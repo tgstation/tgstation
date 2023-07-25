@@ -74922,7 +74922,7 @@
 	dir = 4
 	},
 /obj/item/paper{
-	default_raw_text = Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.-<hr>To set up the waste gas cooling loop, follow these steps:<br><pre>  1. Wrench in the plasma can.<br>  2. Turn on the waste Cooling Gas pump and set the thermomachines to cold.<br>  3. Set up the scrubbers in the chamber using the air alarm.<br>  4. Turn on the filter to the canisters or replace it.<br>  5. Turn on the Supermatter Waste To Port pump.</pre><br>Once everything on that list is complete, make sure that gas isn't building up inside the chamber or the pipes and you are done.;
+	default_raw_text = "Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.-<hr>To set up the waste gas cooling loop, follow these steps:<br><pre>  1. Wrench in the plasma can.<br>  2. Turn on the waste Cooling Gas pump and set the thermomachines to cold.<br>  3. Set up the scrubbers in the chamber using the air alarm.<br>  4. Turn on the filter to the canisters or replace it.<br>  5. Turn on the Supermatter Waste To Port pump.</pre><br>Once everything on that list is complete, make sure that gas isn't building up inside the chamber or the pipes and you are done.";
 	name = "HOW TO SET UP THE SM WASTE"
 	},
 /turf/open/floor/iron/dark,
