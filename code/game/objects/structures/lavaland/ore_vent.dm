@@ -58,6 +58,9 @@
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner))
+		if(tapped)
+			visible_message(span_notice("\the [src] has already been tapped!"))
+			return
 		///This is where we start spitting out mobs.
 		Shake(duration = 3 SECONDS)
 		node = new /mob/living/basic/node_drone(loc)
@@ -101,7 +104,6 @@
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
 	var/mineral_count = boulder_size * (log(rand(1+ore_floor, 4+ore_floor))**-1)
 	mineral_count = SHEET_MATERIAL_AMOUNT * round(mineral_count)
-	say("[mineral_count] is the count!")
 	return mineral_count
 
 /**

@@ -29,22 +29,32 @@
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
 	if(holds_minerals)
-		AddComponent(/datum/component/material_container, processable_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
-		silo_materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
+		silo_materials = AddComponent(
+			/datum/component/remote_materials, \
+			mapload, \
+			mat_container_flags = BREAKDOWN_FLAGS_ORM \
+		)
+
+/obj/machinery/bouldertech/LateInitialize()
+	. = ..()
+	if(!holds_minerals)
+		return
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
 		update_boulder_count()
 		if(!accept_boulder(my_boulder))
 			visible_message(span_warning("[my_boulder] is rejected!"))
-			return FALSE
+			return
 		visible_message(span_warning("[my_boulder] is accepted into \the [src]"))
 		START_PROCESSING(SSmachines, src)
-		breakdown_boulder(my_boulder)
-		return FALSE
+		return
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers) //todo: this probably shouldn't exist? maybe retool elsewhere?
 	. = ..()
@@ -73,27 +83,39 @@
 /obj/machinery/bouldertech/process()
 	. = ..()
 	// We want to loop boulder_processing_max number of times and process a boulder each time asynchronously.
-	if(contents.len <= 0)
-		STOP_PROCESSING(SSmachines, src) //Shut it down holmes
+	if(!is_type_in_list(/obj/item/boulder, contents))
+		say("Shit, no boulders!")
+		STOP_PROCESSING(SSmachines, src) //Nothing to process
 		return
 	for(var/i in 1 to boulders_processing_max)
 		var/obj/item/boulder/boulder = pick(contents)
 		if(!boulder)
 			STOP_PROCESSING(SSmachines, src)
+			say("Shit, no extra boulders!")
 			return
-		INVOKE_ASYNC(src, PROC_REF(breakdown_boulder), boulder)
+		addtimer(CALLBACK(src, PROC_REF(breakdown_boulder), boulder), 15 SECONDS)
+
+/obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(boulders_held >= boulders_held_max)
+		return FALSEWAW
+	if(istype(mover, /obj/item/boulder))
+		return TRUE
 
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
-	if(!chosen_boulder)
+	if(isnull(chosen_boulder))
+		return FALSE
+	if(chosen_boulder.loc != src)
+		return FALSE
+	if(QDELETED(chosen_boulder))
 		return FALSE
 	if(!chosen_boulder.custom_materials)
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
+	if(isnull(silo_materials))
+		return
 	//here we loop through the boulder's ores
-	if(!silo_materials)
-		return FALSE
-
 	var/list/remaining_ores = list()
 	var/tripped = FALSE
 	//If a material is in the boulder's custom_materials, but not in the processable_materials list, we add it to the remaining_ores list to add back to a leftover boulder.
@@ -125,7 +147,7 @@
 	return TRUE
 
 /obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
-	if(!new_boulder)
+	if(isnull(new_boulder))
 		return FALSE
 	if(boulders_held >= boulders_held_max) //Full already
 		visible_message(span_warning("no space!"))
@@ -136,21 +158,25 @@
 		return FALSE
 	new_boulder.forceMove(src)
 	boulders_held++
+	START_PROCESSING(SSmachines, src) //Starts processing if we aren't already.
 	return TRUE
 
 /obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder)
 	if(!contents.len)
 		return FALSE
 	var/obj/item/possible_boulder = specific_boulder
-	if(!possible_boulder)
-		possible_boulder = pick(contents)
-	if(!istype(possible_boulder, /obj/item/boulder))
+	if(isnull(possible_boulder))
+		for(var/i in 1 to contents.len)
+			if(istype(contents[i], /obj/item/boulder))
+				possible_boulder = contents[i]
+				break
+	if(isnull(possible_boulder))
 		return FALSE
 	if(!possible_boulder.custom_materials)
 		qdel(possible_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	possible_boulder.forceMove(drop_location())
+	possible_boulder.forceMove(src.drop_location())
 	boulders_held = clamp(boulders_held--, 0, boulders_held_max)
 	visible_message(span_warning("[boulders_held] remaining!"))
 	return TRUE
@@ -161,10 +187,16 @@
 		boulders_held++
 	return boulders_held
 
+/obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
+	SIGNAL_HANDLER
+	say("We entered with the connect_loc signal!")
+	INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
+
 /obj/machinery/bouldertech/brm
 	name = "boulder retrieval matrix"
 	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
 	icon_state = "brm"
+	circuit = /obj/item/circuitboard/machine/brm
 
 /**
  * So, this should be probably handed in a more elegant way going forward, like a small TGUI prompt to select which boulder you want to pull from.
@@ -208,6 +240,7 @@
 		/datum/material/adamantine,
 		/datum/material/runite,
 	)
+	circuit = /obj/item/circuitboard/machine/smelter
 
 
 /obj/machinery/bouldertech/refinery
@@ -223,6 +256,7 @@
 		/datum/material/bananium,
 		/datum/material/plastic,
 	)
+	circuit = /obj/item/circuitboard/machine/refinery
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
