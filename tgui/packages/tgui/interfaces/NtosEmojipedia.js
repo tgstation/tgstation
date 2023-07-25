@@ -41,7 +41,7 @@ export const NtosEmojipedia = (props, context) => {
           {filtered_emoji_list.map((emoji) => (
             <Box
               key={emoji.name}
-              className={classes(['emojipedia16x16', emoji.name])}
+              className={classes(['emoji16x16', emoji.name])}
               as="img"
               m={0}
               title={emoji.name}

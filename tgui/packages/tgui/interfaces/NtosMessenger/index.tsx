@@ -78,13 +78,13 @@ const ContactsScreen = (_props: any, context: any) => {
     sending_virus,
   } = data;
 
-  // you are not ready for this garbage o7
-
   const [searchUser, setSearchUser] = useLocalState<string>(
     context,
     'searchUser',
     ''
   );
+
+  // you are not ready for this garbage o7
 
   let savedChatsArray = Object.values(saved_chats);
   savedChatsArray.sort((a, b) => b.unread_messages - a.unread_messages);
