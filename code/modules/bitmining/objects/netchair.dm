@@ -7,7 +7,7 @@
 	name = "net chair"
 
 	anchored = TRUE
-	buckle_lying = 270
+	buckle_lying = 275 // relaxin'
 	can_buckle = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
@@ -29,11 +29,18 @@
 	var/datum/outfit/netsuit = /datum/outfit/job/miner
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
+	/// The overlay while connected
+	var/mutable_appearance/bitmining_overlay
 
 /obj/structure/netchair/Initialize(mapload)
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/netchair/LateInitialize()
+	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
 	RegisterSignals(src, list(COMSIG_MOVABLE_UNBUCKLE, COMSIG_QDELETING), PROC_REF(on_sever))
+	bitmining_overlay = mutable_appearance('icons/effects/effects.dmi', "bitmining", ABOVE_MOB_LAYER)
 
 /obj/structure/netchair/Destroy()
 	. = ..()
@@ -109,6 +116,7 @@
 	if(action)
 		action.Remove()
 
+	occupant.cut_overlay(bitmining_overlay)
 	occupant.set_static_vision(2 SECONDS)
 	occupant.set_temp_blindness(1 SECONDS)
 
@@ -156,6 +164,8 @@
 	// Final sanity check before we start the transfer
 	if(QDELETED(neo) || QDELETED(current_avatar) || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
+
+	neo.add_overlay(bitmining_overlay)
 
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
 	occupant_mind_ref = neo_mind_ref
