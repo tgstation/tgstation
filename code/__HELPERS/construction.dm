@@ -45,4 +45,3 @@
 		return null
 
 	. = new target.type(target.drop_location(), amount, FALSE, target.mats_per_unit)
-
