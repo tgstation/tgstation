@@ -38,7 +38,7 @@
 			return
 
 	if(usr?.client == null)
-		to_chat(src, span_boldwarning("An error occured, please try again."), confidential = TRUE)
+		to_chat(src, span_boldwarning("An error occurred, please try again."), confidential = TRUE)
 		return
 
 	GLOB.requests.music_request(usr.client, request_url, credit)
