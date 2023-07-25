@@ -126,7 +126,7 @@
 /datum/award/score/achievements_score
 	name = "Unlocked Achievements"
 	desc = "Worry not, metagaming is all that matters."
-	icon = "elephant" //It's a reference fyi
+	icon = "elephant" //Obey the reference
 	database_id = ACHIEVEMENTS_SCORE
 	load_priority = AWARD_PRIORITY_LAST //See below
 
