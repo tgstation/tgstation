@@ -11,25 +11,40 @@
 	var/valid_move_dirs = SOUTH | WEST | EAST | SOUTHWEST | SOUTHEAST
 	/// Speed at which we fall / traverse downwards
 	var/fall_speed = 0.2 SECONDS
-
+	/// Movables that can move freely on cliffs
 	var/list/protected_types = list(/obj/projectile, /obj/effect, /mob/dead)
+	/// Do we draw a tile as underlay for half tiles?
+	var/turf/underlay_tile
+	/// The pixel x of the underlay image
+	var/undertile_pixel_x = 0
+	/// The pixel y of the underlay image
+	var/undertile_pixel_y = 0
 
 /turf/open/cliff/Initialize(mapload)
 	. = ..()
 
 	RegisterSignal(src, COMSIG_TURF_MOVABLE_THROW_LANDED, PROC_REF(on_turf_movable_throw_landed))
 
+	if(underlay_tile)
+		var/image/underlay = image(icon_state = initial(underlay_tile.icon_state), icon = initial(underlay_tile.icon))
+		underlay.pixel_x = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
+		underlay.pixel_y = undertile_pixel_y
+		underlays += underlay
+
 /turf/open/cliff/CanPass(atom/movable/mover, border_dir)
 	..()
 
 	if(border_dir & can_fall_from_direction || !can_fall(mover))
 		return TRUE
+
 	return FALSE
 
 /turf/open/cliff/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 
 	try_fall(arrived)
+
+
 
 /// Something landed on us
 /turf/open/cliff/proc/on_turf_movable_throw_landed(turf/turf, atom/movable/arrived)
@@ -52,7 +67,12 @@
 	if(arrived.throwing || HAS_TRAIT(arrived, TRAIT_CLIFF_WALKER) || HAS_TRAIT(arrived, TRAIT_MOVE_FLYING))
 		return FALSE
 
+	// We're already falling
 	if(arrived.anchored || (arrived in SScliff_falling.cliff_grinders))
+		return FALSE
+
+	// We can walk infront of the bottom cliff turf, so check that here
+	if(!iscliffturf(get_step(src, fall_direction)) && !(get_dir(arrived, src) & fall_direction))
 		return FALSE
 
 	return TRUE
@@ -84,16 +104,23 @@
 /// Snowy cliff!
 /turf/open/cliff/snowrock
 	icon_state = "icerock_wall-0"
-	icon = 'icons/turf/walls/icerock_wall.dmi'
+	icon = 'icons/turf/cliff/icerock_cliff.dmi'
 	base_icon_state = "icerock_wall"
 
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN_CLIFF
+	canSmoothWith = SMOOTH_GROUP_TURF_OPEN_CLIFF
 	layer = EDGED_TURF_LAYER
+
 	// This is static
 	// Done like this to avoid needing to make it dynamic and save cpu time
 	// 4 to the left, 4 down
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-4, -4), matrix())
 
+	undertile_pixel_x = 4
+	undertile_pixel_y = 4
+
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 
+	underlay_tile = /turf/open/misc/asteroid/snow/icemoon
