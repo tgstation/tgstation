@@ -19,6 +19,8 @@
 	var/undertile_pixel_x = 0
 	/// The pixel y of the underlay image
 	var/undertile_pixel_y = 0
+	/// if given, sets the underlays plane to this
+	var/underlay_plane
 
 /turf/open/cliff/Initialize(mapload)
 	. = ..()
@@ -29,6 +31,7 @@
 		var/image/underlay = image(icon_state = initial(underlay_tile.icon_state), icon = initial(underlay_tile.icon))
 		underlay.pixel_x = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
 		underlay.pixel_y = undertile_pixel_y
+		underlay.plane = underlay_plane || plane
 		underlays += underlay
 
 /turf/open/cliff/CanPass(atom/movable/mover, border_dir)
@@ -44,7 +47,8 @@
 
 	try_fall(arrived)
 
-
+/turf/open/cliff/zImpact(atom/movable/falling, levels, turf/prev_turf, flags)
+	. = ..(flags = flags | FALL_INTERCEPTED)
 
 /// Something landed on us
 /turf/open/cliff/proc/on_turf_movable_throw_landed(turf/turf, atom/movable/arrived)
@@ -111,6 +115,7 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN_CLIFF
 	canSmoothWith = SMOOTH_GROUP_TURF_OPEN_CLIFF
 	layer = EDGED_TURF_LAYER
+	plane = WALL_PLANE
 
 	// This is static
 	// Done like this to avoid needing to make it dynamic and save cpu time
@@ -124,3 +129,4 @@
 	planetary_atmos = TRUE
 
 	underlay_tile = /turf/open/misc/asteroid/snow/icemoon
+	underlay_plane = FLOOR_PLANE
