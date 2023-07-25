@@ -8,6 +8,9 @@
 		USE_TRICOLOR_ALPHA, /// SKYRAPTOR ADDITIONS
 		USE_TRICOLOR_BETA,
 		USE_TRICOLOR_CHARLIE,
+		MUTCOLORS, //we're letting moths have mutcolors and eye color customization here to make them more interesting
+		EYECOLOR,
+		HAIR,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,

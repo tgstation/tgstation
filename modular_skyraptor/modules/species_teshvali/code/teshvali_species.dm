@@ -16,7 +16,7 @@
 		//TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	species_language_holder = /datum/language_holder/synthetic
+	species_language_holder = /datum/language_holder/teshvali
 
 	mutant_bodyparts = list("bodymarks_teshvali" = "None")
 	external_organs = list(
