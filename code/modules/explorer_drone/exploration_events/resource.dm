@@ -87,7 +87,7 @@
 	name = "dessicated corpse"
 	required_site_traits = list(EXPLORATION_SITE_RUINS)
 	required_tool = EXODRONE_TOOL_MULTITOOL
-	discovery_log = "You discovered a corpse of a humanoid."
+	discovery_log = "Discovered a corpse of a humanoid."
 	description = "You find a dessicated corpose of a humanoid, though it's too damaged to identify. A locked briefcase is lying nearby."
 	no_tool_description = "You can't open it without a multiool."
 	has_tool_description = "You can try to hack it open with your multitool!"
@@ -126,7 +126,7 @@
 	name = "storage room"
 	required_site_traits = list(EXPLORATION_SITE_TECHNOLOGY,EXPLORATION_SITE_STATION)
 	required_tool = EXODRONE_TOOL_TRANSLATOR
-	discovery_log = Discovered a storage room full of crates."
+	discovery_log = "Discovered a storage room full of crates."
 	success_log = "Used a translated manifest to find a crate of medication."
 	description = "You find a storage room full of unidentified crates. There's a manifest in an obscure language pinned near the entrance."
 	no_tool_description = "All the crates around are devoid of useful contents, and the manifest is unreadable without a translator."
