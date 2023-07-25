@@ -79,7 +79,7 @@ const Achievement = (props) => {
           </Box>
         )}
         {!!achieve_info && (
-          <Tooltip content={achieve_tooltip}>
+          <Tooltip position="bottom" content={achieve_tooltip}>
             <Box fontSize={0.9} opacity={0.8}>
               {achieve_info}
             </Box>
