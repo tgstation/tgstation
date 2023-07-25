@@ -22,6 +22,10 @@ handles linking back and forth.
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
 
+	//Internal vars
+	var/_prepare_on_register = FALSE
+	var/_connect_to_silo = FALSE
+
 /datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -33,14 +37,18 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
 	var/turf/T = get_turf(parent)
-	var/connect_to_silo = FALSE
+	_connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
-		connect_to_silo = TRUE
+		_connect_to_silo = TRUE
 
 	if(mapload) // wait for silo to initialize during mapload
-		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
-	else // directly call in round
-		_PrepareStorage(connect_to_silo)
+		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), _connect_to_silo))
+	else //directly register in round
+		_prepare_on_register = TRUE
+
+/datum/component/remote_materials/RegisterWithParent()
+	if(_prepare_on_register)
+		_PrepareStorage(_connect_to_silo)
 
 /datum/component/remote_materials/proc/_PrepareStorage(connect_to_silo)
 	if (connect_to_silo)
