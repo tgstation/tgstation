@@ -10,14 +10,20 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/shuttle/pirate)
+"aM" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/mob_spawn/ghost_role/human/pirate/lustrous{
+	color = "#4f98ff"
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "bY" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 8
-	},
-/obj/structure/mineral_door/iron,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/structure/table/wood,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "cx" = (
@@ -27,13 +33,6 @@
 	},
 /obj/effect/turf_decal/stripes/white/corner,
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"el" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/mob_spawn/ghost_role/human/pirate/lustrous{
-	color = "#4f98ff"
-	},
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "ev" = (
 /obj/structure/flora/lunar_plant/style_2,
@@ -47,17 +46,6 @@
 "ga" = (
 /obj/item/stack/sheet/bluespace_crystal{
 	amount = 2
-	},
-/turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
-"ge" = (
-/obj/structure/rack,
-/obj/item/gun/energy/lasercannon{
-	pixel_y = 5
-	},
-/obj/item/gun/energy/lasercannon,
-/obj/item/gun/energy/lasercannon{
-	pixel_y = -5
 	},
 /turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
@@ -86,13 +74,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"im" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner{
-	color = "#4f98ff"
-	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "iu" = (
@@ -142,6 +123,13 @@
 /obj/machinery/piratepad,
 /turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
+"kp" = (
+/obj/machinery/porta_turret/syndicate/teleport{
+	dir = 8;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
 "kx" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -149,19 +137,16 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"kM" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/turf_decal/weather/dirt{
-	dir = 1
+"kV" = (
+/obj/structure/rack,
+/obj/item/gun/energy/lasercannon{
+	pixel_y = 5
 	},
-/obj/effect/turf_decal/weather/dirt{
-	dir = 7
+/obj/item/gun/energy/lasercannon,
+/obj/item/gun/energy/lasercannon{
+	pixel_y = -5
 	},
-/obj/structure/mineral_door/iron,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
+/turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
 "lt" = (
 /turf/template_noop,
@@ -169,11 +154,6 @@
 "lz" = (
 /obj/machinery/launchpad,
 /turf/open/floor/light,
-/area/shuttle/pirate)
-"lA" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "mv" = (
 /turf/open/misc/dirt,
@@ -201,32 +181,26 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "nR" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/table/wood,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	dir = 8;
+	x_offset = 10;
+	y_offset = 5
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "oa" = (
+/obj/machinery/porta_turret/syndicate/teleport{
+	dir = 4;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"oU" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/pirate)
-"oU" = (
-/obj/effect/decal/cleanable/shreds,
-/obj/effect/turf_decal/lunar_sand/plating,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"pC" = (
-/obj/machinery/porta_turret/syndicate/teleport{
-	dir = 8;
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "pO" = (
 /obj/structure/table/reinforced,
@@ -249,6 +223,14 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"rG" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/structure/mineral_door/iron,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "tD" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 3
@@ -266,11 +248,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "uH" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/mob/living/basic/bat{
-	faction = list("pirate");
-	name = "Sethron";
-	desc = "The Lustrous' beloved squatter. Lives rent free."
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -288,21 +267,6 @@
 /obj/structure/closet/crate/miningcar,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
-"vY" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"wd" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/mineral_door/iron,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "wz" = (
 /obj/machinery/computer/piratepad_control,
@@ -346,13 +310,6 @@
 "zZ" = (
 /obj/item/stack/sheet/bluespace_crystal,
 /turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
-"At" = (
-/obj/machinery/porta_turret/syndicate/teleport{
-	dir = 4;
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "AT" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -407,6 +364,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"Dx" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner{
+	color = "#4f98ff"
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "DM" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/cable,
@@ -458,11 +422,8 @@
 /turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
 "GQ" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
-	dir = 8;
-	x_offset = 10;
-	y_offset = 5
-	},
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Hm" = (
@@ -479,6 +440,11 @@
 "HY" = (
 /obj/machinery/loot_locator,
 /turf/open/misc/dirt/jungle,
+/area/shuttle/pirate)
+"Ih" = (
+/obj/effect/decal/cleanable/shreds,
+/obj/effect/turf_decal/lunar_sand/plating,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "IP" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -566,6 +532,13 @@
 "Od" = (
 /turf/closed/wall/mineral/iron,
 /area/shuttle/pirate)
+"Oq" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "OP" = (
 /obj/machinery/space_heater,
 /turf/open/misc/dirt/jungle,
@@ -581,8 +554,9 @@
 /turf/closed/wall/mineral/iron,
 /area/shuttle/pirate)
 "Pq" = (
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 8
+/obj/structure/mineral_door/iron,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -703,6 +677,15 @@
 /obj/item/food/energybar,
 /turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
+"WR" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/mob/living/basic/bat{
+	faction = list("pirate");
+	name = "Sethron";
+	desc = "The Lustrous' beloved squatter. Lives rent free."
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "XB" = (
 /obj/machinery/porta_turret/syndicate/teleport{
 	dir = 1;
@@ -761,19 +744,19 @@ lt
 lt
 lt
 lt
-pC
+kp
 Od
-Pq
-Pq
+uH
+uH
 jx
-Pq
-Pq
-Pq
+uH
+uH
+uH
 jx
-Pq
-Pq
+uH
+uH
 Od
-pC
+kp
 lt
 lt
 lt
@@ -806,13 +789,13 @@ jx
 jx
 Od
 NT
-lA
+GQ
 Uw
 Ku
 ME
 Dw
 Uw
-vY
+Oq
 NT
 Od
 jx
@@ -849,9 +832,9 @@ jx
 Od
 xS
 zS
-nR
+bY
 YK
-uH
+WR
 fB
 TC
 kx
@@ -875,7 +858,7 @@ Sy
 Sy
 Od
 Od
-wd
+rG
 Od
 Od
 Od
@@ -893,7 +876,7 @@ ZF
 ZF
 ZF
 Ds
-ge
+kV
 Od
 Pr
 kx
@@ -951,7 +934,7 @@ lt
 gM
 xg
 TC
-el
+aM
 TC
 Od
 Sy
@@ -974,14 +957,14 @@ Od
 TC
 qO
 kx
-wd
+rG
 kx
 kx
 kx
-bY
+Pq
 kx
 kx
-oa
+oU
 Ss
 Od
 Od
@@ -993,7 +976,7 @@ lt
 mv
 Nb
 fB
-im
+Dx
 Hm
 Od
 ev
@@ -1003,7 +986,7 @@ Od
 Sy
 zZ
 Sy
-oU
+Ih
 id
 St
 Fx
@@ -1039,7 +1022,7 @@ Od
 Od
 Od
 Od
-kM
+rG
 Od
 Od
 Od
@@ -1103,7 +1086,7 @@ Od
 NT
 Qg
 pO
-GQ
+nR
 NT
 Rv
 uP
@@ -1142,11 +1125,11 @@ jx
 jx
 jx
 jx
-At
+oa
 lt
 lt
 lt
-At
+oa
 jx
 jx
 jx
