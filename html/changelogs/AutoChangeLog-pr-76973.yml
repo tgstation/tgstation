@@ -1,0 +1,5 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - refactor: "The mag_type variable on guns has been split between accepted_magazine_type and spawn_magazine_type, allowing weapons to safely spawn with subtypes of their normal magazines without breaking the weapon"
+  - bugfix: "Several weapons that spawned with special magazines, the riot dart pre-loaded donk pistol for example, will now be able to accept normal donksoft magazines that don't spawn loaded with riot darts."
