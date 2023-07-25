@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(achievements)
 
 	///List of achievements
 	var/list/datum/award/achievement/achievements = list()
+	///The highest amount of times a given achievement has been earned.
+	var/highest_times_achieved = 1 //Preventing possible divisions by zero.
 	///List of scores
 	var/list/datum/award/score/scores = list()
 	///List of all awards

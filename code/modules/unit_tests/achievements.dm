@@ -10,4 +10,7 @@
 		if(!init_icon || !(init_icon in award_icons))
 			TEST_FAIL("Award [initial(award.name)] has an unexistent icon: \"[init_icon || "null"]\"")
 		if(length(initial(award.database_id)) > 32) //sql schema limit
-			TEST_FAIL("Award [initial(award.name)] database id is is too long")
+			TEST_FAIL("Award [initial(award.name)] database id is too long")
+		var/init_category = initial(award.category)
+		if(!(init_category in GLOB.achievement_categories))
+			TEST_FAIL("Award [initial(award.name)] has unsupported category: \"[init_category || "null"]\". Update GLOB.achievement_categories")

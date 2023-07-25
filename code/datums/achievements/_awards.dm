@@ -66,14 +66,50 @@
 /datum/award/proc/on_unlock(mob/user)
 	return
 
+///returns additional ui data for the Check Achievements menu
+/datum/award/proc/get_ui_data()
+	return list(
+		"score" = FALSE,
+		"achieve_info" = null,
+		"achieve_tooltip" = null,
+	)
+
 ///Achievements are one-off awards for usually doing cool things.
 /datum/award/achievement
 	desc = "Achievement for epic people"
 	icon = "" // This should warn contributors that do not declare an icon when contributing new achievements.
+	///How many players have earned this achievement
+	var/times_achieved = 0
+
+/datum/award/achievement/New()
+	. = ..()
+	var/datum/db_query/query = SSdbcore.NewQuery(
+		"SELECT COUNT(achievement_key) FROM [format_table_name("achievements")] WHERE achievement_key = :achievement_key AND value > 0",
+		list("achievement_key" = database_id)
+	)
+	if(query.Execute(async = TRUE) && query.NextRow())
+		times_achieved = text2num(query.item[1])
+		if(SSachievements.highest_times_achieved < times_achieved)
+			SSachievements.highest_times_achieved = times_achieved
+	qdel(query)
 
 /datum/award/achievement/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "achievement"
+
+/datum/award/achievement/get_ui_data()
+	. = ..()
+	.["achieve_info"] = "Unlocked by [times_achieved] players so far"
+	var/percent = FLOOR(times_achieved / SSachievements.highest_times_achieved * 100, 0.01)
+	switch(percent)
+		if(0)
+			.["achieve_tooltip"] = "0% of the most unlocked achievement, duh"
+		if(0 to 0,05) // Let's approximate it. rounding errors may be a bitch.
+			.["achieve_tooltip"] = "Less than 0,05% of the most unlocked achievement"
+		if(0 to 99,9)
+			.["achieve_tooltip"] = "[percent]% of the most unlocked achievement"
+		if(100)
+			.["achieve_tooltip"] = "This is the most unlocked achievement"
 
 /datum/award/achievement/parse_value(raw_value)
 	return raw_value > 0
@@ -81,6 +117,9 @@
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
+	times_achieved++
+	if(SSachievements.highest_times_achieved < times_achieved)
+		SSachievements.highest_times_achieved = times_achieved
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
@@ -99,6 +138,10 @@
 /datum/award/score/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "score"
+
+/datum/award/score/get_ui_data()
+	. = ..()
+	.["score"] = TRUE
 
 /datum/award/score/proc/LoadHighScores()
 	var/datum/db_query/Q = SSdbcore.NewQuery(
