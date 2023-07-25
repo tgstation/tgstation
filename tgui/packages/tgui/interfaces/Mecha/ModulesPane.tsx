@@ -22,20 +22,20 @@ const moduleIcon = (param) => {
   }
 };
 
-const emptyModuleText = (param) => {
+const moduleTypeText = (param) => {
   switch (param) {
     case 'mecha_l_arm':
-      return 'Left Arm Slot';
+      return 'Left arm module';
     case 'mecha_r_arm':
-      return 'Right Arm Slot';
+      return 'Right arm module';
     case 'mecha_utility':
-      return 'Utility Module Slot';
+      return 'Utility module';
     case 'mecha_power':
-      return 'Power Module Slot';
+      return 'Power module';
     case 'mecha_armor':
-      return 'Armor Module Slot';
+      return 'Armor module';
     default:
-      return 'Module Slot';
+      return 'Common module';
   }
 };
 
@@ -51,6 +51,7 @@ export const ModulesPane = (props, context) => {
     <Section
       title="Equipment"
       fill
+      scrollable
       buttons={
         <Button
           icon={weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}
@@ -67,35 +68,58 @@ export const ModulesPane = (props, context) => {
         <Stack.Item>
           {modules.map((module, i) =>
             !module.ref ? (
-              <Button fluid key={i} color="transparent">
-                <div
-                  style={{
-                    'text-transform': 'capitalize',
-                    'overflow': 'hidden',
-                    'text-overflow': 'ellipsis',
-                    'padding': '8px 4px',
-                  }}>
-                  <Icon name={moduleIcon(module.type)} />
-                  {emptyModuleText(module.type)}
-                </div>
+              <Button
+                maxWidth={16}
+                p="4px"
+                pr="8px"
+                fluid
+                key={i}
+                color="transparent">
+                <Stack>
+                  <Stack.Item width="32px" height="32px" textAlign="center">
+                    <Icon
+                      fontSize={1.5}
+                      mx={0}
+                      my="8px"
+                      name={moduleIcon(module.type)}
+                    />
+                  </Stack.Item>
+                  <Stack.Item
+                    lineHeight="32px"
+                    style={{
+                      'text-transform': 'capitalize',
+                      'overflow': 'hidden',
+                      'text-overflow': 'ellipsis',
+                    }}>
+                    {`${moduleTypeText(module.type)} Slot`}
+                  </Stack.Item>
+                </Stack>
               </Button>
             ) : (
               <Button
                 maxWidth={16}
+                p="4px"
+                pr="8px"
                 fluid
                 key={i}
                 selected={i === selectedModule}
                 onClick={() => setSelectedModule(i)}>
-                <div
-                  style={{
-                    'text-transform': 'capitalize',
-                    'overflow': 'hidden',
-                    'text-overflow': 'ellipsis',
-                    'padding': '8px 4px',
-                  }}>
-                  <Icon name={moduleIcon(module.type)} />
-                  {module.name}
-                </div>
+                <Stack>
+                  <Stack.Item lineHeight="0">
+                    <Box
+                      className={classes(['mecha_equipment32x32', module.icon])}
+                    />
+                  </Stack.Item>
+                  <Stack.Item
+                    lineHeight="32px"
+                    style={{
+                      'text-transform': 'capitalize',
+                      'overflow': 'hidden',
+                      'text-overflow': 'ellipsis',
+                    }}>
+                    {module.name}
+                  </Stack.Item>
+                </Stack>
               </Button>
             )
           )}
@@ -112,16 +136,19 @@ export const ModulesPane = (props, context) => {
 
 export const ModuleDetails = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
-  const { name, desc, icon, detachable, ref, snowflake } = props.module;
+  const { type, name, desc, icon, detachable, ref, snowflake } = props.module;
   return (
     <Stack vertical>
       <Stack.Item>
         <Stack>
-          <Stack.Item>
+          {/* <Stack.Item>
             <Box className={classes(['mecha_equipment32x32', icon])} />
-          </Stack.Item>
+          </Stack.Item> */}
           <Stack.Item grow>
             <h2 style={{ 'text-transform': 'capitalize' }}>{name}</h2>
+            <Box italic opacity={0.5}>
+              {moduleTypeText(type)}
+            </Box>
           </Stack.Item>
           {!!detachable && (
             <Stack.Item>
@@ -316,7 +343,7 @@ const SnowflakeWeapon = (props: { module: MechModule }, context) => {
 const SnowflakeWeaponBallistic = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { weapons_safety } = data;
-  const { ref } = props.module;
+  const { ref, equip_cooldown } = props.module;
   const {
     integrity,
     projectiles,
@@ -356,6 +383,11 @@ const SnowflakeWeaponBallistic = (props, context) => {
             }}
             value={integrity}
           />
+        </LabeledList.Item>
+      )}
+      {!!equip_cooldown && (
+        <LabeledList.Item label="Cooldown">
+          {equip_cooldown / 10} seconds
         </LabeledList.Item>
       )}
       {!!ammo_type && (
@@ -624,7 +656,18 @@ const SnowflakeAirTank = (props, context) => {
   return (
     <Box>
       <LabeledList>
-        <LabeledList.Item label="Air Source">
+        <LabeledList.Item label="Cabin Pressure">
+          <Box
+            color={
+              cabin_pressure > cabin_dangerous_highpressure ? 'red' : null
+            }>
+            {cabin_pressure} kPa
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Cabin Temperature">
+          <Box>{GetTempFormat(cabin_temp)}</Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Cabin Air Source">
           <Button
             onClick={() =>
               act('equip_act', {
@@ -635,18 +678,21 @@ const SnowflakeAirTank = (props, context) => {
             {air_source}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Cabin pressure">
-          <Box
-            color={
-              cabin_pressure > cabin_dangerous_highpressure ? 'red' : null
-            }>
-            {cabin_pressure} kPa
-          </Box>
+        <LabeledList.Item label="Air Tank Pressure">
+          {airtank_pressure} kPa
         </LabeledList.Item>
-        <LabeledList.Item label="Cabin temperature">
-          <Box>{GetTempFormat(cabin_temp)}</Box>
+        <LabeledList.Item label="Air Tank Temperature">
+          {GetTempFormat(airtank_temp)}
         </LabeledList.Item>
-        <LabeledList.Item label="Gas Port">
+        <LabeledList.Item
+          label="Air Tank Port"
+          buttons={
+            <Button
+              icon="info"
+              color="transparent"
+              tooltip="Park above atmospherics connector port to connect inernal air tank with a gas network."
+            />
+          }>
           <Button
             onClick={() =>
               act('equip_act', {
@@ -658,12 +704,6 @@ const SnowflakeAirTank = (props, context) => {
             {port_connected ? 'Connected' : 'Disconnected'}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Air tank Pressure">
-          {airtank_pressure} kPa
-        </LabeledList.Item>
-        <LabeledList.Item label="Air tank temperature">
-          {GetTempFormat(airtank_temp)}
-        </LabeledList.Item>
       </LabeledList>
     </Box>
   );
@@ -672,7 +712,7 @@ const SnowflakeAirTank = (props, context) => {
 const GetTempFormat = (temp) => {
   const KelvinZeroCelcius = 273.15;
   return (
-    toFixed(temp, 1) + '°K\n' + toFixed(temp - KelvinZeroCelcius, 1) + '°C'
+    toFixed(temp - KelvinZeroCelcius, 1) + '°C (' + toFixed(temp, 1) + '°K)'
   );
 };
 

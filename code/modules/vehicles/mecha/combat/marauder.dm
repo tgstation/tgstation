@@ -20,7 +20,7 @@
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 5,
-		MECHA_POWER = 2,
+		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)
 	bumpsmash = TRUE
@@ -100,7 +100,7 @@
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 5,
-		MECHA_POWER = 2,
+		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)
 	equip_by_category = list(
@@ -123,7 +123,7 @@
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 5,
-		MECHA_POWER = 2,
+		MECHA_POWER = 1,
 		MECHA_ARMOR = 4,
 	)
 	equip_by_category = list(

@@ -531,7 +531,7 @@
 
 //////////////////////////// RADIO MODULE //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/radio
-	name = "mech radio"
+	name = "mounted radio"
 	desc = "A basic component of every vehicle."
 	icon_state = "mecha_radio"
 	equipment_slot = MECHA_UTILITY
@@ -574,8 +574,8 @@
 
 //////////////////////////// AIR TANK MODULE //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/air_tank
-	name = "mech air tank"
-	desc = "An internal air tank used to pressurize mech cockpit and RCS thrusters. Comes with a set of sensors."
+	name = "mounted air tank"
+	desc = "An internal air tank used to pressurize mech cabin and RCS thrusters. Comes with a set of sensors."
 	icon_state = "mecha_air_tank"
 	equipment_slot = MECHA_UTILITY
 	///////////ATMOS

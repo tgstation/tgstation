@@ -2,7 +2,6 @@ import { useBackend } from '../../backend';
 import { ByondUi, Stack, Button, Section, Box, ProgressBar, LabeledList } from '../../components';
 import { KelvinZeroCelcius, OperatorData } from './data';
 import { toFixed } from 'common/math';
-import { AlertPane } from './AlertPane';
 
 export const MechStatPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
@@ -86,11 +85,6 @@ export const MechStatPane = (props, context) => {
               </Button>
             </LabeledList.Item>
           </LabeledList>
-        </Stack.Item>
-        <Stack.Item>
-          <Section title="Alerts">
-            <AlertPane />
-          </Section>
         </Stack.Item>
       </Stack>
     </Section>
