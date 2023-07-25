@@ -1,0 +1,4 @@
+author: "oranges"
+delete-after: True
+changes:
+  - balance: "holodeck spawned banners no longer give the inspiration effects"
