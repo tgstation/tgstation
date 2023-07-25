@@ -830,7 +830,8 @@
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
-	if(updates & UPDATE_GREYSCALE)
+	// extra check to avoid the proc overhead
+	if(updates & UPDATE_GREYSCALE && greyscale_colors && greyscale_config)
 		update_greyscale(updates)
 		. |= UPDATE_GREYSCALE
 
