@@ -251,39 +251,36 @@
 				to_chat(usr, span_notice("ERROR: This device has sending disabled."))
 				return FALSE
 
-			// target ref, can either be a chat in saved_chats or a messenger ref in GLOB.TabletMessengers
+			// target ref, can either be a chat in saved_chats
+			// or a messenger ref in GLOB.TabletMessengers
 			var/target_ref = params["ref"]
 
-			var/datum/pda_chat/target
+			var/target = null
 
 			if(target_ref in saved_chats)
 				target = saved_chats[target_ref]
 			else if(target_ref in GLOB.TabletMessengers)
-				target = create_chat(target_ref)
-				viewing_messages_of = REF(target)
+				target = GLOB.TabletMessengers[target_ref]
 			else
-				return FALSE
-
-			if(!(target.recipient?.reference in GLOB.TabletMessengers))
-				to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
-				target.recipient = null
-				target.can_reply = FALSE
-				return FALSE
-
-			var/datum/computer_file/program/messenger/target_msgr = target.recipient.resolve()
-
-			if(isnull(target_msgr)) // we don't want tommy sending his message to nullspace
-				return FALSE
-
-			if(!target_msgr.sending_and_receiving && !sending_virus)
-				to_chat(usr, span_notice("ERROR: Recipient has receiving disabled."))
 				return FALSE
 
 			if(sending_virus)
 				var/obj/item/computer_disk/virus/disk = computer.inserted_disk
-				if(istype(disk))
-					disk.send_virus(computer, target_msgr.computer, usr, params["msg"])
-					return TRUE
+				if(!istype(disk))
+					return FALSE
+
+				var/datum/computer_file/program/messenger/target_msgr = null
+
+				if(istype(target, /datum/pda_chat))
+					var/datum/pda_chat/target_chat = target
+					target_msgr = target_chat.recipient?.resolve()
+					if(!istype(target_msgr))
+						to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
+						return FALSE
+				else if(istype(target, /datum/computer_file/program/messenger))
+					target_msgr = target
+
+				return disk.send_virus(computer, target_msgr.computer, usr, params["msg"])
 
 			return send_message(usr, params["msg"], list(target))
 
@@ -322,6 +319,11 @@
 			selected_image = TEMP_IMAGE_PATH(REF(src))
 			update_pictures_for_all()
 			return TRUE
+
+/datum/computer_file/program/messenger/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/emojipedia)
+	)
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/static_data = list()
@@ -401,9 +403,10 @@
 
 	for(var/chatref in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chatref]
-		if(chat.recipient?.reference in msgr_targets) // if its in msgr_targets, it's valid
-			msgr_targets -= chat.recipient.reference
-			chats += chat
+		if(!(chat.recipient?.reference in msgr_targets)) // if its in msgr_targets, it's valid
+			continue
+		msgr_targets -= chat.recipient.reference
+		chats += chat
 
 	for(var/missing_msgr in msgr_targets)
 		var/datum/pda_chat/new_chat = create_chat(missing_msgr)
@@ -457,7 +460,7 @@
 	return message
 
 /// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
-/datum/computer_file/program/messenger/proc/send_message(mob/living/sender, message, list/datum/pda_chat/targets, everyone = FALSE)
+/datum/computer_file/program/messenger/proc/send_message(mob/living/sender, message, list/targets, everyone = FALSE)
 	message = sanitize_pda_msg(message, sender)
 
 	if(!message)
@@ -470,32 +473,77 @@
 		photo_asset_key = get_next_ntos_picture_path()
 		SSassets.transport.register_asset(photo_asset_key, img_asset.resource, img_asset.hash)
 
-	var/datum/pda_msg/message_datum = new(message, TRUE, photo_asset_key, everyone)
-
 	// our sender targets
 	var/list/datum/computer_file/program/messenger/target_msgrs = list()
+	var/list/datum/pda_chat/target_chats = list()
+
+	var/should_alert = length(targets) == 1
 
 	// filter out invalid targets
-	for(var/datum/pda_chat/target_chat as anything in targets.Copy())
-		if(!target_chat.can_reply)
-			continue
-		var/datum/computer_file/program/messenger/msgr = target_chat.recipient?.resolve()
-		if(!istype(msgr))
-			targets -= target_chat
-			continue
-		if(!msgr.sending_and_receiving)
-			targets -= target_chat
-			continue
-		target_msgrs += msgr
+	for(var/target in targets)
+		var/datum/pda_chat/target_chat = null
+		var/datum/computer_file/program/messenger/target_msgr = null
 
-	if(send_msg_signal(sender, message, target_msgrs, photo_asset_key, everyone))
-		// Log it in our logs
-		for(var/datum/pda_chat/target_chat as anything in targets)
-			target_chat.add_msg(message_datum, show_in_recents = !everyone)
-			target_chat.unread_messages = 0
+		if(istype(target, /datum/pda_chat))
+			target_chat = target
+
+			if(!target_chat.can_reply)
+				if(should_alert)
+					to_chat(sender, span_notice("ERROR: Recipient has receiving disabled."))
+				continue
+
+			target_msgr = target_chat.recipient?.resolve()
+
+			if(!istype(target_msgr))
+				if(should_alert)
+					to_chat(sender, span_notice("ERROR: Recipient no longer exists."))
+				target_chat.can_reply = FALSE
+				target_chat.recipient = null
+				continue
+
+			if(!target_msgr.sending_and_receiving)
+				if(should_alert)
+					to_chat(sender, span_notice("ERROR: Recipient has receiving disabled."))
+				continue
+
+		else if(istype(target, /datum/computer_file/program/messenger))
+			target_msgr = target
+
+			if(!target_msgr.sending_and_receiving)
+				if(should_alert)
+					to_chat(sender, span_notice("ERROR: Recipient has receiving disabled."))
+				continue
+
+			target_chat = find_chat_by_recp(REF(target))
+
+			if(!istype(target_chat))
+				target_chat = create_chat(REF(target))
+
+		else
+			stack_trace("invalid target [target]")
+			continue
+
+		target_chats += target_chat
+		target_msgrs += target_msgr
+
+	if(!send_msg_signal(sender, message, target_msgrs, photo_asset_key, everyone))
+		return FALSE
+
+	// Log it in our logs
+	var/datum/pda_msg/message_datum = new(emoji_parse(message), TRUE, photo_asset_key, everyone)
+	for(var/datum/pda_chat/target_chat as anything in target_chats)
+		target_chat.add_msg(message_datum, show_in_recents = !everyone)
+		target_chat.unread_messages = 0
+
+	// send new pictures to everyone
+	if(!isnull(photo_asset_key))
 		update_pictures_for_all()
-		return TRUE
-	return FALSE
+
+	// switch our chat screen after sending a message, but do it only if it's not to everyone
+	if(!everyone)
+		viewing_messages_of = REF(target_chats[1])
+
+	return TRUE
 
 /// Sends a rigged message that explodes when the recipient tries to reply or look at it.
 /datum/computer_file/program/messenger/proc/send_rigged_message(mob/sender, message, list/datum/computer_file/program/messenger/targets, fake_name, fake_job, attach_fake_photo)
@@ -573,7 +621,7 @@
 		if(isobserver(player_mob) && (player_mob.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(player_mob, "[FOLLOW_LINK(player_mob, sender)] [ghost_message]")
 
-	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: \"[signal.format_message()]\""))
+	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: \"[message]\""))
 
 	if (alert_able && !alert_silenced)
 		computer.send_sound()
