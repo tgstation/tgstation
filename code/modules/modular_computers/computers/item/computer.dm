@@ -508,12 +508,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+	else if(device_theme == PDA_THEME_RETRO)
+		playsound(src, 'sound/machines/imrcv.ogg', 50) // don't vary
 	else
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	if(device_theme == PDA_THEME_RETRO)
+		playsound(src, 'sound/machines/imsend.ogg', 15)
+	else
+		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
