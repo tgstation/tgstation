@@ -72,6 +72,7 @@
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/midround/bloodsucker/trim_candidates()
+	..()
 	candidates = living_players
 	for(var/mob/living/player in candidates)
 		if(!is_station_level(player.z))
@@ -80,9 +81,10 @@
 			candidates.Remove(player)
 
 /datum/dynamic_ruleset/midround/bloodsucker/execute()
-	var/mob/selected_mobs = pick(living_players)
+	if(!candidates || !candidates.len)
+		return FALSE
+	var/mob/selected_mobs = pick_n_take(candidates)
 	assigned += selected_mobs.mind
-	living_players -= selected_mobs
 	var/datum/mind/candidate_mind = selected_mobs.mind
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = candidate_mind.make_bloodsucker()
 	if(!bloodsuckerdatum)
