@@ -251,7 +251,9 @@
 
 	SET_PLANE_IMPLICIT(src, plane)
 
-	update_greyscale()
+	//we'll check again at item/init for inhand/belt/worn configs.
+	if(greyscale_config && greyscale_colors)
+		update_greyscale()
 
 	//atom color stuff
 	if(color)
@@ -831,6 +833,11 @@
 		. |= UPDATE_OVERLAYS
 
 	// extra check to avoid the proc overhead
+	// extra check to avoid the proc overhead
+	if(updates & UPDATE_GREYSCALE && greyscale_colors && greyscale_config)
+		update_greyscale(updates)
+		. |= UPDATE_GREYSCALE
+
 	if(updates & UPDATE_GREYSCALE && greyscale_colors && greyscale_config)
 		update_greyscale(updates)
 		. |= UPDATE_GREYSCALE
@@ -882,10 +889,7 @@
 	update_greyscale()
 
 /// Checks if this atom uses the GAGS system and if so updates the icon
-/atom/proc/update_greyscale()
-	SHOULD_CALL_PARENT(TRUE)
-	if(greyscale_colors && greyscale_config)
-		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+		SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE)
 		SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE)
 
 /**
