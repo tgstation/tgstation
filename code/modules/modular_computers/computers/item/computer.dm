@@ -124,6 +124,7 @@
 	set_light_range(comp_light_luminosity)
 	if(looping_sound)
 		soundloop = new(src, enabled)
+	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
 	if(inserted_disk)
