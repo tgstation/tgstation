@@ -4,10 +4,7 @@
 		return
 	if(!loc)
 		return
-	// this is a sanity check to make sure that our MMI reference is still valid
-	// there used to be a bug where container still held a reference to an MMI that the brain wasn't
-	// inside of which caused the brain mob to be permanently stuck in nullspace even with a client,
-	// so this code exists as a failsafe in case everything goes wrong
+
 	if(!isnull(container))
 		if(!istype(container))
 			stack_trace("/mob/living/brain with container set, but container was not an MMI!")
