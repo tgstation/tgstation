@@ -1,10 +1,13 @@
 ///objects can only have one particle on them at a time, so we use these abstract effects to hold and display the effects. You know, so multiple particle effects can exist at once.
 ///also because some objects do not display particles due to how their visuals are built
 /obj/effect/abstract/particle_holder
-	anchored = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	layer = ABOVE_ALL_MOB_LAYER
+	name = "particle holder"
+	desc = "How are you reading this? Please make a bug report :)"
+	appearance_flags = KEEP_APART|KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE //movable appearance_flags plus KEEP_APART and KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 	/// Holds info about how this particle emitter works
 	/// See \code\__DEFINES\particles.dm
 	var/particle_flags = NONE
@@ -22,7 +25,7 @@
 	var/atom/movable/lie_about_areas = loc
 	lie_about_areas.vis_contents += src
 	if(!ismovable(loc))
-		RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(immovable_deleted))
+		RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(immovable_deleted))
 
 	if(particle_flags & PARTICLE_ATTACH_MOB)
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))

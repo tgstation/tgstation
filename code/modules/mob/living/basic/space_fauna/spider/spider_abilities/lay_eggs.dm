@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	///How long it takes for a broodmother to lay eggs.
-	var/egg_lay_time = 12 SECONDS
+	var/egg_lay_time = 4 SECONDS
 	///The type of egg we create
 	var/egg_type = /obj/effect/mob_spawn/ghost_role/spider
 

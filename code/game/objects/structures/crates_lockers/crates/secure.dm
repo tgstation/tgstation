@@ -111,7 +111,7 @@
 /obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
-	if(istype(buyer_account, /datum/bank_account/department))
+	if(IS_DEPARTMENTAL_ACCOUNT(buyer_account))
 		department_purchase = TRUE
 		department_account = buyer_account
 

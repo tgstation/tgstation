@@ -3,7 +3,7 @@
  * The file also contain the guicode of the machine
  */
 /obj/machinery/atmospherics/components/unary/hypertorus
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "core_off"
 
 	name = "thermomachine"
@@ -50,7 +50,7 @@
 	if(user.combat_mode)
 		return FALSE
 	balloon_alert(user, "repairing...")
-	if(tool.use_tool(src, user, 10 SECONDS, volume=30, amount=5))
+	if(tool.use_tool(src, user, 10 SECONDS, volume=30))
 		balloon_alert(user, "repaired")
 		cracked = FALSE
 		update_appearance()
@@ -126,7 +126,7 @@
 /obj/machinery/hypertorus
 	name = "hypertorus_core"
 	desc = "hypertorus_core"
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "core_off"
 	move_resist = INFINITY
 	anchored = TRUE
@@ -436,7 +436,7 @@
 /obj/item/hfr_box
 	name = "HFR box"
 	desc = "If you see this, call the police."
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "error"
 	///What kind of box are we handling?
 	var/box_type = "impossible"

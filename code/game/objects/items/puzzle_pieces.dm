@@ -5,7 +5,7 @@
 /obj/item/keycard
 	name = "security keycard"
 	desc = "This feels like it belongs to a door."
-	icon = 'icons/obj/puzzle_small.dmi'
+	icon = 'icons/obj/fluff/puzzle_small.dmi'
 	icon_state = "keycard"
 	force = 0
 	throwforce = 0
@@ -126,7 +126,7 @@
 /obj/structure/holobox
 	name = "holobox"
 	desc = "A hard-light box, containing a secure decryption key."
-	icon = 'icons/obj/puzzle_small.dmi'
+	icon = 'icons/obj/fluff/puzzle_small.dmi'
 	icon_state = "laserbox"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
@@ -135,7 +135,7 @@
 /obj/item/pressure_plate/hologrid
 	name = "hologrid"
 	desc = "A high power, electronic input port for a holobox, which can unlock the hologrid's storage compartment. Safe to stand on."
-	icon = 'icons/obj/puzzle_small.dmi'
+	icon = 'icons/obj/fluff/puzzle_small.dmi'
 	icon_state = "lasergrid"
 	anchored = TRUE
 	trigger_mob = FALSE
@@ -180,7 +180,7 @@
 /obj/structure/light_puzzle
 	name = "light mechanism"
 	desc = "It's a mechanism that seems to power something when all the lights are lit up. It looks virtually indestructible."
-	icon = 'icons/obj/puzzle_small.dmi'
+	icon = 'icons/obj/fluff/puzzle_small.dmi'
 	icon_state = "light_puzzle"
 	anchored = TRUE
 	explosion_block = 3
@@ -225,8 +225,8 @@
 	for(var/i in 1 to 9)
 		if(!light_list[i])
 			continue
-		var/mutable_appearance/lit_image = mutable_appearance('icons/obj/puzzle_small.dmi', "light_lit")
-		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/puzzle_small.dmi', "light_lit", src)
+		var/mutable_appearance/lit_image = mutable_appearance('icons/obj/fluff/puzzle_small.dmi', "light_lit")
+		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/fluff/puzzle_small.dmi', "light_lit", src)
 		lit_image.pixel_x = 8 * ((i % 3 || 3 ) - 1)
 		lit_image.pixel_y = -8 * (ROUND_UP(i / 3) - 1)
 		emissive_image.pixel_x = lit_image.pixel_x

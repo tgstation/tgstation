@@ -22,7 +22,7 @@
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/cheese/wedge = 2
 	)
-	result = /obj/item/food/cheese_sandwich
+	result = /obj/item/food/sandwich/cheese
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/slimesandwich
@@ -31,7 +31,7 @@
 		/datum/reagent/toxin/slimejelly = 5,
 		/obj/item/food/breadslice/plain = 2,
 	)
-	result = /obj/item/food/jellysandwich/slime
+	result = /obj/item/food/sandwich/jelly/slime
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/cherrysandwich
@@ -40,7 +40,7 @@
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/food/breadslice/plain = 2,
 	)
-	result = /obj/item/food/jellysandwich/cherry
+	result = /obj/item/food/sandwich/jelly/cherry
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/notasandwich
@@ -49,7 +49,7 @@
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/clothing/mask/fakemoustache = 1
 	)
-	result = /obj/item/food/notasandwich
+	result = /obj/item/food/sandwich/notasandwich
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/hotdog
@@ -82,7 +82,7 @@
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/grown/tomato = 1
 	)
-	result = /obj/item/food/blt
+	result = /obj/item/food/sandwich/blt
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/peanut_butter_jelly_sandwich
@@ -92,7 +92,7 @@
 		/datum/reagent/consumable/peanut_butter = 5,
 		/datum/reagent/consumable/cherryjelly = 5
 	)
-	result = /obj/item/food/peanut_butter_jelly_sandwich
+	result = /obj/item/food/sandwich/peanut_butter_jelly
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/peanut_butter_banana_sandwich
@@ -102,7 +102,7 @@
 		/datum/reagent/consumable/peanut_butter = 5,
 		/obj/item/food/grown/banana = 1
 	)
-	result = /obj/item/food/peanut_butter_banana_sandwich
+	result = /obj/item/food/sandwich/peanut_butter_banana
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/philly_cheesesteak
@@ -113,7 +113,7 @@
 		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/onion = 1,
 	)
-	result = /obj/item/food/philly_cheesesteak
+	result = /obj/item/food/sandwich/philly_cheesesteak
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/death_sandwich
@@ -125,7 +125,7 @@
 		/obj/item/food/meatball = 4,
 		/obj/item/food/grown/tomato = 1,
 	)
-	result = /obj/item/food/death_sandwich
+	result = /obj/item/food/sandwich/death
 	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/toast_sandwich
@@ -134,5 +134,5 @@
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/butteredtoast = 1,
 	)
-	result = /obj/item/food/toast_sandwich
+	result = /obj/item/food/sandwich/toast_sandwich
 	category = CAT_SANDWICH

@@ -170,7 +170,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/obj/equipment_path as anything in special_equipment)
 				var/obj/equipment_object = new equipment_path
-				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots))
+				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots, indirect_action = TRUE))
 					LAZYINITLIST(receiver.failed_special_equipment)
 					receiver.failed_special_equipment += equipment_path
 					receiver.try_give_equipment_fallback()
@@ -709,7 +709,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/protect_object/proc/set_target(obj/O)
 	protect_target = O
-	RegisterSignal(protect_target, COMSIG_PARENT_QDELETING, PROC_REF(on_objective_qdel))
+	RegisterSignal(protect_target, COMSIG_QDELETING, PROC_REF(on_objective_qdel))
 	update_explanation_text()
 
 /datum/objective/protect_object/update_explanation_text()
@@ -935,7 +935,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				continue
 			//this is an objective item
 			var/obj/item/organ/wanted = stolen
-			if(!(wanted.organ_flags & ORGAN_FAILING) && !(wanted.organ_flags & ORGAN_SYNTHETIC))
+			if(!(wanted.organ_flags & ORGAN_FAILING) && !IS_ROBOTIC_ORGAN(wanted))
 				stolen_count++
 	return stolen_count >= amount
 

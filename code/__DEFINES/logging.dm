@@ -1,3 +1,10 @@
+/// The number of entries to store per category, don't make this too large or you'll start to see performance issues
+#define CONFIG_MAX_CACHED_LOG_ENTRIES 1000
+
+/// The number of *minimum* ticks between each log re-render, making this small will cause performance issues
+/// Admins can still manually request a re-render
+#define LOG_UPDATE_TIMEOUT 5 SECONDS
+
 //Investigate logging defines
 #define INVESTIGATE_ACCESSCHANGES "id_card_changes"
 #define INVESTIGATE_ATMOS "atmos"
@@ -66,6 +73,16 @@
 #define LOG_JSON_ENTRIES "entries"
 #define LOG_JSON_LOGGING_START "log-start"
 
+// Log entry keys
+#define LOG_ENTRY_KEY_TIMESTAMP "ts"
+#define LOG_ENTRY_KEY_CATEGORY "cat"
+#define LOG_ENTRY_KEY_MESSAGE "msg"
+#define LOG_ENTRY_KEY_DATA "data"
+#define LOG_ENTRY_KEY_WORLD_STATE "w-state"
+#define LOG_ENTRY_KEY_SEMVER_STORE "s-store"
+#define LOG_ENTRY_KEY_ID "id"
+#define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
+
 // Category for invalid/missing categories
 #define LOG_CATEGORY_NOT_FOUND "invalid-category"
 
@@ -78,18 +95,19 @@
 #define LOG_CATEGORY_MANIFEST "manifest"
 #define LOG_CATEGORY_MECHA "mecha"
 #define LOG_CATEGORY_PAPER "paper"
+#define LOG_CATEGORY_QDEL "qdel"
 #define LOG_CATEGORY_RUNTIME "runtime"
 #define LOG_CATEGORY_SHUTTLE "shuttle"
 #define LOG_CATEGORY_SILICON "silicon"
 #define LOG_CATEGORY_SILO "silo"
 #define LOG_CATEGORY_SIGNAL "signal"
 #define LOG_CATEGORY_SPEECH_INDICATOR "speech-indiciator"
-#define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"
+// Leave the underscore, it's there for backwards compatibility reasons
+#define LOG_CATEGORY_SUSPICIOUS_LOGIN "suspicious_logins"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
-#define LOG_CATEGORY_QDEL "qdel"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
@@ -103,13 +121,11 @@
 // Debug categories
 #define LOG_CATEGORY_DEBUG "debug"
 #define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
-#define LOG_CATEGORY_DEBUG_HREF "debug-href"
 #define LOG_CATEGORY_DEBUG_JOB "debug-job"
 #define LOG_CATEGORY_DEBUG_LUA "debug-lua"
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"
-#define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
 
 // Compatibility categories, for when stuff is changed and you need existing functionality to work
 #define LOG_CATEGORY_COMPAT_GAME "game-compat"
@@ -127,6 +143,10 @@
 #define LOG_CATEGORY_GAME_TRAITOR "game-traitor"
 #define LOG_CATEGORY_GAME_VOTE "game-vote"
 #define LOG_CATEGORY_GAME_WHISPER "game-whisper"
+
+// HREF categories
+#define LOG_CATEGORY_HREF "href"
+#define LOG_CATEGORY_HREF_TGUI "href-tgui"
 
 // Uplink categories
 #define LOG_CATEGORY_UPLINK "uplink"

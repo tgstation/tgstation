@@ -101,7 +101,12 @@
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, (mapload && force_connect))
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		FALSE, \
+		(mapload && force_connect) \
+	)
 
 /obj/machinery/mineral/stacking_machine/Destroy()
 	if(console)
@@ -142,7 +147,6 @@
 		if (length(matlist))
 			var/inserted = materials.mat_container.insert_item(inp)
 			materials.silo_log(src, "collected", inserted, "sheets", matlist)
-			qdel(inp)
 			return
 
 	// No silo attached process to internal storage

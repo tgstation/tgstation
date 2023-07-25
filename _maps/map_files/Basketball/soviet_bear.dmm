@@ -154,9 +154,7 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "kT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "ly" = (
@@ -494,9 +492,7 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "LV" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron,
 /area/centcom/basketball)
@@ -585,9 +581,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Ql" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron,
 /area/centcom/basketball)

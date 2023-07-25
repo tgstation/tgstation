@@ -38,14 +38,24 @@
 	ADD_TRAIT(parent, TRAIT_HYPERSPACED, src)
 
 	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(update_state))
+	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_FREE_HYPERSPACE_MOVEMENT), PROC_REF(initialize_loop))
+	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_FREE_HYPERSPACE_MOVEMENT), PROC_REF(clear_loop))
 
 	//Items have this cool thing where they're first put on the floor if you grab them from storage, and then into your hand, which isn't caught by movement signals that well
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(do_remove))
 
-	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
+	if(!HAS_TRAIT(parent, TRAIT_FREE_HYPERSPACE_MOVEMENT))
+		initialize_loop()
 
 	update_state(parent) //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
+
+/datum/component/shuttle_cling/proc/initialize_loop()
+	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_NO_DIR_UPDATE|MOVEMENT_LOOP_OUTSIDE_CONTROL)
+	update_state()
+
+/datum/component/shuttle_cling/proc/clear_loop()
+	QDEL_NULL(hyperloop)
 
 ///Check if we're in hyperspace and our state in hyperspace
 /datum/component/shuttle_cling/proc/update_state()
@@ -53,6 +63,9 @@
 
 	if(!is_on_hyperspace(parent))
 		qdel(src)
+		return
+
+	if(!hyperloop)
 		return
 
 	var/should_loop = FALSE
@@ -80,7 +93,7 @@
 
 ///Check if we're "holding on" to the shuttle
 /datum/component/shuttle_cling/proc/is_holding_on(atom/movable/movee)
-	if(movee.pulledby || !isturf(movee.loc))
+	if(movee.pulledby || !isturf(movee.loc) || HAS_TRAIT(movee, TRAIT_FREE_HYPERSPACE_MOVEMENT))
 		return ALL_GOOD
 
 	if(!isliving(movee))

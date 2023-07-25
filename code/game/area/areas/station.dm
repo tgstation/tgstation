@@ -1098,6 +1098,10 @@
 	name = "\improper Pharmacy"
 	icon_state = "pharmacy"
 
+/area/station/medical/chem_storage
+	name = "\improper Chemical Storage"
+	icon_state = "chem_storage"
+
 /area/station/medical/surgery
 	name = "\improper Operating Room"
 	icon_state = "surgery"
@@ -1113,6 +1117,7 @@
 /area/station/medical/surgery/theatre
 	name = "\improper Grand Surgery Theatre"
 	icon_state = "surgerytheatre"
+
 /area/station/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
@@ -1549,7 +1554,7 @@
 
 /area/station/tcommsat
 	icon_state = "tcomsatcham"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen9.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 

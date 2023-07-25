@@ -4,6 +4,8 @@
 	roundend_category = "Fugitive"
 	silent = TRUE //greet called by the spawn
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
+	antagpanel_category = ANTAG_GROUP_HUNTERS
 	prevent_roundtype_conversion = FALSE
 	antag_hud_name = "fugitive_hunter"
 	suicide_cry = "FOR GLORY!!"

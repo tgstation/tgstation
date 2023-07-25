@@ -5,13 +5,15 @@
 
 // Organ signals
 /// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
-#define COMSIG_ORGAN_IMPLANTED "comsig_organ_implanted"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "comsig_wag_tail"
+#define COMSIG_ORGAN_IMPLANTED "organ_implanted"
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
-#define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+#define COMSIG_ORGAN_REMOVED "organ_removed"
 /// Called when an organ is being regenerated with a new copy in species regenerate_organs (obj/item/organ/replacement)
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
+/// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
+#define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
+/// Called when using the *wag emote
+#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -46,6 +48,13 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_PRE_BANING "obj_pre_baning"
+	#define COMPONENT_CANCEL_BANING (1<<0)
+
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_ON_BANING "obj_on_baning"
+
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
 ///from base of mob/living/death(): (gibbed)
@@ -73,10 +82,14 @@
 #define COMSIG_LIVING_STATUS_PARALYZE "living_paralyze"
 ///from base of mob/living/Immobilize() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_IMMOBILIZE "living_immobilize"
+///from base of mob/living/incapacitate() (amount, ignore_canstun)
+#define COMSIG_LIVING_STATUS_INCAPACITATE "living_incapacitate"
 ///from base of mob/living/Unconscious() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
 ///from base of mob/living/Sleeping() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"
+/// from mob/living/check_stun_immunity(): (check_flags)
+#define COMSIG_LIVING_GENERIC_STUN_CHECK "living_check_stun"
 	#define COMPONENT_NO_STUN (1<<0) //For all of them
 ///from base of /mob/living/can_track(): (mob/user)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
@@ -163,6 +176,3 @@
 
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
-
-/// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect
-#define COMSIG_AFTER_INJECT "after_inject"

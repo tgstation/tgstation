@@ -8,44 +8,49 @@
 	name = "Infect %TARGET% the %JOB TITLE%"
 	description = "Infect your target with the experimental Hereditary Manifold Sickness."
 
-	abstract_type = /datum/traitor_objective/target_player
-	objective_period = 30 MINUTES
-	maximum_objectives_in_period = 1
 	progression_minimum = 30 MINUTES
 
 	progression_reward = list(8 MINUTES, 14 MINUTES)
 	telecrystal_reward = 1
 
+	duplicate_type = /datum/traitor_objective/target_player/infect
 
+	/// if TRUE, can only target heads of staff
+	/// if FALSE, CANNOT target heads of staff
 	var/heads_of_staff = FALSE
-	duplicate_type = /datum/traitor_objective/target_player
-
-	var/obj/item/reagent_containers/hypospray/medipen/manifoldinjector/ehms
+	/// if TRUE, the injector item has been bestowed upon the player
+	var/injector_given = FALSE
 
 /datum/traitor_objective/target_player/infect/supported_configuration_changes()
 	. = ..()
 	. += NAMEOF(src, objective_period)
 	. += NAMEOF(src, maximum_objectives_in_period)
 
+/datum/traitor_objective/target_player/infect/can_generate_objective(generating_for, list/possible_duplicates)
+	if(length(possible_duplicates) > 0)
+		return FALSE
+	return ..()
+
 /datum/traitor_objective/target_player/infect/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
-	if(!ehms)
-		buttons += add_ui_button("", "Pressing this will materialize a EHMS autoinjector into your hand, which you must inject into the target to succeed.", "paper-plane", "summon_pen")
+	if(!injector_given)
+		buttons += add_ui_button("", "Pressing this will materialize a EHMS autoinjector into your hand, which you must inject into the target to succeed.", "syringe", "summon_pen")
 	return buttons
 
 /datum/traitor_objective/target_player/infect/ui_perform_action(mob/living/user, action)
 	. = ..()
 	switch(action)
 		if("summon_pen")
-			if(ehms)
+			if(injector_given)
 				return
-			ehms = new(user.drop_location())
+			injector_given = TRUE
+			var/obj/item/reagent_containers/hypospray/medipen/manifoldinjector/ehms = new(user.drop_location())
 			user.put_in_hands(ehms)
 			ehms.balloon_alert(user, "the injector materializes in your hand")
-			RegisterSignal(ehms, COMSIG_AFTER_INJECT, PROC_REF(on_injected))
+			RegisterSignal(ehms, COMSIG_EHMS_INJECTOR_INJECTED, PROC_REF(on_injected))
 			AddComponent(/datum/component/traitor_objective_register, ehms, \
 				succeed_signals = null, \
-				fail_signals = list(COMSIG_PARENT_QDELETING), \
+				fail_signals = list(COMSIG_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/target_player/infect/proc/on_injected(datum/source, mob/living/user, mob/living/injected)
@@ -136,13 +141,11 @@
 		//don't take an objective target of someone who is already obliterated
 		fail_objective()
 
-
 /datum/traitor_objective/target_player/infect/proc/on_target_death()
 	SIGNAL_HANDLER
 	if(objective_state == OBJECTIVE_STATE_INACTIVE)
 		//don't take an objective target of someone who is already dead
 		fail_objective()
-
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector
 	name = "EHMS autoinjector"
@@ -150,20 +153,23 @@
 	icon_state = "tbpen"
 	inhand_icon_state = "tbpen"
 	base_icon_state = "tbpen"
-	var/used = 0
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
+	//Was the injector used on someone yet?
+	var/used = FALSE
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
-	if(used == 0)
-		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
-		if(do_after(user, 1.5 SECONDS))
-			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-			affected_mob.ForceContractDisease(hms)
-			used = 1
-			inject(affected_mob, user)
-			SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
-	else
-		inject(affected_mob, user)
-
+	if(used)
+		return ..()
+	to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
+	balloon_alert(user, "injecting...")
+	log_combat(user, affected_mob, "attempted to inject", src)
+	if(!do_after(user, 1.5 SECONDS))
+		balloon_alert(user, "interrupted!")
+		return
+	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
+	affected_mob.ForceContractDisease(hms)
+	used = TRUE
+	inject(affected_mob, user)
+	SEND_SIGNAL(src, COMSIG_EHMS_INJECTOR_INJECTED, user, affected_mob)

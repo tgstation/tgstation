@@ -54,12 +54,12 @@
 	src.y_offset = y_offset
 	src.sweetener = sweetener
 
-	RegisterSignal(owner, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(on_item_attack_obj))
+	RegisterSignal(owner, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack_obj))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	if(change_name)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_NAME, PROC_REF(on_update_name))
 	if(!change_desc)
-		RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
+		RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 	else
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_DESC, PROC_REF(on_update_desc))
 
@@ -114,11 +114,11 @@
 		var/key = scoops[1]
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
 		if(flavour?.desc) //I scream.
-			examine_list += "[source.p_theyre(TRUE)] filled with scoops of [flavour ? flavour.name : "broken, unhappy"] icecream."
+			examine_list += "[source.p_Theyre()] filled with scoops of [flavour ? flavour.name : "broken, unhappy"] icecream."
 		else
-			examine_list += replacetext(replacetext("[source.p_theyre(TRUE)] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
+			examine_list += replacetext(replacetext("[source.p_Theyre()] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
 	else /// Many flavours.
-		examine_list += "[source.p_theyre(TRUE)] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
+		examine_list += "[source.p_Theyre()] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
 
 /datum/component/ice_cream_holder/proc/on_update_overlays(atom/source, list/new_overlays)
 	SIGNAL_HANDLER
@@ -128,7 +128,7 @@
 	for(var/i in 1 to length(scoop_overlays))
 		var/image/overlay = scoop_overlays[i]
 		if(istext(overlay))
-			overlay = image('icons/obj/kitchen.dmi', overlay)
+			overlay = image('icons/obj/service/kitchen.dmi', overlay)
 		overlay.pixel_x = x_offset
 		overlay.pixel_y = y_offset + added_offset
 		new_overlays += overlay
@@ -295,7 +295,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour/custom/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/R, custom_name)
 	if(!R || R.total_volume < 4) //consumable reagents have stronger taste so higher volume are required to allow non-food flavourings to break through better.
 		return GLOB.ice_cream_flavours[ICE_CREAM_BLAND].add_flavour(target) //Bland, sugary ice and milk.
-	var/image/flavoring = image('icons/obj/kitchen.dmi', "icecream_custom")
+	var/image/flavoring = image('icons/obj/service/kitchen.dmi', "icecream_custom")
 	var/datum/reagent/master = R.get_master_reagent()
 	custom_name = lowertext(master.name) // reagent names are capitalized, while items' aren't.
 	flavoring.color = master.color

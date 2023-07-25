@@ -24,7 +24,7 @@
 								<br>
 								[GLOB.manifest ? GLOB.manifest.get_html(0) : ""]
 								"}
-				if(!computer.print_text(contents,text("crew manifest ([])", station_time_timestamp())))
+				if(!computer.print_text(contents, "crew manifest ([station_time_timestamp()])"))
 					to_chat(usr, span_notice("Printer is out of paper."))
 					return
 				else

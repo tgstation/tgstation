@@ -84,6 +84,7 @@
 	desc = "When it says walk it means walk."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
+	max_integrity = 1
 
 /obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -97,6 +98,7 @@
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
 	rad_insulation = RAD_LIGHT_INSULATION
+	max_integrity = 1
 
 /obj/structure/holosign/barrier/atmos
 	name = "holofirelock"
@@ -121,7 +123,8 @@
 /obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
-	AddElement(/datum/element/trait_loc, TRAIT_FIREDOOR_STOP)
+	var/static/list/turf_traits = list(TRAIT_FIREDOOR_STOP)
+	AddElement(/datum/element/give_turf_traits, turf_traits)
 
 /obj/structure/holosign/barrier/atmos/block_superconductivity() //Didn't used to do this, but it's "normal", and will help ease heat flow transitions with the players.
 	return TRUE
@@ -150,6 +153,7 @@
 	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
+	max_integrity = 1
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
 

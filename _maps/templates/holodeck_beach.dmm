@@ -42,8 +42,8 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "T" = (
-/obj/effect/overlay/palmtree_l,
-/obj/effect/overlay/coconut,
+/obj/structure/flora/tree/palm,
+/obj/structure/flora/coconuts,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "W" = (
@@ -51,7 +51,7 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "X" = (
-/obj/effect/overlay/palmtree_r,
+/obj/structure/flora/tree/palm,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 

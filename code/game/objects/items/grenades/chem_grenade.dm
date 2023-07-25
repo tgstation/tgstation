@@ -32,7 +32,13 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	create_reagents(casing_holder_volume)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
-	wires = new /datum/wires/explosive/chem_grenade(src)
+	set_wires(new /datum/wires/explosive/chem_grenade(src))
+
+/obj/item/grenade/chem_grenade/Destroy(force)
+	QDEL_NULL(wires)
+	QDEL_NULL(landminemode)
+	QDEL_LIST(beakers)
+	return ..()
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == GRENADE_READY) //show/hide the timer based on assembly state

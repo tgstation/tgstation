@@ -14,7 +14,6 @@
 	claim_range = BLOB_CORE_CLAIM_RANGE
 	pulse_range = BLOB_CORE_PULSE_RANGE
 	expand_range = BLOB_CORE_EXPAND_RANGE
-	max_spores = BLOB_CORE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
 /datum/armor/special_core
@@ -79,7 +78,6 @@
 		overmind.update_health_hud()
 	pulse_area(overmind, claim_range, pulse_range, expand_range)
 	reinforce_area(seconds_per_tick)
-	produce_spores()
 	..()
 
 /obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf)

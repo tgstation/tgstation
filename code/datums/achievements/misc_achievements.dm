@@ -223,3 +223,9 @@
 	desc = "Did you think you could get away with defiling the word of God?"
 	database_id = MEDAL_GODS_WRATH
 	icon = "godswrath"
+
+/datum/award/achievement/misc/earthquake_victim
+	name = "A Nasty Fall"
+	desc = "...And the earth opened its mouth and swallowed them and their station- all the HOP's men and all their possessions."
+	database_id = MEDAL_EARTHQUAKE_VICTIM
+	icon = "earthquake"

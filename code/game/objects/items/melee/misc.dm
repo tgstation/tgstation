@@ -86,14 +86,39 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 3 SECONDS, \
-	effectiveness = 95, \
-	bonus_modifier = 5, \
-	)
+	AddComponent(/datum/component/jousting)
 	//fast and effective, but as a sword, it might damage the results.
+	AddComponent(/datum/component/butchering, \
+		speed = 3 SECONDS, \
+		effectiveness = 95, \
+		bonus_modifier = 5, \
+	)
+	// The weight of authority comes down on the tider's crimes.
+	AddElement(/datum/element/bane, target_type = /mob/living/carbon/human, damage_multiplier = 0.35)
+	RegisterSignal(src, COMSIG_OBJECT_PRE_BANING, PROC_REF(attempt_bane))
+	RegisterSignal(src, COMSIG_OBJECT_ON_BANING, PROC_REF(bane_effects))
 
-/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/**
+ * If the target reeks of maintenance, the blade can tear through their body with a total of 20 damage.
+ */
+/obj/item/melee/sabre/proc/attempt_bane(element_owner, mob/living/carbon/criminal)
+	SIGNAL_HANDLER
+	var/obj/item/organ/internal/liver/liver = criminal.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(isnull(liver) || !HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
+		return COMPONENT_CANCEL_BANING
+
+/**
+ * Assistants should fear this weapon.
+ */
+/obj/item/melee/sabre/proc/bane_effects(element_owner, mob/living/carbon/human/baned_target)
+	SIGNAL_HANDLER
+	baned_target.visible_message(
+		span_warning("[src] tears through [baned_target] with unnatural ease!"),
+		span_userdanger("As [src] tears into your body, you feel the weight of authority collapse into your wounds!"),
+	)
+	INVOKE_ASYNC(baned_target, TYPE_PROC_REF(/mob/living/carbon/human, emote), "scream")
+
+/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
@@ -190,7 +215,7 @@
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
 	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "supermatter_sword"
+	icon_state = "supermatter_sword_balanced"
 	inhand_icon_state = "supermatter_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -242,6 +267,7 @@
 /obj/item/melee/supermatter_sword/pickup(user)
 	..()
 	balanced = 0
+	icon_state = "supermatter_sword"
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
 	visible_message(
@@ -315,7 +341,7 @@
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "roastingstick"
 	inhand_icon_state = null
 	worn_icon_state = "tele_baton"
@@ -331,14 +357,13 @@
 	var/static/list/ovens
 	/// The beam that links to the oven we use
 	var/datum/beam/beam
-	/// Whether or stick is extended and can recieve sausage
-	var/extended = FALSE
 
 /obj/item/melee/roastingstick/Initialize(mapload)
 	. = ..()
 	if (!ovens)
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE, \
 		inhand_icon_change = FALSE, \
@@ -366,16 +391,16 @@
 /obj/item/melee/roastingstick/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	extended = active
 	inhand_icon_state = active ? "nullrod" : null
-	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
-	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	if(user)
+		balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
 	if (istype(target, /obj/item/food/sausage))
-		if (!extended)
+		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
 		if (held_sausage)
@@ -406,7 +431,7 @@
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if (!extended)
+	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return
 	if (!is_type_in_typecache(target, ovens))
 		return

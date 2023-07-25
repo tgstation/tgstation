@@ -5,7 +5,7 @@ import io
 import json
 import gc
 import random
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, abort
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
@@ -105,6 +105,10 @@ def tts_health_check():
 	if request_count > 2048:
 		return f"EXPIRED: {request_count}", 500
 	return f"OK: {request_count}", 200
+
+@app.route("/pitch-available")
+def pitch_available():
+	abort(500)
 
 if __name__ == "__main__":
 	if os.getenv('TTS_LD_LIBRARY_PATH', "") != "":

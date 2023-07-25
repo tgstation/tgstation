@@ -23,10 +23,6 @@
 "ag" = (
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
-"ai" = (
-/obj/machinery/vending/liberationstation,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
 "aj" = (
 /obj/machinery/door/airlock/vault,
 /turf/open/floor/plating/airless,
@@ -193,13 +189,6 @@
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"ba" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
-	},
-/turf/open/floor/wood,
-/area/shuttle/transport)
 "bb" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -212,13 +201,6 @@
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/vending_refill/snack,
-/turf/open/floor/wood,
-/area/shuttle/transport)
-"bd" = (
-/obj/item/kirbyplants/dead{
-	desc = "It doesn't look very healthy...";
-	name = "potted plant"
-	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "be" = (
@@ -254,6 +236,30 @@
 "bj" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"hL" = (
+/obj/machinery/vending/liberationstation,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"jd" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/wood,
+/area/shuttle/transport)
+"op" = (
+/obj/item/kirbyplants/random/dead{
+	desc = "It doesn't look very healthy...";
+	name = "potted plant"
+	},
+/turf/open/floor/wood,
+/area/shuttle/transport)
+"ZS" = (
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/wood,
 /area/shuttle/transport)
 
 (1,1,1) = {"
@@ -331,7 +337,7 @@ bj
 (5,1,1) = {"
 ad
 aM
-ai
+hL
 ak
 ao
 ak
@@ -340,7 +346,7 @@ ak
 ak
 aP
 aX
-ba
+jd
 be
 bh
 bi
@@ -373,7 +379,7 @@ aM
 ar
 au
 au
-au
+ZS
 au
 au
 aL
@@ -430,7 +436,7 @@ aD
 aD
 aD
 aD
-bd
+op
 ad
 aa
 aa

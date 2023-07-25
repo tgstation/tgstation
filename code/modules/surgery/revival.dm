@@ -4,6 +4,7 @@
 		The body must still be able to sustain life."
 	requires_bodypart_type = NONE
 	possible_locs = list(BODY_ZONE_HEAD)
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_MORBID_CURIOSITY
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -89,6 +90,9 @@
 		target.visible_message(span_notice("...[target] wakes up, alive and aware!"))
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
+		if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user)) //Contrary to their typical hatred of resurrection, it wouldn't be very thematic if morbid people didn't love playing god
+			var/mob/living/carbon/human/morbid_weirdo = user
+			morbid_weirdo.add_mood_event("morbid_revival_success", /datum/mood_event/morbid_revival_success)
 		return TRUE
 	else
 		target.visible_message(span_warning("...[target.p_they()] convulses, then lies still."))

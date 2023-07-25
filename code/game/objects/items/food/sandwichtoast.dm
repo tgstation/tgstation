@@ -13,10 +13,26 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/grilled_cheese_sandwich
+/obj/item/food/sandwich/cheese
+	name = "cheese sandwich"
+	desc = "A light snack for a warm day. ...but what if you grilled it?"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 7,
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("bread" = 1, "cheese" = 1)
+	foodtypes = GRAIN | DAIRY
+	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/sandwich/cheese/make_grillable()
+	if(burns_on_grill)
+		return ..()
+	AddComponent(/datum/component/grillable, /obj/item/food/sandwich/cheese/grilled, rand(30 SECONDS, 60 SECONDS), TRUE)
+
+/obj/item/food/sandwich/cheese/grilled
 	name = "grilled cheese sandwich"
 	desc = "A warm, melty sandwich that goes perfectly with tomato soup."
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "toastedsandwich"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
@@ -25,53 +41,27 @@
 		/datum/reagent/carbon = 4,
 	)
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
-	foodtypes = GRAIN
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
-/obj/item/food/cheese_sandwich
-	name = "cheese sandwich"
-	desc = "A light snack for a warm day. ...but what if you grilled it?"
-	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "sandwich"
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 7,
-		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/consumable/nutriment/vitamin = 1,
-	)
-	tastes = list("bread" = 1, "cheese" = 1)
-	foodtypes = GRAIN | DAIRY
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_NORMAL
-
-/obj/item/food/cheese_sandwich/make_grillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese_sandwich, rand(30 SECONDS, 60 SECONDS), TRUE)
-
-/obj/item/food/jellysandwich
+/obj/item/food/sandwich/jelly
 	name = "jelly sandwich"
 	desc = "You wish you had some peanut butter to go with this..."
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "jellysandwich"
 	bite_consumption = 3
 	tastes = list("bread" = 1, "jelly" = 1)
 	foodtypes = GRAIN
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/jellysandwich/slime
+/obj/item/food/sandwich/jelly/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	foodtypes = GRAIN | TOXIC
 
-/obj/item/food/jellysandwich/cherry
+/obj/item/food/sandwich/jelly/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
 	foodtypes = GRAIN | FRUIT | SUGAR
 
-/obj/item/food/notasandwich
+/obj/item/food/sandwich/notasandwich
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "notasandwich"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
@@ -79,8 +69,6 @@
 	)
 	tastes = list("nothing suspicious" = 1)
 	foodtypes = GRAIN | GROSS
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/griddle_toast
 	name = "griddle toast"
@@ -180,10 +168,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 
-/obj/item/food/blt
+/obj/item/food/sandwich/blt
 	name = "\improper BLT"
 	desc = "A classic bacon, lettuce, and tomato sandwich."
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "blt"
 	bite_consumption = 4
 	food_reagents = list(
@@ -193,13 +180,10 @@
 	)
 	tastes = list("bacon" = 3, "lettuce" = 2, "tomato" = 2, "bread" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES | BREAKFAST
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/peanut_butter_jelly_sandwich
+/obj/item/food/sandwich/peanut_butter_jelly
 	name = "peanut butter and jelly sandwich"
 	desc = "A classic PB&J sandwich, just like your mom used to make."
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "peanut_butter_jelly_sandwich"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
@@ -208,13 +192,10 @@
 	)
 	tastes = list("peanut butter" = 1, "jelly" = 1, "bread" = 2)
 	foodtypes = GRAIN | FRUIT | NUTS
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/peanut_butter_banana_sandwich
+/obj/item/food/sandwich/peanut_butter_banana
 	name = "peanut butter and banana sandwich"
-	desc = "A grilled peanut butter sandwich with banana slices mixed in, a good high protein treat."
-	icon = 'icons/obj/food/burgerbread.dmi'
+	desc = "A peanut butter sandwich with banana slices mixed in, a good high protein treat."
 	icon_state = "peanut_butter_banana_sandwich"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
@@ -224,13 +205,10 @@
 	)
 	tastes = list("peanut butter" = 1, "banana" = 1, "bread" = 2)
 	foodtypes = GRAIN | FRUIT | NUTS
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/philly_cheesesteak
+/obj/item/food/sandwich/philly_cheesesteak
 	name = "Philly cheesesteak"
 	desc = "A popular sandwich made of sliced meat, onions, melted cheese in a long hoagie roll. Mouthwatering doesn't even begin to describe it."
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "philly_cheesesteak"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
@@ -239,13 +217,10 @@
 	)
 	tastes = list("bread" = 1, "juicy meat" = 1, "melted cheese" = 1, "onions" = 1)
 	foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/toast_sandwich
+/obj/item/food/sandwich/toast_sandwich
 	name = "toast sandwich"
 	desc = "A piece of buttered toast between two slices of bread. Why would you make this?"
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "toast_sandwich"
 	bite_consumption = 3
 	food_reagents = list(
@@ -254,13 +229,10 @@
 	)
 	tastes = list("bread" = 2, "Britain" = 1, "butter" = 1, "toast" = 1)
 	foodtypes = GRAIN
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/death_sandwich
+/obj/item/food/sandwich/death
 	name = "death sandwich"
 	desc = "Eat it right, or you die!"
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "death_sandwich"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
@@ -269,21 +241,19 @@
 	)
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
 	foodtypes = GRAIN | MEAT
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
 
-/obj/item/food/death_sandwich/Initialize(mapload)
+/obj/item/food/sandwich/death/Initialize(mapload)
 	. = ..()
 	obj_flags &= ~UNIQUE_RENAME // You shouldn't be able to disguise this on account of how it kills you
 
 ///Override for checkliked callback
-/obj/item/food/death_sandwich/make_edible()
+/obj/item/food/sandwich/death/make_edible()
 	. = ..()
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 ///Eat it right, or you die.
-/obj/item/food/death_sandwich/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+/obj/item/food/sandwich/death/proc/check_liked(fraction, mob/living/carbon/human/consumer)
 	/// Closest thing to a mullet we have
 	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
 		return FOOD_LIKED
@@ -291,7 +261,7 @@
 	balloon_alert(consumer, "ate it wrong!")
 	consumer.ForceContractDisease(new/datum/disease/death_sandwich_poisoning())
 
-/obj/item/food/death_sandwich/suicide_act(mob/living/user)
+/obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
 	qdel(src)
 	user.gib(TRUE, TRUE, TRUE)
