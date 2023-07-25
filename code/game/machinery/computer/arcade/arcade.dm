@@ -149,6 +149,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		O = T
 		to_chat(user, span_notice("You turn in 2 tickets to the [src] and claim a prize!"))
 		return
+	return ..()
 
 // ** BATTLE ** //
 /obj/machinery/computer/arcade/battle

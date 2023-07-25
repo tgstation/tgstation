@@ -314,80 +314,28 @@
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
-	if(close_enough && clicked_on.permit_melee_chain_use(src, clicked_with_what, right_clicking))
+	if(close_enough)
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
 
-	else if(combat_mode)
-		// Handles swinging at the clicked atom
-		var/datum/attack_style/using_what_style = clicked_with_what.select_attacking_style(src, clicked_on, right_clicking)
-		if(using_what_style)
-			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
-			return
+	if(swing_at_target(clicked_with_what, clicked_on, right_clicking))
+		return
 
 	// Handle afterattack, called regardless of if an attack was done, allowing "ranged click on" interactions for items
-	if(right_clicking)
-		var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params)
-		if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-			clicked_with_what.afterattack(clicked_on, src, close_enough, params)
-
-	else
+	if(!right_clicking || clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params) == SECONDARY_ATTACK_CALL_NORMAL)
 		clicked_with_what.afterattack(clicked_on, src, close_enough, params)
 
-/**
- * Determines if this atom permits the incoming item to enter melee attack chain rather than swinging
- *
- * In the future, every item should be permitted to go through attack chain so long as they're on non-combat mode
- * and attack chain should be redone to be "non-combat interaction chain" instead
- *
- * Then we can get rid of this and delegate all references to "attacking" the attack styles
- *
- * Until this, this proc serves as every edge case we need to handle in one neat place
- */
-/atom/proc/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
-	if(clicked_with_what.item_flags & NOBLUDGEON)
-		return TRUE
-	if(attacker.combat_mode)
+/// Swings at the target with the passed item.
+/mob/living/proc/swing_at_target(obj/item/weapon, atom/swing_at, right_clicking = FALSE)
+	if(!combat_mode || (weapon.item_flags & NOBLUDGEON))
 		return FALSE
 
-	return TRUE
-
-/area/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
-	CRASH("Attempted to melee attack an area")
-
-/mob/living/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
-	// No bludgeon prevents using swing styles,
-	// good to use for items that require "click on mob" interaction like scanners
-	if(clicked_with_what.item_flags & NOBLUDGEON)
+	var/datum/attack_style/swing = weapon.select_attacking_style(src, swing_at, right_clicking)
+	if(swing)
+		swing.process_attack(src, weapon, swing_at, right_clicking)
 		return TRUE
-
-	for(var/datum/surgery/operation as anything in surgeries)
-		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
-			continue
-		if((clicked_with_what.item_flags & SURGICAL_TOOL) \
-			|| operation.all_needed_items[clicked_with_what.type] \
-			|| (clicked_with_what.tool_behaviour && operation.all_needed_items[clicked_with_what.tool_behaviour]))
-			return TRUE
 
 	return FALSE
-
-/mob/living/silicon/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
-	if(clicked_with_what.tool_behaviour == TOOL_CROWBAR \
-		|| clicked_with_what.tool_behaviour == TOOL_WRENCH \
-		|| clicked_with_what.tool_behaviour == TOOL_SCREWDRIVER \
-		|| clicked_with_what.tool_behaviour == TOOL_WELDER)
-		return TRUE
-
-	return ..()
-
-/mob/living/simple_animal/bot/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
-	if(clicked_with_what.tool_behaviour == TOOL_CROWBAR \
-		|| clicked_with_what.tool_behaviour == TOOL_WRENCH \
-		|| clicked_with_what.tool_behaviour == TOOL_SCREWDRIVER \
-		|| clicked_with_what.tool_behaviour == TOOL_WELDER)
-		return TRUE
-
-	return ..()
 
 /// Selects what attack style this item is going to use when being used in a swing
 /obj/item/proc/select_attacking_style(mob/living/attacker, atom/clicked_on, right_clicking)

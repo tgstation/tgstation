@@ -157,9 +157,14 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/attacking_item, mob/user, params)
-	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
+	. = ..()
+	if(.)
+		return TRUE
+	if(obj_flags & CAN_BE_HIT)
+		return attacking_item.attack_atom(src, user, params)
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
+	var/list/modifiers = params2list(params)
 	for(var/datum/surgery/operations as anything in surgeries)
 		if(user.combat_mode)
 			break
@@ -167,42 +172,24 @@
 			continue
 		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
 			continue
-		var/list/modifiers = params2list(params)
 		if(operations.next_step(user, modifiers))
 			return TRUE
 
 	if(..())
 		return TRUE
-	if(attacking_item.force > 1 && user != src)
-		stack_trace("Potentially deprecated use of a weapon ([attacking_item.type]) via attackby. \
-			If this item is intended to be a weapon, implement an attack style.")
+
+	if(!(attacking_item.item_flags & NOBLUDGEON))
+		if(user.combat_mode)
+			. = user.swing_at_target(attacking_item, src, LAZYACCESS(modifiers, RIGHT_CLICK))
+		return .
 
 	user.changeNext_move(attacking_item.attack_style?.cd || CLICK_CD_MELEE)
-	attacking_item.add_fingerprint(user)
 
-	// Block check is skipped if nobludgeon or the user is attacking themselves.
-	if(user == src \
-		|| (attacking_item.item_flags & NOBLUDGEON) \
-		|| !check_block(attacking_item, attacking_item.force, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype) \
-	)
-		var/attack_result = attacking_item.attack_wrapper(src, user, params)
-		if(attack_result & ATTACK_NO_AFTERATTACK|ATTACK_SWING_CANCEL|ATTACK_SWING_SKIPPED)
-			return TRUE // end chain
+	var/attack_result = attacking_item.attack_wrapper(src, user, params)
+	if(attack_result & ATTACK_NO_AFTERATTACK|ATTACK_SWING_CANCEL|ATTACK_SWING_SKIPPED)
+		return TRUE // end chain
 
-		attacked_by(attacking_item, user)
-
-	if(!attacking_item.force && !HAS_TRAIT(attacking_item, TRAIT_CUSTOM_TAP_SOUND))
-		playsound(user, 'sound/weapons/tap.ogg', attacking_item.get_clamped_volume(), TRUE, -1)
-	else if(attacking_item.hitsound)
-		playsound(user, attacking_item.hitsound, attacking_item.get_clamped_volume(), TRUE, extrarange = attacking_item.stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
-
-	UPDATE_LAST_ATTACKER(src, user)
-
-	if(attacking_item.force && user == src && client)
-		client.give_award(/datum/award/achievement/misc/selfouch, user)
-
-	user.do_attack_animation(src, used_item = attacking_item)
-	log_combat(user, src, "attacked", attacking_item.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(attacking_item.damtype)])")
+	attacked_by(attacking_item, user)
 	return FALSE // continue chain
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
@@ -211,6 +198,7 @@
 			If this item is intended to be a weapon, implement an attack style.")
 
 	return weapon.attack_secondary(src, user, params)
+
 
 /**
  * This proc serves as a wrapper for calling [obj/item/proc/attack].

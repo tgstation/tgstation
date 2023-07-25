@@ -348,8 +348,16 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 #endif
 
 /datum/attack_style/melee_weapon
+	VAR_FINAL/left_click_params
+	VAR_FINAL/right_click_params
+
 	/// The attack effect is scaled by this amount
 	var/sprite_size_multiplier = 1
+
+/datum/attack_style/melee_weapon/New()
+	. = ..()
+	left_click_params = list2params(list(LEFT_CLICK = TRUE))
+	right_click_params = list2params(list(RIGHT_CLICK = TRUE))
 
 /datum/attack_style/melee_weapon/check_pacifism(mob/living/attacker, obj/item/weapon)
 	return weapon.force > 0 && weapon.damtype != STAMINA
@@ -359,23 +367,14 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/melee_weapon/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
 	ASSERT(istype(weapon))
-	var/list/fake_modifiers = list()
-	fake_modifiers[right_clicking ? RIGHT_CLICK : LEFT_CLICK] = TRUE
-	if(!weapon.can_attack_with(attacker, list2params(fake_modifiers)))
+	var/params_to_use = right_clicking ? right_click_params : left_click_params
+	if(!weapon.can_attack_with(attacker, params_to_use))
 		return ATTACK_SWING_CANCEL
 
-	return ..()
-
-/// This is essentially the same as item melee attack chain, but with some guff not necessary for combat cut out.
-/datum/attack_style/melee_weapon/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	var/attack_result = NONE
-	var/list/fake_modifiers = list()
-	fake_modifiers[right_clicking ? RIGHT_CLICK : LEFT_CLICK] = TRUE
-	var/fake_parms = list2params(fake_modifiers)
-
+	var/turf/midpoint = affected_turfs[ROUND_UP(length(affected_turfs) / 2)]
 	var/call_pre_attack = !right_clicking
 	if(right_clicking)
-		switch(weapon.pre_attack_secondary(smacked, attacker, fake_parms))
+		switch(weapon.pre_attack_secondary(midpoint, attacker, params_to_use))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return ATTACK_SWING_CANCEL // Stops entire swing
 			if(SECONDARY_ATTACK_CALL_NORMAL)
@@ -385,18 +384,21 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			else
 				CRASH("pre_attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
-	if(call_pre_attack && weapon.pre_attack(smacked, attacker, fake_parms))
+	if(call_pre_attack && weapon.pre_attack(midpoint, attacker, params_to_use))
 		return ATTACK_SWING_CANCEL
 
+	return ..()
+
+/datum/attack_style/melee_weapon/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	// Blocking is checked here. Does NOT calculate final damage when passing to check block (IE, ignores armor / physiology)
-	if(attacker != smacked \
-		&& !(weapon.item_flags & NOBLUDGEON) \
-		&& smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
+	if(smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
 		return ATTACK_SWING_BLOCKED
 
+	var/attack_result = NONE
+	var/params_to_use = right_clicking ? right_click_params : left_click_params
 	var/call_attack = !right_clicking
 	if(right_clicking)
-		switch(weapon.attack_secondary(smacked, attacker, fake_parms))
+		switch(weapon.attack_secondary(smacked, attacker, params_to_use))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return ATTACK_SWING_CANCEL // Stops entire swing
 			if(SECONDARY_ATTACK_CALL_NORMAL)
@@ -407,7 +409,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				CRASH("attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	if(call_attack)
-		attack_result |= weapon.attack_wrapper(smacked, attacker, fake_parms)
+		attack_result |= weapon.attack_wrapper(smacked, attacker, params_to_use)
 		if(attack_result & ATTACK_SWING_CANCEL)
 			return attack_result
 
@@ -424,7 +426,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			attack_result |= ATTACK_SWING_HIT
 
 	if(right_clicking)
-		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE, fake_parms))
+		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE, params_to_use))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return attack_result | ATTACK_SWING_CANCEL // Stops entire swing - If you only want to skip, add a new define
 			if(SECONDARY_ATTACK_CALL_NORMAL)
@@ -435,7 +437,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				CRASH("afterattack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
 	// We don't really care about the return value of after attack.
-	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE, fake_parms)
+	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE, params_to_use)
 	return attack_result
 
 /// Creates an image for use in attack animations

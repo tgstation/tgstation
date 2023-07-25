@@ -4,6 +4,7 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey_basic"
 	w_class = WEIGHT_CLASS_TINY
+	item_flags = NOBLUDGEON
 	/// Can this radio key access the binary radio channel?
 	var/translate_binary = FALSE
 	/// Decrypts Syndicate radio transmissions.

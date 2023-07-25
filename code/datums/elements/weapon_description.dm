@@ -38,7 +38,7 @@
 /datum/element/weapon_description/proc/warning_label(obj/item/item, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
-	if(item.force >= 5 || item.throwforce >= 5 || item.override_notes || item.offensive_notes || attached_proc) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
+	if(!(item.item_flags & NOBLUDGEON) || item.override_notes || item.offensive_notes || item.blocking_ability || attached_proc) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
 		examine_texts += span_notice("<a href='?src=[REF(item)];examine=1'>See combat information.</a>")
 
 /**
@@ -73,6 +73,15 @@
 
 	// Doesn't show the base notes for items that have the override notes variable set to true
 	if(!source.override_notes)
+
+		var/swing_message = source.describe_attack_styles()
+		if(swing_message)
+			readout += swing_message
+
+		var/block_message = source.describe_blocking()
+		if(block_message)
+			readout += block_message
+
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
 			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
@@ -86,11 +95,6 @@
 
 		if(source.armour_penetration > 0)
 			readout += "[source.p_They()] has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability."
-
-		if(!(source.item_flags & NOBLUDGEON))
-			readout += source.describe_attack_styles()
-
-		readout += source.describe_blocking()
 
 	// Custom manual notes
 	if(source.offensive_notes)

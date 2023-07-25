@@ -898,6 +898,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade1"
+	item_flags = NOBLUDGEON
 
 /obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)
 	if(!istype(borgo))
@@ -908,7 +909,7 @@
 	if(borgo.health < 0)
 		to_chat(user, span_warning("You have to repair the cyborg before using this module!"))
 		return ..()
-	if(!(borgo.stat & DEAD))
+	if(borgo.stat != DEAD)
 		to_chat(user, span_warning("This cyborg is already operational!"))
 		return ..()
 
