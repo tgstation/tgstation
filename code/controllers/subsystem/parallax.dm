@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(parallax)
 	var/atom/movable/screen/parallax_layer/random/random_layer
 	/// Weighted list with the parallax layers we could spawn
 	var/random_parallax_weights = list(
-		/atom/movable/screen/parallax_layer/random/space_gas = 35555,
+		/atom/movable/screen/parallax_layer/random/space_gas = 35,
 		/atom/movable/screen/parallax_layer/random/asteroids = 35,
 		PARALLAX_NONE = 30,
 	)
