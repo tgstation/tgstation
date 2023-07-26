@@ -371,14 +371,14 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 //weighted list of lists of wizard clothing sets, might be better to handle this as a static var inside the proc instead
 #define ROBE_SET_LIST list(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard) = 3, \
-									 list(/obj/item/clothing/suit/wizrobe/black, /obj/item/clothing/head/wizard/black) = 3, \
-									 list(/obj/item/clothing/suit/wizrobe/red, /obj/item/clothing/head/wizard/red) = 3, \
-									 list(/obj/item/clothing/suit/wizrobe/yellow, /obj/item/clothing/head/wizard/yellow) = 3, \
-									 list(/obj/item/clothing/suit/wizrobe/magusblue, /obj/item/clothing/head/wizard/magus) = 2, \
-									 list(/obj/item/clothing/suit/wizrobe/magusred, /obj/item/clothing/head/wizard/magus) = 2, \
-									 list(/obj/item/clothing/suit/wizrobe/marisa, /obj/item/clothing/head/wizard/marisa) = 2, \
-									 list(/obj/item/clothing/suit/wizrobe/tape, /obj/item/clothing/head/wizard/tape) = 2, \
-									 list(/obj/item/clothing/suit/wizrobe/santa, /obj/item/clothing/head/wizard/santa) = 1)
+							list(/obj/item/clothing/suit/wizrobe/black, /obj/item/clothing/head/wizard/black) = 3, \
+							list(/obj/item/clothing/suit/wizrobe/red, /obj/item/clothing/head/wizard/red) = 3, \
+							list(/obj/item/clothing/suit/wizrobe/yellow, /obj/item/clothing/head/wizard/yellow) = 3, \
+							list(/obj/item/clothing/suit/wizrobe/magusblue, /obj/item/clothing/head/wizard/magus) = 2, \
+							list(/obj/item/clothing/suit/wizrobe/magusred, /obj/item/clothing/head/wizard/magus) = 2, \
+							list(/obj/item/clothing/suit/wizrobe/marisa, /obj/item/clothing/head/wizard/marisa) = 2, \
+							list(/obj/item/clothing/suit/wizrobe/tape, /obj/item/clothing/head/wizard/tape) = 2, \
+							list(/obj/item/clothing/suit/wizrobe/santa, /obj/item/clothing/head/wizard/santa) = 1)
 
 ///handle equiping humans with their robes
 /datum/summon_things_controller/spellbook_entry/proc/handle_giving_robes(mob/living/carbon/human/given_to)
