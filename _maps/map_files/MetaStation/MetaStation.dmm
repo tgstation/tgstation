@@ -3971,6 +3971,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/cable,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 4
 	},
@@ -17515,7 +17516,6 @@
 /area/station/maintenance/starboard/fore)
 "gEN" = (
 /obj/machinery/light/directional/north,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -31220,6 +31220,7 @@
 /obj/effect/landmark/start/hangover/closet,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
 "luE" = (
@@ -47282,7 +47283,6 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
 /obj/effect/landmark/start/hangover,
 /obj/machinery/light/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -55442,6 +55442,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "ubs" = (
+/obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -55650,7 +55651,6 @@
 /obj/machinery/microwave{
 	pixel_y = 6
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -57849,6 +57849,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/storage_shared)
 "uUX" = (
@@ -60588,6 +60589,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/storage_shared)
 "vPW" = (
@@ -64784,7 +64786,6 @@
 "xpb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -64896,13 +64897,6 @@
 /obj/effect/landmark/navigate_destination,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
-"xrf" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/commons/fitness/recreation)
 "xrr" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -67130,7 +67124,6 @@
 "yfm" = (
 /obj/effect/turf_decal/trimline/dark_red/mid_joiner,
 /obj/effect/turf_decal/trimline/dark_red/line,
-/obj/structure/cable,
 /turf/open/floor/iron/white/smooth_half,
 /area/station/commons/fitness)
 "yfn" = (
@@ -104054,7 +104047,7 @@ lMJ
 aaa
 nvn
 mOl
-xrf
+tgo
 mnl
 biF
 cxU
