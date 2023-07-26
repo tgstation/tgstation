@@ -25,11 +25,11 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 /datum/controller/subsystem/processing/icts_transport/Recover()
 	_listen_lookup = SSicts_transport._listen_lookup
 
-/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, platform, request_flags)
+/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, platform, options)
 	SIGNAL_HANDLER
 
 	var/relevant
-	// var/request_flags = options
+	var/request_flags = options
 	var/datum/transport_controller/linear/tram/transport_controller
 	var/obj/effect/landmark/icts/nav_beacon/tram/destination
 	for(var/datum/transport_controller/linear/tram/candidate_controller as anything in transports_by_type[ICTS_TYPE_TRAM])
@@ -81,15 +81,20 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	pre_departure(transport_controller, request_flags)
 
 /datum/controller/subsystem/processing/icts_transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, request_flags)
+	if(transport_controller.controller_status & COMM_ERROR)
+		request_flags |= BYPASS_SENSORS
 	transport_controller.controller_status |= PRE_DEPARTURE
 	transport_controller.controller_status |= CONTROLS_LOCKED
-	if(request_flags & RAPID_MODE) // bypass for unsafe, rapid departure
+	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS) // bypass for unsafe, rapid departure
 		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = TRUE)
-		transport_controller.dispatch_transport()
+		if(request_flags & RAPID_MODE)
+			transport_controller.dispatch_transport()
+			return
+	else
+		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = FALSE)
 
-	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
-		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = FALSE)
 	addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller), 3 SECONDS)
 
 /datum/controller/subsystem/processing/icts_transport/proc/validate_and_dispatch(datum/transport_controller/linear/tram/transport_controller, attempt)

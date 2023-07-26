@@ -196,6 +196,13 @@
 /obj/machinery/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
 	SIGNAL_HANDLER
 
+	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
+	if(operating_status <= XING_TRANSPORT_FAULT)
+		if(tram.controller_status & COMM_ERROR)
+			operating_status = XING_TRANSPORT_FAULT
+		else
+			operating_status = XING_NORMAL_OPERATION
+
 	if(!linked_sensor)
 		link_sensor()
 	wake_sensor()

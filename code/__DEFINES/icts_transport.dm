@@ -28,13 +28,15 @@
 // Flags for the ICTS Tram VOBC (vehicle on-board computer)
 
 #define SYSTEM_FAULT (1<<0)
-#define EMERGENCY_STOP (1<<1)
-#define PRE_DEPARTURE (1<<2)
-#define DOORS_OPEN (1<<3)
-#define CONTROLS_LOCKED (1<<4)
+#define COMM_ERROR (1<<1)
+#define EMERGENCY_STOP (1<<2)
+#define PRE_DEPARTURE (1<<3)
+#define DOORS_OPEN (1<<4)
+#define CONTROLS_LOCKED (1<<5)
 
 DEFINE_BITFIELD(controller_status, list(
 	"SYSTEM_FAULT" = SYSTEM_FAULT,
+	"COMM_ERROR" = COMM_ERROR,
 	"EMERGENCY_STOP" = EMERGENCY_STOP,
 	"PRE_DEPARTURE" = PRE_DEPARTURE,
 	"DOORS_OPEN" = DOORS_OPEN,
@@ -42,8 +44,10 @@ DEFINE_BITFIELD(controller_status, list(
 ))
 
 #define RAPID_MODE (1<<0)
+#define BYPASS_SENSORS (1<<1)
 DEFINE_BITFIELD(request_flags, list(
 	"RAPID_MODE" = RAPID_MODE,
+	"BYPASS_SENSORS" = BYPASS_SENSORS,
 ))
 
 #define ICTS_TYPE_ELEVATOR "icts_elev"

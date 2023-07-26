@@ -22,7 +22,7 @@
 	assemblytype = null
 	airlock_material = "glass"
 	air_tight = TRUE
-	// req_access = list("tcomms")
+	req_access = list(ACCESS_TCOMMS)
 	transport_linked_id = TRAMSTATION_LINE_1
 	doorOpen = 'sound/machines/tramopen.ogg'
 	doorClose = 'sound/machines/tramclose.ogg'

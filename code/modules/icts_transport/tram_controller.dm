@@ -260,6 +260,7 @@
 			if(door.airlock_state != 1)
 				controller_status |= DOORS_OPEN
 				break
+
 /datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 		if(door.transport_linked_id == specific_transport_id)
@@ -275,3 +276,72 @@
 	idle_platform = null
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
+
+/datum/transport_controller/linear/tram/proc/start_malf_event()
+	controller_status |= COMM_ERROR
+	collision_lethality = 1.25
+
+/datum/transport_controller/linear/tram/proc/end_malf_event()
+	if(!controller_status & COMM_ERROR)
+		return
+	collision_lethality = initial(collision_lethality)
+
+/obj/machinery/icts_controller
+	name = "tram controller"
+	desc = "Makes the tram go, or something."
+	icon = 'icons/obj/machines/tram/tram_controllers.dmi'
+	icon_state = "controller"
+	anchored = TRUE
+	density = FALSE
+	layer = SIGN_LAYER
+	req_access = list(ACCESS_TCOMMS)
+	var/datum/transport_controller/linear/tram/controller_datum
+
+/obj/machinery/icts_controller/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/icts_controller/LateInitialize(mapload)
+	. = ..()
+	if(!find_controller())
+		message_admins("ICTS: Tram failed to find controller!")
+
+/obj/machinery/icts_controller/proc/find_controller()
+	var/obj/structure/transport/linear/tram/tram_structure = locate() in src.loc
+	if(!tram_structure)
+		return FALSE
+
+	controller_datum = tram_structure.transport_controller_datum
+	if(!controller_datum)
+		return FALSE
+
+	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(controller_datum, COMSIG_TRAM_TRAVEL, PROC_REF(sync_controller))
+	return TRUE
+
+/obj/machinery/icts_controller/proc/sync_controller()
+	return
+
+// Switch modes with multitool
+/obj/machinery/icts_controller/multitool_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return FALSE
+
+	if(!controller_datum)
+		return FALSE
+
+	if(controller_datum.controller_status & COMM_ERROR)
+		tool.play_tool_sound(src)
+		balloon_alert(user, "rebooting electronics...")
+		if(do_after(user, 4 SECONDS))
+			controller_datum.controller_status &= ~COMM_ERROR
+			balloon_alert(user, "success!")
+			return TRUE
+
+	else
+		tool.play_tool_sound(src)
+		balloon_alert(user, "breaking electronics...")
+		if(do_after(user, 4 SECONDS))
+			controller_datum.controller_status |= COMM_ERROR
+			balloon_alert(user, "success!")
+			return TRUE
