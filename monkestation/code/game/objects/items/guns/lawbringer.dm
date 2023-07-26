@@ -27,7 +27,7 @@
 
 /obj/item/stock_parts/cell/lawbringer
 	name = "Lawbringer power cell"
-	maxcharge = 6000 //300
+	maxcharge = 3000 //300
 
 /*
 PART 1:
@@ -49,9 +49,9 @@ In situ balance testing
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
 	fire_sound = 'sound/weapons/laser.ogg'
-	e_cost = 1000 //50
+	e_cost = 600 //50 + 10
 	pellets = 5
-	variance = 20
+	variance = 40
 	harmful = FALSE
 
 /obj/projectile/lawbringer/detain
@@ -63,7 +63,7 @@ In situ balance testing
 	damage_type = STAMINA
 	stamina = 20
 	paralyze_timer = 5 SECONDS
-	armor_flag = ENERGY
+	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
 	hitsound = 'sound/weapons/tap.ogg'
 	ricochets_max = 4
 	ricochet_chance = 140
@@ -83,7 +83,7 @@ In situ balance testing
 	projectile_type = /obj/projectile/lawbringer/execute
 	select_name = "execute"
 	fire_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
-	e_cost = 600 //30
+	e_cost = 300 //30
 	harmful = TRUE
 
 /obj/projectile/lawbringer/execute
@@ -100,7 +100,7 @@ In situ balance testing
 	projectile_type = /obj/projectile/lawbringer/hotshot
 	select_name = "hotshot"
 	fire_sound = 'sound/weapons/fwoosh.ogg'
-	e_cost = 1200 //60
+	e_cost = 600 //60
 	harmful = TRUE
 
 /obj/projectile/lawbringer/hotshot
@@ -121,7 +121,7 @@ In situ balance testing
 	projectile_type = /obj/projectile/lawbringer/smokeshot
 	select_name = "smokeshot"
 	fire_sound = 'sound/items/syringeproj.ogg'
-	e_cost = 1000 //50
+	e_cost = 500 //50
 	harmful = FALSE
 
 /obj/projectile/lawbringer/smokeshot
@@ -140,7 +140,7 @@ In situ balance testing
 	projectile_type = /obj/projectile/lawbringer/bigshot
 	select_name = "bigshot"
 	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
-	e_cost = 3400 //170
+	e_cost = 1700 //170
 	harmful = TRUE
 
 /obj/projectile/lawbringer/bigshot
@@ -176,7 +176,7 @@ In situ balance testing
 	projectile_type = /obj/projectile/lawbringer/clownshot
 	select_name = "clownshot"
 	fire_sound = 'sound/items/bikehorn.ogg'
-	e_cost = 300 //15
+	e_cost = 150 //15
 	harmful = TRUE
 
 /obj/projectile/lawbringer/clownshot
@@ -206,12 +206,12 @@ In situ balance testing
 	projectile_type = /obj/projectile/lawbringer/pulse
 	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	select_name = "pulse"
-	e_cost = 700 //35
+	e_cost = 350 //35
 	harmful = TRUE
 
 /obj/projectile/lawbringer/pulse
 	name = "compressed air"
-	//TODO: Projectile sprite
+	icon_state = "chronobolt"
 	damage = 0
 	damage_type = BRUTE
 
@@ -219,15 +219,15 @@ In situ balance testing
 	. = ..()
 	if(isliving(target))
 		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
-		target.throw_at(throw_target, 5, 1)
+		target.throw_at(throw_target, 4, 1)
 
 
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
 	fire_sound = 'sound/weapons/laser.ogg'
 	select_name = "tideshot"
-	e_cost = 600 //30
-	harmful = TRUE
+	e_cost = 250 //25
+	harmful = FALSE
 
 /obj/projectile/lawbringer/tideshot //just make it stun the shit out of staffies
 	name = "grey disabler beam"
@@ -252,5 +252,11 @@ In situ balance testing
 			if(is_assistant_job(target.mind.assigned_role))
 				var/mob/living/carbon/C = target
 				C.add_mood_event("tased", /datum/mood_event/tased)
+				to_chat(target, span_warning("As the beam hits you, body seems to crumple under its uselessness."))
 				SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
+				playsound(src, 'sound/weapons/taserhit.ogg', 80, TRUE, -1)
+				C.stamina.adjust(-100)
+				C.Paralyze(10 SECONDS)
+				C.set_jitter_if_lower(40 SECONDS)
+				C.set_stutter(40 SECONDS)
 
