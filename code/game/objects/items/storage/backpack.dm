@@ -73,8 +73,6 @@
 	qdel(user)
 
 
-	storage_type = /datum/storage/backpack/santabag
-
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
 	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
