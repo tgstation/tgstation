@@ -7,6 +7,8 @@
 	var/account_balance = 0
 	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
 	var/mining_points = 0
+	///Debt. If higher than 0, A portion of the credits is earned (or the whole debt, whichever is lower) will go toward paying it off.
+	var/account_debt = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
 	///The job datum of the account owner.
@@ -114,9 +116,16 @@
  */
 /datum/bank_account/proc/adjust_money(amount, reason)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
-		_adjust_money(amount)
+		var/real_amount = amount
+		var/debt_collected = 0
+		if(account_debt > 0 && amount > 0)
+			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
+			real_amount = amount - debt_collected
+		_adjust_money(real_amount)
 		if(reason)
 			add_log_to_history(amount, reason)
+		if(debt_collected)
+			add_log_to_history(-debt_collected, "Other: Debt Collection")
 		return TRUE
 	return FALSE
 

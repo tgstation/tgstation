@@ -1418,3 +1418,21 @@
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
+
+/datum/quirk/indebted
+	name = "Indebted"
+	desc = "Bad life decisions, medical bills, student loans, whatever it may be, you've incurred quite the debt. A portion of all you receive will go toward paying it off."
+	icon = FA_ICON_DOLLAR
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_HIDE_FROM_SCAN
+	value = -2
+	medical_record_text = "Alas, the patient struggled to scrape together enough money to pay the checkup bill."
+	hardcore_value = 2
+
+/datum/quirk/indebted/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(!human_holder.account_id)
+		return
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[human_holder.account_id]"]
+	var/debt = PAYCHECK_CREW * rand(275, 325)
+	account.account_debt += debt
+	to_chat(quirk_holder, span_warning("You remember, you've a hefty, [debt] credits, debt to pay..."))
