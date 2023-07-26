@@ -27,7 +27,7 @@
 /datum/action/item_action/chameleon/change/New(Target)
 	. = ..()
 	if(!isitem(target))
-		stack_trace("Adding chameleon action to non-item ([Target])")
+		stack_trace("Adding chameleon action to non-item ([target])")
 		qdel(src)
 		return
 	if(!ispath(chameleon_type, /obj/item))
