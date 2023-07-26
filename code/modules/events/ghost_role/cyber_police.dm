@@ -19,18 +19,12 @@
 	if(length(mutation_candidates))
 		return TRUE
 
+/// Loaded domains save created_atoms, so we iterate over these lists to see if there are any valid mob/living targets that aren't players etc
 /datum/round_event_control/cyber_police/proc/generate_candidates()
 	mutation_candidates.Cut()
 
 	for(var/obj/machinery/quantum_server/server as anything in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
-		if(!length(server.occupant_mind_refs) || isnull(server.generated_domain))
-			continue
-
-		for(var/mob/living/creature as anything in server.generated_domain.created_atoms)
-			if(QDELETED(creature) || !isliving(creature) || creature.key)
-				continue
-
-			mutation_candidates += creature
+		mutation_candidates += server.get_valid_domain_targets()
 
 /datum/round_event/ghost_role/cyber_police
 	minimum_required = 1

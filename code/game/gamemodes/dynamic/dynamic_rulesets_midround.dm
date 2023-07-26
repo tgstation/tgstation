@@ -938,14 +938,7 @@
 	mutation_candidates.Cut()
 
 	for(var/obj/machinery/quantum_server/server as anything in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
-		if(!length(server.occupant_mind_refs) || isnull(server.generated_domain))
-			continue
-
-		for(var/mob/living/creature as anything in server.generated_domain.created_atoms)
-			if(QDELETED(creature) || !isliving(creature) || creature.key)
-				continue
-
-			mutation_candidates += creature
+		mutation_candidates += server.get_valid_domain_targets()
 
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB

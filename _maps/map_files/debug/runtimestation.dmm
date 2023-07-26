@@ -2421,7 +2421,8 @@
 "SN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
-/obj/item/assembly/bitminer_trap,
+/obj/item/bitminer_trap,
+/obj/item/bitminer_trap,
 /turf/open/floor/iron,
 /area/station/bitminer_den)
 "Td" = (
