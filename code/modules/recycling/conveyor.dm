@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		if(QDELETED(valid))
 			continue
 		neighbors["[direction]"] = TRUE
-		valid.neighbors["[DIRFLIP(direction)]"] = TRUE
+		valid.neighbors["[REVERSE_DIR(direction)]"] = TRUE
 		RegisterSignal(valid, COMSIG_MOVABLE_MOVED, PROC_REF(nearby_belt_changed), override=TRUE)
 		RegisterSignal(valid, COMSIG_QDELETING, PROC_REF(nearby_belt_changed), override=TRUE)
 		valid.RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(nearby_belt_changed), override=TRUE)
