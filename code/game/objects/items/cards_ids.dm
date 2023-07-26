@@ -1308,6 +1308,7 @@
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+	actions_types = list(/datum/action/item_action/chameleon/change/id)
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
@@ -1318,17 +1319,11 @@
 
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()
-
-	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src)
-	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
-	chameleon_card_action.chameleon_name = "ID Card"
-	chameleon_card_action.initialize_disguises()
-	add_item_action(chameleon_card_action)
 	register_item_context()
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
-	. = ..()
+	return ..()
 
 /obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
