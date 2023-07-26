@@ -162,7 +162,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 
 /obj/item/traitor_machine_trapper/pre_attack(atom/target, mob/living/user, params)
 	. = ..()
-	if (. || !user.Adjacent(target) || !istype(target, target_machine_path))
+	if (. || !istype(target, target_machine_path))
 		return
 	balloon_alert(user, "planting device...")
 	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
