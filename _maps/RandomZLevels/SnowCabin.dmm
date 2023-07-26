@@ -4590,8 +4590,7 @@
 	desc = "He'll hold the line against you!";
 	light_range = 3;
 	melee_damage_upper = 25;
-	name = "Artyom";
-	speak = list("Blyat!","Rawr!","GRR!","Growl!")
+	name = "Artyom"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin{
 	floor_variance = 0;

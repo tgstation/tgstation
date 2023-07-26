@@ -12,6 +12,7 @@
 		/datum/ai_planning_subtree/climb_trees,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_hive,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_honeycomb,
+		/datum/ai_planning_subtree/random_speech/bear,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/bear
