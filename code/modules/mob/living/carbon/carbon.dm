@@ -768,9 +768,15 @@
 	if(!client || !hud_used?.stamina)
 		return
 
-	var/stam_crit_threshold = maxHealth - crit_threshold
+	if(!hud_used?.stamina_capmod || !hud_used?.stamina_regmod || !hud_used?.stamina_stamcrit || !hud_used?.stamina_alerts) /// SKYRAPTOR ADDITIONS: sanity checks for new content
+		return
 
-	if(stat == DEAD)
+	if(!hud_used?.stamina_hunger)
+		return
+
+	var/stam_crit_threshold = maxHealth - crit_threshold /// SKYRAPTOR REMOVALS BEGIN HERE; we're doing a massive edit
+
+	/*if(stat == DEAD)
 		hud_used.stamina.icon_state = "stamina_dead"
 	else
 
@@ -790,7 +796,54 @@
 		else if(shown_stamina_loss > 0)
 			hud_used.stamina.icon_state = "stamina_1"
 		else
-			hud_used.stamina.icon_state = "stamina_full"
+			hud_used.stamina.icon_state = "stamina_full"*/
+	/// SKYRAPTOR REMOVALS END HERE, ADDITIONS BEGIN HERE
+
+	// Stamina bar
+	if(shown_stamina_loss == null)
+		shown_stamina_loss = getStaminaLoss()
+
+	if(shown_stamina_loss <= maxHealth * 0.125)
+		hud_used.stamina.icon_state = "stamina_7"
+	else if(shown_stamina_loss <= maxHealth * 0.25)
+		hud_used.stamina.icon_state = "stamina_6"
+	else if(shown_stamina_loss <= maxHealth * 0.375)
+		hud_used.stamina.icon_state = "stamina_5"
+	else if(shown_stamina_loss <= maxHealth * 0.5)
+		hud_used.stamina.icon_state = "stamina_4"
+	else if(shown_stamina_loss <= maxHealth * 0.625)
+		hud_used.stamina.icon_state = "stamina_3"
+	else if(shown_stamina_loss <= maxHealth * 0.75)
+		hud_used.stamina.icon_state = "stamina_2"
+	else if(shown_stamina_loss <= maxHealth * 0.875)
+		hud_used.stamina.icon_state = "stamina_1"
+	else
+		hud_used.stamina.icon_state = "stamina_0"
+
+	// Stamcrit warning
+	if(shown_stamina_loss >= stam_crit_threshold)
+		hud_used.stamina_stamcrit.icon_state = "stamina_crit"
+	else
+		hud_used.stamina_stamcrit.icon_state = "stamina_nomod"
+
+	// Nutrition
+	if(nutrition >= NUTRITION_LEVEL_FAT * 0.875)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_7"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.75)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_6"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.625)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_5"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.5)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_4"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.375)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_3"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.25)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_2"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.125)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_1"
+	else
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_0"
+
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)

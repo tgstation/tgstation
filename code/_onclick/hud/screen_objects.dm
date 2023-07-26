@@ -707,7 +707,134 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		add_overlay(intent_icon)
 	return ..()
 
+/// STAMINA IS HEAVILY REWORKED HERE: SKYRAPTOR ADDITION BEGIN
 /atom/movable/screen/stamina
 	name = "stamina"
-	icon_state = "stamina0"
+	icon_state = "stamina_7"
 	screen_loc = ui_stamina
+	icon = 'icons/hud/screen_goonstam.dmi'
+
+/atom/movable/screen/stamina/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/content = {"
+		<div class='notice'>
+			[span_boldnotice("You have [C.maxHealth - C.getStaminaLoss()]/[C.maxHealth] stamina.")]
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+	var/_content = {"
+		Stamina: [L.maxHealth - L.getStaminaLoss()]/[L.maxHealth]<br>
+		Regen: N/A
+	"}
+	openToolTip(usr, src, params, title = "Stamina", content = _content)
+
+/atom/movable/screen/stamina/MouseExited(location, control, params)
+	. = ..()
+	closeToolTip(usr)
+
+
+/// These are simple overlays
+/atom/movable/screen/stamina/capmod
+	name = "stamina capacity"
+	icon_state = "stamina_nomod"
+
+/atom/movable/screen/stamina/regenmod
+	name = "stamina regen"
+	icon_state = "stamina_nomod"
+
+
+/// Crit warning
+/atom/movable/screen/stamina/crit
+	name = "stamcrit alert"
+	icon_state = "stamina_nomod"
+
+/atom/movable/screen/stamina/crit/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/content = {"
+		<div class='danger'>
+			[span_boldnotice("You're in STAMCRIT right now!")]
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/crit/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+	var/_content = {"
+		You're in STAMCRIT right now!
+	"}
+	openToolTip(usr, src, params, title = "Stamcrit Warning", content = _content)
+
+
+/// These are are complicated overlays
+/atom/movable/screen/stamina/alert_up
+	name = "upper stam-alert"
+	icon_state = "stamina_alert_base"
+	var/last_alert_index = 0
+
+/atom/movable/screen/stamina/alert_up/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/content = {"
+		<div class='danger'>
+			[span_boldnotice("This isn't implemented!")]
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/alert_up/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+	var/_content = {"
+		This isn't implemented!
+	"}
+	openToolTip(usr, src, params, title = "Stamina Buff Alert", content = _content)
+
+/// These are are complicated overlays
+/atom/movable/screen/stamina/hunger
+	name = "satiety alert"
+	icon_state = "stamina_foodbar_7"
+
+/atom/movable/screen/stamina/hunger/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/content = {"
+		<div class='danger'>
+			[span_boldnotice("This will be implemented when food 2.0 arrives!")]
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/hunger/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+	var/_content = {"
+		This will be implemented when food 2.0 arrives!
+	"}
+	openToolTip(usr, src, params, title = "Hunger", content = _content)
