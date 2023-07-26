@@ -328,6 +328,7 @@ const SnowflakeWeaponBallistic = (props, context) => {
           projectiles_cache > 0 && (
             <Button
               icon={'redo'}
+              disabled={projectiles >= max_magazine}
               onClick={() =>
                 act('equip_act', {
                   ref: ref,

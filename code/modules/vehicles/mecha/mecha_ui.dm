@@ -84,6 +84,7 @@
 	data["internal_damage"] = internal_damage
 	data["dna_lock"] = dna_lock
 	data["weapons_safety"] = weapons_safety
+	data["use_internal_tank"] = use_internal_tank
 	data["mech_view"] = ui_view.assigned_map
 	data["modules"] = get_module_ui_data()
 	data["selected_module_index"] = ui_selected_module_index
