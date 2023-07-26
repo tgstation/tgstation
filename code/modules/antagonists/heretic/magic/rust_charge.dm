@@ -1,4 +1,4 @@
-/datum/action/cooldown/mob_cooldown/charge/rus
+/datum/action/cooldown/mob_cooldown/charge/rust
 	name = "rust charge"
 	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
 	var/charge_distance = 10
@@ -20,6 +20,5 @@
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	victim.rust_heretic_act()
 	get_step(victim, east).rust_heretic_act()
-	get_step(victim, west).rust_heretic_act()	
-
-	  
+	get_step(victim, west).rust_heretic_act()
+	
