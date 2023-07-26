@@ -1034,3 +1034,40 @@
       messages.
   kawoppi:
   - rscdel: removed floating light fixture from the Deltastation security hallway
+2023-07-26:
+  Melbert:
+  - bugfix: Prisoner slots can no longer be controlled by Plexagon HR Core. (special
+      things to distributivgesetz)
+  - bugfix: HoPs can open more assistant job slots if a non-assistant job is the overflow
+      role
+  - code_imp: Dehardcode the HR core blacklist for jobs which cannot have more slots
+      opened by the HoP
+  Mooshimi:
+  - bugfix: Plasmaman DNA can no longer be stolen by changelings.
+  Paxilmaniac:
+  - refactor: The mag_type variable on guns has been split between accepted_magazine_type
+      and spawn_magazine_type, allowing weapons to safely spawn with subtypes of their
+      normal magazines without breaking the weapon
+  - bugfix: Several weapons that spawned with special magazines, the riot dart pre-loaded
+      donk pistol for example, will now be able to accept normal donksoft magazines
+      that don't spawn loaded with riot darts.
+  Rhials:
+  - qol: Modifies the contents of some Mafia lockers. Go check 'em out!
+  Singul0:
+  - bugfix: some fixes to spess IRS pirates.
+  - balance: IRS armor is now bulky
+  Time-Green:
+  - bugfix: Makes radiation nebula space work on high-pop by applying the radiation
+      more directly
+  - balance: Internal nebula storm no longer gives 10 seconds of immunity and has
+      a very, very small chance to apply mutations
+  - balance: Rudes nebula rad immunity from 10 seconds to 6 seconds (shouldn't differ
+      too much since we use a different system now)
+  carshalash:
+  - balance: Mmmh, butter on a stick. Now for americanbots.
+  distributivgesetz:
+  - spellcheck: Head of Personnel's roundstart text now says that they should answer
+      to the captain now instead of themselves.
+  - spellcheck: Phobia warnings have the same glowy text now as they would in messages.
+  oranges:
+  - balance: holodeck spawned banners no longer give the inspiration effects
