@@ -797,26 +797,26 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 			if(C.stamina.majorbufflist[buffname] == "")
 				continue
 			if(firstbuff)
-				bufflist = "[buffname]: [C.stamina.majorbufflist[buffname]]\n"
+				bufflist = "[buffname]: [C.stamina.majorbufflist[buffname]]<br>"
 				firstbuff = FALSE
 			else
-				bufflist = "[bufflist][buffname]: [C.stamina.majorbufflist[buffname]]\n"
+				bufflist = "[bufflist][buffname]: [C.stamina.majorbufflist[buffname]]<br>"
 		var/bufflist2 = ""
 		firstbuff = TRUE
 		for(var/buffname in C.stamina.bufflist)
 			if(C.stamina.bufflist[buffname] == "")
 				continue
 			if(firstbuff)
-				bufflist2 = "[buffname]: [C.stamina.bufflist[buffname]]\n"
+				bufflist2 = "[buffname]: [C.stamina.bufflist[buffname]]<br>"
 				firstbuff = FALSE
 			else
-				bufflist2 = "[bufflist2][buffname]: [C.stamina.bufflist[buffname]]\n"
+				bufflist2 = "[bufflist2][buffname]: [C.stamina.bufflist[buffname]]<br>"
 		var/content = {"
 		<div class='notice'>
-			[span_boldnotice("MAJOR BUFFS:")]
-			[bufflist]
-			[span_boldnotice("MINOR BUFFS:")]
-			[bufflist2]
+			[span_boldnotice("MAJOR BUFFS:")]<br>
+			[bufflist]<br>
+			[span_boldnotice("MINOR BUFFS:")]<br>
+			[bufflist2]<br>
 		</div>
 		"}
 		to_chat(C, content)
@@ -831,18 +831,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		return
 
 	var/mob/living/carbon/C = usr
-		var/bufflist = ""
-		var/firstbuff = TRUE
-		for(var/buffname in C.stamina.majorbufflist)
-			if(C.stamina.majorbufflist[buffname] == "")
-				continue
-			if(firstbuff)
-				bufflist = buffname
-				firstbuff = FALSE
-			else
-				bufflist = "[bufflist] [buffname]"
+	var/bufflist = ""
+	var/firstbuff = TRUE
+	for(var/buffname in C.stamina.majorbufflist)
+		if(C.stamina.majorbufflist[buffname] == "")
+			continue
+		if(firstbuff)
+			bufflist = buffname
+			firstbuff = FALSE
+		else
+			bufflist = "[bufflist] [buffname]"
 	var/_content = {"
-		[bufflist]
+		Effects: [bufflist]
 	"}
 	openToolTip(usr, src, params, title = "Status Effects", content = _content)
 
@@ -856,7 +856,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		var/mob/living/carbon/C = usr
 		var/content = {"
 		<div class='notice'>
-			[span_bolddanger("This will be implemented properly when food 2.0 arrives!")]
+			[span_bolddanger("This will be implemented properly when food 2.0 arrives!")]<br>
 			[span_boldnotice("Nutrition/Satiety: [C.nutrition]/[C.satiety]")]
 		</div>
 		"}
@@ -871,6 +871,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(QDELETED(src))
 		return
 	var/_content = {"
-		Nutrition/Satiety: [C.nutrition]/[C.satiety]
+		Nutrition/Satiety: [L.nutrition]/[L.satiety]
 	"}
 	openToolTip(usr, src, params, title = "Hunger", content = _content)
