@@ -99,6 +99,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
+/obj/item/claymore/on_exit_storage(datum/storage/container)
+	var/obj/item/storage/belt/sheath/sword = container.real_location?.resolve()
+	if(istype(sword))
+		playsound(sword, 'sound/items/unsheath.ogg', 25, TRUE)
+
 //statistically similar to e-cutlasses
 /obj/item/claymore/cutlass
 	name = "cutlass"
@@ -959,6 +964,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+
+/obj/item/melee/moonlight_greatsword/on_exit_storage(datum/storage/container)
+	var/obj/item/storage/belt/sheath/sword = container.real_location?.resolve()
+	if(istype(sword))
+		playsound(sword, 'sound/items/unsheath.ogg', 25, TRUE)
 
 //High Frequency Blade
 

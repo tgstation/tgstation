@@ -4,6 +4,7 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "broadsword"
 	inhand_icon_state = "broadsword"
+	worn_icon_state = "broadsword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -13,7 +14,7 @@
 	throwforce = 10
 	wound_bonus = 5
 	throw_range = 4
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 30
@@ -46,11 +47,13 @@
 	desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's fine edge shines in the light."
 	icon_state = "broadsword_gold"
 	inhand_icon_state = "broadsword_gold"
+	worn_icon_state = "broadsword_gold"
 
 /obj/item/melee/sword/rust
 	name = "rusty broadsword"
 	desc = "A sharp steel forged sword. It's edge is rusty and corroded."
 	icon_state = "broadsword_rust"
+	worn_icon_state = "broadsword"
 	force = 15
 	wound_bonus = 0
 	var/broken_icon = "broadsword_broken"
@@ -58,13 +61,14 @@
 	/// How many hits a sword can deal and block before it breaks, with one additional final attack.
 	var/rustiness = 15 // It may say 15, but it's 16 hits/blocks before it breaks.
 	/// If the sword is broken or not.
-	var/broken = 0
+	var/broken = FALSE
 
-/obj/item/melee/sword/rust/afterattack(target, mob/user)
+/obj/item/melee/sword/rust/afterattack(target, mob/user, proximity_flag)
 	. = ..()
 	if(broken)
 		return ..()
-	decrease_uses(user)
+	if(ismovable(target))
+		decrease_uses(user)
 
 /obj/item/melee/sword/rust/hit_reaction(mob/user)
 	. = ..()
@@ -84,10 +88,11 @@
 	if(broken == TRUE)
 		return
 	user.visible_message(span_notice("[user]'s sword snaps in half."), span_notice("[src]'s blade breaks leaving you with half a sword!"))
-	broken = 1
+	broken = TRUE
 	name = "broken [initial(name)]"
 	icon_state = broken_icon
 	inhand_icon_state = broken_icon
+	worn_icon_state = broken_icon
 	update_appearance()
 	playsound(user, 'sound/effects/structure_stress/pop3.ogg', 100, TRUE)
 	force -= 5
@@ -102,13 +107,15 @@
 	desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's edge is rusty and corroded."
 	icon_state = "broadsword_gold_rust"
 	inhand_icon_state = "broadsword_gold"
-	broken_icon = "broadswordgold_broken"
+	worn_icon_state = "broadsword_gold"
+	broken_icon = "broadsword_gold_broken"
 
 /obj/item/melee/sword/rust/claymore
 	name = "rusty claymore"
 	desc = "A rusted claymore, it smells damp and it has seen better days."
 	icon_state = "claymore_rust"
 	inhand_icon_state = "claymore"
+	worn_icon_state = "claymore"
 	broken_icon = "claymore_broken"
 
 /obj/item/melee/sword/rust/claymoregold
@@ -116,6 +123,7 @@
 	desc = "A weapon fit for a crusade... or it used to be..."
 	icon_state = "claymore_gold_rust"
 	inhand_icon_state = "claymore_gold"
+	worn_icon_state = "claymore_gold"
 	broken_icon = "claymore_gold_broken"
 
 /obj/item/melee/sword/rust/cultblade
@@ -125,11 +133,32 @@
 	inhand_icon_state = "cultblade_rust"
 	broken_icon = "cultblade_broken"
 
+/obj/item/melee/sword/claymore
+	name = "holy claymore"
+	desc = "A weapon fit for a crusade! It lacks a holy shine however."
+	force = 18
+	icon_state = "claymore_gold"
+	inhand_icon_state = "claymore_gold"
+	worn_icon_state = "claymore_gold"
+
+/obj/item/melee/sword/claymore/darkblade
+	name = "dark blade"
+	desc = "Spread the glory of the dark gods! Even if they don't bless this blade."
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon_state = "cultblade"
+	inhand_icon_state = "cultblade"
+	worn_icon_state = "cultblade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+
 /obj/item/melee/sword/reforged
 	name = "Reforged longsword"
 	desc = "A hard steel blade, it's edge has been forged to be incredibly strong. It feels light."
 	icon_state = "reforged"
 	inhand_icon_state = "reforged"
+	worn_icon_state = "reforged"
 	force = 25
 	throwforce = 15
 	throw_range = 6
@@ -139,15 +168,16 @@
 	embedding = list("embed_chance" = 30, "impact_pain_mult" = 10)
 
 /obj/item/melee/sword/reforged/shitty
-	var/broken = 0
+	var/broken = FALSE
 	var/rustiness = 0 //This isn't a mistake, this causes it to break instantly upon use.
 	var/broken_icon = "reforged_broken"
 
-/obj/item/melee/sword/reforged/shitty/afterattack(target, mob/user)
+/obj/item/melee/sword/reforged/shitty/afterattack(target, mob/user, proximity_flag)
 	. = ..()
 	if(broken)
 		return ..()
-	decrease_uses(user)
+	if(ismovable(target))
+		decrease_uses(user)
 
 /obj/item/melee/sword/reforged/shitty/hit_reaction(mob/user)
 	. = ..()
@@ -164,14 +194,15 @@
 	rustiness--
 
 /obj/item/melee/sword/reforged/shitty/proc/no_uses(mob/user)
-	if(broken == 1)
+	if(broken == TRUE)
 		return
 	user.visible_message(span_notice("[user]'s sword breaks. WHAT AN IDIOT!"), span_notice("The [src]'s blade shatters! It was a cheap felinid imitation! WHAT A PIECE OF SHIT!"))
-	broken = 1
+	broken = TRUE
 	name = "broken fake longsword"
 	desc = "A cheap piece of felinid forged trash."
 	icon_state = broken_icon
 	inhand_icon_state = broken_icon
+	worn_icon_state = broken_icon
 	update_appearance()
 	playsound(user, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	force -= 20
@@ -208,10 +239,17 @@
 			/obj/item/melee/sword/rust/claymoregold,
 			/obj/item/melee/sword/rust/cultblade,
 			/obj/item/claymore,
+			/obj/item/claymore/weak,
+			/obj/item/claymore/weak/ceremonial,
 			/obj/item/nullrod/claymore,
+			/obj/item/nullrod/claymore/glowing,
 			/obj/item/nullrod/claymore/darkblade,
+			/obj/item/melee/sword/claymore,
+			/obj/item/melee/sword/claymore/darkblade,
 			/obj/item/melee/cultblade,
 			/obj/item/melee/sword/reforged,
+			/obj/item/melee/sword/reforged/shitty,
+			/obj/item/melee/moonlight_greatsword,
 		), generate_can_hold_subtypes = FALSE
 	)
 
@@ -240,3 +278,22 @@
 		inhand_icon_state += "-sword"
 		worn_icon_state += "-sword"
 	return ..()
+
+/obj/item/storage/belt/sheath/full
+	var/swordtype = list(/obj/item/melee/sword = 20,
+		/obj/item/melee/sword/gold = 20,
+		/obj/item/melee/sword/rust = 160,
+		/obj/item/melee/sword/rust/gold = 160,
+		/obj/item/melee/sword/rust/claymore = 160,
+		/obj/item/melee/sword/rust/claymoregold = 160,
+		/obj/item/melee/sword/rust/cultblade = 160,
+		/obj/item/claymore/weak/ceremonial = 60,
+		/obj/item/melee/sword/claymore = 40,
+		/obj/item/melee/sword/claymore/darkblade = 40,
+		/obj/item/melee/sword/reforged = 9,
+		/obj/item/melee/sword/reforged/shitty = 1,)
+
+/obj/item/storage/belt/sheath/full/PopulateContents()
+	var/typepath = pick_weight(swordtype)
+	new typepath(src)
+	update_appearance()
