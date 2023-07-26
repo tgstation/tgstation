@@ -290,6 +290,7 @@
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_SYRINGE,
 		"mode" = mode == FIRE_SYRINGE_MODE ? "Launch" : "Analyze",
+		"mode_label" = "Action",
 		"syringe" = LAZYLEN(syringes),
 		"max_syringe" = max_syringes,
 		"reagents" = reagents.total_volume,

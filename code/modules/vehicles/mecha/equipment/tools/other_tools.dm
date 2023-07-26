@@ -134,8 +134,8 @@
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_snowflake_data()
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
-		"name" = "Gravity catapult",
 		"mode" = mode == GRAVPUSH_MODE ? "Push" : "Sling",
+		"mode_label" = "Gravity Catapult",
 	)
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/ui_act(action, list/params)
@@ -201,7 +201,8 @@
 	icon_state = "repair_droid"
 	energy_drain = 50
 	range = 0
-	activated = FALSE
+	can_be_toggled = TRUE
+	active = FALSE
 	equipment_slot = MECHA_UTILITY
 	/// Repaired health per second
 	var/health_boost = 0.5
@@ -228,7 +229,7 @@
 	if(action != "toggle")
 		return
 	chassis.cut_overlay(droid_overlay)
-	if(activated)
+	if(active)
 		START_PROCESSING(SSobj, src)
 		droid_overlay = new(src.icon, icon_state = "repair_droid_a")
 		log_message("Activated.", LOG_MECHA)
@@ -258,13 +259,13 @@
 		repaired = TRUE
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
-			activated = FALSE
+			active = FALSE
 			return PROCESS_KILL
 	else //no repair needed, we turn off
 		chassis.cut_overlay(droid_overlay)
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		chassis.add_overlay(droid_overlay)
-		activated = FALSE
+		active = FALSE
 		return PROCESS_KILL
 
 
@@ -277,7 +278,8 @@
 	icon_state = "tesla"
 	range = MECHA_MELEE
 	equipment_slot = MECHA_POWER
-	activated = FALSE
+	can_be_toggled = TRUE
+	active = FALSE
 	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
 	var/obj/item/stack/sheet/fuel = null
 	///Fuel used per second while idle, not generating, in units
@@ -299,7 +301,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
 	STOP_PROCESSING(SSobj, src)
-	activated = FALSE
+	active = FALSE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/get_snowflake_data()
@@ -310,7 +312,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/ui_act(action, list/params)
 	. = ..()
 	if(action == "toggle")
-		if(activated)
+		if(active)
 			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation enabled.")]")
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
@@ -328,16 +330,16 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)
-		activated = FALSE
+		active = FALSE
 		return PROCESS_KILL
 	if(fuel.amount <= 0)
-		activated = FALSE
+		active = FALSE
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")
 		return PROCESS_KILL
 	var/current_charge = chassis.get_charge()
 	if(isnull(current_charge))
-		activated = FALSE
+		active = FALSE
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("No power cell detected.")]")
 		log_message("Deactivated.", LOG_MECHA)
 		return PROCESS_KILL
@@ -375,6 +377,7 @@
 	desc = "A generic set of thrusters, from an unknown source. Uses not-understood methods to propel exosuits seemingly for free."
 	icon_state = "thrusters"
 	equipment_slot = MECHA_UTILITY
+	can_be_toggled = TRUE
 	var/effect_type = /obj/effect/particle_effect/sparks
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
@@ -396,7 +399,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(params["toggle"])
-		if(activated) //inactive
+		if(active) //inactive
 			START_PROCESSING(SSobj, src)
 			enable()
 			log_message("Activated.", LOG_MECHA)
@@ -429,12 +432,11 @@
 	step(E, turn(movement_dir, 180))
 	QDEL_IN(E, 5)
 
-
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas
 	name = "RCS thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
 	effect_type = /obj/effect/particle_effect/fluid/smoke
-	var/move_cost = 20 //moles per step
+	var/move_cost = 0.05 //moles per step (5 times more than human jetpacks)
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/thrust(movement_dir)
 	if(!chassis)
@@ -583,8 +585,8 @@
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	///The connected air port, if we have one
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
-	///Volume of this air tank (half the volume of regular canister)
-	var/volume = 1000
+	///Volume of this air tank
+	var/volume = TANK_STANDARD_VOLUME * 10
 	///Whether the tank starts pressurized
 	var/start_full = FALSE
 

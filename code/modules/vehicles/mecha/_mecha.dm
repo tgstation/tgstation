@@ -221,7 +221,7 @@
 	smoke_system.set_up(3, holder = src, location = src)
 	smoke_system.attach(src)
 
-	cabin_air = new(200)
+	cabin_air = new(TANK_STANDARD_VOLUME)
 
 	add_cell()
 	add_scanmod()
@@ -310,7 +310,7 @@
 			if(E.detachable && prob(30))
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
-				E.activated = TRUE
+				E.active = TRUE
 			else
 				E.detach(loc)
 				qdel(E)

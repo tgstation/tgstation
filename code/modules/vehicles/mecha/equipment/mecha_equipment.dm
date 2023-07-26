@@ -12,8 +12,12 @@
 	var/equipment_slot = MECHA_WEAPON
 	///Cooldown in ticks required between activations of the equipment
 	var/equip_cooldown = 0
-	///used for equipment that can be turned on/off, boolean
-	var/activated = TRUE
+	///Whether you can turn this module on/off with a button
+	var/can_be_toggled = FALSE
+	///Whether you can trigger this module with a button (activation only)
+	var/can_be_triggered = FALSE
+	///Whether the module is currently active
+	var/active = TRUE
 	///Chassis power cell quantity used on activation
 	var/energy_drain = 0
 	///Reference to mecha that this equipment is currently attached to
@@ -57,7 +61,7 @@
 			detach(get_turf(src))
 			return TRUE
 		if("toggle")
-			activated = !activated
+			active = !active
 			return TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
@@ -69,7 +73,7 @@
 			return FALSE
 
 /**
- * Checks whether this mecha equipment can be activated
+ * Checks whether this mecha equipment can be active
  * Returns a bool
  * Arguments:
  * * target: atom we are activating/clicked on
@@ -79,7 +83,7 @@
 		return FALSE
 	if(!chassis)
 		return FALSE
-	if(!activated)
+	if(!active)
 		return FALSE
 	if(energy_drain && !chassis?.has_charge(energy_drain))
 		return FALSE

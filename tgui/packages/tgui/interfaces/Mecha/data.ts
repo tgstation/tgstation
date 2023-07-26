@@ -101,12 +101,14 @@ export type MechaUtility = {
 };
 
 export type MechModule = {
-  type: string;
+  slot: string;
   icon: string;
   name: string;
   detachable: boolean;
-  activated: boolean;
-  equip_cooldown: number;
+  can_be_toggled: boolean;
+  can_be_triggered: boolean;
+  active: boolean;
+  equip_cooldown: string;
   energy_per_use: number;
   snowflake: Snowflake;
   ref: string;
