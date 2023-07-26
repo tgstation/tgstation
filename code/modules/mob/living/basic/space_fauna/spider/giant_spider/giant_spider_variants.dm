@@ -53,9 +53,8 @@
 	. = ..()
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
-
-	var/datum/action/cooldown/lay_web/web_carcass/carcass_web = new(src)
-	carcass_web.Grant(src)
+	var/datum/action/cooldown/web_effigy/shed = new(src)
+	shed.Grant(src)
 
 /**
  * ### Spider Hunter
