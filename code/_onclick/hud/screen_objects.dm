@@ -719,7 +719,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		var/mob/living/carbon/C = usr
 		var/content = {"
 		<div class='notice'>
-			[span_boldnotice("You have [C.maxHealth - C.getStaminaLoss()]/[C.maxHealth] stamina.")]
+			[span_boldnotice("You have [C.stamina.current]/[C.stamina.maximum] stamina, and are regenerating [C.stamina.regen_rate] per tick.")]
 		</div>
 		"}
 		to_chat(C, content)
@@ -733,8 +733,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(QDELETED(src))
 		return
 	var/_content = {"
-		Stamina: [L.maxHealth - L.getStaminaLoss()]/[L.maxHealth]<br>
-		Regen: N/A
+		Stamina: [L.stamina.current]/[L.stamina.maximum]<br>
+		Regen: [L.stamina.regen_rate]
 	"}
 	openToolTip(usr, src, params, title = "Stamina", content = _content)
 
@@ -762,8 +762,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if (iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		var/content = {"
-		<div class='danger'>
-			[span_boldnotice("You're in STAMCRIT right now!")]
+		<div class='notice'>
+			[span_bolddanger("You're in STAMCRIT - you'll be stuck like this until you recover enough to get to safety!")]
 		</div>
 		"}
 		to_chat(C, content)
@@ -777,23 +777,46 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(QDELETED(src))
 		return
 	var/_content = {"
-		You're in STAMCRIT right now!
+		You're in STAMCRIT!
 	"}
 	openToolTip(usr, src, params, title = "Stamcrit Warning", content = _content)
 
 
 /// These are are complicated overlays
 /atom/movable/screen/stamina/alert_up
-	name = "upper stam-alert"
+	name = "stamina buffs & alerts"
 	icon_state = "stamina_alert_base"
 	var/last_alert_index = 0
 
 /atom/movable/screen/stamina/alert_up/Click(location, control, params)
 	if (iscarbon(usr))
 		var/mob/living/carbon/C = usr
+		var/bufflist = ""
+		var/firstbuff = TRUE
+		for(var/buffname in C.stamina.majorbufflist)
+			if(C.stamina.majorbufflist[buffname] == "")
+				continue
+			if(firstbuff)
+				bufflist = "[buffname]: [C.stamina.majorbufflist[buffname]]\n"
+				firstbuff = FALSE
+			else
+				bufflist = "[bufflist][buffname]: [C.stamina.majorbufflist[buffname]]\n"
+		var/bufflist2 = ""
+		firstbuff = TRUE
+		for(var/buffname in C.stamina.bufflist)
+			if(C.stamina.bufflist[buffname] == "")
+				continue
+			if(firstbuff)
+				bufflist2 = "[buffname]: [C.stamina.bufflist[buffname]]\n"
+				firstbuff = FALSE
+			else
+				bufflist2 = "[bufflist2][buffname]: [C.stamina.bufflist[buffname]]\n"
 		var/content = {"
-		<div class='danger'>
-			[span_boldnotice("This isn't implemented!")]
+		<div class='notice'>
+			[span_boldnotice("MAJOR BUFFS:")]
+			[bufflist]
+			[span_boldnotice("MINOR BUFFS:")]
+			[bufflist2]
 		</div>
 		"}
 		to_chat(C, content)
@@ -806,10 +829,22 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 	if(QDELETED(src))
 		return
+
+	var/mob/living/carbon/C = usr
+		var/bufflist = ""
+		var/firstbuff = TRUE
+		for(var/buffname in C.stamina.majorbufflist)
+			if(C.stamina.majorbufflist[buffname] == "")
+				continue
+			if(firstbuff)
+				bufflist = buffname
+				firstbuff = FALSE
+			else
+				bufflist = "[bufflist] [buffname]"
 	var/_content = {"
-		This isn't implemented!
+		[bufflist]
 	"}
-	openToolTip(usr, src, params, title = "Stamina Buff Alert", content = _content)
+	openToolTip(usr, src, params, title = "Status Effects", content = _content)
 
 /// These are are complicated overlays
 /atom/movable/screen/stamina/hunger
@@ -820,8 +855,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if (iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		var/content = {"
-		<div class='danger'>
-			[span_boldnotice("This will be implemented when food 2.0 arrives!")]
+		<div class='notice'>
+			[span_bolddanger("This will be implemented properly when food 2.0 arrives!")]
+			[span_boldnotice("Nutrition/Satiety: [C.nutrition]/[C.satiety]")]
 		</div>
 		"}
 		to_chat(C, content)
@@ -835,6 +871,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(QDELETED(src))
 		return
 	var/_content = {"
-		This will be implemented when food 2.0 arrives!
+		Nutrition/Satiety: [C.nutrition]/[C.satiety]
 	"}
 	openToolTip(usr, src, params, title = "Hunger", content = _content)

@@ -113,6 +113,14 @@
 	/// Only load in visual organs
 	var/visual_only_organs = FALSE
 
+	/// SKYRAPTOR ADDITION BEGIN
+	///Is this carbon trying to sprint?
+	var/sprint_key_down = FALSE
+	var/sprinting = FALSE
+	///How many tiles we have continuously moved in the same direction
+	var/sustained_moves = 0
+	/// SKYRAPTOR ADDITION END
+
 	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
 	var/last_top_offset
 

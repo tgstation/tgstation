@@ -158,7 +158,7 @@
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(..())
 		return TRUE
-	user.changeNext_move(attacking_item.attack_speed)
+	user.changeNext_move(attacking_item.combat_click_delay) /// SKYRAPTOR EDIT
 	return attacking_item.attack(src, user, params)
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
@@ -207,6 +207,8 @@
 
 	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
+
+	user.stamina_swing(src.stamina_cost) /// SYKRAPTOR ADDITION
 
 	user.do_attack_animation(target_mob)
 	target_mob.attacked_by(src, user)

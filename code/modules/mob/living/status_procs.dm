@@ -3,6 +3,15 @@
 
 #define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
 
+/// SKYRAPTOR ADDITION BEGIN
+/mob/living/proc/stamina_stun()
+	return
+
+/mob/living/proc/exit_stamina_stun()
+	SIGNAL_HANDLER
+	return
+/// SKYRAPTOR ADDITION END
+
 /* STUN */
 /mob/living/proc/IsStun() //If we're stunned
 	return has_status_effect(/datum/status_effect/incapacitating/stun)

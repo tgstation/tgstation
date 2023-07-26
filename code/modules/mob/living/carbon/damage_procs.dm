@@ -103,9 +103,15 @@
 	return ..()
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype)
-	. = ..()
+	/// SKYRAPTOR REMOVAL BEGIN: we're torching default stamina for carbons and later other mobtypes.
+	/*. = ..()
 	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME*/
+	/// SKYRAPTOR REMOVAL ENDS, REWRITE BEGINS.
+	if(!forced && !(mob_biotypes & required_biotype))
+		return
+	stamina.adjust(-amount, forced)
+	/// SKYRAPTOR REWRITE ENDS
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
