@@ -54,7 +54,7 @@
  * is wearing shoes.
  */
 /datum/component/bloodysoles/proc/is_under_feet_covered()
-	if(equipped_slot != ITEM_SLOT_ICLOTHING)
+	if(!(equipped_slot & ITEM_SLOT_ICLOTHING))
 		return FALSE
 
 	return !isnull(wielder.shoes)
