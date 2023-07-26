@@ -1766,6 +1766,7 @@
 	prereq_ids = list("adv_robotics")
 	design_ids = list(
 		"mech_repair_droid",
+		"mech_thrusters",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = 5000)
@@ -1895,7 +1896,6 @@
 	prereq_ids = list("adv_mecha")
 	design_ids = list(
 		"mech_rcd",
-		"mech_thrusters",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

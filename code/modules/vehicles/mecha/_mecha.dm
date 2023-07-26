@@ -76,8 +76,6 @@
 	///Internal air mix datum
 	var/datum/gas_mixture/cabin_air
 
-	///Special version of the radio, which is unsellable
-	var/obj/item/radio/mech/radio
 	///List of installed remote tracking beacons, including AI control beacons
 	var/list/trackers = list()
 	///Camera installed into the mech

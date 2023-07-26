@@ -107,7 +107,7 @@
 					"name" = module.name,
 					"desc" = module.desc,
 					"detachable" = module.detachable,
-					"integrity" = (get_integrity()/max_integrity),
+					"integrity" = (module.get_integrity()/module.max_integrity),
 					"can_be_toggled" = module.can_be_toggled,
 					"can_be_triggered" = module.can_be_triggered,
 					"active" = module.active,
@@ -210,12 +210,6 @@
 			mecha_flags ^= ADDING_MAINT_ACCESS_POSSIBLE
 		if("toggle_id_panel")
 			mecha_flags ^= ADDING_ACCESS_POSSIBLE
-		if("toggle_microphone")
-			radio.set_broadcasting(!radio.get_broadcasting())
-		if("toggle_speaker")
-			radio.set_listening(!radio.get_listening())
-		if("set_frequency")
-			radio.set_frequency(sanitize_frequency(params["new_frequency"], radio.freerange, radio.syndie))
 		if("repair_int_damage")
 			ui.close() //if doing this you're likely want to watch for bad people so close the UI
 			try_repair_int_damage(usr, params["flag"])

@@ -397,17 +397,16 @@
 		chassis.active_thrusters = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/mecha_parts/mecha_equipment/thrusters/set_active(active)
 	. = ..()
-	if(params["toggle"])
-		if(active) //inactive
-			START_PROCESSING(SSobj, src)
-			enable()
-			log_message("Activated.", LOG_MECHA)
-		else
-			STOP_PROCESSING(SSobj, src)
-			disable()
-			log_message("Deactivated.", LOG_MECHA)
+	if(active)
+		START_PROCESSING(SSobj, src)
+		enable()
+		log_message("Activated.", LOG_MECHA)
+	else
+		STOP_PROCESSING(SSobj, src)
+		disable()
+		log_message("Deactivated.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/enable()
 	if (chassis.active_thrusters == src)

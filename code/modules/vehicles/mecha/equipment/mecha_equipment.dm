@@ -61,7 +61,7 @@
 			detach(get_turf(src))
 			return TRUE
 		if("toggle")
-			active = !active
+			set_active(!active)
 			return TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
@@ -201,6 +201,9 @@
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 	log_message("[src] removed from equipment.", LOG_MECHA)
 	chassis = null
+
+/obj/item/mecha_parts/mecha_equipment/proc/set_active(active)
+	src.active = active
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)
