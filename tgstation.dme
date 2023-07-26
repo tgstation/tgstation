@@ -1034,6 +1034,7 @@
 #include "code\datums\components\squeak.dm"
 #include "code\datums\components\stationloving.dm"
 #include "code\datums\components\stationstuck.dm"
+#include "code\datums\components\storm_hating.dm"
 #include "code\datums\components\strong_pull.dm"
 #include "code\datums\components\subtype_picker.dm"
 #include "code\datums\components\summoning.dm"
