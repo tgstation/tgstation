@@ -58,6 +58,7 @@
 	. = ..()
 	switch(action)
 		if("detach")
+			chassis.ui_selected_module_index = null
 			detach(get_turf(src))
 			return TRUE
 		if("toggle")

@@ -86,10 +86,12 @@
 	data["weapons_safety"] = weapons_safety
 	data["mech_view"] = ui_view.assigned_map
 	data["modules"] = get_module_ui_data()
+	data["selected_module_index"] = ui_selected_module_index
 	return data
 
 /obj/vehicle/sealed/mecha/proc/get_module_ui_data()
 	var/list/data = list()
+	var/module_index = 0
 	for(var/category in max_equip_by_category)
 		var/max_per_category = max_equip_by_category[category]
 		for(var/i = 1 to max_per_category)
@@ -99,6 +101,8 @@
 				data += list(list(
 					"slot" = category
 				))
+				if(ui_selected_module_index == module_index)
+					ui_selected_module_index = null
 			else
 				var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
 				data += list(list(
@@ -116,6 +120,9 @@
 					"snowflake" = module.get_snowflake_data(),
 					"ref" = REF(module),
 				))
+				if(isnull(ui_selected_module_index))
+					ui_selected_module_index = module_index
+			module_index++
 	return data
 
 /obj/vehicle/sealed/mecha/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -176,6 +183,9 @@
 		return TRUE
 	//usr is in occupants
 	switch(action)
+		if("select_module")
+			ui_selected_module_index = text2num(params["index"])
+			return TRUE
 		if("changename")
 			var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN, default = name)
 			if(!userinput)

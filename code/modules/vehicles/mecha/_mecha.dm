@@ -196,6 +196,8 @@
 
 	/// Theme of the mech TGUI
 	var/ui_theme = "ntos"
+	/// Module selected by default when mech UI is opened
+	var/ui_selected_module_index
 
 /datum/armor/sealed_mecha
 	melee = 20

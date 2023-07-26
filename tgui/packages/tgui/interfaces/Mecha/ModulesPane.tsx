@@ -1,4 +1,4 @@
-import { useLocalState, useBackend } from '../../backend';
+import { useBackend } from '../../backend';
 import { Icon, NumberInput, ProgressBar, Box, Button, Section, Stack, LabeledList, Divider, NoticeBox } from '../../components';
 import { OperatorData, MechModule } from './data';
 import { classes } from 'common/react';
@@ -41,12 +41,7 @@ const moduleSlotLabel = (param) => {
 
 export const ModulesPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
-  const [selectedModule, setSelectedModule] = useLocalState(
-    context,
-    'selectedModule',
-    0
-  );
-  const { mech_electronics, airtank_present, modules, weapons_safety } = data;
+  const { modules, selected_module_index, weapons_safety } = data;
   return (
     <Section
       title="Equipment"
@@ -54,11 +49,11 @@ export const ModulesPane = (props, context) => {
       scrollable
       buttons={
         <Button
-          icon={weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}
-          color={weapons_safety ? 'red' : 'default'}
+          icon={!weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}
+          color={!weapons_safety ? 'red' : 'default'}
           onClick={() => act('toggle_safety')}
           content={
-            weapons_safety
+            !weapons_safety
               ? 'Safety Protocols Disabled'
               : 'Safety Protocols Enabled'
           }
@@ -102,8 +97,12 @@ export const ModulesPane = (props, context) => {
                 pr="8px"
                 fluid
                 key={i}
-                selected={i === selectedModule}
-                onClick={() => setSelectedModule(i)}>
+                selected={i === selected_module_index}
+                onClick={() =>
+                  act('select_module', {
+                    index: i,
+                  })
+                }>
                 <Stack>
                   <Stack.Item lineHeight="0">
                     <Box
@@ -125,9 +124,10 @@ export const ModulesPane = (props, context) => {
           )}
         </Stack.Item>
         <Stack.Item grow pl={1}>
-          {!!modules[selectedModule] && (
-            <ModuleDetails module={modules[selectedModule]} />
-          )}
+          {selected_module_index !== null &&
+            !!modules[selected_module_index] && (
+              <ModuleDetails module={modules[selected_module_index]} />
+            )}
         </Stack.Item>
       </Stack>
     </Section>
@@ -216,9 +216,9 @@ const ModuleDetailsBasic = (props, context) => {
           />
         </LabeledList.Item>
       )}
-      {!!weapons_safety && ['mecha_l_arm', 'mecha_r_arm'].includes(slot) && (
+      {!weapons_safety && ['mecha_l_arm', 'mecha_r_arm'].includes(slot) && (
         <LabeledList.Item label="Safety" color="red">
-          SAFETY OVERRIDE IN EFFECT
+          <NoticeBox danger>SAFETY OFF</NoticeBox>
         </LabeledList.Item>
       )}
       {!!energy_per_use && (
@@ -624,37 +624,29 @@ const SnowflakeCargo = (props, context) => {
   const { ref } = props.module;
   const { cargo } = props.module.snowflake;
   return (
-    <LabeledList.Item>
+    <LabeledList.Item label="Cargo">
       {!cargo.length ? (
         <NoticeBox info>Compartment is empty</NoticeBox>
       ) : (
         cargo.map((item, i) => (
-          <Stack key={i} mb={1} style={{ 'text-transform': 'capitalize' }}>
-            <Stack.Item>
-              <Button
-                icon="eject"
-                tooltip="Eject"
-                onClick={() =>
-                  act('equip_act', {
-                    ref: ref,
-                    cargoref: item.ref,
-                    gear_action: 'eject',
-                  })
-                }
-              />
-            </Stack.Item>
-            <Stack.Item
-              grow
-              lineHeight={1.5}
-              style={{
-                'text-transform': 'capitalize',
-                'overflow': 'hidden',
-                'text-overflow': 'ellipsis',
-                'white-space': 'nowrap',
-              }}>
-              {item.name}
-            </Stack.Item>
-          </Stack>
+          <Button
+            fluid
+            py={0.2}
+            key={i}
+            tooltip="Eject"
+            icon="eject"
+            onClick={() =>
+              act('equip_act', {
+                ref: ref,
+                cargoref: item.ref,
+                gear_action: 'eject',
+              })
+            }
+            style={{
+              'text-transform': 'capitalize',
+            }}>
+            {item.name}
+          </Button>
         ))
       )}
     </LabeledList.Item>

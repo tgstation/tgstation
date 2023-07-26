@@ -91,6 +91,7 @@ export type OperatorData = {
   mech_view: string;
   sheet_material_amount: number;
   modules: MechModule[];
+  selected_module_index: number;
 };
 
 export type MechaUtility = {
@@ -101,6 +102,7 @@ export type MechaUtility = {
 };
 
 export type MechModule = {
+  selected: boolean;
   slot: string;
   icon: string;
   name: string;
