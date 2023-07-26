@@ -11,19 +11,19 @@
 
 /datum/element/tree_climber/Attach(datum/target, climbing_distance = 20)
 	. = ..()
-	if(!ismovable(target))
-		return ELEMENT_INCOMPATIBLE
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(target, COMSIG_LIVING_CLIMB_TREE, PROC_REF(climb_tree))
+	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(climb_tree))
 	src.climbing_distance = climbing_distance
 
 /datum/element/tree_climber/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
+	UnregisterSignal(target, COMSIG_LIVING_CLIMB_TREE)
 
 /// Generates an effect
-/datum/element/tree_climber/proc/pre_attack(mob/living/climber, atom/target)
+/datum/element/tree_climber/proc/climb_tree(mob/living/climber, atom/target)
 	SIGNAL_HANDLER
 
 	if(!istype(target, /obj/structure/flora/tree))

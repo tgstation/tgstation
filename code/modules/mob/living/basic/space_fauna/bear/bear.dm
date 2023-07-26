@@ -103,34 +103,6 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	armored = TRUE
 
-/obj/item/bear_armor
-	name = "pile of bear armor"
-	desc = "A scattered pile of various shaped armor pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
-		are written on the back of one of the plates in russian. This seems like an awful idea."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "bear_armor_upgrade"
-
-/obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag)
-		return
-	if(!istype(target, /mob/living/basic/bear))
-		return
-	var/mob/living/basic/bear/bear_target = target
-	if(bear_target.armored)
-		to_chat(user, span_warning("[bear_target] has already been armored up!"))
-		return
-	bear_target.armored = TRUE
-	bear_target.maxHealth += 60
-	bear_target.health += 60
-	bear_target.armour_penetration += 20
-	bear_target.melee_damage_lower += 3
-	bear_target.melee_damage_upper += 5
-	bear_target.wound_bonus += 5
-	bear_target.update_icons()
-	to_chat(user, span_info("You strap the armor plating to [bear_target] and sharpen [bear_target.p_their()] claws with the nail filer. This was a great idea."))
-	qdel(src)
-
 /mob/living/basic/bear/butter //The mighty companion to Cak. Several functions used from it.
 	name = "Terrygold"
 	icon_state = "butterbear"
@@ -153,8 +125,14 @@
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
 
-/mob/living/basic/bear/butter/Life(seconds_per_tick = SSMOBS_DT, times_fired) //Heals butter bear really fast when he takes damage.
-	if(stat)
+/mob/living/basic/bear/butter/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(regenerate_health))
+
+/mob/living/basic/bear/butter/proc/regenerate_health(seconds_per_tick = SSMOBS_DT, times_fired) //Heals butter bear really fast when he takes damage.
+	SIGNAL_HANDLER
+
+	if(stat == DEAD)
 		return
 	if(health < maxHealth)
 		heal_overall_damage(5 * seconds_per_tick) //Fast life regen, makes it hard for you to get eaten to death.
@@ -184,12 +162,10 @@
 
 /mob/living/basic/bear/butter/UnarmedAttack(atom/target, proximity_flag, list/modifiers) //Makes the butter bear's attacks against vertical targets slip said targets
 	. = ..()
-	if(!.)
-		return
-	if(!isliving(target))
+	if(!. || !isliving(target))
 		return
 	var/mob/living/victim = target
-	if((!victim.body_position == STANDING_UP))
+	if((victim.body_position != STANDING_UP))
 		return
 	victim.Knockdown(20)
 	playsound(loc, 'sound/misc/slip.ogg', 15)
