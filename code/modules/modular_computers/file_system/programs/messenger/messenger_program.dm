@@ -450,7 +450,7 @@
 		message = emoji_sanitize(message)
 
 	// check message against filter
-	if(!check_pda_msg_against_filter(message, sender))
+	if(!check_pda_message_against_filter(message, sender))
 		return null
 
 	return message
