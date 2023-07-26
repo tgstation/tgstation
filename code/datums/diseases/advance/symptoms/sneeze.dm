@@ -18,8 +18,7 @@
 	severity = 1
 	symptom_delay_min = 5
 	symptom_delay_max = 35
-	var/spread_range = 4
-	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Transmission 9" = "Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.",
 		"Stealth 4" = "The symptom remains hidden until active.",
@@ -27,6 +26,8 @@
 	)
 	///Emote cooldowns
 	COOLDOWN_DECLARE(sneeze_cooldown)
+	var/spread_range = 4
+	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
 	///if FALSE, there is a percentage chance that the mob will emote sneezing while sneeze_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown sneeze occurs.
 	var/off_cooldown_sneezed = FALSE
 

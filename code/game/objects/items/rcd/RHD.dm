@@ -1,5 +1,7 @@
 //RAPID HANDHELD DEVICE. the base for all rapid devices
 
+#define SILO_USE_AMOUNT (SHEET_MATERIAL_AMOUNT / 4)
+
 /obj/item/construction
 	name = "not for ingame use"
 	desc = "A device used to rapidly build and deconstruct. Reload with iron, plasteel, glass or compressed matter cartridges."
@@ -13,7 +15,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*50)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 50)
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	armor_type = /datum/armor/item_construction
 	resistance_flags = FIRE_PROOF
@@ -46,13 +48,13 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload, FALSE)
+		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
 	update_appearance()
 
 ///used for examining the RCD and for its UI
 /obj/item/construction/proc/get_silo_iron()
 	if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
-		return silo_mats.mat_container.get_material_amount(/datum/material/iron)/500
+		return silo_mats.mat_container.get_material_amount(/datum/material/iron) / SILO_USE_AMOUNT
 	return FALSE
 
 ///returns local matter units available. overriden by rcd borg to return power units available
@@ -99,7 +101,7 @@
 		return
 	upgrade |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
+		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
 
@@ -171,16 +173,17 @@
 				balloon_alert(user, "silo on hold!")
 			return FALSE
 		if(!silo_mats.mat_container)
-			balloon_alert(user, "no silo detected!")
+			if(user)
+				balloon_alert(user, "no silo detected!")
 			return FALSE
-		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
+		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount))
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
 
 		var/list/materials = list()
-		materials[GET_MATERIAL_REF(/datum/material/iron)] = 500
-		silo_mats.mat_container.use_materials(materials, amount)
+		materials[GET_MATERIAL_REF(/datum/material/iron)] = SILO_USE_AMOUNT
+		silo_mats.mat_container.use_materials(materials, multiplier = amount)
 		silo_mats.silo_log(src, "consume", -amount, "build", materials)
 		return TRUE
 
@@ -235,7 +238,7 @@
 			if(user)
 				balloon_alert(user, "silo on hold!")
 			return FALSE
-		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
+		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount)
 	if(!. && user)
 		balloon_alert(user, "low ammo!")
 		if(has_ammobar)
@@ -295,3 +298,4 @@
 	name = "Destruction Scan"
 	desc = "Scans the surrounding area for destruction. Scanned structures will rebuild significantly faster."
 
+#undef SILO_USE_AMOUNT
