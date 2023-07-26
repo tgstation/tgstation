@@ -813,6 +813,17 @@
 		particles = null
 
 /**
+ * Bee pollinate proc.
+ * Checks if the bee can pollinate the plant
+ */
+/obj/machinery/hydroponics/proc/can_bee_pollinate()
+	if(isnull(myseed))
+		return FALSE
+	if(plant_status == HYDROTRAY_PLANT_DEAD || recent_bee_visit)
+		return FALSE
+	return TRUE
+
+/**
  * Pest Mutation Proc.
  * When a tray is mutated with high pest values, it will spawn spiders.
  * * User - Person who last added chemicals to the tray for logging purposes.

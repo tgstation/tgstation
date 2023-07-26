@@ -74,6 +74,7 @@
 			/obj/item/food/burger/plain = 25,
 			/obj/item/food/burger/cheese = 15,
 			/obj/item/food/burger/superbite = 1,
+			/obj/item/food/butter/on_a_stick = 8,
 			/obj/item/food/fries = 10,
 			/obj/item/food/cheesyfries = 6,
 			/obj/item/food/pie/applepie = 4,

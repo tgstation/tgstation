@@ -94,7 +94,7 @@
 	for(var/entry in logs)
 		data["logs"] += list(list("entry" = entry))
 
-	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(check_apc(apc))
 			var/has_cell = (apc.cell) ? TRUE : FALSE
 			data["apcs"] += list(list(
@@ -157,7 +157,7 @@
 		if("access-apc")
 			var/ref = params["ref"]
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
-			var/obj/machinery/power/apc/APC = locate(ref) in SSmachines.get_machines_by_type(/obj/machinery/power/apc)
+			var/obj/machinery/power/apc/APC = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			connect_apc(APC, usr)
 		if("check-logs")
 			log_activity("Checked Logs")
@@ -167,7 +167,7 @@
 			var/ref = params["ref"]
 			var/type = params["type"]
 			var/value = params["value"]
-			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type(/obj/machinery/power/apc)
+			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			if(!target)
 				return
 
@@ -196,7 +196,7 @@
 			usr.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
 		if("breaker")
 			var/ref = params["ref"]
-			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type(/obj/machinery/power/apc)
+			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			target.toggle_breaker(usr)
 			var/setTo = target.operating ? "On" : "Off"
 			log_activity("Turned APC [target.area.name]'s breaker [setTo]")
