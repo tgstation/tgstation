@@ -20,7 +20,7 @@
 /datum/station_trait/vending_shortage
 	name = "Vending products shortage"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 1
+	weight = 2
 	show_in_report = TRUE
 	can_revert = FALSE //Because it touches every maploaded vending machine on the station.
 	report_message = "We haven't had the time to properly resupply the station's vending machines. Some items may be unavailable."
