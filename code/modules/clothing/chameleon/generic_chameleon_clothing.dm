@@ -174,8 +174,8 @@ do { \
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/chameleon/change/mask)
-
-	var/voice_change = TRUE ///This determines if the voice changer is on or off. // melbert todo: trait / componentize / whateva
+	/// Is our voice changer enabled or disabled?
+	var/voice_change = TRUE
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	. = ..()
