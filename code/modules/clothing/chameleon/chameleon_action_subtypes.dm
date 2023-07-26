@@ -223,7 +223,6 @@
 /datum/action/item_action/chameleon/change/gun
 	chameleon_type = /obj/item/gun
 	chameleon_name = "Gun"
-	active_type = /obj/item/gun/energy/laser
 
 /datum/action/item_action/chameleon/change/gun/New(Target)
 	chameleon_blacklist |= typecacheof(/obj/item/gun/energy/minigun)

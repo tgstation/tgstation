@@ -16,6 +16,9 @@
 	. = ..()
 	recharge_newshot()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+	// Init order shenanigans dictate we have to do this last so we can't just use `active_type`
+	var/datum/action/item_action/chameleon/change/gun/gun_action = locate() in actions
+	gun_action?.update_look(/obj/item/gun/energy/laser)
 
 /**
  * Description: Resets the currently loaded chameleon variables, essentially resetting it to brand new.
