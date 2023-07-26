@@ -23,7 +23,8 @@ SUBSYSTEM_DEF(achievements)
 		var/datum/award/achievement/instance = new achievement
 		achievements[achievement] = instance
 		awards[achievement] = instance
-		achievements_by_db_id[instance.database_id] = instance
+		if(instance.database_id)
+			achievements_by_db_id[instance.database_id] = instance
 
 	/**
 	 * Get a column of achievements that've been unlocked from the db and count how many are of each,
