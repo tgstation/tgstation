@@ -178,7 +178,7 @@
 	if(..())
 		return TRUE
 
-	if(!(attacking_item.item_flags & NOBLUDGEON))
+	if(user != src && !(attacking_item.item_flags & NOBLUDGEON))
 		if(user.combat_mode)
 			. = user.swing_at_target(attacking_item, src, LAZYACCESS(modifiers, RIGHT_CLICK))
 		return .
