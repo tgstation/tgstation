@@ -31,7 +31,7 @@
 	COOLDOWN_DECLARE(mecha_bump_smash)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
-	light_range = 8
+	light_outer_range = 8
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
@@ -107,7 +107,7 @@
 	///required access level for mecha operation
 	var/list/operation_req_access = list()
 	///required access to change internal components
-	var/list/internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE)
+	var/list/internals_req_access = list()
 
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
@@ -124,9 +124,9 @@
 	)
 	///assoc list: max equips for non-arm modules key-count
 	var/list/max_equip_by_category = list(
-		MECHA_UTILITY = 0,
+		MECHA_UTILITY = 1,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 0,
+		MECHA_ARMOR = 1,
 	)
 	///flat equipment for iteration
 	var/list/flat_equipment
@@ -140,8 +140,10 @@
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = 10
+	/// How many points of slowdown are negated from equipment? Added to the mech's base movedelay.
+	var/encumbrance_gap = 1
 
-	///TIme taken to leave the mech
+	///Time taken to leave the mech
 	var/exit_delay = 2 SECONDS
 	///Time you get slept for if you get forcible ejected by the mech exploding
 	var/destruction_sleep_duration = 2 SECONDS
@@ -172,6 +174,9 @@
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
+
+	//Bool for night vision on/off
+	var/light_amplification = FALSE
 
 	///Remaining smoke charges
 	var/smoke_charges = 5

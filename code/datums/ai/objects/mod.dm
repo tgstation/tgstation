@@ -43,6 +43,6 @@
 
 /datum/ai_behavior/mod_attach/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	controller.blackboard[BB_MOD_TARGET] = null
+	controller.clear_blackboard_key(BB_MOD_TARGET)
 	var/obj/item/implant/mod/implant = controller.blackboard[BB_MOD_IMPLANT]
 	implant.end_recall(succeeded)

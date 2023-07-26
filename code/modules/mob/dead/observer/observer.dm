@@ -18,7 +18,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
 	light_system = MOVABLE_LIGHT
-	light_range = 1
+	light_outer_range = 1
 	light_power = 2
 	light_on = FALSE
 	var/can_reenter_corpse

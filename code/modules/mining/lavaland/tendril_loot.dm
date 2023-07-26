@@ -273,7 +273,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
 	light_system = MOVABLE_LIGHT
-	light_range = 7
+	light_outer_range = 7
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE

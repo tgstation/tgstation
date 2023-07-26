@@ -73,7 +73,7 @@
 	var/datum/action/cooldown/lay_web/webbing = new web_type(src)
 	webbing.webbing_time *= web_speed
 	webbing.Grant(src)
-	ai_controller.blackboard[BB_SPIDER_WEB_ACTION] = WEAKREF(webbing)
+	ai_controller.set_blackboard_key(BB_SPIDER_WEB_ACTION, webbing)
 
 /mob/living/basic/giant_spider/Login()
 	. = ..()

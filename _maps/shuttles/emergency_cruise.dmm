@@ -1,9 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/closet/secure_closet/ert_sec{
+	name = "Emergency response security locker";
+	desc = "A storage unit containing equipment for responding to emergencies.";
+	req_access = list("security")
+	},
+/obj/item/food/burger/cheese,
+/obj/item/gun/ballistic/revolver/mateba,
+/obj/item/ammo_box/a357,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ao" = (
@@ -48,6 +54,9 @@
 /mob/living/simple_animal/bot/secbot{
 	name = "Officer Beefsky"
 	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "bF" = (
@@ -75,7 +84,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "ca" = (
-/obj/machinery/vending/cola,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "cf" = (
@@ -96,9 +105,21 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "cu" = (
-/obj/machinery/vending/cola/red,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/escape)
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig";
+	normalspeed = 0
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "cz" = (
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 8
@@ -143,10 +164,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "dC" = (
-/obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/red/warning,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "dN" = (
@@ -216,6 +237,9 @@
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
 	},
+/obj/item/storage/box/lethalshot{
+	pixel_y = -13
+	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "eI" = (
@@ -228,6 +252,7 @@
 	pixel_x = -7;
 	pixel_y = 13
 	},
+/obj/effect/turf_decal/trimline/yellow/line,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "eM" = (
@@ -243,11 +268,11 @@
 /obj/structure/toilet/secret{
 	dir = 1
 	},
-/obj/machinery/door/window/left/directional/north{
-	name = "restroom"
-	},
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "fr" = (
@@ -299,6 +324,7 @@
 "fy" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/disposalpipe/segment,
+/obj/item/storage/box/fireworks/dangerous,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "fA" = (
@@ -312,9 +338,6 @@
 /obj/item/reagent_containers/cup/rag{
 	pixel_y = 7
 	},
-/obj/effect/fun_balloon/sentience/emergency_shuttle{
-	group_name = "bar staff on the NTSS Independence"
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
@@ -327,8 +350,13 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "fK" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/plastic,
+/area/shuttle/escape)
+"fP" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "gr" = (
 /obj/item/radio/intercom/directional/south,
@@ -370,6 +398,7 @@
 	anchored = 1
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "hH" = (
@@ -390,6 +419,9 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "iI" = (
@@ -475,16 +507,13 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy,
 /obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/gun/ballistic/revolver/mateba,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "jG" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
-"jK" = (
-/obj/effect/turf_decal/trimline/red/line,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/escape/brig)
 "jO" = (
 /obj/machinery/camera{
 	c_tag = "Medbay Lobby";
@@ -513,6 +542,7 @@
 "jT" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "jW" = (
@@ -552,15 +582,17 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "ku" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
-	name = "Emergency Surgery";
-	req_access = list("medical")
+/obj/machinery/door/window/survival_pod{
+	req_access = list("medical");
+	dir = 8
 	},
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "kx" = (
 /obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
@@ -589,6 +621,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/grenade/frag,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "ld" = (
@@ -753,6 +786,9 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "oZ" = (
@@ -776,8 +812,14 @@
 "pz" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/gun/ballistic/automatic/pistol/aps,
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
+"pY" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "qd" = (
 /obj/machinery/computer/warrant,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -839,6 +881,7 @@
 /obj/structure/sign/poster/contraband/clown{
 	pixel_y = 35
 	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ri" = (
@@ -856,16 +899,18 @@
 /area/shuttle/escape)
 "rw" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "rx" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/item/storage/medkit/regular,
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_x = 1;
 	pixel_y = 9
 	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "rO" = (
@@ -890,6 +935,11 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "sk" = (
+/obj/item/gun/ballistic/revolver/reverse{
+	name = "\improper Bananium Revolver";
+	desc = "A suspicious revolver. Eminates a strange, funny aura.";
+	color = "#FFFF00"
+	},
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "so" = (
@@ -950,9 +1000,29 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "tF" = (
-/mob/living/simple_animal/hostile/alien/maid/barmaid,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/handcuffs{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/recharger{
+	active_power_usage = 0;
+	idle_power_usage = 0;
+	use_power = 0;
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/storage/box/stingbangs,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/gun/grenadelauncher,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "tS" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -966,6 +1036,9 @@
 "tU" = (
 /obj/structure/chair/sofa/bench/left,
 /obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
@@ -1042,7 +1115,6 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "vI" = (
-/obj/structure/table,
 /obj/machinery/recharger{
 	active_power_usage = 0;
 	idle_power_usage = 0;
@@ -1051,6 +1123,9 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "vL" = (
@@ -1074,10 +1149,16 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "wf" = (
-/obj/effect/turf_decal/trimline/red/line{
+/obj/machinery/door/window/survival_pod{
+	name = "Shuttle Armory";
+	req_access = list("security");
+	dir = 8;
+	safe = 0
+	},
+/obj/effect/turf_decal/trimline/red/warning,
+/obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/red/corner,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "wF" = (
@@ -1154,12 +1235,16 @@
 	pixel_y = 2;
 	pixel_x = 7
 	},
+/obj/item/gun/ballistic/automatic/pistol/clandestine{
+	pixel_y = 9
+	},
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "xT" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape/brig)
 "xU" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/trimline/purple/line{
@@ -1183,8 +1268,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "yq" = (
-/obj/machinery/vending/snack/green,
-/turf/open/floor/iron/dark/textured_large,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/ballistic/revolver/c38,
+/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "ys" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -1219,11 +1305,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "za" = (
-/obj/structure/table,
-/obj/item/storage/box/handcuffs{
-	pixel_x = -3;
-	pixel_y = 9
-	},
 /obj/machinery/recharger{
 	active_power_usage = 0;
 	idle_power_usage = 0;
@@ -1231,11 +1312,11 @@
 	pixel_x = 38;
 	pixel_y = 3
 	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = 11;
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "zm" = (
@@ -1262,6 +1343,8 @@
 /area/shuttle/escape)
 "Al" = (
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/fireworks/dangerous,
+/obj/item/gun/ballistic/shotgun/lethal,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Aq" = (
@@ -1271,6 +1354,11 @@
 	},
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
+"AA" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "AB" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/trimline/red/line{
@@ -1310,6 +1398,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/item/gravity_gun,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Bv" = (
@@ -1365,7 +1454,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "Cw" = (
-/obj/machinery/vending/snack/orange,
+/obj/machinery/vending/imported,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Cy" = (
@@ -1387,16 +1476,14 @@
 	dir = 5;
 	network = list("ss13","medbay")
 	},
+/obj/effect/turf_decal/trimline/red/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/end{
+	dir = 4
+	},
 /obj/machinery/computer/arcade{
 	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 1;
-	pixel_y = -16
-	},
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 8;
-	pixel_y = 16
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
@@ -1420,6 +1507,9 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 9
 	},
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 9
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Do" = (
@@ -1438,6 +1528,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Ds" = (
+/obj/structure/bodycontainer/morgue,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -1458,6 +1549,17 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"DU" = (
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "Ed" = (
 /obj/structure/bed/double/pod,
 /obj/item/bedsheet/patriot/double,
@@ -1529,11 +1631,11 @@
 	},
 /area/shuttle/escape/brig)
 "EK" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/simple_animal/bot/medbot{
 	name = "Doctor Patches"
 	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "EL" = (
@@ -1561,9 +1663,20 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
+"Fc" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "Fp" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Brig"
+	name = "Escape Shuttle Brig";
+	safe = 0;
+	normalspeed = 0
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
@@ -1596,7 +1709,9 @@
 "FS" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Cockpit";
-	id_tag = "escape_cockpit_blast"
+	id_tag = "escape_cockpit_blast";
+	safe = 0;
+	normalspeed = 0
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/showroomfloor,
@@ -1682,6 +1797,7 @@
 /area/shuttle/escape/brig)
 "HF" = (
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/grenadelauncher,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "HT" = (
@@ -1754,6 +1870,8 @@
 	pixel_y = 32
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/grenade/frag,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jk" = (
@@ -1820,12 +1938,16 @@
 /obj/structure/sign/poster/contraband/clown{
 	pixel_y = -30
 	},
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ki" = (
 /obj/machinery/stasis,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/bedsheet/patriot,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -1889,14 +2011,19 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "LH" = (
-/obj/machinery/porta_turret/syndicate{
-	faction = list("neutral","silicon","turret");
-	gender = "female";
-	req_access = list("security");
-	dir = 1
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig";
+	safe = 0;
+	normalspeed = 0
 	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape)
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape/brig)
 "LM" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/item/a_gift/anything{
@@ -1915,7 +2042,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Mq" = (
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
@@ -1926,6 +2052,7 @@
 	pixel_y = 29
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -1955,6 +2082,9 @@
 /area/shuttle/escape)
 "MZ" = (
 /obj/effect/turf_decal/trimline/red/warning{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 5
 	},
 /turf/open/floor/iron/dark/textured,
@@ -2045,6 +2175,11 @@
 "OQ" = (
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
+"OT" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/ballistic,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "OU" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 10
@@ -2154,9 +2289,23 @@
 /obj/item/storage/cans/sixsoda,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
+"Sm" = (
+/obj/machinery/door/window/survival_pod{
+	name = "Officer Seating";
+	req_access = list("security");
+	dir = 4;
+	safe = 0
+	},
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/warning,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "So" = (
 /obj/item/storage/cans/sixbeer,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/ballistic/revolver/chaplain,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Sp" = (
@@ -2218,6 +2367,7 @@
 	req_access = list("security");
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "SZ" = (
@@ -2334,9 +2484,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Vd" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/item/storage/box/stingbangs,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Vi" = (
@@ -2416,12 +2568,16 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 10
 	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Wc" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/red/corner,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Wo" = (
@@ -2527,7 +2683,7 @@
 /turf/open/floor/iron/white/textured_edge,
 /area/shuttle/escape)
 "YI" = (
-/obj/machinery/vending/liberationstation,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "YN" = (
@@ -2671,8 +2827,8 @@ aG
 uV
 Eg
 uV
-yq
-cu
+Cw
+ca
 uV
 Di
 en
@@ -2689,8 +2845,8 @@ aG
 uV
 Eg
 uV
-nU
-nU
+pY
+fP
 bT
 mw
 mw
@@ -2740,7 +2896,7 @@ xf
 iQ
 nU
 nU
-nU
+OT
 xb
 so
 Od
@@ -2755,7 +2911,7 @@ kd
 kd
 kd
 kd
-LH
+uV
 cf
 WT
 dV
@@ -2784,7 +2940,7 @@ xf
 xf
 xf
 iQ
-nU
+AA
 nU
 nU
 xb
@@ -2806,11 +2962,11 @@ rX
 Vm
 dQ
 iP
-Fp
+LH
 iP
-dQ
+iP
 Vm
-Yv
+xT
 rX
 Sp
 wF
@@ -2898,7 +3054,7 @@ rX
 Pr
 AB
 Vd
-AB
+cu
 iP
 tU
 oH
@@ -2988,12 +3144,12 @@ Ep
 Sp
 Vm
 jT
-AB
+Sm
 vI
 nZ
 SK
 MZ
-jW
+Fc
 Kg
 rX
 DJ
@@ -3023,7 +3179,7 @@ xf
 uV
 uV
 uV
-uV
+OK
 "}
 (11,1,1) = {"
 Tw
@@ -3040,7 +3196,7 @@ GT
 iP
 dS
 Yh
-AB
+DU
 rX
 qx
 gY
@@ -3082,11 +3238,11 @@ HA
 jW
 Wc
 bE
-jK
+Hs
 iP
 xi
 OQ
-AB
+DU
 rX
 ft
 El
@@ -3127,8 +3283,8 @@ Sp
 Vm
 re
 wf
-jW
-Hs
+tF
+AB
 iP
 HW
 BT
@@ -3161,7 +3317,7 @@ xf
 uV
 uV
 uV
-uV
+Et
 "}
 (14,1,1) = {"
 Tw
@@ -3353,7 +3509,7 @@ kd
 kd
 kd
 kd
-LH
+uV
 cf
 Ij
 nb
@@ -3382,7 +3538,7 @@ Lf
 xf
 xf
 xf
-nU
+yq
 jw
 fB
 nU
@@ -3430,8 +3586,8 @@ xf
 iQ
 Lz
 xf
-tF
-xT
+xf
+xf
 xf
 AX
 uV

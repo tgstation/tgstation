@@ -1099,7 +1099,7 @@
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
 "BK" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
 "Cc" = (
@@ -1504,7 +1504,7 @@
 /area/misc/anomaly_research)
 "MN" = (
 /obj/structure/flora/grass/green/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/misc/anomaly_research)
 "Nc" = (

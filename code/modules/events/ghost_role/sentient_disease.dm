@@ -4,6 +4,7 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 25
+	earliest_start = 60 MINUTES //monke edit: 25 to 60
 	category = EVENT_CATEGORY_HEALTH
 	description = "Spawns a sentient disease, who wants to infect as many people as possible."
 	min_wizard_trigger_potency = 4

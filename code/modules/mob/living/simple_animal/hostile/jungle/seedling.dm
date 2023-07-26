@@ -40,7 +40,7 @@
 	icon_state = "seedling"
 	damage = 10
 	damage_type = BURN
-	light_range = 2
+	light_outer_range = 2
 	armor_flag = ENERGY
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	hitsound = 'sound/weapons/sear.ogg'
