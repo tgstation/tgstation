@@ -190,3 +190,7 @@
 	. = ..()
 	SSore_generation.available_boulders -= src
 	processed_by = null
+
+/obj/item/boulder/examine(mob/user)
+	. = ..()
+	. += span_notice("This boulder would take [durability] more steps to refine.")

@@ -9,9 +9,7 @@
 
 	/// What is the efficiency of minerals produced by the machine?
 	var/refining_efficiency = 1
-	/// How many boulders are we processing right now within our contents?
-	var/boulders_processing = 0
-	/// How many boulders can we process maximum?
+	/// How many boulders can we process maximum per loop?
 	var/boulders_processing_max = 1
 	/// How many boulders are we holding?
 	var/boulders_held = 0
@@ -21,6 +19,9 @@
 	var/holds_minerals = FALSE
 	/// What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.
 	var/list/processable_materials = list()
+
+	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
+	COOLDOWN_DECLARE(sound_cooldown)
 
 	/// Silo link to it's materials list.
 	var/datum/component/remote_materials/silo_materials
@@ -81,23 +82,26 @@
 		return FALSE
 
 /obj/machinery/bouldertech/process()
-	. = ..()
+	// . = ..()
+	say("hit!")
 	var/blocker = FALSE
 	var/boulders_concurrent = boulders_processing_max
-	for(var/i in contents)
+	for(var/i in 1 to contents.len)
 		if(boulders_concurrent <= 0)
 			say("Hit as many as possible!")
 			return //Try again next time
-
-		if(!istype(i, /obj/item/boulder))
-			continue
-		var/obj/item/boulder/boulder = contents[i]
-		boulders_concurrent--
-		boulder.durability-- //One less durability to the processed boulder.
-		blocker = TRUE
-		if(boulder.durability <= 0)
-			breakdown_boulder(boulder) //Crack that boulder open!
-			continue
+		if(istype(contents[i], /obj/item/boulder))
+			var/obj/item/boulder/boulder = contents[i]
+			boulders_concurrent--
+			boulder.durability-- //One less durability to the processed boulder.
+			balloon_alert_to_viewers(boulder.durability)
+			if(COOLDOWN_FINISHED(src, sound_cooldown))
+				COOLDOWN_START(src, sound_cooldown, 2 SECONDS)
+				playsound(loc, usage_sound, (60-(5*abs(boulder.durability))), FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+			blocker = TRUE
+			if(boulder.durability <= 0)
+				breakdown_boulder(boulder) //Crack that boulder open!
+				continue
 
 	if(!blocker)
 		STOP_PROCESSING(SSmachines, src)
@@ -122,6 +126,7 @@
 	if(!chosen_boulder.custom_materials)
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		update_boulder_count()
 		return FALSE
 	if(isnull(silo_materials))
 		return
@@ -148,6 +153,7 @@
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		update_boulder_count()
 		return TRUE
 
 	var/obj/item/boulder/new_rock = new (src)
@@ -184,11 +190,13 @@
 		return FALSE
 	if(!possible_boulder.custom_materials)
 		qdel(possible_boulder)
+		update_boulder_count()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 	possible_boulder.forceMove(src.drop_location())
 	boulders_held = clamp(boulders_held--, 0, boulders_held_max)
 	visible_message(span_warning("[boulders_held] remaining!"))
+	update_boulder_count()
 	return TRUE
 
 /obj/machinery/bouldertech/proc/update_boulder_count()
@@ -207,6 +215,7 @@
 	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
 	icon_state = "brm"
 	circuit = /obj/item/circuitboard/machine/brm
+	usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
 
 /**
  * So, this should be probably handed in a more elegant way going forward, like a small TGUI prompt to select which boulder you want to pull from.
@@ -251,6 +260,7 @@
 		/datum/material/runite,
 	)
 	circuit = /obj/item/circuitboard/machine/smelter
+	usage_sound = 'sound/machines/mining/smelter.ogg'
 
 
 /obj/machinery/bouldertech/refinery
@@ -267,6 +277,7 @@
 		/datum/material/plastic,
 	)
 	circuit = /obj/item/circuitboard/machine/refinery
+	usage_sound = 'sound/machines/mining/refinery.ogg'
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
