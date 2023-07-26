@@ -686,7 +686,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		if(health <= 0)
 			head_icon = DF.get_overlay(dir = EAST)
 			head_icon.pixel_y = -8
-			head_icon.transform = REVERSE_DIR(head_icon.transform)
+			head_icon.transform = turn(head_icon.transform, 180)
 		else
 			head_icon = DF.get_overlay()
 
