@@ -41,7 +41,7 @@
 	return ..()
 
 /// Speak the provided line on the provided radio channel
-/datum/action/cooldown/bot_announcement/proc/announce(var/line, var/channel)
+/datum/action/cooldown/bot_announcement/proc/announce(line, channel)
 	var/mob/living/simple_animal/bot/bot_owner = owner
 	if (!(bot_owner.bot_mode_flags & BOT_MODE_ON))
 		return
