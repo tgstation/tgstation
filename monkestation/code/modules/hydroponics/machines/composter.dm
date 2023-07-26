@@ -16,10 +16,21 @@
 	if(istype(attacking_item, /obj/item/food/grown))
 		compost(attacking_item)
 
+	if(istype(attacking_item, /obj/item/storage/bag)) // covers any kind of bag that has a compostible item
+		var/obj/item/storage/bag/bag = attacking_item
+		for(var/obj/item/food/grown/item in bag.contents)
+			if(bag.atom_storage.attempt_remove(item, src))
+				compost(item)
+
+		for(var/obj/item/seeds/item in bag.contents)
+			if(bag.atom_storage.attempt_remove(item, src))
+				compost(item)
+		to_chat(user, span_info("You empty \the [bag] into \the [src]."))
+
 /obj/machinery/composters/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(biomatter < 40)
-		to_chat(user, span_notice("No enough biomatter to produce Bio-Cube"))
+		to_chat(user, span_notice("Not enough biomatter to produce Bio-Cube"))
 		return
 	new /obj/item/bio_cube(get_turf(src))
 	biomatter -= 40
@@ -60,10 +71,14 @@
 	icon_state = "bio_cube"
 
 	var/total_duration = 60 SECONDS
-	var/scale_multiplier = 1
+	var/scale_multiplier = 0.6
 
 
-/obj/item/bio_cube/attacked_by(obj/item/attacking_item, mob/living/user)
+/obj/item/bio_cube/update_desc()
+	. = ..()
+	desc = "A cube made of pure biomatter, it seems to be bigger than normal making it last [total_duration / 600] minutes. Does wonders on plant trays."
+
+/obj/item/bio_cube/attackby(obj/item/attacking_item, mob/living/user)
 	. = ..()
 	if(istype(attacking_item, /obj/item/bio_cube))
 		var/obj/item/bio_cube/attacking_cube = attacking_item
