@@ -31,17 +31,18 @@
 		"You feel robust!",
 		"You feel indestructible!",
 	)
+	var/static/list/finished_silicon_message = list(
+		"You feel nothing!",
+		"No pain, no gain!",
+		"Chassis hardness rating... Unchanged.",
+		"You feel the exact same. Nothing.",
+	)
 
 /obj/structure/weightmachine/Initialize(mapload)
 	. = ..()
 
 	weight_action = new(src)
 	weight_action.weightpress = src
-
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Work out", \
-	)
 
 	var/static/list/tool_behaviors = list(
 		TOOL_CROWBAR = list(
@@ -91,7 +92,10 @@
 	START_PROCESSING(SSobj, src)
 	if(do_after(user, 8 SECONDS, src) && user.has_gravity())
 		user.Stun(2 SECONDS)
-		user.balloon_alert(user, pick(finished_message))
+		if(issilicon(user))
+			user.balloon_alert(user, pick(finished_silicon_message))
+		else
+			user.balloon_alert(user, pick(finished_message))
 		user.add_mood_event("exercise", /datum/mood_event/exercise)
 		user.apply_status_effect(/datum/status_effect/exercised)
 	end_workout()
