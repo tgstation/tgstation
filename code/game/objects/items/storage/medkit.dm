@@ -19,7 +19,7 @@
 	throw_speed = 3
 	throw_range = 7
 	var/empty = FALSE
-	//defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
+	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 	var/damagetype_healed
 	/// you just type this in holdables list of medkits instead of copypasting bunch of text.
 	var/static/list/list_of_everything_medkits_can_hold = list(
