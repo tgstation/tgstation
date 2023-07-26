@@ -325,8 +325,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			emp_knockout(6 SECONDS)
 
 /mob/living/silicon/robot/proc/emp_knockout(deciseconds)
-	if(!src || !deciseconds)
-		return
 	set_stat(UNCONSCIOUS)
 	addtimer(CALLBACK(src, PROC_REF(wake_from_emp)), deciseconds, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
