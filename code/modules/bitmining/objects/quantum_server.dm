@@ -113,6 +113,27 @@
 	if(scanner)
 		scanner_tier = scanner.tier
 
+/// Gives all current occupants a notification that the server is going down
+/obj/machinery/quantum_server/proc/begin_shutdown(mob/user)
+	if(isnull(generated_domain))
+		return
+
+	if(!length(occupant_mind_refs))
+		stop_domain(user)
+		return
+
+	for(var/datum/weakref/mind_ref in occupant_mind_refs)
+		var/datum/mind/this_mind = mind_ref.resolve()
+		if(isnull(this_mind))
+			occupant_mind_refs -= this_mind
+			continue
+
+		SEND_SIGNAL(this_mind, COMSIG_BITMINING_SHUTDOWN_ALERT, src)
+
+	balloon_alert(user, "notifying clients...")
+	if(do_after(user, 15 SECONDS, src))
+		stop_domain(user)
+
 /// Checks if there is a loot crate in the designated send areas (2x2)
 /obj/machinery/quantum_server/proc/check_completion(mob/user)
 	if(isnull(generated_domain))
@@ -418,7 +439,7 @@
 
 	loading = TRUE
 	domain_randomized = FALSE
-	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECTED)
+	SEND_SIGNAL(src, COMSIG_BITMINING_SERVER_CRASH)
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
 	var/datum/space_level/vdom = vdom_ref?.resolve()

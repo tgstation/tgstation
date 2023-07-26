@@ -105,8 +105,8 @@
 	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
 	var/list/book_titles_read
 
-	/// Any currently connected netchairs
-	var/datum/weakref/netchair_ref
+	/// Any currently connected netpod
+	var/datum/weakref/netpod_ref
 	/// Weakref of the person that initiated VR. This sometimes requires subsequent hops, so we need a reference to the original
 	var/datum/weakref/pilot_ref
 

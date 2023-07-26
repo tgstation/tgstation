@@ -93,7 +93,7 @@
 			server.cold_boot_map(usr, params["id"])
 			return TRUE
 		if("stop_domain")
-			server.stop_domain(usr)
+			server.begin_shutdown(usr)
 			return TRUE
 
 	return FALSE

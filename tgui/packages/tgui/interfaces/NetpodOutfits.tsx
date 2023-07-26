@@ -19,7 +19,7 @@ type Outfit = {
   type: string;
 };
 
-export const NetChair = (props, context) => {
+export const NetpodOutfits = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { netsuit, collections = [] } = data;
   const [selectedType, setSelectedType] = useLocalState<Collection>(

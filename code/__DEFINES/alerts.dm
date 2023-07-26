@@ -61,5 +61,6 @@
 #define ALERT_TEMPERATURE_HOT "temphot"
 #define ALERT_TEMPERATURE_COLD "tempcold"
 
-/** Bitmining proximity detection */
-#define ALERT_BITMINING_PROXIMITY "bitmining_proximity"
+/** Bitmining */
+#define ALERT_BITMINING_CROWBAR "bitmining_crowbar"
+#define ALERT_BITMINING_SHUTDOWN "bitmining_shutdown"
