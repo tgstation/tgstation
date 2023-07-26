@@ -266,6 +266,7 @@
 /datum/action/item_action/chameleon/change/scanner/New(Target)
 	chameleon_blacklist |= typecacheof(list(
 		/obj/item/door_remote/omni,
+		/obj/item/flashlight/emp/debug,
 		/obj/item/flashlight/flare,
 		/obj/item/healthanalyzer/rad_laser,
 		/obj/item/multitool/ai_detect,

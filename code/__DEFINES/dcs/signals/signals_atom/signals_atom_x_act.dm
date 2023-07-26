@@ -6,7 +6,7 @@
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"
 ///from base of atom/emp_act(): (severity). return EMP protection flags
 #define COMSIG_ATOM_PRE_EMP_ACT "atom_emp_act"
-///from base of atom/emp_act(): (severity)
+///from base of atom/emp_act(): (severity, protection)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"

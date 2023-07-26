@@ -1,7 +1,9 @@
+/// Small handheld chameleon item that allows a user to mimic the outfit of another person.
 /obj/item/chameleon_scanner
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/chameleon/change/scanner)
+	/// Range that we can scan people
 	var/scan_range = 5
 
 /obj/item/chameleon_scanner/examine(mob/user)
@@ -32,6 +34,14 @@
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN // no normal afterattack
 
+/**
+ * Attempts to scan a human's outfit
+ *
+ * * scanned - the atom being scanned.
+ * * scanner - the mob doing the scanning
+ *
+ * Returns null or a list of paths scanned. Will not return an empty list.
+ */
 /obj/item/chameleon_scanner/proc/scan_target(atom/scanned, mob/scanner)
 	if(get_dist(scanned, scanner) > scan_range)
 		return
@@ -48,7 +58,11 @@
 
 	var/list/all_scanned_items = list()
 	for(var/obj/item/thing in mob_copying.get_equipped_items())
-		all_scanned_items |= thing.type
+		var/datum/action/item_action/chameleon/change/counter_chameleon = locate() in thing.actions
+		if(counter_chameleon)
+			all_scanned_items |= counter_chameleon.active_type
+		else
+			all_scanned_items |= thing.type
 
 	if(!length(all_scanned_items))
 		scanned.balloon_alert(scanner, "nothing to scan!")
