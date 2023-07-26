@@ -90,19 +90,19 @@
 		if(boulders_concurrent <= 0)
 			say("Hit as many as possible!")
 			return //Try again next time
-		if(istype(contents[i], /obj/item/boulder))
-			var/obj/item/boulder/boulder = contents[i]
-			boulders_concurrent--
-			boulder.durability-- //One less durability to the processed boulder.
-			balloon_alert_to_viewers(boulder.durability)
-			if(COOLDOWN_FINISHED(src, sound_cooldown))
-				COOLDOWN_START(src, sound_cooldown, 2 SECONDS)
-				playsound(loc, usage_sound, (60-(5*abs(boulder.durability))), FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-			blocker = TRUE
-			if(boulder.durability <= 0)
-				breakdown_boulder(boulder) //Crack that boulder open!
-				continue
-
+		if(!istype(contents[i], /obj/item/boulder))
+			continue
+		var/obj/item/boulder/boulder = contents[i]
+		boulders_concurrent--
+		boulder.durability-- //One less durability to the processed boulder.
+		balloon_alert_to_viewers(boulder.durability)
+		if(COOLDOWN_FINISHED(src, sound_cooldown))
+			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
+			playsound(loc, usage_sound, (60-(5*abs(boulder.durability))), FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+		blocker = TRUE
+		if(boulder.durability <= 0)
+			breakdown_boulder(boulder) //Crack that bouwlder open!
+			continue
 	if(!blocker)
 		STOP_PROCESSING(SSmachines, src)
 		say("Shit, no boulder!")
@@ -147,6 +147,7 @@
 	if(!tripped)
 		remove_boulder(chosen_boulder)
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
+	use_power(100) //Standardize this, hopefully
 	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
 	balloon_alert_to_viewers("Boulder processed!")
 	// playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE) //Maybe look for an industrial sound here instead?
@@ -157,7 +158,6 @@
 		return TRUE
 
 	var/obj/item/boulder/new_rock = new (src)
-	// new_rock.custom_materials = remaining_ores //remove
 	new_rock.set_custom_materials(remaining_ores)
 	remove_boulder(new_rock)
 	return TRUE
