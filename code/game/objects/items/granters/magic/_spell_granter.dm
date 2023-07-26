@@ -33,7 +33,7 @@
 	if(!granted_action)
 		CRASH("Someone attempted to learn [type], which did not have an spell set.")
 	if(locate(granted_action) in user.actions)
-		if(IS_WIZARD(user))
+		if(HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 			to_chat(user, span_warning("You're already far more versed in the spell [action_name] \
 				than this flimsy how-to book can provide!"))
 		else

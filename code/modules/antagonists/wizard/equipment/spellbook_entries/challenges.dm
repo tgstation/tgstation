@@ -8,3 +8,6 @@
 /datum/spellbook_entry/challenge/antiwizard
 	name = "Friendly Wizard Scum"
 	desc = "A \"Friendly\" Wizard will protect the station, and try to kill you. They get a spellbook much like you, but will use it for \"GOOD\"."
+
+/datum/spellbook_entry/challenge/can_be_purchased() //im pretty sure this makes these not show up, kinda removing the point of them
+	return FALSE
