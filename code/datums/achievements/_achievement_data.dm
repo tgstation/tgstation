@@ -116,7 +116,6 @@
 	.["user_key"] = user.ckey
 
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
-	//This should be split into static data later
 	for(var/achievement_type in SSachievements.awards)
 		var/datum/award/award = SSachievements.awards[achievement_type]
 		if(!award.name) //No name? we a subtype.
