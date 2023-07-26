@@ -131,6 +131,14 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	return TRUE
 
 /**
+ * Deconstruct with crowbar
+ */
+/obj/machinery/fax/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_deconstruction_crowbar(tool)
+	return TRUE
+
+/**
  * Using the multi-tool with the panel closed causes the fax network name to be renamed.
  */
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
@@ -519,3 +527,72 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 	return .
 
+/// Suptypes of fax machines
+
+/obj/machinery/fax/captain
+	fax_name = "Captain's Office"
+	name = "Captain's Fax Machine"
+
+/obj/machinery/fax/hos
+	fax_name = "Head of Security's Office"
+	name = "Head of Security's Fax Machine"
+
+/obj/machinery/fax/security
+	fax_name = "Security Office"
+	name = "Security Office Fax Machine"
+
+/obj/machinery/fax/detective
+	fax_name = "Detective's Office"
+	name = "Detective's Fax Machine"
+
+/obj/machinery/fax/law
+	fax_name = "Law Office"
+	name = "Law Office Fax Machine"
+
+/obj/machinery/fax/cmo
+	name = "Chief Medical Officer's Fax Machine"
+	fax_name = "Chief Medical Officer's Office"
+
+/obj/machinery/fax/medical
+	fax_name = "Medical"
+	name = "Medical Fax Machine"
+
+/obj/machinery/fax/psychology
+	fax_name = "Psychology Office"
+	name = "Psychology Office Fax Machine"
+
+/obj/machinery/fax/ce
+	fax_name = "Chief Engineer's Office"
+	name = "Chief Engineer's Fax Machine"
+
+/obj/machinery/fax/engineering
+	fax_name = "Engineering Lobby"
+	name = "Engineering Lobby Fax Machine"
+
+/obj/machinery/fax/rd
+	fax_name = "Research Director's Office"
+	name = "Research Director's Fax Machine"
+
+/obj/machinery/fax/science
+	fax_name = "Research Division"
+	name = "Research Division Fax Machine"
+
+/obj/machinery/fax/qm
+	fax_name = "Quartermaster's Office"
+	name = "Quartermaster's Fax Machine"
+
+/obj/machinery/fax/cargo
+	fax_name = "Cargo Office"
+	name = "Cargo Office Fax Machine"
+
+/obj/machinery/fax/hop
+	fax_name = "Head of Personnel's Office"
+	name = "Head of Personnel's Fax Machine"
+
+/obj/machinery/fax/service
+	fax_name = "Service Hallway"
+	name = "Service Fax Machine"
+
+/obj/machinery/fax/trial
+	fax_name = "Pre-Trial"
+	name = "Pre-Trial Fax Machine"

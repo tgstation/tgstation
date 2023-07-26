@@ -814,10 +814,7 @@
 /area/shuttle/escape)
 "Kf" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
+/obj/machinery/fax/captain,
 /obj/item/paper,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
