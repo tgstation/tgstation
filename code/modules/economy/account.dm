@@ -125,9 +125,19 @@
 		if(reason)
 			add_log_to_history(amount, reason)
 		if(debt_collected)
-			add_log_to_history(-debt_collected, "Other: Debt Collection")
+			pay_debt(debt_collected)
 		return TRUE
 	return FALSE
+
+///Called when a portion of a debt is to be paid. It'll return the amount of credits put forwards to extinguish the debt.
+/datum/bank_account/proc/pay_debt(amount)
+	var/amount_to_pay = min(amount, account_debt)
+	if(!adjust_money(-amount, "Other: Debt Collection"))
+		return 0
+	log_econ("[amount_to_pay] credits were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
+	account_debt -= amount_to_pay
+	SEND_SIGNAL(src, COMSIG_BANK_ACCOUNT_DEBT_PAID)
+	return amount_to_pay
 
 /**
  * Performs a transfer of credits to the bank_account datum from another bank account.
