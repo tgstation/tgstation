@@ -17,6 +17,15 @@
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
 
+/datum/station_trait/vending_shortage
+	name = "Vending products shortage"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 1
+	show_in_report = TRUE
+	can_revert = FALSE //Because it touches every maploaded vending machine on the station.
+	report_message = "We haven't had the time to properly resupply the station's vending machines. Some items may be unavailable."
+	trait_to_give = STATION_TRAIT_VENDING_SHORTAGE
+
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE
