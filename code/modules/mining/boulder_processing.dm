@@ -82,23 +82,33 @@
 
 /obj/machinery/bouldertech/process()
 	. = ..()
-	// We want to loop boulder_processing_max number of times and process a boulder each time asynchronously.
-	if(!is_type_in_list(/obj/item/boulder, contents))
-		say("Shit, no boulders!")
-		STOP_PROCESSING(SSmachines, src) //Nothing to process
+	var/blocker = FALSE
+	var/boulders_concurrent = boulders_processing_max
+	for(var/i in contents)
+		if(boulders_concurrent <= 0)
+			say("Hit as many as possible!")
+			return //Try again next time
+
+		if(!istype(i, /obj/item/boulder))
+			continue
+		var/obj/item/boulder/boulder = contents[i]
+		boulders_concurrent--
+		boulder.durability-- //One less durability to the processed boulder.
+		blocker = TRUE
+		if(boulder.durability <= 0)
+			breakdown_boulder(boulder) //Crack that boulder open!
+			continue
+
+	if(!blocker)
+		STOP_PROCESSING(SSmachines, src)
+		say("Shit, no boulder!")
 		return
-	for(var/i in 1 to boulders_processing_max)
-		var/obj/item/boulder/boulder = pick(contents)
-		if(!boulder)
-			STOP_PROCESSING(SSmachines, src)
-			say("Shit, no extra boulders!")
-			return
-		addtimer(CALLBACK(src, PROC_REF(breakdown_boulder), boulder), 15 SECONDS)
+
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(boulders_held >= boulders_held_max)
-		return FALSEWAW
+		return FALSE
 	if(istype(mover, /obj/item/boulder))
 		return TRUE
 

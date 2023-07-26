@@ -178,10 +178,13 @@
 	item_flags = NO_MAT_REDEMPTION
 	///When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
 	var/obj/machinery/bouldertech/processed_by = null
+	/// How many steps of refinement this boulder has gone through. Starts at 5-8, goes down one each machine process.
+	var/durability = 5
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
+	durability += rand(0, 3) //randomize durability a bit for some flavor. Gives room for subtypes to have different durability values.
 
 /obj/item/boulder/Destroy(force)
 	. = ..()
