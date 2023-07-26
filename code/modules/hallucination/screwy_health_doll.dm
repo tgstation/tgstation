@@ -29,7 +29,7 @@
 		return FALSE
 
 	add_fake_limb()
-	del_timer_id = QDEL_IN(src, duration)
+	del_timer_id = QDEL_IN_STOPPABLE(src, duration)
 	return TRUE
 
 /// Increments the severity of the damage seen on all the limbs we are already tracking.

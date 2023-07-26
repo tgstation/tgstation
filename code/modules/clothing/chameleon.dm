@@ -369,28 +369,28 @@
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
+	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	icon_state = "jumpsuit"
 	greyscale_colors = "#3f3f3f"
 	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
-	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
+	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
 	resistance_flags = NONE
 	can_adjust = FALSE
-	armor_type = /datum/armor/under_chameleon
+	armor_type = /datum/armor/clothing_under/chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/datum/armor/under_chameleon
+/datum/armor/clothing_under/chameleon
 	melee = 10
 	bullet = 10
 	laser = 10
-	bio = 10
 	fire = 50
 	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/chameleon/Initialize(mapload)
 	. = ..()
@@ -668,12 +668,14 @@
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
+	desc = "A pair of black shoes."
 	icon_state = "sneakers"
 	inhand_icon_state = "sneakers_back"
 	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
-	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-	desc = "A pair of black shoes."
+	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_chameleon
 
@@ -953,7 +955,7 @@
 
 	if(istype(gun_to_set, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/ball_gun = gun_to_set
-		var/obj/item/ammo_box/ball_ammo = new ball_gun.mag_type(gun_to_set)
+		var/obj/item/ammo_box/ball_ammo = new ball_gun.spawn_magazine_type(gun_to_set)
 		qdel(ball_gun)
 
 		if(!istype(ball_ammo) || !ball_ammo.ammo_type)

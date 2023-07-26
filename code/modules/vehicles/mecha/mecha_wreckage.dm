@@ -6,7 +6,7 @@
 /obj/structure/mecha_wreckage
 	name = "exosuit wreckage"
 	desc = "Remains of some unfortunate mecha. Completely irreparable, but perhaps something can be salvaged."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
 	opacity = FALSE
@@ -220,7 +220,7 @@
 
 /obj/structure/mecha_wreckage/savannah_ivanov
 	name = "\improper Savannah-Ivanov wreckage"
-	icon = 'icons/mecha/coop_mech.dmi'
+	icon = 'icons/mob/coop_mech.dmi'
 	icon_state = "savannah_ivanov-broken"
 	welder_salvage = list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(

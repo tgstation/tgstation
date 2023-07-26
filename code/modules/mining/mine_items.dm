@@ -19,6 +19,13 @@
 /obj/effect/light_emitter/singularity_act()
 	return
 
+/obj/effect/light_emitter/podbay
+	set_cap = 1
+
+/obj/effect/light_emitter/thunderdome
+	set_cap = 1
+	set_luminosity = 1.6
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner
@@ -54,6 +61,7 @@
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/storage/box/emptysandbags(src)
+	new /obj/item/card/mining_point_card(src)
 	new /obj/item/shovel(src)
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/radio/headset/headset_cargo/mining(src)
@@ -63,7 +71,10 @@
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
-	new /obj/item/survivalcapsule(src)
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
+		new /obj/item/survivalcapsule/bathroom(src)
+	else
+		new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
 
 

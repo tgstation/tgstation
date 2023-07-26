@@ -129,7 +129,7 @@
 /obj/structure/ghost_portal
 	name = "Spooky Portal"
 	desc = "A portal between our dimension and who-knows-where? It's emitting an absolutely ungodly wailing sound."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "anom"
 	anchored = TRUE
 	var/static/list/spooky_noises = list(

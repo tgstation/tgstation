@@ -35,7 +35,7 @@
 	equipped_on.update_worn_undersuit()
 	if(visualsOnly)
 		return
-	equipped_on.fully_replace_character_name(null,"Waldo")
+	equipped_on.fully_replace_character_name(null, "Waldo")
 	equipped_on.eye_color_left = "#000000"
 	equipped_on.eye_color_right = "#000000"
 	equipped_on.gender = MALE
@@ -43,8 +43,8 @@
 	equipped_on.hairstyle = "Business Hair 3"
 	equipped_on.facial_hairstyle = "Shaved"
 	equipped_on.hair_color = "#000000"
-	equipped_on.facial_hair_color = equipped_on.hair_color
-	equipped_on.update_body()
+	equipped_on.facial_hair_color = "#000000"
+	equipped_on.update_body(is_creating = TRUE)
 
 	var/list/no_drops = list()
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_FEET)

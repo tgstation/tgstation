@@ -25,13 +25,12 @@
 /proc/try_to_zombie_infect(mob/living/carbon/human/target)
 	CHECK_DNA_AND_SPECIES(target)
 
-	if(NOZOMBIE in target.dna.species.species_traits)
-		// cannot infect any NOZOMBIE subspecies (such as high functioning
-		// zombies)
+	if(HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
+		// cannot infect any TRAIT_NO_ZOMBIFY human
 		return
 
 	// spaceacillin has a 75% chance to block infection
-	if(istype(target) && target.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(75))
+	if(HAS_TRAIT(target, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return
 
 	var/obj/item/organ/internal/zombie_infection/infection

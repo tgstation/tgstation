@@ -584,7 +584,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "ectoplasm"
 	desc = "Spooky."
 	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/suicide_act(mob/living/user)
@@ -592,7 +592,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return OXYLOSS
 
 /obj/item/ectoplasm/angelic
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "angelplasm"
 
 /obj/item/ectoplasm/mystic
@@ -847,7 +847,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "flyswatter"
 	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -872,7 +872,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
 		/mob/living/basic/spiderling,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
 		/obj/item/queen_bee,
 	))
@@ -1117,7 +1117,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 25
 
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
-	if(!IS_WIZARD(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()

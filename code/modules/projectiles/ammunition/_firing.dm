@@ -2,25 +2,26 @@
 	distro += variance
 	var/targloc = get_turf(target)
 	ready_proj(target, user, quiet, zone_override, fired_from)
+	var/obj/projectile/thrown_proj
 	if(pellets == 1)
 		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
 				spread = round((rand() - 0.5) * distro)
 			else //Smart spread
 				spread = round(1 - 0.5) * distro
-		if(!throw_proj(target, targloc, user, params, spread, fired_from))
+		thrown_proj = throw_proj(target, targloc, user, params, spread, fired_from)
+		if(isnull(thrown_proj))
 			return FALSE
 	else
 		if(isnull(loaded_projectile))
 			return FALSE
 		AddComponent(/datum/component/pellet_cloud, projectile_type, pellets)
-		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
 
 	var/next_delay = click_cooldown_override || CLICK_CD_RANGE
 	if(HAS_TRAIT(user, TRAIT_DOUBLE_TAP))
 		next_delay = round(next_delay * 0.5)
-
 	user.changeNext_move(next_delay)
+
 	if(!tk_firing(user, fired_from))
 		user.newtonian_move(get_dir(target, user))
 	else if(ismovable(fired_from))
@@ -29,6 +30,9 @@
 			var/throwtarget = get_step(fired_from, get_dir(target, fired_from))
 			firer.safe_throw_at(throwtarget, 1, 2)
 	update_appearance()
+
+	SEND_SIGNAL(src, COMSIG_FIRE_CASING, target, user, fired_from, randomspread, spread, zone_override, params, distro, thrown_proj)
+
 	return TRUE
 
 /obj/item/ammo_casing/proc/tk_firing(mob/living/user, atom/fired_from)
@@ -62,7 +66,7 @@
 /obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	var/turf/curloc = get_turf(fired_from)
 	if (!istype(targloc) || !istype(curloc) || !loaded_projectile)
-		return FALSE
+		return null
 
 	var/firing_dir
 	if(loaded_projectile.firer)
@@ -79,7 +83,7 @@
 	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
 	loaded_projectile_cache.fire(null, direct_target)
-	return TRUE
+	return loaded_projectile_cache
 
 /obj/item/ammo_casing/proc/spread(turf/target, turf/current, distro)
 	var/dx = abs(target.x - current.x)

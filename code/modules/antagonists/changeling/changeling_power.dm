@@ -7,17 +7,33 @@
 	background_icon_state = "bg_changeling"
 	overlay_icon_state = "bg_changeling_border"
 	button_icon = 'icons/mob/actions/actions_changeling.dmi'
-	var/needs_button = TRUE//for passive abilities like hivemind that dont need a button
-	var/helptext = "" // Details
-	var/chemical_cost = 0 // negative chemical cost is for passive abilities (chemical glands)
-	var/dna_cost = -1 //cost of the sting in dna points. 0 = auto-purchase (see changeling.dm), -1 = cannot be purchased
-	var/req_dna = 0  //amount of dna needed to use this ability. Changelings always have atleast 1
-	var/req_human = FALSE //if you need to be human to use this ability
-	var/req_absorbs = 0 //similar to req_dna, but only gained from absorbing, not DNA sting
-	///Maximum stat before the ability is blocked. For example, `UNCONSCIOUS` prevents it from being used when in hard crit or dead, while `DEAD` allows the ability to be used on any stat values.
+	/// For passive abilities like hivemind that dont need an action button
+	var/needs_button = TRUE
+	/// Details displayed in fine print within the changling emporium
+	var/helptext = ""
+	/// How many changeling chems it costs to use
+	var/chemical_cost = 0
+	/**
+	 * Cost of the ability in dna points, negative values are not valid
+	 *
+	 * Special numbers include [CHANGELING_POWER_INNATE], which are given to changeling for free without bring prompted
+	 * and [CHANGELING_POWER_UNOBTAINABLE], which are not available for purchase in the changeling emporium
+	 */
+	var/dna_cost = CHANGELING_POWER_UNOBTAINABLE
+	/// Amount of dna needed to use this ability. Note, changelings always have atleast 1
+	var/req_dna = 0
+	/// If you need to be humanoid to use this ability (disincludes monkeys)
+	var/req_human = FALSE
+	/// Similar to req_dna, but only gained from absorbing, not DNA sting
+	var/req_absorbs = 0
+	/// Maximum stat before the ability is blocked.
+	/// For example, `UNCONSCIOUS` prevents it from being used when in hard crit or dead,
+	/// while `DEAD` allows the ability to be used on any stat values.
 	var/req_stat = CONSCIOUS
-	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
-	var/active = FALSE//used by a few powers that toggle
+	/// usable when the changeling is in death coma
+	var/ignores_fakedeath = FALSE
+	/// used by a few powers that toggle
+	var/active = FALSE
 
 /*
 changeling code now relies on on_purchase to grant powers.

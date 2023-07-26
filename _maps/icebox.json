@@ -14,7 +14,7 @@
 	},
 	"traits": [
 		{
-			"Up": 1,
+			"Up": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
@@ -23,8 +23,8 @@
 			"No Parallax": true
 		},
 		{
-			"Down": -1,
-			"Up": 1,
+			"Down": true,
+			"Up": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
@@ -33,7 +33,7 @@
 			"No Parallax": true
 		},
 		{
-			"Down": -1,
+			"Down": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,

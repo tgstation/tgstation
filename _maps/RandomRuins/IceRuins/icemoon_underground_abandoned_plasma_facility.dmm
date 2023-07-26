@@ -987,9 +987,7 @@
 /turf/open/floor/iron/edge,
 /area/ruin/plasma_facility/commons)
 "pn" = (
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/full,
 /turf/open/floor/iron/large,
@@ -1682,9 +1680,7 @@
 /turf/open/floor/iron,
 /area/ruin/plasma_facility/commons)
 "DQ" = (
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/effect/turf_decal/tile/brown/full,
 /turf/open/floor/iron/large,
 /area/ruin/plasma_facility/commons)

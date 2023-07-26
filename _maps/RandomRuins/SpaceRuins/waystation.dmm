@@ -355,15 +355,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"gD" = (
-/obj/machinery/vending/cigarette,
-/obj/effect/turf_decal/siding/green,
-/obj/effect/turf_decal/siding/green{
-	dir = 1
-	},
-/obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/dorms)
 "gE" = (
 /obj/structure/sign/poster/contraband/missing_gloves/directional/north,
 /obj/machinery/power/smes{
@@ -1016,13 +1007,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
-"qr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/dim/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "qC" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
@@ -1122,11 +1106,24 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
-"rC" = (
-/obj/structure/curtain,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/waystation/dorms)
+"rF" = (
+/obj/machinery/button/door/directional/east{
+	id = "Blastdoor_load";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_y = -6
+	},
+/obj/machinery/button/door/directional/east{
+	id = "Blastdoor_unload";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_y = 6
+	},
+/obj/machinery/modular_computer/preset{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargobay)
 "rI" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall,
@@ -1335,6 +1332,16 @@
 /obj/item/stack/rods/two,
 /turf/template_noop,
 /area/template_noop)
+"wj" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/siding/green,
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/dorms)
 "wm" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/toy_figure,
@@ -1464,6 +1471,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
+"yu" = (
+/obj/effect/turf_decal/siding/green/end{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/waystation/dorms)
 "yA" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	pixel_y = -3
@@ -1608,12 +1624,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/kitchen)
-"BN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/dim/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "BZ" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -2130,24 +2140,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
-"Mj" = (
-/obj/machinery/button/door/directional/east{
-	id = "Blastdoor_load";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_y = -6
-	},
-/obj/machinery/button/door/directional/east{
-	id = "Blastdoor_unload";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_y = 6
-	},
-/obj/machinery/modular_computer/console/preset{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/cargobay)
 "Mk" = (
 /obj/structure/table/wood,
 /obj/item/folder,
@@ -2405,13 +2397,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
-"PV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/dim/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/waystation/dorms)
 "PX" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
@@ -2701,6 +2686,11 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
+"Vy" = (
+/obj/structure/curtain,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/waystation/dorms)
 "VE" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_corvette_bolt";
@@ -2758,14 +2748,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
-"WD" = (
-/obj/effect/turf_decal/siding/green/end{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/waystation/dorms)
 "WF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -4212,19 +4194,19 @@ pK
 Ls
 El
 xw
-PV
 zZ
-xw
-xw
-xw
 zZ
-qr
 xw
 xw
 xw
 zZ
 zZ
-BN
+xw
+xw
+xw
+zZ
+zZ
+xw
 HA
 Uy
 QN
@@ -4272,7 +4254,7 @@ pK
 pK
 pK
 Ls
-gD
+wj
 tt
 jV
 jV
@@ -4403,7 +4385,7 @@ KD
 MY
 ox
 pg
-WD
+yu
 Ol
 Je
 yS
@@ -4525,7 +4507,7 @@ Gj
 xH
 yg
 fx
-rC
+Vy
 Qd
 do
 Rs
@@ -5529,7 +5511,7 @@ fm
 fm
 vL
 Jy
-Mj
+rF
 Jy
 JG
 Zf
