@@ -6,9 +6,9 @@
 /datum/element/mirage_border/Attach(datum/target, turf/target_turf, direction, range=world.view)
 	. = ..()
 	if(!isturf(target))
-		return COMPONENT_INCOMPATIBLE
+		return ELEMENT_INCOMPATIBLE
 	if(!target_turf || !istype(target_turf) || !direction)
-		. = COMPONENT_INCOMPATIBLE
+		. = ELEMENT_INCOMPATIBLE
 		CRASH("[type] improperly attached with the following args: target=\[[target_turf]\], direction=\[[direction]\], range=\[[range]\]")
 
 	var/atom/movable/mirage_holder/holder = new(target)
