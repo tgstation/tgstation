@@ -436,7 +436,10 @@
 
 	context[SCREENTIP_CONTEXT_LMB] = "Show ID"
 	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
+	if(isnull(registered_account) || registered_account.replaceable) //Same check we use when we check if we can assign an account
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Assign account"
+	else
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
@@ -1655,7 +1658,7 @@
  */
 /obj/item/card/cardboard
 	name = "cardboard identification card"
-	desc = "A card used to provice ID and det- Heeeey, wait a second, this is just a piece of cut cardboard!"
+	desc = "A card used to provide ID and det- Heeeey, wait a second, this is just a piece of cut cardboard!"
 	icon_state = "cardboard_id"
 	inhand_icon_state = "cardboard-id"
 	worn_icon_state = "nothing"

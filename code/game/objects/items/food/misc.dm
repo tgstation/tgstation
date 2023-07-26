@@ -264,6 +264,7 @@
 	icon_state = "butteronastick"
 	trash_type = /obj/item/stack/rods
 	food_flags = FOOD_FINGER_FOOD
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/butter/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")

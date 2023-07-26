@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "Hulks cannot be aggressive grabbed by strong grabbers anymore"

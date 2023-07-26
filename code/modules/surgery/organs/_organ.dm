@@ -150,6 +150,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(!iscarbon(organ_owner))
+		stack_trace("Organ removal should not be happening on non carbon mobs: [organ_owner]")
+
 	for(var/trait in organ_traits)
 		REMOVE_TRAIT(organ_owner, trait, REF(src))
 
@@ -162,6 +165,24 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EXAMINE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
+
+	var/list/diseases = organ_owner.get_static_viruses()
+	if(!LAZYLEN(diseases))
+		return
+
+	var/list/datum/disease/diseases_to_add = list()
+	for(var/datum/disease/disease as anything in diseases)
+		// robotic organs are immune to disease unless 'inorganic biology' symptom is present
+		if(IS_ROBOTIC_ORGAN(src) && !(disease.infectable_biotypes & MOB_ROBOTIC))
+			continue
+
+		// admin or special viruses that should not be reproduced
+		if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+			continue
+
+		diseases_to_add += disease
+	if(LAZYLEN(diseases_to_add))
+		AddComponent(/datum/component/infective, diseases_to_add)
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)

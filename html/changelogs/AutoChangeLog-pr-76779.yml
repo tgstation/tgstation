@@ -1,4 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - qol: "Added some balloon alerts for failing to place items in storage containers"
