@@ -235,7 +235,6 @@
 	update_appearance(UPDATE_DESC)
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
-	RegisterSignal(card, COMSIG_MOVABLE_OR_CONTAINER_MOVED, PROC_REF(check_distance))
 
 /mob/living/silicon/pai/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
