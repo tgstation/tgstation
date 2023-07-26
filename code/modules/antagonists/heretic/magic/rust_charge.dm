@@ -7,11 +7,11 @@
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
   if(HAS_TRAIT(get_turf(owner)), TRAIT_RUSTY)
-    StartCooldown(135 SECONDS, 135 SECONDS)
+    	  StartCooldown(135 SECONDS, 135 SECONDS)
 	  charge_sequence(owner, target_atom, charge_delay, charge_past)
 	  StartCooldown()
 	  return TRUE
-
+  	
 /datum/action/cooldown/mob_cooldown/charge/rust/proc/on_move(atom/source, atom/new_loc, turf/victim)
 	SIGNAL_HANDLER
 	if(!actively_moving)
