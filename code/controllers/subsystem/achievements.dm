@@ -18,10 +18,34 @@ SUBSYSTEM_DEF(achievements)
 		return SS_INIT_NO_NEED
 	achievements_enabled = TRUE
 
-	for(var/T in subtypesof(/datum/award/achievement))
-		var/instance = new T
-		achievements[T] = instance
-		awards[T] = instance
+	var/list/achievements_by_db_id = list()
+	for(var/achievement in subtypesof(/datum/award/achievement))
+		var/datum/award/achievement/instance = new achievement
+		achievements[achievement] = instance
+		awards[achievement] = instance
+		achievements_by_db_id[instance.database_id] = instance
+
+	/**
+	 * Get a column of achievements that've been unlocked from the db and count how many are of each,
+	 * then store the results in the 'times_achieved' var of the relative achievements.
+	 * Lastly, set 'most_unlocked_achievement' to the achievement instance with highest 'times_achieved'.
+	 */
+	var/datum/db_query/query = SSdbcore.NewQuery(
+		"SELECT achievement_key FROM [format_table_name("achievements")] WHERE value > 0"
+	)
+	if(query.Execute(async = TRUE))
+		while(query.NextRow())
+			var/id = query.item[1]
+			var/datum/award/achievement/instance = id ? achievements_by_db_id[id] : null
+			if(!instance)
+				continue
+			instance.times_achieved++
+	qdel(query)
+
+	for(var/achievement_type in achievements)
+		var/datum/award/achievement/instance = achievements[achievement_type]
+		if(most_unlocked_achievement?.times_achieved < instance.times_achieved)
+			most_unlocked_achievement = instance
 
 	for(var/T in subtypesof(/datum/award/score))
 		var/instance = new T

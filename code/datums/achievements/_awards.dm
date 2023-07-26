@@ -81,18 +81,6 @@
 	///How many players have earned this achievement
 	var/times_achieved = 0
 
-/datum/award/achievement/New()
-	. = ..()
-	var/datum/db_query/query = SSdbcore.NewQuery(
-		"SELECT COUNT(achievement_key) FROM [format_table_name("achievements")] WHERE achievement_key = :achievement_key AND value > 0",
-		list("achievement_key" = database_id)
-	)
-	if(query.Execute(async = TRUE) && query.NextRow())
-		times_achieved = text2num(query.item[1])
-		if(SSachievements.most_unlocked_achievement?.times_achieved < times_achieved)
-			SSachievements.most_unlocked_achievement = src
-	qdel(query)
-
 /datum/award/achievement/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "achievement"
