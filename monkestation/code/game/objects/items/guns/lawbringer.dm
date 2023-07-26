@@ -11,7 +11,8 @@
 	 /obj/item/ammo_casing/energy/lawbringer/smokeshot, \
 	 /obj/item/ammo_casing/energy/lawbringer/bigshot, \
 	 /obj/item/ammo_casing/energy/lawbringer/clownshot, \
-	 /obj/item/ammo_casing/energy/lawbringer/pulse)
+	 /obj/item/ammo_casing/energy/lawbringer/pulse, \
+	 /obj/item/ammo_casing/energy/lawbringer/tideshot)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -28,14 +29,6 @@
 	name = "Lawbringer power cell"
 	maxcharge = 6000 //300
 
-/obj/item/ammo_casing/energy/lawbringer/detain //placeholder
-	projectile_type = /obj/projectile/beam/disabler
-	select_name = "detain"
-	e_cost = 50
-	pellets = 3
-	variance = 15
-	harmful = FALSE
-
 /*
 PART 1:
 The ammo+projectiles+cell
@@ -43,14 +36,53 @@ PART 2:
 Voice stuff
 PART 3:
 Sprites
+PART 4:
+Mapping it in
+PART 5:
+In situ balance testing
 */
 
 // 6000:100 = 300:5    all energy values multiplied by 20
-/*
+// recharge rate was insufficent, multiply all values by 10 instead of 20
+
+/obj/item/ammo_casing/energy/lawbringer/detain
+	projectile_type = /obj/projectile/lawbringer/detain
+	select_name = "detain"
+	fire_sound = 'sound/weapons/laser.ogg'
+	e_cost = 1000 //50
+	pellets = 5
+	variance = 20
+	harmful = FALSE
+
+/obj/projectile/lawbringer/detain
+	name = "hyperfocused disabler beam"
+	icon_state = "gauss_silenced"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	light_system = MOVABLE_LIGHT
+	damage = 0
+	damage_type = STAMINA
+	stamina = 20
+	paralyze_timer = 5 SECONDS
+	armor_flag = ENERGY
+	hitsound = 'sound/weapons/tap.ogg'
+	ricochets_max = 4
+	ricochet_chance = 140
+	ricochet_auto_aim_angle = 50
+	ricochet_auto_aim_range = 7
+	ricochet_incidence_leeway = 0
+	ricochet_decay_chance = 1
+	ricochet_shoots_firer = FALSE //something something biometrics
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	reflectable = REFLECT_NORMAL
+	light_system = MOVABLE_LIGHT
+	light_outer_range = 1
+	light_power = 1
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
-	//revolver sound
 	select_name = "execute"
+	fire_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
 	e_cost = 600 //30
 	harmful = TRUE
 
@@ -59,21 +91,25 @@ Sprites
 	sharpness = SHARP_POINTY
 	armor_flag = BULLET
 	hitsound_wall = SFX_RICOCHET
+	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	damage = 20
 	wound_bonus = -5
-*/
+	wound_falloff_tile = -5
 
 /obj/item/ammo_casing/energy/lawbringer/hotshot
 	projectile_type = /obj/projectile/lawbringer/hotshot
 	select_name = "hotshot"
+	fire_sound = 'sound/weapons/fwoosh.ogg'
 	e_cost = 1200 //60
 	harmful = TRUE
 
 /obj/projectile/lawbringer/hotshot
 	name = "proto-plasma"
-	//TODO: Projectile noise and sprite
+	icon_state = "pulse0_bl"
+	hitsound = 'sound/magic/fireball.ogg'
 	damage = 5
-	damage_type = BRUN
+	damage_type = BURN
+
 /obj/projectile/lawbringer/hotshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
@@ -83,26 +119,27 @@ Sprites
 
 /obj/item/ammo_casing/energy/lawbringer/smokeshot
 	projectile_type = /obj/projectile/lawbringer/smokeshot
-	//grenade launcher sound
 	select_name = "smokeshot"
+	fire_sound = 'sound/items/syringeproj.ogg'
 	e_cost = 1000 //50
 	harmful = FALSE
 
 /obj/projectile/lawbringer/smokeshot
 	name = "condensed smoke"
-	//TODO: Projectile noise and sprite
+	icon_state = "nuclear_particle"
 	damage = 0
 	damage_type = BRUTE
+	can_hit_turfs = TRUE
 
-/obj/projectile/lawbringer/bigshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/lawbringer/smokeshot/on_hit(atom/target, blocked = FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(4, holder = src, location = target.loc)
+	smoke.set_up(3, holder = src, location = get_turf(target))
 	smoke.start()
 
 /obj/item/ammo_casing/energy/lawbringer/bigshot
 	projectile_type = /obj/projectile/lawbringer/bigshot
-	//some loud noise
 	select_name = "bigshot"
+	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
 	e_cost = 3400 //170
 	harmful = TRUE
 
@@ -110,19 +147,20 @@ Sprites
 	name = "protomatter shell"
 	damage = 25
 	damage_type = BRUTE
-	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
+	icon_state = "blastwave"
 	speed = 1
 	pixel_speed_multiplier = 0.5
-	eyeblur = 5
+	eyeblur = 10
+	jitter = 10 SECONDS
 	knockdown = 1
 	wound_bonus = -5
 	var/anti_material_damage = 75
-	//calls light explosion proc on non-carbons.
+
 /obj/projectile/lawbringer/bigshot/on_hit(atom/target, blocked = FALSE)
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(anti_material_damage)
-	if(issilicon(target)) //if the target is a borg, just give them one of these to make it loud, most of the damage is in the projectile itself
+	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_overall_damage(anti_material_damage*0.90, anti_material_damage*0.40)
 		explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
@@ -134,11 +172,10 @@ Sprites
 		else
 			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 
-/*
 /obj/item/ammo_casing/energy/lawbringer/clownshot
 	projectile_type = /obj/projectile/lawbringer/clownshot
-	//honk sound
 	select_name = "clownshot"
+	fire_sound = 'sound/items/bikehorn.ogg'
 	e_cost = 300 //15
 	harmful = TRUE
 
@@ -146,44 +183,74 @@ Sprites
 	name = "bannanium bullet"
 	damage = 4
 	damage_type = BRUTE
-	//something that drops the shoes, makes a visible alert to the crew, plays the loud honk sound, then launches the clown, if it hits someone with the clumsy gene.
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "banana"
+	weak_against_armour = TRUE
 
-/obj/projectile/lawbringer/clownshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/lawbringer/clownshot/on_hit(mob/living/target, blocked = FALSE)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
-		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle)) //put this behind some clown check
-		target.throw_at(throw_target, 200, 8) //put this behind some clown check
-*/
+		if(M.dna && M.dna.check_mutation(/datum/mutation/human/clumsy))
+			if (M.shoes)
+				var/obj/item/clothing/shoes/item_to_strip = M.shoes
+				M.dropItemToGround(item_to_strip)
+				to_chat(target, span_reallybig(span_clown("Your blasted right off your shoes!!")))
+				M.visible_message(span_warning("[M] is is sent rocketing off their shoes!"))
+			playsound(src, 'sound/items/airhorn.ogg', 100, TRUE, -1)
+			var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+			target.throw_at(throw_target, 200, 8)
+
 
 /obj/item/ammo_casing/energy/lawbringer/pulse
 	projectile_type = /obj/projectile/lawbringer/pulse
+	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	select_name = "pulse"
 	e_cost = 700 //35
 	harmful = TRUE
 
 /obj/projectile/lawbringer/pulse
 	name = "compressed air"
-	//TODO: Projectile noise and sprite
+	//TODO: Projectile sprite
 	damage = 0
 	damage_type = BRUTE
 
-/obj/projectile/lawbringer/pulse/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/lawbringer/pulse/on_hit(mob/living/target, blocked = FALSE)
 	. = ..()
 	if(isliving(target))
 		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
-		target.throw_at(throw_target, 5, 2)
+		target.throw_at(throw_target, 5, 1)
 
-/*
+
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
-	//revolver sound
+	fire_sound = 'sound/weapons/laser.ogg'
 	select_name = "tideshot"
-	e_cost = 6000 //30
+	e_cost = 600 //30
 	harmful = TRUE
 
 /obj/projectile/lawbringer/tideshot //just make it stun the shit out of staffies
-	name = "protomatter bullet"
-	damage = 20
-	wound_bonus = -5
-*/
+	name = "grey disabler beam"
+	icon_state = "greyscale_bolt"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage = 0
+	damage_type = STAMINA
+	stamina = 20 // not for use on the employed
+	paralyze_timer = 5 SECONDS
+	armor_flag = ENERGY
+	hitsound = 'sound/weapons/tap.ogg'
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	reflectable = REFLECT_NORMAL
+	light_system = MOVABLE_LIGHT
+	light_outer_range = 1
+	light_power = 1
+	light_color = LIGHT_COLOR_HALOGEN
+
+/obj/projectile/lawbringer/tideshot/on_hit(mob/living/target, blocked = FALSE)
+	if(ishuman(target))
+		if(target.mind)
+			if(is_assistant_job(target.mind.assigned_role))
+				var/mob/living/carbon/C = target
+				C.add_mood_event("tased", /datum/mood_event/tased)
+				SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
+
