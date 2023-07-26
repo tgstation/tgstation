@@ -67,7 +67,7 @@
 
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
-		if(handcuffed.blocks_emissive)
+		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
@@ -86,7 +86,7 @@
 		if(!itm_state)
 			itm_state = l_hand.icon_state
 		var/mutable_appearance/l_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_l", -HANDS_LAYER)
-		if(l_hand.blocks_emissive)
+		if(l_hand.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			l_hand_item.overlays += emissive_blocker(l_hand_item.icon, l_hand_item.icon_state, src, alpha = l_hand_item.alpha)
 		hands += l_hand_item
 
@@ -96,7 +96,7 @@
 		if(!itm_state)
 			itm_state = r_hand.icon_state
 		var/mutable_appearance/r_hand_item = mutable_appearance(alt_inhands_file, "[itm_state][caste]_r", -HANDS_LAYER)
-		if(r_hand.blocks_emissive)
+		if(r_hand.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			r_hand_item.overlays += emissive_blocker(r_hand_item.icon, r_hand_item.icon_state, src, alpha = r_hand_item.alpha)
 		hands += r_hand_item
 
