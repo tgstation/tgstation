@@ -643,6 +643,7 @@
 		/mob/living/basic/bee,
 		/mob/living/basic/butterfly,
 		/mob/living/basic/carp,
+		/mob/living/basic/crab,
 		/mob/living/basic/lizard,
 		/mob/living/basic/mouse,
 		/mob/living/basic/pet/dog/corgi,
