@@ -5,20 +5,7 @@ import { toFixed } from 'common/math';
 
 export const MechStatPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
-  const {
-    name,
-    integrity,
-    airtank_present,
-    weapons_safety,
-    air_source,
-    cabin_pressure,
-    cabin_dangerous_highpressure,
-    cabin_temp,
-    mecha_flags,
-    mechflag_keys,
-    port_connected,
-    mech_view,
-  } = data;
+  const { name, integrity, mecha_flags, mechflag_keys, mech_view } = data;
   return (
     <Section
       fill
@@ -95,25 +82,6 @@ const GetTempFormat = (temp) => {
   return (
     toFixed(temp, 1) + '°K\n' + toFixed(temp - KelvinZeroCelcius, 1) + '°C'
   );
-};
-
-const EnviromentalAir = (props, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
-  const { airtank_pressure, airtank_temp } = data;
-  if (airtank_temp === null) {
-    return <Box>No air tank detected</Box>;
-  } else {
-    return (
-      <>
-        <LabeledList.Item label="Air tank Pressure">
-          {airtank_pressure} kPa
-        </LabeledList.Item>
-        <LabeledList.Item label="Air tank temperature">
-          {GetTempFormat(airtank_temp)}
-        </LabeledList.Item>
-      </>
-    );
-  }
 };
 
 const DNABody = (props, context) => {

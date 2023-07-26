@@ -274,6 +274,7 @@ const MECHA_SNOWFLAKE_ID_OREBOX_MANAGER = 'orebox_manager_snowflake';
 const MECHA_SNOWFLAKE_ID_RADIO = 'radio_snowflake';
 const MECHA_SNOWFLAKE_ID_AIR_TANK = 'air_tank_snowflake';
 const MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC = 'ballistic_weapon_snowflake';
+const MECHA_SNOWFLAKE_ID_GENERATOR = 'generator_snowflake';
 
 export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
   const module = props.module;
@@ -281,7 +282,7 @@ export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
     case MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC:
       return <SnowflakeWeaponBallistic module={module} />;
     case MECHA_SNOWFLAKE_ID_EJECTOR:
-      return <SnowflakeEjector module={module} />;
+      return <SnowflakeCargo module={module} />;
     case MECHA_SNOWFLAKE_ID_EXTINGUISHER:
       return <SnowflakeExtinguisher module={module} />;
     case MECHA_SNOWFLAKE_ID_OREBOX_MANAGER:
@@ -296,6 +297,8 @@ export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
       return <SnowflakeRadio module={module} />;
     case MECHA_SNOWFLAKE_ID_AIR_TANK:
       return <SnowflakeAirTank module={module} />;
+    case MECHA_SNOWFLAKE_ID_GENERATOR:
+      return <SnowflakeGeneraor module={module} />;
     default:
       return null;
   }
@@ -616,7 +619,7 @@ const SnowflakeOrebox = (props, context) => {
   );
 };
 
-const SnowflakeEjector = (props, context) => {
+const SnowflakeCargo = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { ref } = props.module;
   const { cargo } = props.module.snowflake;
@@ -640,7 +643,15 @@ const SnowflakeEjector = (props, context) => {
                 }
               />
             </Stack.Item>
-            <Stack.Item grow lineHeight={1.5}>
+            <Stack.Item
+              grow
+              lineHeight={1.5}
+              style={{
+                'text-transform': 'capitalize',
+                'overflow': 'hidden',
+                'text-overflow': 'ellipsis',
+                'white-space': 'nowrap',
+              }}>
               {item.name}
             </Stack.Item>
           </Stack>
@@ -690,5 +701,19 @@ const SnowflakeExtinguisher = (props, context) => {
         />
       </LabeledList.Item>
     </>
+  );
+};
+
+const SnowflakeGeneraor = (props, context) => {
+  const { act, data } = useBackend<OperatorData>(context);
+  const { sheet_material_amount } = data;
+  const { ref, active, name } = props.module;
+  const { fuel } = props.module.snowflake;
+  return (
+    <LabeledList.Item label="Fuel Amount">
+      {fuel === null
+        ? 'None'
+        : toFixed(fuel * sheet_material_amount, 0.1) + ' cm³'}
+    </LabeledList.Item>
   );
 };

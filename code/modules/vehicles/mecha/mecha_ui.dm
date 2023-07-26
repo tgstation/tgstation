@@ -45,10 +45,6 @@
 		"MECHA_INT_CONTROL_LOST" = MECHA_INT_CONTROL_LOST,
 		"MECHA_INT_SHORT_CIRCUIT" = MECHA_INT_SHORT_CIRCUIT,
 	)
-	data["mech_electronics"] = list(
-		"minfreq" = MIN_FREE_FREQ,
-		"maxfreq" = MAX_FREE_FREQ,
-	)
 	return data
 
 /obj/vehicle/sealed/mecha/ui_data(mob/user)
