@@ -17,8 +17,11 @@
 	if(!CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL|MOVEMENT_LOOP_NO_DIR_UPDATE))
 		on_move(source, direction, old_dir)
 
+///retain the old dir unless walking straight ahead or backward, in which case rotate the dir left or right by a 90°
 /datum/element/sideway_movement/proc/on_move(atom/movable/source, direction, old_dir)
 	if(!source.set_dir_on_move)
 		return
-	if(direction == old_dir) //This means more or less we're walking straight. we don't want that.
-		source.setDir(angle2dir(dir2angle(direction) + pick(90, -90)))
+	var/new_dir = old_dir
+	if(direction == old_dir || direction == REVERSE_DIR(old_dir))
+		new_dir = angle2dir(dir2angle(direction) + pick(90, -90))
+	source.setDir(new_dir)
