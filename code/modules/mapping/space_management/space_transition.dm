@@ -123,11 +123,8 @@
 	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, inner_max_x - 1) //values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
 	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, inner_max_y - 1, 1, 1) //values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
 
-	// Cache the range passed to the mirage border element, since splitting view size wastes a ton of processing
+	// Cache the range passed to the mirage border element, to reduce world var access in the thousands
 	var/range_cached = world.view
-	if(istext(range_cached))
-		var/viewsize = getviewsize(range_cached)
-		range_cached = max(viewsize[1], viewsize[2])
 
 	for(var/datum/space_level/level as anything in cached_z_list)
 		if(!level.neigbours.len)
