@@ -134,7 +134,7 @@
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(do_flop_animation)
 		RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
-	check_environment_after_movement()
+	check_environment()
 	if(status != FISH_DEAD)
 		START_PROCESSING(SSobj, src)
 
@@ -266,7 +266,7 @@
 
 /obj/item/fish/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	check_environment_after_movement()
+	check_environment()
 
 /obj/item/fish/proc/enter_stasis()
 	in_stasis = TRUE
@@ -293,14 +293,15 @@
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
 
-/obj/item/fish/proc/check_environment_after_movement()
+/obj/item/fish/proc/check_environment(stasis_check = TRUE)
 	if(QDELETED(src)) //we don't care anymore
 		return
-	// Apply/remove stasis as needed
-	if(loc && HAS_TRAIT(loc, TRAIT_FISH_SAFE_STORAGE))
-		enter_stasis()
-	else if(in_stasis)
-		exit_stasis()
+	if(stasis_check)
+		// Apply/remove stasis as needed
+		if(loc && HAS_TRAIT(loc, TRAIT_FISH_SAFE_STORAGE))
+			enter_stasis()
+		else if(in_stasis)
+			exit_stasis()
 
 	if(!do_flop_animation)
 		return
@@ -333,7 +334,7 @@
 			status = FISH_ALIVE
 			health = initial(health) // since the fishe has been revived
 			last_feeding = world.time //reset hunger
-			start_flopping()
+			check_environment(FALSE)
 			START_PROCESSING(SSobj, src)
 		if(FISH_DEAD)
 			status = FISH_DEAD
@@ -558,7 +559,7 @@
 
 /// Starts flopping animation
 /obj/item/fish/proc/start_flopping()
-	if(flopping || !do_flop_animation)  //Requires update_transform/animate_wrappers to be less restrictive.
+	if(flopping)  //Requires update_transform/animate_wrappers to be less restrictive.
 		return
 	flopping = TRUE
 	flop_animation(src)
