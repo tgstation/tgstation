@@ -38,10 +38,13 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
+	/// The configuration key for the preset fishing spot for this type of turf.
+	var/fish_source_type = FISHING_SPOT_PRESET_LAVALAND_LAVA
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
+	if(fish_source_type)
+		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
@@ -342,6 +345,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = BURNING_COLD
 	baseturfs = /turf/open/lava/plasma
+	fish_source_type = FISHING_SPOT_PRESET_ICEMOON_PLASMA
 
 	light_range = 3
 	light_power = 0.75
@@ -423,8 +427,10 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
+	fish_source_type = null
 
 //basketball specific lava (normal atmos, no slowdown)
 /turf/open/lava/smooth/basketball
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0
+	fish_source_type = null

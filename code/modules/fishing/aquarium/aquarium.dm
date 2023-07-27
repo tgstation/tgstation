@@ -37,22 +37,39 @@
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
 
-	/// /obj/item/fish in the aquarium - does not include things with aquarium visuals that are not fish
-	var/list/tracked_fish = list()
+	/// /obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish
+	var/list/tracked_fish_by_type
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	RegisterSignal(src,COMSIG_ATOM_ATTACKBY, PROC_REF(feed_feedback))
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(track_if_fish))
+	AddElement(/datum/element/relay_attackers)
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+
+/obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
+	SIGNAL_HANDLER
+	if(isfish(initialized))
+		LAZYADDASSOCLIST(tracked_fish_by_type, initialized.type, initialized)
 
 /obj/structure/aquarium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(arrived,/obj/item/fish))
-		tracked_fish += arrived
+	if(isfish(arrived))
+		LAZYADDASSOCLIST(tracked_fish_by_type, arrived.type, arrived)
 
 /obj/structure/aquarium/Exited(atom/movable/gone, direction)
 	. = ..()
-	tracked_fish -= gone
+	LAZYREMOVEASSOC(tracked_fish_by_type, gone.type, gone)
+
+/// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
+/obj/structure/aquarium/proc/get_fishes(shuffle = FALSE, blacklist)
+	. = list()
+	for(var/fish_type in tracked_fish_by_type)
+		. += tracked_fish_by_type[fish_type]
+	. -= blacklist
+	if(shuffle)
+		. = shuffle(.)
+	return .
 
 /obj/structure/aquarium/proc/request_layer(layer_type)
 	/**
@@ -111,9 +128,9 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/aquarium/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/aquarium/attackby(obj/item/item, mob/living/user, params)
 	if(broken)
-		var/obj/item/stack/sheet/glass/glass = I
+		var/obj/item/stack/sheet/glass/glass = item
 		if(istype(glass))
 			if(glass.get_amount() < 2)
 				to_chat(user, span_warning("You need two glass sheets to fix the case!"))
@@ -126,20 +143,27 @@
 				update_appearance()
 			return TRUE
 	else
-		var/datum/component/aquarium_content/content_component = I.GetComponent(/datum/component/aquarium_content)
-		if(content_component && content_component.is_ready_to_insert(src))
-			if(user.transferItemToLoc(I,src))
-				update_appearance()
-				return TRUE
-		else
-			return ..()
+		var/datum/component/aquarium_content/content_component = item.GetComponent(/datum/component/aquarium_content)
+		if(content_component && content_component.is_ready_to_insert(src) && user.transferItemToLoc(item, src))
+			update_appearance()
+			return TRUE
+
+	if(istype(item, /obj/item/fish_feed))
+		if(!item.reagents.total_volume)
+			to_chat(user, span_warning("[item] is empty."))
+			return TRUE
+		var/list/fishes = get_fishes()
+		for(var/obj/item/fish/fish as anything in fishes)
+			fish.feed(item.reagents)
+		to_chat(user, span_notice("You feed the fish."))
+		return TRUE
 	return ..()
 
-/obj/structure/aquarium/proc/feed_feedback(datum/source, obj/item/thing, mob/user, params)
-	SIGNAL_HANDLER
-	if(istype(thing, /obj/item/fish_feed))
-		to_chat(user,span_notice("You feed the fish."))
-	return NONE
+/obj/structure/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)
+	var/list/fishes = get_fishes()
+	//I wish this were an aquarium signal, but the aquarium_content component got in the way.
+	for(var/obj/item/fish/fish as anything in fishes)
+		SEND_SIGNAL(fish, COMSIG_FISH_STIRRED)
 
 /obj/structure/aquarium/interact(mob/user)
 	if(!broken && user.pulling && isliving(user.pulling))
@@ -176,6 +200,7 @@
 	if(do_after(user, 5 SECONDS, target = src))
 		var/alive_fish = 0
 		var/dead_fish = 0
+		var/list/tracked_fish = get_fishes()
 		for(var/obj/item/fish/fish in tracked_fish)
 			if(fish.status == FISH_ALIVE)
 				alive_fish++

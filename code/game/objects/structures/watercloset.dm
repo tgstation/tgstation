@@ -16,7 +16,8 @@
 	. = ..()
 	open = round(rand(0, 1))
 	update_appearance()
-
+	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
+		AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_TOILET)
 
 /obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -120,8 +121,9 @@
 			return
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
+		return
 
-	else if(is_reagent_container(I) && !user.combat_mode)
+	if(is_reagent_container(I) && !user.combat_mode)
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
