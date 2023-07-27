@@ -18,7 +18,7 @@
 
 /datum/element/tree_climber/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	UnregisterSignal(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE))
 
 /// Generates the tree climbing pixel movement effect
 /datum/element/tree_climber/proc/climb_tree(mob/living/climber, atom/target)
