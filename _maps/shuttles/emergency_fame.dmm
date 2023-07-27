@@ -83,10 +83,6 @@
 /obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"ep" = (
-/obj/effect/mapping_helpers/engraving,
-/turf/closed/wall/mineral/iron,
-/area/shuttle/escape)
 "et" = (
 /obj/structure/chair{
 	dir = 4
@@ -495,10 +491,6 @@
 	},
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
-"wI" = (
-/obj/effect/mapping_helpers/engraving,
-/turf/closed/wall/mineral/bronze,
-/area/shuttle/escape)
 "wK" = (
 /obj/machinery/vending/boozeomat,
 /obj/machinery/status_display/evac/directional/south,
@@ -627,10 +619,6 @@
 "Bj" = (
 /turf/template_noop,
 /area/template_noop)
-"BY" = (
-/obj/effect/mapping_helpers/engraving,
-/turf/closed/wall/mineral/sandstone,
-/area/shuttle/escape)
 "Cg" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 8
@@ -1342,7 +1330,7 @@ mx
 Yp
 Yp
 Yp
-wI
+mx
 Bj
 Bj
 Bj
@@ -1367,7 +1355,7 @@ mx
 Yp
 Yp
 Yp
-wI
+mx
 yc
 aj
 YF
@@ -1392,7 +1380,7 @@ mx
 Yp
 AA
 Yp
-wI
+mx
 yc
 YF
 YF
@@ -1638,11 +1626,11 @@ yc
 YF
 YF
 yc
-BY
+mx
 HZ
 Ei
 HZ
-ep
+mx
 yc
 YF
 YF
@@ -1663,11 +1651,11 @@ yc
 aj
 YF
 yc
-BY
+mx
 HZ
 HZ
 HZ
-ep
+mx
 yc
 YF
 aj
@@ -1688,11 +1676,11 @@ Bj
 Bj
 Bj
 Bj
-BY
+mx
 HZ
 HZ
 HZ
-ep
+mx
 Bj
 Bj
 Bj
