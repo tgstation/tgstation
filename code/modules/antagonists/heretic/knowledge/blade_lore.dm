@@ -375,7 +375,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/ultimate/blade_final,
-		/datum/heretic_knowledge/void_cloak
+		/datum/action/cooldown/mob_cooldown/charge/rust,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
