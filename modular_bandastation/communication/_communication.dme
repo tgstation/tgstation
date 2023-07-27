@@ -1,0 +1,6 @@
+#include "_communication.dm"
+
+#include "code/_communication_defines.dm"
+#include "code/LOOC.dm"
+#include "code/whisper.dm"
+// #include "code/~communication_defines.dm"

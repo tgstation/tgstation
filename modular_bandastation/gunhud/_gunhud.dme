@@ -1,0 +1,7 @@
+#include "_gunhud.dm"
+
+#include "code/_gunhud_defines.dm"
+#include "code/gunhud_component.dm"
+#include "code/gunhud_hud.dm"
+#include "code/gunhud_screen.dm"
+#include "code/~gunhud_defines.dm"

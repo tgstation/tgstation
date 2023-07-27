@@ -1,0 +1,10 @@
+#include "_defines220.dm"
+
+#include "code/defines/keybindings.dm"
+#include "code/defines/spans.dm"
+#include "code/signals_mob/signals_mob_ai.dm"
+#include "code/signals_mob/signals_mob_carbon.dm"
+#include "code/signals_mob/signals_mob_living.dm"
+#include "code/signals_mob/signals_mob_main.dm"
+#include "code/signals_mob/signals_mob_silicon.dm"
+#include "code/signals_mob/signals_mob_simple.dm"
