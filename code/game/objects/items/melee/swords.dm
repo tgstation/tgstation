@@ -144,7 +144,6 @@
 /obj/item/melee/sword/claymore/darkblade
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods! Even if they don't bless this blade."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
