@@ -75,7 +75,7 @@
 	if(!.)
 		return
 	if(broken)
-		return ..()
+		return 
 	decrease_uses(user)
 
 /obj/item/melee/sword/rust/proc/decrease_uses(mob/user)
