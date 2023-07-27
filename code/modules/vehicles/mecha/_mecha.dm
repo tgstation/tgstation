@@ -78,7 +78,7 @@
 	///Internal air mix datum
 	var/datum/gas_mixture/cabin_air
 	///Volume of the cabin
-	var/cabin_volume = TANK_STANDARD_VOLUME * 5
+	var/cabin_volume = TANK_STANDARD_VOLUME * 3
 
 	///List of installed remote tracking beacons, including AI control beacons
 	var/list/trackers = list()

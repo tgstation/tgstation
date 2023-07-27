@@ -614,6 +614,9 @@ const SnowflakeAirTank = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
       <Section>
+        <Collapsible title="Tank Air">
+          <GasmixParser gasmix={tank_air} />
+        </Collapsible>
         {cabin_sealed ? (
           <Collapsible title="Cabin Air">
             <GasmixParser gasmix={cabin_air} />
@@ -624,9 +627,6 @@ const SnowflakeAirTank = (props, context) => {
             Cabin Open
           </NoticeBox>
         )}
-        <Collapsible title="Tank Air">
-          <GasmixParser gasmix={tank_air} />
-        </Collapsible>
       </Section>
     </Box>
   );
