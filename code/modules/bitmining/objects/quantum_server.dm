@@ -18,6 +18,8 @@
 	var/area/preset_mapload_area = /area/station/virtual_domain/bottom_left
 	/// The area type used as a reference to load the safehouse
 	var/area/preset_safehouse_area = /area/station/virtual_domain/safehouse/bottom_left
+	/// The area type used to spawn hololadders
+	var/area/preset_exit_area = /area/station/virtual_domain/safehouse/exit
 	/// The area type used in vdom to send loot and mark completion
 	var/area/preset_send_area = /area/station/virtual_domain/safehouse/send
 	/// The area type used to delete objects in the vdom
@@ -42,6 +44,8 @@
 	var/loading = FALSE
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
+	/// Keeps track of the number of times someone has built a hololadder
+	var/retries_spent = 0
 	/// Scanner tier
 	var/scanner_tier = 1
 	/// Server cooldown efficiency
@@ -56,6 +60,8 @@
 	var/turf/safehouse_load_turf = list()
 	/// The turfs on station where we generate loot.
 	var/turf/receive_turfs = list()
+	/// The turfs we can place a hololadder on.
+	var/turf/exit_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -126,7 +132,7 @@
 		return
 
 	balloon_alert(user, "notifying clients...")
-	SEND_SIGNAL(src, COMSIG_BITMINING_SHUTDOWN_ALERT, src)
+	SEND_SIGNAL(src, COMSIG_BITMINING_SHUTDOWN_ALERT, user)
 
 	if(!do_after(user, 15 SECONDS, src))
 		return
@@ -223,6 +229,43 @@
 
 	return
 
+/// Generates a new avatar for the bitminer.
+/obj/machinery/quantum_server/proc/generate_avatar(obj/structure/hololadder/wayout, datum/outfit/netsuit)
+	var/mob/living/carbon/human/avatar = new(wayout.loc)
+
+	var/datum/outfit/to_wear = generated_domain.forced_outfit || netsuit
+	avatar.equipOutfit(to_wear)
+
+	var/obj/item/card/id/outfit_id = avatar.wear_id
+	if(outfit_id)
+		outfit_id.assignment = "Bit Avatar"
+		outfit_id.registered_name = avatar.real_name
+		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
+
+	return avatar
+
+/// Generates a new hololadder for the bitminer. Effectively a respawn attempt.
+/obj/machinery/quantum_server/proc/generate_hololadder()
+	if(!length(exit_turfs))
+		return
+
+	var/turf/destination
+	for(var/turf/dest_turf as anything in exit_turfs)
+		if(!locate(/obj/structure/hololadder) in dest_turf)
+			destination = dest_turf
+			break
+
+	if(isnull(destination))
+		return
+
+	var/obj/structure/hololadder/wayout = new(destination)
+	if(isnull(wayout))
+		return
+
+	retries_spent += 1
+
+	return wayout
+
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot(mob/user)
 	if(isnull(generated_domain))
@@ -255,6 +298,7 @@
 		var/datum/mind/this_mind = mind_ref.resolve()
 		if(isnull(this_mind))
 			occupant_mind_refs -= this_mind
+			continue
 
 		var/mob/living/creature = this_mind.current
 		var/mob/living/pilot = this_mind.pilot_ref?.resolve()
@@ -263,6 +307,10 @@
 			"health" = creature.health,
 			"name" = creature.name,
 			"pilot" = pilot,
+			"brute" = creature.get_damage_amount(BRUTE),
+			"burn" = creature.get_damage_amount(BURN),
+			"tox" = creature.get_damage_amount(TOX),
+			"oxy" = creature.get_damage_amount(OXY),
 		))
 
 	return hosted_avatars
@@ -377,6 +425,9 @@
 	generated_domain = to_generate
 	generated_safehouse = safehouse
 
+	var/datum/space_level/vdom = vdom_ref?.resolve()
+	exit_turfs = get_area_turfs(/area/station/virtual_domain/safehouse/exit, vdom.z_value)
+
 	return TRUE
 
 /// If broken via signal, disconnects all users
@@ -467,6 +518,7 @@
 
 	generated_domain = null
 	generated_safehouse = null
+	retries_spent = 0
 	loading = FALSE
 
 #undef ONLY_TURF

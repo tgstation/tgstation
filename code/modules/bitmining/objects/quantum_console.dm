@@ -48,6 +48,7 @@
 	data["randomized"] = server.domain_randomized
 	data["ready"] = server.get_ready_status()
 	data["scanner_tier"] = server.scanner_tier
+	data["retries_left"] = length(server.exit_turfs) - server.retries_spent
 
 	return data
 

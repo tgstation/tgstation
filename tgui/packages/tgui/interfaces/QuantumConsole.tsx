@@ -4,6 +4,7 @@ import { Button, Collapsible, Icon, LabeledList, NoticeBox, ProgressBar, Section
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 import { TableCell, TableRow } from '../components/Table';
+import { debounce } from 'common/timer';
 
 type Data =
   | {
@@ -25,6 +26,10 @@ type Avatar = {
   health: number;
   name: string;
   pilot: string;
+  brute: number;
+  burn: number;
+  tox: number;
+  oxy: number;
 };
 
 type Domain = {
@@ -54,6 +59,11 @@ enum Difficulty {
 
 const isConnected = (data: Data): data is Data & { connected: 1 } =>
   data.connected === 1;
+
+const completionDebounce = debounce(
+  (act: (action: string) => void) => act('check_completion'),
+  300
+);
 
 const getColor = (difficulty: number) => {
   switch (difficulty) {
@@ -134,16 +144,22 @@ const AccessView = (props, context) => {
       <Stack.Item>
         <Section>
           <Stack fill>
-            <Stack.Item grow>Loaded: {generated_domain ?? 'None'}</Stack.Item>
+            <Stack.Item grow>
+              <NoticeBox info={!!generated_domain}>
+                {generated_domain ?? 'Nothing loaded'}
+              </NoticeBox>
+            </Stack.Item>
             <Stack.Item>
               <Button.Confirm
                 content="Stop Domain"
                 disabled={!ready || !generated_domain}
                 onClick={() => act('stop_domain')}
+                tooltip="Begins shutdown. Will notify anyone connected."
               />
               <Button
                 disabled={!ready || !generated_domain}
-                onClick={() => act('check_completion')}>
+                onClick={() => completionDebounce(act)}
+                tooltip="Check the send area for loot crates.">
                 Check Completion
               </Button>
             </Stack.Item>
@@ -241,10 +257,36 @@ const AvatarDisplay = (props, context) => {
         </Button>
       }>
       <Table>
-        {avatars.map(({ health, name, pilot }) => (
+        {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
           <TableRow key={name}>
-            <TableCell color="label">{pilot}:</TableCell>
-            <TableCell collapsing>&quot;{name}&quot;</TableCell>
+            <TableCell color="label">
+              {pilot} as{' '}
+              <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
+            </TableCell>
+            <TableCell collapsing>
+              <Stack>
+                {brute === 0 && burn === 0 && tox === 0 && oxy === 0 && (
+                  <Stack.Item>
+                    <Icon color="green" name="check" />
+                  </Stack.Item>
+                )}
+                <Stack.Item>
+                  <Icon color={brute > 50 ? 'bad' : 'gray'} name="tint" />
+                </Stack.Item>
+                <Stack.Item>
+                  <Icon color={burn > 50 ? 'average' : 'gray'} name="fire" />
+                </Stack.Item>
+                <Stack.Item>
+                  <Icon
+                    color={tox > 50 ? 'green' : 'gray'}
+                    name="skull-crossbones"
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Icon color={oxy > 50 ? 'blue' : 'gray'} name="lungs" />
+                </Stack.Item>
+              </Stack>
+            </TableCell>
             <TableCell>
               <ProgressBar
                 minValue={-100}

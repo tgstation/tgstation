@@ -41,6 +41,8 @@
 		),
 		PROC_REF(on_opened_or_destroyed),
 	)
+	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
 	register_context()
 	update_appearance()
 
@@ -54,6 +56,11 @@
 
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Select Outfit"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/crowbar) && occupant)
+		context[SCREENTIP_CONTEXT_LMB] = "Pry Open"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -249,24 +256,28 @@
 	var/mob/living/carbon/current_avatar = avatar_ref?.resolve()
 	var/obj/structure/hololadder/wayout
 	if(isnull(current_avatar) || current_avatar.stat != CONSCIOUS) // We need a viable avatar
-		wayout = generate_hololadder()
+		wayout = server.generate_hololadder()
 		if(isnull(wayout))
 			balloon_alert(neo, "out of bandwidth!")
 			return
-		current_avatar = generate_avatar(wayout, generated_domain)
+		current_avatar = server.generate_avatar(wayout, netsuit)
 		avatar_ref = WEAKREF(current_avatar)
 
 	neo.set_static_vision(3 SECONDS)
 	if(!do_after(neo, 2 SECONDS, src))
 		return
 
-	// Final sanity check before we start the transfer
-	if(QDELETED(neo) || QDELETED(current_avatar) || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
+	// Very invalid
+	if(QDELETED(neo) || QDELETED(current_avatar) || QDELETED(src))
+		return
+
+	// Invalid
+	if(occupant != neo || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
 	occupant_mind_ref = neo_mind_ref
-	cached_actions = neo.actions
+	cached_actions += neo.actions
 	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, neo_mind_ref)
 	neo.mind.initial_avatar_connection(
 		avatar = current_avatar,
@@ -288,49 +299,6 @@
 
 	return
 
-/// Generates a new avatar for the bitminer.
-/obj/machinery/netpod/proc/generate_avatar(obj/structure/hololadder/wayout, datum/map_template/virtual_domain/generated_domain)
-	var/mob/living/carbon/human/avatar = new(wayout.loc)
-
-	var/datum/outfit/to_wear = generated_domain.forced_outfit || netsuit
-	avatar.equipOutfit(to_wear)
-
-	var/obj/item/card/id/outfit_id = avatar.wear_id
-	if(outfit_id)
-		outfit_id.assignment = "Bit Avatar"
-		outfit_id.registered_name = avatar.real_name
-		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
-
-	return avatar
-
-/// Generates a new hololadder for the bitminer. Effectively a respawn attempt.
-/obj/machinery/netpod/proc/generate_hololadder()
-	var/obj/machinery/quantum_server/server = find_server()
-	if(isnull(server))
-		return
-
-	var/datum/space_level/vdom = server.vdom_ref?.resolve()
-	if(isnull(vdom))
-		return
-
-	var/list/turf/possible_turfs = get_area_turfs(/area/station/virtual_domain/safehouse/exit, vdom.z_value)
-	if(!length(possible_turfs))
-		return
-
-	var/turf/destination
-	for(var/turf/dest_turf as anything in possible_turfs)
-		if(!locate(/obj/structure/hololadder) in dest_turf)
-			destination = dest_turf
-			break
-	if(isnull(destination))
-		return
-
-	var/obj/structure/hololadder/wayout = new(destination)
-	if(isnull(wayout))
-		return
-
-	return wayout
-
 /// Creates a list of outfit entries for the UI.
 /obj/machinery/netpod/proc/make_outfit_collection(identifier, list/outfit_list)
 	var/list/collection = list(
@@ -344,16 +312,28 @@
 
 	return list(collection)
 
+/obj/machinery/netpod/proc/on_examine(datum/source, mob/examiner, list/examine_text)
+	SIGNAL_HANDLER
+
+	if(isnull(occupant))
+		examine_text += span_infoplain("It is currently unoccupied.")
+		return
+
+	examine_text += span_infoplain("It is currently occupied by [occupant].")
+
+
 /// On unbuckle or break, make sure the occupant ref is null
 /obj/machinery/netpod/proc/on_opened_or_destroyed()
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, TRUE, src)
 
+	// var/obj/machinery/quantum_server/server = find_server()
+	// if(server)
+	// 	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, occupant_mind_ref)
+
 /// Resolves a path to an outfit.
 /obj/machinery/netpod/proc/resolve_outfit(text)
 	var/path = text2path(text)
 	if(ispath(path, /datum/outfit) && locate(path) in subtypesof(/datum/outfit))
 		return path
-
-	return
