@@ -551,7 +551,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!proximity_flag || !isliving(target) || !active)
+	if(!proximity_flag || !isliving(target) || !active || !user.combat_mode)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	finalize_baton_attack(target, user)
