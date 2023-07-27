@@ -15894,6 +15894,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "dSA" = (
@@ -64173,7 +64174,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "qdc" = (

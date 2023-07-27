@@ -1026,10 +1026,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"OU" = (
-/obj/item/kirbyplants/organic/plant21,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "PD" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
@@ -1203,7 +1199,7 @@ bc
 bc
 bc
 bc
-OU
+ej
 gy
 Zw
 aZ
@@ -1520,7 +1516,7 @@ aZ
 aZ
 aZ
 bc
-OU
+ej
 ab
 dd
 bc

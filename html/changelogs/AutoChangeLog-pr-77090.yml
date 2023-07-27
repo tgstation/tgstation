@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Consumables like bone gel will first be used for surgery before wounds"

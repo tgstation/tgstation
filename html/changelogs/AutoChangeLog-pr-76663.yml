@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - code_imp: "The currently operating rust-g version on a live server is posted to places like the runtime.log, in the same place where the revision information and any applicable test merges already were."

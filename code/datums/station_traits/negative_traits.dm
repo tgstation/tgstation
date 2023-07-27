@@ -389,7 +389,7 @@
 				if(istype(current_thing, /obj/machinery/vending) && prob(45))
 					var/obj/machinery/vending/vendor_to_trash = current_thing
 					if(prob(50))
-						vendor_to_trash.tilt(get_turf(vendor_to_trash))
+						vendor_to_trash.tilt(get_turf(vendor_to_trash), 0) // crit effects can do some real weird shit, lets disable it
 
 					if(prob(50))
 						vendor_to_trash.take_damage(150)
@@ -571,6 +571,10 @@
 	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
 		//if engineering isnt valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
+
+	// Let the viro know resistence is futile
+	send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
+	force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control

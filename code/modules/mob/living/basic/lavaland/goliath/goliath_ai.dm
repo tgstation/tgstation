@@ -93,7 +93,7 @@
 
 /// If we got nothing better to do, dig a little hole
 /datum/ai_behavior/goliath_dig
-	action_cooldown = 1 MINUTES
+	action_cooldown = 3 MINUTES
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/goliath_dig/setup(datum/ai_controller/controller, target_key)
