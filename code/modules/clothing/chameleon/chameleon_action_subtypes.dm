@@ -190,6 +190,7 @@
 	agent_card.update_appearance(UPDATE_ICON)
 
 /datum/action/item_action/chameleon/change/id_trim
+	chameleon_type = /datum/id_trim
 	chameleon_name = "ID Trim"
 
 /datum/action/item_action/chameleon/change/id_trim/New(Target)
@@ -203,7 +204,10 @@
 	name = "Change [chameleon_name] Appearance"
 	build_all_button_icons()
 
-	for(var/datum/id_trim/trim_path as anything in typesof(chameleon_type))
+	LAZYINITLIST(chameleon_typecache)
+	LAZYINITLIST(chameleon_list)
+
+	for(var/datum/id_trim/trim_path as anything in typesof(/datum/id_trim))
 		if(chameleon_blacklist[trim_path])
 			continue
 
@@ -212,6 +216,7 @@
 		if(trim && trim.trim_state && trim.assignment)
 			var/chameleon_item_name = "[trim.assignment] ([trim.trim_state])"
 			chameleon_list[chameleon_item_name] = trim_path
+			chameleon_typecache[trim_path] = TRUE
 
 /datum/action/item_action/chameleon/change/id_trim/update_item(picked_trim_path)
 	var/obj/item/card/id/advanced/chameleon/agent_card = target
@@ -270,10 +275,13 @@
 		/obj/item/camera/siliconcam,
 		/obj/item/door_remote/omni,
 		/obj/item/flashlight/emp/debug,
+		/obj/item/flashlight/eyelight/adapted,
 		/obj/item/flashlight/flare,
+		/obj/item/flashlight/lamp,
 		/obj/item/healthanalyzer/rad_laser,
 		/obj/item/multitool/ai_detect,
 		/obj/item/multitool/cyborg,
+		/obj/item/multitool/drone,
 		/obj/item/multitool/field_debug,
 		/obj/item/storage/fancy/cigarettes/cigars,
 	))

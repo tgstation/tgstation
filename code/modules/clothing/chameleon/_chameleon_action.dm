@@ -144,6 +144,8 @@
 			var/obj/item/clothing/clothing_target = item_target
 			var/obj/item/clothing/picked_clothing = picked_item
 			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
+		item_target.flags_inv = initial(picked_item.flags_inv)
+		item_target.transparent_protection = initial(picked_item.transparent_protection)
 	if(initial(picked_item.greyscale_config) && initial(picked_item.greyscale_colors))
 		atom_target.icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config), initial(picked_item.greyscale_colors))
 	else
@@ -173,6 +175,9 @@
 
 	var/using_item_type
 	for(var/item_type in all_items_to_apply)
+		if(!ispath(item_type, /obj/item))
+			stack_trace("Invalid item type passed to apply_outfit ([item_type])")
+			continue
 		if(chameleon_typecache[item_type])
 			using_item_type = item_type
 			break

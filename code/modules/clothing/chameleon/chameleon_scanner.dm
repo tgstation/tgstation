@@ -37,6 +37,8 @@
 	. = ..()
 	if(!IS_TRAITOR(user))
 		return
+	// similar to context, we don't want a bunch of text revealing "THIS IS A DISGUISED ITEM" to everyone on examine.
+	// despite the fact that anyone can use it, we'll only show it to traitors, everyone else just has to figure it out.
 	. += span_red("There's a small button on the bottom side of it. You recognize this as a hidden <i>Chameleon Scanner 6000</i>.")
 	. += span_red("<b>Left click</b> will stealthily scan a target up to [scan_range] meters away and upload their getup as a custom outfit for you to use.")
 	. += span_red("<b>Right click</b> will do the same, but instantly equip the outfit you obtain.")
@@ -93,7 +95,7 @@
 	var/list/all_scanned_items = list()
 	for(var/obj/item/thing in mob_copying.get_equipped_items())
 		var/datum/action/item_action/chameleon/change/counter_chameleon = locate() in thing.actions
-		if(counter_chameleon)
+		if(counter_chameleon?.active_type)
 			// Prevent counter spying
 			all_scanned_items |= counter_chameleon.active_type
 		else

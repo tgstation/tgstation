@@ -52,7 +52,8 @@
 /datum/action/chameleon_outfit/proc/save_current_outfit(mob/user)
 	var/list/saved_paths = list()
 	for(var/datum/action/item_action/chameleon/change/change_action in owner.actions)
-		saved_paths |= change_action.active_type
+		if(change_action.active_type)
+			saved_paths |= change_action.active_type
 
 	save_outfit(user, saved_paths)
 
@@ -116,5 +117,5 @@
 		var/obj/item/cham_item = change_action.target
 		if(!cham_item.slot_flags)
 			continue
-		// Clothing items get a small delay to create a neat-ish visual effect and also introduce some counterplay
+		// Clothing items get a small delay to create a visual effect and also introduce some counterplay and also distinguish from lings
 		stoplag(0.1 SECONDS)
