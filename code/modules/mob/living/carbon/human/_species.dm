@@ -2311,7 +2311,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			for(var/datum/wound/old_wound as anything in LAZYLISTDUPLICATE(old_part.wounds))
 				new_part.wounds.Add(new old_wound)
 			for(var/datum/scar/old_scar as anything in LAZYLISTDUPLICATE(old_part.scars))
-				new_part.wounds.Add(new old_scar)
+				new_part.scars.Add(new old_scar)
 		qdel(old_part)
 
 /// Creates body parts for the target completely from scratch based on the species
