@@ -4418,8 +4418,8 @@
 /obj/item/knife/combat,
 /obj/item/clothing/suit/armor/vest/old,
 /obj/item/gun/ballistic/rifle/boltaction,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "wi" = (

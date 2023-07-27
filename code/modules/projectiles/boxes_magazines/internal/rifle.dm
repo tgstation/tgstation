@@ -7,7 +7,7 @@
 	multiload = TRUE
 
 /obj/item/ammo_box/magazine/internal/boltaction/surplus
-	ammo_type = /obj/item/ammo_casing/a762/surplus
+	ammo_type = /obj/item/ammo_casing/strilka310/surplus
 
 /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	name = "pipegun internal magazine"

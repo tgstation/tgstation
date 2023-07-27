@@ -95,7 +95,7 @@
 	caliber = CALIBER_STRILKA310
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
-/obj/item/ammo_box/a762/surplus
+/obj/item/ammo_box/strilka310/surplus
 	name = "stripper clip (.310 Surplus)"
 	ammo_type = /obj/item/ammo_casing/strilka310/surplus
 

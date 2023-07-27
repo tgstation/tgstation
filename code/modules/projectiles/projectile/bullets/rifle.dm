@@ -18,19 +18,19 @@
 
 // .310 Strilka (Sakhno Rifle)
 
-/obj/projectile/bullet/a762
+/obj/projectile/bullet/strilka310
 	name = ".310 Strilka bullet"
 	damage = 60
 	armour_penetration = 10
 	wound_bonus = -45
 	wound_falloff_tile = 0
 
-/obj/projectile/bullet/a762/surplus
+/obj/projectile/bullet/strilka310/surplus
 	name = ".310 Strilka surplus bullet"
 	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
 	armour_penetration = 0
 
-/obj/projectile/bullet/a762/enchanted
+/obj/projectile/bullet/strilka310/enchanted
 	name = "enchanted .310 bullet"
 	damage = 20
 	stamina = 80

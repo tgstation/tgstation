@@ -240,14 +240,14 @@
 		for(var/i in 1 to 6)
 			new ammo_to_spawn(src)
 
-/obj/item/storage/toolbox/ammobox/a762
-	name = "7.62mm ammo box (Surplus?)"
+/obj/item/storage/toolbox/ammobox/strilka310
+	name = ".310 Strilka ammo box (Surplus?)"
 	desc = "It contains a few clips. Goddamn, this thing smells awful. \
 		Has this been sitting in a warehouse for the last several centuries?"
-	ammo_to_spawn = /obj/item/ammo_box/a762
+	ammo_to_spawn = /obj/item/ammo_box/strilka310
 
-/obj/item/storage/toolbox/ammobox/a762/surplus
-	ammo_to_spawn = /obj/item/ammo_box/a762/surplus
+/obj/item/storage/toolbox/ammobox/strilka310/surplus
+	ammo_to_spawn = /obj/item/ammo_box/strilka310/surplus
 
 /obj/item/storage/toolbox/ammobox/wt550m9
 	name = "4.6x30mm ammo box"
