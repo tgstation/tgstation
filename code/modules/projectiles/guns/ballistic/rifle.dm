@@ -2,14 +2,14 @@
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon = 'icons/obj/weapons/guns/mosinnagant.dmi'
-	icon_state = "moistnugget"
+	icon_state = "sakhno"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_BULKY
-	inhand_icon_state = "moistnugget"
-	worn_icon_state = "moistnugget"
+	inhand_icon_state = "sakhno"
+	worn_icon_state = "sakhno"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_LOCKING
