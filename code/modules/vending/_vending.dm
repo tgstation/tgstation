@@ -820,9 +820,6 @@
 
 /obj/machinery/vending/fall_and_crush_crit_rebate_table(crit_case)
 
-	if (isnull(crit_case))
-		return null
-
 	if (crit_case == VENDOR_CRUSH_CRIT_GLASSCANDY)
 		return 0.33
 
