@@ -52,7 +52,7 @@
 		return
 
 	players_listening_refs += new_ref
-	music_callbacks += addtimer(CALLBACK(src, PROC_REF(clear_target), new_ref), track_duration)
+	music_callbacks += addtimer(CALLBACK(src, PROC_REF(clear_target), new_ref), track_duration, TIMER_STOPPABLE)
 	new_target.playsound_local(new_target, boss_track, 200, FALSE, channel = CHANNEL_BOSS_MUSIC, pressure_affected = FALSE, use_reverb = FALSE)
 
 ///Removes `old_target` from the list of players listening, and stops their music if it is still playing.
