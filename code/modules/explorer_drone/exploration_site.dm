@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 
 /datum/exploration_site/alien_ruins
 	name = "alien ruins"
-	description = "Alien ruins on a small moons surface."
+	description = "Alien ruins on a small moon's surface."
 	site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_SURFACE,EXPLORATION_SITE_ALIEN,EXPLORATION_SITE_RUINS)
 	fluff_type = "fluff_ruins"
 
