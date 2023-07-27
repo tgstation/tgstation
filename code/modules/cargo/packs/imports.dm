@@ -224,7 +224,7 @@
 		/obj/item/clothing/mask/russian_balaclava,
 		/obj/item/clothing/head/helmet/rus_ushanka,
 		/obj/item/clothing/suit/armor/vest/russian_coat,
-		/obj/item/storage/toolbox/mosincase = 2,
+		/obj/item/storage/toolbox/riflecase = 2,
 	)
 
 /datum/supply_pack/imports/russian/fill(obj/structure/closet/crate/our_crate)
@@ -233,7 +233,7 @@
 		new item(our_crate)
 
 /datum/supply_pack/imports/moistnuggets
-	name = "Refurbished Mosin Nagant Crate"
+	name = "Refurbished Sakhno Precision Rifle Crate"
 	desc = "Hello Comrade Operative. You need gun? You hate garbage we sell to station normally? \
 		Then we have the perfect weapon for you! Special price for good friends! \
 		We don't have enough spare ammo, so you'll have to pick up the weapon of \

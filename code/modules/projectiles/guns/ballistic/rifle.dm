@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/rifle
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
-	icon = 'icons/obj/weapons/guns/mosinnagant.dmi'
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "sakhno"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -178,7 +178,7 @@
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	initial_caliber = CALIBER_SHOTGUN
-	alternative_caliber = CALIBER_A762
+	alternative_caliber = CALIBER_STRILKA310
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
