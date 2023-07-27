@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Crabs refactored into basic mobs. They now hunt tiny critters and flee from attackers."
+  - bugfix: "Fixed crabs not crab-walking."
