@@ -304,7 +304,7 @@
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/Shoot(atom/targeted_atom)
 	GiveTarget(targeted_atom)
-	AttackingTarget()
+	click_on_without_item(target)
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget()
 	if(istype(target, /obj/item/bodypart/arm))
@@ -316,7 +316,7 @@
 		return
 	if(back)
 		back.GiveTarget(target)
-		back.AttackingTarget()
+		back.click_on_without_item(target)
 	if(!Adjacent(target))
 		return
 	do_attack_animation(target)

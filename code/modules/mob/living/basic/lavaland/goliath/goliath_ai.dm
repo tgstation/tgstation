@@ -107,7 +107,7 @@
 	. = ..()
 	var/turf/target_turf = controller.blackboard[target_key]
 	var/mob/living/basic/basic_mob = controller.pawn
-	basic_mob.melee_attack(target_turf)
+	basic_mob.ClickOn(target_turf)
 	finish_action(controller, succeeded = TRUE)
 
 /datum/ai_behavior/goliath_dig/finish_action(datum/ai_controller/controller, succeeded, target_key)

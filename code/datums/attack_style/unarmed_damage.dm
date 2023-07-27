@@ -232,3 +232,22 @@
 		override_effect = animal.attack_vis_effect
 
 	return ..()
+
+/datum/attack_style/unarmed/generic_damage/mob_attack/actually_apply_damage(
+	mob/living/attacker,
+	mob/living/smacked,
+	obj/item/bodypart/hitting_with,
+	obj/item/bodypart/affecting,
+	datum/apply_damage_packet/packet,
+)
+	. = ..()
+	// Bad code ahead but this is primarily for compatibiltiy with old effects
+	// Ideally these should all be moved to a swing, or react to a signal sent by a swing, or just in click, or whatever else
+	if(ishostile(attacker))
+		var/mob/living/simple_animal/hostile/animal = attacker
+		animal.GiveTarget(smacked)
+		UNLINT(animal.AttackingTarget(smacked))
+
+	if(isbasicmob(attacker))
+		var/mob/living/basic/animal = attacker
+		UNLINT(animal.melee_attack(smacked))

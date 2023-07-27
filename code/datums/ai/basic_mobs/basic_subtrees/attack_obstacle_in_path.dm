@@ -59,11 +59,11 @@
 	for (var/obj/object as anything in next_step.contents)
 		if (!can_smash_object(basic_mob, object))
 			continue
-		basic_mob.melee_attack(object)
+		basic_mob.ClickOn(object)
 		return TRUE
 
 	if (can_attack_turfs)
-		basic_mob.melee_attack(next_step)
+		basic_mob.ClickOn(next_step)
 		return TRUE
 	return FALSE
 

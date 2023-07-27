@@ -115,7 +115,7 @@
 	if(!basic_pawn.Adjacent(snack))
 		return
 
-	basic_pawn.melee_attack(snack) // snack attack!
+	basic_pawn.ClickOn(snack) // snack attack!
 
 	if(QDELETED(snack)) // we ate it!
 		finish_action(controller, TRUE, target_key, delivery_key)

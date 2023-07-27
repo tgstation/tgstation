@@ -61,10 +61,13 @@
 	if (!do_after(source, delay = telegraph_duration, target = source, interaction_key = INTERACTION_BASIC_ATTACK_FORCEAST))
 		forget_target(target)
 		return
-	if (!current_target) // They got out of the way :(
+	if (!current_target) // They got out of the way, sad
 		return
 	ADD_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
-	source.melee_attack(current_target)
+	var/pre_combat = source.combat_mode
+	source.set_combat_mode(TRUE)
+	source.ClickOn(current_target)
+	source.set_combat_mode(pre_combat)
 	forget_target(current_target)
 
 /// The guy we're trying to attack moved, is he still in range?

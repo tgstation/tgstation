@@ -30,11 +30,13 @@
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
+	var/pre_combat = basic_mob.combat_mode
+	basic_mob.set_combat_mode(TRUE)
 	if(hiding_target) //Slap it!
-		basic_mob.melee_attack(hiding_target)
+		basic_mob.ClickOn(hiding_target)
 	else
-		basic_mob.melee_attack(target)
-
+		basic_mob.ClickOn(target)
+	basic_mob.set_combat_mode(pre_combat)
 
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
