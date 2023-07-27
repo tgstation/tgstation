@@ -57,8 +57,8 @@
 	worn_icon_state = "broadsword"
 	force = 15
 	wound_bonus = 0
+	///Icon thats used for object, inhands and worn sprites when it breaks.
 	var/broken_icon = "broadsword_broken"
-
 	/// How many hits a sword can deal and block before it breaks, with one additional final attack.
 	var/rustiness = 15 // It may say 15, but it's 16 hits/blocks before it breaks.
 	/// If the sword is broken or not.
@@ -76,7 +76,7 @@
 	if(!.)
 		return
 	if(broken)
-		return 
+		return
 	decrease_uses(user)
 
 /obj/item/melee/sword/rust/proc/decrease_uses(mob/user)
