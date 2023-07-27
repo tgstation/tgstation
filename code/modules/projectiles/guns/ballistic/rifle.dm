@@ -137,7 +137,7 @@
 	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
 		\"Sakhno M2442 Army\" is stamped into the side of it. \
 		There was probably a reason it wasn't manufactured this short to begin with. \
-		Cutting the weapon down seems to have not helped with the moisture buildup."
+		Cutting the weapon down seems to have not helped with the moisture problem."
 	icon_state = "sakhno_tactifucked"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
