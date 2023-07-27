@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - admin: "Changing shuttle events now alerts admins"

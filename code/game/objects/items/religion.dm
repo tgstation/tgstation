@@ -24,7 +24,7 @@
 		. += span_notice("Activate it in your hand to inspire nearby allies of this banner's allegiance!")
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
-	if(!inspiration_available)
+	if(!inspiration_available || flags_1 & HOLOGRAM_1)
 		return
 	if(morale_time > world.time)
 		to_chat(user, span_warning("You aren't feeling inspired enough to flourish [src] again yet."))

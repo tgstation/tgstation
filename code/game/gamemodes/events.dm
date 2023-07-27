@@ -31,7 +31,7 @@
 		station_area.power_environ = FALSE
 		station_area.power_change()
 
-	for(var/obj/machinery/power/apc/C as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+	for(var/obj/machinery/power/apc/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(C.cell && is_station_level(C.z))
 			var/area/A = C.area
 			if(GLOB.typecache_powerfailure_safe_areas[A.type])
@@ -46,7 +46,7 @@
  */
 /proc/power_restore()
 	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
-	for(var/obj/machinery/power/apc/C as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+	for(var/obj/machinery/power/apc/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(C.cell && is_station_level(C.z))
 			C.cell.charge = C.cell.maxcharge
 			COOLDOWN_RESET(C, failure_timer)
