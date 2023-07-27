@@ -91595,7 +91595,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xVl" = (
-/mob/living/simple_animal/crab,
+/mob/living/basic/crab,
 /obj/structure/railing{
 	dir = 1
 	},
