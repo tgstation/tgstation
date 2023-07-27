@@ -1071,3 +1071,60 @@
   - spellcheck: Phobia warnings have the same glowy text now as they would in messages.
   oranges:
   - balance: holodeck spawned banners no longer give the inspiration effects
+2023-07-27:
+  Ghommie:
+  - bugfix: the height of runechat messages should now scale correctly with the current
+      size variable of living mob.
+  - refactor: Crabs refactored into basic mobs. They now hunt tiny critters and flee
+      from attackers.
+  - bugfix: Fixed crabs not crab-walking.
+  - bugfix: Fixed active conveyor belts not moving movables spawned on top of them.
+  Helg2:
+  - qol: Tactical medkits now can hold stuff it spawns with.
+  - bugfix: Nukie Medical Bundle now spawns with premium tactical medkit as it should.
+  Jacquerel:
+  - bugfix: Traitors can once again affix tiny bombs to lathes rather than trying
+      to feed them to the lathe
+  Kubisopplay:
+  - balance: Flashing borgs requires two consecutive flashes to fully immobilize
+  - balance: Flashed borgs can speak
+  - balance: Remote lockdown on cyborgs lasts 180 seconds
+  - balance: Cyborg stun arm works like normal baton, and costs less energy
+  LT3:
+  - bugfix: Consumables like bone gel will first be used for surgery before wounds
+  Licks-The-Crystal:
+  - qol: The "Kidnap" progression traitor objective now displays the number of telecrystals
+      awarded for a successful live kidnapping.
+  Melbert:
+  - bugfix: Fixes some occasions which result in TTS messages not playing
+  Rhials:
+  - bugfix: Clown cars now properly collide with deer.
+  - sound: Violent, slightly glassy car impact sound.
+  Senefi:
+  - bugfix: Wired MetaStation APCs that were not attached to the station's power grid
+      at round start.
+  Time-Green:
+  - admin: Changing shuttle events now alerts admins
+  carlarctg:
+  - bugfix: Hulks cannot be aggressive grabbed by strong grabbers anymore
+  - balance: Syndicate duffelbags can fit 2 extra bulky items, down from three.
+  - balance: Reduced syndicate duffelbag's unzipped slowdown from '1' to '0.3', and
+      set its zipping-up sped to 0.5, same as unzipping.
+  - rscadd: 'Added the following items to the Syndicate Duffelbag bulky exception
+      list: Greentext, mech removal tool, gibtonite, skub, golem shells, mech ammo.
+      Roughly sorted the list by item category.'
+  - bugfix: Fixed the syndie surgery duffelbag having more items than it can hold
+      by removing the redundant surgical drill (Upgraded cauteries can turn into one
+      anyways)
+  - qol: Any storage item with a can_hold description can be examined twice to see
+      what it can hold now.
+  - bugfix: The parent crayon's name is 'crayon' to prevent any weirdness with things
+      that show the parent type's name.
+  distributivgesetz:
+  - bugfix: Fixed a rare bug that let you spam bluespace bodybags everywhere.
+  - bugfix: Mafia chaplains can now only use their seances on dead people now.
+  vinylspiders:
+  - bugfix: fixes mobs missing most of their emissive blockers
+  zeroisthebiggay:
+  - balance: Huzzah! Interdyne Associates have finally upgraded their medborgs' firmware.
+      They'll now have bonesetters and bonegel available!

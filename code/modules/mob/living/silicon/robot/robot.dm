@@ -411,12 +411,25 @@
 	// They stay locked down if their wire is cut.
 	if(wires?.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
+	else if(!ai_lockdown)
+		lockdown_timer = addtimer(CALLBACK(src,PROC_REF(lockdown_override), FALSE), 10 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME | TIMER_STOPPABLE)
+		to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown engaged. Trying to hack the lockdown subsystem...")]<br>")
 	if(state)
 		throw_alert(ALERT_HACKED, /atom/movable/screen/alert/locked)
 	else
+		deltimer(lockdown_timer)
 		clear_alert(ALERT_HACKED)
 	set_lockcharge(state)
 
+/// Allows the borg to unlock themselves after a lenghty period of time.
+/mob/living/silicon/robot/proc/lockdown_override()
+	if(ai_lockdown)
+		to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown override failed.")]<br>")
+		return
+	set_lockcharge(FALSE)
+	to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
+	if(connected_ai)
+		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] succesfully overriden the lockdown system")]<br>")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
@@ -658,10 +671,6 @@
 			death()
 			toggle_headlamp(1)
 			return
-		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
-			set_stat(UNCONSCIOUS)
-		else
-			set_stat(CONSCIOUS)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
@@ -677,6 +686,7 @@
 		builtInCamera.toggle_cam(src, 0)
 	if(full_heal_flags & HEAL_ADMIN)
 		locked = TRUE
+	src.set_stat(CONSCIOUS)
 	notify_ai(AI_NOTIFICATION_NEW_BORG)
 	toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
 	return TRUE

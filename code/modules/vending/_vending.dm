@@ -75,9 +75,14 @@
 	///The ref of the last mob to shop with us
 	var/last_shopper
 	var/tilted = FALSE
+	/// If tilted, this variable should always be the rotation that was applied when we were tilted. Stored for the purposes of unapplying it.
+	var/tilted_rotation = 0
 	var/tiltable = TRUE
 	var/squish_damage = 75
-	var/forcecrit = 0
+	/// The chance, in percent, of this vendor performing a critical hit on anything it crushes via [tilt].
+	var/crit_chance = 15
+	/// If set to a critical define in crushing.dm, anything this vendor crushes will always be hit with that effect.
+	var/forcecrit = null
 	var/num_shards = 7
 	var/list/pinned_mobs = list()
 	///Icon for the maintenance panel overlay
@@ -636,10 +641,8 @@
 					freebie(user, 1)
 				if(26 to 75)
 					return
-				if(76 to 90)
+				if(76 to 100)
 					tilt(user)
-				if(91 to 100)
-					tilt(user, crit=TRUE)
 
 /obj/machinery/vending/proc/freebie(mob/fatty, freebies)
 	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!"))
@@ -662,118 +665,279 @@
 			R.amount--
 			break
 
-///Tilts ontop of the atom supplied, if crit is true some extra shit can happen. Returns TRUE if it dealt damage to something.
-/obj/machinery/vending/proc/tilt(atom/fatty, crit=FALSE)
+/// Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.
+/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit)
 	if(QDELETED(src) || !has_gravity(src))
 		return
-	visible_message(span_danger("[src] tips over!"))
-	tilted = TRUE
-	layer = ABOVE_MOB_LAYER
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
-	var/crit_case
-	if(crit)
-		crit_case = rand(1,6)
+	. = NONE
 
-	if(forcecrit)
-		crit_case = forcecrit
-
-	. = FALSE
-
+	var/picked_rotation = pick(90, 270)
 	if(Adjacent(fatty))
-		for(var/mob/living/L in get_turf(fatty))
-			var/was_alive = (L.stat != DEAD)
-			var/mob/living/carbon/C = L
+		. = fall_and_crush(get_turf(fatty), squish_damage, local_crit_chance, forced_crit, 6 SECONDS, rotation = picked_rotation)
 
-			SEND_SIGNAL(L, COMSIG_ON_VENDOR_CRUSH)
-
-
-			if(istype(C))
-				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
-
-				if(crit_case < 5) // the body/head asplode case has its own description
-					C.visible_message(span_danger("[C] is crushed by [src]!"), \
-						span_userdanger("You are crushed by [src]!"))
-
-				switch(crit_case) // only carbons can have the fun crits
-					if(1) // shatter their legs and bleed 'em
-						crit_rebate = 60
-						C.bleed(150)
-						var/obj/item/bodypart/leg/left/l = C.get_bodypart(BODY_ZONE_L_LEG)
-						if(l)
-							l.receive_damage(brute=200)
-						var/obj/item/bodypart/leg/right/r = C.get_bodypart(BODY_ZONE_R_LEG)
-						if(r)
-							r.receive_damage(brute=200)
-						if(l || r)
-							C.visible_message(span_danger("[C]'s legs shatter with a sickening crunch!"), \
-								span_userdanger("Your legs shatter with a sickening crunch!"))
-					if(2) // pin them beneath the machine until someone untilts it
-						forceMove(get_turf(C))
-						buckle_mob(C, force=TRUE)
-						C.visible_message(span_danger("[C] is pinned underneath [src]!"), \
-							span_userdanger("You are pinned down by [src]!"))
-					if(3) // glass candy
-						crit_rebate = 50
-						for(var/i in 1 to num_shards)
-							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
-							shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
-							shard.updateEmbedding()
-							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-							shard.embedding = list()
-							shard.updateEmbedding()
-					if(4) // paralyze this binch
-						// the new paraplegic gets like 4 lines of losing their legs so skip them
-						visible_message(span_danger("[C]'s spinal cord is obliterated with a sickening crunch!"), ignored_mobs = list(C))
-						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
-					if(5) // limb squish!
-						for(var/i in C.bodyparts)
-							var/obj/item/bodypart/squish_part = i
-							if(IS_ORGANIC_LIMB(squish_part))
-								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-								squish_part.force_wound_upwards(type_wound, wound_source = "crushing by vending machine")
-							else
-								squish_part.receive_damage(brute=30)
-						C.visible_message(span_danger("[C]'s body is maimed underneath the mass of [src]!"), \
-							span_userdanger("Your body is maimed underneath the mass of [src]!"))
-					if(6) // skull squish!
-						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
-						if(O)
-							if(O.dismember())
-								C.visible_message(span_danger("[O] explodes in a shower of gore beneath [src]!"), \
-									span_userdanger("Oh f-"))
-								O.drop_organs()
-								qdel(O)
-								new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
-
-				if(prob(30))
-					C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE) // the 30% chance to spread the damage means you escape breaking any bones
-				else
-					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5) // otherwise, deal it to 2 random limbs (or the same one) which will likely shatter something
-					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5)
-				C.AddElement(/datum/element/squish, 80 SECONDS)
-			else
-				L.visible_message(span_danger("[L] is crushed by [src]!"), \
-				span_userdanger("You are crushed by [src]!"))
-				L.apply_damage(squish_damage, forced=TRUE)
-				if(crit_case)
-					L.apply_damage(squish_damage, forced=TRUE)
-			if(was_alive && L.stat == DEAD && L.client)
-				L.client.give_award(/datum/award/achievement/misc/vendor_squish, L) // good job losing a fight with an inanimate object idiot
-
-			L.Paralyze(60)
-			L.emote("scream")
-			. = TRUE
-			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
-			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-			add_memory_in_range(L, 7, /datum/memory/witness_vendor_crush, protagonist = L, antagonist = src)
-
-	var/matrix/M = matrix()
-	M.Turn(pick(90, 270))
-	transform = M
+		if (. & SUCCESSFULLY_FELL_OVER)
+			visible_message(span_danger("[src] tips over!"))
+			tilted = TRUE
+			tilted_rotation = picked_rotation
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 1, 1, spin=FALSE, quickstart=FALSE)
+		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
+
+/**
+ * Causes src to fall onto [target], crushing everything on it (including itself) with [damage]
+ * and a small chance to do a spectacular effect per entity (if a chance above 0 is provided).
+ *
+ * Args:
+ * * turf/target: The turf to fall onto. Cannot be null.
+ * * damage: The raw numerical damage to do by default.
+ * * chance_to_crit: The percent chance of a critical hit occuring. Default: 0
+ * * forced_crit_case: If given a value from crushing.dm, [target] and it's contents will always be hit with that specific critical hit. Default: null
+ * * paralyze_time: The time, in deciseconds, a given mob/living will be paralyzed for if crushed.
+ * * crush_dir: The direction the crush is coming from. Default: dir of src to [target].
+ * * damage_type: The type of damage to do. Default: BRUTE
+ * * damage_flag: The attack flag for armor purposes. Default: MELEE
+ * * rotation: The angle of which to rotate src's transform by on a successful tilt. Default: 90.
+ *
+ * Returns: A collection of bitflags defined in crushing.dm. Read that file's documentation for info.
+ */
+/atom/movable/proc/fall_and_crush(turf/target, damage, chance_to_crit = 0, forced_crit_case = null, paralyze_time, crush_dir = get_dir(get_turf(src), target), damage_type = BRUTE, damage_flag = MELEE, rotation = 90)
+
+	ASSERT(!isnull(target))
+
+	var/flags_to_return = NONE
+
+	if (!target.is_blocked_turf(TRUE, src, list(src)))
+		for(var/atom/atom_target in (target.contents) + target)
+			if (isarea(atom_target))
+				continue
+
+			if (SEND_SIGNAL(atom_target, COMSIG_PRE_TILT_AND_CRUSH, src) & COMPONENT_IMMUNE_TO_TILT_AND_CRUSH)
+				continue
+
+			var/crit_case = forced_crit_case
+			if (isnull(crit_case) && chance_to_crit > 0)
+				if (prob(chance_to_crit))
+					crit_case = pick_weight(get_crit_crush_chances())
+			var/crit_rebate_mult = 1 // lessen the normal damage we deal for some of the crits
+
+			if (!isnull(crit_case))
+				crit_rebate_mult = fall_and_crush_crit_rebate_table(crit_case)
+				apply_crit_crush(crit_case, atom_target)
+
+			var/adjusted_damage = damage * crit_rebate_mult
+			var/crushed
+			if (isliving(atom_target))
+				crushed = TRUE
+				var/mob/living/carbon/living_target = atom_target
+				var/was_alive = (living_target.stat != DEAD)
+				var/blocked = living_target.run_armor_check(attack_flag = damage_flag)
+				if (iscarbon(living_target))
+					var/mob/living/carbon/carbon_target = living_target
+					if(prob(30))
+						carbon_target.apply_damage(max(0, adjusted_damage), damage_type, blocked = blocked, forced = TRUE, spread_damage = TRUE, attack_direction = crush_dir) // the 30% chance to spread the damage means you escape breaking any bones
+					else
+						var/brute = (damage_type == BRUTE ? damage : 0) * 0.5
+						var/burn = (damage_type == BURN ? damage : 0) * 0.5
+						carbon_target.take_bodypart_damage(brute, burn, check_armor = TRUE, wound_bonus = 5) // otherwise, deal it to 2 random limbs (or the same one) which will likely shatter something
+						carbon_target.take_bodypart_damage(brute, burn, check_armor = TRUE, wound_bonus = 5)
+					carbon_target.AddElement(/datum/element/squish, 80 SECONDS)
+				else
+					living_target.apply_damage(adjusted_damage, damage_type, blocked = blocked, forced = TRUE, attack_direction = crush_dir)
+
+				living_target.Paralyze(paralyze_time)
+				living_target.emote("scream")
+				playsound(living_target, 'sound/effects/blobattack.ogg', 40, TRUE)
+				playsound(living_target, 'sound/effects/splat.ogg', 50, TRUE)
+				post_crush_living(living_target, was_alive)
+				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
+
+			else if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) && !(is_type_in_typecache(atom_target, GLOB.WALLITEMS_INTERIOR) || is_type_in_typecache(atom_target, GLOB.WALLITEMS_EXTERIOR)))
+				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
+				crushed = TRUE
+				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
+
+			if (crushed)
+				atom_target.visible_message(span_danger("[atom_target] is crushed by [src]!"), span_userdanger("You are crushed by [src]!"))
+				SEND_SIGNAL(atom_target, COMSIG_POST_TILT_AND_CRUSH, src)
+
+		var/matrix/to_turn = turn(transform, rotation)
+		animate(src, transform = to_turn, 0.2 SECONDS)
+		playsound(src, 'sound/effects/bang.ogg', 40)
+
+		visible_message(span_danger("[src] tips over, slamming hard onto [target]!"))
+		flags_to_return |= SUCCESSFULLY_FELL_OVER
+		post_tilt()
+	else
+		visible_message(span_danger("[src] rebounds comically as it fails to slam onto [target]!"))
+
+	Move(target, crush_dir) // we still TRY to move onto it for shit like teleporters
+	return flags_to_return
+
+/**
+ * Exists for the purposes of custom behavior.
+ * Called directly after [crushed] is crushed.
+ *
+ * Args:
+ * * mob/living/crushed: The mob that was crushed.
+ * * was_alive: Boolean. True if the mob was alive before the crushing.
+ */
+/atom/movable/proc/post_crush_living(mob/living/crushed, was_alive)
+	return
+
+/**
+ * Exists for the purposes of custom behavior.
+ * Called directly after src actually rotates and falls over.
+ */
+/atom/movable/proc/post_tilt()
+	return
+
+/obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
+
+	if(was_alive && crushed.stat == DEAD && crushed.client)
+		crushed.client.give_award(/datum/award/achievement/misc/vendor_squish, crushed) // good job losing a fight with an inanimate object idiot
+
+	add_memory_in_range(crushed, 7, /datum/memory/witness_vendor_crush, protagonist = crushed, antagonist = src)
+
+	return ..()
+
+/**
+ * Allows damage to be reduced on certain crit cases.
+ * Args:
+ * * crit_case: The critical case chosen.
+ */
+/atom/movable/proc/fall_and_crush_crit_rebate_table(crit_case)
+
+	ASSERT(!isnull(crit_case))
+
+	switch(crit_case)
+		if (CRUSH_CRIT_SHATTER_LEGS)
+			return 0.2
+		else
+			return 1
+
+/obj/machinery/vending/fall_and_crush_crit_rebate_table(crit_case)
+
+	if (crit_case == VENDOR_CRUSH_CRIT_GLASSCANDY)
+		return 0.33
+
+	return ..()
+
+/**
+ * Returns a assoc list of (critcase -> num), where critcase is a critical define in crushing.dm and num is a weight.
+ * Use with pickweight to acquire a random critcase.
+ */
+/atom/movable/proc/get_crit_crush_chances()
+	RETURN_TYPE(/list)
+
+	var/list/weighted_crits = list()
+
+	weighted_crits[CRUSH_CRIT_SHATTER_LEGS] = 100
+	weighted_crits[CRUSH_CRIT_PARAPALEGIC] = 80
+	weighted_crits[CRUSH_CRIT_HEADGIB] = 20
+	weighted_crits[CRUSH_CRIT_SQUISH_LIMB] = 100
+
+	return weighted_crits
+
+/obj/machinery/vending/get_crit_crush_chances()
+	var/list/weighted_crits = ..()
+
+	weighted_crits[VENDOR_CRUSH_CRIT_GLASSCANDY] = 100
+	weighted_crits[VENDOR_CRUSH_CRIT_PIN] = 100
+
+	return weighted_crits
+
+/**
+ * Should be where critcase effects are actually implemented. Use this to apply critcases.
+ * Args:
+ * * crit_case: The chosen critcase, defined in crushing.dm.
+ * * atom/atom_target: The target to apply the critical hit to. Cannot be null. Can be anything except /area.
+ *
+ * Returns:
+ * TRUE if a crit case is successfully applied, FALSE otherwise.
+ */
+/atom/movable/proc/apply_crit_crush(crit_case, atom/atom_target)
+	switch (crit_case)
+		if(CRUSH_CRIT_SHATTER_LEGS) // shatter their legs and bleed 'em
+			if (!iscarbon(atom_target))
+				return FALSE
+			var/mob/living/carbon/carbon_target = atom_target
+			carbon_target.bleed(150)
+			var/obj/item/bodypart/leg/left/left_leg = carbon_target.get_bodypart(BODY_ZONE_L_LEG)
+			if(left_leg)
+				left_leg.receive_damage(brute = 200)
+			var/obj/item/bodypart/leg/right/right_leg = carbon_target.get_bodypart(BODY_ZONE_R_LEG)
+			if(right_leg)
+				right_leg.receive_damage(brute = 200)
+			if(left_leg || right_leg)
+				carbon_target.visible_message(span_danger("[carbon_target]'s legs shatter with a sickening crunch!"), span_userdanger("Your legs shatter with a sickening crunch!"))
+			return TRUE
+		if(CRUSH_CRIT_PARAPALEGIC) // paralyze this binch
+			// the new paraplegic gets like 4 lines of losing their legs so skip them
+			if (!iscarbon(atom_target))
+				return FALSE
+			var/mob/living/carbon/carbon_target = atom_target
+			visible_message(span_danger("[carbon_target]'s spinal cord is obliterated with a sickening crunch!"), ignored_mobs = list(carbon_target))
+			carbon_target.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+			return TRUE
+		if(CRUSH_CRIT_SQUISH_LIMB) // limb squish!
+			if (!iscarbon(atom_target))
+				return FALSE
+			var/mob/living/carbon/carbon_target = atom_target
+			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
+				if(IS_ORGANIC_LIMB(squish_part))
+					var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
+					squish_part.force_wound_upwards(type_wound, wound_source = "crushed by [src]")
+				else
+					squish_part.receive_damage(brute=30)
+			carbon_target.visible_message(span_danger("[carbon_target]'s body is maimed underneath the mass of [src]!"), span_userdanger("Your body is maimed underneath the mass of [src]!"))
+			return TRUE
+		if(CRUSH_CRIT_HEADGIB) // skull squish!
+			if (!iscarbon(atom_target))
+				return FALSE
+			var/mob/living/carbon/carbon_target = atom_target
+			var/obj/item/bodypart/head/carbon_head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
+			if(carbon_head)
+				if(carbon_head.dismember())
+					carbon_target.visible_message(span_danger("[carbon_head] explodes in a shower of gore beneath [src]!"),	span_userdanger("Oh f-"))
+					carbon_head.drop_organs()
+					qdel(carbon_head)
+					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target))
+			return TRUE
+
+	return FALSE
+
+/obj/machinery/vending/apply_crit_crush(crit_case, atom_target)
+	. = ..()
+
+	if (.)
+		return TRUE
+
+	switch (crit_case)
+		if (VENDOR_CRUSH_CRIT_GLASSCANDY)
+			if (!iscarbon(atom_target))
+				return FALSE
+			var/mob/living/carbon/carbon_target = atom_target
+			for(var/i in 1 to num_shards)
+				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
+				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
+				shard.updateEmbedding()
+				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+				shard.embedding = list()
+				shard.updateEmbedding()
+			return TRUE
+		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
+			if (!isliving(atom_target))
+				return FALSE
+			var/mob/living/living_target = atom_target
+			forceMove(get_turf(living_target))
+			buckle_mob(living_target, force=TRUE)
+			living_target.visible_message(span_danger("[living_target] is pinned underneath [src]!"), span_userdanger("You are pinned down by [src]!"))
+			return TRUE
+
+	return FALSE
 
 /obj/machinery/vending/proc/untilt(mob/user)
 	if(user)
@@ -786,9 +950,9 @@
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
 
-	var/matrix/M = matrix()
-	M.Turn(0)
-	transform = M
+	var/matrix/to_turn = turn(transform, -tilted_rotation)
+	animate(src, transform = to_turn, 0.2 SECONDS)
+	tilted_rotation = 0
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
 	. = TRUE
