@@ -388,7 +388,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/porta_turret/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && atom_integrity > 0) //damage received
 		if(prob(30))

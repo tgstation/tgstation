@@ -203,7 +203,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "bJ" = (
-/mob/living/simple_animal/crab{
+/mob/living/basic/crab{
 	faction = list("carp")
 	},
 /turf/open/floor/plating,
