@@ -45,6 +45,7 @@
 /datum/component/attached_sticker/proc/peel(atom/source)
 	SIGNAL_HANDLER
 	if(!QDELETED(sticker))
+		var/atom/as_atom = parent
 		sticker.forceMove(isturf(as_atom) ? as_atom : as_atom.drop_location())
 		sticker.pixel_y = rand(-4,1)
 		sticker.pixel_x = rand(-3,3)
