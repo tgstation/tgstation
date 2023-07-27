@@ -321,16 +321,11 @@
 
 	examine_text += span_infoplain("It is currently occupied by [occupant].")
 
-
 /// On unbuckle or break, make sure the occupant ref is null
 /obj/machinery/netpod/proc/on_opened_or_destroyed()
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, TRUE, src)
-
-	// var/obj/machinery/quantum_server/server = find_server()
-	// if(server)
-	// 	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, occupant_mind_ref)
 
 /// Resolves a path to an outfit.
 /obj/machinery/netpod/proc/resolve_outfit(text)

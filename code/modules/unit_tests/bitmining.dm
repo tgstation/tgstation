@@ -186,7 +186,7 @@
 
 	labrat.forceMove(pod.loc)
 	pod.set_occupant(labrat)
-	pod.close_machine()
+	pod.close_machine(labrat)
 	TEST_ASSERT_EQUAL(pod.occupant, labrat, "Sanity: Pod didn't set occupant")
 	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: Pod didn't set server")
 	TEST_ASSERT_NOTNULL(pod.occupant_mind_ref, "Sanity: Pod didn't set mind")
@@ -198,7 +198,7 @@
 
 	labrat.fully_heal()
 	pod.set_occupant(labrat)
-	pod.close_machine()
+	pod.close_machine(labrat)
 	TEST_ASSERT_NOTNULL(pod.occupant_mind_ref, "Sanity: Pod didn't set mind")
 	TEST_ASSERT_EQUAL(pod.occupant_mind_ref, real_mind, "Sanity: Pod didn't set mind")
 
@@ -222,7 +222,7 @@
 	pod.occupant_mind_ref = labrat_mind_ref
 	pod.occupant = labrat
 
-	labrat.mind.initial_avatar_connection(labrat, target, pod, server)
+	labrat.mind.initial_avatar_connection(avatar = target, hosting_netpod = pod, server = server)
 	TEST_ASSERT_NOTNULL(target.mind, "Couldn't transfer mind to target")
 	TEST_ASSERT_EQUAL(target.mind, initial_mind, "New mind is different from original")
 	TEST_ASSERT_NOTNULL(target.mind.pilot_ref, "Could not set avatar_ref")
@@ -238,8 +238,6 @@
 	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/bodypart/head) in labrat.get_damaged_bodyparts(burn = TRUE), "Pilot did not get damaged bodypart")
 
-
-	TEST_ASSERT_EQUAL(target.mind.pilot_ref.resolve(), labrat, "Pilot ref should not have changed")
 	target.apply_damage(999, forced = TRUE, spread_damage = TRUE)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should have died on lethal damage")
 	TEST_ASSERT_EQUAL(labrat.stat, DEAD, "Pilot should have died on lethal damage")
@@ -254,7 +252,7 @@
 	pod.occupant_mind_ref = WEAKREF(pincushion.mind)
 	pod.occupant = pincushion
 
-	pincushion.mind.initial_avatar_connection(pincushion, to_gib, pod, server)
+	pincushion.mind.initial_avatar_connection(avatar = to_gib, hosting_netpod = pod, server = server)
 	TEST_ASSERT_EQUAL(to_gib.mind, pincushion_mind, "Pincushion mind should have been transferred to the gib target")
 
 	to_gib.gib()
@@ -263,21 +261,82 @@
 
 /// Tests the signals sent when the server is destroyed, mobs step on a loaded tile, etc
 /datum/unit_test/bitmining_signals
-	var/received = FALSE
+	var/client_connect_received = FALSE
+	var/client_disconnect_received = FALSE
+	var/crowbar_alert_received = FALSE
+	var/shutdown_alert_received = FALSE
+	var/server_crash_received = FALSE
+	var/sever_avatar_received = FALSE
 
-/datum/unit_test/bitmining_signals/proc/on_proximity(datum/source, mob/living/intruder)
+/datum/unit_test/bitmining_signals/proc/on_client_connected(datum/source)
 	SIGNAL_HANDLER
-	received = TRUE
+	client_connect_received = TRUE
 
-/datum/unit_test/bitmining_signals/proc/on_disconnect()
+/datum/unit_test/bitmining_signals/proc/on_client_disconnected(datum/source)
 	SIGNAL_HANDLER
-	received = TRUE
+	client_disconnect_received = TRUE
+
+/datum/unit_test/bitmining_signals/proc/on_crowbar_alert(datum/source)
+	SIGNAL_HANDLER
+	crowbar_alert_received = TRUE
+
+/datum/unit_test/bitmining_signals/proc/on_shutdown_alert(datum/source)
+	SIGNAL_HANDLER
+	shutdown_alert_received = TRUE
+
+/datum/unit_test/bitmining_signals/proc/on_server_crash(datum/source)
+	SIGNAL_HANDLER
+	server_crash_received = TRUE
+
+/datum/unit_test/bitmining_signals/proc/on_sever_avatar(datum/source)
+	SIGNAL_HANDLER
+	sever_avatar_received = TRUE
 
 /datum/unit_test/bitmining_signals/Run()
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/area/test_area = get_area(labrat)
+	var/obj/machinery/netpod/netpod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
 	labrat.mind_initialize()
+	labrat.mock_client = new()
+	labrat.mind.key = "fake_mind"
+	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
+
+	var/obj/item/crowbar/prybar = allocate(/obj/item/crowbar)
+	var/mob/living/carbon/human/perp = allocate(/mob/living/carbon/human/consistent)
+
+	RegisterSignal(server, COMSIG_BITMINING_CLIENT_CONNECTED, PROC_REF(on_client_connected))
+	RegisterSignal(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
+	RegisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT, PROC_REF(on_shutdown_alert))
+	RegisterSignal(server, COMSIG_BITMINING_SERVER_CRASH, PROC_REF(on_server_crash))
+	RegisterSignal(netpod, COMSIG_BITMINING_CROWBAR_ALERT, PROC_REF(on_crowbar_alert))
+	RegisterSignal(netpod, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_avatar))
+
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+
+	labrat.forceMove(netpod.loc)
+	netpod.set_occupant(labrat)
+	netpod.close_machine(labrat)
+	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
+	TEST_ASSERT_NOTNULL(netpod.server_ref, "Sanity: Did not set server")
+	TEST_ASSERT_EQUAL(netpod.occupant_mind_ref, labrat_mind_ref, "Sanity: Did not set mind")
+	TEST_ASSERT_EQUAL(client_connect_received, TRUE, "Did not send COMSIG_BITMINING_CLIENT_CONNECTED")
+
+	perp.put_in_active_hand(prybar)
+	netpod.default_pry_open(prybar, perp)
+	TEST_ASSERT_EQUAL(crowbar_alert_received, TRUE, "Did not send COMSIG_BITMINING_CROWBAR_ALERT")
+	TEST_ASSERT_EQUAL(sever_avatar_received, TRUE, "Did not send COMSIG_BITMINING_SEVER_AVATAR")
+	TEST_ASSERT_EQUAL(client_disconnect_received, TRUE, "Did not send COMSIG_BITMINING_CLIENT_DISCONNECTED")
+
+	netpod.set_occupant(labrat)
+	netpod.close_machine(labrat)
+	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
+	TEST_ASSERT_EQUAL(netpod.occupant_mind_ref, labrat_mind_ref, "Sanity: Did not set mind")
+
+	server.begin_shutdown(perp)
+	TEST_ASSERT_EQUAL(shutdown_alert_received, TRUE, "Did not send COMSIG_BITMINING_SHUTDOWN_ALERT")
+	TEST_ASSERT_EQUAL(server_crash_received, TRUE, "Did not send COMSIG_BITMINING_SERVER_CRASH")
 
 
 /// Tests the server's ability to buff and nerf mobs

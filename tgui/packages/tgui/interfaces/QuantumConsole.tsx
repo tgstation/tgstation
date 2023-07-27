@@ -16,6 +16,7 @@ type Data =
       points: number;
       randomized: BooleanLike;
       ready: BooleanLike;
+      retries_left: number;
       scanner_tier: number;
     }
   | {
@@ -243,18 +244,22 @@ const AvatarDisplay = (props, context) => {
     return null;
   }
 
-  const { avatars = [] } = data;
+  const { avatars = [], retries_left } = data;
 
   return (
     <Section
       title="Connected Clients"
       buttons={
-        <Button
-          icon="sync"
-          onClick={() => act('refresh')}
-          tooltip="Refresh avatar data.">
-          Refresh
-        </Button>
+        <>
+          {retries_left}
+          <Icon name="broadcast-tower" />
+          <Button
+            icon="sync"
+            onClick={() => act('refresh')}
+            tooltip="Refresh avatar data.">
+            Refresh
+          </Button>
+        </>
       }>
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
