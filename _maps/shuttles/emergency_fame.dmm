@@ -84,9 +84,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ep" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/fakebasalt,
-/area/shuttle/escape/brig)
+/obj/effect/mapping_helpers/engraving,
+/turf/closed/wall/mineral/iron,
+/area/shuttle/escape)
 "et" = (
 /obj/structure/chair{
 	dir = 4
@@ -232,6 +232,12 @@
 	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
+"ly" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "lA" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes/cigars/havana{
@@ -296,11 +302,9 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "mx" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
+/obj/effect/mapping_helpers/engraving,
+/turf/closed/wall/mineral/silver,
+/area/shuttle/escape)
 "mz" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -351,10 +355,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "oz" = (
-/obj/machinery/door/window/brigdoor/security/holding/left/directional/west,
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 4
-	},
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "oB" = (
@@ -420,7 +422,7 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "rV" = (
-/obj/structure/sign/picture_frame/showroom/one,
+/obj/structure/sign/picture_frame/hall_of_fame/one,
 /turf/closed/wall/mineral/gold,
 /area/shuttle/escape)
 "si" = (
@@ -494,11 +496,12 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "wI" = (
-/obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
+/obj/effect/mapping_helpers/engraving,
+/turf/closed/wall/mineral/bronze,
+/area/shuttle/escape)
 "wK" = (
 /obj/machinery/vending/boozeomat,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "xc" = (
@@ -510,9 +513,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "xg" = (
-/mob/living/basic/cockroach,
-/turf/open/floor/fakebasalt,
-/area/shuttle/escape/brig)
+/obj/structure/sign/painting/library,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 "xl" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -546,7 +549,7 @@
 /area/shuttle/escape)
 "yo" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
 /turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "yy" = (
@@ -591,11 +594,12 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "Ab" = (
-/obj/structure/sign/picture_frame/showroom/four,
+/obj/structure/sign/picture_frame/hall_of_fame/four,
 /turf/closed/wall/mineral/gold,
 /area/shuttle/escape)
 "Aw" = (
 /obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "AA" = (
@@ -624,10 +628,9 @@
 /turf/template_noop,
 /area/template_noop)
 "BY" = (
-/obj/structure/kitchenspike,
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/fakebasalt,
-/area/shuttle/escape/brig)
+/obj/effect/mapping_helpers/engraving,
+/turf/closed/wall/mineral/sandstone,
+/area/shuttle/escape)
 "Cg" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 8
@@ -646,9 +649,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DA" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "DO" = (
@@ -691,7 +692,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "FZ" = (
-/obj/structure/sign/picture_frame/showroom/two,
+/obj/structure/sign/picture_frame/hall_of_fame/two,
 /turf/closed/wall/mineral/gold,
 /area/shuttle/escape)
 "Gf" = (
@@ -830,7 +831,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "NU" = (
-/obj/structure/sign/picture_frame/showroom/three,
+/obj/structure/sign/picture_frame/hall_of_fame/three,
 /turf/closed/wall/mineral/gold,
 /area/shuttle/escape)
 "NV" = (
@@ -844,17 +845,13 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "Or" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/mob/living/basic/cockroach,
+/turf/open/floor/fakebasalt,
+/area/shuttle/escape/brig)
 "Ow" = (
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "OA" = (
 /obj/effect/turf_decal/siding{
 	dir = 5
@@ -937,11 +934,10 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Vl" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/fakebasalt,
+/area/shuttle/escape/brig)
 "VQ" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -1004,11 +1000,12 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "YS" = (
-/obj/structure/sign/painting/library{
-	pixel_y = 32
+/obj/machinery/door/window/brigdoor/security/holding/left/directional/west,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/turf/open/floor/fakebasalt,
+/area/shuttle/escape/brig)
 "YX" = (
 /obj/item/kirbyplants/organic/plant21,
 /turf/open/floor/iron/dark,
@@ -1336,16 +1333,16 @@ qM
 Oa
 FJ
 RZ
-Oa
+Ws
 Bj
 Bj
 Bj
 Bj
-Oa
-YS
+mx
 Yp
-Or
-Oa
+Yp
+Yp
+wI
 Bj
 Bj
 Bj
@@ -1366,11 +1363,11 @@ yc
 YF
 aj
 yc
-Ws
+mx
 Yp
 Yp
 Yp
-Ws
+wI
 yc
 aj
 YF
@@ -1391,11 +1388,11 @@ yc
 YF
 YF
 yc
-Oa
-YS
+mx
+Yp
 AA
-Or
-Oa
+Yp
+wI
 yc
 YF
 YF
@@ -1411,7 +1408,7 @@ Oa
 Oa
 Pf
 RZ
-Ws
+xg
 Bj
 Bj
 Bj
@@ -1436,7 +1433,7 @@ ga
 RZ
 RZ
 RZ
-Oa
+xg
 Bj
 Bj
 mz
@@ -1577,7 +1574,7 @@ mz
 Bj
 mz
 Ru
-wI
+Ow
 Lv
 mz
 "}
@@ -1586,7 +1583,7 @@ xI
 RZ
 RZ
 RZ
-Oa
+xg
 Bj
 Bj
 mz
@@ -1602,7 +1599,7 @@ Bj
 Bj
 Oa
 so
-mx
+ly
 Ny
 Oa
 "}
@@ -1611,7 +1608,7 @@ Oa
 Oa
 kM
 RZ
-Ws
+xg
 Bj
 Bj
 Bj
@@ -1627,7 +1624,7 @@ Bj
 Bj
 Oa
 yJ
-mx
+ly
 yH
 Oa
 "}
@@ -1641,19 +1638,19 @@ yc
 YF
 YF
 yc
-Oa
-Ow
+BY
+HZ
 Ei
-Vl
-Oa
+HZ
+ep
 yc
 YF
 YF
 yc
 mz
+Vl
+YS
 yo
-oz
-ep
 Oa
 "}
 (26,1,1) = {"
@@ -1666,11 +1663,11 @@ yc
 aj
 YF
 yc
-Ws
+BY
 HZ
 HZ
 HZ
-Ws
+ep
 yc
 YF
 aj
@@ -1678,7 +1675,7 @@ yc
 mz
 DA
 gE
-xg
+Or
 Oa
 "}
 (27,1,1) = {"
@@ -1686,23 +1683,23 @@ Uu
 Oa
 oc
 XW
-Oa
+Ws
 Bj
 Bj
 Bj
 Bj
-Oa
-Ow
+BY
 HZ
-Vl
-Oa
+HZ
+HZ
+ep
 Bj
 Bj
 Bj
 Bj
 Oa
 iz
-BY
+oz
 Oa
 Uu
 "}
