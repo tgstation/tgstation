@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Clown cars now properly collide with deer."
+  - sound: "Violent, slightly glassy car impact sound."
