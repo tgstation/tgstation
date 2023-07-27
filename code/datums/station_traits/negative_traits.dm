@@ -389,7 +389,7 @@
 				if(istype(current_thing, /obj/machinery/vending) && prob(45))
 					var/obj/machinery/vending/vendor_to_trash = current_thing
 					if(prob(50))
-						vendor_to_trash.tilt(get_turf(vendor_to_trash))
+						vendor_to_trash.tilt(get_turf(vendor_to_trash), 0) // crit effects can do some real weird shit, lets disable it
 
 					if(prob(50))
 						vendor_to_trash.take_damage(150)
