@@ -171,7 +171,7 @@
 	band_values = list(EXOSCANNER_BAND_PLASMA=1)
 	required_tool = EXODRONE_TOOL_MULTITOOL
 	discovery_log = "Discovered ship fuel storage."
-	description = "You find the ships fuel storage. Unfortunately, it has an electronic lock."
+	description = "You find the ship's fuel storage. Unfortunately, it has an electronic lock."
 	success_log = "Retrieved fuel from storage."
 	no_tool_description = "You can't breach the lock without a multitool."
 	has_tool_description = "You can try and short circuit the lock with your multitool!"
