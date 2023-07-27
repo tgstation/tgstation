@@ -14,6 +14,8 @@ $_channel_map: (
   'Engi': #f37746,
   'Hive': #855d85,
   'io': #1e90ff,
+  // BANDASTATION EDIT ADDITION
+  'LOOC': #ffceb6,
   'Me': #5975da,
   'Med': #57b8f0,
   'OOC': #cca300,
@@ -24,6 +26,8 @@ $_channel_map: (
   'Supp': #b88646,
   'Svc': #6ca729,
   'Synd': #8f4a4b,
+  // BANDASTATION EDIT ADDITION
+  'Whis': #7c7fd9,
 );
 
 $channel_keys: map.keys($_channel_map) !default;
