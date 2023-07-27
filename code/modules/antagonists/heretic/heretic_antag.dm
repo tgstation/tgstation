@@ -43,7 +43,7 @@
 	var/high_value_sacrifices = 0
 	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
-	// list of all targets used for end of round report
+	/// List of all sacrifice target's names, used for end of round report
 	var/list/all_sac_targets = list()
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
@@ -450,8 +450,7 @@
 
 	parts += printplayer(owner)
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
-	var/targets = "The heretic's targets were: [english_list(all_sac_targets, nothing_text = "No one")]."
-	parts += targets
+	parts += "The heretic's sacrifice targets were: [english_list(all_sac_targets, nothing_text = "No one")]."
 	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective as anything in objectives)
