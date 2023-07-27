@@ -1,29 +1,36 @@
-///How much time after a fauna loses a target do they have until the music stops
-///Allowing faunas who lose their target to not lose their music for some time, in case the miner returns
-#define BOSS_MUSIC_STOP_DELAY (30 SECONDS)
-
 /**
  * Attaches to a hostile simplemob and plays that music while they have a target.
  */
 /datum/component/boss_music
-	///The soundloop to play while attacking.
-	var/datum/looping_sound/boss_music
-	///The timer until the music stops itself, after losing a target.
-	var/stop_music_timer
+	///The music track we will play to players.
+	var/boss_track
+	///How long the track is, used to clear players out when the music is supposed to end.
+	var/track_duration
 
-/datum/component/boss_music/Initialize(datum/looping_sound/soundloop_type)
+	///List of all mobs listening to the boss music currently. Cleared on Destroy or after `track_duration`.
+	var/list/datum/weakref/players_listening_refs = list()
+	///List of callback timers, used to clear out mobs listening to boss music after `track_duration`.
+	var/list/music_callbacks = list()
+
+/datum/component/boss_music/Initialize(
+	boss_track,
+	track_duration,
+)
 	. = ..()
 	if(!ishostile(parent))
 		return COMPONENT_INCOMPATIBLE
-	boss_music = new soundloop_type(parent, FALSE, FALSE)
+	src.boss_track = boss_track
+	src.track_duration = track_duration
 
 /datum/component/boss_music/Destroy(force, silent)
-	if(stop_music_timer)
-		deltimer(stop_music_timer)
-	if(boss_music)
-		boss_music.stop(TRUE)
-		QDEL_NULL(boss_music)
-	return ..()
+	. = ..()
+	for(var/callback in music_callbacks)
+		deltimer(callback)
+	music_callbacks = null
+
+	for(var/player_refs in players_listening_refs)
+		clear_target(player_refs)
+	players_listening_refs = null
 
 /datum/component/boss_music/RegisterWithParent()
 	. = ..()
@@ -33,25 +40,26 @@
 	UnregisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET)
 	return ..()
 
-///Handles giving the boss music to people around them, when gaining a new target.
-///If there is a timer to delete the music, deletes it, allowing it to continue that one instead.
-/datum/component/boss_music/proc/on_target_found(atom/source, new_target)
+///Handles giving the boss music to a new target the fauna has recieved.
+///Keeps track of them to not repeatedly overwrite its own track.
+/datum/component/boss_music/proc/on_target_found(atom/source, mob/new_target)
 	SIGNAL_HANDLER
-	if(QDELETED(source))
+	if(QDELETED(source) || !istype(new_target))
 		return
-	if(isnull(new_target))
-		stop_music_timer = addtimer(CALLBACK(src, PROC_REF(stop_music)), BOSS_MUSIC_STOP_DELAY, TIMER_UNIQUE | TIMER_STOPPABLE)
-		return
-	if(stop_music_timer)
-		deltimer(stop_music_timer)
-	if(boss_music.is_active())
-		return
-	boss_music.start()
 
-///Ends the music, called by a timer when a fauna loses their target, after a delay.
-/datum/component/boss_music/proc/stop_music()
-	if(boss_music && boss_music.is_active())
-		boss_music.stop(TRUE)
-		stop_music_timer = null
+	var/datum/weakref/new_ref = WEAKREF(new_target)
+	if(new_ref in players_listening_refs)
+		return
 
-#undef BOSS_MUSIC_STOP_DELAY
+	players_listening_refs += new_ref
+	music_callbacks += addtimer(CALLBACK(src, PROC_REF(clear_target), new_ref), track_duration)
+	new_target.playsound_local(new_target, boss_track, 200, FALSE, channel = CHANNEL_BOSS_MUSIC, pressure_affected = FALSE, use_reverb = FALSE)
+
+///Removes `old_target` from the list of players listening, and stops their music if it is still playing.
+///This allows them to have music played again if they re-enter combat with this fauna.
+/datum/component/boss_music/proc/clear_target(datum/weakref/old_ref)
+	players_listening_refs -= old_ref
+
+	var/mob/old_target = old_ref?.resolve()
+	if(old_target)
+		old_target.stop_sound_channel(CHANNEL_BOSS_MUSIC)

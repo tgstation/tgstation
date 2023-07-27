@@ -90,7 +90,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	spawned_beacon = new(loc)
-	AddComponent(/datum/component/boss_music, /datum/looping_sound/hierophant)
+	AddComponent(/datum/component/boss_music, 'sound/lavaland/hiero_boss.ogg', 145 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	QDEL_NULL(spawned_beacon)
@@ -768,23 +768,3 @@ Difficulty: Hard
 			to_chat(user, span_hierophant_warning("You touch the beacon with the club, but nothing happens."))
 	else
 		return ..()
-
-/datum/looping_sound/hierophant
-	mid_length = 25 SECONDS
-	mid_sounds = list(
-		'sound/lavaland/boss_music/hierophant_boss_1.ogg' = 1,
-		'sound/lavaland/boss_music/hierophant_boss_2.ogg' = 1,
-		'sound/lavaland/boss_music/hierophant_boss_3.ogg' = 1,
-		'sound/lavaland/boss_music/hierophant_boss_4.ogg' = 1,
-		'sound/lavaland/boss_music/hierophant_boss_5.ogg' = 1,
-		'sound/lavaland/boss_music/hierophant_boss_6.ogg' = 1,
-		'sound/lavaland/boss_music/hierophant_boss_7.ogg' = 1,
-	)
-	each_once = TRUE
-	in_order = TRUE
-	volume = 250 //very loud because it's a boss, and it's gotta be louder than other lavaland sounds
-	sound_channel = CHANNEL_BOSS_MUSIC
-	falloff_exponent = 12
-	falloff_distance = 12
-	pressure_affected = FALSE
-	use_reverb = FALSE
