@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/name = "Unnamed Trait"
 	/// Description of the trait in the fishing catalog and scanner
 	var/catalog_description = "Uh uh, someone has forgotten to set description to this trait. Yikes!"
+	///A list of traits fish cannot have in conjunction with this trait.
 	var/list/incompatible_traits
 	/// The probability this trait can be inherited by offsprings when both mates have it
 	var/inheritability = 100

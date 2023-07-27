@@ -558,9 +558,10 @@
 
 /// Starts flopping animation
 /obj/item/fish/proc/start_flopping()
-	if(!flopping) //Requires update_transform/animate_wrappers to be less restrictive.
-		flopping = TRUE
-		flop_animation(src)
+	if(flopping || !do_flop_animation)  //Requires update_transform/animate_wrappers to be less restrictive.
+		return
+	flopping = TRUE
+	flop_animation(src)
 
 /// Stops flopping animation
 /obj/item/fish/proc/stop_flopping()
