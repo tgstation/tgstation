@@ -66,7 +66,7 @@
 /obj/item/melee/sword/rust/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(broken)
-		return ..()
+		return
 	if(ismovable(target))
 		decrease_uses(user)
 
