@@ -4,25 +4,28 @@
 	can_hold_trait = TRAIT_FISH_CASE_COMPATIBILE
 	can_hold_description = "fish and aquarium equipment"
 
-///Requires the user to have it outside of storage and equipment slots so they can't just shove a tuna in their pockets.
-/datum/storage/fish_case/can_insert(obj/item/to_insert, mob/living/user, messages = TRUE, force = FALSE)
-	. = ..()
-	if(!. || force)
-		return .
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(resolve_parent.item_flags & IN_STORAGE)
-		if(messages && user)
-			to_chat(user, span_warning("Take [resolve_parent] out of [resolve_parent.loc] first!"))
-		return FALSE
-	if(user && (resolve_parent in user.get_equipped_items(TRUE)) && !user.is_holding(resolve_parent))
-		if(messages)
-			to_chat(user, span_warning("Either hold [resolve_parent] or place it nearby first!"))
-		return FALSE
-
+/**
+ * Change the size of the storage item to match the inserted item's
+ * Because of that, we also check if conditions to keep it inside another storage or pockets are still met.
+ */
 /datum/storage/fish_case/handle_enter(obj/item/storage/fish_case/source, obj/item/arrived)
 	. = ..()
-	if(istype(arrived))
-		source.w_class = arrived.w_class
+	if(!istype(arrived) || arrived.w_class == source.w_class)
+		return
+	source.w_class = arrived.w_class
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(resolve_parent?.item_flags & IN_STORAGE)
+		source.moveToNullspace() //temporarily remove source from its location so that attempt_insert may work correctly.
+		if(!resolve_parent.atom_storage?.attempt_insert(source, override = TRUE))
+			source.forceMove(resolve_parent.drop_location())
+			source.visible_message("[source] spills out of [resolve_parent] as it expands to hold around [arrived]", vision_distance = 1)
+	else if(!isliving(source.loc))
+		return
+	var/mob/living/living_loc = source.loc
+	var/equipped_slot = living_loc.get_slot_by_item(source)
+	if(equipped_slot & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET) && source.w_class > WEIGHT_CLASS_SMALL)
+		source.forceMove(living_loc.drop_location())
+		to_chat(living_loc, "[source] drops out of your pockets as it expands to hold around [arrived]", vision_distance = 1)
 
 /datum/storage/fish_case/handle_exit(obj/item/storage/fish_case/source, obj/item/gone)
 	. = ..()
