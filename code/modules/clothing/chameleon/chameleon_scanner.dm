@@ -58,7 +58,7 @@
 	if(length(scanned_outfit))
 		var/datum/outfit/empty_outfit = new()
 		var/datum/action/chameleon_outfit/outfit_action = locate() in user.actions
-		outfit_action?.apply_outfit(empty_outfit, scanned_outfit)
+		outfit_action?.apply_outfit(empty_outfit, scanned_outfit.Copy())
 		qdel(empty_outfit)
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN // no normal afterattack
