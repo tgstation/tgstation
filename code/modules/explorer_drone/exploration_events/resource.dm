@@ -238,7 +238,7 @@
 	name = "welded locker"
 	required_site_traits = list(EXPLORATION_SITE_SPACE)
 	required_tool = EXODRONE_TOOL_WELDER
-	discovery_log = "You discovered a hastily welded locker."
+	discovery_log = "Discovered a hastily welded locker."
 	description = "You discover a welded locker floating through space. What could be inside...?"
 	no_tool_description = "You'll need a welding tool to take the contents of the locker."
 	success_log = "Retrieved... a severed head."
