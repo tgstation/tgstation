@@ -2,9 +2,8 @@
 	name = "Syndicate Lootbox Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
 			With their all new kit, codenamed 'scam' the syndicate attempted to extract the energy of the die of fate to \
-			make a loot-box style system but failed, so instead just fake their randomness using ook's evil twin brother to sniff out the items to shove in it.\
-			Item price not guaranteed. Can contain normally unobtainable items. Syndicate wont provide you with anymore crates after the purchase.\
-			DISCLAIMER: this crate can only be purchased before buying any items, and will lock you out of purchasing anymore equipment"
+			make a loot-box style system but failed, so instead just fake their randomness using ook's evil twin brother to sniff out the items to shove in it. \
+			Item price not guaranteed. Can contain normally unobtainable items."
 	lock_other_purchases = TRUE
 
 /datum/uplink_item/bundles_tc/surplus/lootbox/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
@@ -12,8 +11,7 @@
 	crate_tc_value *= 5
 	if(crate_tc_value == 5) //horrible luck, welcome to gambling
 		crate_tc_value *= 0
-		to_chat(user, "<span class='warning'><b>Incomming transmission from the syndicate.</b></span>")
-		to_chat(user, "<span class='warning'>You feel an overwhelming sense of pride and accomplishment.</span>")
+		to_chat(user, span_warning("You feel an overwhelming sense of pride and accomplishment."))
 	if(crate_tc_value == 100) // Jackpot, how lucky
 		crate_tc_value *= 2
 		print_command_report("Congratulations to [user] for being the [rand(2, 9)]th lucky winner of the syndicate lottery! \
