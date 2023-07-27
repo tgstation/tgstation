@@ -63,7 +63,7 @@
 	/// If the sword is broken or not.
 	var/broken = FALSE
 
-/obj/item/melee/sword/rust/afterattack(target, mob/user, proximity_flag)
+/obj/item/melee/sword/rust/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(broken)
 		return ..()
