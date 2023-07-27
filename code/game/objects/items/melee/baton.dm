@@ -547,11 +547,11 @@
 		deductcharge(cell_hit_cost)
 
 // Stun N bash
-/obj/item/melee/baton/security/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/melee/baton/security/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!proximity_flag || !isliving(target) || !active || !user.combat_mode)
+	if(!proximity_flag || !isliving(target) || !isliving(user) || !active || !user.combat_mode)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	finalize_baton_attack(target, user)

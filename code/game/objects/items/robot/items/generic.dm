@@ -34,8 +34,6 @@
 		if(!robot_user.cell.use(charge_cost))
 			return TRUE
 
-	user.do_attack_animation(attacked_mob)
-	attacked_mob.adjustStaminaLoss(stamina_damage)
 	attacked_mob.set_confusion_if_lower(5 SECONDS)
 	attacked_mob.adjust_stutter(20 SECONDS)
 	attacked_mob.set_jitter_if_lower(5 SECONDS)
