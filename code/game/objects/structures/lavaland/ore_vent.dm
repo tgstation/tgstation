@@ -180,6 +180,7 @@
 	var/obj/machinery/bouldertech/processed_by = null
 	/// How many steps of refinement this boulder has gone through. Starts at 5-8, goes down one each machine process.
 	var/durability = 5
+	COOLDOWN_DECLARE(processing_cooldown)
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
@@ -194,3 +195,11 @@
 /obj/item/boulder/examine(mob/user)
 	. = ..()
 	. += span_notice("This boulder would take [durability] more steps to refine.")
+
+/obj/item/boulder/proc/can_get_processed()
+	if(COOLDOWN_FINISHED(src, processing_cooldown))
+		return TRUE
+	return FALSE
+
+/obj/item/boulder/proc/reset_processing_cooldown()
+	COOLDOWN_START(src, processing_cooldown, 2 SECONDS)

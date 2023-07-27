@@ -19,8 +19,9 @@
 	var/holds_minerals = FALSE
 	/// What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.
 	var/list/processable_materials = list()
-
+	/// What sound plays when a thing operates?
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
+	// Cooldown associated with the usage_sound played.
 	COOLDOWN_DECLARE(sound_cooldown)
 
 	/// Silo link to it's materials list.
@@ -31,10 +32,10 @@
 	. = ..()
 	if(holds_minerals)
 		silo_materials = AddComponent(
-			/datum/component/remote_materials, \
-			mapload, \
-			mat_container_flags = BREAKDOWN_FLAGS_ORM \
-		)
+		/datum/component/remote_materials, \
+		mapload, \
+		mat_container_flags = MATCONTAINER_NO_INSERT, \
+	)
 
 /obj/machinery/bouldertech/LateInitialize()
 	. = ..()
@@ -82,20 +83,16 @@
 		return FALSE
 
 /obj/machinery/bouldertech/process()
-	// . = ..()
-	say("hit!")
 	var/blocker = FALSE
 	var/boulders_concurrent = boulders_processing_max
 	for(var/i in 1 to contents.len)
 		if(boulders_concurrent <= 0)
-			say("Hit as many as possible!")
 			return //Try again next time
 		if(!istype(contents[i], /obj/item/boulder))
 			continue
 		var/obj/item/boulder/boulder = contents[i]
 		boulders_concurrent--
 		boulder.durability-- //One less durability to the processed boulder.
-		balloon_alert_to_viewers(boulder.durability)
 		if(COOLDOWN_FINISHED(src, sound_cooldown))
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
 			playsound(loc, usage_sound, (60-(5*abs(boulder.durability))), FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -103,9 +100,14 @@
 		if(boulder.durability <= 0)
 			breakdown_boulder(boulder) //Crack that bouwlder open!
 			continue
+		else
+			if(prob(15))
+				var/list/quips = list("clang!", "crack!", "bang!", "clunk!", "clank!",)
+				balloon_alert_to_viewers("[pick(quips)]")
 	if(!blocker)
 		STOP_PROCESSING(SSmachines, src)
-		say("Shit, no boulder!")
+		balloon_alert_to_viewers("clear!")
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
 		return
 
 
@@ -114,7 +116,10 @@
 	if(boulders_held >= boulders_held_max)
 		return FALSE
 	if(istype(mover, /obj/item/boulder))
-		return TRUE
+		var/obj/item/boulder/boulder = mover
+		if(boulder.can_get_processed())
+			return TRUE
+		return FALSE
 
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
 	if(isnull(chosen_boulder))
@@ -193,7 +198,9 @@
 		update_boulder_count()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	possible_boulder.forceMove(src.drop_location())
+	var/obj/item/boulder/real_boulder = possible_boulder
+	real_boulder.reset_processing_cooldown()
+	real_boulder.forceMove(src.drop_location())
 	boulders_held = clamp(boulders_held--, 0, boulders_held_max)
 	visible_message(span_warning("[boulders_held] remaining!"))
 	update_boulder_count()
@@ -207,7 +214,6 @@
 
 /obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
 	SIGNAL_HANDLER
-	say("We entered with the connect_loc signal!")
 	INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
 
 /obj/machinery/bouldertech/brm
@@ -216,16 +222,54 @@
 	icon_state = "brm"
 	circuit = /obj/item/circuitboard/machine/brm
 	usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
+	// Are we trying to actively collect boulders automatically?
+	var/toggled_on = FALSE
+
+/obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	collect_boulder()
+
+/obj/machinery/bouldertech/brm/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	START_PROCESSING(SSmachines, src)
+	icon_state = "brm-toggled"
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/bouldertech/brm/process()
+	boulders_held = 0
+	balloon_alert_to_viewers("Bzzap!")
+	if(SSore_generation.available_boulders.len < 1)
+		say("No boulders to collect. Entering idle mode.")
+		STOP_PROCESSING(SSmachines, src)
+		icon_state = "brm"
+		update_appearance(UPDATE_ICON_STATE)
+		return
+	for(var/i in 1 to boulders_processing_max)
+		if(!collect_boulder())
+			i-- //Retry
+	for(var/ground_rocks in loc.contents)
+		if(istype(ground_rocks, /obj/item/boulder))
+
+			boulders_held++
+			if(boulders_held > boulders_held_max)
+				STOP_PROCESSING(SSmachines, src)
+				icon_state = "brm"
+				update_appearance(UPDATE_ICON_STATE)
+				return
 
 /**
  * So, this should be probably handed in a more elegant way going forward, like a small TGUI prompt to select which boulder you want to pull from.
  * However, in the attempt to make this really, REALLY basic but functional until I can actually sit down and get this done we're going to just grab a random entry from the global list and work with it.
  */
 /obj/machinery/bouldertech/brm/proc/collect_boulder()
-	var/obj/item/random_boulder = pick(SSore_generation.available_boulders)
+	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
+	if(random_boulder.processed_by)
+		return FALSE
 	if(!random_boulder)
 		return FALSE
+	random_boulder.processed_by = src
 	random_boulder.Shake(duration = 1.5 SECONDS)
+	SSore_generation.available_boulders -= random_boulder
 	//todo: Maybe add some kind of teleporation raster effect thing? filters? I can probably make something happen here...
 	sleep(1.5 SECONDS)
 	flick("brm-flash", src)
@@ -235,14 +279,10 @@
 		return FALSE
 	//todo:do the thing we do where we make sure the thing still exists and hasn't been deleted between the start of the recall and after.
 	random_boulder.forceMove(drop_location())
-	SSore_generation.available_boulders -= random_boulder
 	balloon_alert_to_viewers("[random_boulder] appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-
-/obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	collect_boulder()
+	use_power(100)
 
 /obj/machinery/bouldertech/smelter
 	name = "boulder smeltery"
