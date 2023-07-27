@@ -18,7 +18,18 @@
 	laser = 50
 	energy = 100
 
-/obj/structure/closet/crate/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/closet/crate/syndicrate/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!broken && !force && !created_items)
+		balloon_alert(user, "locked!")
+		return FALSE
+
+	return TRUE
+
+/obj/structure/closet/crate/syndicrate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(created_items)
 		return ..()
 	if(damage_amount < DAMAGE_PRECISION)
