@@ -1,4 +1,0 @@
-author: "Senefi"
-delete-after: True
-changes:
-  - bugfix: "Wired MetaStation APCs that were not attached to the station's power grid at round start."
