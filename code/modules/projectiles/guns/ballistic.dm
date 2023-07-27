@@ -375,7 +375,8 @@
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
 			if (chambered && !chambered.loaded_projectile)
 				chambered.forceMove(drop_location())
-				magazine?.stored_ammo -= chambered
+				if(chambered != magazine?.stored_ammo[1])
+					magazine.stored_ammo -= chambered
 				chambered = null
 			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
 			if (num_loaded)
