@@ -142,7 +142,8 @@
 	name = "\improper Sakhno-Zhihao Sporting Rifle"
 	desc = "An upgrade and modernisation of the original Sakhno rifle, made with such wonders as \
 		modern materials, a scope, and other impressive technological advancements that, to be honest, \
-		were already around when the original weapon was designed."
+		were already around when the original weapon was designed. Surprisingly for a rifle of this type, \
+		the scope actually has magnification, rather than being decorative."
 	icon_state = "zhihao"
 	inhand_icon_state = "zhihao"
 	worn_icon_state = "zhihao"
@@ -151,6 +152,10 @@
 		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
 		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
 		go for the saw."
+
+/obj/item/gun/ballistic/rifle/boltaction/prime/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
 
 /obj/item/gun/ballistic/rifle/boltaction/prime/sawoff(mob/user)
 	. = ..()
