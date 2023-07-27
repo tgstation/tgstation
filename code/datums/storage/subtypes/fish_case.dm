@@ -18,14 +18,14 @@
 		source.moveToNullspace() //temporarily remove source from its location so that attempt_insert may work correctly.
 		if(!resolve_parent.atom_storage?.attempt_insert(source, override = TRUE))
 			source.forceMove(resolve_parent.drop_location())
-			source.visible_message("[source] spills out of [resolve_parent] as it expands to hold around [arrived]", vision_distance = 1)
+			source.visible_message("[source] spills out of [resolve_parent] as it expands to hold [arrived]", vision_distance = 1)
 	else if(!isliving(source.loc))
 		return
 	var/mob/living/living_loc = source.loc
 	var/equipped_slot = living_loc.get_slot_by_item(source)
 	if(equipped_slot & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET) && source.w_class > WEIGHT_CLASS_SMALL)
 		source.forceMove(living_loc.drop_location())
-		to_chat(living_loc, "[source] drops out of your pockets as it expands to hold around [arrived]", vision_distance = 1)
+		to_chat(living_loc, "[source] drops out of your pockets as it expands to hold [arrived]")
 
 /datum/storage/fish_case/handle_exit(obj/item/storage/fish_case/source, obj/item/gone)
 	. = ..()
