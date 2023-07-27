@@ -31,8 +31,7 @@
 	var/rusting_range = 4
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/turf/ritual_turf = loc
-	for(var/turf/nearby_turf in view(rusting_range, ritual_turf))
+	for(var/turf/nearby_turf in view(rusting_range, loc))
 		if(prob(20) || istype(nearby_turf, /turf/closed))
 			continue
 		nearby_turf.rust_heretic_act()
