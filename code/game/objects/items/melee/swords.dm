@@ -27,9 +27,10 @@
 
 /obj/item/melee/sword/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 8 SECONDS, \
-	effectiveness = 105, \
+	AddComponent( \
+		/datum/component/butchering, \
+		speed = 8 SECONDS, \
+		effectiveness = 105, \
 	)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
