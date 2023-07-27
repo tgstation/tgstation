@@ -2309,6 +2309,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_brute_dam(old_part.brute_dam)
 			new_part.set_burn_dam(old_part.burn_dam)
+			new_part.wounds = old_part.wounds.Copy()
+			new_part.scars = old_part.scars.Copy()
 		qdel(old_part)
 
 /// Creates body parts for the target completely from scratch based on the species
