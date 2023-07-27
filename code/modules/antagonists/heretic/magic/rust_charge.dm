@@ -12,7 +12,7 @@
 		charge_sequence(owner, target_atom, charge_delay, charge_past)
 		StartCooldown()
 		return TRUE
-  	
+
 /datum/action/cooldown/mob_cooldown/charge/rust/proc/on_move(atom/source, atom/new_loc, turf/victim)
 	SIGNAL_HANDLER
 	if(!actively_moving)
@@ -22,5 +22,4 @@
 	get_step(victim, east).rust_heretic_act()
 	get_step(victim, west).rust_heretic_act()
 	if(HAS_TRAIT(get_turf(owner)), TRAIT_RUSTY)
-		INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
-	
+	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
