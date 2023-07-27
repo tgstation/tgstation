@@ -527,7 +527,6 @@
 	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
 	threat_reduction = 30
 	dynamic_threat_id = "Radioactive Nebula"
-	force = TRUE
 
 	intensity_increment_time = 5 MINUTES
 	maximum_nebula_intensity = 1 HOURS + 40 MINUTES
