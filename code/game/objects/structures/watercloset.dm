@@ -741,6 +741,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
 
+/obj/structure/curtain/Initialize(mapload)
+	// see-through curtains should let emissives shine through
+	if(!opaque_closed)
+		blocks_emissive = EMISSIVE_BLOCK_NONE
+
 /obj/structure/curtain/proc/toggle()
 	open = !open
 	if(open)
