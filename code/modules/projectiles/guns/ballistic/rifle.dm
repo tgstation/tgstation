@@ -45,18 +45,16 @@
 ///////////////////////
 
 /obj/item/gun/ballistic/rifle/boltaction
-	name = "\improper Mosin Nagant"
-	desc = "A classic Mosin Nagant. They don't make them like they used to. Well, okay, in all honesty, this one is actually \
-		a new refurbished version. So it works just fine! Often found in the hands of underpaid Nanotrasen interns, \
-		Russian military LARPers, actual Space Russians, revolutionaries and cargo technicians. Still feels slightly moist."
-	sawn_desc = "A sawn-off Mosin Nagant, popularly known as an \"Obrez\". \
+	name = "\improper Sakhno Precision Rifle"
+	desc = "A Sakhno Precision Rifle, a bolt action weapon that was (and certainly still is) popular with \
+		frontiersmen, cargo runners, private security forces, explorers, and other unsavoury types. This particular \
+		pattern of the rifle dates back all the way to 2440."
+	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
 		There was probably a reason it wasn't manufactured this short to begin with. \
-		This one is still in surprisingly good condition. Often found in the hands \
-		of underpaid Nanotrasen interns without a care for company property, Russian military LARPers, \
-		actual drunk Space Russians, Tiger Co-op assassins and cargo technicians. <I>Still</I> feels slightly moist."
+		Despite the terrible nature of the modification, the weapon seems otherwise in good condition."
 	weapon_weight = WEAPON_HEAVY
-	icon_state = "moistnugget"
-	inhand_icon_state = "moistnugget"
+	icon_state = "sakhno"
+	inhand_icon_state = "sakhno"
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
@@ -136,35 +134,35 @@
 	can_be_sawn_off = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
-	desc = "A classic Mosin Nagant, ruined by centuries of moisture. Some Space Russians claim that the moisture \
-		is a sign of good luck. A sober user will know that this thing is going to fucking jam. Repeatedly. \
-		Often found in the hands of cargo technicians, Russian military LARPers, Tiger Co-Op terrorist cells, \
-		cryo-frozen Space Russians, and security personnel with a bone to pick. EXTREMELY moist."
-	sawn_desc = "A sawn-off Mosin Nagant, popularly known as an \"Obrez\". \
+	desc = "A modification of the Sakhno Precision Rifle, \"Sakhno M2442 Army\" is stamped into the side. \
+		It is unknown what army this pattern of rifle was made for or if it was ever even used by an army \
+		of any sort. What you can discern, however, is that its previous owner did not treat the weapon well. \
+		For some reason, there's moisture all through the internals."
+	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
+		\"Sakhno M2442 Army\" is stamped into the side of it. \
 		There was probably a reason it wasn't manufactured this short to begin with. \
-		This one has been ruined by centuries of moisture and WILL jam. Often found in the hands of \
-		cargo technicians with a death wish, Russian military LARPers, actual drunk Space Russians, \
-		Tiger Co-op assassins, cryo-frozen Space Russians, and security personnel with \
-		little care for professional conduct while making 'arrests' point blank in the back of the head \
-		until the gun clicks. EXTREMELY moist."
+		Cutting the weapon down seems to have not helped with the moisture buildup."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
-	name = "\improper Regal Nagant"
-	desc = "A prized hunting Mosin Nagant. Used for the most dangerous game."
-	icon_state = "moistprime"
-	inhand_icon_state = "moistprime"
-	worn_icon_state = "moistprime"
+	name = "\improper Sakhno-Zhihao Sporting Rifle"
+	desc = "An upgrade and modernisation of the original Sakhno rifle, made with such wonders as \
+		modern materials, a scope, and other impressive technological advancements that, to be honest, \
+		were already around when the original weapon was designed."
+	icon_state = "zhihao"
+	inhand_icon_state = "zhihao"
+	worn_icon_state = "zhihao"
 	can_be_sawn_off = TRUE
-	sawn_desc = "A sawn-off Regal Nagant... Doing this was a sin, I hope you're happy. \
-		You are now probably one of the few people in the universe to ever hold a \"Regal Obrez\". \
-		Even thinking about that name combination makes you ill."
+	sawn_desc = "A sawn-off Sakhno-Zhihao Sporting Rifle... Doing this was a sin, I hope you're happy. \
+		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
+		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
+		go for the saw."
 
 /obj/item/gun/ballistic/rifle/boltaction/prime/sawoff(mob/user)
 	. = ..()
 	if(.)
-		name = "\improper Regal Obrez" // wear it loud and proud
+		name = "\improper Obrez Moderna" // wear it loud and proud
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
@@ -207,6 +205,10 @@
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
+	icon_state = "enchanted_rifle"
+	inhand_icon_state = "enchanted_rifle"
+	worn_icon_state = "enchanted_rifle"
+	slot_flags = ITEM_SLOT_BACK
 	var/guns_left = 30
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
