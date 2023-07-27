@@ -30,10 +30,6 @@
 		stack_trace("Adding chameleon action to non-item ([target])")
 		qdel(src)
 		return
-	if(!ispath(chameleon_type, /obj/item))
-		stack_trace("Non-item chameleon type defined on [type] ([chameleon_type])")
-		qdel(src)
-		return
 
 	initialize_disguises()
 	if(active_type)
@@ -84,6 +80,11 @@
 	LAZYINITLIST(chameleon_list)
 
 	chameleon_blacklist |= typecacheof(target.type)
+
+	if(!ispath(chameleon_type, /obj/item))
+		stack_trace("Non-item chameleon type defined on [type] ([chameleon_type])")
+		return
+
 	add_chameleon_items(chameleon_type)
 
 /datum/action/item_action/chameleon/change/proc/add_chameleon_items(type_to_add)
@@ -120,7 +121,6 @@
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
 	PROTECTED_PROC(TRUE) // Call update_look, not this!
-	SHOULD_CALL_PARENT(TRUE)
 
 	var/atom/atom_target = target
 	atom_target.name = initial(picked_item.name)

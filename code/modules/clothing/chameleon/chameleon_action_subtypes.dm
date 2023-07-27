@@ -189,36 +189,37 @@
 	agent_card.update_label()
 	agent_card.update_appearance(UPDATE_ICON)
 
-// /datum/action/item_action/chameleon/change/id_trim
+/datum/action/item_action/chameleon/change/id_trim
+	chameleon_name = "ID Trim"
 
-// /datum/action/item_action/chameleon/change/id_trim/New(Target)
-// 	. = ..()
-// 	if(!istype(target, /obj/item/card/id/advanced/chameleon))
-// 		stack_trace("Adding chameleon ID trim action to non-chameleon id ([target])")
-// 		qdel(src)
+/datum/action/item_action/chameleon/change/id_trim/New(Target)
+	. = ..()
+	if(!istype(target, /obj/item/card/id/advanced/chameleon))
+		stack_trace("Adding chameleon ID trim action to non-chameleon id ([target])")
+		qdel(src)
 
-// /datum/action/item_action/chameleon/change/id_trim/initialize_disguises()
-// 	name = "Change [chameleon_name] Appearance"
-// 	build_all_button_icons()
+/datum/action/item_action/chameleon/change/id_trim/initialize_disguises()
+	// Little bit of copypasta but we only use trim datums rather than item paths
+	name = "Change [chameleon_name] Appearance"
+	build_all_button_icons()
 
-// 	chameleon_blacklist |= typecacheof(target.type)
-// 	for(var/datum/id_trim/trim_path in typesof(chameleon_type))
-// 		if(chameleon_blacklist[trim_path])
-// 			continue
+	for(var/datum/id_trim/trim_path as anything in typesof(chameleon_type))
+		if(chameleon_blacklist[trim_path])
+			continue
 
-// 		var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+		var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
 
-// 		if(trim && trim.trim_state && trim.assignment)
-// 			var/chameleon_item_name = "[trim.assignment] ([trim.trim_state])"
-// 			chameleon_list[chameleon_item_name] = trim_path
+		if(trim && trim.trim_state && trim.assignment)
+			var/chameleon_item_name = "[trim.assignment] ([trim.trim_state])"
+			chameleon_list[chameleon_item_name] = trim_path
 
-// /datum/action/item_action/chameleon/change/id_trim/update_item(picked_trim_path)
-// 	var/obj/item/card/id/advanced/chameleon/agent_card = target
+/datum/action/item_action/chameleon/change/id_trim/update_item(picked_trim_path)
+	var/obj/item/card/id/advanced/chameleon/agent_card = target
 
-// 	SSid_access.apply_trim_to_chameleon_card(agent_card, picked_trim_path, TRUE)
+	SSid_access.apply_trim_to_chameleon_card(agent_card, picked_trim_path, TRUE)
 
-// 	agent_card.update_label()
-// 	agent_card.update_appearance(UPDATE_ICON)
+	agent_card.update_label()
+	agent_card.update_appearance(UPDATE_ICON)
 
 /datum/action/item_action/chameleon/change/gun
 	chameleon_type = /obj/item/gun
@@ -239,7 +240,7 @@
 /datum/action/item_action/chameleon/change/scanner
 	chameleon_type = /obj/item/pen
 	chameleon_name = "Chameleon Scanner"
-	active_type = /obj/item/pen
+	active_type = /obj/item/storage/fancy/cigarettes/cigpack_robustgold
 	/// Other types the chameleon scanner can swap into in addition to the chameleon type
 	var/static/list/other_cham_types = list(
 		/obj/item/analyzer,
@@ -257,6 +258,7 @@
 		/obj/item/multitool,
 		/obj/item/plant_analyzer,
 		/obj/item/sensor_device,
+		/obj/item/storage/fancy/cigarettes, // Fanservice
 		/obj/item/taperecorder,
 		/obj/item/toy/crayon,
 	)
@@ -264,6 +266,8 @@
 
 /datum/action/item_action/chameleon/change/scanner/New(Target)
 	chameleon_blacklist |= typecacheof(list(
+		/obj/item/assembly/signaler/anomaly,
+		/obj/item/camera/siliconcam,
 		/obj/item/door_remote/omni,
 		/obj/item/flashlight/emp/debug,
 		/obj/item/flashlight/flare,
@@ -271,6 +275,7 @@
 		/obj/item/multitool/ai_detect,
 		/obj/item/multitool/cyborg,
 		/obj/item/multitool/field_debug,
+		/obj/item/storage/fancy/cigarettes/cigars,
 	))
 	return ..()
 

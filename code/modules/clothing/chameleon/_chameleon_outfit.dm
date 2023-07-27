@@ -61,6 +61,11 @@
 		owner.balloon_alert(user, "no outfit saved!")
 		return
 
+	for(var/existing_outfit in custom_outfits)
+		if(custom_outfits[existing_outfit] ~= saved_paths)
+			owner.balloon_alert(user, "outfit already saved!")
+			return
+
 	if(next_custom_outfit > max_custom_oufits)
 		next_custom_outfit = 1
 
