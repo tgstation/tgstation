@@ -1,11 +1,12 @@
 import { clamp } from 'common/math';
+import { KEY_CTRL } from 'common/keycodes';
 import { randomInteger, randomNumber, randomPick, randomProb } from 'common/random';
 import { useDispatch } from 'common/redux';
 import { Component } from 'inferno';
 import { resolveAsset } from '../assets';
 import { backendSuspendStart, useBackend } from '../backend';
-import { Icon } from '../components';
-import { globalEvents } from '../events';
+import { Icon, KeyListener } from '../components';
+import { globalEvents, KeyEvent } from '../events';
 import { Window } from '../layouts';
 
 type Bait = {
@@ -26,6 +27,7 @@ type FishAI = 'dumb' | 'zippy' | 'slow';
 enum ReelingState {
   Idle,
   Reeling,
+  ReelingDown,
 }
 
 type FishingMinigameProps = {
@@ -43,7 +45,13 @@ type FishingMinigameState = {
   fish: Fish;
 };
 
-type SpecialRule = 'weighted' | 'limit_loss' | 'heavy';
+type SpecialRule =
+  | 'weighted'
+  | 'limit_loss'
+  | 'heavy'
+  | 'bidirectional'
+  | 'no_escape'
+  | 'lubed';
 
 class FishingMinigame extends Component<
   FishingMinigameProps,
@@ -63,6 +71,9 @@ class FishingMinigame extends Component<
   longJumpVelocityLimit: number = 200;
   shortJumpVelocityLimit: number = 400;
   idleVelocity: number = 0;
+  accel_up_coeff: number = 1;
+  bidirectional: boolean = false;
+  no_escape: boolean = false;
 
   baseLongJumpChancePerSecond: number = 0.0075;
   baseShortJumpChancePerSecond: number = 0.255;
@@ -82,6 +93,9 @@ class FishingMinigame extends Component<
       : -6;
     this.baitBounceCoeff = props.special_rules.includes('weighted') ? 0.1 : 0.6;
     this.idleVelocity = props.special_rules.includes('heavy') ? 10 : 0;
+    this.bidirectional = props.special_rules.includes('bidirectional');
+    this.no_escape = props.special_rules.includes('no_escape');
+    this.accel_up_coeff = props.special_rules.includes('lubed') ? 1.4 : 1;
 
     switch (props.fish_ai) {
       case 'dumb':
@@ -117,6 +131,10 @@ class FishingMinigame extends Component<
 
     this.handle_mousedown = this.handle_mousedown.bind(this);
     this.handle_mouseup = this.handle_mouseup.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handle_ctrldown = this.handle_ctrldown.bind(this);
+    this.handle_ctrlup = this.handle_ctrlup.bind(this);
     this.updateAnimation = this.updateAnimation.bind(this);
     this.moveFish = this.moveFish.bind(this);
     this.moveBait = this.moveBait.bind(this);
@@ -130,6 +148,8 @@ class FishingMinigame extends Component<
     this.animation_id = window.requestAnimationFrame(this.updateAnimation);
     globalEvents.on('byond/mousedown', this.handle_mousedown);
     globalEvents.on('byond/mouseup', this.handle_mouseup);
+    globalEvents.on('byond/ctrldown', this.handle_ctrldown);
+    globalEvents.on('byond/ctrlup', this.handle_ctrlup);
   }
 
   componentWillUnmount() {
@@ -138,6 +158,8 @@ class FishingMinigame extends Component<
     window.cancelAnimationFrame(this.animation_id);
     globalEvents.off('byond/mousedown', this.handle_mousedown);
     globalEvents.off('byond/mouseup', this.handle_mouseup);
+    globalEvents.off('byond/ctrldown', this.handle_ctrldown);
+    globalEvents.off('byond/ctrlup', this.handle_ctrlup);
   }
 
   updateAnimation(timestamp: DOMHighResTimeStamp) {
@@ -275,7 +297,7 @@ class FishingMinigame extends Component<
     const { fish, bait } = this.state;
 
     // Speedup when reeling
-    const acceleration_up = -1500;
+    const acceleration_up = -1500 * this.accel_up_coeff;
     // Gravity
     const acceleration_down = 1000;
     // Velocity is multiplied by this when bouncing off the bottom/top
@@ -298,17 +320,31 @@ class FishingMinigame extends Component<
     // Bottom bound
     if (newPosition + bait.height > this.area_height) {
       newPosition = this.area_height - bait.height;
-      newVelocity = -bait.velocity * bounce_coeff;
+      if (this.reeling === ReelingState.ReelingDown) {
+        newVelocity = 0;
+      } else {
+        newVelocity = -bait.velocity * bounce_coeff;
+      }
     }
 
     const acceleration =
       this.reeling === ReelingState.Reeling
         ? acceleration_up
-        : acceleration_down;
-    const velocity_change = acceleration * seconds;
+        : this.reeling === ReelingState.ReelingDown
+          ? -acceleration_up
+          : acceleration_down;
     // Slowdown both ways when on fish
-    if (this.fishOnBait(fish, bait)) {
-      newVelocity += on_point_coeff * velocity_change;
+    const velocity_change =
+      acceleration *
+      seconds *
+      (this.fishOnBait(fish, bait) ? on_point_coeff : 1);
+
+    if (this.bidirectional && this.reeling === ReelingState.Idle) {
+      if (newVelocity < 0) {
+        newVelocity = Math.min(newVelocity + velocity_change, 0);
+      } else {
+        newVelocity = Math.max(newVelocity - velocity_change, 0);
+      }
     } else {
       newVelocity += velocity_change;
     }
@@ -351,7 +387,7 @@ class FishingMinigame extends Component<
 
     const dispatch = useDispatch(this.context);
 
-    if (newCompletion <= 0) {
+    if (newCompletion <= 0 && !this.no_escape) {
       this.props.lose();
       dispatch(backendSuspendStart());
     } else if (newCompletion >= 100) {
@@ -377,7 +413,33 @@ class FishingMinigame extends Component<
   }
 
   handle_mouseup(event: MouseEvent) {
-    this.reeling = ReelingState.Idle;
+    if (this.reeling === ReelingState.Reeling) {
+      this.reeling = ReelingState.Idle;
+    }
+  }
+
+  handleKeyDown(keyEvent: KeyEvent) {
+    if (keyEvent.code === KEY_CTRL) {
+      this.handle_ctrldown();
+    }
+  }
+
+  handleKeyUp(keyEvent: KeyEvent) {
+    if (keyEvent.code === KEY_CTRL) {
+      this.handle_ctrlup();
+    }
+  }
+
+  handle_ctrldown() {
+    if (this.bidirectional && this.reeling === ReelingState.Idle) {
+      this.reeling = ReelingState.ReelingDown;
+    }
+  }
+
+  handle_ctrlup() {
+    if (this.bidirectional && this.reeling === ReelingState.ReelingDown) {
+      this.reeling = ReelingState.Idle;
+    }
   }
 
   render() {
@@ -386,6 +448,10 @@ class FishingMinigame extends Component<
     const background_image = resolveAsset(this.props.background);
     return (
       <div class="fishing">
+        <KeyListener
+          onKeyDown={this.handleKeyDown}
+          onKeyUp={this.handleKeyUp}
+        />
         <div class="main">
           <div
             class="background"
