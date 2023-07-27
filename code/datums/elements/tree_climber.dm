@@ -13,16 +13,14 @@
 	. = ..()
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_LIVING_CLIMB_TREE, PROC_REF(climb_tree))
-	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(climb_tree))
+	RegisterSignal(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE), PROC_REF(climb_tree))
 	src.climbing_distance = climbing_distance
 
 /datum/element/tree_climber/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
-	UnregisterSignal(target, COMSIG_LIVING_CLIMB_TREE)
+	UnregisterSignal(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 
-/// Generates an effect
+/// Generates the tree climbing pixel movement effect
 /datum/element/tree_climber/proc/climb_tree(mob/living/climber, atom/target)
 	SIGNAL_HANDLER
 

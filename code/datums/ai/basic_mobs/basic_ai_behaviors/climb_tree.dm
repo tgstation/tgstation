@@ -24,8 +24,8 @@
 /datum/ai_behavior/climb_tree/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/obj/structure/flora/target_tree = controller.blackboard[target_key]
-	var/mob/living/basic/bear_pawn = controller.pawn
-	SEND_SIGNAL(bear_pawn, COMSIG_LIVING_CLIMB_TREE, target_tree)
+	var/mob/living/basic/living_pawn = controller.pawn
+	SEND_SIGNAL(living_pawn, COMSIG_LIVING_CLIMB_TREE, target_tree)
 	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/climb_tree/finish_action(datum/ai_controller/controller, succeeded, target_key)
