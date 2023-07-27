@@ -1,22 +1,45 @@
-/// Small handheld chameleon item that allows a user to mimic the outfit of another person.
+/// Small handheld chameleon item that allows a user to mimic the outfit of another person quickly.
 /obj/item/chameleon_scanner
 	// No name or desc by default, set up by the cham action
+	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_TINY
 	actions_types = list(/datum/action/item_action/chameleon/change/scanner)
+	throw_speed = 3
 	/// Range that we can scan people
 	var/scan_range = 5
 	/// Cooldown between scans.
 	/// Not entirely intended to be a balance knob, but rather intended to prevent accidentally scanning the same person in quick succession.
 	COOLDOWN_DECLARE(scan_cooldown)
 
+/obj/item/chameleon_scanner/Initialize(mapload)
+	. = ..()
+	register_item_context()
+
+/obj/item/chameleon_scanner/add_item_context(
+	obj/item/source,
+	list/context,
+	atom/target,
+	mob/living/user,
+)
+	if(ishuman(target) && IS_TRAITOR(user))
+		// probably don't want to give out the context to any old crewmember -
+		// even though anyone can use it, it kind of reveals the fact that it's disguised
+		// (though it's trivial to find that out anyway)
+		context[SCREENTIP_CONTEXT_LMB] = "Scan target outfit"
+		context[SCREENTIP_CONTEXT_RMB] = "Scan target outfit and equip"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/item/chameleon_scanner/examine(mob/user)
 	. = ..()
 	if(!IS_TRAITOR(user))
 		return
 	. += span_red("There's a small button on the bottom side of it. You recognize this as a hidden <i>Chameleon Scanner 6000</i>.")
-	. += span_red("<b>Left click</b> will stealthily scan a target up to [scan_range] meters away and upload their clothing as a custom outfit for you to use.")
-	. += span_red("<b>Right click</b> will do the same, but instantly equip the outfit obtained.")
+	. += span_red("<b>Left click</b> will stealthily scan a target up to [scan_range] meters away and upload their getup as a custom outfit for you to use.")
+	. += span_red("<b>Right click</b> will do the same, but instantly equip the outfit you obtain.")
 
 /obj/item/chameleon_scanner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
