@@ -34,8 +34,10 @@
 		PROC_REF(on_sever_connection),
 	)
 	RegisterSignal(hosting_netpod, COMSIG_BITMINING_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
+	RegisterSignal(hosting_netpod, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITMINING_SERVER_CRASH, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
+	RegisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
 	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 
 /// Links mob damage & death as long as the netpod is there
@@ -61,11 +63,8 @@
 
 	var/mob/living/carbon/pilot = pilot_ref?.resolve()
 
-	if(!pilot || damage_type == STAMINA || damage_type == OXYLOSS)
+	if(isnull(pilot) || damage_type == STAMINA || damage_type == OXYLOSS)
 		return
-
-	if(damage > 15)
-		pilot.do_jitter_animation(damage)
 
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(pilot, TYPE_PROC_REF(/mob/living, emote), "scream")
@@ -83,48 +82,44 @@
 /datum/mind/proc/on_netpod_crowbar(datum/source, mob/living/intruder)
 	SIGNAL_HANDLER
 
+	current.playsound_local(current, 'sound/machines/terminal_alert.ogg', 50, TRUE)
 	current.throw_alert(
 		ALERT_BITMINING_CROWBAR,
 		/atom/movable/screen/alert/netpod_crowbar,
 		new_master = intruder
 	)
 
+/// Disconnects the avatar and returns the mind to the pilot.
+/datum/mind/proc/on_sever_connection(datum/source, forced = FALSE, obj/machinery/netpod/broken_netpod)
+	SIGNAL_HANDLER
+
+	if(forced)
+		last_death = world.time
+
+	var/mob/living/pilot = pilot_ref?.resolve()
+	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
+	if(isnull(pilot) || isnull(hosting_netpod))
+		current.dust()
+
+	disconnect_avatar_signals()
+	UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
+	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
+	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
+	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
+	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
+
+	netpod_ref = null
+	pilot_ref = null
+
+	hosting_netpod.disconnect_occupant(src, forced)
+
 /// Triggers when the server is shutting down
 /datum/mind/proc/on_shutting_down(datum/source, obj/machinery/quantum_server/server)
 	SIGNAL_HANDLER
 
+	current.playsound_local(current, 'sound/machines/terminal_alert.ogg', 50, TRUE)
 	current.throw_alert(
 		ALERT_BITMINING_SHUTDOWN,
 		/atom/movable/screen/alert/qserver_shutting_down,
 		new_master = server
 	)
-
-/// Helper so that we don't have to apply args to register_signal
-/datum/mind/proc/on_sever_connection(datum/source)
-	SIGNAL_HANDLER
-
-	last_death = world.time
-	sever_avatar(forced = TRUE)
-
-/// Disconnects the avatar and returns the mind to the pilot.
-/// Handles case where the chair is destroyed via broken_chair
-/datum/mind/proc/sever_avatar(forced = FALSE, obj/machinery/netpod/broken_netpod)
-	var/mob/living/pilot = pilot_ref?.resolve()
-	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
-	if(isnull(hosting_netpod)  || isnull(pilot))
-		current.dust()
-
-	disconnect_avatar_signals()
-	UnregisterSignal(hosting_netpod, COMSIG_BITMINING_CROWBAR_ALERT)
-	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
-	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
-	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(pilot, COMSIG_MOVABLE_UNBUCKLE)
-	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
-
-	netpod_ref = null
-	pilot_ref = null
-
-	current.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
-	current.flash_act(override_blindness_check = TRUE, visual = TRUE)
-	hosting_netpod.disconnect_occupant(src, forced)

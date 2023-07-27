@@ -86,6 +86,7 @@
 				return TRUE
 
 			server.cold_boot_map(usr, map_id)
+			return TRUE
 		if("refresh")
 			ui.send_full_update()
 			return TRUE
@@ -111,4 +112,4 @@
 			nearby_server.console_ref = WEAKREF(src)
 			return nearby_server
 
-	return FALSE
+	return

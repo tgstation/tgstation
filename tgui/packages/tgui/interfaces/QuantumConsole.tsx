@@ -136,11 +136,11 @@ const AccessView = (props, context) => {
           <Stack fill>
             <Stack.Item grow>Loaded: {generated_domain ?? 'None'}</Stack.Item>
             <Stack.Item>
-              <Button
-                disabled={!ready || !generated_domain || occupants > 0}
-                onClick={() => act('stop_domain')}>
-                Stop Domain
-              </Button>
+              <Button.Confirm
+                content="Stop Domain"
+                disabled={!ready || !generated_domain}
+                onClick={() => act('stop_domain')}
+              />
               <Button
                 disabled={!ready || !generated_domain}
                 onClick={() => act('check_completion')}>

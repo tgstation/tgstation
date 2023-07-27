@@ -101,36 +101,34 @@
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_EXPENSIVE, "Sanity: Should've loaded expensive test map")
 	TEST_ASSERT_EQUAL(server.points, 0, "Should've spent 3 points on loading a 3 point domain")
 
-/// Tests the netchair's ability to buckle in and set refs
-/datum/unit_test/netchair_buckle/Run()
+/// Tests the netpod's ability to buckle in and set refs
+/datum/unit_test/netpod_close/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	labrat.mind_initialize()
 	labrat.mock_client = new()
 
-	chair.find_server() // buckle_mob calls this but i want to test it separately
-	TEST_ASSERT_NOTNULL(chair.server_ref, "Did not set server_ref")
+	pod.find_server() // enter_matrix calls this but I want to set it separately
+	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: Did not set server_ref")
 
-	var/obj/machinery/quantum_server/connected_server = chair.server_ref.resolve()
+	var/obj/machinery/quantum_server/connected_server = pod.server_ref.resolve()
 	TEST_ASSERT_EQUAL(connected_server, server, "Did not set server_ref correctly")
 
-	server.set_domain(labrat, map_id = TEST_MAP)
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	chair.buckle_mob(labrat, check_loc = FALSE)
-	TEST_ASSERT_NOTNULL(chair.occupant_ref, "Did not set occupant_ref")
-	UNTIL(!isnull(chair.occupant_mind_ref))
-	TEST_ASSERT_EQUAL(server.occupant_mind_refs[1], chair.occupant_mind_ref, "Did not add mind to server occupant_mind_refs")
+	labrat.forceMove(pod.loc)
+	pod.close_machine(labrat)
+	TEST_ASSERT_NOTNULL(pod.occupant, "Did not set occupant_ref")
+	UNTIL(!isnull(pod.occupant_mind_ref))
+	TEST_ASSERT_EQUAL(server.occupant_mind_refs[1], pod.occupant_mind_ref, "Did not add mind to server occupant_mind_refs")
 
-	var/mob/living/labrat_resolved = chair.occupant_ref.resolve()
-	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Did not set occupant_ref correctly")
-
-/// Tests the netchair's ability to disconnect
-/datum/unit_test/netchair_disconnect/Run()
+/// Tests the netpod's ability to disconnect
+/datum/unit_test/netpod_disconnect/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/datum/weakref/server_ref = WEAKREF(server)
 	var/datum/weakref/labrat_ref = WEAKREF(labrat)
 
@@ -140,66 +138,76 @@
 	labrat.key = "fake_mind" // Original body gets a fake mind
 	var/datum/mind/real_mind = WEAKREF(labrat.mind)
 
-	chair.find_server()
-	TEST_ASSERT_NOTNULL(chair.server_ref, "Sanity: Netchair did not set server_ref")
+	pod.find_server()
+	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: netpod did not set server_ref")
 
-	chair.server_ref = null // We can use this to see if the disconnect was successful
-	chair.disconnect_occupant(labrat.mind)
-	TEST_ASSERT_NULL(chair.server_ref, "Should've prevented disconnect with no occupant")
+	pod.server_ref = null // We can use this to see if the disconnect was successful
+	pod.set_occupant(labrat)
+	pod.disconnect_occupant(labrat.mind)
+	TEST_ASSERT_NULL(pod.server_ref, "Should've prevented disconnect with no occupant")
 
 	var/datum/mind/wrong_mind = new("wrong_mind") // 'another player'
-	chair.occupant_mind_ref = real_mind
-	chair.occupant_ref = labrat_ref
-	chair.disconnect_occupant(wrong_mind)
-	TEST_ASSERT_NULL(chair.server_ref, "Should've prevented disconnect with wrong mind destination")
+	pod.occupant_mind_ref = real_mind
+	pod.set_occupant(labrat)
+	pod.disconnect_occupant(wrong_mind)
+	TEST_ASSERT_NULL(pod.server_ref, "Should've prevented disconnect with wrong mind destination")
 
-	var/mob/living/occupant = chair.occupant_ref.resolve()
-	chair.disconnect_occupant(labrat.mind)
-	TEST_ASSERT_EQUAL(chair.server_ref, server_ref, "Should disconnect with CORRECT mind dest")
-	TEST_ASSERT_EQUAL(occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 0, "Should not have taken brain damage on disconnect")
-	TEST_ASSERT_NOTNULL(chair.occupant_ref, "Should NOT clear occupant_ref, unbuckle only")
-	TEST_ASSERT_NULL(chair.occupant_mind_ref, "Should've cleared occupant_mind_ref")
+	pod.server_ref = null
+	pod.set_occupant(labrat)
+	pod.disconnect_occupant(labrat.mind)
+	var/mob/living/mob_occupant = pod.occupant
+	TEST_ASSERT_EQUAL(pod.server_ref, server_ref, "Should have correct server_ref")
+	TEST_ASSERT_EQUAL(mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 0, "Should not have taken brain damage on disconnect")
+	TEST_ASSERT_NOTNULL(mob_occupant, "Should NOT clear occupant_ref, unbuckle only")
+	TEST_ASSERT_NULL(pod.occupant_mind_ref, "Should've cleared occupant_mind_ref")
 
 	/// Testing force disconn
-	chair.server_ref = null
-	chair.occupant_mind_ref = real_mind
-	chair.occupant_ref = labrat_ref
-	chair.disconnect_occupant(labrat.mind , forced = TRUE)
-	TEST_ASSERT_NOTNULL(chair.server_ref, "Sanity: Chair didn't set server")
-	TEST_ASSERT_EQUAL(occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should've taken brain damage on force disconn")
+	pod.server_ref = null
+	pod.occupant_mind_ref = real_mind
+	pod.set_occupant(labrat)
+	pod.disconnect_occupant(labrat.mind , forced = TRUE)
+	mob_occupant = pod.occupant
+	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: pod didn't set server")
+	TEST_ASSERT_EQUAL(mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should've taken brain damage on force disconn")
 
-/// Tests cases where the netchair is destroyed or the occupant unbuckled
-/datum/unit_test/netchair_unbuckle_or_qdel/Run()
+/// Tests cases where the netpod is destroyed or the occupant unbuckled
+/datum/unit_test/netpod_break/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
 	labrat.mind_initialize()
 	labrat.mock_client = new()
 	labrat.mind.key = "fake_mind"
 	var/datum/weakref/real_mind = WEAKREF(labrat.mind)
 
-	server.set_domain(labrat, map_id = TEST_MAP)
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	chair.buckle_mob(labrat, check_loc = FALSE)
-	UNTIL(!isnull(chair.occupant_mind_ref))
-	TEST_ASSERT_EQUAL(chair.occupant_mind_ref, real_mind, "Sanity: Chair didn't set mind")
+	labrat.forceMove(pod.loc)
+	pod.set_occupant(labrat)
+	pod.close_machine()
+	TEST_ASSERT_EQUAL(pod.occupant, labrat, "Sanity: Pod didn't set occupant")
+	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: Pod didn't set server")
+	TEST_ASSERT_NOTNULL(pod.occupant_mind_ref, "Sanity: Pod didn't set mind")
+	TEST_ASSERT_EQUAL(pod.occupant_mind_ref, real_mind, "Sanity: Pod didn't set mind")
 
-	chair.unbuckle_mob(labrat)
-	TEST_ASSERT_NULL(chair.occupant_ref, "Should've cleared occupant_ref")
+	pod.open_machine()
+	TEST_ASSERT_NULL(pod.occupant, "Should've cleared occupant")
 	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should have taken brain damage on unbuckle")
 
 	labrat.fully_heal()
-	chair.buckle_mob(labrat, check_loc = FALSE)
-	UNTIL(!isnull(chair.occupant_mind_ref))
-	TEST_ASSERT_EQUAL(chair.occupant_mind_ref, real_mind, "Sanity: Chair didn't set mind")
+	pod.set_occupant(labrat)
+	pod.close_machine()
+	TEST_ASSERT_NOTNULL(pod.occupant_mind_ref, "Sanity: Pod didn't set mind")
+	TEST_ASSERT_EQUAL(pod.occupant_mind_ref, real_mind, "Sanity: Pod didn't set mind")
 
-	qdel(chair)
-	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should have taken brain damage on chair deletion")
+	qdel(pod)
+	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should have taken brain damage on pod deletion")
 
 /// Tests the connection between avatar and pilot
 /datum/unit_test/avatar_connection/Run()
-	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair)
+	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/target = allocate(/mob/living/carbon/human/consistent)
@@ -211,20 +219,20 @@
 	var/datum/weakref/labrat_ref = WEAKREF(labrat)
 	var/datum/weakref/initial_mind = labrat.mind
 	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
-	chair.occupant_mind_ref = labrat_mind_ref
-	chair.occupant_ref = labrat_ref
+	pod.occupant_mind_ref = labrat_mind_ref
+	pod.occupant = labrat
 
-	labrat.mind.initial_avatar_connection(labrat, target, chair, server)
+	labrat.mind.initial_avatar_connection(labrat, target, pod, server)
 	TEST_ASSERT_NOTNULL(target.mind, "Couldn't transfer mind to target")
 	TEST_ASSERT_EQUAL(target.mind, initial_mind, "New mind is different from original")
 	TEST_ASSERT_NOTNULL(target.mind.pilot_ref, "Could not set avatar_ref")
-	TEST_ASSERT_NOTNULL(target.mind.netchair_ref, "Could not set netchair_ref")
+	TEST_ASSERT_NOTNULL(target.mind.netpod_ref, "Could not set netpod_ref")
 
 	var/mob/living/carbon/human/labrat_resolved = target.mind.pilot_ref.resolve()
 	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Wrong pilot ref")
 
-	var/obj/structure/netchair/connected_chair = target.mind.netchair_ref.resolve()
-	TEST_ASSERT_EQUAL(connected_chair, chair, "Wrong netchair ref")
+	var/obj/machinery/netpod/connected_pod = target.mind.netpod_ref.resolve()
+	TEST_ASSERT_EQUAL(connected_pod, pod, "Wrong netpod ref")
 
 	target.apply_damage(10, damagetype = BURN, def_zone = BODY_ZONE_HEAD, blocked = 0, forced = TRUE)
 	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
@@ -243,10 +251,10 @@
 	pincushion.mock_client = new()
 	pincushion.mind.key = "gibbed_key"
 	var/datum/mind/pincushion_mind = pincushion.mind
-	chair.occupant_mind_ref = WEAKREF(pincushion.mind)
-	chair.occupant_ref = WEAKREF(pincushion)
+	pod.occupant_mind_ref = WEAKREF(pincushion.mind)
+	pod.occupant = pincushion
 
-	pincushion.mind.initial_avatar_connection(pincushion, to_gib, chair, server)
+	pincushion.mind.initial_avatar_connection(pincushion, to_gib, pod, server)
 	TEST_ASSERT_EQUAL(to_gib.mind, pincushion_mind, "Pincushion mind should have been transferred to the gib target")
 
 	to_gib.gib()
@@ -268,31 +276,9 @@
 /datum/unit_test/bitmining_signals/Run()
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/obj/item/bitminer_trap/trap = allocate(/obj/item/bitminer_trap)
 	var/area/test_area = get_area(labrat)
 	labrat.mind_initialize()
 
-	labrat.put_in_active_hand(trap, forced = TRUE)
-	trap.attack_self(labrat)
-	TEST_ASSERT_EQUAL(received, FALSE, "Trap should only be usable in the bit den")
-
-	rename_area(test_area, "Bitmining: Den")
-	trap.attack_self(labrat)
-	TEST_ASSERT_EQUAL(trap.used, TRUE, "Trap did not activate")
-
-	RegisterSignal(SSdcs, COMSIG_GLOB_BITMINING_PROXIMITY, PROC_REF(on_proximity))
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BITMINING_PROXIMITY, labrat)
-	TEST_ASSERT_EQUAL(received, TRUE, "Global bitmining prox signal was not received")
-
-	received = FALSE
-	labrat.forceMove(run_loc_floor_top_right)
-	labrat.forceMove(run_loc_floor_bottom_left)
-	TEST_ASSERT_EQUAL(received, TRUE, "Signal chain: Didn't receive bitmining_proximity signal from armed tile")
-
-	received = FALSE
-	RegisterSignal(server, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_disconnect))
-	qdel(server)
-	TEST_ASSERT_EQUAL(received, TRUE, "Signal chain: Didn't receive qserver_disconnected signal from qserver deletion")
 
 /// Tests the server's ability to buff and nerf mobs
 /datum/unit_test/quantum_server_difficulty/Run()
@@ -307,22 +293,22 @@
 	TEST_ASSERT_NOTNULL(pupper, "Sanity: Couldn't find mobs in vdom")
 
 	var/base_health = pupper.health
-	server.client_connect(labrat_mind_ref)
+	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, labrat_mind_ref)
 	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer shouldn't buff mobs on first bitminer connect")
 
-	server.client_connect(labrat_mind_ref)
+	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, labrat_mind_ref)
 	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff, "QServer should buff mobs 1.5x on second bitminer connect")
 
-	server.client_connect(labrat_mind_ref)
+	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, labrat_mind_ref)
 	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff * server.difficulty_coeff, "QServer should buff mobs 1.5x on third bitminer connect")
 
-	server.client_disconnect(labrat_mind_ref)
+	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, labrat_mind_ref)
 	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff, "QServer should nerf mobs 1.5x on first bitminer disconnect")
 
-	server.client_disconnect(labrat_mind_ref)
+	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, labrat_mind_ref)
 	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should nerf mobs 1.5x on second bitminer disconnect")
 
-	server.client_disconnect(labrat_mind_ref)
+	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, labrat_mind_ref)
 	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should not nerf mobs below base health")
 
 /// Server side randomization of domains

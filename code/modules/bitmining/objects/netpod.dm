@@ -23,6 +23,8 @@
 	var/datum/outfit/netsuit = /datum/outfit/job/miner
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
+	/// Cached mob actions, stops mobs from keeping abilities
+	var/list/datum/action/cached_actions = list()
 
 /obj/machinery/netpod/Initialize(mapload)
 	. = ..()
@@ -32,13 +34,19 @@
 /obj/machinery/netpod/LateInitialize()
 	. = ..()
 
-	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_sever))
+	RegisterSignals(src, list(
+		COMSIG_QDELETING,
+		COMSIG_MACHINERY_BROKEN,
+		COMSIG_MACHINERY_POWER_LOST,
+		),
+		PROC_REF(on_opened_or_destroyed),
+	)
 	register_context()
 	update_appearance()
 
 /obj/machinery/netpod/Destroy()
 	. = ..()
-
+	cached_actions.Cut()
 	cached_outfits.Cut()
 
 /obj/machinery/netpod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -87,6 +95,7 @@
 
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
+		on_opened_or_destroyed()
 		flick("[initial(icon_state)]-anim", src)
 	return ..()
 
@@ -114,14 +123,13 @@
 	if(state_open || isnull(occupant))
 		return ..()
 
-	crowbar.play_tool_sound(src, 50)
+
 	visible_message(span_danger("[pryer] starts prying open [src]!"), span_notice("You start to pry open [src]."))
+	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+	SEND_SIGNAL(src, COMSIG_BITMINING_CROWBAR_ALERT, pryer)
 
-	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
-	SEND_SIGNAL(hosted_mind, COMSIG_BITMINING_CROWBAR_ALERT, pryer)
-
-	if(do_after(pryer, 10 SECONDS, PROC_REF(open_machine)))
-		on_sever()
+	if(do_after(pryer, 15 SECONDS, src))
+		open_machine()
 		return ..()
 
 /obj/machinery/netpod/screwdriver_act(mob/living/user, obj/item/screwdriver)
@@ -187,23 +195,27 @@
 	mob_occupant.mind.key = null
 	mob_occupant.key = null
 	receiving.transfer_to(mob_occupant)
+	occupant_mind_ref = null
 
-	var/datum/action/avatar_domain_info/action = locate(/datum/action/avatar_domain_info) in mob_occupant.actions
-	if(action)
-		action.Remove()
+	mob_occupant.actions = cached_actions
+	cached_actions.Cut()
 
+	mob_occupant.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
 	mob_occupant.set_static_vision(2 SECONDS)
 	mob_occupant.set_temp_blindness(1 SECONDS)
 
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
-		SEND_SIGNAL(src, COMSIG_BITMINING_CLIENT_DISCONNECTED, occupant_mind_ref)
+		SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, occupant_mind_ref)
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_SERVER_CRASH)
-	occupant_mind_ref = null
+		receiving.UnregisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT)
+	receiving.UnregisterSignal(src, COMSIG_BITMINING_CROWBAR_ALERT)
+	receiving.UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
 
 	if(!forced || mob_occupant.stat == DEAD)
 		return
 
+	mob_occupant.Paralyze(2 SECONDS)
 	mob_occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
 	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 	INVOKE_ASYNC(mob_occupant, TYPE_PROC_REF(/mob/living, emote), "scream")
@@ -254,7 +266,8 @@
 
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
 	occupant_mind_ref = neo_mind_ref
-	SEND_SIGNAL(src, COMSIG_BITMINING_CLIENT_CONNECTED, neo_mind_ref)
+	cached_actions = neo.actions
+	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, neo_mind_ref)
 	neo.mind.initial_avatar_connection(
 		avatar = current_avatar,
 		hosting_netpod = src,
@@ -262,6 +275,7 @@
 		help_text = generated_domain.help_text
 	)
 
+/// Finds a server and sets the server_ref
 /obj/machinery/netpod/proc/find_server()
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	if(server)
@@ -270,8 +284,6 @@
 	server = locate(/obj/machinery/quantum_server) in oview(4, src)
 	if(server)
 		server_ref = WEAKREF(server)
-		RegisterSignal(src, COMSIG_BITMINING_CLIENT_CONNECTED, PROC_REF(on_connected))
-		RegisterSignal(src, COMSIG_BITMINING_CLIENT_DISCONNECTED, PROC_REF(on_disconnected))
 		return server
 
 	return
@@ -332,33 +344,11 @@
 
 	return list(collection)
 
-/// Inserts the mind ref into the server occupant_mind_refs
-/obj/machinery/netpod/proc/on_connected(datum/source, datum/weakref/new_mind)
-	SIGNAL_HANDLER
-
-	var/obj/machinery/quantum_server/server = find_server()
-	if(isnull(server))
-		return
-
-	server.client_connect(new_mind)
-
-/// Removes the mind ref from the server occupant_mind_refs
-/obj/machinery/netpod/proc/on_disconnected(datum/source, datum/weakref/old_mind)
-	SIGNAL_HANDLER
-
-	var/obj/machinery/quantum_server/server = find_server()
-	if(isnull(server))
-		return
-
-	server.client_disconnect(old_mind)
-
 /// On unbuckle or break, make sure the occupant ref is null
-/obj/machinery/netpod/proc/on_sever()
+/obj/machinery/netpod/proc/on_opened_or_destroyed()
 	SIGNAL_HANDLER
 
-	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
-	if(hosted_mind)
-		hosted_mind.sever_avatar(forced = TRUE, broken_netpod = src)
+	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, TRUE, src)
 
 /// Resolves a path to an outfit.
 /obj/machinery/netpod/proc/resolve_outfit(text)

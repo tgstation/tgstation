@@ -39,7 +39,7 @@
 
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
-		user.mind.sever_avatar()
+		SEND_SIGNAL(mob_mind, COMSIG_BITMINING_SEVER_AVATAR)
 
 /obj/structure/hololadder/proc/on_enter(datum/source, atom/movable/arrived, turf/old_loc)
 	SIGNAL_HANDLER

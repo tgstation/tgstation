@@ -59,6 +59,14 @@
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/quantum_server/LateInitialize()
+	. = ..()
+	if(isnull(console_ref))
+		find_console()
+
 	RegisterSignals(src, list(
 		COMSIG_MACHINERY_BROKEN,
 		COMSIG_MACHINERY_POWER_LOST,
@@ -67,14 +75,9 @@
 		PROC_REF(on_broken)
 	)
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(src, COMSIG_BITMINING_CLIENT_CONNECTED, PROC_REF(on_client_connected))
+	RegisterSignal(src, COMSIG_BITMINING_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
 	RefreshParts()
-
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/quantum_server/LateInitialize()
-	. = ..()
-	if(isnull(console_ref))
-		find_console()
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
@@ -122,17 +125,13 @@
 		stop_domain(user)
 		return
 
-	for(var/datum/weakref/mind_ref in occupant_mind_refs)
-		var/datum/mind/this_mind = mind_ref.resolve()
-		if(isnull(this_mind))
-			occupant_mind_refs -= this_mind
-			continue
-
-		SEND_SIGNAL(this_mind, COMSIG_BITMINING_SHUTDOWN_ALERT, src)
-
 	balloon_alert(user, "notifying clients...")
-	if(do_after(user, 15 SECONDS, src))
-		stop_domain(user)
+	SEND_SIGNAL(src, COMSIG_BITMINING_SHUTDOWN_ALERT, src)
+
+	if(!do_after(user, 15 SECONDS, src))
+		return
+
+	stop_domain(user)
 
 /// Checks if there is a loot crate in the designated send areas (2x2)
 /obj/machinery/quantum_server/proc/check_completion(mob/user)
@@ -155,28 +154,6 @@
 	balloon_alert(user, "no loot crate found.")
 
 	return FALSE
-
-/// Each time someone connects, mob health jumps 1.5x
-/obj/machinery/quantum_server/proc/client_connect(datum/weakref/new_mind)
-	occupant_mind_refs += new_mind
-	if(length(occupant_mind_refs) == 1)
-		return
-
-	for(var/mob/living/creature as anything in generated_domain.created_atoms)
-		if(is_valid_mob(creature))
-			creature.health *= difficulty_coeff
-			creature.maxHealth *= difficulty_coeff
-
-/// If a client disconnects, remove them from the list & nerf mobs
-/obj/machinery/quantum_server/proc/client_disconnect(datum/weakref/old_mind)
-	occupant_mind_refs -= old_mind
-	if(length(occupant_mind_refs) == 0)
-		return
-
-	for(var/mob/living/creature as anything in generated_domain.created_atoms)
-		if(is_valid_mob(creature))
-			creature.health /= difficulty_coeff
-			creature.maxHealth /= difficulty_coeff
 
 /**
  * ### Quantum Server Cold Boot
@@ -214,7 +191,7 @@
 	if(points < 0)
 		balloon_alert(user, "not enough points.")
 		loading = FALSE
-		return
+		return FALSE
 
 	var/datum/space_level/loaded_zlevel = vdom_ref?.resolve()
 	if(isnull(loaded_zlevel) && !initialize_virtual_domain())
@@ -244,7 +221,7 @@
 			nearby_console.server_ref = WEAKREF(src)
 			return nearby_console
 
-	return FALSE
+	return
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot(mob/user)
@@ -407,6 +384,34 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(stop_domain))
+
+
+/// Each time someone connects, mob health jumps 1.5x
+/obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_mind)
+	SIGNAL_HANDLER
+
+	occupant_mind_refs += new_mind
+	if(length(occupant_mind_refs) == 1)
+		return
+
+	for(var/mob/living/creature as anything in generated_domain.created_atoms)
+		if(is_valid_mob(creature))
+			creature.health *= difficulty_coeff
+			creature.maxHealth *= difficulty_coeff
+
+/// If a client disconnects, remove them from the list & nerf mobs
+/obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_mind)
+	SIGNAL_HANDLER
+
+	occupant_mind_refs -= old_mind
+	if(length(occupant_mind_refs) == 0)
+		return
+
+	for(var/mob/living/creature as anything in generated_domain.created_atoms)
+		if(is_valid_mob(creature))
+			creature.health /= difficulty_coeff
+			creature.maxHealth /= difficulty_coeff
+
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
