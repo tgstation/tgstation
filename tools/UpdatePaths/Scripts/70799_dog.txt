@@ -1,1 +1,0 @@
-/mob/living/simple_animal/pet/dog/@SUBTYPES : /mob/living/basic/pet/dog/@SUBTYPES {@OLD}

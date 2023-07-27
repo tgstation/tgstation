@@ -1,1 +1,0 @@
-/mob/living/simple_animal/hostile/lightgeist : /mob/living/basic/lightgeist{@OLD;AIStatus=@SKIP}

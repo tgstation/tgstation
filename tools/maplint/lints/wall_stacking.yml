@@ -1,5 +1,0 @@
-/turf/closed:
-  banned_neighbors:
-  - /obj/machinery/door/airlock
-  - /obj/structure/lattice
-  - /obj/structure/window

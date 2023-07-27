@@ -1,9 +1,0 @@
-#comment replaces /obj/machinery/portable_atmospherics/canister/tier_# with /obj/machinery/portable_atmospherics/canister
-#comment replaces /obj/structure/canister_frame/machine/frame_tier_0 with /obj/structure/canister_frame/machine/unfinished_frame
-#comment replaces /obj/structure/canister_frame/machine/frame_tier_1 with /obj/structure/canister_frame/machine/finished_frame
-
-/obj/machinery/portable_atmospherics/canister/tier_1 : /obj/machinery/portable_atmospherics/canister
-/obj/machinery/portable_atmospherics/canister/tier_2 : /obj/machinery/portable_atmospherics/canister
-/obj/machinery/portable_atmospherics/canister/tier_3 : /obj/machinery/portable_atmospherics/canister
-/obj/structure/canister_frame/machine/frame_tier_0 : /obj/structure/canister_frame/machine/unfinished_canister_frame
-/obj/structure/canister_frame/machine/frame_tier_1 : /obj/structure/canister_frame/machine/finished_canister_frame

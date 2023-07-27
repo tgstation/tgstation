@@ -1,5 +1,0 @@
-/obj/machinery/camera/@SUBTYPES {dir=5;conversion_done=@UNSET} : @OLD {@OLD;dir=10;conversion_done=1}
-/obj/machinery/camera/@SUBTYPES {dir=10;conversion_done=@UNSET} : @OLD {@OLD;dir=5;conversion_done=1}
-/obj/machinery/camera/@SUBTYPES {dir=6;conversion_done=@UNSET} : @OLD {@OLD;dir=9;conversion_done=1}
-/obj/machinery/camera/@SUBTYPES {dir=9;conversion_done=@UNSET} : @OLD {@OLD;dir=6;conversion_done=1}
-/obj/machinery/camera/@SUBTYPES {conversion_done=1} : @OLD {@OLD;conversion_done=@SKIP}

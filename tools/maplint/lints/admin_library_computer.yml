@@ -1,3 +1,0 @@
-help: This typepath exists to make an admin verb work, it should not be placed on maps
-/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker:
-  banned: true # Please don't man I swear to god

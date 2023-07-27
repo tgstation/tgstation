@@ -1,1 +1,0 @@
-/mob/living/simple_animal/hostile/killertomato : /mob/living/basic/killer_tomato{@OLD}

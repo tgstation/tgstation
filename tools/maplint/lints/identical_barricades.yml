@@ -1,4 +1,0 @@
-/obj/structure/barricade:
-  banned_neighbors:
-    /obj/structure/barricade:
-      identical: true

@@ -1,1 +1,0 @@
-/mob/living/simple_animal/hostile/lizard/@SUBTYPES : /mob/living/basic/lizard/@SUBTYPES{@OLD}

@@ -1,1 +1,0 @@
-/obj/item/clothing/head/helmet/police : /obj/item/clothing/head/warden/police{@old}

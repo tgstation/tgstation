@@ -1,1 +1,0 @@
-/obj/item/food/tinychocolate : /obj/item/food/bonbon{@OLD}

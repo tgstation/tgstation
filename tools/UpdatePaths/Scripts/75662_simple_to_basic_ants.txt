@@ -1,1 +1,0 @@
-/mob/living/simple_animal/hostile/ant : /mob/living/basic/ant{@OLD}

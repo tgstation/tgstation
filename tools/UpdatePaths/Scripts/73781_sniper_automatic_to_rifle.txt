@@ -1,3 +1,0 @@
-#comment This repaths sniper rifles from the automatic subtype to the rifle subtype.
-
-/obj/item/gun/ballistic/automatic/sniper : /obj/item/gun/ballistic/rifle/sniper{@OLD}

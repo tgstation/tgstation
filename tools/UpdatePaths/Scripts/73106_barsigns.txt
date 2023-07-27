@@ -1,3 +1,0 @@
-# This repaths barsigns to be a subtype of machinery
-
-/obj/structure/sign/barsign : /obj/machinery/barsign{@OLD}

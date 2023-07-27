@@ -1,5 +1,0 @@
-help:
-  This means you didn't clean up any potential merge conflicts,
-  make sure everything in that area is correct.
-/obj/merge_conflict_marker:
-  banned: true

@@ -1,4 +1,0 @@
-# removes the medical and combat subtypes
-
-/obj/vehicle/sealed/mecha/@SUBTYPES : /obj/vehicle/sealed/mecha/combat/@SUBTYPES{@OLD}
-/obj/vehicle/sealed/mecha/@SUBTYPES : /obj/vehicle/sealed/mecha/medical/@SUBTYPES{@OLD}

@@ -1,2 +1,0 @@
-/obj/item/kirbyplants/dead : /obj/item/kirbyplants/random/dead{@OLD}
-/obj/item/kirbyplants/fullysynthetic : /obj/item/kirbyplants/random/fullysynthetic{@OLD}
