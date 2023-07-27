@@ -134,6 +134,8 @@
 	send_alert(weather_message, weather_sound)
 	if(!perpetual)
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
+	for(var/area/impacted_area as anything in impacted_areas)
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type))
 
 /**
  * Weather enters the winding down phase, stops effects
@@ -165,6 +167,8 @@
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
+	for(var/area/impacted_area as anything in impacted_areas)
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type))
 
 // handles sending all alerts
 /datum/weather/proc/send_alert(alert_msg, alert_sfx)
