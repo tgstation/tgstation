@@ -745,7 +745,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	// see-through curtains should let emissives shine through
 	if(!opaque_closed)
 		blocks_emissive = EMISSIVE_BLOCK_NONE
-	
 	return ..()
 
 /obj/structure/curtain/proc/toggle()
