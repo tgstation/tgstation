@@ -5,7 +5,16 @@ import { toFixed } from 'common/math';
 
 export const MechStatPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
-  const { name, integrity, mecha_flags, mechflag_keys, mech_view } = data;
+  const {
+    name,
+    integrity,
+    mecha_flags,
+    mechflag_keys,
+    mech_view,
+    enclosed,
+    cabin_sealed,
+    cabin_pressure,
+  } = data;
   return (
     <Section
       fill
@@ -43,6 +52,21 @@ export const MechStatPane = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Power">
               <PowerBar />
+            </LabeledList.Item>
+            <LabeledList.Item
+              label="Cabin"
+              buttons={
+                !!cabin_sealed && (
+                  <Box opacity={0.5}>{`${Math.round(cabin_pressure)} kPa`}</Box>
+                )
+              }>
+              <Button
+                icon={cabin_sealed ? 'mask-ventilator' : 'wind'}
+                content={cabin_sealed ? 'Airtight' : 'Open'}
+                disabled={!enclosed}
+                onClick={() => act('toggle_cabin_seal')}
+                selected={cabin_sealed}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="DNA Lock">
               <DNABody />

@@ -18,6 +18,8 @@
 	var/can_be_triggered = FALSE
 	///Whether the module is currently active
 	var/active = TRUE
+	///Label used in the ui next to the Activate/Enable/Disable buttons
+	var/active_label = "Activity"
 	///Chassis power cell quantity used on activation
 	var/energy_drain = 0
 	///Reference to mecha that this equipment is currently attached to

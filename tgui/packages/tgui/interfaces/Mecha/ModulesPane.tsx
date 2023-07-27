@@ -1,9 +1,10 @@
 import { useBackend } from '../../backend';
-import { Icon, NumberInput, ProgressBar, Box, Button, Section, Stack, LabeledList, Divider, NoticeBox } from '../../components';
+import { Icon, NumberInput, ProgressBar, Box, Button, Section, Stack, LabeledList, Divider, NoticeBox, Collapsible } from '../../components';
 import { OperatorData, MechModule } from './data';
 import { classes } from 'common/react';
 import { toFixed } from 'common/math';
 import { formatPower } from '../../format';
+import { GasmixParser } from 'tgui/interfaces/common/GasmixParser';
 
 const moduleSlotIcon = (param) => {
   switch (param) {
@@ -124,10 +125,9 @@ export const ModulesPane = (props, context) => {
           )}
         </Stack.Item>
         <Stack.Item grow pl={1}>
-          {selected_module_index !== null &&
-            !!modules[selected_module_index] && (
-              <ModuleDetails module={modules[selected_module_index]} />
-            )}
+          {selected_module_index !== null && modules[selected_module_index] && (
+            <ModuleDetails module={modules[selected_module_index]} />
+          )}
         </Stack.Item>
       </Stack>
     </Section>
@@ -167,10 +167,15 @@ export const ModuleDetails = (props, context) => {
       <Stack.Item>{desc}</Stack.Item>
       <Divider />
       <Stack.Item>
-        <LabeledList>
-          <ModuleDetailsBasic module={props.module} />
-          {!!snowflake && <ModuleDetailsExtra module={props.module} />}
-        </LabeledList>
+        {!!snowflake &&
+        snowflake.snowflake_id === MECHA_SNOWFLAKE_ID_AIR_TANK ? (
+          <SnowflakeAirTank module={props.module} />
+        ) : (
+          <LabeledList>
+            <ModuleDetailsBasic module={props.module} />
+            {!!snowflake && <ModuleDetailsExtra module={props.module} />}
+          </LabeledList>
+        )}
       </Stack.Item>
     </Stack>
   );
@@ -186,6 +191,7 @@ const ModuleDetailsBasic = (props, context) => {
     can_be_toggled,
     can_be_triggered,
     active,
+    active_label,
     equip_cooldown,
     energy_per_use,
   } = props.module;
@@ -232,7 +238,7 @@ const ModuleDetailsBasic = (props, context) => {
         <LabeledList.Item label="Cooldown">{equip_cooldown}</LabeledList.Item>
       )}
       {!!can_be_toggled && (
-        <LabeledList.Item label="Activity">
+        <LabeledList.Item label={active_label}>
           <Button
             icon="power-off"
             content={active ? 'Enabled' : 'Disabled'}
@@ -247,7 +253,7 @@ const ModuleDetailsBasic = (props, context) => {
         </LabeledList.Item>
       )}
       {!!can_be_triggered && (
-        <LabeledList.Item label="Activity">
+        <LabeledList.Item label={active_label}>
           <Button
             icon="power-off"
             content="Activate"
@@ -529,8 +535,8 @@ const SnowflakeRadio = (props, context) => {
 
 const SnowflakeAirTank = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
-  const { cabin_dangerous_highpressure } = data;
-  const { ref } = props.module;
+  const { cabin_dangerous_highpressure, cabin_sealed } = data;
+  const { ref, integrity, active_label, active } = props.module;
   const {
     snowflake_id,
     air_source,
@@ -539,56 +545,90 @@ const SnowflakeAirTank = (props, context) => {
     port_connected,
     cabin_pressure,
     cabin_temp,
+    cabin_air,
+    tank_air,
   } = props.module.snowflake;
   return (
-    <>
-      <LabeledList.Item label="Cabin Pressure">
-        <Box
-          color={cabin_pressure > cabin_dangerous_highpressure ? 'red' : null}>
-          {cabin_pressure} kPa
-        </Box>
-      </LabeledList.Item>
-      <LabeledList.Item label="Cabin Temp">
-        <Box>{GetTempFormat(cabin_temp)}</Box>
-      </LabeledList.Item>
-      <LabeledList.Item label="Cabin Air Source">
-        <Button
-          onClick={() =>
-            act('equip_act', {
-              ref: ref,
-              gear_action: 'toggle_airsource',
-            })
-          }>
-          {air_source}
-        </Button>
-      </LabeledList.Item>
-      <LabeledList.Item label="Tank Pressure">
-        {airtank_pressure} kPa
-      </LabeledList.Item>
-      <LabeledList.Item label="Tank Temp">
-        {GetTempFormat(airtank_temp)}
-      </LabeledList.Item>
-      <LabeledList.Item
-        label="Tank Port"
-        buttons={
+    <Box>
+      <LabeledList>
+        {integrity < 1 && (
+          <LabeledList.Item
+            label="Integrity"
+            buttons={
+              <Button
+                content={'Repair'}
+                icon={'wrench'}
+                onClick={() =>
+                  act('equip_act', {
+                    ref: ref,
+                    gear_action: 'repair',
+                  })
+                }
+              />
+            }>
+            <ProgressBar
+              ranges={{
+                good: [0.75, Infinity],
+                average: [0.25, 0.75],
+                bad: [-Infinity, 0.25],
+              }}
+              value={integrity}
+            />
+          </LabeledList.Item>
+        )}
+        <LabeledList.Item label={active_label}>
           <Button
-            icon="info"
-            color="transparent"
-            tooltip="Park above atmospherics connector port to connect inernal air tank with a gas network."
+            icon="power-off"
+            content={
+              active ? (!cabin_sealed ? 'Paused' : 'Enabled') : 'Disabled'
+            }
+            onClick={() =>
+              act('equip_act', {
+                ref: ref,
+                gear_action: 'toggle',
+              })
+            }
+            selected={active}
           />
-        }>
-        <Button
-          onClick={() =>
-            act('equip_act', {
-              ref: ref,
-              gear_action: 'toggle_port',
-            })
-          }
-          selected={port_connected}>
-          {port_connected ? 'Connected' : 'Disconnected'}
-        </Button>
-      </LabeledList.Item>
-    </>
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Tank Port"
+          buttons={
+            <Button
+              icon="info"
+              color="transparent"
+              tooltip="Park above atmospherics connector port to connect inernal air tank with a gas network."
+            />
+          }>
+          <Button
+            onClick={() =>
+              act('equip_act', {
+                ref: ref,
+                gear_action: 'toggle_port',
+              })
+            }
+            icon={port_connected ? 'plug-circle-check' : 'plug-circle-xmark'}
+            selected={port_connected}>
+            {port_connected ? 'Connected' : 'Disconnected'}
+          </Button>
+        </LabeledList.Item>
+      </LabeledList>
+      <Section>
+        {cabin_sealed ? (
+          <Collapsible title="Cabin Air">
+            <GasmixParser gasmix={cabin_air} />
+          </Collapsible>
+        ) : (
+          <NoticeBox>
+            <Icon name="wind" mr={1} />
+            Cabin Open
+          </NoticeBox>
+        )}
+        <Collapsible title="Tank Air">
+          <GasmixParser gasmix={tank_air} />
+        </Collapsible>
+      </Section>
+    </Box>
   );
 };
 

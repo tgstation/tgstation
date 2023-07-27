@@ -183,6 +183,8 @@
 	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
 		to_chat(user, span_notice("You exit the mech."))
+		if(cabin_sealed)
+			set_cabin_seal(user, FALSE)
 		mob_exit(user, silent = TRUE)
 	else
 		to_chat(user, span_notice("You stop exiting the mech. Weapons are enabled again."))

@@ -71,10 +71,14 @@
 	var/bumpsmash = FALSE
 
 	///////////ATMOS
-	///Whether we are currrently drawing from the internal tank
-	var/use_internal_tank = FALSE
+	///Whether the pilot is hidden from the outside viewers and whether the cabin can be sealed to be aritight
+	var/enclosed = TRUE
+	///Whether the cabin exchanges gases with the environment
+	var/cabin_sealed = FALSE
 	///Internal air mix datum
 	var/datum/gas_mixture/cabin_air
+	///Volume of the cabin
+	var/cabin_volume = TANK_STANDARD_VOLUME * 5
 
 	///List of installed remote tracking beacons, including AI control beacons
 	var/list/trackers = list()
@@ -142,8 +146,6 @@
 	var/exit_delay = 2 SECONDS
 	///Time you get slept for if you get forcible ejected by the mech exploding
 	var/destruction_sleep_duration = 2 SECONDS
-	///Whether outside viewers can see the pilot inside and whether the cabin is sealed
-	var/enclosed = TRUE
 	///In case theres a different iconstate for AI/MMI pilot(currently only used for ripley)
 	var/silicon_icon_state = null
 	///Currently ejecting, and unable to do things
@@ -221,7 +223,7 @@
 	smoke_system.set_up(3, holder = src, location = src)
 	smoke_system.attach(src)
 
-	cabin_air = new(TANK_STANDARD_VOLUME)
+	cabin_air = new(cabin_volume)
 
 	add_cell()
 	add_scanmod()
@@ -365,7 +367,8 @@
 
 /obj/vehicle/sealed/mecha/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_SETTINGS)
+	if(enclosed)
+		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
@@ -506,31 +509,6 @@
 			var/delta = cabin_air.temperature - T20C
 			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * seconds_per_tick
 
-	if(internal_tank)
-		var/datum/gas_mixture/tank_air = internal_tank.return_air()
-
-		var/release_pressure = internal_tank.release_pressure
-		var/cabin_pressure = cabin_air.return_pressure()
-		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
-		var/transfer_moles = 0
-		if(pressure_delta > 0) //cabin pressure lower than release pressure
-			if(tank_air.return_temperature() > 0)
-				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
-				var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
-				cabin_air.merge(removed)
-		else if(pressure_delta < 0) //cabin pressure higher than release pressure
-			var/datum/gas_mixture/t_air = return_air()
-			pressure_delta = cabin_pressure - release_pressure
-			if(t_air)
-				pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
-			if(pressure_delta > 0) //if location pressure is lower than cabin pressure
-				transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
-				var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
-				if(t_air)
-					t_air.merge(removed)
-				else //just delete the cabin gas, we're in space or some shit
-					qdel(removed)
-
 	for(var/mob/living/occupant as anything in occupants)
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
@@ -575,6 +553,7 @@
 
 	if(mecha_flags & LIGHTS_ON)
 		use_power(2*seconds_per_tick)
+
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -697,12 +676,12 @@
 /////////////////////////////////////
 
 /obj/vehicle/sealed/mecha/remove_air(amount)
-	if(use_internal_tank)
+	if(enclosed && cabin_sealed)
 		return cabin_air.remove(amount)
 	return ..()
 
 /obj/vehicle/sealed/mecha/return_air()
-	if(use_internal_tank)
+	if(enclosed && cabin_sealed)
 		return cabin_air
 	return ..()
 
@@ -718,6 +697,50 @@
 /obj/vehicle/sealed/mecha/return_temperature()
 	var/datum/gas_mixture/air = return_air()
 	return air?.return_temperature()
+
+///makes cabin unsealed, dumping cabin air outside or airtight filling the cabin with external air mix
+/obj/vehicle/sealed/mecha/proc/set_cabin_seal(mob/usr, cabin_sealed)
+	if(!enclosed)
+		balloon_alert(usr, "cabin can't be sealed!")
+		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
+		return
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_CABIN_SEAL))
+		balloon_alert(usr, "on cooldown")
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 3)
+
+	src.cabin_sealed = cabin_sealed
+
+	var/datum/gas_mixture/environment_air = loc.return_air()
+	if(!isnull(environment_air))
+		if(cabin_sealed)
+			// Fill cabin with air
+			environment_air.pump_gas_to(cabin_air, environment_air.return_pressure())
+		else
+			// Dump cabin air
+			var/datum/gas_mixture/removed_gases = cabin_air.remove_ratio(1)
+			if(loc)
+				loc.assume_air(removed_gases)
+			else
+				qdel(removed_gases)
+
+	var/pressurized
+	var/obj/item/mecha_parts/mecha_equipment/air_tank/tank = locate(/obj/item/mecha_parts/mecha_equipment/air_tank) in equip_by_category[MECHA_UTILITY]
+	var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in usr.actions
+	if(!isnull(tank) && cabin_sealed)
+		pressurized = TRUE
+		if(!tank.active)
+			tank.set_active(TRUE)
+		else
+			action.button_icon_state = "mech_cabin_pressurized"
+			action.build_all_button_icons()
+	else
+		action.button_icon_state = "mech_cabin_[cabin_sealed ? "closed" : "open"]"
+		action.build_all_button_icons()
+
+	balloon_alert(usr, "cabin [cabin_sealed ? "airtight" : "open"]")
+	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
+	playsound(src, 'sound/machines/airlock.ogg', 50, TRUE)
 
 /// Special light eater handling
 /obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/source, datum/light_eater)

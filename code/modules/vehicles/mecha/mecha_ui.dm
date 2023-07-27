@@ -84,7 +84,9 @@
 	data["internal_damage"] = internal_damage
 	data["dna_lock"] = dna_lock
 	data["weapons_safety"] = weapons_safety
-	data["use_internal_tank"] = use_internal_tank
+	data["enclosed"] = enclosed
+	data["cabin_sealed"] = cabin_sealed
+	data["cabin_pressure"] = cabin_air.return_pressure()
 	data["mech_view"] = ui_view.assigned_map
 	data["modules"] = get_module_ui_data()
 	data["selected_module_index"] = ui_selected_module_index
@@ -116,6 +118,7 @@
 					"can_be_toggled" = module.can_be_toggled,
 					"can_be_triggered" = module.can_be_triggered,
 					"active" = module.active,
+					"active_label" = module.active_label,
 					"equip_cooldown" = module.equip_cooldown && DisplayTimeText(module.equip_cooldown),
 					"energy_per_use" = module.energy_drain,
 					"snowflake" = module.get_snowflake_data(),
@@ -211,6 +214,8 @@
 			to_chat(user, "[icon2html(src, occupants)][span_notice("You feel a prick as the needle takes your DNA sample.")]")
 		if("reset_dna")
 			dna_lock = null
+		if("toggle_cabin_seal")
+			set_cabin_seal(usr, !cabin_sealed)
 		if("view_dna")
 			tgui_alert(usr, "Enzymes detected: " + dna_lock)
 			return FALSE

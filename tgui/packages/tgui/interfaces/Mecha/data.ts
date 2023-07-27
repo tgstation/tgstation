@@ -1,5 +1,3 @@
-import { BooleanLike } from 'common/react';
-
 export const KelvinZeroCelcius = 273.15;
 
 export const InternalDamageToDamagedDesc = {
@@ -20,32 +18,6 @@ export const InternalDamageToNormalDesc = {
 export type AccessData = {
   name: string;
   number: number;
-};
-
-type MechElectronics = {
-  microphone: boolean;
-  speaker: boolean;
-  frequency: number;
-  minfreq: number;
-  maxfreq: number;
-};
-
-export type MechWeapon = {
-  name: string;
-  desc: string;
-  ref: string;
-  isballisticweapon: boolean;
-  integrity: number;
-  energy_per_use: number;
-  // null when not ballistic weapon
-  disabledreload: boolean | null;
-  projectiles: number | null;
-  max_magazine: number | null;
-  projectiles_cache: number | null;
-  projectiles_cache_max: number | null;
-  ammo_type: string | null;
-  // first entry is always "snowflake_id"=snowflake_id if snowflake
-  snowflake: any;
 };
 
 export type MainData = {
@@ -73,32 +45,18 @@ export type OperatorData = {
   mecha_flags: number;
   internal_damage: number;
   internal_damage_keys: string[];
-  airtank_present: BooleanLike;
-  air_source: string;
   mechflag_keys: string[];
   cabin_dangerous_highpressure: number;
-  airtank_pressure: number | null;
-  airtank_temp: number | null;
-  port_connected: boolean | null;
   cabin_pressure: number;
   cabin_temp: number;
+  enclosed: boolean;
+  cabin_sealed: boolean;
   dna_lock: string | null;
-  mech_electronics: MechElectronics;
-  right_arm_weapon: MechWeapon | null;
-  left_arm_weapon: MechWeapon | null;
   weapons_safety: boolean;
-  mech_equipment: MechEquipment;
   mech_view: string;
-  sheet_material_amount: number;
   modules: MechModule[];
   selected_module_index: number;
-};
-
-export type MechaUtility = {
-  activated: boolean;
-  name: string;
-  ref: string;
-  snowflake: any;
+  sheet_material_amount: number;
 };
 
 export type MechModule = {
@@ -110,28 +68,10 @@ export type MechModule = {
   can_be_toggled: boolean;
   can_be_triggered: boolean;
   active: boolean;
+  active_label: string;
   equip_cooldown: string;
   energy_per_use: number;
   snowflake: Snowflake;
-  ref: string;
-};
-
-export type MechEquipment = {
-  utility: MechUtilityModule[];
-  power: MechUtilityModule[];
-  armor: MechArmorModule[];
-};
-
-export type MechUtilityModule = {
-  name: string;
-  activated: boolean;
-  ref: string;
-  snowflake: Snowflake;
-};
-
-export type MechArmorModule = {
-  protect_name: string;
-  iconstate_name: string;
   ref: string;
 };
 

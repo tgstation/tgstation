@@ -576,17 +576,19 @@
 //////////////////////////// AIR TANK MODULE //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/air_tank
 	name = "mounted air tank"
-	desc = "An internal air tank used to pressurize mech cabin and RCS thrusters. Comes with a set of sensors."
+	desc = "An internal air tank used to pressurize mech cabin, srcub CO2 and power RCS thrusters. Comes with a set of sensors."
 	icon_state = "mecha_air_tank"
 	equipment_slot = MECHA_UTILITY
-	///Whether we are currrently drawing from the internal tank
-	var/use_internal_tank = FALSE
+	can_be_toggled = TRUE
+	active_label = "Pressurize Cabin"
 	///The internal air tank obj of the mech
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	///The connected air port, if we have one
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	///Volume of this air tank
 	var/volume = TANK_STANDARD_VOLUME * 10
+	///Maximum pressure of this air tank
+	var/maximum_pressure = ONE_ATMOSPHERE * 30
 	///Whether the tank starts pressurized
 	var/start_full = FALSE
 
@@ -594,15 +596,18 @@
 	. = ..()
 	internal_tank = new(src)
 	internal_tank.air_contents.volume = volume
+	internal_tank.maximum_pressure = maximum_pressure
 	if(start_full)
 		internal_tank.air_contents.temperature = T20C
 		internal_tank.air_contents.add_gases(/datum/gas/oxygen)
-		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = internal_tank.maximum_pressure * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
+		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = maximum_pressure * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Destroy()
-	qdel(internal_tank)
 	if(chassis)
 		UnregisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE)
+	if(active)
+		STOP_PROCESSING(SSobj, src)
+	qdel(internal_tank)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
@@ -612,7 +617,38 @@
 /obj/item/mecha_parts/mecha_equipment/air_tank/detach(atom/moveto)
 	disconnect_air()
 	UnregisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE)
+	if(active)
+		set_active(FALSE)
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/set_active(active)
+	. = ..()
+	if(active)
+		START_PROCESSING(SSobj, src)
+		var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in usr.actions
+		action.button_icon_state = "mech_cabin_[chassis.cabin_sealed ? "pressurized" : "open"]"
+		action.build_all_button_icons()
+	else
+		STOP_PROCESSING(SSobj, src)
+		var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in usr.actions
+		action.button_icon_state = "mech_cabin_[chassis.cabin_sealed ? "closed" : "open"]"
+		action.build_all_button_icons()
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/process(seconds_per_tick)
+	if(!chassis || !active)
+		set_active(FALSE)
+		return
+	if(!chassis.cabin_sealed)
+		return
+	var/datum/gas_mixture/external_air = chassis.loc.return_air()
+	var/datum/gas_mixture/tank_air = internal_tank.return_air()
+	var/datum/gas_mixture/cabin_air = chassis.cabin_air
+	var/release_pressure = internal_tank.release_pressure
+	var/cabin_pressure = cabin_air.return_pressure()
+	if(cabin_pressure < release_pressure)
+		tank_air.release_gas_to(cabin_air, release_pressure)
+	if(cabin_pressure)
+		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, GAS_CO2)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/disconnect_air()
 	SIGNAL_HANDLER
@@ -621,15 +657,16 @@
 		log_message("Lost connection to gas port.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/get_snowflake_data()
-	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
+	var/datum/gas_mixture/tank_air = internal_tank.return_air()
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_AIR_TANK,
-		"air_source" = use_internal_tank ? "Internal Airtank" : "Environment",
-		"airtank_pressure" = int_tank_air ? round(int_tank_air.return_pressure(), 0.01) : null,
-		"airtank_temp" = int_tank_air?.temperature,
+		"airtank_pressure" = tank_air ? round(tank_air.return_pressure(), 0.01) : null,
+		"airtank_temp" = tank_air?.temperature,
 		"port_connected" = internal_tank?.connected_port ? TRUE : FALSE,
-		"cabin_pressure" = round(chassis.return_pressure(), 0.01),
-		"cabin_temp" = chassis.return_temperature(),
+		"cabin_pressure" = round(chassis.cabin_air.return_pressure(), 0.01),
+		"cabin_temp" = chassis.cabin_air.return_temperature(),
+		"cabin_air" = gas_mixture_parser(chassis.cabin_air, "cabin"),
+		"tank_air" = gas_mixture_parser(tank_air, "tank"),
 	)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/ui_act(action, list/params)
@@ -641,13 +678,6 @@
 				return
 			internal_tank.release_pressure = new_pressure
 			to_chat(usr, span_notice("The internal pressure valve has been set to [internal_tank.release_pressure]kPa."))
-			return TRUE
-		if("toggle_airsource")
-			if(!internal_tank)
-				return FALSE
-			use_internal_tank = !use_internal_tank
-			balloon_alert(usr, "taking air from [use_internal_tank ? "internal airtank" : "environment"]")
-			log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
 			return TRUE
 		if("toggle_port")
 			if(internal_tank.connected_port)
