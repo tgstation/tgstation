@@ -56101,10 +56101,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rPp" = (
-/obj/structure/fake_stairs/wood/north,
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "rPu" = (
@@ -68256,7 +68256,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon                Level","4"="Station                Level")
+	preset_destination_names = list("3"="Icemoon                                Level","4"="Station                                Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -71908,7 +71908,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "wUD" = (
-/obj/structure/fake_stairs/wood/north,
+/obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "wUE" = (
@@ -74124,10 +74124,10 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "xDQ" = (
-/obj/structure/fake_stairs/wood/north,
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/fake_stairs/wood/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "xDU" = (

@@ -1200,6 +1200,7 @@
 #include "code\datums\elements\chemical_transfer.dm"
 #include "code\datums\elements\chewable.dm"
 #include "code\datums\elements\cleaning.dm"
+#include "code\datums\elements\cliff_walker.dm"
 #include "code\datums\elements\climbable.dm"
 #include "code\datums\elements\connect_loc.dm"
 #include "code\datums\elements\content_barfer.dm"

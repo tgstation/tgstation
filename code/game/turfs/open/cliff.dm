@@ -65,7 +65,7 @@
 /// Check if they can fall from us
 /turf/open/cliff/proc/can_fall(atom/movable/arrived)
 	// Check if we're a protected type that doesnt make sense to fall (like effects and bullets)
-	if(is_type_in_list(arrived, protected_types)
+	if(is_type_in_list(arrived, protected_types))
 		return FALSE
 
 	if(arrived.throwing || HAS_TRAIT(arrived, TRAIT_CLIFF_WALKER) || HAS_TRAIT(arrived, TRAIT_MOVE_FLYING))
