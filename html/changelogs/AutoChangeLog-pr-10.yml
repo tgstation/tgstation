@@ -1,0 +1,6 @@
+author: "CliffracerX"
+delete-after: True
+changes:
+  - rscadd: "runechat color option - set to black to use pastels"
+  - qol: "increased max length of runechat"
+  - qol: "runechat width for wordwrap has been increased"
