@@ -1,4 +1,4 @@
-/datum/emote/living/carbon/snake_scream
+/datum/emote/living/snake_scream
 	key = "agony"
 	key_third_person = "agonizes"
 	message = "seizes up and falls limp, their eyes dead and lifeless..."
@@ -8,7 +8,7 @@
 	audio_cooldown = 1 SECONDS
 	vary = FALSE
 
-/datum/emote/living/carbon/snake_scream/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/snake_scream/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(isliving(user))
 		var/mob/living/liveuser = user
@@ -18,55 +18,55 @@
 		else
 			message = "seizes up and falls limp, their eyes dead and lifeless..."
 
-/datum/emote/living/carbon/snake_scream/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/snake_fucking_died.ogg')
 
-/datum/emote/living/carbon/snake_scream/oldspess
+/datum/emote/living/snake_scream/oldspess
 	key = "oldscream"
 	key_third_person = "oldscreams"
 	message = "lets out an agonized scream!"
 
-/datum/emote/living/carbon/snake_scream/oldspess/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/oldspess/get_sound(mob/living/user)
 	return pick('sound/voice/human/malescream_2.ogg')
 
-/datum/emote/living/carbon/snake_scream/jc
+/datum/emote/living/snake_scream/jc
 	key = "jcagony"
 	key_third_person = "jcagonizes"
 
-/datum/emote/living/carbon/snake_scream/jc/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/jc/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/jc_fucking_died.ogg')
 
-/datum/emote/living/carbon/snake_scream/teshi
+/datum/emote/living/snake_scream/teshi
 	key = "teshagony"
 	key_third_person = "teshagonizes"
 
-/datum/emote/living/carbon/snake_scream/teshi/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/teshi/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/teshi_fucking_died.ogg')
 
-/datum/emote/living/carbon/snake_scream/lizzer
+/datum/emote/living/snake_scream/lizzer
 	key = "lizagony"
 	key_third_person = "lizagonizes"
 
-/datum/emote/living/carbon/snake_scream/lizzer/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/lizzer/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/lizzer_fucking_died.ogg')
 
-/datum/emote/living/carbon/snake_scream/haki
+/datum/emote/living/snake_scream/haki
 	key = "voxagony"
 	key_third_person = "voxagonizes"
 
-/datum/emote/living/carbon/snake_scream/haki/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/haki/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/haki_fucking_died.ogg')
 
-/datum/emote/living/carbon/snake_scream/moff
+/datum/emote/living/snake_scream/moff
 	key = "mothagony"
 	key_third_person = "mothagonizes"
 
-/datum/emote/living/carbon/snake_scream/moff/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/moff/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/moff_fucking_died.ogg')
 
-/datum/emote/living/carbon/snake_scream/scug
+/datum/emote/living/snake_scream/scug
 	key = "sluggony"
 	key_third_person = "sluggonizes"
 
-/datum/emote/living/carbon/snake_scream/scug/get_sound(mob/living/user)
+/datum/emote/living/snake_scream/scug/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/sluggony2.ogg')

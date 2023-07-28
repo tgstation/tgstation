@@ -12,6 +12,7 @@
 		EYECOLOR,
 		HAIR,
 		LIPS,
+		USE_TRICOLOR_ALPHA,
 	)
 	inherent_traits = list(
 		TRAIT_TACKLING_TAILED_DEFENDER,

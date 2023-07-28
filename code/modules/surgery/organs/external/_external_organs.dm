@@ -187,6 +187,17 @@
 /datum/bodypart_overlay/mutant/horns/get_global_feature_list()
 	return GLOB.horns_list
 
+/datum/bodypart_overlay/mutant/horns/inherit_color(obj/item/bodypart/ownerlimb, force) /// SKYRAPTOR ADDITION
+	. = ..()
+	if(isnull(ownerlimb))
+		return
+	var/mob/living/carbon/human/the_humie = ownerlimb.owner
+	if(!isnull(the_humie))
+		var/mut_color = the_humie.dna.features["horns_color"]
+		if(mut_color)
+			draw_color = mut_color
+			ownerlimb.update_overlays() /// SKYRAPTOR ADDITION END
+
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/external/frills
 	name = "frills"
@@ -213,6 +224,17 @@
 
 /datum/bodypart_overlay/mutant/frills/get_global_feature_list()
 	return GLOB.frills_list
+
+/datum/bodypart_overlay/mutant/frills/inherit_color(obj/item/bodypart/ownerlimb, force) /// SKYRAPTOR ADDITION
+	. = ..()
+	if(isnull(ownerlimb))
+		return
+	var/mob/living/carbon/human/the_humie = ownerlimb.owner
+	if(!isnull(the_humie))
+		var/mut_color = the_humie.dna.features["frills_color"]
+		if(mut_color)
+			draw_color = mut_color
+			ownerlimb.update_overlays() /// SKYRAPTOR ADDITION END
 
 ///Guess what part of the lizard this is?
 /obj/item/organ/external/snout
@@ -310,6 +332,7 @@
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
 	///Are we burned? If so we draw differently
 	var/burnt = FALSE
+	color_source = ORGAN_COLOR_OVERRIDE /// SKYRAPTOR EDIT
 
 /datum/bodypart_overlay/mutant/antennae/New()
 	. = ..()
@@ -321,6 +344,38 @@
 
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
+
+/// SKYRAPTOR ADDITIONS BEGIN: we're trying to make moth wings recolorable with a matrix and it's going to be fucking COMPLICATED AS BALLS
+/datum/bodypart_overlay/mutant/antennae/override_color(rgb_value)
+	return COLOR_WHITE
+
+/datum/bodypart_overlay/mutant/antennae/inherit_color(obj/item/bodypart/ownerlimb, force)
+	. = ..()
+	if(isnull(ownerlimb))
+		return
+	var/mob/living/carbon/human/the_humie = ownerlimb.owner
+	if(!isnull(the_humie))
+		var/tcol_1 = the_humie.dna.features["tricolor-c1"]
+		var/tcol_2 = the_humie.dna.features["tricolor-c2"]
+		var/tcol_3 = the_humie.dna.features["tricolor-c3"]
+		if(tcol_1 && tcol_2 && tcol_3)
+			//this is beyond ugly but it works
+			var/r1 = hex2num(copytext(tcol_1, 2, 4)) / 255.0
+			var/g1 = hex2num(copytext(tcol_1, 4, 6)) / 255.0
+			var/b1 = hex2num(copytext(tcol_1, 6, 8)) / 255.0
+			var/r2 = hex2num(copytext(tcol_2, 2, 4)) / 255.0
+			var/g2 = hex2num(copytext(tcol_2, 4, 6)) / 255.0
+			var/b2 = hex2num(copytext(tcol_2, 6, 8)) / 255.0
+			var/r3 = hex2num(copytext(tcol_3, 2, 4)) / 255.0
+			var/g3 = hex2num(copytext(tcol_3, 4, 6)) / 255.0
+			var/b3 = hex2num(copytext(tcol_3, 6, 8)) / 255.0
+			draw_color = list(r1,g1,b1, r2,g2,b2, r3,g3,b3)
+			ownerlimb.update_overlays()
+
+/datum/bodypart_overlay/mutant/antennae/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+	. = ..()
+	overlay.color = draw_color
+/// SKYRAPTOR ADDITIONS END
 
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair

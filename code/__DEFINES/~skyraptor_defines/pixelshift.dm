@@ -1,0 +1,1 @@
+#define COMSIG_KB_MOB_PIXELSHIFT "keybinding_mob_pixelshift"

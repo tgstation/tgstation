@@ -529,6 +529,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
+"afS" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/locker)
 "afY" = (
 /obj/machinery/computer/shuttle/mining{
 	dir = 8
@@ -14810,6 +14821,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
+"dGN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/window/right/directional/south{
+	name = "Cryogenics Cabin"
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/locker)
 "dGQ" = (
 /obj/effect/spawner/random/maintenance/two,
 /obj/structure/closet,
@@ -17714,6 +17733,13 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay)
+"etm" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/locker)
 "etq" = (
 /obj/structure/table/wood,
 /obj/item/toy/talking/ai,
@@ -19837,11 +19863,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "eVS" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/item/storage/wallet,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/locker)
 "eVU" = (
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{
@@ -29878,6 +29904,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "hwC" = (
@@ -35097,14 +35125,16 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
 "iMO" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
+/obj/structure/table/glass,
+/obj/item/storage/medkit/fire{
+	pixel_x = 6;
+	pixel_y = 6
 	},
-/obj/item/storage/wallet,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/item/storage/medkit/o2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/locker)
 "iMU" = (
 /obj/effect/decal/cleanable/dirt,
@@ -40468,6 +40498,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/wallet,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "kaL" = (
@@ -51778,6 +51809,15 @@
 /obj/effect/turf_decal/tile/neutral/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/interrogation)
+"mUn" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/locker)
 "mUt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -60233,10 +60273,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "pgX" = (
-/obj/machinery/status_display/ai/directional/north,
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/locker)
 "pgY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
@@ -95827,6 +95867,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "xYP" = (
@@ -146310,7 +146352,7 @@ svd
 mtd
 ijP
 rYA
-lSw
+mUn
 eVS
 hDy
 sja
@@ -146568,8 +146610,8 @@ lfm
 vHY
 rYA
 pgX
-eCr
-hDy
+dGN
+afS
 djQ
 puK
 hLf
@@ -146825,7 +146867,7 @@ ebQ
 ahe
 rYA
 iMO
-lSw
+etm
 hDy
 sja
 xJX

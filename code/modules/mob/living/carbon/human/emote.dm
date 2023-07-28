@@ -61,7 +61,7 @@
 	message = "screams!"
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	only_forced_audio = TRUE
+	only_forced_audio = FALSE ///SKYRAPTOR EDIT: SCREAM BUFF WOOOO
 	vary = TRUE
 
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)

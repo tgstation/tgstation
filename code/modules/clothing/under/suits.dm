@@ -31,6 +31,10 @@
 	icon_state = "waiter"
 	inhand_icon_state = "waiter"
 	supports_variations_flags = CLOTHING_MONKEY_VARIATION
+	/// SKYRAPTOR EDIT: switches pun pun's uniform over
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_MONKEY)
+	/// i feel absolute despair that these can't use defines
+	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/cargo.dmi', "16" = 'icons/mob/species/monkey/uniform.dmi')
 
 /obj/item/clothing/under/suit/blacktwopiece
 	name = "black two piece suit"

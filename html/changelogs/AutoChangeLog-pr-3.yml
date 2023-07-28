@@ -1,6 +1,0 @@
-author: "CliffracerX"
-delete-after: True
-changes:
-  - bugfix: "button rendering as expected"
-  - image: "button colors match the general look"
-  - image: "launcher buttons resprited"

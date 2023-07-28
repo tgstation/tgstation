@@ -1,9 +1,0 @@
-author: "CliffracerX"
-delete-after: True
-changes:
-  - rscadd: "slugcat species, ft. many style options"
-  - refactor: "huge reworks under the hood to speciesprefs"
-  - refactor: "lizard prefs updated to work with new code"
-  - image: "digi-leg sprites for most (all?) uniforms"
-  - image: "snouted variants for most (all?) masks"
-  - image: "digi + snouted support for most (all?) MODs"

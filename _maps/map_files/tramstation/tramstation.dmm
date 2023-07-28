@@ -7173,7 +7173,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck");
 	req_access = list("mining")
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -18198,7 +18198,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -23412,13 +23412,9 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "hft" = (
-/obj/structure/bed{
-	dir = 8
-	},
-/obj/item/bedsheet/dorms,
 /obj/structure/sign/clock/directional/east,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "hfx" = (
 /obj/machinery/airalarm/directional/east,
@@ -29586,15 +29582,9 @@
 /turf/open/floor/carpet,
 /area/station/service/chapel/monastery)
 "jwq" = (
-/obj/machinery/button/door/directional/west{
-	id = "private_o";
-	name = "Privacy Bolts";
-	normaldoorcontrol = 1;
-	pixel_y = -9;
-	specialfunctions = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "jwT" = (
 /obj/structure/cable,
@@ -38630,13 +38620,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
 "mHP" = (
-/obj/machinery/door/airlock{
-	id_tag = "private_o";
-	name = "Private Quarters O"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
+/obj/machinery/door/airlock{
+	id_tag = "Cabin7";
+	name = "Cryogenics Cabin"
+	},
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
 /area/station/commons/dorms)
 "mHR" = (
 /obj/structure/alien/weeds,
@@ -41977,7 +41969,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -42542,6 +42534,11 @@
 "oca" = (
 /turf/closed/wall,
 /area/station/construction/mining/aux_base)
+"ocf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/dorms)
 "ocn" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
@@ -42634,6 +42631,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison/work)
+"oew" = (
+/obj/machinery/computer/cryopod{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/dorms)
 "oeP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -43774,7 +43778,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -44605,7 +44609,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck");
 	layer = 3.1
 	},
 /turf/closed/wall/r_wall,
@@ -53064,7 +53068,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -57508,7 +57512,7 @@
 /area/station/hallway/secondary/service)
 "tzk" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen Supply")
+	atmos_chambers = list("o2ordance"="Oxygen  Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -58008,6 +58012,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"tJy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/storage/medkit/fire{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/storage/medkit/o2,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/dorms)
 "tJz" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/table,
@@ -58489,7 +58505,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
@@ -62703,7 +62719,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck");
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck");
 	layer = 3.1
 	},
 /turf/closed/wall,
@@ -65536,6 +65552,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"wjS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/dorms)
 "wjT" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -91928,9 +91949,9 @@ wSm
 vjo
 bPz
 elr
-uof
+ocf
 jwq
-toy
+wjS
 elr
 mJi
 glY
@@ -92186,8 +92207,8 @@ pKZ
 kYL
 elr
 hft
-fOs
-qRc
+oew
+tJy
 oTA
 qes
 eZS
