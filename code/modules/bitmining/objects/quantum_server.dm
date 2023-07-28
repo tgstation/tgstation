@@ -37,7 +37,7 @@
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
 	/// The amount to scale (and descale) mob health on connect/disconnect
-	var/difficulty_coeff = 1.5
+	var/difficulty_coeff = 1.2
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
@@ -234,7 +234,7 @@
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
 
 	var/datum/outfit/to_wear = generated_domain.forced_outfit || netsuit
-	avatar.equipOutfit(to_wear)
+	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
 
 	var/obj/item/card/id/outfit_id = avatar.wear_id
 	if(outfit_id)
