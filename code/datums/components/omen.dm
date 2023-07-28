@@ -67,7 +67,7 @@
 
 	var/mob/living/living_guy = our_guy
 
-	if((rand(10000) == 10000) && (living_guy.stat != DEAD)) // You hit the lottery! Kinda.
+	if(prob(0.001) && (living_guy.stat != DEAD)) // You hit the lottery! Kinda.
 		living_guy.visible_message(span_danger("[living_guy] suddenly bursts into flames!"), span_danger("You suddenly burst into flames!"))
 		INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
 		living_guy.adjust_fire_stacks(6)
