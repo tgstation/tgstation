@@ -2,7 +2,7 @@
 	name = "layer adaptor"
 	icon = 'icons/obj/pipes_n_cables/manifold.dmi'
 	icon_state = "manifoldlayer"
-	var/underlay_icon = 'icons/obj/atmospherics/pipes/layer_manifold_underlays.dmi' /// Skyraptor addition/edit
+	var/underlay_icon = 'icons/obj/pipes_n_cables/layer_manifold_underlays.dmi' /// Skyraptor addition/edit
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH

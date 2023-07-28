@@ -219,7 +219,7 @@
 					var/N
 					var/altbody
 					for(N in picked_item.supported_bodytypes)
-						if(H.dna.species.bodytype & N)
+						if(H.bodytype & N)
 							altbody = picked_item.greyscale_config_worn_bodytypes["[N]"]
 					if(altbody)
 						item_target.worn_icon = SSgreyscale.GetColoredIconByType(initial(altbody), initial(picked_item.greyscale_colors)) /// SKYRAPTOR EDIT END

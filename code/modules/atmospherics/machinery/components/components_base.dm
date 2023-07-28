@@ -18,9 +18,9 @@
 	var/list/datum/gas_mixture/airs
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
-	
+
 	/// SKYRAPTOR ADDITION: underlays getting a modular icon
-	var/underlay_icon = 'icons/obj/atmospherics/pipes/pipe_underlays.dmi'
+	var/underlay_icon = 'icons/obj/pipes_n_cables/pipe_underlays.dmi'
 
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)

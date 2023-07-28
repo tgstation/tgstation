@@ -21,7 +21,7 @@
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	
+
 	/// SKYRAPTOR ADDITION: belt icon file
 	var/belt_icon_file = 'icons/obj/clothing/belt_overlays.dmi'
 
@@ -703,7 +703,7 @@
 		var/mob/living/carbon/human/userH = user
 		var/N
 		for(N in supported_bodytypes)
-			if(userH.dna.species.bodytype & N)
+			if(userH.bodytype & N)
 				greyscale_config_last_bodtype = "[N]"
 		update_greyscale()
 	/// SKYRAPTOR EDIT END
