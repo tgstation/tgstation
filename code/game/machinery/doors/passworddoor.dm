@@ -9,12 +9,18 @@
 	armor_type = /datum/armor/door_password
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	damage_deflection = 70
+	/// Password that must be provided to open the door.
 	var/password = "Swordfish"
-	var/interaction_activated = TRUE //use the door to enter the password
-	var/voice_activated = FALSE //Say the password nearby to open the door.
-	var/doorOpen = 'sound/machines/blastdoor.ogg' //Sound used upon opening.
-	var/doorClose = 'sound/machines/blastdoor.ogg' //Sound used upon closing.
-	var/doorDeny = 'sound/machines/buzz-sigh.ogg' //Sound used upon denying.
+	/// Setting to true allows the user to input the password through a text box after clicking on the door.
+	var/interaction_activated = TRUE
+	/// Say the password nearby to open the door.
+	var/voice_activated = FALSE
+	/// Sound used upon opening.
+	var/door_open = 'sound/machines/blastdoor.ogg'
+	/// Sound used upon closing.
+	var/door_close = 'sound/machines/blastdoor.ogg'
+	/// Sound used upon denying.
+	var/door_deny = 'sound/machines/buzz-sigh.ogg'
 
 /obj/machinery/door/password/voice
 	voice_activated = TRUE
@@ -63,13 +69,13 @@
 	switch(animation)
 		if("opening")
 			flick("opening", src)
-			playsound(src, doorOpen, 50, TRUE)
+			playsound(src, door_open, 50, TRUE)
 		if("closing")
 			flick("closing", src)
-			playsound(src, doorClose, 50, TRUE)
+			playsound(src, door_close, 50, TRUE)
 		if("deny")
 			//Deny animation would be nice to have.
-			playsound(src, doorDeny, 30, TRUE)
+			playsound(src, door_deny, 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
 	var/guess = tgui_input_text(user, "Enter the password", "Password")
