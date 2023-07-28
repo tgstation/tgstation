@@ -4098,8 +4098,6 @@
 #include "code\modules\mob\living\basic\space_fauna\mushroom.dm"
 #include "code\modules\mob\living\basic\space_fauna\spaceman.dm"
 #include "code\modules\mob\living\basic\space_fauna\bear\_bear.dm"
-#include "code\modules\mob\living\basic\space_fauna\bear\bear_ai_behavior.dm"
-#include "code\modules\mob\living\basic\space_fauna\bear\bear_ai_subtree.dm"
 #include "code\modules\mob\living\basic\space_fauna\carp\carp.dm"
 #include "code\modules\mob\living\basic\space_fauna\carp\carp_abilities.dm"
 #include "code\modules\mob\living\basic\space_fauna\carp\carp_ai_actions.dm"
