@@ -124,17 +124,6 @@
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
-	///how much we regenerate health
-	var/heal_amount = 20
-
-/mob/living/basic/bear/butter/updatehealth() //Heals butter bear really fast when he takes damage.
-	. = ..()
-
-	if(stat == DEAD)
-		return
-
-	if(health < maxHealth)
-		heal_overall_damage(heal_amount)
 
 /mob/living/basic/bear/butter/attack_hand(mob/living/user, list/modifiers) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	. = ..()
