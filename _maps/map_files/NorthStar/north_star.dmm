@@ -6111,7 +6111,7 @@
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "bwx" = (
@@ -14527,7 +14527,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "dJC" = (
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small/dim/directional/east,
 /turf/open/openspace,
 /area/station/command/heads_quarters/hop)
 "dJF" = (
@@ -20078,10 +20078,6 @@
 /obj/structure/table,
 /obj/item/paper_bin/carbon{
 	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/stamp/head/hop{
-	pixel_x = -4;
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
@@ -28426,7 +28422,14 @@
 /obj/machinery/button/ticket_machine{
 	pixel_x = -32
 	},
-/obj/item/flashlight/lamp,
+/obj/item/stamp/head/hop{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "hxy" = (
@@ -30830,6 +30833,7 @@
 /obj/structure/table,
 /obj/machinery/status_display/evac/directional/north,
 /obj/item/papercutter,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "iea" = (
@@ -82284,7 +82288,6 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/east,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/fore)
 "vzS" = (

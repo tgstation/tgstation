@@ -44,7 +44,7 @@
 		return
 	if(!carbon_mob.density)
 		return
-	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
+	var/turf/checked_turf = get_step(carbon_mob, REVERSE_DIR(carbon_mob.dir))
 	if(checked_turf == src)
 		carbon_mob.start_leaning(src)
 

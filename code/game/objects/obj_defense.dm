@@ -28,7 +28,7 @@
 	playsound(src, P.hitsound, 50, TRUE)
 	var/damage
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage * P.demolition_mod, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration)
+		damage = take_damage(P.damage * P.demolition_mod, P.damage_type, P.armor_flag, 0, REVERSE_DIR(P.dir), P.armour_penetration)
 	if(P.suppressed != SUPPRESSED_VERY)
 		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
 
