@@ -185,6 +185,11 @@
 	emote_see = list("shakes their head.", "shivers.")
 	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
 
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 1
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
+
 /datum/ai_planning_subtree/random_speech/penguin
 	speech_chance = 5
 	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")

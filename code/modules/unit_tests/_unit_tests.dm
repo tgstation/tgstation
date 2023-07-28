@@ -55,8 +55,13 @@
 #define TEST_DEFAULT 1
 /// After most test steps, used for tests that run long so shorter issues can be noticed faster
 #define TEST_LONGER 10
-/// This must be the last test to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
-#define TEST_CREATE_AND_DESTROY INFINITY
+/// This must be the one of last tests to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
+#define TEST_CREATE_AND_DESTROY 9001
+/**
+ * For tests that rely on create and destroy having iterated through every (tangible) atom so they don't have to do something similar.
+ * Keep in mind tho that create and destroy will absolutely break the test platform, anything that relies on its shape cannot come after it.
+ */
+#define TEST_AFTER_CREATE_AND_DESTROY INFINITY
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
@@ -112,6 +117,7 @@
 #include "container_sanity.dm"
 #include "crayons.dm"
 #include "create_and_destroy.dm"
+#include "dcs_check_list_arguments.dm"
 #include "dcs_get_id_from_elements.dm"
 #include "designs.dm"
 #include "door_access.dm"
@@ -122,6 +128,7 @@
 #include "egg_glands.dm"
 #include "emoting.dm"
 #include "explosion_action.dm"
+#include "fish_unit_tests.dm"
 #include "focus_only_tests.dm"
 #include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"

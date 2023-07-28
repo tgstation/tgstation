@@ -10,19 +10,24 @@ handles linking back and forth.
 	// 1. silo exists, materials is parented to silo
 	// 2. silo is null, materials is parented to parent
 	// 3. silo is null, materials is null
+
+	/// The silo machine this container is connected to
 	var/obj/machinery/ore_silo/silo
+	//material container. the value is either the silo or local
 	var/datum/component/material_container/mat_container
-	var/category
+	//should we create a local storage if we can't connect to silo
 	var/allow_standalone
+	//are we trying to connect to the silo
+	var/connecting
+	//local size of container when silo = null
 	var/local_size = INFINITY
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
 
-/datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags=NONE)
+/datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.category = category
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 
@@ -30,30 +35,26 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
 	var/turf/T = get_turf(parent)
-	if (force_connect || (mapload && is_station_level(T.z)))
-		addtimer(CALLBACK(src, PROC_REF(LateInitialize)))
-	else if (allow_standalone)
-		_MakeLocal()
+	if(force_connect || (mapload && is_station_level(T.z)))
+		connecting = TRUE
 
-/datum/component/remote_materials/proc/LateInitialize()
-	silo = GLOB.ore_silo_default
-	if (silo)
-		silo.ore_connected_machines += src
-		mat_container = silo.GetComponent(/datum/component/material_container)
-	else
+/datum/component/remote_materials/RegisterWithParent()
+	if (connecting)
+		silo = GLOB.ore_silo_default
+		if (silo)
+			silo.ore_connected_machines += src
+			mat_container = silo.GetComponent(/datum/component/material_container)
+		connecting = FALSE
+	if (!mat_container && allow_standalone)
 		_MakeLocal()
 
 /datum/component/remote_materials/Destroy()
 	if (silo)
 		silo.ore_connected_machines -= src
+		silo.holds -= src
 		silo.updateUsrDialog()
 		silo = null
-		mat_container = null
-	else if (mat_container)
-		// specify explicitly in case the other component is deleted first
-		var/atom/P = parent
-		mat_container.retrieve_all(P.drop_location())
-		QDEL_NULL(mat_container)
+	mat_container = null
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()
@@ -71,9 +72,15 @@ handles linking back and forth.
 		/datum/material/titanium,
 		/datum/material/bluespace,
 		/datum/material/plastic,
-		)
+	)
 
-	mat_container = parent.AddComponent(/datum/component/material_container, allowed_mats, local_size, mat_container_flags, allowed_items=/obj/item/stack)
+	mat_container = parent.AddComponent( \
+		/datum/component/material_container, \
+		allowed_mats, \
+		local_size, \
+		mat_container_flags, \
+		allowed_items = /obj/item/stack \
+	)
 
 /datum/component/remote_materials/proc/toggle_holding(force_hold = FALSE)
 	if(isnull(silo))
@@ -123,9 +130,9 @@ handles linking back and forth.
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
 			silo.ore_connected_machines -= src
+			silo.holds -= src
 			silo.updateUsrDialog()
 		else if (mat_container)
-			mat_container.retrieve_all()
 			qdel(mat_container)
 		silo = M.buffer
 		silo.ore_connected_machines += src
@@ -150,7 +157,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/on_hold()
 	if(!check_z_level())
 		return FALSE
-	return silo.holds["[get_area(parent)]/[category]"]
+	return silo.holds[src]
 
 /datum/component/remote_materials/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (silo)
@@ -158,7 +165,7 @@ handles linking back and forth.
 
 /datum/component/remote_materials/proc/format_amount()
 	if (mat_container)
-		return "[mat_container.total_amount] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount] ([silo ? "remote" : "local"])"
+		return "[mat_container.total_amount()] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount] ([silo ? "remote" : "local"])"
 	else
 		return "0 / 0"
 
@@ -179,10 +186,3 @@ handles linking back and forth.
 	matlist[material_ref] = eject_amount
 	silo_log(parent, "ejected", -count, "sheets", matlist)
 	return count
-
-/// Returns `TRUE` if and only if the given material ref can be inserted/removed from this component
-/datum/component/remote_materials/proc/can_hold_material(datum/material/material_ref)
-	if(!mat_container)
-		return FALSE
-
-	return mat_container.can_hold_material(material_ref)

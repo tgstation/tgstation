@@ -104,6 +104,7 @@ SUBSYSTEM_DEF(job)
 	new_overflow.allow_bureaucratic_error = FALSE
 	new_overflow.spawn_positions = cap
 	new_overflow.total_positions = cap
+	new_overflow.job_flags |= JOB_CANNOT_OPEN_SLOTS
 
 	if(new_overflow.type == overflow_role)
 		return
@@ -111,6 +112,8 @@ SUBSYSTEM_DEF(job)
 	old_overflow.allow_bureaucratic_error = initial(old_overflow.allow_bureaucratic_error)
 	old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
 	old_overflow.total_positions = initial(old_overflow.total_positions)
+	if(!(initial(old_overflow.job_flags) & JOB_CANNOT_OPEN_SLOTS))
+		old_overflow.job_flags &= ~JOB_CANNOT_OPEN_SLOTS
 	overflow_role = new_overflow.type
 	JobDebug("Overflow role set to : [new_overflow.type]")
 

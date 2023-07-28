@@ -81,3 +81,6 @@ https://freesound.org/people/giddster/sounds/414480/
 
 zip_up.ogg and un_zip.ogg adapted from aboxinghelena's Zip.wav (CC 4)
 https://freesound.org/people/aboxinghelena/sounds/401139/
+
+car_crash.ogg is adapted from squareal's "Car Crash" (CC 0)
+https://freesound.org/people/squareal/sounds/237375/
