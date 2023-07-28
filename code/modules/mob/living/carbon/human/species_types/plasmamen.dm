@@ -45,6 +45,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
 
+
 	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
 	// The minimum amount they stabilize per tick is reduced making hot areas harder to deal with
@@ -182,6 +183,10 @@
 		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
 		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
 	)
+// Monkestation Addition Start
+/datum/species/plasmaman/get_laugh_sound(mob/living/carbon/human/human)
+	return 'monkestation/sound/voice/laugh/skeleton/skeleton_laugh.ogg'
+// Monkestation Addition End
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

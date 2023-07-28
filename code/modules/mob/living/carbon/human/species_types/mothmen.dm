@@ -70,6 +70,15 @@
 /datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
 	return 'sound/voice/moth/scream_moth.ogg'
 
+// Monkestation Addition Start
+/datum/species/moth/get_laugh_sound(mob_living/carbon/human/human)
+	return pick(
+		'monkestation/sound/voice/laugh/moth/mothchitter.ogg',
+		'monkestation/sound/voice/laugh/moth/mothlaugh.ogg',
+		'monkestation/sound/voice/laugh/moth/mothsqueak.ogg',
+	)
+// Monkestation Addition End
+
 /datum/species/moth/get_species_description()
 	return "Hailing from a planet that was lost long ago, the moths travel \
 		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
