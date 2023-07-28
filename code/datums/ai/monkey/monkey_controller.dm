@@ -15,7 +15,6 @@ have ways of interacting with a specific mob and control it.
 	)
 	blackboard = list(
 		BB_MONKEY_AGGRESSIVE = FALSE,
-		BB_MONKEY_TRIPPING = TRUE,
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
 		BB_MONKEY_ENEMIES = list(),
 		BB_MONKEY_BLACKLISTITEMS = list(),

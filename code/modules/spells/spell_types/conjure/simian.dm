@@ -25,22 +25,20 @@
 
 /datum/action/cooldown/spell/conjure/simian/cast(atom/cast_on)
 	. = ..()
-	if(FACTION_MONKEY in owner.faction)
+	if(FACTION_MONKEY in cast_on.faction)
 		return
-	owner.faction.Add(FACTION_MONKEY)
+	owner.faction |= FACTION_MONKEY
 	addtimer(CALLBACK(src, PROC_REF(remove_monky_faction), owner), 1 MINUTES)
 
 /datum/action/cooldown/spell/conjure/simian/proc/remove_monky_faction(mob/owner)
-	owner.faction.Remove(FACTION_MONKEY)
+	owner.faction. -= FACTION_MONKEY
 
 /datum/action/cooldown/spell/conjure/simian/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/alive_dude = summoned_object
-	alive_dude.faction.Add(FACTION_MONKEY)
+	alive_dude.faction |= FACTION_MONKEY
 	if(ismonkey(summoned_object))
 		create_monky(summoned_object)
 		return
-	//else if(istype(summoned_object, /mob/living/simple_animal/hostile/gorilla))
-	//	create_gorilla(summoned_object)
 
 /datum/action/cooldown/spell/conjure/simian/proc/create_monky(atom/summoned_object)
 	var/mob/living/carbon/human/species/monkey/summoned_monkey = summoned_object

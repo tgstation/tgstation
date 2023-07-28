@@ -81,7 +81,6 @@
 		if(prob(10))
 			switch(rand(1,4))
 				if(1) //blood rage
-					//magnification.ai_controller.set_blackboard_key(BB_MONKEY_TRIPPING, FALSE)
 					var/datum/ai_controller/monkey/monky_controller = magnification.ai_controller
 					monky_controller.set_trip_mode(mode = FALSE)
 				if(2) //brain death
