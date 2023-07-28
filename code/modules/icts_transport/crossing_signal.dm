@@ -2,7 +2,8 @@
 /obj/machinery/crossing_signal
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
-	icon = 'icons/obj/machines/crossing_signal.dmi'
+	icon = 'icons/obj/machines/tram/crossing_signal.dmi'
+	icon_state = "crossing-signal"
 	base_icon_state = "crossing-"
 	plane = GAME_PLANE_UPPER
 	layer = TRAM_SIGNAL_LAYER
@@ -14,8 +15,6 @@
 	density = FALSE
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-	light_range = 1.5
-	light_power = 3
 	light_color = LIGHT_COLOR_BABY_BLUE
 	luminosity = 1
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
@@ -26,8 +25,6 @@
 	var/datum/weakref/tram_ref
 	/// the sensor we use
 	var/obj/machinery/guideway_sensor/linked_sensor
-	/// If the signal is facing east or west
-	var/signal_direction
 	/// Inbound station
 	var/inbound
 	/// Outbound station
@@ -54,26 +51,22 @@
  *  so signals on the east side have their distance reduced by the tram length, in this case 10 for Tramstation.
 */
 /obj/machinery/crossing_signal/northwest
-	icon_state = "crossing-base-right"
-	signal_direction = WEST
+	dir = WEST
 	pixel_x = -32
 	pixel_y = -1
 
 /obj/machinery/crossing_signal/northeast
-	icon_state = "crossing-base-left"
-	signal_direction = EAST
+	dir = EAST
 	pixel_x = -2
 	pixel_y = -1
 
 /obj/machinery/crossing_signal/southwest
-	icon_state = "crossing-base-right"
-	signal_direction = WEST
+	dir = WEST
 	pixel_x = -32
 	pixel_y = 20
 
 /obj/machinery/crossing_signal/southeast
-	icon_state = "crossing-base-left"
-	signal_direction = EAST
+	dir = EAST
 	pixel_x = -2
 	pixel_y = 20
 
@@ -81,8 +74,7 @@
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/machines/crossing_signal.dmi'
-	icon_state = "static-left-on"
-	base_icon_state = "static-left-"
+	icon_state = "static-signal"
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
@@ -96,22 +88,22 @@
 	luminosity = 1
 
 /obj/machinery/static_signal/northwest
-	icon_state = "static-right-on"
-	base_icon_state = "static-right-"
+	dir = WEST
 	pixel_x = -32
 	pixel_y = -1
 
 /obj/machinery/static_signal/northeast
+	dir = EAST
 	pixel_x = -2
 	pixel_y = -1
 
 /obj/machinery/static_signal/southwest
-	icon_state = "static-right-on"
-	base_icon_state = "static-right-"
+	dir = WEST
 	pixel_x = -32
 	pixel_y = 20
 
 /obj/machinery/static_signal/southeast
+	dir = EAST
 	pixel_x = -2
 	pixel_y = 20
 
@@ -338,13 +330,10 @@
 	if(!is_operational)
 		return
 
-	if(!signal_direction) //Base type doesnt have directions set
-		return
-
-	var/lights_overlay = "[base_icon_state][signal_direction][signal_state]"
+	var/lights_overlay = "[base_icon_state][signal_state]"
 
 	. += mutable_appearance(icon, lights_overlay)
-	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
+	. += emissive_appearance(icon, lights_overlay, offset_spokesman = src, alpha = src.alpha)
 
 /obj/machinery/static_signal/power_change()
 	..()
@@ -409,8 +398,7 @@
 	new_partner.paired_sensor = WEAKREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()
-	new_partner.balloon_alert_to_viewers("paired!", vision_distance = 15)
-	balloon_alert_to_viewers("paired!", vision_distance = 15)
+	playsound(src, 'sound/machines/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
 
 /obj/machinery/guideway_sensor/Destroy()
 	SSicts_transport.sensors -= src
@@ -419,7 +407,7 @@
 		divorcee.set_machine_stat(machine_stat & ~MAINT)
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
-		divorcee.balloon_alert_to_viewers("divorced!", vision_distance = 15)
+		playsound(src, 'sound/machines/synth_no.ogg', 75, vary = FALSE, use_reverb = TRUE)
 		paired_sensor = null
 	. = ..()
 
