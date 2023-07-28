@@ -158,19 +158,15 @@
 
 /obj/machinery/crossing_signal/proc/wake_sensor()
 	if(operating_status > XING_SENSOR_FAULT)
-		balloon_alert_to_viewers("malfunctioning!", vision_distance = 15)
 		return
 
 	if(!linked_sensor)
-		balloon_alert_to_viewers("sensor fault!", vision_distance = 15)
 		operating_status = XING_SENSOR_FAULT
 
 	else if(linked_sensor.trigger_sensor())
-		balloon_alert_to_viewers("sensor okay!", vision_distance = 15)
 		operating_status = XING_NORMAL_OPERATION
 
 	else
-		balloon_alert_to_viewers("sensor fault!", vision_distance = 15)
 		operating_status = XING_SENSOR_FAULT
 
 /**
@@ -322,9 +318,12 @@
 		return
 
 	var/lights_overlay = "[base_icon_state][signal_state]"
+	var/status_overlay = "status-[operating_status]"
 
 	. += mutable_appearance(icon, lights_overlay)
-	. += emissive_appearance(icon, lights_overlay, offset_spokesman = src, alpha = src.alpha)
+	. += mutable_appearance(icon, lights_overlay)
+	. += emissive_appearance(icon, status_overlay, offset_spokesman = src, alpha = src.alpha)
+	. += emissive_appearance(icon, status_overlay, offset_spokesman = src, alpha = src.alpha)
 
 /obj/machinery/static_signal/power_change()
 	..()
@@ -333,7 +332,6 @@
 		set_light(l_on = FALSE)
 		return
 
-	icon_state = "[base_icon_state]on"
 	set_light(l_on = TRUE)
 
 /obj/machinery/static_signal/update_overlays()
@@ -367,7 +365,6 @@
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 
 /obj/machinery/guideway_sensor/proc/pair_sensor()
-	balloon_alert_to_viewers("pairing...", vision_distance = 15)
 	set_machine_stat(machine_stat | MAINT)
 	if(paired_sensor)
 		var/obj/machinery/guideway_sensor/divorcee = paired_sensor?.resolve()
@@ -449,14 +446,11 @@
 
 /obj/machinery/guideway_sensor/proc/wake_up()
 	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
-	if(!buddy)
-		balloon_alert_to_viewers("no buddy!", vision_distance = 15)
+
 	if(!attached_scanner)
-		balloon_alert_to_viewers("no scanner!", vision_distance = 15)
 		set_machine_stat(machine_stat | BROKEN)
 		return
 	if(attached_scanner.rating < 2)
-		balloon_alert_to_viewers("no scanner!", vision_distance = 15)
 		set_machine_stat(machine_stat | BROKEN)
 		return
 
@@ -464,10 +458,8 @@
 
 	if(buddy)
 		if(!buddy.is_operational)
-			balloon_alert_to_viewers("buddy inop!", vision_distance = 15)
 			set_machine_stat(machine_stat | MAINT)
 		else
-			balloon_alert_to_viewers("buddy okay", vision_distance = 15)
 			set_machine_stat(machine_stat & ~MAINT)
 
 	update_appearance()
