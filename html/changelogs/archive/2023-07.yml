@@ -1071,3 +1071,124 @@
   - spellcheck: Phobia warnings have the same glowy text now as they would in messages.
   oranges:
   - balance: holodeck spawned banners no longer give the inspiration effects
+2023-07-27:
+  Ghommie:
+  - bugfix: the height of runechat messages should now scale correctly with the current
+      size variable of living mob.
+  - refactor: Crabs refactored into basic mobs. They now hunt tiny critters and flee
+      from attackers.
+  - bugfix: Fixed crabs not crab-walking.
+  - bugfix: Fixed active conveyor belts not moving movables spawned on top of them.
+  Helg2:
+  - qol: Tactical medkits now can hold stuff it spawns with.
+  - bugfix: Nukie Medical Bundle now spawns with premium tactical medkit as it should.
+  Jacquerel:
+  - bugfix: Traitors can once again affix tiny bombs to lathes rather than trying
+      to feed them to the lathe
+  Kubisopplay:
+  - balance: Flashing borgs requires two consecutive flashes to fully immobilize
+  - balance: Flashed borgs can speak
+  - balance: Remote lockdown on cyborgs lasts 180 seconds
+  - balance: Cyborg stun arm works like normal baton, and costs less energy
+  LT3:
+  - bugfix: Consumables like bone gel will first be used for surgery before wounds
+  Licks-The-Crystal:
+  - qol: The "Kidnap" progression traitor objective now displays the number of telecrystals
+      awarded for a successful live kidnapping.
+  Melbert:
+  - bugfix: Fixes some occasions which result in TTS messages not playing
+  Rhials:
+  - bugfix: Clown cars now properly collide with deer.
+  - sound: Violent, slightly glassy car impact sound.
+  Senefi:
+  - bugfix: Wired MetaStation APCs that were not attached to the station's power grid
+      at round start.
+  Time-Green:
+  - admin: Changing shuttle events now alerts admins
+  carlarctg:
+  - bugfix: Hulks cannot be aggressive grabbed by strong grabbers anymore
+  - balance: Syndicate duffelbags can fit 2 extra bulky items, down from three.
+  - balance: Reduced syndicate duffelbag's unzipped slowdown from '1' to '0.3', and
+      set its zipping-up sped to 0.5, same as unzipping.
+  - rscadd: 'Added the following items to the Syndicate Duffelbag bulky exception
+      list: Greentext, mech removal tool, gibtonite, skub, golem shells, mech ammo.
+      Roughly sorted the list by item category.'
+  - bugfix: Fixed the syndie surgery duffelbag having more items than it can hold
+      by removing the redundant surgical drill (Upgraded cauteries can turn into one
+      anyways)
+  - qol: Any storage item with a can_hold description can be examined twice to see
+      what it can hold now.
+  - bugfix: The parent crayon's name is 'crayon' to prevent any weirdness with things
+      that show the parent type's name.
+  distributivgesetz:
+  - bugfix: Fixed a rare bug that let you spam bluespace bodybags everywhere.
+  - bugfix: Mafia chaplains can now only use their seances on dead people now.
+  vinylspiders:
+  - bugfix: fixes mobs missing most of their emissive blockers
+  zeroisthebiggay:
+  - balance: Huzzah! Interdyne Associates have finally upgraded their medborgs' firmware.
+      They'll now have bonesetters and bonegel available!
+2023-07-28:
+  DATA-xPUNGED:
+  - bugfix: New lights have been issued to the Head of Personnel's office.
+  - bugfix: We've instructed our intern to no longer place the HoP's stamps UNDER
+      the carbon paper bin, making many think there was no stamp at all.
+  Ghommie:
+  - bugfix: Reduced the maximum allowed length for ID assignments and paintings' titles
+      from 1024 to 42.
+  Iamgoofball:
+  - bugfix: Removes the ability to screwdriver springlock modules to make them not
+      deadly because that defeats the point of the springlock module
+  Inari-Whitebear:
+  - bugfix: Determination can now actually overcome your adrenal glands, making adrenal
+      crisis a curable condition!
+  Jackal-boop:
+  - qol: heretic sac targets now appear on the end of round report
+  Jacquerel:
+  - rscadd: Uncollected sand and snow will be blown away by the wind when storms happen
+      (but don't worry, storms also allow those turfs to be freshly dug up again).
+  MTandi:
+  - refactor: Refactored MOD Suit UI
+  - qol: Added options to hide detailed vitals and DNA data to the MOD status module
+  - qol: Made MOD Ion Jetpack Module have stabilizers enabled by default
+  Sealed101:
+  - rscadd: dog with a butter on 'em
+  - rscadd: dead dog with da butter on 'em (dogs feigning death are so good at it,
+      they appear dead to medical HUDs and other things)
+  - rscadd: Nars-Ian now can revive from the dead if he consumes a pet
+  - bugfix: fixes dog fashion items with no speech modifiers set making dressed up
+      corgis unable to perform their speech or emote behaviors
+  - bugfix: fixes old Ian losing his mobility ride when shaved with a razor
+  - bugfix: fixes pets not dropping their collar when gibbed
+  - bugfix: butter don't go on Lisa and corgi puppies (Lisa won't wear hats and corgi
+      puppies can't wear hats and back slot items)
+  Time-Green:
+  - qol: The virologist is warned when radioactive resonance cannot be obtained
+  YehnBeep:
+  - bugfix: Fixed a floating light in Delta's bar
+  mc-oofert:
+  - bugfix: guillotines no longer runtime when logging after decapping someone if
+      they buckle AFTER the blade starts to drop
+  - bugfix: shoving a crystal down a hole no longer makes it dust itself
+  nikothedude:
+  - rscadd: 'New malf module: Remote vendor tipping. Allows you to remotely tip a
+      vendor in any of the 8 directions. Goofy and okay for assassinations on unaware
+      enemies!'
+  - rscadd: 'New malf module: Core rolling. Allows you to roll around, crushing anything
+      you fall on with a satisfying splat.'
+  - code_imp: Vendor tipping is now a /atom/movable proc, allowing anything to fall
+      over and crush you.
+  - code_imp: All take_damage() overrides now use the correct arguments
+  - image: turf_analysis.dmi's red_arrow now has orthogonal directions
+  - balance: Vendors now are far less likely to gib your head or make you parapalegic
+  - balance: Vendors now respect armor when they crush you
+  san7890:
+  - code_imp: The currently operating rust-g version on a live server is posted to
+      places like the runtime.log, in the same place where the revision information
+      and any applicable test merges already were.
+  vinylspiders:
+  - bugfix: fixes a type mismatch error with some of the phobia chat messages
+  volas:
+  - bugfix: Some explosions should be more flashy and fiery, probably.
+  xPokee:
+  - rscadd: Photophobia as a negative quirk.

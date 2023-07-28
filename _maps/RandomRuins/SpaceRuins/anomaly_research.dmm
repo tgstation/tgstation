@@ -93,18 +93,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
-"dz" = (
-/turf/open/space/basic,
-/area/misc/anomaly_research)
 "dD" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/spawner/random/environmentally_safe_anomaly,
 /turf/open/lava/plasma/ice_moon,
-/area/misc/anomaly_research)
-"ek" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "eq" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -980,11 +972,6 @@
 /area/misc/anomaly_research)
 "AV" = (
 /turf/closed/wall,
-/area/misc/anomaly_research)
-"Bc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "Bq" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -2980,7 +2967,7 @@ rX
 xo
 xo
 aX
-Bc
+ek
 Cl
 xE
 xE
@@ -3018,7 +3005,7 @@ Ew
 AV
 lL
 QP
-Bc
+ek
 Cl
 xE
 xE
@@ -3056,7 +3043,7 @@ QI
 AV
 SQ
 Iw
-Bc
+ek
 Cl
 Cl
 AV
@@ -3095,8 +3082,8 @@ AV
 wz
 Iw
 Ov
-Bc
-Bc
+ek
+ek
 AV
 Ya
 xE
@@ -3134,7 +3121,7 @@ GI
 Iw
 iK
 wg
-Bc
+ek
 AV
 Ya
 xE
@@ -3172,7 +3159,7 @@ ok
 Iw
 uB
 oq
-Bc
+ek
 AV
 Ya
 xE
@@ -3210,7 +3197,7 @@ sg
 Iw
 hU
 Ia
-Bc
+ek
 AV
 Ya
 Ya
@@ -3287,7 +3274,7 @@ Iw
 Iw
 iq
 Iw
-ek
+Bc
 xQ
 AV
 nA
@@ -3361,7 +3348,7 @@ kY
 oK
 ip
 ii
-Bc
+ek
 Iw
 fe
 YA
@@ -3399,7 +3386,7 @@ Gr
 mC
 nh
 cA
-Bc
+ek
 ZL
 Ng
 Ox
@@ -3467,7 +3454,7 @@ Ya
 RT
 RT
 Ya
-dz
+Ya
 Ya
 AV
 hq
@@ -3504,8 +3491,8 @@ Ya
 (43,1,1) = {"
 RT
 RT
-dz
-dz
+Ya
+Ya
 Ya
 AV
 uN
@@ -3515,7 +3502,7 @@ ut
 cA
 Cf
 sE
-Bc
+ek
 xQ
 AV
 jN
@@ -3542,7 +3529,7 @@ Ya
 (44,1,1) = {"
 RT
 Ya
-dz
+Ya
 Ya
 Ya
 AV
@@ -3580,7 +3567,7 @@ RT
 (45,1,1) = {"
 RT
 Ya
-dz
+Ya
 Ya
 Ya
 AV

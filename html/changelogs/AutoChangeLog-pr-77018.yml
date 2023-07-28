@@ -1,5 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - qol: "Tactical medkits now can hold stuff it spawns with."
-  - bugfix: "Nukie Medical Bundle now spawns with premium tactical medkit as it should."
