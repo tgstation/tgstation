@@ -1,6 +1,7 @@
 /datum/preference_middleware/jobs
 	action_delegations = list(
 		"set_job_preference" = PROC_REF(set_job_preference),
+		"set_job_title" = PROC_REF(set_job_title),
 	)
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
@@ -22,6 +23,15 @@
 		return FALSE
 
 	preferences.character_preview_view?.update_body()
+
+	return TRUE
+
+/datum/preference_middleware/jobs/proc/set_job_title(list/params, mob/user)
+	var/default_job_title = params["job"]
+	var/new_job_title = params["new_title"]
+
+
+	preferences.alt_job_titles[default_job_title] = new_job_title
 
 	return TRUE
 
@@ -52,6 +62,7 @@
 		jobs[job.title] = list(
 			"description" = job.description,
 			"department" = department_name,
+			"alt_titles" = job.alt_titles,
 		)
 
 	data["departments"] = departments
@@ -62,7 +73,12 @@
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
 	var/list/data = list()
 
+	if(isnull(preferences.alt_job_titles))
+		preferences.alt_job_titles = list()
+
 	data["job_preferences"] = preferences.job_preferences
+
+	data["job_alt_titles"] = preferences.alt_job_titles
 
 	return data
 

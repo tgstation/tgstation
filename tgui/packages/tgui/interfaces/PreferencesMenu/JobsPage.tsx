@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode, SFC } from 'inferno';
+import { InfernoNode, Inferno } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
 import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
@@ -182,9 +182,15 @@ const JobRow = (
 
   const createSetPriority = createCreateSetPriorityFromName(context, name);
 
+  const { act } = useBackend<PreferencesMenuData>(context);
+
   const experienceNeeded =
     data.job_required_experience && data.job_required_experience[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
+
+  const alt_title_selected = data.job_alt_titles[name]
+    ? data.job_alt_titles[name]
+    : name;
 
   let rightSide: InfernoNode;
 
@@ -226,33 +232,44 @@ const JobRow = (
   }
 
   return (
-    <Stack.Item
+    <Box
       className={className}
-      height="100%"
       style={{
         'margin-top': 0,
       }}>
-      <Stack fill align="center">
-        <Tooltip content={job.description} position="bottom-start">
+      <Stack align="center">
+        <Tooltip content={job.description} position="right">
           <Stack.Item
             className="job-name"
             width="50%"
             style={{
               'padding-left': '0.3em',
             }}>
-            {name}
+            {' '}
+            {!job.alt_titles ? (
+              name
+            ) : (
+              <Dropdown
+                width="100%"
+                options={job.alt_titles}
+                displayText={alt_title_selected}
+                onSelected={(value) =>
+                  act('set_job_title', { job: name, new_title: value })
+                }
+              />
+            )}
           </Stack.Item>
         </Tooltip>
 
-        <Stack.Item grow className="options">
+        <Stack.Item width="50%" className="options" /* SKYRAT EDIT */>
           {rightSide}
         </Stack.Item>
       </Stack>
-    </Stack.Item>
+    </Box>
   );
 };
 
-const Department: SFC<{ department: string }> = (props) => {
+const Department: Inferno.SFC<{ department: string }> = (props) => {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 

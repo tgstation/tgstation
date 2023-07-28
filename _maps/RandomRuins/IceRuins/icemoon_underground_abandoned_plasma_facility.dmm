@@ -1325,7 +1325,7 @@
 /area/ruin/plasma_facility/operations)
 "vz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "vI" = (

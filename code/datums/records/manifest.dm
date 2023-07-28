@@ -38,6 +38,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			misc_list[++misc_list.len] = list(
 				"name" = name,
 				"rank" = rank,
+				"trim" = trim,
 				)
 			continue
 		for(var/department_type as anything in job.departments_list)
@@ -48,6 +49,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			var/list/entry = list(
 				"name" = name,
 				"rank" = rank,
+				"trim" = trim,
 				)
 			var/list/department_list = manifest_out[department.department_name]
 			if(istype(job, department.department_head))
@@ -94,7 +96,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 
 /// Injects a record into the manifest.
-/datum/manifest/proc/inject(mob/living/carbon/human/person)
+/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client)
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
@@ -107,6 +109,8 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	if(person.gender == "female")
 		person_gender = "Female"
 
+	var/chosen_assignment = person_client?.prefs.alt_job_titles[assignment] || assignment
+
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
 		blood_type = person.dna.blood_type,
@@ -116,7 +120,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
-		rank = assignment,
+		rank = chosen_assignment	,
 		species = person.dna.species.name,
 		trim = assignment,
 		// Locked specifics
@@ -133,7 +137,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
-		rank = assignment,
+		rank = chosen_assignment,
 		species = person.dna.species.name,
 		trim = assignment,
 		// Crew specific

@@ -153,7 +153,7 @@
 	restaurant_portal.update_icon()
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/simple_animal/robot_customer as anything in current_visitors)
-		robot_customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE //LEAVEEEEEE
+		robot_customer.ai_controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE) //LEAVEEEEEE
 
 /obj/machinery/restaurant_portal
 	name = "restaurant portal"

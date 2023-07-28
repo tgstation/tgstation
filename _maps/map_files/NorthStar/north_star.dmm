@@ -5217,8 +5217,10 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/light/directional/north,
+/obj/machinery/computer/cryopod{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/hallway/floor1/fore)
 "blL" = (
@@ -45055,6 +45057,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/machinery/cryopod,
 /turf/open/floor/iron,
 /area/station/hallway/floor1/fore)
 "lWH" = (
@@ -52747,6 +52750,7 @@
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_x = 15
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "nOH" = (
@@ -62948,6 +62952,8 @@
 /obj/effect/spawner/random/aimodule/harmless{
 	pixel_x = -15
 	},
+/obj/item/ai_module/core/full/crewsimov,
+/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "qCa" = (
@@ -71342,6 +71348,7 @@
 	dir = 5
 	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/cryopod,
 /turf/open/floor/iron,
 /area/station/hallway/floor1/fore)
 "sVU" = (

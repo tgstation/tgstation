@@ -48,3 +48,25 @@
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "sammi"
 	squeak_override = list('monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'=1)
+
+/obj/item/toy/plush/knightplush
+	name = "knight plush"
+	desc = "D'aww he's gonna save the world, yes he is!"
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon_state = "knight"
+
+
+// Donator Plushes
+/obj/item/toy/plush/turnipplush
+	name = "turnip plush"
+	desc = "This bastard's about to commit tax evasion! ~Handcrafted lovingly for TTNT."
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon_state = "turnip"
+
+/obj/item/toy/plush/tinywitchplush
+	name = "tiny witch plush"
+	desc = "Some sort of mini magical girl? ~Handcrafted lovingly for bidlink."
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	squeak_override = list('sound/magic/wand_teleport.ogg'=1)
+	icon_state = "mage"
+

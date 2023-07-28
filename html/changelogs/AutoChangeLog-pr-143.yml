@@ -1,0 +1,6 @@
+author: "SeeBeeSee"
+delete-after: True
+changes:
+  - rscadd: "Added Gigantism, a neutral quirk we had on the previous codebase."
+  - rscadd: "Added Dwarfism, an expensive positive quirk that's been requested _literally_ since I joined the community."
+  - qol: "Made the above quirks mutually exclusive"

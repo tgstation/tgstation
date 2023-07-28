@@ -28,7 +28,7 @@
 /area/station/engineering/supermatter/room)
 "eq" = (
 /obj/structure/cable/multilayer/connected,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "eP" = (
 /obj/structure/cable,
@@ -59,7 +59,7 @@
 	dir = 8
 	},
 /obj/structure/cable/layer1,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "hD" = (
 /turf/open/floor/glass/plasma,
@@ -68,7 +68,7 @@
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /obj/effect/turf_decal/bot_white/left,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "hV" = (
 /obj/effect/turf_decal/stripes/line,
@@ -83,7 +83,7 @@
 "hW" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white/right,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ic" = (
 /obj/machinery/door/firedoor,
@@ -126,7 +126,7 @@
 /area/station/engineering/supermatter/room)
 "kf" = (
 /obj/machinery/field/generator,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "km" = (
 /obj/structure/cable,
@@ -274,7 +274,7 @@
 /area/station/engineering/supermatter/room)
 "rP" = (
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "rW" = (
 /obj/effect/turf_decal/bot,
@@ -367,7 +367,7 @@
 /area/station/engineering/supermatter/room)
 "zg" = (
 /obj/structure/cable/layer1,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "zs" = (
 /turf/closed/wall/r_wall,
@@ -418,7 +418,7 @@
 "Cu" = (
 /obj/structure/cable,
 /obj/machinery/field/generator,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Dm" = (
 /obj/machinery/particle_accelerator/control_box,
@@ -495,7 +495,7 @@
 /obj/machinery/power/emitter{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "IJ" = (
 /obj/structure/lattice/catwalk,
@@ -588,7 +588,7 @@
 /obj/machinery/power/emitter{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "OT" = (
 /obj/machinery/the_singularitygen/tesla,
@@ -633,7 +633,7 @@
 "Rx" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white/left,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "RL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -702,7 +702,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Vk" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Vv" = (
 /obj/structure/sign/warning/secure_area,
@@ -739,7 +739,7 @@
 "XV" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Yj" = (
 /obj/effect/turf_decal/stripes/line{

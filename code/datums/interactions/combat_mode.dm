@@ -4,6 +4,10 @@
 
 /datum/interaction_mode/combat_mode/update_istate(mob/M, modifiers)
 	M.istate = NONE
+
+	// Makes player face mouse on combat mode
+	M.face_mouse = (M?.client.prefs?.read_preference(/datum/preference/toggle/face_cursor_combat_mode) && combat_mode) ? TRUE : FALSE
+
 	if(combat_mode)
 		M.istate |= ISTATE_HARM|ISTATE_BLOCKING
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

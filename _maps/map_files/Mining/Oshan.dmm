@@ -810,14 +810,6 @@
 "Jq" = (
 /turf/closed/wall,
 /area/mine/production)
-"JI" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/security/prison)
 "Kc" = (
 /obj/machinery/hydroponics,
 /obj/machinery/airalarm/directional/south,
@@ -964,12 +956,6 @@
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
-"QR" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/security/prison)
 "QT" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
@@ -28031,7 +28017,7 @@ ry
 Uq
 yj
 XG
-JI
+dR
 XG
 Nf
 hZ
@@ -28288,7 +28274,7 @@ mq
 ot
 Gj
 TA
-QR
+OE
 TA
 Tn
 kg
@@ -28545,7 +28531,7 @@ HO
 HO
 HO
 TA
-QR
+OE
 TA
 IB
 IB

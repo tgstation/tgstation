@@ -139,8 +139,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "dS" = (
-/obj/machinery/light/floor{
-	brightness = 2;
+/obj/machinery/light/floor/has_bulb{
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
 	},
@@ -155,7 +154,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "el" = (
@@ -312,7 +311,7 @@
 /obj/structure/spawner/nether{
 	light_color = "#FF0000";
 	light_power = 2;
-	light_range = 2;
+	light_outer_range = 2;
 	max_mobs = 2
 	},
 /obj/effect/gibspawner/human,
@@ -347,8 +346,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iS" = (
-/obj/machinery/light/floor{
-	brightness = 2;
+/obj/machinery/light/floor/has_bulb{
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
 	},
@@ -832,7 +830,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "vz" = (
@@ -922,8 +920,7 @@
 /obj/structure/displaycase{
 	start_showpiece_type = /obj/item/hilbertshotel
 	},
-/obj/machinery/light/floor{
-	brightness = 2;
+/obj/machinery/light/floor/has_bulb{
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
 	},
@@ -1436,7 +1433,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "GP" = (
@@ -1881,7 +1878,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/food/tomato_smudge,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "QV" = (
@@ -2268,7 +2265,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Yg" = (
@@ -2304,7 +2301,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "YG" = (

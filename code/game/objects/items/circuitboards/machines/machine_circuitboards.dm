@@ -594,7 +594,11 @@
 		/obj/machinery/vending/security = "SecTech",
 		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
 		/obj/machinery/vending/tool = "YouTool",
-		/obj/machinery/vending/custom = "Custom Vendor")
+		/obj/machinery/vending/custom = "Custom Vendor",
+		/obj/machinery/vending/imported = "NT Sustenance Supplier",
+		/obj/machinery/vending/imported/yangyu = "Fudobenda",
+		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
+		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths

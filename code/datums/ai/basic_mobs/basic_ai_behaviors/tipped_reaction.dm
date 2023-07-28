@@ -33,5 +33,5 @@
 /datum/ai_behavior/tipped_reaction/finish_action(datum/ai_controller/controller, succeeded, tipper_key, reacting_key)
 	. = ..()
 	//I'VE SAID MY PEACE...
-	controller.blackboard[reacting_key] = FALSE
-	controller.blackboard[tipper_key] = null
+	controller.set_blackboard_key(reacting_key, FALSE)
+	controller.clear_blackboard_key(tipper_key)

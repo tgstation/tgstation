@@ -55,5 +55,5 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old" // We should probably get these their own icon at some point
 	light_color = "#6496FA"
-	light_range = 4
+	light_outer_range = 4
 

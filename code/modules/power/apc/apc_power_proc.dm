@@ -134,7 +134,7 @@
 	if(nightshift_lights == on)
 		return //no change
 	nightshift_lights = on
-	for(var/obj/machinery/light/night_light in area)
+	for(var/obj/machinery/light/night_light in area.lights)
 		if(night_light.nightshift_allowed)
 			night_light.nightshift_enabled = nightshift_lights
 			night_light.update(FALSE)

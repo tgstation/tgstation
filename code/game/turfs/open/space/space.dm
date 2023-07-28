@@ -117,7 +117,7 @@
 
 /// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
-	if(!light_range)
+	if(!light_outer_range)
 		set_light(2)
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
@@ -297,8 +297,9 @@
 
 /turf/open/space/openspace/enable_starlight()
 	var/turf/below = SSmapping.get_turf_below(src)
-	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
-	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
+	if(istype(below, /turf/open/space/openspace))
+		// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
+		RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
 	if(!isspaceturf(below))
 		return
 	set_light(2)

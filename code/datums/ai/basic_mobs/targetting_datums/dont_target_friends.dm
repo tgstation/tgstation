@@ -30,11 +30,10 @@
 	if (!living_mob.ai_controller) // How did you get here?
 		return FALSE
 
-	var/list/friends_list = living_mob.ai_controller.blackboard[BB_FRIENDS_LIST]
-	if (!friends_list)
-		return TRUE // We don't have any friends, anything's fair game
-	if (!friends_list[WEAKREF(target)])
-		return TRUE // This is not our friend, fire at will
+	if (!(target in living_mob.ai_controller.blackboard[BB_FRIENDS_LIST]))
+		// We don't have any friends, anything's fair game
+		// OR This is not our friend, fire at will
+		return TRUE
 
 	return FALSE
 

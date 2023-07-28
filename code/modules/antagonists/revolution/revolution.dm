@@ -751,6 +751,6 @@
 #undef REVOLUTION_VICTORY
 #undef STATION_VICTORY
 
-/datum/antagonist/rev/head/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/rev/head/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
 	hosts_mind.make_rev()

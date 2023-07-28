@@ -1025,11 +1025,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		CRASH("Attempted to lazy load a template key that does not exist: '[template_key]'")
 	return target.lazy_load()
 
-/proc/generate_lighting_appearance_by_z(z_level)
-	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
-		GLOB.default_lighting_underlays_by_z.len = z_level
-	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
 
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return config.planetary
+
+/proc/generate_lighting_appearance_by_z(z_level)
+	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
+		GLOB.default_lighting_underlays_by_z.len = z_level
+	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))

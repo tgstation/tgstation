@@ -6,7 +6,7 @@
 /turf/open/floor/light
 	name = "light floor"
 	desc = "A wired glass tile embedded into the floor. Modify the color with a Multitool."
-	light_range = 5
+	light_outer_range = 5
 	icon_state = "light_on-1"
 	floor_tile = /obj/item/stack/tile/light
 	///var to see if its on or off
@@ -72,11 +72,11 @@
 		if(LIGHTFLOOR_FINE)
 			set_light_color(currentcolor)
 			set_light(5)
-			light_range = 3
+			light_outer_range = 3
 		if(LIGHTFLOOR_FLICKER)
 			set_light_color(currentcolor)
 			set_light(3)
-			light_range = 2
+			light_outer_range = 2
 		if(LIGHTFLOOR_BREAKING)
 			set_light(1)
 		if(LIGHTFLOOR_BROKEN)

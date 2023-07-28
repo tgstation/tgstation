@@ -447,7 +447,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/proc/process_fire()
 	get_group_burn()
 
-	var/reagents_to_remove = group_burn_rate * (burning_members.len)
+	var/reagents_to_remove = group_burn_rate * (length(burning_members))
 
 	if(!group_burn_power)
 		extinguish_all()
@@ -455,9 +455,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	remove_any(amount = reagents_to_remove)
 
-	if(group_burn_rate >= reagents_per_turf * 0.2)
+	if(group_burn_rate >= reagents_per_turf)
 		var/list/removed_turf = list()
-		for(var/num = 1, num < (burning_members.len * 0.2), num++)
+		for(var/num = 1, num < round(group_burn_rate / reagents_per_turf))
 			var/turf/picked_turf = burning_members[1]
 			extinguish(picked_turf)
 			remove_from_group(picked_turf)
@@ -518,6 +518,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			SSliquids.burning_turfs |= adjacent_turf
 			for(var/atom/movable/movable in adjacent_turf)
 				movable.fire_act((T20C+50) + (50*adjacent_turf.liquids.fire_state), 125)
+				member.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
 
 /datum/liquid_group/proc/extinguish_all()
 	group_burn_power = 0
@@ -538,6 +539,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		return
 	member.liquids.fire_state = LIQUID_FIRE_STATE_NONE
 	member.liquids.set_fire_effect()
+	member.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
 
 ///EDGE COLLECTION AND PROCESSING
 

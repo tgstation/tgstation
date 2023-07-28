@@ -446,7 +446,7 @@
 	pixel_x = -12;
 	pixel_y = 15
 	},
-/obj/machinery/light/floor{
+/obj/machinery/light/floor/has_bulb{
 	pixel_x = 4;
 	pixel_y = -4
 	},
@@ -692,7 +692,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "qK" = (
-/obj/machinery/light/floor{
+/obj/machinery/light/floor/has_bulb{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -871,7 +871,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "wK" = (
-/obj/machinery/light/floor{
+/obj/machinery/light/floor/has_bulb{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -2165,7 +2165,7 @@
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "Yu" = (
-/obj/machinery/light/floor{
+/obj/machinery/light/floor/has_bulb{
 	pixel_x = -4;
 	pixel_y = 4
 	},

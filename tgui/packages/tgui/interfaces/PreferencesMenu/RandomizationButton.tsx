@@ -1,11 +1,10 @@
 import { Dropdown, Icon } from '../../components';
 import { RandomSetting } from './data';
-import { exhaustiveCheck } from 'common/exhaustive';
 
 export const RandomizationButton = (props: {
   dropdownProps?: Record<string, unknown>;
   setValue: (newValue: RandomSetting) => void;
-  value: RandomSetting;
+  value?: RandomSetting;
 }) => {
   const { dropdownProps = {}, setValue, value } = props;
 
@@ -21,8 +20,6 @@ export const RandomizationButton = (props: {
     case RandomSetting.Enabled:
       color = 'green';
       break;
-    default:
-      exhaustiveCheck(value);
   }
 
   return (
@@ -49,6 +46,7 @@ export const RandomizationButton = (props: {
       ]}
       nochevron
       onSelected={setValue}
+      menuWidth="120px"
       width="auto"
     />
   );
