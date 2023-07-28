@@ -1,6 +1,6 @@
-#define ORE_MULTIPLIER_IRON 1
-#define ORE_MULTIPLIER_GLASS 0.9
-#define ORE_MULTIPLIER_PLASMA 0.8
+#define ORE_MULTIPLIER_IRON 3
+#define ORE_MULTIPLIER_GLASS 2
+#define ORE_MULTIPLIER_PLASMA 1
 #define ORE_MULTIPLIER_SILVER 0.7
 #define ORE_MULTIPLIER_GOLD 0.6
 #define ORE_MULTIPLIER_TITANIUM 0.5
@@ -18,7 +18,6 @@
 	desc = "Needs delivered back station side to be opened."
 	locked = TRUE
 
-
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
 	return FALSE
 
@@ -28,34 +27,37 @@
 	desc = "Materialized from the virtual domain. The reward of a successful bitminer."
 	locked = FALSE
 
-/obj/structure/closet/crate/secure/bitminer_loot/decrypted/Initialize(mapload, datum/map_template/virtual_domain/completed_domain)
+/obj/structure/closet/crate/secure/bitminer_loot/decrypted/Initialize(
+	mapload,
+	datum/map_template/virtual_domain/completed_domain,
+	rewards_multiplier = 1,
+	)
 	. = ..()
-	playsound(src, 'sound/magic/blink.ogg')
+	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
 
 	if(isnull(completed_domain))
 		return
 
-	PopulateContents(completed_domain.difficulty, completed_domain.reward_points, completed_domain.extra_loot)
+	PopulateContents(completed_domain.extra_loot, rewards_multiplier)
 
-/obj/structure/closet/crate/secure/bitminer_loot/decrypted/PopulateContents(difficulty, reward_points, list/extra_loot)
+/obj/structure/closet/crate/secure/bitminer_loot/decrypted/PopulateContents(list/extra_loot, rewards_multiplier)
 	. = ..()
-	var/sum = 10 + reward_points
+	var/sum = 10 + rewards_multiplier
 
 	for(var/path in extra_loot)
 		if(ispath(path))
 			new path()
 
-	// This is just a showcase of how mats work. It's cash instead for the time being
 	new /obj/item/stack/ore/iron(src, sum * ORE_MULTIPLIER_IRON)
 	new /obj/item/stack/ore/glass(src, sum * ORE_MULTIPLIER_GLASS)
 	new /obj/item/stack/ore/plasma(src, sum * ORE_MULTIPLIER_PLASMA)
 
-	if(difficulty > 1)
+	if(rewards_multiplier > 2)
 		new /obj/item/stack/ore/silver(src, sum * ORE_MULTIPLIER_SILVER)
 		new /obj/item/stack/ore/gold(src, sum * ORE_MULTIPLIER_GOLD)
 		new /obj/item/stack/ore/titanium(src, sum * ORE_MULTIPLIER_TITANIUM)
 
-	if(difficulty > 2)
+	if(rewards_multiplier > 3)
 		new /obj/item/stack/ore/uranium(src, sum * ORE_MULTIPLIER_URANIUM)
 		new /obj/item/stack/ore/diamond(src, sum * ORE_MULTIPLIER_DIAMOND)
 		new /obj/item/stack/ore/bluespace_crystal(src, sum * ORE_MULTIPLIER_BLUESPACE_CRYSTAL)

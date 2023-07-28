@@ -36,8 +36,8 @@
 	var/datum/weakref/console_ref
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
-	/// The amount to scale (and descale) mob health on connect/disconnect
-	var/difficulty_coeff = 1.2
+	/// The amount to scale (and descale) loot with extra players
+	var/rewards_coefficient = 1.5
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
@@ -285,11 +285,19 @@
 	points += generated_domain.reward_points
 	playsound(src, 'sound/machines/terminal_success.ogg', 30, 2)
 
-	var/turf/to_spawn = pick(receive_turfs)
-	if(isnull(to_spawn))
+	var/turf/dest_turf = pick(receive_turfs)
+	if(isnull(dest_turf))
 		CRASH("Failed to find a turf to spawn loot crate on.")
 
-	new /obj/structure/closet/crate/secure/bitminer_loot/decrypted(to_spawn, generated_domain)
+
+	var/rewards_multiplier = generated_domain.reward_points
+	if(domain_randomized)
+		rewards_multiplier += 0.2
+
+	for(var/index in 2 to length(occupant_mind_refs))
+		rewards_multiplier *= rewards_coefficient
+
+	new /obj/structure/closet/crate/secure/bitminer_loot/decrypted(dest_turf, generated_domain, rewards_multiplier)
 	return TRUE
 
 /// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals
@@ -402,8 +410,6 @@
 	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
 		if(map_id == initial(available.id) && points >= initial(available.cost))
 			to_generate = new available
-			if(domain_randomized)
-				to_generate.reward_points += 1
 			return to_generate
 
 /// Generates a new virtual domain
@@ -458,11 +464,6 @@
 	if(length(occupant_mind_refs) == 1)
 		return
 
-	for(var/mob/living/creature as anything in generated_domain.created_atoms)
-		if(is_valid_mob(creature))
-			creature.health *= difficulty_coeff
-			creature.maxHealth *= difficulty_coeff
-
 /// If a client disconnects, remove them from the list & nerf mobs
 /obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_mind)
 	SIGNAL_HANDLER
@@ -470,12 +471,6 @@
 	occupant_mind_refs -= old_mind
 	if(length(occupant_mind_refs) == 0)
 		return
-
-	for(var/mob/living/creature as anything in generated_domain.created_atoms)
-		if(is_valid_mob(creature))
-			creature.health /= difficulty_coeff
-			creature.maxHealth /= difficulty_coeff
-
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
