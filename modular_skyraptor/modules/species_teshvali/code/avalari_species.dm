@@ -3,17 +3,12 @@
 	name = "\improper Avali"
 	plural_form = "Avali"
 	id = SPECIES_AVALARI
-	species_traits = list(
-		MUTCOLORS,
-		EYECOLOR,
-		//HAIR,
-		LIPS,
-		NO_UNDERWEAR,
-		NOAUGMENTS,
-		USE_TRICOLOR_ALPHA,
-	)
 	inherent_traits = list(
-		//TRAIT_TACKLING_TAILED_DEFENDER,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_TACKLING_TAILED_DEFENDER,
+		USE_TRICOLOR_ALPHA,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	species_language_holder = /datum/language_holder/teshvali
