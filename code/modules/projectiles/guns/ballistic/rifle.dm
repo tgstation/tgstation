@@ -2,7 +2,7 @@
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	icon_state = 'sakhno'
+	icon_state = "sakhno"
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
