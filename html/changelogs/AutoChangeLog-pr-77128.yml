@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "shoving a crystal down a hole no longer makes it dust itself"

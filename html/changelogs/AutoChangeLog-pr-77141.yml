@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Uncollected sand and snow will be blown away by the wind when storms happen (but don't worry, storms also allow those turfs to be freshly dug up again)."
