@@ -1,7 +1,3 @@
-/**
- * I'll come up with a better file name later
- */
-
 /// A list of all active and visible messengers
 GLOBAL_LIST_EMPTY_TYPED(pda_messengers, /datum/computer_file/program/messenger)
 
