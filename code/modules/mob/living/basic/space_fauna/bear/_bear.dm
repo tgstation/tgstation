@@ -126,12 +126,9 @@
 	attack_verb_continuous = "slaps"
 	///how much we regenerate health
 	var/heal_amount = 20
-/mob/living/basic/bear/butter/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(regenerate_health))
 
-/mob/living/basic/bear/butter/proc/regenerate_health(mob/source) //Heals butter bear really fast when he takes damage.
-	SIGNAL_HANDLER
+/mob/living/basic/bear/butter/updatehealth() //Heals butter bear really fast when he takes damage.
+	. = ..()
 
 	if(stat == DEAD)
 		return
