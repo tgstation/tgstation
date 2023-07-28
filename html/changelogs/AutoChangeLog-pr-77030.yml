@@ -1,0 +1,5 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - qol: "pAIs now try to stay within range of their owner, and teleport back only when necessary"
+  - qol: "Default max pAI range has been changed to the maximum range you can choose (9 tiles)"

@@ -76,7 +76,7 @@
 	#define COMPONENT_ALLOW_REACH (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
-///when an atom is processed (mob/living/user, obj/item/I, list/atom/results)
+///when an atom is processed (mob/living/user, obj/item/process_item, list/atom/results)
 #define COMSIG_ATOM_PROCESSED "atom_processed"
 ///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
 #define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
