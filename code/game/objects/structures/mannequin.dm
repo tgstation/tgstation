@@ -191,6 +191,7 @@
 	desc = "Not to knock over."
 	material = MANNEQUIN_SKELETON
 	anchored = TRUE
+	obj_flags = UNIQUE_RENAME
 	starting_items = list(
 		/obj/item/clothing/glasses/eyepatch,
 		/obj/item/clothing/suit/costume/hawaiian,

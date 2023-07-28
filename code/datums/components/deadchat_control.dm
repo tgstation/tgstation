@@ -190,7 +190,7 @@
 	if(!isobserver(user))
 		return
 
-	examine_list += span_notice("[A.p_theyre(TRUE)] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
+	examine_list += span_notice("[A.p_Theyre()] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
 
 	if(deadchat_mode & DEMOCRACY_MODE)
 		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] second\s.")

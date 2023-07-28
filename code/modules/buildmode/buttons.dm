@@ -89,3 +89,8 @@
 /atom/movable/screen/buildmode/quit/Click()
 	bd.quit()
 	return 1
+
+/atom/movable/screen/buildmode/preview_item
+	name = "Selected Item"
+	icon_state = "template"
+	screen_loc = "NORTH,WEST+4"

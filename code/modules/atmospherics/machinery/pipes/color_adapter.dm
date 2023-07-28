@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe/color_adapter
-	icon = 'icons/obj/atmospherics/pipes/color_adapter.dmi'
+	icon = 'icons/obj/pipes_n_cables/color_adapter.dmi'
 	var/manifold_icon = 'icons/obj/atmospherics/pipes/manifold.dmi' ///SKYRAPTOR ADDITION
 	icon_state = "adapter_map-3"
 

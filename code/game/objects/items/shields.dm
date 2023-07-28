@@ -244,8 +244,6 @@
 	throw_speed = 3
 	breakable_by_damage = FALSE
 	block_sound = 'sound/weapons/block_blade.ogg'
-	/// Whether the shield is currently extended and protecting the user.
-	var/enabled = FALSE
 	/// Force of the shield when active.
 	var/active_force = 10
 	/// Throwforce of the shield when active.
@@ -257,19 +255,21 @@
 
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
 		throw_speed_on = active_throw_speed, \
 		hitsound_on = hitsound, \
-		clumsy_check = !can_clumsy_use)
+		clumsy_check = !can_clumsy_use, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	return FALSE
 
 /obj/item/shield/energy/IsReflect()
-	return enabled
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -277,10 +277,9 @@
 /obj/item/shield/energy/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	enabled = active
-
-	balloon_alert(user, "[active ? "activated":"deactivated"]")
-	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	if(user)
+		balloon_alert(user, active ? "activated" : "deactivated")
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele
@@ -296,27 +295,28 @@
 	throw_speed = 3
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
-	/// Whether the shield is extended and protecting the user..
-	var/extended = FALSE
 
 /obj/item/shield/riot/tele/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = 8, \
 		throwforce_on = 5, \
 		throw_speed_on = 2, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_BULKY, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
-		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
+	)
+
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(extended)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return ..()
 	return FALSE
 
-/*
+/**
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
  * Allows it to be placed on back slot when active.
@@ -324,10 +324,10 @@
 /obj/item/shield/riot/tele/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	extended = active
 	slot_flags = active ? ITEM_SLOT_BACK : null
-	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	balloon_alert(user, "[active ? "extended" : "collapsed"]")
+	if(user)
+		balloon_alert(user, active ? "extended" : "collapsed")
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 #undef BATON_BASH_COOLDOWN

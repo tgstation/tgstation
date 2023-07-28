@@ -11,10 +11,7 @@
 	var/allow_intruder_use = FALSE
 
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
-	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion) \
-		&& !allow_intruder_use)
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !allow_intruder_use)
 		return FALSE
 	return TRUE
 

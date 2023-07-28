@@ -33,7 +33,7 @@
 	desc = "A large structure used to remove the heads of traitors and treasonists."
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "guilliotine"
 	can_buckle = TRUE
 	anchored = TRUE
@@ -130,7 +130,7 @@
 			else
 				blade_status = GUILLOTINE_BLADE_MOVING
 				icon_state = "guillotine_drop"
-				addtimer(CALLBACK(src, PROC_REF(drop_blade)), GUILLOTINE_ANIMATION_LENGTH)
+				addtimer(CALLBACK(src, PROC_REF(drop_blade), user), GUILLOTINE_ANIMATION_LENGTH)
 
 /// Sets the guillotine blade in a raised position
 /obj/structure/guillotine/proc/raise_blade()

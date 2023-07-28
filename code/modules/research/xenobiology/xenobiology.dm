@@ -473,12 +473,13 @@
 /obj/item/slime_extract/adamantine/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			if(species.armor > 0)
+			if(HAS_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR))
 				to_chat(user, span_warning("Your skin is already hardened!"))
 				return
+			ADD_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
 			to_chat(user, span_notice("You feel your skin harden and become more resistant."))
-			species.armor += 25
-			addtimer(CALLBACK(src, PROC_REF(reset_armor), species), 1200)
+			user.physiology.damage_resistance += 25
+			addtimer(CALLBACK(src, PROC_REF(reset_armor), user), 120 SECONDS)
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -489,9 +490,9 @@
 				return
 			to_chat(user, span_notice("You stop feeding [src], and your body returns to its slimelike state."))
 
-/obj/item/slime_extract/adamantine/proc/reset_armor(datum/species/jelly/luminescent/species)
-	if(istype(species))
-		species.armor -= 25
+/obj/item/slime_extract/adamantine/proc/reset_armor(mob/living/carbon/human/user)
+	REMOVE_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
+	user.physiology.damage_resistance -= 25
 
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
@@ -776,7 +777,6 @@
 	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
 	switchy_mob.faction = user.faction.Copy()
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
-	switchy_mob.update_atom_languages()
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
 	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))

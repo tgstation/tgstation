@@ -8,6 +8,14 @@
 	areaimage = image('icons/area/areas_misc.dmi', null, "yellow")
 	..()
 
+/datum/buildmode_mode/area_edit/show_help(client/builder)
+	to_chat(builder, span_purple(examine_block(
+		"[span_bold("Select corner")] -> Left Mouse Button on obj/turf/mob\n\
+		[span_bold("Paint area")] -> Left Mouse Button + Alt on turf/obj/mob\n\
+		[span_bold("Select area to paint")] -> Right Mouse Button on obj/turf/mob\n\
+		[span_bold("Create new area")] -> Right Mouse Button on buildmode button"))
+	)
+
 /datum/buildmode_mode/area_edit/enter_mode(datum/buildmode/BM)
 	BM.holder.images += areaimage
 
@@ -20,14 +28,6 @@
 	QDEL_NULL(areaimage)
 	storedarea = null
 	return ..()
-
-/datum/buildmode_mode/area_edit/show_help(client/c)
-	to_chat(c, span_notice("***********************************************************"))
-	to_chat(c, span_notice("Left Mouse Button on obj/turf/mob = Select corner"))
-	to_chat(c, "<span class='notice'>Left Mouse Button + Alt on turf/obj/mob = Paint area/span>")
-	to_chat(c, span_notice("Right Mouse Button on obj/turf/mob = Select area to paint"))
-	to_chat(c, span_notice("Right Mouse Button on buildmode button = Create new area"))
-	to_chat(c, span_notice("***********************************************************"))
 
 /datum/buildmode_mode/area_edit/change_settings(client/c)
 	var/target_path = input(c, "Enter typepath:", "Typepath", "/area")

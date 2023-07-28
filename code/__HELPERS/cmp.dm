@@ -10,6 +10,20 @@
 /proc/cmp_text_dsc(a,b)
 	return sorttext(a,b)
 
+/proc/cmp_embed_text_asc(a,b)
+	if(isdatum(a))
+		a = REF(a)
+	if(isdatum(b))
+		b = REF(b)
+	return sorttext("[b]", "[a]")
+
+/proc/cmp_embed_text_dsc(a,b)
+	if(isdatum(a))
+		a = REF(a)
+	if(isdatum(b))
+		b = REF(b)
+	return sorttext("[a]", "[b]")
+
 /proc/cmp_name_asc(atom/a, atom/b)
 	return sorttext(b.name, a.name)
 
@@ -170,3 +184,7 @@
 /// Orders heretic knowledge by priority
 /proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
 	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
+
+/// Passed a list of assoc lists, sorts them by the list's "name" keys.
+/proc/cmp_assoc_list_name(list/A, list/B)
+	return sorttext(B["name"], A["name"])

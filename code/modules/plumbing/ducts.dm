@@ -5,7 +5,7 @@ All the important duct code:
 */
 /obj/machinery/duct
 	name = "fluid duct"
-	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi'
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
 	use_power = NO_POWER_USE
@@ -323,7 +323,7 @@ All the important duct code:
 	name = "stack of duct"
 	desc = "A stack of fluid ducts."
 	singular_name = "duct"
-	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi'
 	icon_state = "ducts"
 	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
 	w_class = WEIGHT_CLASS_TINY

@@ -143,7 +143,7 @@
 	if(stat != DEAD)
 		return
 
-	if(HAS_TRAIT(user.mind, TRAIT_NAIVE))
+	if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 		. += pick(
 			"It seems tired and shagged out after a long squawk.",
 			"It seems to be pining for the fjords.",
@@ -908,7 +908,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN MODSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
 	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
-	voice_filter = "rubberband=pitch=1.5"
 
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
@@ -920,6 +919,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	ears = new /obj/item/radio/headset/headset_eng(src)
 	if(SStts.tts_enabled)
 		voice = pick(SStts.available_speakers)
+		if(SStts.pitch_enabled)
+			if(findtext(voice, "Woman"))
+				pitch = 12 // up-pitch by one octave
+			else
+				pitch = 24 // up-pitch by 2 octaves
+		else
+			voice_filter = "rubberband=pitch=1.5" // Use the filter to pitch up if we can't naturally pitch up.
+
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)

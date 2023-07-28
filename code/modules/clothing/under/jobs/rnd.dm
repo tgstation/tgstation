@@ -1,18 +1,22 @@
 /obj/item/clothing/under/rank/rnd
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
+	armor_type = /datum/armor/clothing_under/science
+
+/datum/armor/clothing_under/science
+	bio = 50
 
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's vest suit"
 	icon_state = "director"
 	inhand_icon_state = "lb_suit"
-	armor_type = /datum/armor/rnd_research_director
+	armor_type = /datum/armor/clothing_under/rnd_research_director
 	can_adjust = FALSE
 
-/datum/armor/rnd_research_director
+/datum/armor/clothing_under/rnd_research_director
 	bomb = 10
-	bio = 10
+	bio = 50
 	acid = 35
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
@@ -71,10 +75,7 @@
 	name = "scientist's jumpsuit"
 	icon_state = "science"
 	inhand_icon_state = "w_suit"
-	armor_type = /datum/armor/rnd_scientist
-
-/datum/armor/rnd_scientist
-	bio = 50
+	armor_type = /datum/armor/clothing_under/science
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
 	name = "scientist's jumpskirt"
@@ -108,10 +109,6 @@
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
-	armor_type = /datum/armor/rnd_geneticist
-
-/datum/armor/rnd_geneticist
-	bio = 50
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"

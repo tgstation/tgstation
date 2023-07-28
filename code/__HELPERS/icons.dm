@@ -992,7 +992,7 @@ world
 			letter = lowertext(letter)
 
 	var/image/text_image = new(loc = A)
-	text_image.maptext = MAPTEXT("<font size = 4>[letter]</font>")
+	text_image.maptext = MAPTEXT("<span style='font-size: 24pt'>[letter]</span>")
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	qdel(atom_icon)
@@ -1133,6 +1133,23 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /proc/generate_asset_name(file)
 	return "asset.[md5(fcopy_rsc(file))]"
 
+/// Gets a dummy savefile for usage in icon generation.
+/// Savefiles generated from this proc will be empty.
+/proc/get_dummy_savefile(from_failure = FALSE)
+	var/static/next_id = 0
+	if(next_id++ > 9)
+		next_id = 0
+	var/savefile_path = "tmp/dummy-save-[next_id].sav"
+	try
+		if(fexists(savefile_path))
+			fdel(savefile_path)
+		return new /savefile(savefile_path)
+	catch(var/exception/error)
+		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldnt have
+		if(from_failure) // this *is* the retry, something fucked up
+			CRASH("get_dummy_savefile failed to create a dummy savefile: '[error]'")
+		return get_dummy_savefile(from_failure = TRUE)
+
 /**
  * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
  * exporting it as text, and then parsing the base64 from that.
@@ -1141,14 +1158,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /proc/icon2base64(icon/icon)
 	if (!isicon(icon))
 		return FALSE
-	var/savefile/dummySave = new("tmp/dummySave.sav")
+	var/savefile/dummySave = get_dummy_savefile()
 	WRITE_FILE(dummySave["dummy"], icon)
 	var/iconData = dummySave.ExportText("dummy")
 	var/list/partial = splittext(iconData, "{")
-	. = replacetext(copytext_char(partial[2], 3, -5), "\n", "") //if cleanup fails we want to still return the correct base64
-	dummySave.Unlock()
-	dummySave = null
-	fdel("tmp/dummySave.sav") //if you get the idea to try and make this more optimized, make sure to still call unlock on the savefile after every write to unlock it.
+	return replacetext(copytext_char(partial[2], 3, -5), "\n", "") //if cleanup fails we want to still return the correct base64
 
 ///given a text string, returns whether it is a valid dmi icons folder path
 /proc/is_valid_dmi_file(icon_path)

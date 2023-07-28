@@ -162,6 +162,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	icon_state = "egg-yellow"
 	inhand_icon_state = "egg-yellow"
 
+/obj/item/food/egg/penguin_egg
+	icon = 'icons/mob/simple/penguins.dmi'
+	icon_state = "penguin_egg"
+
 /obj/item/food/egg/fertile
 	name = "fertile-looking egg"
 	desc = "An egg! It looks fertilized.\nQuite how you can tell this just by looking at it is a mystery."

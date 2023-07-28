@@ -246,6 +246,7 @@
 	name = "instrument delivery beacon"
 	desc = "Summon your tool of art."
 	icon_state = "gangtool-red"
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/choice_beacon/music/generate_display_names()
 	var/static/list/instruments

@@ -50,6 +50,7 @@
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
+#define MEDAL_LEGENDARY_FISHER "Legendary Fisher"
 
 //Mafia medal hub IDs (wins)
 #define MAFIA_MEDAL_ASSISTANT "Assistant"

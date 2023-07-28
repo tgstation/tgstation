@@ -161,7 +161,7 @@
 	//how much the armor of the mech is modified by
 	var/datum/armor/armor_mod
 
-/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/M, attach_right)
+/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
 	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
@@ -213,10 +213,10 @@
 	chassis?.cut_overlay(droid_overlay)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
 	. = ..()
 	droid_overlay = new(src.icon, icon_state = "repair_droid")
-	M.add_overlay(droid_overlay)
+	new_mecha.add_overlay(droid_overlay)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
 	chassis.cut_overlay(droid_overlay)
@@ -281,11 +281,11 @@
 	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
 	var/obj/item/stack/sheet/fuel = null
 	///Fuel used per second while idle, not generating, in units
-	var/fuelrate_idle = 12.5
+	var/fuelrate_idle = 0.00625 * SHEET_MATERIAL_AMOUNT
 	///Fuel used per second while actively generating, in units
-	var/fuelrate_active = 100
+	var/fuelrate_active = 0.05 * SHEET_MATERIAL_AMOUNT
 	///Maximum fuel capacity of the generator, in units
-	var/max_fuel = 150000
+	var/max_fuel = 75 * SHEET_MATERIAL_AMOUNT
 	///Energy recharged per second
 	var/rechargerate = 10
 
@@ -312,11 +312,11 @@
 	. = ..()
 	if(action == "toggle")
 		if(activated)
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation enabled.")]")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation enabled.")]")
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation disabled.")]")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation disabled.")]")
 			STOP_PROCESSING(SSobj, src)
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE
@@ -385,17 +385,12 @@
 			return FALSE
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	M.active_thrusters = src //Enable by default
+/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
+	new_mecha.active_thrusters = src //Enable by default
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/detach()
-	if(chassis?.active_thrusters == src)
-		chassis.active_thrusters = null
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/thrusters/Destroy()
-	if(chassis?.active_thrusters == src)
+/obj/item/mecha_parts/mecha_equipment/thrusters/detach(atom/moveto)
+	if(chassis.active_thrusters == src)
 		chassis.active_thrusters = null
 	return ..()
 
@@ -519,7 +514,7 @@
 /obj/item/mecha_parts/camera_kit
 	name = "exosuit-mounted camera"
 	desc = "A security camera meant for exosuit-mounted surveillance-on-the-go."
-	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon = 'icons/mob/mecha_equipment.dmi'
 	icon_state = "mecha_camera"
 	w_class = WEIGHT_CLASS_SMALL
 

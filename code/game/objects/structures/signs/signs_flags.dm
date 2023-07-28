@@ -1,7 +1,7 @@
 /obj/structure/sign/flag
 	name = "flag of the IT Division"
 	desc = "The flag of the Nanotrasen IT Division. Bears a symbol that only makes sense to those that understand."
-	icon = 'icons/obj/flags.dmi'
+	icon = 'icons/obj/fluff/flags.dmi'
 	icon_state = "flag_coder"
 
 /obj/structure/sign/flag/nanotrasen

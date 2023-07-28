@@ -2,6 +2,7 @@ import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../components';
 import { Window } from '../layouts';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 const hivestyle = {
   fontWeight: 'bold',
@@ -36,12 +37,6 @@ const hivemindstyle = {
 const fallenstyle = {
   color: 'black',
   fontWeight: 'bold',
-};
-
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
 };
 
 type Memory = {
@@ -90,24 +85,6 @@ export const AntagInfoChangeling = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
-};
-
 const HivemindSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
   const { true_name } = data;
@@ -150,7 +127,7 @@ const IntroductionSection = (props, context) => {
           <span style={hivestyle}> {hive_name}</span>.
         </Stack.Item>
         <Stack.Item>
-          <ObjectivePrintout />
+          <ObjectivePrintout objectives={objectives} />
         </Stack.Item>
       </Stack>
     </Section>
@@ -167,7 +144,7 @@ const AbilitiesSection = (props, context) => {
             <Stack.Item basis={0} textColor="label" grow>
               Your
               <span style={absorbstyle}>&ensp;Absorb DNA</span> ability allows
-              you to steal the DNA and memories of a victim. Your
+              you to steal the DNA and memories of a victim. The
               <span style={absorbstyle}>&ensp;Extract DNA Sting</span> ability
               also steals the DNA of a victim, and is undetectable, but does not
               grant you their memories or speech patterns.
