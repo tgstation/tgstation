@@ -4,22 +4,22 @@
 /area/space)
 "h" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "k" = (
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "u" = (
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "x" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "A" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "J" = (
 /turf/template_noop,
 /area/template_noop)
@@ -27,14 +27,14 @@
 /obj/item/pickaxe,
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "O" = (
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "P" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
 J

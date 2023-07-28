@@ -10,11 +10,11 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "bl" = (
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "bT" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -23,13 +23,13 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "bY" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "ce" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -39,7 +39,7 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "cC" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -48,7 +48,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "cX" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
@@ -61,10 +61,10 @@
 	},
 /obj/structure/stone_tile/center,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "dI" = (
 /turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "dS" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
@@ -77,7 +77,10 @@
 	},
 /obj/structure/stone_tile/center,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
+"ee" = (
+/turf/closed/indestructible/binary,
+/area/lavaland/surface/outdoors/virtual_domain)
 "ey" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
@@ -88,7 +91,7 @@
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/center/cracked,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "eF" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -97,18 +100,18 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "eK" = (
 /obj/structure/necropolis_gate/locked,
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "fE" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "fR" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -118,7 +121,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "fV" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -127,7 +130,7 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "gO" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -136,7 +139,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "hx" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -146,7 +149,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "hB" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -155,7 +158,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "hF" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -165,7 +168,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "ii" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -174,30 +177,30 @@
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "ik" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "in" = (
 /obj/structure/fluff/drake_statue/falling,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "jp" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "jw" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "jB" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
@@ -208,7 +211,7 @@
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "jX" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -221,7 +224,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "kj" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
@@ -234,17 +237,17 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "kx" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "kG" = (
 /obj/structure/stone_tile/slab,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "kX" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -257,20 +260,20 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "lu" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "lx" = (
 /obj/structure/necropolis_gate/legion_gate,
 /obj/structure/necropolis_arch,
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "lT" = (
 /obj/structure/stone_tile/block/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "lU" = (
 /turf/template_noop,
 /area/space)
@@ -283,11 +286,11 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "mh" = (
 /obj/structure/stone_tile/block,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "nb" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -300,11 +303,11 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "nd" = (
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "nk" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -313,20 +316,20 @@
 	dir = 4
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "oM" = (
 /turf/closed/indestructible/riveted/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "pB" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "pX" = (
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "qw" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -339,14 +342,14 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "qE" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
 /obj/structure/stone_tile/block/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "qU" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -359,11 +362,11 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "rt" = (
 /obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "rw" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
@@ -376,16 +379,16 @@
 	},
 /obj/structure/stone_tile/center,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "rG" = (
 /turf/closed/mineral/random/high_chance/volcanic,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "sn" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "td" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -397,20 +400,20 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "tm" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "tB" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "tS" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
@@ -421,21 +424,21 @@
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/center,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "tY" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "uK" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "uM" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -444,13 +447,13 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "uX" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "vn" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -463,28 +466,28 @@
 	},
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "vD" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "vE" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "vT" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "vU" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "wO" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -496,7 +499,7 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "xm" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
@@ -507,14 +510,14 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "xo" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "xM" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -523,18 +526,18 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "xU" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "yd" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "yy" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -547,7 +550,7 @@
 	},
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "zb" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -559,7 +562,7 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "zk" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -569,7 +572,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "zs" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -578,13 +581,13 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ac" = (
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 6
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ae" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -597,7 +600,7 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ax" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -607,7 +610,7 @@
 	},
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Bk" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
@@ -617,7 +620,7 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Bl" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -627,7 +630,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "BL" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -636,7 +639,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ce" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -649,20 +652,20 @@
 	},
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Cy" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Cz" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "CB" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -671,7 +674,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "CI" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -681,23 +684,23 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Dn" = (
 /obj/structure/stone_tile{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ed" = (
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "EY" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Fm" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -706,11 +709,11 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Fo" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Fz" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -719,7 +722,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "FQ" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -729,20 +732,20 @@
 	dir = 1
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Gb" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Gf" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Gj" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -751,7 +754,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Go" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -761,7 +764,7 @@
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Gw" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -774,7 +777,7 @@
 	},
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "GL" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -783,7 +786,7 @@
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "GN" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -792,13 +795,13 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "GV" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ho" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -810,14 +813,14 @@
 	dir = 4
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Hz" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "HA" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -830,13 +833,13 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Id" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "IV" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
@@ -849,20 +852,20 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Jr" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Jv" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Jw" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding_tile,
@@ -873,13 +876,13 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Jz" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ka" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -888,7 +891,7 @@
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Ku" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -898,11 +901,11 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "KI" = (
 /obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Lm" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
@@ -913,19 +916,19 @@
 	},
 /obj/structure/stone_tile/center/cracked,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Lu" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "LG" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "LK" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -934,17 +937,17 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "PA" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "PE" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "PR" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile{
@@ -954,7 +957,7 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Qj" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -963,24 +966,24 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Rl" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Rp" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
 /mob/living/simple_animal/hostile/megafauna/legion/virtual_domain,
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "RF" = (
 /obj/structure/stone_tile/cracked,
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "RM" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
@@ -993,7 +996,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Sf" = (
 /turf/closed/indestructible/binary,
 /area/space)
@@ -1009,14 +1012,14 @@
 	},
 /obj/structure/stone_tile/center/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "SV" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Tv" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
@@ -1026,14 +1029,14 @@
 	},
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "TX" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "UV" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -1046,7 +1049,7 @@
 	dir = 4
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "VP" = (
 /obj/structure/stone_tile/block{
 	dir = 8
@@ -1056,7 +1059,7 @@
 	dir = 1
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "VW" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -1069,7 +1072,7 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Wd" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
@@ -1080,20 +1083,20 @@
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Wq" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "WB" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
 /obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "WF" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -1105,7 +1108,7 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Xi" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -1115,7 +1118,7 @@
 	},
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Xs" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -1124,10 +1127,10 @@
 	dir = 1
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Xx" = (
 /turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Yj" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1141,7 +1144,7 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "ZB" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -1153,18 +1156,18 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "ZO" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "ZU" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
 Yj
@@ -5274,7 +5277,7 @@ Sf
 Sf
 Sf
 Sf
-Sf
+ee
 oM
 oM
 oM

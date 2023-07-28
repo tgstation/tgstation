@@ -4,59 +4,44 @@
 /area/space)
 "e" = (
 /turf/open/indestructible/hierophant/two,
-/area/ruin/unpowered/hierophant)
+/area/lavaland/surface/outdoors/virtual_domain)
 "h" = (
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/indestructible/hierophant,
-/area/ruin/powered/hierophant)
+/area/lavaland/surface/outdoors/virtual_domain)
 "m" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/explored)
+/area/lavaland/surface/outdoors/virtual_domain)
 "v" = (
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual_domain,
 /turf/open/indestructible/hierophant/two,
-/area/ruin/unpowered/hierophant)
+/area/lavaland/surface/outdoors/virtual_domain)
 "w" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 5
 	},
 /turf/open/indestructible/hierophant/two,
-/area/ruin/unpowered/hierophant)
+/area/lavaland/surface/outdoors/virtual_domain)
 "z" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
-/obj/item/gun/energy/recharge/kinetic_accelerator,
-/obj/item/clothing/mask/gas/explorer,
-/obj/item/clothing/suit/hooded/explorer,
-/obj/item/storage/box/survival/mining,
-/obj/item/flashlight/lantern,
-/turf/template_noop,
-/area/template_noop)
+/turf/closed/indestructible/binary,
+/area/lavaland/surface/outdoors/virtual_domain)
 "D" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 5
 	},
 /turf/open/indestructible/hierophant,
-/area/ruin/unpowered/hierophant)
-"I" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
-/obj/item/kinetic_crusher,
-/obj/item/clothing/suit/hooded/explorer,
-/obj/item/clothing/mask/gas/explorer,
-/obj/item/storage/box/survival/mining,
-/obj/item/flashlight/lantern,
-/turf/template_noop,
-/area/template_noop)
+/area/lavaland/surface/outdoors/virtual_domain)
 "J" = (
 /turf/template_noop,
 /area/template_noop)
 "V" = (
 /turf/open/indestructible/hierophant,
-/area/ruin/unpowered/hierophant)
+/area/lavaland/surface/outdoors/virtual_domain)
 "W" = (
 /turf/closed/indestructible/riveted/hierophant,
-/area/ruin/unpowered/hierophant)
+/area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
 J
@@ -2048,16 +2033,16 @@ b
 b
 J
 J
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
 J
 "}
 (27,1,1) = {"
@@ -2125,7 +2110,7 @@ W
 b
 J
 J
-b
+z
 m
 m
 m
@@ -2202,7 +2187,7 @@ W
 b
 J
 J
-b
+z
 m
 m
 m
@@ -2279,7 +2264,7 @@ W
 b
 b
 b
-b
+z
 m
 m
 m
@@ -2355,8 +2340,8 @@ V
 V
 W
 W
-b
-b
+z
+z
 m
 m
 m
@@ -2433,7 +2418,7 @@ V
 V
 V
 W
-b
+z
 m
 m
 m
@@ -2661,7 +2646,7 @@ V
 V
 V
 W
-b
+z
 W
 V
 V
@@ -2738,8 +2723,8 @@ V
 V
 V
 W
-b
-b
+z
+z
 W
 V
 V
@@ -2815,16 +2800,16 @@ V
 W
 V
 W
-b
-b
-b
+z
+z
+z
 W
 V
 V
 J
-z
-I
-z
+J
+J
+J
 J
 J
 m
@@ -2892,9 +2877,9 @@ V
 V
 V
 W
-b
-b
-b
+z
+z
+z
 W
 V
 V
@@ -2969,9 +2954,9 @@ V
 V
 D
 W
-b
-b
-b
+z
+z
+z
 W
 V
 V
@@ -3046,9 +3031,9 @@ V
 V
 V
 W
-b
-b
-b
+z
+z
+z
 W
 V
 V
@@ -3123,9 +3108,9 @@ V
 W
 V
 W
-b
-b
-b
+z
+z
+z
 W
 V
 V
@@ -3200,8 +3185,8 @@ V
 V
 V
 W
-b
-b
+z
+z
 W
 V
 V
@@ -3277,7 +3262,7 @@ V
 V
 V
 W
-b
+z
 W
 V
 V
@@ -3511,7 +3496,7 @@ V
 V
 V
 W
-b
+z
 m
 m
 m
@@ -3587,8 +3572,8 @@ V
 V
 W
 W
-b
-b
+z
+z
 m
 m
 m
@@ -3665,7 +3650,7 @@ W
 b
 b
 b
-b
+z
 m
 m
 m
@@ -3742,7 +3727,7 @@ W
 b
 J
 J
-b
+z
 m
 m
 m
@@ -3819,7 +3804,7 @@ W
 b
 J
 J
-b
+z
 m
 m
 m
@@ -3896,16 +3881,16 @@ b
 b
 J
 J
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
 J
 "}
 (51,1,1) = {"

@@ -54,14 +54,16 @@
 	var/server_cooldown_time = 2 MINUTES
 	/// If the server is cooling down from a recent despawn
 	COOLDOWN_DECLARE(cooling_off)
-	/// This marks the starting point (bottom left) of the virtual dom map. We use this to spawn templates. Expected: 1
-	var/turf/map_load_turf = list()
-	/// This marks the starting point (bottom left) of the safehouse. We use this to spawn the safehouse. Expected: 1
-	var/turf/safehouse_load_turf = list()
-	/// The turfs on station where we generate loot.
-	var/turf/receive_turfs = list()
+	/// Turfs to delete whenever the server is shut down.
+	var/turf/delete_turfs = list()
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
+	/// This marks the starting point (bottom left) of the virtual dom map. We use this to spawn templates. Expected: 1
+	var/turf/map_load_turf = list()
+	/// The turfs on station where we generate loot.
+	var/turf/receive_turfs = list()
+	/// This marks the starting point (bottom left) of the safehouse. We use this to spawn the safehouse. Expected: 1
+	var/turf/safehouse_load_turf = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -416,6 +418,7 @@
 
 	vdom_ref = WEAKREF(loaded_zlevel)
 
+	delete_turfs = get_area_turfs(preset_delete_area, loaded_zlevel.z_value)
 	map_load_turf = get_area_turfs(preset_mapload_area, loaded_zlevel.z_value)
 	safehouse_load_turf = get_area_turfs(preset_safehouse_area, loaded_zlevel.z_value)
 
@@ -501,10 +504,11 @@
 		loading = FALSE
 		return
 
+	// Applies a fresh template with delete areas onto the map
 	var/datum/map_template/virtual_domain/fresh_map = new()
 	fresh_map.load(map_load_turf[ONLY_TURF])
 
-	for(var/turf/tile in get_area_turfs(preset_delete_area, vdom.z_value))
+	for(var/turf/tile in delete_turfs)
 		for(var/thing in tile.contents)
 			if(!isobserver(thing))
 				qdel(thing)

@@ -4,21 +4,21 @@
 /area/space)
 "e" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "h" = (
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "p" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "B" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "H" = (
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/virtual_domain)
 "J" = (
 /turf/template_noop,
 /area/template_noop)

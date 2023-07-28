@@ -3,7 +3,7 @@
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/virtual_domain)
 "h" = (
 /obj/effect/landmark/portal_exit{
 	id = "wendigo arena"
@@ -11,29 +11,29 @@
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/virtual_domain)
 "n" = (
 /obj/effect/landmark/portal_exit{
 	id = "wendigo arena exit"
 	},
 /turf/open/misc/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored/virtual_domain)
 "x" = (
 /obj/item/paper/crumpled/bloody{
 	default_raw_text = "for your own sake, do not enter"
 	},
 /turf/open/misc/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored/virtual_domain)
 "z" = (
 /turf/closed/indestructible/binary,
-/area/template_noop)
+/area/icemoon/underground/explored/virtual_domain)
 "E" = (
 /obj/effect/mob_spawn/corpse/human/miner/explorer,
 /turf/open/misc/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored/virtual_domain)
 "I" = (
 /turf/closed/indestructible/rock/snow/ice/ore,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/virtual_domain)
 "J" = (
 /turf/template_noop,
 /area/template_noop)
@@ -42,16 +42,19 @@
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/icemoon/underground/explored)
+/area/icemoon/underground/explored/virtual_domain)
 "R" = (
 /obj/effect/portal/permanent/one_way{
 	id = "wendigo arena"
 	},
 /turf/open/misc/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored/virtual_domain)
 "Y" = (
 /turf/open/misc/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored/virtual_domain)
+"Z" = (
+/turf/template_noop,
+/area/icemoon/underground/explored/virtual_domain)
 
 (1,1,1) = {"
 J
@@ -2739,12 +2742,12 @@ I
 Y
 Y
 Y
-J
-J
-J
-J
-J
-J
+Z
+Z
+Z
+Z
+Z
+Z
 Y
 J
 "}
@@ -2816,12 +2819,12 @@ I
 Y
 Y
 Y
-J
-J
-J
-J
-J
-J
+Z
+Z
+Z
+Z
+Z
+Z
 Y
 J
 "}
@@ -2893,12 +2896,12 @@ I
 E
 Y
 Y
-J
-J
-J
-J
-J
-J
+Z
+Z
+Z
+Z
+Z
+Z
 Y
 J
 "}
@@ -2970,12 +2973,12 @@ I
 R
 x
 Y
-J
-J
-J
-J
-J
-J
+Z
+Z
+Z
+Z
+Z
+Z
 Y
 J
 "}
@@ -3047,12 +3050,12 @@ I
 Y
 Y
 Y
-J
-J
-J
-J
-J
-J
+Z
+Z
+Z
+Z
+Z
+Z
 Y
 J
 "}
@@ -3124,12 +3127,12 @@ I
 Y
 Y
 Y
-J
-J
-J
-J
-J
-J
+Z
+Z
+Z
+Z
+Z
+Z
 Y
 J
 "}
@@ -3201,12 +3204,12 @@ I
 Y
 Y
 Y
-J
-J
-J
-J
-J
-J
+Z
+Z
+Z
+Z
+Z
+Z
 Y
 J
 "}

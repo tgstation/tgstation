@@ -18,14 +18,19 @@
 	icon_state = "bit_gen_map"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
+/area/lavaland/surface/outdoors/virtual_domain
+	name = "Virtual Domain: Ruins"
+	icon_state = "bit_ruin"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+
+/area/icemoon/underground/explored/virtual_domain
+	name = "Virtual Domain: Ice Ruins"
+	icon_state = "bit_ice"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+
 /// Using this to get turfs on the z-level then deleting contents
 /area/station/virtual_domain/to_delete
 	icon_state = "bit_gen_del"
-
-/area/station/virtual_domain/ruin
-	name = "Virtual Domain: Ruins"
-	icon_state = "bit_ruin"
-	requires_power = FALSE
 
 /area/station/virtual_domain/safehouse
 	name = "Virtual Domain: Safehouse"

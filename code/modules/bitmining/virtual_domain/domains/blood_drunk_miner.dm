@@ -1,4 +1,4 @@
-/datum/map_template/virtual_domain/ash_drake
+/datum/map_template/virtual_domain/blood_drunk_miner
 	name = "Sanguine Excavation"
 	cost = BITMINING_COST_MEDIUM
 	desc = "Few escape the surface of Lavaland without a few scars. Some remain, maddened by the hunt."
