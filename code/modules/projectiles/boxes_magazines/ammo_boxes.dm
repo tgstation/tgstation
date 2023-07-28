@@ -89,7 +89,7 @@
 /obj/item/ammo_box/strilka310
 	name = "stripper clip (.310 Strilka)"
 	desc = "A stripper clip."
-	icon_state = "310-strip"
+	icon_state = "310_strip"
 	ammo_type = /obj/item/ammo_casing/strilka310
 	max_ammo = 5
 	caliber = CALIBER_STRILKA310
