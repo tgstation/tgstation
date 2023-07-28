@@ -314,3 +314,11 @@
 	)
 	crate_name = "radioactive nebula shielding (IMPORTANT)"
 	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/Advanced_Insulated_Gloves	
+	name = "Advanced Insulated Gloves Crate"
+	desc = "Contains 2 pairs of advanced insulated gloves. Shockproof, fireproof and does not encumber your fingers to boot! Unlike regular gloves"
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/obj/item/clothing/gloves/chief_engineer = 2)
+	crate_name = "advanced insulated gloves crate"
+	crate_type = /obj/structure/closet/crate/engineering
