@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet.dmi'
 	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
-	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet_digi.dmi')
+	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet.dmi', "16" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet_digi.dmi')
 
 
 
@@ -26,20 +26,20 @@
 
 
 
-/datum/greyscale_config/sneakers_worn
+/datum/greyscale_config/sneakers/worn
 	icon_file = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet.dmi'
 
-/datum/greyscale_config/sneakers_orange_worn
+/datum/greyscale_config/sneakers_orange/worn
 	icon_file = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet.dmi'
 
 /datum/greyscale_config/sneakers_marisa/worn
 	icon_file = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet.dmi'
 
-/datum/greyscale_config/sneakers_worn/digi
+/datum/greyscale_config/sneakers/worn/digi
 	name = "Worn Digi Sneakers"
 	icon_file = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet_digi.dmi'
 
-/datum/greyscale_config/sneakers_orange_worn/digi
+/datum/greyscale_config/sneakers_orange/worn/digi
 	name = "Orange Worn Digi Sneakers"
 	icon_file = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet_digi.dmi'
 
