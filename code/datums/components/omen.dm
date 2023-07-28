@@ -48,10 +48,9 @@
 	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
 	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, PROC_REF(check_bless))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
-	RegisterSignal(parent, COMSIG_POST_WINDUP_APPLY_MEDTOOL, PROC_REF(check_tending))
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH, COMSIG_POST_WINDUP_APPLY_MEDTOOL))
+	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH))
 
 /**
  * check_accident() is called each step we take
@@ -213,58 +212,6 @@
 		return
 
 	qdel(src)
-
-/// Sutures can fuck you over!
-/datum/component/omen/proc/check_tending(obj/item/stack/medical/med_stack, mob/living/carbon/our_guy)
-	SIGNAL_HANDLER
-
-	var/obj/item/bodypart/affecting = our_guy.get_bodypart(check_zone(our_guy.zone_selected))
-	// In case we delete it after use!
-	var/stack_type = med_stack.type
-	if(prob(3 * luck_mod)) // Whoops!
-		// Suture
-		if(istype(med_stack, /obj/item/stack/medical/suture))
-			if(prob(40 / luck_mod))
-				to_chat(our_guy, span_warning("You accidentally suture straight through a vein!"))
-				INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
-				affecting.force_wound_upwards(/datum/wound/slash/moderate)
-			else
-				to_chat(our_guy, span_warning("You accidentally suture straight through an artery!"))
-				INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
-				affecting.force_wound_upwards(/datum/wound/slash/severe)
-			med_stack.use(1)
-			return COMPONENT_CEASE_ACTION
-		// Regen Mesh and Ointment
-		if(is_type_in_list(med_stack, list(/obj/item/stack/medical/mesh, /obj/item/stack/medical/ointment)))
-			to_chat(our_guy, span_warning("You apply [med_stack] on [affecting], but you feel a bit sick afterwards. You check the health warnings and find a chemical you're allergic to. Whoops.."))
-			our_guy.reagents.add_reagent(/datum/reagent/toxin/histamine, rand(1, 8))
-			return
-		// Gauze
-		if(istype(med_stack, /obj/item/stack/medical/gauze))
-			to_chat(our_guy, span_warning("You finish applying [med_stack], letting your hand go, and the gauze inmediately falls to the ground."))
-			med_stack.use(1)
-			new stack_type(our_guy, mat_amt = 1)
-			return COMPONENT_CEASE_ACTION
-		// Aloe
-		if(istype(med_stack, /obj/item/stack/medical/aloe))
-			to_chat(our_guy, span_warning("You swallow [med_stack] in one go. That's how it works, right? You feel a bit sick..."))
-			qdel(med_stack)
-			our_guy.reagents.add_reagent(/datum/reagent/toxin, rand(1, 3) * med_stack.amount)
-			return COMPONENT_CEASE_ACTION
-		// Poultice
-		if(istype(med_stack, /obj/item/stack/medical/poultice))
-			to_chat(our_guy, span_warning("You swallow [med_stack] in one go. That's how it works, right? You feel great afterwards, looks like you're not as unlucky as you thought!"))
-			qdel(med_stack)
-			our_guy.reagents.add_reagent(/datum/reagent/toxin/lexorin, rand(1, 2) * med_stack.amount)
-			our_guy.reagents.add_reagent(/datum/reagent/medicine/mine_salve, rand(1, 2) * med_stack.amount)
-			return COMPONENT_CEASE_ACTION
-		// Bone Gel uses hardshitcode so nothing here
-		// All wounds do actually, they override medical in their own procs. Fun!
-
-	if(permanent)
-		return
-
-	//qdel(src)
 
 /// Creates a localized explosion that shakes the camera
 /datum/component/omen/proc/death_explode(mob/living/our_guy)
