@@ -27,13 +27,18 @@
 	if(!istype(target, /obj/structure/flora/tree))
 		return
 
-	handle_climb_tree(climber)
-	if(climbed)
-		climber.forceMove(get_turf(target))
-		RegisterSignal(climber, COMSIG_MOVABLE_MOVED, PROC_REF(climber_moved))
+	if(!can_climb_tree(target)) //check if another animal is on the tree
+		to_chat(climber, span_warning("[target] is blocked!"))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	UnregisterSignal(climber, COMSIG_MOVABLE_MOVED)
+	handle_climb_tree(climber)
+
+	if(climbed)
+		climber.forceMove(get_turf(target))
+		RegisterSignal(climber, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(climber_moved))
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	UnregisterSignal(climber, COMSIG_MOVABLE_PRE_MOVE)
 	var/list/possible_drops = get_adjacent_open_turfs(target)
 	for(var/turf/droploc as anything in possible_drops)
 		if(!droploc.is_blocked_turf(exclude_mobs = TRUE))
@@ -43,14 +48,21 @@
 		climber.forceMove(pick(possible_drops))
 	return COMPONENT_HOSTILE_NO_ATTACK
 
+/datum/element/tree_climber/proc/can_climb_tree(obj/structure/flora/tree/target)
+	var/turf/tree_turf = get_turf(target)
+	if(locate(/mob/living) in tree_turf.contents)
+		return FALSE
+	return TRUE
 
-/datum/element/tree_climber/proc/handle_climb_tree(mob/climber)
+
+/datum/element/tree_climber/proc/handle_climb_tree(mob/living/climber)
 	var/offset = climbed ? -(climbing_distance) : climbing_distance
 	animate(climber, pixel_y = climber.pixel_y + offset, time = 2)
 	climbed = !climbed
+	climber.Stun(2 SECONDS, ignore_canstun = TRUE)
 
 /datum/element/tree_climber/proc/climber_moved(mob/source)
 	SIGNAL_HANDLER
 
 	handle_climb_tree(source)
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(source, COMSIG_MOVABLE_PRE_MOVE)
