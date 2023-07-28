@@ -867,7 +867,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
 		/mob/living/basic/spiderling,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
 		/obj/item/queen_bee,
 	))
@@ -1107,7 +1107,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 25
 
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
-	if(!IS_WIZARD(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()

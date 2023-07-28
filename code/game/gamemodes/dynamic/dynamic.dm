@@ -15,6 +15,8 @@ GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
+/// Modify the threat level for station traits before dynamic can be Initialized. List(instance = threat_reduction)
+GLOBAL_LIST_EMPTY(dynamic_station_traits)
 
 /datum/game_mode/dynamic
 	// Threat logging vars
@@ -395,6 +397,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
 	threat_level = clamp(round(lorentz_to_amount(relative_threat), 0.1), 0, max_threat_level)
 
+	for(var/datum/station_trait/station_trait in GLOB.dynamic_station_traits)
+		threat_level = max(threat_level - GLOB.dynamic_station_traits[station_trait], 0)
+		log_dynamic("Threat reduced by [GLOB.dynamic_station_traits[station_trait]]. Source: [type].")
+
 	if (SSticker.totalPlayersReady < low_pop_player_threshold)
 		threat_level = min(threat_level, LERP(low_pop_maximum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold))
 
@@ -442,6 +448,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						continue
 					vars[variable] = configuration["Dynamic"][variable]
 
+	configure_station_trait_costs()
 	setup_parameters()
 	setup_hijacking()
 	setup_shown_threat()
@@ -776,6 +783,26 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		ruleset.restricted_roles |= JOB_ASSISTANT
+
+/// Get station traits and call for their config
+/datum/game_mode/dynamic/proc/configure_station_trait_costs()
+	if(!CONFIG_GET(flag/dynamic_config_enabled))
+		return
+	for(var/datum/station_trait/station_trait as anything in GLOB.dynamic_station_traits)
+		configure_station_trait(station_trait)
+
+/// Apply configuration for station trait costs
+/datum/game_mode/dynamic/proc/configure_station_trait(datum/station_trait/station_trait)
+	var/list/station_trait_config = LAZYACCESSASSOC(configuration, "Station", station_trait.dynamic_threat_id)
+	var/cost = station_trait_config["cost"]
+
+	if(isnull(cost)) //0 is valid so check for null specifically
+		return
+
+	if(cost != GLOB.dynamic_station_traits[station_trait])
+		log_dynamic("Config set [station_trait.dynamic_threat_id] cost from [station_trait.threat_reduction] to [cost]")
+
+	GLOB.dynamic_station_traits[station_trait] = cost
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)

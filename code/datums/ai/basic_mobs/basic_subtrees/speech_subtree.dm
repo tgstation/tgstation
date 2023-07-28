@@ -158,6 +158,15 @@
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
 
+/datum/ai_planning_subtree/random_speech/pony
+	speech_chance = 3
+	emote_hear = list("whinnies!")
+	emote_see = list("horses around.")
+
+/datum/ai_planning_subtree/random_speech/pony/tamed
+	speech_chance = 3
+	emote_see = list("snorts.")
+
 /datum/ai_planning_subtree/random_speech/killer_tomato
 	speech_chance = 3
 	speak = list("gnashes.", "growls lowly.", "snarls.")
@@ -175,6 +184,11 @@
 	emote_hear = list("howls.", "barks.", "screams.")
 	emote_see = list("shakes their head.", "shivers.")
 	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
+
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 1
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
 
 /datum/ai_planning_subtree/random_speech/penguin
 	speech_chance = 5
