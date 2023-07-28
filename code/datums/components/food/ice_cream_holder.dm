@@ -334,6 +334,11 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"
 
+/datum/ice_cream_flavour/custom/korta
+	desc = "filled with artisanal lizard-friendly icecream. Made with real $CUSTOM_NAME. Ain't that something."
+	ingredients = list(/datum/reagent/consumable/korta_milk, /datum/reagent/consumable/ice)
+	ingredients_text = "optional flavorings"
+
 /datum/ice_cream_flavour/custom/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/R, custom_name)
 	if(!R || R.total_volume < 4) //consumable reagents have stronger taste so higher volume are required to allow non-food flavourings to break through better.
 		return GLOB.ice_cream_flavours[ICE_CREAM_BLAND].add_flavour(target) //Bland, sugary ice and milk.
