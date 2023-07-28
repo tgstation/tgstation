@@ -73,17 +73,21 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_snowflake_data()
+	var/list/contents = chassis.ore_box?.contents
+	var/list/contents_grouped = list()
+	for(var/obj/item/stack/ore/item as anything in contents)
+		if(isnull(contents_grouped[item.icon_state]))
+			var/ore_data = list()
+			ore_data["name"] = item.name
+			ore_data["icon"] = item.icon_state
+			ore_data["amount"] = item.amount
+			contents_grouped[item.icon_state] = ore_data
+		else
+			contents_grouped[item.icon_state]["amount"] += item.amount
 	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER,
-		"contents" = list(),
+		"contents" = contents_grouped,
 		)
-	var/list/contents = chassis.ore_box?.contents
-	for(var/obj/item/stack/ore/item as anything in contents)
-		var/ore_data = list()
-		ore_data["name"] = item.name
-		ore_data["icon"] = item.icon_state
-		ore_data["amount"] = item.amount
-		data["contents"] += list(ore_data)
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
@@ -95,6 +99,7 @@
 		if(isnull(cached_ore_box))
 			return FALSE
 		cached_ore_box.dump_box_contents()
+		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
 		log_message("Dumped [cached_ore_box].", LOG_MECHA)
 		return TRUE
 

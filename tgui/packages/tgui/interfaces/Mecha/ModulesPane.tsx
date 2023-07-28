@@ -618,7 +618,7 @@ const SnowflakeAirTank = (props, context) => {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Release Pressure">
+          <LabeledList.Item label="Cabin Pressure">
             <NumberInput
               value={tank_release_pressure}
               unit="kPa"
@@ -686,7 +686,6 @@ const SnowflakeAirTank = (props, context) => {
         <LabeledList.Item label="Direction">
           <Button
             content={tank_pump_direction ? 'Area → Tank' : 'Tank → Area'}
-            color={!tank_pump_direction ? 'caution' : null}
             onClick={() =>
               act('equip_act', {
                 ref: ref,
@@ -749,34 +748,47 @@ const SnowflakeOrebox = (props, context) => {
   const { ref } = props.module;
   const { contents } = props.module.snowflake;
   return (
-    <Section>
-      <Button
-        icon="arrows-down-to-line"
-        onClick={() =>
-          act('equip_act', {
-            ref: ref,
-            gear_action: 'dump',
-          })
-        }
-        disabled={!contents.length}>
-        {contents.length ? 'Dump contents' : 'Empty'}
-      </Button>
-      {contents.map((item, i) => (
-        <Stack key={i}>
-          <Stack.Item lineHeight="0">
-            <Box className={classes(['mecha_equipment32x32', item.icon])} />
-          </Stack.Item>
-          <Stack.Item
-            lineHeight="32px"
-            style={{
-              'text-transform': 'capitalize',
-              'overflow': 'hidden',
-              'text-overflow': 'ellipsis',
-            }}>
-            {`${item.amount}x ${item.name}`}
-          </Stack.Item>
-        </Stack>
-      ))}
+    <Section
+      title="Contents"
+      buttons={
+        <Button
+          icon="arrows-down-to-line"
+          content="Dump contents"
+          onClick={() =>
+            act('equip_act', {
+              ref: ref,
+              gear_action: 'dump',
+            })
+          }
+          disabled={!Object.keys(contents).length}
+        />
+      }>
+      {Object.keys(contents).length ? (
+        Object.keys(contents).map((item, i) => (
+          <Stack key={i}>
+            <Stack.Item lineHeight="0">
+              <Box
+                m="-4px"
+                className={classes([
+                  'mecha_equipment32x32',
+                  contents[item].icon,
+                ])}
+              />
+            </Stack.Item>
+            <Stack.Item
+              lineHeight="24px"
+              style={{
+                'text-transform': 'capitalize',
+                'overflow': 'hidden',
+                'text-overflow': 'ellipsis',
+              }}>
+              {`${contents[item].amount}x ${contents[item].name}`}
+            </Stack.Item>
+          </Stack>
+        ))
+      ) : (
+        <NoticeBox info>Ore box is empty</NoticeBox>
+      )}
     </Section>
   );
 };

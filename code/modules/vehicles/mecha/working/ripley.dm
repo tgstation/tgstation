@@ -235,6 +235,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		LAZYREMOVE(miner.cargo, crate)
 		if(crate == miner.ore_box)
 			miner.ore_box = null
+		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [crate]. Cargo compartment capacity: [miner.cargo_capacity - LAZYLEN(miner.cargo)]", LOG_MECHA)
 		return TRUE
 
