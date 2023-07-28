@@ -133,6 +133,7 @@
 #include "json_savefile_importing.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
+#include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
 #include "lungs.dm"

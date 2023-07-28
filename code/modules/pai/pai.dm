@@ -65,6 +65,8 @@
 	var/ram = 100
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
+	/// The current leash to the owner
+	var/datum/component/leash/leash
 
 	// Onboard Items
 	/// Atmospheric analyzer
@@ -226,7 +228,7 @@
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
 	forceMove(pai_card)
-	card = pai_card
+	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
@@ -434,3 +436,10 @@
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
 	return STOP_SACRIFICE
+
+/// Updates the distance we can be from our pai card
+/mob/living/silicon/pai/proc/increment_range(increment_amount)
+	var/new_distance = leash.distance + increment_amount
+	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
+		return
+	leash.set_distance(new_distance)

@@ -83,11 +83,11 @@
 /// Record that we got another guy on our ass
 /mob/living/basic/heretic_summon/armsy/proc/register_behind(mob/living/tail)
 	if(!isnull(back)) // Shouldn't happen but just in case
-		UnregisterSignal(back, COMSIG_QDELETING)
+		UnregisterSignal(back, COMSIG_PARENT_QDELETING)
 	back = tail
 	update_appearance(UPDATE_ICON_STATE)
 	if(!isnull(back))
-		RegisterSignal(back, COMSIG_QDELETING, PROC_REF(tail_deleted))
+		RegisterSignal(back, COMSIG_PARENT_QDELETING, PROC_REF(tail_deleted))
 
 /// When our tail is gone stop holding a reference to it
 /mob/living/basic/heretic_summon/armsy/proc/tail_deleted()

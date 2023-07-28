@@ -31,7 +31,7 @@
 		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) + subtypesof(/mob/living/basic/heretic_summon) - monster_types_blacklist
 	if(!isnull(ascendant_mind))
 		ascendee = ascendant_mind
-		RegisterSignals(ascendant_mind.current, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(end_madness))
+		RegisterSignals(ascendant_mind.current, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), PROC_REF(end_madness))
 	SSpoints_of_interest.make_point_of_interest(src)
 	INVOKE_ASYNC(src, PROC_REF(poll_ghosts))
 
@@ -49,7 +49,7 @@
 	var/turf/our_turf = get_turf(src)
 	playsound(our_turf, 'sound/magic/castsummon.ogg', vol = 100, vary = TRUE)
 	visible_message(span_boldwarning("The rip in space spasms and disappears!"))
-	UnregisterSignal(former_master, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING)) // Just in case they die THEN delete
+	UnregisterSignal(former_master, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING)) // Just in case they die THEN delete
 	new /obj/effect/temp_visual/destabilising_tear(our_turf)
 	qdel(src)
 
