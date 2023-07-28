@@ -9,8 +9,8 @@
 	layer = TRAM_SIGNAL_LAYER
 	max_integrity = 250
 	integrity_failure = 0.25
-	light_range = 1.5
-	light_power = 3
+	light_range = 2
+	light_power = 0.7
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
 	anchored = TRUE
@@ -175,6 +175,8 @@
 /obj/machinery/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
 	SIGNAL_HANDLER
 
+	flick("synthesizer_beam", src)
+
 	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
 	if(operating_status <= XING_TRANSPORT_FAULT)
 		if(tram.controller_status & COMM_ERROR)
@@ -289,6 +291,7 @@
 		return
 
 	signal_state = new_state
+	flick_overlay()
 	update_appearance()
 
 /obj/machinery/crossing_signal/update_appearance(updates)
@@ -321,8 +324,8 @@
 	var/status_overlay = "status-[operating_status]"
 
 	. += mutable_appearance(icon, lights_overlay)
-	. += mutable_appearance(icon, lights_overlay)
-	. += emissive_appearance(icon, status_overlay, offset_spokesman = src, alpha = src.alpha)
+	. += mutable_appearance(icon, status_overlay)
+	. += emissive_appearance(icon, lights_overlay, offset_spokesman = src, alpha = src.alpha)
 	. += emissive_appearance(icon, status_overlay, offset_spokesman = src, alpha = src.alpha)
 
 /obj/machinery/static_signal/power_change()
