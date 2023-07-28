@@ -1,13 +1,13 @@
 /datum/map_template/virtual_domain/ash_drake
-	name = "Ashen Inferno"
+	name = "Sanguine Excavation"
 	cost = BITMINING_COST_MEDIUM
-	desc = "Home of the ash drake, a powerful dragon that scours the surface of Lavaland."
+	desc = "Few escape the surface of Lavaland without a few scars. Some remain, maddened by the hunt."
 	difficulty = BITMINING_DIFFICULTY_MEDIUM
-	filename = "ash_drake.dmm"
-	id = "ash_drake"
+	filename = "blood_drunk_miner.dmm"
+	id = "blood_drunk_miner"
 	reward_points = BITMINING_REWARD_MEDIUM
 
-/mob/living/simple_animal/hostile/megafauna/dragon/virtual_domain
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual_domain
 	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitminer_loot/encrypted)
 	loot = list(/obj/structure/closet/crate/secure/bitminer_loot/encrypted)

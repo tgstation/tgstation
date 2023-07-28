@@ -387,7 +387,7 @@
 
 	var/list/mutation_candidates = list()
 	for(var/mob/living/creature as anything in generated_domain.created_atoms)
-		if(QDELETED(creature) || !isliving(creature) || creature.key)
+		if(QDELETED(creature) || !isliving(creature) || creature.mind || !creature.can_be_cybercop)
 			continue
 
 		mutation_candidates += creature

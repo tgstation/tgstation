@@ -10,5 +10,6 @@
 /area/ruin/powered/hierophant
 	name = "\improper Hierophant's Arena"
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual_domain
+	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitminer_loot/encrypted)
 	loot = list(/obj/structure/closet/crate/secure/bitminer_loot/encrypted)
