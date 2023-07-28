@@ -8,32 +8,12 @@
 
 	plane = FLOOR_PLANE //one with the floor
 
-/obj/structure/fake_stairs/north
-	dir = NORTH
-
-/obj/structure/fake_stairs/south
-	dir = SOUTH
-
-/obj/structure/fake_stairs/east
-	dir = EAST
-
-/obj/structure/fake_stairs/west
-	dir = WEST
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fake_stairs, 0)
 
 /obj/structure/fake_stairs/wood
 	icon_state = "stairs_wood"
 
-/obj/structure/fake_stairs/wood/north
-	dir = NORTH
-
-/obj/structure/fake_stairs/wood/south
-	dir = SOUTH
-
-/obj/structure/fake_stairs/wood/east
-	dir = EAST
-
-/obj/structure/fake_stairs/wood/west
-	dir = WEST
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fake_stairs/wood, 0)
 
 /obj/structure/fake_stairs/stone
 	icon_state = "stairs_stone"

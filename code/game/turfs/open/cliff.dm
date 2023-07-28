@@ -27,12 +27,13 @@
 
 	RegisterSignal(src, COMSIG_TURF_MOVABLE_THROW_LANDED, PROC_REF(on_turf_movable_throw_landed))
 
-	if(underlay_tile)
-		var/image/underlay = image(icon_state = initial(underlay_tile.icon_state), icon = initial(underlay_tile.icon))
-		underlay.pixel_x = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
-		underlay.pixel_y = undertile_pixel_y
-		SET_PLANE(underlay, underlay_plane || plane, src)
-		underlays += underlay
+	if(isnull(underlay_tile))
+		return
+	var/image/underlay = image(icon_state = initial(underlay_tile.icon_state), icon = initial(underlay_tile.icon))
+	underlay.pixel_x = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
+	underlay.pixel_y = undertile_pixel_y
+	SET_PLANE(underlay, underlay_plane || plane, src)
+	underlays += underlay
 
 /turf/open/cliff/CanPass(atom/movable/mover, border_dir)
 	..()
@@ -64,9 +65,8 @@
 /// Check if they can fall from us
 /turf/open/cliff/proc/can_fall(atom/movable/arrived)
 	// Check if we're a protected type that doesnt make sense to fall (like effects and bullets)
-	for(var/type in protected_types)
-		if(istype(arrived, type))
-			return FALSE
+	if(is_type_in_list(arrived, protected_types)
+		return FALSE
 
 	if(arrived.throwing || HAS_TRAIT(arrived, TRAIT_CLIFF_WALKER) || HAS_TRAIT(arrived, TRAIT_MOVE_FLYING))
 		return FALSE
@@ -88,10 +88,11 @@
 
 /// We just fell onto this chasm tile
 /turf/open/cliff/proc/on_fall(atom/movable/faller)
-	if(isliving(faller))
-		var/mob/living/living = faller
-		living.Knockdown(fall_speed) //OUCH- OW- CRAP- SHIT- OW-
-		living.spin(fall_speed, fall_speed)
+	if(!isliving(faller))
+		return
+	var/mob/living/living = faller
+	living.Knockdown(fall_speed) //OUCH- OW- CRAP- SHIT- OW-
+	living.spin(fall_speed, fall_speed)
 
 /// Check if the movement direction we're moving on (while already falling on us) is valid
 /turf/open/cliff/proc/can_move(atom/movable/mover, turf/target)
