@@ -53,6 +53,8 @@
 	if(QDELING(src))
 		CRASH("We just tried to add an element to a qdeleted datum, something is fucked")
 	var/datum/element/ele = SSdcs.GetElement(arguments)
+	if(!ele) // We couldn't fetch the element, likely because it was not an element.
+		return // the crash message has already been sent
 	arguments[1] = src
 	if(ele.Attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
 		CRASH("Incompatible element [ele.type] was assigned to a [type]! args: [json_encode(args)]")
@@ -62,7 +64,9 @@
  * You only need additional arguments beyond the type if you're using [ELEMENT_BESPOKE]
  */
 /datum/proc/_RemoveElement(list/arguments)
-	var/datum/element/ele = SSdcs.GetElement(arguments)
+	var/datum/element/ele = SSdcs.GetElement(arguments, FALSE)
+	if(!ele) // We couldn't fetch the element, likely because it didn't exist.
+		return
 	if(ele.element_flags & ELEMENT_COMPLEX_DETACH)
 		arguments[1] = src
 		ele.Detach(arglist(arguments))

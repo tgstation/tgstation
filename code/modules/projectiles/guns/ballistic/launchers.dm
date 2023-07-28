@@ -6,7 +6,7 @@
 	name = "grenade launcher"
 	icon_state = "dshotgun_sawn"
 	inhand_icon_state = "gun"
-	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -23,9 +23,9 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg
 	desc = "A 6-shot grenade launcher."
 	name = "multi grenade launcher"
-	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon = 'icons/mob/mecha_equipment.dmi'
 	icon_state = "mecha_grenadelnchr"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg/attack_self()
@@ -36,7 +36,7 @@
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	mag_type = /obj/item/ammo_box/magazine/m75
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
@@ -48,7 +48,7 @@
 	A sticker near the cheek rest reads, \"ENSURE AREA BEHIND IS CLEAR BEFORE FIRING\""
 	icon_state = "rocketlauncher"
 	inhand_icon_state = "rocketlauncher"
-	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
@@ -104,7 +104,7 @@
 		sleep(0.5 SECONDS)
 		shoot_with_empty_chamber(user)
 		sleep(2 SECONDS)
-		user.visible_message(span_warning("[user] looks about the room realizing [user.p_theyre()] still there. [user.p_they(TRUE)] proceed to shove [src] down their throat and choke [user.p_them()]self with it!"), \
+		user.visible_message(span_warning("[user] looks about the room realizing [user.p_theyre()] still there. [user.p_They()] proceed to shove [src] down their throat and choke [user.p_them()]self with it!"), \
 			span_userdanger("You look around after realizing you're still here, then proceed to choke yourself to death with [src]!"))
 		sleep(2 SECONDS)
 		return OXYLOSS

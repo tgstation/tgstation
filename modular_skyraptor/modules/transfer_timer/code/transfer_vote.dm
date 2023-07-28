@@ -42,7 +42,7 @@
 
 	if(winning_option == CHOICE_TRANSFER)
 		SSshuttle.autoEnd()
-		var/obj/machinery/computer/communications/comms_console = locate() in GLOB.machines
+		var/obj/machinery/computer/communications/comms_console = locate() in GLOB.shuttle_caller_list
 		if(comms_console)
 			comms_console.post_status("shuttle")
 		return

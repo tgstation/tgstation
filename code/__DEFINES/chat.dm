@@ -21,7 +21,7 @@
 #define MESSAGE_TYPE_DEBUG "debug"
 
 /// Max length of chat message in characters
-#define CHAT_MESSAGE_MAX_LENGTH 110
+#define CHAT_MESSAGE_MAX_LENGTH 250 /// SKYRAPTOR EDIT: 250 chars, up from 110
 
 //debug printing macros (for development and testing)
 /// Used for debug messages to the world

@@ -173,7 +173,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE) || default_location
+	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, indirect_action = TRUE) || default_location
 
 	if(where == LOCATION_BACKPACK)
 		open_backpack = TRUE

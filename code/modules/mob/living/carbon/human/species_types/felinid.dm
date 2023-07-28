@@ -2,32 +2,34 @@
 /datum/species/human/felinid
 	name = "Felinid"
 	id = SPECIES_FELINE
-
+	examine_limb_id = SPECIES_HUMAN
 	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
-
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
-	inherent_traits = list(TRAIT_CAN_USE_FLIGHT_POTION, TRAIT_HATED_BY_DOGS)
+	inherent_traits = list(
+		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_HATED_BY_DOGS,
+		TRAIT_USES_SKINTONES,
+	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
-	disliked_food = GROSS | CLOTH | RAW
-	liked_food = SEAFOOD | ORANGES | BUGS | GORE
-	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
 	ass_image = 'icons/ass/asscat.png'
 	family_heirlooms = list(/obj/item/toy/cattoy)
-	examine_limb_id = SPECIES_HUMAN
+	/// When false, this is a felinid created by mass-purrbation
+	var/original_felinid = TRUE
 
 // Prevents felinids from taking toxin damage from carpotoxin
-/datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
 	if(istype(chem, /datum/reagent/toxin/carpotoxin))
 		var/datum/reagent/toxin/carpotoxin/fish = chem
 		fish.toxpwr = 0
-
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load)
 	if(ishuman(carbon_being))
@@ -126,9 +128,8 @@
 		to_chat(purrbated_human, span_boldnotice("You are no longer a cat."))
 
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
-	human_for_preview.hairstyle = "Hime Cut"
-	human_for_preview.hair_color = "#ffcccc" // pink
-	human_for_preview.update_body_parts()
+	human_for_preview.set_haircolor("#ffcccc", update = FALSE) // pink
+	human_for_preview.set_hairstyle("Hime Cut", update = TRUE)
 
 	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
 	if (cat_ears)

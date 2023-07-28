@@ -8,3 +8,44 @@
 		)
 	else
 		return defaults
+
+/**
+ * Turns material amount into the number of sheets, returning FALSE if the number is less than SHEET_MATERIAL_AMOUNT
+ *
+ * Arguments:
+ * - amt: amount to convert
+ */
+/proc/amount2sheet(amt)
+	if(amt >= SHEET_MATERIAL_AMOUNT)
+		return round(amt / SHEET_MATERIAL_AMOUNT)
+	return 0
+
+/**
+ * Turns number of sheets into material amount, returning FALSE if the number is <= 0
+ *
+ * Arguments:
+ * - amt: amount to convert
+ */
+/proc/sheet2amount(sheet_amt)
+	if(sheet_amt > 0)
+		return sheet_amt * SHEET_MATERIAL_AMOUNT
+	return 0
+
+/**
+ * Splits a stack. we don't use /obj/item/stack/proc/fast_split_stack because Byond complains that should only be called asynchronously.
+ * This proc is also more faster because it doesn't deal with mobs, copying evidences or refreshing atom storages
+ * Has special internal uses for e.g. by the material container
+ *
+ * Arguments:
+ * - [target][obj/item]: the stack to splot
+ * - [amount]: amount to split by
+ */
+/datum/component/material_container/proc/fast_split_stack(obj/item/stack/target, amount)
+	if(!target.use(amount, TRUE, FALSE))
+		return null
+
+	. = new target.type(target.drop_location(), amount, FALSE, target.mats_per_unit)
+	target.loc.atom_storage?.refresh_views()
+
+	target.is_zero_amount(delete_if_zero = TRUE)
+

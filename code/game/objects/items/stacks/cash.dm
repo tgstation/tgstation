@@ -3,6 +3,7 @@
 	singular_name = "bill"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = null
+	worn_icon_state = "nothing"
 	amount = 1
 	max_amount = INFINITY
 	throwforce = 0
