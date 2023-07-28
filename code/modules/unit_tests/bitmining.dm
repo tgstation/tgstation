@@ -31,6 +31,10 @@
 	var/datum/map_template/virtual_domain/domain = server.set_domain(TEST_MAP)
 	TEST_ASSERT_EQUAL(domain.id, TEST_MAP, "Did not load test map correctly")
 
+	server.domain_randomized = TRUE
+	domain = server.set_domain(TEST_MAP)
+	TEST_ASSERT_EQUAL(domain.reward_points, 2, "Should've added points when randomizing")
+
 /// Loading maps onto the vdom
 /datum/unit_test/quantum_server_load_domain/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
@@ -42,9 +46,10 @@
 	TEST_ASSERT_EQUAL(domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	server.load_domain(domain)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Did not load the correct domain")
 	TEST_ASSERT_NOTNULL(server.generated_safehouse, "Did not load generated_safehouse correctly")
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Did not load generated_domain correctly")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Did not load the correct domain")
+	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Did not load the correct number of exit turfs")
 
 /// Handles cases with stopping domains. The server should cool down & prevent stoppage with active mobs
 /datum/unit_test/quantum_server_stop_domain/Run()
@@ -329,6 +334,7 @@
 	TEST_ASSERT_EQUAL(sever_avatar_received, TRUE, "Did not send COMSIG_BITMINING_SEVER_AVATAR")
 	TEST_ASSERT_EQUAL(client_disconnect_received, TRUE, "Did not send COMSIG_BITMINING_CLIENT_DISCONNECTED")
 
+	netpod.open_machine()
 	netpod.set_occupant(labrat)
 	netpod.close_machine(labrat)
 	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
@@ -337,7 +343,6 @@
 	server.begin_shutdown(perp)
 	TEST_ASSERT_EQUAL(shutdown_alert_received, TRUE, "Did not send COMSIG_BITMINING_SHUTDOWN_ALERT")
 	TEST_ASSERT_EQUAL(server_crash_received, TRUE, "Did not send COMSIG_BITMINING_SERVER_CRASH")
-
 
 /// Tests the server's ability to buff and nerf mobs
 /datum/unit_test/quantum_server_difficulty/Run()
