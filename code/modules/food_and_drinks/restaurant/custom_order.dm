@@ -119,7 +119,8 @@
 
 	var/added_offset = 0
 	for(var/flavor in wanted_flavors)
-		var/image/scoop = image('icons/obj/service/kitchen.dmi', GLOB.ice_cream_flavours[flavor].icon_state)
+		var/image/scoop = image('icons/obj/service/kitchen.dmi', "icecream_custom")
+		scoop.color = GLOB.ice_cream_flavours[flavor].color
 		scoop.pixel_y = added_offset
 		i_scream.overlays += scoop
 		added_offset += ICE_CREAM_SCOOP_OFFSET
