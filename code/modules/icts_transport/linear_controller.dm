@@ -522,8 +522,6 @@
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
 /datum/transport_controller/linear/proc/move_lift_horizontally(going)
-	controls_lock(TRUE)
-
 	if(modular_set)
 		for(var/obj/structure/transport/linear/module_to_move as anything in transport_modules)
 			module_to_move.travel(going)
@@ -592,8 +590,6 @@
 					for(var/y in min_y to max_y)
 						var/obj/structure/transport/linear/transport_module = locate(/obj/structure/transport/linear, locate(x, y, z))
 						transport_module?.travel(going)
-
-	controls_lock(FALSE)
 
 ///Check destination turfs
 /datum/transport_controller/linear/proc/Check_lift_move(check_dir)

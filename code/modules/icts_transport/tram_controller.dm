@@ -168,7 +168,7 @@
  */
 
 /datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
-	controller_status &= ~PRE_DEPARTURE
+	set_status_code(PRE_DEPARTURE, FALSE)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
@@ -228,10 +228,10 @@
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
 /datum/transport_controller/linear/tram/proc/unlock_controls()
-	set_active(FALSE)
 	controls_lock(FALSE)
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		transport_module.set_travelling(FALSE)
+	set_active(FALSE)
 
 
 /datum/transport_controller/linear/tram/proc/set_active(new_status)
@@ -254,11 +254,11 @@
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/update_status()
-	controller_status &= ~DOORS_OPEN
+	set_status_code(DOORS_OPEN, FALSE)
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 		if(door.transport_linked_id == specific_transport_id)
 			if(door.airlock_state != 1)
-				controller_status |= DOORS_OPEN
+				set_status_code(DOORS_OPEN, TRUE)
 				break
 
 /datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
@@ -278,19 +278,20 @@
 		module.estop_throw(throw_direction)
 
 /datum/transport_controller/linear/tram/proc/start_malf_event()
-	controller_status |= COMM_ERROR
+	set_status_code(COMM_ERROR, TRUE)
 	collision_lethality = 1.25
 
 /datum/transport_controller/linear/tram/proc/end_malf_event()
-	if(!controller_status & COMM_ERROR)
+	if(!(controller_status & COMM_ERROR))
 		return
+	set_status_code(COMM_ERROR, FALSE)
 	collision_lethality = initial(collision_lethality)
 
 /obj/machinery/icts_controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something."
 	icon = 'icons/obj/machines/tram/tram_controllers.dmi'
-	icon_state = "controller"
+	icon_state = "controller-panel"
 	anchored = TRUE
 	density = FALSE
 	layer = SIGN_LAYER
@@ -306,6 +307,47 @@
 	if(!find_controller())
 		message_admins("ICTS: Tram failed to find controller!")
 
+/obj/machinery/icts_controller/update_overlays()
+	. = ..()
+	var/status = ""
+	if(machine_stat & NOPOWER)
+		return
+
+	if(!panel_open)
+		. += mutable_appearance(icon, "controller-door")
+
+	if(controller_datum.controller_status & DOORS_OPEN)
+		status += "DOORS "
+		. += mutable_appearance(icon, "doors")
+		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
+
+	if(controller_datum.controller_status & EMERGENCY_STOP)
+		status += "ESTOP "
+		. += mutable_appearance(icon, "estop")
+		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
+
+	else if(controller_datum.controller_status & SYSTEM_FAULT)
+		status += "FAULT "
+		. += mutable_appearance(icon, "fault")
+		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
+
+	if(controller_datum.controller_status & COMM_ERROR)
+		status += "COMMS "
+		. += mutable_appearance(icon, "comms")
+		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
+
+	if(controller_datum.controller_status & PRE_DEPARTURE)
+		status += "DEPT "
+		. += mutable_appearance(icon, "departure")
+		. += emissive_appearance(icon, "departure", src, alpha = src.alpha)
+
+	else if(controller_datum.controller_status & CONTROLS_LOCKED)
+		status += "LOCK"
+		. += mutable_appearance(icon, "locked")
+		. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
+
+	message_admins("[status]")
+
 /obj/machinery/icts_controller/proc/find_controller()
 	var/obj/structure/transport/linear/tram/tram_structure = locate() in src.loc
 	if(!tram_structure)
@@ -316,11 +358,12 @@
 		return FALSE
 
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
-	RegisterSignal(controller_datum, COMSIG_TRAM_TRAVEL, PROC_REF(sync_controller))
 	return TRUE
 
-/obj/machinery/icts_controller/proc/sync_controller()
-	return
+/obj/machinery/icts_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
+	if(controller != controller_datum)
+		return
+	update_appearance()
 
 // Switch modes with multitool
 /obj/machinery/icts_controller/multitool_act(mob/living/user, obj/item/tool)
@@ -335,6 +378,7 @@
 		balloon_alert(user, "rebooting electronics...")
 		if(do_after(user, 4 SECONDS))
 			controller_datum.controller_status &= ~COMM_ERROR
+			controller_datum.collision_lethality = initial(controller_datum.collision_lethality)
 			balloon_alert(user, "success!")
 			return TRUE
 

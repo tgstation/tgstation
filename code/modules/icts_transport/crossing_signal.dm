@@ -358,8 +358,8 @@
 
 /obj/machinery/guideway_sensor
 	name = "guideway sensor"
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "airlock_sensor_standby"
+	icon = 'icons/obj/machines/tram/tram_sensor.dmi'
+	icon_state = "sensor-base"
 	layer = TRAM_RAIL_LAYER
 	use_power = 0
 	/// Keeps track of the signal's scanning equipment
@@ -423,25 +423,29 @@
 		paired_sensor = null
 	. = ..()
 
-/obj/machinery/guideway_sensor/update_appearance()
+/obj/machinery/guideway_sensor/update_overlays()
 	. = ..()
 	if(machine_stat & BROKEN)
-		icon_state = "airlock_sensor_off"
 		return
 
 	if(machine_stat & MAINT)
-		icon_state = "airlock_sensor_standby"
+		. += mutable_appearance(icon, "sensor-standby")
+		. += emissive_appearance(icon, "sensor-standby", src, alpha = src.alpha)
 		return
 
 	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(buddy)
 		if(!buddy.is_operational)
-			icon_state = "airlock_sensor_alert"
+			. += mutable_appearance(icon, "sensor-warning")
+			. += emissive_appearance(icon, "sensor-warning", src, alpha = src.alpha)
 		else
-			icon_state = "airlock_sensor_cycle"
+			. += mutable_appearance(icon, "sensor-active")
+			. += emissive_appearance(icon, "sensor-active", src, alpha = src.alpha)
 			return
 
-	icon_state = "airlock_sensor_standby"
+	else
+		. += mutable_appearance(icon, "sensor-standby")
+		. += emissive_appearance(icon, "sensor-standby", src, alpha = src.alpha)
 
 /obj/machinery/guideway_sensor/proc/trigger_sensor()
 	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
