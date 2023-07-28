@@ -290,8 +290,8 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	name = ICE_CREAM_CARAMEL
 	color = COLOR_ICECREAM_CARAMEL
 	desc = "filled with caramel ice cream. It is deliciously sweet."
-	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/coco)
-	reagent_type = /datum/reagent/consumable/coco
+	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/caramel)
+	reagent_type = /datum/reagent/consumable/caramel
 
 /datum/ice_cream_flavour/banana
 	name = ICE_CREAM_BANANA
