@@ -1,6 +1,6 @@
 #define TEMP_IMAGE_PATH(ref) ("ntos_messenger[ref]_temp_image.png")
 /// Purpose is evident by the name, hopefully.
-#define MAX_pda_message_LEN 1024
+#define MAX_PDA_MESSAGE_LEN 1024
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -435,7 +435,7 @@
 
 /// Returns a message input, sanitized and checked against the filter
 /datum/computer_file/program/messenger/proc/sanitize_pda_message(message, mob/sender)
-	message = sanitize(trim(message, MAX_pda_message_LEN))
+	message = sanitize(trim(message, MAX_PDA_MESSAGE_LEN))
 
 	if(mime_mode)
 		message = emoji_sanitize(message)
@@ -715,5 +715,5 @@
 			var/obj/item/modular_computer/pda/comp = computer
 			comp.explode(usr, from_message_menu = TRUE)
 
-#undef MAX_pda_message_LEN
+#undef MAX_PDA_MESSAGE_LEN
 #undef TEMP_IMAGE_PATH
