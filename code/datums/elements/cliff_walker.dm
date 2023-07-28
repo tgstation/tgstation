@@ -21,10 +21,11 @@
 /datum/element/cliff_walking/proc/update_cliff_walking(mob/living/climber)
 	SIGNAL_HANDLER
 
-	if(climber.stat == DEAD)
-		REMOVE_TRAIT(climber, TRAIT_CLIFF_WALKER, src)
-	else
-		ADD_TRAIT(climber, TRAIT_CLIFF_WALKER, src)
+	if(climber.stat != DEAD)
+		ADD_TRAIT(climber, TRAIT_CLIFF_WALKER, type)
+		return
+
+	REMOVE_TRAIT(climber, TRAIT_CLIFF_WALKER, type)
 
 	var/turf/open/cliff/cliff_tile = get_turf(climber)
 	if(!iscliffturf(cliff_tile))
