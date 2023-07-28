@@ -100,3 +100,27 @@
 
 /datum/unit_test/check_swings/melee_three_tiles/distant_turf/get_clicking_atom()
 	return locate(victim_B.x + 1, victim_B.y, victim_B.z)
+
+/datum/unit_test/check_swings/desword
+
+/datum/unit_test/check_swings/desword/Run()
+	. = ..()
+
+	var/obj/item/dualsaber/desword = allocate(/obj/item/dualsaber)
+	attacker.put_in_active_hand(desword, forced = TRUE)
+	desword.attack_self(attacker)
+	attacker.set_combat_mode(TRUE)
+
+	click_wrapper(attacker, victim_B)
+
+	TEST_ASSERT_EQUAL(victim_A.lastattacker, attacker.real_name, "Victim A (to the top right) was not hit by the desword.")
+	TEST_ASSERT_NOTEQUAL(victim_A.getBruteLoss(), 0, "Victim A did not sustain damage from being hit by the desword.")
+
+	TEST_ASSERT_EQUAL(victim_B.lastattacker, attacker.real_name, "Victim B (to the direct right) was not hit by the desword.")
+	TEST_ASSERT_NOTEQUAL(victim_B.getBruteLoss(), 0, "Victim B did not sustain damage from being hit by the desword.")
+
+	TEST_ASSERT_EQUAL(victim_C.lastattacker, attacker.real_name, "Victim C (to the bottom right) was not hit by the desword.")
+	TEST_ASSERT_NOTEQUAL(victim_C.getBruteLoss(), 0, "Victim C did not sustain damage from being hit by the desword.")
+
+	TEST_ASSERT_EQUAL(victim_D.lastattacker, attacker.real_name, "Victim D (to the direct bottom) was not hit by the desword.")
+	TEST_ASSERT_NOTEQUAL(victim_D.getBruteLoss(), 0, "Victim D did not sustain damage from being hit by the desword.")
