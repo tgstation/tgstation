@@ -5,7 +5,7 @@
 	///the distance to climb up and down
 	var/climbing_distance = 20
 	///are we on a tree
-	var/climbed = FALSE
+	var/obj/current_tree
 
 /datum/component/tree_climber/Initialize(climbing_distance = 20)
 	. = ..()
@@ -32,14 +32,12 @@
 		to_chat(source, span_warning("[target] is blocked!"))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	handle_climb_tree(source)
+	handle_climb_tree(source, target)
 
-	if(climbed)
-		source.forceMove(get_turf(target))
-		RegisterSignal(source, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(climber_moved))
+	if(current_tree)
+		source.forceMove(get_turf(current_tree))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	UnregisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE)
 	var/list/possible_drops = get_adjacent_open_turfs(target)
 	for(var/turf/droploc as anything in possible_drops)
 		if(!droploc.is_blocked_turf(exclude_mobs = TRUE))
@@ -51,25 +49,45 @@
 
 /datum/component/tree_climber/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	if(climbed)
+	if(current_tree)
 		examine_text += "It is clinging to a tree!"
 
 /datum/component/tree_climber/proc/can_climb_tree(obj/structure/flora/tree/target)
-	if(climbed)
+	if(current_tree)
 		return TRUE
 	var/turf/tree_turf = get_turf(target)
 	if(locate(/mob/living) in tree_turf.contents)
 		return FALSE
 	return TRUE
 
-/datum/component/tree_climber/proc/handle_climb_tree(mob/living/climber)
-	var/offset = climbed ? -(climbing_distance) : climbing_distance
+/datum/component/tree_climber/proc/handle_climb_tree(mob/living/climber, obj/structure/target_tree)
+	var/offset = current_tree ? -(climbing_distance) : climbing_distance
 	animate(climber, pixel_y = climber.pixel_y + offset, time = 2)
-	climbed = !climbed
 	climber.Stun(2 SECONDS, ignore_canstun = TRUE)
+	if(current_tree)
+		remove_tree_signals()
+		current_tree = null
+		return
+
+	current_tree = target_tree
+	register_tree_signals()
 
 /datum/component/tree_climber/proc/climber_moved(mob/living/source)
 	SIGNAL_HANDLER
 
-	handle_climb_tree(source)
+	handle_climb_tree(source, current_tree)
+
+/datum/component/tree_climber/proc/on_tree_delete()
+	SIGNAL_HANDLER
+
+	var/mob/living/climber = parent
+	handle_climb_tree(climber, current_tree)
+
+/datum/component/tree_climber/proc/register_tree_signals()
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(climber_moved))
+	RegisterSignal(current_tree, COMSIG_PREQDELETED, PROC_REF(on_tree_delete))
+
+/datum/component/tree_climber/proc/remove_tree_signals()
 	UnregisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(current_tree, COMSIG_PREQDELETED)
+
