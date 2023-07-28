@@ -91,6 +91,10 @@
 	icon_state = "water"
 	bullet_sizzle = TRUE
 
+/turf/open/floor/holofloor/beach/water/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/holographic)
+
 /turf/open/floor/holofloor/asteroid
 	gender = PLURAL
 	name = "asteroid sand"

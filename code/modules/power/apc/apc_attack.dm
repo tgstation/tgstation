@@ -61,7 +61,7 @@
 			balloon_alert(user, "need ten lengths of cable!")
 			return
 
-		var/terminal_cable_layer
+		var/terminal_cable_layer = cable_layer // Default to machine's cable layer
 		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
 			if(isnull(choice))
@@ -79,7 +79,7 @@
 		if(terminal || !opened || !has_electronics)
 			return
 		var/turf/our_turf = get_turf(src)
-		var/obj/structure/cable/cable_node = our_turf.get_cable_node()
+		var/obj/structure/cable/cable_node = our_turf.get_cable_node(terminal_cable_layer)
 		if(prob(50) && electrocute_mob(usr, cable_node, cable_node, 1, TRUE))
 			do_sparks(5, TRUE, src)
 			return
@@ -271,7 +271,7 @@
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
 
-/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE)
+/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
 	if(machine_stat & BROKEN && atom_integrity <= 0)
 		if(sound_effect)
