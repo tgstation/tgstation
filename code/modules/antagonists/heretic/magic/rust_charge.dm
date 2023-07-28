@@ -6,7 +6,7 @@
 	var/charge_damage = 50
 
 
-/datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
+/datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
 	if(HAS_TRAIT(get_turf(owner)), TRAIT_RUSTY)
 		StartCooldown(135 SECONDS, 135 SECONDS)
 		charge_sequence(owner, target_atom, charge_delay, charge_past)
