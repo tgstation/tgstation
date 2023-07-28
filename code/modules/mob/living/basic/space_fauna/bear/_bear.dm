@@ -129,7 +129,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(regenerate_health))
 
-/mob/living/basic/bear/butter/proc/regenerate_health(seconds_per_tick = SSMOBS_DT, times_fired) //Heals butter bear really fast when he takes damage.
+/mob/living/basic/bear/butter/proc/regenerate_health() //Heals butter bear really fast when he takes damage.
 	SIGNAL_HANDLER
 
 	if(stat == DEAD)
