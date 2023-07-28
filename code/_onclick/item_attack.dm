@@ -170,25 +170,13 @@
 	if(..())
 		return TRUE
 
-	if(user != src && !(attacking_item.item_flags & NOBLUDGEON))
-		if(user.combat_mode)
-			. = user.swing_at_target(attacking_item, src, LAZYACCESS(params2list(params), RIGHT_CLICK))
-		return .
-
-	user.changeNext_move(attacking_item.attack_style?.cd || CLICK_CD_MELEE)
-
-	var/attack_result = attacking_item.attack_wrapper(src, user, params)
-	if(attack_result & ATTACK_NO_AFTERATTACK|ATTACK_SWING_CANCEL|ATTACK_SWING_SKIPPED)
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(attacking_item.attack_wrapper(src, user, params) & (ATTACK_NO_AFTERATTACK|ATTACK_SWING_CANCEL|ATTACK_SWING_SKIPPED))
 		return TRUE // end chain
 
-	attacked_by(attacking_item, user)
 	return FALSE // continue chain
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
-	if(weapon.force > 1 && user != src)
-		stack_trace("Potentially deprecated use of a weapon ([weapon.type]) via attackby_secondary. \
-			If this item is intended to be a weapon, implement an attack style.")
-
 	return weapon.attack_secondary(src, user, params)
 
 

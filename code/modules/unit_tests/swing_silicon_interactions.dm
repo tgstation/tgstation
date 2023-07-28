@@ -13,7 +13,7 @@
 	id.forceMove(attacker.drop_location())
 	attacker.put_in_active_hand(crowbar, forced = TRUE)
 	click_wrapper(attacker, borgo)
-	TEST_ASSERT(borgo.opened, "Robot was opened when crowbarred")
+	TEST_ASSERT(borgo.opened, "Robot was not opened when crowbarred")
 	// close
 	attacker.put_in_active_hand(crowbar, forced = TRUE)
 	click_wrapper(attacker, borgo)

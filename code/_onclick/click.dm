@@ -314,7 +314,7 @@
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
-	if(close_enough)
+	if(close_enough && (!combat_mode || !isliving(clicked_on)))
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
 
