@@ -1,6 +1,6 @@
-#define TEMP_IMAGE_PATH(ref) ("ntos_msgr[ref]_temp_image.png")
+#define TEMP_IMAGE_PATH(ref) ("ntos_messenger[ref]_temp_image.png")
 /// Purpose is evident by the name, hopefully.
-#define MAX_PDA_MSG_LEN 1024
+#define MAX_pda_message_LEN 1024
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -74,15 +74,6 @@
 	selected_image = null
 	viewing_messages_of = null
 
-/datum/computer_file/program/messenger/proc/on_paintjob_update(sender, paintjob)
-	SIGNAL_HANDLER
-	if(ispath(paintjob, /obj/item/modular_computer/pda/mime))
-		mime_mode = TRUE
-		alert_able = FALSE
-	else
-		mime_mode = FALSE
-		alert_able = TRUE
-
 /datum/computer_file/program/messenger/Destroy(force)
 	if(!QDELETED(computer))
 		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
@@ -93,17 +84,17 @@
 /datum/computer_file/program/messenger/proc/get_messengers()
 	var/list/dictionary = list()
 
-	var/list/messengers_sorted = get_messengers_sorted(sort_by_job)
+	var/list/messengers_sorted = sort_by_job ? get_messengers_sorted_by_job() : get_messengers_sorted_by_name()
 
 	for(var/messenger_ref in messengers_sorted)
-		var/datum/computer_file/program/messenger/msgr = messengers_sorted[messenger_ref]
-		if(msgr == src || msgr.invisible)
+		var/datum/computer_file/program/messenger/messenger = messengers_sorted[messenger_ref]
+		if(messenger == src || messenger.invisible)
 			continue
 
 		var/list/data = list()
-		data["name"] = msgr.computer.saved_identification
-		data["job"] = msgr.computer.saved_job
-		data["ref"] = REF(msgr)
+		data["name"] = messenger.computer.saved_identification
+		data["job"] = messenger.computer.saved_job
+		data["ref"] = REF(messenger)
 
 		dictionary[data["ref"]] = data
 
@@ -122,10 +113,10 @@
 
 	if(viewing_messages_of in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
-		for(var/datum/pda_msg/msg as anything in chat.messages)
-			if(isnull(msg.photo_asset_name))
+		for(var/datum/pda_message/message as anything in chat.messages)
+			if(isnull(message.photo_name))
 				continue
-			data |= msg.photo_asset_name
+			data |= message.photo_name
 
 	if(!isnull(selected_image))
 		data |= selected_image
@@ -169,7 +160,7 @@
 			alert_silenced = !alert_silenced
 			return TRUE
 
-		if("PDA_sAndR")
+		if("PDA_toggleSendingAndReceiving")
 			sending_and_receiving = !sending_and_receiving
 			return TRUE
 
@@ -221,18 +212,18 @@
 			if(!can_send_everyone_message())
 				return FALSE
 
-			return send_message_to_all(usr, params["msg"])
+			return send_message_to_all(usr, params["message"])
 
 		if("PDA_saveMessageDraft")
 			var/target_chat_ref = params["ref"]
-			var/msg_draft = params["msg"]
+			var/message_draft = params["message"]
 
 			if(!(target_chat_ref in saved_chats))
 				return FALSE
 
 			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
 
-			chat.message_draft = msg_draft
+			chat.message_draft = message_draft
 
 			return TRUE
 
@@ -253,15 +244,15 @@
 				return FALSE
 
 			// target ref, can either be a chat in saved_chats
-			// or a messenger ref in GLOB.TabletMessengers
+			// or a messenger ref in GLOB.pda_messengers
 			var/target_ref = params["ref"]
 
 			var/target = null
 
 			if(target_ref in saved_chats)
 				target = saved_chats[target_ref]
-			else if(target_ref in GLOB.TabletMessengers)
-				target = GLOB.TabletMessengers[target_ref]
+			else if(target_ref in GLOB.pda_messengers)
+				target = GLOB.pda_messengers[target_ref]
 			else
 				return FALSE
 
@@ -270,20 +261,20 @@
 				if(!istype(disk))
 					return FALSE
 
-				var/datum/computer_file/program/messenger/target_msgr = null
+				var/datum/computer_file/program/messenger/target_messenger = null
 
 				if(istype(target, /datum/pda_chat))
 					var/datum/pda_chat/target_chat = target
-					target_msgr = target_chat.recipient?.resolve()
-					if(!istype(target_msgr))
+					target_messenger = target_chat.recipient?.resolve()
+					if(!istype(target_messenger))
 						to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
 						return FALSE
 				else if(istype(target, /datum/computer_file/program/messenger))
-					target_msgr = target
+					target_messenger = target
 
-				return disk.send_virus(computer, target_msgr.computer, usr, params["msg"])
+				return disk.send_virus(computer, target_messenger.computer, usr, params["message"])
 
-			return send_message(usr, params["msg"], list(target))
+			return send_message(usr, params["message"], list(target))
 
 		if("PDA_clearPhoto")
 			selected_image = null
@@ -341,7 +332,7 @@
 
 	var/list/messengers = get_messengers()
 
-	data["owner"] = ((REF(src) in GLOB.TabletMessengers) ? list(
+	data["owner"] = ((REF(src) in GLOB.pda_messengers) ? list(
 			"name" = computer.saved_identification,
 			"job" = computer.saved_job,
 			"ref" = REF(src)
@@ -392,33 +383,33 @@
 /// Helper proc that sends a message to everyone
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
 	var/list/datum/pda_chat/chats = list()
-	var/list/msgr_targets = list()
+	var/list/messenger_targets = list()
 
 	for(var/mc in get_messengers())
-		msgr_targets += mc
+		messenger_targets += mc
 
 	for(var/chatref in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chatref]
-		if(!(chat.recipient?.reference in msgr_targets)) // if its in msgr_targets, it's valid
+		if(!(chat.recipient?.reference in messenger_targets)) // if its in messenger_targets, it's valid
 			continue
-		msgr_targets -= chat.recipient.reference
+		messenger_targets -= chat.recipient.reference
 		chats += chat
 
-	for(var/missing_msgr in msgr_targets)
-		var/datum/pda_chat/new_chat = create_chat(missing_msgr)
+	for(var/missing_messenger in messenger_targets)
+		var/datum/pda_chat/new_chat = create_chat(missing_messenger)
 		chats += new_chat
 
 	if(send_message(user, message, chats, everyone = TRUE))
 		COOLDOWN_START(src, last_text_everyone, 2 MINUTES)
 
 /// Creates a chat and adds it to saved_chats. Supports fake users. Returns the newly created chat.
-/datum/computer_file/program/messenger/proc/create_chat(recp_ref, name, job)
+/datum/computer_file/program/messenger/proc/create_chat(recipient_ref, name, job)
 	var/datum/computer_file/program/messenger/recipient = null
 
 	if(isnull(name) && isnull(job))
-		if(!(recp_ref in GLOB.TabletMessengers))
+		if(!(recipient_ref in GLOB.pda_messengers))
 			CRASH("tried to create a chat with a messenger that isn't registered")
-		recipient = GLOB.TabletMessengers[recp_ref]
+		recipient = GLOB.pda_messengers[recipient_ref]
 
 	var/datum/pda_chat/new_chat = new(recipient)
 
@@ -433,7 +424,7 @@
 	return new_chat
 
 /// Gets the chat by the recipient, either by their name or messenger ref
-/datum/computer_file/program/messenger/proc/find_chat_by_recp(recipient, fake_user = FALSE)
+/datum/computer_file/program/messenger/proc/find_chat_by_recipient(recipient, fake_user = FALSE)
 	for(var/chat_ref in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chat_ref]
 		if(fake_user && chat.cached_name == recipient)
@@ -443,8 +434,8 @@
 	return null
 
 /// Returns a message input, sanitized and checked against the filter
-/datum/computer_file/program/messenger/proc/sanitize_pda_msg(message, mob/sender)
-	message = sanitize(trim(message, MAX_PDA_MSG_LEN))
+/datum/computer_file/program/messenger/proc/sanitize_pda_message(message, mob/sender)
+	message = sanitize(trim(message, MAX_pda_message_LEN))
 
 	if(mime_mode)
 		message = emoji_sanitize(message)
@@ -457,7 +448,7 @@
 
 /// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
 /datum/computer_file/program/messenger/proc/send_message(mob/living/sender, message, list/targets, everyone = FALSE)
-	message = sanitize_pda_msg(message, sender)
+	message = sanitize_pda_message(message, sender)
 
 	if(!message)
 		return FALSE
@@ -466,11 +457,11 @@
 	var/photo_asset_key = selected_image
 	if(photo_asset_key == TEMP_IMAGE_PATH(REF(src)))
 		var/datum/asset_cache_item/img_asset = SSassets.cache[photo_asset_key]
-		photo_asset_key = get_next_ntos_picture_path()
+		photo_asset_key = get_next_ntos_picture_name()
 		SSassets.transport.register_asset(photo_asset_key, img_asset.resource, img_asset.hash)
 
 	// our sender targets
-	var/list/datum/computer_file/program/messenger/target_msgrs = list()
+	var/list/datum/computer_file/program/messenger/target_messengers = list()
 	var/list/datum/pda_chat/target_chats = list()
 
 	var/should_alert = length(targets) == 1
@@ -478,7 +469,7 @@
 	// filter out invalid targets
 	for(var/target in targets)
 		var/datum/pda_chat/target_chat = null
-		var/datum/computer_file/program/messenger/target_msgr = null
+		var/datum/computer_file/program/messenger/target_messenger = null
 
 		if(istype(target, /datum/pda_chat))
 			target_chat = target
@@ -488,29 +479,29 @@
 					to_chat(sender, span_notice("ERROR: Recipient has receiving disabled."))
 				continue
 
-			target_msgr = target_chat.recipient?.resolve()
+			target_messenger = target_chat.recipient?.resolve()
 
-			if(!istype(target_msgr))
+			if(!istype(target_messenger))
 				if(should_alert)
 					to_chat(sender, span_notice("ERROR: Recipient no longer exists."))
 				target_chat.can_reply = FALSE
 				target_chat.recipient = null
 				continue
 
-			if(!target_msgr.sending_and_receiving)
+			if(!target_messenger.sending_and_receiving)
 				if(should_alert)
 					to_chat(sender, span_notice("ERROR: Recipient has receiving disabled."))
 				continue
 
 		else if(istype(target, /datum/computer_file/program/messenger))
-			target_msgr = target
+			target_messenger = target
 
-			if(!target_msgr.sending_and_receiving)
+			if(!target_messenger.sending_and_receiving)
 				if(should_alert)
 					to_chat(sender, span_notice("ERROR: Recipient has receiving disabled."))
 				continue
 
-			target_chat = find_chat_by_recp(REF(target))
+			target_chat = find_chat_by_recipient(REF(target))
 
 			if(!istype(target_chat))
 				target_chat = create_chat(REF(target))
@@ -520,15 +511,15 @@
 			continue
 
 		target_chats += target_chat
-		target_msgrs += target_msgr
+		target_messengers += target_messenger
 
-	if(!send_msg_signal(sender, message, target_msgrs, photo_asset_key, everyone))
+	if(!send_message_signal(sender, message, target_messengers, photo_asset_key, everyone))
 		return FALSE
 
 	// Log it in our logs
-	var/datum/pda_msg/message_datum = new(message, TRUE, photo_asset_key, everyone)
+	var/datum/pda_message/message_datum = new(message, TRUE, photo_asset_key, everyone)
 	for(var/datum/pda_chat/target_chat as anything in target_chats)
-		target_chat.add_msg(message_datum, show_in_recents = !everyone)
+		target_chat.add_message(message_datum, show_in_recents = !everyone)
 		target_chat.unread_messages = 0
 
 	// send new pictures to everyone
@@ -543,16 +534,16 @@
 
 /// Sends a rigged message that explodes when the recipient tries to reply or look at it.
 /datum/computer_file/program/messenger/proc/send_rigged_message(mob/sender, message, list/datum/computer_file/program/messenger/targets, fake_name, fake_job, attach_fake_photo)
-	message = sanitize_pda_msg(message, sender)
+	message = sanitize_pda_message(message, sender)
 
 	if(!message)
 		return FALSE
 
 	var/fake_photo = attach_fake_photo ? ">:3c" : null
 
-	return send_msg_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
+	return send_message_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
 
-/datum/computer_file/program/messenger/proc/send_msg_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+/datum/computer_file/program/messenger/proc/send_message_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!sender.can_perform_action(computer))
 		return FALSE
 
@@ -563,7 +554,7 @@
 		return FALSE
 
 	// check for jammers
-	if(is_within_jammer_range(src) && !rigged)
+	if(is_within_radio_jammer_range(computer) && !rigged)
 		// different message so people know it's a radio jammer
 		to_chat(sender, span_notice("ERROR: Network unavailable, please try again later."))
 		if(alert_able && !alert_silenced)
@@ -573,10 +564,10 @@
 	// used for logging
 	var/list/stringified_targets = list()
 
-	for(var/datum/computer_file/program/messenger/msgr as anything in targets)
-		stringified_targets += get_messenger_name(msgr)
+	for(var/datum/computer_file/program/messenger/messenger as anything in targets)
+		stringified_targets += get_messenger_name(messenger)
 
-	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
+	var/datum/signal/subspace/messaging/tablet_message/signal = new(computer, list(
 		"ref" = REF(src),
 		"message" = message,
 		"targets" = targets,
@@ -627,7 +618,7 @@
 	selected_image = null
 	return TRUE
 
-/datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
+/datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_message/signal)
 	var/datum/pda_chat/chat = null
 
 	var/is_rigged = signal.data["rigged"]
@@ -640,12 +631,12 @@
 
 	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
-		var/datum/pda_msg/message = new(signal.data["message"], FALSE, signal.data["photo"], signal.data["everyone"])
+		var/datum/pda_message/message = new(signal.data["message"], FALSE, signal.data["photo"], signal.data["everyone"])
 
-		chat = find_chat_by_recp(is_fake_user ? fake_name : sender_ref, is_fake_user)
+		chat = find_chat_by_recipient(is_fake_user ? fake_name : sender_ref, is_fake_user)
 		if(!istype(chat))
 			chat = create_chat(!is_fake_user ? sender_ref : null, fake_name, fake_job)
-		chat.add_msg(message)
+		chat.add_message(message)
 		chat.unread_messages++
 
 		// the recipient (us) currently has a chat with the sender open, so update their ui
@@ -724,5 +715,5 @@
 			var/obj/item/modular_computer/pda/comp = computer
 			comp.explode(usr, from_message_menu = TRUE)
 
-#undef MAX_PDA_MSG_LEN
+#undef MAX_pda_message_LEN
 #undef TEMP_IMAGE_PATH

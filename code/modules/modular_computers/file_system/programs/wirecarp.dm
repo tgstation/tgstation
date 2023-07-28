@@ -29,10 +29,10 @@
 			SSmodular_computers.purge_logs()
 			return TRUE
 		if("toggle_mass_pda")
-			if(!(params["ref"] in GLOB.TabletMessengers))
+			if(!(params["ref"] in GLOB.pda_messengers))
 				return
-			var/datum/computer_file/program/messenger/target_msgr = GLOB.TabletMessengers[params["ref"]]
-			target_msgr.spam_mode = !target_msgr.spam_mode
+			var/datum/computer_file/program/messenger/target_messenger = GLOB.pda_messengers[params["ref"]]
+			target_messenger.spam_mode = !target_messenger.spam_mode
 			return TRUE
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
@@ -55,8 +55,8 @@
 		data["ntnetlogs"] += list(list("entry" = i))
 
 	data["tablets"] = list()
-	for(var/msgr_ref in get_messengers_sorted())
-		var/datum/computer_file/program/messenger/app = GLOB.TabletMessengers[msgr_ref]
+	for(var/messenger_ref in get_messengers_sorted_by_name())
+		var/datum/computer_file/program/messenger/app = GLOB.pda_messengers[messenger_ref]
 		var/obj/item/modular_computer/pda = app.computer
 
 		var/list/tablet_data = list()

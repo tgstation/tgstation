@@ -1,39 +1,39 @@
 import { Stack, Section, Button, Box, Input, Modal } from '../../components';
 import { Component, RefObject, createRef, SFC } from 'inferno';
-import { NtChat, NtMessenger, NtPicture } from './types';
+import { NtMessage, NtMessenger, NtPicture } from './types';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';
 
 type ChatScreenProps = {
-  onReturn: () => void;
-  // if one doesn't exist, assume the other one does
-  chat?: NtChat;
-  temp_msgr?: NtMessenger;
-  storedPhotos?: NtPicture[];
-  selectedPhoto: string | null;
+  canReply: BooleanLike;
+  chatRef?: string;
   isSilicon: BooleanLike;
+  messages: NtMessage[];
+  recipient: NtMessenger;
+  selectedPhoto?: string;
   sendingVirus: BooleanLike;
+  storedPhotos?: NtPicture[];
+  unreads: number;
 };
 
 type ChatScreenState = {
-  msg: string;
-  selectingPhoto: boolean;
   canSend: boolean;
-  previewingImage: string | null;
+  message: string;
+  previewingImage?: string;
+  selectingPhoto: boolean;
 };
 
 const READ_UNREADS_TIME_MS = 3000;
 const SEND_COOLDOWN_MS = 1000;
 
 export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
+  readUnreadsTimeout: NodeJS.Timeout | null = null;
   scrollRef: RefObject<HTMLDivElement>;
-  readUnreadsTimeout: NodeJS.Timeout | null;
 
   state: ChatScreenState = {
-    msg: '',
+    message: '',
     selectingPhoto: false,
     canSend: true,
-    previewingImage: null,
   };
 
   constructor(props: ChatScreenProps) {
@@ -60,32 +60,36 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     _prevState: ChatScreenState,
     _snapshot: any
   ) {
-    if (prevProps.chat?.messages.length !== this.props.chat?.messages.length) {
+    if (prevProps.messages.length !== this.props.messages.length) {
       this.scrollToBottom();
       this.trySetReadTimeout();
     }
   }
 
   componentWillUnmount() {
-    const { act } = useBackend(this.context);
+    if (!this.props.chatRef) {
+      return;
+    }
 
-    const chat = this.props.chat;
-    if (!chat) return;
+    const { act } = useBackend(this.context);
 
     this.tryClearReadTimeout();
 
     act('PDA_saveMessageDraft', {
-      ref: chat.ref,
-      msg: this.state.msg,
+      ref: this.props.chatRef,
+      message: this.state.message,
     });
   }
 
   trySetReadTimeout() {
-    const chat = this.props.chat;
+    if (!this.props.chatRef) {
+      return;
+    }
+    const unreadMessages = this.props.unreads;
 
     this.tryClearReadTimeout();
 
-    if (chat && chat.unread_messages > 0) {
+    if (unreadMessages > 0) {
       this.readUnreadsTimeout = setTimeout(() => {
         this.clearUnreads();
         this.readUnreadsTimeout = null;
@@ -102,8 +106,8 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   clearUnreads() {
     const { act } = useBackend(this.context);
-    const chat = this.props.chat;
-    act('PDA_clearUnreads', { ref: chat!.ref });
+
+    act('PDA_clearUnreads', { ref: this.props.chatRef });
   }
 
   scrollToBottom() {
@@ -124,51 +128,52 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   }
 
   handleSendMessage() {
-    if (this.state.msg === '') return;
-    const { act } = useBackend(this.context);
-    const { temp_msgr, chat } = this.props;
+    if (this.state.message === '') {
+      return;
+    }
 
-    let ref = chat ? chat.ref : temp_msgr!.ref!;
+    const { act } = useBackend(this.context);
+    const { chatRef, recipient } = this.props;
+
+    let ref = chatRef ? chatRef : recipient.ref;
 
     act('PDA_sendMessage', {
       ref: ref,
-      msg: this.state.msg,
+      message: this.state.message,
     });
 
-    this.setState({ msg: '', canSend: false });
+    this.setState({ message: '', canSend: false });
     setTimeout(() => this.setState({ canSend: true }), SEND_COOLDOWN_MS);
   }
 
   handleMessageInput(_: any, val: string) {
-    this.setState({ msg: val });
+    this.setState({ message: val });
   }
 
   render() {
     const { act } = useBackend(this.context);
     const {
-      onReturn,
-      chat,
-      temp_msgr,
+      canReply,
+      messages,
+      recipient,
+      chatRef,
       selectedPhoto,
       storedPhotos,
       sendingVirus,
+      unreads,
     } = this.props;
-    const { msg, canSend, previewingImage, selectingPhoto } = this.state;
+    const { message, canSend, previewingImage, selectingPhoto } = this.state;
 
-    // one or the other has to exist
-    const recp = chat ? chat.recp : temp_msgr!;
-    const msgs = chat ? chat.messages : [];
-
-    let lastOutgoing: boolean = false;
     let filteredMessages: JSX.Element[] = [];
 
-    for (let index = 0; index < msgs.length; index++) {
-      const message = msgs[index];
-      const isSwitch = lastOutgoing !== !!message.outgoing;
-      lastOutgoing = !!message.outgoing;
+    for (let index = 0; index < messages.length; index++) {
+      const message = messages[index];
+      const isSwitch = !(
+        index === 0 || messages[index - 1].outgoing === message.outgoing
+      );
 
       // this code shouldn't be reached if there's no chat
-      if (index === msgs.length - chat!.unread_messages) {
+      if (index === messages.length - unreads) {
         filteredMessages.push(<ChatDivider mt={isSwitch ? 3 : 1} />);
       }
 
@@ -176,7 +181,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         <Stack.Item key={index} mt={isSwitch ? 3 : 1}>
           <ChatMessage
             outgoing={message.outgoing}
-            msg={message.message}
+            message={message.message}
             everyone={message.everyone}
             photoPath={message.photo_path}
             onPreviewImage={
@@ -191,7 +196,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
     let sendingBar: JSX.Element;
 
-    if (chat && !chat.can_reply) {
+    if (!canReply) {
       sendingBar = (
         <Section fill>
           <Box width="100%" italic color="gray" ml={1}>
@@ -247,22 +252,21 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         />
       );
 
-      const buttons =
-        temp_msgr || chat?.can_reply ? (
-          <>
-            <Stack.Item>{attachmentButton}</Stack.Item>
-            <Stack.Item>
-              <Button
-                tooltip="Send"
-                icon="arrow-right"
-                onClick={this.handleSendMessage}
-                disabled={!canSend}
-              />
-            </Stack.Item>
-          </>
-        ) : (
-          ''
-        );
+      const buttons = canReply ? (
+        <>
+          <Stack.Item>{attachmentButton}</Stack.Item>
+          <Stack.Item>
+            <Button
+              tooltip="Send"
+              icon="arrow-right"
+              onClick={this.handleSendMessage}
+              disabled={!canSend}
+            />
+          </Stack.Item>
+        </>
+      ) : (
+        ''
+      );
 
       sendingBar = (
         <Section fill>
@@ -282,13 +286,13 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
               <Stack fill align="center">
                 <Stack.Item grow={1}>
                   <Input
-                    placeholder={`Send message to ${recp.name}...`}
+                    placeholder={`Send message to ${recipient.name}...`}
                     fluid
                     autoFocus
                     width="100%"
                     justify
                     id="input"
-                    value={msg}
+                    value={message}
                     maxLength={1024}
                     onInput={this.handleMessageInput}
                     onEnter={this.handleSendMessage}
@@ -305,18 +309,22 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     return (
       <Stack vertical fill>
         <Section>
-          <Button icon="arrow-left" content="Back" onClick={onReturn} />
-          {chat && (
+          <Button
+            icon="arrow-left"
+            content="Back"
+            onClick={() => act('PDA_viewMessages', { ref: null })}
+          />
+          {chatRef && (
             <>
               <Button
                 icon="box-archive"
                 content="Close chat"
-                onClick={() => act('PDA_closeMessages', { ref: chat.ref })}
+                onClick={() => act('PDA_closeMessages', { ref: chatRef })}
               />
               <Button.Confirm
                 icon="trash-can"
                 content="Delete chat"
-                onClick={() => act('PDA_clearMessages', { ref: chat.ref })}
+                onClick={() => act('PDA_clearMessages', { ref: chatRef })}
               />
             </>
           )}
@@ -327,13 +335,13 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             scrollable
             fill
             fitted
-            title={`${recp.name} (${recp.job})`}
+            title={`${recipient.name} (${recipient.job})`}
             scrollableRef={this.scrollRef}>
             <Stack vertical className="NtosChatLog">
-              {!!chat?.can_reply && (
+              {messages.length > 0 && canReply && (
                 <>
                   <Stack.Item textAlign="center" fontSize={1}>
-                    This is the beginning of your chat with {recp.name}.
+                    This is the beginning of your chat with {recipient.name}.
                   </Stack.Item>
                   <Stack.Divider />
                 </>
@@ -354,7 +362,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                   icon="arrow-left"
                   content="Back"
                   tooltipPosition="left"
-                  onClick={() => this.setState({ previewingImage: null })}
+                  onClick={() => this.setState({ previewingImage: undefined })}
                 />
               }>
               <Box as="img" src={previewingImage} />
@@ -368,18 +376,18 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
 type ChatMessageProps = {
   outgoing: BooleanLike;
-  msg: string;
+  message: string;
   everyone: BooleanLike;
   photoPath?: string;
   onPreviewImage?: () => void;
 };
 
 const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
-  const { msg, everyone, outgoing, photoPath, onPreviewImage } = props;
+  const { message, everyone, outgoing, photoPath, onPreviewImage } = props;
 
   return (
     <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
-      <Box className="NtosChatMessage__content">{msg}</Box>
+      <Box className="NtosChatMessage__content">{message}</Box>
       {photoPath !== null && (
         <Button
           tooltip="View image"

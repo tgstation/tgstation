@@ -20,7 +20,7 @@ export type NtMessenger = {
 
 export type NtChat = {
   ref: string;
-  recp: NtMessenger;
+  recipient: NtMessenger;
   messages: NtMessage[];
   visible: BooleanLike;
   owner_deleted: BooleanLike;

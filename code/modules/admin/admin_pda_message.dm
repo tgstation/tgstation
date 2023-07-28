@@ -13,7 +13,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(!length(GLOB.TabletMessengers))
+	if(!length(GLOB.pda_messengers))
 		to_chat(usr, span_warning("ERROR: There are no users you can send a message to"))
 		return
 
@@ -35,12 +35,12 @@
 /datum/admin_pda_panel/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/available_messengers = list()
-	for(var/msgr_ref in get_messengers_sorted(FALSE))
-		var/datum/computer_file/program/messenger/msgr = GLOB.TabletMessengers[msgr_ref]
-		available_messengers[REF(msgr)] = list(
-			ref = REF(msgr),
-			username = get_messenger_name(msgr),
-			invisible = msgr.invisible,
+	for(var/messenger_ref in get_messengers_sorted_by_name())
+		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+		available_messengers[REF(messenger)] = list(
+			ref = REF(messenger),
+			username = get_messenger_name(messenger),
+			invisible = messenger.invisible,
 		)
 	data["users"] = available_messengers
 	return data
@@ -58,20 +58,20 @@
 			var/spam = params["spam"]
 			var/ref = params["ref"]
 			var/force = params["force"]
-			if(!spam && (ref in GLOB.TabletMessengers))
-				targets += GLOB.TabletMessengers[ref]
+			if(!spam && (ref in GLOB.pda_messengers))
+				targets += GLOB.pda_messengers[ref]
 			else
-				for(var/msgr_ref in get_messengers_sorted(FALSE))
-					var/datum/computer_file/program/messenger/msgr = GLOB.TabletMessengers[msgr_ref]
-					if(msgr.invisible && !params["include_invisible"])
+				for(var/messenger_ref in get_messengers_sorted_by_name())
+					var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+					if(messenger.invisible && !params["include_invisible"])
 						continue
-					targets += msgr
+					targets += messenger
 
 			if(!length(targets))
 				to_chat(usr, span_warning("ERROR: Target is unavailable."))
 				return FALSE
 
-			var/datum/signal/subspace/messaging/tablet_msg/signal = new(null, list(
+			var/datum/signal/subspace/messaging/tablet_message/signal = new(null, list(
 				"fakename" = params["name"],
 				"fakejob" = params["job"],
 				"message" = params["message"],

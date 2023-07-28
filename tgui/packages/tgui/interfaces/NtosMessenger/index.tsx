@@ -7,11 +7,12 @@ import { SFC } from 'inferno';
 
 import { NtChat, NtMessenger, NtPicture } from './types';
 import { ChatScreen } from './ChatScreen';
+import { sortBy } from 'common/collections';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
   is_silicon: BooleanLike;
-  owner: NtMessenger | null;
+  owner?: NtMessenger;
   saved_chats: Record<string, NtChat>;
   messengers: Record<string, NtMessenger>;
   sort_by_job: BooleanLike;
@@ -20,7 +21,7 @@ type NtosMessengerData = {
   sending_and_receiving: BooleanLike;
   open_chat: string;
   stored_photos?: NtPicture[];
-  selected_photo_path: string | null;
+  selected_photo_path?: string;
   on_spam_cooldown: BooleanLike;
   virus_attach: BooleanLike;
   sending_virus: BooleanLike;
@@ -40,15 +41,20 @@ export const NtosMessenger = (_props: any, context: any) => {
 
   let content: JSX.Element;
   if (open_chat !== null) {
+    const openChat = saved_chats[open_chat];
+    const temporaryRecipient = messengers[open_chat];
+
     content = (
       <ChatScreen
-        chat={saved_chats[open_chat]}
-        temp_msgr={messengers[open_chat]}
         storedPhotos={stored_photos}
         selectedPhoto={selected_photo_path}
-        onReturn={() => act('PDA_viewMessages', { ref: null })}
         isSilicon={is_silicon}
         sendingVirus={sending_virus}
+        canReply={openChat ? openChat.can_reply : !!temporaryRecipient}
+        messages={openChat ? openChat.messages : []}
+        recipient={openChat ? openChat.recipient : temporaryRecipient}
+        unreads={openChat ? openChat.unread_messages : 0}
+        chatRef={openChat?.ref}
       />
     );
   } else {
@@ -78,74 +84,58 @@ const ContactsScreen = (_props: any, context: any) => {
     sending_virus,
   } = data;
 
-  const [searchUser, setSearchUser] = useLocalState<string>(
-    context,
-    'searchUser',
-    ''
+  const [searchUser, setSearchUser] = useLocalState(context, 'searchUser', '');
+
+  const sortByUnreads = sortBy<NtChat>((chat) => chat.unread_messages);
+
+  const searchChatByName = createSearch(
+    searchUser,
+    (chat: NtChat) => chat.recipient.name + chat.recipient.job
+  );
+  const searchMessengerByName = createSearch(
+    searchUser,
+    (messenger: NtMessenger) => messenger.name + messenger.job
   );
 
-  // you are not ready for this garbage o7
-
-  let savedChatsArray = Object.values(saved_chats);
-  savedChatsArray.sort((a, b) => b.unread_messages - a.unread_messages);
-
-  if (searchUser.length > 0) {
-    const chatSearch = createSearch(
-      searchUser,
-      (chat: NtChat) => chat.recp.name + chat.recp.job
-    );
-
-    savedChatsArray = savedChatsArray.filter(chatSearch);
-  }
-
-  const chatToButton = (chat) => {
+  const chatToButton = (chat: NtChat) => {
     return (
       <ChatButton
         key={chat.ref}
-        name={`${chat.recp.name} (${chat.recp.job})`}
+        name={`${chat.recipient.name} (${chat.recipient.job})`}
         chatRef={chat.ref}
         unreads={chat.unread_messages}
       />
     );
   };
 
-  const filteredChatButtons = savedChatsArray
+  const messengerToButton = (messenger: NtMessenger) => {
+    return (
+      <ChatButton
+        key={messenger.ref}
+        name={`${messenger.name} (${messenger.job})`}
+        chatRef={messenger.ref!}
+        unreads={0}
+      />
+    );
+  };
+
+  const openChatsArray = sortByUnreads(Object.values(saved_chats)).filter(
+    searchChatByName
+  );
+
+  const filteredChatButtons = openChatsArray
     .filter((c) => c.visible)
     .map(chatToButton);
 
-  const chatButtons = savedChatsArray.map(chatToButton);
-
-  let messengerButtons = [...chatButtons];
-  const filteredMessengers = Object.assign({}, messengers);
-
-  savedChatsArray.forEach((chat) => {
-    if (chat.recp.ref) delete filteredMessengers[chat.recp.ref];
-  });
-
-  let filteredMessengerArray = Object.values(filteredMessengers);
-
-  if (searchUser.length > 0) {
-    const msgrSearch = createSearch(
-      searchUser,
-      (messengers: NtMessenger) => messengers.name + messengers.job
-    );
-
-    filteredMessengerArray = filteredMessengerArray.filter(msgrSearch);
-  }
-
-  messengerButtons = messengerButtons.concat(
-    filteredMessengerArray.map((msgr) => {
-      // assume that the msgr has a ref if they are in GLOB.TabletMessengers
-      return (
-        <ChatButton
-          key={msgr.ref}
-          name={`${msgr.name} (${msgr.job})`}
-          chatRef={msgr.ref!}
-          unreads={0}
-        />
-      );
-    })
-  );
+  const messengerButtons = Object.entries(messengers)
+    .filter(
+      ([ref, messenger]) =>
+        openChatsArray.every((chat) => chat.recipient.ref !== ref) &&
+        searchMessengerByName(messenger)
+    )
+    .map(([_, messenger]) => messenger)
+    .map(messengerToButton)
+    .concat(openChatsArray.filter((chat) => !chat.visible).map(chatToButton));
 
   const noId = !owner && !is_silicon;
 
@@ -178,7 +168,7 @@ const ContactsScreen = (_props: any, context: any) => {
                     ? 'Send / Receive: On'
                     : 'Send / Receive: Off'
                 }
-                onClick={() => act('PDA_sAndR')}
+                onClick={() => act('PDA_toggleSendingAndReceiving')}
               />
               <Button
                 icon="bell"
@@ -241,8 +231,15 @@ const ContactsScreen = (_props: any, context: any) => {
             </Stack>
           </Section>
           <Section fill scrollable>
-            <Stack vertical pb={1}>
-              {messengerButtons.length === 0 && 'No users found'}
+            <Stack vertical pb={1} fill>
+              {messengerButtons.length === 0 && (
+                <Stack align="center" justify="center" fill pl={4}>
+                  <Icon color="gray" name="user-slash" size={2} />
+                  <Stack.Item fontSize={1.5} ml={3}>
+                    No users found.
+                  </Stack.Item>
+                </Stack>
+              )}
               {messengerButtons}
             </Stack>
           </Section>
@@ -266,19 +263,19 @@ type ChatButtonProps = {
 
 const ChatButton: SFC<ChatButtonProps> = (props: ChatButtonProps, ctx: any) => {
   const { act } = useBackend(ctx);
-  const unread_msgs = props.unreads;
-  const has_unreads = unread_msgs > 0;
+  const unreadMessages = props.unreads;
+  const hasUnreads = unreadMessages > 0;
   return (
     <Button
-      icon={has_unreads && 'envelope'}
+      icon={hasUnreads && 'envelope'}
       key={props.chatRef}
       fluid
       onClick={() => {
         act('PDA_viewMessages', { ref: props.chatRef });
       }}>
-      {has_unreads &&
-        `[${unread_msgs <= 9 ? unread_msgs : '9+'} unread message${
-          unread_msgs !== 1 ? 's' : ''
+      {hasUnreads &&
+        `[${unreadMessages <= 9 ? unreadMessages : '9+'} unread message${
+          unreadMessages !== 1 ? 's' : ''
         }]`}{' '}
       {props.name}
     </Button>
@@ -289,7 +286,7 @@ const SendToAllSection = (_: any, context: any) => {
   const { data, act } = useBackend<NtosMessengerData>(context);
   const { on_spam_cooldown } = data;
 
-  const [msg, setMsg] = useLocalState(context, 'everyoneMessage', '');
+  const [message, setmessage] = useLocalState(context, 'everyoneMessage', '');
 
   return (
     <>
@@ -302,12 +299,12 @@ const SendToAllSection = (_: any, context: any) => {
           <Stack.Item>
             <Button
               icon="arrow-right"
-              disabled={on_spam_cooldown || msg === ''}
+              disabled={on_spam_cooldown || message === ''}
               tooltip={on_spam_cooldown && 'Wait before sending more messages!'}
               tooltipPosition="auto-start"
               onClick={() => {
-                act('PDA_sendEveryone', { msg: msg });
-                setMsg('');
+                act('PDA_sendEveryone', { message: message });
+                setmessage('');
               }}>
               Send
             </Button>
@@ -317,9 +314,9 @@ const SendToAllSection = (_: any, context: any) => {
       <Section>
         <TextArea
           height={6}
-          value={msg}
+          value={message}
           placeholder="Send message to everyone..."
-          onInput={(_: any, v: string) => setMsg(v)}
+          onInput={(_: any, v: string) => setmessage(v)}
         />
       </Section>
     </>

@@ -131,10 +131,10 @@
 		return
 
 	// log the signal
-	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
-		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
-		var/datum/data_tablet_msg/logmsg = new(PDAsignal.format_target(), PDAsignal.format_sender(), PDAsignal.format_message(), PDAsignal.format_photo_path())
-		pda_msgs += logmsg
+	if(istype(signal, /datum/signal/subspace/messaging/tablet_message))
+		var/datum/signal/subspace/messaging/tablet_message/PDAsignal = signal
+		var/datum/data_tablet_msg/log_message = new(PDAsignal.format_target(), PDAsignal.format_sender(), PDAsignal.format_message(), PDAsignal.format_photo_path())
+		pda_msgs += log_message
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
 		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
 		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
@@ -172,24 +172,24 @@
 	return copy
 
 // Tablet message signal datum
-/datum/signal/subspace/messaging/tablet_msg/proc/format_target()
+/datum/signal/subspace/messaging/tablet_message/proc/format_target()
 	if (data["everyone"])
 		return "Everyone"
 	var/datum/computer_file/program/messenger/target_app = data["targets"][1]
 	var/obj/item/modular_computer/target = target_app.computer
 	return "[target.saved_identification] ([target.saved_job])"
 
-/datum/signal/subspace/messaging/tablet_msg/proc/format_sender()
+/datum/signal/subspace/messaging/tablet_message/proc/format_sender()
 	var/display_name = get_messenger_name(locate(data["ref"]))
 	return display_name ? display_name : STRINGIFY_PDA_TARGET(data["fakename"], data["fakejob"])
 
-/datum/signal/subspace/messaging/tablet_msg/proc/format_message()
+/datum/signal/subspace/messaging/tablet_message/proc/format_message()
 	return data["message"]
 
-/datum/signal/subspace/messaging/tablet_msg/proc/format_photo_path()
+/datum/signal/subspace/messaging/tablet_message/proc/format_photo_path()
 	return data["photo"]
 
-/datum/signal/subspace/messaging/tablet_msg/broadcast()
+/datum/signal/subspace/messaging/tablet_message/broadcast()
 	for (var/datum/computer_file/program/messenger/app in data["targets"])
 		if(!QDELETED(app))
 			app.receive_message(src)
