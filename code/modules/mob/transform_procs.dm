@@ -378,7 +378,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/crab))
+	if(ispath(MP, /mob/living/basic/crab))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE

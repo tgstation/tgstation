@@ -280,16 +280,15 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(crew_manifest_update)
 		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
 
-	if(user)
-		if(!issilicon(user) && in_range(src, user))
-			user.put_in_hands(computer_id_slot)
-		balloon_alert(user, "removed ID")
-		to_chat(user, span_notice("You remove the card from the card slot."))
+	if(user && !issilicon(user) && in_range(src, user))
+		user.put_in_hands(computer_id_slot)
 	else
 		computer_id_slot.forceMove(drop_location())
 
 	computer_id_slot = null
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	balloon_alert(user, "removed ID")
+	to_chat(user, span_notice("You remove the card from the card slot."))
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc

@@ -225,9 +225,12 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	var/list/test_results = list()
 
+	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
+	SSticker.delay_end = TRUE
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
+	SSticker.delay_end = FALSE
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

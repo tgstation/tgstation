@@ -473,6 +473,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+	SEND_SIGNAL(gone, COMSIG_MOVABLE_EXITED_AREA, src, direction)
 
 	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
