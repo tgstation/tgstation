@@ -116,22 +116,9 @@
 			return
 
 		for(var/obj/machinery/light/evil_light in the_turf)
-			if(evil_light.status == LIGHT_EMPTY) // we cant do anything :(
+			if(evil_light.status == (LIGHT_BURNED || LIGHT_BROKEN)) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE)) // we cant do anything :( // Why in the world is there no get_siemens_coeff proc???
 				to_chat(living_guy, span_warning("[evil_light] sparks weakly for a second."))
 				do_sparks(2, FALSE, evil_light) // hey maybe it'll ignite them
-				return
-
-			// If light blew up already or he's shock-immune, blast some shards at him.
-			if((evil_light.status == (LIGHT_BURNED || LIGHT_BROKEN)) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // Why in the world is there no get_siemens_coeff proc???
-				to_chat(living_guy, span_warning("[evil_light] sparks ominously and explodes in a burst of directed shards!"))
-				do_sparks(4, FALSE, evil_light)
-				for(var/i in 1 to rand(1, 3))
-					var/obj/item/shard/new_shard = new(get_turf(living_guy))
-					new_shard.throw_at(living_guy, 7, 10, null, FALSE)
-					if(!permanent && !prob(66.6))
-						qdel(src)
-				evil_light.status = LIGHT_EMPTY
-				evil_light.update()
 				return
 
 			to_chat(living_guy, span_warning("[evil_light] glows ominously...")) // omenously
