@@ -1342,7 +1342,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		qdel(src)
 		return
 
-	var/engraving = SSpersistence.saved_engravings[rand(1, SSpersistence.saved_engravings.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+	var/engraving = pick_n_take(SSpersistence.saved_engravings)
 	if(!islist(engraving))
 		stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
 		qdel(src)

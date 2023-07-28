@@ -2,9 +2,15 @@
 "aj" = (
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1;
-	spawn_loot_count = 2
+	spawn_loot_count = 2;
+	spawn_loot_chance = 50
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"as" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/storage/photo_album/hall_of_fame,
+/turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "aI" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -33,7 +39,9 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "bT" = (
-/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "cb" = (
@@ -41,7 +49,9 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "ct" = (
-/obj/effect/spawner/random/trash/hobo_squat,
+/obj/effect/spawner/random/trash/hobo_squat{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "cu" = (
@@ -62,7 +72,9 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "dh" = (
-/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "dp" = (
@@ -121,9 +133,7 @@
 /area/shuttle/escape)
 "gE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/tracks{
-	dir = 6
-	},
+/obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "gI" = (
@@ -187,6 +197,13 @@
 "kM" = (
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"kR" = (
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/yellow/corner,
+/turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "la" = (
 /obj/item/reagent_containers/cup/bottle/epinephrine{
@@ -369,6 +386,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"pJ" = (
+/obj/effect/turf_decal/siding,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
 "qd" = (
 /obj/effect/turf_decal/siding{
 	dir = 9
@@ -386,11 +410,15 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "qr" = (
-/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "qx" = (
-/obj/structure/curtain/cloth/fancy,
+/obj/structure/curtain/cloth/fancy{
+	name = "Hall of Fame"
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "qG" = (
@@ -422,14 +450,28 @@
 /turf/closed/wall/mineral/gold,
 /area/shuttle/escape)
 "si" = (
-/obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "so" = (
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"ss" = (
+/obj/effect/turf_decal/siding,
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
+"th" = (
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
 "vi" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/sink/directional/south,
@@ -482,14 +524,8 @@
 "wv" = (
 /obj/machinery/light/directional/south,
 /obj/structure/table/wood/fancy/royalblue,
-/obj/item/camera_film{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/camera{
-	pixel_x = 4
-	},
-/turf/open/floor/mineral/silver,
+/obj/effect/spawner/random/decoration/statue,
+/turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "wK" = (
 /obj/machinery/vending/boozeomat,
@@ -536,8 +572,8 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "ye" = (
-/obj/item/reagent_containers/cup/glass/trophy/gold_cup,
-/turf/open/floor/carpet/red,
+/obj/structure/fluff/arc,
+/turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "yo" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -547,8 +583,8 @@
 "yy" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table/wood/fancy/royalblue,
-/obj/item/storage/photo_album/hall_of_fame,
-/turf/open/floor/mineral/silver,
+/obj/effect/spawner/random/decoration/statue,
+/turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "yH" = (
 /obj/structure/table,
@@ -576,6 +612,13 @@
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"zy" = (
+/obj/effect/turf_decal/siding,
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/shuttle/escape)
 "zG" = (
 /obj/effect/turf_decal/siding{
 	dir = 6
@@ -596,7 +639,7 @@
 /area/shuttle/escape)
 "AA" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "AS" = (
 /obj/effect/turf_decal/siding,
@@ -625,10 +668,10 @@
 	},
 /area/shuttle/escape)
 "Cz" = (
-/obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/machinery/door/airlock/external,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "Dv" = (
@@ -637,7 +680,6 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DA" = (
-/obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "DO" = (
@@ -652,7 +694,7 @@
 /area/shuttle/escape)
 "Ei" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "EF" = (
 /obj/item/kirbyplants/organic/plant16,
@@ -719,7 +761,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "HZ" = (
-/turf/open/floor/iron/dark,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Ih" = (
 /obj/machinery/power/shuttle_engine/propulsion{
@@ -765,6 +807,11 @@
 /area/shuttle/escape)
 "Mb" = (
 /turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"Mj" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/hourglass,
+/turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "MO" = (
 /obj/effect/turf_decal/siding/wood{
@@ -878,6 +925,15 @@
 	pixel_y = 2
 	},
 /turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"PM" = (
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "PP" = (
 /obj/structure/chair/comfy/shuttle,
@@ -1327,9 +1383,9 @@ Bj
 Bj
 Bj
 mx
-Yp
-Yp
-Yp
+HZ
+HZ
+HZ
 mx
 Bj
 Bj
@@ -1352,9 +1408,9 @@ YF
 aj
 yc
 mx
-Yp
-Yp
-Yp
+HZ
+HZ
+HZ
 mx
 yc
 aj
@@ -1377,9 +1433,9 @@ YF
 YF
 yc
 mx
-Yp
+HZ
 AA
-Yp
+HZ
 mx
 yc
 YF
@@ -1426,11 +1482,11 @@ Bj
 Bj
 mz
 mz
-Xr
+mZ
 vD
 Sl
 lr
-Xr
+mZ
 mz
 mz
 Bj
@@ -1450,13 +1506,13 @@ mz
 Bj
 mz
 mz
-Xr
-mZ
+aS
+it
 jS
 Xv
 AS
-mZ
-Xr
+Bb
+rH
 mz
 mz
 Bj
@@ -1475,13 +1531,13 @@ mz
 yc
 mz
 Xr
-aS
-it
-jS
+bR
+YN
+kR
 qr
-AS
-Bb
-rH
+ss
+YN
+qG
 Xr
 mz
 yc
@@ -1501,11 +1557,11 @@ yc
 FZ
 yy
 bR
-YN
-jS
+as
+th
 ye
-AS
-YN
+pJ
+Mj
 qG
 wv
 Ab
@@ -1525,13 +1581,13 @@ mz
 yc
 mz
 Xr
-qn
-MS
-jS
+bR
+YN
+PM
 bT
-AS
-kz
-LL
+zy
+YN
+qG
 Xr
 mz
 yc
@@ -1550,13 +1606,13 @@ mz
 Bj
 mz
 mz
-Xr
-mZ
+qn
+MS
 jS
 Xv
 AS
-mZ
-Xr
+kz
+LL
 mz
 mz
 Bj
@@ -1576,11 +1632,11 @@ Bj
 Bj
 mz
 mz
-Xr
+mZ
 vZ
 dr
 Pj
-Xr
+mZ
 mz
 mz
 Bj

@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(persistence)
 	var/successfully_loaded_engravings = 0
 
 	for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
-		var/engraving = saved_engravings[rand(1, saved_engravings.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+		var/engraving = pick_n_take(saved_engravings)
 		if(!islist(engraving))
 			stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
 			continue
