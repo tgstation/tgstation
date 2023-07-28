@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "guillotines no longer runtime when logging after decapping someone if they buckle AFTER the blade starts to drop"
