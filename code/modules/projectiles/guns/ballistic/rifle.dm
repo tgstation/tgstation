@@ -1,6 +1,8 @@
 /obj/item/gun/ballistic/rifle
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = 'sakhno'
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
@@ -45,7 +47,6 @@
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		Despite the terrible nature of the modification, the weapon seems otherwise in good condition."
 
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "sakhno"
 	inhand_icon_state = "sakhno"
 	worn_icon_state = "sakhno"
@@ -210,7 +211,6 @@
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "enchanted_rifle"
 	inhand_icon_state = "enchanted_rifle"
 	worn_icon_state = "enchanted_rifle"
