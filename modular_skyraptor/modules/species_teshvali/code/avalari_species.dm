@@ -27,8 +27,8 @@
 	payday_modifier = 1 //we're going to be doing a master_files override to universally set payday mod to 1 bcuz it's still some serious wtfery
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	disliked_food = SEAFOOD | JUNKFOOD
-	liked_food = GORE | MEAT
+	//disliked_food = SEAFOOD | JUNKFOOD
+	//liked_food = GORE | MEAT
 	//normal digilegs vs. non-digilegs do not apply here since teshis have completely unique legs
 
 	ass_image = 'icons/ass/asslizard.png' //not even bothering to change this, fuck you
