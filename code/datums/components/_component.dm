@@ -128,22 +128,24 @@
 /datum/component/proc/_RemoveFromParent()
 	var/datum/parent = src.parent
 	var/list/parents_components = parent._datum_components
-	for(var/I in _GetInverseTypeList())
-		var/list/components_of_type = parents_components[I]
 
-		if(length(components_of_type)) //
-			var/list/subtracted = components_of_type - src
+	if(parents_components)
+		for(var/I in _GetInverseTypeList())
+			var/list/components_of_type = parents_components[I]
 
-			if(subtracted.len == 1) //only 1 guy left
-				parents_components[I] = subtracted[1] //make him special
-			else
-				parents_components[I] = subtracted
+			if(length(components_of_type)) //
+				var/list/subtracted = components_of_type - src
 
-		else //just us
-			parents_components -= I
+				if(subtracted.len == 1) //only 1 guy left
+					parents_components[I] = subtracted[1] //make him special
+				else
+					parents_components[I] = subtracted
 
-	if(!parents_components.len)
-		parent._datum_components = null
+			else //just us
+				parents_components -= I
+
+		if(!parents_components.len)
+			parent._datum_components = null
 
 	UnregisterFromParent()
 
