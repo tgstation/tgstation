@@ -20,7 +20,7 @@
 
 /datum/component/tree_climber/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE))
+	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE, COMSIG_ATOM_EXAMINE))
 
 /datum/component/tree_climber/proc/climb_tree(mob/living/source, atom/target)
 	SIGNAL_HANDLER
