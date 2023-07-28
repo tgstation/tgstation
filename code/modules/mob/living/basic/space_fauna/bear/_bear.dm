@@ -126,6 +126,18 @@
 	attack_verb_continuous = "slaps"
 	///how much we regenerate health
 	var/heal_amount = 20
+/mob/living/basic/bear/butter/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(regenerate_health))
+
+/mob/living/basic/bear/butter/proc/regenerate_health(mob/source) //Heals butter bear really fast when he takes damage.
+	SIGNAL_HANDLER
+
+	if(stat == DEAD)
+		return
+
+	if(health < maxHealth)
+		heal_overall_damage(heal_amount)
 
 /mob/living/basic/bear/butter/attack_hand(mob/living/user, list/modifiers) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	. = ..()
