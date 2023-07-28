@@ -241,8 +241,10 @@
 				 * in average, it should be 37.5% of the max amount, rounded up to the nearest int,
 				 * tho the max boundary can be as low/high as 50%/100%
 				 */
-				var/max_amount = CEILING(product_record.amount/2, product_record.amount)
+				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
 				product_record.amount = rand(0, max_amount)
+			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
+				tilt(loc)
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 
