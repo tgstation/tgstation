@@ -44,7 +44,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/tree_climber)
+	AddComponent(/datum/component/tree_climber, climbing_distance = 15)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/bear/Login()
