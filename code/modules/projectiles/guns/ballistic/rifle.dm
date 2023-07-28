@@ -1,11 +1,7 @@
 /obj/item/gun/ballistic/rifle
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	icon_state = "sakhno"
 	w_class = WEIGHT_CLASS_BULKY
-	inhand_icon_state = "sakhno"
-	worn_icon_state = "sakhno"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_LOCKING
@@ -48,15 +44,19 @@
 	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		Despite the terrible nature of the modification, the weapon seems otherwise in good condition."
-	weapon_weight = WEAPON_HEAVY
+
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "sakhno"
 	inhand_icon_state = "sakhno"
+	worn_icon_state = "sakhno"
+
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
 	knife_x_offset = 37
 	knife_y_offset = 14
 	can_be_sawn_off = TRUE
+	weapon_weight = WEAPON_HEAVY
 	var/jamming_chance = 20
 	var/unjam_chance = 10
 	var/jamming_increment = 5
@@ -130,6 +130,7 @@
 	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
+	name = "\improper Sakhno M2442 Army"
 	desc = "A modification of the Sakhno Precision Rifle, \"Sakhno M2442 Army\" is stamped into the side. \
 		It is unknown what army this pattern of rifle was made for or if it was ever even used by an army \
 		of any sort. What you can discern, however, is that its previous owner did not treat the weapon well. \
@@ -209,6 +210,7 @@
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "enchanted_rifle"
 	inhand_icon_state = "enchanted_rifle"
 	worn_icon_state = "enchanted_rifle"
