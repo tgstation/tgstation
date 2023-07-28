@@ -3,7 +3,8 @@
 	name = "\improper Akula"
 	plural_form = "\improper Akulae"
 	id = SPECIES_AKULA
-	species_traits = list(
+	//old traits as we migrate to the new setup
+	/*species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
 		HAIR,
@@ -11,9 +12,13 @@
 		USE_TRICOLOR_ALPHA,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_RESISTCOLD,
-	)
+	)*/
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_TACKLING_TAILED_DEFENDER,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESISTCOLD,
+		USE_TRICOLOR_ALPHA,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	species_language_holder = /datum/language_holder/synthetic
@@ -36,8 +41,9 @@
 	payday_modifier = 1 //we're going to be doing a master_files override to universally set payday mod to 1 bcuz it's still some serious wtfery
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	disliked_food = JUNKFOOD | BUGS
-	liked_food = MEAT | SEAFOOD
+	// NOTE- subtype tongue/ and add mutanttongue to replace these later
+	//disliked_food = JUNKFOOD | BUGS
+	//liked_food = MEAT | SEAFOOD
 	//scugs have forced digi thru custom legs, this is necessary until we rework the digi_customization setting to allow for other digileg types
 	//digitigrade_customization = DIGITIGRADE_FORCED
 

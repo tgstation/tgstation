@@ -3,17 +3,11 @@
 	name = "\improper Lizardperson"
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
-	// uh oh
-	/*species_traits = list(
-		MUTCOLORS,
-		EYECOLOR,
-		LIPS,
-		USE_TRICOLOR_ALPHA, /// SKYRAPTOR ADDITION
-	)*/
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
+		USE_TRICOLOR_ALPHA, /// SKYRAPTOR ADDITIONS
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("bodymarks_lizard" = "None", "legs" = "Normal Legs") //SKYRAPTOR EDITS: bodymarks_lizard from body_markings, new lizard subtypes for stability
