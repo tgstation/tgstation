@@ -15,6 +15,7 @@ have ways of interacting with a specific mob and control it.
 	)
 	blackboard = list(
 		BB_MONKEY_AGGRESSIVE = FALSE,
+		BB_MONKEY_TRIPPING = TRUE,
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
 		BB_MONKEY_ENEMIES = list(),
 		BB_MONKEY_BLACKLISTITEMS = list(),
@@ -53,7 +54,9 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
+	pawn = new_pawn
 	set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE) //Angry cunt
+	set_trip_mode(mode = FALSE)
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))

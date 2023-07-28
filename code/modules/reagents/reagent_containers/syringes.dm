@@ -255,6 +255,11 @@
 /obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
 	return
 
+/obj/item/reagent_containers/syringe/crude/tribal/Initialize(mapload)
+	list_reagents = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity, /datum/reagent/ants)
+	// Used by monkeys from the elemental plane of bananas. Reagents come from bungo pit, death berries, destroying angel, jupiter cups, and jumping beans.
+	. = ..()
+
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"
 	desc = "Contains crikey juice - makes any gold core create the most deadly companions in the world."

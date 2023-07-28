@@ -38,7 +38,7 @@
 
 /datum/action/cooldown/spell/apply_mutations/mutate
 	name = "Mutate"
-	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
+	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while. Unlike the lesser nonmagical version, it works on non-humans and mantains hand dexterity as well!"
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 	spell_max_level = 3
@@ -46,5 +46,5 @@
 	invocation = "BIRUZ BENNAR"
 	invocation_type = INVOCATION_SHOUT
 
-	mutations_to_add = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk)
+	mutations_to_add = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk/wizardly)
 	mutation_duration = 30 SECONDS
