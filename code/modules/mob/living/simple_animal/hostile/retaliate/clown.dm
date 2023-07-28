@@ -41,7 +41,9 @@
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		var/static/list/injection_range = list(1, 5)
+		var/static/list/injection_range
+		if(!injection_range)
+			injection_range = string_numbers_list(list(1, 5))
 		AddElement(/datum/element/venomous, attack_reagent, injection_range)
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
@@ -140,7 +142,7 @@
 /datum/action/cooldown/exquisite_bunch
 	name = "Exquisite Bunch"
 	desc = "Pluck your finest bunch of bananas from your head. This bunch is especially nutrious to monkeykind. A gentle tap will trigger an explosive ripening process."
-	button_icon = 'icons/obj/hydroponics/harvest.dmi'
+	button_icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	cooldown_time = 60 SECONDS
 	button_icon_state = "banana_bunch"
 	background_icon_state = "bg_nature"

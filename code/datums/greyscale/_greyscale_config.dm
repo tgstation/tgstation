@@ -236,9 +236,8 @@
 /// Actually create the icon and color it in, handles caching
 /datum/greyscale_config/proc/Generate(color_string, icon/last_external_icon)
 	var/key = color_string
-	var/icon/new_icon = icon_cache[key]
-	if(new_icon)
-		return icon(new_icon)
+	if(key in icon_cache) /// SKYRAPTOR EDIT: this somehow breaks horribly now and i do not know why
+		return icon(icon_cache[key])
 
 	var/icon/icon_bundle = GenerateBundle(color_string, last_external_icon=last_external_icon)
 	icon_bundle = fcopy_rsc(icon_bundle)

@@ -95,7 +95,7 @@
 	cap_icon_state = "beaker_cap"
 
 /obj/item/reagent_containers/cup/beaker/jar
-	fill_icon = 'icons/obj/reagentfillings.dmi'
+	fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	cap_on = FALSE
 	can_have_cap = FALSE
 	cap_icon_state = null
@@ -132,7 +132,7 @@
 	icon = 'modular_skyraptor/modules/aesthetics/shiptest_chemcontainers/shipchems.dmi'
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle
-	fill_icon = 'icons/obj/reagentfillings.dmi'
+	fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
 	cap_on = FALSE
 	can_have_cap = FALSE

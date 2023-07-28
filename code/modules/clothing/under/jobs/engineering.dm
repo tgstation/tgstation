@@ -3,11 +3,10 @@
 /obj/item/clothing/under/rank/engineering
 	icon = 'icons/obj/clothing/under/engineering.dmi'
 	worn_icon = 'icons/mob/clothing/under/engineering.dmi'
-	armor_type = /datum/armor/rank_engineering
+	armor_type = /datum/armor/clothing_under/rank_engineering
 	resistance_flags = NONE
 
-/datum/armor/rank_engineering
-	bio = 10
+/datum/armor/clothing_under/rank_engineering
 	fire = 60
 	acid = 20
 
@@ -16,10 +15,9 @@
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	inhand_icon_state = "gy_suit"
-	armor_type = /datum/armor/engineering_chief_engineer
+	armor_type = /datum/armor/clothing_under/engineering_chief_engineer
 
-/datum/armor/engineering_chief_engineer
-	bio = 10
+/datum/armor/clothing_under/engineering_chief_engineer
 	fire = 80
 	acid = 40
 

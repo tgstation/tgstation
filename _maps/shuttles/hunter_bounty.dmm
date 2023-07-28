@@ -5,11 +5,6 @@
 "b" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
-"c" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external/ruin,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
 "d" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -22,17 +17,15 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/hunter)
-"f" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external/ruin,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
 "g" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
 "h" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "i" = (
@@ -48,10 +41,8 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
 "l" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external/ruin,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "m" = (
@@ -111,10 +102,6 @@
 /obj/item/phone,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
-"x" = (
-/obj/structure/table,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
 "y" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -135,16 +122,6 @@
 /area/shuttle/hunter)
 "B" = (
 /obj/machinery/launchpad,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"C" = (
-/obj/item/multitool,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"D" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "E" = (
@@ -172,37 +149,11 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
-"J" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical,
-/turf/open/floor/pod/light,
-/area/shuttle/hunter)
 "K" = (
 /obj/machinery/suit_storage_unit/standard_unit{
 	storage_type = /obj/item/tank/internals/oxygen/yellow
 	},
 /turf/open/floor/pod/light,
-/area/shuttle/hunter)
-"L" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external/ruin,
-/obj/docking_port/stationary{
-	dwidth = 11;
-	height = 16;
-	shuttle_id = "pirate_home";
-	name = "Deep Space";
-	width = 17
-	},
-/obj/docking_port/mobile{
-	shuttle_id = "huntership";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "hunter shuttle";
-	rechargeTime = 1800
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
 /area/shuttle/hunter)
 "M" = (
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/armor{
@@ -210,11 +161,98 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
+"N" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"O" = (
+/obj/machinery/light/floor,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
 "P" = (
 /obj/structure/fluff/empty_sleeper{
 	dir = 1
 	},
 /turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"Q" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"R" = (
+/obj/structure/table,
+/obj/item/pinpointer/shuttle{
+	pixel_y = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"S" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"T" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"U" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/ruin,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"V" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/ruin,
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	name = "Deep Space";
+	shuttle_id = "pirate_home";
+	width = 17
+	},
+/obj/docking_port/mobile{
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"W" = (
+/obj/machinery/suit_storage_unit/standard_unit{
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"X" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"Y" = (
+/obj/structure/table,
+/obj/item/multitool,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "Z" = (
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth,
@@ -301,30 +339,30 @@ b
 b
 g
 b
-b
+T
 s
-C
+s
+s
 G
-b
 b
 g
 b
 b
 "}
 (7,1,1) = {"
-f
-d
+U
 h
 j
-l
+Q
+s
 t
-D
+X
 H
-c
+s
+N
 d
-h
-j
-L
+l
+V
 "}
 (8,1,1) = {"
 b
@@ -363,7 +401,7 @@ i
 k
 n
 w
-x
+Y
 s
 K
 b
@@ -376,11 +414,11 @@ a
 a
 a
 b
-J
-x
+S
+R
 E
 s
-K
+W
 b
 a
 a
@@ -423,7 +461,7 @@ a
 i
 p
 s
-s
+O
 s
 P
 i

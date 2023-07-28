@@ -61,9 +61,17 @@
 			balloon_alert(user, "need ten lengths of cable!")
 			return
 
+		var/terminal_cable_layer = cable_layer // Default to machine's cable layer
+		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			if(isnull(choice))
+				return
+			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+
 		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
 		balloon_alert(user, "adding cables to the frame...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+
 		if(!do_after(user, 20, target = src))
 			return
 		if(installing_cable.get_amount() < 10 || !installing_cable)
@@ -71,13 +79,13 @@
 		if(terminal || !opened || !has_electronics)
 			return
 		var/turf/our_turf = get_turf(src)
-		var/obj/structure/cable/cable_node = our_turf.get_cable_node()
+		var/obj/structure/cable/cable_node = our_turf.get_cable_node(terminal_cable_layer)
 		if(prob(50) && electrocute_mob(usr, cable_node, cable_node, 1, TRUE))
 			do_sparks(5, TRUE, src)
 			return
 		installing_cable.use(10)
 		balloon_alert(user, "cables added to the frame")
-		make_terminal()
+		make_terminal(terminal_cable_layer)
 		terminal.connect_to_network()
 		return
 
@@ -263,7 +271,7 @@
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
 
-/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE)
+/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
 	if(machine_stat & BROKEN && atom_integrity <= 0)
 		if(sound_effect)

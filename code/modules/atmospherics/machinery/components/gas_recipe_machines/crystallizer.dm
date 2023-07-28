@@ -4,7 +4,7 @@
 #define HIGH_CONDUCTIVITY_RATIO 0.95
 
 /obj/machinery/atmospherics/components/binary/crystallizer
-	icon = 'icons/obj/atmospherics/components/machines.dmi'
+	icon = 'icons/obj/machines/atmospherics/machines.dmi'
 	icon_state = "crystallizer-off"
 	base_icon_state = "crystallizer"
 	name = "crystallizer"

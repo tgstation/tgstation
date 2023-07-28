@@ -3,18 +3,22 @@
 	name = "\improper Talon IV Moth"
 	plural_form = "\improper Tal4 Moths"
 	id = SPECIES_TALONMOTH
-	species_traits = list(
+	//old stuff
+	/*species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
 		HAIR,
 		LIPS,
 		USE_TRICOLOR_ALPHA,
 		USE_TRICOLOR_BETA,
-	)
+	)*/
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_WINGED_ATTACKER,
-		//TRAIT_TACKLING_TAILED_DEFENDER,
+		TRAIT_TACKLING_TAILED_DEFENDER,
+		USE_TRICOLOR_ALPHA,
+		USE_TRICOLOR_BETA,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	species_language_holder = /datum/language_holder/synthetic
@@ -26,6 +30,7 @@
 		/obj/item/organ/external/horns/slugcat = "Standard",
 	)
 
+	//UGH WE NEED TO SUBTYPE THIS
 	mutanttongue = /obj/item/organ/internal/tongue/moth
 	mutanteyes = /obj/item/organ/internal/eyes/talonmoth
 	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
@@ -33,9 +38,9 @@
 	payday_modifier = 1 //we're going to be doing a master_files override to universally set payday mod to 1 bcuz it's still some serious wtfery
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = VEGETABLES | DAIRY | CLOTH | MEAT
-	disliked_food = GROSS | BUGS | GORE
-	toxic_food = FRUIT | RAW | SEAFOOD
+	//liked_food = VEGETABLES | DAIRY | CLOTH | MEAT
+	//disliked_food = GROSS | BUGS | GORE
+	//toxic_food = FRUIT | RAW | SEAFOOD
 	//scugs have forced digi thru custom legs, this is necessary until we rework the digi_customization setting to allow for other digileg types
 	//digitigrade_customization = DIGITIGRADE_FORCED
 

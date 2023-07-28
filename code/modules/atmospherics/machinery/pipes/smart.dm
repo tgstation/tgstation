@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)))
 //Smart pipes... or are they?
 /obj/machinery/atmospherics/pipe/smart
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
+	icon = 'icons/obj/pipes_n_cables/simple.dmi'
 	icon_state = "pipe11-3"
 
 	name = "pipe"
@@ -67,13 +67,13 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 
 //mapping helpers
 /obj/machinery/atmospherics/pipe/smart/simple
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
+	icon = 'icons/obj/pipes_n_cables/simple.dmi'
 	icon_state = "pipe11-3"
 
 /obj/machinery/atmospherics/pipe/smart/manifold
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
+	icon = 'icons/obj/pipes_n_cables/manifold.dmi'
 	icon_state = "manifold-3"
 
 /obj/machinery/atmospherics/pipe/smart/manifold4w
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
+	icon = 'icons/obj/pipes_n_cables/manifold.dmi'
 	icon_state = "manifold4w-3"

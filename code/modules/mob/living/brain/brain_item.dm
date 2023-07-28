@@ -9,7 +9,7 @@
 	plane = GAME_PLANE_UPPER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
-	organ_flags = ORGAN_VITAL
+	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -379,8 +379,22 @@
 	desc = "This collection of sparkling gems somehow allows a golem to think."
 	icon_state = "adamantine_resonator"
 	color = COLOR_GOLEM_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+
+/obj/item/organ/internal/brain/lustrous
+	name = "lustrous brain"
+	desc = "This is your brain on bluespace dust. Not even once."
+	icon_state = "random_fly_4"
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
+
+/obj/item/organ/internal/brain/lustrous/before_organ_replacement(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/obj/item/organ/internal/brain/lustrous/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
@@ -507,7 +521,7 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	if(!owner)
 		return

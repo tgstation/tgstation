@@ -2,6 +2,6 @@
 	name = "pipes"
 
 /datum/asset/spritesheet/pipes/create_spritesheets()
-	for (var/each in list('modular_skyraptor/modules/aesthetics/moremospherics/icons/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi')) ///SKYRAPTOR EDIT: pipe_item redir to aestheticsmodule
+	 ///SKYRAPTOR EDIT: pipe_item redir to aestheticsmodule
+	for (var/each in list('modular_skyraptor/modules/aesthetics/moremospherics/icons/pipes/pipe_item.dmi', 'icons/obj/pipes_n_cables/disposal.dmi', 'icons/obj/pipes_n_cables/transit_tube.dmi', 'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi'))
 		InsertAll("", each, GLOB.alldirs)
-	Insert(sprite_name = "gsensor1", I = 'icons/obj/stationobjs.dmi', icon_state = "gsensor1")

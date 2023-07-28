@@ -61,6 +61,11 @@
 	description = "The stench of rotting carcasses is unbearable!"
 	mood_change = -12
 
+/datum/mood_event/disgust/dirty_food
+	description = "It was too dirty to eat..."
+	mood_change = -6
+	timeout = 4 MINUTES
+
 //Generic needs events
 /datum/mood_event/favorite_food
 	description = "I really enjoyed eating that."

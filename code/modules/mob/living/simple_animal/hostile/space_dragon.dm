@@ -273,6 +273,7 @@
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	var/range = 20
 	var/list/turfs = list()
+	var/list/hit_list_parameter = list(src)
 	turfs = line_target(0, range, at)
 	var/delayFire = -1.0
 	for(var/turf/T in turfs)
@@ -284,7 +285,7 @@
 			if(D.density)
 				return
 		delayFire += 1.0
-		addtimer(CALLBACK(src, PROC_REF(dragon_fire_line), T), delayFire)
+		addtimer(CALLBACK(src, PROC_REF(dragon_fire_line), T, hit_list_parameter), delayFire)
 
 /**
  * What occurs on each tile to actually create the fire.
@@ -294,10 +295,9 @@
  * It can only hit any given target once.
  * Arguments:
  * * turf/T - The turf to trigger the effects on.
+ * * list/hit_list - The list of targets that have already been hit in the fire_stream.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/fire_turf)
-	var/list/hit_list = list()
-	hit_list += src
+/mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/fire_turf, list/hit_list)
 	new /obj/effect/hotspot(fire_turf)
 	fire_turf.hotspot_expose(700,50,1)
 	for(var/mob/living/living_target in fire_turf.contents)

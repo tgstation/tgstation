@@ -1,18 +1,15 @@
-#define REGENERATION_DELAY 60  // After taking damage, how long it takes for automatic regeneration to begin
+#define REGENERATION_DELAY 6 SECONDS  // After taking damage, how long it takes for automatic regeneration to begin
 
 /datum/species/zombie
 	// 1spooky
 	name = "High-Functioning Zombie"
 	id = SPECIES_ZOMBIE
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
-	species_traits = list(
-		NOZOMBIE,
-		NOTRANSSTING,
-	)
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
+		TRAIT_NO_ZOMBIFY,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
@@ -21,12 +18,13 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
-		TRAIT_NOMETABOLISM,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		TRAIT_NO_TRANSFORMATION_STING,
 		// HIGH FUNCTIONING UNIQUE
 		TRAIT_NOBLOOD,
 		TRAIT_SUCCUMB_OVERRIDE,
@@ -36,9 +34,6 @@
 	mutantliver = null
 	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
-	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW | GORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
@@ -51,6 +46,15 @@
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/zombie,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
+	)
+
+	/// Spooky growls we sometimes play while alive
+	var/static/list/spooks = list(
+		'sound/hallucinations/growl1.ogg',
+		'sound/hallucinations/growl2.ogg',
+		'sound/hallucinations/growl3.ogg',
+		'sound/hallucinations/veryfar_noise.ogg',
+		'sound/hallucinations/wail.ogg',
 	)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
@@ -88,16 +92,11 @@
 	name = "Infectious Zombie"
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
-	armor = 20 // 120 damage to KO a zombie, which kills it
-	speedmod = 1.6
+	damage_modifier = 20 // 120 damage to KO a zombie, which kills it
 	mutanteyes = /obj/item/organ/internal/eyes/zombie
 	mutantbrain = /obj/item/organ/internal/brain/zombie
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	/// The rate the zombies regenerate at
-	var/heal_rate = 0.5
-	/// The cooldown before the zombie can start regenerating
-	COOLDOWN_DECLARE(regen_cooldown)
 
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
@@ -109,7 +108,7 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
-		TRAIT_NOMETABOLISM,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
@@ -120,13 +119,27 @@
 		TRAIT_STABLELIVER, // Not necessary but for consistency with above
 	)
 
-/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+	// Infectious zombies have slow legs
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/zombie,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/zombie,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie/infectious,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie/infectious,
+	)
+	/// The rate the zombies regenerate at
+	var/heal_rate = 0.5
+	/// The cooldown before the zombie can start regenerating
+	COOLDOWN_DECLARE(regen_cooldown)
 
-/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
 	. = ..()
-	qdel(C.GetComponent(/datum/component/mutant_hands))
+	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+
+/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
+	. = ..()
+	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -183,7 +196,6 @@
 	name = "\improper Human"
 	id = SPECIES_ZOMBIE_KROKODIL
 	examine_limb_id = SPECIES_HUMAN
-	sexes = 0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	bodypart_overrides = list(
@@ -194,6 +206,5 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
-
 
 #undef REGENERATION_DELAY
