@@ -8,19 +8,21 @@
 	var/obj/current_tree
 
 /datum/component/tree_climber/Initialize(climbing_distance = 20)
-	. = ..()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.climbing_distance = climbing_distance
 
 /datum/component/tree_climber/RegisterWithParent()
-	. = ..()
 	RegisterSignals(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE), PROC_REF(climb_tree))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/tree_climber/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE, COMSIG_ATOM_EXAMINE))
+
+/datum/component/tree_climber/Destroy()
+	if(current_tree)
+		handle_climb_tree(parent, current_tree) //remove mob from tree and handle deletion of signals
+	return ..()
 
 /datum/component/tree_climber/proc/climb_tree(mob/living/source, atom/target)
 	SIGNAL_HANDLER
@@ -72,20 +74,14 @@
 	current_tree = target_tree
 	register_tree_signals()
 
-/datum/component/tree_climber/proc/climber_moved(mob/living/source)
+/datum/component/tree_climber/proc/remove_from_tree()
 	SIGNAL_HANDLER
 
-	handle_climb_tree(source, current_tree)
-
-/datum/component/tree_climber/proc/on_tree_delete()
-	SIGNAL_HANDLER
-
-	var/mob/living/climber = parent
-	handle_climb_tree(climber, current_tree)
+	handle_climb_tree(parent, current_tree)
 
 /datum/component/tree_climber/proc/register_tree_signals()
-	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(climber_moved))
-	RegisterSignal(current_tree, COMSIG_PREQDELETED, PROC_REF(on_tree_delete))
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(remove_from_tree))
+	RegisterSignal(current_tree, COMSIG_PREQDELETED, PROC_REF(remove_from_tree))
 
 /datum/component/tree_climber/proc/remove_tree_signals()
 	UnregisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE)
