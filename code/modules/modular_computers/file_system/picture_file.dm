@@ -1,14 +1,3 @@
-/// Used for finding a valid name to assign a picture to.
-/// Please don't touch this.
-var/static/next_ntos_picture_id = 0
-
-/// Returns a name which a /datum/picture can be assigned to.
-/// Use this function to get asset names and to avoid cache duplicates/overwriting.
-/proc/get_next_ntos_picture_name()
-	var/next_uid = next_ntos_picture_id
-	next_ntos_picture_id++
-	return "ntos_picture_[next_uid].png"
-
 /**
  * PNG file type
  * Stores a picture which can be used by other programs.
@@ -38,7 +27,7 @@ var/static/next_ntos_picture_id = 0
 /datum/computer_file/picture/proc/assign_path()
 	if(!isnull(picture_name))
 		return
-	picture_name = get_next_ntos_picture_name()
+	picture_name = SSmodular_computers.get_next_picture_name()
 	SSassets.transport.register_asset(picture_name, stored_picture.picture_image)
 
 /datum/computer_file/picture/clone(rename = FALSE)

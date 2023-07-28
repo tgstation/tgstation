@@ -457,7 +457,7 @@
 	var/photo_asset_key = selected_image
 	if(photo_asset_key == TEMP_IMAGE_PATH(REF(src)))
 		var/datum/asset_cache_item/img_asset = SSassets.cache[photo_asset_key]
-		photo_asset_key = get_next_ntos_picture_name()
+		photo_asset_key = SSmodular_computers.get_next_picture_name()
 		SSassets.transport.register_asset(photo_asset_key, img_asset.resource, img_asset.hash)
 
 	// our sender targets
