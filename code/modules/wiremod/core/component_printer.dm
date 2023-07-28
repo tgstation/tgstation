@@ -312,9 +312,9 @@
 
 	///The internal material bus
 	var/datum/component/remote_materials/materials
-	//List of designs scanned and saved
+	///List of designs scanned and saved
 	var/list/scanned_designs = list()
-	//Constant material cost per component
+	///Constant material cost per component
 	var/cost_per_component = HALF_SHEET_MATERIAL_AMOUNT
 	///Cost efficiency of this machine
 	var/efficiency_coeff = 1
