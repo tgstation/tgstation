@@ -1128,3 +1128,67 @@
   zeroisthebiggay:
   - balance: Huzzah! Interdyne Associates have finally upgraded their medborgs' firmware.
       They'll now have bonesetters and bonegel available!
+2023-07-28:
+  DATA-xPUNGED:
+  - bugfix: New lights have been issued to the Head of Personnel's office.
+  - bugfix: We've instructed our intern to no longer place the HoP's stamps UNDER
+      the carbon paper bin, making many think there was no stamp at all.
+  Ghommie:
+  - bugfix: Reduced the maximum allowed length for ID assignments and paintings' titles
+      from 1024 to 42.
+  Iamgoofball:
+  - bugfix: Removes the ability to screwdriver springlock modules to make them not
+      deadly because that defeats the point of the springlock module
+  Inari-Whitebear:
+  - bugfix: Determination can now actually overcome your adrenal glands, making adrenal
+      crisis a curable condition!
+  Jackal-boop:
+  - qol: heretic sac targets now appear on the end of round report
+  Jacquerel:
+  - rscadd: Uncollected sand and snow will be blown away by the wind when storms happen
+      (but don't worry, storms also allow those turfs to be freshly dug up again).
+  MTandi:
+  - refactor: Refactored MOD Suit UI
+  - qol: Added options to hide detailed vitals and DNA data to the MOD status module
+  - qol: Made MOD Ion Jetpack Module have stabilizers enabled by default
+  Sealed101:
+  - rscadd: dog with a butter on 'em
+  - rscadd: dead dog with da butter on 'em (dogs feigning death are so good at it,
+      they appear dead to medical HUDs and other things)
+  - rscadd: Nars-Ian now can revive from the dead if he consumes a pet
+  - bugfix: fixes dog fashion items with no speech modifiers set making dressed up
+      corgis unable to perform their speech or emote behaviors
+  - bugfix: fixes old Ian losing his mobility ride when shaved with a razor
+  - bugfix: fixes pets not dropping their collar when gibbed
+  - bugfix: butter don't go on Lisa and corgi puppies (Lisa won't wear hats and corgi
+      puppies can't wear hats and back slot items)
+  Time-Green:
+  - qol: The virologist is warned when radioactive resonance cannot be obtained
+  YehnBeep:
+  - bugfix: Fixed a floating light in Delta's bar
+  mc-oofert:
+  - bugfix: guillotines no longer runtime when logging after decapping someone if
+      they buckle AFTER the blade starts to drop
+  - bugfix: shoving a crystal down a hole no longer makes it dust itself
+  nikothedude:
+  - rscadd: 'New malf module: Remote vendor tipping. Allows you to remotely tip a
+      vendor in any of the 8 directions. Goofy and okay for assassinations on unaware
+      enemies!'
+  - rscadd: 'New malf module: Core rolling. Allows you to roll around, crushing anything
+      you fall on with a satisfying splat.'
+  - code_imp: Vendor tipping is now a /atom/movable proc, allowing anything to fall
+      over and crush you.
+  - code_imp: All take_damage() overrides now use the correct arguments
+  - image: turf_analysis.dmi's red_arrow now has orthogonal directions
+  - balance: Vendors now are far less likely to gib your head or make you parapalegic
+  - balance: Vendors now respect armor when they crush you
+  san7890:
+  - code_imp: The currently operating rust-g version on a live server is posted to
+      places like the runtime.log, in the same place where the revision information
+      and any applicable test merges already were.
+  vinylspiders:
+  - bugfix: fixes a type mismatch error with some of the phobia chat messages
+  volas:
+  - bugfix: Some explosions should be more flashy and fiery, probably.
+  xPokee:
+  - rscadd: Photophobia as a negative quirk.
