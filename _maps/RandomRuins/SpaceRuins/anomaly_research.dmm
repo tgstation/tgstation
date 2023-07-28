@@ -1456,8 +1456,6 @@
 "MJ" = (
 /turf/closed/wall/r_wall,
 /area/misc/anomaly_research)
-"MM" = (
-)
 "MN" = (
 /obj/structure/flora/grass/green/style_random,
 /obj/machinery/light/floor,
@@ -3281,7 +3279,7 @@ Iw
 Iw
 iq
 Iw
-MM
+tG
 xQ
 AV
 nA
@@ -3355,7 +3353,7 @@ kY
 oK
 ip
 ii
-MM
+tG
 Iw
 fe
 YA
@@ -3393,7 +3391,7 @@ Gr
 mC
 nh
 cA
-MM
+tG
 ZL
 Ng
 Ox
@@ -3509,7 +3507,7 @@ ut
 cA
 Cf
 sE
-MM
+tG
 xQ
 AV
 jN
