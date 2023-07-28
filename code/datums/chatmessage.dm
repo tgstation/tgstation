@@ -13,7 +13,7 @@
 /// Approximate height in pixels of an 'average' line, used for height decay
 #define CHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
-#define CHAT_MESSAGE_WIDTH 112
+#define CHAT_MESSAGE_WIDTH 160 ///SKYRAPTOR EDIT: 160, up from 112
 /// The dimensions of the chat message icons
 #define CHAT_MESSAGE_ICON_SIZE 9
 
@@ -130,6 +130,28 @@
 		target.chat_color = colorize_string(target.name)
 		target.chat_color_darkened = colorize_string(target.name, 0.85, 0.85)
 		target.chat_color_name = target.name
+		
+	/// SKYRAPTOR ADDITION BEGIN
+	var/mob/target_mob = target
+	if(istype(target_mob))
+		var/client/target_cli = target_mob.client
+		if(istype(target_cli))
+			var/ccolor = target_cli.prefs.read_preference(/datum/preference/color/runechat_color)
+			if(ccolor)
+				if(ccolor != COLOR_BLACK)
+					target.chat_color = ccolor
+					target.chat_color_darkened = ccolor
+					var/r = hex2num(copytext(ccolor, 2, 4))
+					var/g = hex2num(copytext(ccolor, 4, 6))
+					var/b = hex2num(copytext(ccolor, 6, 8))
+					r = r * 0.85
+					g = g * 0.85
+					b = b * 0.85
+					r = round(r, 1)
+					g = round(g, 1)
+					b = round(b, 1)
+					target.chat_color_darkened = "#[num2hex(r, 2)][num2hex(g, 2)][num2hex(b, 2)]"
+	/// SKYRAPTOR ADDITION END
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
 	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")

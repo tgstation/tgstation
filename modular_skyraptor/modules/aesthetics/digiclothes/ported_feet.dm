@@ -11,13 +11,13 @@
 /obj/item/clothing/shoes/sneakers/Initialize(mapload)
 	. = ..()
 	greyscale_config_worn_bodytypes = list()
-	greyscale_config_worn_bodytypes["[BODYTYPE_HUMANOID]"] = /datum/greyscale_config/sneakers_worn
-	greyscale_config_worn_bodytypes["[BODYTYPE_DIGITIGRADE]"] = /datum/greyscale_config/sneakers_worn/digi
+	greyscale_config_worn_bodytypes["[BODYTYPE_HUMANOID]"] = /datum/greyscale_config/sneakers/worn
+	greyscale_config_worn_bodytypes["[BODYTYPE_DIGITIGRADE]"] = /datum/greyscale_config/sneakers/worn/digi
 
 /obj/item/clothing/shoes/sneakers/orange/Initialize(mapload)
 	. = ..()
-	greyscale_config_worn_bodytypes["[BODYTYPE_HUMANOID]"] = /datum/greyscale_config/sneakers_orange_worn
-	greyscale_config_worn_bodytypes["[BODYTYPE_DIGITIGRADE]"] = /datum/greyscale_config/sneakers_orange_worn/digi
+	greyscale_config_worn_bodytypes["[BODYTYPE_HUMANOID]"] = /datum/greyscale_config/sneakers_orange/worn
+	greyscale_config_worn_bodytypes["[BODYTYPE_DIGITIGRADE]"] = /datum/greyscale_config/sneakers_orange/worn/digi
 
 /obj/item/clothing/shoes/sneakers/marisa/Initialize(mapload)
 	. = ..()
