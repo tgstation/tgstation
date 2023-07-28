@@ -3,7 +3,7 @@
 #define TEST_MAP_MOBS "test_only_mobs"
 
 /// The qserver and qconsole should find each other on init
-/datum/unit_test/quantum_server_find_console/Run()
+/datum/unit_test/qserver_find_console/Run()
 	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
@@ -15,8 +15,19 @@
 	TEST_ASSERT_EQUAL(connected_console, console, "Quantum console did not set server_ref correctly")
 	TEST_ASSERT_EQUAL(connected_server, server, "Quantum server did not set console_ref correctly")
 
+/// Initializing map templates
+/datum/unit_test/qserver_initialize_domain/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+
+	var/datum/map_template/virtual_domain/domain = server.initialize_domain(TEST_MAP)
+	TEST_ASSERT_EQUAL(domain.id, TEST_MAP, "Did not load test map correctly")
+
+	server.domain_randomized = TRUE
+	domain = server.initialize_domain(TEST_MAP)
+	TEST_ASSERT_EQUAL(domain.reward_points, 2, "Should've added points when randomizing")
+
 /// Initializing virtual domain
-/datum/unit_test/quantum_server_initialize_vdom/Run()
+/datum/unit_test/qserver_initialize_vdom/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 
 	server.initialize_virtual_domain()
@@ -24,25 +35,14 @@
 	TEST_ASSERT_EQUAL(length(server.map_load_turf), 1, "There should only ever be ONE turf, the bottom left, in the map_load_turf list")
 	TEST_ASSERT_EQUAL(length(server.safehouse_load_turf), 1, "There should only ever be ONE turf, the bottom left, in the safehouse_load_turf list")
 
-/// Setting domains
-/datum/unit_test/quantum_server_set_domain/Run()
-	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
-
-	var/datum/map_template/virtual_domain/domain = server.set_domain(TEST_MAP)
-	TEST_ASSERT_EQUAL(domain.id, TEST_MAP, "Did not load test map correctly")
-
-	server.domain_randomized = TRUE
-	domain = server.set_domain(TEST_MAP)
-	TEST_ASSERT_EQUAL(domain.reward_points, 2, "Should've added points when randomizing")
-
 /// Loading maps onto the vdom
-/datum/unit_test/quantum_server_load_domain/Run()
+/datum/unit_test/qserver_load_domain/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 
 	server.initialize_virtual_domain()
 	TEST_ASSERT_NOTNULL(server.vdom_ref, "Sanity: Did not initialize vdom_ref")
 
-	var/datum/map_template/virtual_domain/domain = server.set_domain(map_id = TEST_MAP)
+	var/datum/map_template/virtual_domain/domain = server.initialize_domain(map_id = TEST_MAP)
 	TEST_ASSERT_EQUAL(domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	server.load_domain(domain)
@@ -52,7 +52,7 @@
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Did not load the correct number of exit turfs")
 
 /// Handles cases with stopping domains. The server should cool down & prevent stoppage with active mobs
-/datum/unit_test/quantum_server_stop_domain/Run()
+/datum/unit_test/qserver_stop_domain/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 
@@ -79,7 +79,7 @@
 	TEST_ASSERT_NULL(server.generated_domain, "Should force stop a domain even with occupants")
 
 /// Handles the linking process to boot a domain from scratch
-/datum/unit_test/quantum_server_cold_boot_map/Run()
+/datum/unit_test/qserver_cold_boot_map/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	labrat.mind_initialize()
@@ -345,7 +345,7 @@
 	TEST_ASSERT_EQUAL(server_crash_received, TRUE, "Did not send COMSIG_BITMINING_SERVER_CRASH")
 
 /// Tests the server's ability to buff and nerf mobs
-/datum/unit_test/quantum_server_difficulty/Run()
+/datum/unit_test/qserver_difficulty/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
@@ -376,7 +376,7 @@
 	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should not nerf mobs below base health")
 
 /// Server side randomization of domains
-/datum/unit_test/quantum_server_get_random_domain_id/Run()
+/datum/unit_test/qserver_get_random_domain_id/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/datum/map_template/virtual_domain/selected
 
@@ -390,7 +390,7 @@
 	/// Can't truly test the randomization past this
 
 /// Tests getting list of domain generated mobs for antag targets
-/datum/unit_test/quantum_server_get_valid_domain_mobs/Run()
+/datum/unit_test/qserver_get_valid_domain_mobs/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 
@@ -407,6 +407,32 @@
 	pupper.key = "fake_mind"
 	mobs = server.get_valid_domain_targets()
 	TEST_ASSERT_EQUAL(length(mobs), 0, "Should not return mobs with keys")
+
+/// Tests the ability to create hololadders and effectively, retries
+/datum/unit_test/qserver_generate_hololadder/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
+
+	server.generate_hololadder()
+	TEST_ASSERT_EQUAL(length(server.exit_turfs), 0, "Sanity: Shouldn't exist any exit turfs until boot")
+	TEST_ASSERT_EQUAL(server.retries_spent, 0, "Shouldn't create a hololadder without exit turfs")
+
+	server.cold_boot_map(labrat, map_id = TEST_MAP_MOBS)
+	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
+	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Should create 3 exit turfs")
+
+	server.generate_hololadder()
+	TEST_ASSERT_EQUAL(server.retries_spent, 1, "Should've spent a retry")
+
+	server.generate_hololadder()
+	server.generate_hololadder()
+	TEST_ASSERT_EQUAL(server.retries_spent, 3, "Should've spent 3 retries")
+
+	server.generate_hololadder()
+	TEST_ASSERT_EQUAL(server.retries_spent, 3, "Shouldn't spend more than 3 retries")
+
+	server.stop_domain()
+	TEST_ASSERT_EQUAL(server.retries_spent, 0, "Should reset retries on stop_domain()")
 
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE

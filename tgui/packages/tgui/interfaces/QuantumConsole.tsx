@@ -122,7 +122,7 @@ const AccessView = (props, context) => {
                 icon="random"
                 onClick={() => act('random_domain')}
                 mr={1}
-                tooltip="Get a random domain for more rewards. Weighted towards your current points.">
+                tooltip="Get a random domain for more rewards. Weighted towards your current points. Minimum: 1 point.">
                 Randomize
               </Button>
               <Tooltip content="Accrued points for purchasing domains.">
@@ -250,16 +250,21 @@ const AvatarDisplay = (props, context) => {
     <Section
       title="Connected Clients"
       buttons={
-        <>
-          {retries_left}
-          <Icon name="broadcast-tower" />
-          <Button
-            icon="sync"
-            onClick={() => act('refresh')}
-            tooltip="Refresh avatar data.">
-            Refresh
-          </Button>
-        </>
+        <Stack align="center" color="good">
+          <Stack.Item>
+            <Tooltip content="Available bandwidth for new connections.">
+              <DisplayDetails icon="broadcast-tower" amount={retries_left} />
+            </Tooltip>
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="sync"
+              onClick={() => act('refresh')}
+              tooltip="Refresh avatar data.">
+              Refresh
+            </Button>
+          </Stack.Item>
+        </Stack>
       }>
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
@@ -323,10 +328,12 @@ const DisplayDetails = (props: DisplayDetailsProps, context) => {
   }
 
   return (
-    <>
+    <Stack>
       {Array.from({ length: amount }, (_, index) => (
-        <Icon key={index} name={icon} />
+        <Stack.Item>
+          <Icon key={index} name={icon} />
+        </Stack.Item>
       ))}
-    </>
+    </Stack>
   );
 };

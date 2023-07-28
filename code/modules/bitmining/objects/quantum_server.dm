@@ -187,7 +187,7 @@
 	balloon_alert(user, "initializing virtual domain...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
-	var/datum/map_template/virtual_domain/to_generate = set_domain(map_id)
+	var/datum/map_template/virtual_domain/to_generate = initialize_domain(map_id)
 	if(isnull(to_generate))
 		balloon_alert(user, "invalid domain specified.")
 		loading = FALSE
@@ -394,6 +394,16 @@
 
 	return mutation_candidates
 
+/// Returns a new domain if the given id is valid and the user has enough points
+/obj/machinery/quantum_server/proc/initialize_domain(map_id)
+	var/datum/map_template/virtual_domain/to_generate
+	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
+		if(map_id == initial(available.id) && points >= initial(available.cost))
+			to_generate = new available
+			if(domain_randomized)
+				to_generate.reward_points += 1
+			return to_generate
+
 /// Generates a new virtual domain
 /obj/machinery/quantum_server/proc/initialize_virtual_domain()
 	var/datum/map_template/virtual_domain/base_map = new()
@@ -474,18 +484,6 @@
 	examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 	if(server_cooldown_efficiency < 1)
 		examine_text += span_notice("Its coolant capacity reduces cooldown time by [(1 - server_cooldown_efficiency) * 100]%.")
-
-/// Sets the current virtual domain to the given map template
-/obj/machinery/quantum_server/proc/set_domain(map_id)
-	var/datum/map_template/virtual_domain/to_generate
-	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
-		if(map_id == initial(available.id) && initial(available.cost) <= points)
-			to_generate = new available
-			if(domain_randomized)
-				to_generate.reward_points += 1
-			break
-
-	return to_generate
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/stop_domain(mob/user)
