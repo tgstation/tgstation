@@ -129,7 +129,7 @@
 	. = pick_weight(spawning_list)
 	if(remove_from_list_when_spawned) //if we have this enabled, we decrease the pickweight by 1 till it runs out
 		spawning_list[.] -= 1
-		if(spawning_list[.] < 1)
+		if(spawning_list[.] < 0)
 			spawning_list.Remove(.)
 
 ///Do any post-spawn edits you need to do
