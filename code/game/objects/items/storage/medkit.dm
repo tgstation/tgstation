@@ -389,11 +389,6 @@
 		/obj/item/bodybag = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
-		/obj/item/surgical_drapes = 1,
-		/obj/item/scalpel/cruel = 1,
-		/obj/item/retractor/cruel = 1,
-		/obj/item/hemostat/cruel = 1,
-		/obj/item/cautery/cruel = 1,
 	)
 	generate_items_inside(items_inside,src)
 

@@ -46457,7 +46457,7 @@
 "oNj" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/storage/backpack/duffelbag/coroner/surgery,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "oNp" = (
