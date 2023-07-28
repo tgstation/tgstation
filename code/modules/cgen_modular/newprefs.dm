@@ -5,7 +5,7 @@
 	savefile_key = "feature_tricolor_alpha"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_species_trait = USE_TRICOLOR_ALPHA
+	relevant_inherent_trait = USE_TRICOLOR_ALPHA
 
 /datum/preference/tri_color/tricol_alpha/create_default_value()
 	return list(COLOR_RED, COLOR_GREEN, COLOR_BLUE)
@@ -71,7 +71,7 @@
 	savefile_key = "feature_tricolor_beta"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_species_trait = USE_TRICOLOR_BETA
+	relevant_inherent_trait = USE_TRICOLOR_BETA
 
 /datum/preference/tri_color/tricol_beta/create_default_value()
 	return list(COLOR_RED, COLOR_GREEN, COLOR_BLUE)
@@ -137,7 +137,7 @@
 	savefile_key = "feature_tricolor_charlie"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_species_trait = USE_TRICOLOR_CHARLIE
+	relevant_inherent_trait = USE_TRICOLOR_CHARLIE
 
 /datum/preference/tri_color/tricol_charlie/create_default_value()
 	return list(COLOR_RED, COLOR_GREEN, COLOR_BLUE)

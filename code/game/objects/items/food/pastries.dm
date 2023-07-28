@@ -45,10 +45,10 @@
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
-	if(!ishuman(user))
+	if(!isliving(user))
 		return
-	var/mob/living/carbon/human/moffin_observer = user
-	if(moffin_observer.dna.species.liked_food & CLOTH)
+	var/mob/living/moffin_observer = user
+	if(moffin_observer.get_liked_foodtypes() & CLOTH)
 		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
 	else
 		. += span_warning("You're not too sure what's on top though...")
@@ -135,7 +135,7 @@
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
-	trash_type = /obj/item/paper/paperslip
+	trash_type = /obj/item/paper/paperslip/fortune
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
@@ -152,11 +152,8 @@
 		return fortune
 
 	// Otherwise, use a generic one
-	var/obj/item/paper/paperslip/fortune_slip = new trash_type(drop_location)
-	fortune_slip.name = "fortune slip"
+	var/obj/item/paper/paperslip/fortune/fortune_slip = new trash_type(drop_location)
 	// if someone adds lottery tickets in the future, be sure to add random numbers to this
-	fortune_slip.default_raw_text = pick(GLOB.wisdoms)
-
 	return fortune_slip
 
 /obj/item/food/fortunecookie/make_leave_trash()
@@ -326,7 +323,7 @@
 /obj/item/food/icecream
 	name = "waffle cone"
 	desc = "Delicious waffle cone, but no ice cream."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "icecream_cone_waffle"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cream" = 2, "waffle" = 1)

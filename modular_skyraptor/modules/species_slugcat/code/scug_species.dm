@@ -7,15 +7,17 @@
 	name = "\improper Slugcat"
 	plural_form = "Slugcats"
 	id = SPECIES_SLUGCAT
-	species_traits = list(
+	/*species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
 		HAIR,
 		LIPS,
 		USE_TRICOLOR_ALPHA,
-	)
+	)*/
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_TACKLING_TAILED_DEFENDER,
+		USE_TRICOLOR_ALPHA,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	species_language_holder = /datum/language_holder/synthetic
@@ -34,8 +36,9 @@
 	payday_modifier = 1 //we're going to be doing a master_files override to universally set payday mod to 1 bcuz it's still some serious wtfery
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	disliked_food = DAIRY | SUGAR | FRIED
-	liked_food = GORE | MEAT | RAW
+	// see the other species, we need a new tongue for scugs.
+	//disliked_food = DAIRY | SUGAR | FRIED
+	//liked_food = GORE | MEAT | RAW
 	//scugs have forced digi thru custom legs, this is necessary until we rework the digi_customization setting to allow for other digileg types
 	//digitigrade_customization = DIGITIGRADE_FORCED
 

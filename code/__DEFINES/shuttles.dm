@@ -94,3 +94,13 @@
 #define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
 #define SHUTTLE_UNLOCK_MEDISIM "holodeck"
 #define SHUTTLE_UNLOCK_NARNAR "narnar"
+
+//Shuttle Events
+
+///Self destruct if this is returned in process
+#define SHUTTLE_EVENT_CLEAR 2
+
+///spawned stuff should float by the window and not hit the shuttle
+#define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
+///spawned stuff should hit the shuttle
+#define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1

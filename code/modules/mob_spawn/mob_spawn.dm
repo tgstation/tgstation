@@ -225,6 +225,8 @@
 
 	check_uses() // Now we check if the spawner should delete itself or not
 
+	return created
+
 /obj/effect/mob_spawn/ghost_role/create(mob/mob_possessor, newname)
 	if(!mob_possessor.key) // This is in the scenario that the server is somehow lagging, or someone fucked up their code, and we try to spawn the same person in twice. We'll simply not spawn anything and CRASH(), so that we report what happened.
 		CRASH("Attempted to create an instance of [type] with a mob that had no ckey attached to it, which isn't supported by ghost role spawners!")

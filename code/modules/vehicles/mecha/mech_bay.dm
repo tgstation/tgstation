@@ -3,7 +3,7 @@
 	desc = "This port recharges a mech's internal power cell."
 	density = TRUE
 	dir = EAST
-	icon = 'icons/mecha/mech_bay.dmi'
+	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
 	circuit = /obj/item/circuitboard/machine/mech_recharger
 	///Weakref to currently recharging mech on our recharging_turf

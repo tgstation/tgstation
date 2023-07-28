@@ -275,3 +275,13 @@
 	name = "Marine Medic"
 	outfit = /datum/outfit/centcom/ert/marine/medic
 	role = "Medical Officer"
+
+/datum/antagonist/ert/militia
+	name = "Frontier Militia"
+	outfit = /datum/outfit/centcom/militia
+	role = "Volunteer"
+
+/datum/antagonist/ert/militia/general
+	name = "Frontier Militia General"
+	outfit = /datum/outfit/centcom/militia/general
+	role = "General"

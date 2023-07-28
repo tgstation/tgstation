@@ -36,7 +36,7 @@
 		override = TRUE,
 	)
 
-	del_timer_id = QDEL_IN(src, duration)
+	del_timer_id = QDEL_IN_STOPPABLE(src, duration)
 	return TRUE
 
 /datum/hallucination/fake_alert/need_oxygen

@@ -23,7 +23,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/bone = 4,
 		/datum/reagent/fuel/oil = 5,
-		/obj/item/shovel/spade = 1,
+		/obj/item/shovel = 1,
 	)
 	result = /obj/item/shovel/serrated
 	category = CAT_TOOLS

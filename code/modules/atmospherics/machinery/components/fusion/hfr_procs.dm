@@ -416,6 +416,16 @@
 				Get as far away as possible from the reactor or find a way to shut it down.", "Alert")
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
+
+	notify_ghosts(
+		"The [src] has begun melting down!",
+		source = src,
+		header = "Meltdown Incoming",
+		action = NOTIFY_ORBIT,
+		ghost_sound = 'sound/machines/warning-buzzer.ogg',
+		notify_volume = 75
+	)
+
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
 		if(critical_threshold_proximity < melting_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)

@@ -6,7 +6,6 @@
 	inhand_icon_state = "dropper"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
-	amount_list_position = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
 	reagent_flags = TRANSPARENT
@@ -92,6 +91,6 @@
 	. = ..()
 	if(!reagents.total_volume)
 		return
-	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "dropper")
 	filling.color = mix_color_from_reagents(reagents.reagent_list)
 	. += filling

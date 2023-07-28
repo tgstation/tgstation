@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/pipe
-	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
-	var/bitmask_icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi' /// SKYRAPTOR ADDITION: this shouldn't be fucken hardcoded
+	icon = 'icons/obj/pipes_n_cables/pipes_bitmask.dmi'
+	var/bitmask_icon = 'icons/obj/pipes_n_cables/pipes_bitmask.dmi' /// SKYRAPTOR ADDITION: this shouldn't be fucken hardcoded
 	damage_deflection = 12
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0

@@ -101,14 +101,15 @@ There are several things that need to be remembered:
 		var/handled_by_bodytype = TRUE
 		var/icon_file
 		var/woman
+		var/my_bodytype = bodytype
 		/// SKYRAPTOR REMOVAL: STANDARD SPECIESHANDLING IS GOING OUT THE WINDOW IN FAVOUR OF REWORKS
 		//BEGIN SPECIES HANDLING
-		/*if((dna?.species.bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
+		/*if((bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
 			icon_file = MONKEY_UNIFORM_FILE
-		else if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		else if((bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
-		if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		else if(dna.species.sexes && (bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE*/
 		/// SKYRAPTOR REMOVAL END HSFFHGJG
 
@@ -124,7 +125,7 @@ There are several things that need to be remembered:
 			female_uniform = woman ? uniform.female_sprite_flags : null,
 			override_state = target_overlay,
 			override_file = handled_by_bodytype ? icon_file : null,
-			bodytype = dna?.species.bodytype, //SKYRAPTOR ADDITION
+			bodytype = my_bodytype, //SKYRAPTOR ADDITION
 		)
 
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
@@ -147,8 +148,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_id
 		update_hud_id(worn_item)
 		var/icon_file = 'icons/mob/clothing/id.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 
 		if(!id_overlay)
 			return
@@ -189,11 +191,13 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/hands.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 
 		var/feature_y_offset = 0
-		for (var/obj/item/bodypart/arm/my_hand as anything in hand_bodyparts)
+		//needs to be typed, hand_bodyparts can have nulls
+		for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
 			var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
 			if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
 				feature_y_offset = glove_offset["y"]
@@ -222,8 +226,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/eyes.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		my_head.worn_glasses_offset?.apply_offset(glasses_overlay)
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
@@ -248,8 +253,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/ears.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		my_head.worn_ears_offset?.apply_offset(ears_overlay)
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
@@ -269,8 +275,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(neck_overlay)
 		overlays_standing[NECK_LAYER] = neck_overlay
@@ -295,8 +302,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = DEFAULT_SHOES_FILE
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		if(!shoes_overlay)
 			return
 
@@ -331,7 +339,9 @@ There are several things that need to be remembered:
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE)
 			return
 
-		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi', bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
+
+		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi', bodytype = my_bodytype) //SKYRAPTOR ADD
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_storage_offset?.apply_offset(s_store_overlay)
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
@@ -351,8 +361,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
@@ -375,8 +386,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(belt_overlay)
 		overlays_standing[BELT_LAYER] = belt_overlay
@@ -394,8 +406,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_suit
 		update_hud_wear_suit(worn_item)
 		var/icon_file = DEFAULT_SUIT_FILE
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
@@ -445,8 +458,9 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 		my_head.worn_mask_offset?.apply_offset(mask_overlay)
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
@@ -465,8 +479,9 @@ There are several things that need to be remembered:
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
 		var/icon_file = 'icons/mob/clothing/back.dmi'
+		var/my_bodytype = bodytype //SKYRAPTOR ADD
 
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, bodytype = dna?.species.bodytype) //SKYRAPTOR ADD
+		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, bodytype = my_bodytype) //SKYRAPTOR ADD
 
 		if(!back_overlay)
 			return
@@ -674,7 +689,7 @@ generate/load female uniform sprites matching all previously decided variables
 		//to_chat(world, "SKYRAPTOR TESTING: found bodytype_icon_files on [name] being equipped")
 		for(var/bodytype_key in supported_bodytypes)
 			//to_chat(world, "SKYRAPTOR TESTING: testing [bodytype_key] on provided bodytype: [bodytype]")
-			if(bodytype & bodytype_key && "[bodytype_key]" in bodytype_icon_files)
+			if((bodytype & bodytype_key) && ("[bodytype_key]" in bodytype_icon_files))
 				//to_chat(world, "FOUND A MATCH!")
 				file2use = bodytype_icon_files["[bodytype_key]"]
 	/// SKYRAPTOR ADDITION END
@@ -774,31 +789,12 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
-	if (!istype(my_head))
+	if(!istype(my_head))
 		return
 
 	my_head.update_limb(is_creating = update_limb_data)
 
 	add_overlay(my_head.get_limb_icon())
-	update_damage_overlays()
-
-	if(my_head && !(HAS_TRAIT(src, TRAIT_HUSK)))
-		// lipstick
-		if(lip_style && (LIPS in dna.species.species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
-			lip_overlay.color = lip_color
-			my_head.worn_face_offset?.apply_offset(lip_overlay)
-			add_overlay(lip_overlay)
-
-		// eyes
-		if(!(NOEYESPRITES in dna.species.species_traits))
-			var/obj/item/organ/internal/eyes/parent_eyes = get_organ_slot(ORGAN_SLOT_EYES)
-			if(parent_eyes)
-				add_overlay(parent_eyes.generate_body_overlay(src))
-			else
-				var/mutable_appearance/missing_eyes = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
-				my_head.worn_face_offset?.apply_offset(missing_eyes)
-				add_overlay(missing_eyes)
 	update_worn_head()
 	update_worn_mask()
 
