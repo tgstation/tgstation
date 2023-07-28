@@ -13,8 +13,27 @@ export const MechStatPane = (props, context) => {
     mech_view,
     enclosed,
     cabin_sealed,
+    cabin_temp,
     cabin_pressure,
+    cabin_pressure_warning_min,
+    cabin_pressure_hazard_min,
+    cabin_pressure_warning_max,
+    cabin_pressure_hazard_max,
+    cabin_temp_warning_min,
+    cabin_temp_hazard_min,
+    cabin_temp_warning_max,
+    cabin_temp_hazard_max,
   } = data;
+  const temp_warning =
+    cabin_temp < cabin_temp_warning_min || cabin_temp > cabin_temp_warning_max;
+  const temp_hazard =
+    cabin_temp < cabin_temp_hazard_min || cabin_temp > cabin_temp_hazard_max;
+  const pressure_warning =
+    cabin_pressure < cabin_pressure_warning_min ||
+    cabin_pressure > cabin_pressure_warning_max;
+  const pressure_hazard =
+    cabin_pressure < cabin_pressure_hazard_min ||
+    cabin_pressure > cabin_pressure_hazard_max;
   return (
     <Section
       fill
@@ -57,7 +76,32 @@ export const MechStatPane = (props, context) => {
               label="Cabin"
               buttons={
                 !!cabin_sealed && (
-                  <Box opacity={0.5}>{`${Math.round(cabin_pressure)} kPa`}</Box>
+                  <>
+                    <Button
+                      color={
+                        temp_hazard
+                          ? 'danger'
+                          : temp_warning
+                            ? 'average'
+                            : 'transparent'
+                      }
+                      icon="temperature-low"
+                      tooltipPosition="top"
+                      tooltip={`Air temperature: ${cabin_temp}°C`}
+                    />
+                    <Button
+                      color={
+                        pressure_hazard
+                          ? 'danger'
+                          : pressure_warning
+                            ? 'average'
+                            : 'transparent'
+                      }
+                      icon="gauge-high"
+                      tooltipPosition="top"
+                      tooltip={`Air pressure: ${cabin_pressure}kPa`}
+                    />
+                  </>
                 )
               }>
               <Button

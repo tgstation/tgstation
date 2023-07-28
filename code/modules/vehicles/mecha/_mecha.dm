@@ -96,7 +96,7 @@
 	/// % chance for internal damage to occur
 	var/internal_damage_probability = 20
 	/// list of possibly dealt internal damage for this mech type
-	var/possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_INT_TANK_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
+	var/possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_CABIN_AIR_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	/// damage threshold above which we take component damage
 	var/component_damage_threshold = 10
 
@@ -472,45 +472,52 @@
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(seconds_per_tick)
-	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
 	if(internal_damage)
-		if(internal_damage & MECHA_INT_FIRE)
-			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && SPT_PROB(2.5, seconds_per_tick))
-				clear_internal_damage(MECHA_INT_FIRE)
-			if(internal_tank)
-				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
-					set_internal_damage(MECHA_INT_TANK_BREACH)
-				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
-					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(5,7.5)*seconds_per_tick)
-			if(cabin_air && cabin_air.return_volume()>0)
-				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(5,7.5)*seconds_per_tick)
-				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(seconds_per_tick*2/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
+		process_internal_damage_effects(seconds_per_tick)
+	if(cabin_sealed)
+		process_cabin_air(seconds_per_tick)
+	if(length(occupants))
+		process_occupants(seconds_per_tick)
+	if(mecha_flags & LIGHTS_ON)
+		use_power(2*seconds_per_tick)
 
+/obj/vehicle/sealed/mecha/proc/process_internal_damage_effects(seconds_per_tick)
+	if(internal_damage & MECHA_INT_FIRE)
+		if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && SPT_PROB(2.5, seconds_per_tick))
+			clear_internal_damage(MECHA_INT_FIRE)
+		if(cabin_air && cabin_sealed && cabin_air.return_volume()>0)
+			if(cabin_air.return_pressure() > (PUMP_DEFAULT_PRESSURE * 30) && !(internal_damage & MECHA_CABIN_AIR_BREACH))
+				set_internal_damage(MECHA_CABIN_AIR_BREACH)
+			cabin_air.temperature = min(6000+T0C, cabin_air.temperature+rand(5,7.5)*seconds_per_tick)
+			if(cabin_air.return_temperature() > max_temperature/2)
+				take_damage(seconds_per_tick*2/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
-		if(internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
-			if(internal_tank)
-				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(SPT_PROB_RATE(0.05, seconds_per_tick))
-				if(loc)
-					loc.assume_air(leaked_gas)
-				else
-					qdel(leaked_gas)
+	if(internal_damage & MECHA_CABIN_AIR_BREACH && cabin_air && cabin_sealed) //remove some air from cabin_air
+		var/datum/gas_mixture/leaked_gas = cabin_air.remove_ratio(SPT_PROB_RATE(0.05, seconds_per_tick))
+		if(loc)
+			loc.assume_air(leaked_gas)
+		else
+			qdel(leaked_gas)
 
-		if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
-			if(get_charge())
-				spark_system.start()
-				cell.charge -= min(10 * seconds_per_tick, cell.charge)
-				cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
+	if(internal_damage & MECHA_INT_SHORT_CIRCUIT && get_charge())
+		spark_system.start()
+		cell.charge -= min(10 * seconds_per_tick, cell.charge)
+		cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
 
-	if(!(internal_damage & MECHA_INT_TEMP_CONTROL))
-		if(cabin_air && cabin_air.return_volume() > 0)
-			var/delta = cabin_air.temperature - T20C
-			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * seconds_per_tick
+/obj/vehicle/sealed/mecha/proc/process_cabin_air(seconds_per_tick)
+	if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && cabin_air && cabin_air.return_volume() > 0)
+		var/heat_capacity = cabin_air.heat_capacity()
+		var/required_energy = (T20C - cabin_air.temperature) * heat_capacity
+		required_energy = min(required_energy, 1000)
+		if(required_energy < 1)
+			return
+		var/delta_temperature = required_energy / heat_capacity
+		if(delta_temperature)
+			cabin_air.temperature += delta_temperature
 
+/obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
 	for(var/mob/living/occupant as anything in occupants)
-		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		if(!cabin_sealed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
 		if(cell)
@@ -526,7 +533,6 @@
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 3)
 				else
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell/mech)
-
 		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
@@ -550,10 +556,6 @@
 			else if (checking == src)
 				break  // all good
 			checking = checking.loc
-
-	if(mecha_flags & LIGHTS_ON)
-		use_power(2*seconds_per_tick)
-
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -707,7 +709,7 @@
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_CABIN_SEAL))
 		balloon_alert(usr, "on cooldown")
 		return
-	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 3)
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 1 SECONDS)
 
 	src.cabin_sealed = cabin_sealed
 
@@ -726,7 +728,7 @@
 
 	var/obj/item/mecha_parts/mecha_equipment/air_tank/tank = locate(/obj/item/mecha_parts/mecha_equipment/air_tank) in equip_by_category[MECHA_UTILITY]
 	var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in usr.actions
-	if(!isnull(tank) && cabin_sealed)
+	if(!isnull(tank) && cabin_sealed && tank.auto_pressurize_on_seal)
 		if(!tank.active)
 			tank.set_active(TRUE)
 		else

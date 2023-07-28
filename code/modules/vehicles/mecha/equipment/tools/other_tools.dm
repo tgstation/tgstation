@@ -207,7 +207,7 @@
 	/// Repaired health per second
 	var/health_boost = 0.5
 	var/icon/droid_overlay
-	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
+	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_CABIN_AIR_BREACH)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -576,21 +576,29 @@
 //////////////////////////// AIR TANK MODULE //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/air_tank
 	name = "mounted air tank"
-	desc = "An internal air tank used to pressurize mech cabin, srcub CO2 and power RCS thrusters. Comes with a set of sensors."
+	desc = "An internal air tank used to pressurize mech cabin, scrub CO2 and power RCS thrusters. Comes with a pump and a set of sensors."
 	icon_state = "mecha_air_tank"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
-	active_label = "Pressurize Cabin"
+	///Whether the pressurization should start automatically when the cabin is sealed airtight
+	var/auto_pressurize_on_seal = TRUE
 	///The internal air tank obj of the mech
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
-	///The connected air port, if we have one
-	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	///Volume of this air tank
 	var/volume = TANK_STANDARD_VOLUME * 10
 	///Maximum pressure of this air tank
 	var/maximum_pressure = ONE_ATMOSPHERE * 30
 	///Whether the tank starts pressurized
 	var/start_full = FALSE
+	///Pumping
+	///The connected air port, if we have one
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
+	///Whether the pump is moving the air from/to the connected port
+	var/tank_pump_active = FALSE
+	///Direction of the pump - into the tank from the port or the air (PUMP_IN) or from the tank (PUMP_OUT)
+	var/tank_pump_direction = PUMP_IN
+	///Target pressure of the pump
+	var/tank_pump_pressure = ONE_ATMOSPHERE
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Initialize(mapload)
 	. = ..()
@@ -616,6 +624,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/detach(atom/moveto)
 	disconnect_air()
+	if(tank_pump_active)
+		tank_pump_active = FALSE
 	UnregisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE)
 	if(active)
 		set_active(FALSE)
@@ -638,6 +648,10 @@
 	if(!chassis || !active)
 		set_active(FALSE)
 		return
+	process_cabin_pressure()
+	process_pump()
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/proc/process_cabin_pressure(seconds_per_tick)
 	if(!chassis.cabin_sealed)
 		return
 	var/datum/gas_mixture/external_air = chassis.loc.return_air()
@@ -650,6 +664,15 @@
 	if(cabin_pressure)
 		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, GAS_CO2)
 
+/obj/item/mecha_parts/mecha_equipment/air_tank/proc/process_pump(seconds_per_tick)
+	if(!tank_pump_active)
+		return
+	var/turf/local_turf = get_turf(chassis)
+	var/datum/gas_mixture/sending = (tank_pump_direction == PUMP_IN ? local_turf.return_air() : internal_tank.air_contents)
+	var/datum/gas_mixture/receiving = (tank_pump_direction == PUMP_IN ? internal_tank.air_contents : local_turf.return_air())
+	if(sending.pump_gas_to(receiving, tank_pump_pressure))
+		air_update_turf(FALSE, FALSE)
+
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/disconnect_air()
 	SIGNAL_HANDLER
 	if(connected_port && internal_tank.disconnect())
@@ -660,24 +683,26 @@
 	var/datum/gas_mixture/tank_air = internal_tank.return_air()
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_AIR_TANK,
-		"airtank_pressure" = tank_air ? round(tank_air.return_pressure(), 0.01) : null,
-		"airtank_temp" = tank_air?.temperature,
+		"auto_pressurize_on_seal" = auto_pressurize_on_seal,
 		"port_connected" = internal_tank?.connected_port ? TRUE : FALSE,
-		"cabin_pressure" = round(chassis.cabin_air.return_pressure(), 0.01),
-		"cabin_temp" = chassis.cabin_air.return_temperature(),
-		"cabin_air" = gas_mixture_parser(chassis.cabin_air, "cabin"),
+		"tank_release_pressure" = round(internal_tank.release_pressure),
+		"tank_release_pressure_min" = internal_tank.can_min_release_pressure,
+		"tank_release_pressure_max" = internal_tank.can_max_release_pressure,
+		"tank_pump_active" = tank_pump_active,
+		"tank_pump_direction" = tank_pump_direction,
+		"tank_pump_pressure" = round(tank_pump_pressure),
+		"tank_pump_pressure_min" = PUMP_MIN_PRESSURE,
+		"tank_pump_pressure_max" = min(PUMP_MAX_PRESSURE, internal_tank.maximum_pressure),
 		"tank_air" = gas_mixture_parser(tank_air, "tank"),
+		"cabin_air" = gas_mixture_parser(chassis.cabin_air, "cabin"),
 	)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/ui_act(action, list/params)
 	. = ..()
 	switch(action)
-		if("set_pressure")
-			var/new_pressure = tgui_input_number(usr, "Enter new pressure", "Cabin pressure change", internal_tank.release_pressure)
-			if(isnull(new_pressure) || !chassis.construction_state)
-				return
-			internal_tank.release_pressure = new_pressure
-			to_chat(usr, span_notice("The internal pressure valve has been set to [internal_tank.release_pressure]kPa."))
+		if("set_cabin_pressure")
+			var/new_pressure = text2num(params["new_pressure"])
+			internal_tank.release_pressure = clamp(round(new_pressure), internal_tank.can_min_release_pressure, internal_tank.can_max_release_pressure)
 			return TRUE
 		if("toggle_port")
 			if(internal_tank.connected_port)
@@ -694,6 +719,19 @@
 				return TRUE
 			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Unable to connect with air system port!")]")
 			return FALSE
+		if("toggle_auto_pressurize")
+			auto_pressurize_on_seal = !auto_pressurize_on_seal
+			return TRUE
+		if("toggle_tank_pump")
+			tank_pump_active = !tank_pump_active
+			return TRUE
+		if("toggle_tank_pump_direction")
+			tank_pump_direction = !tank_pump_direction
+			return TRUE
+		if("set_tank_pump_pressure")
+			var/new_pressure = text2num(params["new_pressure"])
+			tank_pump_pressure = clamp(round(new_pressure), PUMP_MIN_PRESSURE, min(PUMP_MAX_PRESSURE, internal_tank.maximum_pressure))
+			return TRUE
 		else
 			return FALSE
 

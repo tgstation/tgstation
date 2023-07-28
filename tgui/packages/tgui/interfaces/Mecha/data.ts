@@ -2,17 +2,18 @@ export const KelvinZeroCelcius = 273.15;
 
 export const InternalDamageToDamagedDesc = {
   'MECHA_INT_FIRE': 'Internal fire detected',
-  'MECHA_INT_TEMP_CONTROL': 'Temperature control inactive',
-  'MECHA_INT_TANK_BREACH': 'Air tank breach detected',
-  'MECHA_INT_CONTROL_LOST': 'Control module damaged',
+  'MECHA_INT_TEMP_CONTROL': 'Cabin heater offline',
+  'MECHA_CABIN_AIR_BREACH': 'Cabin breach detected',
+  'MECHA_INT_CONTROL_LOST': 'Servo motors damaged',
+  'MECHA_INT_SHORT_CIRCUIT': 'Capacitors shorted',
 };
 
 export const InternalDamageToNormalDesc = {
   'MECHA_INT_FIRE': 'No internal fires detected',
-  'MECHA_INT_TEMP_CONTROL': 'Temperature control active',
-  'MECHA_INT_TANK_BREACH': 'Air tank intact',
-  'MECHA_INT_CONTROL_LOST': 'Control module active',
-  'MECHA_INT_SHORT_CIRCUIT': 'Internal capacitor operational',
+  'MECHA_INT_TEMP_CONTROL': 'Cabin heater active',
+  'MECHA_CABIN_AIR_BREACH': 'Cabin sealing intact',
+  'MECHA_INT_CONTROL_LOST': 'Servo motors active',
+  'MECHA_INT_SHORT_CIRCUIT': 'Capacitors operational',
 };
 
 export type AccessData = {
@@ -46,7 +47,17 @@ export type OperatorData = {
   internal_damage: number;
   internal_damage_keys: string[];
   mechflag_keys: string[];
-  cabin_dangerous_highpressure: number;
+
+  cabin_pressure_warning_min: number;
+  cabin_pressure_hazard_min: number;
+  cabin_pressure_warning_max: number;
+  cabin_pressure_hazard_max: number;
+  cabin_temp_warning_min: number;
+  cabin_temp_hazard_min: number;
+  cabin_temp_warning_max: number;
+  cabin_temp_hazard_max: number;
+
+  one_atmosphere: number;
   cabin_pressure: number;
   cabin_temp: number;
   enclosed: boolean;

@@ -537,18 +537,21 @@ const SnowflakeRadio = (props, context) => {
 
 const SnowflakeAirTank = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
-  const { cabin_dangerous_highpressure, cabin_sealed } = data;
-  const { ref, integrity, active_label, active } = props.module;
+  const { cabin_sealed, one_atmosphere } = data;
+  const { ref, integrity, active } = props.module;
   const {
-    snowflake_id,
-    air_source,
-    airtank_pressure,
-    airtank_temp,
+    auto_pressurize_on_seal,
     port_connected,
-    cabin_pressure,
-    cabin_temp,
-    cabin_air,
+    tank_release_pressure,
+    tank_release_pressure_min,
+    tank_release_pressure_max,
+    tank_pump_active,
+    tank_pump_direction,
+    tank_pump_pressure,
+    tank_pump_pressure_min,
+    tank_pump_pressure_max,
     tank_air,
+    cabin_air,
   } = props.module.snowflake;
   return (
     <Box>
@@ -578,11 +581,18 @@ const SnowflakeAirTank = (props, context) => {
             />
           </LabeledList.Item>
         )}
-        <LabeledList.Item label={active_label}>
+      </LabeledList>
+      <Section
+        title="Tank"
+        buttons={
           <Button
             icon="power-off"
             content={
-              active ? (!cabin_sealed ? 'Paused' : 'Enabled') : 'Disabled'
+              active
+                ? !cabin_sealed
+                  ? 'Release Paused'
+                  : 'Pressurizing Cabin'
+                : 'Release Off'
             }
             onClick={() =>
               act('equip_act', {
@@ -592,30 +602,130 @@ const SnowflakeAirTank = (props, context) => {
             }
             selected={active}
           />
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Tank Port"
-          buttons={
+        }>
+        <LabeledList>
+          <LabeledList.Item label="Automation">
             <Button
-              icon="info"
-              color="transparent"
-              tooltip="Park above atmospherics connector port to connect inernal air tank with a gas network."
+              content={
+                auto_pressurize_on_seal ? 'Pressurize on Seal' : 'Manual'
+              }
+              selected={auto_pressurize_on_seal}
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: 'toggle_auto_pressurize',
+                })
+              }
             />
-          }>
+          </LabeledList.Item>
+          <LabeledList.Item label="Release Pressure">
+            <NumberInput
+              value={tank_release_pressure}
+              unit="kPa"
+              width="75px"
+              minValue={tank_release_pressure_min}
+              maxValue={tank_release_pressure_max}
+              step={10}
+              onChange={(e, value) =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: 'set_cabin_pressure',
+                  new_pressure: value,
+                })
+              }
+            />
+            <Button
+              icon="sync"
+              disabled={tank_release_pressure === Math.round(one_atmosphere)}
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: 'set_cabin_pressure',
+                  new_pressure: Math.round(one_atmosphere),
+                })
+              }
+            />
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Tank Port"
+            buttons={
+              <Button
+                icon="info"
+                color="transparent"
+                tooltip="Park above atmospherics connector port to connect inernal air tank with a gas network."
+              />
+            }>
+            <Button
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  gear_action: 'toggle_port',
+                })
+              }
+              selected={port_connected}>
+              {port_connected ? 'Connected' : 'Disconnected'}
+            </Button>
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+      <Section
+        title="External Pump"
+        buttons={
           <Button
+            icon="power-off"
+            content={tank_pump_active ? 'On' : 'Off'}
+            selected={tank_pump_active}
             onClick={() =>
               act('equip_act', {
                 ref: ref,
-                gear_action: 'toggle_port',
+                gear_action: 'toggle_tank_pump',
               })
             }
-            icon={port_connected ? 'plug-circle-check' : 'plug-circle-xmark'}
-            selected={port_connected}>
-            {port_connected ? 'Connected' : 'Disconnected'}
-          </Button>
+          />
+        }>
+        <LabeledList.Item label="Direction">
+          <Button
+            content={tank_pump_direction ? 'Area → Tank' : 'Tank → Area'}
+            color={!tank_pump_direction ? 'caution' : null}
+            onClick={() =>
+              act('equip_act', {
+                ref: ref,
+                gear_action: 'toggle_tank_pump_direction',
+              })
+            }
+          />
         </LabeledList.Item>
-      </LabeledList>
-      <Section>
+        <LabeledList.Item label="Target Pressure">
+          <NumberInput
+            value={tank_pump_pressure}
+            unit="kPa"
+            width="75px"
+            minValue={tank_pump_pressure_min}
+            maxValue={tank_pump_pressure_max}
+            step={10}
+            format={(value) => Math.round(value)}
+            onChange={(e, value) =>
+              act('equip_act', {
+                ref: ref,
+                gear_action: 'set_tank_pump_pressure',
+                new_pressure: value,
+              })
+            }
+          />
+          <Button
+            icon="sync"
+            disabled={tank_pump_pressure === Math.round(one_atmosphere)}
+            onClick={() =>
+              act('equip_act', {
+                ref: ref,
+                gear_action: 'set_tank_pump_pressure',
+                new_pressure: Math.round(one_atmosphere),
+              })
+            }
+          />
+        </LabeledList.Item>
+      </Section>
+      <Section title="Sensors">
         <Collapsible title="Tank Air">
           <GasmixParser gasmix={tank_air} />
         </Collapsible>
@@ -654,7 +764,7 @@ const SnowflakeOrebox = (props, context) => {
       {contents.map((item, i) => (
         <Stack key={i}>
           <Stack.Item lineHeight="0">
-            <Box className={classes(['ore32x32', item.icon])} />
+            <Box className={classes(['mecha_equipment32x32', item.icon])} />
           </Stack.Item>
           <Stack.Item
             lineHeight="32px"

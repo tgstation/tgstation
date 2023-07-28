@@ -24,15 +24,22 @@
 	)
 
 /obj/vehicle/sealed/mecha/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/ore),
-		get_asset_datum(/datum/asset/spritesheet/mecha_equipment),
-	)
+	return get_asset_datum(/datum/asset/spritesheet/mecha_equipment)
 
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
 	var/list/data = list()
 	data["ui_theme"] = ui_theme
-	data["cabin_dangerous_highpressure"] = WARNING_HIGH_PRESSURE
+	//same thresholds as in air alarm
+	data["cabin_pressure_warning_min"]  = WARNING_LOW_PRESSURE
+	data["cabin_pressure_hazard_min"]  = HAZARD_LOW_PRESSURE
+	data["cabin_pressure_warning_max"]  = WARNING_HIGH_PRESSURE
+	data["cabin_pressure_hazard_max"]  = HAZARD_HIGH_PRESSURE
+	data["cabin_temp_warning_min"]  = BODYTEMP_COLD_WARNING_1 + 10 - T0C
+	data["cabin_temp_hazard_min"]  = BODYTEMP_COLD_WARNING_1 - T0C
+	data["cabin_temp_warning_max"]  = BODYTEMP_HEAT_WARNING_1 - 27 - T0C
+	data["cabin_temp_hazard_max"]  = BODYTEMP_HEAT_WARNING_1 - T0C
+	data["one_atmosphere"]  = ONE_ATMOSPHERE
+
 	data["sheet_material_amount"] = SHEET_MATERIAL_AMOUNT
 	//map of relevant flags to check tgui side, not every flag needs to be here
 	data["mechflag_keys"] = list(
@@ -44,7 +51,7 @@
 	data["internal_damage_keys"] = list(
 		"MECHA_INT_FIRE" = MECHA_INT_FIRE,
 		"MECHA_INT_TEMP_CONTROL" = MECHA_INT_TEMP_CONTROL,
-		"MECHA_INT_TANK_BREACH" = MECHA_INT_TANK_BREACH,
+		"MECHA_CABIN_AIR_BREACH" = MECHA_CABIN_AIR_BREACH,
 		"MECHA_INT_CONTROL_LOST" = MECHA_INT_CONTROL_LOST,
 		"MECHA_INT_SHORT_CIRCUIT" = MECHA_INT_SHORT_CIRCUIT,
 	)
@@ -89,7 +96,8 @@
 	data["weapons_safety"] = weapons_safety
 	data["enclosed"] = enclosed
 	data["cabin_sealed"] = cabin_sealed
-	data["cabin_pressure"] = cabin_air.return_pressure()
+	data["cabin_temp"] =  round(cabin_air.temperature - T0C)
+	data["cabin_pressure"] = round(cabin_air.return_pressure())
 	data["mech_view"] = ui_view.assigned_map
 	data["modules"] = get_module_ui_data()
 	data["selected_module_index"] = ui_selected_module_index
