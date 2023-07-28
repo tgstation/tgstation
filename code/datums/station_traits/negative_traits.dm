@@ -389,7 +389,7 @@
 				if(istype(current_thing, /obj/machinery/vending) && prob(45))
 					var/obj/machinery/vending/vendor_to_trash = current_thing
 					if(prob(50))
-						vendor_to_trash.tilt(get_turf(vendor_to_trash))
+						vendor_to_trash.tilt(get_turf(vendor_to_trash), 0) // crit effects can do some real weird shit, lets disable it
 
 					if(prob(50))
 						vendor_to_trash.take_damage(150)
@@ -545,11 +545,13 @@
 	VAR_PROTECTED/send_care_package_time = 5 MINUTES
 	///The glow of 'fake' radioactive objects in space
 	var/nebula_radglow = "#66ff33"
+	/// Area's that are part of the radioactive nebula
+	var/radioactive_areas = /area/space
 
 /datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
 
-	for(var/area/target as anything in get_areas(/area/space))
+	for(var/area/target as anything in get_areas(radioactive_areas))
 		RegisterSignals(target, list(COMSIG_AREA_ENTERED, COMSIG_AREA_INITIALIZED_IN), PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
 
@@ -570,29 +572,40 @@
 		//if engineering isnt valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
 
+	// Let the viro know resistence is futile
+	send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
+	force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
+
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
 	modified_event.weight = 0
 
-///They entered space? START BOMBING WITH RADS HAHAHAHA
-/datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer)
+///They entered space? START BOMBING WITH RADS HAHAHAHA. old_area can be null for new objects
+/datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer, area/old_area)
 	SIGNAL_HANDLER
 
-	if(!ismovable(enterer))
-		return
+	if(iscarbon(enterer))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
+		if(!istype(old_area, radioactive_areas)) //old area wasnt radioactive
+			enterer.AddComponent( \
+				/datum/component/radioactive_exposure, \
+				minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME, \
+				irradiation_chance_base = RADIATION_EXPOSURE_NEBULA_BASE_CHANCE, \
+				irradiation_chance_increment = RADIATION_EXPOSURE_NEBULA_CHANCE_INCREMENT, \
+				irradiation_interval = RADIATION_EXPOSURE_NEBULA_CHECK_INTERVAL, \
+				source = src, \
+				radioactive_areas = radioactive_areas, \
+			)
 
-	enterer.AddElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
-	//Don't actually make EVERY. SINGLE. THING. radioactive, just make them glow so people arent killed instantly
-	if(!SSradiation.can_irradiate_basic(enterer))
+	else if(isobj(enterer)) //and fake the rest
 		//outline clashes too much with other outlines and creates pretty ugly lines
 		enterer.add_filter(GLOW_NEBULA, 2, list("type" = "drop_shadow", "color" = nebula_radglow, "size" = 2))
 
 ///Called when an atom leaves space, so we can remove the radiation effect
-/datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter)
+/datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter, direction)
 	SIGNAL_HANDLER
 
-	exiter.RemoveElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
 	exiter.remove_filter(GLOW_NEBULA)
+	// The component handles its own removal
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now

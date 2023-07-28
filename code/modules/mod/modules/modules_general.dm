@@ -101,7 +101,7 @@
 	overlay_state_active = "module_jetpack_on"
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	var/stabilize = FALSE
+	var/stabilize = TRUE
 	var/thrust_callback
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
@@ -182,8 +182,12 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
+	/// Does this show damage types, body temp, satiety
+	var/display_detailed_vitals = TRUE
+	/// Does this show DNA data
+	var/display_dna = FALSE
 	/// Does this show the round ID and shift time?
-	var/show_time = FALSE
+	var/display_time = FALSE
 	/// Death sound. May or may not be funny. Vareditable at your own risk.
 	var/death_sound = 'sound/effects/flatline3.ogg'
 	/// Death sound volume. Please be responsible with this.
@@ -191,20 +195,22 @@
 
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
-	.["show_time"] = show_time
-	.["statustime"] = station_time_timestamp()
-	.["statusid"] = GLOB.round_id
-	.["statushealth"] = mod.wearer?.health || 0
-	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["statusburn"] = mod.wearer?.getFireLoss() || 0
-	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
-	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
-	.["statustemp"] = mod.wearer?.bodytemperature || 0
-	.["statusnutrition"] = mod.wearer?.nutrition || 0
-	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["statusdna"] = mod.wearer?.dna.unique_enzymes
-	.["statusviruses"] = null
+	.["display_time"] = display_time
+	.["shift_time"] = station_time_timestamp()
+	.["shift_id"] = GLOB.round_id
+	.["health"] = mod.wearer?.health || 0
+	.["health_max"] = mod.wearer?.getMaxHealth() || 0
+	if(display_detailed_vitals)
+		.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
+		.["loss_fire"] = mod.wearer?.getFireLoss() || 0
+		.["loss_tox"] = mod.wearer?.getToxLoss() || 0
+		.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+		.["body_temperature"] = mod.wearer?.bodytemperature || 0
+		.["nutrition"] = mod.wearer?.nutrition || 0
+	if(display_dna)
+		.["dna_unique_identity"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
+		.["dna_unique_enzymes"] = mod.wearer?.dna.unique_enzymes
+	.["viruses"] = null
 	if(!length(mod.wearer?.diseases))
 		return .
 	var/list/viruses = list()
@@ -216,9 +222,21 @@
 		virus_data["maxstage"] = virus.max_stages
 		virus_data["cure"] = virus.cure_text
 		viruses += list(virus_data)
-	.["statusviruses"] = viruses
+	.["viruses"] = viruses
 
 	return .
+
+/obj/item/mod/module/status_readout/get_configuration()
+	. = ..()
+	.["display_detailed_vitals"] = add_ui_configuration("Detailed Vitals", "bool", display_detailed_vitals)
+	.["display_dna"] = add_ui_configuration("DNA Information", "bool", display_dna)
+
+/obj/item/mod/module/status_readout/configure_edit(key, value)
+	switch(key)
+		if("display_detailed_vitals")
+			display_detailed_vitals = text2num(value)
+		if("display_dna")
+			display_dna = text2num(value)
 
 /obj/item/mod/module/status_readout/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))

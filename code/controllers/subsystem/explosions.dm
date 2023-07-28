@@ -199,7 +199,7 @@ SUBSYSTEM_DEF(explosions)
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
+/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
 	. = SSexplosions.explode(arglist(args))
 
 
@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(explosions)
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
+/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = null, flash_range = null, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
 	var/list/arguments = list(
 		EXARG_KEY_ORIGIN = origin,
 		EXARG_KEY_DEV_RANGE = devastation_range,
