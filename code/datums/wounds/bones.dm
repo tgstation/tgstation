@@ -144,13 +144,13 @@
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 
-/datum/wound/blunt/get_examine_description(mob/user)
+/datum/wound/blunt/get_wound_description(mob/user)
 	if(!limb.current_gauze && !gelled && !taped)
 		return ..()
 
 	var/list/msg = list()
 	if(!limb.current_gauze)
-		msg += "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
+		msg += "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 	else
 		var/sling_condition = ""
 		// how much life we have left in these bandages
@@ -164,7 +164,7 @@
 			if(4 to INFINITY)
 				sling_condition = "tightly"
 
-		msg += "[victim.p_their(TRUE)] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
+		msg += "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
 
 	if(taped)
 		msg += ", [span_notice("and appears to be reforming itself under some surgical tape!")]"
@@ -291,12 +291,17 @@
 
 
 /datum/wound/blunt/moderate/treat(obj/item/I, mob/user)
-	if(victim == user)
-		victim.visible_message(span_danger("[user] begins resetting [victim.p_their()] [limb.plaintext_zone] with [I]."), span_warning("You begin resetting your [limb.plaintext_zone] with [I]..."))
-	else
-		user.visible_message(span_danger("[user] begins resetting [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [I]..."))
+	var/scanned = HAS_TRAIT(src, TRAIT_WOUND_SCANNED)
+	var/self_penalty_mult = user == victim ? 1.5 : 1
+	var/scanned_mult = scanned ? 0.5 : 1
+	var/treatment_delay = base_treat_time * self_penalty_mult * scanned_mult
 
-	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
+	if(victim == user)
+		victim.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim.p_their()] [limb.plaintext_zone] with [I]."), span_warning("You begin resetting your [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+	else
+		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+
+	if(!do_after(user, treatment_delay, target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(victim == user)

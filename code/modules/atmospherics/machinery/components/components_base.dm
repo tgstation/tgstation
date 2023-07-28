@@ -18,9 +18,9 @@
 	var/list/datum/gas_mixture/airs
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
-	
+
 	/// SKYRAPTOR ADDITION: underlays getting a modular icon
-	var/underlay_icon = 'icons/obj/atmospherics/pipes/pipe_underlays.dmi'
+	var/underlay_icon = 'icons/obj/pipes_n_cables/pipe_underlays.dmi'
 
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
@@ -81,14 +81,14 @@
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
 		var/node_dir = get_dir(src, node)
-		var/mutable_appearance/pipe_appearance = mutable_appearance(underlay_icon, "intact_[node_dir]_[underlay_pipe_layer]") //SKR EDIT
+		var/mutable_appearance/pipe_appearance = mutable_appearance(underlay_icon, "intact_[node_dir]_[underlay_pipe_layer]") //SKYRAPTOR EDIT
 		pipe_appearance.color = node.pipe_color
 		underlays += pipe_appearance
 		connected |= node_dir
 
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
-			var/mutable_appearance/pipe_appearance = mutable_appearance(underlay_icon, "exposed_[direction]_[underlay_pipe_layer]") //SKR EDIT
+			var/mutable_appearance/pipe_appearance = mutable_appearance(underlay_icon, "exposed_[direction]_[underlay_pipe_layer]") //SKYRAPTOR EDIT
 			pipe_appearance.color = pipe_color
 			underlays += pipe_appearance
 

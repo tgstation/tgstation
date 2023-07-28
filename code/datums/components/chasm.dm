@@ -1,6 +1,3 @@
-/// List of weakrefs to containers for things which have fallen into chasms
-GLOBAL_LIST_INIT(chasm_storage, list())
-
 // Used by /turf/open/chasm and subtypes to implement the "dropping" mechanic
 /datum/component/chasm
 	var/turf/target_turf
@@ -34,71 +31,76 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		/obj/effect/fishing_lure,
 	))
 
-/datum/component/chasm/Initialize(turf/target)
-	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Entered))
+/datum/component/chasm/Initialize(turf/target, mapload)
+	if(!isturf(parent))
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
+	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
-	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
-	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
+	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
+	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
+	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
+	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff when the turf is changed.
+	//otherwise don't do anything because turfs and areas are initialized before movables.
+	if(!mapload)
+		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
+	parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
 
 /datum/component/chasm/UnregisterFromParent()
-	STOP_PROCESSING(SSobj, src)
-	remove_storage()
+	storage = null
 
-/**
- * Deletes the chasm storage object and removes empty weakrefs from global list
- */
-/datum/component/chasm/proc/remove_storage()
-	if (!storage)
-		return
-	QDEL_NULL(storage)
-	var/list/chasm_storage = list()
-	for (var/datum/weakref/ref as anything in GLOB.chasm_storage)
-		if (!ref.resolve())
-			continue
-		chasm_storage += ref
-	GLOB.chasm_storage = chasm_storage
-
-/datum/component/chasm/proc/Entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
+	drop_stuff()
 
-	START_PROCESSING(SSobj, src)
-	drop_stuff(arrived)
+/datum/component/chasm/proc/exited(datum/source, atom/movable/exited)
+	SIGNAL_HANDLER
+	UnregisterSignal(exited, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED))
 
-/datum/component/chasm/process()
-	if (!drop_stuff())
-		STOP_PROCESSING(SSobj, src)
+/datum/component/chasm/proc/initialized_on(datum/source, atom/movable/movable, mapload)
+	SIGNAL_HANDLER
+	drop_stuff(movable)
 
-/datum/component/chasm/proc/is_safe()
-	//if anything matching this typecache is found in the chasm, we don't drop things
-	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice, /obj/structure/lattice/catwalk, /obj/structure/stone_tile))
+/datum/component/chasm/proc/on_chasm_stopped(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	for(var/atom/movable/movable as anything in source)
+		UnregisterSignal(movable, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED))
 
-	var/atom/parent = src.parent
-	var/list/found_safeties = typecache_filter_list(parent.contents, chasm_safeties_typecache)
-	for(var/obj/structure/stone_tile/S in found_safeties)
-		if(S.fallen)
-			LAZYREMOVE(found_safeties, S)
-	return LAZYLEN(found_safeties)
+/datum/component/chasm/proc/on_chasm_no_longer_stopped(datum/source)
+	SIGNAL_HANDLER
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(exited))
+	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
+	drop_stuff()
 
-/datum/component/chasm/proc/drop_stuff(dropped_thing)
-	if (is_safe())
-		return FALSE
+#define CHASM_NOT_DROPPING 0
+#define CHASM_DROPPING 1
+///Doesn't drop the movable, but registers a few signals to try again if the conditions change.
+#define CHASM_REGISTER_SIGNALS 2
 
-	var/atom/parent = src.parent
-	var/to_check = dropped_thing ? list(dropped_thing) : parent.contents
-	for (var/thing in to_check)
-		if (droppable(thing))
-			. = TRUE
-			INVOKE_ASYNC(src, PROC_REF(drop), thing)
+/datum/component/chasm/proc/drop_stuff(atom/movable/dropped_thing)
+	if(HAS_TRAIT(parent, TRAIT_CHASM_STOPPED))
+		return
+	var/atom/atom_parent = parent
+	var/to_check = dropped_thing ? list(dropped_thing) : atom_parent.contents
+	for (var/atom/movable/thing as anything in to_check)
+		var/dropping = droppable(thing)
+		switch(dropping)
+			if(CHASM_DROPPING)
+				INVOKE_ASYNC(src, PROC_REF(drop), thing)
+			if(CHASM_REGISTER_SIGNALS)
+				RegisterSignals(thing, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED), PROC_REF(drop_stuff), TRUE)
 
 /datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	// avoid an infinite loop, but allow falling a large distance
 	if(falling_atoms[falling_ref] && falling_atoms[falling_ref] > 30)
-		return FALSE
-	if(!isliving(dropped_thing) && !isobj(dropped_thing))
-		return FALSE
-	if(is_type_in_typecache(dropped_thing, forbidden_types) || dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
-		return FALSE
+		return CHASM_NOT_DROPPING
+	if(is_type_in_typecache(dropped_thing, forbidden_types) || (!isliving(dropped_thing) && !isobj(dropped_thing)))
+		return CHASM_NOT_DROPPING
+	if(dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
+		return CHASM_REGISTER_SIGNALS
 
 	//Flies right over the chasm
 	if(ismob(dropped_thing))
@@ -106,7 +108,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		if(M.buckled) //middle statement to prevent infinite loops just in case!
 			var/mob/buckled_to = M.buckled
 			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
-				return FALSE
+				return CHASM_REGISTER_SIGNALS
 		if(ishuman(dropped_thing))
 			var/mob/living/carbon/human/victim = dropped_thing
 			if(istype(victim.belt, /obj/item/wormhole_jaunter))
@@ -115,8 +117,12 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 				var/fall_into_chasm = jaunter.chasm_react(victim)
 				if(!fall_into_chasm)
 					chasm.visible_message(span_boldwarning("[victim] falls into the [chasm]!")) //To freak out any bystanders
-				return fall_into_chasm
-	return TRUE
+				return fall_into_chasm ? CHASM_DROPPING : CHASM_NOT_DROPPING
+	return CHASM_DROPPING
+
+#undef CHASM_NOT_DROPPING
+#undef CHASM_DROPPING
+#undef CHASM_REGISTER_SIGNALS
 
 /datum/component/chasm/proc/drop(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
@@ -176,9 +182,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		return
 
 	if(!storage)
-		storage = new(get_turf(parent))
-		RegisterSignal(storage, COMSIG_ATOM_EXITED, PROC_REF(left_chasm))
-		GLOB.chasm_storage += WEAKREF(storage)
+		storage = (locate() in parent) || new(parent)
 
 	if(storage.contains(dropped_thing))
 		return
@@ -188,14 +192,11 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	dropped_thing.transform = oldtransform
 	dropped_thing.pixel_y = oldoffset
 
-	if(dropped_thing.forceMove(storage))
-		if (isliving(dropped_thing))
-			RegisterSignal(dropped_thing, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-	else
+	if(!dropped_thing.forceMove(storage))
 		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
 		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 
-	if(isliving(dropped_thing))
+	else if(isliving(dropped_thing))
 		var/mob/living/fallen_mob = dropped_thing
 		fallen_mob.notransform = FALSE
 		if (fallen_mob.stat != DEAD)
@@ -216,27 +217,8 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	SIGNAL_HANDLER
 	UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 
-#define CHASM_TRAIT "chasm trait"
-
-/**
- * Called if something comes back to life inside the pit. Expected sources are badmins and changelings.
- * Ethereals should take enough damage to be smashed and not revive.
- *
- * Arguments
- * * escapee - Lucky guy who just came back to life at the bottom of a hole.
- */
-/datum/component/chasm/proc/on_revive(mob/living/escapee)
-	SIGNAL_HANDLER
-	var/atom/parent = src.parent
-	parent.visible_message(span_boldwarning("After a long climb, [escapee] leaps out of [parent]!"))
-	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in
-	escapee.forceMove(get_turf(parent))
-	escapee.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
-	REMOVE_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT)
-	escapee.Paralyze(20 SECONDS, TRUE)
-	UnregisterSignal(escapee, COMSIG_LIVING_REVIVE)
-
-#undef CHASM_TRAIT
+///Global list needed to let fishermen with a rescue hook fish fallen mobs from any place
+GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /**
  * An abstract object which is basically just a bag that the chasm puts people inside
@@ -250,3 +232,40 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 /obj/effect/abstract/chasm_storage/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SECLUDED_LOCATION, INNATE_TRAIT)
+
+/obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
+	. = ..()
+	if (isliving(arrived))
+		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
+		GLOB.chasm_fallen_mobs += arrived
+
+/obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
+	. = ..()
+	if (isliving(gone))
+		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
+		GLOB.chasm_fallen_mobs -= gone
+
+#define CHASM_TRAIT "chasm trait"
+/**
+ * Called if something comes back to life inside the pit. Expected sources are badmins and changelings.
+ * Ethereals should take enough damage to be smashed and not revive.
+ * Arguments
+ * escapee - Lucky guy who just came back to life at the bottom of a hole.
+ */
+/obj/effect/abstract/chasm_storage/proc/on_revive(mob/living/escapee)
+	SIGNAL_HANDLER
+	var/turf/turf = get_turf(src)
+	if(turf.GetComponent(/datum/component/chasm))
+		turf.visible_message(span_boldwarning("After a long climb, [escapee] leaps out of [turf]!"))
+	else
+		playsound(turf, 'sound/effects/bang.ogg', 50, TRUE)
+		turf.visible_message(span_boldwarning("[escapee] busts through [turf], leaping out of the chasm below"))
+		turf.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in
+	escapee.forceMove(turf)
+	escapee.throw_at(get_edge_target_turf(turf, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
+	REMOVE_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT)
+	escapee.Paralyze(20 SECONDS, TRUE)
+	UnregisterSignal(escapee, COMSIG_LIVING_REVIVE)
+
+#undef CHASM_TRAIT

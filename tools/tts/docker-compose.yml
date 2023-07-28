@@ -4,7 +4,7 @@ services:
 
     build: ./tts-api
     ports:
-      - "5002:5002"
+      - "127.0.0.1:5002:5002"
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:5002/health-check"]

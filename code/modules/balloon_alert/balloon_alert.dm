@@ -8,7 +8,13 @@
 /// The amount of characters needed before this increase takes into effect
 #define BALLOON_TEXT_CHAR_LIFETIME_INCREASE_MIN 10
 
-/// Creates text that will float from the atom upwards to the viewer.
+/**
+ * Creates text that will float from the atom upwards to the viewer.
+ *
+ * Args:
+ * * mob/viewer: The mob the text will be shown to. Nullable (But only in the form of it won't runtime).
+ * * text: The text to be shown to viewer. Must not be null.
+ */
 /atom/proc/balloon_alert(mob/viewer, text)
 	SHOULD_NOT_SLEEP(TRUE)
 
@@ -34,7 +40,7 @@
 // if this would look bad on laggy clients.
 /atom/proc/balloon_alert_perform(mob/viewer, text)
 
-	var/client/viewer_client = viewer.client
+	var/client/viewer_client = viewer?.client
 	if (isnull(viewer_client))
 		return
 

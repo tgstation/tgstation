@@ -1,5 +1,4 @@
 //Stores several modifiers in a way that isn't cleared by changing species
-
 /datum/physiology
 	var/brute_mod = 1 // % of brute damage taken from all sources
 	var/burn_mod = 1 // % of burn damage taken from all sources
@@ -17,7 +16,11 @@
 
 	var/siemens_coeff = 1 // resistance to shocks
 
-	var/stun_mod = 1 // % stun modifier
+	/// Multiplier applied to all incapacitating stuns (knockdown, stun, paralyze, immobilize)
+	var/stun_mod = 1
+	/// Multiplied aplpied to just knockdowns, stacks with above multiplicatively
+	var/knockdown_mod = 1
+
 	var/bleed_mod = 1 // % bleeding modifier
 	var/datum/armor/armor // internal armor datum
 

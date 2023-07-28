@@ -35,14 +35,14 @@
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
 	if(grown_battery)
-		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
+		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
 	var/icon_link
 	if(!grown_battery)
 		icon_link = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/cells/cell.dmi'
 	else
-		icon_link = 'icons/obj/power.dmi'
+		icon_link = 'icons/obj/machines/cell_charger.dmi' //this might not be intended behaviour, it's hard to say
 	. += mutable_appearance(icon_link, "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
 
 /obj/machinery/cell_charger

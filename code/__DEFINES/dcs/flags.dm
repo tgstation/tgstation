@@ -1,4 +1,4 @@
-/// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
+/// Return this from `/datum/component/Initialize` or `/datum/component/OnTransfer` or `/datum/component/on_source_add` to have the component be deleted if it's applied to an incorrect type.
 /// `parent` must not be modified if this is to be returned.
 /// This will be noted in the runtime logs
 #define COMPONENT_INCOMPATIBLE 1
@@ -22,6 +22,13 @@
 /// Causes all detach arguments to be passed to detach instead of only being used to identify the element
 /// When this is used your Detach proc should have the same signature as your Attach proc
 #define ELEMENT_COMPLEX_DETACH (1 << 2)
+/**
+ * Stops lists used as arguments for the element from being sorted by the dcs_check_list_arguments unit test.
+ * For when changing the position of the keys is undesiderable, like for color matrices.
+ */
+#define ELEMENT_DONT_SORT_LIST_ARGS (1<<3)
+/// Elements with this flag will be ignored by the test (I would rather put some faith than have contributors stringify connect loc lists).
+#define ELEMENT_NO_LIST_UNIT_TEST (1<<4)
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
@@ -33,8 +40,8 @@
 /**
  * Component uses source tracking to manage adding and removal logic.
  * Add a source/spawn to/the component by using AddComponentFrom(source, component_type, args...)
- * Only the first args will be respected, and you should instead handle most of your logic in the on_source_added proc.
  * Removing the last source will automatically remove the component from the parent.
+ * Arguments will be passed to on_source_add(source, args...); ensure that Initialize and on_source_add have the same signature.
  */
 #define COMPONENT_DUPE_SOURCES 3
 /// old component is given the initialization args of the new

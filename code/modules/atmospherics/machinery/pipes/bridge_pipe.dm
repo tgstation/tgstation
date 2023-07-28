@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe
-	icon = 'icons/obj/atmospherics/pipes/bridge_pipe.dmi'
+	icon = 'icons/obj/pipes_n_cables/bridge_pipe.dmi'
 	icon_state = "bridge_center"
 
 	name = "bridge pipe"
@@ -22,7 +22,7 @@
 
 /obj/machinery/atmospherics/pipe/bridge_pipe/update_overlays()
 	. = ..()
-	var/mutable_appearance/center = mutable_appearance(icon, "bridge_center") //SKYRAPTOR EDIT: WHY THE *HELL* DIDN'T THIS JUST USE THE BASE ICON??  WHY HARDCODE IT????
+	var/mutable_appearance/center = mutable_appearance(icon, "bridge_center") //SKYRAPTOR EDIT: WHY THE *HELL* DIDN'T THIS JUST USE THE BASE ICON??  WHY HARDCODE IT????  UPDATE AFTER THE BIG MERGENING OF LATE JULY: They reworked the entire pipe icon dir layout and STILL didn't fix this
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	. += center
 

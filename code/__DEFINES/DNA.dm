@@ -29,15 +29,16 @@
 
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
-#define DNA_EYE_COLOR_LEFT_BLOCK 4
+#define DNA_GENDER_BLOCK 1
+#define DNA_SKIN_TONE_BLOCK 2
+#define DNA_EYE_COLOR_LEFT_BLOCK 3
 #define DNA_EYE_COLOR_RIGHT_BLOCK 4
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
-#define DNA_FACIAL_HAIRSTYLE_BLOCK 6
-#define DNA_GENDER_BLOCK 5
-#define DNA_HAIR_COLOR_BLOCK 1
-#define DNA_HAIRSTYLE_BLOCK 7
-#define DNA_SKIN_TONE_BLOCK 3
-#define DNA_UNI_IDENTITY_BLOCKS 7
+#define DNA_HAIRSTYLE_BLOCK 5
+#define DNA_HAIR_COLOR_BLOCK 6
+#define DNA_FACIAL_HAIRSTYLE_BLOCK 7
+#define DNA_FACIAL_HAIR_COLOR_BLOCK 8
+
+#define DNA_UNI_IDENTITY_BLOCKS 8
 
 /// This number needs to equal the total number of DNA blocks
 #define DNA_FEATURE_BLOCKS 26 /// SKYRAPTOR EDIT: 23, up from 15
@@ -167,9 +168,11 @@
 #define CHROMOSOME_USED 2
 
 //used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their physique for the actual sprites, which is not genetic)
+#define GENDERS 4
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3
+#define G_NEUTER 4
 
 /// Defines how a mob's organs_slot is ordered
 /// Exists so Life()'s organ process order is consistent

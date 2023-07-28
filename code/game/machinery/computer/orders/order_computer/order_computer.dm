@@ -134,12 +134,19 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	switch(action)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
-			grocery_list[wanted_item] += 1
+			if(grocery_list[wanted_item] >= 20)
+				return
+			else
+				grocery_list[wanted_item] += 1
 		if("remove_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 			if(!grocery_list[wanted_item])
 				return
-			grocery_list[wanted_item] -= 1
+			if(grocery_list[wanted_item] < 1)
+				grocery_list[wanted_item] = 0
+				return
+			else
+				grocery_list[wanted_item] -= 1
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 		if("cart_set")
@@ -156,6 +163,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			//So miners cant spam buy crates for a very low price
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				return
+				
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")

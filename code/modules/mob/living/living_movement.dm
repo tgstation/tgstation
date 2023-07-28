@@ -95,15 +95,14 @@
 	add_movespeed_modifier(modifier)
 	/// SKYRAPTOR ADDITION END
 
-/mob/living/proc/update_turf_movespeed(turf/open/T)
-	if(isopenturf(T) && !is_type_on_turf(T, /obj/structure/lattice/catwalk))
-		if(T.slowdown != current_turf_slowdown)
-			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = T.slowdown)
-			current_turf_slowdown = T.slowdown
+/mob/living/proc/update_turf_movespeed(turf/open/turf)
+	if(isopenturf(turf) && !HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLOWDOWN))
+		if(turf.slowdown != current_turf_slowdown)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = turf.slowdown)
+			current_turf_slowdown = turf.slowdown
 	else if(current_turf_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
 		current_turf_slowdown = 0
-
 
 /mob/living/proc/update_pull_movespeed()
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATING_PULL_MOVESPEED)

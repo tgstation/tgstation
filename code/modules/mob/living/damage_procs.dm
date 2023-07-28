@@ -150,7 +150,7 @@
 		adjust_drowsiness(drowsy)
 	if(eyeblur)
 		adjust_eye_blur(eyeblur)
-	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+	if(jitter && !check_stun_immunity(CANSTUN))
 		adjust_jitter(jitter)
 	if(slur)
 		adjust_slurring(slur)
@@ -279,10 +279,10 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/adjustOrganLoss(slot, amount, maximum, required_organtype)
+/mob/living/proc/adjustOrganLoss(slot, amount, maximum, required_organ_flag)
 	return
 
-/mob/living/proc/setOrganLoss(slot, amount, maximum, required_organtype)
+/mob/living/proc/setOrganLoss(slot, amount, maximum, required_organ_flag)
 	return
 
 /mob/living/proc/get_organ_loss(slot)

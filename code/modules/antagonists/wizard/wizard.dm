@@ -50,6 +50,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+
+/datum/antagonist/wizard_minion/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard_minion/proc/create_objectives()
@@ -76,6 +81,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	. = ..()
 	if(allow_rename)
 		rename_wizard()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+
+/datum/antagonist/wizard/Destroy()
+	QDEL_NULL(ritual)
+	return ..()
 
 /datum/antagonist/wizard/create_team(datum/team/wizard/new_team)
 	if(!new_team)
@@ -98,7 +108,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /// Initialises the grand ritual action for this mob
 /datum/antagonist/wizard/proc/assign_ritual()
-	ritual = new(owner.current)
+	ritual = new(src)
 	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 
 /datum/antagonist/wizard/proc/send_to_lair()
@@ -165,6 +175,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			qdel(spell)
 			owner.current.actions -= spell
 
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()

@@ -22,10 +22,12 @@
 /atom/movable/screen/lobby/button/crew_manifest
 	icon = 'modular_skyraptor/modules/aesthetics/ui_greenened/lobby_ui/bottom_buttons.dmi'
 
-/atom/movable/screen/lobby/button/poll
+//welp
+/*/atom/movable/screen/lobby/button/poll
 	icon = 'modular_skyraptor/modules/aesthetics/ui_greenened/lobby_ui/bottom_buttons.dmi'
 
 /atom/movable/screen/lobby/button/poll/update_overlays() //this is a wee bit ugly but we roll with it
 	. = ..()
 	if(new_poll)
 		. += mutable_appearance('modular_skyraptor/modules/aesthetics/ui_greenened/lobby_ui/poll_overlay.dmi', "new_poll")
+*/

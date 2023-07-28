@@ -3,10 +3,14 @@
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon = 'icons/obj/weapons/guns/mosinnagant.dmi'
 	icon_state = "moistnugget"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = "moistnugget"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
@@ -54,7 +58,7 @@
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
 	slot_flags = ITEM_SLOT_BACK
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
 	knife_x_offset = 37
 	knife_y_offset = 14
@@ -121,9 +125,13 @@
 	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "speargun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	inhand_icon_state = "speargun"
 	worn_icon_state = "speargun"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
 
@@ -139,7 +147,7 @@
 		Tiger Co-op assassins, cryo-frozen Space Russians, and security personnel with \
 		little care for professional conduct while making 'arrests' point blank in the back of the head \
 		until the gun clicks. EXTREMELY moist."
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
@@ -170,7 +178,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	initial_caliber = CALIBER_SHOTGUN
 	alternative_caliber = CALIBER_A762
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -191,7 +199,7 @@
 	icon_state = "musket_prime"
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "musket_prime"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	projectile_damage_multiplier = 1
 
 /// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///
@@ -200,24 +208,8 @@
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	var/guns_left = 30
-	mag_type = /obj/item/ammo_box/magazine/internal/enchanted
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
-
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage
-	name = "arcane barrage"
-	desc = "Pew Pew Pew."
-	fire_sound = 'sound/weapons/emitter.ogg'
-	pin = /obj/item/firing_pin/magic
-	icon_state = "arcane_barrage"
-	inhand_icon_state = "arcane_barrage"
-	slot_flags = null
-	can_bayonet = FALSE
-	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
-	flags_1 = NONE
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
-	show_bolt_icon = FALSE //It's a magic hand, not a rifle
-
-	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
 
 /obj/item/gun/ballistic/rifle/enchanted/dropped()
 	. = ..()
@@ -227,9 +219,6 @@
 
 /obj/item/gun/ballistic/rifle/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))
-
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/discard_gun(mob/living/user)
-	qdel(src)
 
 /obj/item/gun/ballistic/rifle/enchanted/attack_self()
 	return
@@ -256,6 +245,10 @@
 		It is also able to be suppressed....somehow."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "sniper"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	weapon_weight = WEAPON_HEAVY
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
@@ -265,7 +258,7 @@
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
-	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
 	internal_magazine = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
@@ -283,7 +276,7 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 7) //enough range to at least make extremely good use of the penetrator rounds
+	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
 	. = ..()

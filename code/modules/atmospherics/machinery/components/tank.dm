@@ -1,7 +1,7 @@
 #define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
-	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
+	icon = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
 	icon_state = "smooth"
 
 	name = "pressure tank"
@@ -67,7 +67,7 @@
 	if(!knob_overlays)
 		knob_overlays = list()
 		for(var/dir in GLOB.cardinals)
-			knob_overlays["[dir]"] = image('icons/obj/atmospherics/stationary_canisters.dmi', icon_state = "knob", dir = dir, layer = FLOAT_LAYER)
+			knob_overlays["[dir]"] = image('icons/obj/pipes_n_cables/stationary_canisters.dmi', icon_state = "knob", dir = dir, layer = FLOAT_LAYER)
 
 	if(!crack_states)
 		crack_states = list()
@@ -79,7 +79,7 @@
 
 	AddComponent(/datum/component/gas_leaker, leak_rate = 0.05)
 	AddElement(/datum/element/volatile_gas_storage)
-	AddElement(/datum/element/crackable, 'icons/obj/atmospherics/stationary_canisters.dmi', crack_states)
+	AddElement(/datum/element/crackable, 'icons/obj/pipes_n_cables/stationary_canisters.dmi', crack_states)
 
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
@@ -432,7 +432,7 @@
 // Tank Frame Structure
 
 /obj/structure/tank_frame
-	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
+	icon = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
 	icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
