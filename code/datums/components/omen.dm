@@ -14,7 +14,7 @@
 	var/permanent = FALSE
 	/// Base probability of negative events. Cursed are half as unlucky.
 	var/luck_mod = 1
-	/// Base damage from negative events. Cursed take 25% less damage.
+	/// Base damage from negative events. Cursed take 25% of this damage.
 	var/damage_mod = 1
 
 /datum/component/omen/Initialize(obj/vessel, permanent, luck_mod, damage_mod)
@@ -48,9 +48,10 @@
 	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
 	RegisterSignal(parent, COMSIG_CARBON_MOOD_UPDATE, PROC_REF(check_bless))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
+	RegisterSignal(parent, COMSIG_POST_WINDUP_APPLY_MEDTOOL, PROC_REF(check_tending))
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_CARBON_MOOD_UPDATE, COMSIG_LIVING_DEATH, COMSIG_POST_WINDUP_APPLY_MEDTOOL))
 
 /**
  * check_accident() is called each step we take
@@ -65,7 +66,17 @@
 		return
 
 	var/mob/living/living_guy = our_guy
-	if(!prob(15 * luck_mod))
+
+	if((rand(10000) == 10000) && (living_guy.stat != DEAD)) // You hit the lottery! Kinda.
+		living_guy.visible_message(span_danger("[living_guy] suddenly bursts into flames!"), span_danger("You suddenly burst into flames!"))
+		INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+		living_guy.adjust_fire_stacks(6)
+		living_guy.ignite_mob(silent = TRUE)
+		if(!permanent)
+			qdel(src)
+		return
+
+	if(!prob(8 * luck_mod))
 		return
 
 	var/our_guy_pos = get_turf(living_guy)
@@ -103,6 +114,71 @@
 			if(!permanent)
 				qdel(src)
 			return
+
+		for(var/obj/machinery/light/evil_light in the_turf)
+			if(evil_light.status == LIGHT_EMPTY) // we cant do anything :(
+				to_chat(living_guy, span_warning("[evil_light] sparks weakly for a second."))
+				do_sparks(2, FALSE, evil_light) // hey maybe it'll ignite them
+				return
+
+			// If light blew up already or he's shock-immune, blast some shards at him.
+			if((evil_light.status == (LIGHT_BURNED || LIGHT_BROKEN)) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // Why in the world is there no get_siemens_coeff proc???
+				to_chat(living_guy, span_warning("[evil_light] sparks ominously and explodes in a burst of directed shards!"))
+				do_sparks(4, FALSE, evil_light)
+				for(var/i in 1 to rand(1, 3))
+					var/obj/item/shard/new_shard = new(get_turf(living_guy))
+					new_shard.throw_at(living_guy, 7, 10, null, FALSE)
+					if(!permanent && !prob(66.6))
+						qdel(src)
+				evil_light.status = LIGHT_EMPTY
+				evil_light.update()
+				return
+
+			to_chat(living_guy, span_warning("[evil_light] glows ominously...")) // omenously
+			evil_light.visible_message(span_boldwarning("[evil_light] suddenly flares brightly and sparks!"))
+			evil_light.break_light_tube(skip_sound_and_sparks = FALSE)
+			do_sparks(4, FALSE, evil_light)
+			evil_light.Beam(living_guy, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
+			living_guy.electrocute_act(35 * (damage_mod / 2), evil_light, flags = SHOCK_NOGLOVES)
+			INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+			if(!permanent && !prob(66.6))
+				qdel(src)
+
+		for(var/obj/structure/mirror/evil_mirror in the_turf)
+			to_chat(living_guy, span_warning("You pass by the mirror and glance at it..."))
+			if(evil_mirror.broken)
+				to_chat(living_guy, span_warning("You feel lucky, somehow."))
+				return
+			switch(rand(1, 5))
+				if(1)
+					to_chat(living_guy, span_warning("The mirror explodes into a million pieces! Wait, does that mean you're even more unlucky?"))
+					if(prob(50 * luck_mod)) // sometimes
+						luck_mod += 0.25
+						damage_mod += 0.25
+				if(2 to 3)
+					to_chat(living_guy, span_big(span_hypnophrase("Oh god, you can't see your reflection!!")))
+					if(isvampire(living_guy)) // not so living i suppose
+						to_chat(living_guy, span_green("Well, obviously."))
+						return
+					INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+
+				if(4 to 5)
+					if(isvampire(living_guy))
+						to_chat(living_guy, span_warning("You don't see anything of notice. Huh."))
+						return
+					to_chat(living_guy, span_userdanger("You see your reflection, but it is grinning malevolently and staring directly at you!"))
+					INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+
+			living_guy.set_jitter_if_lower(25 SECONDS)
+			if(prob(7 * luck_mod))
+				to_chat(living_guy, span_warning("You are completely shocked by this turn of events!"))
+				var/mob/living/carbon/carbon_guy = living_guy
+				to_chat(living_guy, span_userdanger("You clutch at your heart!"))
+				if(istype(carbon_guy))
+					carbon_guy.set_heartattack(status = TRUE)
+
+			if(!permanent && !prob(66.6))
+				qdel(src)
 
 /datum/component/omen/proc/slam_airlock(obj/machinery/door/airlock/darth_airlock)
 	. = darth_airlock.close(force_crush = TRUE)
@@ -150,6 +226,58 @@
 		return
 
 	qdel(src)
+
+/// Sutures can fuck you over!
+/datum/component/omen/proc/check_tending(obj/item/stack/medical/med_stack, mob/living/carbon/our_guy)
+	SIGNAL_HANDLER
+
+	var/obj/item/bodypart/affecting = our_guy.get_bodypart(check_zone(our_guy.zone_selected))
+	// In case we delete it after use!
+	var/stack_type = med_stack.type
+	if(prob(3 * luck_mod)) // Whoops!
+		// Suture
+		if(istype(med_stack, /obj/item/stack/medical/suture))
+			if(prob(40 / luck_mod))
+				to_chat(our_guy, span_warning("You accidentally suture straight through a vein!"))
+				INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
+				affecting.force_wound_upwards(/datum/wound/slash/moderate)
+			else
+				to_chat(our_guy, span_warning("You accidentally suture straight through an artery!"))
+				INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
+				affecting.force_wound_upwards(/datum/wound/slash/severe)
+			med_stack.use(1)
+			return COMPONENT_CEASE_ACTION
+		// Regen Mesh and Ointment
+		if(is_type_in_list(med_stack, list(/obj/item/stack/medical/mesh, /obj/item/stack/medical/ointment)))
+			to_chat(our_guy, span_warning("You apply [med_stack] on [affecting], but you feel a bit sick afterwards. You check the health warnings and find a chemical you're allergic to. Whoops.."))
+			our_guy.reagents.add_reagent(/datum/reagent/toxin/histamine, rand(1, 8))
+			return
+		// Gauze
+		if(istype(med_stack, /obj/item/stack/medical/gauze))
+			to_chat(our_guy, span_warning("You finish applying [med_stack], letting your hand go, and the gauze inmediately falls to the ground."))
+			med_stack.use(1)
+			new stack_type(our_guy, mat_amt = 1)
+			return COMPONENT_CEASE_ACTION
+		// Aloe
+		if(istype(med_stack, /obj/item/stack/medical/aloe))
+			to_chat(our_guy, span_warning("You swallow [med_stack] in one go. That's how it works, right? You feel a bit sick..."))
+			qdel(med_stack)
+			our_guy.reagents.add_reagent(/datum/reagent/toxin, rand(1, 3) * med_stack.amount)
+			return COMPONENT_CEASE_ACTION
+		// Poultice
+		if(istype(med_stack, /obj/item/stack/medical/poultice))
+			to_chat(our_guy, span_warning("You swallow [med_stack] in one go. That's how it works, right? You feel great afterwards, looks like you're not as unlucky as you thought!"))
+			qdel(med_stack)
+			our_guy.reagents.add_reagent(/datum/reagent/toxin/lexorin, rand(1, 2) * med_stack.amount)
+			our_guy.reagents.add_reagent(/datum/reagent/medicine/mine_salve, rand(1, 2) * med_stack.amount)
+			return COMPONENT_CEASE_ACTION
+		// Bone Gel uses hardshitcode so nothing here
+		// All wounds do actually, they override medical in their own procs. Fun!
+
+	if(permanent)
+		return
+
+	//qdel(src)
 
 /// Creates a localized explosion that shakes the camera
 /datum/component/omen/proc/death_explode(mob/living/our_guy)
