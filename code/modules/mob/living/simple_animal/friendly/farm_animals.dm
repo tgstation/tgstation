@@ -38,6 +38,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
 	AddComponent(/datum/component/udder)
+	AddElement(/datum/element/cliff_walking) //we walk the cliff
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
