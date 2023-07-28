@@ -63,6 +63,8 @@
 	var/jammed = FALSE
 	var/can_jam = FALSE
 
+	SET_BASE_PIXEL(-8, 0)
+
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
 	if(.)
@@ -125,6 +127,8 @@
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
 
+	SET_BASE_PIXEL(0, 0)
+
 /obj/item/gun/ballistic/rifle/boltaction/surplus
 	desc = "A modification of the Sakhno Precision Rifle, \"Sakhno M2442 Army\" is stamped into the side. \
 		It is unknown what army this pattern of rifle was made for or if it was ever even used by an army \
@@ -185,6 +189,8 @@
 	can_be_sawn_off = FALSE
 	projectile_damage_multiplier = 0.75
 
+	SET_BASE_PIXEL(0, 0)
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
 	. = ..()
 	do_sparks(1, TRUE, src)
@@ -210,6 +216,8 @@
 	var/guns_left = 30
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
+
+	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/rifle/enchanted/dropped()
 	. = ..()
