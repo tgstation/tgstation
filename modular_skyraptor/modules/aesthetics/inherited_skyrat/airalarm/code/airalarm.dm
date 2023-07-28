@@ -17,5 +17,8 @@
 
 	set_light(1.5, 1, color)
 
+//why did we do this again?
+/*
 /obj/item/wallframe/airalarm
 	icon = 'icons/obj/monitors.dmi'
+*/

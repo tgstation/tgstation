@@ -95,7 +95,7 @@
 	cap_icon_state = "beaker_cap"
 
 /obj/item/reagent_containers/cup/beaker/jar
-	fill_icon = 'icons/obj/reagentfillings.dmi'
+	fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	cap_on = FALSE
 	can_have_cap = FALSE
 	cap_icon_state = null
