@@ -280,6 +280,7 @@
 		do_sparks(5, TRUE, src)
 
 /obj/structure/fluff/tram_rail/floor
+	name = "tram rail protective cover"
 	icon_state = "rail_floor"
 
 /obj/structure/fluff/tram_rail/end

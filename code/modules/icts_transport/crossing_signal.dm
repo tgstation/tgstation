@@ -9,6 +9,8 @@
 	layer = TRAM_SIGNAL_LAYER
 	max_integrity = 250
 	integrity_failure = 0.25
+	light_range = 1.5
+	light_power = 3
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
 	anchored = TRUE
@@ -29,6 +31,7 @@
 	var/inbound
 	/// Outbound station
 	var/outbound
+	/// If us or anything else in the operation chain is broken
 	var/operating_status = XING_NORMAL_OPERATION
 	/** Proximity thresholds for crossing signal states
 	*
@@ -52,29 +55,23 @@
 */
 /obj/machinery/crossing_signal/northwest
 	dir = WEST
-	pixel_x = -32
-	pixel_y = -1
 
 /obj/machinery/crossing_signal/northeast
 	dir = EAST
-	pixel_x = -2
-	pixel_y = -1
 
 /obj/machinery/crossing_signal/southwest
 	dir = WEST
-	pixel_x = -32
 	pixel_y = 20
 
 /obj/machinery/crossing_signal/southeast
 	dir = EAST
-	pixel_x = -2
 	pixel_y = 20
 
 /obj/machinery/static_signal
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
-	icon = 'icons/obj/machines/crossing_signal.dmi'
-	icon_state = "static-signal"
+	icon = 'icons/obj/machines/tram/crossing_signal.dmi'
+	icon_state = "crossing-signal"
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
@@ -89,22 +86,16 @@
 
 /obj/machinery/static_signal/northwest
 	dir = WEST
-	pixel_x = -32
-	pixel_y = -1
 
 /obj/machinery/static_signal/northeast
 	dir = EAST
-	pixel_x = -2
-	pixel_y = -1
 
 /obj/machinery/static_signal/southwest
 	dir = WEST
-	pixel_x = -32
 	pixel_y = 20
 
 /obj/machinery/static_signal/southeast
 	dir = EAST
-	pixel_x = -2
 	pixel_y = 20
 
 /obj/machinery/crossing_signal/Initialize(mapload)
@@ -337,13 +328,22 @@
 
 /obj/machinery/static_signal/power_change()
 	..()
+
 	if(!is_operational)
-		icon_state = "[base_icon_state]off"
 		set_light(l_on = FALSE)
 		return
 
 	icon_state = "[base_icon_state]on"
 	set_light(l_on = TRUE)
+
+/obj/machinery/static_signal/update_overlays()
+	. = ..()
+
+	if(!is_operational)
+		return
+
+	. += mutable_appearance(icon, "crossing-0")
+	. += emissive_appearance(icon, "crossing-0", offset_spokesman = src, alpha = src.alpha)
 
 /obj/machinery/guideway_sensor
 	name = "guideway sensor"
