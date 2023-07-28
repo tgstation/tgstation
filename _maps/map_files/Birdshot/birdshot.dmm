@@ -49417,6 +49417,7 @@
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/item/restraints/handcuffs,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs)
 "rBx" = (
