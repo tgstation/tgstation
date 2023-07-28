@@ -102,6 +102,9 @@
  * Attack -> left clicking -> stun attacking, no harmbatong
  */
 /obj/item/melee/baton/attack(mob/living/target_mob, mob/living/user, params)
+	if(!user.combat_mode)
+		return ATTACK_SWING_CANCEL
+
 	if(!active)
 		user.visible_message(
 			span_notice("[user] prods [target_mob] with [src]. Luckily, it was off."),
@@ -139,6 +142,8 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
+	if(!user.combat_mode)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN // no calling normal stun left click attack
 
@@ -554,7 +559,8 @@
 	if(!proximity_flag || !isliving(target) || !isliving(user) || !active || !user.combat_mode)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	finalize_baton_attack(target, user)
+	if(COOLDOWN_FINISHED(src, cooldown_check))
+		finalize_baton_attack(target, user)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, stun_override)
