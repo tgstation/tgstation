@@ -724,11 +724,9 @@
 			else
 				qdel(removed_gases)
 
-	var/pressurized
 	var/obj/item/mecha_parts/mecha_equipment/air_tank/tank = locate(/obj/item/mecha_parts/mecha_equipment/air_tank) in equip_by_category[MECHA_UTILITY]
 	var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in usr.actions
 	if(!isnull(tank) && cabin_sealed)
-		pressurized = TRUE
 		if(!tank.active)
 			tank.set_active(TRUE)
 		else

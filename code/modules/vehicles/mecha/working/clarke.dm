@@ -73,8 +73,17 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_snowflake_data()
-	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER)
-	data["cargo"] = length(chassis.ore_box?.contents)
+	var/list/data = list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER,
+		"contents" = list(),
+		)
+	var/list/contents = chassis.ore_box?.contents
+	for(var/obj/item/stack/ore/item as anything in contents)
+		var/ore_data = list()
+		ore_data["name"] = item.name
+		ore_data["icon"] = item.icon_state
+		ore_data["amount"] = item.amount
+		data["contents"] += list(ore_data)
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)

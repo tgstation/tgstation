@@ -202,13 +202,18 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/item/mecha_parts/mecha_equipment/ejector
 	name = "Cargo compartment"
+	desc = "Holds cargo loaded with a hydraulic clamp."
 	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/ejector/get_snowflake_data()
-	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_EJECTOR, "cargo" = list())
 	var/obj/vehicle/sealed/mecha/ripley/miner = chassis
+	var/list/data = list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_EJECTOR,
+		"cargo_capacity" = miner.cargo_capacity,
+		"cargo" = list()
+		)
 	for(var/obj/crate in miner.cargo)
 		data["cargo"] += list(list(
 			"name" = crate.name,

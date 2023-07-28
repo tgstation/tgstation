@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Icon, NumberInput, ProgressBar, Box, Button, Section, Stack, LabeledList, Divider, NoticeBox, Collapsible } from '../../components';
+import { Icon, NumberInput, ProgressBar, Box, Button, Section, Stack, LabeledList, NoticeBox, Collapsible } from '../../components';
 import { OperatorData, MechModule } from './data';
 import { classes } from 'common/react';
 import { toFixed } from 'common/math';
@@ -138,46 +138,54 @@ export const ModuleDetails = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { slot, name, desc, icon, detachable, ref, snowflake } = props.module;
   return (
-    <Stack vertical>
-      <Stack.Item>
-        <Stack>
-          <Stack.Item grow>
-            <h2 style={{ 'text-transform': 'capitalize' }}>{name}</h2>
-            <Box italic opacity={0.5}>
-              {moduleSlotLabel(slot)}
-            </Box>
+    <Box>
+      <Section>
+        <Stack vertical>
+          <Stack.Item>
+            <Stack>
+              <Stack.Item grow>
+                <h2 style={{ 'text-transform': 'capitalize' }}>{name}</h2>
+                <Box italic opacity={0.5}>
+                  {moduleSlotLabel(slot)}
+                </Box>
+              </Stack.Item>
+              {!!detachable && (
+                <Stack.Item>
+                  <Button
+                    icon="eject"
+                    tooltip="Detach"
+                    fontSize={1.5}
+                    onClick={() =>
+                      act('equip_act', {
+                        ref: ref,
+                        gear_action: 'detach',
+                      })
+                    }
+                  />
+                </Stack.Item>
+              )}
+            </Stack>
           </Stack.Item>
-          {!!detachable && (
-            <Stack.Item>
-              <Button
-                icon="eject"
-                tooltip="Detach"
-                fontSize={1.5}
-                onClick={() =>
-                  act('equip_act', {
-                    ref: ref,
-                    gear_action: 'detach',
-                  })
-                }
-              />
-            </Stack.Item>
-          )}
+          <Stack.Item>{desc}</Stack.Item>
         </Stack>
-      </Stack.Item>
-      <Stack.Item>{desc}</Stack.Item>
-      <Divider />
-      <Stack.Item>
-        {!!snowflake &&
-        snowflake.snowflake_id === MECHA_SNOWFLAKE_ID_AIR_TANK ? (
+      </Section>
+      <Section>
+        {snowflake && snowflake.snowflake_id === MECHA_SNOWFLAKE_ID_EJECTOR ? (
+          <SnowflakeCargo module={props.module} />
+        ) : snowflake &&
+          snowflake.snowflake_id === MECHA_SNOWFLAKE_ID_AIR_TANK ? (
           <SnowflakeAirTank module={props.module} />
+        ) : snowflake &&
+          snowflake.snowflake_id === MECHA_SNOWFLAKE_ID_OREBOX_MANAGER ? (
+          <SnowflakeOrebox module={props.module} />
         ) : (
           <LabeledList>
             <ModuleDetailsBasic module={props.module} />
             {!!snowflake && <ModuleDetailsExtra module={props.module} />}
           </LabeledList>
         )}
-      </Stack.Item>
-    </Stack>
+      </Section>
+    </Box>
   );
 };
 
@@ -287,12 +295,8 @@ export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
   switch (module.snowflake.snowflake_id) {
     case MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC:
       return <SnowflakeWeaponBallistic module={module} />;
-    case MECHA_SNOWFLAKE_ID_EJECTOR:
-      return <SnowflakeCargo module={module} />;
     case MECHA_SNOWFLAKE_ID_EXTINGUISHER:
       return <SnowflakeExtinguisher module={module} />;
-    case MECHA_SNOWFLAKE_ID_OREBOX_MANAGER:
-      return <SnowflakeOrebox module={module} />;
     case MECHA_SNOWFLAKE_ID_SLEEPER:
       return <SnowflakeSleeper module={module} />;
     case MECHA_SNOWFLAKE_ID_SYRINGE:
@@ -301,8 +305,6 @@ export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
       return <SnowflakeMode module={module} />;
     case MECHA_SNOWFLAKE_ID_RADIO:
       return <SnowflakeRadio module={module} />;
-    case MECHA_SNOWFLAKE_ID_AIR_TANK:
-      return <SnowflakeAirTank module={module} />;
     case MECHA_SNOWFLAKE_ID_GENERATOR:
       return <SnowflakeGeneraor module={module} />;
     default:
@@ -632,19 +634,12 @@ const SnowflakeAirTank = (props, context) => {
   );
 };
 
-const GetTempFormat = (temp) => {
-  const KelvinZeroCelcius = 273.15;
-  return (
-    toFixed(temp - KelvinZeroCelcius, 1) + '°C (' + toFixed(temp, 1) + '°K)'
-  );
-};
-
 const SnowflakeOrebox = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { ref } = props.module;
-  const { cargo } = props.module.snowflake;
+  const { contents } = props.module.snowflake;
   return (
-    <LabeledList.Item label="Action">
+    <Section>
       <Button
         icon="arrows-down-to-line"
         onClick={() =>
@@ -653,44 +648,63 @@ const SnowflakeOrebox = (props, context) => {
             gear_action: 'dump',
           })
         }
-        disabled={!cargo}>
-        {cargo ? 'Dump contents' : 'Empty'}
+        disabled={!contents.length}>
+        {contents.length ? 'Dump contents' : 'Empty'}
       </Button>
-    </LabeledList.Item>
+      {contents.map((item, i) => (
+        <Stack key={i}>
+          <Stack.Item lineHeight="0">
+            <Box className={classes(['ore32x32', item.icon])} />
+          </Stack.Item>
+          <Stack.Item
+            lineHeight="32px"
+            style={{
+              'text-transform': 'capitalize',
+              'overflow': 'hidden',
+              'text-overflow': 'ellipsis',
+            }}>
+            {`${item.amount}x ${item.name}`}
+          </Stack.Item>
+        </Stack>
+      ))}
+    </Section>
   );
 };
 
 const SnowflakeCargo = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { ref } = props.module;
-  const { cargo } = props.module.snowflake;
+  const { cargo, cargo_capacity } = props.module.snowflake;
   return (
-    <LabeledList.Item label="Cargo">
-      {!cargo.length ? (
-        <NoticeBox info>Compartment is empty</NoticeBox>
-      ) : (
-        cargo.map((item, i) => (
-          <Button
-            fluid
-            py={0.2}
-            key={i}
-            tooltip="Eject"
-            icon="eject"
-            onClick={() =>
-              act('equip_act', {
-                ref: ref,
-                cargoref: item.ref,
-                gear_action: 'eject',
-              })
-            }
-            style={{
-              'text-transform': 'capitalize',
-            }}>
-            {item.name}
-          </Button>
-        ))
-      )}
-    </LabeledList.Item>
+    <Box>
+      <Section
+        title="Contents"
+        buttons={`${cargo.length} of ${cargo_capacity}`}>
+        {!cargo.length ? (
+          <NoticeBox info>Compartment is empty</NoticeBox>
+        ) : (
+          cargo.map((item, i) => (
+            <Button
+              fluid
+              py={0.2}
+              key={i}
+              icon="eject"
+              onClick={() =>
+                act('equip_act', {
+                  ref: ref,
+                  cargoref: item.ref,
+                  gear_action: 'eject',
+                })
+              }
+              style={{
+                'text-transform': 'capitalize',
+              }}>
+              {item.name}
+            </Button>
+          ))
+        )}
+      </Section>
+    </Box>
   );
 };
 

@@ -744,10 +744,10 @@
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
-			G.icon_state = "Gibtonite ore 3"
+			G.icon_state = "gibtonite_3"
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
-			G.icon_state = "Gibtonite ore 2"
+			G.icon_state = "gibtonite_2"
 
 	var/flags = NONE
 	var/old_type = type
