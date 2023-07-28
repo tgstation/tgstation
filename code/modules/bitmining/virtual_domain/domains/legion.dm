@@ -4,8 +4,10 @@
 	desc = "A chilling realm that houses Legion's necropolis. Those who succumb to it are forever damned."
 	difficulty = BITMINING_DIFFICULTY_MEDIUM
 	filename = "legion.dmm"
+	forced_outfit = /datum/outfit/job/miner
 	id = "legion"
 	reward_points = BITMINING_REWARD_MEDIUM
+	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual_domain
 	can_be_cybercop = FALSE

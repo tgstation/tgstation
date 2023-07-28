@@ -202,7 +202,6 @@
 	mob_occupant.mind.key = null
 	mob_occupant.key = null
 	receiving.transfer_to(mob_occupant)
-	occupant_mind_ref = null
 
 	mob_occupant.actions = cached_actions
 	cached_actions.Cut()
@@ -218,6 +217,7 @@
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT)
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_CROWBAR_ALERT)
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
+	occupant_mind_ref = null
 
 	if(!forced || mob_occupant.stat == DEAD)
 		return

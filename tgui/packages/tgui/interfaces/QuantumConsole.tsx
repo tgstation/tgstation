@@ -200,11 +200,10 @@ const DomainEntry = (props: DomainEntryProps, context) => {
     <Collapsible
       buttons={
         <Button
-          disabled={
-            current || randomized || !ready || occupied || points < cost
-          }
+          disabled={!!generated_domain || !ready || occupied || points < cost}
           icon={buttonIcon}
-          onClick={() => act('set_domain', { id })}>
+          onClick={() => act('set_domain', { id })}
+          tooltip={!!generated_domain && 'Stop current domain first.'}>
           {buttonName}
         </Button>
       }
@@ -244,18 +243,20 @@ const AvatarDisplay = (props, context) => {
     return null;
   }
 
-  const { avatars = [], retries_left } = data;
+  const { avatars = [], generated_domain, retries_left } = data;
 
   return (
     <Section
       title="Connected Clients"
       buttons={
         <Stack align="center" color="good">
-          <Stack.Item>
-            <Tooltip content="Available bandwidth for new connections.">
-              <DisplayDetails icon="broadcast-tower" amount={retries_left} />
-            </Tooltip>
-          </Stack.Item>
+          {!!generated_domain && (
+            <Stack.Item>
+              <Tooltip content="Available bandwidth for new connections.">
+                <DisplayDetails icon="broadcast-tower" amount={retries_left} />
+              </Tooltip>
+            </Stack.Item>
+          )}
           <Stack.Item>
             <Button
               icon="sync"

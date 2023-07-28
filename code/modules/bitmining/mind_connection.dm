@@ -93,9 +93,6 @@
 /datum/mind/proc/on_sever_connection(datum/source, forced = FALSE, obj/machinery/netpod/broken_netpod)
 	SIGNAL_HANDLER
 
-	if(forced)
-		last_death = world.time
-
 	var/mob/living/pilot = pilot_ref?.resolve()
 	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
 	if(isnull(pilot) || isnull(hosting_netpod))

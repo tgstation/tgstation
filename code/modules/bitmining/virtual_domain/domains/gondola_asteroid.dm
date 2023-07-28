@@ -6,6 +6,7 @@
 	Hmm... It doesn't budge. The gondolas don't seem to have any trouble moving it, though. \
 	I bet there's a way to move it myself."
 	id = "gondola_asteroid"
+	safehouse_path = /datum/map_template/safehouse/shuttle
 
 /// Very pushy gondolas, great for moving loot crates.
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted/gondola

@@ -12,3 +12,4 @@
 	the crate. 	Be careful, they are extremely armed."
 	id = "syndicate_assault"
 	reward_points = BITMINING_REWARD_MEDIUM
+	safehouse_path = /datum/map_template/safehouse/shuttle

@@ -269,9 +269,9 @@
 	var/client_connect_received = FALSE
 	var/client_disconnect_received = FALSE
 	var/crowbar_alert_received = FALSE
-	var/shutdown_alert_received = FALSE
 	var/server_crash_received = FALSE
 	var/sever_avatar_received = FALSE
+	var/shutdown_alert_received = FALSE
 
 /datum/unit_test/bitmining_signals/proc/on_client_connected(datum/source)
 	SIGNAL_HANDLER
@@ -334,12 +334,7 @@
 	TEST_ASSERT_EQUAL(sever_avatar_received, TRUE, "Did not send COMSIG_BITMINING_SEVER_AVATAR")
 	TEST_ASSERT_EQUAL(client_disconnect_received, TRUE, "Did not send COMSIG_BITMINING_CLIENT_DISCONNECTED")
 
-	netpod.open_machine()
-	netpod.set_occupant(labrat)
-	netpod.close_machine(labrat)
-	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
-	TEST_ASSERT_EQUAL(netpod.occupant_mind_ref, labrat_mind_ref, "Sanity: Did not set mind")
-
+	server.occupant_mind_refs += labrat_mind_ref
 	server.begin_shutdown(perp)
 	TEST_ASSERT_EQUAL(shutdown_alert_received, TRUE, "Did not send COMSIG_BITMINING_SHUTDOWN_ALERT")
 	TEST_ASSERT_EQUAL(server_crash_received, TRUE, "Did not send COMSIG_BITMINING_SERVER_CRASH")

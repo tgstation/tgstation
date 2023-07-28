@@ -4,8 +4,10 @@
 	desc = "Home of the ash drake, a powerful dragon that scours the surface of Lavaland."
 	difficulty = BITMINING_DIFFICULTY_MEDIUM
 	filename = "ash_drake.dmm"
+	forced_outfit = /datum/outfit/job/miner
 	id = "ash_drake"
 	reward_points = BITMINING_REWARD_MEDIUM
+	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual_domain
 	can_be_cybercop = FALSE
