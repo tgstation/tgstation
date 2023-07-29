@@ -6,8 +6,8 @@
 	name = "quantum console"
 
 	circuit = /obj/item/circuitboard/computer/quantum_console
-	icon_keyboard = "security_key"
-	icon_screen = "teleport"
+	icon_keyboard = "mining"
+	icon_screen = "bitmining"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
 	var/datum/weakref/server_ref
