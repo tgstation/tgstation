@@ -23,7 +23,7 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
 "m" = (
-/mob/living/simple_animal/crab{
+/mob/living/basic/crab{
 	name = "la creatura";
 	desc = "ay dios mios..."
 	},

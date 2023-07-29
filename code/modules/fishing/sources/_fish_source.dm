@@ -11,8 +11,14 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	var/datum/fish_source/lavaland/lava_preset = new
 	.[FISHING_SPOT_PRESET_LAVALAND_LAVA] = lava_preset
 
+	var/datum/fish_source/lavaland/icemoon/plasma_preset = new
+	.[FISHING_SPOT_PRESET_ICEMOON_PLASMA] = plasma_preset
+
 	var/datum/fish_source/chasm/chasm_preset = new
 	.[FISHING_SPOT_PRESET_CHASM] = chasm_preset
+
+	var/datum/fish_source/toilet/toilet_preset = new
+	.[FISHING_SPOT_PRESET_TOILET] = toilet_preset
 
 /// Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes can share single source, ie single shared one for ocean/lavaland river
 /datum/fish_source
@@ -35,7 +41,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 
 
 /// DIFFICULTY = (SPOT_BASE_VALUE + FISH_MODIFIER + ROD_MODIFIER + FAV/DISLIKED_BAIT_MODIFIER + TRAITS_ADDITIVE) * TRAITS_MULTIPLICATIVE , For non-fish it's just SPOT_BASE_VALUE
-/datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
 	. = fishing_difficulty
 
 	if(!ispath(result,/obj/item/fish))
@@ -55,21 +61,22 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 		for(var/bait_identifer in fav_bait)
 			if(is_matching_bait(bait, bait_identifer))
 				. += FAV_BAIT_DIFFICULTY_MOD
-				break
 		//Disliked bait makes it harder
 		var/list/disliked_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, disliked_bait)]
 		for(var/bait_identifer in disliked_bait)
 			if(is_matching_bait(bait, bait_identifer))
 				. += DISLIKED_BAIT_DIFFICULTY_MOD
-				break
+
+	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
+		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Matching/not matching fish traits and equipment
-	var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fishing_traits)]
+	var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
 
 	var/additive_mod = 0
 	var/multiplicative_mod = 1
 	for(var/fish_trait in fish_traits)
-		var/datum/fishing_trait/trait = new fish_trait
+		var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
 		var/list/mod = trait.difficulty_mod(rod, fisherman)
 		additive_mod += mod[ADDITIVE_FISHING_MOD]
 		multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]
@@ -81,29 +88,57 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
 	return pick_weight(get_modified_fish_table(rod,fisherman))
 
+/**
+ * Used to register signals or add traits and the such right after conditions have been cleared
+ * and before the minigame starts.
+ */
+/datum/fish_source/proc/pre_challenge_started(obj/item/fishing_rod/rod, mob/user)
+	return
+
+///Proc called when the challenge is interrupted within the fish source code.
+/datum/fish_source/proc/interrupt_challenge(reason)
+	SEND_SIGNAL(src, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, reason)
+
+/**
+ * Proc called when the COMSIG_FISHING_CHALLENGE_COMPLETED signal is sent.
+ * Check if we've succeeded. If so, write into memory and dispense the reward.
+ */
+/datum/fish_source/proc/on_challenge_completed(datum/fishing_challenge/source, mob/user, success, perfect)
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+	if(!success)
+		return
+	var/obj/item/fish/caught = source.reward_path
+	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
+	var/turf/fishing_spot = get_turf(source.lure)
+	dispense_reward(source.reward_path, user, fishing_spot)
+
 /// Gives out the reward if possible
-/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman)
+/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, fishing_spot)
 	if((reward_path in fish_counts)) // This is limited count result
 		if(fish_counts[reward_path] > 0)
 			fish_counts[reward_path] -= 1
 		else
 			reward_path = FISHING_DUD //Ran out of these since rolling (multiple fishermen on same source most likely)
+	var/atom/movable/reward
 	if(ispath(reward_path))
+		reward = new reward_path(get_turf(fisherman))
 		if(ispath(reward_path,/obj/item))
-			var/obj/item/reward = new reward_path(get_turf(fisherman))
 			if(ispath(reward_path,/obj/item/fish))
 				var/obj/item/fish/caught_fish = reward
-				caught_fish.randomize_weight_and_size()
+				caught_fish.randomize_size_and_weight()
 				//fish caught signal if needed goes here and/or fishing achievements
 			//Try to put it in hand
-			fisherman.put_in_hands(reward)
+			INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
 			fisherman.balloon_alert(fisherman, "caught [reward]!")
 		else //If someone adds fishing out carp/chests/singularities or whatever just plop it down on the fisher's turf
 			fisherman.balloon_alert(fisherman, "caught something!")
-			new reward_path(get_turf(fisherman))
 	else if (reward_path == FISHING_DUD)
 		//baloon alert instead
 		fisherman.balloon_alert(fisherman,pick(duds))
+	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
+	if(reward)
+		SEND_SIGNAL(reward, COMSIG_ATOM_FISHING_REWARD, fishing_spot)
 
 /// Cached fish list properties so we don't have to initalize fish every time, init deffered
 GLOBAL_LIST(fishing_property_cache)
@@ -113,11 +148,11 @@ GLOBAL_LIST(fishing_property_cache)
 	if(GLOB.fishing_property_cache == null)
 		var/list/fish_property_table = list()
 		for(var/fish_type in subtypesof(/obj/item/fish))
-			var/obj/item/fish/fish = new fish_type(null)
+			var/obj/item/fish/fish = new fish_type(null, FALSE)
 			fish_property_table[fish_type] = list()
 			fish_property_table[fish_type][NAMEOF(fish, favorite_bait)] = fish.favorite_bait.Copy()
 			fish_property_table[fish_type][NAMEOF(fish, disliked_bait)] = fish.disliked_bait.Copy()
-			fish_property_table[fish_type][NAMEOF(fish, fishing_traits)] = fish.fishing_traits.Copy()
+			fish_property_table[fish_type][NAMEOF(fish, fish_traits)] = fish.fish_traits.Copy()
 			QDEL_NULL(fish)
 		GLOB.fishing_property_cache = fish_property_table
 	return GLOB.fishing_property_cache
@@ -132,6 +167,8 @@ GLOBAL_LIST(fishing_property_cache)
 			if("Foodtype")
 				var/obj/item/food/food_bait = bait
 				return istype(food_bait) && food_bait.foodtypes & special_identifier["Value"]
+			if("Reagent")
+				return bait.reagents?.has_reagent(special_identifier["Value"], special_identifier["Amount"], check_subtypes = TRUE)
 			else
 				CRASH("Unknown bait identifier in fish favourite/disliked list")
 	else
@@ -173,20 +210,18 @@ GLOBAL_LIST(fishing_property_cache)
 				for(var/bait_identifer in fav_bait)
 					if(is_matching_bait(bait, bait_identifer))
 						final_table[result] *= 2
-						break // could compound possibly
 				//Bait matching dislikes
 				var/list/disliked_bait = fish_list_properties[result][NAMEOF(caught_fish, disliked_bait)]
 				for(var/bait_identifer in disliked_bait)
 					if(is_matching_bait(bait, bait_identifer))
 						final_table[result] *= 0.5
-						break // same question as above
 
-			// Apply fishing trait modifiers
-			var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fishing_traits)]
+			// Apply fish trait modifiers
+			var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
 			var/additive_mod = 0
 			var/multiplicative_mod = 1
 			for(var/fish_trait in fish_traits)
-				var/datum/fishing_trait/trait = new fish_trait
+				var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
 				var/list/mod = trait.catch_weight_mod(rod, fisherman)
 				additive_mod += mod[ADDITIVE_FISHING_MOD]
 				multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]

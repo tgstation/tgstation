@@ -45,7 +45,7 @@ Slimecrossing Mobs
 	icon_state = "slime_puppy"
 	icon_living = "slime_puppy"
 	icon_dead = "slime_puppy_dead"
-	nofur = TRUE
+	can_be_shaved = FALSE
 	gold_core_spawnable = NO_SPAWN
 	speak_emote = list("blorbles", "bubbles", "borks")
 

@@ -51,7 +51,7 @@
 		for(var/d in GLOB.cardinals)
 			var/turf/T = get_step(src, d)
 			for(var/obj/machinery/power/terminal/term in T)
-				if(term && term.dir == turn(d, 180))
+				if(term && term.dir == REVERSE_DIR(d))
 					terminal = term
 					break dir_loop
 
@@ -97,7 +97,7 @@
 		terminal = null
 		var/turf/T = get_step(src, dir)
 		for(var/obj/machinery/power/terminal/term in T)
-			if(term && term.dir == turn(dir, 180))
+			if(term && term.dir == REVERSE_DIR(dir))
 				terminal = term
 				terminal.master = src
 				to_chat(user, span_notice("Terminal found."))
@@ -147,7 +147,7 @@
 		if(do_after(user, 20, target = src))
 			if(C.get_amount() < 10 || !C)
 				return
-			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
+			var/obj/structure/cable/N = T.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
