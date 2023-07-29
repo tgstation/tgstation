@@ -28,6 +28,10 @@
 	var/message_AI = ""
 	/// Message displayed if the user is a monkey.
 	var/message_monkey = ""
+	/// Message displayed if the user is an IPC.
+	var/message_ipc = ""
+	/// Message displayed if the user is an insect.
+	var/message_insect = ""
 	/// Message to display if the user is a simple_animal or basic mob.
 	var/message_animal_or_basic = ""
 	/// Message with %t at the end to allow adding params to the message, like for mobs doing an emote relatively to something else.
@@ -201,6 +205,10 @@
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
+	else if((ismoth(user) || isflyperson(user)) && message_insect)
+		. = message_insect
+	else if(isipc(user) && message_ipc)
+		. = message_ipc
 	else if(isanimal_or_basicmob(user) && message_animal_or_basic)
 		. = message_animal_or_basic
 
