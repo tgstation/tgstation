@@ -71,11 +71,11 @@
 	if(!players)
 		players = GLOB.player_list
 
-	for(var/mob/target in players)
-		if(!isnewplayer(target) && target.can_hear())
+	for(var/mob/target in players) //For loop that goes through each player
+		if(!isnewplayer(target) && target.can_hear()) //Checks for players that are in the game and are not deaf
 			to_chat(target, announcement)
-			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-				SEND_SOUND(target, sound(sound, volume = target.client?.prefs.channel_volume["[CHANNEL_VOX]"]))
+			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements)) //Checks if the target player has announcements enabled
+				SEND_SOUND(target, sound(sound, volume = target.client?.prefs.channel_volume["[CHANNEL_VOX]"])) //Sends the sound to players over the VOX audio channel, at their preferred volume
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
