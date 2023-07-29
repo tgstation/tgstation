@@ -15,6 +15,7 @@
 	var/starting_cutout
 
 /obj/item/cardboard_cutout/LateInitialize()
+	. = ..()
 	if(isnull(starting_cutout))
 		return
 
