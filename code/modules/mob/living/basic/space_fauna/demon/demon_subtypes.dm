@@ -16,6 +16,8 @@
 	bare_wound_bonus = 0
 	sharpness = SHARP_EDGED
 
+	antag_type = /datum/antagonist/slaughter
+
 	/// Datum that stores the action for us to crawl around.
 	var/crawl_type = /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon
 	/// How long it takes for the alt-click slam attack to come off cooldown
@@ -126,6 +128,7 @@
 	icon_living = "bowmon"
 	death_message = "fades out, as all of its friends are released from its prison of hugs."
 
+	antag_type = /datum/antagonist/slaughter/laughter
 	crawl_type = /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny
 
 /mob/living/basic/demon/slaughter/laughter/Initialize(mapload)

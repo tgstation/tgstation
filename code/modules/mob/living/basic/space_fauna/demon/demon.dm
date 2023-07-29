@@ -46,6 +46,9 @@
 	lighting_cutoff_green = 10
 	lighting_cutoff_blue = 20
 
+	/// Typepath of the antag datum to add to the demon when applicable
+	var/datum/antagonist/antag_type = null
+
 /mob/living/basic/demon/Initialize(mapload)
 	. = ..()
 	var/list/grantable_loot = grant_loot()
@@ -55,3 +58,15 @@
 /// Proc that adds the necessary loot for the demon. Return an empty list if you don't want to add anything.
 /mob/living/basic/demon/proc/grant_loot()
 	return list()
+
+/// Proc that just sets up the demon's antagonism status.
+/mob/living/basic/demon/proc/generate_antagonist_status()
+	if(isnull(antag_type))
+		return // we weren't built for this proc to run
+
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+	mind.special_role = ROLE_SLAUGHTER_DEMON
+	mind.add_antag_datum(antag_type)
+
+	SEND_SOUND(src, 'sound/magic/demon_dies.ogg')
+	to_chat(src, span_bold("You are currently not currently in the same plane of existence as the station. Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
