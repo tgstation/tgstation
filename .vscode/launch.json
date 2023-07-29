@@ -5,14 +5,14 @@
 			"type": "byond",
 			"request": "launch",
 			"name": "Launch DreamSeeker",
-			"preLaunchTask": "build all",
+			"preLaunchTask": "Build All",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
 		},
 		{
 			"type": "byond",
 			"request": "launch",
 			"name": "Launch DreamDaemon",
-			"preLaunchTask": "build all",
+			"preLaunchTask": "Build All",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
 			"dreamDaemon": true
 		},
@@ -26,7 +26,7 @@
 				"${command:dreammaker.getFilenameDmb}",
 				"-trusted"
 			],
-			"preLaunchTask": "build all"
+			"preLaunchTask": "Build All"
 		}
 	]
 }

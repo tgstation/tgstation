@@ -228,6 +228,8 @@
 	// so it should not start on someone or in a bag.
 	if(ismob(attached.loc))
 		return FALSE
+	if(!isclothing(attached))
+		return FALSE
 	return TRUE
 
 /datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
