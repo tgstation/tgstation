@@ -27,6 +27,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
+	del_on_death = TRUE
 
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE
@@ -317,7 +318,6 @@
 	var/atom/location_destroyed = drop_location()
 	if(prob(50))
 		drop_part(robot_arm, location_destroyed)
-	qdel(src)
 
 /mob/living/simple_animal/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
