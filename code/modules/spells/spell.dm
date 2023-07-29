@@ -189,7 +189,7 @@
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
-			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
+			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES) && !ismonkey(human_owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
@@ -199,10 +199,33 @@
 				return FALSE
 
 	else
-		// If the spell requires wizard equipment and we're not a human (can't wear robes or hats), that's just a given
-		if(spell_requirements & (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_HUMAN))
+		// If you strictly need to be a human, well, goodbye.
+		if(spell_requirements & SPELL_REQUIRES_HUMAN)
 			if(feedback)
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
+			return FALSE
+
+		// Otherwise, we can do some funny snowflake checks in case they're a hat-wearing simple or basic mob.
+		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
+			// Borgs can TECHNICALLY wear a hat if someone throws it on them. Not very smart of the thrower though.
+			if(iscyborg(owner))
+				var/mob/living/silicon/robot/borg_owner = owner
+				var/obj/item/clothing/clothing_hat = borg_owner.hat
+				if(!istype(clothing_hat) || !(clothing_hat?.clothing_flags & CASTING_CLOTHES))
+					if(feedback)
+						to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+					return
+			// Similar with drones.
+			else if(isdrone(owner))
+				var/mob/living/simple_animal/drone/drone_owner = owner
+				var/obj/item/clothing/clothing_hat = drone_owner.head
+				if(!istype(clothing_hat) || !(clothing_hat?.clothing_flags & CASTING_CLOTHES))
+					if(feedback)
+						to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+					return
+			// Not a drone, or a cyborg, you're screwed.
+			if(feedback)
+				to_chat(owner, span_warning("[src] can only be cast by hat-wearing entities!"))
 			return FALSE
 
 		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))

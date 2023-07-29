@@ -22,16 +22,20 @@
 	summon_amount++ // MORE, MOOOOORE
 	if(spell_level == spell_max_level) // We reward the faithful.
 		summon_type = list(/mob/living/carbon/human/species/monkey/angry, /mob/living/simple_animal/hostile/gorilla)
+		spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC // Max level lets you cast it naked, for monkey larp.
 
 /datum/action/cooldown/spell/conjure/simian/cast(atom/cast_on)
 	. = ..()
-	if(FACTION_MONKEY in cast_on.faction)
+	var/mob/living/cast_mob = cast_on
+	if(!istype(cast_mob))
 		return
-	owner.faction |= FACTION_MONKEY
-	addtimer(CALLBACK(src, PROC_REF(remove_monky_faction), owner), 1 MINUTES)
+	if(FACTION_MONKEY in cast_mob.faction)
+		return
+	cast_mob.faction |= FACTION_MONKEY
+	addtimer(CALLBACK(src, PROC_REF(remove_monky_faction), cast_mob), 1 MINUTES)
 
-/datum/action/cooldown/spell/conjure/simian/proc/remove_monky_faction(mob/owner)
-	owner.faction. -= FACTION_MONKEY
+/datum/action/cooldown/spell/conjure/simian/proc/remove_monky_faction(mob/cast_mob)
+	cast_mob.faction -= FACTION_MONKEY
 
 /datum/action/cooldown/spell/conjure/simian/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/alive_dude = summoned_object
