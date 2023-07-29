@@ -1,0 +1,8 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscadd: "Adds a Forested planetary station trait! Icebox exterior is now a forest!"
+  - rscadd: "Adds a Forever Storm planetary station trait! Sometimes, the storm never stops. Stay inside or get some coffee and warm clothes"
+  - bugfix: "fixes stuff spawning in rivers and above chasms"
+  - bugfix: "emissive blockers on random flora not updating"
+  - code_imp: "Splits terrain generation and terrain population in SSmapping"
