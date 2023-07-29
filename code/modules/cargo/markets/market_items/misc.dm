@@ -124,9 +124,9 @@
 
 /datum/market_item/misc/giant_wrench_parts
 	name = "Big Slappy parts"
-	desc = "Illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	desc = "Cheap illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
 	item = /obj/item/weaponcrafting/giant_wrench
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 5
 	stock_max = 1
-	availability_prob = 40
+	availability_prob = 25
