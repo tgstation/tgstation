@@ -4303,6 +4303,7 @@
 #include "code\modules\mob\living\simple_animal\shade.dm"
 #include "code\modules\mob\living\simple_animal\simple_animal.dm"
 #include "code\modules\mob\living\simple_animal\bot\bot.dm"
+#include "code\modules\mob\living\simple_animal\bot\bot_announcement.dm"
 #include "code\modules\mob\living\simple_animal\bot\cleanbot.dm"
 #include "code\modules\mob\living\simple_animal\bot\construction.dm"
 #include "code\modules\mob\living\simple_animal\bot\ed209bot.dm"
