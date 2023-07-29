@@ -126,9 +126,6 @@
 
 	crawl_type = /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny
 
-	/// List for keeping the people we hug!
-	var/list/consumed_mobs = list()
-
 /mob/living/basic/demon/slaughter/laughter/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_death))
