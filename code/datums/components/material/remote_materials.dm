@@ -13,11 +13,11 @@ handles linking back and forth.
 
 	///The silo machine this container is connected to
 	var/obj/machinery/ore_silo/silo
-	//Material container. the value is either the silo or local
+	///Material container. the value is either the silo or local
 	var/datum/component/material_container/mat_container
-	//Should we create a local storage if we can't connect to silo
+	///Should we create a local storage if we can't connect to silo
 	var/allow_standalone
-	//Local size of container when silo = null
+	///Local size of container when silo = null
 	var/local_size = INFINITY
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
