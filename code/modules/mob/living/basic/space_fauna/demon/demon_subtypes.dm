@@ -68,7 +68,7 @@
 		to_chat(src, span_warning("You are too far away to use your slam attack on [attack_target]!"))
 		return
 
-	if(COOLDOWN_FINISHED(src, slam_cooldown))
+	if(!COOLDOWN_FINISHED(src, slam_cooldown))
 		to_chat(src, span_warning("Your slam ability is still on cooldown!"))
 		return
 
@@ -89,7 +89,7 @@
 	COOLDOWN_START(src, slam_cooldown, slam_cooldown_time)
 	log_combat(src, victim, "slaughter slammed")
 
-/// Proc that we execute on attacking someone to keep track of our hitstreaks and wound bonuses. Also handles bodyslamming.
+/// Proc that we execute on attacking someone to keep track of our hitstreaks and wound bonuses. Also handles triggering the bodyslam on attacks.
 /mob/living/basic/demon/slaughter/proc/on_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
 
@@ -101,7 +101,7 @@
 		return
 
 	var/mob/living/carbon/target = attack_target
-	if(target.stat == DEAD || isnull(target.mind) || (current_hitstreak < wound_bonus_hitstreak_max))
+	if(target.stat == DEAD || isnull(target.mind) || (current_hitstreak > wound_bonus_hitstreak_max))
 		return
 
 	current_hitstreak++
