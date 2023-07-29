@@ -203,9 +203,8 @@
 	pa_system.Grant(src)
 
 /mob/living/simple_animal/bot/Destroy()
-	if(paicard)
-		ejectpai()
 	GLOB.bots_list -= src
+	QDEL_NULL(paicard)
 	QDEL_NULL(pa_system)
 	QDEL_NULL(personality_download)
 	QDEL_NULL(internal_radio)
@@ -307,6 +306,8 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/death(gibbed)
+	if(paicard)
+		ejectpai()
 	explode()
 	return ..()
 
