@@ -382,7 +382,7 @@ type ChatMessageProps = {
   onPreviewImage?: () => void;
 };
 
-const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
+const ChatMessage = (props: ChatMessageProps) => {
   const { message, everyone, outgoing, photoPath, onPreviewImage } = props;
 
   return (

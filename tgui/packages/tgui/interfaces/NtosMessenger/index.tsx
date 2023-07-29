@@ -3,7 +3,6 @@ import { useBackend, useLocalState } from '../../backend';
 import { createSearch } from 'common/string';
 import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../../layouts';
-import { SFC } from 'inferno';
 
 import { NtChat, NtMessenger, NtPicture } from './types';
 import { ChatScreen } from './ChatScreen';
@@ -27,8 +26,8 @@ type NtosMessengerData = {
   sending_virus: BooleanLike;
 };
 
-export const NtosMessenger = (_props: any, context: any) => {
-  const { act, data } = useBackend<NtosMessengerData>(context);
+export const NtosMessenger = (_: any, context: any) => {
+  const { data } = useBackend<NtosMessengerData>(context);
   const {
     is_silicon,
     saved_chats,
@@ -68,7 +67,7 @@ export const NtosMessenger = (_props: any, context: any) => {
   );
 };
 
-const ContactsScreen = (_props: any, context: any) => {
+const ContactsScreen = (_: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
   const {
     owner,
@@ -200,7 +199,7 @@ const ContactsScreen = (_props: any, context: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onInput={(_e: any, value: string) => setSearchUser(value)}
+              onInput={(_: any, value: string) => setSearchUser(value)}
             />
           </Stack>
         </Section>
@@ -261,8 +260,8 @@ type ChatButtonProps = {
   chatRef: string;
 };
 
-const ChatButton: SFC<ChatButtonProps> = (props: ChatButtonProps, ctx: any) => {
-  const { act } = useBackend(ctx);
+const ChatButton = (props: ChatButtonProps, context: any) => {
+  const { act } = useBackend(context);
   const unreadMessages = props.unreads;
   const hasUnreads = unreadMessages > 0;
   return (
@@ -323,7 +322,7 @@ const SendToAllSection = (_: any, context: any) => {
   );
 };
 
-export const NoIDDimmer: SFC = () => {
+export const NoIDDimmer = () => {
   return (
     <Dimmer>
       <Stack align="baseline" vertical>
