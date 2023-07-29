@@ -24,7 +24,7 @@
 	mutantappendix = null
 	mutantheart = null
 	heatmod = 1.5
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 	breathid = GAS_PLASMA
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	species_cookie = /obj/item/reagent_containers/condiment/milk

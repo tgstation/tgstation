@@ -9,7 +9,7 @@
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,

@@ -173,7 +173,11 @@
 	  * if it's off-station during mapload, it's also safe from the brand intelligence event
 	  */
 	var/onstation = TRUE
-	///A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements. DO NOT APPLY THIS GLOBALLY.
+	/**
+	 * A variable to change on a per instance basis on the map that allows the instance
+	 * to ignore whether it's on the station or not.
+	 * Useful to force cost and ID requirements. DO NOT APPLY THIS GLOBALLY.
+	 */
 	var/onstation_override = FALSE
 
 	var/list/vending_machine_input = list()
@@ -230,14 +234,22 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
-	if(onstation_override) //overrides the checks if true.
-		onstation = TRUE
-		return
 	if(mapload) //check if it was initially created off station during mapload.
 		if(!is_station_level(z))
-			onstation = FALSE
+			if(!onstation_override)
+				onstation = FALSE
 			if(circuit)
 				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
+			for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
+				/**
+				 * in average, it should be 37.5% of the max amount, rounded up to the nearest int,
+				 * tho the max boundary can be as low/high as 50%/100%
+				 */
+				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
+				product_record.amount = rand(0, max_amount)
+			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
+				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 
@@ -353,8 +365,11 @@
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  */
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE)
-	default_price = round(initial(default_price) * SSeconomy.inflation_value())
-	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
+	default_price = round(initial(default_price))
+	extra_price = round(initial(extra_price))
+	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
+		default_price *= SSeconomy.inflation_value()
+		extra_price *= SSeconomy.inflation_value()
 
 	var/list/product_to_category = list()
 	for (var/list/category as anything in categories)
@@ -375,8 +390,11 @@
 			R.amount = amount
 		R.max_amount = amount
 		///Prices of vending machines are all increased uniformly.
-		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
-		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
+		R.custom_price = round(initial(temp.custom_price))
+		R.custom_premium_price = round(initial(temp.custom_premium_price))
+		if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
+			R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
+			R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
@@ -414,21 +432,32 @@
  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
  */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
-	default_price = round(initial(default_price) * SSeconomy.inflation_value())
-	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
+	var/crash_status = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING)
+	default_price = round(initial(default_price))
+	extra_price = round(initial(extra_price))
+	if(crash_status)
+		default_price *= SSeconomy.inflation_value()
+		extra_price *= SSeconomy.inflation_value()
+
 	for(var/R in recordlist)
 		var/datum/data/vending_product/record = R
 		var/obj/item/potential_product = record.product_path
-		record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
+		record.custom_price = round(initial(potential_product.custom_price))
+		if(crash_status)
+			record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
 	for(var/R in premiumlist)
 		var/datum/data/vending_product/record = R
 		var/obj/item/potential_product = record.product_path
 		var/premium_sanity = round(initial(potential_product.custom_premium_price))
 		if(premium_sanity)
-			record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
+			record.custom_premium_price = round(premium_sanity)
+			if(crash_status)
+				record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
 			continue
 		//For some ungodly reason, some premium only items only have a custom_price
-		record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (SSeconomy.inflation_value() - 1)))
+		record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price)))
+		if(crash_status)
+			record.custom_premium_price = round(extra_price + (initial(potential_product.custom_price) * (SSeconomy.inflation_value() - 1)))
 
 /**
  * Refill a vending machine from a refill canister
@@ -1121,7 +1150,7 @@
 			.["user"]["department"] = DEPARTMENT_UNASSIGNED
 	.["stock"] = list()
 
-	for (var/datum/data/vending_product/product_record in product_records + coin_records + hidden_records)
+	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 		var/list/product_data = list(
 			name = product_record.name,
 			amount = product_record.amount,

@@ -164,6 +164,12 @@
 	database_id = MEDAL_COSMOS_ASCENSION
 	icon = "cosmicascend"
 
+/datum/award/achievement/misc/grand_ritual_finale
+	name = "Archmage"
+	desc = "Made a big impression on the station with your phenomenal cosmic power."
+	database_id = MEDAL_ARCHMAGE
+	icon = "archmage"
+
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
 	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."
