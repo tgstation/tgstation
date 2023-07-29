@@ -474,6 +474,8 @@
 		COMSIG_CARBON_LOSE_ORGAN,
 		COMSIG_MOVABLE_MOVED,))
 	quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
+	var/obj/item/organ/internal/eyes/normal_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
+	normal_eyes.flash_protect = initial(eyes.flash_protect)
 
 /datum/quirk/photophobia/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
 	SIGNAL_HANDLER
