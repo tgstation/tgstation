@@ -859,55 +859,55 @@
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/dashi
-	reaction = /datum/reagent/consumable/nutriment/soup/dashi
+	reaction = /datum/chemical_reaction/food/soup/dashi
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/teriyaki
-	reaction = /datum/reagent/consumable/nutriment/soup/teriyaki
+	reaction = /datum/chemical_reaction/food/soup/teriyaki
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/curry_sauce
-	reaction = /datum/reagent/consumable/nutriment/soup/curry_sauce
+	reaction = /datum/chemical_reaction/food/soup/curry_sauce
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/shoyu_ramen
-	reaction = /datum/reagent/consumable/nutriment/soup/shoyu_ramen
+	reaction = /datum/chemical_reaction/food/soup/shoyu_ramen
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/gyuramen
-	reaction = /datum/reagent/consumable/nutriment/soup/gyuramen
+	reaction = /datum/chemical_reaction/food/soup/gyuramen
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/new_osaka_sunrise
-	reaction = /datum/reagent/consumable/nutriment/soup/new_osaka_sunrise
+	reaction = /datum/chemical_reaction/food/soup/new_osaka_sunrise
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/satsuma_black
-	reaction = /datum/reagent/consumable/nutriment/soup/satsuma_black
+	reaction = /datum/chemical_reaction/food/soup/satsuma_black
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/dragon_ramen
-	reaction = /datum/reagent/consumable/nutriment/soup/dragon_ramen
+	reaction = /datum/chemical_reaction/food/soup/dragon_ramen
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/hong_kong_borscht
-	reaction = /datum/reagent/consumable/nutriment/soup/hong_kong_borscht
+	reaction = /datum/chemical_reaction/food/soup/hong_kong_borscht
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/hong_kong_macaroni
-	reaction = /datum/reagent/consumable/nutriment/soup/hong_kong_macaroni
+	reaction = /datum/chemical_reaction/food/soup/hong_kong_macaroni
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/foxs_prize_soup
-	reaction = /datum/reagent/consumable/nutriment/soup/foxs_prize_soup
+	reaction = /datum/chemical_reaction/food/soup/foxs_prize_soup
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/secret_noodle_soup
-	reaction = /datum/glass_style/has_foodtype/soup/secret_noodle_soup
+	reaction = /datum/chemical_reaction/food/soup/secret_noodle_soup
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/budae_jjigae
-	reaction = /datum/reagent/consumable/nutriment/soup/budae_jjigae
+	reaction = /datum/chemical_reaction/food/soup/budae_jjigae
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/reaction/soup/volt_fish
