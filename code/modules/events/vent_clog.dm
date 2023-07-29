@@ -287,12 +287,12 @@
 
 /datum/round_event/vent_clog/strange/get_mob()
 	var/static/list/mob_list = list(
+		/mob/living/basic/bear,
 		/mob/living/basic/cockroach/glockroach/mobroach,
 		/mob/living/basic/lightgeist,
 		/mob/living/basic/mothroach,
 		/mob/living/basic/mushroom,
 		/mob/living/basic/viscerator,
-		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,
 	)
