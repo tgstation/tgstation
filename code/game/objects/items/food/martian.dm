@@ -6,7 +6,7 @@
 	icon_state = "kimchi"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/consumable/capsaicin = 1
+		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("spicy cabbage" = 1)
 	foodtypes = VEGETABLES
@@ -19,7 +19,7 @@
 	icon_state = "inferno_kimchi"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/consumable/capsaicin = 3
+		/datum/reagent/consumable/capsaicin = 3,
 	)
 	tastes = list("very spicy cabbage" = 1)
 	foodtypes = VEGETABLES
@@ -32,7 +32,8 @@
 	icon_state = "garlic_kimchi"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/consumable/capsaicin = 1
+		/datum/reagent/consumable/capsaicin = 1,
+		/datum/reagent/consumable/garlic = 2,
 	)
 	tastes = list("spicy cabbage" = 1, "garlic" = 1)
 	foodtypes = VEGETABLES
@@ -233,8 +234,10 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "ketchup_fried_rice"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/ketchup = 2,
 	)
 	tastes = list("rice" = 1, "sausage" = 1, "ketchup" = 1, "veggies" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES
@@ -246,10 +249,11 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "mediterranean_fried_rice"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
-	tastes = list("rice" = 1, "sausage" = 1, "ketchup" = 1, "veggies" = 1)
+	tastes = list("rice" = 1, "cheese" = 1, "meatball" = 1, "olives" = 1, "herbs" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -259,8 +263,8 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "egg_fried_rice"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("rice" = 1, "egg" = 1, "soy sauce" = 1)
 	foodtypes = MEAT | GRAIN
@@ -275,7 +279,12 @@
 	desc = "A Korean dish consisting of rice and various toppings, served in a hot stone bowl."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "bibimbap"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/capsaicin = 2,
+	)
 	tastes = list("rice" = 1, "spicy cabbage" = 1, "chilli heat" = 1, "egg" = 1, "meat" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -290,7 +299,11 @@
 	desc = "Korean barbecue meat served with noodles! Made with gochujang, for extra spicy flavour."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "bulgogi_noodles"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/capsaicin = 2,
+	)
 	tastes = list("barbecue meat" = 1, "noodles" = 1, "chilli heat" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -300,7 +313,11 @@
 	desc = "Breaded and deep fried meat on a bed of fried noodles. Delicious, if unconventional."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "yakisoba_katsu"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment = 8,
+	)
 	tastes = list("fried noodles" = 1, "meat" = 1, "breadcrumbs" = 1, "veggies" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -310,7 +327,11 @@
 	desc = "Fried noodles from the red planet. Martian cooking draws from many cultures, and these noodles are no exception- there's elements of Malay, Thai, Chinese, Korean and Japanese cuisine in here."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "martian_fried_noodles"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/protein = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment = 8,
+	)
 	tastes = list("noodles" = 1, "meat" = 1, "nuts" = 1, "onion" = 1, "egg" = 1)
 	foodtypes = GRAIN | NUTS | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -320,7 +341,11 @@
 	desc = "A simple yet delicious fried noodle dish, perfect for the creative chef to make whatever fried noodles they want."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "simple_fried_noodles"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/protein = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment = 6,
+	)
 	tastes = list("noodles" = 1, "soy sauce" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -335,7 +360,12 @@
 	desc = "Made famous by a cafe in Setagaya, this curry's extensive recipe has gone on to be a closely-guarded secret amongst cafe owners across human space. The taste is said to replenish the diner's soul, whatever that means."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "setagaya_curry"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/protein = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/medicine/omnizine = 5,
+	)
 	tastes = list("masterful curry" = 1, "rice" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -347,8 +377,9 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "big_blue_burger"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	tastes = list("bun" = 1, "burger" = 2, "teriyaki onions" = 1, "cheese" = 1, "bacon" = 1, "pineapple" = 1)
 	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES | FRUIT | PINEAPPLE
@@ -360,8 +391,8 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "chappy_patty"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("bun" = 1, "fried pork" = 2, "egg" = 1, "cheese" = 1, "ketchup" = 1)
 	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES
@@ -373,8 +404,10 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "king_katsu_sandwich"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("meat" = 1, "bacon" = 1, "kimchi" = 1, "salad" = 1, "rice bread" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES
@@ -386,8 +419,9 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "marte_cubano_sandwich"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("bacon" = 1, "pickles" = 1, "cheese" = 1, "rice bread" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN
@@ -399,8 +433,10 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "marte_cubano_sandwich"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("egg" = 1, "meat" = 1, "kimchi" = 1, "mozzarella" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN
@@ -412,8 +448,9 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "croque_martienne"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("egg" = 1, "toast" = 1, "pork" = 1, "pineapple" = 1, "cheese" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | PINEAPPLE | BREAKFAST
@@ -425,10 +462,11 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "prospect_sunrise"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
-	tastes = list("egg" = 1, "toast" = 1, "pork" = 1, "pineapple" = 1, "cheese" = 1)
+	tastes = list("egg" = 1, "toast" = 1, "bacon" = 1, "pickles" = 1, "cheese" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | PINEAPPLE | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -439,8 +477,9 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "takoyaki"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/cooking_oil = 2,
 	)
 	tastes = list("octopus" = 1, "batter" = 1, "onion" = 1, "worcestershire sauce" = 1)
 	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES
@@ -452,9 +491,9 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "russian_takoyaki"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/consumable/capsaicin = 5
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/capsaicin = 10,
 	)
 	tastes = list("octopus" = 1, "batter" = 1, "onion" = 1, "chilli heat" = 1)
 	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES
@@ -466,8 +505,9 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "tacoyaki"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/cooking_oil = 2,
 	)
 	tastes = list("taco meat" = 1, "batter" = 1, "corn" = 1, "cheese" = 1)
 	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES | DAIRY
@@ -479,8 +519,8 @@
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "okonomiyaki"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("batter" = 1, "cabbage" = 1, "onion" = 1, "worcestershire sauce" = 1)
 	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES | DAIRY
@@ -496,7 +536,12 @@
 	desc = "Fried kimchi, mixed with sugar and topped with bratwurst. A popular dish at izakayas on Mars."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "brat_kimchi"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/capsaicin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/capsaicin = 2,
+		/datum/reagent/consumable/sugar = 2,
+	)
 	tastes = list("spicy cabbage" = 1, "sausage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -506,7 +551,11 @@
 	desc = "A cultural fusion between German and Japanese cooking, tonkatsuwurst blends the currywurst and tonkatsu sauce into something familiar, yet new."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "tonkatsuwurst"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/ketchup = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/worcestershire = 2,
+	)
 	tastes = list("sausage" = 1, "spicy sauce" = 1, "fries" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -516,7 +565,11 @@
 	desc = "Pig blood, mixed with rice, fried, and topped with peanut and coriander. It's an... acquired taste for sure, but it's popular at Prospect's night markets, brought by Taiwanese settlers."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "ti_hoeh_koe"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/blood = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/peanut_butter = 1,
+	)
 	tastes = list("blood" = 1, "nuts" = 1, "herbs" = 1)
 	foodtypes = MEAT | NUTS | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -526,7 +579,11 @@
 	desc = "A variant on inarizushi popular on Mars amongst vulpinids (and the wider animalid community), kitzushi integrates a spicy cheese and chilli mix inside the pocket for extra flavour."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "kitzushi"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/capsaicin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/capsaicin = 2,
+	)
 	tastes = list("rice" = 1, "tofu" = 1, "chilli cheese" = 1)
 	foodtypes = GRAIN | FRIED | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
@@ -536,7 +593,10 @@
 	desc = "A fried pastry snack from Malaysia, which migrated via Singapore into the Martian diet. Stuffed with curried chicken and potatoes, alongside a slice of hard boiled egg, it's a popular street food on the Red Planet."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "epok_epok"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
 	tastes = list("curry" = 1, "egg" = 1, "pastry" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -546,7 +606,11 @@
 	desc = "A classic Malaysian snack, the roti john consists of bread fried in a mixture of meat, egg and onion, yielding a result that's somewhere between French toast and an omelette."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "roti_john"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment = 10,
+	)
 	tastes = list("bread" = 1, "egg" = 1, "meat" = 1, "onion" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -556,7 +620,12 @@
 	desc = "New Osaka's favourite fries, 2 centuries running- and it's all thanks to the marriage of Red Bay, furikake and mayonnaise."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "izakaya_fries"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/capsaicin = 2,
+		/datum/reagent/consumable/salt = 2,
+	)
 	tastes = list("fries" = 1, "mars" = 1)
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -566,7 +635,11 @@
 	desc = "The bunny chow meets Martian ingenuity in the form of the kurry-ok subsando, with fries and katsu curry in perfect harmony."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "kurry_ok_subsando"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+	)
 	tastes = list("bread" = 1, "spicy fries" = 1, "mayonnaise" = 1, "curry" = 1, "meat" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -576,17 +649,25 @@
 	desc = "A simple classic from Hawaii. Makes for a filling, tasty, and cheap meal."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "loco_moco"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
 	tastes = list("rice" = 1, "burger" = 1, "gravy" = 1, "egg" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/wild_duck_fries
 	name = "wild duck fries"
-	desc = "Fries with shredded duck, ketchup, mayo, and Red Bay. A classic street food on Mars, although they're most often associated with Quack Snax, Mars' favourite (and indeed, only) duck themed fast food chain."
+	desc = "Fries with shredded duck, ketchup, mayo, and Red Bay. A classic street food on Mars, although they're most often associated with Kwik-Kwak, Mars' favourite (and indeed, only) duck themed fast food chain."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "wild_duck_fries"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/capsaicin = 2,
+		/datum/reagent/consumable/salt = 2,
+	)
 	tastes = list("fries" = 1, "duck" = 1, "ketchup" = 1, "mayo" = 1, "spicy seasoning" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -596,7 +677,11 @@
 	desc = "From the friendly vendors of Honolulu Avenue comes the Little Hawaii dog- tropical and fattening, all at the same time!"
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "little_hawaii_hotdog"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
 	tastes = list("sausage" = 1, "pineapple" = 1, "onion" = 1, "teriyaki" = 1)
 	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
@@ -606,7 +691,12 @@
 	desc = "The simple name of this dish doesn't tell the full story of its deliciousness- sure, salt and chilli are big components, but the onion, ginger and garlic are the real flavour heroes here."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "salt_chilli_fries"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/capsaicin = 2,
+		/datum/reagent/consumable/salt = 2,
+	)
 	tastes = list("fries" = 1, "garlic" = 1, "ginger" = 1, "numbing heat" = 1, "salt" = 1)
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -616,7 +706,10 @@
 	desc = "A simple seafood dish, typical to everywhere that octopus is eaten. Martians like it with Red Bay."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "grilled_octopus"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/char = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/char = 2)
 	tastes = list("octopus" = 1)
 	foodtypes = SEAFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -626,7 +719,10 @@
 	desc = "Man, sticking chunks of steak in a croquette. Must be the countryside way."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "steak_croquette"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/char = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
 	tastes = list("steak" = 1, "potato" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -636,7 +732,12 @@
 	desc = "A traditional Filipino-style silog consisting of sinangag, a fried egg, and slices of chap. Makes for a simple, yet filling, breakfast."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "chapsilog"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/char = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/garlic = 1,
+	)
 	tastes = list("ham" = 1, "garlic rice" = 1, "egg" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -646,7 +747,11 @@
 	desc = "What do you get when you combine chap, onions, peppers and potatoes? The chap hash, of course! Add some red bay, and you've got yourself a tasty breakfast."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "chap_hash"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/char = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment = 3,
+	)
 	tastes = list("ham" = 1, "onion" = 1, "pepper" = 1, "potato" = 1)
 	foodtypes = MEAT | VEGETABLES | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -656,7 +761,11 @@
 	desc = "Crispy fried tofu, served in a tasty umami broth. Frequently served at izakayas."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "agedashi_tofu"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
 	tastes = list("umami broth" = 1, "tofu" = 1)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -667,7 +776,11 @@
 	desc = "Also known as galinha à portuguesa, or Portuguese chicken, this dish is a Macanese classic born of Portuguese colonialism, though the dish itself is not a Portuguese dish. It consists of chicken in \"Portuguese Sauce\", a mild coconut-based curry."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "po_kok_gai"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("chicken" = 1, "coconut" = 1, "curry" = 1)
 	foodtypes = MEAT | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
@@ -677,7 +790,12 @@
 	desc = "An adaptation of mapo tofu made famous in Prospect, the foodie Mecca of Mars. It even kinda looks like Mars, if you really squint."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "huoxing_tofu"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/capsaicin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/capsaicin = 2
+	)
 	tastes = list("meat" = 1, "chilli heat" = 1, "tofu" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -687,7 +805,11 @@
 	desc = "Considered a Macanese variant on piri-piri, fēizhōu jī, or galinha à africana, or African chicken (if you're feeling like speaking Common), is a popular dish in the TID, and subsequently also on Mars due to its influx of Macanese settlers."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "feizhou_ji"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/capsaicin = 2,
+	)
 	tastes = list("chicken" = 1, "chilli heat" = 1, "vinegar" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -697,7 +819,10 @@
 	desc = "Originally a Portuguese dish, cabidela rice is traditionally made with chicken in Portugal, and duck in Macau- ultimately, the chicken version won out on Mars due to European influence."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "galinha_de_cabidela"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 12,
+	)
 	tastes = list("chicken" = 1, "iron" = 1, "vinegar" = 1, "rice" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -707,7 +832,10 @@
 	desc = "Breaded and deep fried meat, topped with curry sauce and served on a bed of rice."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "katsu_curry"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
 	tastes = list("curry" = 1, "meat" = 1, "breadcrumbs" = 1, "rice" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -717,7 +845,11 @@
 	desc = "A tasty mix of stewed beef and onion, served over rice. Typical toppings include pickled ginger, chilli powder, and fried eggs."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "beef_bowl"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("beef" = 25, "onion" = 25, "chili heat" = 15, "rice" = 34, "soul" = 1) //I pour my soul into this bowl
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -727,7 +859,13 @@
 	desc = "Inspired by the Japanese donburi tradition, this spicy take on ten-don is a flavour sensation that's swept the Martian nation."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "salt_chilli_bowl"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/capsaicin = 2,
+		/datum/reagent/consumable/salt = 2,
+	)
 	tastes = list("seafood" = 1, "rice" = 1, "garlic" = 1, "ginger" = 1, "numbing heat" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -737,17 +875,25 @@
 	desc = "Also known as konohadon, this donburi is typical to the Kansai region, and consists of kamaboko fishcake, egg and onion served over rice."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "kansai_bowl"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("seafood" = 1, "rice" = 1, "egg" = 1, "onion" = 1)
 	foodtypes = SEAFOOD | MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/salad/eigamudo_curry
+/obj/item/food/salad/eigamudo_curry //curry is meant to be really spicy or kinda mild, this just stinks!
 	name = "\improper Eigamudo curry"
 	desc = "An inexplicable curry dish made from a cacophony of ingredients. Presumably tastes good to someone, somewhere- though good luck finding them."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "eigamudo_curry"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(
+		/datum/reagent/consumable/nutraslop = 8,
+		/datum/reagent/consumable/capsaicin = 2,
+		/datum/reagent/toxin/slimejelly = 4,
+	)
 	tastes = list("grit" = 1, "slime" = 1, "gristle" = 1, "rice" = 1, "Mystery Food X" = 1)
 	foodtypes = GROSS | GRAIN | TOXIC
 	w_class = WEIGHT_CLASS_SMALL
@@ -758,7 +904,13 @@
 	desc = "Eggs, served on a savoury yoghurt base with a spicy oil topping. Originally a Turkish dish, it came to Mars with German-Turkish settlers and has become a breakfast mainstay since."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "cilbir"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/capsaicin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/capsaicin = 2,
+		/datum/reagent/consumable/garlic = 1,
+	)
 	tastes = list("yoghurt" = 1, "garlic" = 1, "lemon" = 1, "egg" = 1, "chilli heat" = 1)
 	foodtypes = DAIRY | VEGETABLES | FRUIT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -768,7 +920,12 @@
 	desc = "This dish takes the best of Beijing's and Paris' cuisines to make a deliciously tangy and savoury meal."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "peking_duck_crepes"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/orangejuice = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/orangejuice = 4,
+	)
 	tastes = list("meat" = 1, "crepes" = 1, "orange" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
@@ -779,7 +936,10 @@
 	desc = "Brought to Mars by both Dutch and Indonesian settlers, spekkoek is a common holiday cake on the Red Planet, often being served as part of a traditional rijsttafel. Use of ambrosia vulgaris as a flavouring is one of necessity in deep space, as pandan leaf is rare this far from Earth."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "spekkoek"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 15)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 15
+	)
 	tastes = list("winter spices" = 2, "ambrosia vulgaris" = 2, "cake" = 5)
 	foodtypes = GRAIN | SUGAR | DAIRY
 	burns_in_oven = TRUE
@@ -800,7 +960,13 @@
 	desc = "A classic Martian adaptation of another classic dessert, Pineapple Foster is a toasty sweet treat which presents only a mild-to-moderate fire risk."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "pineapple_foster"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/caramel = 4, /datum/reagent/consumable/pineapplejuice = 2, /datum/reagent/consumable/milk = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/caramel = 4,
+		/datum/reagent/consumable/pineapplejuice = 2,
+		/datum/reagent/consumable/milk = 4
+	)
 	tastes = list("pineapple" = 1, "vanilla" = 1, "caramel" = 1, "ice cream" = 1)
 	foodtypes = FRUIT | DAIRY | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
@@ -810,7 +976,11 @@
 	desc = "Originally created by Portuguese monks, pastéis de nata went worldwide under the Portuguese colonial empire- including Macau, from which it came to Mars with settlers from the TID of Hong Kong and Macau."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "pastel_de_nata"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/sugar = 4,
+	)
 	tastes = list("custard" = 1, "vanilla" = 1, "sweet pastry" = 1)
 	foodtypes = DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -820,7 +990,10 @@
 	desc = "Confusingly referred to as a \"pineapple bun\", this Hong Konger treat contains no actual pineapple- instead, it's a sugar-cookie like bun with a butter filling."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "boh_loh_yah"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/sugar = 4,
+	)
 	tastes = list("cookie" = 1, "butter" = 1)
 	foodtypes = DAIRY | GRAIN | PINEAPPLE //it's funny
 	w_class = WEIGHT_CLASS_SMALL
@@ -830,7 +1003,11 @@
 	desc = "A ubiquitous sweet snack from much of Maritime South-East Asia, the banana fritter has many names, but all share a similar style- banana, coated in batter, and fried."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "banana_fritter"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/sugar = 1,
+	)
 	tastes = list("banana" = 1, "batter" = 1)
 	foodtypes = GRAIN | FRUIT | FRIED
 	w_class = WEIGHT_CLASS_SMALL
@@ -840,7 +1017,11 @@
 	desc = "Like its cousin, the banana fritter, the pineapple fritter is a popular snack, though somewhat let down by pineapple's infamous \"love it or hate it\" flavour."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "pineapple_fritter"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/sugar = 1,
+	)
 	tastes = list("pineapple" = 1, "batter" = 1)
 	foodtypes = GRAIN | FRUIT | FRIED | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
@@ -850,7 +1031,12 @@
 	desc = "Japanese-style dango balls, flavoured with grenadine and orange, giving a final result that looks like Mars and tastes like dessert, served three to a stick."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "kasei_dango"
-	food_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/consumable/orangejuice = 3, /datum/reagent/consumable/grenadine = 3)
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/orangejuice = 3,
+		/datum/reagent/consumable/grenadine = 3
+	)
 	tastes = list("pomegranate" = 1, "orange" = 1)
 	foodtypes = FRUIT | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -861,7 +1047,12 @@
 	desc = "A classic dessert at the Arabia Street Night Market in Prospect, peanut butter ice cream mochi is made with a peanut-butter flavoured ice cream as the main filling, and coated in crushed peanuts in the Taiwanese tradition."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "pb_ice_cream_mochi"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 6, /datum/reagent/consumable/peanut_butter = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/peanut_butter = 4,
+		/datum/reagent/consumable/milk = 2,
+	)
 	tastes = list("peanut butter" = 1, "mochi" = 1)
 	foodtypes = NUTS | GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
@@ -871,10 +1062,10 @@
 	desc = "Few cultures love pineapple as much as the Martians, and this dessert proves that- frozen pineapple, on a stick, with just a little dunk of dark chocolate."
 	overlay_state = "pineapple_pop"
 	food_reagents = list(
-		/datum/reagent/consumable/berryjuice = 4,
-		/datum/reagent/consumable/cream = 2,
-		/datum/reagent/consumable/vanilla = 2,
+		/datum/reagent/consumable/pineapplejuice = 4,
 		/datum/reagent/consumable/sugar = 4,
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("cold pineapple" = 1, "chocolate" = 1)
 	foodtypes = SUGAR | PINEAPPLE
@@ -884,7 +1075,8 @@
 	desc = "This sky-blue ice-cream bar is flavoured with only the finest imported sea salt. Salty... no, sweet!"
 	overlay_state = "sea_salt_pop"
 	food_reagents = list(
-		/datum/reagent/consumable/berryjuice = 4,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/cream = 2,
 		/datum/reagent/consumable/vanilla = 2,
 		/datum/reagent/consumable/sugar = 4,
@@ -897,7 +1089,11 @@
 	name = "berry topsicle"
 	desc = "A frozen treat made from tofu and berry juice blended smooth, then frozen. Supposedly a favourite of bears, but that makes no sense..."
 	overlay_state = "topsicle_berry"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 6, /datum/reagent/consumable/peanut_butter = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/berryjuice = 4
+	)
 	tastes = list("berry" = 1, "tofu" = 1)
 	foodtypes = FRUIT | VEGETABLES
 
@@ -905,14 +1101,22 @@
 	name = "banana topsicle"
 	desc = "A frozen treat made from tofu and banana juice blended smooth, then frozen. Popular in rural Japan in the summer."
 	overlay_state = "topsicle_banana"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 6, /datum/reagent/consumable/peanut_butter = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/banana = 4
+	)
 	tastes = list("banana" = 1, "tofu" = 1)
 
 /obj/item/food/popsicle/topsicle/pineapple
 	name = "pineapple topsicle"
 	desc = "A frozen treat made from tofu and pineapple juice blended smooth, then frozen. As seen on TV."
 	overlay_state = "topsicle_pineapple"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 6, /datum/reagent/consumable/peanut_butter = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/sugar = 6,
+		/datum/reagent/consumable/pineapplejuice = 4
+	)
 	tastes = list("pineapple" = 1, "tofu" = 1)
 
 // Ballpark Food
@@ -921,7 +1125,11 @@
 	desc = "The signature snack of Cybersun Park, home of the New Osaka Woodpeckers: a ballpark hot-dog with sambal, dashi-grilled onions and pineapple-lime salsa. You know, the sort of bold flavours they enjoy on Mars."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "plasma_dog_supreme"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment = 6)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment = 6
+	)
 	tastes = list("sausage" = 1, "relish" = 1, "onion" = 1, "fruity salsa" = 1)
 	foodtypes = FRUIT | MEAT | PINEAPPLE | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -931,7 +1139,11 @@
 	desc = "Spicy fried pickle spears? Such a bold combination can surely come only from one place- Martian ballparks? Well, not really, but they are a popular snack there."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "frickles"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/cooking_oil = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/capsaicin = 1,
+	)
 	tastes = list("frickles" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -941,9 +1153,12 @@
 	desc = "A twisted knot of dough, ready to be baked, or possibly griddled?"
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "raw_ballpark_pretzel"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/salt = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/salt = 1,
+	)
 	tastes = list("bread" = 1, "salt" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | RAW
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_ballpark_pretzel/make_bakeable()
@@ -957,7 +1172,10 @@
 	desc = "A classic German bread, transformed by the hand of American imperialism into a game-day snack, and then carried to the Red Planet on the backs of Japanese settlers. How multicultural."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "ballpark_pretzel"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/salt = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/salt = 1,
+	)
 	tastes = list("bread" = 1, "salt" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -967,9 +1185,12 @@
 	desc = "Raw chicken meatballs on a skewer, ready to be griddled into something delicious."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "raw_ballpark_tsukune"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment = 2,
+	)
 	tastes = list("raw chicken" = 7, "salmonella" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/kebab/raw_ballpark_tsukune/make_grillable()
@@ -980,7 +1201,10 @@
 	desc = "Skewered chicken meatballs in a sweet-and-savoury yakitori sauce. A common sight at Martian ballparks."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "ballpark_tsukune"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/nutriment = 4,
+	)
 	tastes = list("chicken" = 1, "umami sauce" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -998,7 +1222,10 @@
 	desc = "A traditional dish from Sprout (where it is known as hinu'sashuruhk), pickled voltvine has taken on a new identity amongst the pickle masters of Mars, earning a seat at the holy pickle pantheon alongside pickled ginger and kimchi (once appropriately discharged, at least)."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "pickled_voltvine"
-	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(
+		/datum/reagent/consumable/liquidelectricity/enriched = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("sour radish" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -1009,7 +1236,10 @@
 	desc = "Some may question the 24-volt fish. After all, fish poached in electric-blue super-sour energy drink looks awful. And, indeed, tastes awful. So why do the Martian ethereals like it, then?" //beats the hell out of me
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "volt_fish"
-	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 6, /datum/reagent/consumable/nutriment/protein = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/liquidelectricity/enriched = 6,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
 	tastes = list("fish" = 1, "sour pear" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
@@ -1020,7 +1250,11 @@
 	desc = "Named for the Ethereal homeworld, this rice-based bowl draws on the donburi tradition, but rejects typical donburi toppings, instead using sashimi grade fish and pickled voltvine."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "sprout_bowl"
-	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 6, /datum/reagent/consumable/nutriment/protein = 4)
+	food_reagents = list(
+		/datum/reagent/consumable/liquidelectricity/enriched = 8,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
 	tastes = list("fish" = 1, "sour radish" = 1, "rice" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
