@@ -1,0 +1,4 @@
+#include "_emote_panel.dm"
+
+#include "code/emote_panel.dm"
+#include "code/emotes.dm"
