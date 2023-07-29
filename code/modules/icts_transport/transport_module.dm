@@ -800,7 +800,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 /obj/structure/transport/linear/tram
 	name = "tram"
 	desc = "A tram for tramversing the station."
-	icon = 'icons/turf/tram.dmi'
+	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
 	icon_state = "titanium_white"
 	layer = TRAM_FLOOR_LAYER
 	base_icon_state = null
@@ -830,20 +830,31 @@ GLOBAL_LIST_EMPTY(icts_transports)
 /obj/structure/transport/linear/tram/purple
 	icon_state = "titanium_purple"
 
-/obj/structure/transport/linear/tram/subfloor
-	icon_state = "tram_subfloor"
+/obj/structure/transport/linear/tram/accessible
+	icon_state = "titanium_accessible"
+
+/obj/structure/transport/linear/tram/blue
+	icon_state = "titanium_blue"
+
+/obj/structure/transport/linear/tram/noslip
+	icon_state = "noslip"
+
+/obj/structure/transport/linear/tram/structure
+	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
+	icon_state = "subfloor"
+	base_icon_state = "subfloor"
 
 /obj/structure/transport/linear/tram/subfloor/northwest
-	icon_state = "tram_subfloor_nw"
+	icon_state = "spoiler-subfloor-nw"
 
 /obj/structure/transport/linear/tram/subfloor/southwest
-	icon_state = "tram_subfloor_sw"
+	icon_state = "spoiler-subfloor-sw"
 
 /obj/structure/transport/linear/tram/subfloor/northeast
-	icon_state = "tram_subfloor_ne"
+	icon_state = "spoiler-subfloor-ne"
 
 /obj/structure/transport/linear/tram/subfloor/southeast
-	icon_state = "tram_subfloor_se"
+	icon_state = "spoiler-subfloor-se"
 
 /datum/armor/structure_tram
 	melee = 50

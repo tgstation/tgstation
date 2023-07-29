@@ -309,7 +309,6 @@
 
 /obj/machinery/icts_controller/update_overlays()
 	. = ..()
-	var/status = ""
 	if(machine_stat & NOPOWER)
 		return
 
@@ -317,36 +316,28 @@
 		. += mutable_appearance(icon, "controller-door")
 
 	if(controller_datum.controller_status & DOORS_OPEN)
-		status += "DOORS "
 		. += mutable_appearance(icon, "doors")
 		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
 
 	if(controller_datum.controller_status & EMERGENCY_STOP)
-		status += "ESTOP "
 		. += mutable_appearance(icon, "estop")
 		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
 
 	else if(controller_datum.controller_status & SYSTEM_FAULT)
-		status += "FAULT "
 		. += mutable_appearance(icon, "fault")
 		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
 
 	if(controller_datum.controller_status & COMM_ERROR)
-		status += "COMMS "
 		. += mutable_appearance(icon, "comms")
 		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
 
 	if(controller_datum.controller_status & PRE_DEPARTURE)
-		status += "DEPT "
 		. += mutable_appearance(icon, "departure")
 		. += emissive_appearance(icon, "departure", src, alpha = src.alpha)
 
 	else if(controller_datum.controller_status & CONTROLS_LOCKED)
-		status += "LOCK"
 		. += mutable_appearance(icon, "locked")
 		. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
-
-	message_admins("[status]")
 
 /obj/machinery/icts_controller/proc/find_controller()
 	var/obj/structure/transport/linear/tram/tram_structure = locate() in src.loc
