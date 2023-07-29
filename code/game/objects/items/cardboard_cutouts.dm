@@ -14,13 +14,9 @@
 	/// What cutout datum we spawn at the start? Uses the name, not the path.
 	var/starting_cutout
 
-/obj/item/cardboard_cutout/Initialize(mapload)
-	. = ..()
-	if(starting_cutout)
-		return INITIALIZE_HINT_LATELOAD
-
 /obj/item/cardboard_cutout/LateInitialize()
-	ASSERT(!isnull(starting_cutout))
+	if(isnull(starting_cutout))
+		return
 
 	var/datum/cardboard_cutout/cutout
 	for (var/datum/cardboard_cutout/cutout_subtype as anything in subtypesof(/datum/cardboard_cutout))
