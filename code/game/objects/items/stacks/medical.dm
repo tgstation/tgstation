@@ -12,7 +12,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	novariants = FALSE
-	item_flags = NOBLUDGEON
+	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
 	cost = 250
 	source = /datum/robot_energy_storage/medical
 	merge_type = /obj/item/stack/medical
