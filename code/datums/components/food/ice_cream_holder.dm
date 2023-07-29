@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour/lemon
 	name = ICE_CREAM_LEMON
 	color = COLOR_ICECREAM_LEMON
-	desc = "filled with lemon sorbet. Tangy!"
+	desc = "filled with lemon sorbet. Like frozen lemonade in a cone."
 	ingredients = list(/datum/reagent/consumable/ice, /datum/reagent/consumable/lemonjuice) //contains no milk
 	reagent_type = /datum/reagent/consumable/lemonjuice
 
@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour/peach
 	name = ICE_CREAM_PEACH
 	color = COLOR_ICECREAM_PEACH
-	desc = "filled with limited edition peach flavour. Wow!"
+	desc = "filled with limited edition peach flavour. Enjoy it while it lasts!"
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/peachjuice)
 	reagent_type = /datum/reagent/consumable/peachjuice
 
