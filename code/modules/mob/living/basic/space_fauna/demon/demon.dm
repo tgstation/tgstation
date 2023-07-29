@@ -15,9 +15,9 @@
 	attack_verb_continuous = "wildly tears into"
 	attack_verb_simple = "wildly tear into"
 
-	icon = 'icons/mob/simple/mob.dmi'
-	icon_state = "imp"
-	icon_living = "imp"
+	icon = 'icons/mob/simple/demon.dmi'
+	icon_state = "demon"
+	icon_living = "demon"
 
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID // undead is important because it means we can't be healed with sutures and the like. keep this in mind if you ever decide to change this
 	status_flags = CANPUSH

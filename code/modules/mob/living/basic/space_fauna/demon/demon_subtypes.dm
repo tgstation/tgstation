@@ -5,8 +5,8 @@
 	unique_name = FALSE
 	speak_emote = list("gurgles","wails","screeches")
 
-	icon_state = "daemon"
-	icon_living = "daemon"
+	icon_state = "slaughter_demon"
+	icon_living = "slaughter_demon"
 
 	minimum_survivable_temperature = TCMB
 	obj_damage = 50
@@ -124,8 +124,8 @@
 	attack_vis_effect = null
 	death_sound = 'sound/misc/sadtrombone.ogg'
 
-	icon_state = "bowmon"
-	icon_living = "bowmon"
+	icon_state = "bow_demon"
+	icon_living = "bow_demon"
 	death_message = "fades out, as all of its friends are released from its prison of hugs."
 
 	antag_type = /datum/antagonist/slaughter/laughter
@@ -135,7 +135,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	if(check_holidays(APRIL_FOOLS))
-		icon_state = "honkmon"
+		icon_state = "honk_demon"
 
 /mob/living/basic/demon/slaughter/laughter/grant_loot()
 	return list() // we do our thing... with the kittens...
