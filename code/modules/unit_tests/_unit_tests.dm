@@ -102,6 +102,7 @@
 #include "blindness.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
+#include "burning.dm"
 #include "cable_powernets.dm"
 #include "card_mismatch.dm"
 #include "cardboard_cutouts.dm"
