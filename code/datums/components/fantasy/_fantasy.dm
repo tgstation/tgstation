@@ -37,6 +37,10 @@
 	var/obj/item/master = parent
 	originalName = master.name
 	modify()
+	RegisterSignal(parent, COMSIG_STACK_CAN_MERGE, PROC_REF(try_merge_stack))
+
+/datum/component/fantasy/proc/try_merge_stack(obj/item/stack/to_merge, in_hand)
+	return CANCEL_STACK_MERGE
 
 /datum/component/fantasy/UnregisterFromParent()
 	unmodify()
@@ -70,11 +74,7 @@
 	if(!affixListing)
 		affixListing = list()
 		for(var/T in subtypesof(/datum/fantasy_affix))
-			var/datum/fantasy_affix/affix = new T(src)
-			if(!(affix.alignment & alignment))
-				continue
-			if(!affix.validate(parent))
-				continue
+			var/datum/fantasy_affix/affix = new T
 			affixListing[affix] = affix.weight
 
 	if(length(affixes))
@@ -86,6 +86,10 @@
 	for(var/i in 1 to max(1, abs(quality))) // We want at least 1 affix applied
 		var/datum/fantasy_affix/affix = pick_weight(affixListing)
 		if(affix.placement & usedSlots)
+			continue
+		if(!(affix.alignment & alignment))
+			continue
+		if(!affix.validate(parent))
 			continue
 		affixes += affix
 		usedSlots |= affix.placement

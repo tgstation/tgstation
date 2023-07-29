@@ -538,10 +538,7 @@ BLIND     // can't see anything
 /obj/item/clothing/apply_fantasy_bonuses(bonus)
 	. = ..()
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = bonus)))
-	// Clothes won't make you speedy
-	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
 
 /obj/item/clothing/remove_fantasy_bonuses(bonus)
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
-	slowdown = reset_fantasy_variable("slowdown", slowdown)
 	return ..()

@@ -1,40 +1,36 @@
 
 /particles/unusual_effect
-	width = 32
-	height = 32
-	count = 10
-	spawning = 5
-	bound1 = list(-16, -16, -100)
-	bound2 = list(16, 16, 0)
-	lifespan = 10
-	gradient = list("#FFBF00", "#FFEA00")
-	color_change = 0.1
-	position = generator("box", list(-16, -16, -100), list(16, 16, -100))
-	velocity = generator("box", list(-1, -1), list(1, 1))
-	fade = 3
-	fadein = 3
+	icon = 'icons/effects/particles/pollen.dmi'
+	icon_state = "pollen"
+	width = 100
+	height = 100
+	count = 1000
+	spawning = 4
+	lifespan = 0.7 SECONDS
+	fade = 1 SECONDS
+	grow = -0.01
+	velocity = list(0, 0)
+	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
+	gravity = list(0, 0.95)
+	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
+	rotation = 30
+	spin = generator(GEN_NUM, -20, 20)
 
 /datum/component/unusual_effect
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
-/datum/component/unusual_effect/Initialize(color, include_particles)
+	COOLDOWN_DECLARE(glow_cooldown)
+
+/datum/component/unusual_effect/Initialize(color, include_particles = FALSE)
 	var/atom/movable/parent_movable = parent
 	if (!istype(parent_movable))
 		return COMPONENT_INCOMPATIBLE
 
 	parent_movable.add_filter("unusual_effect", 2, list("type" = "outline", "color" = color, "size" = 2))
-	parent_movable.particles = new /particles/unusual_effect()
+	if(include_particles)
+		parent_movable.particles = new /particles/unusual_effect()
 	START_PROCESSING(SSobj, src)
-
-/datum/component/unusual_effect/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
-	RegisterSignal(parent, COMSIG_GEIGER_COUNTER_SCAN, PROC_REF(on_geiger_counter_scan))
-
-/datum/component/unusual_effect/UnregisterFromParent()
-	UnregisterSignal(parent, list(
-		COMSIG_COMPONENT_CLEAN_ACT,
-		COMSIG_GEIGER_COUNTER_SCAN,
-	))
 
 /datum/component/unusual_effect/Destroy(force, silent)
 	var/atom/movable/parent_movable = parent
@@ -44,9 +40,14 @@
 	return ..()
 
 /datum/component/unusual_effect/process(seconds_per_tick)
+	var/atom/movable/parent_movable = parent
 	var/filter = parent_movable.get_filter("unusual_effect")
 	if (!filter)
 		qdel(src)
 		return PROCESS_KILL
-	animate(filter, alpha = 110, time = seconds_per_tick / 2, loop = -1)
-	animate(alpha = 40, time = seconds_per_tick / 2)
+	if(COOLDOWN_FINISHED(src, glow_cooldown))
+		return
+
+	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
+	animate(alpha = 40, time = 2.5 SECONDS)
+	COOLDOWN_START(src, glow_cooldown, 4 SECONDS)

@@ -223,6 +223,7 @@
 	var/list/fantasy_modifications
 
 /obj/item/Initialize(mapload)
+	. = INITIALIZE_HINT_LATELOAD
 
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
@@ -237,7 +238,7 @@
 	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left))
 		update_greyscale()
 
-	. = ..()
+	..()
 
 	// Handle adding item associated actions
 	for(var/path in actions_types)
@@ -259,6 +260,12 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
+
+	return .
+
+/obj/item/LateInitialize()
+	. = ..()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM_POST_INIT, src)
 
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref

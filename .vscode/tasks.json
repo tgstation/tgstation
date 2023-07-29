@@ -22,7 +22,7 @@
 				"isDefault": true
 			},
 			"dependsOn": "dm: reparse",
-			"label": "Build All"
+			"label": "build all"
 		},
 		{
 			"type": "dreammaker",

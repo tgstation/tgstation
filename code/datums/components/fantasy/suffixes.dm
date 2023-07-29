@@ -217,6 +217,40 @@
 	var/obj/item/master = comp.parent
 	master.RemoveElement(/datum/element/curse_announcement) //just in case
 
+/datum/fantasy_affix/curse_of_hunger
+	name = "curse of polymorph"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_EVIL
+	weight = 5
+
+/datum/fantasy_affix/curse_of_hunger/validate(obj/item/attached)
+	// Curse of hunger can be really unbearable to deal with,
+	// so it should not start on someone or in a bag.
+	if(ismob(attached.loc))
+		return FALSE
+	return TRUE
+
+/datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
+	. = ..()
+	var/obj/item/master = comp.parent
+	var/filter_color = "#8a0c0ca1" //clarified args
+	var/new_name = pick(", transforming", " of the polymorph", " cursed with polymorphing", ", changer of all", " of changing")
+	var/static/list/possible_results = list(
+		WABBAJACK_MONKEY,
+		WABBAJACK_ROBOT,
+		WABBAJACK_SLIME,
+		WABBAJACK_XENO,
+		WABBAJACK_HUMAN,
+		WABBAJACK_ANIMAL,
+	)
+	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of polymorph!", filter_color, new_name, comp)
+	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_polymorph, pick(possible_results))
+	return newName //no spoilers!
+
+/datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.RemoveElement(/datum/element/curse_announcement) //just in case
+
 /datum/fantasy_affix/speed
 	name = "of speed"
 	placement = AFFIX_SUFFIX

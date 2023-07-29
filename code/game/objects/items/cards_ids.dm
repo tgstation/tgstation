@@ -118,6 +118,8 @@
 		add_access(SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), mode = FORCE_ADD_ALL)
 	else if(bonus >= 10)
 		add_access(SSid_access.get_region_access_list(list(REGION_ALL_STATION)), mode = FORCE_ADD_ALL)
+	else if(bonus <= 10)
+		clear_access()
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()

@@ -75,6 +75,8 @@
 	return ..()
 
 /obj/item/grenade/proc/apply_grenade_fantasy_bonuses(quality)
+	if(ex_dev == 0 && ex_heavy == 0 && ex_light == 0 && ex_flame == 0)
+		return
 	var/devIncrease = round(quality / 10)
 	var/heavyIncrease = round(quality / 5)
 	var/lightIncrease = round(quality / 2)

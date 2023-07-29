@@ -29,6 +29,14 @@
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
 
+/obj/item/clothing/under/suit/armor/apply_fantasy_bonuses(bonus)
+	. = ..()
+	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
+
+/obj/item/clothing/under/suit/armor/remove_fantasy_bonuses(bonus)
+	slowdown = reset_fantasy_variable("slowdown", slowdown)
+	return ..()
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
 	desc = "A slim Type I armored vest that provides decent protection against most types of damage."

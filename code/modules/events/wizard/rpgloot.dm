@@ -23,6 +23,18 @@
 	var/can_backfire = TRUE
 	var/uses = 1
 
+/obj/item/upgradescroll/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(bonus >= 15)
+		can_backfire = FALSE
+	upgrade_amount = modify_fantasy_variable("upgrade_amount", upgrade_amount, round(bonus / 4), minimum = 1)
+
+/obj/item/upgradescroll/remove_fantasy_bonuses(bonus)
+	upgrade_amount = reset_fantasy_variable("upgrade_amount", upgrade_amount)
+	can_backfire = TRUE
+	return ..()
+
+
 /obj/item/upgradescroll/afterattack(obj/item/target, mob/user, proximity)
 	. = ..()
 	if(!proximity || !istype(target))
@@ -66,13 +78,14 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 /datum/rpgloot_controller/New()
 	. = ..()
 	//second operation takes MUCH longer, so lets set up signals first.
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(on_new_item_in_existence))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM_POST_INIT, PROC_REF(on_new_item_in_existence))
 	handle_current_items()
 
 ///signal sent by a new item being created.
 /datum/rpgloot_controller/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
 	SIGNAL_HANDLER
-
+	if(created_item.item_flags & SKIP_FANTASY_ON_SPAWN)
+		return
 	created_item.AddComponent(/datum/component/fantasy)
 
 /**
@@ -90,6 +103,9 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 			continue
 
 		fantasy_item.AddComponent(/datum/component/fantasy)
+
+		if(isnull(fantasy_item.loc))
+			continue
 
 		if(istype(fantasy_item, /obj/item/storage))
 			var/obj/item/storage/storage_item = fantasy_item
