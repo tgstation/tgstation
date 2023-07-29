@@ -166,11 +166,12 @@
 
 	if(targeted)
 		if(flashed.flash_act(1, 1))
-			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+			//flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER) SKYRAPTOR REMOVAL
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
-			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
-			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
+			//flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5))) SKYRAPTOR REMOVAL
+			//flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5))) SKYRAPTOR REMOVAL
+			flashed.Disorient((7 SECONDS * (1-(deviation*0.5))), 70, paralyze = 2 SECONDS)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 
 		else if(user)
@@ -178,8 +179,10 @@
 		else
 			to_chat(flashed, span_danger("[src] fails to blind you!"))
 	else
-		if(flashed.flash_act())
-			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+		// MORE REMOVALS
+		//if(flashed.flash_act())
+			//flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+		flashed.Disorient(7 SECONDS * (1-(deviation*0.5)), paralyze = 2 SECONDS)
 
 /**
  * Handles the directionality of the attack
@@ -246,13 +249,14 @@
 		if(flashed_borgo.flash_act(affect_silicon = TRUE))
 			if(flashed_borgo.is_blind())
 				var/flash_duration = rand(8,12) SECONDS
-				flashed_borgo.Paralyze(flash_duration)
-				flashed_borgo.set_temp_blindness_if_lower(flash_duration)
+				//flashed_borgo.Paralyze(flash_duration) SKYRAPTOR REMOVAL
+				//flashed_borgo.set_temp_blindness_if_lower(flash_duration) SKYRAPTOR REMOVAL
 				user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors and computing with the flash!"), span_danger("You overload [flashed_borgo]'s sensors and computing with the flash!"))
 			else
 				user.visible_message(span_warning("[user] blinds [flashed_borgo] with the flash!"), span_danger("You blind [flashed_borgo] with the flash!"))
-			flashed_borgo.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
-			flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
+			//flashed_borgo.set_temp_blindness_if_lower( (rand(5,15) SECONDS)) SKYRAPTOR REMOVAL
+			//flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER) SKYRAPTOR REMOVAL
+			flashed_borgo.Disorient(70, paralyze = rand(80, 120), stack_status = FALSE)
 		else
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
 		return

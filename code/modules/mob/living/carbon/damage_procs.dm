@@ -102,7 +102,7 @@
 		amount = min(amount, 0)
 	return ..()
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype)
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced = FALSE, required_biotype = MOB_ORGANIC) //SKYRAPTOR EDIT: these need to be unkerscrunkled
 	/// SKYRAPTOR REMOVAL BEGIN: we're torching default stamina for carbons and later other mobtypes.
 	/*. = ..()
 	if(amount > 0)
