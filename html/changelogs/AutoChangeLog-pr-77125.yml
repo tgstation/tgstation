@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added a 'Vending products shortage' station trait, that randomly lowers the availability of all vending products from vending machines on the station, with a 1/20 chance of the vending machine itself being tilted."
