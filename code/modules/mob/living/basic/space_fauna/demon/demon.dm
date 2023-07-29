@@ -22,7 +22,7 @@
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID // undead is important because it means we can't be healed with sutures and the like. keep this in mind if you ever decide to change this
 	status_flags = CANPUSH
 
-	combat_mode = TRUE
+	istate = ISTATE_HARM | ISTATE_BLOCKING
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	faction = list(FACTION_HELL)

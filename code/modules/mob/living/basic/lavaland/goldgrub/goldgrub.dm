@@ -20,7 +20,6 @@
 	attack_verb_continuous = "barrels into"
 	attack_verb_simple = "barrel into"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	combat_mode = FALSE
 	speak_emote = list("screeches")
 	death_message = "stops moving as green liquid oozes from the carcass!"
 	status_flags = CANPUSH

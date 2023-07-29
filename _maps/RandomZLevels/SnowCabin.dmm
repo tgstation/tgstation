@@ -979,6 +979,22 @@
 	name = "fat space polar bear";
 	speed = 3
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/bear/snow{
+	desc = "It's a polar bear, in space, but not actually in space. It's actually on a planet. This is a planet.";
+	melee_damage_lower = 10;
+	melee_damage_upper = 20;
+	name = "fat space polar bear";
+	speed = 3
+	},
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dA" = (
@@ -1101,6 +1117,29 @@
 	melee_damage_upper = 20;
 	name = "fat space polar bear";
 	speed = 3
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/mob/living/basic/bear/snow{
+	desc = "It's a polar bear, in space, but not actually in space. It's actually on a planet. This is a planet.";
+	melee_damage_lower = 10;
+	melee_damage_upper = 20;
+	name = "fat space polar bear";
+	speed = 3
+	},
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
@@ -3663,6 +3702,22 @@
 	speed = 3;
 	wander = 0
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/bear/snow{
+	desc = "It's a polar bear, in space, but not actually in space. It's actually on a planet. This is a planet.";
+	melee_damage_lower = 10;
+	melee_damage_upper = 20;
+	name = "fat space polar bear";
+	speed = 3
+	},
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
 /turf/open/misc/asteroid/snow/snow_cabin{
 	name = "packed snow";
 	slowdown = 0
@@ -4282,6 +4337,16 @@
 	name = "Artyom";
 	speak = list("Blyat!","Rawr!","GRR!","Growl!");
 	wander = 0
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/bear/russian{
+	desc = "He'll hold the line against you!";
+	light_range = 3;
+	melee_damage_upper = 25;
+	name = "Artyom"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin{
 	floor_variance = 0;
