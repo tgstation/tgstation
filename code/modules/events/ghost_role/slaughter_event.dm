@@ -28,7 +28,7 @@
 	var/spawn_location = find_space_spawn()
 	if(!spawn_location)
 		return MAP_ERROR //This sends an error message further up.
-	var/mob/living/simple_animal/hostile/imp/slaughter/S = new(spawn_location)
+	var/mob/living/basic/demon/slaughter/S = new(spawn_location)
 	new /obj/effect/dummy/phased_mob(spawn_location, S)
 
 	player_mind.transfer_to(S)

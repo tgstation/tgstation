@@ -241,7 +241,7 @@
 
 	var/shatter_msg = span_notice("You shatter the bottle, no turning back now!")
 	var/veil_msg = span_warning("You sense a dark presence lurking just beyond the veil...")
-	var/mob/living/demon_type = /mob/living/simple_animal/hostile/imp/slaughter
+	var/mob/living/demon_type = /mob/living/basic/demon/slaughter
 	var/antag_type = /datum/antagonist/slaughter
 
 
@@ -267,7 +267,7 @@
 		to_chat(user, span_warning("The bottle's contents usually pop and boil constantly, but right now they're eerily still and calm. Perhaps you should try again later."))
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(T)
+	var/mob/living/basic/demon/slaughter/S = new demon_type(T)
 	new /obj/effect/dummy/phased_mob(T, S)
 
 	S.key = C.key
@@ -285,5 +285,5 @@
 	color = "#FF69B4" // HOT PINK
 
 	veil_msg = span_warning("You sense an adorable presence lurking just beyond the veil...")
-	demon_type = /mob/living/simple_animal/hostile/imp/slaughter/laughter
+	demon_type = /mob/living/basic/demon/slaughter/laughter
 	antag_type = /datum/antagonist/slaughter/laughter

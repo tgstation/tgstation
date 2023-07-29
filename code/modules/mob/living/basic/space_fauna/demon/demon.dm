@@ -1,6 +1,6 @@
 //////////////////Imp
 
-/mob/living/simple_animal/hostile/imp
+/mob/living/basic/demon
 	name = "imp"
 	real_name = "imp"
 	unique_name = TRUE
@@ -23,7 +23,7 @@
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
 	faction = list(FACTION_HELL)
@@ -45,7 +45,7 @@
 
 //////////////////The Man Behind The Slaughter
 
-/mob/living/simple_animal/hostile/imp/slaughter
+/mob/living/basic/demon/slaughter
 	name = "slaughter demon"
 	real_name = "slaughter demon"
 	unique_name = FALSE
@@ -78,14 +78,14 @@
 	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
 	var/wound_bonus_hitstreak_max = 12
 
-/mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload)
+/mob/living/basic/demon/slaughter/Initialize(mapload)
 	. = ..()
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/crawl = new crawl_type(src)
 	crawl.Grant(src)
 	RegisterSignals(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(on_crawl))
 
 /// Whenever we enter or exit blood crawl, reset our bonus and hitstreaks.
-/mob/living/simple_animal/hostile/imp/slaughter/proc/on_crawl(datum/source)
+/mob/living/basic/demon/slaughter/proc/on_crawl(datum/source)
 	SIGNAL_HANDLER
 
 	// Grant us a speed boost if we're on the mortal plane
@@ -100,7 +100,7 @@
 
 
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
-/mob/living/simple_animal/hostile/imp/slaughter/proc/bodyslam(atom/attack_target)
+/mob/living/basic/demon/slaughter/proc/bodyslam(atom/attack_target)
 	if(!isliving(attack_target))
 		return
 
@@ -122,7 +122,7 @@
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
 
-/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/demon/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		bodyslam(attack_target)
 		return
@@ -194,7 +194,7 @@
 /obj/item/organ/internal/heart/demon/Stop()
 	return 0 // Always beating.
 
-/mob/living/simple_animal/hostile/imp/slaughter/laughter
+/mob/living/basic/demon/slaughter/laughter
 	// The laughter demon! It's everyone's best friend! It just wants to hug
 	// them so much, it wants to hug everyone at once!
 	name = "laughter demon"
@@ -220,12 +220,12 @@
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
 
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize(mapload)
+/mob/living/basic/demon/slaughter/laughter/Initialize(mapload)
 	. = ..()
 	if(check_holidays(APRIL_FOOLS))
 		icon_state = "honkmon"
 
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
+/mob/living/basic/demon/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			investigate_log("has died from a devastating explosion.", INVESTIGATE_DEATHS)
@@ -237,6 +237,6 @@
 
 	return TRUE
 
-/mob/living/simple_animal/hostile/imp/slaughter/engine_demon
+/mob/living/basic/demon/slaughter/engine_demon
 	name = "engine demon"
 	faction = list(FACTION_HELL, FACTION_NEUTRAL)
