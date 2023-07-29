@@ -1192,3 +1192,32 @@
   - bugfix: Some explosions should be more flashy and fiery, probably.
   xPokee:
   - rscadd: Photophobia as a negative quirk.
+2023-07-29:
+  DaydreamIQ:
+  - bugfix: Birdshot AI sat now has unrestricted exit instead of entrance
+  Ghommie:
+  - rscadd: Added a 'Vending products shortage' station trait, that randomly lowers
+      the availability of all vending products from vending machines on the station,
+      with a 1/20 chance of the vending machine itself being tilted.
+  Mothblocks:
+  - qol: pAIs now try to stay within range of their owner, and teleport back only
+      when necessary
+  - qol: Default max pAI range has been changed to the maximum range you can choose
+      (9 tiles)
+  Paxilmaniac:
+  - bugfix: The anomaly research ruin is no longer missing several tiles on the inside
+      to the void
+  Sealed101:
+  - bugfix: fixed gibtonite countdown animation interrupting clicks with the mining
+      scanner
+  Senefi:
+  - bugfix: Replaced 5 space tiles in the wall of the anomaly research ruin with rocks.
+  - bugfix: Replaced the tile under the window in the mimes vs clowns ruin with plating.
+  - bugfix: Replaced space tile in the emergency fish shuttle with plastitanium flooring.
+  - bugfix: Removed space tiles from the exterior of some ruins templates.
+  Time-Green:
+  - rscadd: Adds cliffs to the north of icebox. Try not to fall of of them!
+  mc-oofert:
+  - bugfix: you can no longer fireman carry to bypass puzzle doors
+  vinylspiders:
+  - bugfix: non-opaque curtains will no longer block emissives

@@ -40,13 +40,13 @@ Housekeeping and pipe network stuff
 	//Node 3 is rest output
 	//If we flip the filter, 1 and 3 shall exchange positions
 
-	var/node1_connect = turn(dir, -180)
+	var/node1_connect = REVERSE_DIR(dir)
 	var/node2_connect = turn(dir, -90)
 	var/node3_connect = dir
 
 	if(flipped)
-		node1_connect = turn(node1_connect, 180)
-		node3_connect = turn(node3_connect, 180)
+		node1_connect = REVERSE_DIR(node1_connect)
+		node3_connect = REVERSE_DIR(node3_connect)
 
 	return list(node1_connect, node2_connect, node3_connect)
 

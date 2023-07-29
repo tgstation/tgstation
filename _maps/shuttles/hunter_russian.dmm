@@ -342,7 +342,7 @@
 	desc = "A large wood and steel-reinforced crate.";
 	name = "voytek's crate"
 	},
-/mob/living/simple_animal/hostile/bear{
+/mob/living/basic/bear{
 	desc = "A very friendly yet still extremely menacing space-bear. Comrade until the end.";
 	name = "Voytek"
 	},
