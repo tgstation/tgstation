@@ -2330,7 +2330,9 @@
 	description = "Cutting edge fishing advancements."
 	prereq_ids = list("base")
 	design_ids = list(
-		"fishing_rod_tech"
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"fish_analyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

@@ -112,6 +112,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, check_density = FALSE, category = CAT_TILES)\
 ))
 
+/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	AddComponent(/datum/component/storm_hating)
+
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
 	. += GLOB.sand_recipes
