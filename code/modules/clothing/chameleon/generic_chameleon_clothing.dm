@@ -139,6 +139,8 @@ do { \
 	BREAK_CHAMELEON_ACTION(src)
 
 /obj/item/clothing/head/chameleon/drone
+	actions_types = list(/datum/action/item_action/chameleon/change/hat, /datum/action/item_action/chameleon/drone/togglehatmask, /datum/action/item_action/chameleon/drone/randomise)
+	item_flags = DROPDEL
 	// The camohat, I mean, holographic hat projection, is part of the drone itself.
 	armor_type = /datum/armor/none
 	// which means it offers no protection, it's just air and light
@@ -148,10 +150,6 @@ do { \
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	var/datum/action/item_action/chameleon/change/hat/hat = locate() in actions
 	hat?.random_look()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.build_all_button_icons()
-	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.build_all_button_icons()
 
 // Cham mask, voice changer included
 /datum/armor/mask_chameleon
@@ -178,7 +176,6 @@ do { \
 	var/voice_change = TRUE
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	. = ..()
 	voice_change = !voice_change
 	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
 
@@ -189,9 +186,10 @@ do { \
 	BREAK_CHAMELEON_ACTION(src)
 
 /obj/item/clothing/mask/chameleon/drone
+	actions_types = list(/datum/action/item_action/chameleon/change/mask, /datum/action/item_action/chameleon/drone/togglehatmask, /datum/action/item_action/chameleon/drone/randomise)
+	item_flags = DROPDEL
 	//Same as the drone chameleon hat, undroppable and no protection
 	armor_type = /datum/armor/none
-	// Can drones use the voice changer part? Let's not find out.
 	voice_change = FALSE
 
 /obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
@@ -199,10 +197,6 @@ do { \
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	var/datum/action/item_action/chameleon/change/mask/mask = locate() in actions
 	mask?.random_look()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.build_all_button_icons()
-	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.build_all_button_icons()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
 	to_chat(user, span_notice("[src] does not have a voice changer."))

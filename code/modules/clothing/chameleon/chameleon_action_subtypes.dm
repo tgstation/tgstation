@@ -3,9 +3,9 @@
 	chameleon_name = "Neck Accessory"
 	active_type = /obj/item/clothing/neck/tie/black
 
-/datum/action/item_action/chameleon/change/neck/New(Target)
+/datum/action/item_action/chameleon/change/neck/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(/obj/item/clothing/neck/cloak/skill_reward)
-	return ..()
 
 /datum/action/item_action/chameleon/change/stamp
 	chameleon_type = /obj/item/stamp
@@ -15,9 +15,9 @@
 	chameleon_type = /obj/item/modular_computer/pda
 	chameleon_name = "Tablet"
 
-/datum/action/item_action/chameleon/change/tablet/New(Target)
+/datum/action/item_action/chameleon/change/tablet/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/tablet/update_item(obj/item/picked_item)
 	..()
@@ -51,45 +51,45 @@
 	chameleon_name = "Shoes"
 	active_type = /obj/item/clothing/shoes/sneakers/black
 
-/datum/action/item_action/chameleon/change/shoes/New(Target)
+/datum/action/item_action/chameleon/change/shoes/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(/obj/item/clothing/shoes/changeling, only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/mask
 	chameleon_type = /obj/item/clothing/mask
 	chameleon_name = "Mask"
 	active_type = /obj/item/clothing/mask/gas
 
-/datum/action/item_action/chameleon/change/mask/New(Target)
+/datum/action/item_action/chameleon/change/mask/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/hat
 	chameleon_type = /obj/item/clothing/head
 	chameleon_name = "Hat"
 	active_type = /obj/item/clothing/head/soft/black
 
-/datum/action/item_action/chameleon/change/hat/New(Target)
+/datum/action/item_action/chameleon/change/hat/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/gloves
 	chameleon_type = /obj/item/clothing/gloves
 	chameleon_name = "Gloves"
 	active_type = /obj/item/clothing/gloves/color/yellow
 
-/datum/action/item_action/chameleon/change/gloves/New(Target)
+/datum/action/item_action/chameleon/change/gloves/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/glasses
 	chameleon_type = /obj/item/clothing/glasses
 	chameleon_name = "Glasses"
 	active_type = /obj/item/clothing/glasses/meson
 
-/datum/action/item_action/chameleon/change/glasses/New(Target)
+/datum/action/item_action/chameleon/change/glasses/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(list(/obj/item/clothing/glasses/changeling, /obj/item/clothing/glasses/hud/security/chameleon, /obj/item/clothing/glasses/thermal/syndi), only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/glasses/no_preset
 	active_type = null
@@ -99,9 +99,9 @@
 	chameleon_name = "Suit"
 	active_type = /obj/item/clothing/suit/armor/vest
 
-/datum/action/item_action/chameleon/change/suit/New(Target)
+/datum/action/item_action/chameleon/change/suit/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/suit/apply_outfit(mob/user, datum/outfit/applying_from, list/all_items_to_apply)
 	. = ..()
@@ -117,9 +117,9 @@
 	chameleon_name = "Jumpsuit"
 	active_type = /obj/item/clothing/under/color/black
 
-/datum/action/item_action/chameleon/change/jumpsuit/New(Target)
+/datum/action/item_action/chameleon/change/jumpsuit/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE)
-	return ..()
 
 /datum/action/item_action/chameleon/change/id
 	chameleon_type = /obj/item/card/id/advanced
@@ -165,12 +165,12 @@
 
 	// job_outfit is going to be a path.
 	var/datum/outfit/job/job_outfit = job_datum.outfit
-	if(!job_outfit)
+	if(isnull(job_outfit))
 		return
 
 	// copied_card is also going to be a path.
 	var/obj/item/card/id/copied_card = initial(job_outfit.id)
-	if(!copied_card)
+	if(isnull(copied_card))
 		return
 
 	// If the outfit comes with a special trim override, we'll use that. Otherwise, use the card's default trim. Failing that, no trim at all.
@@ -198,6 +198,9 @@
 	if(!istype(target, /obj/item/card/id/advanced/chameleon))
 		stack_trace("Adding chameleon ID trim action to non-chameleon id ([target])")
 		qdel(src)
+
+/datum/action/item_action/chameleon/change/id_trim/initialize_blacklist()
+	return
 
 /datum/action/item_action/chameleon/change/id_trim/initialize_disguises()
 	// Little bit of copypasta but we only use trim datums rather than item paths
@@ -231,11 +234,14 @@
 	chameleon_name = "Gun"
 
 /datum/action/item_action/chameleon/change/gun/New(Target)
-	chameleon_blacklist |= typecacheof(/obj/item/gun/energy/minigun)
 	. = ..()
 	if(!istype(target, /obj/item/gun/energy/laser/chameleon))
 		stack_trace("Adding chameleon gun action to non-chameleon gun ([target])")
 		qdel(src)
+
+/datum/action/item_action/chameleon/change/gun/initialize_blacklist()
+	. = ..()
+	chameleon_blacklist |= typecacheof(/obj/item/gun/energy/minigun)
 
 /datum/action/item_action/chameleon/change/gun/update_look(obj/item/picked_item)
 	var/obj/item/gun/energy/laser/chameleon/chameleon_gun = target
@@ -269,7 +275,8 @@
 	)
 	// (Other ideas include: GPSs, PDAs, station bounced radios, holosign creators, etc. But this is good enough)
 
-/datum/action/item_action/chameleon/change/scanner/New(Target)
+/datum/action/item_action/chameleon/change/scanner/initialize_blacklist()
+	. = ..()
 	chameleon_blacklist |= typecacheof(list(
 		/obj/item/assembly/signaler/anomaly,
 		/obj/item/camera/siliconcam,
@@ -285,7 +292,6 @@
 		/obj/item/multitool/field_debug,
 		/obj/item/storage/fancy/cigarettes/cigars,
 	))
-	return ..()
 
 /datum/action/item_action/chameleon/change/scanner/initialize_disguises()
 	. = ..()

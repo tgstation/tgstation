@@ -31,6 +31,7 @@
 		qdel(src)
 		return
 
+	initialize_blacklist()
 	initialize_disguises()
 	if(active_type)
 		if(chameleon_blacklist[active_type])
@@ -72,14 +73,15 @@
 	var/datum/action/chameleon_outfit/outfit_action = locate() in remove_from.actions
 	QDEL_NULL(outfit_action)
 
+/datum/action/item_action/chameleon/change/proc/initialize_blacklist()
+	chameleon_blacklist |= typecacheof(target.type)
+
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
 	name = "Change [chameleon_name] Appearance"
 	build_all_button_icons()
 
 	LAZYINITLIST(chameleon_typecache)
 	LAZYINITLIST(chameleon_list)
-
-	chameleon_blacklist |= typecacheof(target.type)
 
 	if(!ispath(chameleon_type, /obj/item))
 		stack_trace("Non-item chameleon type defined on [type] ([chameleon_type])")
@@ -126,28 +128,47 @@
 	atom_target.name = initial(picked_item.name)
 	atom_target.desc = initial(picked_item.desc)
 	atom_target.icon_state = initial(picked_item.icon_state)
+
 	if(isitem(atom_target))
 		var/obj/item/item_target = target
 		item_target.worn_icon = initial(picked_item.worn_icon)
 		item_target.lefthand_file = initial(picked_item.lefthand_file)
 		item_target.righthand_file = initial(picked_item.righthand_file)
-		if(initial(picked_item.greyscale_colors))
-			if(initial(picked_item.greyscale_config_worn))
-				item_target.worn_icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_worn), initial(picked_item.greyscale_colors))
-			if(initial(picked_item.greyscale_config_inhand_left))
-				item_target.lefthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_left), initial(picked_item.greyscale_colors))
-			if(initial(picked_item.greyscale_config_inhand_right))
-				item_target.righthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_right), initial(picked_item.greyscale_colors))
+
 		item_target.worn_icon_state = initial(picked_item.worn_icon_state)
 		item_target.inhand_icon_state = initial(picked_item.inhand_icon_state)
+
+		if(initial(picked_item.greyscale_colors))
+			if(initial(picked_item.greyscale_config_worn))
+				item_target.worn_icon = SSgreyscale.GetColoredIconByType(
+					initial(picked_item.greyscale_config_worn),
+					initial(picked_item.greyscale_colors),
+				)
+			if(initial(picked_item.greyscale_config_inhand_left))
+				item_target.lefthand_file = SSgreyscale.GetColoredIconByType(
+					initial(picked_item.greyscale_config_inhand_left),
+					initial(picked_item.greyscale_colors),
+				)
+			if(initial(picked_item.greyscale_config_inhand_right))
+				item_target.righthand_file = SSgreyscale.GetColoredIconByType(
+					initial(picked_item.greyscale_config_inhand_right),
+					initial(picked_item.greyscale_colors),
+				)
+
+		item_target.flags_inv = initial(picked_item.flags_inv)
+		item_target.transparent_protection = initial(picked_item.transparent_protection)
 		if(isclothing(item_target) && ispath(picked_item, /obj/item/clothing))
 			var/obj/item/clothing/clothing_target = item_target
 			var/obj/item/clothing/picked_clothing = picked_item
 			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
-		item_target.flags_inv = initial(picked_item.flags_inv)
-		item_target.transparent_protection = initial(picked_item.transparent_protection)
+
+
 	if(initial(picked_item.greyscale_config) && initial(picked_item.greyscale_colors))
-		atom_target.icon = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config), initial(picked_item.greyscale_colors))
+		atom_target.icon = SSgreyscale.GetColoredIconByType(
+			initial(picked_item.greyscale_config),
+			initial(picked_item.greyscale_colors),
+		)
+
 	else
 		atom_target.icon = initial(picked_item.icon)
 

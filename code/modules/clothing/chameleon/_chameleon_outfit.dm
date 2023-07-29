@@ -33,11 +33,9 @@
 
 /datum/action/chameleon_outfit/Trigger(trigger_flags)
 	. = ..()
-	if(!.)
+	if(!. || applying)
 		return
 	if(usr != owner) // i guess
-		return
-	if(applying)
 		return
 	applying = TRUE
 
