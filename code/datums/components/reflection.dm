@@ -47,6 +47,7 @@
 	reflection_holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	if(reflection_filter)
 		reflection_holder.add_filter("reflection", 1, reflection_filter)
+	mov_parent.vis_contents += reflection_holder
 
 	set_reflection(new_dir = mov_parent.dir)
 
