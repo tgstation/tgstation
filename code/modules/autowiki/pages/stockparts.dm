@@ -2,29 +2,27 @@
 /datum/autowiki/stock_parts
 	page = "Template:Autowiki/Content/StockParts"
 
+	var/list/battery_whitelist = list(
+	/obj/item/stock_parts/cell,
+	/obj/item/stock_parts/cell/high,
+	/obj/item/stock_parts/cell/super,
+	/obj/item/stock_parts/cell/hyper,
+	/obj/item/stock_parts/cell/bluespace)
+
 /datum/autowiki/stock_parts/generate()
 	var/output = ""
 
 	for(var/part_type in subtypesof(/obj/item/stock_parts))
-		if(part_type == /obj/item/stock_parts/subspace)
+		var/obj/item/stock_parts/type_to_check = part_type
+		if(initial(type_to_check.abstract_type) == part_type)
 			continue
-
-		// Battery cells have a million variants we don't care about
-		// All other battery types could possibly be put in another list?
-		// As it is, power cells are barely stock parts with how much extra functionality they have
-		if(ispath(part_type, /obj/item/stock_parts/cell))
-			switch(part_type)
-				if(/obj/item/stock_parts/cell)
-				if(/obj/item/stock_parts/cell/high)
-				if(/obj/item/stock_parts/cell/super)
-				if(/obj/item/stock_parts/cell/hyper)
-				if(/obj/item/stock_parts/cell/bluespace)
-				else
-					continue
 
 		var/obj/item/stock_parts/stock_part = new part_type()
 
 		var/datum/design/recipe = find_design(stock_part)
+
+		if(!recipe)
+			continue
 
 		var/datum/techweb_node/required_node = find_research(recipe)
 
