@@ -132,3 +132,46 @@
 	icon_state = "bolter_wrench"
 	inhand_icon_state = "bolter_wrench"
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/wrench/tile_remover
+	name = "Big Slappy"
+	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
+	icon_state = "giant_wrench"
+	icon = 'icons/obj/giant_wrench.dmi'
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	toolspeed = 0.2
+	force = 25
+	throwforce = 20
+	block_chance = 30
+	throw_range = 2
+	demolition_mod = 2
+	armor_type = /datum/armor/tile_remover
+	resistance_flags = FIRE_PROOF
+	wound_bonus = -10
+	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
+	attack_verb_simple = list("bonks", "bludgeons", "pounds")
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
+	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
+
+/datum/armor/tile_remover
+	acid = 30
+	bomb = 100
+	bullet = 30
+	fire = 100
+	laser = 30
+	melee = 30
+
+/obj/item/wrench/tile_remover/Initialize(mapload)
+	. = ..()
+	transform = transform.Translate(-16, -16)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/tile_remover, TRUE)
