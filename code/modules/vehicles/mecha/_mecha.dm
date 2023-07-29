@@ -446,7 +446,7 @@
 		else
 			. += span_warning("It's missing micro-servo.")
 		if(capacitor)
-			. += span_notice("Capacitor increases armor against energy attacks by [capacitor * 5].")
+			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
 		else
 			. += span_warning("It's missing capacitor.")
 		if(!scanmod)
