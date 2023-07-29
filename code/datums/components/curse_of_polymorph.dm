@@ -26,9 +26,11 @@
 ///signal called from equipping parent
 /datum/component/curse_of_polymorph/proc/on_equip(datum/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
-	var/obj/item/at_least_item = parent
+	var/obj/item/polymorpher_item = parent
 	// Items with no slot flags curse on pickup (because hand slot)
-	if(at_least_item.slot_flags && !(at_least_item.slot_flags & slot))
+	if(polymorpher_item.slot_flags && !(polymorpher_item.slot_flags & slot))
 		return
-	equipper.wabbajack(polymorph_type)
+	ASYNC
+		equipper.dropItemToGround(polymorpher_item, TRUE)
+		equipper.wabbajack(polymorph_type)
 
