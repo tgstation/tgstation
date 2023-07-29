@@ -228,7 +228,7 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 	var/list/raw_colors = splittext(colorString, "#")
 	var/new_split_colors = list()
 	for(var/index in 2 to length(raw_colors))
-		var/color = "[raw_colors[index]]"
+		var/color = "#[raw_colors[index]]"
 		if(!findtext(color, GLOB.is_color))
 			return FALSE
 		new_split_colors += color
