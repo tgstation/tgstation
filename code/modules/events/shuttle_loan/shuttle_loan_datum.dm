@@ -118,7 +118,7 @@
 	spawn_list.Add(/obj/structure/closet/crate/hydroponics)
 
 	for(var/i in 1 to 8)
-		spawn_list.Add(/mob/living/simple_animal/hostile/bee/toxin)
+		spawn_list.Add(/mob/living/basic/bee/toxin)
 
 	for(var/i in 1 to 5)
 		var/decal = pick(/obj/effect/decal/cleanable/blood, /obj/effect/decal/cleanable/insectguts)
@@ -180,11 +180,11 @@
 
 	spawn_list.Add(/mob/living/basic/syndicate/russian)
 	spawn_list.Add(/mob/living/basic/syndicate/russian/ranged) //drops a mateba
-	spawn_list.Add(/mob/living/simple_animal/hostile/bear/russian)
+	spawn_list.Add(/mob/living/basic/bear/russian)
 	if(prob(75))
 		spawn_list.Add(/mob/living/basic/syndicate/russian)
 	if(prob(50))
-		spawn_list.Add(/mob/living/simple_animal/hostile/bear/russian)
+		spawn_list.Add(/mob/living/basic/bear/russian)
 
 /datum/shuttle_loan_situation/spider_gift
 	sender = "CentCom Diplomatic Corps"
