@@ -9,6 +9,7 @@ import { JobsPage } from './JobsPage';
 import { MainPage } from './MainPage';
 import { SpeciesPage } from './SpeciesPage';
 import { QuirksPage } from './QuirksPage';
+import { VoicePage } from './VoicePage'; // BANDASTATION EDIT ADD - TTS
 
 enum Page {
   Antags,
@@ -16,6 +17,8 @@ enum Page {
   Jobs,
   Species,
   Quirks,
+  // BANDASTATION EDIT ADD - TTS
+  Voice,
 }
 
 const CharacterProfiles = (props: {
@@ -75,6 +78,10 @@ export const CharacterPreferenceWindow = (props, context) => {
       break;
     case Page.Quirks:
       pageContents = <QuirksPage />;
+      break;
+    // BANDASTATION EDIT ADD - TTS
+    case Page.Voice:
+      pageContents = <VoicePage />;
       break;
     default:
       exhaustiveCheck(currentPage);
@@ -146,6 +153,17 @@ export const CharacterPreferenceWindow = (props, context) => {
                   Quirks
                 </PageButton>
               </Stack.Item>
+
+              {Boolean(data.tts_enabled) && ( // BANDASTATION EDIT - TTS
+                <Stack.Item grow>
+                  <PageButton
+                    currentPage={currentPage}
+                    page={Page.Voice}
+                    setPage={setCurrentPage}>
+                    Voice
+                  </PageButton>
+                </Stack.Item>
+              )}
             </Stack>
           </Stack.Item>
 

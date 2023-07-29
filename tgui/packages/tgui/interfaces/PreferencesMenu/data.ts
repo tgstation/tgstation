@@ -142,6 +142,7 @@ export type PreferencesMenuData = {
       gender: Gender;
       joblessrole: JoblessRole;
       species: string;
+      tts_seed: string; // BANDASTATION EDIT ADD - TTS
     };
 
     randomization: Record<string, RandomSetting>;
