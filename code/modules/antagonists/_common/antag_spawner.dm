@@ -267,14 +267,14 @@
 		to_chat(user, span_warning("The bottle's contents usually pop and boil constantly, but right now they're eerily still and calm. Perhaps you should try again later."))
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/mob/living/basic/demon/slaughter/S = new demon_type(T)
+	var/mob/living/basic/demon/slaughter/spawned = new demon_type(T)
 	new /obj/effect/dummy/phased_mob(T, S)
 
-	S.key = C.key
-	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
-	S.mind.special_role = ROLE_SLAUGHTER_DEMON
-	S.mind.add_antag_datum(antag_type)
-	to_chat(S, span_bold("You are currently not currently in the same plane of existence as the station. \
+	spawned.key = C.key
+	spawned.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+	spawned.mind.special_role = ROLE_SLAUGHTER_DEMON
+	spawned.mind.add_antag_datum(antag_type)
+	to_chat(spawned, span_bold("You are currently not currently in the same plane of existence as the station. \
 		Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
 
 /obj/item/antag_spawner/slaughter_demon/laughter
