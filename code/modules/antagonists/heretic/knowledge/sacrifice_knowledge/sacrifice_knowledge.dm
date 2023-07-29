@@ -195,7 +195,8 @@
 		feedback += " <i>graciously</i>"
 
 	if(IS_HERETIC(sacrifice))
-		explosion(sacrifice, devastation_range = 10) // it's a placeholder where you most probably should to place your proc to not break everything
+		var/datum/antagonist/heretic/victim = sacrifice.mind?.has_antag_datum(/datum/antagonist/heretic)
+		victim.knowledge_points -= 3
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	heretic_datum.total_sacrifices++
@@ -446,7 +447,10 @@
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_return_live_target(mob/living/carbon/human/sac_target)
 	to_chat(sac_target, span_hypnophrase("The fight is over, but at great cost. You have been returned to the station in one piece."))
-	to_chat(sac_target, span_big(span_hypnophrase("You don't remember anything leading up to the experience - All you can think about are those horrific hands...")))
+	if(IS_HERETIC(sac_target))
+		to_chat(sac_target, span_big(span_hypnophrase("You don't remember anything leading up to the experience, but you feel your connection with the Mansus weakened - knowledge once known, forgotten...")))
+	else
+		to_chat(sac_target, span_big(span_hypnophrase("You don't remember anything leading up to the experience - All you can think about are those horrific hands...")))
 
 	// Oh god where are we?
 	sac_target.flash_act()
