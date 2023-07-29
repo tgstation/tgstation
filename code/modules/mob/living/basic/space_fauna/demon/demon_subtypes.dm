@@ -11,7 +11,8 @@
 	minimum_survivable_temperature = TCMB
 
 	// slaughter demons are specifically intended to have low melee damage, but as they hit and build up their killstreak
-	// they derive their sheer power via inflicting wounds on their targets, which builds higher and higher through the killstreak they build up.
+	// their wound bonuses grow and grow higher. this is how they're able to efficiently kill and slaughter their victims.
+	// consider this before you balance them.
 	obj_damage = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
