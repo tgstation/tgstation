@@ -12,6 +12,7 @@
 #include "crawl_speed/_crawl_speed.dme"
 #include "cyrillic_fixes/_cyrillic_fixes.dme"
 #include "discord/_discord.dme"
+#include "emote_panel/_emote_panel.dme"
 #include "events/_events.dme"
 #include "gunhud/_gunhud.dme"
 #include "keybindings/_keybindings.dme"
