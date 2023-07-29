@@ -632,17 +632,19 @@
 /**
  * React to an EMP of the given severity
  *
- * Default behaviour is to send the [COMSIG_ATOM_EMP_ACT] signal
+ * Default behaviour is to send the [COMSIG_ATOM_PRE_EMP_ACT] and [COMSIG_ATOM_EMP_ACT] signal
  *
- * If the signal does not return protection, and there are attached wires then we call
+ * If the pre-signal does not return protection, and there are attached wires then we call
  * [emp_pulse][/datum/wires/proc/emp_pulse] on the wires
  *
  * We then return the protection value
  */
 /atom/proc/emp_act(severity)
-	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
+	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_PRE_EMP_ACT, severity)
 	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity, protection)
 	return protection // Pass the protection value collected here upwards
 
 /**
@@ -983,7 +985,7 @@
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
 	if(harmed_atom && isturf(harmed_atom.loc))
-		step(harmed_atom, turn(harmed_atom.dir, 180))
+		step(harmed_atom, REVERSE_DIR(harmed_atom.dir))
 
 ///Handle the atom being slipped over
 /atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, force_drop)

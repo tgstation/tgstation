@@ -337,3 +337,9 @@
 #define BB_CURRENT_HOME "BB_current_home"
 ///the hydro we will pollinate
 #define BB_TARGET_HYDRO "BB_target_hydro"
+
+///bear keys
+///the hive with honey that we will steal from
+#define BB_FOUND_HONEY "BB_found_honey"
+///the tree that we will climb
+#define BB_CLIMBED_TREE "BB_climbed_tree"

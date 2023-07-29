@@ -216,7 +216,7 @@
 			if(eyes.overlay_ignore_lighting)
 				eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha)
 				eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha)
-			else if(blocks_emissive)
+			else if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				var/atom/location = loc || owner || src
 				eye_left.overlays += emissive_blocker(eye_left.icon, eye_left.icon_state, location, alpha = eye_left.alpha)
 				eye_right.overlays += emissive_blocker(eye_right.icon, eye_right.icon_state, location, alpha = eye_right.alpha)

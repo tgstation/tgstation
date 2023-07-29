@@ -99,7 +99,7 @@
 	// If they don't, we'll make them wrap all the way around to the other side of the grid
 	for(var/direction in GLOB.cardinals)
 		var/dir = "[direction]"
-		var/inverse = "[turn(direction, 180)]"
+		var/inverse = "[REVERSE_DIR(direction)]"
 		for(var/datum/space_level/level as anything in transition_levels)
 			// If we have something in this dir that isn't just us, continue on
 			if(level.neigbours[dir] && level.neigbours[dir] != level)

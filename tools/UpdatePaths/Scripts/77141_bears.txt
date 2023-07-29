@@ -1,0 +1,6 @@
+/mob/living/simple_animal/hostile/bear : /mob/living/basic/bear{@OLD;wander=@SKIP;speak=@SKIP}
+/mob/living/simple_animal/hostile/bear/butter : /mob/living/basic/bear/butter{@OLD;wander=@SKIP;speak=@SKIP}
+/mob/living/simple_animal/hostile/bear/hudson : /mob/living/basic/bear/hudson{@OLD;wander=@SKIP;speak=@SKIP}
+/mob/living/simple_animal/hostile/bear/fightpit : /mob/living/basic/bear/fightpit{@OLD;wander=@SKIP;speak=@SKIP}
+/mob/living/simple_animal/hostile/bear/russian : /mob/living/basic/bear/russian{@OLD;wander=@SKIP;speak=@SKIP}
+/mob/living/simple_animal/hostile/bear/snow : /mob/living/basic/bear/snow{@OLD;wander=@SKIP;speak=@SKIP}

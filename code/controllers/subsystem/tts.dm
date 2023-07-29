@@ -107,6 +107,9 @@ SUBSYSTEM_DEF(tts)
 
 	var/channel = SSsounds.random_available_channel()
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
+		if(QDELING(listening_mob))
+			stack_trace("TTS tried to play a sound to a deleted mob.")
+			continue
 		var/volume_to_play_at = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts_volume)
 		var/tts_pref = listening_mob.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
 		if(volume_to_play_at == 0 || (tts_pref == TTS_SOUND_OFF))
