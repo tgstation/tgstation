@@ -90,7 +90,7 @@
 	log_combat(src, victim, "slaughter slammed")
 
 /// Proc that we execute on attacking someone to keep track of our hitstreaks and wound bonuses. Also handles bodyslamming.
-/mob/living/basic/demon/slaughter/proc/on_attack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/demon/slaughter/proc/on_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
