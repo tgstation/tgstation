@@ -32,9 +32,15 @@
 /obj/item/clothing/suit/armor/apply_fantasy_bonuses(bonus)
 	. = ..()
 	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
 
 /obj/item/clothing/suit/armor/remove_fantasy_bonuses(bonus)
 	slowdown = reset_fantasy_variable("slowdown", slowdown)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
 	return ..()
 
 /obj/item/clothing/suit/armor/vest

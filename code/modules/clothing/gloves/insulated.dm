@@ -18,10 +18,10 @@
 /obj/item/clothing/gloves/color/yellow/apply_fantasy_bonuses(bonus)
 	. = ..()
 	if(bonus >= 10)
-		clothing_traits -= TRAIT_CHUNKYFINGERS
+		detach_clothing_traits(TRAIT_CHUNKYFINGERS)
 
 /obj/item/clothing/gloves/color/yellow/remove_fantasy_bonuses(bonus)
-	clothing_traits |= TRAIT_CHUNKYFINGERS
+	attach_clothing_traits(TRAIT_CHUNKYFINGERS)
 	return ..()
 
 /datum/armor/color_yellow
