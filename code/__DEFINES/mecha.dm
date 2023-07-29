@@ -4,8 +4,8 @@
 #define MECHA_CABIN_AIR_BREACH (1<<3)
 #define MECHA_INT_CONTROL_LOST (1<<4)
 
-#define ADDING_ACCESS_POSSIBLE (1<<0)
-#define ADDING_MAINT_ACCESS_POSSIBLE (1<<1)
+#define PANEL_OPEN (1<<0)
+#define ID_LOCK_ON (1<<1)
 #define CANSTRAFE (1<<2)
 #define LIGHTS_ON (1<<3)
 #define SILICON_PILOT (1<<4)
@@ -33,11 +33,6 @@
 #define MECHA_UTILITY "mecha_utility"
 #define MECHA_POWER "mecha_power"
 #define MECHA_ARMOR "mecha_armor"
-
-#define MECHA_LOCKED 0
-#define MECHA_SECURE_BOLTS 1
-#define MECHA_LOOSE_BOLTS 2
-#define MECHA_OPEN_HATCH 3
 
 // Some mechs must (at least for now) use snowflake handling of their UI elements, these defines are for that
 // when changing MUST update the same-named tsx file constants

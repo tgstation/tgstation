@@ -25,6 +25,15 @@
 	else
 		capacitor = new /obj/item/stock_parts/capacitor(src)
 
+///Adds a servo, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
+/obj/vehicle/sealed/mecha/proc/add_servo(obj/item/stock_parts/servo/new_servo)
+	QDEL_NULL(servo)
+	if(new_servo)
+		new_servo.forceMove(src)
+		servo = new_servo
+	else
+		servo = new /obj/item/stock_parts/servo(src)
+
 ///////////////////////
 ///// Power stuff /////
 ///////////////////////

@@ -219,17 +219,18 @@
 		return
 
 	if(W.GetID())
-		if((mecha_flags & ADDING_ACCESS_POSSIBLE) || (mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE))
-			if(internals_access_allowed(user))
-				ui_interact(user)
-				return
-			to_chat(user, span_warning("Invalid ID: Access denied."))
+		if(!allowed(user))
+			if(mecha_flags & ID_LOCK_ON)
+				to_chat(user, span_warning("Invalid ID: Access denied."))
+			else
+				to_chat(user, span_warning("Invalid ID: Unable to set ID lock."))
 			return
-		to_chat(user, span_warning("Maintenance protocols disabled by operator."))
+		mecha_flags ^= ID_LOCK_ON
+		to_chat(user, span_warning("ID lock [mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"]."))
 		return
 
 	if(istype(W, /obj/item/stock_parts/cell))
-		if(construction_state == MECHA_OPEN_HATCH)
+		if(mecha_flags & PANEL_OPEN)
 			if(!cell)
 				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
@@ -243,7 +244,7 @@
 		return
 
 	if(istype(W, /obj/item/stock_parts/scanning_module))
-		if(construction_state == MECHA_OPEN_HATCH)
+		if(mecha_flags & PANEL_OPEN)
 			if(!scanmod)
 				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
@@ -257,7 +258,7 @@
 		return
 
 	if(istype(W, /obj/item/stock_parts/capacitor))
-		if(construction_state == MECHA_OPEN_HATCH)
+		if(mecha_flags & PANEL_OPEN)
 			if(!capacitor)
 				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
@@ -268,6 +269,20 @@
 				update_part_values()
 			else
 				to_chat(user, span_warning("There's already a capacitor installed!"))
+		return
+
+	if(istype(W, /obj/item/stock_parts/servo))
+		if(mecha_flags & PANEL_OPEN)
+			if(!servo)
+				if(!user.transferItemToLoc(W, src, silent = FALSE))
+					return
+				to_chat(user, span_notice("You install the micro-servo."))
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+				servo = W
+				log_message("[W] installed", LOG_MECHA)
+				update_part_values()
+			else
+				to_chat(user, span_warning("There's already a micro-servo installed!"))
 		return
 
 	if(istype(W, /obj/item/mecha_parts))
@@ -302,27 +317,24 @@
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	.=..()
-	if(construction_state > MECHA_LOCKED)
-		switch(construction_state)
-			if(MECHA_SECURE_BOLTS)
-				. += span_notice("Use a <b>wrench</b> to adjust bolts securing the cover.")
-			if(MECHA_LOOSE_BOLTS)
-				. += span_notice("Use a <b>crowbar</b> to unlock the hatch to the power unit.")
-			if(MECHA_OPEN_HATCH)
-				. += span_notice("Use <b>interface</b> to eject stock parts from the mech.")
+	if(mecha_flags & PANEL_OPEN)
+		. += span_notice("The panel is open. You could use a <b>crowbar</b> to eject parts or lock the panel back with a <b>screwdriver</b>.")
+	else
+		. += span_notice("You could unlock the maintenance cover with a <b>screwdriver</b>.")
 
-/obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/tool)
+/obj/vehicle/sealed/mecha/screwdriver_act(mob/living/user, obj/item/tool)
 	..()
 	. = TRUE
-	if(construction_state == MECHA_SECURE_BOLTS)
-		construction_state = MECHA_LOOSE_BOLTS
-		to_chat(user, span_notice("You undo the securing bolts."))
-		tool.play_tool_sound(src)
+	if(!(mecha_flags & PANEL_OPEN) && (mecha_flags & ID_LOCK_ON) && !allowed(user))
+		balloon_alert(user, "access denied!")
 		return
-	if(construction_state == MECHA_LOOSE_BOLTS)
-		construction_state = MECHA_SECURE_BOLTS
-		to_chat(user, span_notice("You tighten the securing bolts."))
-		tool.play_tool_sound(src)
+	mecha_flags ^= PANEL_OPEN
+	if(mecha_flags & PANEL_OPEN)
+		to_chat(user, span_notice("You undo the maintenance panel screws."))
+	else
+		to_chat(user, span_notice("You tighten the maintenance panel screws."))
+	tool.play_tool_sound(src)
+	return
 
 /obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/tool)
 	..()
@@ -331,15 +343,29 @@
 		var/obj/item/crowbar/mechremoval/remover = tool
 		remover.empty_mech(src, user)
 		return
-	if(construction_state == MECHA_LOOSE_BOLTS)
-		construction_state = MECHA_OPEN_HATCH
-		to_chat(user, span_notice("You open the hatch to the power unit."))
+	if(!(mecha_flags ^= PANEL_OPEN))
+		balloon_alert(user, "open the cover first!")
+		return
+
+	var/list/stock_parts = list()
+	if(cell)
+		stock_parts += cell
+	if(scanmod)
+		stock_parts += scanmod
+	if(capacitor)
+		stock_parts += capacitor
+	if(servo)
+		stock_parts += servo
+
+	if(length(stock_parts))
+		var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)
+		if(!(locate(part_to_remove) in contents))
+			return
+		usr.put_in_hands(part_to_remove)
+		CheckParts()
 		tool.play_tool_sound(src)
 		return
-	if(construction_state == MECHA_OPEN_HATCH)
-		construction_state = MECHA_LOOSE_BOLTS
-		to_chat(user, span_notice("You close the hatch to the power unit."))
-		tool.play_tool_sound(src)
+	balloon_alert(user, "no parts!")
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	if(user.combat_mode)

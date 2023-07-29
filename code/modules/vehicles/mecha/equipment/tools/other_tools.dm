@@ -379,6 +379,7 @@
 	icon_state = "thrusters"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
+	active_label = "Thrusters"
 	var/effect_type = /obj/effect/particle_effect/sparks
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)

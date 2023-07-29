@@ -73,7 +73,7 @@
 	process_pump()
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/process_cabin_pressure(seconds_per_tick)
-	if(!chassis.cabin_sealed)
+	if(!chassis.cabin_sealed || !active)
 		return
 	var/datum/gas_mixture/external_air = chassis.loc.return_air()
 	var/datum/gas_mixture/tank_air = internal_tank.return_air()

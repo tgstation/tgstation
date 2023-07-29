@@ -53,12 +53,11 @@
 	var/obj/item/stock_parts/scanning_module/scanmod
 	/// Keeps track of the mech's capacitor
 	var/obj/item/stock_parts/capacitor/capacitor
-	///Whether the mechs maintenance protocols are on or off
-	var/construction_state = MECHA_LOCKED
+	/// Keeps track of the mech's servo motor
+	var/obj/item/stock_parts/servo/servo
 	///Contains flags for the mecha
-	var/mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
-	///Stores the DNA enzymes of a carbon so tht only they can access the mech
-	var/dna_lock
+	var/mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+
 	///Spark effects are handled by this datum
 	var/datum/effect_system/spark_spread/spark_system
 	///How powerful our lights are
@@ -100,10 +99,12 @@
 	/// damage threshold above which we take component damage
 	var/component_damage_threshold = 10
 
-	///required access level for mecha operation
-	var/list/operation_req_access = list()
-	///required access to change internal components
-	var/list/internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE)
+	///Stores the DNA enzymes of a carbon so tht only they can access the mech
+	var/dna_lock
+	/// A list of all granted accesses
+	var/list/accesses = list()
+	/// If the mech should require ALL or only ONE of the listed accesses
+	var/one_access = TRUE
 
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
@@ -228,6 +229,8 @@
 	add_cell()
 	add_scanmod()
 	add_capacitor()
+	add_servo()
+	update_access()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
@@ -275,6 +278,7 @@
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)
 	QDEL_NULL(capacitor)
+	QDEL_NULL(servo)
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
@@ -407,15 +411,16 @@
 	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
-	. = ..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
 	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
 	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
+	servo = locate(/obj/item/stock_parts/servo) in contents
 	update_part_values()
+	return ..()
 
 /obj/vehicle/sealed/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
-	if(scanmod)
-		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+	if(servo)
+		normal_step_energy_drain = 20 - (5 * servo.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
 		step_energy_drain = normal_step_energy_drain
 	else
 		normal_step_energy_drain = 500
@@ -583,9 +588,6 @@
 		return
 	if(user.incapacitated())
 		return
-	if(construction_state)
-		balloon_alert(user, "end maintenance first!")
-		return
 	if(!get_charge())
 		return
 	if(src == target)
@@ -656,22 +658,6 @@
 
 	var/image/mech_speech = image('icons/mob/effects/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), mech_speech, speech_bubble_recipients, 3 SECONDS)
-
-
-/////////////////////////
-////// Access stuff /////
-/////////////////////////
-
-/obj/vehicle/sealed/mecha/proc/operation_allowed(mob/M)
-	req_access = operation_req_access
-	req_one_access = list()
-	return allowed(M)
-
-/obj/vehicle/sealed/mecha/proc/internals_access_allowed(mob/M)
-	req_one_access = internals_req_access
-	req_access = list()
-	return allowed(M)
-
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -752,3 +738,8 @@
 	for(var/occupant in occupants)
 		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 	return COMPONENT_BLOCK_LIGHT_EATER
+
+/// Apply corresponding accesses
+/obj/vehicle/sealed/mecha/proc/update_access()
+	req_access = one_access ? list() : accesses
+	req_one_access = one_access ? accesses : list()

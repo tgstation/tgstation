@@ -6,7 +6,7 @@
 	allow_diagonal_movement = TRUE
 	movedelay = 3
 	max_integrity = 250
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_gygax
 	max_temperature = 25000
 	leg_overload_coeff = 80
@@ -71,10 +71,9 @@
 	max_temperature = 35000
 	leg_overload_coeff = 70
 	force = 30
-	operation_req_access = list(ACCESS_SYNDICATE)
-	internals_req_access = list(ACCESS_SYNDICATE)
+	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
-	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
@@ -112,3 +111,6 @@
 
 /obj/vehicle/sealed/mecha/gygax/dark/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
+
+/obj/vehicle/sealed/mecha/gygax/dark/add_servo()
+	servo = new /obj/item/stock_parts/servo/femto(src)

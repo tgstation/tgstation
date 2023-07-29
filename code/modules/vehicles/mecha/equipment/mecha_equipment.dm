@@ -19,7 +19,7 @@
 	///Whether the module is currently active
 	var/active = TRUE
 	///Label used in the ui next to the Activate/Enable/Disable buttons
-	var/active_label = "Activity"
+	var/active_label = "Status"
 	///Chassis power cell quantity used on activation
 	var/energy_drain = 0
 	///Reference to mecha that this equipment is currently attached to
@@ -190,6 +190,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
+	playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
 	LAZYREMOVE(chassis.flat_equipment, src)
 	var/to_unequip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)

@@ -45,8 +45,7 @@
 	data["sheet_material_amount"] = SHEET_MATERIAL_AMOUNT
 	//map of relevant flags to check tgui side, not every flag needs to be here
 	data["mechflag_keys"] = list(
-		"ADDING_ACCESS_POSSIBLE" = ADDING_ACCESS_POSSIBLE,
-		"ADDING_MAINT_ACCESS_POSSIBLE" = ADDING_MAINT_ACCESS_POSSIBLE,
+		"ID_LOCK_ON" = ID_LOCK_ON,
 		"LIGHTS_ON" = LIGHTS_ON,
 		"HAS_LIGHTS" = HAS_LIGHTS,
 	)
@@ -57,36 +56,22 @@
 		"MECHA_INT_CONTROL_LOST" = MECHA_INT_CONTROL_LOST,
 		"MECHA_INT_SHORT_CIRCUIT" = MECHA_INT_SHORT_CIRCUIT,
 	)
+
+	var/list/regions = list()
+	var/list/tgui_region_data = SSid_access.all_region_access_tgui
+	for(var/region in SSid_access.station_regions)
+		regions += tgui_region_data[region]
+	data["regions"] = regions
 	return data
 
 /obj/vehicle/sealed/mecha/ui_data(mob/user)
 	var/list/data = list()
 	var/isoperator = (user in occupants) //maintenance mode outside of mech
 	data["isoperator"] = isoperator
-	if(!isoperator)
-		data["name"] = name
-		data["mecha_flags"] = mecha_flags
-		data["cell"] = cell?.name
-		data["scanning"] = scanmod?.name
-		data["capacitor"] = capacitor?.name
-		data["operation_req_access"] = list()
-		data["idcard_access"] = list()
-		for(var/code in operation_req_access)
-			data["operation_req_access"] += list(list("name" = SSid_access.get_access_desc(code), "number" = code))
-		if(!isliving(user))
-			return data
-		var/mob/living/living_user = user
-		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
-		if(!card)
-			return data
-		for(var/idcode in card.access)
-			if(idcode in operation_req_access)
-				continue
-			var/accessname = SSid_access.get_access_desc(idcode)
-			if(!accessname)
-				continue //there's some strange access without a name
-			data["idcard_access"] += list(list("name" = accessname, "number" = idcode))
-		return data
+	data["cell"] = cell?.name
+	data["scanning"] = scanmod?.name
+	data["capacitor"] = capacitor?.name
+	data["servo"] = servo?.name
 	ui_view.appearance = appearance
 	data["name"] = name
 	data["integrity"] = atom_integrity/max_integrity
@@ -94,7 +79,12 @@
 	data["power_max"] = cell?.maxcharge
 	data["mecha_flags"] = mecha_flags
 	data["internal_damage"] = internal_damage
+
 	data["dna_lock"] = dna_lock
+
+	data["one_access"] = one_access
+	data["accesses"] = accesses
+
 	data["weapons_safety"] = weapons_safety
 	data["enclosed"] = enclosed
 	data["cabin_sealed"] = cabin_sealed
@@ -146,60 +136,36 @@
 	. = ..()
 	if(.)
 		return
-	if(!(usr in occupants))
-		switch(action)
-			if("stopmaint")
-				if(construction_state > MECHA_LOCKED)
-					to_chat(usr, span_warning("You must end Maintenance Procedures first!"))
-					return
-				mecha_flags &= ~ADDING_MAINT_ACCESS_POSSIBLE
-				ui.close()
-				return FALSE
-			if("togglemaint")
-				if(!(mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE))
-					return FALSE
-				if(construction_state == MECHA_LOCKED)
-					construction_state = MECHA_SECURE_BOLTS
-					to_chat(usr, span_notice("The securing bolts are now exposed."))
-				else if(construction_state == MECHA_SECURE_BOLTS)
-					construction_state = MECHA_LOCKED
-					to_chat(usr, span_notice("The securing bolts are now hidden."))
-			if("drop_cell")
-				if(construction_state != MECHA_OPEN_HATCH)
-					return
-				usr.put_in_hands(cell)
-				cell = null
-			if("drop_scanning")
-				if(construction_state != MECHA_OPEN_HATCH)
-					return
-				usr.put_in_hands(scanmod)
-				scanmod = null
-			if("drop_capacitor")
-				if(construction_state != MECHA_OPEN_HATCH)
-					return
-				usr.put_in_hands(capacitor)
-				capacitor = null
-			if("add_req_access")
-				if(!(mecha_flags & ADDING_ACCESS_POSSIBLE))
-					return
-				if(!(params["added_access"] == "all"))
-					operation_req_access += params["added_access"]
-				else
-					var/mob/living/living_user = usr
-					var/obj/item/card/id/card = living_user.get_idcard(TRUE)
-					operation_req_access += card.access
-			if("del_req_access")
-				if(!(mecha_flags & ADDING_ACCESS_POSSIBLE))
-					return
-				if(!(params["removed_access"] == "all"))
-					operation_req_access -= params["removed_access"]
-				else
-					operation_req_access = list()
-			if("lock_req_edit")
-				mecha_flags &= ~ADDING_ACCESS_POSSIBLE
-		return TRUE
-	//usr is in occupants
 	switch(action)
+		if("clear_all")
+			accesses = list()
+			one_access = 0
+			update_access()
+		if("grant_all")
+			accesses = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
+			update_access()
+		if("one_access")
+			one_access = !one_access
+			update_access()
+		if("set")
+			var/access = params["access"]
+			if (!(access in accesses))
+				accesses += access
+			else
+				accesses -= access
+			update_access()
+		if("grant_region")
+			var/region = params["region"]
+			if(isnull(region))
+				return
+			accesses |= SSid_access.get_region_access_list(list(region))
+			update_access()
+		if("deny_region")
+			var/region = params["region"]
+			if(isnull(region))
+				return
+			accesses -= SSid_access.get_region_access_list(list(region))
+			update_access()
 		if("select_module")
 			ui_selected_module_index = text2num(params["index"])
 			return TRUE
@@ -232,13 +198,8 @@
 		if("view_dna")
 			tgui_alert(usr, "Enzymes detected: " + dna_lock)
 			return FALSE
-		if("toggle_maintenance")
-			if(construction_state)
-				to_chat(occupants, "[icon2html(src, occupants)][span_danger("Maintenance protocols in effect")]")
-				return
-			mecha_flags ^= ADDING_MAINT_ACCESS_POSSIBLE
-		if("toggle_id_panel")
-			mecha_flags ^= ADDING_ACCESS_POSSIBLE
+		if("toggle_id_lock")
+			mecha_flags ^= ID_LOCK_ON
 		if("repair_int_damage")
 			ui.close() //if doing this you're likely want to watch for bad people so close the UI
 			try_repair_int_damage(usr, params["flag"])

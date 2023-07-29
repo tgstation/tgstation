@@ -34,6 +34,7 @@ export type MaintData = {
   cell: string;
   scanning: string;
   capacitor: string;
+  servo: string;
   operation_req_access: AccessData[];
   idcard_access: AccessData[];
 };
@@ -47,6 +48,10 @@ export type OperatorData = {
   internal_damage: number;
   internal_damage_keys: string[];
   mechflag_keys: string[];
+
+  one_access: boolean;
+  regions: string[];
+  accesses: string[];
 
   cabin_pressure_warning_min: number;
   cabin_pressure_hazard_min: number;

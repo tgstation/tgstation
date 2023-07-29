@@ -10,8 +10,7 @@
 	destruction_sleep_duration = 40
 	exit_delay = 40
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	operation_req_access = list(ACCESS_CENT_SPECOPS)
-	internals_req_access = list(ACCESS_CENT_SPECOPS)
+	accesses = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	mech_type = EXOSUIT_MODULE_MARAUDER
@@ -90,8 +89,7 @@
 	name = "\improper Seraph"
 	icon_state = "seraph"
 	base_icon_state = "seraph"
-	operation_req_access = list(ACCESS_CENT_SPECOPS)
-	internals_req_access = list(ACCESS_CENT_SPECOPS)
+	accesses = list(ACCESS_CENT_SPECOPS)
 	movedelay = 3
 	max_integrity = 550
 	wreckage = /obj/structure/mecha_wreckage/seraph
@@ -117,13 +115,13 @@
 	ui_theme = "syndicate"
 	icon_state = "mauler"
 	base_icon_state = "mauler"
-	operation_req_access = list(ACCESS_SYNDICATE)
-	internals_req_access = list(ACCESS_SYNDICATE)
+	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
+	mecha_flags = ID_LOCK_ON | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
-		MECHA_UTILITY = 5,
+		MECHA_UTILITY = 4,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 4,
 	)
@@ -153,3 +151,6 @@
 
 /obj/vehicle/sealed/mecha/marauder/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
+
+/obj/vehicle/sealed/mecha/marauder/add_servo()
+	servo = new /obj/item/stock_parts/servo/femto(src)

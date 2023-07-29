@@ -10,8 +10,7 @@
 	max_temperature = 25000
 	destruction_sleep_duration = 40
 	exit_delay = 40
-	operation_req_access = list(ACCESS_THEATRE)
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	wreckage = /obj/structure/mecha_wreckage/honker
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	mech_type = EXOSUIT_MODULE_HONK
@@ -44,9 +43,9 @@
 	max_integrity = 300
 	armor_type = /datum/armor/honker_dark
 	max_temperature = 35000
-	operation_req_access = list(ACCESS_SYNDICATE)
-	internals_req_access = list(ACCESS_SYNDICATE)
+	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
+	mecha_flags = ID_LOCK_ON | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
@@ -81,6 +80,9 @@
 
 /obj/vehicle/sealed/mecha/honker/dark/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/super(src)
+
+/obj/vehicle/sealed/mecha/honker/dark/add_servo()
+	servo = new /obj/item/stock_parts/servo/pico(src)
 
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"

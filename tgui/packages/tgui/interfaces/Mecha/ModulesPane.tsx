@@ -152,6 +152,7 @@ export const ModuleDetails = (props, context) => {
               {!!detachable && (
                 <Stack.Item>
                   <Button
+                    color="transparent"
                     icon="eject"
                     tooltip="Detach"
                     fontSize={1.5}
@@ -753,7 +754,7 @@ const SnowflakeOrebox = (props, context) => {
       buttons={
         <Button
           icon="arrows-down-to-line"
-          content="Dump contents"
+          content="Dump"
           onClick={() =>
             act('equip_act', {
               ref: ref,
@@ -855,9 +856,9 @@ const SnowflakeExtinguisher = (props, context) => {
           {reagents}
         </ProgressBar>
       </LabeledList.Item>
-      <LabeledList.Item label="Activity">
+      <LabeledList.Item label="Extinguisher">
         <Button
-          content={'Extinguish'}
+          content={'Activate'}
           color={'red'}
           disabled={reagents < reagents_required}
           icon={'fire-extinguisher'}

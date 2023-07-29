@@ -32,6 +32,7 @@ export const AlertPane = (props, context) => {
               {!!(internal_damage & internal_damage_keys[t]) && (
                 <Stack.Item>
                   <Button
+                    my="-4px"
                     onClick={() =>
                       act('repair_int_damage', {
                         flag: internal_damage_keys[t],

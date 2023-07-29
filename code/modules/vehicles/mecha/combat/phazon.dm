@@ -8,7 +8,7 @@
 	max_integrity = 200
 	armor_type = /datum/armor/mecha_phazon
 	max_temperature = 25000
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	destruction_sleep_duration = 40
 	exit_delay = 40
 	wreckage = /obj/structure/mecha_wreckage/phazon

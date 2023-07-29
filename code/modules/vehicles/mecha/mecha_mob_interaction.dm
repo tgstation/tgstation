@@ -11,7 +11,7 @@
 			to_chat(M, span_warning("Access denied. [name] is secured with a DNA lock."))
 			log_message("Permission denied (DNA LOCK).", LOG_MECHA)
 			return
-	if(!operation_allowed(M))
+	if((mecha_flags & ID_LOCK_ON) && !allowed(M))
 		to_chat(M, span_warning("Access denied. Insufficient operation keycodes."))
 		log_message("Permission denied (No keycode).", LOG_MECHA)
 		return
