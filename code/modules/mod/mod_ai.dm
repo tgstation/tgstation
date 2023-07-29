@@ -88,6 +88,7 @@
 	pai_assistant.can_holo = FALSE
 	if (pai_assistant.holoform)
 		pai_assistant.fold_in()
+	SStgui.close_uis(card)
 	on_gained_assistant(card.pai)
 	return TRUE
 
