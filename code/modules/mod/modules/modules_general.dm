@@ -14,7 +14,7 @@
 	var/max_combined_w_class = 15
 	/// Max amount of items in the storage.
 	var/max_items = 7
-	/// Is nesting same-size items allowed?
+	/// Is nesting same-size storage items allowed?
 	var/big_nesting = FALSE
 
 /obj/item/mod/module/storage/Initialize(mapload)
