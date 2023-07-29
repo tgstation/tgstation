@@ -68,7 +68,7 @@
 		to_chat(src, span_warning("You are too far away to use your slam attack on [attack_target]!"))
 		return
 
-	if(COOLDOWN_FINISHED(slam_cooldown))
+	if(COOLDOWN_FINISHED(src, slam_cooldown))
 		to_chat(src, span_warning("Your slam ability is still on cooldown!"))
 		return
 
@@ -86,7 +86,7 @@
 
 	var/turf/yeet_target = get_edge_target_turf(victim, dir)
 	victim.throw_at(yeet_target, 10, 5, src)
-	COOLDOWN_START(slam_cooldown, slam_cooldown_time)
+	COOLDOWN_START(src, slam_cooldown, slam_cooldown_time)
 	log_combat(src, victim, "slaughter slammed")
 
 /// Proc that we execute on attacking someone to keep track of our hitstreaks and wound bonuses. Also handles bodyslamming.
@@ -140,7 +140,7 @@
 /// We do our own special thing on death, which is to spawn a kitten.
 /mob/living/basic/demon/slaughter/laughter/proc/on_death()
 	SIGNAL_HANDLER
-	var/mob/living/simple_animal/cat/kitten/kitty = new(drop_location())
+	var/mob/living/simple_animal/pet/cat/kitten/kitty = new(drop_location())
 	kitty.name = "Laughter"
 
 /mob/living/basic/demon/slaughter/laughter/ex_act(severity)
