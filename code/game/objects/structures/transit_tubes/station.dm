@@ -182,7 +182,7 @@
 			tube_dirs = list(NORTH, SOUTH)
 		if(WEST)
 			tube_dirs = list(NORTH, SOUTH)
-	boarding_dir = turn(dir, 180)
+	boarding_dir = REVERSE_DIR(dir)
 
 
 /obj/structure/transit_tube/station/flipped
@@ -212,7 +212,7 @@
 			tube_dirs = list(SOUTH)
 		if(WEST)
 			tube_dirs = list(NORTH)
-	boarding_dir = turn(dir, 180)
+	boarding_dir = REVERSE_DIR(dir)
 
 /obj/structure/transit_tube/station/reverse/flipped
 	icon_state = "closed_terminus1"
@@ -291,7 +291,7 @@
 			tube_dirs = list(SOUTH)
 		if(WEST)
 			tube_dirs = list(NORTH)
-	boarding_dir = turn(dir, 180)
+	boarding_dir = REVERSE_DIR(dir)
 
 /obj/structure/transit_tube/station/dispenser/reverse/flipped
 	icon_state = "open_terminusdispenser1"
