@@ -55,59 +55,60 @@
 					state = 0
 				return
 
-			if(!circuit && istype(P, /obj/item/storage/part_replacer) && P.contents.len)
-				var/obj/item/storage/part_replacer/replacer = P
-				// map of circuitboard names to the board
-				var/list/circuit_boards = list()
-				for(var/obj/item/circuitboard/computer/board in replacer.contents)
-					circuit_boards[board.name] = board
-				if(!length(circuit_boards))
-					return
-				//if there is only one board directly install it else pick from list
-				var/obj/item/circuitboard/computer/target_board
-				if(circuit_boards.len == 1)
-					for(var/board_name in circuit_boards)
-						target_board = circuit_boards[board_name]
-				else
-					var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
-					target_board = circuit_boards[option]
-					if(!target_board)
+			if(!circuit)
+				//attempt to install circuitboard from part replacer
+				if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
+					var/obj/item/storage/part_replacer/replacer = P
+					// map of circuitboard names to the board
+					var/list/circuit_boards = list()
+					for(var/obj/item/circuitboard/computer/board in replacer.contents)
+						circuit_boards[board.name] = board
+					if(!length(circuit_boards))
+						return
+					//if there is only one board directly install it else pick from list
+					var/obj/item/circuitboard/computer/target_board
+					if(circuit_boards.len == 1)
+						for(var/board_name in circuit_boards)
+							target_board = circuit_boards[board_name]
+					else
+						var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
+						target_board = circuit_boards[option]
+						if(!target_board)
+							return
+
+					if(install_board(target_board, user, by_hand = FALSE))
+						replacer.play_rped_sound()
+						//automatically screw the board in as well, a perk of using the rped
+						to_chat(user, span_notice("You screw [circuit] into place."))
+						state = 2
+						icon_state = "2"
+						//attack again so we can install the cable & glass
+						attackby(replacer, user, params)
 						return
 
-				if(install_board(target_board, user, FALSE))
-					replacer.play_rped_sound()
-					//automatically screw the board in as well, a perk of using the rped
+				//attempt to install circuitboard by hand
+				if(istype(P, /obj/item/circuitboard/computer))
+					install_board(P, user, by_hand = TRUE)
+					return
+				else if(istype(P, /obj/item/circuitboard))
+					to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
+					return
+			else
+				if(P.tool_behaviour == TOOL_SCREWDRIVER)
+					P.play_tool_sound(src)
 					to_chat(user, span_notice("You screw [circuit] into place."))
 					state = 2
 					icon_state = "2"
-					//attack again so we can install the cable & glass
-					attackby(replacer, user, params)
 					return
-
-			if(!circuit && istype(P, /obj/item/circuitboard/computer))
-				install_board(P, user, TRUE)
-				return
-
-			else if(!circuit && istype(P, /obj/item/circuitboard))
-				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
-				return
-
-			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You screw [circuit] into place."))
-				state = 2
-				icon_state = "2"
-				return
-
-			if(P.tool_behaviour == TOOL_CROWBAR && circuit)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You remove [circuit]."))
-				state = 1
-				icon_state = "0"
-				circuit.forceMove(drop_location())
-				circuit.add_fingerprint(user)
-				circuit = null
-				return
+				if(P.tool_behaviour == TOOL_CROWBAR)
+					P.play_tool_sound(src)
+					to_chat(user, span_notice("You remove [circuit]."))
+					state = 1
+					icon_state = "0"
+					circuit.forceMove(drop_location())
+					circuit.add_fingerprint(user)
+					circuit = null
+					return
 		if(2)
 			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
 				P.play_tool_sound(src)
