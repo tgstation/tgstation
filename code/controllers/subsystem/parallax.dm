@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(parallax)
 	if(picked_parallax == PARALLAX_NONE)
 		return
 
-	random_layer = new picked_parallax(null, null, TRUE) //rip no named params, but we set template to TRUE so we don't del without a hud owner
+	random_layer = new picked_parallax(null,  /* hud_owner = */ null, /* template = */ TRUE)
 	RegisterSignal(random_layer, COMSIG_QDELETING, PROC_REF(clear_references))
 	random_layer.get_random_look()
 
