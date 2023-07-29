@@ -142,11 +142,11 @@
 		var/side_dir = hyperloop.direction - direction
 
 		if(is_tile_solid(get_step(clinger, side_dir)))
-			hyperloop.direction = direction + turn(side_dir, 180) //We're bumping a wall to the side, so switch to the other side_dir (yes this adds pingpong protocol)
+			hyperloop.direction = direction + REVERSE_DIR(side_dir) //We're bumping a wall to the side, so switch to the other side_dir (yes this adds pingpong protocol)
 		return
 
 	//Get the directions from the side of our current drift direction (so if we have drift south, get all cardinals and remove north and south, leaving only east and west)
-	var/side_dirs = shuffle(GLOB.cardinals - direction - turn(direction, 180))
+	var/side_dirs = shuffle(GLOB.cardinals - direction - REVERSE_DIR(direction))
 
 	//We check if one side is solid
 	if(!is_tile_solid(get_step(clinger, side_dirs[1])))
