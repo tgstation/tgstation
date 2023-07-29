@@ -8,7 +8,7 @@
 
 	returns_created_atoms = TRUE
 	/// The map file to load
-	var/filename = "wood.dmm"
+	var/filename = "den.dmm"
 
 /datum/map_template/safehouse/New()
 	mappath = "_maps/safehouses/" + filename

@@ -40,8 +40,8 @@
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
 	var/loading = FALSE
-	/// The amount to scale (and descale) loot with extra players
-	var/multiplayer_coefficient = 1.5
+	/// Scales loot with extra players
+	var/multiplayer_bonus = 1.1
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Keeps track of the number of times someone has built a hololadder
@@ -132,6 +132,8 @@
 		return
 
 	if(!length(occupant_mind_refs))
+		balloon_alert(user, "powering down domain...")
+		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
 		stop_domain(user)
 		return
 
@@ -142,6 +144,21 @@
 		return
 
 	stop_domain(user)
+
+/// Handles calculating rewards based on number of players, parts, etc
+/obj/machinery/quantum_server/proc/calculate_rewards()
+	var/rewards_base = 0.8
+
+	if(domain_randomized)
+		rewards_base += 0.2
+
+	for(var/datum/stock_part/servo/servo in component_parts)
+		rewards_base += servo.tier * 0.1
+
+	for(var/index in 2 to length(occupant_mind_refs))
+		rewards_base += multiplayer_bonus
+
+	return rewards_base
 
 /**
  * ### Quantum Server Cold Boot
@@ -251,28 +268,20 @@
 	if(!length(receive_turfs))
 		receive_turfs = get_area_turfs(preset_receive_area)
 	if(!length(receive_turfs))
-		CRASH("Failed to find receive turfs on the station.")
+		stack_trace("Failed to find receive turfs on the station.")
+		return FALSE
 
 	points += generated_domain.reward_points
 	playsound(src, 'sound/machines/terminal_success.ogg', 30, 2)
 
 	var/turf/dest_turf = pick(receive_turfs)
 	if(isnull(dest_turf))
-		CRASH("Failed to find a turf to spawn loot crate on.")
+		stack_trace("Failed to find a turf to spawn loot crate on.")
+		return FALSE
 
-	var/rewards_multiplier = 1
-
-	if(domain_randomized)
-		rewards_multiplier += 0.2
-
-	for(var/datum/stock_part/servo/servo in component_parts)
-		rewards_multiplier += servo.tier * 0.1
-
-	for(var/index in 2 to length(occupant_mind_refs))
-		rewards_multiplier *= multiplayer_coefficient
-
-	var/obj/structure/closet/crate/secure/bitminer_loot/decrypted/reward_crate = new(dest_turf, generated_domain, rewards_multiplier)
-	teleport_effects(reward_crate)
+	var/obj/structure/closet/crate/secure/bitminer_loot/decrypted/reward_crate = new(dest_turf, generated_domain, calculate_rewards())
+	spark_at_location(reward_crate)
+	return TRUE
 
 /// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals
 /obj/machinery/quantum_server/proc/get_avatar_data()
@@ -463,26 +472,28 @@
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
-	if(get_ready_status())
-		return
-
-	examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 	if(server_cooldown_efficiency < 1)
-		examine_text += span_notice("Its coolant capacity reduces cooldown time by [(1 - server_cooldown_efficiency) * 100]%.")
+		examine_text += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - server_cooldown_efficiency) * 100]%.")
+
+	var/rewards_bonus = 0.8
+	for(var/datum/stock_part/servo/servo in component_parts)
+		rewards_bonus += servo.tier * 0.1
+
+	examine_text += span_infoplain("Its manipulation potential is increasing rewards by [(rewards_bonus * 100)]x.")
+
+	if(get_ready_status())
+		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
+		return
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
+	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
 	var/datum/effect_system/spark_spread/quantum/sparks = new /datum/effect_system/spark_spread/quantum
 	sparks.set_up(5, 1, get_turf(crate))
 	sparks.start()
-	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
 
 /// Stops the current virtual domain and disconnects all users
-/obj/machinery/quantum_server/proc/stop_domain(mob/user)
-	if(user) // Sometimes called by on_broken()
-		balloon_alert(user, "powering down domain...")
-		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
-
+/obj/machinery/quantum_server/proc/stop_domain()
 	loading = TRUE
 	domain_randomized = FALSE
 	SEND_SIGNAL(src, COMSIG_BITMINING_SERVER_CRASH)
@@ -493,6 +504,13 @@
 		loading = FALSE
 		return
 
+	for(var/turf/tile in send_turfs)
+		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
+		UnregisterSignal(tile, COMSIG_ATOM_EXAMINE)
+
+	for(var/turf/tile in exit_turfs)
+		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
+
 	// Applies a fresh template onto the map
 	var/datum/map_template/virtual_domain/fresh_map = new()
 	fresh_map.load(map_load_turf[ONLY_TURF])
@@ -502,7 +520,7 @@
 			if(!isobserver(thing))
 				qdel(thing)
 
-	for(var/turf/tile in safehouse_load_turf)
+	for(var/turf/tile in safehouse_load_turf) // cleanup that one tile
 		for(var/thing in tile.contents)
 			if(!isobserver(thing))
 				qdel(thing)

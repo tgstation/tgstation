@@ -269,6 +269,7 @@
 	var/client_connect_received = FALSE
 	var/client_disconnect_received = FALSE
 	var/crowbar_alert_received = FALSE
+	var/domain_complete_received = FALSE
 	var/server_crash_received = FALSE
 	var/sever_avatar_received = FALSE
 	var/shutdown_alert_received = FALSE
@@ -284,6 +285,10 @@
 /datum/unit_test/bitmining_signals/proc/on_crowbar_alert(datum/source)
 	SIGNAL_HANDLER
 	crowbar_alert_received = TRUE
+
+/datum/unit_test/bitmining_signals/proc/on_domain_complete(datum/source)
+	SIGNAL_HANDLER
+	domain_complete_received = TRUE
 
 /datum/unit_test/bitmining_signals/proc/on_shutdown_alert(datum/source)
 	SIGNAL_HANDLER
@@ -301,6 +306,7 @@
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/machinery/netpod/netpod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/structure/closet/crate/secure/bitminer_loot/encrypted/crate = allocate(/obj/structure/closet/crate/secure/bitminer_loot/encrypted)
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
@@ -312,6 +318,7 @@
 
 	RegisterSignal(server, COMSIG_BITMINING_CLIENT_CONNECTED, PROC_REF(on_client_connected))
 	RegisterSignal(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
+	RegisterSignal(server, COMSIG_BITMINING_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
 	RegisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT, PROC_REF(on_shutdown_alert))
 	RegisterSignal(server, COMSIG_BITMINING_SERVER_CRASH, PROC_REF(on_server_crash))
 	RegisterSignal(netpod, COMSIG_BITMINING_CROWBAR_ALERT, PROC_REF(on_crowbar_alert))
@@ -320,7 +327,7 @@
 	server.cold_boot_map(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	labrat.forceMove(netpod.loc)
+	labrat.forceMove(get_turf(netpod))
 	netpod.set_occupant(labrat)
 	netpod.close_machine(labrat)
 	TEST_ASSERT_EQUAL(netpod.occupant, labrat, "Sanity: Did not set occupant")
@@ -339,36 +346,33 @@
 	TEST_ASSERT_EQUAL(shutdown_alert_received, TRUE, "Did not send COMSIG_BITMINING_SHUTDOWN_ALERT")
 	TEST_ASSERT_EQUAL(server_crash_received, TRUE, "Did not send COMSIG_BITMINING_SERVER_CRASH")
 
-/// Tests the server's ability to buff and nerf mobs
-/datum/unit_test/qserver_difficulty/Run()
+	COOLDOWN_RESET(server, cooling_off)
+	server.occupant_mind_refs.Cut()
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	TEST_ASSERT_NOTEQUAL(length(server.send_turfs), 0, "Sanity: Did not find a send turf")
+
+	crate.forceMove(pick(server.send_turfs))
+	TEST_ASSERT_EQUAL(domain_complete_received, TRUE, "Did not send COMSIG_BITMINING_DOMAIN_COMPLETE")
+
+/// Tests the server's ability to generate a loot crate
+/datum/unit_test/qserver_generate_rewards/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
-	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
+	labrat.mind_initialize()
+	labrat.mock_client = new()
 
+	var/turf/tiles = get_adjacent_open_turfs(server)
+	TEST_ASSERT_NOTEQUAL(length(tiles), 0, "Sanity: Did not find an open turf")
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP_MOBS)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_MOBS, "Sanity: Didn't load test map correctly")
-	var/mob/living/basic/pet/dog/corgi/pupper = locate(/mob/living/basic/pet/dog/corgi) in server.generated_domain.created_atoms
-	TEST_ASSERT_NOTNULL(pupper, "Sanity: Couldn't find mobs in vdom")
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	var/base_health = pupper.health
-	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, labrat_mind_ref)
-	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer shouldn't buff mobs on first bitminer connect")
+	server.receive_turfs = tiles
+	TEST_ASSERT_EQUAL(server.generate_loot(), TRUE, "Should generate loot with a receive turf")
 
-	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, labrat_mind_ref)
-	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff, "QServer should buff mobs 1.5x on second bitminer connect")
-
-	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_CONNECTED, labrat_mind_ref)
-	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff * server.difficulty_coeff, "QServer should buff mobs 1.5x on third bitminer connect")
-
-	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, labrat_mind_ref)
-	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff, "QServer should nerf mobs 1.5x on first bitminer disconnect")
-
-	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, labrat_mind_ref)
-	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should nerf mobs 1.5x on second bitminer disconnect")
-
-	SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, labrat_mind_ref)
-	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should not nerf mobs below base health")
+	var/obj/structure/closet/crate/secure/bitminer_loot/decrypted/loot = locate(/obj/structure/closet/crate/secure/bitminer_loot/decrypted) in tiles
+	TEST_ASSERT_NOTNULL(loot, "Should've generated a crate")
 
 /// Server side randomization of domains
 /datum/unit_test/qserver_get_random_domain_id/Run()
@@ -428,6 +432,39 @@
 
 	server.stop_domain()
 	TEST_ASSERT_EQUAL(server.retries_spent, 0, "Should reset retries on stop_domain()")
+
+/// Tests the calculate rewards function
+/datum/unit_test/qserver_calculate_rewards/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
+	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
+
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
+
+	var/rewards = server.calculate_rewards()
+	TEST_ASSERT_EQUAL(rewards, 1, "Should return base rewards with unmodded")
+
+	server.domain_randomized = TRUE
+	rewards = server.calculate_rewards()
+	TEST_ASSERT_EQUAL(rewards, 1.2, "Should increase rewards wehen randomized")
+
+	server.domain_randomized = FALSE
+	server.occupant_mind_refs += labrat_mind_ref
+	server.occupant_mind_refs += labrat_mind_ref
+	server.occupant_mind_refs += labrat_mind_ref
+	rewards = server.calculate_rewards()
+	var/totalA = ROUND_UP(rewards)
+	var/totalB = ROUND_UP(1 + server.multiplayer_bonus * 2)
+	TEST_ASSERT_EQUAL(totalA, totalB, "Should increase rewards with occupants")
+
+	for(var/datum/stock_part/servo/servo in server.component_parts)
+		server.component_parts -= servo
+		server.component_parts += new /datum/stock_part/servo/tier4
+
+	server.occupant_mind_refs.Cut()
+	rewards = server.calculate_rewards()
+	TEST_ASSERT_EQUAL(rewards, 1.6, "Should increase rewards with modded servos")
 
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE

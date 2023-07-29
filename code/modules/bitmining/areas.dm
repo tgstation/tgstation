@@ -19,13 +19,19 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/lavaland/surface/outdoors/virtual_domain
-	name = "Virtual Domain: Ruins"
+	name = "Virtual Domain: Lava Ruins"
 	icon_state = "bit_ruin"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
 
 /area/icemoon/underground/explored/virtual_domain
 	name = "Virtual Domain: Ice Ruins"
 	icon_state = "bit_ice"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+
+/area/ruin/space/has_grav/powered/virtual_domain
+	name = "Virtual Domain: Space Ruins"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "bit_space"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
 
 /// Using this to get turfs on the z-level then deleting contents

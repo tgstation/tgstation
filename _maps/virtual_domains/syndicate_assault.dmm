@@ -11,15 +11,15 @@
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "aU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "be" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "bu" = (
 /turf/closed/mineral,
 /area/space)
@@ -34,12 +34,12 @@
 	amount = 15
 	},
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "bO" = (
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/structure/table/reinforced,
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ce" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4;
@@ -48,12 +48,12 @@
 	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "cq" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "cG" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -61,23 +61,23 @@
 	},
 /obj/item/wrench,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "da" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "db" = (
 /obj/machinery/light/directional/north,
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "dg" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "fscremate"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "dr" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -86,12 +86,12 @@
 	amount = 3
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "dM" = (
 /obj/structure/table/reinforced,
 /obj/item/dualsaber/green,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "dN" = (
 /obj/machinery/suit_storage_unit/syndicate{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black;
@@ -99,11 +99,11 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ef" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "es" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -115,7 +115,7 @@
 	},
 /obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ez" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -125,16 +125,16 @@
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "eO" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "fa" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "fK" = (
 /obj/structure/transit_tube/station/dispenser/reverse{
 	dir = 8
@@ -150,20 +150,20 @@
 	screen_loc = ""
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "gJ" = (
 /obj/structure/displaycase{
 	req_access = list("syndicate");
 	start_showpiece_type = /obj/item/gun/ballistic/automatic/pistol/deagle/camo
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "gS" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/space/basic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "hC" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -176,7 +176,7 @@
 	},
 /mob/living/basic/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "iq" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -187,20 +187,20 @@
 	secure = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "iy" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "iI" = (
 /obj/machinery/power/port_gen/pacman/super{
 	anchored = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "iM" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -212,38 +212,38 @@
 	},
 /obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "jC" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "jI" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "kb" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /mob/living/basic/syndicate/ranged/smg/pilot,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "kg" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "la" = (
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "lh" = (
 /turf/open/space/basic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "lr" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -258,7 +258,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "lu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -266,14 +266,14 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "lB" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "lE" = (
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "lF" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/ruin{
@@ -281,12 +281,12 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "lN" = (
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "mo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -296,30 +296,30 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "mq" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "mt" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "mP" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "mR" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "nc" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ow" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
@@ -328,11 +328,11 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "oF" = (
 /mob/living/basic/syndicate/ranged/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "oQ" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -341,7 +341,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "oT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -350,7 +350,7 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "pi" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -368,24 +368,24 @@
 /obj/item/storage/box/firingpins/syndicate,
 /obj/item/storage/box/firingpins/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "pj" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ps" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "pw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "qa" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -399,33 +399,33 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "qh" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
 /obj/machinery/portable_atmospherics/scrubber{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ql" = (
 /obj/structure/table/reinforced,
 /obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "rj" = (
 /mob/living/basic/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "rz" = (
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "rD" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "rS" = (
 /obj/structure/transit_tube/crossing,
 /turf/closed/mineral/random,
@@ -434,21 +434,21 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "sh" = (
 /obj/machinery/power/shuttle_engine/huge{
 	dir = 8
 	},
 /turf/open/space/basic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "sv" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "sw" = (
 /obj/structure/transit_tube/crossing,
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "sx" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -456,7 +456,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "sB" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Captain's Room"
@@ -468,7 +468,7 @@
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "sE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
@@ -477,7 +477,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "sW" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -485,19 +485,19 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "tf" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "tF" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "tM" = (
-/obj/structure/closet/crate/secure/bitminer_loot/decrypted,
+/obj/structure/closet/crate/secure/bitminer_loot/encrypted,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "tT" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -515,7 +515,7 @@
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/shoes/combat,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "uP" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -528,53 +528,53 @@
 	},
 /mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "uT" = (
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "vB" = (
 /obj/structure/chair/comfy,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "vE" = (
 /obj/machinery/suit_storage_unit/syndicate{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black;
 	suit_type = /obj/item/clothing/suit/space/syndicate/black
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "vG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "wo" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "wA" = (
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "wB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "wJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "wS" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "xc" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/reinforced,
@@ -582,7 +582,7 @@
 /obj/item/storage/medkit,
 /obj/item/storage/medkit,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "xD" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -598,10 +598,10 @@
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/under/syndicate/skirt,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ye" = (
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yj" = (
 /obj/machinery/turretid{
 	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
@@ -613,7 +613,7 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yk" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -621,7 +621,7 @@
 /area/space)
 "yo" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yp" = (
 /obj/machinery/computer/security{
 	desc = "Used to access interrogation room camera.";
@@ -631,19 +631,19 @@
 	screen_loc = ""
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yw" = (
 /obj/structure/sign/poster/contraband/tools,
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yA" = (
 /obj/structure/table/optable,
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yC" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yY" = (
 /turf/closed/mineral/random,
 /area/space)
@@ -658,17 +658,17 @@
 	state_open = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "zv" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "zP" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ak" = (
 /turf/closed/indestructible/binary,
 /area/space)
@@ -677,21 +677,21 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Aq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "AC" = (
 /obj/machinery/light/directional/south,
 /obj/structure/transit_tube/station/dispenser/reverse{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "BQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
@@ -700,11 +700,11 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ch" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Cy" = (
 /obj/machinery/camera/xray{
 	c_tag = "Cargo pod";
@@ -712,8 +712,15 @@
 	network = list("fsci");
 	screen_loc = ""
 	},
+/obj/structure/closet,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/card/id/advanced/black/syndicate_command/crew_id,
+/obj/item/card/id/advanced/black/syndicate_command/crew_id,
+/obj/item/card/id/advanced/black/syndicate_command/crew_id,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "CA" = (
 /obj/structure/transit_tube/crossing,
 /turf/open/space/basic,
@@ -722,52 +729,52 @@
 /obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "DC" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "DZ" = (
 /obj/machinery/light/directional/north,
 /obj/item/ai_module/core/full/cybersun,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Eg" = (
 /obj/machinery/door/window{
 	name = "Control Room";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Eh" = (
 /mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "EE" = (
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ER" = (
 /obj/structure/sign/poster/contraband/c20r,
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Fb" = (
 /turf/open/space/basic,
 /area/space)
 "FA" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "FC" = (
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Gd" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "GE" = (
 /obj/machinery/camera/xray{
 	c_tag = "Medbay";
@@ -776,7 +783,7 @@
 	screen_loc = ""
 	},
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "GN" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -789,11 +796,11 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Hn" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Hw" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Bridge"
@@ -803,7 +810,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ic" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -811,14 +818,14 @@
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /obj/item/clothing/suit/space/syndicate/black/engie,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ip" = (
 /obj/machinery/button/crematorium{
 	id = "fscremate";
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ir" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -827,14 +834,14 @@
 	amount = 19
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "IE" = (
 /obj/structure/toilet{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "IK" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -842,16 +849,16 @@
 /obj/structure/cable,
 /obj/item/paper/fluff/ruins/forgottenship/powerissues,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "IR" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Jk" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "JC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -859,31 +866,31 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "JP" = (
 /turf/closed/indestructible/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Kf" = (
 /obj/machinery/computer/camera_advanced/syndie{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ki" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Kl" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Km" = (
 /turf/closed/mineral/random/high_chance,
 /area/space)
 "Kw" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "KG" = (
 /obj/structure/table/reinforced,
 /obj/item/ammo_box/magazine/smgm45,
@@ -891,16 +898,16 @@
 /obj/item/ammo_box/magazine/smgm45,
 /obj/item/gun/ballistic/automatic/c20r/unrestricted,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "KU" = (
 /obj/structure/cable,
 /mob/living/basic/syndicate/melee/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "KZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Lk" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
@@ -908,7 +915,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "LM" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate Ship Airlock"
@@ -917,19 +924,19 @@
 /obj/structure/cable,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Mj" = (
 /obj/machinery/shower/directional/north,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ml" = (
 /obj/structure/table/reinforced,
 /obj/item/paper,
 /obj/item/pen,
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "MM" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -943,7 +950,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "MP" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -957,7 +964,7 @@
 /obj/item/ammo_box/magazine/m9mm_aps,
 /obj/item/ammo_box/magazine/m9mm_aps,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Na" = (
 /turf/template_noop,
 /area/template_noop)
@@ -969,36 +976,36 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "NP" = (
 /mob/living/basic/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ob" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /mob/living/basic/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Pf" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Pt" = (
 /obj/structure/table/reinforced,
 /obj/item/ammo_box/magazine/mm712x82,
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "PI" = (
 /obj/machinery/computer/crew/syndie{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Qk" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/closed/mineral/random,
@@ -1007,7 +1014,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "QD" = (
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 15
@@ -1015,27 +1022,27 @@
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "QE" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Rl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "RY" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate Ship Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "So" = (
 /obj/structure/filingcabinet,
 /obj/machinery/door/window{
@@ -1044,37 +1051,37 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ss" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Sy" = (
 /obj/structure/chair/comfy{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "SF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "SQ" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "SR" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "SU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1082,14 +1089,14 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Tu" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "TJ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1097,7 +1104,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ud" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -1111,7 +1118,7 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Uj" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4;
@@ -1120,7 +1127,7 @@
 	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Ut" = (
 /obj/machinery/door/window{
 	dir = 1;
@@ -1128,7 +1135,7 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "UB" = (
 /obj/machinery/mineral/ore_redemption{
 	name = "Syndicate ore redemption machine";
@@ -1136,7 +1143,7 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Vh" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null
@@ -1148,29 +1155,29 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "VN" = (
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "We" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/fluff/ruins/forgottenship/missionobj,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Wf" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Wk" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
 	},
 /obj/item/disk/surgery/forgottenship,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Wo" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -1179,29 +1186,29 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Wy" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "WS" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "XR" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "YE" = (
 /mob/living/basic/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Za" = (
 /obj/machinery/camera/xray/directional/east{
 	c_tag = "Conference room";
@@ -1209,7 +1216,7 @@
 	screen_loc = ""
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Zw" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1217,11 +1224,11 @@
 /obj/item/melee/energy/sword/saber/red,
 /obj/machinery/light/directional/north,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "ZN" = (
 /obj/machinery/vending/medical/syndicate_access/cybersun,
 /turf/open/floor/plastic,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/area/ruin/space/has_grav/powered/virtual_domain)
 
 (1,1,1) = {"
 Na

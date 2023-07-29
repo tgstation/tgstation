@@ -62,7 +62,7 @@
 /datum/mind/proc/on_domain_completed(datum/source, atom/entered)
 	SIGNAL_HANDLER
 
-	current.playsound_local(current, 'sound/machines/terminal_alert.ogg', 50, TRUE)
+	current.playsound_local(current, 'sound/machines/terminal_success.ogg', 50, TRUE)
 	current.throw_alert(
 		ALERT_BITMINING_COMPLETED,
 		/atom/movable/screen/alert/qserver_domain_complete,

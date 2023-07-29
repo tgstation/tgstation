@@ -11,7 +11,7 @@
 	var/cost = BITMINING_COST_NONE
 	/// The description of the map
 	var/desc = "A map."
-	/// The 'difficulty' of the map, which affects the ui and the types of ores that spawn in the rewards crate.
+	/// The 'difficulty' of the map, which affects the ui and ability to scan info.
 	var/difficulty = BITMINING_DIFFICULTY_NONE
 	/// Any additional loot to add after completion
 	var/extra_loot
@@ -23,12 +23,12 @@
 	var/help_text
 	/// For blacklisting purposes
 	var/id
-	/// Points to reward for completion. These are used to purchase new domains, but also calculate ore rewards.
+	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
 	var/reward_points = BITMINING_REWARD_LOW
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
 	/// The safehouse to load into the map
-	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/wood
+	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse
 
 /datum/map_template/virtual_domain/New()
 	if(!name && id)
