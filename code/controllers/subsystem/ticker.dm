@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(ticker)
 	/// Boolean to track if round should be forcibly ended next ticker tick.
 	/// Set by admin intervention ([ADMIN_FORCE_END_ROUND])
 	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
-	var/force_ending = FALSE
+	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
 	/// Boolean to track and check if our subsystem setup is done.
