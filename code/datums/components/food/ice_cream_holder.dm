@@ -319,6 +319,13 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	desc = "filled with vanilla ice cream made with korta milk. Lizards love it!"
 	ingredients = list(/datum/reagent/consumable/korta_milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
 
+/datum/ice_cream_flavour/cherry_chocolate
+	name = ICE_CREAM_CHERRY_CHOCOLATE
+	color = COLOR_ICECREAM_CHERRY_CHOCOLATE
+	desc = "filled with cherry chocolate chip ice cream. It is wonderfully tangy and sweet."
+	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/coco, /datum/reagent/consumable/cherryjelly)
+	reagent_type = /datum/reagent/consumable/cherryjelly
+
 /datum/ice_cream_flavour/mob
 	name = ICE_CREAM_MOB
 	color = COLOR_ICECREAM_STRAWBERRY

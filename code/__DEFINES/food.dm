@@ -177,6 +177,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define ICE_CREAM_BANANA "banana"
 #define ICE_CREAM_ORANGE_CREAM "orangesicle"
 #define ICE_CREAM_PEACH "peach"
+#define ICE_CREAM_CHERRY_CHOCOLATE "cherry chocolate chip"
 #define ICE_CREAM_KORTA_VANILLA "korta vanilla"
 #define ICE_CREAM_MOB "mob"
 #define ICE_CREAM_CUSTOM "custom"
