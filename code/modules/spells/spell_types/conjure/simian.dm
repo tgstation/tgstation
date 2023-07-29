@@ -44,8 +44,7 @@
 		create_monky(summoned_object)
 		return
 
-/datum/action/cooldown/spell/conjure/simian/proc/create_monky(atom/summoned_object)
-	var/mob/living/carbon/human/species/monkey/summoned_monkey = summoned_object
+/datum/action/cooldown/spell/conjure/simian/proc/create_monky(var/mob/living/carbon/human/species/monkey/summoned_monkey)
 
 	var/datum/ai_controller/monkey/monky_controller = summoned_monkey.ai_controller
 	monky_controller.set_trip_mode(mode = FALSE)
