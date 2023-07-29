@@ -50,15 +50,11 @@
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/statue
-	/// Loot this mob drops on death.
-	var/loot
 	/// Stores the creator in here if it has one.
 	var/mob/living/creator = null
 
 /mob/living/basic/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
-	if(LAZYLEN(loot))
-		AddElement(/datum/element/death_drops, loot)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
 	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
 
@@ -160,3 +156,20 @@
 
 /datum/ai_behavior/basic_melee_attack/statue
 	action_cooldown = 1 SECONDS
+
+/mob/living/basic/statue/frosty
+	name = "Frosty"
+	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman."
+	icon_dead = "snowman"
+	icon_living = "snowman"
+	icon_state = "snowman"
+	health = 5000
+	maxHealth = 5000
+	melee_damage_lower = 65
+	melee_damage_upper = 65
+	faction = list("statue","mining")
+
+/mob/living/basic/statue/frosty/Initialize(mapload)
+	. = ..()
+	var/static/list/death_loot = list(/obj/item/dnainjector/geladikinesis)
+	AddElement(/datum/element/death_drops, death_loot)

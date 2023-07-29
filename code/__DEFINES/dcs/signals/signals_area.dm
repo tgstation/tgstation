@@ -32,3 +32,8 @@
 // Area fire signals
 /// Sent when an area's fire var changes: (fire_value)
 #define COMSIG_AREA_FIRE_CHANGED "area_fire_set"
+
+/// Called when some weather starts in this area
+#define COMSIG_WEATHER_BEGAN_IN_AREA(event_type) "weather_began_in_area_[event_type]"
+/// Called when some weather ends in this area
+#define COMSIG_WEATHER_ENDED_IN_AREA(event_type) "weather_ended_in_area_[event_type]"
