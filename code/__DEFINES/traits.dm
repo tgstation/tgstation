@@ -765,6 +765,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 
+///if the atom has a sticker attached to it
+#define TRAIT_STICKERED "stickered"
+
 // Debug traits
 /// This object has light debugging tools attached to it
 #define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"
