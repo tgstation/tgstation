@@ -17,6 +17,9 @@
 		if(initial(type_to_check.abstract_type) == part_type)
 			continue
 
+		if(!battery_whitelist.Find(part_type) && ispath(part_type, /obj/item/stock_parts/cell))
+			continue
+
 		var/obj/item/stock_parts/stock_part = new part_type()
 
 		var/datum/design/recipe = find_design(stock_part)
