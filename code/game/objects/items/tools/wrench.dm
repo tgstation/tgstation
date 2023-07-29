@@ -137,7 +137,7 @@
 	name = "Big Slappy"
 	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
 	icon_state = "giant_wrench"
-	icon = 'icons/obj/giant_wrench.dmi'
+	icon = 'icons/obj/weapons/giant_wrench.dmi'
 	inhand_icon_state = null
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
