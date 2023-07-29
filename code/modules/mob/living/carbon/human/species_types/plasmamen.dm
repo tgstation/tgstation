@@ -45,7 +45,6 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
 
-
 	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
 	// The minimum amount they stabilize per tick is reduced making hot areas harder to deal with
