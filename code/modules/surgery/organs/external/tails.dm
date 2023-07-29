@@ -46,10 +46,6 @@
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
-	if(bodypart_overlay.color_source == NONE)
-		return
-
-	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
 
 /obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
