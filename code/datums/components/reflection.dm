@@ -82,9 +82,9 @@
 
 ///Checks if the target movable can be reflected or not.
 /datum/component/reflection/proc/check_can_reflect(atom/movable/target, check_view = TRUE)
-	var/atom/movable/mov_parent = parent
-	if(target == src || (check_view && !(target in view(1, parent))))
+	if(target == parent || (check_view && !(target in view(1, parent))))
 		return FALSE
+	var/atom/movable/mov_parent = parent
 	if(target.loc != mov_parent.loc && get_dir(mov_parent, target) != reflected_dir)
 		return FALSE
 	if(can_reflect && !can_reflect.Invoke(target))
