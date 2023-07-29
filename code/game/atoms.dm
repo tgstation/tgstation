@@ -983,7 +983,7 @@
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
 	if(harmed_atom && isturf(harmed_atom.loc))
-		step(harmed_atom, turn(harmed_atom.dir, 180))
+		step(harmed_atom, REVERSE_DIR(harmed_atom.dir))
 
 ///Handle the atom being slipped over
 /atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, force_drop)

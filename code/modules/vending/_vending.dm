@@ -173,7 +173,11 @@
 	  * if it's off-station during mapload, it's also safe from the brand intelligence event
 	  */
 	var/onstation = TRUE
-	///A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements. DO NOT APPLY THIS GLOBALLY.
+	/**
+	 * A variable to change on a per instance basis on the map that allows the instance
+	 * to ignore whether it's on the station or not.
+	 * Useful to force cost and ID requirements. DO NOT APPLY THIS GLOBALLY.
+	 */
 	var/onstation_override = FALSE
 
 	var/list/vending_machine_input = list()
@@ -230,14 +234,22 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
-	if(onstation_override) //overrides the checks if true.
-		onstation = TRUE
-		return
 	if(mapload) //check if it was initially created off station during mapload.
 		if(!is_station_level(z))
-			onstation = FALSE
+			if(!onstation_override)
+				onstation = FALSE
 			if(circuit)
 				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
+			for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
+				/**
+				 * in average, it should be 37.5% of the max amount, rounded up to the nearest int,
+				 * tho the max boundary can be as low/high as 50%/100%
+				 */
+				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
+				product_record.amount = rand(0, max_amount)
+			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
+				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 
@@ -1121,7 +1133,7 @@
 			.["user"]["department"] = DEPARTMENT_UNASSIGNED
 	.["stock"] = list()
 
-	for (var/datum/data/vending_product/product_record in product_records + coin_records + hidden_records)
+	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 		var/list/product_data = list(
 			name = product_record.name,
 			amount = product_record.amount,

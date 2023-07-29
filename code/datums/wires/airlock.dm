@@ -148,7 +148,7 @@
 		if(WIRE_UNRESTRICTED_EXIT) // Pulse to switch the direction around by 180 degrees (North goes to South, East goes to West, vice-versa)
 			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
 				return
-			A.unres_sides = DIRFLIP(A.unres_sides)
+			A.unres_sides = REVERSE_DIR(A.unres_sides)
 			A.update_appearance()
 
 /obj/machinery/door/airlock/proc/reset_ai_wire()
