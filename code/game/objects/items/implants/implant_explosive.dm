@@ -182,7 +182,7 @@
 
 /obj/item/implant/explosive/deniability
 	name = "tactical deniability implant"
-	desc = "An enchanced version of the microbomb that directly plugs into the brain. No downsides, promise!"
+	desc = "An enhanced version of the microbomb that directly plugs into the brain. No downsides, promise!"
 	delay = 10 SECONDS
 	panic_beep_sound = TRUE
 	no_paralyze = TRUE
