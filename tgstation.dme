@@ -4115,6 +4115,8 @@
 #include "code\modules\mob\living\basic\space_fauna\carp\magicarp.dm"
 #include "code\modules\mob\living\basic\space_fauna\carp\megacarp.dm"
 #include "code\modules\mob\living\basic\space_fauna\demon\demon.dm"
+#include "code\modules\mob\living\basic\space_fauna\demon\demon_items.dm"
+#include "code\modules\mob\living\basic\space_fauna\demon\demon_subtypes.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\chasing_spikes.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_eyeball.dm"
 #include "code\modules\mob\living\basic\space_fauna\meteor_heart\meteor_heart.dm"
