@@ -366,6 +366,12 @@
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
 	new /obj/item/implanter/explosive_macro(src)
 
+/obj/item/storage/box/syndie_kit/imp_deniability
+	name = "tactical deniability implant box"
+
+/obj/item/storage/box/syndie_kit/imp_deniability/PopulateContents()
+	new /obj/item/implanter/tactical_deniability(src)
+
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
 
