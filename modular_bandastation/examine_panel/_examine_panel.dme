@@ -1,0 +1,7 @@
+#include "_examine_panel.dm"
+
+#include "code/_examine_panel_defines.dm"
+#include "code/examine_panel_component.dm"
+#include "code/examine_panel_mob.dm"
+#include "code/examine_panel_prefs.dm"
+#include "code/~examine_panel_defines.dm"
