@@ -262,7 +262,7 @@
 
 /obj/item/reagent_containers/syringe/crude/tribal/Initialize(mapload)
 	list_reagents = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity, /datum/reagent/ants)
-	..()
+	return ..()
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"
