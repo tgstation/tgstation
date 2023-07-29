@@ -1,7 +1,0 @@
-author: "Senefi"
-delete-after: True
-changes:
-  - bugfix: "Replaced 5 space tiles in the wall of the anomaly research ruin with rocks."
-  - bugfix: "Replaced the tile under the window in the mimes vs clowns ruin with plating."
-  - bugfix: "Replaced space tile in the emergency fish shuttle with plastitanium flooring."
-  - bugfix: "Removed space tiles from the exterior of some ruins templates."

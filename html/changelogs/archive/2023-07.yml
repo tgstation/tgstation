@@ -46,84 +46,6 @@
   - code_imp: Added code for effect remover element to use a windup if set.
   mc-oofert:
   - bugfix: siliconnect log tab updates correctly
-2023-07-03:
-  CliffracerX:
-  - rscadd: cryosleep module
-  - code_imp: cryosleep announce added to announcement_system
-2023-07-09:
-  CliffracerX:
-  - rscadd: auto-transfer subsystem
-  - rscadd: ability to call transfer votes
-  - code_imp: silent mode in emergency shuttle request() function
-2023-07-10:
-  CliffracerX:
-  - rscadd: pixelshifting - use B to slide your sprite around
-  - rscadd: pixelshifting far enough stops you from being an obstacle
-  - config: changed immobilizing button from B to Ctrl
-2023-07-11:
-  CliffracerX:
-  - rscadd: some mossmed drip, as a treat
-  - rscadd: Akula, frigid sharks from Ceres of the Sol system
-  - rscadd: Talon IV Moths, a sturdier, digi variant of moths
-  - bugfix: monkey tails are no longer haunted
-  - bugfix: paramedic labcoat, coroner stuff work now
-  - balance: regular Mute no longer mutes emote sounds
-  - image: you can recolor moth parts with matrices
-  - image: lizards and slugcats have colorable underbellies
-  - code_imp: tricolor prefs code exists now
-  Cheshify, Kinnebian, and RedSentry27:
-  - rscadd: Maintenance engineers have sent out blueprints across the sector for a
-      new laser musket.
-  - admin: A new energy-gun toting ERT is available to send to the crew.
-  Jacquerel:
-  - bugfix: Actions granted by equipped or held items now actually appear again
-  LT3:
-  - qol: Context tooltip size increased
-  - bugfix: Fixed remnants of old maptext code on various things
-  MTandi:
-  - rscadd: Food and pills have a 10% chance to infect with one of three new diseases
-      on consumption when left for more than 5 seconds on the floor. You can wash
-      it to avoid disease. ChemMaster and Pill Press are added to the list of elevated
-      structures (Considered as tables for pills). Made harvest spawn on top of hydrotrays
-      to stay protected from germs.
-  - rscadd: 'Added three new advanced diseases: Gastritium, Carpellosis, Nebula Nausea
-      with static cures obtained by digesting dirty food.'
-  - bugfix: Food no longer decomposes on Hydrotrays, Grilles, Bonfires and all dense
-      kitchen machinery
-  - code_imp: Decomposition now uses `germ_sensitive` component and follows 5 second
-      rule too.
-  - qol: Crafted food items spawns on nearby tables (except the one behind you) instead
-      of dropping on floor when hands are full.
-  SyncIt21:
-  - bugfix: jetpack modules work on mod suits again
-  - bugfix: jetpack cyber implants also work
-  - refactor: removed `get_mover` callback, user is retrieved during activation
-  - refactor: timestop module on `on_module_triggered()` accepts user as 2nd param
-  Vekter:
-  - balance: Increased armor penetration on xenos' neurotoxin spit. Well-protected
-      crew members should still take more than a few hits to down but shouldn't be
-      immune to it.
-  necromanceranne:
-  - rscadd: Coroners are now Morbid!
-  - rscadd: Coroners come with a series of special tools that are especially good
-      at performing certain surgeries if used by a Morbid individual (which the coroner
-      happens to be). They are found in the coroner's medkit.
-  - rscadd: The sorts of surgeries they enjoy are; dissections, autospies, revival
-      surgery, plastic surgery, organ/feature manipulations, amputations. Also eyesnatching.
-  - rscadd: Coroners therefore hate; tending the wounds of the living, defibrillation
-      and CPR. Why waste so much effort on breathers if you can't even carve them
-      up a bit first?
-  - rscadd: Coroners love pickles and pickle juice.
-  - rscadd: The coroner can finally put their autopsy scanner into their special medkit.
-      Not the compact one, though.
-  - rscadd: The elephant graveyard is safer to plunder for the morbid individual.
-      The rewards from the graveyard are now also slightly more lucrative...if you
-      don't care about being cursed, that is.
-  - balance: Roboticists get secure morgue access during skeleton shifts
-  timothymtorres:
-  - qol: Add hotkeys to APCs for AIs and borgs. Toggle environmental (ctrl + shift),
-      toggle lighting (shift), toggle equipment (alt), and toggle breaker (ctrl).
-  - qol: Remove APC UI popup when using RMB to toggle the lock.
 2023-07-02:
   ChungusGamer666:
   - bugfix: Hair and facial hair gradients work again now
@@ -1264,3 +1186,45 @@
   - bugfix: Some explosions should be more flashy and fiery, probably.
   xPokee:
   - rscadd: Photophobia as a negative quirk.
+2023-07-29:
+  CliffracerX:
+  - rscadd: runechat color option - set to black to use pastels
+  - qol: increased max length of runechat
+  - qol: runechat width for wordwrap has been increased
+  - refactor: we're up-to-date with TG again
+  - server: for the love of god don't fullmerge this without a TM first
+  DaydreamIQ:
+  - bugfix: Birdshot AI sat now has unrestricted exit instead of entrance
+  Paxilmaniac:
+  - bugfix: The anomaly research ruin is no longer missing several tiles on the inside
+      to the void
+  DaydreamIQ:
+  - bugfix: Birdshot AI sat now has unrestricted exit instead of entrance
+  Ghommie:
+  - rscadd: Added a 'Vending products shortage' station trait, that randomly lowers
+      the availability of all vending products from vending machines on the station,
+      with a 1/20 chance of the vending machine itself being tilted.
+  Mothblocks:
+  - qol: pAIs now try to stay within range of their owner, and teleport back only
+      when necessary
+  - qol: Default max pAI range has been changed to the maximum range you can choose
+      (9 tiles)
+  Paxilmaniac:
+  - bugfix: The anomaly research ruin is no longer missing several tiles on the inside
+      to the void
+  Sealed101:
+  - bugfix: fixed gibtonite countdown animation interrupting clicks with the mining
+      scanner
+  Senefi:
+  - bugfix: Replaced 5 space tiles in the wall of the anomaly research ruin with rocks.
+  - bugfix: Replaced the tile under the window in the mimes vs clowns ruin with plating.
+  - bugfix: Replaced space tile in the emergency fish shuttle with plastitanium flooring.
+  - bugfix: Removed space tiles from the exterior of some ruins templates.
+  mc-oofert:
+  - bugfix: you can no longer fireman carry to bypass puzzle doors
+  Time-Green:
+  - rscadd: Adds cliffs to the north of icebox. Try not to fall of of them!
+  mc-oofert:
+  - bugfix: you can no longer fireman carry to bypass puzzle doors
+  vinylspiders:
+  - bugfix: non-opaque curtains will no longer block emissives
