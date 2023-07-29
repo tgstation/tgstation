@@ -198,7 +198,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
-		/datum/heretic_knowledge/spell/rust_charge,
+		/datum/action/cooldown/mob_cooldown/charge/rust,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
