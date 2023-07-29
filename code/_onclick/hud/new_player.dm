@@ -465,9 +465,9 @@
 
 ///Returns a ready blip overlay depending on the player's ready state
 /atom/movable/screen/lobby/button/collapse/proc/get_blip_overlay()
-	var/mob/dead/new_player/new_player = hud.mymob
 	var/blip_icon_state = "ready_blip"
-	if(blip_enabled)
+	if(blip_enabled && hud)
+		var/mob/dead/new_player/new_player = hud.mymob
 		blip_icon_state += "_[new_player.ready ? "" : "not_"]ready"
 	else
 		blip_icon_state += "_disabled"
