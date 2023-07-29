@@ -151,7 +151,7 @@
 	block_chance = 30
 	throw_range = 2
 	demolition_mod = 2
-	armor_type = /datum/armor/tile_remover
+	armor_type = /datum/armor/giant_wrench
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
@@ -162,7 +162,7 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
 
-/datum/armor/tile_remover
+/datum/armor/giant_wrench
 	acid = 30
 	bomb = 100
 	bullet = 30
@@ -170,7 +170,7 @@
 	laser = 30
 	melee = 30
 
-/obj/item/wrench/tile_remover/Initialize(mapload)
+/obj/item/wrench/giant_wrench/Initialize(mapload)
 	. = ..()
 	transform = transform.Translate(-16, -16)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
