@@ -1,7 +1,7 @@
 /**
  * # engraved component!
  *
- * component for walls that applies an engraved overlay and lets you examine it to read a story (+ art element yay)
+ * component that applies an engraved overlay and lets you examine it to read a story (+ art element yay)
  * new creations will get a high art value, cross round scrawlings will get a low one.
  * MUST be a component, though it doesn't look like it. SSPersistence demandeth
  */
@@ -17,8 +17,9 @@
 
 /datum/component/engraved/Initialize(engraved_description, persistent_save, story_value)
 	. = ..()
-	if(!isclosedturf(parent) && !istype(parent, /obj/structure/statue))
+	if(!is_type_in_typecache(parent, GLOB.engravable_whitelist))
 		return COMPONENT_INCOMPATIBLE
+
 	var/turf/closed/engraved_wall = parent
 
 	src.engraved_description = engraved_description
