@@ -1,6 +1,22 @@
 import { useBackend } from '../../backend';
-import { Section, Stack, Button, Box, Icon } from '../../components';
-import { MainData, InternalDamageToDamagedDesc, InternalDamageToNormalDesc } from './data';
+import { Section, Stack, Button, Box, Icon, Dimmer } from '../../components';
+import { MainData } from './data';
+
+export const InternalDamageToDamagedDesc = {
+  'MECHA_INT_FIRE': 'Internal fire detected',
+  'MECHA_INT_TEMP_CONTROL': 'Thermoregulator offline',
+  'MECHA_CABIN_AIR_BREACH': 'Cabin breach detected',
+  'MECHA_INT_CONTROL_LOST': 'Motors damaged',
+  'MECHA_INT_SHORT_CIRCUIT': 'Circuits shorted',
+};
+
+export const InternalDamageToNormalDesc = {
+  'MECHA_INT_FIRE': 'No internal fires detected',
+  'MECHA_INT_TEMP_CONTROL': 'Thermoregulator active',
+  'MECHA_CABIN_AIR_BREACH': 'Cabin sealing intact',
+  'MECHA_INT_CONTROL_LOST': 'Motors active',
+  'MECHA_INT_SHORT_CIRCUIT': 'Circuits operational',
+};
 
 export const AlertPane = (props, context) => {
   const { act, data } = useBackend<MainData>(context);
@@ -14,44 +30,52 @@ export const AlertPane = (props, context) => {
   return (
     <Section title="Status">
       <Stack vertical>
-        {Object.keys(internal_damage_keys).map((t) => (
-          <Stack.Item key={t}>
-            <Stack justify="space-between">
-              <Stack.Item>
-                <Box
-                  color={
-                    internal_damage & internal_damage_keys[t] ? 'red' : 'green'
-                  }>
-                  <Icon
-                    mr={1}
-                    name={
-                      internal_damage & internal_damage_keys[t]
-                        ? 'warning'
-                        : 'check'
-                    }
-                  />
-                  {internal_damage & internal_damage_keys[t]
-                    ? InternalDamageToDamagedDesc[t]
-                    : InternalDamageToNormalDesc[t]}
-                </Box>
-              </Stack.Item>
-              {!!(internal_damage & internal_damage_keys[t]) && (
+        {!scanmod_rating ? (
+          <Box height={8}>
+            <Dimmer>Scanning module missing.</Dimmer>
+          </Box>
+        ) : (
+          Object.keys(internal_damage_keys).map((t) => (
+            <Stack.Item key={t}>
+              <Stack justify="space-between">
                 <Stack.Item>
-                  <Button
-                    my="-4px"
-                    onClick={() =>
-                      act('repair_int_damage', {
-                        flag: internal_damage_keys[t],
-                      })
-                    }
-                    color={'red'}>
-                    Repair
-                  </Button>
+                  <Box
+                    color={
+                      internal_damage & internal_damage_keys[t]
+                        ? 'red'
+                        : 'green'
+                    }>
+                    <Icon
+                      mr={1}
+                      name={
+                        internal_damage & internal_damage_keys[t]
+                          ? 'warning'
+                          : 'check'
+                      }
+                    />
+                    {internal_damage & internal_damage_keys[t]
+                      ? InternalDamageToDamagedDesc[t]
+                      : InternalDamageToNormalDesc[t]}
+                  </Box>
                 </Stack.Item>
-              )}
-            </Stack>
-          </Stack.Item>
-        ))}
+                {!!(internal_damage & internal_damage_keys[t]) && (
+                  <Stack.Item>
+                    <Button
+                      my="-4px"
+                      onClick={() =>
+                        act('repair_int_damage', {
+                          flag: internal_damage_keys[t],
+                        })
+                      }
+                      color={'red'}>
+                      Repair
+                    </Button>
+                  </Stack.Item>
+                )}
+              </Stack>
+            </Stack.Item>
+          ))
+        )}
       </Stack>
     </Section>
   );

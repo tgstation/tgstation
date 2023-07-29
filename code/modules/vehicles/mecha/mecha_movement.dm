@@ -79,8 +79,6 @@
 	var/list/missing_parts = list()
 	if(isnull(cell))
 		missing_parts += "power cell"
-	if(isnull(scanmod))
-		missing_parts += "scanning module"
 	if(isnull(capacitor))
 		missing_parts += "capacitor"
 	if(isnull(servo))

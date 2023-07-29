@@ -229,6 +229,10 @@
 		to_chat(user, span_warning("ID lock [mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"]."))
 		return
 
+	if(is_wire_tool(W) && (mecha_flags & PANEL_OPEN))
+		wires.interact(user)
+		return
+
 	if(istype(W, /obj/item/stock_parts/cell))
 		if(mecha_flags & PANEL_OPEN)
 			if(!cell)
@@ -325,14 +329,11 @@
 /obj/vehicle/sealed/mecha/screwdriver_act(mob/living/user, obj/item/tool)
 	..()
 	. = TRUE
-	if(!(mecha_flags & PANEL_OPEN) && (mecha_flags & ID_LOCK_ON) && !allowed(user))
-		balloon_alert(user, "access denied!")
-		return
 	mecha_flags ^= PANEL_OPEN
 	if(mecha_flags & PANEL_OPEN)
-		to_chat(user, span_notice("You undo the maintenance panel screws."))
+		balloon_alert(user, "panel open")
 	else
-		to_chat(user, span_notice("You tighten the maintenance panel screws."))
+		balloon_alert(user, "panel closed")
 	tool.play_tool_sound(src)
 	return
 
@@ -345,6 +346,14 @@
 		return
 	if(!(mecha_flags ^= PANEL_OPEN))
 		balloon_alert(user, "open the cover first!")
+		return
+	if(dna_lock && user.has_dna())
+		var/mob/living/carbon/user_carbon = user
+		if(user_carbon.dna.unique_enzymes != dna_lock)
+			balloon_alert(user, "access with this DNA denied!")
+			return
+	if((mecha_flags & ID_LOCK_ON) && !allowed(user))
+		balloon_alert(user, "access denied!")
 		return
 
 	var/list/stock_parts = list()

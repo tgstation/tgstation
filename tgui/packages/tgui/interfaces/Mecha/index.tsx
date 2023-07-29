@@ -165,7 +165,7 @@ const IntegrityBar = (props, context) => {
   return (
     <LabeledList.Item label="Integrity">
       {!scanmod_rating ? (
-        <Box italic content={'Unknown.'} />
+        <Box italic>Unknown</Box>
       ) : (
         <ProgressBar
           ranges={{

@@ -1,21 +1,3 @@
-export const KelvinZeroCelcius = 273.15;
-
-export const InternalDamageToDamagedDesc = {
-  'MECHA_INT_FIRE': 'Internal fire detected',
-  'MECHA_INT_TEMP_CONTROL': 'Cabin heater offline',
-  'MECHA_CABIN_AIR_BREACH': 'Cabin breach detected',
-  'MECHA_INT_CONTROL_LOST': 'Servo motors damaged',
-  'MECHA_INT_SHORT_CIRCUIT': 'Capacitors shorted',
-};
-
-export const InternalDamageToNormalDesc = {
-  'MECHA_INT_FIRE': 'No internal fires detected',
-  'MECHA_INT_TEMP_CONTROL': 'Cabin heater active',
-  'MECHA_CABIN_AIR_BREACH': 'Cabin sealing intact',
-  'MECHA_INT_CONTROL_LOST': 'Servo motors active',
-  'MECHA_INT_SHORT_CIRCUIT': 'Capacitors operational',
-};
-
 export type AccessData = {
   name: string;
   number: number;
@@ -82,8 +64,4 @@ export type MechModule = {
 export type Snowflake = {
   snowflake_id: string;
   integrity: number;
-};
-
-export type SnowflakeWeapon = {
-  snowflake_id: string;
 };

@@ -231,6 +231,7 @@
 	add_capacitor()
 	add_servo()
 	update_access()
+	set_wires(new /datum/wires/mecha(src))
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
 	log_message("[src.name] created.", LOG_MECHA)
@@ -436,7 +437,20 @@
 	if(LAZYLEN(flat_equipment))
 		. += span_notice("It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
+			if(istype(ME, /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay))
+				continue
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
+	if(mecha_flags & PANEL_OPEN)
+		if(servo)
+			. += span_notice("Micro-servos reduce movement power usage by [round((servo.rating - 1) / 3) * 100]%")
+		else
+			. += span_warning("It's missing micro-servo.")
+		if(capacitor)
+			. += span_notice("Capacitor increases armor against energy attacks by [capacitor * 5].")
+		else
+			. += span_warning("It's missing capacitor.")
+		if(!scanmod)
+			. += span_warning("It's missing scanning module.")
 	if(enclosed)
 		return
 	if(mecha_flags & SILICON_PILOT)
@@ -512,13 +526,16 @@
 /obj/vehicle/sealed/mecha/proc/process_cabin_air(seconds_per_tick)
 	if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && cabin_air && cabin_air.return_volume() > 0)
 		var/heat_capacity = cabin_air.heat_capacity()
-		var/required_energy = (T20C - cabin_air.temperature) * heat_capacity
+		var/required_energy = abs(T20C - cabin_air.temperature) * heat_capacity
 		required_energy = min(required_energy, 1000)
 		if(required_energy < 1)
 			return
 		var/delta_temperature = required_energy / heat_capacity
 		if(delta_temperature)
-			cabin_air.temperature += delta_temperature
+			if(cabin_air.temperature < T20C)
+				cabin_air.temperature += delta_temperature
+			else
+				cabin_air.temperature -= delta_temperature
 
 /obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
 	for(var/mob/living/occupant as anything in occupants)
@@ -743,3 +760,10 @@
 /obj/vehicle/sealed/mecha/proc/update_access()
 	req_access = one_access ? list() : accesses
 	req_one_access = one_access ? accesses : list()
+
+/// Electrocute user from power celll
+/obj/vehicle/sealed/mecha/proc/shock(mob/living/user)
+	if(!istype(user) || get_charge() < 1)
+		return FALSE
+	do_sparks(5, TRUE, src)
+	return electrocute_mob(user, cell, src, 0.7, TRUE)
