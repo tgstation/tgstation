@@ -196,6 +196,7 @@
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
+	var/disable_duration =  knockdown_time * (trait_check ? 0.1 : 1)
 	if(iscyborg(target))
 		if(!affect_cyborg)
 			return FALSE
