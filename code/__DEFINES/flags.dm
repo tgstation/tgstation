@@ -255,20 +255,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // This skillchip is incompatible with other skillchips from the incompatible_category list.
 #define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
 
-//dir macros
-///Returns true if the dir is diagonal, false otherwise
-#define ISDIAGONALDIR(d) (d&(d-1))
-///True if the dir is north or south, false therwise
-#define NSCOMPONENT(d)   (d&(NORTH|SOUTH))
-///True if the dir is east/west, false otherwise
-#define EWCOMPONENT(d)   (d&(EAST|WEST))
-///Flips the dir for north/south directions
-#define NSDIRFLIP(d)     (d^(NORTH|SOUTH))
-///Flips the dir for east/west directions
-#define EWDIRFLIP(d)     (d^(EAST|WEST))
-///Turns the dir by 180 degrees
-#define DIRFLIP(d)       turn(d, 180)
-
 #define MAX_BITFIELD_SIZE 24
 
 /// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
@@ -285,7 +271,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_INCAPACITATED (1<<3)
 /// Used to prevent important slowdowns from being abused by drugs like kronkaine
 #define IGNORE_SLOWDOWNS (1<<4)
-
 
 // Spacevine-related flags
 /// Is the spacevine / flower bud heat resistant

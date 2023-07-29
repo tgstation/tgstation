@@ -1,7 +1,7 @@
 /datum/traitor_objective/target_player/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
 	description = "%TARGET% holds extremely important information regarding secret NT projects - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
-		You'll get additional reward if %TARGET% is delivered alive."
+		If %TARGET% is delivered alive, you will be rewarded with an additional %TC% telecrystals."
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
 
@@ -168,6 +168,7 @@
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 	replace_in_name("%AREA%", initial(dropoff_area.name))
+	replace_in_name("%TC%", alive_bonus)
 	return TRUE
 
 /datum/traitor_objective/target_player/kidnapping/ungenerate_objective()

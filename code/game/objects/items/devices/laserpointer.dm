@@ -214,7 +214,7 @@
 		if(target_sillycone.stat == DEAD)
 			outmsg = span_notice("You point [src] at [target_sillycone], but [target_sillycone.p_they()] appear[target_sillycone.p_s()] to be non-functioning.")
 		if(prob(effectchance * diode.rating) && target_sillycone.flash_act(affect_silicon = TRUE))
-			target_sillycone.Paralyze(rand(10 SECONDS, 20 SECONDS))
+			target_sillycone.set_temp_blindness_if_lower(5 SECONDS)
 			to_chat(target_sillycone, span_danger("Your sensors were overloaded by a laser!"))
 			outmsg = span_notice("You overload [target_sillycone] by shining [src] at [target_sillycone.p_their()] sensors.")
 			log_combat(user, target_sillycone, "shone in the sensors", src)
