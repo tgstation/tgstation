@@ -11,19 +11,22 @@ handles linking back and forth.
 	// 2. silo is null, materials is parented to parent
 	// 3. silo is null, materials is null
 
-	/// The silo machine this container is connected to
+	///The silo machine this container is connected to
 	var/obj/machinery/ore_silo/silo
-	//material container. the value is either the silo or local
+	//Material container. the value is either the silo or local
 	var/datum/component/material_container/mat_container
-	//should we create a local storage if we can't connect to silo
+	//Should we create a local storage if we can't connect to silo
 	var/allow_standalone
-	//local size of container when silo = null
+	//Local size of container when silo = null
 	var/local_size = INFINITY
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
 
 	//Internal vars
+
+	///Prepare storage when component is registered to parent. This allows local material container(if created) to be first in the component list so it gets GC'd properly
 	var/_prepare_on_register = FALSE
+	///Are we trying to to connect to remote ore silo or not
 	var/_connect_to_silo = FALSE
 
 /datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)

@@ -48,11 +48,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		silo_mats = AddComponent( \
-			/datum/component/remote_materials, \
-			mapload, \
-			FALSE \
-		)
+		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
 	update_appearance()
 
 ///used for examining the RCD and for its UI
@@ -105,11 +101,7 @@
 		return
 	upgrade |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = AddComponent(
-			/datum/component/remote_materials, \
-			FALSE, \
-			FALSE \
-		)
+		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
 
