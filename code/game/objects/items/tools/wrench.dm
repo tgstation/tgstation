@@ -133,7 +133,7 @@
 	inhand_icon_state = "bolter_wrench"
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/wrench/tile_remover
+/obj/item/wrench/giant_wrench
 	name = "Big Slappy"
 	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
 	icon_state = "giant_wrench"
@@ -145,7 +145,7 @@
 	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
-	toolspeed = 0.2
+	toolspeed = 0.1
 	force = 25
 	throwforce = 20
 	block_chance = 30
@@ -156,7 +156,7 @@
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
 	attack_verb_simple = list("bonks", "bludgeons", "pounds")
-	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	usesound = 'sound/items/drill_use.ogg'
 	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
