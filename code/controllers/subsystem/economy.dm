@@ -213,8 +213,8 @@ SUBSYSTEM_DEF(economy)
  */
 /datum/controller/subsystem/economy/proc/update_vending_prices()
 	var/list/obj/machinery/vending/prices_to_update = list()
-		// Assoc list of "z level" -> if it's on the station
-		// Hack, is station z level is too expensive to do for each machine, I hate this place
+	// Assoc list of "z level" -> if it's on the station
+	// Hack, is station z level is too expensive to do for each machine, I hate this place
 	var/list/station_z_status = list()
 	for(var/obj/machinery/vending/vending_lad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
 		if(istype(vending_lad, /obj/machinery/vending/custom))
