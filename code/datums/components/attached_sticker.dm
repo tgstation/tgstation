@@ -50,7 +50,8 @@
 		sticker.pixel_y = rand(-4,1)
 		sticker.pixel_x = rand(-3,3)
 	sticker = null
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /datum/component/attached_sticker/RegisterWithParent()
 	if(sticker.resistance_flags & FLAMMABLE)
