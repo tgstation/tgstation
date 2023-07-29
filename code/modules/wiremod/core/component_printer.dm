@@ -315,7 +315,7 @@
 	///List of designs scanned and saved
 	var/list/scanned_designs = list()
 	///Constant material cost per component
-	var/cost_per_component = HALF_SHEET_MATERIAL_AMOUNT
+	var/cost_per_component = SHEET_MATERIAL_AMOUNT / 10
 	///Cost efficiency of this machine
 	var/efficiency_coeff = 1
 
