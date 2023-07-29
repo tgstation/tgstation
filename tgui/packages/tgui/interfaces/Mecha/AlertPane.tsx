@@ -1,9 +1,9 @@
 import { useBackend } from '../../backend';
 import { Section, Stack, Button, Box, Icon } from '../../components';
-import { OperatorData, InternalDamageToDamagedDesc, InternalDamageToNormalDesc } from './data';
+import { MainData, InternalDamageToDamagedDesc, InternalDamageToNormalDesc } from './data';
 
 export const AlertPane = (props, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+  const { act, data } = useBackend<MainData>(context);
   const { internal_damage, internal_damage_keys } = data;
   return (
     <Section title="Status">

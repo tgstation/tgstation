@@ -24,22 +24,6 @@ export type AccessData = {
 export type MainData = {
   isoperator: boolean;
   ui_theme: string;
-};
-
-export type MaintData = {
-  name: string;
-  mecha_flags: number;
-  mechflag_keys: string[];
-  internal_tank_valve: number;
-  cell: string;
-  scanning: string;
-  capacitor: string;
-  servo: string;
-  operation_req_access: AccessData[];
-  idcard_access: AccessData[];
-};
-
-export type OperatorData = {
   name: string;
   integrity: number;
   power_level: number | null;
@@ -52,6 +36,10 @@ export type OperatorData = {
   one_access: boolean;
   regions: string[];
   accesses: string[];
+
+  servo_rating: number;
+  scanmod_rating: number;
+  capacitor_rating: number;
 
   cabin_pressure_warning_min: number;
   cabin_pressure_hazard_min: number;

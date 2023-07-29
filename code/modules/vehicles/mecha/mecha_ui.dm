@@ -85,6 +85,10 @@
 	data["one_access"] = one_access
 	data["accesses"] = accesses
 
+	data["servo_rating"] = servo?.rating
+	data["scanmod_rating"] = scanmod?.rating
+	data["capacitor_rating"] = capacitor?.rating
+
 	data["weapons_safety"] = weapons_safety
 	data["enclosed"] = enclosed
 	data["cabin_sealed"] = cabin_sealed
@@ -195,9 +199,6 @@
 			dna_lock = null
 		if("toggle_cabin_seal")
 			set_cabin_seal(usr, !cabin_sealed)
-		if("view_dna")
-			tgui_alert(usr, "Enzymes detected: " + dna_lock)
-			return FALSE
 		if("toggle_id_lock")
 			mecha_flags ^= ID_LOCK_ON
 		if("repair_int_damage")
