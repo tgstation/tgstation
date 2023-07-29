@@ -217,13 +217,13 @@
 	var/obj/item/master = comp.parent
 	master.RemoveElement(/datum/element/curse_announcement) //just in case
 
-/datum/fantasy_affix/curse_of_hunger
+/datum/fantasy_affix/curse_of_polymorph
 	name = "curse of polymorph"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_EVIL
 	weight = 5
 
-/datum/fantasy_affix/curse_of_hunger/validate(obj/item/attached)
+/datum/fantasy_affix/curse_of_polymorph/validate(obj/item/attached)
 	// Curse of hunger can be really unbearable to deal with,
 	// so it should not start on someone or in a bag.
 	if(ismob(attached.loc))
@@ -232,7 +232,7 @@
 		return FALSE
 	return TRUE
 
-/datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
+/datum/fantasy_affix/curse_of_polymorph/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
 	var/filter_color = "#8a0c0ca1" //clarified args
@@ -249,7 +249,7 @@
 	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_polymorph, pick(possible_results))
 	return newName //no spoilers!
 
-/datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
+/datum/fantasy_affix/curse_of_polymorph/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
 	master.RemoveElement(/datum/element/curse_announcement) //just in case
 
