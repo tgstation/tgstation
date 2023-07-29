@@ -20,7 +20,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 // check to see if this rped have atleast one circuitboard
 /obj/item/storage/part_replacer/proc/has_an_circuitboard(board_type)
-	return !isnull((locate(board_type) in contents))
+	return (locate(board_type) in contents)
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
 	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine) && !istype(attacked_object, /obj/structure/frame/computer))

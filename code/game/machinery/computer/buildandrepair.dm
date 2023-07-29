@@ -125,10 +125,10 @@
 					return
 
 				//install cable
-				if(!cable.tool_start_check(user, amount=5))
+				if(!cable.tool_start_check(user, amount = 5))
 					return
 				to_chat(user, span_notice("You start adding cables to the frame..."))
-				if(cable.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, volume=50, amount=5))
+				if(cable.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, volume = 50, amount = 5))
 					if(state != 2)
 						return
 					to_chat(user, span_notice("You add cables to the frame."))
@@ -152,7 +152,7 @@
 				if (!QDELETED(A))
 					A.add_fingerprint(user)
 			else
-				//serach for glass sheets which can either be the attacking item or inside an rped
+				//search for glass sheets which can either be the attacking item or inside an rped
 				var/obj/item/stack/sheet/glass/glass_sheets = null
 				if(istype(P, /obj/item/stack/sheet/glass))
 					glass_sheets = P
@@ -162,11 +162,11 @@
 					return
 
 				//install glass sheets
-				if(!glass_sheets.tool_start_check(user, amount=2))
+				if(!glass_sheets.tool_start_check(user, amount = 2))
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, span_notice("You start to put in the glass panel..."))
-				if(glass_sheets.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, amount=2))
+				if(glass_sheets.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, amount = 2))
 					if(state != 3)
 						return
 					to_chat(user, span_notice("You put in the glass panel."))
