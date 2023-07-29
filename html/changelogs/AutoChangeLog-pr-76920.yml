@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Player-controlled bots can now play the prerecorded lines associated with that bot."
+  - rscadd: "Placing a pAI into a bot temporarily teaches that bot all the langauges the pAI could speak."
