@@ -174,4 +174,4 @@
 	. = ..()
 	transform = transform.Translate(-16, -16)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
-	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/tile_remover, TRUE)
+	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/giant_wrench, TRUE)
