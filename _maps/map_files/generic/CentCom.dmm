@@ -1797,6 +1797,16 @@
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
+"if" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/statue/bananium/clown,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pizzatime";
+	name = "Pizza Time Shutters";
+	desc = "People who take escape pods over the shuttle don't get to visit centcom's pizza tower..."
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "ig" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -2953,7 +2963,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pizzatime";
-	name = "Pizza Time shutters";
+	name = "Pizza Time Shutters";
 	desc = "People who take escape pods over the shuttle don't get to visit centcom's pizza tower..."
 	},
 /obj/structure/statue/bananium/clown,
@@ -3433,7 +3443,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pizzatime";
-	name = "Pizza Time shutters";
+	name = "Pizza Time Shutters";
 	desc = "People who take escape pods over the shuttle don't get to visit centcom's pizza tower..."
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -55999,7 +56009,7 @@ uR
 uR
 uR
 Vx
-lM
+if
 Jg
 mM
 Ox
