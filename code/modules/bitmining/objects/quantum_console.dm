@@ -74,13 +74,6 @@
 		return FALSE
 
 	switch(action)
-		if("check_completion")
-			if(!server.check_completion(usr))
-				return TRUE
-			if(!server.generate_loot(usr))
-				return TRUE
-			server.stop_domain(usr)
-			return TRUE
 		if("random_domain")
 			var/map_id = server.get_random_domain_id()
 			if(!map_id)

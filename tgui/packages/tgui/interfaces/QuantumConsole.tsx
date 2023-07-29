@@ -157,12 +157,6 @@ const AccessView = (props, context) => {
                 onClick={() => act('stop_domain')}
                 tooltip="Begins shutdown. Will notify anyone connected."
               />
-              <Button
-                disabled={!ready || !generated_domain}
-                onClick={() => completionDebounce(act)}
-                tooltip="Check the send area for loot crates.">
-                Check Completion
-              </Button>
             </Stack.Item>
           </Stack>
         </Section>

@@ -36,12 +36,12 @@
 	var/datum/weakref/console_ref
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
-	/// The amount to scale (and descale) loot with extra players
-	var/rewards_coefficient = 1.5
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
 	var/loading = FALSE
+	/// The amount to scale (and descale) loot with extra players
+	var/multiplayer_coefficient = 1.5
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Keeps track of the number of times someone has built a hololadder
@@ -60,6 +60,8 @@
 	var/turf/exit_turfs = list()
 	/// This marks the starting point (bottom left) of the virtual dom map. We use this to spawn templates. Expected: 1
 	var/turf/map_load_turf = list()
+	/// Turfs to look for loot boxes.
+	var/turf/send_turfs = list()
 	/// The turfs on station where we generate loot.
 	var/turf/receive_turfs = list()
 	/// This marks the starting point (bottom left) of the safehouse. We use this to spawn the safehouse. Expected: 1
@@ -113,12 +115,12 @@
 
 /obj/machinery/quantum_server/RefreshParts()
 	. = ..()
-	var/total_rating = 1.2
 
+	var/capacitor_rating = 0.8
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		total_rating -= capacitor.tier * 0.1
+		capacitor_rating += capacitor.tier * 0.1
 
-	server_cooldown_efficiency = max(total_rating, 0)
+	server_cooldown_efficiency = max(capacitor_rating, 0)
 
 	var/datum/stock_part/scanning_module/scanner = locate(/datum/stock_part/scanning_module) in component_parts
 	if(scanner)
@@ -136,32 +138,10 @@
 	balloon_alert(user, "notifying clients...")
 	SEND_SIGNAL(src, COMSIG_BITMINING_SHUTDOWN_ALERT, user)
 
-	if(!do_after(user, 15 SECONDS, src))
+	if(!do_after(user, 20 SECONDS, src))
 		return
 
 	stop_domain(user)
-
-/// Checks if there is a loot crate in the designated send areas (2x2)
-/obj/machinery/quantum_server/proc/check_completion(mob/user)
-	if(isnull(generated_domain))
-		return FALSE
-
-	var/datum/space_level/vdom = vdom_ref?.resolve()
-	if(isnull(vdom))
-		return FALSE
-
-	var/turf/send_turfs = get_area_turfs(preset_send_area, vdom.z_value)
-	if(!length(send_turfs))
-		CRASH("Failed to find send turfs in the virtual domain.")
-
-	for(var/turf/tile in send_turfs)
-		if(locate(/obj/structure/closet/crate/secure/bitminer_loot/encrypted) in tile)
-			return TRUE
-
-	user.playsound_local(src, 'sound/machines/buzz-two.ogg', 30, 2)
-	balloon_alert(user, "no loot crate found.")
-
-	return FALSE
 
 /**
  * ### Quantum Server Cold Boot
@@ -229,8 +209,6 @@
 			nearby_console.server_ref = WEAKREF(src)
 			return nearby_console
 
-	return
-
 /// Generates a new avatar for the bitminer.
 /obj/machinery/quantum_server/proc/generate_avatar(obj/structure/hololadder/wayout, datum/outfit/netsuit)
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
@@ -269,14 +247,7 @@
 	return wayout
 
 /// Generates a reward based on the given domain
-/obj/machinery/quantum_server/proc/generate_loot(mob/user)
-	if(isnull(generated_domain))
-		return FALSE
-
-	if(length(occupant_mind_refs))
-		balloon_alert(user, "all clients must disconnect!")
-		return FALSE
-
+/obj/machinery/quantum_server/proc/generate_loot()
 	if(!length(receive_turfs))
 		receive_turfs = get_area_turfs(preset_receive_area)
 	if(!length(receive_turfs))
@@ -289,16 +260,19 @@
 	if(isnull(dest_turf))
 		CRASH("Failed to find a turf to spawn loot crate on.")
 
+	var/rewards_multiplier = 1
 
-	var/rewards_multiplier = generated_domain.reward_points
 	if(domain_randomized)
 		rewards_multiplier += 0.2
 
-	for(var/index in 2 to length(occupant_mind_refs))
-		rewards_multiplier *= rewards_coefficient
+	for(var/datum/stock_part/servo/servo in component_parts)
+		rewards_multiplier += servo.tier * 0.1
 
-	new /obj/structure/closet/crate/secure/bitminer_loot/decrypted(dest_turf, generated_domain, rewards_multiplier)
-	return TRUE
+	for(var/index in 2 to length(occupant_mind_refs))
+		rewards_multiplier *= multiplayer_coefficient
+
+	var/obj/structure/closet/crate/secure/bitminer_loot/decrypted/reward_crate = new(dest_turf, generated_domain, rewards_multiplier)
+	teleport_effects(reward_crate)
 
 /// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals
 /obj/machinery/quantum_server/proc/get_avatar_data()
@@ -381,8 +355,6 @@
 			domain_randomized = TRUE
 			return available["id"]
 
-	return
-
 /// Returns if the server is busy via loading or cooldown states
 /obj/machinery/quantum_server/proc/get_ready_status()
 	return !loading && COOLDOWN_FINISHED(src, cooling_off)
@@ -445,7 +417,11 @@
 	generated_safehouse = safehouse
 
 	var/datum/space_level/vdom = vdom_ref?.resolve()
-	exit_turfs = get_area_turfs(/area/station/virtual_domain/safehouse/exit, vdom.z_value)
+	exit_turfs = get_area_turfs(preset_exit_area, vdom.z_value)
+	send_turfs = get_area_turfs(preset_send_area, vdom.z_value)
+
+	for(var/turf/tile in send_turfs)
+		RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_send_turf_entered))
 
 	return TRUE
 
@@ -455,22 +431,33 @@
 
 	INVOKE_ASYNC(src, PROC_REF(stop_domain))
 
-
 /// Each time someone connects, mob health jumps 1.5x
 /obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_mind)
 	SIGNAL_HANDLER
 
 	occupant_mind_refs += new_mind
-	if(length(occupant_mind_refs) == 1)
-		return
 
 /// If a client disconnects, remove them from the list & nerf mobs
 /obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_mind)
 	SIGNAL_HANDLER
 
 	occupant_mind_refs -= old_mind
-	if(length(occupant_mind_refs) == 0)
+
+/// Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.
+/obj/machinery/quantum_server/proc/on_send_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if(!istype(arrived, /obj/structure/closet/crate/secure/bitminer_loot/encrypted))
 		return
+
+	var/obj/structure/closet/crate/secure/bitminer_loot/encrypted/loot_crate = arrived
+	if(!istype(loot_crate))
+		return
+
+	spark_at_location(loot_crate)
+	qdel(loot_crate)
+	SEND_SIGNAL(src, COMSIG_BITMINING_DOMAIN_COMPLETE, arrived)
+	generate_loot()
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
@@ -482,6 +469,13 @@
 	examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 	if(server_cooldown_efficiency < 1)
 		examine_text += span_notice("Its coolant capacity reduces cooldown time by [(1 - server_cooldown_efficiency) * 100]%.")
+
+/// Do some magic teleport sparks
+/obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
+	var/datum/effect_system/spark_spread/quantum/sparks = new /datum/effect_system/spark_spread/quantum
+	sparks.set_up(5, 1, get_turf(crate))
+	sparks.start()
+	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/stop_domain(mob/user)
@@ -499,7 +493,7 @@
 		loading = FALSE
 		return
 
-	// Applies a fresh template with delete areas onto the map
+	// Applies a fresh template onto the map
 	var/datum/map_template/virtual_domain/fresh_map = new()
 	fresh_map.load(map_load_turf[ONLY_TURF])
 

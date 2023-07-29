@@ -213,6 +213,7 @@
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
 		SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, occupant_mind_ref)
+		receiving.UnregisterSignal(server, COMSIG_BITMINING_DOMAIN_COMPLETE)
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_SERVER_CRASH)
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT)
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_CROWBAR_ALERT)

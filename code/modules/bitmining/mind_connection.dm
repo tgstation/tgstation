@@ -35,6 +35,7 @@
 	)
 	RegisterSignal(hosting_netpod, COMSIG_BITMINING_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(hosting_netpod, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
+	RegisterSignal(server, COMSIG_BITMINING_DOMAIN_COMPLETE, PROC_REF(on_domain_completed))
 	RegisterSignal(server, COMSIG_BITMINING_SERVER_CRASH, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
 	RegisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
@@ -56,6 +57,17 @@
 /datum/mind/proc/disconnect_avatar_signals()
 	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(current, COMSIG_LIVING_DEATH)
+
+/// Triggers whenever the server gets a loot crate pushed to send area
+/datum/mind/proc/on_domain_completed(datum/source, atom/entered)
+	SIGNAL_HANDLER
+
+	current.playsound_local(current, 'sound/machines/terminal_alert.ogg', 50, TRUE)
+	current.throw_alert(
+		ALERT_BITMINING_COMPLETED,
+		/atom/movable/screen/alert/qserver_domain_complete,
+		new_master = entered
+	)
 
 /// Transfers damage from the avatar to the pilot
 /datum/mind/proc/on_linked_damage(datum/source, damage, damage_type, def_zone, blocked, forced)

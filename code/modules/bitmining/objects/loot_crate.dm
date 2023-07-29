@@ -1,5 +1,5 @@
-#define ORE_MULTIPLIER_IRON 3
-#define ORE_MULTIPLIER_GLASS 2
+#define ORE_MULTIPLIER_IRON 2
+#define ORE_MULTIPLIER_GLASS 1.5
 #define ORE_MULTIPLIER_PLASMA 1
 #define ORE_MULTIPLIER_SILVER 0.7
 #define ORE_MULTIPLIER_GOLD 0.6
@@ -42,25 +42,24 @@
 
 /obj/structure/closet/crate/secure/bitminer_loot/decrypted/PopulateContents(list/extra_loot, rewards_multiplier)
 	. = ..()
-	var/sum = 10 + rewards_multiplier
 
 	for(var/path in extra_loot)
 		if(ispath(path))
 			new path()
 
-	new /obj/item/stack/ore/iron(src, sum * ORE_MULTIPLIER_IRON)
-	new /obj/item/stack/ore/glass(src, sum * ORE_MULTIPLIER_GLASS)
-	new /obj/item/stack/ore/plasma(src, sum * ORE_MULTIPLIER_PLASMA)
+	new /obj/item/stack/ore/iron(src, rewards_multiplier * ORE_MULTIPLIER_IRON)
+	new /obj/item/stack/ore/glass(src, rewards_multiplier * ORE_MULTIPLIER_GLASS)
+	new /obj/item/stack/ore/plasma(src, rewards_multiplier * ORE_MULTIPLIER_PLASMA)
 
 	if(rewards_multiplier > 2)
-		new /obj/item/stack/ore/silver(src, sum * ORE_MULTIPLIER_SILVER)
-		new /obj/item/stack/ore/gold(src, sum * ORE_MULTIPLIER_GOLD)
-		new /obj/item/stack/ore/titanium(src, sum * ORE_MULTIPLIER_TITANIUM)
+		new /obj/item/stack/ore/silver(src, rewards_multiplier * ORE_MULTIPLIER_SILVER)
+		new /obj/item/stack/ore/gold(src, rewards_multiplier * ORE_MULTIPLIER_GOLD)
+		new /obj/item/stack/ore/titanium(src, rewards_multiplier * ORE_MULTIPLIER_TITANIUM)
 
 	if(rewards_multiplier > 3)
-		new /obj/item/stack/ore/uranium(src, sum * ORE_MULTIPLIER_URANIUM)
-		new /obj/item/stack/ore/diamond(src, sum * ORE_MULTIPLIER_DIAMOND)
-		new /obj/item/stack/ore/bluespace_crystal(src, sum * ORE_MULTIPLIER_BLUESPACE_CRYSTAL)
+		new /obj/item/stack/ore/uranium(src, rewards_multiplier * ORE_MULTIPLIER_URANIUM)
+		new /obj/item/stack/ore/diamond(src, rewards_multiplier * ORE_MULTIPLIER_DIAMOND)
+		new /obj/item/stack/ore/bluespace_crystal(src, rewards_multiplier * ORE_MULTIPLIER_BLUESPACE_CRYSTAL)
 
 #undef ORE_MULTIPLIER_IRON
 #undef ORE_MULTIPLIER_GLASS
