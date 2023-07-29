@@ -99,25 +99,27 @@
 		if(crystal_lens)
 			balloon_alert(user, "already has a lens!")
 			return
-		//the crystal we're about to install
-		var/obj/item/stack/ore/bluespace_crystal/jammed_crystal = attack_item
+		//the crystal stack we're trying to install a crystal from
+		var/obj/item/stack/ore/bluespace_crystal/crystal_stack = attack_item
 		if(diode && diode.rating < 3) //only lasers of tier 3 and up can house a lens
-			to_chat(user, span_warning("You try to jam \the [jammed_crystal.name] in front of the diode, but it's a bad fit!"))
+			to_chat(user, span_warning("You try to jam \the [crystal_stack.name] in front of the diode, but it's a bad fit!"))
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 20)
 			if(do_after(user, 2 SECONDS, src))
 				var/atom/atom_to_teleport = pick(user, src)
 				if(atom_to_teleport == user)
-					to_chat(user, span_warning("You press on \the [jammed_crystal.name] too hard and are teleported away!"))
+					to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and are teleported away!"))
 					user.drop_all_held_items()
 				else if(atom_to_teleport == src)
 					forceMove(drop_location())
-					to_chat(user, span_warning("You press on \the [jammed_crystal.name] too hard and \the [src] is teleported away!"))
-				do_teleport(atom_to_teleport, get_turf(src), jammed_crystal.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-				jammed_crystal.use_tool(src, user, amount = 1) //use only one if we were installing from a stack of crystals
+					to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and \the [src] is teleported away!"))
+				do_teleport(atom_to_teleport, get_turf(src), crystal_stack.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+				crystal_stack.use_tool(src, user, amount = 1) //use only one if we were installing from a stack of crystals
 			return
-		if(!jammed_crystal.use_tool(src, user, amount = 1))
+		//the single crystal that we actually install
+		var/obj/item/stack/ore/bluespace_crystal/single_crystal = fast_split_stack(crystal_stack, 1)
+		if(!user.transferItemToLoc(single_crystal, src))
 			return
-		crystal_lens = new(src) //this could probably convert artificial crystals into pure ones, hmm
+		crystal_lens = single_crystal
 		playsound(src, 'sound/items/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
