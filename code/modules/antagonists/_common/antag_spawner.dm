@@ -268,7 +268,7 @@
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	var/mob/living/basic/demon/slaughter/spawned = new demon_type(T)
-	new /obj/effect/dummy/phased_mob(T, S)
+	new /obj/effect/dummy/phased_mob(T, spawned)
 
 	spawned.key = C.key
 	spawned.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
