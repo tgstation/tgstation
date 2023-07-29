@@ -112,6 +112,9 @@ SUBSYSTEM_DEF(atoms)
 	testing("Initialized [count] atoms")
 
 /// Init this specific atom
+// ⚠️ THIS CODE IS EXTREMELY HOT! Anything new here adds hundreds of milliseconds to init time. ⚠️
+// ⚠️ Anything slightly complicated can easily add seconds, especially on slower machines. ⚠️
+// ⚠️ Please talk to maintainers if you feel you need to edit this code. ⚠️
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
 	var/the_type = A.type
 
@@ -159,13 +162,12 @@ SUBSYSTEM_DEF(atoms)
 		if(location)
 			/// Sends a signal that the new atom `src`, has been created at `loc`
 			SEND_SIGNAL(location, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, A, arguments[1])
-			var/area/atom_area = get_area(location)
-			if(atom_area)
-				SEND_SIGNAL(atom_area, COMSIG_AREA_INITIALIZED_IN, A)
 		if(created_atoms && from_template && ispath(the_type, /atom/movable))//we only want to populate the list with movables
 			created_atoms += A.get_all_contents()
 
 	return qdeleted || QDELING(A)
+// ⚠️ If you are editing InitAtom, make sure to check the warning at the top! ⚠️
+// ⚠️ This code is EXTREMELY hot! ⚠️
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin(source)
 	set_tracked_initalized(INITIALIZATION_INSSATOMS, source)
