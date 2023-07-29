@@ -33,6 +33,7 @@
 	. = ..()
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/crawl = new crawl_type(src)
 	crawl.Grant(src)
+	RegisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack))
 	RegisterSignals(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(on_crawl))
 
 /mob/living/basic/demon/slaughter/grant_loot()
@@ -88,25 +89,26 @@
 	COOLDOWN_START(slam_cooldown, slam_cooldown_time)
 	log_combat(src, victim, "slaughter slammed")
 
-/mob/living/basic/demon/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/// Proc that we execute on attacking someone to keep track of our hitstreaks and wound bonuses. Also handles bodyslamming.
+/mob/living/basic/demon/slaughter/proc/on_attack(atom/attack_target, proximity_flag, list/modifiers)
+	SIGNAL_HANDLER
+
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		bodyslam(attack_target)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!iscarbon(attack_target))
 		return
 
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	var/mob/living/carbon/target = attack_target
+	if(target.stat == DEAD || isnull(target.mind) || (current_hitstreak < wound_bonus_hitstreak_max))
 		return
 
-	if(iscarbon(attack_target))
-		var/mob/living/carbon/target = attack_target
-		if(target.stat != DEAD && target.mind && current_hitstreak < wound_bonus_hitstreak_max)
-			current_hitstreak++
-			wound_bonus += wound_bonus_per_hit
-			bare_wound_bonus += wound_bonus_per_hit
+	current_hitstreak++
+	wound_bonus += wound_bonus_per_hit
+	bare_wound_bonus += wound_bonus_per_hit
 
-	return ..()
-
-/// The laughter demon! It's everyone's best friend! It just wants to hug
-/// them so much, it wants to hug everyone at once!
+/// The laughter demon! It's everyone's best friend! It just wants to hug them so much, it wants to hug everyone at once!
 /mob/living/basic/demon/slaughter/laughter
 	name = "laughter demon"
 	real_name = "laughter demon"
