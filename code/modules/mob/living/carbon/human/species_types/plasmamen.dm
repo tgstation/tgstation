@@ -182,10 +182,6 @@
 		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
 		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
 	)
-// Monkestation Addition Start
-/datum/species/plasmaman/get_laugh_sound(mob/living/carbon/human/human)
-	return 'monkestation/sound/voice/laugh/skeleton/skeleton_laugh.ogg'
-// Monkestation Addition End
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

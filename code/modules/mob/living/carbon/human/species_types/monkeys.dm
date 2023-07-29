@@ -144,11 +144,6 @@
 		'sound/creatures/monkey/monkey_screech_7.ogg',
 	)
 
-// Monkestation Addition Start
-/datum/species/monkey/get_laugh_sound(mob/living/carbon/human/human)
-	return 'monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'
-// Monkestation Addition End
-
 /datum/species/monkey/get_species_description()
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \
 		Every year, on Monkey Day, Nanotrasen shows their respect for the little guys by allowing them to roam the station freely."

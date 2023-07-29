@@ -28,14 +28,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/abductor,
 	)
 
-// Monkestation Addition Start
-/datum/species/abductor/get_scream_sound(mob/living/carbon/human/human)
-	return 'sound/weather/ashstorm/inside/weak_end.ogg'
-
-/datum/species/abductor/get_laugh_sound(mob/living/carbon/human/human)
-	return 'sound/weather/ashstorm/inside/weak_end.ogg'
-// Monkestation Addition End
-
 /datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]

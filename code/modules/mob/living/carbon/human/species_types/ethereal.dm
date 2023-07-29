@@ -192,11 +192,6 @@
 		'sound/voice/ethereal/ethereal_scream_3.ogg',
 	)
 
-// Monkestation Addition Start
-/datum/species/ethereal/get_laugh_sound(mob/living/carbon/human/ethereal)
-	return 'monkestation/sound/voice/laugh/ethereal/ethereal_laugh_1.ogg'
-// Monkestation Addition End
-
 /datum/species/ethereal/get_species_description()
 	return "Coming from the planet of Sprout, the theocratic ethereals are \
 		separated socially by caste, and espouse a dogma of aiding the weak and \
