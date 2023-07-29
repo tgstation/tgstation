@@ -20,14 +20,14 @@
 	var/crawl_type = /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon
 	/// How long it takes for the alt-click slam attack to come off cooldown
 	var/slam_cooldown_time = 45 SECONDS
-	/// The actual instance var for the cooldown
-	var/slam_cooldown = 0
 	/// How many times we have hit humanoid targets since we last bloodcrawled, scaling wounding power
 	var/current_hitstreak = 0
 	/// How much both our wound_bonus and bare_wound_bonus go up per hitstreak hit
 	var/wound_bonus_per_hit = 5
 	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
 	var/wound_bonus_hitstreak_max = 12
+	/// Cooldown tracker for the slam
+	COOLDOWN_DECLARE(slam_cooldown)
 
 /mob/living/basic/demon/slaughter/Initialize(mapload)
 	. = ..()
@@ -58,7 +58,6 @@
 	wound_bonus = initial(wound_bonus)
 	bare_wound_bonus = initial(bare_wound_bonus)
 
-
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/basic/demon/slaughter/proc/bodyslam(atom/attack_target)
 	if(!isliving(attack_target))
@@ -68,13 +67,15 @@
 		to_chat(src, span_warning("You are too far away to use your slam attack on [attack_target]!"))
 		return
 
-	if(slam_cooldown + slam_cooldown_time > world.time)
+	if(COOLDOWN_FINISHED(slam_cooldown))
 		to_chat(src, span_warning("Your slam ability is still on cooldown!"))
 		return
 
 	face_atom(attack_target)
+
 	var/mob/living/victim = attack_target
-	victim.take_bodypart_damage(brute=20, wound_bonus=wound_bonus) // don't worry, there's more punishment when they hit something
+	victim.take_bodypart_damage(brute = 20, wound_bonus = wound_bonus) // don't worry, there's more punishment when they hit something
+
 	visible_message(
 		span_danger("[src] slams into [victim] with monstrous strength!"),
 		span_danger("You slam into [victim] with monstrous strength!"),
@@ -84,7 +85,7 @@
 
 	var/turf/yeet_target = get_edge_target_turf(victim, dir)
 	victim.throw_at(yeet_target, 10, 5, src)
-	slam_cooldown = world.time
+	COOLDOWN_START(slam_cooldown, slam_cooldown_time)
 	log_combat(src, victim, "slaughter slammed")
 
 /mob/living/basic/demon/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
