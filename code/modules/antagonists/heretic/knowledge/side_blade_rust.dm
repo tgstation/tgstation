@@ -95,3 +95,11 @@
 	// We removed any invalid casings from the atoms list,
 	// return to allow the ritual to fill out selected atoms with the new list
 	return TRUE
+
+/datum/heretic_knowledge/spell/rust_charge
+	name = "rust charge"
+	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
+	gain_text = "The hills sparkeled now, as I neared them my mind began to wander, I quickly regained my resolve and pushed forward, this last leg would be the most treacherous"
+	spell_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
+	cost = 1
+	route = PATH_SIDE
