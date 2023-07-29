@@ -5,10 +5,9 @@
 #include "code/carbon.dm"
 #include "code/client.dm"
 #include "code/communication.dm"
+#include "code/emote.dm"
 #include "code/human.dm"
 #include "code/living.dm"
 #include "code/mob.dm"
 #include "code/movement.dm"
 #include "code/robot.dm"
-
-//TODO: Перевод
