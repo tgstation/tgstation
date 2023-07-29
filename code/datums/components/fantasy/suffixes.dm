@@ -195,7 +195,7 @@
 	name = "curse of hunger"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_EVIL
-	weight = 2
+	weight = 5
 
 /datum/fantasy_affix/curse_of_hunger/validate(obj/item/attached)
 	// Curse of hunger can be really unbearable to deal with,
@@ -221,7 +221,6 @@
 	name = "curse of polymorph"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_EVIL
-	weight = 5
 
 /datum/fantasy_affix/curse_of_polymorph/validate(obj/item/attached)
 	// Curse of hunger can be really unbearable to deal with,
