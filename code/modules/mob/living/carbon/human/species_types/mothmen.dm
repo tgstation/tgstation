@@ -71,7 +71,7 @@
 	return 'sound/voice/moth/scream_moth.ogg'
 
 // Monkestation Addition Start
-/datum/species/moth/get_laugh_sound(mob_living/carbon/human/human)
+/datum/species/moth/get_laugh_sound(mob/living/carbon/human/human)
 	return pick(
 		'monkestation/sound/voice/laugh/moth/mothchitter.ogg',
 		'monkestation/sound/voice/laugh/moth/mothlaugh.ogg',
