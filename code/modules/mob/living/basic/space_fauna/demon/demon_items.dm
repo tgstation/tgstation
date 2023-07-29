@@ -10,13 +10,14 @@
 	AddElement(/datum/element/update_icon_blocker)
 	return ..()
 
-/obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
-	if(M != user)
+/obj/item/organ/internal/heart/demon/attack(mob/target_mob, mob/living/carbon/user, obj/target)
+	if(target_mob != user)
 		return ..()
-	user.visible_message(span_warning(
-		"[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
+
+	user.visible_message(
+		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
 		span_danger("An unnatural hunger consumes you. You raise [src] your mouth and devour it!"),
-		)
+	)
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
 	if(locate(/datum/action/cooldown/spell/jaunt/bloodcrawl) in user.actions)
@@ -28,6 +29,7 @@
 		span_warning("[user]'s eyes flare a deep crimson!"),
 		span_userdanger("You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!"),
 	)
+
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
@@ -43,7 +45,7 @@
 	qdel(crawl)
 
 /obj/item/organ/internal/heart/demon/Stop()
-	return 0 // Always beating.
+	return FALSE // Always beating.
 
 /obj/effect/decal/cleanable/blood/innards
 	name = "pile of viscera"
