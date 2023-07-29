@@ -32,8 +32,8 @@
 
 	radio = new(src)
 	radio.set_listening(FALSE)
-	R.set_frequency(FREQ_RADIO_NAV_BEACON)
-	R.freqlock = RADIO_FREQENCY_LOCKED
+	radio.set_frequency(FREQ_RADIO_NAV_BEACON)
+	radio.freqlock = RADIO_FREQENCY_LOCKED
 	radio.recalculateChannels()
 
 	START_PROCESSING(SSmachines, src)
