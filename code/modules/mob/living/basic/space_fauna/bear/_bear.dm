@@ -125,6 +125,15 @@
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
 
+/mob/living/basic/bear/butter/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/regenerator,\
+		regeneration_delay = 1 SECONDS,\
+		health_per_second = 5,\
+		outline_colour = COLOR_YELLOW,\
+	)
+
 /mob/living/basic/bear/butter/attack_hand(mob/living/user, list/modifiers) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	. = ..()
 	if(user.combat_mode && user.reagents && !stat)
