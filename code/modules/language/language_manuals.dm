@@ -1,5 +1,5 @@
 /obj/item/language_manual
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "book2"
 	/// Number of charges the book has, limits the number of times it can be used.
 	var/charges = 1
@@ -65,13 +65,8 @@
 
 /obj/item/language_manual/roundstart_species/Initialize(mapload)
 	. = ..()
-	language = pick( \
-		/datum/language/voltaic, \
-		/datum/language/nekomimetic, \
-		/datum/language/draconic, \
-		/datum/language/moffic, \
-		/datum/language/calcic \
-	)
+	var/list/available_languages = length(GLOB.uncommon_roundstart_languages) ? GLOB.uncommon_roundstart_languages : list(/datum/language/common)
+	language = pick(available_languages)
 	name = "[initial(language.name)] manual"
 	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""
 	flavour_text = "you feel empowered with a mastery over [initial(language.name)]"

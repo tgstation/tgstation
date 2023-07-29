@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
-	icon = 'icons/obj/power_cond/layer_cable.dmi'
+	icon = 'icons/obj/pipes_n_cables/layer_cable.dmi'
 	icon_state = "l2-1-2-4-8-node"
 	color = CABLE_HEX_COLOR_YELLOW
 	plane = FLOOR_PLANE
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
 					if(S && (!S.terminal || S.terminal == search_parent))
 						continue
-		var/inverse = turn(check_dir, 180)
+		var/inverse = REVERSE_DIR(check_dir)
 		for(var/obj/structure/cable/C in TB)
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
 	for(var/check_dir in GLOB.cardinals)
-		var/inverse = turn(check_dir, 180)
+		var/inverse = REVERSE_DIR(check_dir)
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
 			for(var/obj/structure/cable/C in TB)
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(direction)
 
-	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
+	var/inverse_dir = (!direction)? 0 : REVERSE_DIR(direction) //flip the direction, to match with the source position on its turf
 
 	var/turf/TB = get_step(src, direction)
 
@@ -420,7 +420,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	name = "cable coil"
 	custom_price = PAYCHECK_LOWER * 0.8
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "coil"
 	inhand_icon_state = "coil_yellow"
 	base_icon_state = "coil"
@@ -513,8 +513,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
 	"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
 	"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
-	"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
-	"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable"),
+	"Multilayer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cable_bridge"),
+	"Multi Z layer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
 	"Cable restraints" = restraints_icon
 	)
 
@@ -651,7 +651,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/multilayer
 	name = "multilayer cable hub"
 	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty multilayer power transfer."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/pipes_n_cables/structures.dmi'
 	icon_state = "cable_bridge"
 	cable_layer = CABLE_LAYER_2
 	layer = WIRE_LAYER - 0.02 //Below all cables Disabled layers can lay over hub
@@ -664,19 +664,19 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/multilayer/update_icon()
 	. = ..()
 	underlays.Cut()
-	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l4-1-2-4-8-node")
+	var/mutable_appearance/cable_node_3 = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l4-1-2-4-8-node")
 	cable_node_3.color = CABLE_COLOR_BLUE
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
 	underlays += cable_node_3
-	var/mutable_appearance/cable_node_2 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l2-1-2-4-8-node")
+	var/mutable_appearance/cable_node_2 = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l2-1-2-4-8-node")
 	cable_node_2.color = CABLE_COLOR_YELLOW
 	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
 	underlays += cable_node_2
-	var/mutable_appearance/cable_node_1 = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l1-1-2-4-8-node")
+	var/mutable_appearance/cable_node_1 = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l1-1-2-4-8-node")
 	cable_node_1.color = CABLE_COLOR_RED
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
 	underlays += cable_node_1
-	var/mutable_appearance/machinery_node = mutable_appearance('icons/obj/power_cond/layer_cable.dmi', "l2-noconnection")
+	var/mutable_appearance/machinery_node = mutable_appearance('icons/obj/pipes_n_cables/layer_cable.dmi', "l2-noconnection")
 	machinery_node.color = "black"
 	underlays += machinery_node
 

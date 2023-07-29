@@ -289,7 +289,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
 	icon_state = "random_anything"
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
-	blacklisted_types = list(/obj/structure/sign/poster/traitor)
+	blacklisted_types = list(
+		/obj/structure/sign/poster/traitor,
+		/obj/structure/sign/poster/abductor,
+	)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
 

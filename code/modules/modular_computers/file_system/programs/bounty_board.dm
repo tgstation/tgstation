@@ -127,7 +127,3 @@
 		if("bountyText")
 			bounty_text = (params["bountytext"])
 	return TRUE
-
-/datum/computer_file/program/bounty_board/Destroy()
-	GLOB.allbountyboards -= computer
-	. = ..()

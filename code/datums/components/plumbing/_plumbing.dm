@@ -174,9 +174,9 @@
 
 		var/image/overlay
 		if(turn_connects)
-			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]", layer = duct_layer)
+			overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "[direction_text]-[ducting_layer]", layer = duct_layer)
 		else
-			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]-s", layer = duct_layer)
+			overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "[direction_text]-[ducting_layer]-s", layer = duct_layer)
 			overlay.dir = direction
 
 		overlay.color = color
@@ -187,7 +187,7 @@
 
 		// This is a little wiggley extension to make wallmounts like sinks and showers visually link to the pipe
 		if(extend_pipe_to_edge && !extension_handled)
-			var/image/edge_overlay = image('icons/obj/plumbing/connects.dmi', "edge-extension", layer = duct_layer)
+			var/image/edge_overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "edge-extension", layer = duct_layer)
 			edge_overlay.dir = parent_movable.dir
 			edge_overlay.color = color
 			edge_overlay.pixel_x = -parent_movable.pixel_x - parent_movable.pixel_w
@@ -217,7 +217,7 @@
 		for(var/obj/machinery/duct/duct in get_step(parent, direction))
 			if(!(duct.duct_layer & ducting_layer))
 				continue
-			duct.remove_connects(turn(direction, 180))
+			duct.remove_connects(REVERSE_DIR(direction))
 			duct.neighbours.Remove(parent)
 			duct.update_appearance()
 
@@ -302,7 +302,7 @@
 /datum/component/plumbing/proc/direct_connect(datum/component/plumbing/plumbing, dir)
 	if(!plumbing.active)
 		return
-	var/opposite_dir = turn(dir, 180)
+	var/opposite_dir = REVERSE_DIR(dir)
 	if(plumbing.demand_connects & opposite_dir && supply_connects & dir || plumbing.supply_connects & opposite_dir && demand_connects & dir) //make sure we arent connecting two supplies or demands
 		var/datum/ductnet/net = new()
 		net.add_plumber(src, dir)

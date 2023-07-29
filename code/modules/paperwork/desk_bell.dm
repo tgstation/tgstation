@@ -3,7 +3,7 @@
 /obj/structure/desk_bell
 	name = "desk bell"
 	desc = "The cornerstone of any customer service job. You feel an unending urge to ring it."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "desk_bell"
 	layer = OBJ_LAYER
 	anchored = FALSE

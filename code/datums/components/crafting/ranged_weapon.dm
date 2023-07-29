@@ -328,3 +328,32 @@
 	tool_paths = list(/obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy)
 	time = 30 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/smoothbore_disabler
+	name = "Smoothbore Disabler"
+	result = /obj/item/gun/energy/disabler/smoothbore
+	reqs = list(
+		/obj/item/weaponcrafting/stock = 1, //it becomes the grip
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/pipe = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/cell = 1,
+		/obj/item/assembly/mousetrap = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/smoothbore_disabler_prime
+	name = "Elite Smoothbore Disabler"
+	always_available = FALSE
+	result = /obj/item/gun/energy/disabler/smoothbore/prime
+	reqs = list(
+		/obj/item/gun/energy/disabler/smoothbore = 1,
+		/obj/item/stack/sheet/mineral/gold = 5,
+		/obj/item/stock_parts/cell/hyper = 1,
+		/datum/reagent/reaction_agent/speed_agent = 10,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 20 SECONDS
+	category = CAT_WEAPON_RANGED

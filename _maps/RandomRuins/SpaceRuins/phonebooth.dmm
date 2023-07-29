@@ -11,7 +11,7 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/space/has_grav/powered/space_phone_booth)
 "e" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/powered/space_phone_booth)
 "k" = (
 /obj/machinery/vending/snack/green{
@@ -35,7 +35,7 @@
 "v" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/powered/space_phone_booth)
 "z" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -65,7 +65,7 @@
 /area/ruin/space/has_grav/powered/space_phone_booth)
 "V" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/powered/space_phone_booth)
 "W" = (
 /obj/machinery/vending/cigarette{
