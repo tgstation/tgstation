@@ -672,7 +672,7 @@
 		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [sender_name], </b>\"[inbound_message]\"[photo_message] [reply]"))
+		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_name], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
 	if (alert_able && should_ring)
 		computer.ring(ringtone)
