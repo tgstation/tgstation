@@ -16,6 +16,12 @@
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "riflestock"
 
+/obj/item/weaponcrafting/giant_wrench
+	name = "Big Slappy parts kit"
+	desc = "Illegal parts to make a giant like wrench commonly known as a Big Slappy."
+	icon = 'icons/obj/weapons/improvised.dmi'
+	icon_state = "weaponkit_gw"
+
 ///These gun kits are printed from the security protolathe to then be used in making new weapons
 
 // GUN PART KIT //
