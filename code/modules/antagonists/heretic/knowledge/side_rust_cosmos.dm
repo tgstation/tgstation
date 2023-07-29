@@ -32,7 +32,8 @@
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	for(var/turf/nearby_turf in view(rusting_range, loc))
-		if(prob(20) || istype(nearby_turf, /turf/closed))
+		//we exclude closed turf to avoid exposing cultist bases
+		if(prob(20) || isclosedturf(nearby_turf))
 			continue
 		nearby_turf.rust_heretic_act()
 	return TRUE
