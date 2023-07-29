@@ -11,7 +11,8 @@
 	description = "Temporarily increases the prices of vending machines."
 
 /datum/round_event/market_crash
-	var/every_fifth = 1
+	/// This counts the number of ticks that the market crash event has been processing, so that we don't call vendor price updates every tick, but we still iterate for other mechanics that use inflation.
+	var/tick_counter = 1
 
 /datum/round_event/market_crash/setup()
 	start_when = 1
@@ -49,8 +50,8 @@
 
 /datum/round_event/market_crash/tick()
 	. = ..()
-	every_fifth = every_fifth + 1
+	tick_counter = tick_counter++
 	SSeconomy.inflation_value = 5.5*(log(activeFor+1))
-	if(every_fifth == 5)
-		every_fifth = 1
+	if(tick_counter == 5)
+		tick_counter = 1
 		SSeconomy.update_vending_prices()
