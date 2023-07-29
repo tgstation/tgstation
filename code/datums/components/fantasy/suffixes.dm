@@ -42,9 +42,15 @@
 
 /datum/fantasy_affix/cosmetic_suffixes/apply(datum/component/fantasy/comp, newName)
 	if(comp.quality > 0 || (comp.quality == 0 && prob(50)))
-		return "[newName] of [pick(goodSuffixes)]"
+		. = "[newName] of [pick(goodSuffixes)]"
+		if(comp.quality >= 10)
+			START_PROCESSING(SSprocessing, src)
+			if(comp.quality >= 15)
+				comp.parent.AddComponent(/datum/component/unusual_effect, color = "#FFEA0030", include_particles = TRUE)
+			else
+				comp.parent.AddComponent(/datum/component/unusual_effect, color = "#FFBF0030")
 	else
-		return "[newName] of [pick(badSuffixes)]"
+		. = "[newName] of [pick(badSuffixes)]"
 
 //////////// Good suffixes
 /datum/fantasy_affix/bane
@@ -189,11 +195,13 @@
 	name = "curse of hunger"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_EVIL
+	weight = 2
 
 /datum/fantasy_affix/curse_of_hunger/validate(obj/item/attached)
-	//curse of hunger that attaches onto food has the ability to eat itself. it's hilarious.
-	if(!IS_EDIBLE(attached))
-		return TRUE
+	// Curse of hunger can be really unbearable to deal with,
+	// so it should not start on someone or in a bag.
+	if(!isturf(attached.loc))
+		return FALSE
 	return TRUE
 
 /datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
@@ -208,3 +216,23 @@
 /datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
 	master.RemoveElement(/datum/element/curse_announcement) //just in case
+
+/datum/fantasy_affix/speed
+	name = "of speed"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_GOOD
+
+/datum/fantasy_affix/speed/validate(obj/item/attached)
+	if(!istype(attached, /obj/item/clothing/shoes))
+		return FALSE
+	return TRUE
+
+/datum/fantasy_affix/speed/apply(datum/component/fantasy/comp, newName)
+	. = ..()
+	var/obj/item/master = comp.parent
+	master.slowdown = min(-comp.quality / 5, master.slowdown)
+	return "[newName] of speed"
+
+/datum/fantasy_affix/speed/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.slowdown = initial(master.slowdown)

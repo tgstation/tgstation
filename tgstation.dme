@@ -1072,6 +1072,7 @@
 #include "code\datums\components\udder.dm"
 #include "code\datums\components\unbreakable.dm"
 #include "code\datums\components\unobserved_actor.dm"
+#include "code\datums\components\unusual_effect.dm"
 #include "code\datums\components\uplink.dm"
 #include "code\datums\components\usb_port.dm"
 #include "code\datums\components\vacuum.dm"

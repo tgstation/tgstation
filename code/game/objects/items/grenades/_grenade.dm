@@ -66,6 +66,27 @@
 	if(!QDELETED(src))
 		qdel(src)
 
+/obj/item/grenade/apply_fantasy_bonuses(bonus)
+	. = ..()
+	apply_grenade_fantasy_bonuses(bonus)
+
+/obj/item/grenade/remove_fantasy_bonuses(bonus)
+	remove_grenade_fantasy_bonuses(bonus)
+	return ..()
+
+/obj/item/grenade/proc/apply_grenade_fantasy_bonuses(quality)
+	var/devIncrease = round(quality / 10)
+	var/heavyIncrease = round(quality / 5)
+	var/lightIncrease = round(quality / 2)
+	ex_dev = modify_fantasy_variable("ex_dev", ex_dev, devIncrease, 0)
+	ex_heavy = modify_fantasy_variable("ex_heavy", ex_heavy, heavyIncrease, 0)
+	ex_light = modify_fantasy_variable("ex_light", ex_light, lightIncrease, 0)
+
+/obj/item/grenade/proc/remove_grenade_fantasy_bonuses(quality)
+	ex_dev = reset_fantasy_variable("ex_dev", ex_dev)
+	ex_heavy = reset_fantasy_variable("ex_heavy", ex_heavy)
+	ex_light = reset_fantasy_variable("ex_light", ex_light)
+
 /**
  * Checks for various ways to botch priming a grenade.
  *

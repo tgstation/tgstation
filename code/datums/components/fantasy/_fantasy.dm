@@ -61,10 +61,20 @@
 
 ///proc on creation for random affixes
 /datum/component/fantasy/proc/randomAffixes(force)
+	var/alignment
+	if(quality >= 0)
+		alignment |= AFFIX_GOOD
+	if(quality <= 0)
+		alignment |= AFFIX_EVIL
+
 	if(!affixListing)
 		affixListing = list()
 		for(var/T in subtypesof(/datum/fantasy_affix))
-			var/datum/fantasy_affix/affix = new T
+			var/datum/fantasy_affix/affix = new T(src)
+			if(!(affix.alignment & alignment))
+				continue
+			if(!affix.validate(parent))
+				continue
 			affixListing[affix] = affix.weight
 
 	if(length(affixes))
@@ -72,20 +82,10 @@
 			return
 		affixes = list()
 
-	var/alignment
-	if(quality >= 0)
-		alignment |= AFFIX_GOOD
-	if(quality <= 0)
-		alignment |= AFFIX_EVIL
-
 	var/usedSlots = NONE
 	for(var/i in 1 to max(1, abs(quality))) // We want at least 1 affix applied
 		var/datum/fantasy_affix/affix = pick_weight(affixListing)
 		if(affix.placement & usedSlots)
-			continue
-		if(!(affix.alignment & alignment))
-			continue
-		if(!affix.validate(parent))
 			continue
 		affixes += affix
 		usedSlots |= affix.placement
@@ -101,12 +101,7 @@
 
 /datum/component/fantasy/proc/modify()
 	var/obj/item/master = parent
-
-	master.force = max(0, master.force + quality)
-	master.throwforce = max(0, master.throwforce + quality)
-	master.set_armor(master.get_armor().generate_new_with_modifiers(list(ARMOR_ALL = quality)))
-	master.wound_bonus += quality
-	master.bare_wound_bonus += quality
+	master.apply_fantasy_bonuses(quality)
 
 	var/newName = originalName
 	for(var/i in affixes)
@@ -133,12 +128,7 @@
 		var/datum/fantasy_affix/affix = i
 		affix.remove(src)
 	QDEL_LIST(appliedComponents)
-
-	master.force = max(0, master.force - quality)
-	master.throwforce = max(0, master.throwforce - quality)
-	master.set_armor(master.get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -quality)))
-	master.wound_bonus -= quality
-	master.bare_wound_bonus -= quality
+	master.remove_fantasy_bonuses(quality)
 
 	master.name = originalName
 

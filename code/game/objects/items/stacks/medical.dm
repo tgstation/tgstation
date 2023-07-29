@@ -37,6 +37,28 @@
 	. = ..()
 	try_heal(patient, user)
 
+/obj/item/stack/medical/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(heal_brute)
+		heal_brute = modify_fantasy_variable("heal_brute", heal_brute, bonus)
+	if(heal_burn)
+		heal_burn = modify_fantasy_variable("heal_burn", heal_burn, bonus)
+	if(stop_bleeding)
+		stop_bleeding = modify_fantasy_variable("stop_bleeding", stop_bleeding, bonus/10)
+	if(sanitization)
+		sanitization = modify_fantasy_variable("sanitization", sanitization, bonus/10)
+	if(flesh_regeneration)
+		flesh_regeneration = modify_fantasy_variable("flesh_regeneration", flesh_regeneration, bonus/10)
+
+/obj/item/stack/medical/remove_fantasy_bonuses(bonus)
+	heal_brute = reset_fantasy_variable("heal_brute", heal_brute)
+	heal_burn = reset_fantasy_variable("heal_burn", heal_burn)
+	stop_bleeding = reset_fantasy_variable("stop_bleeding", stop_bleeding)
+	sanitization = reset_fantasy_variable("sanitization", sanitization)
+	flesh_regeneration = reset_fantasy_variable("flesh_regeneration", flesh_regeneration)
+	return ..()
+
+
 /// In which we print the message that we're starting to heal someone, then we try healing them. Does the do_after whether or not it can actually succeed on a targeted mob
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/user, silent = FALSE)
 	if(!patient.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
