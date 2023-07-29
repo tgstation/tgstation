@@ -468,6 +468,7 @@
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 	update_eyes(quirk_holder.get_organ_slot(ORGAN_SLOT_EYES))
 
+/datum/quirk/photophobia/remove()
 	UnregisterSignal(quirk_holder, list(
 		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_CARBON_LOSE_ORGAN,
