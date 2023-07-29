@@ -209,13 +209,8 @@
 	var/obj/item/master = comp.parent
 	var/filter_color = "#8a0c0ca1" //clarified args
 	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
-	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
 	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger)
-	return newName //no spoilers!
-
-/datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
-	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/curse_announcement) //just in case
+	return "[newName] [new_name]" //no spoilers!
 
 /datum/fantasy_affix/curse_of_polymorph
 	name = "curse of polymorph"
@@ -244,9 +239,8 @@
 		WABBAJACK_HUMAN,
 		WABBAJACK_ANIMAL,
 	)
-	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of polymorph!", filter_color, new_name, comp)
 	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_polymorph, pick(possible_results))
-	return newName //no spoilers!
+	return "[newName] [new_name]" //no spoilers!
 
 /datum/fantasy_affix/curse_of_polymorph/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
