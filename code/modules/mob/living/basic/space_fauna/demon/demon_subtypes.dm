@@ -9,8 +9,11 @@
 	icon_living = "slaughter_demon"
 
 	minimum_survivable_temperature = TCMB
+
+	// slaughter demons are specifically intended to have low melee damage, but as they hit and build up their killstreak
+	// they derive their sheer power via inflicting wounds on their targets, which builds higher and higher through the killstreak they build up.
 	obj_damage = 50
-	melee_damage_lower = 15 // reduced from 30 to 15 with wounds since they get big buffs to slicing wounds
+	melee_damage_lower = 15
 	melee_damage_upper = 15
 	wound_bonus = -10
 	bare_wound_bonus = 0
