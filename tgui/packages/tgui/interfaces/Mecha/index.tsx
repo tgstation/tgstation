@@ -137,40 +137,6 @@ export const Content = (props, context) => {
   );
 };
 
-const DNALock = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
-  const { dna_lock } = data;
-  return (
-    <LabeledList.Item label="DNA Lock">
-      <Button
-        onClick={() => act('dna_lock')}
-        icon="syringe"
-        content={dna_lock ? 'Enabled' : 'Unset'}
-        tooltip="Set new DNA key"
-        selected={!!dna_lock}
-        tooltipPosition="top"
-      />
-      {!!dna_lock && (
-        <>
-          <Button
-            icon="key"
-            tooltip={`Key enzyme: ${dna_lock}`}
-            tooltipPosition="top"
-            disabled={!dna_lock}
-          />
-          <Button
-            onClick={() => act('reset_dna')}
-            icon="ban"
-            tooltip="Reset DNA lock"
-            tooltipPosition="top"
-            disabled={!dna_lock}
-          />
-        </>
-      )}
-    </LabeledList.Item>
-  );
-};
-
 const PowerBar = (props, context) => {
   const { act, data } = useBackend<MainData>(context);
   const { power_level, power_max } = data;
@@ -280,6 +246,40 @@ const CabinSeal = (props, context) => {
         onClick={() => act('toggle_cabin_seal')}
         selected={cabin_sealed}
       />
+    </LabeledList.Item>
+  );
+};
+
+const DNALock = (props, context) => {
+  const { act, data } = useBackend<MainData>(context);
+  const { dna_lock } = data;
+  return (
+    <LabeledList.Item label="DNA Lock">
+      <Button
+        onClick={() => act('dna_lock')}
+        icon="syringe"
+        content={dna_lock ? 'Enabled' : 'Unset'}
+        tooltip="Set new DNA key"
+        selected={!!dna_lock}
+        tooltipPosition="top"
+      />
+      {!!dna_lock && (
+        <>
+          <Button
+            icon="key"
+            tooltip={`Key enzyme: ${dna_lock}`}
+            tooltipPosition="top"
+            disabled={!dna_lock}
+          />
+          <Button
+            onClick={() => act('reset_dna')}
+            icon="ban"
+            tooltip="Reset DNA lock"
+            tooltipPosition="top"
+            disabled={!dna_lock}
+          />
+        </>
+      )}
     </LabeledList.Item>
   );
 };

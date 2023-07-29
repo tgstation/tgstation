@@ -4,7 +4,13 @@ import { MainData, InternalDamageToDamagedDesc, InternalDamageToNormalDesc } fro
 
 export const AlertPane = (props, context) => {
   const { act, data } = useBackend<MainData>(context);
-  const { internal_damage, internal_damage_keys } = data;
+  const {
+    internal_damage,
+    internal_damage_keys,
+    servo_rating,
+    scanmod_rating,
+    capacitor_rating,
+  } = data;
   return (
     <Section title="Status">
       <Stack vertical>
