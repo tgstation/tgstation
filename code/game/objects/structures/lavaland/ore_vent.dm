@@ -23,7 +23,7 @@
 		/datum/material/bluespace = 1,
 		/datum/material/plastic = 1,
 	)
-	var/static/list/lavaland_mobs = list(
+	var/list/lavaland_mobs = list(
 		/mob/living/basic/mining/goliath,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
@@ -168,6 +168,41 @@
 
 /obj/structure/ore_vent/large
 	boulder_size = BOULDER_SIZE_LARGE
+
+/obj/structure/ore_vent/random
+	/// Static list of ore vent types, for random generation.
+	var/static/list/ore_vent_types = list(
+		BOULDER_SIZE_SMALL,
+		BOULDER_SIZE_MEDIUM,
+		BOULDER_SIZE_LARGE,
+	)
+
+/obj/structure/ore_vent/random/Initialize(mapload)
+	. = ..()
+	boulder_size = pick(ore_vent_types)
+
+//Make sure to finish this!!!
+/obj/structure/ore_vent/random/boss
+	name = "menacing ore vent"
+	desc = "An ore vent, brimming with underground ore. This one has an evil aura about it. Better be careful."
+	///What boss do we want to spawn?
+	var/summoned_boss = null
+
+/obj/structure/ore_vent/random/boss/Initialize(mapload)
+	. = ..()
+	summoned_boss = pick(list(
+		/mob/living/simple_animal/hostile/megafauna/bubblegum,
+		/mob/living/simple_animal/hostile/megafauna/dragon,
+		/mob/living/simple_animal/hostile/megafauna/colossus,
+	))
+
+/obj/structure/ore_vent/random/boss/start_wave_defense()
+	// Completely override the normal wave defense, and just spawn the boss.
+	var/mob/living/simple_animal/boss = new summoned_boss(loc)
+	/// Register that the boss's death will tap the vent and end the mining event.
+	/// Later, I guess.
+
+
 
 
 /obj/item/boulder
