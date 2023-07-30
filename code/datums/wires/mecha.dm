@@ -1,9 +1,9 @@
 /datum/wires/mecha
 	holder_type = /obj/vehicle/sealed/mecha
-	proper_name = "Mecha control circuit"
+	proper_name = "Mecha Control"
 
 /datum/wires/mecha/New(atom/holder)
-	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_LIGHT)
+	wires = list(WIRE_IDSCAN, WIRE_DISARM, WIRE_ZAP, WIRE_LIGHT)
 	add_duds(3)
 	..()
 
@@ -25,12 +25,12 @@
 /datum/wires/mecha/on_pulse(wire)
 	var/obj/vehicle/sealed/mecha/mecha = holder
 	switch(wire)
-		if(WIRE_HACK)
+		if(WIRE_IDSCAN)
 			mecha.mecha_flags ^= ID_LOCK_ON
 			mecha.dna_lock = null
-		if(WIRE_DISABLE)
+		if(WIRE_DISARM)
 			mecha.equipment_disabled = TRUE
-		if(WIRE_SHOCK)
+		if(WIRE_ZAP)
 			mecha.internal_damage ^= MECHA_INT_SHORT_CIRCUIT
 		if(WIRE_LIGHT)
 			mecha.set_light_on(!mecha.light_on)
@@ -38,13 +38,13 @@
 /datum/wires/mecha/on_cut(wire, mend, source)
 	var/obj/vehicle/sealed/mecha/mecha = holder
 	switch(wire)
-		if(WIRE_HACK)
+		if(WIRE_IDSCAN)
 			if(!mend)
 				mecha.mecha_flags &= ~ID_LOCK_ON
 				mecha.dna_lock = null
-		if(WIRE_DISABLE)
+		if(WIRE_DISARM)
 			mecha.equipment_disabled = !mend
-		if(WIRE_SHOCK)
+		if(WIRE_ZAP)
 			if(mend)
 				mecha.internal_damage &= ~MECHA_INT_SHORT_CIRCUIT
 			else
@@ -56,4 +56,9 @@
 	var/obj/vehicle/sealed/mecha/mecha = holder
 	if(!issilicon(usr) && mecha.internal_damage & MECHA_INT_SHORT_CIRCUIT && mecha.shock(usr))
 		return FALSE
+	return ..()
+
+/datum/wires/mecha/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		return TRUE
 	return ..()
