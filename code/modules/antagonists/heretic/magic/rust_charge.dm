@@ -13,7 +13,7 @@
 		StartCooldown()
 		return TRUE
 
-/datum/action/cooldown/mob_cooldown/charge/rust/proc/on_move(atom/source, atom/new_loc, turf/victim)
+/on_move(atom/source, atom/new_loc, turf/victim)
 	SIGNAL_HANDLER
 	if(!actively_moving)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
