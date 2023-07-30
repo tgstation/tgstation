@@ -1221,3 +1221,61 @@
   - bugfix: you can no longer fireman carry to bypass puzzle doors
   vinylspiders:
   - bugfix: non-opaque curtains will no longer block emissives
+2023-07-30:
+  ArcaneMusic:
+  - qol: Improvements to the accounting console in the HOP office.
+  - balance: Non-human species now receive a 90% racial paycut, up from 75%.
+  - balance: The inflation mechanic affecting vending machines has been removed, except
+      during the market crash event.
+  - balance: The market crash event now stands as it's own separate event, and ramps
+      up the cost of vendor items until finally popping and returning to normal. Market
+      crash now lasts longer to have more impact while it scales with time.
+  - image: New cargo exo-drone scanner sprites!
+  Ben10Omintrix:
+  - refactor: the bear is a basic now. please report any bugs
+  - rscadd: the bear will climb trees and search honey
+  Ghommie:
+  - bugfix: Put a cap to the amount of stickers that can be sticked to an atom (12)
+      to prevent icon-related issues.
+  - bugfix: Fixing some jank with the a greyscale modify menu, like inputs not being
+      sanitized.
+  Jacquerel:
+  - bugfix: Dismounting from a piggyback no longer allows you to phase through other
+      players.
+  - rscadd: You can now earn an achievement for completing the Grand Ritual.
+  - bugfix: Summon Magic and Summon Guns work again
+  - rscadd: Player-controlled bots can now play the prerecorded lines associated with
+      that bot.
+  - rscadd: Placing a pAI into a bot temporarily teaches that bot all the langauges
+      the pAI could speak.
+  Melbert:
+  - refactor: Refactored chameleon actions a fair bit
+  - rscadd: Adds outfit saving to chameleon clothes. RMB the "chameleon outfit" action
+      to save your current chameleon setup for quick swapping.
+  - rscadd: Swapping between chameleon outfits now has a slight "animation" associated,
+      to distinguish traitors from lings slightly.
+  - rscadd: Adds a new chameleon item, the "Chameleon Scanner". Use it on other crewmembers
+      to stealthily save their current outfit as a custom outfit to use later. And
+      of course, it's chameleon too.
+  - bugfix: Ethereals, the DNA lock mod, GPSs, and storage items now respect EMP protection
+  - balance: The "Long Shift" achievement is now feasibly obtainable, and admins can
+      no longer trigger it unknowingly
+  - bugfix: Fixes runtime from trying to put two pots on one stove.
+  SyncIt21:
+  - bugfix: some things not connecting to the ore silo round start
+  Time-Green:
+  - rscadd: Adds a Forested planetary station trait! Icebox exterior is now a forest!
+  - rscadd: Adds a Forever Storm planetary station trait! Sometimes, the storm never
+      stops. Stay inside or get some coffee and warm clothes
+  - bugfix: fixes stuff spawning in rivers and above chasms
+  - bugfix: emissive blockers on random flora not updating
+  - code_imp: Splits terrain generation and terrain population in SSmapping
+  - rscadd: Starlight will color with space gas parallax
+  - code_imp: Cleans up random parallax code / radioactive nebula parallax code
+  - bugfix: Staff of laval no longer works on space
+  necromanceranne:
+  - bugfix: Fixes revolvers losing ammo capacity when you reload them.
+  san7890:
+  - bugfix: Carbons with tails (felinids, lizards) who have that tail removed will
+      now have that tail actually look like it came from the person in question, rather
+      than just be a grey thing of sadness.

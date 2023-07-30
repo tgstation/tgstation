@@ -21,6 +21,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	#endif
 
 	announcer = new announcer() //Initialize the station's announcer datum
+	SSparallax.random_layer.apply_global_effects() //Apply station effects that parallax might have
 
 	return SS_INIT_SUCCESS
 
