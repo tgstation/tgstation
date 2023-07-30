@@ -39,6 +39,7 @@
 /obj/vehicle/sealed/mecha/honker/dark
 	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. This one has been painted black for maximum fun. HONK!"
 	name = "\improper Dark H.O.N.K"
+	ui_theme = "syndicate"
 	icon_state = "darkhonker"
 	max_integrity = 300
 	armor_type = /datum/armor/honker_dark
