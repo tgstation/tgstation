@@ -228,19 +228,30 @@ class ChatRenderer {
           if (!highlightWords) {
             highlightWords = [];
           }
+          // We're not going to let regex characters fuck up our RegEx operation.
+          const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
+          line = line.replace(regexEscapeCharacters, '\\$&');
+
           highlightWords.push(line);
         }
       }
       const regexStr = regexExpressions.join('|');
       const flags = 'g' + (matchCase ? '' : 'i');
-      // setting regex overrides matchword
-      if (regexStr) {
-        highlightRegex = new RegExp('(' + regexStr + ')', flags);
-      } else {
-        const pattern = `${matchWord ? '\\b' : ''}(${lines.join('|')})${
-          matchWord ? '\\b' : ''
-        }`;
-        highlightRegex = new RegExp(pattern, flags);
+      // We wrap this in a try-catch to ensure that broken regex doesn't break
+      // the entire chat.
+      try {
+        // setting regex overrides matchword
+        if (regexStr) {
+          highlightRegex = new RegExp('(' + regexStr + ')', flags);
+        } else {
+          const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
+            '|'
+          )})${matchWord ? '\\b' : ''}`;
+          highlightRegex = new RegExp(pattern, flags);
+        }
+      } catch {
+        // We just reset it if it's invalid.
+        highlightRegex = null;
       }
       // Lazy init
       if (!this.highlightParsers) {
