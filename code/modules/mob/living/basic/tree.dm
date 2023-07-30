@@ -1,7 +1,7 @@
 /mob/living/basic/tree
 	name = "pine tree"
 	desc = "A pissed off tree-like alien. It seems annoyed with the festivities..."
-	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
@@ -55,7 +55,9 @@
 /mob/living/basic/tree/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	AddElement(/datum/element/death_drops, list(/obj/item/stack/sheet/mineral/wood))
+	var/static/list/death_loot = list(/obj/item/stack/sheet/mineral/wood)
+	AddElement(/datum/element/death_drops, death_loot)
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 
 /mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()

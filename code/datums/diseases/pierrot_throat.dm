@@ -10,7 +10,7 @@
 	spreading_modifier = 0.75
 	desc = "If left untreated the subject will probably drive others to insanity."
 	severity = DISEASE_SEVERITY_MEDIUM
-
+	required_organ = ORGAN_SLOT_TONGUE
 
 /datum/disease/pierrot_throat/stage_act(seconds_per_tick, times_fired)
 	. = ..()

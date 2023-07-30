@@ -8,6 +8,7 @@
 /mob/living/basic/spiderling
 	name = "spiderling"
 	desc = "It never stays still for long."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "spiderling"
 	icon_dead = "spiderling_dead"
 	density = FALSE

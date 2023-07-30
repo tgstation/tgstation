@@ -20,7 +20,7 @@
 /obj/machinery/rnd/experimentor
 	name = "\improper E.X.P.E.R.I-MENTOR"
 	desc = "A \"replacement\" for the destructive analyzer with a slight tendency to catastrophically fail."
-	icon = 'icons/obj/machines/heavy_lathe.dmi'
+	icon = 'icons/obj/machines/experimentator.dmi'
 	icon_state = "h_lathe"
 	base_icon_state = "h_lathe"
 	density = TRUE
@@ -639,18 +639,18 @@
 	to_chat(user, message)
 
 	var/static/list/valid_animals = list(
+		/mob/living/basic/bear,
+		/mob/living/basic/bee,
 		/mob/living/basic/butterfly,
 		/mob/living/basic/carp,
+		/mob/living/basic/crab,
 		/mob/living/basic/lizard,
 		/mob/living/basic/mouse,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
-		/mob/living/simple_animal/crab,
-		/mob/living/simple_animal/hostile/bear,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/pet/fox,
 		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/fox,
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)

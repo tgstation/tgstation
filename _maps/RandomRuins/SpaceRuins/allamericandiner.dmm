@@ -2,28 +2,13 @@
 "aa" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/teal,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
-"ak" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sink/kitchen/directional/east,
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/allamericandiner)
 "aA" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/allamericandiner)
-"br" = (
-/obj/structure/chair/sofa/right/maroon,
-/obj/structure/window/reinforced/tinted/spawner/directional/north,
-/obj/machinery/light/dim/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "bA" = (
 /obj/machinery/power/rtg/advanced,
@@ -47,27 +32,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
-"cn" = (
-/obj/structure/chair/sofa/left/maroon{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/allamericandiner)
 "cQ" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/allamericandiner)
-"cT" = (
-/obj/structure/chair/sofa/right/maroon{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/machinery/light/dim/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "db" = (
 /obj/structure/chair/sofa/right/maroon{
@@ -112,17 +81,6 @@
 /obj/structure/filingcabinet,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/allamericandiner)
-"et" = (
-/obj/machinery/shower/directional/east,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
-/obj/item/soap,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/allamericandiner)
 "eM" = (
 /obj/machinery/door/airlock{
 	name = "Bathrooms"
@@ -134,6 +92,12 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
+"eR" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/open,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "fu" = (
@@ -191,10 +155,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
-"gI" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/allamericandiner)
 "gO" = (
 /obj/structure/chair/sofa/middle/brown{
 	dir = 1
@@ -205,21 +165,20 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"hT" = (
-/obj/structure/chair/sofa/left/maroon{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/obj/machinery/light/dim/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/allamericandiner)
 "hU" = (
 /obj/structure/chair/sofa/right/maroon{
 	dir = 4
 	},
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav/allamericandiner)
+"iS" = (
+/obj/structure/chair/sofa/right/maroon{
+	dir = 4
+	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "jl" = (
@@ -236,6 +195,12 @@
 "jZ" = (
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
+"kj" = (
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/allamericandiner)
 "kL" = (
 /obj/structure/table,
 /turf/open/floor/iron/kitchen/small,
@@ -246,6 +211,11 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
+"ls" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "lF" = (
 /obj/machinery/chem_master/condimaster{
@@ -259,12 +229,31 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
+"mK" = (
+/obj/structure/chair/sofa/left/maroon{
+	dir = 1
+	},
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav/allamericandiner)
 "na" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 6
 	},
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
+"nq" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/obj/item/soap,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "nr" = (
 /obj/structure/table/wood,
@@ -281,20 +270,12 @@
 /area/ruin/space/has_grav/allamericandiner)
 "nv" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "ny" = (
 /obj/machinery/oven,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/allamericandiner)
-"nD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sink/kitchen/directional/west,
-/obj/machinery/light/dim/directional/east,
-/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "nM" = (
 /obj/structure/table/reinforced,
@@ -328,6 +309,12 @@
 /obj/item/food/meat/slab/monkey,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/allamericandiner)
+"oj" = (
+/obj/structure/chair/sofa/right/maroon,
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "oN" = (
 /turf/closed/mineral/random/low_chance,
@@ -443,6 +430,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
+"uy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/sink/kitchen/directional/west,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/allamericandiner)
 "uP" = (
 /obj/structure/kitchenspike,
 /obj/effect/turf_decal/bot,
@@ -490,12 +484,6 @@
 /obj/item/chair/plastic,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"wD" = (
-/obj/machinery/deepfryer,
-/obj/machinery/light/dim/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/allamericandiner)
 "wI" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
@@ -528,11 +516,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
-"yq" = (
-/obj/machinery/griddle,
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/allamericandiner)
 "yB" = (
 /obj/machinery/door/airlock/command,
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
@@ -562,6 +545,18 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
+"zw" = (
+/obj/machinery/vending/dinnerware,
+/obj/machinery/light/dim/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/space/has_grav/allamericandiner)
+"zM" = (
+/obj/effect/turf_decal/trimline/dark_green/filled/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
 "zN" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 10
@@ -577,11 +572,26 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
+"Ao" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/sink/kitchen/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/allamericandiner)
 "Ap" = (
 /obj/structure/chair/sofa/right/maroon{
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav/allamericandiner)
+"Bg" = (
+/obj/machinery/light/dim/directional/west,
+/obj/structure/chair/sofa/left/maroon{
+	dir = 1
+	},
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "Bl" = (
@@ -596,18 +606,26 @@
 "Bn" = (
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"BZ" = (
-/obj/structure/chair/sofa/left/maroon{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/obj/machinery/light/dim/directional/south,
-/turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/allamericandiner)
 "Cr" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen/small,
+/area/ruin/space/has_grav/allamericandiner)
+"CC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/allamericandiner)
+"CF" = (
+/obj/machinery/shower/directional/west,
+/obj/structure/fluff{
+	desc = "What, you think the water just magically soaks into the metallic flooring?";
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
+	icon_state = "fan_tiny";
+	name = "shower drain"
+	},
+/obj/item/soap,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "Du" = (
 /obj/structure/table/reinforced,
@@ -650,12 +668,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/allamericandiner)
-"Ey" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/open,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "EK" = (
 /turf/closed/wall,
@@ -749,17 +761,6 @@
 /obj/structure/sign/poster/official/cleanliness/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
-"Hp" = (
-/obj/machinery/shower/directional/west,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
-/obj/item/soap,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/allamericandiner)
 "Hz" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/item/food/meat/slab/monkey,
@@ -823,11 +824,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
-"Iz" = (
-/obj/machinery/vending/dinnerware,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/allamericandiner)
 "IY" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -838,6 +834,10 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
+"JC" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "JD" = (
 /obj/structure/chair/sofa/left/maroon{
 	dir = 4
@@ -914,10 +914,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
+"Mt" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/allamericandiner)
 "MJ" = (
 /obj/structure/urinal/directional/north,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/allamericandiner)
+"MQ" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/open,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
 "MS" = (
 /obj/structure/table/wood,
@@ -949,18 +958,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
-"NF" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/allamericandiner)
 "NH" = (
 /obj/machinery/grill,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
-"NR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/dim/directional/east,
-/turf/open/floor/iron/freezer,
+"Ot" = (
+/obj/machinery/light/dim/directional/south,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "OE" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line,
@@ -1038,11 +1043,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
-"Sn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/allamericandiner)
 "ST" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
@@ -1050,7 +1050,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "SU" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "SZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1125,14 +1125,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/allamericandiner)
-"Un" = (
-/obj/effect/turf_decal/trimline/dark_green/filled/line{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/allamericandiner)
 "Uv" = (
 /obj/structure/toilet{
 	dir = 8
@@ -1175,13 +1167,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/allamericandiner)
-"Wn" = (
-/obj/effect/turf_decal/trimline/dark_green/filled/line{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/allamericandiner)
 "WC" = (
 /obj/machinery/gibber{
 	pixel_y = -2
@@ -1211,6 +1196,11 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"Xj" = (
+/obj/machinery/deepfryer,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/space/has_grav/allamericandiner)
 "Xs" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
@@ -1231,7 +1221,7 @@
 "Yd" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/fuchsia,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "Yo" = (
 /obj/structure/table/wood,
@@ -1432,10 +1422,10 @@ oN
 EK
 DQ
 yl
-hT
-br
+mK
+oj
 fL
-cn
+Bg
 vp
 Ph
 Pn
@@ -1512,7 +1502,7 @@ PW
 PW
 PW
 Zk
-BZ
+ET
 EK
 SU
 SU
@@ -1549,7 +1539,7 @@ GE
 rd
 PW
 JD
-cT
+iS
 EK
 SU
 SU
@@ -1623,7 +1613,7 @@ Xw
 FB
 PW
 Ap
-ET
+Ot
 EK
 EK
 EK
@@ -1662,7 +1652,7 @@ rd
 Id
 FP
 xa
-Ey
+MQ
 EK
 EK
 EK
@@ -1689,7 +1679,7 @@ oN
 oN
 oN
 EK
-yq
+Jw
 Fr
 ny
 Fr
@@ -1701,7 +1691,7 @@ yY
 Ud
 Ud
 Tv
-NF
+Mt
 vu
 SU
 SU
@@ -1738,7 +1728,7 @@ DU
 DU
 DU
 Tv
-gI
+Mt
 vu
 SU
 SU
@@ -1759,7 +1749,7 @@ oN
 oN
 EK
 Hz
-ak
+Ao
 KT
 GX
 EK
@@ -1773,7 +1763,7 @@ rd
 gB
 XE
 xa
-Ey
+eR
 EK
 EK
 EK
@@ -1808,7 +1798,7 @@ nM
 rG
 rd
 gl
-GU
+hU
 EK
 EK
 EK
@@ -1837,7 +1827,7 @@ Al
 UM
 ZS
 EK
-Iz
+zw
 jZ
 Qn
 Fr
@@ -1869,7 +1859,7 @@ oN
 oN
 oN
 EK
-uP
+kj
 Al
 Kp
 WC
@@ -1882,7 +1872,7 @@ Cr
 rG
 PW
 Zk
-BZ
+ET
 EK
 SU
 SU
@@ -1911,7 +1901,7 @@ Al
 rV
 ZS
 EK
-wD
+Xj
 Fr
 NH
 Fr
@@ -1919,7 +1909,7 @@ ug
 rG
 rd
 gl
-hU
+GU
 EK
 SU
 SU
@@ -1981,7 +1971,7 @@ oN
 oN
 EK
 fV
-nD
+uy
 KT
 GX
 EK
@@ -2059,12 +2049,12 @@ HB
 Go
 EK
 ue
-Un
+eN
 eN
 zN
 EK
 MJ
-Sn
+ls
 YX
 EK
 qY
@@ -2073,9 +2063,9 @@ dY
 EK
 oN
 Bn
-gU
-gU
-gU
+Bn
+Bn
+Bn
 SU
 SU
 SU
@@ -2106,13 +2096,13 @@ Kp
 jx
 Kp
 Lp
-Hp
+CF
 EK
 oN
 oN
 gU
 Ie
-gU
+Bn
 Bn
 SU
 SU
@@ -2147,9 +2137,9 @@ EK
 EK
 oN
 oN
-gU
 Bn
 gU
+Bn
 Bn
 Bn
 SU
@@ -2180,13 +2170,13 @@ YX
 Im
 YX
 bE
-et
+nq
 EK
 oN
 oN
 gU
 Bn
-gU
+Bn
 Bn
 Bn
 SU
@@ -2209,10 +2199,10 @@ EK
 ck
 WS
 WS
-Dv
+zM
 EK
 MJ
-NR
+CC
 Kp
 EK
 ST
@@ -2222,8 +2212,8 @@ EK
 oN
 oN
 oN
-gU
-gU
+Bn
+Bn
 Bn
 Bn
 Bn
@@ -2352,10 +2342,10 @@ Bn
 Ty
 JH
 Bn
-Bn
+JC
 EK
 Vy
-Wn
+aA
 aA
 na
 EK
