@@ -200,13 +200,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
 
-/area/proc/RunGeneration()
+/// Generate turfs, including cool cave wall gen
+/area/proc/RunTerrainGeneration()
 	if(map_generator)
 		map_generator = new map_generator()
 		var/list/turfs = list()
 		for(var/turf/T in contents)
 			turfs += T
 		map_generator.generate_terrain(turfs, src)
+
+/// Populate the previously generated terrain with mobs and objects
+/area/proc/RunTerrainPopulation()
+	if(map_generator)
+		var/list/turfs = list()
+		for(var/turf/T in contents)
+			turfs += T
+		map_generator.populate_terrain(turfs, src)
 
 /area/proc/test_gen()
 	if(map_generator)
