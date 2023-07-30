@@ -27,8 +27,12 @@
 /obj/item/mod/module/pathfinder/Exited(atom/movable/gone, direction)
 	if(gone == implant)
 		implant = null
-		icon_state = "pathfinder_empty"
+		update_icon_state()
 	return ..()
+
+/obj/item/mod/module/pathfinder/update_icon_state()
+	. = ..()
+	icon_state = implant ? "pathfinder" : "pathfinder_empty"
 
 /obj/item/mod/module/pathfinder/examine(mob/user)
 	. = ..()
