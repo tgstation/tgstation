@@ -208,7 +208,7 @@ const CabinSeal = (props, context) => {
     cabin_pressure > cabin_pressure_hazard_max;
   return (
     <LabeledList.Item
-      label="Cabin"
+      label="Cabin Air"
       buttons={
         !!cabin_sealed && (
           <>
@@ -241,7 +241,7 @@ const CabinSeal = (props, context) => {
       }>
       <Button
         icon={cabin_sealed ? 'mask-ventilator' : 'wind'}
-        content={cabin_sealed ? 'Airtight' : 'Open'}
+        content={cabin_sealed ? 'Sealed' : 'Exposed'}
         disabled={!enclosed}
         onClick={() => act('toggle_cabin_seal')}
         selected={cabin_sealed}
