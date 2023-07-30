@@ -35,15 +35,15 @@
 	/// Whether the menu is currently locked down to prevent abuse from players. Currently is only unlocked when opened from vv.
 	var/unlocked = FALSE
 
-	/// If defined, this ui state will be used instead of the target's
-	var/datum/ui_state/specific_ui_state
+	/// If defined, the always state will be used, and the user will be able to set the alpha channel of the colors too.
+	var/vv_mode = FALSE
 
-/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors, datum/ui_state/specific_ui_state)
+/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors, vv_mode = FALSE)
 	src.target = target
 	src.user = user
 	src.apply_callback = apply_callback || CALLBACK(src, PROC_REF(DefaultApply))
 	icon_state = starting_icon_state
-	src.specific_ui_state = specific_ui_state
+	src.vv_mode = vv_mode
 
 	SetupConfigOwner()
 
@@ -72,7 +72,7 @@
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
-	return specific_ui_state || GLOB.greyscale_menu_state
+	return vv_mode ? GLOB.always_state : GLOB.greyscale_menu_state
 
 /datum/greyscale_modify_menu/ui_close()
 	qdel(src)
@@ -139,7 +139,7 @@
 		if("recolor")
 			var/index = text2num(params["color_index"])
 			var/new_color = lowertext(params["new_color"])
-			if(split_colors[index] != new_color && findtext(new_color, GLOB.is_color))
+			if(split_colors[index] != new_color && (findtext(new_color, GLOB.is_color) || (vv_mode && findtext(new_color, GLOB.is_alpha_color))))
 				split_colors[index] = new_color
 				queue_refresh()
 
@@ -225,14 +225,11 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 			config.EnableAutoRefresh(config_owner_type)
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
-	var/static/regex/color_regex = regex("^#\[0-9a-fA-F]+$")
-	var/list/colors = splittext(colorString, "#")
 	var/list/new_split_colors = list()
+	var/list/colors = splittext(colorString, "#")
 	for(var/index in 2 to length(colors))
 		var/color = "#[colors[index]]"
-		var/col_len = length(color)
-		to_chat(world, color)
-		if(!findtext(color, color_regex) && (col_len == 4 || col_len == 5 || col_len == 7 || col_len == 9))
+		if(!findtext(color, GLOB.is_color) && (!vv_mode || !findtext(color, GLOB.is_alpha_color)))
 			return FALSE
 		new_split_colors += color
 	split_colors = new_split_colors
