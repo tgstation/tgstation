@@ -231,6 +231,9 @@
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
 
+/// Generic key for if we only have one action so we don't need to make a million subtypes with different keys
+#define BB_TARGETTED_ACTION "BB_targetted_action"
+
 ///Targetting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
@@ -343,3 +346,6 @@
 #define BB_FOUND_HONEY "BB_found_honey"
 ///the tree that we will climb
 #define BB_CLIMBED_TREE "BB_climbed_tree"
+
+/// Lobstrosities will only attack people with one of these traits
+#define BB_LOBSTROSITY_EXPLOIT_TRAITS "BB_lobstrosity_exploit_traits"

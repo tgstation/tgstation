@@ -175,6 +175,10 @@
 	var/shake_duration = 1 SECONDS
 	/// Intensity of shaking animation
 	var/shake_pixel_shift = 2
+	/// Amount of time to stun self upon impact
+	var/recoil_duration = 0.6 SECONDS
+	/// Amount of time to knock over an impacted target
+	var/knockdown_duration = 0.6 SECONDS
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/do_charge_indicator(atom/charger, atom/charge_target)
 	charger.Shake(shake_pixel_shift, shake_pixel_shift, shake_duration)
@@ -190,18 +194,33 @@
 		source.visible_message(span_danger("[source] smashes into [target]!"))
 		if(!living_source)
 			return
-		living_source.Stun(6, ignore_canstun = TRUE)
+		living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 		return
 
 	var/mob/living/living_target = target
 	if(ishuman(living_target))
 		var/mob/living/carbon/human/human_target = living_target
 		if(human_target.check_shields(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
-			living_source.Stun(6, ignore_canstun = TRUE)
+			living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 			return
 
 	living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
-	living_target.Knockdown(6)
+	living_target.Knockdown(knockdown_duration)
+
+/// Charge a long way, knock down for longer, and perform an instant melee attack
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster
+	charge_distance = 8
+	knockdown_duration = 2 SECONDS
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
+	. = ..()
+	if(!isliving(target) || !isbasicmob(source))
+		return
+	var/mob/living/basic/basic_source = source
+	var/mob/living/living_target = target
+	basic_source.melee_attack(living_target)
+	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+	basic_source.Immobilize(0.5 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"
