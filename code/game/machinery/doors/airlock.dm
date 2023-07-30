@@ -1773,7 +1773,7 @@
 /obj/structure/fluff/airlock_filler/proc/no_airlock()
 	SIGNAL_HANDLER
 
-	qdel(src)
+	filled_airlock = null
 
 /*
 	Station Airlocks Regular

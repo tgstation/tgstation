@@ -172,7 +172,7 @@
 /obj/machinery/door/proc/no_filler()
 	SIGNAL_HANDLER
 
-	qdel(src)
+	filler = null
 
 /**
  * Checks which way the airlock is facing and adjusts the direction accordingly.
