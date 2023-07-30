@@ -6,14 +6,14 @@
 	charge_damage = 50
 
 
-/datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
+/datum/action/cooldown/mob_cooldown/charge/rust(atom/target_atom)
 	if(HAS_TRAIT(get_step(src, 0), TRAIT_RUSTY))
 		StartCooldown(135 SECONDS, 135 SECONDS)
 		charge_sequence(owner, target_atom, charge_delay, charge_past)
 		StartCooldown()
 		return TRUE
 
-/datum/action/cooldown/mob_cooldown/chareg/rust/on_move(atom/source, atom/new_loc, turf/victim)
+/datum/action/cooldown/mob_cooldown/chareg/rust(atom/source, atom/new_loc, turf/victim)
 	SIGNAL_HANDLER
 	if(!actively_moving)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
