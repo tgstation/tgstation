@@ -1581,9 +1581,9 @@
 /// Returns the original fantasy variable value
 /obj/item/proc/reset_fantasy_variable(variable_key, current_value)
 	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+	LAZYREMOVE(fantasy_modifications, variable_key)
 	if(!modification)
 		return current_value
-	LAZYREMOVE(fantasy_modifications, variable_key)
 	return current_value - modification
 
 /obj/item/proc/apply_fantasy_bonuses(bonus)
