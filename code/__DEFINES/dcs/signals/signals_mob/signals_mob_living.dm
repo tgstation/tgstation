@@ -195,3 +195,6 @@
 
 /// From /mob/living/proc/was_attacked_effects, signifying the mob was attacked by another mob
 #define COMSIG_LIVING_ATTACKED_BY "living_attacked_by"
+
+/// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
+#define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"

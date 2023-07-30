@@ -11,18 +11,23 @@ handles linking back and forth.
 	// 2. silo is null, materials is parented to parent
 	// 3. silo is null, materials is null
 
-	/// The silo machine this container is connected to
+	///The silo machine this container is connected to
 	var/obj/machinery/ore_silo/silo
-	//material container. the value is either the silo or local
+	///Material container. the value is either the silo or local
 	var/datum/component/material_container/mat_container
-	//should we create a local storage if we can't connect to silo
+	///Should we create a local storage if we can't connect to silo
 	var/allow_standalone
-	//are we trying to connect to the silo
-	var/connecting
-	//local size of container when silo = null
+	///Local size of container when silo = null
 	var/local_size = INFINITY
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
+
+	//Internal vars
+
+	///Prepare storage when component is registered to parent. This allows local material container(if created) to be first in the component list so it gets GC'd properly
+	var/_prepare_on_register = FALSE
+	///Are we trying to to connect to remote ore silo or not
+	var/_connect_to_silo = FALSE
 
 /datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)
 	if (!isatom(parent))
@@ -35,16 +40,25 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
 	var/turf/T = get_turf(parent)
+	_connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
-		connecting = TRUE
+		_connect_to_silo = TRUE
+
+	if(mapload) // wait for silo to initialize during mapload
+		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), _connect_to_silo))
+	else //directly register in round
+		_prepare_on_register = TRUE
 
 /datum/component/remote_materials/RegisterWithParent()
-	if (connecting)
+	if(_prepare_on_register)
+		_PrepareStorage(_connect_to_silo)
+
+/datum/component/remote_materials/proc/_PrepareStorage(connect_to_silo)
+	if (connect_to_silo)
 		silo = GLOB.ore_silo_default
 		if (silo)
 			silo.ore_connected_machines += src
 			mat_container = silo.GetComponent(/datum/component/material_container)
-		connecting = FALSE
 	if (!mat_container && allow_standalone)
 		_MakeLocal()
 
@@ -163,24 +177,25 @@ handles linking back and forth.
 	if (silo)
 		silo.silo_log(M || parent, action, amount, noun, mats)
 
-/datum/component/remote_materials/proc/format_amount()
-	if (mat_container)
-		return "[mat_container.total_amount()] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount] ([silo ? "remote" : "local"])"
-	else
-		return "0 / 0"
-
 /// Ejects the given material ref and logs it, or says out loud the problem.
 /datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount)
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return 0
 
-	if (!mat_container)
+	if (!mat_container) //no silolink & local storage not supported
 		movable_parent.say("No access to material storage, please contact the quartermaster.")
 		return 0
-	if (on_hold())
+	if(!mat_container.can_hold_material(material_ref)) //material not supported by container
+		movable_parent.say("Invalid material requested.")
+		return 0
+	if(eject_amount <= 0) //invalid amount
+		movable_parent.say("Invalid amount requested.")
+		return 0
+	if(on_hold()) //silo on hold
 		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
 		return 0
+
 	var/count = mat_container.retrieve_sheets(eject_amount, material_ref, movable_parent.drop_location())
 	var/list/matlist = list()
 	matlist[material_ref] = eject_amount

@@ -49,8 +49,8 @@ GLOBAL_VAR(restart_counter)
  * - Dominion/Cyberboss
  *
  * Where to put init shit quick guide:
- * If you need it to happen before the mc is created: world/Genesis. 
- * If you need it to happen last: world/New(), 
+ * If you need it to happen before the mc is created: world/Genesis.
+ * If you need it to happen last: world/New(),
  * Otherwise, in a subsystem preinit or init. Subsystems can set an init priority.
  */
 
@@ -180,7 +180,7 @@ GLOBAL_VAR(restart_counter)
 #ifdef UNIT_TESTS
 	cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(RunUnitTests))
 #else
-	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
+	cb = VARSET_CALLBACK(SSticker, force_ending, ADMIN_FORCE_END_ROUND)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 

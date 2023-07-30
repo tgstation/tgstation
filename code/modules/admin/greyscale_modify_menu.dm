@@ -35,11 +35,15 @@
 	/// Whether the menu is currently locked down to prevent abuse from players. Currently is only unlocked when opened from vv.
 	var/unlocked = FALSE
 
-/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors)
+	/// If defined, this ui state will be used instead of the target's
+	var/datum/ui_state/specific_ui_state
+
+/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors, datum/ui_state/specific_ui_state)
 	src.target = target
 	src.user = user
 	src.apply_callback = apply_callback || CALLBACK(src, PROC_REF(DefaultApply))
 	icon_state = starting_icon_state
+	src.specific_ui_state = specific_ui_state
 
 	SetupConfigOwner()
 
@@ -68,7 +72,7 @@
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
-	return GLOB.always_state
+	return specific_ui_state || target.ui_state(user)
 
 /datum/greyscale_modify_menu/ui_close()
 	qdel(src)
@@ -76,7 +80,7 @@
 /datum/greyscale_modify_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "GreyscaleModifyMenu")
+		ui = new(user, target, "GreyscaleModifyMenu")
 		ui.open()
 
 /datum/greyscale_modify_menu/ui_data(mob/user)
@@ -135,14 +139,13 @@
 		if("recolor")
 			var/index = text2num(params["color_index"])
 			var/new_color = lowertext(params["new_color"])
-			if(split_colors[index] != new_color)
+			if(split_colors[index] != new_color && findtext(new_color, GLOB.is_color))
 				split_colors[index] = new_color
 				queue_refresh()
 
 		if("recolor_from_string")
 			var/full_color_string = lowertext(params["color_string"])
-			if(full_color_string != split_colors.Join())
-				ReadColorsFromString(full_color_string)
+			if(full_color_string != split_colors.Join() && ReadColorsFromString(full_color_string))
 				queue_refresh()
 
 		if("pick_color")
@@ -223,9 +226,14 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
 	var/list/raw_colors = splittext(colorString, "#")
-	split_colors = list()
-	for(var/i in 2 to length(raw_colors))
-		split_colors += "#[raw_colors[i]]"
+	var/new_split_colors = list()
+	for(var/index in 2 to length(raw_colors))
+		var/color = "[raw_colors[index]]"
+		if(!findtext(color, GLOB.is_color))
+			return FALSE
+		new_split_colors += color
+	split_colors = new_split_colors
+	return TRUE
 
 /datum/greyscale_modify_menu/proc/randomize_color(color_index)
 	var/new_color = "#"

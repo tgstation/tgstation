@@ -19,6 +19,11 @@
 	security_mode_flags = SECBOT_CHECK_WEAPONS | SECBOT_HANDCUFF_TARGET
 	possessed_message = "You are a honkbot! Make sure the crew are having a great time!"
 
+	automated_announcements = list(
+		HONKBOT_VOICED_HONK_HAPPY = 'sound/items/bikehorn.ogg',
+		HONKBOT_VOICED_HONK_SAD = 'sound/misc/sadtrombone.ogg',
+	)
+
 	///Keeping track of how much we honk to prevent spamming it
 	var/limiting_spam = FALSE
 	///Sound played when HONKing someone
@@ -44,10 +49,12 @@
 
 /mob/living/simple_animal/bot/secbot/honkbot/knockOver(mob/living/carbon/tripped_target)
 	. = ..()
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, speak), "Honk!")
-	playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, speak), HONKBOT_VOICED_HONK_SAD)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+
+/mob/living/simple_animal/bot/secbot/honkbot/threat_react(threatlevel)
+	speak(HONKBOT_VOICED_HONK_HAPPY)
 
 /mob/living/simple_animal/bot/secbot/honkbot/bot_reset()
 	..()
