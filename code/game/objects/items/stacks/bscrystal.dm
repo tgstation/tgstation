@@ -2,7 +2,7 @@
 /obj/item/stack/ore/bluespace_crystal
 	name = "bluespace crystal"
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
-	icon = 'icons/obj/stack_objects.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "bluespace_crystal"
 	singular_name = "bluespace crystal"
 	dye_color = DYE_COSMIC
