@@ -179,7 +179,13 @@ const ProductDisplay = (
 ) => {
   const { data } = useBackend<VendingData>(context);
   const { custom, inventory, selectedCategory } = props;
-  const { stock, onstation, user, displayed_currency_icon, displayed_currency_name } = data;
+  const {
+    stock,
+    onstation,
+    user,
+    displayed_currency_icon,
+    displayed_currency_name,
+  } = data;
 
   return (
     <Section
@@ -190,7 +196,9 @@ const ProductDisplay = (
         !!onstation &&
         user && (
           <Box fontSize="16px" color="green">
-            {(user && user.cash) || 0}{displayed_currency_name} <Icon name={displayed_currency_icon} color="gold" />
+            {(user && user.cash) || 0}
+            {displayed_currency_name}{' '}
+            <Icon name={displayed_currency_icon} color="gold" />
           </Box>
         )
       }>
@@ -340,7 +348,8 @@ const ProductButton = (props, context) => {
           'item': product.name,
         })
       }>
-      {customPrice}{displayed_currency_name}
+      {customPrice}
+      {displayed_currency_name}
     </Button>
   ) : (
     <Button
@@ -351,7 +360,8 @@ const ProductButton = (props, context) => {
           'ref': product.ref,
         })
       }>
-      {standardPrice}{displayed_currency_name}
+      {standardPrice}
+      {displayed_currency_name}
     </Button>
   );
 };

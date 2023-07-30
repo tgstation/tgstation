@@ -30,7 +30,7 @@
 	machine_name = "Sustenance Vendor"
 	icon_state = "refill_snack"
 
-//Subtype to force the vendor on lavaland labor camp (or other station areas not on station z) to use prices instead of being free
+//Labor camp subtype that uses labor points obtained from mining and processing ore
 /obj/machinery/vending/sustenance/labor_camp
 	name = "\improper Labor Camp Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement. \
@@ -39,7 +39,15 @@
 	displayed_currency_icon = "digging"
 	displayed_currency_name = " LP"
 
-/obj/machinery/vending/ui_data(mob/user)
+/obj/machinery/vending/sustenance/interact(mob/user)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!(machine_stat & NOPOWER) && !istype(living_user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner))
+			speak("No valid labor points account found. Vending is not permitted.")
+			return
+	return ..()
+
+/obj/machinery/vending/sustenance/ui_data(mob/user)
 	. = list()
 	var/obj/item/card/id/advanced/prisoner/paying_scum_id
 	if(isliving(user))
