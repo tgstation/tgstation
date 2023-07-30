@@ -58,4 +58,4 @@
 	return ..()
 
 /datum/ai_planning_subtree/targeted_mob_ability/lobster
-	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/in_range
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range
