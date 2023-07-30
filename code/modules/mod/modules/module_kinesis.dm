@@ -174,6 +174,7 @@
 /obj/item/mod/module/anomaly_locked/kinesis/proc/clear_grab(playsound = TRUE)
 	if(!grabbed_atom)
 		return
+	. = grabbed_atom
 	if(playsound)
 		playsound(grabbed_atom, 'sound/effects/empulse.ogg', 75, TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
@@ -250,6 +251,21 @@
 	complexity = 0
 	grab_range = INFINITY
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0
+	/// Does our object phase through stuff?
+	var/phasing = FALSE
+
+/obj/item/mod/module/anomaly_locked/kinesis/admin/grab_atom(atom/movable/target)
+	. = ..()
+	if(phasing)
+		ADD_TRAIT(grabbed_atom, TRAIT_MOVE_PHASING, REF(src))
+
+/obj/item/mod/module/anomaly_locked/kinesis/admin/clear_grab(playsound)
+	. = ..()
+	if(!.)
+		return
+	var/atom/movable/previous_grab = .
+	if(phasing)
+		REMOVE_TRAIT(previous_grab, TRAIT_MOVE_PHASING, REF(src))
 
 /obj/item/mod/module/anomaly_locked/kinesis/admin/can_grab(atom/target)
 	if(mod.wearer == target)
@@ -260,3 +276,18 @@
 	if(movable_target.throwing)
 		return FALSE
 	return TRUE
+
+/obj/item/mod/module/anomaly_locked/kinesis/admin/get_configuration()
+	. = ..()
+	.["phasing"] = add_ui_configuration("Phasing", "bool", phasing)
+
+/obj/item/mod/module/anomaly_locked/kinesis/admin/configure_edit(key, value)
+	switch(key)
+		if("phasing")
+			phasing = value
+			if(!grabbed_atom)
+				return
+			if(phasing)
+				ADD_TRAIT(grabbed_atom, TRAIT_MOVE_PHASING, REF(src))
+			else
+				REMOVE_TRAIT(grabbed_atom, TRAIT_MOVE_PHASING, REF(src))
