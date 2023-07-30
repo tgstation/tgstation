@@ -17,16 +17,18 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.quality = quality || randomQuality()
+	src.quality = quality
+	if(isnull(src.quality))
+		src.quality = random_quality()
 	src.canFail = canFail
 	src.announce = announce
 
 	src.affixes = affixes
 	appliedComponents = list()
 	if(affixes && affixes.len)
-		setAffixes()
+		set_affixes()
 	else
-		randomAffixes()
+		random_affixes()
 
 /datum/component/fantasy/Destroy()
 	unmodify()
@@ -57,14 +59,14 @@
 		src.announce = announce || src.announce
 	modify()
 
-/datum/component/fantasy/proc/randomQuality()
+/datum/component/fantasy/proc/random_quality()
 	var/quality = pick(1;15, 2;14, 2;13, 2;12, 3;11, 3;10, 3;9, 4;8, 4;7, 4;6, 5;5, 5;4, 5;3, 6;2, 6;1, 6;0)
 	if(prob(50))
 		quality = -quality
 	return quality
 
 ///proc on creation for random affixes
-/datum/component/fantasy/proc/randomAffixes(force)
+/datum/component/fantasy/proc/random_affixes(force)
 	var/alignment
 	if(quality >= 0)
 		alignment |= AFFIX_GOOD
@@ -95,7 +97,7 @@
 		usedSlots |= affix.placement
 
 ///proc on creation for specific affixes given to the fantasy component
-/datum/component/fantasy/proc/setAffixes(force)
+/datum/component/fantasy/proc/set_affixes(force)
 	var/usedSlots = NONE
 	for(var/datum/fantasy_affix/affix in affixes) // We want at least 1 affix applied
 		if((affix.placement & usedSlots) || (!affix.validate(parent)))
