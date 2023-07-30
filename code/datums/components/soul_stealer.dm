@@ -6,7 +6,7 @@
  */
 /datum/component/soul_stealer
 	/// List of soulstones captured by this item.
-	var/list/obj/item/soulstone/soulstones = list()
+	var/list/obj/item/soulstone/anybody/purified/soulstones = list()
 
 /datum/component/soul_stealer/Initialize()
 	if(!isitem(parent))
@@ -60,7 +60,7 @@
 /datum/component/soul_stealer/proc/try_capture(mob/living/carbon/human/victim, mob/living/captor)
 	if(victim.stat == CONSCIOUS)
 		return
-	var/obj/item/soulstone/soulstone = new(parent)
+	var/obj/item/soulstone/anybody/purified/soulstone = new(parent)
 	soulstone.attack(victim, captor)
 	if(!length(soulstone.contents)) // failed
 		qdel(soulstone)
