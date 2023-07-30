@@ -24,5 +24,5 @@
 	if(!isliving(living_owner))
 		return
 
-	if(tgui_alert(living_owner, "Are you sure you want to exit?", "Disconnect", list("Exit", "Remain"), 10 SECONDS) == "Exit")
-		SEND_SIGNAL(living_owner.mind, COMSIG_BITMINING_SEVER_AVATAR)
+	if(tgui_alert(living_owner, "You may choose to exit safely or remain indefinitely.", "Disconnect", list("Exit", "Remain"), 10 SECONDS) == "Exit")
+		SEND_SIGNAL(living_owner.mind, COMSIG_BITMINING_SAFE_DISCONNECT)

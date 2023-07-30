@@ -10,11 +10,11 @@
 /// from /obj/machinery/quantum_server/on_exit_turf_entered(): (atom/entered)
 #define COMSIG_BITMINING_DOMAIN_COMPLETE "bitmining_complete"
 
-/// from /obj/machinery/netpod/open_machine(), /obj/structure/hololadder(), etc
-#define COMSIG_BITMINING_SEVER_AVATAR "bitmining_sever"
+/// from /obj/structure/hololadder and others:
+#define COMSIG_BITMINING_SAFE_DISCONNECT "bitmining_disconnect"
 
-/// from /obj/machinery/quantum_server/on_destroyed()
-#define COMSIG_BITMINING_SERVER_CRASH "bitmining_crash"
+/// from /obj/machinery/netpod/open_machine(), /obj/machinery/quantum_server, etc (obj/machinery/netpod)
+#define COMSIG_BITMINING_SEVER_AVATAR "bitmining_sever"
 
 /// from /obj/machinery/quantum_server/shutdown() : (obj/machinery/quantum_server)
 #define COMSIG_BITMINING_SHUTDOWN_ALERT "bitmining_shutdown"

@@ -1,19 +1,15 @@
 #define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
 #define REDACTED "???"
 
-/**
- * ### Quantum Server
- * Houses artificial realities. Interfaced by the console.
- * Destroying this causes brain damage to the occupants and deletes the level.
- */
 /obj/machinery/quantum_server
 	name = "quantum server"
 
 	circuit = /obj/item/circuitboard/machine/quantum_server
 	density = TRUE
 	desc = "A hulking computational machine designed to fabricate virtual domains."
-	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "hub"
+	icon = 'icons/obj/machines/bitmining.dmi'
+	base_icon_state = "qserver"
+	icon_state = "qserver"
 	/// The area type used to delete objects in the vdom
 	var/area/preset_delete_area = /area/station/virtual_domain/to_delete
 	/// The area type used to spawn hololadders
@@ -60,12 +56,12 @@
 	var/turf/exit_turfs = list()
 	/// This marks the starting point (bottom left) of the virtual dom map. We use this to spawn templates. Expected: 1
 	var/turf/map_load_turf = list()
-	/// Turfs to look for loot boxes.
-	var/turf/send_turfs = list()
 	/// The turfs on station where we generate loot.
 	var/turf/receive_turfs = list()
 	/// This marks the starting point (bottom left) of the safehouse. We use this to spawn the safehouse. Expected: 1
 	var/turf/safehouse_load_turf = list()
+	/// Turfs to look for loot boxes.
+	var/turf/send_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -92,15 +88,43 @@
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 	occupant_mind_refs.Cut()
+	QDEL_NULL(delete_turfs)
+	QDEL_NULL(exit_turfs)
+	QDEL_NULL(map_load_turf)
+	QDEL_NULL(receive_turfs)
+	QDEL_NULL(safehouse_load_turf)
+	QDEL_NULL(send_turfs)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 
+/obj/machinery/quantum_server/update_appearance(updates)
+	. = ..()
+	if(isnull(vdom_ref))
+		set_light(0)
+		return
+
+	var/light_color = isnull(generated_domain) ? LIGHT_COLOR_FIRE : LIGHT_COLOR_BABY_BLUE
+	set_light_color(light_color)
+	set_light(2, 1.5)
+
+/obj/machinery/quantum_server/update_icon_state()
+	if(isnull(vdom_ref))
+		icon_state = base_icon_state
+		return ..()
+	if(generated_domain)
+		icon_state = "[base_icon_state]_on"
+		return ..()
+	if(!COOLDOWN_FINISHED(src, cooling_off))
+		icon_state = "[base_icon_state]_off"
+
+	return ..()
+
 /obj/machinery/quantum_server/attackby(obj/item/tool, mob/user, params)
-	var/icon_closed = initial(icon_state)
-	var/icon_open = "[initial(icon_state)]_o"
+	var/icon_closed = base_icon_state
+	var/icon_open = "[base_icon_state]_o"
 	if(!(machine_stat & (BROKEN|NOPOWER)))
-		icon_closed = "[initial(icon_state)]_off"
-		icon_open = "[initial(icon_state)]_o_off"
+		icon_closed = "[base_icon_state]_off"
+		icon_open = "[base_icon_state]_o_off"
 
 	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, tool))
 		return
@@ -432,6 +456,8 @@
 	for(var/turf/tile in send_turfs)
 		RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_send_turf_entered))
 
+	update_appearance()
+
 	return TRUE
 
 /// If broken via signal, disconnects all users
@@ -479,9 +505,9 @@
 	for(var/datum/stock_part/servo/servo in component_parts)
 		rewards_bonus += servo.tier * 0.1
 
-	examine_text += span_infoplain("Its manipulation potential is increasing rewards by [(rewards_bonus * 100)]x.")
+	examine_text += span_infoplain("Its manipulation potential is increasing rewards by [(rewards_bonus)]x.")
 
-	if(get_ready_status())
+	if(!get_ready_status())
 		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 		return
 
@@ -496,7 +522,7 @@
 /obj/machinery/quantum_server/proc/stop_domain()
 	loading = TRUE
 	domain_randomized = FALSE
-	SEND_SIGNAL(src, COMSIG_BITMINING_SERVER_CRASH)
+	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR)
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
 	var/datum/space_level/vdom = vdom_ref?.resolve()
@@ -528,6 +554,7 @@
 	generated_domain = null
 	generated_safehouse = null
 	retries_spent = 0
+	update_appearance()
 	loading = FALSE
 
 #undef ONLY_TURF

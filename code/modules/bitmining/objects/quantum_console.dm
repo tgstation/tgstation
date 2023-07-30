@@ -1,7 +1,3 @@
-/**
- * ### Quantum Console
- * Links to the quantum computer. Allows the user to access the quantum computer's functions.
- */
 /obj/machinery/computer/quantum_console
 	name = "quantum console"
 

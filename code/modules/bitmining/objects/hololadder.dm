@@ -1,7 +1,3 @@
-/**
- * ### Hololadder
- * Provides a way for players to reconnect with their physical bodies.
- */
 /obj/structure/hololadder
 	name = "hololadder"
 
@@ -28,6 +24,7 @@
 
 	disconnect(user)
 
+/// If there's a pilot ref- send the disconnect signal
 /obj/structure/hololadder/proc/disconnect(mob/user)
 	if(isnull(user.mind))
 		return
@@ -39,8 +36,9 @@
 
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
-		SEND_SIGNAL(mob_mind, COMSIG_BITMINING_SEVER_AVATAR)
+		SEND_SIGNAL(mob_mind, COMSIG_BITMINING_SAFE_DISCONNECT)
 
+/// Helper for times when you dont have hands (gondola??)
 /obj/structure/hololadder/proc/on_enter(datum/source, atom/movable/arrived, turf/old_loc)
 	SIGNAL_HANDLER
 

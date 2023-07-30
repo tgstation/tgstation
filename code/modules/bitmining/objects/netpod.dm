@@ -1,16 +1,11 @@
-
-/**
- * ### Net Pod
- * Provides a way for players to engage with the loaded virtual domains.
- */
 /obj/machinery/netpod
 	name = "net pod"
 
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
-	icon = 'icons/obj/machines/sleeper.dmi'
-	base_icon_state = "oldpod"
-	icon_state = "oldpod"
+	icon = 'icons/obj/machines/bitmining.dmi'
+	base_icon_state = "netpod"
+	icon_state = "netpod"
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
 	/// Holds this to see if it needs to generate a new one
@@ -130,13 +125,13 @@
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		on_opened_or_destroyed()
-		flick("[initial(icon_state)]-anim", src)
+		flick("[base_icon_state]_opening", src)
 	return ..()
 
 /obj/machinery/netpod/close_machine(mob/user, density_to_set = TRUE)
 	if(isnull(user) || !state_open || panel_open)
 		return
-	flick("[initial(icon_state)]-anim", src)
+	flick("[base_icon_state]_closing", src)
 	..()
 	protect_occupant(occupant)
 	enter_matrix()
@@ -241,7 +236,7 @@
 	if(server)
 		SEND_SIGNAL(server, COMSIG_BITMINING_CLIENT_DISCONNECTED, occupant_mind_ref)
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_DOMAIN_COMPLETE)
-		receiving.UnregisterSignal(server, COMSIG_BITMINING_SERVER_CRASH)
+		receiving.UnregisterSignal(server, COMSIG_BITMINING_SEVER_AVATAR)
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT)
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_CROWBAR_ALERT)
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
@@ -358,7 +353,7 @@
 	SIGNAL_HANDLER
 
 	unprotect_occupant(occupant)
-	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, TRUE, src)
+	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, src)
 
 /// Sets the owner to in_netpod state, basically short-circuiting environmental conditions
 /obj/machinery/netpod/proc/protect_occupant(mob/living/target)

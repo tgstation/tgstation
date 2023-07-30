@@ -36,9 +36,9 @@
 	RegisterSignal(hosting_netpod, COMSIG_BITMINING_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(hosting_netpod, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITMINING_DOMAIN_COMPLETE, PROC_REF(on_domain_completed))
-	RegisterSignal(server, COMSIG_BITMINING_SERVER_CRASH, PROC_REF(on_sever_connection))
+	RegisterSignal(server, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
-	RegisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
+	RegisterSignal(src, COMSIG_BITMINING_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
 	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 
 /// Links mob damage & death as long as the netpod is there
@@ -57,6 +57,25 @@
 /datum/mind/proc/disconnect_avatar_signals()
 	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(current, COMSIG_LIVING_DEATH)
+
+/// Disconnects the avatar and returns the mind to the pilot.
+/datum/mind/proc/full_avatar_disconnect(forced = FALSE, obj/machinery/netpod/broken_netpod)
+	var/mob/living/pilot = pilot_ref?.resolve()
+	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
+	if(isnull(pilot) || isnull(hosting_netpod))
+		return
+
+	disconnect_avatar_signals()
+	UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
+	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
+	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
+	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
+	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
+
+	netpod_ref = null
+	pilot_ref = null
+
+	hosting_netpod.disconnect_occupant(src, forced)
 
 /// Triggers whenever the server gets a loot crate pushed to send area
 /datum/mind/proc/on_domain_completed(datum/source, atom/entered)
@@ -101,26 +120,17 @@
 		new_master = intruder
 	)
 
-/// Disconnects the avatar and returns the mind to the pilot.
-/datum/mind/proc/on_sever_connection(datum/source, forced = FALSE, obj/machinery/netpod/broken_netpod)
+/// Safely exits without forced variables, etc
+/datum/mind/proc/on_safe_disconnect(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/pilot = pilot_ref?.resolve()
-	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
-	if(isnull(pilot) || isnull(hosting_netpod))
-		current.dust()
+	full_avatar_disconnect()
 
-	disconnect_avatar_signals()
-	UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
-	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
-	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
-	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
-	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
+/// Helper for calling sever with forced variables
+/datum/mind/proc/on_sever_connection(datum/source, obj/machinery/netpod/broken_netpod)
+	SIGNAL_HANDLER
 
-	netpod_ref = null
-	pilot_ref = null
-
-	hosting_netpod.disconnect_occupant(src, forced)
+	full_avatar_disconnect(forced = TRUE, broken_netpod = broken_netpod)
 
 /// Triggers when the server is shutting down
 /datum/mind/proc/on_shutting_down(datum/source, obj/machinery/quantum_server/server)
