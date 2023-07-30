@@ -63,6 +63,9 @@
 		return FALSE
 	if(!direction)
 		return FALSE
+	if(ismovable(loc)) //Mech is inside an object, tell it we moved
+		var/atom/loc_atom = loc
+		return loc_atom.relaymove(src, direction)
 	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
 	if(internal_tank?.connected_port)
 		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
