@@ -5259,12 +5259,6 @@
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
-"ZW" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/turf/template_noop,
-/area/ruin/space/has_grav/hotel)
 
 (1,1,1) = {"
 Cl
@@ -9458,7 +9452,7 @@ vp
 hf
 vM
 Dc
-ZW
+cN
 Cl
 Cl
 Cl
