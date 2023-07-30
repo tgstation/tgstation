@@ -309,6 +309,8 @@
 		return FALSE
 	if(ismovable(target) && !isturf(target.loc))
 		return FALSE
+	if(target.z != mod.wearer.z)
+		return FALSE
 	return TRUE
 
 /obj/item/mod/module/anomaly_locked/kinesis/admin/on_setanchored(atom/movable/grabbed_atom, anchorvalue)
