@@ -648,7 +648,7 @@ const SnowflakeAirTank = (props, context) => {
             />
           </LabeledList.Item>
           <LabeledList.Item
-            label="Tank Port"
+            label="Pipenet Port"
             buttons={
               <Button
                 icon="info"
