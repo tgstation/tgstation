@@ -106,6 +106,12 @@
 
 	return TRUE
 
+/datum/traitor_objective/target_player/assault/generate_ui_buttons(mob/user)
+	var/list/buttons = list()
+	if(attacks_required > attacks_inflicted)
+		buttons += add_ui_button("[attacks_required - attacks_inflicted]", "This tells you how many more times you have to attack the target player to succeed.", "hand-rock-o", "none")
+	return buttons
+
 /datum/traitor_objective/target_player/assault/proc/on_target_qdeleted()
 	SIGNAL_HANDLER
 	if(objective_state == OBJECTIVE_STATE_INACTIVE)
