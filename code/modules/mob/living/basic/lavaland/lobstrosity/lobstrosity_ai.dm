@@ -1,7 +1,8 @@
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/lobster,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
+		BB_BASIC_MOB_FLEEING = TRUE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -13,6 +14,9 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
 	)
+
+/datum/targetting_datum/basic/lobster
+	stat_attack = HARD_CRIT
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster
@@ -28,6 +32,8 @@
 /datum/ai_behavior/basic_melee_attack/lobster/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	var/is_vulnerable = FALSE
 	var/atom/target = controller.blackboard[target_key]
+	if (isnull(target))
+		return ..()
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
 		if (!HAS_TRAIT(target, trait))
 			continue
