@@ -1,6 +1,0 @@
-author: "Senefi"
-delete-after: True
-changes:
-  - rscadd: "MetaStation Chemical Storage now has its own APC"
-  - rscadd: "MetaStation Chemical Storage is slightly larger than before"
-  - rscadd: "Ice Box Station Chemical Storage now has its own APC"

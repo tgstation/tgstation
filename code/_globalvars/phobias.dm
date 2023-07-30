@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 	"insects" = typecacheof(list(
 		/mob/living/basic/cockroach,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 	)),
 	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"robots" = typecacheof(list(

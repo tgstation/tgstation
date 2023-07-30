@@ -44,6 +44,7 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
+	can_open_with_hands = FALSE
 	/// Make sure that the puzzle has the same puzzle_id as the keycard door!
 	var/puzzle_id = null
 	/// Message that occurs when the door is opened

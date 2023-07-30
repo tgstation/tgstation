@@ -1470,10 +1470,10 @@
 /datum/chemical_reaction/food/soup/cheese
 	required_reagents = list(
 		/datum/reagent/water = 30,
-		/datum/reagent/consumable/flour = 10,
 		/datum/reagent/consumable/milk = 10,
 	)
 	required_ingredients = list(
+		/obj/item/food/doughslice = 2,
 		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/butterslice = 1,
 		/obj/item/food/grown/potato/sweet = 1,
