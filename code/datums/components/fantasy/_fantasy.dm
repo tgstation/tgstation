@@ -122,10 +122,10 @@
 		place.visible_message(span_danger("[parent] [span_blue("violently glows blue")] for a while, then evaporates."))
 		master.burn()
 		return
-	else if(announce)
-		announce()
 
 	master.name = newName
+	if(announce)
+		announce()
 
 /datum/component/fantasy/proc/unmodify()
 	var/obj/item/master = parent
@@ -149,4 +149,4 @@
 		span = "<span class='danger'>"
 		effect_description = span_bold("mottled black glow")
 
-	location.visible_message("[span][originalName] is covered by a [effect_description] and then transforms into [parent]!</span>")
+	location.visible_message("[span]The [originalName] is covered by a [effect_description] and then transforms into [parent]!</span>")
