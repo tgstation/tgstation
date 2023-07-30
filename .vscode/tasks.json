@@ -102,6 +102,13 @@
 			],
 			"group": "build",
 			"label": "tgui: rebuild tgfont"
+		},
+		{
+			"group": "none",
+			"label": "tools: update paths",
+			"type": "shell",
+			"command": "tools/UpdatePaths/updatepaths.sh",
+			"problemMatcher": []
 		}
 	]
 }
