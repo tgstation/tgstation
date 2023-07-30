@@ -3,7 +3,7 @@
 	name = "rust charge"
 	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
 	charge_distance = 10
-	var/charge_damage = 50
+	charge_damage = 50
 
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
