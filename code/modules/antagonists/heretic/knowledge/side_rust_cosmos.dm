@@ -69,6 +69,7 @@
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
 	cost = 1
 	route = PATH_SIDE
+	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
 
 /datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
 	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms

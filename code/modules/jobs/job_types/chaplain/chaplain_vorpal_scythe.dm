@@ -13,7 +13,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	if(receiver.mind)
-		receiver.mind.add_traits(TRAIT_MORBID, ORGAN_TRAIT)
+		ADD_TRAIT(receiver.mind, TRAIT_MORBID, ORGAN_TRAIT)
 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item

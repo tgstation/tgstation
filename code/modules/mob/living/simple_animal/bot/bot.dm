@@ -47,8 +47,8 @@
 	///All initial access this bot started with.
 	var/list/prev_access = list()
 
-	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT
-	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT
+	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
+	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_COVER_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
 	var/bot_cover_flags = BOT_COVER_LOCKED
@@ -112,6 +112,10 @@
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 	/// Message to display upon possession
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
+	/// List of strings to sound effects corresponding to automated messages the bot can play
+	var/list/automated_announcements
+	/// Action we use to say voice lines out loud, also we just pass anything we try to say through here just in case it plays a voice line
+	var/datum/action/cooldown/bot_announcement/pa_system
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -192,13 +196,17 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
 		randomize_language_if_on_station()
 
-	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT))
+	if(mapload && is_station_level(z) && bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT && bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION)
 		enable_possession(mapload = mapload)
+
+	pa_system = new(src, automated_announcements = automated_announcements)
+	pa_system.Grant(src)
 
 /mob/living/simple_animal/bot/Destroy()
 	if(paicard)
 		ejectpai()
 	GLOB.bots_list -= src
+	QDEL_NULL(pa_system)
 	QDEL_NULL(personality_download)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
@@ -228,14 +236,14 @@
 /mob/living/simple_animal/bot/proc/disable_possession(mob/user)
 	can_be_possessed = FALSE
 	QDEL_NULL(personality_download)
-	if (!key)
+	if (isnull(key))
 		return
 	if (user)
 		log_combat(user, src, "ejected from [initial(src.name)] control.")
 	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
 	ghostize(can_reenter_corpse = FALSE)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	say("Personality matrix reset!", forced = "bot")
+	speak("Personality matrix reset!")
 	key = null
 
 /// Returns true if this mob can be controlled
@@ -247,18 +255,21 @@
 /// Fired after something takes control of this mob
 /mob/living/simple_animal/bot/proc/post_possession()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	say("New personality installed successfully!", forced = "bot")
+	speak("New personality installed successfully!")
 	rename(src)
 
 /// Allows renaming the bot to something else
 /mob/living/simple_animal/bot/proc/rename(mob/user)
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(
-		user = user,
-		message = "This machine is designated [real_name]. Would you like to update its registration?",
-		title = "Name change",
-		default = real_name,
-		max_length = MAX_NAME_LEN,
-	)))
+	var/new_name = sanitize_name(
+		reject_bad_text(tgui_input_text(
+			user = user,
+			message = "This machine is designated [real_name]. Would you like to update its registration?",
+			title = "Name change",
+			default = real_name,
+			max_length = MAX_NAME_LEN,
+		)),
+		allow_numbers = TRUE
+	)
 	if (isnull(new_name) || QDELETED(src))
 		return
 	if (key && user != src)
@@ -311,8 +322,8 @@
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		bot_cover_flags &= ~BOT_COVER_LOCKED
-		to_chat(user, span_notice("You bypass [src]'s [hackables]."))
-		return
+		balloon_alert(user, "cover unlocked")
+		return TRUE
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) && bot_cover_flags & BOT_COVER_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		bot_cover_flags &= ~BOT_COVER_LOCKED //Manually emagging the bot locks out the panel.
@@ -322,9 +333,10 @@
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
 		if(user)
 			log_combat(user, src, "emagged")
-		return
+		return TRUE
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver (or through the UI) yet.
-		to_chat(user, span_warning("You need to open maintenance panel first!"))
+		balloon_alert(user, "open maintenance panel first!")
+		return FALSE
 
 /mob/living/simple_animal/bot/examine(mob/user)
 	. = ..()
@@ -504,25 +516,32 @@
 		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
 		ejectpai()
 
-	if(prob(70/severity))
-		set_active_language(get_random_spoken_language())
+	if (QDELETED(src))
+		return
 
 	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
 	addtimer(CALLBACK(src, PROC_REF(emp_reset), was_on), severity * 30 SECONDS)
+	if(!prob(70/severity))
+		return
+	if (!length(GLOB.uncommon_roundstart_languages))
+		return
+	remove_all_languages(source = LANGUAGE_EMP)
+	grant_random_uncommon_language(source = LANGUAGE_EMP)
 
 /mob/living/simple_animal/bot/proc/emp_reset(was_on)
 	stat &= ~EMPED
 	if(was_on)
 		turn_on()
 
-/mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
-	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
+/**
+ * Pass a message to have the bot say() it, passing through our announcement action to potentially also play a sound.
+ * Optionally pass a frequency to say it on the radio.
+ */
+/mob/living/simple_animal/bot/proc/speak(message, channel)
+	if(!message)
 		return
-	if(channel && internal_radio.channels[channel])// Use radio if we have channel key
-		internal_radio.talk_into(src, message, channel)
-	else
-		say(message)
+	pa_system.announce(message, channel)
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
@@ -1059,6 +1078,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	disable_possession()
 	if(paicard.pai.holoform)
 		paicard.pai.fold_in()
+	copy_languages(paicard.pai, source_override = LANGUAGE_PAI)
+	set_active_language(paicard.pai.get_selected_language())
 	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
 	paicard.pai.mind.transfer_to(src)
 	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
@@ -1094,6 +1115,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	paicard = null
 	name = initial(src.name)
 	faction = initial(faction)
+	remove_all_languages(source = LANGUAGE_PAI)
+	get_selected_language()
 
 /// Ejects the pAI remotely.
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)

@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Personal AI holograms are now limited to an area around their PAI card. The size of this are can be configured via the PAI card."
-  - rscadd: "pAI cards can now be placed inside bots in order to grant them control of the bot."

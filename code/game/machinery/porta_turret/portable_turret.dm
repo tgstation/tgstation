@@ -355,10 +355,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	else
 		return ..()
 
-/obj/machinery/porta_turret/emag_act(mob/user)
+/obj/machinery/porta_turret/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_warning("You short out [src]'s threat assessment circuits."))
+		return FALSE
+	balloon_alert(user, "threat assessment circuits shorted")
 	audible_message(span_hear("[src] hums oddly..."))
 	obj_flags |= EMAGGED
 	controllock = TRUE
@@ -367,6 +367,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	return TRUE
 
 /obj/machinery/porta_turret/emp_act(severity)
 	. = ..()
@@ -387,7 +388,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/porta_turret/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && atom_integrity > 0) //damage received
 		if(prob(30))
@@ -974,12 +975,13 @@ DEFINE_BITFIELD(turret_flags, list(
 		else
 			to_chat(user, span_alert("Access denied."))
 
-/obj/machinery/turretid/emag_act(mob/user)
+/obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_notice("You short out the turret controls' access analysis module."))
+		return FALSE
+	balloon_alert(user, "access analysis module shorted")
 	obj_flags |= EMAGGED
 	locked = FALSE
+	return TRUE
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || isAdminGhostAI(user))
@@ -1107,7 +1109,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/item/gun/ballistic/get_turret_properties()
 	. = ..()
-	var/obj/item/ammo_box/mag = mag_type
+	var/obj/item/ammo_box/mag = spawn_magazine_type
 	var/obj/item/ammo_casing/primary_ammo = initial(mag.ammo_type)
 
 	.["base_icon_state"] = "syndie"
