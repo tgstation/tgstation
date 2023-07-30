@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Clothes equipped in the jumpsuit slot that happen to cover your feet will no longer get bloody when you walk over blood if you are also wearing shoes. Your kilt won't be getting bloody instantly anymore, it only will if you take your shoes off!"

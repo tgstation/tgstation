@@ -1,0 +1,5 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Chat highlights now escape special RegEx characters from non-RegEx highlights."
+  - bugfix: "Broken RegEx expressions no longer cause the chat to bluescreen, allowing you to properly fix them."
