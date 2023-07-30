@@ -398,14 +398,12 @@
 /obj/item/mod/core/plasma/lavaland/proc/on_toggle()
 	SIGNAL_HANDLER
 	if(mod.active)
-		START_PROCESSING(SSprocessing, src)
 		particle_effect = new(mod.wearer, /particles/pollen, PARTICLE_ATTACH_MOB)
 		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(spread_flowers))
 
 	else
-		STOP_PROCESSING(SSprocessing, src)
 		QDEL_NULL(particle_effect)
 		UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
 		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
