@@ -17,8 +17,10 @@
 	var/deployed_name
 	/// If the item used to deploy gets deleted on use or not
 	var/delete_on_use = TRUE
+	/// If the component adds a little bit into the parent's description
+	var/add_description_hint = TRUE
 
-/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use)
+/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use, add_description_hint)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -26,8 +28,10 @@
 	src.deploy_time = deploy_time
 	src.thing_to_be_deployed = thing_to_be_deployed
 	src.delete_on_use = delete_on_use
+	src.add_description_hint = add_description_hint
 
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+	if(add_description_hint)
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_hand))
 
 	var/obj/item/typecast = thing_to_be_deployed

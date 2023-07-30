@@ -1,6 +1,6 @@
 /obj/machinery/spaceship_navigation_beacon
 	name = "radio navigation gigabeacon"
-	desc = "A device that constantly transmits its position over several different commonly used maritime navigation frequencies."
+	desc = "A device that constantly transmits its position over several different commonly used maritime navigation frequencies. Used to create shuttle navigation waypoints in unexplored or undeveloped areas."
 	icon = 'icons/obj/machines/navigation_beacon.dmi'
 	icon_state = "beacon_active"
 	base_icon_state = "beacon"
@@ -70,14 +70,14 @@
 
 	locked = !locked
 
-	balloon_alert_to_viewers("[locked ? "unlocked" : "locked"]")
+	balloon_alert_to_viewers("[!locked ? "unlocked" : "locked"]")
 	update_icon_state()
 
 	return TRUE
 
 /obj/machinery/spaceship_navigation_beacon/examine()
 	.=..()
-	. += span_notice("'[FREQ_RADIO_NAV_BEACON / 10] Mhz' is printed on the side.")
+	. += span_notice("'[FREQ_RADIO_NAV_BEACON / 10] kHz' is printed on the side.")
 	if(locked)
 		. += span_warning("The blinking red light on the front indicates that this beacon is LOCKED.")
 	else
@@ -106,4 +106,4 @@
 /obj/item/folded_navigation_gigabeacon/examine()
 	.=..()
 	. += span_notice("The backside has instructions in various galactic languages detailing how this can be deployed <b>in hand</b> without any special tools.")
-	. += span_notice("'[FREQ_RADIO_NAV_BEACON / 10] Mhz' is printed on the side.")
+	. += span_notice("'[FREQ_RADIO_NAV_BEACON / 10] kHz' is printed on the side.")
