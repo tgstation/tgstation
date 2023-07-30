@@ -1,3 +1,5 @@
+#define MAX_ARTIFACT_ROLL_CHANCE 10
+
 /obj/structure/ore_vent
 	name = "ore vent"
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
@@ -41,7 +43,7 @@
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
 
 	/// Percent chance that this vent will produce an artifact as well.
-	// var/artifact_chance = 0
+	var/artifact_chance = 0
 
 
 /obj/structure/ore_vent/Initialize(mapload)
@@ -180,6 +182,7 @@
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
 	boulder_size = pick(ore_vent_types)
+	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 
 //Make sure to finish this!!!
 /obj/structure/ore_vent/random/boss
@@ -238,3 +241,13 @@
 
 /obj/item/boulder/proc/reset_processing_cooldown()
 	COOLDOWN_START(src, processing_cooldown, 2 SECONDS)
+
+/obj/item/boulder/artifact
+	name = "artifact boulder"
+	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
+
+/obj/item/boulder/artifact/Initialize(mapload)
+	. = ..()
+	var/obj/item/relic/boulder_relic = new /obj/item/relic(src)
+
+#undef MAX_ARTIFACT_ROLL_CHANCE
