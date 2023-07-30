@@ -75,33 +75,37 @@
 	close_machine(target)
 
 /obj/machinery/netpod/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
 	if(user.combat_mode)
-		return
+		return ..()
 
 	if(occupant && user != occupant)
 		balloon_alert(user, "it's sealed shut!")
 		return TRUE
 
-	if(state_open)
+	if(!state_open)
+		open_machine()
+		return TRUE
+
+	if(get_turf(user) == get_turf(src))
 		close_machine(user)
 		return TRUE
 
-	open_machine()
+	state_open = FALSE
+	set_density(TRUE)
+	update_appearance()
 	return TRUE
 
 /obj/machinery/netpod/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
 	var/mob/living/carbon/human/player = user
 	if(!ishuman(player) || player.combat_mode)
-		return
+		return ..()
 
 	if(occupant)
 		balloon_alert(player, "in use!")
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	ui_interact(player)
-	return TRUE
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/netpod/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -109,7 +113,7 @@
 		container_resist_act(gone)
 
 /obj/machinery/netpod/container_resist_act(mob/living/user)
-	visible_message(span_notice("[occupant] emerges from [src]!"),
+	user.visible_message(span_notice("[occupant] emerges from [src]!"),
 		span_notice("You climb out of [src]!"))
 	open_machine()
 
@@ -243,7 +247,11 @@
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
 	occupant_mind_ref = null
 
-	if(!forced || mob_occupant.stat == DEAD)
+	if(!forced)
+		return
+
+	if(mob_occupant.stat <= UNCONSCIOUS)
+		open_machine()
 		return
 
 	mob_occupant.Paralyze(2 SECONDS)

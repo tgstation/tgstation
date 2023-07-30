@@ -418,9 +418,9 @@
 /// Loads the safehouse and given domain into the virtual domain
 /obj/machinery/quantum_server/proc/load_domain(datum/map_template/virtual_domain/to_generate)
 	var/datum/map_template/safehouse/safehouse = new to_generate.safehouse_path
-	// We need to reload the safehouse so things don't carry over
-	safehouse.load(safehouse_load_turf[ONLY_TURF])
+
 	to_generate.load(map_load_turf[ONLY_TURF])
+	safehouse.load(safehouse_load_turf[ONLY_TURF])
 
 	generated_domain = to_generate
 	generated_safehouse = safehouse
