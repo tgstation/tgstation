@@ -1,7 +1,7 @@
 /obj/machinery/recharge_station
 	name = "recharging station"
 	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
-	icon = 'icons/obj/machines/basic_machines.dmi'
+	icon = 'icons/obj/machines/borg_charger.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
 	req_access = list(ACCESS_ROBOTICS)
@@ -21,7 +21,6 @@
 
 	materials = AddComponent(
 		/datum/component/remote_materials, \
-		"charger", \
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT, \
 	)

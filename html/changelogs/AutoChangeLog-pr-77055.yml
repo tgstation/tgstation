@@ -1,0 +1,7 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "Improvements to the accounting console in the HOP office."
+  - balance: "Non-human species now receive a 90% racial paycut, up from 75%."
+  - balance: "The inflation mechanic affecting vending machines has been removed, except during the market crash event."
+  - balance: "The market crash event now stands as it's own separate event, and ramps up the cost of vendor items until finally popping and returning to normal. Market crash now lasts longer to have more impact while it scales with time."

@@ -14,7 +14,7 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	visibility_flags = HIDDEN_SCANNER
 	bypasses_immunity = TRUE
-
+	required_organ = ORGAN_SLOT_STOMACH
 
 /datum/disease/death_sandwich_poisoning/stage_act(seconds_per_tick, times_fired)
 	. = ..()

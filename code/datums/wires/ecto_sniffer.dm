@@ -12,6 +12,6 @@
 	our_sniffer.activate()
 	..()
 
-/datum/wires/ecto_sniffer/on_cut(wire, mend)
+/datum/wires/ecto_sniffer/on_cut(wire, mend, source)
 	var/obj/machinery/ecto_sniffer/our_sniffer = holder
 	our_sniffer.sensor_enabled = mend

@@ -144,15 +144,13 @@
 /area/centcom/mafia)
 "D" = (
 /obj/structure/closet/crate/science,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
 /turf/open/floor/holofloor/snow,
 /area/centcom/mafia)
 "E" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/critter,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
-/obj/item/clothing/shoes/winterboots,
 /turf/open/lava/plasma/mafia,
 /area/centcom/mafia)
 "F" = (

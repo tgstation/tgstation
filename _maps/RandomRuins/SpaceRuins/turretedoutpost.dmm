@@ -25,10 +25,6 @@
 "ag" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
-"ah" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/turretedoutpost)
 "aj" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
@@ -38,12 +34,6 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "al" = (
 /turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/turretedoutpost)
-"am" = (
-/obj/structure/table/reinforced,
-/obj/item/folder,
-/obj/item/radio,
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "an" = (
 /obj/structure/chair/office{
@@ -57,10 +47,6 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "ap" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/turretedoutpost)
-"aq" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "ar" = (
@@ -77,14 +63,6 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
 /obj/item/rack_parts,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/turretedoutpost)
-"au" = (
-/obj/item/rack_parts,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -132,13 +110,6 @@
 /obj/item/gps/spaceruin,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
-"aD" = (
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/machinery/light/directional/north,
-/obj/item/radio,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/turretedoutpost)
 "aE" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/iron,
@@ -157,12 +128,6 @@
 "aI" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/turretedoutpost)
-"aK" = (
-/obj/structure/bed,
-/obj/item/bedsheet/orange,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "aL" = (
 /obj/structure/rack,
@@ -183,12 +148,6 @@
 /obj/structure/chair/office,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
-"aO" = (
-/obj/structure/chair/comfy/beige{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/turretedoutpost)
 "aP" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
@@ -203,12 +162,6 @@
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/turretedoutpost)
-"aS" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light/directional/south,
-/obj/item/camera_bug,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "aT" = (
@@ -242,35 +195,71 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
-"aY" = (
-/obj/structure/rack,
-/obj/machinery/light/directional/south,
-/obj/effect/spawner/random/exotic/syndie,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/turretedoutpost)
 "aZ" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/exotic/syndie,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
-"ba" = (
+"df" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/turretedoutpost)
+"fk" = (
 /obj/structure/table/wood,
 /obj/item/food/breadslice/meat,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/turretedoutpost)
+"iq" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
 /obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
+"kK" = (
+/obj/structure/bed,
+/obj/item/bedsheet/orange,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "tK" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
-"Nu" = (
+"vd" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/radio,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/turretedoutpost)
+"Ar" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/turretedoutpost)
+"Iq" = (
+/obj/structure/table/reinforced,
+/obj/item/camera_bug,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/turretedoutpost)
+"LS" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "turret_outpost"
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/turretedoutpost)
+"WF" = (
+/obj/structure/table/reinforced,
+/obj/item/folder,
+/obj/item/radio,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 
 (1,1,1) = {"
@@ -363,8 +352,8 @@ al
 ad
 ad
 ay
-aL
-aL
+iq
+iq
 aL
 ad
 ad
@@ -421,12 +410,12 @@ ab
 aa
 al
 ad
-au
+at
 az
 aH
 aM
 az
-aY
+aZ
 ad
 al
 aa
@@ -519,13 +508,13 @@ aa
 ac
 ad
 ae
-am
+WF
 ap
 ad
 aC
 ag
 ag
-aS
+Iq
 ad
 al
 ab
@@ -540,9 +529,9 @@ ac
 ad
 af
 an
-aq
+ag
 ad
-aD
+vd
 ag
 aN
 aT
@@ -563,7 +552,7 @@ ag
 ag
 aw
 ag
-ag
+Ar
 ag
 aU
 ad
@@ -604,9 +593,9 @@ ag
 ax
 ag
 ag
-aO
+df
 aV
-ba
+fk
 ad
 ac
 ab
@@ -618,7 +607,7 @@ aa
 ab
 ac
 ad
-ah
+ag
 ag
 ar
 ad
@@ -638,8 +627,8 @@ ab
 aa
 ac
 ad
-Nu
-Nu
+LS
+LS
 ad
 ad
 ad
@@ -663,8 +652,8 @@ ak
 ad
 al
 ad
-aK
 aP
+kK
 aP
 aP
 ad
@@ -698,8 +687,8 @@ ab
 ab
 ac
 ad
-Nu
-Nu
+LS
+LS
 ad
 ac
 ac

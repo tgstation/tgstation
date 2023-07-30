@@ -6,9 +6,9 @@
 	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
 	greyscale_colors = "#2d2d33#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
-	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
+	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/sneakers/black
@@ -80,9 +80,9 @@
 	icon_state_preview = "prisonshoes"
 	greyscale_colors = "#d15b1b#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_orange
-	greyscale_config_worn = /datum/greyscale_config/sneakers_orange_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange_inhand_right
+	greyscale_config_worn = /datum/greyscale_config/sneakers_orange/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange/inhand_right
 	flags_1 = NONE
 	var/obj/item/restraints/handcuffs/attached_cuffs
 
