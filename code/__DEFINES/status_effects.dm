@@ -39,6 +39,8 @@
 
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 
+#define STASIS_NETPOD_EFFECT "stasis_netpod"
+
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)
 /// Cures the mob's blindness from the passed source, removing blindness wholesale if no sources are left

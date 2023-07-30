@@ -55,7 +55,8 @@
 	. = ..()
 
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Select Outfit"
+		context[SCREENTIP_CONTEXT_LMB] = "Open Machine"
+		context[SCREENTIP_CONTEXT_RMB] = "Select Outfit"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/crowbar) && occupant)
@@ -73,10 +74,31 @@
 		return
 	close_machine(target)
 
-/obj/machinery/netpod/attack_hand(mob/user, list/modifiers)
+/obj/machinery/netpod/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(user.combat_mode)
+		return
+
+	if(occupant && user != occupant)
+		balloon_alert(user, "it's sealed shut!")
+		return TRUE
+
+	if(state_open)
+		close_machine(user)
+		return TRUE
+
+	open_machine()
+	return TRUE
+
+/obj/machinery/netpod/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
 	var/mob/living/carbon/human/player = user
 	if(!ishuman(player) || player.combat_mode)
-		return ..()
+		return
+
+	if(occupant)
+		balloon_alert(player, "in use!")
+		return
 
 	ui_interact(player)
 	return TRUE
@@ -93,6 +115,7 @@
 
 /obj/machinery/netpod/Exited(atom/movable/gone, direction)
 	. = ..()
+	unprotect_occupant(occupant)
 	if(!state_open && gone == occupant)
 		container_resist_act(gone)
 
@@ -111,6 +134,7 @@
 		return
 	flick("[initial(icon_state)]-anim", src)
 	..()
+	protect_occupant(occupant)
 	enter_matrix()
 
 /obj/machinery/netpod/crowbar_act(mob/living/user, obj/item/crowbar)
@@ -129,7 +153,6 @@
 
 	if(state_open || isnull(occupant))
 		return ..()
-
 
 	visible_message(span_danger("[pryer] starts prying open [src]!"), span_notice("You start to pry open [src]."))
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
@@ -326,10 +349,35 @@
 /obj/machinery/netpod/proc/on_opened_or_destroyed()
 	SIGNAL_HANDLER
 
+	unprotect_occupant(occupant)
 	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, TRUE, src)
+
+/// Sets the owner to in_netpod state, basically short-circuiting environmental conditions
+/obj/machinery/netpod/proc/protect_occupant(mob/living/target)
+	if(target != occupant)
+		return
+	playsound(src, 'sound/effects/spray.ogg', 15, TRUE)
+	target.apply_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
+	target.extinguish_mob()
+	update_use_power(ACTIVE_POWER_USE)
+
+/// Removes the in_netpod state
+/obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)
+	target.remove_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
+	update_use_power(IDLE_POWER_USE)
 
 /// Resolves a path to an outfit.
 /obj/machinery/netpod/proc/resolve_outfit(text)
 	var/path = text2path(text)
 	if(ispath(path, /datum/outfit) && locate(path) in subtypesof(/datum/outfit))
 		return path
+
+/datum/status_effect/grouped/embryonic
+	id = "embryonic"
+	duration = -1
+	alert_type = /atom/movable/screen/alert/status_effect/embryonic
+
+/atom/movable/screen/alert/status_effect/embryonic
+	name = "Embryonic Stasis"
+	icon_state = "netpod_stasis"
+	desc = "You feel like you're in a dream."
