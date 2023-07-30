@@ -107,7 +107,15 @@
 			"group": "none",
 			"label": "tools: update paths",
 			"type": "shell",
-			"command": "tools/UpdatePaths/updatepaths.sh",
+			"command": "cmd.exe",
+			"args": ["/c", "tools\\UpdatePaths\\Update Paths.bat", "-tooltask"],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"panel": "shared",
+				"clear": false,
+				"focus": true
+			},
 			"problemMatcher": []
 		}
 	]
