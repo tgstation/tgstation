@@ -6,20 +6,31 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	/// Airlock's current construction state
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 	var/base_name = "Airlock"
+	var/created_name = null
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
-	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
-	var/multi_tile = FALSE //! do we perform the extra checks required for multi-tile (large) airlocks
+	/// Do we perform the extra checks required for multi-tile (large) airlocks
+	var/multi_tile = FALSE
+	/// The type path of the airlock once completed (solid version)
+	var/airlock_type = /obj/machinery/door/airlock
+	/// The type path of the airlock once completed (glass version)
 	var/glass_type = /obj/machinery/door/airlock/glass
-	var/glass = 0 // 0 = glass can be installed. 1 = glass is already installed.
-	var/created_name = null
-	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
+	/// FALSE = glass can be installed. TRUE = glass is already installed.
+	var/glass = FALSE
+	/// Whether to heat-proof the finished airlock
+	var/heat_proof_finished = FALSE
+	/// If you're changing the airlock material, what is the previous type
 	var/previous_assembly = /obj/structure/door_assembly
-	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
-	var/nomineral = FALSE //airlock with glass version, but cannot be modified with sheets
+	/// Airlocks with no glass version, also cannot be modified with sheets
+	var/noglass = FALSE
+	/// Airlock with glass version, but cannot be modified with sheets
+	var/nomineral = FALSE
+	/// What type of material the airlock drops when deconstructed
 	var/material_type = /obj/item/stack/sheet/iron
+	/// Amount of material the airlock drops when deconstructed
 	var/material_amt = 4
 
 /obj/structure/door_assembly/multi_tile
@@ -92,7 +103,7 @@
 				to_chat(user, span_notice("You weld the glass panel out."))
 				if(heat_proof_finished)
 					new /obj/item/stack/sheet/rglass(get_turf(src))
-					heat_proof_finished = 0
+					heat_proof_finished = FALSE
 				else
 					new /obj/item/stack/sheet/glass(get_turf(src))
 				glass = 0
