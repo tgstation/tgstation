@@ -60,7 +60,6 @@
 /atom/movable/screen/alert/status_effect/food_haste
 	name = "Energetic meal"
 	desc = "That meal makes me pumped up with energy!"
-	icon_state = "realignment"
 
 /// Makes you gain a trait
 /datum/status_effect/food/trait
@@ -78,15 +77,6 @@
 	REMOVE_TRAIT(owner, trait, type)
 	return ..()
 
-/datum/status_effect/food/trait/jolly
-	alert_type = /atom/movable/screen/alert/status_effect/food_trait_jolly
-	trait = TRAIT_JOLLY
-
-/atom/movable/screen/alert/status_effect/food_trait_jolly
-	name = "Jolly"
-	desc = "That meal made me feel funny..."
-	icon_state = "drunk2"
-
 /datum/status_effect/food/trait/shockimmune
 	alert_type = /atom/movable/screen/alert/status_effect/food_trait_shockimmune
 	trait = TRAIT_SHOCKIMMUNE
@@ -94,22 +84,3 @@
 /atom/movable/screen/alert/status_effect/food_trait_shockimmune
 	name = "Grounded"
 	desc = "That meal made me feel like a superconductor..."
-	icon_state = "woozy"
-
-/datum/status_effect/food/trait/stunimmune
-	alert_type = /atom/movable/screen/alert/status_effect/food_trait_stunimmune
-	trait = TRAIT_STUNIMMUNE
-
-/atom/movable/screen/alert/status_effect/food_trait_stunimmune
-	name = "Unstoppable"
-	desc = "That meal made me feel like a mountain..."
-	icon_state = "stun"
-
-/datum/status_effect/food/trait/noslip
-	alert_type = /atom/movable/screen/alert/status_effect/food_trait_noslip
-	trait = TRAIT_NO_SLIP_ALL
-
-/atom/movable/screen/alert/status_effect/food_trait_noslip
-	name = "Stable"
-	desc = "That meal made me feel that I have complete control over my balance..."
-	icon_state = "terrified"

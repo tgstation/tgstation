@@ -145,11 +145,9 @@ GLOBAL_LIST_INIT(food_buffs, list(
 	),
 	FOOD_COMPLEXITY_2 = list(
 		/datum/status_effect/food/haste = 1,
-		/datum/status_effect/food/trait/jolly = 1,
 	),
 	FOOD_COMPLEXITY_3 = list(
 		/datum/status_effect/food/haste = 1,
-		/datum/status_effect/food/trait/jolly = 2,
 	),
 	FOOD_COMPLEXITY_4 = list(
 		/datum/status_effect/food/haste = 1,
