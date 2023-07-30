@@ -319,11 +319,15 @@
 
 /obj/machinery/icts/controller/update_overlays()
 	. = ..()
-	if(machine_stat & NOPOWER)
-		return
 
 	if(!panel_open)
 		. += mutable_appearance(icon, "controller-door")
+
+	if(machine_stat & NOPOWER)
+		return
+
+	if(!controller_datum)
+		return
 
 	if(controller_datum.controller_status & DOORS_OPEN)
 		. += mutable_appearance(icon, "doors")
