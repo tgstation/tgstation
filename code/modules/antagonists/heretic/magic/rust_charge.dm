@@ -7,8 +7,7 @@
 
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
-	var/our_turf = get_turf(owner)
-	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
+	if(HAS_TRAIT(get_step(src, 0), TRAIT_RUSTY))
 		StartCooldown(135 SECONDS, 135 SECONDS)
 		charge_sequence(owner, target_atom, charge_delay, charge_past)
 		StartCooldown()
@@ -22,6 +21,5 @@
 	victim.rust_heretic_act()
 	get_step(victim, EAST).rust_heretic_act()
 	get_step(victim, WEST).rust_heretic_act()
-	var/current_turf = get_step(src, 0)
-	if(HAS_TRAIT(current_turf, TRAIT_RUSTY))
+	if(HAS_TRAIT(get_step(src, 0), TRAIT_RUSTY))
 		INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
