@@ -157,9 +157,9 @@
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
-/mob/living/basic/bear/butter/UnarmedAttack(atom/target, proximity_flag, list/modifiers) //Makes the butter bear's attacks against vertical targets slip said targets
+/mob/living/basic/bear/butter/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers) //Makes the butter bear's attacks against vertical targets slip said targets
 	. = ..()
-	if(!. || !isliving(target))
+	if(. || !isliving(target))
 		return
 	var/mob/living/victim = target
 	if((victim.body_position != STANDING_UP))

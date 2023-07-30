@@ -163,7 +163,7 @@
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return FALSE
+		return TRUE
 
 	var/just_do_attack_hand = ismovable(attack_target) && !isliving(attack_target)
 	var/try_moving_pulled = !combat_mode && pulling && isturf(attack_target)

@@ -39,7 +39,7 @@
 
 /mob/living/basic/pet/penguin/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	if(!proximity_flag)
