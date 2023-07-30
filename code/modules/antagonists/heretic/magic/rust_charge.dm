@@ -19,7 +19,7 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
 	victim.rust_heretic_act()
-	get_step(victim, east).rust_heretic_act()
+	get_step(victim, EAST).rust_heretic_act()
 	get_step(victim, west).rust_heretic_act()
 	if(HAS_TRAIT(get_turf(owner), TRAIT_RUSTY))
 		INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
