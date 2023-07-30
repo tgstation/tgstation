@@ -193,6 +193,7 @@ class ChatRenderer {
       const matchWord = setting.matchWord;
       const matchCase = setting.matchCase;
       const allowedRegex = /^[a-z0-9_\-$/^[\s\]\\]+$/gi;
+      const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
       const lines = String(text)
         .split(',')
         .map((str) => str.trim())
@@ -229,7 +230,6 @@ class ChatRenderer {
             highlightWords = [];
           }
           // We're not going to let regex characters fuck up our RegEx operation.
-          const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
           line = line.replace(regexEscapeCharacters, '\\$&');
 
           highlightWords.push(line);
