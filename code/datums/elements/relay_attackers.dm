@@ -38,9 +38,16 @@
 
 /datum/element/relay_attackers/proc/on_attack_generic(atom/target, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
-	var/shoving = LAZYACCESS(modifiers, RIGHT_CLICK) ? ATTACKER_SHOVING : ATTACKER_DAMAGING_ATTACK
-	if(attacker.combat_mode || shoving)
-		relay_attacker(target, attacker, shoving)
+
+	// Check for a shove.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		relay_attacker(target, attacker, ATTACKER_SHOVING)
+		return
+
+	// Else check for combat mode.
+	if(attacker.combat_mode)
+		relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK)
+		return
 
 /datum/element/relay_attackers/proc/on_attack_npc(atom/target, mob/living/attacker)
 	SIGNAL_HANDLER
