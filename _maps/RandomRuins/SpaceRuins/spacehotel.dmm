@@ -2380,7 +2380,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "uQ" = (
-/obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier,
 /obj/structure/chair/office/tactical,
 /obj/machinery/button{
 	id = "htsec";
@@ -2388,6 +2387,7 @@
 	pixel_x = -25;
 	pixel_y = -1
 	},
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "uW" = (
@@ -3841,6 +3841,7 @@
 /obj/machinery/door/window/survival_pod{
 	dir = 1
 	},
+/obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "Km" = (
