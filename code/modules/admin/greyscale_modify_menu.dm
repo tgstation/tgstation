@@ -72,7 +72,7 @@
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
-	return specific_ui_state || target.ui_state(user)
+	return specific_ui_state || GLOB.greyscale_menu_state
 
 /datum/greyscale_modify_menu/ui_close()
 	qdel(src)
@@ -80,7 +80,7 @@
 /datum/greyscale_modify_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, target, "GreyscaleModifyMenu")
+		ui = new(user, src, "GreyscaleModifyMenu")
 		ui.open()
 
 /datum/greyscale_modify_menu/ui_data(mob/user)
@@ -225,11 +225,14 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 			config.EnableAutoRefresh(config_owner_type)
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
-	var/list/raw_colors = splittext(colorString, "#")
-	var/new_split_colors = list()
-	for(var/index in 2 to length(raw_colors))
-		var/color = "#[raw_colors[index]]"
-		if(!findtext(color, GLOB.is_color))
+	var/static/regex/color_regex = regex("^#\[0-9a-fA-F]+$")
+	var/list/colors = splittext(colorString, "#")
+	var/list/new_split_colors = list()
+	for(var/index in 2 to length(colors))
+		var/color = "#[colors[index]]"
+		var/col_len = length(color)
+		to_chat(world, color)
+		if(!findtext(color, color_regex) && (col_len == 4 || col_len == 5 || col_len == 7 || col_len == 9))
 			return FALSE
 		new_split_colors += color
 	split_colors = new_split_colors
@@ -254,7 +257,7 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
 	for(var/i in length(split_colors) + 1 to config.expected_colors)
-		split_colors += rgb(100, 100, 100)
+		LAZYADD(split_colors, rgb(100, 100, 100))
 	var/list/used_colors = split_colors.Copy(1, config.expected_colors+1)
 
 	sprite_data = list()
