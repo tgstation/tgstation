@@ -207,30 +207,11 @@
 	living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
 	living_target.Knockdown(knockdown_duration)
 
-/// Charge a long way, knock down for longer, and perform an instant melee attack
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster
-	charge_distance = 8
-	knockdown_duration = 2.5 SECONDS
-
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
-	. = ..()
-	if(!isliving(target) || !isbasicmob(source))
-		return
-	var/mob/living/basic/basic_source = source
-	var/mob/living/living_target = target
-	basic_source.melee_attack(living_target)
-	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
-
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)
-	. = ..()
-	if(!isliving(charger))
-		return
-	var/mob/living/living_charger = charger
-	living_charger.apply_status_effect(/datum/status_effect/tired_post_charge)
 
 /datum/status_effect/tired_post_charge
 	id = "tired_post_charge"
 	duration = 1 SECONDS
+	alert_type = null
 
 /datum/status_effect/tired_post_charge/on_apply()
 	. = ..()

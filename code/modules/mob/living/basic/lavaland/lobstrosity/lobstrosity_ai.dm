@@ -8,6 +8,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/lobster,
 		/datum/ai_planning_subtree/flee_target/lobster,
@@ -63,5 +64,12 @@
 
 	return ..()
 
+/// Don't use charge ability on an adjacent target, and make sure you're visible before you start
 /datum/ai_planning_subtree/targeted_mob_ability/lobster
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range
+
+/datum/ai_planning_subtree/targeted_mob_ability/lobster/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target) || in_range(controller.pawn, target))
+		return FALSE
+	return ..()

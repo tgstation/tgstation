@@ -1,14 +1,14 @@
 /// Cowardly mob with a charging attack
 /mob/living/basic/mining/lobstrosity
 	name = "arctic lobstrosity"
-	desc = "These hairy crustaceans creep and multiply in underground lakes deep below the ice. Beware their charge."
+	desc = "These hairy crustaceans creep and multiply in underground lakes deep below the ice. They have a particular taste for fingers."
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "arctic_lobstrosity"
 	icon_living = "arctic_lobstrosity"
 	icon_dead = "arctic_lobstrosity_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	friendly_verb_continuous = "chitters at"
-	friendly_verb_simple = "chits at"
+	friendly_verb_simple = "chitters at"
 	speak_emote = list("chitters")
 	speed = 1
 	maxHealth = 150
@@ -34,6 +34,11 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(\
+		/datum/element/amputating_limbs,\
+		surgery_verb = "snipping",\
+		target_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM),\
+	)
 	charge = new(src)
 	charge.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, charge)
@@ -48,7 +53,28 @@
 /// Lavaland lobster variant, it basically just looks different
 /mob/living/basic/mining/lobstrosity/lava
 	name = "chasm lobstrosity"
-	desc = "Twitching crustaceans boiled red by the sulfurous fumes of the chasms in which they lurk. Beware their charge."
+	desc = "Twitching crustaceans boiled red by the sulfurous fumes of the chasms in which they lurk. They have a particular taste for fingers."
 	icon_state = "lobstrosity"
 	icon_living = "lobstrosity"
 	icon_dead = "lobstrosity_dead"
+
+/// Charge a long way, knock down for longer, and perform an instant melee attack
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster
+	charge_distance = 8
+	knockdown_duration = 2.5 SECONDS
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
+	. = ..()
+	if(!isliving(target) || !isbasicmob(source))
+		return
+	var/mob/living/basic/basic_source = source
+	var/mob/living/living_target = target
+	basic_source.melee_attack(living_target)
+	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)
+	. = ..()
+	if(!isliving(charger))
+		return
+	var/mob/living/living_charger = charger
+	living_charger.apply_status_effect(/datum/status_effect/tired_post_charge)

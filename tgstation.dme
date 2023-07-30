@@ -1192,6 +1192,7 @@
 #include "code\datums\elements\ai_held_item.dm"
 #include "code\datums\elements\ai_retaliate.dm"
 #include "code\datums\elements\ai_target_damagesource.dm"
+#include "code\datums\elements\amputating_limbs.dm"
 #include "code\datums\elements\animal_variety.dm"
 #include "code\datums\elements\art.dm"
 #include "code\datums\elements\atmos_requirements.dm"
