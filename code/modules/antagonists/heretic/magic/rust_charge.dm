@@ -22,6 +22,6 @@
 	victim.rust_heretic_act()
 	get_step(victim, EAST).rust_heretic_act()
 	get_step(victim, WEST).rust_heretic_act()
-	var/our_turf = get_turf(owner)
-	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
+	var/current_turf = get_step(src, 0)
+	if(HAS_TRAIT(current_turf, TRAIT_RUSTY))
 		INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
