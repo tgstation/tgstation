@@ -85,6 +85,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		request_flags |= BYPASS_SENSORS
 	transport_controller.set_status_code(PRE_DEPARTURE, TRUE)
 	transport_controller.set_status_code(CONTROLS_LOCKED, TRUE)
+	transport_controller.set_lights()
 	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS) // bypass for unsafe, rapid departure
 		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = TRUE)

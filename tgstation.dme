@@ -3761,6 +3761,7 @@
 #include "code\modules\icts_transport\icts_displays.dm"
 #include "code\modules\icts_transport\icts_floors.dm"
 #include "code\modules\icts_transport\icts_lighting.dm"
+#include "code\modules\icts_transport\icts_machinery.dm"
 #include "code\modules\icts_transport\linear_controller.dm"
 #include "code\modules\icts_transport\tram_controller.dm"
 #include "code\modules\icts_transport\tram_controls.dm"

@@ -44,6 +44,8 @@
 
 	var/datum/tram_mfg_info/tram_registration
 
+	var/obj/machinery/icts/controller/control_panel
+
 /datum/tram_mfg_info
 	var/serial_number
 	var/mfg_date
@@ -138,10 +140,10 @@
 			explosion(transport_module, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(transport_module)
 
-		for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
+		for(var/obj/machinery/icts/destination_sign/desto as anything in SSicts_transport.displays)
 			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 
-		for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
+		for(var/obj/machinery/icts/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
 			xing.set_signal_state(XING_STATE_MALF)
 			xing.update_appearance()
 
@@ -188,6 +190,7 @@
 		cycle_doors(OPEN_DOORS)
 		idle_platform = destination_platform
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= scheduled_move)
 		var/start_time = TICK_USAGE
@@ -233,6 +236,8 @@
 		transport_module.set_travelling(FALSE)
 	set_active(FALSE)
 
+/datum/transport_controller/linear/tram/proc/set_lights()
+	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_LIGHTS, controller_active, controller_status, travel_direction)
 
 /datum/transport_controller/linear/tram/proc/set_active(new_status)
 	if(controller_active == new_status)
@@ -272,22 +277,23 @@
 		return
 	var/throw_direction = travel_direction
 	travel_remaining = 0
-	set_status_code(SYSTEM_FAULT, TRUE)
 	idle_platform = null
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
 
 /datum/transport_controller/linear/tram/proc/start_malf_event()
 	set_status_code(COMM_ERROR, TRUE)
+	control_panel.generate_repair_signals(steps = 3)
 	collision_lethality = 1.25
 
 /datum/transport_controller/linear/tram/proc/end_malf_event()
 	if(!(controller_status & COMM_ERROR))
 		return
 	set_status_code(COMM_ERROR, FALSE)
+	control_panel.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
 
-/obj/machinery/icts_controller
+/obj/machinery/icts/controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something."
 	icon = 'icons/obj/machines/tram/tram_controllers.dmi'
@@ -298,16 +304,16 @@
 	req_access = list(ACCESS_TCOMMS)
 	var/datum/transport_controller/linear/tram/controller_datum
 
-/obj/machinery/icts_controller/Initialize(mapload)
+/obj/machinery/icts/controller/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/icts_controller/LateInitialize(mapload)
+/obj/machinery/icts/controller/LateInitialize(mapload)
 	. = ..()
 	if(!find_controller())
 		message_admins("ICTS: Tram failed to find controller!")
 
-/obj/machinery/icts_controller/update_overlays()
+/obj/machinery/icts/controller/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
 		return
@@ -339,7 +345,7 @@
 		. += mutable_appearance(icon, "locked")
 		. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
 
-/obj/machinery/icts_controller/proc/find_controller()
+/obj/machinery/icts/controller/proc/find_controller()
 	var/obj/structure/transport/linear/tram/tram_structure = locate() in src.loc
 	if(!tram_structure)
 		return FALSE
@@ -348,35 +354,11 @@
 	if(!controller_datum)
 		return FALSE
 
+	controller_datum.control_panel = src
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
 	return TRUE
 
-/obj/machinery/icts_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
+/obj/machinery/icts/controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
 	if(controller != controller_datum)
 		return
 	update_appearance()
-
-// Switch modes with multitool
-/obj/machinery/icts_controller/multitool_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return FALSE
-
-	if(!controller_datum)
-		return FALSE
-
-	if(controller_datum.controller_status & COMM_ERROR)
-		tool.play_tool_sound(src)
-		balloon_alert(user, "rebooting electronics...")
-		if(do_after(user, 4 SECONDS))
-			controller_datum.controller_status &= ~COMM_ERROR
-			controller_datum.collision_lethality = initial(controller_datum.collision_lethality)
-			balloon_alert(user, "success!")
-			return TRUE
-
-	else
-		tool.play_tool_sound(src)
-		balloon_alert(user, "breaking electronics...")
-		if(do_after(user, 4 SECONDS))
-			controller_datum.controller_status |= COMM_ERROR
-			balloon_alert(user, "success!")
-			return TRUE

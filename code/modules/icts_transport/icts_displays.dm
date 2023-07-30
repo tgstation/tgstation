@@ -1,4 +1,4 @@
-/obj/machinery/destination_sign
+/obj/machinery/icts/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
 	icon = 'icons/obj/machines/tram/tram_display.dmi'
@@ -22,7 +22,7 @@
 	/// Is this sign malfunctioning?
 	var/malfunctioning = FALSE
 
-/obj/machinery/destination_sign/indicator
+/obj/machinery/icts/destination_sign/indicator
 	icon = 'icons/obj/machines/tram_sign.dmi'
 	icon_state = "indicator_off"
 	base_icon_state = "indicator_"
@@ -30,7 +30,7 @@
 	light_color = LIGHT_COLOR_DARK_BLUE
 	light_mask = "indicator_off_e"
 
-/obj/machinery/destination_sign/Initialize(mapload)
+/obj/machinery/icts/destination_sign/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(update_sign))
 	SSicts_transport.displays += src
@@ -38,11 +38,11 @@
 		TRAMSTATION_LINE_1,
 	)
 
-/obj/machinery/destination_sign/Destroy()
+/obj/machinery/icts/destination_sign/Destroy()
 	SSicts_transport.displays -= src
 	. = ..()
 
-/obj/machinery/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
+/obj/machinery/icts/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
 	SIGNAL_HANDLER
 
 	if(controller.specific_transport_id != tram_id)
@@ -50,7 +50,7 @@
 	update_sign()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
 
-/obj/machinery/destination_sign/proc/update_operating()
+/obj/machinery/icts/destination_sign/proc/update_operating()
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
@@ -58,7 +58,7 @@
 		return
 	end_processing()
 
-/obj/machinery/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
+/obj/machinery/icts/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
 
 	if(!controller || !controller.controller_operational)
 		icon_state = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]"
@@ -83,7 +83,7 @@
 	update_appearance()
 	return PROCESS_KILL
 
-/obj/machinery/destination_sign/update_overlays()
+/obj/machinery/icts/destination_sign/update_overlays()
 	. = ..()
 	if(!light_mask)
 		return
@@ -91,4 +91,4 @@
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/destination_sign/indicator, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/icts/destination_sign/indicator, 32)
