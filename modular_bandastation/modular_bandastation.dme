@@ -6,6 +6,7 @@
 #include "_defines220/_defines220.dme"
 #include "_helpers220/_helpers220.dme"
 #include "_signals220/_signals220.dme"
+#include "aesthetics/_aesthetics.dme"
 #include "ai_laws/_ai_laws.dme"
 #include "barsigns/_barsigns.dme"
 #include "communication/_communication.dme"

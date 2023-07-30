@@ -1,0 +1,43 @@
+#include "_aesthetics.dm"
+
+#include "airalarm\code\airalarm.dm"
+#include "airlocks\code\airlock.dm"
+#include "airlocks\code\airlock_types.dm"
+#include "airlocks\code\airlock_assembly_types.dm"
+#include "apc\code\apc.dm"
+// #include "atm\code\atm.dm" // Unused
+// #include "atmospherics\code\atmospherics.dm" // Need more sprites
+// #include "better_ids\code\better_ids.dm" // Need to change a lot
+#include "blastdoor\code\blastdoor.dm"
+// #include "boxes\code\boxes.dm" // Need to change a lot
+#include "cameras\code\cameras.dm"
+// #include "chairs\code\chairs.dm" // TG already uses these
+// #include "decals\code\decals.dm" // Didn't check this new one
+// #include "defib\code\defib.dm" // TG already uses these
+#include "dirwindows\code\dirwindows.dm"
+// #include "door_control\code\door_control.dm" // Unused
+// #include "extinguisher\code\extinguisher.dm" // Need more sprites
+// #include "firealarm\code\firealarm.dm" // Need more sprites
+// #include "floors\code\floors.dm" // Need to change a lot
+// #include "floors\code\tile_types.dm" // Need to change a lot
+// #include "hydroponics\code\hydroponics.dm" // TG already uses these
+// #include "intercom\code\intercom.dm" // TG already uses these
+#include "keycard\code\keycard.dm"
+#include "labeler\code\labeler.dm"
+// #include "library\code\library.dm" // TG already uses these
+#include "light_switch\code\light_switch.dm"
+#include "newscaster\code\newscaster.dm"
+// #include "piano\code\piano.dm" // Unused
+#include "racks\code\racks.dm"
+#include "requests_console\code\requests_console.dm"
+// #include "safe\code\safe.dm" // TG already uses these
+#include "shutters\code\shutters.dm"
+// #include "soap\code\soap.dm" // Unused
+#include "surgery_table\code\surgery_table.dm"
+// #include "toolboxes\code\toolboxes.dm" // TG already uses these
+// #include "wallcloset\code\wallcloset.dm" // Unused
+#include "walls\code\walls.dm"
+#include "windoor\code\windoor.dm"
+// #include "windows\code\windows.dm" // Need more sprites and fixes
+// #include "windowtint\code\windowtint.dm" // Unused?
+// #include "zippo\code\zippo.dm" // Unused
