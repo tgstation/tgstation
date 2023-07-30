@@ -124,6 +124,7 @@
 	targetitem = /obj/item/clothing/shoes/clown_shoes
 	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_CLOWN)
+	exists_on_map = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/shoes/clown_shoes)
@@ -133,6 +134,7 @@
 	targetitem = /obj/item/clothing/mask/gas/mime
 	excludefromjob = list(JOB_MIME, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_MIME)
+	exists_on_map = TRUE
 
 /obj/item/clothing/mask/gas/mime/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/mask/gas/mime)
@@ -152,6 +154,7 @@
 	targetitem = /obj/item/clothing/mask/fakemoustache/italian
 	excludefromjob = list(JOB_COOK, JOB_HEAD_OF_PERSONNEL, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_COOK)
+	exists_on_map = TRUE
 
 /obj/item/clothing/mask/fakemoustache/italian/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/mask/fakemoustache/italian)
@@ -170,6 +173,7 @@
 	targetitem = /obj/item/clothing/accessory/lawyers_badge
 	excludefromjob = list(JOB_LAWYER)
 	item_owner = list(JOB_LAWYER)
+	exists_on_map = TRUE
 
 /obj/item/clothing/accessory/lawyers_badge/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/accessory/lawyers_badge)
