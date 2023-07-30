@@ -220,7 +220,6 @@
 	var/mob/living/living_target = target
 	basic_source.melee_attack(living_target)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
-	basic_source.Immobilize(0.5 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"
