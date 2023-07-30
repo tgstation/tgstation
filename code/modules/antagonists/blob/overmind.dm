@@ -141,9 +141,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(autoplace_max_time && world.time >= autoplace_max_time)
 				place_blob_core(BLOB_RANDOM_PLACEMENT)
 		else
-			if(mind)
-				mind.remove_antag_datum(/datum/antagonist/blob)
-
 			// If we get here, it means yes: the blob is kill
 			SSticker.news_report = BLOB_DESTROYED
 			qdel(src)
