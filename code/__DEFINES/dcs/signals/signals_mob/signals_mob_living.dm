@@ -176,3 +176,6 @@
 
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
+
+/// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
+#define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"

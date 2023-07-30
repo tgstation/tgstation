@@ -785,7 +785,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		angle = 270
 	if(target.dir & turn(target_to_user, 270))
 		angle = 90
-	if(target.dir & turn(target_to_user, 180))
+	if(target.dir & REVERSE_DIR(target_to_user))
 		angle = 180
 	if(target.dir & target_to_user)
 		angle = 360
