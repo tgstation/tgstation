@@ -79,11 +79,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 	//If the delay is shorter or equal to the default delay, just blow up already jeez
 	if(delay <= MICROBOMB_DELAY)
-		explosion(src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
-		if(imp_in)
-			imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
-			imp_in.gib(TRUE)
-		qdel(src)
+		explode()
 		return
 	timed_explosion()
 
