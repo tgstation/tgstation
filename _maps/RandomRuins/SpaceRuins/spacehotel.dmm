@@ -1029,6 +1029,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/storage/box/beanbag,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "iA" = (
@@ -1166,6 +1167,13 @@
 	},
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 8
+	},
+/obj/machinery/door/airlock/grunge{
+	name = "Hotel Kitchen"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
@@ -2073,6 +2081,7 @@
 	color = "A46106"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/tank/internals/emergency_oxygen/double,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "rM" = (
@@ -2443,6 +2452,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/textured_half{
 	dir = 4
 	},
@@ -2806,6 +2816,9 @@
 /obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = 6;
 	pixel_y = 17
+	},
+/obj/item/gun/ballistic/shotgun/doublebarrel{
+	pixel_y = -11
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
