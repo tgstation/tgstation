@@ -43,7 +43,7 @@
 
 /obj/projectile/bullet/c35
 	name = ".35 bullet"
-	damage = 15
+	damage = 20
 
 /obj/item/ammo_box/c35
 	name = "ammo box (.35)"
