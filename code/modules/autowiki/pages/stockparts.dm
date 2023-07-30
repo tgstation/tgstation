@@ -7,7 +7,8 @@
 	/obj/item/stock_parts/cell/high,
 	/obj/item/stock_parts/cell/super,
 	/obj/item/stock_parts/cell/hyper,
-	/obj/item/stock_parts/cell/bluespace)
+	/obj/item/stock_parts/cell/bluespace,
+	)
 
 /datum/autowiki/stock_parts/generate()
 	var/output = ""
@@ -61,35 +62,34 @@
 	var/filename = SANITIZE_FILENAME(escape_value(stock_part.icon_state))
 	upload_icon(icon(stock_part.icon, stock_part.icon_state, SOUTH, 1, FALSE), filename)
 
-	return "Autowiki-" + "[filename]" + ".png"
+	return "Autowiki-[filename].png"
 
 /datum/autowiki/stock_parts/proc/generate_source_list(datum/design/recipe)
 	var/source_list = ""
 
-	if((recipe.build_type & PROTOLATHE) == PROTOLATHE)
+	if(recipe.build_type & PROTOLATHE)
 		source_list += "Protolathe"
 
-	if((recipe.build_type & AWAY_LATHE) == AWAY_LATHE)
+	if(recipe.build_type & AWAY_LATHE)
 		if(source_list)
 			source_list += ", "
 
 		source_list += "Ancient Protolathe"
 
-	if((recipe.build_type & AUTOLATHE) == AUTOLATHE)
+	if(recipe.build_type & AUTOLATHE)
 		if(source_list)
-			source_list += ", "
+			source_list.Join(", ")
 
 		source_list += "Autolathe"
 
 	return source_list
 
 /datum/autowiki/stock_parts/proc/generate_material_list(datum/design/recipe)
-
 	var/list/materials = list()
 
 	for(var/ingredient_type in recipe.materials)
 		var/datum/material/ingredient = new ingredient_type()
 
-		materials.Add("[recipe.materials[ingredient_type]] " + "[ingredient.name]")
+		materials += "[recipe.materials[ingredient_type]] [ingredient.name]"
 
 	return materials.Join("<br>")

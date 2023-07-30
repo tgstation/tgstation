@@ -461,8 +461,8 @@
 
 /obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()
-	var/area/A = get_area(src)
-	if(A)
+	var/area/area = get_area(src)
+	if(area)
 		if(!A.lightswitch || !A.light_power)
 			charge = 0 //For naturally depowered areas, we start with no power
 
