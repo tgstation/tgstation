@@ -21,8 +21,6 @@
 	var/hit_cooldown_time = 1 SECONDS
 	/// Stat required for us to grab a mob.
 	var/stat_required = DEAD
-	/// How long we stun a mob for.
-	var/mob_stun_time = 5 SECONDS
 	/// Atom we grabbed with kinesis.
 	var/atom/movable/grabbed_atom
 	/// Ref of the beam following the grabbed atom.
@@ -61,20 +59,7 @@
 		balloon_alert(mod.wearer, "can't grab!")
 		return
 	drain_power(use_power_cost)
-	grabbed_atom = target
-	if(isliving(grabbed_atom))
-		var/mob/living/grabbed_mob = grabbed_atom
-		grabbed_mob.Stun(mob_stun_time)
-	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
-	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
-	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
-	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
-	grabbed_atom.add_overlay(kinesis_icon)
-	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
-	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/cursor_catcher/kinesis, 0)
-	kinesis_catcher.assign_to_mob(mod.wearer)
-	soundloop.start()
-	START_PROCESSING(SSfastprocess, src)
+	grab_atom(target)
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -140,6 +125,22 @@
 	grabbed_item.melee_attack_chain(mod.wearer, hitting_atom)
 	COOLDOWN_START(src, hit_cooldown, hit_cooldown_time)
 
+/obj/item/mod/module/anomaly_locked/kinesis/proc/grab_atom(atom/movable/target)
+	grabbed_atom = target
+	if(isliving(grabbed_atom))
+		ADD_TRAIT(grabbed_atom, TRAIT_IMMOBILIZED, REF(src))
+		ADD_TRAIT(grabbed_atom, TRAIT_HANDS_BLOCKED, REF(src))
+	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
+	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
+	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
+	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
+	grabbed_atom.add_overlay(kinesis_icon)
+	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
+	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/cursor_catcher/kinesis, 0)
+	kinesis_catcher.assign_to_mob(mod.wearer)
+	soundloop.start()
+	START_PROCESSING(SSfastprocess, src)
+
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
 	if(mod.wearer == target)
 		return FALSE
@@ -158,6 +159,8 @@
 		if(!isliving(movable_target))
 			return FALSE
 		var/mob/living/living_target = movable_target
+		if(living_target.buckled)
+			return FALSE
 		if(living_target.stat < stat_required)
 			return FALSE
 	else if(isitem(movable_target))
@@ -178,6 +181,9 @@
 	mod.wearer.clear_fullscreen("kinesis")
 	grabbed_atom.cut_overlay(kinesis_icon)
 	QDEL_NULL(kinesis_beam)
+	if(isliving(grabbed_atom))
+		REMOVE_TRAIT(grabbed_atom, TRAIT_IMMOBILIZED, REF(src))
+		REMOVE_TRAIT(grabbed_atom, TRAIT_HANDS_BLOCKED, REF(src))
 	if(!isitem(grabbed_atom))
 		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x, pixel_y = grabbed_atom.base_pixel_y)
 	grabbed_atom = null
@@ -215,25 +221,42 @@
 	if(damage_self && source.uses_integrity)
 		source.take_damage(source.max_integrity/5, BRUTE, MELEE)
 
+/atom/movable/screen/fullscreen/cursor_catcher/kinesis
+	icon_state = "kinesis"
+
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt
 	prebuilt = TRUE
 
-/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype
+/obj/item/mod/module/anomaly_locked/kinesis/prototype
 	name = "MOD prototype kinesis module"
+	prebuilt = TRUE
 	complexity = 0
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	removable = FALSE
-
-/atom/movable/screen/fullscreen/cursor_catcher/kinesis
-	icon_state = "kinesis"
 
 /obj/item/mod/module/anomaly_locked/kinesis/plus
 	name = "MOD kinesis+ module"
 	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
 		The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user \
 		to manipulate the world around them. Like it's older counterpart, it's capable of manipulating \
-		structures, machinery, vehicles, and, thanks to the fruitful efforts of it's creators - living  \
-		beings. They can, however, still struggle after an initial burst of inertia."
+		structures, machinery, vehicles, and, thanks to the fruitful efforts of its creators - living beings."
 	complexity = 0
 	prebuilt = TRUE
 	stat_required = CONSCIOUS
+
+/obj/item/mod/module/anomaly_locked/kinesis/admin
+	name = "MOD kinesis+ module"
+	desc = "A modular plug-in to the forearm, this module was recently reredeveloped in super secret. Oh no."
+	complexity = 0
+	grab_range = INFINITY
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0
+
+/obj/item/mod/module/anomaly_locked/kinesis/admin/can_grab(atom/target)
+	if(mod.wearer == target)
+		return FALSE
+	if(!ismovable(target))
+		return FALSE
+	var/atom/movable/movable_target = target
+	if(movable_target.throwing)
+		return FALSE
+	return TRUE
