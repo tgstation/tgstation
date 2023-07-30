@@ -1568,6 +1568,8 @@
 
 /// Modifies the fantasy variable
 /obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
+	if(LAZYACCESS(fantasy_modifications, variable_key) != null)
+		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
 	var/intended_target = value + bonus
 	value = max(minimum, intended_target)
 
@@ -1581,6 +1583,7 @@
 	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
 	if(!modification)
 		return current_value
+	LAZYREMOVE(fantasy_modifications, variable_key)
 	return current_value - modification
 
 /obj/item/proc/apply_fantasy_bonuses(bonus)

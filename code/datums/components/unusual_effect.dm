@@ -17,8 +17,14 @@
 	rotation = 30
 	spin = generator(GEN_NUM, -20, 20)
 
+/// Creates a cool looking effect on the movable.
+/// In the future, this could be expanded to have more interesting particles and effects.
 /datum/component/unusual_effect
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
+
+	var/obj/effect/abstract/particle_holder/special_effects
+
+	var/color
 
 	COOLDOWN_DECLARE(glow_cooldown)
 
@@ -27,9 +33,10 @@
 	if (!istype(parent_movable))
 		return COMPONENT_INCOMPATIBLE
 
+	src.color = color
 	parent_movable.add_filter("unusual_effect", 2, list("type" = "outline", "color" = color, "size" = 2))
 	if(include_particles)
-		parent_movable.particles = new /particles/unusual_effect()
+		special_effects = new(parent_movable, /particles/unusual_effect)
 	START_PROCESSING(SSobj, src)
 
 /datum/component/unusual_effect/Destroy(force, silent)
@@ -43,9 +50,9 @@
 	var/atom/movable/parent_movable = parent
 	var/filter = parent_movable.get_filter("unusual_effect")
 	if (!filter)
-		qdel(src)
-		return PROCESS_KILL
-	if(COOLDOWN_FINISHED(src, glow_cooldown))
+		parent_movable.add_filter("unusual_effect", 2, list("type" = "outline", "color" = color, "size" = 2))
+		return
+	if(!COOLDOWN_FINISHED(src, glow_cooldown))
 		return
 
 	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)

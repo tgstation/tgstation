@@ -42,6 +42,7 @@
 	RegisterSignal(parent, COMSIG_STACK_CAN_MERGE, PROC_REF(try_merge_stack))
 
 /datum/component/fantasy/proc/try_merge_stack(obj/item/stack/to_merge, in_hand)
+	SIGNAL_HANDLER
 	return CANCEL_STACK_MERGE
 
 /datum/component/fantasy/UnregisterFromParent()

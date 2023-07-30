@@ -51,6 +51,7 @@
 				comp.parent.AddComponent(/datum/component/unusual_effect, color = "#FFBF0030")
 	else
 		. = "[newName] of [pick(badSuffixes)]"
+	return .
 
 //////////// Good suffixes
 /datum/fantasy_affix/bane
@@ -209,9 +210,9 @@
 	var/obj/item/master = comp.parent
 	var/filter_color = "#8a0c0ca1" //clarified args
 	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
-	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of polymorph!", filter_color, "", comp)
+	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, "", comp)
 	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger)
-	return "[newName][new_name]" //no spoilers!
+	return "[newName][new_name]"
 
 /datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
@@ -223,8 +224,7 @@
 	alignment = AFFIX_EVIL
 
 /datum/fantasy_affix/curse_of_polymorph/validate(obj/item/attached)
-	// Curse of hunger can be really unbearable to deal with,
-	// so it should not start on someone or in a bag.
+	// Don't start on someone so that it doesn't immediately polymorph them.
 	if(ismob(attached.loc))
 		return FALSE
 	if(!isclothing(attached))
@@ -246,7 +246,7 @@
 	)
 	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of polymorph!", filter_color, "", comp)
 	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_polymorph, pick(possible_results))
-	return "[newName][new_name]" //no spoilers!
+	return "[newName][new_name]"
 
 /datum/fantasy_affix/curse_of_polymorph/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
