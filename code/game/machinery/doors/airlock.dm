@@ -1742,6 +1742,22 @@
 	var/area/source_area = get_area(src)
 	return source_area?.airlock_wires ? new source_area.airlock_wires(src) : new /datum/wires/airlock(src)
 
+/obj/structure/fluff/airlock_filler/Initialize(mapload)
+	. = ..()
+	RegisterSignal(filled_airlock, COMSIG_QDELETING, PROC_REF(no_airlock))
+
+/obj/structure/fluff/airlock_filler/Destroy(force)
+	filled_airlock = null
+	return ..()
+
+/**
+ * Multi-tile airlocks pair with a filler panel, if one goes so does the other.
+ */
+/obj/structure/fluff/airlock_filler/proc/no_airlock()
+	SIGNAL_HANDLER
+
+	qdel(src)
+
 /**
  * Multi-tile airlocks (using a filler panel) have special handling for movables with PASSGLASS
  */
@@ -1761,19 +1777,6 @@
 
 /obj/structure/fluff/airlock_filler/singularity_pull(S, current_size)
 	return
-
-/obj/structure/fluff/airlock_filler/Initialize(mapload)
-	. = ..()
-	RegisterSignal(filled_airlock, COMSIG_QDELETING, PROC_REF(no_airlock))
-
-/obj/structure/fluff/airlock_filler/Destroy(force)
-	QDEL_NULL(filled_airlock)
-	return ..()
-
-/obj/structure/fluff/airlock_filler/proc/no_airlock()
-	SIGNAL_HANDLER
-
-	filled_airlock = null
 
 /*
 	Station Airlocks Regular
