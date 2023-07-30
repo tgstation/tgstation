@@ -613,6 +613,7 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/recharger,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/security)
 "fN" = (
@@ -752,7 +753,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/machinery/vending/cola,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
 "gK" = (
@@ -815,7 +816,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/vending/cola,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
 "hq" = (
@@ -1455,7 +1456,7 @@
 "lE" = (
 /obj/structure/cable,
 /obj/structure/rack,
-/obj/item/melee/baton/security,
+/obj/item/melee/baton/security/loaded,
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "lF" = (
@@ -1544,6 +1545,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/crowbar/large/old,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "mD" = (
@@ -1760,9 +1762,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
 "nY" = (
-/obj/structure/chair/comfy/lime{
-	dir = 4
-	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Lobby";
 	network = list("spacehotel")
@@ -2615,6 +2614,7 @@
 /area/ruin/space/has_grav/hotel)
 "wK" = (
 /obj/effect/spawner/random/vending/snackvend,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel)
 "wO" = (
@@ -3556,6 +3556,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 9
 	},
+/obj/machinery/vending/imported,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "Hv" = (
@@ -4215,8 +4216,7 @@
 "Pd" = (
 /obj/structure/cable,
 /obj/structure/closet/secure_closet{
-	name = "contraband locker";
-	req_access = list("armory")
+	name = "contraband locker"
 	},
 /obj/effect/spawner/random/contraband/armory,
 /obj/effect/spawner/random/contraband,
@@ -4394,10 +4394,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
 /obj/structure/sign/poster/random/directional/north,
+/obj/machinery/vending/imported/yangyu,
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
 "Rg" = (
@@ -4747,7 +4745,11 @@
 	spawnwithmagazine = 0
 	},
 /obj/item/ammo_box/magazine/m45,
-/obj/structure/closet/secure_closet/armory2,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/glasses/night,
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "Vq" = (
@@ -8926,7 +8928,7 @@ WD
 Dc
 Sq
 Sq
-cf
+lL
 PF
 cf
 kZ
