@@ -315,8 +315,9 @@
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
 	if(close_enough && (!combat_mode || !isliving(clicked_on)))
-		clicked_with_what.melee_attack_chain(src, clicked_on, params)
-		return
+		// Only stop the swing attempt if the attack chain return TRUE at any point
+		if(clicked_with_what.melee_attack_chain(src, clicked_on, params))
+			return
 
 	if(swing_at_target(clicked_with_what, clicked_on, right_clicking))
 		return

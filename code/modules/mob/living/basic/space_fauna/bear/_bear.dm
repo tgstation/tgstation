@@ -159,10 +159,10 @@
 
 /mob/living/basic/bear/butter/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers) //Makes the butter bear's attacks against vertical targets slip said targets
 	. = ..()
-	if(. || !isliving(target))
+	if(. || !isliving(attack_target))
 		return
-	var/mob/living/victim = target
-	if((victim.body_position != STANDING_UP))
+	var/mob/living/victim = attack_target
+	if(victim.body_position != STANDING_UP)
 		return
 	victim.Knockdown(20)
 	playsound(loc, 'sound/misc/slip.ogg', 15)

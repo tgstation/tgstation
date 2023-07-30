@@ -6,6 +6,7 @@
 	var/obj/item/kinetic_crusher/crusher = allocate(/obj/item/kinetic_crusher)
 
 	attacker.put_in_active_hand(crusher, forced = TRUE)
+	crusher.attack_self(attacker)
 
 	click_wrapper(attacker, run_loc_floor_top_right, list2params(list(RIGHT_CLICK = TRUE)))
 

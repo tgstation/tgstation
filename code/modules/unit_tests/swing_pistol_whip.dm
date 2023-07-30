@@ -8,20 +8,21 @@
 
 	victim.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
 
+	var/expected_ammo = gun.magazine.max_ammo
 	// These assertions are just here because I don't understand gun code
 	TEST_ASSERT(gun.chambered, "Gun spawned without a chambered round.")
-	TEST_ASSERT_EQUAL(gun.magazine.ammo_count(), gun.magazine.max_ammo, "Gun spawned without a full magazine, \
+	TEST_ASSERT_EQUAL(gun.magazine.ammo_count(countempties = FALSE), expected_ammo, "Gun spawned without a full magazine, \
 		when it should spawn with mag size + 1 (chambered) rounds.")
 
 	// Combat mode in melee range -> pistol whip
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, victim)
-	TEST_ASSERT_EQUAL(gun.magazine.ammo_count(), gun.magazine.max_ammo, "The gun fired a shot when it was used for a pistol whip.")
 	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim did not take brute damage from being pistol-whipped.")
+	TEST_ASSERT_EQUAL(gun.magazine.ammo_count(countempties = FALSE), expected_ammo, "The gun fired a shot when it was used for a pistol whip.")
 	attacker.fully_heal()
 
 	// No combat mode -> point blank shot
 	attacker.set_combat_mode(FALSE)
 	click_wrapper(attacker, victim)
-	TEST_ASSERT_EQUAL(gun.magazine.ammo_count(), gun.magazine.max_ammo - 1, "The gun did not fire a shot when it was used for a point-blank shot.")
 	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim did not take brute damage from being fired upon point-blank.")
+	TEST_ASSERT_EQUAL(gun.magazine.ammo_count(countempties = FALSE), expected_ammo - 1, "The gun did not fire a shot when it was used for a point-blank shot.")

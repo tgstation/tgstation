@@ -239,6 +239,7 @@
 #include "subsystem_init.dm"
 #include "suit_storage_icons.dm"
 #include "surgeries.dm"
+#include "swing_bashing.dm"
 #include "swing_batons.dm"
 #include "swing_blocking.dm"
 #include "swing_combat.dm"
