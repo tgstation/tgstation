@@ -87,6 +87,7 @@
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
+	toast_circuit()
 	occupant_mind_refs.Cut()
 	QDEL_NULL(delete_turfs)
 	QDEL_NULL(exit_turfs)
@@ -119,30 +120,33 @@
 
 	return ..()
 
-/obj/machinery/quantum_server/attackby(obj/item/tool, mob/user, params)
-	var/icon_closed = base_icon_state
-	var/icon_open = "[base_icon_state]_o"
-	if(!(machine_stat & (BROKEN|NOPOWER)))
-		icon_closed = "[base_icon_state]_off"
-		icon_open = "[base_icon_state]_o_off"
+/obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
+	. = ..()
+	if(!get_ready_status())
+		balloon_alert(user, "it's scalding hot!")
+		return TRUE
+	if(length(occupant_mind_refs))
+		balloon_alert(user, "all clients must disconnect!")
+		return TRUE
+	if(default_deconstruction_crowbar(crowbar))
+		return TRUE
+	return FALSE
 
-	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, tool))
-		return
-	// Using a multitool lets you access the receiver's interface
-	else if(tool.tool_behaviour == TOOL_MULTITOOL)
-		attack_hand(user)
-
-	else if(default_deconstruction_crowbar(tool))
-		return
-	else
-		return ..()
+/obj/machinery/quantum_server/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	. = ..()
+	if(!get_ready_status())
+		balloon_alert(user, "it's scalding hot!")
+		return TRUE
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", icon_state, screwdriver))
+		return TRUE
+	return FALSE
 
 /obj/machinery/quantum_server/RefreshParts()
 	. = ..()
 
-	var/capacitor_rating = 0.8
+	var/capacitor_rating = 1.2
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		capacitor_rating += capacitor.tier * 0.1
+		capacitor_rating -= capacitor.tier * 0.1
 
 	server_cooldown_efficiency = max(capacitor_rating, 0)
 
@@ -505,7 +509,8 @@
 	for(var/datum/stock_part/servo/servo in component_parts)
 		rewards_bonus += servo.tier * 0.1
 
-	examine_text += span_infoplain("Its manipulation potential is increasing rewards by [(rewards_bonus)]x.")
+	if(rewards_bonus > 1)
+		examine_text += span_infoplain("Its manipulation potential is increasing rewards by [(rewards_bonus)]x.")
 
 	if(!get_ready_status())
 		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
@@ -556,6 +561,15 @@
 	retries_spent = 0
 	update_appearance()
 	loading = FALSE
+
+/// If someone tries to rebuild it to skirt the cooldown, break the board (it's hot!)
+/obj/machine/quantum_server/proc/toast_circuit()
+	if(get_ready_status())
+		return
+
+	var/obj/item/circuitboard/machine/quantum_server/circuit = locate(circuit) in contents
+	if(circuit)
+		qdel(circuit)
 
 #undef ONLY_TURF
 #undef REDACTED

@@ -61,7 +61,18 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/netpod/update_icon_state()
-	icon_state = "[base_icon_state][state_open ? "-open" : null]"
+	if(machine_stat & (BROKEN | NOPOWER))
+		icon_state = base_icon_state
+		return ..()
+
+	if(state_open)
+		icon_state = base_icon_state + "_open_active"
+		return ..()
+
+	icon_state = base_icon_state + "_closed"
+	if(occupant)
+		icon_state += "_active"
+
 	return ..()
 
 /obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
@@ -86,6 +97,7 @@
 		return TRUE
 
 	state_open = FALSE
+	flick("[base_icon_state]_closing", src)
 	set_density(TRUE)
 	update_appearance()
 	return TRUE
@@ -169,7 +181,7 @@
 	if(state_open)
 		balloon_alert(user, "close first.")
 		return TRUE
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), screwdriver))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", "[base_icon_state]_closed", screwdriver))
 		return TRUE
 	return FALSE
 
@@ -245,7 +257,7 @@
 	if(!forced)
 		return
 
-	if(mob_occupant.stat <= UNCONSCIOUS)
+	if(mob_occupant.stat >= HARD_CRIT)
 		open_machine()
 		return
 
