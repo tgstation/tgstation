@@ -49,8 +49,9 @@
 	if(!mod.wearer.client)
 		return
 	if(grabbed_atom)
-		launch()
+		var/launched_object = grabbed_atom
 		clear_grab(playsound = FALSE)
+		launch(launched_object)
 		return
 	if(!range_check(target))
 		balloon_alert(mod.wearer, "too far!")
@@ -222,11 +223,11 @@
 	if(grabbed_atom.anchored)
 		clear_grab()
 
-/obj/item/mod/module/anomaly_locked/kinesis/proc/launch()
-	playsound(grabbed_atom, 'sound/magic/repulse.ogg', 100, TRUE)
-	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
-	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, grabbed_atom), get_turf(src), 10)
-	grabbed_atom.throw_at(target_turf, range = grab_range, speed = grabbed_atom.density ? 3 : 4, thrower = mod.wearer, spin = isitem(grabbed_atom))
+/obj/item/mod/module/anomaly_locked/kinesis/proc/launch(atom/movable/launched_object)
+	playsound(launched_object, 'sound/magic/repulse.ogg', 100, TRUE)
+	RegisterSignal(launched_object, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
+	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, launched_object), get_turf(src), 10)
+	launched_object.throw_at(target_turf, range = grab_range, speed = launched_object.density ? 3 : 4, thrower = mod.wearer, spin = isitem(launched_object))
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
 	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
@@ -269,8 +270,9 @@
 	stat_required = CONSCIOUS
 
 /obj/item/mod/module/anomaly_locked/kinesis/admin
-	name = "MOD kinesis+ module"
-	desc = "A modular plug-in to the forearm, this module was recently reredeveloped in super secret. Oh no."
+	name = "MOD kinesis++ module"
+	desc = "A modular plug-in to the forearm, this module was recently reredeveloped in super secret. \
+		This one can force some of the grasped objects to phase through walls. Oh no."
 	complexity = 0
 	grab_range = INFINITY
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0
