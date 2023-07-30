@@ -516,10 +516,12 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "eB" = (
 /obj/structure/cable,
-/obj/structure/table/reinforced,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/obj/machinery/computer/records/security{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "eF" = (
 /obj/machinery/power/solar,
@@ -614,7 +616,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/recharger,
-/turf/open/floor/plating,
+/turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "fN" = (
 /obj/machinery/door/airlock/external/glass,
@@ -1850,7 +1852,7 @@
 	req_access = list("security")
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "oC" = (
 /obj/structure/filingcabinet,
@@ -1935,7 +1937,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/item/storage/toolbox/mechanical/old/clean,
-/turf/open/floor/plating,
+/turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "qd" = (
 /obj/structure/closet/l3closet/janitor,
@@ -2188,7 +2190,7 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/item/card/id/away/hotel/security,
-/turf/open/floor/plating,
+/turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "sP" = (
 /obj/structure/cable,
@@ -3277,9 +3279,11 @@
 /area/ruin/space/has_grav/hotel)
 "EF" = (
 /obj/structure/cable,
-/obj/structure/table/reinforced,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/turf/open/floor/plating,
+/obj/machinery/computer/security{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "EJ" = (
 /obj/structure/table/wood/fancy/purple,
@@ -3773,7 +3777,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/plating,
+/turf/open/floor/carpet/neon/simple/red/nodots,
 /area/ruin/space/has_grav/hotel/security)
 "JF" = (
 /obj/item/soap,
