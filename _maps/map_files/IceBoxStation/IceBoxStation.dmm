@@ -32457,8 +32457,8 @@
 /turf/open/floor/iron/white/corner,
 /area/station/engineering/atmos)
 "kqs" = (
-/obj/machinery/vending/sustenance,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/sustenance/labor_camp,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "kqw" = (
@@ -45888,15 +45888,15 @@
 "oCA" = (
 /obj/structure/closet/secure_closet/cytology,
 /obj/machinery/button/door/directional/north{
-	name = "Containment Blast Doors";
 	id = "xenobiomain";
-	req_access = list("xenobiology");
-	pixel_y = 32
+	name = "Containment Blast Doors";
+	pixel_y = 32;
+	req_access = list("xenobiology")
 	},
 /obj/machinery/button/door/directional/north{
-	pixel_y = 23;
-	name = "Test Chamber Blast Doors";
 	id = "misclab";
+	name = "Test Chamber Blast Doors";
+	pixel_y = 23;
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/glass/reinforced,
