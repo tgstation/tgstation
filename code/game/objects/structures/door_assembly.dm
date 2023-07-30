@@ -24,7 +24,6 @@
 
 /obj/structure/door_assembly/multi_tile
 	dir = EAST
-	/// Whether or not the assembly is for a multi-tile airlock.
 	multi_tile = TRUE
 
 /obj/structure/door_assembly/Initialize(mapload)
