@@ -65,24 +65,18 @@
 	return "Autowiki-[filename].png"
 
 /datum/autowiki/stock_parts/proc/generate_source_list(datum/design/recipe)
-	var/source_list = ""
+	var/list/source_list = list()
 
 	if(recipe.build_type & PROTOLATHE)
-		source_list += "Protolathe"
+		source_list.Add("Protolathe")
 
 	if(recipe.build_type & AWAY_LATHE)
-		if(source_list)
-			source_list += ", "
-
-		source_list += "Ancient Protolathe"
+		source_list.Add("Ancient Protolathe")
 
 	if(recipe.build_type & AUTOLATHE)
-		if(source_list)
-			source_list.Join(", ")
+		source_list.Add("Autolathe")
 
-		source_list += "Autolathe"
-
-	return source_list
+	return source_list.Join(", ")
 
 /datum/autowiki/stock_parts/proc/generate_material_list(datum/design/recipe)
 	var/list/materials = list()

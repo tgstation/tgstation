@@ -463,7 +463,7 @@
 	. = ..()
 	var/area/area = get_area(src)
 	if(area)
-		if(!A.lightswitch || !A.light_power)
+		if(!area.lightswitch || !area.light_power)
 			charge = 0 //For naturally depowered areas, we start with no power
 
 /obj/item/stock_parts/cell/crystal_cell
