@@ -1,10 +1,10 @@
 @echo off
 setlocal EnableDelayedExpansion
 if "%~1"=="-tooltask" (
-	goto run-updatepaths
+	goto run-updatepaths-all
 )
 if "%~1"=="" (
-	:run-updatepaths
+	:run-updatepaths-all
 	echo Running UpdatePaths with all scripts in the Scripts directory.
 	echo This will take a while, and cannot be interrupted without data corruption.
 	echo Make sure you commit all changes first!
