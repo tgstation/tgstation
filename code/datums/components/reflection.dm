@@ -30,7 +30,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/static/list/connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered_or_initialized),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_movable_entered_or_initialized),
 		COMSIG_ATOM_EXITED = PROC_REF(on_movable_exited)
 	)
 	var/atom/movable/mov_parent = parent
@@ -93,7 +94,7 @@
 	return TRUE
 
 ///Called when a movable enters a turf within the connected range
-/datum/component/reflection/proc/on_movable_entered(atom/movable/source, atom/movable/arrived)
+/datum/component/reflection/proc/on_movable_entered_or_initialized(atom/movable/source, atom/movable/arrived)
 	SIGNAL_HANDLER
 	if(LAZYACCESS(reflected_movables, arrived) || !check_can_reflect(arrived))
 		return
