@@ -32,7 +32,7 @@
 /datum/element/eyestab/proc/on_item_attack(datum/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	if (user.zone_selected != BODY_ZONE_PRECISE_EYES)
+	if (!user.combat_mode || user.zone_selected != BODY_ZONE_PRECISE_EYES)
 		return
 
 	if (HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -55,7 +55,6 @@
 
 	item.add_fingerprint(user)
 	playsound(item, item.hitsound, 30, TRUE, -1)
-	user.do_attack_animation(target)
 	if (target == user)
 		user.visible_message(
 			span_danger("[user] stabs [user.p_them()]self in the eye with [item]!"),

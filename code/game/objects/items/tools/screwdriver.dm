@@ -103,6 +103,7 @@
 	greyscale_config_belt = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+	weapon_sprite_angle = 270
 
 /obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()

@@ -244,6 +244,7 @@
 #include "swing_blocking.dm"
 #include "swing_combat.dm"
 #include "swing_crusher.dm"
+#include "swing_eyestab.dm"
 #include "swing_pistol_whip.dm"
 #include "swing_silicon_interactions.dm"
 #include "swing_swings.dm"
