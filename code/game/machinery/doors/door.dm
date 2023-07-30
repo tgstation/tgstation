@@ -143,9 +143,7 @@
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
-	if(filler)
-		qdel(filler)
-		filler = null
+	QDEL_NULL(filler)
 	air_update_turf(TRUE, FALSE)
 	return ..()
 
@@ -166,11 +164,17 @@
 	if(!filler)
 		filler = new(get_step(src, get_adjusted_dir(dir)))
 		filler.filled_airlock = src
+		RegisterSignal(filler, COMSIG_QDELETING, PROC_REF(no_filler))
 	else
 		filler.loc = get_step(src, get_adjusted_dir(dir))
 
 	filler.density = density
 	filler.set_opacity(opacity)
+
+/obj/machinery/door/proc/no_filler()
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /**
  * Checks which way the airlock is facing and adjusts the direction accordingly.

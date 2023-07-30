@@ -34,9 +34,7 @@
 
 /obj/structure/door_assembly/multi_tile/Initialize(mapload)
 	. = ..()
-	multi_tile = get_size_in_tiles(src) > 1
-	if(multi_tile)
-		set_bounds()
+	set_bounds()
 	update_overlays()
 
 /obj/structure/door_assembly/multi_tile/Move()
