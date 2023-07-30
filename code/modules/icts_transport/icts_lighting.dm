@@ -32,19 +32,27 @@
 	if((travel_direction & (SOUTH|EAST)) && controller_active || (travel_direction & (NORTH|WEST)) && !controller_active)
 		switch(dir)
 			if(NORTH, EAST)
-				set_light(l_range = 4, l_color = LIGHT_COLOR_INTENSE_RED)
+				set_light_color(LIGHT_COLOR_INTENSE_RED)
+				set_light_range(4)
+				set_light_power(0.4)
 				icon_state = "tram_rear"
 			if(SOUTH, WEST)
-				set_light(l_range = 7, l_color = LIGHT_COLOR_FAINT_BLUE)
+				set_light_color(LIGHT_COLOR_FAINT_BLUE)
+				set_light_range(7)
+				set_light_power(0.7)
 				icon_state = "tram_front"
 
 	else if((travel_direction & (NORTH|WEST)) && controller_active || (travel_direction & (SOUTH|EAST)) && !controller_active)
 		switch(dir)
 			if(NORTH, EAST)
-				set_light(l_range = 7, l_color = LIGHT_COLOR_FAINT_BLUE)
+				set_light_color(LIGHT_COLOR_FAINT_BLUE)
+				set_light_range(7)
+				set_light_power(0.7)
 				icon_state = "tram_front"
 			if(SOUTH, WEST)
-				set_light(l_range = 4, l_color = LIGHT_COLOR_INTENSE_RED)
+				set_light_color(LIGHT_COLOR_INTENSE_RED)
+				set_light_range(4)
+				set_light_power(0.4)
 				icon_state = "tram_rear"
 	else
 		stack_trace("Light [src] received an invalid direction from signal")
