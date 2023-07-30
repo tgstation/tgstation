@@ -3,11 +3,11 @@
 	page = "Template:Autowiki/Content/StockParts"
 
 	var/list/battery_whitelist = list(
-	/obj/item/stock_parts/cell,
-	/obj/item/stock_parts/cell/high,
-	/obj/item/stock_parts/cell/super,
-	/obj/item/stock_parts/cell/hyper,
-	/obj/item/stock_parts/cell/bluespace,
+		/obj/item/stock_parts/cell,
+		/obj/item/stock_parts/cell/high,
+		/obj/item/stock_parts/cell/super,
+		/obj/item/stock_parts/cell/hyper,
+		/obj/item/stock_parts/cell/bluespace,
 	)
 
 /datum/autowiki/stock_parts/generate()
