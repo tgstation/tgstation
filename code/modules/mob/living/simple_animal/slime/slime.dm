@@ -25,7 +25,7 @@
 
 	maxHealth = 150
 	health = 150
-	healable = 0
+	mob_biotypes = MOB_SLIME
 	melee_damage_lower = 5
 	melee_damage_upper = 25
 

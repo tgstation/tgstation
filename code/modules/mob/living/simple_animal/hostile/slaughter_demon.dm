@@ -16,7 +16,7 @@
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "imp"
 	icon_living = "imp"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_BEAST|MOB_HUMANOID
 	speed = 1
 	combat_mode = TRUE
 	stop_automated_movement = TRUE
@@ -31,7 +31,6 @@
 	attack_verb_simple = "wildly tear into"
 	maxHealth = 200
 	health = 200
-	healable = 0
 	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 15

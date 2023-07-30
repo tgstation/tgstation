@@ -16,7 +16,6 @@
 	melee_damage_upper = 15
 	minbodytemp = 0
 	maxbodytemp = 1500
-	healable = 0 //they're skeletons how would bruise packs help them??
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
