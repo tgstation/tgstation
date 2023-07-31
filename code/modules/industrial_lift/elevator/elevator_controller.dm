@@ -23,8 +23,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	var/datum/weakref/lift_weakref
 	COOLDOWN_DECLARE(elevator_cooldown)
 
-/obj/item/assembly/control/elevator/LateInitialize()
+/obj/item/assembly/control/elevator/Initialize(mapload)
 	. = ..()
+
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
+
+	var/datum/lift_master/lift = get_lift()
+	if(!lift)
+		return
+
+	lift_weakref = WEAKREF(lift)
+
+/obj/item/assembly/control/elevator/LateInitialize()
 	var/datum/lift_master/lift = get_lift()
 	if(!lift)
 		log_mapping("Elevator call button at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")

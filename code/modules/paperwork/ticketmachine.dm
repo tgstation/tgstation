@@ -128,8 +128,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	///Weakref to our ticket machine
 	var/datum/weakref/ticket_machine_ref
 
+/obj/item/assembly/control/ticket_machine/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
 /obj/item/assembly/control/ticket_machine/LateInitialize()
-	. = ..()
 	find_machine()
 
 /// Locate the ticket machine to which we're linked by our ID

@@ -73,12 +73,14 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 /datum/rpgloot_controller/New()
 	. = ..()
 	//second operation takes MUCH longer, so lets set up signals first.
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM_POST_INIT, PROC_REF(on_new_item_in_existence))
+	RegisterSignal(SSdcs, COMSIG_GLOB_ATOM_AFTER_POST_INIT, PROC_REF(on_new_item_in_existence))
 	handle_current_items()
 
 ///signal sent by a new item being created.
 /datum/rpgloot_controller/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
 	SIGNAL_HANDLER
+	if(!istype(created_item))
+		return
 	if(created_item.item_flags & SKIP_FANTASY_ON_SPAWN)
 		return
 	created_item.AddComponent(/datum/component/fantasy)
