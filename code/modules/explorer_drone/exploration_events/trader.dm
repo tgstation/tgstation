@@ -49,7 +49,7 @@
 /datum/exploration_event/simple/trader/proc/trade(obj/item/exodrone/drone)
 	var/obj/trade_good = locate(required_path) in drone.contents
 	var/obj/loot = new traded_path()
-	drone.drone_log("Traded [trade_good] for [loot]")
+	drone.drone_log("Traded [trade_good] for [loot].")
 	qdel(trade_good)
 	drone.try_transfer(loot)
 
@@ -67,7 +67,7 @@
 
 /datum/exploration_event/simple/trader/farmer_market
 	name = "farmer's market"
-	deep_scan_description = "You detect a spot with unusal concentraction of edibles on the site."
+	deep_scan_description = "You detect an area with an unusually high concentration of edibles on site."
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_SURFACE)
 	band_values = list(EXOSCANNER_BAND_LIFE=2)
 	required_path = /obj/item/stock_parts/servo/nano
@@ -77,7 +77,7 @@
 /datum/exploration_event/simple/trader/fish
 	name = "interstellar fish trader"
 	requires_translator = FALSE
-	deep_scan_description = "You spot gian \"FRESH FISH\" sign on the site."
+	deep_scan_description = "You spot a giant \"FRESH FISH\" sign on site."
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_SURFACE)
 	band_values = list(EXOSCANNER_BAND_LIFE=2)
 	required_path = /obj/item/stock_parts/cell/high
@@ -95,7 +95,7 @@
 
 /datum/exploration_event/simple/trader/surplus
 	name = "military surplus trader"
-	deep_scan_description = "You decrypt a transmission advertising military surplus sale on the site."
+	deep_scan_description = "You decrypt a transmission advertising military surplus for sale on site."
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_CIVILIZED)
 	band_values = list(EXOSCANNER_BAND_LIFE=1)
 	required_path = list(/obj/item/clothing/suit/armor,/obj/item/clothing/shoes/jackboots)
@@ -104,7 +104,7 @@
 
 /datum/exploration_event/simple/trader/flame_card
 	name = "id card artisan"
-	deep_scan_description = "You spy a adveristment for an id card customization workshop."
+	deep_scan_description = "You spy an advertisment for an ID card customisation workshop."
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_CIVILIZED)
 	band_values = list(EXOSCANNER_BAND_TECH=1)
 	required_path = list(/obj/item/card/id) //If you trade a better card for worse that's on you
@@ -114,10 +114,10 @@
 	var/static/list/possible_card_states = list("card_flames","card_carp","card_rainbow")
 
 /datum/exploration_event/simple/trader/flame_card/get_discovery_message(obj/item/exodrone/drone)
-	return "Encountered [name] willing to customize any id card you bring them."
+	return "Encountered [name] willing to customise any ID card you bring them."
 
 /datum/exploration_event/simple/trader/flame_card/get_description(obj/item/exodrone/drone)
-	return "You encounter local craftsman willing to improve an id card for you free of charge."
+	return "You encounter a local craftsman willing to customise an ID card for you, free of charge."
 
 /datum/exploration_event/simple/trader/flame_card/trade(obj/item/exodrone/drone)
 	var/obj/item/card/id/card = locate(required_path) in drone.contents
