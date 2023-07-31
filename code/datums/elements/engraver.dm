@@ -9,12 +9,12 @@
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_item_pre_attack_secondary))
-	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+	RegisterSignal(target, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 	target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/element/engraver/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_PRE_ATTACK_SECONDARY, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
+	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_PRE_ATTACK_SECONDARY, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 
 ///signal called on parent being examined
 /datum/element/engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -77,14 +77,11 @@
 		tattoo_entry["story"] = tattoo_story
 		SSpersistence.prison_tattoos_to_save += list(tattoo_entry)
 
-/datum/element/engraver/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+/datum/element/engraver/proc/add_item_context(atom/source, list/context, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!is_type_in_typecache(source, GLOB.engravable_whitelist))
-		return NONE
+	if(is_type_in_typecache(target, GLOB.engravable_whitelist) && !HAS_TRAIT(target, TRAIT_NOT_ENGRAVABLE))
+		context[SCREENTIP_CONTEXT_RMB] = "Engrave memory"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	if(HAS_TRAIT(source, TRAIT_NOT_ENGRAVABLE))
-		return NONE
-
-	context[SCREENTIP_CONTEXT_RMB] = "Engrave memory"
-	return CONTEXTUAL_SCREENTIP_SET
+	return NONE
