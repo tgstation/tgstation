@@ -29,11 +29,13 @@
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
+	var/static/list/target_foods = list(/obj/item/bodypart/arm)
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/basic_eating, food_types = target_foods)
 	AddElement(\
 		/datum/element/amputating_limbs,\
 		surgery_verb = "snipping",\
@@ -71,6 +73,7 @@
 	var/mob/living/living_target = target
 	basic_source.melee_attack(living_target)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+	basic_source.start_pulling(living_target)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	. = ..()
