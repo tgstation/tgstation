@@ -76,7 +76,7 @@
 	#define COMPONENT_ALLOW_REACH (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
-///when an atom is processed (mob/living/user, obj/item/I, list/atom/results)
+///when an atom is processed (mob/living/user, obj/item/process_item, list/atom/results)
 #define COMSIG_ATOM_PROCESSED "atom_processed"
 ///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
 #define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
@@ -117,6 +117,9 @@
 #define COMSIG_ATOM_TIMESTOP_FREEZE "atom_timestop_freeze"
 /// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"
+
+/// Called on [/atom/SpinAnimation()] : (speed, loops, segments, angle)
+#define COMSIG_ATOM_SPIN_ANIMATION "atom_spin_animation"
 
 /// when atom falls onto the floor and become exposed to germs: (datum/component/germ_exposure)
 #define COMSIG_ATOM_GERM_EXPOSED "atom_germ_exposed"

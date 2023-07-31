@@ -49,7 +49,7 @@
 		if(initialize_dirs & DISP_DIR_RIGHT)
 			dpdir |= turn(dir, -90)
 		if(initialize_dirs & DISP_DIR_FLIP)
-			dpdir |= turn(dir, 180)
+			dpdir |= REVERSE_DIR(dir)
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 	if(isturf(loc))
@@ -85,7 +85,7 @@
 // returns the direction of the next pipe object, given the entrance dir
 // by default, returns the bitmask of remaining directions
 /obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/H)
-	return dpdir & (~turn(H.dir, 180))
+	return dpdir & (~REVERSE_DIR(H.dir))
 
 // transfer the holder through this pipe segment
 // overridden for special behaviour
@@ -210,7 +210,7 @@
 // if coming in from secondary dirs, then next is primary dir
 // if coming in from primary dir, then next is equal chance of other dirs
 /obj/structure/disposalpipe/junction/nextdir(obj/structure/disposalholder/H)
-	var/flipdir = turn(H.dir, 180)
+	var/flipdir = REVERSE_DIR(H.dir)
 	if(flipdir != dir) // came from secondary dir, so exit through primary
 		return dir
 
