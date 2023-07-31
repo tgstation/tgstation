@@ -80,6 +80,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_BITMINING_GOAL_POINT, PROC_REF(on_add_point))
 
+/// Listens for points to be added which will eventually spawn a crate.
 /obj/effect/bitminer_loot_signal/proc/on_add_point(datum/source, points_to_add)
 	SIGNAL_HANDLER
 
@@ -93,6 +94,7 @@
 
 	reveal()
 
+/// Spawns the crate with some effects
 /obj/effect/bitminer_loot_signal/proc/reveal()
 	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
 	var/turf/tile = get_turf(src)

@@ -4,8 +4,6 @@
 #define BITMINING_COST_HIGH 3
 #define BITMINING_COST_EXTREME 20
 
-/// Rewards formula: (1 + rewards_points) * ORE_MULTIPLIER
-
 #define BITMINING_REWARD_MIN 1
 #define BITMINING_REWARD_LOW 2
 #define BITMINING_REWARD_MEDIUM 3

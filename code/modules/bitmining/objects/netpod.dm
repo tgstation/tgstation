@@ -164,7 +164,7 @@
 /obj/machinery/netpod/default_pry_open(obj/item/crowbar, mob/living/pryer)
 	if(panel_open && isnull(occupant) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR)
 		crowbar.play_tool_sound(src, 50)
-		visible_message(span_danger("[pryer] pries open [src]!"), span_notice("You pry open [src]."))
+		pryer.visible_message(span_notice("[pryer] pries open [src]."), span_notice("You pry open [src]."), span_notice("You hear a machine being disassembled."))
 		return ..()
 
 	if(state_open || isnull(occupant))
@@ -259,18 +259,17 @@
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
 	occupant_mind_ref = null
 
-	if(!forced)
-		return
-
 	if(mob_occupant.stat >= HARD_CRIT)
 		open_machine()
+		return
+
+	if(!forced)
 		return
 
 	mob_occupant.Paralyze(2 SECONDS)
 	mob_occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
 	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 	INVOKE_ASYNC(mob_occupant, TYPE_PROC_REF(/mob/living, emote), "scream")
-	mob_occupant.do_jitter_animation(200)
 	to_chat(mob_occupant, span_danger("You've been forcefully disconnected from your avatar! Your thoughts feel scrambled!"))
 
 /**

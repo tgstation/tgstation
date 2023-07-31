@@ -24,7 +24,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = safehouseshutter
+	id = "safehouseshutter"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/safehouse)
@@ -86,7 +86,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
-	id = safehouseshutter
+	id = "safehouseshutter"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/safehouse)
@@ -100,7 +100,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
-	id = safehouseshutter
+	id = "safehouseshutter"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/safehouse)
@@ -136,7 +136,7 @@
 "W" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = safehouseshutter
+	id = "safehouseshutter"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/safehouse)
@@ -150,7 +150,7 @@
 /obj/machinery/button/door{
 	pixel_x = 4;
 	pixel_y = 4;
-	id = safehouseshutter
+	id = "safehouseshutter"
 	},
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage{
 	pixel_y = 6;
