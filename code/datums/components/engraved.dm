@@ -20,7 +20,7 @@
 	if(!is_type_in_typecache(parent, GLOB.engravable_whitelist))
 		return COMPONENT_INCOMPATIBLE
 
-	var/turf/closed/engraved_wall = parent
+	var/atom/engravable = parent
 
 	src.engraved_description = engraved_description
 	src.persistent_save = persistent_save
@@ -43,15 +43,15 @@
 		if(STORY_VALUE_LEGENDARY)
 			beauty_value = rand(500, 800) //Almost always a good story! this is for memories you can barely ever get, killing megafauna, doing ultimate feats!
 
-	engraved_wall.AddElement(/datum/element/art, beauty_value / ENGRAVING_BEAUTY_TO_ART_FACTOR)
+	engravable.AddElement(/datum/element/art, beauty_value / ENGRAVING_BEAUTY_TO_ART_FACTOR)
 	if(persistent_save)
-		engraved_wall.AddElement(/datum/element/beauty, beauty_value)
+		engravable.AddElement(/datum/element/beauty, beauty_value)
 	else
-		engraved_wall.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
+		engravable.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
 	icon_state_append = rand(1, 2)
 	//must be here to allow overlays to be updated
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
-	engraved_wall.update_appearance()
+	engravable.update_appearance()
 
 /datum/component/engraved/Destroy(force, silent)
 	if(!parent)

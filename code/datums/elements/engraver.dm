@@ -1,13 +1,7 @@
-/// Whitelist of things that can be engraved
-GLOBAL_LIST_INIT(engravable_whitelist, typecacheof(list(
-	/obj/structure/statue,
-	/turf/closed,
-)))
-
 /// An element that lets you engrave walls and statues when right click is used
 /datum/element/engraver
 
-/datum/element/engraver/Attach(datum/target)
+/datum/element/engraver/Attach(obj/item/target)
 	. = ..()
 
 	if(!isitem(target))
@@ -25,7 +19,7 @@ GLOBAL_LIST_INIT(engravable_whitelist, typecacheof(list(
 ///signal called on parent being examined
 /datum/element/engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("You can engrave with RMB if you can think of something interesting to engrave.")
+	examine_list += span_notice("You can engrave with RMB if you can think of something interesting.")
 
 ///signal called on parent being used to right click attack something
 /datum/element/engraver/proc/on_item_pre_attack_secondary(datum/source, atom/target, mob/living/user)
@@ -54,7 +48,7 @@ GLOBAL_LIST_INIT(engravable_whitelist, typecacheof(list(
 	if(!user.Adjacent(target))
 		return
 	item.add_fingerprint(user)
-	playsound(item, item.hitsound, 30, TRUE, -1)
+	playsound(item, pick(item.usesound), 30, TRUE, -1)
 	user.do_attack_animation(target)
 	user.balloon_alert(user, "engraving...")
 	if(!do_after(user, 5 SECONDS, target = target))
@@ -86,11 +80,11 @@ GLOBAL_LIST_INIT(engravable_whitelist, typecacheof(list(
 /datum/element/engraver/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 
-	if(isclosedturf(source) || istype(source, /obj/structure/statue))
-		if(HAS_TRAIT(source, TRAIT_NOT_ENGRAVABLE))
-			return NONE
+	if(!is_type_in_typecache(source, GLOB.engravable_whitelist))
+		return NONE
 
-		context[SCREENTIP_CONTEXT_RMB] = "Engrave memory"
-		return CONTEXTUAL_SCREENTIP_SET
+	if(HAS_TRAIT(source, TRAIT_NOT_ENGRAVABLE))
+		return NONE
 
-	return NONE
+	context[SCREENTIP_CONTEXT_RMB] = "Engrave memory"
+	return CONTEXTUAL_SCREENTIP_SET
