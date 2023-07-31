@@ -11,7 +11,7 @@
 		/obj/structure/spawner/lavaland/legion = 3,
 		SPAWN_MEGAFAUNA = 2,
 		/mob/living/simple_animal/hostile/asteroid/goldgrub = 10,
-		/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 20,
+		/mob/living/basic/mining/lobstrosity/lava = 20,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon = 20,
 		/mob/living/basic/mining/bileworm = 20,
 	)

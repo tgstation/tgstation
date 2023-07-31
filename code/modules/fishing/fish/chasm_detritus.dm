@@ -22,16 +22,16 @@
 			/obj/item/stack/ore/slag = 2,
 			/obj/item/stack/sheet/bone = 3,
 			/obj/effect/mob_spawn/corpse/human/skeleton = 1,
-			/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 1,
+			/mob/living/basic/mining/lobstrosity/lava = 1,
 		),
 		BODIES_ONLY = list(
 			/obj/effect/mob_spawn/corpse/human/skeleton = 3,
-			/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 1,
+			/mob/living/basic/mining/lobstrosity/lava = 1,
 		),
 		NO_CORPSES = list(
 			/obj/item/stack/ore/slag = 10,
 			/obj/item/stack/sheet/bone = 14,
-			/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 1,
+			/mob/living/basic/mining/lobstrosity/lava = 1,
 		),
 	)
 
