@@ -41,24 +41,26 @@
 	. = ..()
 	for(var/path in extra_loot)
 		if(ispath(path))
-			new path(extra_loot[path])
+			for(var/i in 1 to extra_loot[path])
+				new path(src)
 
-	new /obj/item/stack/ore/iron(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_IRON))
-	new /obj/item/stack/ore/glass(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_GLASS))
-	new /obj/item/stack/ore/plasma(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_PLASMA))
+	new /obj/item/stack/ore/iron(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_IRON))
+	new /obj/item/stack/ore/glass(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_GLASS))
+	new /obj/item/stack/ore/plasma(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_PLASMA))
 
 	if(reward_points > 1)
-		new /obj/item/stack/ore/silver(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_SILVER))
-		new /obj/item/stack/ore/gold(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_GOLD))
-		new /obj/item/stack/ore/titanium(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_TITANIUM))
+		new /obj/item/stack/ore/silver(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_SILVER))
+		new /obj/item/stack/ore/gold(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_GOLD))
+		new /obj/item/stack/ore/titanium(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_TITANIUM))
 
 	if(reward_points > 2)
-		new /obj/item/stack/ore/uranium(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_URANIUM))
-		new /obj/item/stack/ore/diamond(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_DIAMOND))
-		new /obj/item/stack/ore/bluespace_crystal(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_BLUESPACE_CRYSTAL))
+		new /obj/item/stack/ore/uranium(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_URANIUM))
+		new /obj/item/stack/ore/diamond(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_DIAMOND))
+		new /obj/item/stack/ore/bluespace_crystal(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_BLUESPACE_CRYSTAL))
 
-/obj/structure/closet/crate/secure/bitminer_loot/decrypted/proc/calculate_loot(rewards_multiplier, ore_multiplier)
-	var/base = 5 * rewards_multiplier
+/// Handles generating random numbers & calculating loot totals
+/obj/structure/closet/crate/secure/bitminer_loot/decrypted/proc/calculate_loot(reward_points, rewards_multiplier, ore_multiplier)
+	var/base = 2 * (rewards_multiplier + reward_points)
 	var/random_sum = rand(FLOOR(base / 1.5, 1), ROUND_UP(base * 1.5))
 	return ROUND_UP(random_sum * ore_multiplier)
 

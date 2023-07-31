@@ -239,6 +239,11 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"Y" = (
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/turf/template_noop,
+/area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
@@ -3321,7 +3326,7 @@ J
 J
 J
 J
-J
+Y
 J
 n
 J

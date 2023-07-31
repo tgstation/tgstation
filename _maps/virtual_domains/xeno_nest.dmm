@@ -224,8 +224,8 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "V" = (
-/obj/effect/spawner/random/medical/medkit,
-/obj/effect/spawner/random/medical/medkit,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /turf/template_noop,
 /area/template_noop)
 "W" = (
@@ -3467,7 +3467,7 @@ J
 b
 z
 z
-u
+z
 d
 i
 a

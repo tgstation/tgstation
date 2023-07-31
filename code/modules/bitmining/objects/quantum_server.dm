@@ -347,8 +347,8 @@
 	for(var/datum/map_template/virtual_domain/domain as anything in subtypesof(/datum/map_template/virtual_domain))
 		if(initial(domain.test_only))
 			continue
-		var/can_view = initial(domain.difficulty) < scanner_tier
-		var/can_view_reward = initial(domain.difficulty) < (scanner_tier + 1)
+		var/can_view = initial(domain.difficulty) < scanner_tier && initial(domain.cost) <= points + 5
+		var/can_view_reward = initial(domain.difficulty) < (scanner_tier + 1) && initial(domain.cost) <= points + 3
 
 		levels += list(list(
 			"cost" = initial(domain.cost),
@@ -381,7 +381,7 @@
 
 	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
 		var/init_cost = initial(available.cost)
-		if(!initial(available.test_only) && init_cost > 0 && init_cost <= points)
+		if(!initial(available.test_only) && init_cost > 0 && init_cost < 4 && init_cost <= points)
 			available_domains += list(list(
 				cost = init_cost,
 				id = initial(available.id),

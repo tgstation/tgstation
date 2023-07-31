@@ -5,9 +5,8 @@
 	difficulty = BITMINING_DIFFICULTY_NONE
 	extra_loot = list(/obj/item/stack/spacecash/c500 = 3)
 	filename = "vaporwave.dmm"
-	forced_outfit = /datum/outfit/job/clown
 	help_text = "The trials of the Honkitude have begun. The sound of bike horns wailing in the distance.\
 	this realm- some sort of puzzle, has existed in legend as the final test of just how silly you are."
 	id = "vaporwave"
 	reward_points = BITMINING_REWARD_EXTREME
-	safehouse_path = /datum/map_template/safehouse/mine
+	safehouse_path = /datum/map_template/safehouse/shuttle_space
