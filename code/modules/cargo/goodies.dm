@@ -236,6 +236,12 @@
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
 
+/datum/supply_pack/goody/telescopic_fishing_rod
+	name = "Telescopic Fishing Rod"
+	desc = "A collapsible fishing rod that can fit within a backpack."
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/fishing_rod/telescopic)
+
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug"
 	desc = "A bog standard coffee mug, for drinking coffee."

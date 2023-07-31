@@ -320,9 +320,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	switch(severity)
 		if(1)
-			Stun(160)
+			emp_knockout(16 SECONDS)
 		if(2)
-			Stun(60)
+			emp_knockout(6 SECONDS)
+
+/mob/living/silicon/robot/proc/emp_knockout(deciseconds)
+	set_stat(UNCONSCIOUS)
+	addtimer(CALLBACK(src, PROC_REF(wake_from_emp)), deciseconds, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
+
+/mob/living/silicon/robot/proc/wake_from_emp()
+	set_stat(CONSCIOUS)
+	update_stat()
 
 /mob/living/silicon/robot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -430,3 +438,12 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()
+
+/mob/living/silicon/on_hit(obj/projectile/P)
+	if(!has_movespeed_modifier(/datum/movespeed_modifier/borg_throw))
+		add_movespeed_modifier(/datum/movespeed_modifier/borg_throw)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/silicon, clear_throw_slowdown)), (P.throwforce / 10) SECONDS)
+	return ..()
+
+/mob/living/silicon/proc/clear_throw_slowdown()
+	src.remove_movespeed_modifier(/datum/movespeed_modifier/borg_throw)
