@@ -102,21 +102,6 @@
 			],
 			"group": "build",
 			"label": "tgui: rebuild tgfont"
-		},
-		{
-			"group": "none",
-			"label": "tools: update paths",
-			"type": "shell",
-			"command": "cmd.exe",
-			"args": ["/c", "tools\\UpdatePaths\\Update Paths.bat", "-tooltask"],
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"panel": "shared",
-				"clear": false,
-				"focus": true
-			},
-			"problemMatcher": []
 		}
 	]
 }
