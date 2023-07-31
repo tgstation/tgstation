@@ -426,28 +426,28 @@
 		return
 
 	if(machine_stat & BROKEN)
-		. += mutable_appearance(icon, "sensor[ICTS_LOCAL_FAULT]")
-		. += emissive_appearance(icon, "sensor[ICTS_LOCAL_FAULT]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor-[ICTS_LOCAL_FAULT]")
+		. += emissive_appearance(icon, "sensor-[ICTS_LOCAL_FAULT]", src, alpha = src.alpha)
 		return
 
 	if(machine_stat & MAINT)
-		. += mutable_appearance(icon, "sensor[ICTS_REMOTE_FAULT]")
-		. += emissive_appearance(icon, "sensor[ICTS_REMOTE_FAULT]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor-[ICTS_REMOTE_FAULT]")
+		. += emissive_appearance(icon, "sensor-[ICTS_REMOTE_FAULT]", src, alpha = src.alpha)
 		return
 
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(buddy)
 		if(!buddy.is_operational)
-			. += mutable_appearance(icon, "sensor[ICTS_REMOTE_WARNING]")
-			. += emissive_appearance(icon, "sensor[ICTS_REMOTE_WARNING]", src, alpha = src.alpha)
+			. += mutable_appearance(icon, "sensor-[ICTS_REMOTE_WARNING]")
+			. += emissive_appearance(icon, "sensor-[ICTS_REMOTE_WARNING]", src, alpha = src.alpha)
 		else
-			. += mutable_appearance(icon, "sensor[ICTS_SYSTEM_NORMAL]")
-			. += emissive_appearance(icon, "sensor[ICTS_SYSTEM_NORMAL]", src, alpha = src.alpha)
+			. += mutable_appearance(icon, "sensor-[ICTS_SYSTEM_NORMAL]")
+			. += emissive_appearance(icon, "sensor-[ICTS_SYSTEM_NORMAL]", src, alpha = src.alpha)
 			return
 
 	else
-		. += mutable_appearance(icon, "sensor[ICTS_REMOTE_FAULT]")
-		. += emissive_appearance(icon, "sensor[ICTS_REMOTE_FAULT]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor-[ICTS_REMOTE_FAULT]")
+		. += emissive_appearance(icon, "sensor-[ICTS_REMOTE_FAULT]", src, alpha = src.alpha)
 
 /obj/machinery/icts/guideway_sensor/proc/trigger_sensor()
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
