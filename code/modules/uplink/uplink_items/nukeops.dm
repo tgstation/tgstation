@@ -85,7 +85,7 @@
 // ~~ Ansem Pistol ~~
 
 /datum/uplink_item/weapon_kits/low_cost/clandestine
-	name = "Ansem Pistol Case (Easy)"
+	name = "Ansem Pistol Case (Easy/Spare)"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors. Comes with three spare magazines."
 	item = /obj/item/storage/toolbox/guncase/clandestine
