@@ -504,6 +504,7 @@
 	new /obj/item/stamp/chameleon(src)
 	new /obj/item/modular_computer/pda/chameleon(src)
 	new /obj/item/gun/energy/laser/chameleon(src)
+	new /obj/item/chameleon_scanner(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -514,6 +515,17 @@
 		new /obj/item/paperplane/syndicate(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
+
+/obj/item/storage/box/syndie_kit/throwing_weapons/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 9 // 5 + 2 + 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 18 // 5*2 + 2*1 + 3*2
+	atom_storage.set_holdable(list(
+		/obj/item/restraints/legcuffs/bola/tactical,
+		/obj/item/paperplane/syndicate,
+		/obj/item/throwing_star,
+	))
 
 /obj/item/storage/box/syndie_kit/cutouts/PopulateContents()
 	for(var/i in 1 to 3)

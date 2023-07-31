@@ -28,6 +28,8 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
+	name = "monkey"
+	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
 	regenerate_icons()
@@ -99,6 +101,8 @@
 
 	if(preference_source)
 		apply_pref_name(/datum/preference/name/ai, preference_source)
+		our_AI.apply_pref_hologram_display(preference_source)
+		our_AI.set_core_display_icon(null, preference_source)
 
 	qdel(src)
 
@@ -211,7 +215,6 @@
 
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.key = key
-	update_atom_languages()
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
@@ -375,11 +378,11 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/crab))
+	if(ispath(MP, /mob/living/basic/crab))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
+	if(ispath(MP, /mob/living/basic/mushroom))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return TRUE
@@ -387,7 +390,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/mouse))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
+	if(ispath(MP, /mob/living/basic/bear))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/parrot))
 		return TRUE //Parrots are no longer unfinished! -Nodrak

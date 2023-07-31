@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - balance: "Armour penetration calculation is now the inverse function of armour stacking."

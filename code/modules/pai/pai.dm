@@ -65,6 +65,8 @@
 	var/ram = 100
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
+	/// The current leash to the owner
+	var/datum/component/leash/leash
 
 	// Onboard Items
 	/// Atmospheric analyzer
@@ -176,7 +178,7 @@
 	return "[src] bleeps electronically."
 
 /mob/living/silicon/pai/emag_act(mob/user)
-	handle_emag(user)
+	return handle_emag(user)
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
@@ -225,12 +227,13 @@
 		var/newcardloc = pai_card
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
-	forceMove(pai_card)
 	card = pai_card
+	forceMove(pai_card)
+	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
-	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
+	update_appearance(UPDATE_DESC)
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 
@@ -258,6 +261,15 @@
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
+
+/mob/living/silicon/pai/update_desc(updates)
+	desc = "A hard-light holographic avatar representing a pAI. This one appears in the form of a [chassis]."
+	return ..()
+
+/mob/living/silicon/pai/update_icon_state()
+	icon_state = resting ? "[chassis]_rest" : "[chassis]"
+	held_state = "[chassis]"
+	return ..()
 
 /**
  * Resolves the weakref of the pai's master.
@@ -434,3 +446,10 @@
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
 	return STOP_SACRIFICE
+
+/// Updates the distance we can be from our pai card
+/mob/living/silicon/pai/proc/increment_range(increment_amount)
+	var/new_distance = leash.distance + increment_amount
+	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
+		return
+	leash.set_distance(new_distance)

@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			roles.mafia_alert.update_text("[message]")
 		roles.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
-	next_phase_timer = QDEL_IN(src, VICTORY_LAP_PERIOD_LENGTH)
+	next_phase_timer = QDEL_IN_STOPPABLE(src, VICTORY_LAP_PERIOD_LENGTH)
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
@@ -414,7 +414,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * close: boolean, the state you want the curtains in.
  */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
-	for(var/obj/machinery/door/poddoor/D in GLOB.airlocks) //I really dislike pathing of these
+	for(var/obj/machinery/door/poddoor/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)
@@ -1045,7 +1045,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	return ..()
 
 /atom/movable/screen/mafia_popup/proc/update_text(text)
-	maptext = MAPTEXT("<b style='color: [COLOR_RED]; text-align: center; font-size: 32px'> [text]</b>")
+	maptext = MAPTEXT("<span style='color: [COLOR_RED]; text-align: center; font-size: 24pt'> [text]</span>")
 	maptext_width = view_to_pixels(owner.body.client?.view_size.getView())[1]
 	owner.body.client?.screen += src
 	addtimer(CALLBACK(src, PROC_REF(null_text), owner.body.client), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)

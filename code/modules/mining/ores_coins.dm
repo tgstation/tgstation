@@ -50,7 +50,7 @@
 	if(!refined_type)
 		return TRUE
 
-	if(I.use_tool(src, user, 0, volume=50, amount=15))
+	if(I.use_tool(src, user, 0, volume=50))
 		new refined_type(drop_location())
 		use(1)
 
@@ -111,6 +111,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, check_density = FALSE, category = CAT_MISC),\
 		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, check_density = FALSE, category = CAT_TILES)\
 ))
+
+/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	AddComponent(/datum/component/storm_hating)
 
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
@@ -245,13 +249,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/gibtonite/Destroy()
 	qdel(wires)
-	wires = null
+	set_wires(null)
 	return ..()
 
 /obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && isigniter(I))
 		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
-		wires = new /datum/wires/explosive/gibtonite(src)
+		set_wires(new /datum/wires/explosive/gibtonite(src))
 		attacher = key_name(user)
 		qdel(I)
 		add_overlay("Gibtonite_igniter")

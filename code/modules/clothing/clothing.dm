@@ -291,7 +291,7 @@
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
-		. += span_warning("<b>[p_theyre(TRUE)] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
+		. += span_warning("<b>[p_Theyre()] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
 		return
 
 	switch (max_heat_protection_temperature)
@@ -534,3 +534,11 @@ BLIND     // can't see anything
 		to_chat(L, span_warning("The damaged threads on your [src.name] chafe!"))
 
 #undef MOTH_EATING_CLOTHING_DAMAGE
+
+/obj/item/clothing/apply_fantasy_bonuses(bonus)
+	. = ..()
+	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = bonus)))
+
+/obj/item/clothing/remove_fantasy_bonuses(bonus)
+	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
+	return ..()

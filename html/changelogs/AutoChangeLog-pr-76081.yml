@@ -1,4 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - rscdel: "Positronic brains no longer check for suicide verb use."

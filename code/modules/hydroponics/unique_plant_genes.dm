@@ -181,7 +181,10 @@
 	. = ..()
 	if(!.)
 		return
-
+	if(genes_to_check)
+		genes_to_check = string_list(genes_to_check)
+	if(traits_to_check)
+		traits_to_check = string_list(traits_to_check)
 	our_plant.AddElement(/datum/element/plant_backfire, cancel_action_on_backfire, traits_to_check, genes_to_check)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, PROC_REF(on_backfire))
 
@@ -462,7 +465,7 @@
 
 /// Walking Mushroom's transformation gene
 /datum/plant_gene/trait/mob_transformation/shroom
-	killer_plant = /mob/living/simple_animal/hostile/mushroom
+	killer_plant = /mob/living/basic/mushroom
 	mob_health_multiplier = 0.25
 	mob_melee_multiplier = 0.05
 	mob_speed_multiplier = 0.02

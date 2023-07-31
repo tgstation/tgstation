@@ -102,3 +102,13 @@
 #define SHUTTLE_UNLOCK_WABBAJACK "wabbajack"
 // Needs cargo budget to be almost empty to be purchasable.
 #define SHUTTLE_UNLOCK_SCRAPHEAP "scrapheap"
+
+//Shuttle Events
+
+///Self destruct if this is returned in process
+#define SHUTTLE_EVENT_CLEAR 2
+
+///spawned stuff should float by the window and not hit the shuttle
+#define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
+///spawned stuff should hit the shuttle
+#define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1

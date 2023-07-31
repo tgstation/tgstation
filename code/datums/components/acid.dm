@@ -21,6 +21,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/stage = 0
 	/// Acid overlay appearance we apply
 	var/acid_overlay
+	/// Boolean for if we ignore mobs when applying acid to turf contents
+	var/turf_acid_ignores_mobs = FALSE
 	/// The ambient sound of acid eating away at the parent [/atom].
 	var/datum/looping_sound/acid/sizzle
 	/// Particle holder for acid particles (sick)
@@ -28,7 +30,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
-/datum/component/acid/Initialize(acid_power = ACID_POWER_MELT_TURF, acid_volume = 50, acid_overlay = GLOB.acid_overlay, acid_particles = /particles/acid)
+/datum/component/acid/Initialize(acid_power = ACID_POWER_MELT_TURF, acid_volume = 50, acid_overlay = GLOB.acid_overlay, acid_particles = /particles/acid, turf_acid_ignores_mobs = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -48,6 +50,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		src.max_volume = MOB_ACID_VOLUME_MAX
 		src.process_effect = CALLBACK(src, PROC_REF(process_mob), parent)
 	else if(isturf(parent))
+		src.turf_acid_ignores_mobs = turf_acid_ignores_mobs
 		src.max_volume = TURF_ACID_VOLUME_MAX
 		src.process_effect = CALLBACK(src, PROC_REF(process_turf), parent)
 	//if we failed all other checks, we must be an /atom/movable that uses integrity
@@ -146,6 +149,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/acid_used = min(acid_volume * 0.05, 20) * seconds_per_tick
 	var/applied_targets = 0
 	for(var/atom/movable/target_movable as anything in target_turf)
+		// Dont apply acid to things under the turf
+		if(target_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(target_movable, TRAIT_T_RAY_VISIBLE))
+			continue
+		// Ignore mobs if turf_acid_ignores_mobs is TRUE
+		if(turf_acid_ignores_mobs && ismob(target_movable))
+			continue
+		// Apply the acid
 		if(target_movable.acid_act(acid_power, acid_used))
 			applied_targets++
 
@@ -157,6 +167,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	// Snowflake code for handling acid melting walls.
 	// We really should consider making turfs use atom_integrity, but for now this is just for acids.
+
+	//Strong walls will never get melted
+	if(target_turf.get_explosive_block() >= 2)
+		return
+	//Reinforced floors never get melted
+	if(istype(target_turf, /turf/open/floor/engine))
+		return
 	if(acid_power < ACID_POWER_MELT_TURF)
 		return
 
@@ -188,7 +205,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_danger("[source.p_theyre(TRUE)] covered in a corrosive liquid!")
+	examine_list += span_danger("[source.p_Theyre()] covered in a corrosive liquid!")
 
 /// Makes it possible to clean acid off of objects.
 /datum/component/acid/proc/on_clean(atom/source, clean_types)
@@ -233,6 +250,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
+	if(turf_acid_ignores_mobs)
+		return
 	if(!isliving(arrived))
 		return
 	var/mob/living/crosser = arrived
