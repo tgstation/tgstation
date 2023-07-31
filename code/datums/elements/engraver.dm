@@ -48,7 +48,7 @@
 	if(!user.Adjacent(target))
 		return
 	item.add_fingerprint(user)
-	playsound(item, pick(item.usesound), 30, TRUE, -1)
+	playsound(item, 'sound/effects/break_stone.ogg', 30, TRUE, -1)
 	user.do_attack_animation(target)
 	user.balloon_alert(user, "engraving...")
 	if(!do_after(user, 5 SECONDS, target = target))
