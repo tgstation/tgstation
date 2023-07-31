@@ -174,7 +174,8 @@
 	else
 		say("Bounty Target Located. Bounty ID: [bounty.name]. Location: [get_area_name(bounty)]")
 
-	COOLDOWN_START(src, locate_cooldown, 20 SECONDS)
+	//Since the target list doesn't shuffle, this always reports the same fugitive until they're dead/captured. We want to avoid being able to report a constant location so the delay is kind of long.
+	COOLDOWN_START(src, locate_cooldown, 40 SECONDS)
 
 ///Locates a random fugitive via their antag datum and returns them.
 /obj/machinery/fugitive_locator/proc/locate_fugitive()
