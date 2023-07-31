@@ -43,8 +43,8 @@
 	* Red: decent chance of getting hit, but if you're quick it's a decent gamble.
 	* Amber: slow people may be in danger.
 	*/
-	var/amber_distance_threshold = XING_DISTANCE_AMBER
-	var/red_distance_threshold = XING_DISTANCE_RED
+	var/amber_distance_threshold = AMBER_THRESHOLD_NORMAL
+	var/red_distance_threshold = RED_THRESHOLD_NORMAL
 
 
 /** Crossing signal subtypes
@@ -125,14 +125,10 @@
 /obj/machinery/icts/crossing_signal/proc/start_event_malfunction()
 	if(operating_status == ICTS_SYSTEM_NORMAL)
 		operating_status = ICTS_REMOTE_FAULT
-		amber_distance_threshold = XING_DISTANCE_AMBER * 0.5
-		red_distance_threshold = XING_DISTANCE_RED * 0.5
 
 /obj/machinery/icts/crossing_signal/proc/end_event_malfunction()
 	if(operating_status == ICTS_REMOTE_FAULT)
-		operating_status = FALSE
-		amber_distance_threshold = XING_DISTANCE_AMBER
-		red_distance_threshold = XING_DISTANCE_RED
+		operating_status = ICTS_SYSTEM_NORMAL
 
 /**
  * Finds the tram, just like the tram computer
@@ -156,19 +152,32 @@
 	linked_sensor = null
 	if(operating_status < ICTS_REMOTE_WARNING)
 		operating_status = ICTS_REMOTE_WARNING
+		degraded_response()
 
 /obj/machinery/icts/crossing_signal/proc/wake_sensor()
 	if(operating_status > ICTS_REMOTE_WARNING)
+		degraded_response()
 		return
 
 	if(!linked_sensor)
 		operating_status = ICTS_REMOTE_WARNING
+		degraded_response()
 
 	else if(linked_sensor.trigger_sensor())
 		operating_status = ICTS_SYSTEM_NORMAL
+		normal_response()
 
 	else
 		operating_status = ICTS_REMOTE_WARNING
+		degraded_response()
+
+/obj/machinery/icts/crossing_signal/proc/normal_response()
+	amber_distance_threshold = AMBER_THRESHOLD_NORMAL
+	red_distance_threshold = RED_THRESHOLD_NORMAL
+
+/obj/machinery/icts/crossing_signal/proc/degraded_response()
+	amber_distance_threshold = AMBER_THRESHOLD_DEGRADED
+	red_distance_threshold = RED_THRESHOLD_DEGRADED
 
 /**
  * Only process if the tram is actually moving
@@ -176,9 +185,14 @@
 /obj/machinery/icts/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
 	SIGNAL_HANDLER
 
+	if(prob(5))
+		local_fault()
+		return
+
 	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
 	if(operating_status <= ICTS_REMOTE_FAULT)
 		operating_status = ICTS_REMOTE_FAULT
+
 		if(!(tram.controller_status & COMM_ERROR))
 			operating_status = ICTS_SYSTEM_NORMAL
 
@@ -253,7 +267,7 @@
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + (XING_DEFAULT_TRAM_LENGTH * 0.5)))
+	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
 
 	// Check for stopped state.
 	// Will kill the process since tram starting up will restart process.
@@ -354,7 +368,9 @@
 		return
 
 	. += mutable_appearance(icon, "crossing-0")
+	. += mutable_appearance(icon, "status-0")
 	. += emissive_appearance(icon, "crossing-0", offset_spokesman = src, alpha = src.alpha)
+	. += emissive_appearance(icon, "status-0", offset_spokesman = src, alpha = src.alpha)
 
 /obj/machinery/icts/guideway_sensor
 	name = "guideway sensor"
@@ -460,8 +476,8 @@
 	return TRUE
 
 /obj/machinery/icts/guideway_sensor/proc/wake_up()
-	if(prob(1))
-		sensor_fault()
+	if(prob(0.01))
+		local_fault()
 
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
 
@@ -470,20 +486,11 @@
 
 	update_appearance()
 
-/obj/machinery/icts/guideway_sensor/proc/sensor_fault()
-	generate_repair_signals()
-	set_machine_stat(machine_stat | BROKEN)
-	set_is_operational(FALSE)
-
-/obj/machinery/icts/try_fix_machine()
-	. = ..()
-
-	set_machine_stat(machine_stat & ~BROKEN)
-	update_appearance()
-
 /obj/machinery/icts/guideway_sensor/on_set_is_operational()
 	. = ..()
 
+	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
+	buddy.update_appearance()
 	update_appearance()
 
 /obj/machinery/icts/crossing_signal/proc/return_closest_sensor(obj/machinery/icts/crossing_signal/comparison, allow_multiple_answers = FALSE)
@@ -507,7 +514,7 @@
 			winner = sensor_to_sort
 			winner_distance = sensor_distance
 
-	if(winner_distance <= XING_DEFAULT_TRAM_LENGTH)
+	if(winner_distance <= DEFAULT_TRAM_LENGTH)
 		return winner
 
 	return FALSE

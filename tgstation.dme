@@ -229,7 +229,6 @@
 #include "code\__DEFINES\tools.dm"
 #include "code\__DEFINES\toys.dm"
 #include "code\__DEFINES\traits.dm"
-#include "code\__DEFINES\tram.dm"
 #include "code\__DEFINES\tts.dm"
 #include "code\__DEFINES\turbine_defines.dm"
 #include "code\__DEFINES\turfs.dm"

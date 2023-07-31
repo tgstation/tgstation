@@ -72,7 +72,7 @@
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + (XING_DEFAULT_TRAM_LENGTH * 0.5)))
+	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
 
 	// Check if our victim is in the active path of the tram.
 	if(!tram.controller_active)
@@ -87,7 +87,7 @@
 		return FALSE
 	if(tram.travel_direction & EAST && outbound > tram.idle_platform.platform_code)
 		return FALSE
-	if(approach_distance >= XING_DISTANCE_AMBER)
+	if(approach_distance >= AMBER_THRESHOLD_NORMAL)
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!

@@ -126,7 +126,7 @@
 		return
 	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
 	add_fingerprint(user)
-	if(tram_part.travel_distance < XING_DEFAULT_TRAM_LENGTH || tram_part.travel_distance > tram_part.travel_trip_length - XING_DEFAULT_TRAM_LENGTH)
+	if(tram_part.travel_distance < DEFAULT_TRAM_LENGTH || tram_part.travel_distance > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH)
 		return // we're already animating, don't reset that
 	cycle_doors(OPEN_DOORS, TRUE) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 	return

@@ -12,6 +12,12 @@
 		"cut some excess wires" = TOOL_WIRECUTTER,
 	)
 
+/obj/machinery/icts/proc/local_fault()
+	generate_repair_signals()
+	set_machine_stat(machine_stat | BROKEN)
+	set_is_operational(FALSE)
+	update_appearance()
+
 /**
  * All ICTS subtypes have the same method of repair for consistency and predictability
  * The key of this assoc list is the "method" of how they're fixing the thing (just flavor for examine),
@@ -69,3 +75,5 @@
 	machine.balloon_alert(user, "success!")
 	QDEL_LAZYLIST(repair_signals)
 	QDEL_LAZYLIST(methods_to_fix)
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
