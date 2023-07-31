@@ -1,7 +1,6 @@
 /datum/status_effect/static_vision
 	id = "static_vision"
 
-
 /datum/status_effect/static_vision/on_creation(mob/living/new_owner, duration = 3 SECONDS)
 	src.duration = duration
 	return ..()

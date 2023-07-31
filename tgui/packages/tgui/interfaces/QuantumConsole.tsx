@@ -4,6 +4,7 @@ import { Button, Collapsible, Icon, NoticeBox, ProgressBar, Section, Stack, Tabl
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 import { TableCell, TableRow } from '../components/Table';
+import { shuffleByProp } from 'common/array';
 
 type Data =
   | {
@@ -102,7 +103,7 @@ const AccessView = (props, context) => {
     points,
   } = data;
 
-  const sorted = available_domains.sort((a, b) => a.cost - b.cost);
+  const sorted = shuffleByProp(available_domains, 'cost');
 
   return (
     <Stack fill vertical>

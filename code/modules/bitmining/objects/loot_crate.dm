@@ -40,9 +40,11 @@
 /obj/structure/closet/crate/secure/bitminer_loot/decrypted/PopulateContents(reward_points, list/extra_loot, rewards_multiplier)
 	. = ..()
 	for(var/path in extra_loot)
-		if(ispath(path))
-			for(var/i in 1 to extra_loot[path])
-				new path(src)
+		if(!ispath(path))
+			continue
+
+		for(var/i in 1 to extra_loot[path])
+			new path(src)
 
 	new /obj/item/stack/ore/iron(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_IRON))
 	new /obj/item/stack/ore/glass(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_GLASS))

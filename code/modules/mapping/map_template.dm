@@ -27,10 +27,6 @@
 	var/turf/ceiling_turf = /turf/open/floor/plating
 	///What baseturfs to set when replacing openspace when has_ceiling is true
 	var/list/ceiling_baseturfs = list()
-	///special locs that can mess with derez'ing spawned objects
-	var/list/special_locs = list(
-		/obj/item/clothing/head/mob_holder,
-	)
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -247,26 +243,3 @@
 		return FALSE
 	template.load_new_z(secret)
 	return TRUE
-
-/// Despawns all spawned items inside the template. Returns_spawned_atoms must be set to TRUE
-/datum/map_template/proc/clear_atoms()
-	for(var/spawned_atom in created_atoms)
-		derez(spawned_atom)
-
-/// Despawns an atom inside the template.
-/datum/map_template/proc/derez(atom/movable/deleting_atom)
-	created_atoms -= deleting_atom
-	if(!deleting_atom)
-		return
-	UnregisterSignal(deleting_atom, COMSIG_QDELETING)
-	var/turf/target_turf = get_turf(deleting_atom)
-	for(var/atom/movable/atom_contents as anything in deleting_atom) //make sure that things inside of a holoitem are moved outside before destroying it
-		atom_contents.forceMove(target_turf)
-
-	if(istype(deleting_atom, /obj/item/clothing/under/rank))
-		var/obj/item/clothing/under/holo_clothing = deleting_atom
-		holo_clothing.dump_attachments()
-
-	if(is_type_in_list(deleting_atom.loc, special_locs))
-		qdel(deleting_atom.loc)
-	qdel(deleting_atom)

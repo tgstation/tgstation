@@ -23,14 +23,18 @@ const shuffle = <T>(array: T[]): T[] => {
   return array;
 };
 
-// Main function
+/**
+ * ### shuffleByProp
+ * Sorts elements by a property, then shuffles each group
+ * Used to make pseudo-random lists, while keeping them grouped by a property
+ */
 export const shuffleByProp = <T extends Record<string, any>>(
   arr: T[],
   prop: string
 ): any[] => {
   let grouped: { [key: number]: any[] } = {};
 
-  // Group elements by difficulty
+  // Group elements by prop
   arr.forEach((element) => {
     if (!propInObject(prop, element)) {
       return [];

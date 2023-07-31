@@ -929,7 +929,7 @@
 	player_mind.add_antag_datum(/datum/antagonist/cyber_police)
 
 	playsound(new_agent, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(new_agent)] has been made into a Cyber Police by the midround ruleset.")
+	message_admins("[ADMIN_LOOKUPFLW(new_agent)] has been made into Cyber Police by the midround ruleset.")
 	log_dynamic("[key_name(new_agent)] was spawned as a Cyber Police by the midround ruleset.")
 
 	return new_agent
