@@ -1,3 +1,6 @@
+/**
+ * Element gave to basic creatures to allow them to change appearance when find a target
+ */
 /datum/element/appearance_on_aggro
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
