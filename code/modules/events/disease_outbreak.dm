@@ -179,8 +179,10 @@
 			event.requested_severity = ADV_DISEASE_HARMFUL
 		if("Dangerous")
 			event.requested_severity = ADV_DISEASE_DANGEROUS
-		else
+		if("Random")
 			event.requested_severity = null
+		else
+			return ADMIN_CANCEL_EVENT
 
 /datum/event_admin_setup/listed_options/disease_outbreak_advanced/transmissibility
 	input_text = "Pick a transmissibility!"
@@ -197,8 +199,10 @@
 			event.requested_transmissibility = ADV_SPREAD_FORCED_MID
 		if("Airborne")
 			event.requested_transmissibility = ADV_SPREAD_FORCED_HIGH
-		else
+		if("Random")
 			event.requested_transmissibility = null
+		else
+			return ADMIN_CANCEL_EVENT
 
 /datum/event_admin_setup/input_number/disease_outbreak_advanced
 	input_text = "How many symptoms do you want your virus to have?"
@@ -215,7 +219,6 @@
 			chosen_value = null
 		else
 			return ADMIN_CANCEL_EVENT
-
 
 /datum/event_admin_setup/input_number/disease_outbreak_advanced/apply_to_event(datum/round_event/disease_outbreak/advanced/event)
 	event.max_symptoms = chosen_value
