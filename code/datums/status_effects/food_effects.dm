@@ -35,32 +35,6 @@
 /atom/movable/screen/alert/status_effect/food/buff_5
 	icon_state = "food_buff_5"
 
-/// Haste makes the eater move faster
-/datum/status_effect/food/haste
-	alert_type = /atom/movable/screen/alert/status_effect/food_haste
-	var/datum/movespeed_modifier/food_haste/modifier
-
-/datum/status_effect/food/haste/on_apply()
-	modifier = new()
-	modifier.multiplicative_slowdown = -0.04 * strength
-	owner.add_movespeed_modifier(modifier, update = TRUE)
-	return ..()
-
-/datum/status_effect/food/haste/be_replaced()
-	owner.remove_movespeed_modifier(modifier, update = TRUE)
-	return ..()
-
-/datum/status_effect/food/haste/on_remove()
-	owner.remove_movespeed_modifier(modifier, update = TRUE)
-	return ..()
-
-/datum/movespeed_modifier/food_haste
-	multiplicative_slowdown = -0.1
-
-/atom/movable/screen/alert/status_effect/food_haste
-	name = "Energetic meal"
-	desc = "That meal makes me pumped up with energy!"
-
 /// Makes you gain a trait
 /datum/status_effect/food/trait
 	var/trait = TRAIT_DUMB // You need to override this
@@ -76,11 +50,3 @@
 /datum/status_effect/food/trait/on_remove()
 	REMOVE_TRAIT(owner, trait, type)
 	return ..()
-
-/datum/status_effect/food/trait/shockimmune
-	alert_type = /atom/movable/screen/alert/status_effect/food_trait_shockimmune
-	trait = TRAIT_SHOCKIMMUNE
-
-/atom/movable/screen/alert/status_effect/food_trait_shockimmune
-	name = "Grounded"
-	desc = "That meal made me feel like a superconductor..."

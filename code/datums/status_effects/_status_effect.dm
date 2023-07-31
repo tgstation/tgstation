@@ -19,7 +19,7 @@
 	var/on_remove_on_mob_delete = FALSE
 	/// The typepath to the alert thrown by the status effect when created.
 	/// Status effect "name"s and "description"s are shown to the owner here.
-	var/alert_type = /atom/movable/screen/alert/status_effect
+	var/atom/alert_type = /atom/movable/screen/alert/status_effect
 	/// The alert itself, created in [proc/on_creation] (if alert_type is specified).
 	var/atom/movable/screen/alert/status_effect/linked_alert
 	/// Used to define if the status effect should be using SSfastprocess or SSprocessing
