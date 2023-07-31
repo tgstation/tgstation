@@ -165,7 +165,7 @@
 	COOLDOWN_DECLARE(locate_cooldown)
 
 /obj/machinery/fugitive_locator/interact(mob/user)
-	if(COOLDOWN_FINISHED(src, locate_cooldown))
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
 		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
 		return
 	var/mob/living/bounty = locate_fugitive()
@@ -178,8 +178,14 @@
 
 ///Locates a random fugitive via their antag datum and returns them.
 /obj/machinery/fugitive_locator/proc/locate_fugitive()
-	for(var/datum/antagonist/fugitive/found_fugitive in GLOB.antagonists)
-		if(!found_fugitive.owner)
+	for(var/datum/antagonist/fugitive/fugitive_datum in GLOB.antagonists)
+		if(!fugitive_datum.owner)
 			stack_trace("Fugitive locator tried to locate a fugitive antag datum with no owner.")
 			continue
-		return found_fugitive.owner
+		if(fugitive_datum.is_captured)
+			continue
+		var/mob/living/found_fugitive = fugitive_datum.owner.current
+		if(found_fugitive.stat == DEAD)
+			continue
+
+		return found_fugitive
