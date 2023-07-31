@@ -1,10 +1,10 @@
 /obj/machinery/netpod
 	name = "net pod"
 
+	base_icon_state = "netpod"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
 	icon = 'icons/obj/machines/bitmining.dmi'
-	base_icon_state = "netpod"
 	icon_state = "netpod"
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
@@ -97,8 +97,9 @@
 		return TRUE
 
 	state_open = FALSE
+	playsound(src, 'sound/machines/tramclose.ogg', 50, TRUE, frequency = 25000)
 	flick("[base_icon_state]_closing", src)
-	set_density(TRUE)
+
 	update_appearance()
 	return TRUE
 
@@ -121,12 +122,12 @@
 
 /obj/machinery/netpod/container_resist_act(mob/living/user)
 	user.visible_message(span_notice("[occupant] emerges from [src]!"),
-		span_notice("You climb out of [src]!"))
+		span_notice("You climb out of [src]!"),
+		span_notice("With a hiss, you hear the sound of a machine opening."))
 	open_machine()
 
 /obj/machinery/netpod/Exited(atom/movable/gone, direction)
 	. = ..()
-	unprotect_occupant(occupant)
 	if(!state_open && gone == occupant)
 		container_resist_act(gone)
 
@@ -137,6 +138,7 @@
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		on_opened_or_destroyed()
+		playsound(src, 'sound/machines/tramopen.ogg', 50, TRUE, frequency = 25000)
 		flick("[base_icon_state]_opening", src)
 	return ..()
 
@@ -371,6 +373,7 @@
 /obj/machinery/netpod/proc/protect_occupant(mob/living/target)
 	if(target != occupant)
 		return
+
 	playsound(src, 'sound/effects/spray.ogg', 15, TRUE)
 	target.apply_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
 	target.extinguish_mob()
@@ -386,13 +389,3 @@
 	var/path = text2path(text)
 	if(ispath(path, /datum/outfit) && locate(path) in subtypesof(/datum/outfit))
 		return path
-
-/datum/status_effect/grouped/embryonic
-	id = "embryonic"
-	duration = -1
-	alert_type = /atom/movable/screen/alert/status_effect/embryonic
-
-/atom/movable/screen/alert/status_effect/embryonic
-	name = "Embryonic Stasis"
-	icon_state = "netpod_stasis"
-	desc = "You feel like you're in a dream."

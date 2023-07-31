@@ -7,6 +7,9 @@
 /// from /obj/machinery/netpod/default_pry_open() : (mob/living/intruder)
 #define COMSIG_BITMINING_CROWBAR_ALERT "bitmining_crowbar"
 
+/// from /obj/effect/spawner/bitminer_loot() : (points)
+#define COMSIG_BITMINING_GOAL_POINT "bitmining_goal_point"
+
 /// from /obj/machinery/quantum_server/on_exit_turf_entered(): (atom/entered)
 #define COMSIG_BITMINING_DOMAIN_COMPLETE "bitmining_complete"
 

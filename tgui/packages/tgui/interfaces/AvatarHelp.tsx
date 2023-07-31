@@ -17,7 +17,7 @@ const boxHelp = [
   },
   {
     color: 'green',
-    text: 'Bring the crate to the designated sending location in the safehouse. The area can manifest as many things: A carpet, circuit tiles, or glowing floors.',
+    text: 'Bring the crate to the designated sending location in the safehouse. The area can manifest as many things: A carpet, circuit tiles, glowing floors, and more. Examine the safehouse to find it.',
     icon: 'boxes',
     'title': 'Recover',
   },
@@ -29,9 +29,9 @@ const boxHelp = [
   },
   {
     color: 'yellow',
-    text: 'When triggered, the proximity alert system offers a safe method to disconnect. You can activate it, but be aware that domains cannot be paused.',
+    text: 'Net pods have limited security measures. You are somewhat safe from environmental hazards and intrusions, but not completely.',
     icon: 'id-badge',
-    title: 'Proximity Alert',
+    title: 'Security',
   },
   {
     color: 'gold',

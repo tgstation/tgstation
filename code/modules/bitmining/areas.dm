@@ -14,6 +14,10 @@
 	has_gravity = STANDARD_GRAVITY
 	static_lighting = TRUE
 
+/area/station/virtual_domain/powered
+	icon_state = "bit_ruin"
+	requires_power = FALSE
+
 /area/station/virtual_domain/bottom_left
 	icon_state = "bit_gen_map"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA

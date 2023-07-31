@@ -5,6 +5,10 @@
 "j" = (
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
+"l" = (
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
 "p" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/green,
@@ -29,17 +33,20 @@
 /area/station/virtual_domain/safehouse/send)
 "K" = (
 /obj/effect/spawner/structure/window,
-/turf/open/indestructible/hotelwood,
+/turf/open/floor/plating,
 /area/station/virtual_domain/safehouse)
 "L" = (
 /obj/machinery/door/airlock/wood/glass,
-/turf/open/floor/wood,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/station/virtual_domain/safehouse)
 "O" = (
 /turf/closed/wall/mineral/wood,
 /area/station/virtual_domain/safehouse)
 "V" = (
 /obj/machinery/light/small/directional/east,
+/obj/structure/table/wood,
+/obj/item/newspaper,
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
 
@@ -61,7 +68,7 @@ K
 "}
 (3,1,1) = {"
 O
-j
+l
 j
 j
 a

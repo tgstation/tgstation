@@ -8,7 +8,7 @@
 "u" = (/obj/effect/turf_decal/siding/yellow{dir = 8},/obj/effect/turf_decal/siding/yellow,/obj/effect/decal/cleanable/oil/streak,/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
 "v" = (/obj/effect/turf_decal/siding/yellow{dir = 8},/obj/effect/decal/remains/xeno/larva,/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
 "x" = (/turf/closed/mineral/asteroid,/area/template_noop)
-"z" = (/obj/effect/turf_decal/sand/plating,/obj/machinery/door/airlock/maintenance/glass,/turf/open/floor/plating,/area/station/virtual_domain/safehouse)
+"z" = (/obj/machinery/door/airlock/maintenance/glass,/obj/structure/fans/tiny,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating,/area/station/virtual_domain/safehouse)
 "B" = (/turf/closed/mineral/asteroid,/area/station/virtual_domain/safehouse)
 "E" = (/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse/exit)
 "K" = (/turf/closed/wall/rock,/area/station/virtual_domain/safehouse)

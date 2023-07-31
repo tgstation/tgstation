@@ -11,7 +11,7 @@
 "A" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "B" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/effect/turf_decal/stripes/line,/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "D" = (/obj/effect/turf_decal/stripes/end,/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
-"E" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/door/airlock/shuttle/glass,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/sand/volcanic,/turf/open/floor/iron/white,/area/station/virtual_domain/safehouse)
+"E" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/door/airlock/shuttle/glass,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/sand/volcanic,/obj/structure/fans/tiny,/turf/open/floor/iron/white,/area/station/virtual_domain/safehouse)
 "F" = (/obj/effect/turf_decal/tile/neutral/half/contrasted,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/light/small/directional/north,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "G" = (/obj/effect/turf_decal/tile/neutral/half/contrasted,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/light/small/directional/north,/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "I" = (/obj/effect/turf_decal/stripes/end{dir = 1},/obj/effect/turf_decal/sand/volcanic,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)

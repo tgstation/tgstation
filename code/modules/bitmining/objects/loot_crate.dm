@@ -15,7 +15,7 @@
 /// The virtual domain - side of the bitmining crate. Deliver to the send location.
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted
 	name = "encrypted loot crate"
-	desc = "Needs delivered back station side to be opened."
+	desc = "Needs decrypted at the safehouse to be opened."
 	locked = TRUE
 
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
@@ -58,6 +58,42 @@
 		new /obj/item/stack/ore/uranium(src, ROUND_UP(sum * ORE_MULTIPLIER_URANIUM))
 		new /obj/item/stack/ore/diamond(src, ROUND_UP(sum * ORE_MULTIPLIER_DIAMOND))
 		new /obj/item/stack/ore/bluespace_crystal(src, ROUND_UP(sum * ORE_MULTIPLIER_BLUESPACE_CRYSTAL))
+
+/// In case you want to gate the crate behind a special condition.
+/obj/effect/bitminer_loot_signal
+	name = "Mysterious aura"
+	/// The amount required to spawn a crate
+	var/points_goal = 10
+	/// A special condition limits this from spawning a crate
+	var/points_received = 0
+	/// Finished the special condition
+	var/revealed = FALSE
+
+/obj/effect/bitminer_loot_signal/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_BITMINING_GOAL_POINT, PROC_REF(on_add_point))
+
+/obj/effect/bitminer_loot_signal/proc/on_add_point(datum/source, points_to_add)
+	SIGNAL_HANDLER
+
+	if(revealed)
+		return
+
+	points_received += points_to_add
+
+	if(points_received < points_goal)
+		return
+
+	reveal()
+
+/obj/effect/bitminer_loot_signal/proc/reveal()
+	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+	var/turf/tile = get_turf(src)
+	var/obj/structure/closet/crate/secure/bitminer_loot/encrypted/loot = new(tile)
+	var/datum/effect_system/spark_spread/quantum/sparks = new(tile)
+	sparks.set_up(5, 1, get_turf(loot))
+	sparks.start()
+	qdel(src)
 
 #undef ORE_MULTIPLIER_IRON
 #undef ORE_MULTIPLIER_GLASS

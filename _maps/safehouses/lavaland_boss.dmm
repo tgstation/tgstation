@@ -105,6 +105,7 @@
 	name = "Mining External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/virtual_domain/safehouse)
 "K" = (
