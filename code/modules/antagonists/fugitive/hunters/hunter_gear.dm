@@ -172,14 +172,14 @@
 	if(!bounty)
 		say("No bounty targets detected.")
 	else
-		say("Bounty Target Located. Bounty ID: [bounty.name]. Location: [get_area_name(bounty)]")
+		say("Bounty Target Located. Bounty ID: [bounty.real_name]. Location: [get_area_name(bounty)]")
 
-	//Since the target list doesn't shuffle, this always reports the same fugitive until they're dead/captured. We want to avoid being able to report a constant location so the delay is kind of long.
 	COOLDOWN_START(src, locate_cooldown, 40 SECONDS)
 
 ///Locates a random fugitive via their antag datum and returns them.
 /obj/machinery/fugitive_locator/proc/locate_fugitive()
-	for(var/datum/antagonist/fugitive/fugitive_datum in GLOB.antagonists)
+	var/list/datum_list = shuffle(GLOB.antagonists)
+	for(var/datum/antagonist/fugitive/fugitive_datum in datum_list)
 		if(!fugitive_datum.owner)
 			stack_trace("Fugitive locator tried to locate a fugitive antag datum with no owner.")
 			continue
