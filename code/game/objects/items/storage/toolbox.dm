@@ -313,24 +313,107 @@
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = SMALL_MATERIAL_AMOUNT*5)
 
-/obj/item/storage/toolbox/mosincase
-	name = "ancient gun case"
-	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
+/obj/item/storage/toolbox/guncase
+	name = "gun case"
+	desc = "A weapon's case. Has a blood-red 'S' stamped on the cover."
 	icon = 'icons/obj/storage/case.dmi'
-	icon_state = "mosin_case"
+	icon_state = "infiltrator_case"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	inhand_icon_state = "mosin_case"
+	inhand_icon_state = "infiltrator_case"
 	has_latches = FALSE
+	var/gun_to_spawn = /obj/item/gun/ballistic/automatic/pistol
+	var/ammo_to_spawn = /obj/item/ammo_box/magazine/m9mm
 
-/obj/item/storage/toolbox/mosincase/Initialize(mapload)
+/obj/item/storage/toolbox/guncase/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.max_total_storage = 7 //enough to hold ONE mosin and the ammo boxes
+	atom_storage.max_total_storage = 7 //enough to hold ONE bulky gun and the ammo boxes
 	atom_storage.max_slots = 4
 
-/obj/item/storage/toolbox/mosincase/PopulateContents()
-	new /obj/effect/spawner/random/mosin (src)
+/obj/item/storage/toolbox/guncase/PopulateContents()
+	new gun_to_spawn (src)
 	for(var/i in 1 to 3)
-		new /obj/effect/spawner/random/mosin/ammo (src)
+		new ammo_to_spawn (src)
 
+/obj/item/storage/toolbox/guncase/bulldog
+	name = "bulldog gun case"
+	gun_to_spawn = /obj/item/gun/ballistic/shotgun/bulldog
+	ammo_to_spawn = /obj/item/ammo_box/magazine/m12g
+
+/obj/item/storage/toolbox/guncase/c20r
+	name = "c-20r gun case"
+	gun_to_spawn = /obj/item/gun/ballistic/automatic/c20r
+	ammo_to_spawn = /obj/item/ammo_box/magazine/smgm45
+
+/obj/item/storage/toolbox/guncase/clandestine
+	name = "clandestine gun case"
+	gun_to_spawn = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	ammo_to_spawn = /obj/item/ammo_box/magazine/m10mm
+
+/obj/item/storage/toolbox/guncase/m90gl
+	name = "m-90gl gun case"
+	gun_to_spawn = /obj/item/gun/ballistic/automatic/m90
+	ammo_to_spawn = /obj/item/ammo_box/magazine/m223
+
+/obj/item/storage/toolbox/guncase/m90gl/PopulateContents()
+	new gun_to_spawn (src)
+	new ammo_to_spawn (src)
+	new /obj/item/ammo_box/a40mm/rubber (src)
+
+/obj/item/storage/toolbox/guncase/rocketlauncher
+	name = "rocket launcher gun case"
+	gun_to_spawn = /obj/item/gun/ballistic/rocketlauncher
+	ammo_to_spawn = /obj/item/ammo_box/rocket
+
+/obj/item/storage/toolbox/guncase/rocketlauncher/PopulateContents()
+	new gun_to_spawn (src)
+	new ammo_to_spawn (src)
+
+/obj/item/storage/toolbox/guncase/revolver
+	name = "revolver gun case"
+	gun_to_spawn = /obj/item/gun/ballistic/revolver/syndicate
+	ammo_to_spawn = /obj/item/ammo_box/a357
+
+/obj/item/storage/toolbox/guncase/sword_and_board
+	name = "energy sword and shield weapon case"
+	gun_to_spawn = /obj/item/melee/energy/sword
+	ammo_to_spawn = /obj/item/shield/energy
+
+/obj/item/storage/toolbox/guncase/sword_and_board/PopulateContents()
+	new gun_to_spawn (src)
+	new ammo_to_spawn (src)
+	new /obj/item/mod/module/hat_stabilizer (src)
+	new /obj/item/clothing/head/helmet/knight (src)
+
+/obj/item/storage/toolbox/guncase/doublesword
+	name = "double-energy sword weapon case"
+	gun_to_spawn = /obj/item/dualsaber
+	ammo_to_spawn = /obj/item/soap/syndie
+
+/obj/item/storage/toolbox/guncase/doublesword/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.max_total_storage = 10 //it'll hold enough
+	atom_storage.max_slots = 5
+
+/obj/item/storage/toolbox/guncase/doublesword/PopulateContents()
+	new gun_to_spawn (src)
+	new ammo_to_spawn (src)
+	new /obj/item/mod/module/noslip (src)
+	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine (src)
+	new /obj/item/clothing/under/rank/prisoner/nosensor (src)
+
+/obj/item/storage/toolbox/guncase/soviet
+	name = "ancient gun case"
+	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
+	icon_state = "mosin_case"
+	inhand_icon_state = "mosin_case"
+	gun_to_spawn = /obj/effect/spawner/random/mosin
+	ammo_to_spawn = /obj/effect/spawner/random/mosin/ammo
+
+/obj/item/storage/toolbox/guncase/soviet/plastikov
+	name = "ancient surplus gun case"
+	desc = "A gun case. Has the symbol of the Third Soviet Union stamped on the side."
+	gun_to_spawn = /obj/item/gun/ballistic/automatic/plastikov
+	ammo_to_spawn = /obj/item/food/rationpack //sorry comrade, cannot get you more ammo, here, have lunch

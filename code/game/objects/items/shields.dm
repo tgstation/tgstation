@@ -266,6 +266,8 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ..()
 	return FALSE
 
 /obj/item/shield/energy/IsReflect()
