@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - rscadd: "Expanded the RPG loot wizard event by giving various different items their own statistic boost."
