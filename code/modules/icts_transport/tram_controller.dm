@@ -287,7 +287,8 @@
 
 /datum/transport_controller/linear/tram/proc/start_malf_event()
 	set_status_code(COMM_ERROR, TRUE)
-	control_panel.generate_repair_signals(steps = 3)
+	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
+	control_panel.generate_repair_signals()
 	collision_lethality = 1.25
 
 /datum/transport_controller/linear/tram/proc/end_malf_event()
@@ -296,6 +297,7 @@
 	set_status_code(COMM_ERROR, FALSE)
 	control_panel.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
+	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 
 /obj/machinery/icts/controller
 	name = "tram controller"
@@ -370,3 +372,11 @@
 	if(controller != controller_datum)
 		return
 	update_appearance()
+
+/obj/machinery/icts/controller/try_fix_machine(obj/machinery/icts/machine, mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(!controller_datum)
+		return
+
+	controller_datum.end_malf_event()

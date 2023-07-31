@@ -101,6 +101,7 @@
 /obj/machinery/icts/crossing_signal/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+	RegisterSignal(SSicts_transport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
 	SSicts_transport.crossing_signals += src
 	return INITIALIZE_HINT_LATELOAD
 
@@ -175,13 +176,10 @@
 /obj/machinery/icts/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
 	SIGNAL_HANDLER
 
-	flick("synthesizer_beam", src)
-
 	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
 	if(operating_status <= XING_TRANSPORT_FAULT)
-		if(tram.controller_status & COMM_ERROR)
-			operating_status = XING_TRANSPORT_FAULT
-		else
+		operating_status = XING_TRANSPORT_FAULT
+		if(!(tram.controller_status & COMM_ERROR))
 			operating_status = XING_NORMAL_OPERATION
 
 	if(!linked_sensor)
@@ -194,6 +192,17 @@
 
 	update_operating()
 
+/obj/machinery/icts/crossing_signal/proc/comms_change(source, controller, new_status)
+	SIGNAL_HANDLER
+
+	switch(new_status)
+		if(TRUE)
+			if(operating_status == XING_TRANSPORT_FAULT)
+				operating_status = XING_NORMAL_OPERATION
+		if(FALSE)
+			if(operating_status == XING_NORMAL_OPERATION)
+				operating_status = XING_TRANSPORT_FAULT
+
 /**
  * Update processing state.
  *
@@ -202,6 +211,7 @@
 /obj/machinery/icts/crossing_signal/proc/update_operating()
 
 	use_power(idle_power_usage)
+	update_appearance()
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
@@ -297,7 +307,7 @@
 /obj/machinery/icts/crossing_signal/update_appearance(updates)
 	. = ..()
 
-	if(!is_operational)
+	if(machine_stat & NOPOWER)
 		set_light(l_on = FALSE)
 		return
 
@@ -317,7 +327,7 @@
 /obj/machinery/icts/crossing_signal/update_overlays()
 	. = ..()
 
-	if(!is_operational)
+	if(machine_stat & NOPOWER)
 		return
 
 	var/lights_overlay = "[base_icon_state][signal_state]"
@@ -375,7 +385,6 @@
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
 		paired_sensor = null
-		update_appearance()
 
 	for(var/obj/machinery/icts/guideway_sensor/potential_sensor in SSicts_transport.sensors)
 		if(potential_sensor == src)
@@ -413,57 +422,67 @@
 
 /obj/machinery/icts/guideway_sensor/update_overlays()
 	. = ..()
+	if(machine_stat & NOPOWER)
+		return
+
 	if(machine_stat & BROKEN)
+		. += mutable_appearance(icon, "sensor-warning")
+		. += emissive_appearance(icon, "sensor-warning", src, alpha = src.alpha)
 		return
 
 	if(machine_stat & MAINT)
-		. += mutable_appearance(icon, "sensor-standby")
-		. += emissive_appearance(icon, "sensor-standby", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor-nobuddy")
+		. += emissive_appearance(icon, "sensor-nobuddy", src, alpha = src.alpha)
 		return
 
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(buddy)
 		if(!buddy.is_operational)
-			. += mutable_appearance(icon, "sensor-warning")
-			. += emissive_appearance(icon, "sensor-warning", src, alpha = src.alpha)
+			. += mutable_appearance(icon, "sensor-standby")
+			. += emissive_appearance(icon, "sensor-standby", src, alpha = src.alpha)
 		else
 			. += mutable_appearance(icon, "sensor-active")
 			. += emissive_appearance(icon, "sensor-active", src, alpha = src.alpha)
 			return
 
 	else
-		. += mutable_appearance(icon, "sensor-standby")
-		. += emissive_appearance(icon, "sensor-standby", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor-nobuddy")
+		. += emissive_appearance(icon, "sensor-nobuddy", src, alpha = src.alpha)
 
 /obj/machinery/icts/guideway_sensor/proc/trigger_sensor()
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(!buddy)
-		balloon_alert_to_viewers("no buddy!", vision_distance = 15)
 		return FALSE
 
 	if(!is_operational || !buddy.is_operational)
-		balloon_alert_to_viewers("scanner fail!", vision_distance = 15)
 		return FALSE
 
 	return TRUE
 
 /obj/machinery/icts/guideway_sensor/proc/wake_up()
+	if(prob(1))
+		sensor_fault()
+
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
 
-	if(!attached_scanner)
-		set_machine_stat(machine_stat | BROKEN)
-		return
-	if(attached_scanner.rating < 2)
-		set_machine_stat(machine_stat | BROKEN)
-		return
+	if(buddy)
+		set_machine_stat(machine_stat & ~MAINT)
+
+	update_appearance()
+
+/obj/machinery/icts/guideway_sensor/proc/sensor_fault()
+	generate_repair_signals()
+	set_machine_stat(machine_stat | BROKEN)
+	set_is_operational(FALSE)
+
+/obj/machinery/icts/try_fix_machine()
+	. = ..()
 
 	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
 
-	if(buddy)
-		if(!buddy.is_operational)
-			set_machine_stat(machine_stat | MAINT)
-		else
-			set_machine_stat(machine_stat & ~MAINT)
+/obj/machinery/icts/guideway_sensor/on_set_is_operational()
+	. = ..()
 
 	update_appearance()
 
