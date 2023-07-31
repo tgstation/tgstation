@@ -1,108 +1,108 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse/exit)
-"j" = (
-/turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
-"l" = (
-/obj/item/kirbyplants/random/fullysynthetic,
-/turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
-"p" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/carpet/green,
-/area/station/virtual_domain/safehouse/send)
-"q" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
-"v" = (
-/obj/structure/sign/poster/random/directional/east,
-/turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
-"x" = (
-/turf/closed/wall/mineral/wood,
-/area/template_noop)
-"A" = (
-/turf/open/floor/carpet/green,
-/area/station/virtual_domain/safehouse/send)
-"B" = (
-/obj/structure/railing,
-/turf/open/floor/carpet/green,
-/area/station/virtual_domain/safehouse/send)
-"K" = (
+"i" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/virtual_domain/safehouse)
-"L" = (
-/obj/machinery/door/airlock/wood/glass,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
-"O" = (
+"k" = (
 /turf/closed/wall/mineral/wood,
+/area/template_noop)
+"o" = (
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
+"p" = (
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
-"V" = (
+"s" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
+"v" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
 /obj/item/newspaper,
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
+"x" = (
+/obj/structure/railing,
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
+"z" = (
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
+"G" = (
+/turf/closed/wall/mineral/wood,
+/area/station/virtual_domain/safehouse)
+"T" = (
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse/exit)
+"X" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/station/virtual_domain/safehouse)
+"Z" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
 
 (1,1,1) = {"
-O
-O
-K
-O
-O
-x
+G
+G
+i
+G
+G
+k
 "}
 (2,1,1) = {"
-K
-q
-j
-j
-q
-K
+i
+Z
+a
+a
+Z
+i
 "}
 (3,1,1) = {"
-O
-l
-j
-j
+G
+p
 a
-O
+a
+T
+G
 "}
 (4,1,1) = {"
-L
-j
-j
-j
+X
 a
-O
+a
+a
+T
+G
 "}
 (5,1,1) = {"
-O
-A
-B
-j
+G
+o
+x
 a
-O
+T
+G
 "}
 (6,1,1) = {"
-K
-p
-B
+i
+s
+x
+z
 v
-V
-K
+i
 "}
 (7,1,1) = {"
-O
-O
-K
-O
-O
-O
+G
+G
+i
+G
+G
+G
 "}

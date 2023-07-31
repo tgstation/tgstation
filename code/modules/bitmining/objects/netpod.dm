@@ -170,7 +170,7 @@
 	if(state_open || isnull(occupant))
 		return ..()
 
-	visible_message(span_danger("[pryer] starts prying open [src]!"), span_notice("You start to pry open [src]."))
+	pryer.visible_message(span_danger("[pryer] starts prying open [src]!"), span_notice("You start to pry open [src]."))
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 	SEND_SIGNAL(src, COMSIG_BITMINING_CROWBAR_ALERT, pryer)
 
