@@ -334,10 +334,10 @@
 /// Try and draw reagents and produce waste
 /obj/machinery/bouldertech/refinery/proc/process_reagents(volume = MACHINE_REAGENT_TRANSFER)
 	if(volume > washing_input.reagents.total_volume) //not enough washing fluid
-		return FALSE
+		return null
 
 	if(reagents.maximum_volume < reagents.total_volume + volume) //we dont have enough space for waste!
-		return FALSE
+		return null
 
 	. = list() //keep track of which reagents we use and how much. list(type = volume)
 
