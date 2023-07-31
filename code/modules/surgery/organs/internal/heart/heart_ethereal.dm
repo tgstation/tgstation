@@ -40,7 +40,6 @@
 	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
 	. += shine
 
-
 /obj/item/organ/internal/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
 	SIGNAL_HANDLER
 
@@ -100,7 +99,6 @@
 	)
 	deltimer(crystalize_timer_id)
 	crystalize_timer_id = addtimer(CALLBACK(src, PROC_REF(crystalize), defender), CRYSTALIZE_DISARM_WAIT_TIME, TIMER_STOPPABLE) //Lets us restart the timer on disarm
-
 
 ///Actually spawns the crystal which puts the ethereal in it.
 /obj/item/organ/internal/heart/ethereal/proc/crystalize(mob/living/ethereal)
@@ -202,7 +200,6 @@
 /obj/structure/ethereal_crystal/proc/start_crystalization()
 	being_built = FALSE
 	update_icon()
-
 
 /obj/structure/ethereal_crystal/atom_destruction(damage_flag)
 	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive_fail.ogg', 100)
