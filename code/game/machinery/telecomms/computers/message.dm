@@ -276,14 +276,13 @@
 
 /obj/item/paper/monitorkey
 	name = "monitor decryption key"
+	var/printed = FALSE
 
 /obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/telecomms/message_server/server)
 	..()
 	if (server)
 		print(server)
-		return INITIALIZE_HINT_NORMAL
-	else
-		return INITIALIZE_HINT_LATELOAD
+		printed = TRUE
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
 	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is <b>[server.decryptkey]</b>.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
@@ -291,7 +290,11 @@
 	update_appearance()
 
 /obj/item/paper/monitorkey/LateInitialize()
+	. = ..()
+	if(printed)
+		return
 	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)
 		if (server.decryptkey)
 			print(server)
+			printed = TRUE
 			break

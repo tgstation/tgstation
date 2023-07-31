@@ -190,10 +190,6 @@
 	///this is our destination's landmark, so we only have to find it the first time.
 	var/datum/weakref/destination_platform
 
-/obj/item/assembly/control/tram/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
 /obj/item/assembly/control/tram/LateInitialize()
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
