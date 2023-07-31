@@ -14,14 +14,14 @@
 #define ADV_RNG_LOW 40
 /// Percentile for mid severity advanced virus
 #define ADV_RNG_MID 85
+/// Percentile for high vs. low transmissibility
+#define ADV_SPREAD_THRESHOLD 85
 /// Admin custom low spread
 #define ADV_SPREAD_FORCED_LOW 0
 /// Admin custom med spread
 #define ADV_SPREAD_FORCED_MID 70
 /// Admin custom high spread
 #define ADV_SPREAD_FORCED_HIGH 90
-/// Percentile for high vs. low transmissibility
-#define ADV_SPREAD_THRESHOLD 85
 
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
@@ -461,7 +461,7 @@
 #undef ADV_DISEASE_DANGEROUS
 #undef ADV_RNG_LOW
 #undef ADV_RNG_MID
+#undef ADV_SPREAD_THRESHOLD
 #undef ADV_SPREAD_FORCED_LOW
 #undef ADV_SPREAD_FORCED_MID
 #undef ADV_SPREAD_FORCED_HIGH
-#undef ADV_SPREAD_THRESHOLD
