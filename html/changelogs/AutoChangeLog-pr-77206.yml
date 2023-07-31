@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - refactor: "Slaughter and Laughter Demons have been refactored, please place an issue report for any unexpected things/hitches."
+  - bugfix: "Laughter Demons should now actually drop a kitten."
