@@ -42,7 +42,7 @@
 
 // ~~ Weapon Categories ~~
 
-//Low-cost firearms: Around 6 TC each. Meant for easy squad weapon purchases
+//Low-cost firearms: Around 8 TC each. Meant for easy squad weapon purchases
 
 /datum/uplink_item/weapon_kits/low_cost
 	cost = 8
@@ -158,7 +158,7 @@
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
 	desc = "A case containing an energy sword and energy shield. The shield is capable of deflecting \
-	energy and laser projectiles, as well as most other forms of attack. Perfect for the enterprising nuclear knight. "
+	energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
 
 // ~~ Syndicate Revolver ~~
