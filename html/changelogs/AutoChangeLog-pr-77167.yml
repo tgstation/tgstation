@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Losing your hooded suit (whether to theft, or because you were turned into an ape) will also cause you to lose the hood."
