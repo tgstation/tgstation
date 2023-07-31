@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - bugfix: "fixes a runtime in SSstation setup"
+  - bugfix: "fixes parallax not rendering correctly for latejoins"
