@@ -149,7 +149,7 @@
 
 /datum/ai_planning_subtree/random_speech/tree
 	speech_chance = 3
-	emote_see = list("photosynthesizes angirly.")
+	emote_see = list("photosynthesizes angrily.")
 
 /datum/ai_planning_subtree/random_speech/pig
 	speech_chance = 3
