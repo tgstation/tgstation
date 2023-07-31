@@ -20,6 +20,7 @@
 	gender = PLURAL
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
+	item_flags = SKIP_FANTASY_ON_SPAWN
 	/// A list to all recipies this stack item can create.
 	var/list/datum/stack_recipe/recipes
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
@@ -579,6 +580,8 @@
 		var/obj/machinery/machine = loc
 		if(!(src in machine.component_parts) || !(check in machine.component_parts))
 			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_STACK_CAN_MERGE, check, inhand) & CANCEL_STACK_MERGE)
+		return FALSE
 	return TRUE
 
 /**
