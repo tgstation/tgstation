@@ -10,7 +10,6 @@
 	friendly_verb_continuous = "chitters at"
 	friendly_verb_simple = "chitters at"
 	speak_emote = list("chitters")
-	speed = 1
 	maxHealth = 150
 	health = 150
 	obj_damage = 15
