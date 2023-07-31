@@ -7,7 +7,7 @@
 
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
-    if(HAS_TRAIT(get_step(src, 0), TRAIT_RUSTY))
+    if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
         StartCooldown(135 SECONDS, 135 SECONDS)
         charge_sequence(owner, target_atom, charge_delay, charge_past)
         StartCooldown()
@@ -21,5 +21,5 @@
     victim.rust_heretic_act()
     get_step(victim, EAST).rust_heretic_act()
     get_step(victim, WEST).rust_heretic_act()
-    if(HAS_TRAIT(get_step(src, 0), TRAIT_RUSTY))
+    if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
         INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
