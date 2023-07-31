@@ -10,10 +10,12 @@
 	var/engraved_description
 	///whether this is a new engraving, or a persistence loaded one.
 	var/persistent_save
-	///what random icon state should the engraving have
-	var/icon_state_append
 	///The story value of this piece.
 	var/story_value
+	///the overlays for different engravings
+	var/static/mutable_appearance/wall_engraving_1 = mutable_appearance('icons/effects/engraving.dmi', "wall_1")
+	var/static/mutable_appearance/wall_engraving_2 = mutable_appearance('icons/effects/engraving.dmi', "wall_2")
+	var/static/mutable_appearance/statue_engraving_bottom = mutable_appearance('icons/effects/engraving.dmi', "statue_bottom")
 
 /datum/component/engraved/Initialize(engraved_description, persistent_save, story_value)
 	. = ..()
@@ -48,7 +50,6 @@
 		engravable.AddElement(/datum/element/beauty, beauty_value)
 	else
 		engravable.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
-	icon_state_append = rand(1, 2)
 	//must be here to allow overlays to be updated
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	engravable.update_appearance()
@@ -80,7 +81,13 @@
 /datum/component/engraved/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += mutable_appearance('icons/turf/wall_overlays.dmi', "engraving[icon_state_append]")
+	var/engraving_overlay
+	if(isclosedturf(parent_atom))
+		engraving_overlay = pick(wall_engraving_1, wall_engraving_2)
+	else if(istype(parent_atom, /obj/structure/statue/custom))
+		engraving_overlay = statue_engraving_bottom
+
+	overlays += engraving_overlay
 
 ///signal called on parent being examined
 /datum/component/engraved/proc/on_examine(datum/source, mob/user, list/examine_list)
