@@ -42,7 +42,9 @@
 	var/cooldown = 5 MINUTES
 	/// Cooldown for chip actions.
 	COOLDOWN_DECLARE(chip_cooldown)
-	/// Used to determine if this is an abstract type or not. If this is meant to be an abstract type, set it to the type's path. Will be overridden by subsequent abstract parents. See /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	/// Used to determine if this is an abstract type or not.
+	/// If this is meant to be an abstract type, set it to the type's path.
+	/// Will be overridden by subsequent abstract parents.
 	var/abstract_parent_type = /obj/item/skillchip
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
