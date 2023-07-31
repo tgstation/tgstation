@@ -32,7 +32,7 @@
 	/// Outbound station
 	var/outbound
 	/// If us or anything else in the operation chain is broken
-	var/operating_status = XING_NORMAL_OPERATION
+	var/operating_status = ICTS_SYSTEM_NORMAL
 	/** Proximity thresholds for crossing signal states
 	*
 	* The proc that checks the distance between the tram and crossing signal uses these vars to determine the distance between tram and signal to change
@@ -118,18 +118,18 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	balloon_alert(user, "disabled motion sensors")
-	operating_status = XING_SIGNAL_EMAG
+	operating_status = ICTS_LOCAL_FAULT
 	obj_flags |= EMAGGED
 	return TRUE
 
 /obj/machinery/icts/crossing_signal/proc/start_event_malfunction()
-	if(operating_status == XING_NORMAL_OPERATION)
-		operating_status = XING_TRANSPORT_FAULT
+	if(operating_status == ICTS_SYSTEM_NORMAL)
+		operating_status = ICTS_REMOTE_FAULT
 		amber_distance_threshold = XING_DISTANCE_AMBER * 0.5
 		red_distance_threshold = XING_DISTANCE_RED * 0.5
 
 /obj/machinery/icts/crossing_signal/proc/end_event_malfunction()
-	if(operating_status == XING_TRANSPORT_FAULT)
+	if(operating_status == ICTS_REMOTE_FAULT)
 		operating_status = FALSE
 		amber_distance_threshold = XING_DISTANCE_AMBER
 		red_distance_threshold = XING_DISTANCE_RED
@@ -154,21 +154,21 @@
 	SIGNAL_HANDLER
 
 	linked_sensor = null
-	if(operating_status < XING_SENSOR_FAULT)
-		operating_status = XING_SENSOR_FAULT
+	if(operating_status < ICTS_REMOTE_WARNING)
+		operating_status = ICTS_REMOTE_WARNING
 
 /obj/machinery/icts/crossing_signal/proc/wake_sensor()
-	if(operating_status > XING_SENSOR_FAULT)
+	if(operating_status > ICTS_REMOTE_WARNING)
 		return
 
 	if(!linked_sensor)
-		operating_status = XING_SENSOR_FAULT
+		operating_status = ICTS_REMOTE_WARNING
 
 	else if(linked_sensor.trigger_sensor())
-		operating_status = XING_NORMAL_OPERATION
+		operating_status = ICTS_SYSTEM_NORMAL
 
 	else
-		operating_status = XING_SENSOR_FAULT
+		operating_status = ICTS_REMOTE_WARNING
 
 /**
  * Only process if the tram is actually moving
@@ -177,10 +177,10 @@
 	SIGNAL_HANDLER
 
 	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
-	if(operating_status <= XING_TRANSPORT_FAULT)
-		operating_status = XING_TRANSPORT_FAULT
+	if(operating_status <= ICTS_REMOTE_FAULT)
+		operating_status = ICTS_REMOTE_FAULT
 		if(!(tram.controller_status & COMM_ERROR))
-			operating_status = XING_NORMAL_OPERATION
+			operating_status = ICTS_SYSTEM_NORMAL
 
 	if(!linked_sensor)
 		link_sensor()
@@ -197,11 +197,11 @@
 
 	switch(new_status)
 		if(TRUE)
-			if(operating_status == XING_TRANSPORT_FAULT)
-				operating_status = XING_NORMAL_OPERATION
+			if(operating_status == ICTS_REMOTE_FAULT)
+				operating_status = ICTS_SYSTEM_NORMAL
 		if(FALSE)
-			if(operating_status == XING_NORMAL_OPERATION)
-				operating_status = XING_TRANSPORT_FAULT
+			if(operating_status == ICTS_SYSTEM_NORMAL)
+				operating_status = ICTS_REMOTE_FAULT
 
 /**
  * Update processing state.
@@ -279,7 +279,7 @@
 
 	// Finally the interesting part where it's ACTUALLY approaching
 	if(approach_distance <= red_distance_threshold)
-		if(operating_status != XING_NORMAL_OPERATION)
+		if(operating_status != ICTS_SYSTEM_NORMAL)
 			set_signal_state(XING_STATE_MALF)
 		else
 			set_signal_state(XING_STATE_RED)
@@ -426,28 +426,28 @@
 		return
 
 	if(machine_stat & BROKEN)
-		. += mutable_appearance(icon, "sensor-warning")
-		. += emissive_appearance(icon, "sensor-warning", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor[ICTS_LOCAL_FAULT]")
+		. += emissive_appearance(icon, "sensor[ICTS_LOCAL_FAULT]", src, alpha = src.alpha)
 		return
 
 	if(machine_stat & MAINT)
-		. += mutable_appearance(icon, "sensor-nobuddy")
-		. += emissive_appearance(icon, "sensor-nobuddy", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor[ICTS_REMOTE_FAULT]")
+		. += emissive_appearance(icon, "sensor[ICTS_REMOTE_FAULT]", src, alpha = src.alpha)
 		return
 
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(buddy)
 		if(!buddy.is_operational)
-			. += mutable_appearance(icon, "sensor-standby")
-			. += emissive_appearance(icon, "sensor-standby", src, alpha = src.alpha)
+			. += mutable_appearance(icon, "sensor[ICTS_REMOTE_WARNING]")
+			. += emissive_appearance(icon, "sensor[ICTS_REMOTE_WARNING]", src, alpha = src.alpha)
 		else
-			. += mutable_appearance(icon, "sensor-active")
-			. += emissive_appearance(icon, "sensor-active", src, alpha = src.alpha)
+			. += mutable_appearance(icon, "sensor[ICTS_SYSTEM_NORMAL]")
+			. += emissive_appearance(icon, "sensor[ICTS_SYSTEM_NORMAL]", src, alpha = src.alpha)
 			return
 
 	else
-		. += mutable_appearance(icon, "sensor-nobuddy")
-		. += emissive_appearance(icon, "sensor-nobuddy", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "sensor[ICTS_REMOTE_FAULT]")
+		. += emissive_appearance(icon, "sensor[ICTS_REMOTE_FAULT]", src, alpha = src.alpha)
 
 /obj/machinery/icts/guideway_sensor/proc/trigger_sensor()
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
