@@ -357,7 +357,7 @@
 	if(isnull(transmissibility))
 		transmissibility = rand(1,100)
 
-	if(transmissibility == 0) // For the admin forced low transmissibility
+	if(transmissibility == ADV_SPREAD_FORCED_LOW) // For the admin forced low transmissibility
 		set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
 	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH)
