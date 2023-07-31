@@ -29,6 +29,9 @@
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
+	/// Limbs we will cut off an unconscious man
+	var/static/list/target_limbs = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	/// Things we will eat if we see them (arms, chiefly)
 	var/static/list/target_foods = list(/obj/item/bodypart/arm)
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
@@ -39,7 +42,7 @@
 	AddElement(\
 		/datum/element/amputating_limbs,\
 		surgery_verb = "snipping",\
-		target_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM),\
+		target_zones = target_limbs,\
 	)
 	charge = new(src)
 	charge.Grant(src)
