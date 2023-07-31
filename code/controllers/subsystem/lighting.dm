@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(lighting)
 	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
 		i += 1
 
-		var/datum/lighting_object/O = queue[i]
+		var/atom/movable/lighting_object/O = queue[i]
 		if(QDELETED(O))
 			continue
 		O.update()

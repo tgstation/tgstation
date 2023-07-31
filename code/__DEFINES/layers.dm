@@ -42,7 +42,7 @@
 #define POINT_PLANE 5
 
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting underlays
+///Normal 1 per turf dynamic lighting objects
 #define LIGHTING_PLANE 10
 
 ///Lighting objects that are "free floating"
