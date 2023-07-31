@@ -49,7 +49,10 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	affected_turf = null
 	return ..()
 
+GLOBAL_LIST_EMPTY(light_obj_count)
+GLOBAL_LIST_EMPTY(light_obj_cost)
 /datum/lighting_object/proc/update()
+	INIT_COST(GLOB.light_obj_count, GLOB.light_obj_cost)
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
 	// Well my man, it's because the loop performed like shit.
@@ -60,7 +63,10 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
+	SET_COST("build dummy")
+
 	var/turf/affected_turf = src.affected_turf
+	SET_COST("get turf")
 
 #ifdef VISUALIZE_LIGHT_UPDATES
 	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
@@ -72,8 +78,10 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	var/datum/lighting_corner/green_corner = affected_turf.lighting_corner_SE || dummy_lighting_corner
 	var/datum/lighting_corner/blue_corner = affected_turf.lighting_corner_NW || dummy_lighting_corner
 	var/datum/lighting_corner/alpha_corner = affected_turf.lighting_corner_NE || dummy_lighting_corner
+	SET_COST("get corners (x4)")
 
 	var/max = max(red_corner.largest_color_luminosity, green_corner.largest_color_luminosity, blue_corner.largest_color_luminosity, alpha_corner.largest_color_luminosity)
+	SET_COST("get max lum")
 
 
 	#if LIGHTING_SOFT_THRESHOLD != 0
@@ -83,19 +91,19 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif
+	SET_COST("are we off")
 
 	var/mutable_appearance/current_underlay = src.current_underlay
+	SET_COST("get underlay")
 	affected_turf.underlays -= current_underlay
-	if(red_corner.cache_r & green_corner.cache_r & blue_corner.cache_r & alpha_corner.cache_r && \
-		(red_corner.cache_g + green_corner.cache_g + blue_corner.cache_g + alpha_corner.cache_g + \
-		red_corner.cache_b + green_corner.cache_b + blue_corner.cache_b + alpha_corner.cache_b == 8))
-		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		current_underlay.icon_state = "lighting_transparent"
-		current_underlay.color = null
-	else if(!set_luminosity)
+	SET_COST("yeet underlay")
+	if(!set_luminosity)
+		SET_COST("LUM check")
 		current_underlay.icon_state = "lighting_dark"
 		current_underlay.color = null
+		SET_COST("dark work")
 	else
+		SET_COST("LUM check")
 		current_underlay.icon_state = null
 		current_underlay.color = list(
 			red_corner.cache_r, red_corner.cache_g, red_corner.cache_b, 00,
@@ -104,8 +112,11 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 			alpha_corner.cache_r, alpha_corner.cache_g, alpha_corner.cache_b, 00,
 			00, 00, 00, 01
 		)
+		SET_COST("colored work")
 
 	// Of note. Most of the cost in this proc is here, I think because color matrix'd underlays DO NOT cache well, which is what adding to underlays does
 	// We use underlays because objects on each tile would fuck with maptick. if that ever changes, use an object for this instead
 	affected_turf.underlays += current_underlay
+	SET_COST("unyeet underlay")
 	affected_turf.luminosity = set_luminosity
+	SET_COST("set lum")
