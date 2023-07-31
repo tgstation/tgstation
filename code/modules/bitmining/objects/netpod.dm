@@ -97,7 +97,7 @@
 		return TRUE
 
 	state_open = FALSE
-	playsound(src, 'sound/machines/tramclose.ogg', 50, TRUE, frequency = 25000)
+	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
 
 	update_appearance()
@@ -123,7 +123,7 @@
 /obj/machinery/netpod/container_resist_act(mob/living/user)
 	user.visible_message(span_notice("[occupant] emerges from [src]!"),
 		span_notice("You climb out of [src]!"),
-		span_notice("With a hiss, you hear the sound of a machine opening."))
+		span_notice("With a hiss, you hear a machine opening."))
 	open_machine()
 
 /obj/machinery/netpod/Exited(atom/movable/gone, direction)
@@ -138,13 +138,14 @@
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		on_opened_or_destroyed()
-		playsound(src, 'sound/machines/tramopen.ogg', 50, TRUE, frequency = 25000)
+		playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)
 		flick("[base_icon_state]_opening", src)
 	return ..()
 
 /obj/machinery/netpod/close_machine(mob/user, density_to_set = TRUE)
 	if(isnull(user) || !state_open || panel_open)
 		return
+	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
 	..()
 	protect_occupant(occupant)
@@ -374,7 +375,6 @@
 	if(target != occupant)
 		return
 
-	playsound(src, 'sound/effects/spray.ogg', 15, TRUE)
 	target.apply_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
 	target.extinguish_mob()
 	update_use_power(ACTIVE_POWER_USE)
