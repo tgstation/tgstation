@@ -156,10 +156,10 @@
 
 /obj/machinery/fugitive_locator
 	name = "Bounty Locator"
-	desc = "Tracks the signatures of bounty targets in nearby space. Nobody actually knows what mechanism this thing uses to track its targets. \
-		Whether it be bluespace entanglement or a simple RFID implant, this machine will find you who you're looking for."
-	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "tdoppler"
+	desc = "Tracks the signatures of bounty targets in your sector. Nobody actually knows what mechanism this thing uses to track its targets. \
+		Whether it be bluespace entanglement or a simple RFID implant, this machine will find you who you're looking for no matter where they're hiding."
+	icon = 'icons/obj/machines/dominator.dmi'
+	icon_state = "dominator-Purple"
 	density = TRUE
 	/// Cooldown on locating a fugitive.
 	COOLDOWN_DECLARE(locate_cooldown)
@@ -170,7 +170,7 @@
 		return
 	var/mob/living/bounty = locate_fugitive()
 	if(!bounty)
-		say("No bounty targets in nearby space.")
+		say("No bounty targets detected.")
 	else
 		say("Bounty Target Located. Bounty ID: [bounty.name]. Location: [get_area_name(bounty)]")
 
