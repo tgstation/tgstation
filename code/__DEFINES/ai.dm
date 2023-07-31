@@ -343,3 +343,9 @@
 #define BB_FOUND_HONEY "BB_found_honey"
 ///the tree that we will climb
 #define BB_CLIMBED_TREE "BB_climbed_tree"
+
+///hivebot keys
+///the hivemind partner we will cominucate with
+#define BB_HIVE_PARTNER "BB_hive_partner"
+///the machine we must repair
+#define BB_MACHINE_TARGET "BB_machine_target"
