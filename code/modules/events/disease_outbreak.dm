@@ -253,9 +253,6 @@
 		else
 			requested_severity = ADV_DISEASE_DANGEROUS
 
-	if(isnull(requested_transmissibility))
-		requested_transmissibility = rand(1,100)
-
 	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, requested_severity, requested_transmissibility)
 
 	var/list/name_symptoms = list()
@@ -360,6 +357,9 @@
 	if(transmissibility == 0) // For the admin forced low transmissibility
 		set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
+	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH)
+		set_spread(DISEASE_SPREAD_AIRBORNE)
+
 	//If severe enough, alert immediately on scanners, limit transmissibility
 	else if(current_severity >= ADV_DISEASE_DANGEROUS)
 		visibility_flags &= ~HIDDEN_SCANNER
@@ -406,7 +406,7 @@
 		stack_trace("Advanced virus properties were empty or null!")
 		return
 
-	incubation_time = world.time + (((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS)
+	incubation_time = round(world.time + (((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS))
 	properties["transmittable"] = rand(4,7)
 	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 	cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // Can be between 5 and 10
