@@ -162,4 +162,4 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(ROLE_DEATHSQUAD)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenelitesoldier
-	held_item = /obj/item/gun/energy/pulse/carbine/lethal
+	held_item = /obj/item/gun/energy/laser/hellgun
