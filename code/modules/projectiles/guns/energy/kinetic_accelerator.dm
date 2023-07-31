@@ -16,6 +16,14 @@
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
+	. = ..()
+	max_mod_capacity = modify_fantasy_variable("max_mod_capacity", max_mod_capacity, bonus * 10)
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/remove_fantasy_bonuses(bonus)
+	max_mod_capacity = reset_fantasy_variable("max_mod_capacity", max_mod_capacity)
+	return ..()
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 
