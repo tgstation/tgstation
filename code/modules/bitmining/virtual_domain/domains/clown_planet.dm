@@ -3,7 +3,7 @@
 	cost = BITMINING_COST_LOW
 	desc = "In the deep, dark reaches of space, there is only Honk."
 	difficulty = BITMINING_DIFFICULTY_LOW
-	extra_loot = list(/obj/item/bikehorn)
+	extra_loot = list(/obj/item/bikehorn = 1)
 	filename = "clown_planet.dmm"
 	forced_outfit = /datum/outfit/job/clown
 	help_text = "The trials of the Honkitude have begun. The sound of bike horns wailing in the distance.\

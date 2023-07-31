@@ -26,6 +26,10 @@
 /datum/map_template/safehouse/shuttle
 	filename = "shuttle.dmm"
 
+// Has space tiles on the four corners.
+/datum/map_template/safehouse/shuttle_space
+	filename = "shuttle_space.dmm"
+
 /datum/map_template/safehouse/mine
 	filename = "mine.dmm"
 

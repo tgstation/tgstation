@@ -3,7 +3,7 @@
 	cost = BITMINING_COST_HIGH
 	desc = "King of the slaughter demons. Bubblegum is a massive, hulking beast with a penchant for violence."
 	difficulty = BITMINING_DIFFICULTY_HIGH
-	extra_loot = list(/obj/item/toy/plush/bubbleplush)
+	extra_loot = list(/obj/item/toy/plush/bubbleplush = 1)
 	filename = "bubblegum.dmm"
 	forced_outfit = /datum/outfit/job/miner
 	id = "bubblegum"

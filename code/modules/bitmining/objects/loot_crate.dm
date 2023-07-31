@@ -41,7 +41,7 @@
 	. = ..()
 	for(var/path in extra_loot)
 		if(ispath(path))
-			new path()
+			new path(extra_loot[path])
 
 	new /obj/item/stack/ore/iron(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_IRON))
 	new /obj/item/stack/ore/glass(src, calculate_loot(rewards_multiplier, ORE_MULTIPLIER_GLASS))

@@ -7,7 +7,7 @@
 "o" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/effect/turf_decal/stripes/line{dir = 6},/obj/structure/table/reinforced,/obj/item/tank/internals/emergency_oxygen{pixel_x = 3},/obj/item/clothing/mask/gas,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "p" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/structure/chair/comfy/shuttle{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "r" = (/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/stripes/line{dir = 5},/obj/structure/table/reinforced,/obj/effect/decal/cleanable/dirt,/obj/item/storage/toolbox/emergency,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
-"x" = (/turf/closed/wall/mineral/titanium,/area/template_noop)
+"x" = (/turf/closed/wall/mineral/titanium/overspace,/area/template_noop)
 "A" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "B" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/effect/turf_decal/stripes/line,/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "D" = (/obj/effect/turf_decal/stripes/end,/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
@@ -17,16 +17,17 @@
 "I" = (/obj/effect/turf_decal/stripes/end{dir = 1},/obj/effect/turf_decal/sand/volcanic,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "K" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/effect/turf_decal/stripes/line,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "L" = (/obj/effect/turf_decal/stripes/line{dir = 10},/obj/effect/decal/cleanable/generic,/turf/open/floor/iron,/area/station/virtual_domain/safehouse/exit)
+"N" = (/turf/closed/wall/mineral/titanium/overspace,/area/station/virtual_domain/safehouse)
 "Q" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "S" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/iron,/area/station/virtual_domain/safehouse)
 "V" = (/turf/closed/wall/mineral/titanium,/area/station/virtual_domain/safehouse)
 "W" = (/obj/effect/spawner/structure/window/reinforced/shuttle,/turf/open/floor/plating,/area/station/virtual_domain/safehouse)
 
 (1,1,1) = {"
-VWVEVWV
+NWVEVWN
 jIGSFrV
 WAQQpfW
 WDBKKoW
 jilLanV
-xVWVWVV
+xVWVWVN
 "}
