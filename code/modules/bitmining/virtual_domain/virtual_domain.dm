@@ -14,7 +14,7 @@
 	/// The 'difficulty' of the map, which affects the ui and ability to scan info.
 	var/difficulty = BITMINING_DIFFICULTY_NONE
 	/// Any additional loot to add after completion
-	var/extra_loot
+	var/list/extra_loot
 	/// The map file to load
 	var/filename = "virtual_domain.dmm"
 	/// Any outfit that you wish to force on avatars. Overrides preferences
@@ -24,7 +24,7 @@
 	/// For blacklisting purposes
 	var/id
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
-	var/reward_points = BITMINING_REWARD_LOW
+	var/reward_points = BITMINING_REWARD_MIN
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
 	/// The safehouse to load into the map

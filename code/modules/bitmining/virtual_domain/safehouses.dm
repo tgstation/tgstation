@@ -26,6 +26,9 @@
 /datum/map_template/safehouse/shuttle
 	filename = "shuttle.dmm"
 
+/datum/map_template/safehouse/mine
+	filename = "mine.dmm"
+
 // Comes preloaded with mining combat gear.
 /datum/map_template/safehouse/lavaland_boss
 	filename = "lavaland_boss.dmm"

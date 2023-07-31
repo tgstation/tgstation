@@ -109,15 +109,14 @@
 	return ..()
 
 /obj/machinery/quantum_server/update_icon_state()
-	if(isnull(vdom_ref))
-		icon_state = base_icon_state
-		return ..()
 	if(generated_domain)
 		icon_state = "[base_icon_state]_on"
 		return ..()
 	if(cooling_off)
 		icon_state = "[base_icon_state]_off"
+		return ..()
 
+	icon_state = base_icon_state
 	return ..()
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)

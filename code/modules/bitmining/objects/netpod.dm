@@ -96,9 +96,11 @@
 		close_machine(user)
 		return TRUE
 
+	// Had the issue where calling close_machine() would pull you inside
 	state_open = FALSE
 	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
+	set_density(TRUE)
 
 	update_appearance()
 	return TRUE

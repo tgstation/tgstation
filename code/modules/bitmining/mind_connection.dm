@@ -66,7 +66,7 @@
 		return
 
 	disconnect_avatar_signals()
-	UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
+	UnregisterSignal(src, COMSIG_BITMINING_SAFE_DISCONNECT)
 	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
 	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
 	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)

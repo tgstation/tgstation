@@ -3040,6 +3040,7 @@
 #include "code\modules\bitmining\virtual_domain\domains\beach_bar.dm"
 #include "code\modules\bitmining\virtual_domain\domains\blood_drunk_miner.dm"
 #include "code\modules\bitmining\virtual_domain\domains\bubblegum.dm"
+#include "code\modules\bitmining\virtual_domain\domains\clown_planet.dm"
 #include "code\modules\bitmining\virtual_domain\domains\colossus.dm"
 #include "code\modules\bitmining\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitmining\virtual_domain\domains\hierophant.dm"
