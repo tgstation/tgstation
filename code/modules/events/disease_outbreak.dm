@@ -357,10 +357,10 @@
 	if(isnull(transmissibility))
 		transmissibility = rand(1,100)
 
-	if(transmissibility == ADV_SPREAD_FORCED_LOW) // For the admin forced low transmissibility
+	if(requested_transmissibility == ADV_SPREAD_FORCED_LOW) // Admin forced
 		set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
 
-	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH)
+	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH) // Admin forced
 		set_spread(DISEASE_SPREAD_AIRBORNE)
 
 	//If severe enough, alert immediately on scanners, limit transmissibility
