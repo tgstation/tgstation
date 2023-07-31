@@ -397,7 +397,7 @@
 	id = "oldship_ruin_gun";
 	name = "Pod Bay Door"
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/whiteship/box)
 "lO" = (
 /obj/effect/turf_decal/siding/wideplating{

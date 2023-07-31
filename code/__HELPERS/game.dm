@@ -179,6 +179,7 @@
 	// This is faster then pooling. I promise
 	var/atom/movable/flick_visual/visual = new()
 	visual.appearance = passed_appearance
+	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	// I hate /area
 	var/atom/movable/lies_to_children = src
 	lies_to_children.vis_contents += visual
