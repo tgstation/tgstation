@@ -184,7 +184,7 @@
 	required_site_traits = list(EXPLORATION_SITE_SHIP)
 	required_tool = EXODRONE_TOOL_TRANSLATOR
 	discovery_log = "Discovered ship navigation systems."
-	description = "You find the ships navigation systems encoded in a strange language. You'll be able to use the data with a translator."
+	description = "You find the ship's navigation systems encoded in a strange language. You'll be able to use the data with a translator."
 	success_log = "Retrieved shipping data from navigation systems."
 	no_tool_description = "You'll need a translator to decipher the data."
 	has_tool_description = "You can try and translate the navigation data with your multitool!"
