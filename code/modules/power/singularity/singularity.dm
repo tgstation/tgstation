@@ -477,6 +477,6 @@
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
 
-// Special singularity that spawns for shuttle events only
+/// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
 	anchored = FALSE
