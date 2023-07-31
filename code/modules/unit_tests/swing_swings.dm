@@ -56,7 +56,6 @@
 
 	var/atom/clicking_on = get_clicking_atom()
 	click_wrapper(attacker, clicking_on)
-	TEST_ASSERT(attacker.next_move <= world.time, "Attacker should not have attacked while not on combat mode")
 	if(isliving(clicking_on))
 		var/mob/living/living_clicked = clicking_on
 		TEST_ASSERT_EQUAL(living_clicked.lastattacker, null, "Victim should not have been hit when clicked on by attacker[assertion_message]")

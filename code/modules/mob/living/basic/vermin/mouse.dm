@@ -123,12 +123,8 @@
 	qdel(src)
 
 /mob/living/basic/mouse/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(.)
-		return
-
 	if(!proximity_flag)
-		return
+		return ..()
 
 	if(istype(attack_target, /obj/item/food/cheese))
 		try_consume_cheese(attack_target)
@@ -137,6 +133,8 @@
 	if(istype(attack_target, /obj/structure/cable))
 		try_bite_cable(attack_target)
 		return TRUE
+
+	return ..()
 
 /// Signal proc for [COMSIG_ATOM_ENTERED]. Sends a lil' squeak to chat when someone walks over us.
 /mob/living/basic/mouse/proc/on_entered(datum/source, atom/movable/entered)

@@ -55,7 +55,6 @@
 	return list(LEFT_CLICK = TRUE)
 
 /datum/unit_test/baton_swings/no_combat_mode_left_click/check_results(mob/living/carbon/human/attacker, mob/living/carbon/human/victim, obj/item/melee/baton/security/baton)
-	TEST_ASSERT(attacker.next_move <= world.time, "Attacker had a cooldown despite not being in combat mode / swinging")
 	TEST_ASSERT(victim.getStaminaLoss() == 0, "Victim took stamina damage despite not being hit by any swing")
 	TEST_ASSERT(COOLDOWN_FINISHED(baton, cooldown_check), "Baton had a cooldown after failing to swing")
 

@@ -5,6 +5,7 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/screwdriver/stabber = allocate(/obj/item/screwdriver)
 
+	attacker.zone_selected = BODY_ZONE_PRECISE_EYES
 	attacker.put_in_active_hand(stabber, forced = TRUE)
 
 	click_wrapper(attacker, victim)
