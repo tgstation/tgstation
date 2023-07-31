@@ -146,7 +146,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	toolspeed = 0.1
-	force = 25
+	force = 30
 	throwforce = 20
 	block_chance = 30
 	throw_range = 2
@@ -175,3 +175,14 @@
 	transform = transform.Translate(-16, -16)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/giant_wrench, TRUE)
+
+/obj/item/wrench/giant_wrench/attack(mob/living/target_mob, mob/living/user)
+	..()
+	if(QDELETED(target_mob))
+		return
+	var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
+	target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
+	target_mob.Knockdown(2 SECONDS)
+	user.adjustBruteLoss(force / 3)
+	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
+	log_combat(user, user, "recoiled Big Slappy into")
