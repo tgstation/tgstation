@@ -8881,7 +8881,7 @@
 	req_access = list("cent_captain")
 	},
 /obj/machinery/door/poddoor/shutters/indestructible{
-	id = null
+	id = "XCCadminstore"
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
@@ -9198,7 +9198,7 @@
 /area/centcom/central_command_areas/supplypod/loading/one)
 "ST" = (
 /obj/machinery/door/poddoor/ert{
-	id = null
+	id = "XCCertstore"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -9817,7 +9817,7 @@
 /area/centcom/central_command_areas/armory)
 "VO" = (
 /obj/machinery/door/poddoor/ert{
-	id = null
+	id = "XCCertstore"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
