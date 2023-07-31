@@ -37,6 +37,10 @@
 /datum/map_template/safehouse/lavaland_boss
 	filename = "lavaland_boss.dmm"
 
+// Chill out
+/datum/map_template/safehouse/ice
+	filename = "ice.dmm"
+
 /**
  * Your safehouse here
  * /datum/map_template/safehouse/your_type

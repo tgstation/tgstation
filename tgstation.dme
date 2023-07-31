@@ -3045,6 +3045,7 @@
 #include "code\modules\bitmining\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitmining\virtual_domain\domains\hierophant.dm"
 #include "code\modules\bitmining\virtual_domain\domains\legion.dm"
+#include "code\modules\bitmining\virtual_domain\domains\stairs_and_cliffs.dm"
 #include "code\modules\bitmining\virtual_domain\domains\syndicate_assault.dm"
 #include "code\modules\bitmining\virtual_domain\domains\test_only.dm"
 #include "code\modules\bitmining\virtual_domain\domains\vaporwave.dm"
