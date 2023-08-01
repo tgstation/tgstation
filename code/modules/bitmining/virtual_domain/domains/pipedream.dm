@@ -83,7 +83,7 @@
 	r_pocket = /obj/item/stamp/head/qm
 
 // Corpses
-/obj/effect/mob_spawn/corpse/human/factory/
+/obj/effect/mob_spawn/corpse/human/factory
 	name = "Factory Worker"
 	outfit = /datum/outfit/factory
 	icon_state = "corpsecargotech"
