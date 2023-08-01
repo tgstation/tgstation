@@ -87,8 +87,6 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	ranged_attacker = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/hivebot/mechanic
-	///the ability to create foam wall
-	var/datum/action/cooldown/spell/conjure/foam_wall/foam
 	///cooldown to repair machines
 	COOLDOWN_DECLARE(repair_cooldown)
 
@@ -97,6 +95,8 @@
 	foam = new
 	foam.Grant(src)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	var/datum/action/cooldown/spell/conjure/foam_wall/foam/foam = new(src)
+	foam.Grant(src)
 
 /mob/living/basic/hivebot/mechanic/proc/pre_attack(mob/living/fixer, atom/target)
 	SIGNAL_HANDLER
