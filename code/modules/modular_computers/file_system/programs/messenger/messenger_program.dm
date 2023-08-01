@@ -662,17 +662,20 @@
 		else
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
+		var/datum/computer_file/program/messenger/sender_messenger = chat.recipient.resolve()
+
 		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
-		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
+		var/sender_title = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(sender_messenger)
+		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
 
 		if (isAI(receiver_mob))
-			sender_name = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_name]</a>"
+			sender_title = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_full_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
 		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_name], </b>\"[inbound_message]\"[photo_message] [reply]"))
+		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
 	if (alert_able && should_ring)
 		computer.ring(ringtone)
