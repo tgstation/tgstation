@@ -73,6 +73,7 @@
 
 	if(!SPT_PROB(action_prob, seconds_per_tick))
 		return
+
 	controller.queue_behavior(/datum/ai_behavior/enter_exit_hive, BB_CURRENT_HOME)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
