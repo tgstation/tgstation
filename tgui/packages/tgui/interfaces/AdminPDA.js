@@ -1,6 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
 import { Section, Dropdown, Input, Box, TextArea } from '../components';
-import { Button, ButtonCheckbox } from '../components/Button';
+import { useBackend, useLocalState } from '../backend';
+import { Button } from '../components/Button';
 import { Window } from '../layouts';
 
 export const AdminPDA = (props, context) => {
@@ -49,13 +49,13 @@ const ReceiverChoice = (props, context) => {
         />
       </Box>
       <Box>
-        <ButtonCheckbox
+        <Button.Checkbox
           checked={showInvisible}
           fluid
           onClick={() => setShowInvisible(!showInvisible)}
           content="Include invisible?"
         />
-        <ButtonCheckbox
+        <Button.Checkbox
           checked={spam}
           fluid
           onClick={() => setSpam(!spam)}
@@ -133,7 +133,7 @@ const MessageInput = (props, context) => {
         />
       </Box>
       <Box>
-        <ButtonCheckbox
+        <Button.Checkbox
           fluid
           checked={force}
           content="Force send the message?"
