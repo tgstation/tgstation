@@ -156,6 +156,7 @@
 			if(user_id_card)
 				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER * boulder_size)
 
+//comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
 	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
