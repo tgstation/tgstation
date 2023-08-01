@@ -236,7 +236,7 @@
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
 		if(WEAKREF(item) in stock_list)
 			extra_purchasable_stock[REF(item)] = stock_list[WEAKREF(item)]
-			stock_list -= item
+			stock_list -= WEAKREF(item)
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
