@@ -2031,7 +2031,7 @@
 /area/station/science/explab)
 "xD" = (
 /turf/open/floor/circuit/green,
-/area/station/bitminer_den/receive)
+/area/station/bitminer_receive)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
