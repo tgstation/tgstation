@@ -60,7 +60,7 @@
 	TEST_ASSERT_NOTNULL(server.vdom_ref, "Should not erase vdom_ref on stop_domain()")
 	TEST_ASSERT_NULL(server.generated_domain, "Did not stop domain")
 	TEST_ASSERT_NULL(server.generated_safehouse, "Did not stop safehouse")
-	TEST_ASSERT_EQUAL(server.get_ready_status(), FALSE, "Should cool down, but did not set ready status to FALSE")
+	TEST_ASSERT_EQUAL(server.get_is_ready(), FALSE, "Should cool down, but did not set ready status to FALSE")
 
 	server.cold_boot_map(labrat, TEST_MAP)
 	TEST_ASSERT_NULL(server.generated_domain, "Should prevent loading a new domain while cooling down")
