@@ -283,3 +283,56 @@
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
+
+/obj/item/shovel/giant_wrench
+	name = "Big Slappy"
+	desc = "A gigantic wrench made illegal because of its many incidents involving this tool."
+	icon_state = "giant_wrench"
+	icon = 'icons/obj/weapons/giant_wrench.dmi'
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	toolspeed = 0.1
+	force = 30
+	throwforce = 20
+	block_chance = 30
+	throw_range = 2
+	demolition_mod = 2
+	armor_type = /datum/armor/giant_wrench
+	resistance_flags = FIRE_PROOF
+	wound_bonus = -10
+	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
+	attack_verb_simple = list("bonks", "bludgeons", "pounds")
+	usesound = 'sound/items/drill_use.ogg'
+	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
+	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
+
+/datum/armor/giant_wrench
+	acid = 30
+	bomb = 100
+	bullet = 30
+	fire = 100
+	laser = 30
+	melee = 30
+
+/obj/item/shovel/giant_wrench/Initialize(mapload)
+	. = ..()
+	transform = transform.Translate(-16, -16)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
+/obj/item/shovel/giant_wrench/attack(mob/living/target_mob, mob/living/user)
+	..()
+	if(QDELETED(target_mob))
+		return
+	var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
+	target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
+	target_mob.Knockdown(2 SECONDS)
+	user.adjustBruteLoss(force / 3)
+	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
+	log_combat(user, user, "recoiled Big Slappy into")
