@@ -179,9 +179,9 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
-	..()
-	if(A == beaker)
+/obj/machinery/chem_dispenser/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		cut_overlays()
 

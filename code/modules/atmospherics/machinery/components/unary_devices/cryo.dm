@@ -208,9 +208,9 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
-	..()
-	if(A == beaker)
+/obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()

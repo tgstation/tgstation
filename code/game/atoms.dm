@@ -1124,7 +1124,6 @@
  * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
  */
 /atom/proc/handle_atom_del(atom/deleting_atom)
-	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
 
 /**
  * the vision impairment to give to the mob whose perspective is set to that atom

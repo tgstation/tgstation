@@ -73,11 +73,11 @@
 /obj/machinery/computer/pandemic/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
-	if(A == beaker)
+/obj/machinery/computer/pandemic/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-	return ..()
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
 	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!

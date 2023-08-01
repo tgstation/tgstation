@@ -105,9 +105,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	replace_beaker()
 	return ..()
 
-/obj/machinery/chem_master/handle_atom_del(atom/deleted_atom)
-	..()
-	if(deleted_atom == beaker)
+/obj/machinery/chem_master/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		update_appearance(UPDATE_ICON)
 

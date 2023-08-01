@@ -257,7 +257,6 @@
 			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
 			chambered = null
 		else if(casing_ejector || !from_firing)
-			chambered = null
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
 				casing.bounce_away(TRUE)
@@ -502,7 +501,7 @@
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
 		chambered = null
 		var/num_unloaded = 0
-		for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
+		for(var/obj/item/ammo_casing/CB as anything in get_ammo_list(FALSE))
 			CB.forceMove(drop_location())
 			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
@@ -552,14 +551,12 @@
 	return bullets
 
 ///gets a list of every bullet in the gun
-/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE, drop_all = FALSE)
+/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE)
 	var/list/rounds = list()
 	if(chambered && countchambered)
 		rounds.Add(chambered)
-		if(drop_all)
-			chambered = null
 	if(magazine)
-		rounds.Add(magazine.ammo_list(drop_all))
+		rounds.Add(magazine.ammo_list())
 	return rounds
 
 #define BRAINS_BLOWN_THROW_RANGE 3

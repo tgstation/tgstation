@@ -47,13 +47,13 @@
 	if(vname in list(NAMEOF(src, open), NAMEOF(src, showpiece), NAMEOF(src, custom_glass_overlay)))
 		update_appearance()
 
-/obj/structure/displaycase/handle_atom_del(atom/A)
-	if(A == electronics)
+/obj/structure/displaycase/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == electronics)
 		electronics = null
-	if(A == showpiece)
+	if(gone == showpiece)
 		showpiece = null
 		update_appearance()
-	return ..()
 
 /obj/structure/displaycase/Destroy()
 	QDEL_NULL(electronics)
@@ -73,8 +73,6 @@
 	if(QDELETED(showpiece))
 		return
 	showpiece.forceMove(drop_location())
-	showpiece = null
-	update_appearance()
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

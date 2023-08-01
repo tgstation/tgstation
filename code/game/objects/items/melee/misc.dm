@@ -416,16 +416,15 @@
 	..()
 	if (held_sausage)
 		user.put_in_hands(held_sausage)
-		held_sausage = null
-	update_appearance()
 
 /obj/item/melee/roastingstick/update_overlays()
 	. = ..()
 	if(held_sausage)
 		. += mutable_appearance(icon, "roastingstick_sausage")
 
-/obj/item/melee/roastingstick/handle_atom_del(atom/target)
-	if (target == held_sausage)
+/obj/item/melee/roastingstick/Exited(atom/movable/gone, direction)
+	. = ..()
+	if (gone == held_sausage)
 		held_sausage = null
 		update_appearance()
 

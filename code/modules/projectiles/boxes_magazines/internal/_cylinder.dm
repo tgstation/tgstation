@@ -4,14 +4,19 @@
 	caliber = CALIBER_357
 	max_ammo = 7
 
-/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = 0)
+///Here, we have to maintain the list size, to emulate a cylinder with several chambers, empty or otherwise.
+/obj/item/ammo_box/magazine/internal/cylinder/Exited(atom/movable/gone, direction)
+	. = ..()
+	for(var/index in 1 to length(stored_ammo))
+		var/obj/item/ammo_casing/bullet = stored_ammo[index]
+		if(gone == bullet)
+			stored_ammo[index] = null
+			update_appearance()
+			return
+
+/obj/item/ammo_box/magazine/internal/cylinder/get_round()
 	rotate()
-
-	var/b = stored_ammo[1]
-	if(!keep)
-		stored_ammo[1] = null
-
-	return b
+	return stored_ammo[1]
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
 	var/b = stored_ammo[1]
@@ -23,14 +28,7 @@
 		rotate()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_list(drop_list = FALSE)
-	var/list/L = list()
-	for(var/i=1 to stored_ammo.len)
-		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if(bullet)
-			L.Add(bullet)
-			if(drop_list)//We have to maintain the list size, to emulate a cylinder
-				stored_ammo[i] = null
-	return L
+	return list_clear_nulls(stored_ammo.Copy())
 
 /obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))

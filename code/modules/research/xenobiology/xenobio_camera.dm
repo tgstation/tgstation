@@ -69,12 +69,12 @@
 	connected_recycler = null
 	return ..()
 
-/obj/machinery/computer/camera_advanced/xenobio/handle_atom_del(atom/A)
-	if(A == current_potion)
+/obj/machinery/computer/camera_advanced/xenobio/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == current_potion)
 		current_potion = null
-	if(A in stored_slimes)
-		stored_slimes -= A
-	return ..()
+	if(gone in stored_slimes)
+		stored_slimes -= gone
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/ai_eye/remote/xenobio(get_turf(src))

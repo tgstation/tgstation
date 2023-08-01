@@ -11,10 +11,10 @@
 	///Icon of the current screen status
 	var/screen_icon = "gulag_on"
 
-/obj/machinery/gulag_item_reclaimer/handle_atom_del(atom/deleting_atom)
+/obj/machinery/gulag_item_reclaimer/Exited(atom/movable/gone, direction)
+	. = ..()
 	for(var/person in stored_items)
-		stored_items[person] -= deleting_atom
-	return ..()
+		stored_items[person] -= gone
 
 /obj/machinery/gulag_item_reclaimer/update_overlays()
 	. = ..()

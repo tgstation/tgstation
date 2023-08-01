@@ -349,7 +349,8 @@
 	.["name"] = name
 	.["isdryer"] = FALSE
 
-/obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
+/obj/machinery/smartfridge/Exited(atom/movable/gone, direction) // Update the UIs in case something inside is removed
+	. = ..()
 	SStgui.update_uis(src)
 
 /obj/machinery/smartfridge/ui_act(action, params)

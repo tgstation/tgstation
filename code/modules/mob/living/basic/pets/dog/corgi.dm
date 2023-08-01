@@ -42,16 +42,16 @@
 	UnregisterSignal(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD))
 	return ..()
 
-/mob/living/basic/pet/dog/corgi/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == inventory_head)
+/mob/living/basic/pet/dog/corgi/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == inventory_head)
 		inventory_head = null
 		update_corgi_fluff()
 		update_appearance(UPDATE_OVERLAYS)
-	if(deleting_atom == inventory_back)
+	if(gone == inventory_back)
 		inventory_back = null
 		update_corgi_fluff()
 		update_appearance(UPDATE_OVERLAYS)
-	return ..()
 
 /mob/living/basic/pet/dog/corgi/gib()
 	if(inventory_head)
