@@ -352,7 +352,7 @@
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	name = "Cargo Bay Lockdown";
-	id = factorylockdown
+	id = "factorylockdown"
 	},
 /turf/open/floor/carpet/royalblue{
 	icon_state = "carpet_royalblue-63"
@@ -392,7 +392,7 @@
 "lx" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/shutters/indestructible{
-	id = factorylockdown
+	id = "factorylockdown"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/powered)
@@ -553,7 +553,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 4;
-	id = factorylockdown
+	id = "factorylockdown"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/powered)
@@ -595,7 +595,7 @@
 "ql" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
-	id = factorylockdown
+	id = "factorylockdown"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/powered)
@@ -1349,7 +1349,7 @@
 "Kk" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 4;
-	id = factorylockdown
+	id = "factorylockdown"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/powered)
@@ -1394,7 +1394,7 @@
 /area/station/virtual_domain/powered)
 "KZ" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
-	id = factorylockdown
+	id = "factorylockdown"
 	},
 /turf/open/floor/plating,
 /area/station/virtual_domain/powered)
@@ -1570,7 +1570,7 @@
 "QW" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 4;
-	id = factorylockdown
+	id = "factorylockdown"
 	},
 /turf/open/floor/iron,
 /area/station/virtual_domain/powered)
