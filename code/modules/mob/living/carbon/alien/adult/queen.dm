@@ -57,8 +57,9 @@
 	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
 	tail_whip.Grant(src)
 
-	var/datum/action/small_sprite/queen/smallsprite = new(src)
-	smallsprite.Grant(src)
+	AddComponent(/datum/component/seethrough_mob)
+	var/datum/action/toggle_seethrough/seeThrough = new
+	seeThrough.Grant(src)
 
 	var/datum/action/cooldown/alien/promote/promotion = new(src)
 	promotion.Grant(src)

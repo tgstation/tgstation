@@ -73,8 +73,6 @@
 	var/using_special = FALSE
 	/// Determines whether or not Space Dragon is currently tearing through a wall.
 	var/tearing_wall = FALSE
-	/// The ability to make your sprite smaller
-	var/datum/action/toggle_seethrough/seeThrough
 	/// The color of the space dragon.
 	var/chosen_color
 	/// Minimum devastation damage dealt coefficient based on max health
@@ -88,7 +86,7 @@
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 	AddComponent(/datum/component/seethrough_mob)
-	seeThrough = new
+	var/datum/action/toggle_seethrough/seeThrough = new
 	seeThrough.Grant(src)
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
