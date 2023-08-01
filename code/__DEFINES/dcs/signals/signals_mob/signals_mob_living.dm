@@ -102,7 +102,7 @@
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
-///(NOT on humans) from mob/living/*/UnarmedAttack(): (atom/target, proximity, modifiers)
+///(NOT on humans) from mob/living/*/UnarmedAttack(): (mob/living/source, atom/target, proximity, modifiers)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
 ///From base of mob/living/MobBump() (mob/living)
 #define COMSIG_LIVING_MOB_BUMP "living_mob_bump"
@@ -176,3 +176,6 @@
 
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
+
+/// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
+#define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"

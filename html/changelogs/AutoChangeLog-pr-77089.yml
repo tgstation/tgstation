@@ -1,0 +1,5 @@
+author: "Senefi"
+delete-after: True
+changes:
+  - bugfix: "NorthStar's Supermatter Waste Chamber guide no longer contains inaccurate information"
+  - qol: "NorthStar's Supermatter Waste Chamber air alarm no longer shows the hallway vent and scrubber on the configuration panel."
