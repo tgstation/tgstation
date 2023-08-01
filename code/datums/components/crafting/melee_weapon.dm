@@ -145,7 +145,7 @@
 
 /datum/crafting_recipe/giant_wrench
 	name = "Big Slappy"
-	result = /obj/item/wrench/giant_wrench
+	result = /obj/item/shovel/giant_wrench
 	tool_behaviors = list(TOOL_CROWBAR, TOOL_SCREWDRIVER, TOOL_WELDER)
 	reqs = list(
 		/obj/item/wrench = 4,
