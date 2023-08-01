@@ -65,6 +65,21 @@
 	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_REINFORCED))
 		return "You'll need reinforced fishing line to fish in there"
 
+/datum/fish_source/lavaland/icemoon
+	catalog_description = "Liquid plasma vents"
+	fish_table = list(
+		FISHING_DUD = 5,
+		/obj/item/fish/chasm_crab/ice = 15,
+		/obj/item/coin/plasma = 3,
+		/obj/item/stack/ore/plasma = 3,
+		/mob/living/basic/mining/lobstrosity = 1,
+		/obj/effect/decal/remains/plasma = 1,
+
+	)
+	fish_counts = list(
+		/obj/item/stack/sheet/mineral/adamantine = 3,
+		/obj/item/stack/sheet/mineral/mythril = 2,
+	)
 
 /datum/fish_source/moisture_trap
 	catalog_description = "moisture trap basins"
