@@ -429,27 +429,15 @@
 
 	show_in_report = TRUE
 
-	///The color of the "nebula" we send to the players client
-	var/nebula_color
 	///The parallax layer of the nebula
 	var/nebula_layer = /atom/movable/screen/parallax_layer/random/space_gas
-	///The color space 'glows'
-	var/space_light_color = COLOR_STARLIGHT
 	///If set, gives the basic carp different colors
 	var/carp_color_override
 
 /datum/station_trait/nebula/New()
 	. = ..()
 
-	///We set the parallax layer to give a visual effect
-	SSparallax.random_layer = nebula_layer
-	SSparallax.random_parallax_color = nebula_color //give a unique color to tell the player somethings up
-	GLOB.starlight_color = space_light_color //color starlight in our nebula color
-
-	//parallax is generated for quick-joiners before we can change it, so reset it for them :/
-	for(var/client/client as anything in GLOB.clients)
-		client.parallax_layers_cached?.Cut()
-		client.mob?.hud_used?.update_parallax_pref(client.mob)
+	SSparallax.swap_out_random_parallax_layer(nebula_layer)
 
 	//Color the carp in unique colors to better blend with the nebula
 	if(carp_color_override)
@@ -541,8 +529,7 @@
 	intensity_increment_time = 5 MINUTES
 	maximum_nebula_intensity = 1 HOURS + 40 MINUTES
 
-	nebula_color = list(0,0,0,0, 0,2,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //very vibrant green
-	space_light_color = COLOR_VIBRANT_LIME
+	nebula_layer = /atom/movable/screen/parallax_layer/random/space_gas/radioactive
 	carp_color_override = list(
 		COLOR_CARP_GREEN = 1,
 		COLOR_CARP_TEAL = 1,
@@ -685,3 +672,25 @@
 /datum/station_trait/nebula/hostile/radiation/get_decal_color(atom/thing_to_color, pattern)
 	if(istype(get_area(thing_to_color), /area/station/hallway)) //color hallways green
 		return COLOR_GREEN
+
+///Starts a storm on roundstart
+/datum/station_trait/storm
+	trait_flags = STATION_TRAIT_ABSTRACT
+	var/datum/weather/storm_type
+
+/datum/station_trait/storm/on_round_start()
+	. = ..()
+
+	SSweather.run_weather(storm_type)
+
+/// Calls down an eternal storm on planetary stations
+/datum/station_trait/storm/foreverstorm
+	name = "Forever Storm"
+	trait_type = STATION_TRAIT_NEGATIVE
+	trait_flags = STATION_TRAIT_PLANETARY
+	weight = 3
+	show_in_report = TRUE
+	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
+
+	storm_type = /datum/weather/snow_storm/forever_storm
+

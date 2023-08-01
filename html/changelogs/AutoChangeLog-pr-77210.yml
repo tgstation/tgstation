@@ -1,0 +1,5 @@
+author: "honkpocket"
+delete-after: True
+changes:
+  - rscadd: "Adds an emote to push up glasses with *glasses"
+  - rscadd: "Adds a visual effect to *sigh"

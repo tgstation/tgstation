@@ -534,3 +534,11 @@ BLIND     // can't see anything
 		to_chat(L, span_warning("The damaged threads on your [src.name] chafe!"))
 
 #undef MOTH_EATING_CLOTHING_DAMAGE
+
+/obj/item/clothing/apply_fantasy_bonuses(bonus)
+	. = ..()
+	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = bonus)))
+
+/obj/item/clothing/remove_fantasy_bonuses(bonus)
+	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
+	return ..()

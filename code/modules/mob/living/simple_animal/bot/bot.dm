@@ -27,6 +27,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_power = 0.9
+	del_on_death = TRUE
 
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE
@@ -112,6 +113,10 @@
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 	/// Message to display upon possession
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
+	/// List of strings to sound effects corresponding to automated messages the bot can play
+	var/list/automated_announcements
+	/// Action we use to say voice lines out loud, also we just pass anything we try to say through here just in case it plays a voice line
+	var/datum/action/cooldown/bot_announcement/pa_system
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -195,10 +200,13 @@
 	if(mapload && is_station_level(z) && bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT && bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION)
 		enable_possession(mapload = mapload)
 
+	pa_system = new(src, automated_announcements = automated_announcements)
+	pa_system.Grant(src)
+
 /mob/living/simple_animal/bot/Destroy()
-	if(paicard)
-		ejectpai()
 	GLOB.bots_list -= src
+	QDEL_NULL(paicard)
+	QDEL_NULL(pa_system)
 	QDEL_NULL(personality_download)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
@@ -299,6 +307,8 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/death(gibbed)
+	if(paicard)
+		ejectpai()
 	explode()
 	return ..()
 
@@ -308,7 +318,6 @@
 	var/atom/location_destroyed = drop_location()
 	if(prob(50))
 		drop_part(robot_arm, location_destroyed)
-	qdel(src)
 
 /mob/living/simple_animal/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -526,13 +535,14 @@
 	if(was_on)
 		turn_on()
 
-/mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
-	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
+/**
+ * Pass a message to have the bot say() it, passing through our announcement action to potentially also play a sound.
+ * Optionally pass a frequency to say it on the radio.
+ */
+/mob/living/simple_animal/bot/proc/speak(message, channel)
+	if(!message)
 		return
-	if(channel && internal_radio.channels[channel])// Use radio if we have channel key
-		internal_radio.talk_into(src, message, channel)
-	else
-		say(message)
+	pa_system.announce(message, channel)
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
@@ -1069,6 +1079,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	disable_possession()
 	if(paicard.pai.holoform)
 		paicard.pai.fold_in()
+	copy_languages(paicard.pai, source_override = LANGUAGE_PAI)
+	set_active_language(paicard.pai.get_selected_language())
 	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
 	paicard.pai.mind.transfer_to(src)
 	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
@@ -1104,6 +1116,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	paicard = null
 	name = initial(src.name)
 	faction = initial(faction)
+	remove_all_languages(source = LANGUAGE_PAI)
+	get_selected_language()
 
 /// Ejects the pAI remotely.
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
