@@ -213,6 +213,19 @@
 				"rate" = reagent.rate
 			))
 		seed_data["volume_mod"] = (locate(/datum/plant_gene/trait/maxchem) in to_add.genes) ? 2 : 1
+		seed_data["mutatelist"] = list()
+		for(var/obj/item/seeds/mutant as anything in to_add.mutatelist)
+			seed_data["mutatelist"] += initial(mutant.plantname)
+		var/obj/item/food/grown/product = new to_add.product
+		if(product)
+			var/datum/reagent/product_distill_reagent = product.distill_reagent
+			seed_data["distill_reagent"] = initial(product_distill_reagent.name)
+			var/datum/reagent/product_juice_typepath = product.juice_typepath
+			seed_data["juice_name"] = initial(product_juice_typepath.name)
+			seed_data["grind_results"] = list()
+			for(var/datum/reagent/reagent as anything in product.grind_results)
+				seed_data["grind_results"] += initial(reagent.name)
+		qdel(product)
 		piles[seed_id] = seed_data
 	return TRUE
 
