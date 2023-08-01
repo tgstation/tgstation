@@ -4,17 +4,17 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "f" = (
 /turf/closed/wall,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "p" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/dark,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "v" = (
 /obj/structure/table,
 /obj/item/borg/upgrade/modkit/damage{
@@ -47,7 +47,7 @@
 	pixel_x = -8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "w" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -59,7 +59,7 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "x" = (
 /turf/closed/wall,
 /area/template_noop)
@@ -69,7 +69,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "B" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -87,7 +87,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "C" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -99,7 +99,7 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "H" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -107,13 +107,13 @@
 /obj/effect/mapping_helpers/airlock/access/all,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "K" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/smooth_edge,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "O" = (
 /obj/structure/table,
 /obj/item/gun/energy/recharge/kinetic_accelerator{
@@ -129,14 +129,14 @@
 	pixel_y = -4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "P" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "S" = (
 /turf/open/floor/iron/dark/textured_large,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "T" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -144,7 +144,7 @@
 /obj/item/kirbyplants/random,
 /obj/structure/sign/departments/cargo/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "X" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -153,7 +153,7 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "Y" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -163,14 +163,14 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "Z" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /obj/machinery/suit_storage_unit/mining,
 /turf/open/floor/iron/dark,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 
 (1,1,1) = {"
 f

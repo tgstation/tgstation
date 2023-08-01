@@ -1,54 +1,54 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "k" = (
 /turf/closed/wall/mineral/wood,
 /area/template_noop)
 "o" = (
 /turf/open/floor/carpet/green,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "p" = (
 /obj/item/kirbyplants/random/fullysynthetic,
 /turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "s" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/green,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "v" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
 /obj/item/newspaper,
 /turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "x" = (
 /obj/structure/railing,
 /turf/open/floor/carpet/green,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "z" = (
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "G" = (
 /turf/closed/wall/mineral/wood,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "T" = (
 /turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "X" = (
 /obj/machinery/door/airlock/wood/glass,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "Z" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 
 (1,1,1) = {"
 G

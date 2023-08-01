@@ -7,13 +7,13 @@
 	on = 1
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "c" = (
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "h" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/box/corners{
@@ -21,14 +21,14 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "i" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
 /obj/effect/decal/remains/xeno/larva,
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "l" = (
 /obj/structure/table,
 /obj/item/coin/gold{
@@ -41,14 +41,14 @@
 	on = 1
 	},
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "o" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "u" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -56,38 +56,38 @@
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "x" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "A" = (
 /turf/closed/wall/rock,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "B" = (
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "H" = (
 /turf/closed/mineral/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "I" = (
 /obj/machinery/door/airlock/maintenance/glass,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "M" = (
 /obj/effect/turf_decal/siding/yellow,
 /obj/structure/railing/corner,
 /obj/effect/decal/remains/xeno,
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "N" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "Q" = (
 /turf/closed/mineral/asteroid,
 /area/template_noop)
@@ -99,16 +99,16 @@
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "T" = (
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "U" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
 /turf/open/misc/asteroid,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 
 (1,1,1) = {"
 H

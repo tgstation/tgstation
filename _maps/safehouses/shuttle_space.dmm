@@ -2,12 +2,12 @@
 "a" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "b" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "c" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/stripes/line{
@@ -16,20 +16,20 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "d" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/template_noop)
 "i" = (
 /turf/closed/wall/mineral/titanium/overspace,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "l" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "n" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -41,7 +41,7 @@
 	icon_screen = "shuttle"
 	},
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "o" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -50,7 +50,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "q" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/stripes/line{
@@ -60,25 +60,25 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "r" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "z" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "A" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
 /obj/effect/turf_decal/sand/volcanic,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "B" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -89,12 +89,12 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "D" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "E" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -104,14 +104,14 @@
 /obj/effect/turf_decal/sand/volcanic,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/white,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "G" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "H" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "I" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/stripes/line{
@@ -120,7 +120,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "L" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -132,7 +132,7 @@
 	},
 /obj/item/clothing/mask/gas,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "N" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
@@ -142,7 +142,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "O" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/chair/comfy/shuttle{
@@ -150,26 +150,26 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "U" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "W" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "Y" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 
 (1,1,1) = {"
 i

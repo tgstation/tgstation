@@ -2,7 +2,7 @@
 "a" = (
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating/snowed,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "c" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
@@ -13,21 +13,21 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "f" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 9
 	},
 /turf/open/floor/vault,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "g" = (
 /obj/effect/spawner/structure/window/ice,
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/plating/snowed,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "i" = (
 /turf/closed/wall/ice,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "m" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -35,7 +35,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "n" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -47,14 +47,14 @@
 /obj/item/grown/log,
 /obj/item/hatchet/wooden,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "o" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 5
 	},
 /turf/open/floor/vault,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "p" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -62,11 +62,11 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/vault,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "u" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "v" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -74,7 +74,7 @@
 	dir = 5
 	},
 /turf/open/floor/pod,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "x" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -82,7 +82,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/vending/coffee,
 /turf/open/floor/plating/snowed,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -90,7 +90,7 @@
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plating/snowed,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "A" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -98,7 +98,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/vault,
-/area/station/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse/send)
 "B" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -108,7 +108,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/snowed,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "C" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -124,7 +124,7 @@
 	pixel_y = 14
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "D" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -133,11 +133,11 @@
 	dir = 9
 	},
 /turf/open/floor/pod,
-/area/station/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse/exit)
 "I" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "L" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
@@ -146,7 +146,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/smartfridge/drying_rack,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "O" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -158,7 +158,7 @@
 /obj/machinery/door/airlock/freezer,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating/snowed,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "R" = (
 /turf/closed/wall/ice,
 /area/template_noop)
@@ -173,7 +173,7 @@
 	pixel_y = 15
 	},
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "W" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -181,7 +181,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/internals,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 "Z" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
@@ -196,7 +196,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron,
-/area/station/virtual_domain/safehouse)
+/area/virtual_domain/safehouse)
 
 (1,1,1) = {"
 i
