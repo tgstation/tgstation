@@ -512,6 +512,7 @@
 		to_chat(user, span_notice("You fail to grind [item]."))
 		return
 	to_chat(user, span_notice("You grind [item] into a nice powder."))
+	grinded = null
 	QDEL_NULL(item)
 
 /obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
@@ -519,6 +520,7 @@
 		to_chat(user, span_notice("You fail to juice [item]."))
 		return
 	to_chat(user, span_notice("You juice [item] into a fine liquid."))
+	grinded = null
 	QDEL_NULL(item)
 
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer

@@ -957,6 +957,7 @@
 	reagents.add_reagent_list(grind_results)
 	if(reagents && target_holder)
 		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+	return TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
@@ -971,6 +972,7 @@
 	reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
 	if(reagents && target_holder)
 		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+	return TRUE
 
 /obj/item/proc/set_force_string()
 	switch(force)

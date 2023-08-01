@@ -47,7 +47,6 @@
 		use_power(active_power_usage)
 		if(I.grind_results)
 			I.grind(src, src)
-			reagents.add_reagent_list(I.grind_results)
 		else if (I.juice_typepath)
 			I.juice(src, src)
 		qdel(I)
