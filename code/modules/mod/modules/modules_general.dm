@@ -14,6 +14,8 @@
 	var/max_combined_w_class = 15
 	/// Max amount of items in the storage.
 	var/max_items = 7
+	/// Is nesting same-size storage items allowed?
+	var/big_nesting = FALSE
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
@@ -24,6 +26,7 @@
 /obj/item/mod/module/storage/on_install()
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
+	modstorage.allow_big_nesting = big_nesting
 	atom_storage.locked = STORAGE_NOT_LOCKED
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
@@ -83,6 +86,7 @@
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
 	max_items = 21
+	big_nesting = TRUE
 
 ///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
@@ -504,9 +508,7 @@
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	on_emp(src, severity)
+	on_emp(src, severity, .)
 
 /obj/item/mod/module/dna_lock/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -521,9 +523,10 @@
 	balloon_alert(user, "dna locked!")
 	return FALSE
 
-/obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity)
+/obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity, protection)
 	SIGNAL_HANDLER
-
+	if(protection & EMP_PROTECT_SELF)
+		return
 	dna = null
 
 /obj/item/mod/module/dna_lock/proc/on_emag(datum/source, mob/user, obj/item/card/emag/emag_card)

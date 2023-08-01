@@ -219,8 +219,10 @@
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
 
-/obj/item/Initialize(mapload)
+	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
+	var/list/fantasy_modifications
 
+/obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
 	if(attack_verb_simple)
@@ -1555,3 +1557,41 @@
 /obj/item/update_atom_colour()
 	. = ..()
 	update_slot_icon()
+
+/// Modifies the fantasy variable
+/obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
+	if(LAZYACCESS(fantasy_modifications, variable_key) != null)
+		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
+	var/intended_target = value + bonus
+	value = max(minimum, intended_target)
+
+	var/difference = intended_target - value
+	var/modified_amount = bonus - difference
+	LAZYSET(fantasy_modifications, variable_key, modified_amount)
+	return value
+
+/// Returns the original fantasy variable value
+/obj/item/proc/reset_fantasy_variable(variable_key, current_value)
+	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+	LAZYREMOVE(fantasy_modifications, variable_key)
+	if(!modification)
+		return current_value
+	return current_value - modification
+
+/obj/item/proc/apply_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_APPLY_FANTASY_BONUSES, bonus)
+	force = modify_fantasy_variable("force", force, bonus)
+	throwforce = modify_fantasy_variable("throwforce", throwforce, bonus)
+	wound_bonus = modify_fantasy_variable("wound_bonus", wound_bonus, bonus)
+	bare_wound_bonus = modify_fantasy_variable("bare_wound_bonus", bare_wound_bonus, bonus)
+	toolspeed = modify_fantasy_variable("toolspeed", toolspeed, -bonus/10, minimum = 0.1)
+
+/obj/item/proc/remove_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	force = reset_fantasy_variable("force", force)
+	throwforce = reset_fantasy_variable("throwforce", throwforce)
+	wound_bonus = reset_fantasy_variable("wound_bonus", wound_bonus)
+	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
+	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
+	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
