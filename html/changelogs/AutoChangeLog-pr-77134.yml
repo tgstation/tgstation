@@ -1,6 +1,0 @@
-author: "YesterdaysPromise"
-delete-after: True
-changes:
-  - rscadd: "Added couple new signs to the game (med, medbay, morgue, chapel, viro, gene, botany)"
-  - rscadd: "Way-signs now have additional states, showing vertical directions."
-  - image: "Made the font on the signs consistant."
