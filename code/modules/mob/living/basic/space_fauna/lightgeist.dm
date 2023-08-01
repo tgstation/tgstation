@@ -71,8 +71,6 @@
 	if(.)
 		death()
 
-/// This is a bit neutered since these aren't intended to exist outside of player control, but it's a bit weird to just have these guys be completely stationary.
-/// No attacking or anything like that, though. Just something so they seem alive.
 /datum/ai_controller/basic_controller/lightgeist
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/lightgeist,
