@@ -68,6 +68,7 @@
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
+			cure()
 			return FALSE
 
 	if(has_cure())
