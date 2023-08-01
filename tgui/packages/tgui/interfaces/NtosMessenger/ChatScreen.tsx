@@ -3,6 +3,7 @@ import { Component, RefObject, createRef, SFC } from 'inferno';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';
+import { decodeHtmlEntities } from 'common/string';
 
 type ChatScreenProps = {
   canReply: BooleanLike;
@@ -385,9 +386,11 @@ type ChatMessageProps = {
 const ChatMessage = (props: ChatMessageProps) => {
   const { message, everyone, outgoing, photoPath, onPreviewImage } = props;
 
+  const displayMessage = decodeHtmlEntities(message);
+
   return (
     <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
-      <Box className="NtosChatMessage__content">{message}</Box>
+      <Box className="NtosChatMessage__content">{displayMessage}</Box>
       {photoPath !== null && (
         <Button
           tooltip="View image"
