@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Traitors using the sneak suit and heretics under the effects of cloak no longer leak their identity via Text to Speech"
