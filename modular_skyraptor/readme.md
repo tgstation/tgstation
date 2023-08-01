@@ -270,6 +270,13 @@ Due to the order in which BYOND loads files, any defines your modules add need t
 If you have a define that's used in more than one file, **put it in there**, while any defines used only within a single file should be declared at the top of their DM, and **undefined** at the end with `#undef MY_DEFINE` at the bottom to avoid bloat in context menus or IDEs.
 
 
+## Species Addition Specifics
+If you're adding a new species with an associated language, *be sure to give it a bespoke icon file*!  We're doing this to avoid merge conflicts with binaries.  Additionally, if they're intended to be a roundstart species, make sure to include their language in get_possible_languages for the baseline tongue class!  This ensures that people taking languages for quirk points will be able to speak it!  Unless you have a *really good reason* why most critters SHOULDN'T be able to verbalize it, you're hampering QOL and character customization for people playing linguists- and that's no good!
+
+```/obj/item/organ/internal/tongue/get_possible_languages()
+	return ..() + /datum/language/your_language_here```
+
+
 
 ## Afterword
 This has been quite the wall of text, to be sure, but it is for the better - the cleaner we can write our code, the easier it is to maintain the server & keep everything moving.  Massive thanks to the contribs who wrote up Skyrat's modularization guide - much of their design philosophy is still present here.

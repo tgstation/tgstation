@@ -32,3 +32,6 @@
 							/datum/language/moffic = list(LANGUAGE_ATOM),
 							/datum/language/calcic = list(LANGUAGE_ATOM),
 							/datum/language/nekomimetic = list(LANGUAGE_ATOM))
+
+/obj/item/organ/internal/tongue/get_possible_languages()
+	return ..() + /datum/language/slugcat

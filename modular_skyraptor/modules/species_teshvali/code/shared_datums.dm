@@ -18,3 +18,6 @@
 								/datum/language/teshvali = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/teshvali = list(LANGUAGE_ATOM))
+
+/obj/item/organ/internal/tongue/get_possible_languages()
+	return ..() + /datum/language/teshvali
