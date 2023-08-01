@@ -2,13 +2,13 @@
 "aj" = (
 /obj/item/pickaxe,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ce" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "cr" = (
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood/old,
@@ -17,25 +17,25 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "cL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "cT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/closed/indestructible/binary,
-/area/space)
+/area/lavaland/surface/outdoors/virtual_domain)
 "dF" = (
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "dS" = (
 /obj/item/bikehorn,
 /obj/structure/disposalpipe/segment{
@@ -44,16 +44,16 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "eH" = (
 /obj/structure/table/glass,
 /obj/item/grown/bananapeel/bluespace,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "eK" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "eZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -63,7 +63,7 @@
 /obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/escape,
 /obj/item/pen/fourcolor,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "fc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -72,34 +72,34 @@
 /obj/structure/table,
 /obj/item/flashlight/lamp/bananalamp,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "fo" = (
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "fS" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "fU" = (
 /turf/closed/indestructible/binary,
-/area/space)
+/area/lavaland/surface/outdoors/virtual_domain)
 "gu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "hC" = (
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "hQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -108,7 +108,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "if" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -117,16 +117,16 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "iT" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "kb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "kg" = (
 /obj/effect/decal/cleanable/food/pie_smudge,
 /obj/structure/disposalpipe/segment{
@@ -134,13 +134,13 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "kE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "li" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -149,11 +149,11 @@
 /obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ll" = (
 /obj/machinery/light/directional/north,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "mA" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -162,34 +162,34 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/station/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain)
 "mL" = (
 /obj/machinery/disposal/delivery_chute,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ne" = (
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ng" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "nt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
 /turf/open/indestructible/light,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ny" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -197,7 +197,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "nQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -206,29 +206,29 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "nU" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "nV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "oA" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/station/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain)
 "oZ" = (
 /obj/machinery/disposal/delivery_chute{
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "pd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -236,13 +236,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "pt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "pz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -250,11 +250,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "pS" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "qv" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -263,26 +263,26 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "qR" = (
 /obj/structure/table/glass,
 /obj/item/gun/magic/staff/honk,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "rk" = (
 /obj/item/bikehorn/airhorn,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "sl" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/spray/waterflower/superlube,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ss" = (
 /obj/structure/table/glass,
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "sA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -290,24 +290,24 @@
 /obj/item/bikehorn,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "sY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "te" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "tg" = (
 /obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/hope,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "tJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -315,7 +315,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "um" = (
 /obj/item/coin/bananium,
 /obj/item/coin/bananium,
@@ -323,30 +323,33 @@
 /obj/item/coin/bananium,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "us" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/closed/indestructible/binary,
-/area/space)
+/area/lavaland/surface/outdoors/virtual_domain)
 "uB" = (
 /obj/structure/statue/bananium/clown,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "uC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
+"vn" = (
+/turf/closed/wall/r_wall,
+/area/lavaland/surface/outdoors/virtual_domain)
 "we" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "wl" = (
 /obj/machinery/disposal/delivery_chute{
 	desc = "The following is engraved upon the chute: A FATE WORSE THAN DEATH LIES WITHIN";
@@ -356,18 +359,18 @@
 /obj/structure/disposalpipe/trunk,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "wC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "wJ" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "xf" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1;
@@ -376,17 +379,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "xt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "xL" = (
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "yn" = (
 /turf/template_noop,
 /area/template_noop)
@@ -394,23 +397,23 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "zj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "zt" = (
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "zx" = (
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /obj/structure/table/glass,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "zB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -418,35 +421,35 @@
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ab" = (
 /obj/item/bikehorn,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "AM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /turf/closed/indestructible/binary,
-/area/space)
+/area/lavaland/surface/outdoors/virtual_domain)
 "AY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Bs" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Cn" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Dc" = (
 /obj/structure/disposalpipe/trunk,
 /obj/structure/disposaloutlet{
@@ -454,7 +457,7 @@
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ds" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -463,7 +466,7 @@
 	dir = 4
 	},
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "DI" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -472,18 +475,18 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/station/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain)
 "DL" = (
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ey" = (
 /obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Fp" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -492,7 +495,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ft" = (
 /obj/item/coin/bananium,
 /obj/item/coin/bananium,
@@ -500,10 +503,10 @@
 /obj/item/coin/bananium,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "FZ" = (
 /turf/open/lava/smooth,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Gf" = (
 /obj/item/bikehorn,
 /obj/structure/disposalpipe/segment{
@@ -511,7 +514,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "GH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -520,12 +523,12 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "GY" = (
 /obj/item/clothing/head/cone,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "He" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -533,30 +536,30 @@
 /obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "HA" = (
 /obj/structure/marker_beacon/yellow,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/station/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain)
 "HH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/station/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain)
 "HW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ib" = (
 /obj/effect/mapping_helpers/no_lava,
 /mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ik" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -564,17 +567,17 @@
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Il" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/mapping_helpers/no_lava,
 /mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Jy" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "JS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -582,24 +585,24 @@
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "KG" = (
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "KX" = (
 /obj/item/bikehorn,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Lu" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Lz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -607,20 +610,20 @@
 	},
 /obj/item/pickaxe,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "LM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/closed/indestructible/binary,
-/area/space)
+/area/lavaland/surface/outdoors/virtual_domain)
 "LV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
 /turf/closed/indestructible/binary,
-/area/space)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Mb" = (
 /obj/item/bikehorn,
 /obj/structure/disposalpipe/segment{
@@ -628,10 +631,10 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Mf" = (
 /turf/closed/mineral/bananium,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Mm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -639,52 +642,52 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Mx" = (
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ns" = (
 /turf/open/indestructible/light,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "NO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "NR" = (
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ON" = (
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
 /turf/closed/indestructible/binary,
-/area/space)
+/area/lavaland/surface/outdoors/virtual_domain)
 "Pe" = (
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Pt" = (
 /obj/machinery/light/directional/south,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "PT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Qg" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Qi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Qo" = (
 /obj/structure/mecha_wreckage/honker,
 /obj/structure/disposalpipe/segment{
@@ -692,23 +695,30 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "RD" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/mail_sorting/supply/qm_office,
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "RX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Sl" = (
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
+"Tr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/closed/wall/r_wall,
+/area/lavaland/surface/outdoors/virtual_domain)
 "TA" = (
 /obj/item/bikehorn,
 /obj/effect/decal/cleanable/dirt,
@@ -717,17 +727,17 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Ub" = (
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Wd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
 	},
 /turf/closed/wall/r_wall,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Wi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -735,7 +745,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Wy" = (
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
@@ -743,7 +753,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Xg" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -752,18 +762,18 @@
 	dir = 8
 	},
 /turf/open/floor/noslip,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Yt" = (
 /obj/machinery/door/airlock/bananium,
 /turf/open/indestructible/honk,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "YN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/indestructible/white,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "Zz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -771,11 +781,11 @@
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/indestructible/permalube,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 "ZM" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet,
-/area/station/virtual_domain/powered)
+/area/virtual_domain/powered)
 
 (1,1,1) = {"
 yn
@@ -3152,16 +3162,16 @@ NR
 FZ
 FZ
 NR
-NR
-Wd
-NR
-NR
-NR
-NR
-NR
-NR
-NR
-NR
+vn
+Tr
+vn
+vn
+vn
+vn
+vn
+vn
+vn
+vn
 yn
 "}
 (32,1,1) = {"
@@ -3229,7 +3239,7 @@ FZ
 Jy
 FZ
 NR
-NR
+vn
 HH
 oA
 oA
@@ -3306,7 +3316,7 @@ FZ
 Jy
 FZ
 FZ
-NR
+vn
 HH
 HA
 oA
@@ -3383,7 +3393,7 @@ FZ
 Pe
 Jy
 FZ
-NR
+vn
 HH
 oA
 oA
@@ -3460,7 +3470,7 @@ Sl
 FZ
 Jy
 FZ
-NR
+vn
 HH
 oA
 yn
@@ -3537,7 +3547,7 @@ Sl
 FZ
 Jy
 FZ
-NR
+vn
 DI
 oA
 yn
@@ -3614,7 +3624,7 @@ Sl
 FZ
 Jy
 FZ
-NR
+vn
 oA
 oA
 yn
@@ -3691,7 +3701,7 @@ NR
 FZ
 Jy
 FZ
-NR
+vn
 oA
 oA
 yn
@@ -3768,7 +3778,7 @@ Sl
 FZ
 Jy
 FZ
-NR
+vn
 oA
 oA
 yn
@@ -3845,7 +3855,7 @@ Sl
 FZ
 Jy
 FZ
-NR
+vn
 mA
 oA
 yn
@@ -3922,7 +3932,7 @@ Sl
 FZ
 Jy
 FZ
-NR
+vn
 HH
 oA
 yn
@@ -3999,7 +4009,7 @@ FZ
 Jy
 Pe
 FZ
-NR
+vn
 HH
 oA
 oA
@@ -4076,7 +4086,7 @@ FZ
 Jy
 FZ
 FZ
-NR
+vn
 HH
 oA
 oA
@@ -4153,7 +4163,7 @@ NR
 Jy
 FZ
 NR
-NR
+vn
 HH
 oA
 oA
@@ -4230,16 +4240,16 @@ FZ
 Pe
 FZ
 NR
-NR
-Wd
-NR
-NR
-NR
-NR
-NR
-NR
-NR
-NR
+vn
+Tr
+vn
+vn
+vn
+vn
+vn
+vn
+vn
+vn
 yn
 "}
 (46,1,1) = {"

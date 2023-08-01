@@ -2146,7 +2146,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/netpod,
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "aOp" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/trimline/brown/warning,
@@ -5624,7 +5624,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "cdC" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -6587,8 +6587,9 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "cwc" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/circuit/green,
-/area/station/bitminer_receive)
+/area/station/bitmining/receiving)
 "cwq" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -12413,7 +12414,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "eFR" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -13596,7 +13597,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "fdX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -13945,7 +13946,7 @@
 "fjD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "fkb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 10
@@ -15573,7 +15574,7 @@
 /area/station/command/teleporter)
 "fRG" = (
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "fRP" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north,
 /obj/machinery/light/directional/north,
@@ -18654,7 +18655,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "haP" = (
 /obj/structure/chair{
 	dir = 1
@@ -25850,7 +25851,7 @@
 "jwv" = (
 /obj/machinery/quantum_server,
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "jwy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -30019,7 +30020,7 @@
 "kXa" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/circuit/green,
-/area/station/bitminer_receive)
+/area/station/bitmining/receiving)
 "kXl" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -36031,7 +36032,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "nfs" = (
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/rd)
@@ -36062,7 +36063,7 @@
 /area/station/commons/storage/tools)
 "nfK" = (
 /turf/closed/wall,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "nfP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -36171,7 +36172,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/netpod,
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "nib" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -41125,6 +41126,10 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"oXQ" = (
+/obj/effect/landmark/start/bitminer,
+/turf/open/floor/iron/dark,
+/area/station/bitmining/den)
 "oXR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -48404,7 +48409,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "rEr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -49228,7 +49233,7 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "rSi" = (
 /obj/effect/landmark/start/chief_engineer,
 /obj/structure/chair/office/light{
@@ -56276,7 +56281,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "uso" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -59810,7 +59815,7 @@
 /obj/machinery/light/directional/west,
 /obj/structure/railing,
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "vCN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -61555,6 +61560,7 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
+/obj/effect/landmark/start/bitminer,
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
 "wgf" = (
@@ -67339,7 +67345,7 @@
 "ykA" = (
 /obj/machinery/netpod,
 /turf/open/floor/iron/dark,
-/area/station/bitminer_den)
+/area/station/bitmining/den)
 "ykH" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/blobstart,
@@ -84803,7 +84809,7 @@ nfK
 aOo
 haE
 fdU
-fRG
+oXQ
 nfK
 wfZ
 soa
@@ -85315,7 +85321,7 @@ xbd
 pOa
 nfK
 ykA
-fRG
+oXQ
 jwv
 rSb
 nfK

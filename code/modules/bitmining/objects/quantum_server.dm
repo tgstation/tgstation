@@ -11,17 +11,17 @@
 	base_icon_state = "qserver"
 	icon_state = "qserver"
 	/// The area type used to delete objects in the vdom
-	var/area/preset_delete_area = /area/station/virtual_domain/to_delete
+	var/area/preset_delete_area = /area/virtual_domain/to_delete
 	/// The area type used to spawn hololadders
-	var/area/preset_exit_area = /area/station/virtual_domain/safehouse/exit
+	var/area/preset_exit_area = /area/virtual_domain/safehouse/exit
 	/// The area type used as a reference to load templates
-	var/area/preset_mapload_area = /area/station/virtual_domain/bottom_left
+	var/area/preset_mapload_area = /area/virtual_domain/bottom_left
 	/// The area type to receive loot after a domain is completed
-	var/area/preset_receive_area = /area/station/bitminer_receive
+	var/area/preset_receive_area = /area/station/bitmining/receiving
 	/// The area type used as a reference to load the safehouse
-	var/area/preset_safehouse_area = /area/station/virtual_domain/safehouse/bottom_left
+	var/area/preset_safehouse_area = /area/virtual_domain/safehouse/bottom_left
 	/// The area type used in vdom to send loot and mark completion
-	var/area/preset_send_area = /area/station/virtual_domain/safehouse/send
+	var/area/preset_send_area = /area/virtual_domain/safehouse/send
 	/// The loaded map template, map_template/virtual_domain
 	var/datum/map_template/virtual_domain/generated_domain
 	/// The loaded safehouse, map_template/safehouse

@@ -176,6 +176,7 @@
 		ACCESS_CHANGE_IDS,
 		ACCESS_QM,
 		)
+	job = /datum/job/bitminer
 
 /datum/id_trim/job/botanist
 	assignment = "Botanist"

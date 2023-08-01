@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /turf/closed/indestructible/binary,
-/area/space)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "d" = (
 /turf/open/space/basic,
 /area/space)
