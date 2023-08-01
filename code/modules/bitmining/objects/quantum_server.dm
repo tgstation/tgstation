@@ -78,7 +78,6 @@
 	RegisterSignals(src, list(
 		COMSIG_MACHINERY_BROKEN,
 		COMSIG_MACHINERY_POWER_LOST,
-		COMSIG_QDELETING
 		),
 		PROC_REF(on_broken)
 	)
@@ -92,6 +91,8 @@
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
+	if(vdom_ref)
+		scrub_vdom_contents()
 	toast_circuit()
 	occupant_mind_refs.Cut()
 	available_domains.Cut()
@@ -167,7 +168,7 @@
 	if(!length(occupant_mind_refs))
 		balloon_alert(user, "powering down domain...")
 		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
-		stop_domain(user)
+		stop_domain()
 		return
 
 	balloon_alert(user, "notifying clients...")
@@ -176,7 +177,7 @@
 	if(!do_after(user, 20 SECONDS, src))
 		return
 
-	stop_domain(user)
+	stop_domain()
 
 /// Handles calculating rewards based on number of players, parts, etc
 /obj/machinery/quantum_server/proc/calculate_rewards()
@@ -482,7 +483,11 @@
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, PROC_REF(stop_domain))
+	var/datum/space_level/vdom = vdom_ref?.resolve()
+	if(isnull(vdom))
+		return
+
+	stop_domain()
 
 /// Each time someone connects, mob health jumps 1.5x
 /obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_mind)
@@ -530,25 +535,9 @@
 		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 		return
 
-/// Do some magic teleport sparks
-/obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
-	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
-	var/datum/effect_system/spark_spread/quantum/sparks = new()
-	sparks.set_up(5, 1, get_turf(crate))
-	sparks.start()
-
-/// Stops the current virtual domain and disconnects all users
-/obj/machinery/quantum_server/proc/stop_domain()
-	loading = TRUE
-	domain_randomized = FALSE
-	cooling_off = TRUE
+/// Disconnects everyone and deletes all the tile contents
+/obj/machinery/quantum_server/proc/scrub_vdom_contents()
 	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR)
-	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * server_cooldown_efficiency), TIMER_UNIQUE|TIMER_STOPPABLE)
-
-	var/datum/space_level/vdom = vdom_ref?.resolve()
-	if(isnull(vdom))
-		loading = FALSE
-		return
 
 	for(var/turf/tile in send_turfs)
 		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
@@ -556,18 +545,6 @@
 
 	for(var/turf/tile in exit_turfs)
 		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
-
-	if(!length(map_load_turf))
-		map_load_turf = get_area_turfs(preset_mapload_area, vdom.z_value)
-
-	if(!length(map_load_turf))
-		stack_trace("Failed to find map load turfs in the vdom.")
-		loading = FALSE
-		return
-
-	// Applies a fresh template onto the map
-	var/datum/map_template/virtual_domain/fresh_map = new()
-	fresh_map.load(map_load_turf[ONLY_TURF])
 
 	for(var/turf/tile in delete_turfs)
 		for(var/thing in tile.contents)
@@ -579,10 +556,34 @@
 			if(!isobserver(thing))
 				qdel(thing)
 
-	generated_domain = null
-	generated_safehouse = null
-	retries_spent = 0
+/// Replaces all tiles on the map with a fresh vdom
+/obj/machinery/quantum_server/proc/scrub_vdom_map()
+	var/datum/map_template/virtual_domain/fresh_map = new()
+	fresh_map.load(map_load_turf[ONLY_TURF])
+
+/// Do some magic teleport sparks
+/obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
+	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
+	var/datum/effect_system/spark_spread/quantum/sparks = new()
+	sparks.set_up(5, 1, get_turf(crate))
+	sparks.start()
+
+/// Stops the current virtual domain and disconnects all users
+/obj/machinery/quantum_server/proc/stop_domain()
+	loading = TRUE
+
+	scrub_vdom_contents()
+	scrub_vdom_map()
+
+	QDEL_NULL(generated_domain)
+	QDEL_NULL(generated_safehouse)
+
+	cooling_off = TRUE
+	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * server_cooldown_efficiency), TIMER_UNIQUE|TIMER_STOPPABLE)
 	update_appearance()
+
+	domain_randomized = FALSE
+	retries_spent = 0
 	loading = FALSE
 
 /// If someone tries to rebuild it to skirt the cooldown, break the board (it's hot!)
