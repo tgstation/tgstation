@@ -11887,7 +11887,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/chair/office/tactical,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "eBV" = (
@@ -19540,7 +19539,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/machinery/iv_drip,
+/obj/structure/chair/office/tactical{
+	dir = 1
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "hky" = (
@@ -36971,13 +36972,11 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/auxlab/firing_range)
 "ntW" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 5
-	},
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 2
-	},
 /obj/machinery/light/small/directional/north,
+/obj/machinery/vending/wardrobe/coroner_wardrobe,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "ntX" = (
@@ -57331,6 +57330,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "uhu" = (
@@ -62894,7 +62894,8 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
-/obj/machinery/vending/wardrobe/coroner_wardrobe,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "vWe" = (
@@ -65833,7 +65834,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wRU" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/plating,
 /area/station/medical/morgue)
 "wRW" = (
@@ -70337,9 +70338,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "yaJ" = (
-/obj/machinery/smartfridge/organ,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/small/directional/south,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "yaL" = (
