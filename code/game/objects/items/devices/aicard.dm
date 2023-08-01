@@ -81,6 +81,7 @@
 		// Make it look evil!!!
 		AI.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
 		AI.icon_state = resolve_ai_icon("hades") // evli
+		AI.forceMove(src)
 		do_sparks(4, TRUE, src)
 		playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
 	else
