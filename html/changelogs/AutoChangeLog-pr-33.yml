@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored chameleon actions a fair bit"
-  - rscadd: "Adds outfit saving to chameleon clothes. RMB the \"chameleon outfit\" action to save your current chameleon setup for quick swapping."
-  - rscadd: "Swapping between chameleon outfits now has a slight \"animation\" associated, to distinguish traitors from lings slightly."
-  - rscadd: "Adds a new chameleon item, the \"Chameleon Scanner\". Use it on other crewmembers to stealthily save their current outfit as a custom outfit to use later. And of course, it's chameleon too."
-  - bugfix: "Ethereals, the DNA lock mod, GPSs, and storage items now respect EMP protection"
