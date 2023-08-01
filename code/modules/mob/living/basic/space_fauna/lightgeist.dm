@@ -65,6 +65,10 @@
 		complete_text = "%TARGET%'s wounds mend together.",\
 	)
 
+/mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers)
+	if (isliving(target))
+		faction |= REF(target) // Anyone we heal will treat us as a friend
+	return ..()
 
 /mob/living/basic/lightgeist/ghost()
 	. = ..()
