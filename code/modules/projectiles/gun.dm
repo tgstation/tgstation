@@ -51,6 +51,7 @@
 	var/projectile_damage_multiplier = 1
 
 	/// Also slightly snowflakey way to modify projectile wound bonus for projectiles fired from this gun.
+	/// Most bullets don't really have a non-zero wound bonus, actually, on further testing, so...
 	var/projectile_wound_multiplier = 1
 
 	var/spread = 0 //Spread induced by the gun itself.
