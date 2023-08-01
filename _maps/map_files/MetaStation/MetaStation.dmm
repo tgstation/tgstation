@@ -727,11 +727,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
-"aog" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "aok" = (
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -2140,13 +2135,17 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "aOo" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/sink/kitchen/directional/south{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink"
+	},
+/obj/effect/landmark/generic_maintenance_landmark,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/netpod,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/turf/open/floor/plating,
+/area/station/commons/toilet/auxiliary)
 "aOp" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/trimline/brown/warning,
@@ -5052,8 +5051,10 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "bRG" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/landmark/start/hangover,
+/obj/machinery/shower/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/commons/toilet/auxiliary)
 "bRH" = (
@@ -5620,11 +5621,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "cdv" = (
-/obj/machinery/computer/quantum_console{
-	dir = 8
+/obj/machinery/door/airlock{
+	id_tag = "AuxToilet1";
+	name = "Unit 1"
 	},
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "cdC" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -6587,9 +6589,12 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "cwc" = (
-/obj/effect/landmark/atmospheric_sanity/ignore_area,
-/turf/open/floor/circuit/green,
-/area/station/bitmining/receiving)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/urinal/directional/west,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "cwq" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -10037,7 +10042,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/departments/cargo/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "dPV" = (
@@ -12408,13 +12412,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"eFQ" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Bitmining Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/turf/open/floor/plating,
-/area/station/bitmining/den)
 "eFR" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -13592,12 +13589,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
-"fdU" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
 "fdX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -13944,9 +13935,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "fjD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/bitmining/den)
+/turf/closed/wall,
+/area/station/commons/toilet/auxiliary)
 "fkb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 10
@@ -15573,8 +15563,12 @@
 /turf/open/floor/iron,
 /area/station/command/teleporter)
 "fRG" = (
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/obj/machinery/firealarm/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "fRP" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint/directional/north,
 /obj/machinery/light/directional/north,
@@ -18650,12 +18644,10 @@
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "haE" = (
+/obj/structure/mirror/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/turf/open/floor/plating,
+/area/station/commons/toilet/auxiliary)
 "haP" = (
 /obj/structure/chair{
 	dir = 1
@@ -19499,8 +19491,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "hsF" = (
-/obj/machinery/shower/directional/north,
-/turf/open/floor/iron,
+/obj/machinery/door/airlock{
+	id_tag = "AuxToilet3";
+	name = "Unit 3"
+	},
+/turf/open/floor/plating,
 /area/station/commons/toilet/auxiliary)
 "hsN" = (
 /obj/structure/cable,
@@ -20136,11 +20131,6 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/sign/map/right{
-	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
-	icon_state = "map-right-MS";
-	pixel_y = -32
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "hCK" = (
@@ -22346,13 +22336,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
-"isj" = (
-/obj/machinery/airalarm/directional/east,
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/turf/open/floor/iron,
-/area/station/commons/toilet/auxiliary)
 "isl" = (
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/plating,
@@ -25417,9 +25400,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "jql" = (
-/obj/machinery/shower/directional/north,
-/obj/effect/spawner/random/trash/soap{
-	spawn_scatter_radius = 1
+/obj/machinery/door/airlock{
+	id_tag = "AuxToilet2";
+	name = "Unit 2"
 	},
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
@@ -25848,9 +25831,21 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "jwv" = (
-/obj/machinery/quantum_server,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small/directional/east,
+/obj/machinery/newscaster/directional/south,
+/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start/hangover,
+/obj/machinery/button/door/directional/east{
+	id = "AuxToilet1";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "jwy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -30017,9 +30012,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kXa" = (
-/obj/machinery/airalarm/directional/south,
-/turf/open/floor/circuit/green,
-/area/station/bitmining/receiving)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/urinal/directional/west,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "kXl" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -31992,8 +31990,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "lMY" = (
+/obj/machinery/shower/directional/east,
+/obj/machinery/light/small/directional/south,
 /obj/effect/spawner/random/trash/mess,
-/obj/machinery/shower/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
 "lNb" = (
@@ -32276,6 +32275,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lQW" = (
+/obj/structure/sign/map/left{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-left-MS";
+	pixel_y = -32
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -36026,12 +36030,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
-"neZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
 "nfs" = (
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/rd)
@@ -36061,8 +36059,21 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "nfK" = (
-/turf/closed/wall,
-/area/station/bitmining/den)
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small/directional/east,
+/obj/machinery/newscaster/directional/south,
+/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start/hangover,
+/obj/machinery/button/door/directional/east{
+	id = "AuxToilet2";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "nfP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -36168,10 +36179,10 @@
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "nhS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/netpod,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/obj/machinery/vending/cigarette,
+/obj/structure/sign/poster/official/random/directional/east,
+/turf/open/floor/plating,
+/area/station/commons/toilet/auxiliary)
 "nib" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -37854,11 +37865,6 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/obj/structure/sign/map/left{
-	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
-	icon_state = "map-left-MS";
-	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -39843,11 +39849,20 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "oyx" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
+/obj/machinery/button/door/directional/east{
+	id = "AuxToilet3";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/plating,
 /area/station/commons/toilet/auxiliary)
 "oyO" = (
 /obj/structure/disposalpipe/segment{
@@ -41125,10 +41140,6 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"oXQ" = (
-/obj/effect/landmark/start/bitminer,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
 "oXR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -43734,7 +43745,17 @@
 /turf/open/floor/iron,
 /area/station/maintenance/central)
 "pUl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/shower/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/north{
+	id = "AuxShower";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/effect/spawner/random/trash/soap{
+	spawn_scatter_radius = 1
+	},
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
 "pUp" = (
@@ -44913,7 +44934,12 @@
 /area/station/hallway/primary/central)
 "qsu" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/closed/wall,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
 /area/station/maintenance/port)
 "qsv" = (
 /obj/effect/spawner/structure/window,
@@ -46685,9 +46711,7 @@
 /area/station/engineering/atmos/storage/gas)
 "qXm" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "qXt" = (
@@ -48404,11 +48428,16 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "rEj" = (
+/obj/structure/sink/kitchen/directional/south{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink"
+	},
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "rEr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -49228,11 +49257,6 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"rSb" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
 "rSi" = (
 /obj/effect/landmark/start/chief_engineer,
 /obj/structure/chair/office/light{
@@ -50358,7 +50382,7 @@
 "soa" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/poster/official/random/directional/south,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/commons/toilet/auxiliary)
 "soi" = (
 /obj/machinery/door/airlock/maintenance,
@@ -52421,10 +52445,6 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
-"sZm" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/station/commons/toilet/auxiliary)
 "sZo" = (
 /obj/machinery/light/directional/north,
 /obj/structure/reagent_dispensers/watertank/high,
@@ -53112,9 +53132,11 @@
 /area/station/service/chapel)
 "tmI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
+/obj/machinery/door/airlock{
+	id_tag = "AuxShower";
+	name = "Showers"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
 "tmJ" = (
@@ -56271,16 +56293,15 @@
 /area/station/maintenance/port)
 "usk" = (
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Auxiliary Bathrooms"
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/mining{
-	name = "Bitmining: Den"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron,
-/area/station/bitmining/den)
+/area/station/commons/toilet/auxiliary)
 "uso" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -59811,10 +59832,15 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "vCu" = (
-/obj/machinery/light/directional/west,
-/obj/structure/railing,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/camera/directional/west{
+	c_tag = "Auxilary Restrooms"
+	},
+/obj/structure/sign/poster/official/random/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/toilet/auxiliary)
 "vCN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -60251,6 +60277,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "vJB" = (
+/obj/structure/sign/map/right{
+	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
+	icon_state = "map-right-MS";
+	pixel_y = -32
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -60953,14 +60984,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"vVX" = (
-/obj/machinery/door/airlock{
-	id_tag = "AuxShower";
-	name = "Showers"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/commons/toilet/auxiliary)
 "vVZ" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
@@ -61555,12 +61578,9 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "wfZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/obj/effect/landmark/start/bitminer,
-/turf/open/floor/iron,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
 /area/station/commons/toilet/auxiliary)
 "wgf" = (
 /obj/effect/turf_decal/delivery,
@@ -67341,10 +67361,6 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/carpet,
 /area/station/service/theater)
-"ykA" = (
-/obj/machinery/netpod,
-/turf/open/floor/iron/dark,
-/area/station/bitmining/den)
 "ykH" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/blobstart,
@@ -84038,7 +84054,7 @@ aal
 dPQ
 xYy
 vJB
-vVX
+fjD
 pUl
 lMY
 pOa
@@ -84290,12 +84306,12 @@ bZY
 xOw
 spH
 dHc
-nfK
+fjD
 usk
-nfK
 fjD
 fjD
-nfK
+fjD
+fjD
 vsr
 bRG
 pOa
@@ -84547,14 +84563,14 @@ hyW
 pTf
 iOc
 qwG
-nfK
+fjD
 rEj
 vCu
 cwc
 kXa
-nfK
+fjD
 tmI
-jql
+fjD
 pOa
 cIW
 tKj
@@ -84804,12 +84820,12 @@ hyW
 xOw
 iOc
 mAs
-nfK
+fjD
 aOo
 haE
-fdU
-oXQ
-nfK
+vsr
+fRG
+vsr
 wfZ
 soa
 pOa
@@ -85063,11 +85079,11 @@ iOc
 rcW
 fjD
 nhS
-neZ
+fjD
 cdv
-fRG
-nfK
-sZm
+fjD
+jql
+fjD
 hsF
 pOa
 vJY
@@ -85318,13 +85334,13 @@ hyW
 xOw
 xbd
 pOa
-nfK
-ykA
-oXQ
+pOa
+pOa
+pOa
 jwv
-rSb
+fjD
 nfK
-isj
+fjD
 oyx
 pOa
 xgG
@@ -85577,10 +85593,10 @@ mux
 pOa
 qXm
 qsu
-eFQ
-nfK
-nfK
-nfK
+pOa
+pOa
+pOa
+pOa
 pOa
 pOa
 pOa
@@ -86090,7 +86106,7 @@ pqc
 rkM
 pOa
 hKp
-aog
+rpE
 vXH
 usi
 sNM
