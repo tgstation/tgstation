@@ -156,6 +156,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/freezer,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating/snowed,
 /area/station/virtual_domain/safehouse)
 "R" = (
@@ -178,6 +179,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/internals,
 /turf/open/floor/iron,
 /area/station/virtual_domain/safehouse)
 "Z" = (

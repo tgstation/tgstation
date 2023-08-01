@@ -81,6 +81,7 @@
 		),
 		PROC_REF(on_broken)
 	)
+	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(src, COMSIG_BITMINING_CLIENT_CONNECTED, PROC_REF(on_client_connected))
 	RegisterSignal(src, COMSIG_BITMINING_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
@@ -91,9 +92,6 @@
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
-	if(vdom_ref)
-		scrub_vdom_contents()
-	toast_circuit()
 	occupant_mind_refs.Cut()
 	available_domains.Cut()
 	QDEL_NULL(delete_turfs)
@@ -220,6 +218,14 @@
 	balloon_alert(user, "initializing virtual domain...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
+	var/datum/space_level/loaded_zlevel = vdom_ref?.resolve()
+	if(isnull(loaded_zlevel))
+		if(!initialize_virtual_domain())
+			loading = FALSE
+			return FALSE
+	else
+		scrub_vdom_map()
+
 	var/datum/map_template/virtual_domain/to_generate = initialize_domain(map_id)
 	if(isnull(to_generate))
 		balloon_alert(user, "invalid domain specified.")
@@ -229,11 +235,6 @@
 	points -= to_generate.cost
 	if(points < 0)
 		balloon_alert(user, "not enough points.")
-		loading = FALSE
-		return FALSE
-
-	var/datum/space_level/loaded_zlevel = vdom_ref?.resolve()
-	if(isnull(loaded_zlevel) && !initialize_virtual_domain())
 		loading = FALSE
 		return FALSE
 
@@ -483,8 +484,7 @@
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
-	var/datum/space_level/vdom = vdom_ref?.resolve()
-	if(isnull(vdom))
+	if(isnull(generated_domain))
 		return
 
 	stop_domain()
@@ -500,6 +500,21 @@
 	SIGNAL_HANDLER
 
 	occupant_mind_refs -= old_mind
+
+/// Being qdeleted - make sure the circuit and connected mobs go with it
+/obj/machinery/quantum_server/proc/on_delete(datum/source)
+	SIGNAL_HANDLER
+
+	if(generated_domain)
+		SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR)
+		scrub_vdom_contents()
+
+	if(get_is_ready())
+		return
+
+	var/obj/item/circuitboard/machine/quantum_server/circuit = locate(/obj/item/circuitboard/machine/quantum_server) in contents
+	if(circuit)
+		qdel(circuit)
 
 /// Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.
 /obj/machinery/quantum_server/proc/on_send_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -535,10 +550,8 @@
 		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 		return
 
-/// Disconnects everyone and deletes all the tile contents
+/// Deletes all the tile contents
 /obj/machinery/quantum_server/proc/scrub_vdom_contents()
-	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR)
-
 	for(var/turf/tile in send_turfs)
 		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
 		UnregisterSignal(tile, COMSIG_ATOM_EXAMINE)
@@ -547,6 +560,11 @@
 		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
 
 	for(var/turf/tile in delete_turfs)
+		for(var/thing in tile.contents)
+			if(!isobserver(thing))
+				qdel(thing)
+
+	for(var/turf/tile in delete_turfs) // some things drop items
 		for(var/thing in tile.contents)
 			if(!isobserver(thing))
 				qdel(thing)
@@ -572,8 +590,9 @@
 /obj/machinery/quantum_server/proc/stop_domain()
 	loading = TRUE
 
+	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR)
+
 	scrub_vdom_contents()
-	scrub_vdom_map()
 
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
@@ -585,15 +604,6 @@
 	domain_randomized = FALSE
 	retries_spent = 0
 	loading = FALSE
-
-/// If someone tries to rebuild it to skirt the cooldown, break the board (it's hot!)
-/obj/machinery/quantum_server/proc/toast_circuit()
-	if(get_is_ready())
-		return
-
-	var/obj/item/circuitboard/machine/quantum_server/circuit = locate(/obj/item/circuitboard/machine/quantum_server) in contents
-	if(circuit)
-		qdel(circuit)
 
 #undef ONLY_TURF
 #undef REDACTED

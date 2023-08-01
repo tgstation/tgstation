@@ -412,6 +412,7 @@
 
 	mobs.Cut()
 	pupper.mind_initialize()
+	pupper.mock_client = new()
 	mobs = server.get_valid_domain_targets()
 	TEST_ASSERT_EQUAL(length(mobs), 0, "Should not return mobs with minds")
 
