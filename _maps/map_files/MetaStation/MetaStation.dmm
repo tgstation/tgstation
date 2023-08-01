@@ -41892,6 +41892,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "kitchen_counter";
+	name = "Kitchen Counter Shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "pmK" = (
@@ -51366,14 +51371,14 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/bar,
 /obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/door/airlock/public/glass{
-	name = "Bar"
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/machinery/door/airlock/public{
+	name = "Kitchen"
+	},
 /turf/open/floor/iron,
-/area/station/commons/lounge)
+/area/station/service/kitchen)
 "sGm" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
