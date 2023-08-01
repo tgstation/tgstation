@@ -206,6 +206,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define isvendor(A) (istype(A, /obj/machinery/vending))
+
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))

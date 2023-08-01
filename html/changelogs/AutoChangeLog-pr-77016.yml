@@ -1,4 +1,0 @@
-author: "YakumoChen"
-delete-after: True
-changes:
-  - bugfix: "Dish drive no longer spams the bar/kitchen/etc when its idle with empty messages."

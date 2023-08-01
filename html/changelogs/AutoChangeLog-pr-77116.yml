@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - bugfix: "Fixed a floating light in Delta's bar"

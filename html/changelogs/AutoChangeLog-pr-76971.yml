@@ -1,8 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - balance: "the bee now can fly over the machines so its easy for him to go to the hydroponics machine"
-  - bugfix: "player bees now will not be stuck inside the hive if he entered it, they can now leave it"
-  - bugfix: "fixed a har deleted when the hive is deleted all the bees still have a refence to the hive now its fixed"
-  - bugfix: "now when a player interacted with the bee hive the bees will now leave the hive to defend the hive (it was glitched)"
-  - refactor: "the bees now are a basic insect."
