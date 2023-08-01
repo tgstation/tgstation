@@ -1,5 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - bugfix: "Photophobia should work now."
-  - bugfix: "Eyes should return to their normal flash sensitivity when the quirk is removed."
