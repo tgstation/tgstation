@@ -78,9 +78,6 @@
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 
-	if(seed.get_gene(/datum/plant_gene/trait/brewing))
-		ferment()
-
 /obj/item/food/grown/Destroy()
 	if(isatom(seed))
 		QDEL_NULL(seed)
@@ -146,6 +143,12 @@
 			grind_results[grind_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
+
+/obj/item/food/grown/on_juice()
+	. = ..()
+	if(!juice_typepath)
+		return FALSE
+	reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER
 #undef BITE_SIZE_VOLUME_MULTIPLIER

@@ -50,7 +50,6 @@
 			reagents.add_reagent_list(I.grind_results)
 		else if (I.juice_typepath)
 			I.on_juice()
-			I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
 		if(I.reagents)
 			I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
 		qdel(I)

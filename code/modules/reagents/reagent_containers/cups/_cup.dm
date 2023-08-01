@@ -489,36 +489,14 @@
 					switch(picked_option)
 						if("Juice") //prioritize juicing
 							if(grinded.juice_typepath)
-								grinded.on_juice()
-								I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
+								return juice_item(grinded, user)
 							else
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
-								QDEL_NULL(grinded)
-								return
+								return grind_item(grinded, user)
 						if("Grind")
 							if(grinded.grind_results)
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You break [grinded] into powder."))
-								QDEL_NULL(grinded)
-								return
+								return grind_item(grinded, user)
 							else
-								grinded.on_juice()
-								I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
+								return juice_item(grinded, user)
 						else
 							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
 							return
@@ -534,6 +512,20 @@
 		grinded = I
 		return
 	to_chat(user, span_warning("You can't grind this!"))
+
+/obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
+	item.on_grind()
+	reagents.add_reagent_list(item.grind_results)
+	if(item.reagents) //If grinded item has reagents within, transfer them to the mortar
+		item.reagents.trans_to(src, item.reagents.total_volume, transfered_by = user)
+	to_chat(user, span_notice("You try to juice [item] but there is no liquids in it. Instead you get nice powder."))
+	QDEL_NULL(item)
+
+/obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
+	item.on_juice()
+	item.reagents.trans_to(src, item.reagents.total_volume, transfered_by = user)
+	to_chat(user, span_notice("You juice [item] into a fine liquid."))
+	QDEL_NULL(item)
 
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
 /obj/item/reagent_containers/cup/coffeepot

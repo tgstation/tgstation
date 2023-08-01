@@ -283,6 +283,8 @@
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
 		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath)
 			grown_edible.on_juice()
+		else if(get_gene(/datum/plant_gene/trait/brewing))
+			grown_edible.ferment()
 
 		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
 		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
