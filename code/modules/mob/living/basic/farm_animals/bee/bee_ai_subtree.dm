@@ -10,9 +10,9 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
+		/datum/ai_planning_subtree/find_and_hunt_target/pollinate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/pollinate,
 	)
 
 /datum/ai_controller/basic_controller/queen_bee
