@@ -136,16 +136,17 @@
 		reagents.del_reagent(reagent.type)
 
 /obj/item/food/grown/grind(datum/reagents/target_holder, mob/user)
-	if(!on_grind())
+	if(on_grind() == -1)
 		return FALSE
 
-	if(LAZYLEN(grind_results))
+	var/grind_results_num = LAZYLEN(grind_results)
+	if(grind_results_num)
 		var/average_purity = reagents.get_average_purity()
 		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-		var/single_reagent_amount = LAZYLEN(grind_results) > 1 ? total_nutriment_amount / LAZYLEN(grind_results) : total_nutriment_amount
+		var/single_reagent_amount = grind_results_num > 1 ? total_nutriment_amount / grind_results_num : total_nutriment_amount
+		reagents.remove_all_type(/datum/reagent/consumable/nutriment, total_nutriment_amount)
 		for(var/reagent in grind_results)
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
-		reagents.remove_all_type(/datum/reagent/consumable/nutriment, total_nutriment_amount)
 
 	if(reagents && target_holder)
 		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
