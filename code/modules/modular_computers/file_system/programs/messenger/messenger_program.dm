@@ -669,7 +669,7 @@
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
 
 		if (isAI(receiver_mob))
-			sender_title = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_full_title]</a>"
+			sender_title = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
 		inbound_message = emoji_parse(inbound_message)
