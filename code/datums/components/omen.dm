@@ -115,7 +115,7 @@
 			return
 
 		for(var/obj/machinery/light/evil_light in the_turf)
-			if((evil_light.status == (LIGHT_BURNED || LIGHT_BROKEN)) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // we cant do anything :( // Why in the world is there no get_siemens_coeff proc???
+			if((evil_light.status == LIGHT_BURNED || evil_light.status == LIGHT_BROKEN) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // we cant do anything :( // Why in the world is there no get_siemens_coeff proc???
 				to_chat(living_guy, span_warning("[evil_light] sparks weakly for a second."))
 				do_sparks(2, FALSE, evil_light) // hey maybe it'll ignite them
 				return
