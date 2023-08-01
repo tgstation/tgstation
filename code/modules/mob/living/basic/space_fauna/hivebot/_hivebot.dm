@@ -92,11 +92,9 @@
 
 /mob/living/basic/hivebot/mechanic/Initialize(mapload)
 	. = ..()
-	foam = new
+	var/datum/action/cooldown/spell/conjure/foam_wall/foam = new(src)
 	foam.Grant(src)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	var/datum/action/cooldown/spell/conjure/foam_wall/foam/foam = new(src)
-	foam.Grant(src)
 
 /mob/living/basic/hivebot/mechanic/proc/pre_attack(mob/living/fixer, atom/target)
 	SIGNAL_HANDLER
