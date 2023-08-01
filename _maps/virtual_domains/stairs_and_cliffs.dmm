@@ -42,9 +42,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/snow,
 /area/icemoon/underground/explored/virtual_domain)
-"j" = (
-/turf/closed/indestructible/binary,
-/area/template_noop)
 "k" = (
 /obj/item/pickaxe/mini,
 /turf/open/misc/asteroid/snow,
@@ -268,84 +265,84 @@
 /area/icemoon/underground/explored/virtual_domain)
 
 (1,1,1) = {"
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
 "}
 (2,1,1) = {"
-j
+J
 b
 b
 b
@@ -419,10 +416,10 @@ b
 b
 b
 b
-j
+J
 "}
 (3,1,1) = {"
-j
+J
 b
 b
 b
@@ -496,10 +493,10 @@ b
 b
 b
 b
-j
+J
 "}
 (4,1,1) = {"
-j
+J
 b
 b
 b
@@ -573,10 +570,10 @@ b
 b
 b
 b
-j
+J
 "}
 (5,1,1) = {"
-j
+J
 b
 b
 F
@@ -650,10 +647,10 @@ b
 b
 b
 b
-j
+J
 "}
 (6,1,1) = {"
-j
+J
 b
 b
 Q
@@ -727,10 +724,10 @@ b
 b
 b
 b
-j
+J
 "}
 (7,1,1) = {"
-j
+J
 b
 b
 F
@@ -804,10 +801,10 @@ b
 b
 b
 b
-j
+J
 "}
 (8,1,1) = {"
-j
+J
 b
 b
 O
@@ -881,10 +878,10 @@ b
 b
 b
 b
-j
+J
 "}
 (9,1,1) = {"
-j
+J
 b
 b
 F
@@ -958,10 +955,10 @@ b
 b
 b
 b
-j
+J
 "}
 (10,1,1) = {"
-j
+J
 b
 F
 S
@@ -1035,10 +1032,10 @@ b
 b
 b
 b
-j
+J
 "}
 (11,1,1) = {"
-j
+J
 b
 F
 O
@@ -1112,10 +1109,10 @@ b
 b
 b
 b
-j
+J
 "}
 (12,1,1) = {"
-j
+J
 b
 F
 F
@@ -1189,10 +1186,10 @@ b
 b
 b
 b
-j
+J
 "}
 (13,1,1) = {"
-j
+J
 b
 F
 l
@@ -1266,10 +1263,10 @@ b
 b
 b
 b
-j
+J
 "}
 (14,1,1) = {"
-j
+J
 b
 F
 F
@@ -1343,10 +1340,10 @@ b
 b
 b
 b
-j
+J
 "}
 (15,1,1) = {"
-j
+J
 b
 S
 l
@@ -1420,10 +1417,10 @@ b
 b
 b
 b
-j
+J
 "}
 (16,1,1) = {"
-j
+J
 b
 F
 l
@@ -1497,10 +1494,10 @@ b
 b
 b
 b
-j
+J
 "}
 (17,1,1) = {"
-j
+J
 b
 F
 l
@@ -1574,10 +1571,10 @@ b
 b
 b
 b
-j
+J
 "}
 (18,1,1) = {"
-j
+J
 b
 b
 F
@@ -1651,10 +1648,10 @@ b
 b
 b
 b
-j
+J
 "}
 (19,1,1) = {"
-j
+J
 b
 b
 Q
@@ -1728,10 +1725,10 @@ b
 b
 b
 b
-j
+J
 "}
 (20,1,1) = {"
-j
+J
 b
 b
 F
@@ -1805,10 +1802,10 @@ b
 b
 b
 b
-j
+J
 "}
 (21,1,1) = {"
-j
+J
 b
 b
 F
@@ -1882,10 +1879,10 @@ b
 b
 b
 b
-j
+J
 "}
 (22,1,1) = {"
-j
+J
 b
 b
 F
@@ -1959,10 +1956,10 @@ b
 b
 b
 b
-j
+J
 "}
 (23,1,1) = {"
-j
+J
 b
 b
 b
@@ -2036,10 +2033,10 @@ b
 b
 b
 b
-j
+J
 "}
 (24,1,1) = {"
-j
+J
 b
 b
 S
@@ -2113,10 +2110,10 @@ b
 b
 b
 b
-j
+J
 "}
 (25,1,1) = {"
-j
+J
 b
 b
 F
@@ -2190,10 +2187,10 @@ b
 b
 b
 b
-j
+J
 "}
 (26,1,1) = {"
-j
+J
 b
 b
 F
@@ -2267,10 +2264,10 @@ G
 b
 b
 b
-j
+J
 "}
 (27,1,1) = {"
-j
+J
 b
 b
 F
@@ -2344,10 +2341,10 @@ G
 b
 b
 b
-j
+J
 "}
 (28,1,1) = {"
-j
+J
 b
 b
 l
@@ -2421,10 +2418,10 @@ G
 G
 b
 b
-j
+J
 "}
 (29,1,1) = {"
-j
+J
 b
 b
 l
@@ -2498,10 +2495,10 @@ G
 b
 b
 b
-j
+J
 "}
 (30,1,1) = {"
-j
+J
 b
 b
 W
@@ -2575,10 +2572,10 @@ G
 b
 b
 b
-j
+J
 "}
 (31,1,1) = {"
-j
+J
 b
 A
 W
@@ -2652,10 +2649,10 @@ F
 F
 F
 b
-j
+J
 "}
 (32,1,1) = {"
-j
+J
 b
 v
 v
@@ -2729,10 +2726,10 @@ F
 F
 b
 b
-j
+J
 "}
 (33,1,1) = {"
-j
+J
 b
 v
 v
@@ -2806,10 +2803,10 @@ F
 F
 b
 b
-j
+J
 "}
 (34,1,1) = {"
-j
+J
 b
 v
 v
@@ -2883,10 +2880,10 @@ F
 F
 F
 b
-j
+J
 "}
 (35,1,1) = {"
-j
+J
 b
 v
 v
@@ -2960,10 +2957,10 @@ J
 J
 J
 b
-j
+J
 "}
 (36,1,1) = {"
-j
+J
 b
 F
 v
@@ -3037,10 +3034,10 @@ J
 J
 J
 b
-j
+J
 "}
 (37,1,1) = {"
-j
+J
 b
 b
 F
@@ -3114,10 +3111,10 @@ J
 J
 J
 b
-j
+J
 "}
 (38,1,1) = {"
-j
+J
 b
 b
 F
@@ -3191,10 +3188,10 @@ J
 J
 J
 b
-j
+J
 "}
 (39,1,1) = {"
-j
+J
 b
 b
 F
@@ -3268,10 +3265,10 @@ J
 J
 J
 b
-j
+J
 "}
 (40,1,1) = {"
-j
+J
 b
 b
 F
@@ -3345,10 +3342,10 @@ J
 J
 J
 b
-j
+J
 "}
 (41,1,1) = {"
-j
+J
 b
 F
 l
@@ -3422,10 +3419,10 @@ J
 J
 J
 b
-j
+J
 "}
 (42,1,1) = {"
-j
+J
 b
 F
 T
@@ -3499,10 +3496,10 @@ F
 F
 F
 b
-j
+J
 "}
 (43,1,1) = {"
-j
+J
 b
 n
 n
@@ -3576,10 +3573,10 @@ F
 F
 F
 b
-j
+J
 "}
 (44,1,1) = {"
-j
+J
 b
 F
 n
@@ -3653,10 +3650,10 @@ F
 F
 F
 b
-j
+J
 "}
 (45,1,1) = {"
-j
+J
 b
 F
 F
@@ -3730,10 +3727,10 @@ Q
 F
 b
 b
-j
+J
 "}
 (46,1,1) = {"
-j
+J
 b
 b
 l
@@ -3807,10 +3804,10 @@ F
 F
 b
 b
-j
+J
 "}
 (47,1,1) = {"
-j
+J
 b
 b
 F
@@ -3884,10 +3881,10 @@ F
 F
 b
 b
-j
+J
 "}
 (48,1,1) = {"
-j
+J
 b
 b
 F
@@ -3961,10 +3958,10 @@ F
 F
 F
 b
-j
+J
 "}
 (49,1,1) = {"
-j
+J
 b
 b
 F
@@ -4038,10 +4035,10 @@ S
 F
 F
 b
-j
+J
 "}
 (50,1,1) = {"
-j
+J
 b
 b
 l
@@ -4115,10 +4112,10 @@ O
 F
 F
 b
-j
+J
 "}
 (51,1,1) = {"
-j
+J
 b
 b
 b
@@ -4192,10 +4189,10 @@ F
 F
 l
 b
-j
+J
 "}
 (52,1,1) = {"
-j
+J
 b
 b
 b
@@ -4269,10 +4266,10 @@ F
 F
 F
 b
-j
+J
 "}
 (53,1,1) = {"
-j
+J
 b
 b
 b
@@ -4346,10 +4343,10 @@ b
 F
 F
 b
-j
+J
 "}
 (54,1,1) = {"
-j
+J
 b
 b
 b
@@ -4423,10 +4420,10 @@ b
 F
 b
 b
-j
+J
 "}
 (55,1,1) = {"
-j
+J
 b
 b
 F
@@ -4500,10 +4497,10 @@ F
 F
 F
 b
-j
+J
 "}
 (56,1,1) = {"
-j
+J
 b
 b
 F
@@ -4577,10 +4574,10 @@ F
 F
 F
 b
-j
+J
 "}
 (57,1,1) = {"
-j
+J
 b
 b
 F
@@ -4654,10 +4651,10 @@ F
 F
 F
 b
-j
+J
 "}
 (58,1,1) = {"
-j
+J
 b
 b
 F
@@ -4731,10 +4728,10 @@ l
 F
 F
 b
-j
+J
 "}
 (59,1,1) = {"
-j
+J
 b
 b
 l
@@ -4808,10 +4805,10 @@ F
 b
 b
 b
-j
+J
 "}
 (60,1,1) = {"
-j
+J
 b
 b
 F
@@ -4885,10 +4882,10 @@ F
 b
 b
 b
-j
+J
 "}
 (61,1,1) = {"
-j
+J
 b
 F
 Q
@@ -4962,10 +4959,10 @@ b
 b
 b
 b
-j
+J
 "}
 (62,1,1) = {"
-j
+J
 b
 F
 l
@@ -5039,10 +5036,10 @@ b
 b
 b
 b
-j
+J
 "}
 (63,1,1) = {"
-j
+J
 b
 F
 q
@@ -5116,10 +5113,10 @@ b
 b
 b
 b
-j
+J
 "}
 (64,1,1) = {"
-j
+J
 b
 F
 l
@@ -5193,10 +5190,10 @@ b
 b
 b
 b
-j
+J
 "}
 (65,1,1) = {"
-j
+J
 b
 F
 F
@@ -5270,10 +5267,10 @@ b
 b
 b
 b
-j
+J
 "}
 (66,1,1) = {"
-j
+J
 b
 F
 Q
@@ -5347,10 +5344,10 @@ b
 b
 b
 b
-j
+J
 "}
 (67,1,1) = {"
-j
+J
 b
 F
 F
@@ -5424,10 +5421,10 @@ b
 b
 b
 b
-j
+J
 "}
 (68,1,1) = {"
-j
+J
 b
 F
 F
@@ -5501,10 +5498,10 @@ b
 b
 b
 b
-j
+J
 "}
 (69,1,1) = {"
-j
+J
 b
 b
 F
@@ -5578,10 +5575,10 @@ b
 b
 b
 b
-j
+J
 "}
 (70,1,1) = {"
-j
+J
 b
 b
 b
@@ -5655,10 +5652,10 @@ b
 b
 b
 b
-j
+J
 "}
 (71,1,1) = {"
-j
+J
 b
 b
 F
@@ -5732,10 +5729,10 @@ b
 b
 b
 b
-j
+J
 "}
 (72,1,1) = {"
-j
+J
 b
 b
 l
@@ -5809,10 +5806,10 @@ b
 b
 b
 b
-j
+J
 "}
 (73,1,1) = {"
-j
+J
 b
 b
 b
@@ -5886,10 +5883,10 @@ b
 b
 b
 b
-j
+J
 "}
 (74,1,1) = {"
-j
+J
 b
 b
 b
@@ -5963,82 +5960,82 @@ b
 b
 b
 b
-j
+J
 "}
 (75,1,1) = {"
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
-j
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
 "}

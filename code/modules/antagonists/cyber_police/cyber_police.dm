@@ -18,6 +18,19 @@
 	var/datum/martial_art/the_sleeping_carp/carp = new()
 	carp.teach(owner.current)
 
+	owner.current.add_traits(list(
+		TRAIT_NOBREATH,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_NOHUNGER,
+		TRAIT_WEATHER_IMMUNE,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESISTCOLD,
+		), TRAIT_GENERIC,
+	)
+
 	return ..()
 
 /datum/outfit/cyber_police
@@ -30,7 +43,10 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/radio/headset/binary
-	l_pocket = /obj/item/storage/box/survival
+	back = /obj/item/storage/backpack/duffelbag
+	backpack_contents = list(
+		/obj/item/storage/box/survival = 1,
+	)
 
 /datum/outfit/cyber_police/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	var/obj/item/radio/outfit_radio = equipped.ears

@@ -3,7 +3,9 @@
 	cost = BITMINING_COST_LOW
 	desc = "A treacherous climb few calves can survive. Great cardio though."
 	help_text = "Ever heard of 'Snakes and Ladders'? It's like that, but with instead of ladders its stairs and instead of snakes its a steep drop down a cliff into rough rocks or liquid plasma."
-	extra_loot = list(/obj/item/clothing/suit/costume/snowman = 1, /obj/item/clothing/head/costume/snowman = 1 )
+	extra_loot = list(
+		/obj/item/clothing/suit/costume/snowman = 2
+	)
 	difficulty = BITMINING_DIFFICULTY_LOW
 	filename = "stairs_and_cliffs.dmm"
 	forced_outfit = /datum/outfit/job/virtual_domain_iceclimber
@@ -27,5 +29,5 @@
 		/obj/item/flashlight = 1,
 		/obj/item/flashlight/flare = 2,
 		)
-	backpack = /obj/item/storage/backpack/duffelbag
+	back = /obj/item/storage/backpack/duffelbag
 	shoes = /obj/item/clothing/shoes/winterboots

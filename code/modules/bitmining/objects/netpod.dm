@@ -6,6 +6,7 @@
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
 	icon = 'icons/obj/machines/bitmining.dmi'
 	icon_state = "netpod"
+	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
 	/// Holds this to see if it needs to generate a new one
@@ -37,6 +38,7 @@
 		PROC_REF(on_opened_or_destroyed),
 	)
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_take_damage))
 
 	register_context()
 	update_appearance()
@@ -256,6 +258,7 @@
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_SEVER_AVATAR)
 		receiving.UnregisterSignal(server, COMSIG_BITMINING_SHUTDOWN_ALERT)
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_CROWBAR_ALERT)
+	receiving.UnregisterSignal(src, COMSIG_BITMINING_NETPOD_INTEGRITY)
 	receiving.UnregisterSignal(src, COMSIG_BITMINING_SEVER_AVATAR)
 	occupant_mind_ref = null
 
@@ -365,11 +368,25 @@
 	examine_text += span_infoplain("It is currently occupied by [occupant].")
 
 /// On unbuckle or break, make sure the occupant ref is null
-/obj/machinery/netpod/proc/on_opened_or_destroyed()
+/obj/machinery/netpod/proc/on_opened_or_destroyed(datum/source)
 	SIGNAL_HANDLER
 
 	unprotect_occupant(occupant)
 	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, src)
+
+/// Checks the integrity, alerts occupants
+/obj/machinery/netpod/proc/on_take_damage(datum/source, damage_amount)
+	SIGNAL_HANDLER
+
+	if(isnull(occupant))
+		return
+
+	var/total = max_integrity - damage_amount
+	var/integrity = (atom_integrity / total) * 100
+	if(integrity > 50)
+		return
+
+	SEND_SIGNAL(src, COMSIG_BITMINING_NETPOD_INTEGRITY)
 
 /// Sets the owner to in_netpod state, basically short-circuiting environmental conditions
 /obj/machinery/netpod/proc/protect_occupant(mob/living/target)
