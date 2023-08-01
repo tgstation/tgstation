@@ -27,6 +27,23 @@
 	key = "eyebrow"
 	message = "raises an eyebrow."
 
+/datum/emote/living/carbon/human/glasses
+	key = "glasses"
+	key_third_person = "glasses"
+	message = "pushes up their glasses."
+	emote_type = EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
+	var/obj/eyes_slot = user.get_item_by_slot(ITEM_SLOT_EYES)
+	if(istype(eyes_slot, /obj/item/clothing/glasses/regular) || istype(eyes_slot, /obj/item/clothing/glasses/sunglasses))
+		return ..()
+	return FALSE
+
+/datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "glasses")
+	flick_overlay_global(emote_animation, GLOB.clients, 1.6 SECONDS)
+
 /datum/emote/living/carbon/human/grumble
 	key = "grumble"
 	key_third_person = "grumbles"
