@@ -11,9 +11,15 @@
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
 		/datum/ai_planning_subtree/find_and_hunt_target/pollinate,
-		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/simple_find_target/bee,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
+
+/datum/ai_planning_subtree/simple_find_target/bee/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/hydro_target = controller.blackboard[BB_TARGET_HYDRO]
+	if(hydro_target)
+		return
+	return ..()
 
 /datum/ai_controller/basic_controller/queen_bee
 	blackboard = list(
@@ -67,7 +73,6 @@
 
 	if(!SPT_PROB(action_prob, seconds_per_tick))
 		return
-
 	controller.queue_behavior(/datum/ai_behavior/enter_exit_hive, BB_CURRENT_HOME)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
