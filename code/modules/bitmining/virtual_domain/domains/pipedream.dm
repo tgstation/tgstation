@@ -6,6 +6,7 @@
 	safehouse_path = /datum/map_template/safehouse/shuttle
 	cost = BITMINING_COST_LOW
 	difficulty = BITMINING_DIFFICULTY_MEDIUM
+	reward_points = BITMINING_REWARD_LOW
 	extra_loot = list(
 		/obj/item/stack/pipe_cleaner_coil/random/five = 1
 	)
