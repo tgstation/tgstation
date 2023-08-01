@@ -28,11 +28,6 @@
 /area/virtual_domain/to_delete
 	icon_state = "bit_gen_del"
 
-/area/virtual_domain/powered
-	name = "Virtual Domain: Ruins"
-	icon_state = "bit_ruin"
-	requires_power = FALSE
-
 /// Safehouse
 
 /area/virtual_domain/safehouse
@@ -85,3 +80,9 @@
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_space"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+
+/area/virtual_domain/powered
+	name = "Virtual Domain: Ruins"
+	icon_state = "bit_ruin"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	requires_power = FALSE

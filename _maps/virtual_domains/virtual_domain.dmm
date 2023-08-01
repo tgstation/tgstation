@@ -1,22 +1,22 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/binary,
-/area/station/virtual_domain/bottom_left)
+/area/virtual_domain/bottom_left)
 "b" = (
 /turf/closed/indestructible/binary,
-/area/space)
+/area/virtual_domain)
 "x" = (
 /turf/open/genturf,
-/area/station/virtual_domain/to_delete)
+/area/virtual_domain/to_delete)
 "y" = (
 /turf/open/genturf/blue,
-/area/station/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse/bottom_left)
 "D" = (
 /turf/open/genturf/blue,
-/area/station/virtual_domain/to_delete)
+/area/virtual_domain/to_delete)
 "P" = (
 /turf/open/genturf/orange,
-/area/station/virtual_domain/to_delete)
+/area/virtual_domain/to_delete)
 
 (1,1,1) = {"
 b
