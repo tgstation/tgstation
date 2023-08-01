@@ -23,6 +23,9 @@
 		/datum/reagent/consumable/cooking_oil = 3,
 	)
 
+/datum/reagent/gondola_mutation_toxin/virtual_domain
+	name = "Advanced Tranquility"
+
 /datum/reagent/gondola_mutation_toxin/virtual_domain/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))

@@ -42,29 +42,18 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
-	ears = /obj/item/radio/headset/binary
-	back = /obj/item/storage/backpack/duffelbag
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-	)
 
 /datum/outfit/cyber_police/post_equip(mob/living/carbon/human/equipped, visualsOnly)
-	var/obj/item/radio/outfit_radio = equipped.ears
-	if(outfit_radio)
-		outfit_radio.set_broadcasting(FALSE)
-		outfit_radio.translate_binary = TRUE
-		outfit_radio.freqlock = RADIO_FREQENCY_LOCKED
-
 	var/obj/item/card/id/outfit_id = equipped.wear_id
 	if(outfit_id)
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
 		outfit_id.update_icon()
 
-	var/obj/item/clothing/under/sentinel_uniform = equipped.w_uniform
-	if(sentinel_uniform)
-		sentinel_uniform.has_sensor = NO_SENSORS
-		sentinel_uniform.sensor_mode = SENSOR_OFF
+	var/obj/item/clothing/under/officer_uniform = equipped.w_uniform
+	if(officer_uniform)
+		officer_uniform.has_sensor = NO_SENSORS
+		officer_uniform.sensor_mode = SENSOR_OFF
 		equipped.update_suit_sensors()
 
 /datum/objective/cyber_police_fluff/New()

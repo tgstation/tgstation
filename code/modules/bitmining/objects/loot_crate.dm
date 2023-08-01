@@ -35,6 +35,9 @@
 	. = ..()
 	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
 
+	if(isnull(completed_domain))
+		return
+
 	PopulateContents(completed_domain.reward_points, completed_domain.extra_loot, rewards_multiplier)
 
 /obj/structure/closet/crate/secure/bitminer_loot/decrypted/PopulateContents(reward_points, list/extra_loot, rewards_multiplier)
