@@ -91,6 +91,10 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"ax" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/control)
 "aB" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/yellow{
@@ -404,6 +408,7 @@
 	pixel_x = -8
 	},
 /obj/structure/table/reinforced/rglass,
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet/cyan,
 /area/centcom/central_command_areas/control)
 "bL" = (
@@ -3924,6 +3929,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
 "pi" = (
@@ -6549,6 +6555,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
 "zJ" = (
@@ -7222,6 +7229,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/control)
 "Cx" = (
@@ -12661,7 +12669,7 @@
 "ZJ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/glass_large{
-	name = "Shipping and Receiving" 
+	name = "Shipping and Receiving"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
@@ -58961,7 +58969,7 @@ BG
 Qs
 RA
 io
-Ti
+ax
 ei
 vk
 vk
