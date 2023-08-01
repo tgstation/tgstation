@@ -23,6 +23,8 @@
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
 	armor_type = /datum/armor/item_wrench
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 3
 
 /datum/armor/item_wrench
 	fire = 50
@@ -174,7 +176,6 @@
 	. = ..()
 	transform = transform.Translate(-16, -16)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
-	AddComponent(/datum/component/item_slowdown, /datum/movespeed_modifier/giant_wrench, TRUE)
 
 /obj/item/wrench/giant_wrench/attack(mob/living/target_mob, mob/living/user)
 	..()
