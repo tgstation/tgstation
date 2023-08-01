@@ -42,7 +42,7 @@
 	data["occupants"] = length(server.occupant_mind_refs)
 	data["points"] = server.points
 	data["randomized"] = server.domain_randomized
-	data["ready"] = server.get_ready_status()
+	data["ready"] = server.get_is_ready()
 	data["scanner_tier"] = server.scanner_tier
 	data["retries_left"] = length(server.exit_turfs) - server.retries_spent
 

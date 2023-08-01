@@ -3,7 +3,7 @@
 	desc = "Office of bitminers, houses their equipment."
 	icon_state = "bit_den"
 
-/area/station/bitminer_den/receive
+/area/station/bitminer_receive
 	name = "Bitmining: Receiving"
 	desc = "Receives shipments from the virtual domain."
 	icon_state = "bit_receive"
@@ -44,6 +44,7 @@
 
 /area/station/virtual_domain/safehouse
 	name = "Virtual Domain: Safehouse"
+	icon_state = "bit_safe"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 	sound_environment = SOUND_ENVIRONMENT_ROOM
