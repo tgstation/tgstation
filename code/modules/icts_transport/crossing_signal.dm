@@ -185,21 +185,31 @@
 /obj/machinery/icts/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
 	SIGNAL_HANDLER
 
-	if(prob(5))
+	if(machine_stat & BROKEN || machine_stat & NOPOWER)
+		return
+
+	if(prob(0.0175))
 		local_fault()
 		return
 
-	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
-	if(operating_status <= ICTS_REMOTE_FAULT)
-		operating_status = ICTS_REMOTE_FAULT
+	operating_status = ICTS_SYSTEM_NORMAL
 
-		if(!(tram.controller_status & COMM_ERROR))
-			operating_status = ICTS_SYSTEM_NORMAL
+	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
+
+	if(!tram || tram.controller_status & COMM_ERROR)
+		operating_status = ICTS_REMOTE_FAULT
 
 	if(!linked_sensor)
 		link_sensor()
 	wake_sensor()
 	update_operating()
+
+/obj/machinery/icts/crossing_signal/on_set_machine_stat()
+	. = ..()
+	if(machine_stat & BROKEN)
+		operating_status = ICTS_REMOTE_FAULT
+	else
+		operating_status = ICTS_SYSTEM_NORMAL
 
 /obj/machinery/icts/crossing_signal/on_set_is_operational()
 	. = ..()
@@ -223,7 +233,6 @@
  * Returns whether we are still processing.
  */
 /obj/machinery/icts/crossing_signal/proc/update_operating()
-
 	use_power(idle_power_usage)
 	update_appearance()
 	// Immediately process for snappy feedback
@@ -343,6 +352,9 @@
 
 	if(machine_stat & NOPOWER)
 		return
+
+	if(machine_stat & BROKEN)
+		operating_status = ICTS_LOCAL_FAULT
 
 	var/lights_overlay = "[base_icon_state][signal_state]"
 	var/status_overlay = "status-[operating_status]"
@@ -476,7 +488,12 @@
 	return TRUE
 
 /obj/machinery/icts/guideway_sensor/proc/wake_up()
-	if(prob(0.01))
+	SIGNAL_HANDLER
+
+	if(machine_stat & BROKEN)
+		return
+
+	if(prob(0.0175))
 		local_fault()
 
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()

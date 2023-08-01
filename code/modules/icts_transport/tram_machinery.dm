@@ -229,6 +229,19 @@
 	. += span_notice("There's a small inscription on the button...")
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
 
+/obj/item/assembly/control/icts/call_button/proc/debug_autotram(platform)
+	var/next_platform
+	if(platform)
+		next_platform = platform + 1
+	else
+		next_platform = 1
+
+	if(next_platform > 3)
+		next_platform = 1
+
+	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, next_platform)
+	addtimer(CALLBACK(src, PROC_REF(autotram), next_platform), 10 SECONDS)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/icts/tram, 32)
 
 #undef AIRLOCK_CLOSED

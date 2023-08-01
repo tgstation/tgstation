@@ -132,7 +132,7 @@
 				desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
 				desto.update_appearance()
 		else
-			icts_controller.set_status_code(EMERGENCY_STOP, TRUE)
+			//icts_controller.set_status_code(EMERGENCY_STOP, TRUE)
 			for(var/obj/machinery/icts/destination_sign/desto as anything in SSicts_transport.displays)
 				desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 				desto.update_appearance()

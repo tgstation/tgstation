@@ -13,6 +13,9 @@
 	)
 
 /obj/machinery/icts/proc/local_fault()
+	if(machine_stat & BROKEN || repair_signals)
+		return
+
 	generate_repair_signals()
 	set_machine_stat(machine_stat | BROKEN)
 	set_is_operational(FALSE)

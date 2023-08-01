@@ -155,6 +155,9 @@
 	destination_platform = destination
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_remaining = get_dist(idle_platform, destination_platform)
+	var/physical_dist = get_dist(get_turf(transport_modules[1]), destination_platform)
+	if(physical_dist != travel_remaining + (DEFAULT_TRAM_LENGTH * 0.5) && physical_dist != travel_remaining - (DEFAULT_TRAM_LENGTH * 0.5))
+		message_admins("ICTS: WARNING! Calculated trip of [travel_remaining] doesn't match validation of [physical_dist]!")
 	travel_trip_length = travel_remaining
 	return TRUE
 
@@ -184,8 +187,8 @@
 	START_PROCESSING(SSicts_transport, src)
 
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
-	if(controller_status & EMERGENCY_STOP)
-		estop()
+	//if(controller_status & EMERGENCY_STOP)
+	//	estop()
 	if(!travel_remaining)
 		cycle_doors(OPEN_DOORS)
 		idle_platform = destination_platform
