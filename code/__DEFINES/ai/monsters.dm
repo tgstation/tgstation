@@ -51,3 +51,5 @@
 #define BB_FOUND_HONEY "BB_found_honey"
 ///the tree that we will climb
 #define BB_CLIMBED_TREE "BB_climbed_tree"
+
+// Lightgeist keys
