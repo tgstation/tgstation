@@ -7,7 +7,7 @@
 	cost = BITMINING_COST_LOW
 	difficulty = BITMINING_DIFFICULTY_MEDIUM
 	extra_loot = list(
-		/obj/item/stack/pipe_cleaner_coil/random/five
+		/obj/item/stack/pipe_cleaner_coil/random/five = 1
 	)
 
 // ID Trims
@@ -81,7 +81,7 @@
 	l_pocket = /obj/item/melee/baton/telescopic
 	r_pocket = /obj/item/stamp/head/qm
 
-//Corpses
+// Corpses
 /obj/effect/mob_spawn/corpse/human/factory/
 	name = "Factory Worker"
 	outfit = /datum/outfit/factory
@@ -97,31 +97,6 @@
 	outfit = /datum/outfit/factory/qm
 	icon_state = "corpsecargotech"
 
-//Mobs
-/mob/living/simple_animal/hostile/hivebot/virtural_domain
-	can_be_cybercop = FALSE
-
-/mob/living/simple_animal/hostile/hivebot/virtural_domain/ranged
-	name = "hivebot"
-	desc = "A smallish robot, this one is armed!"
-	icon_state = "ranged"
-	icon_living = "ranged"
-	icon_dead = "ranged"
-	ranged = TRUE
-	retreat_distance = 5
-	minimum_distance = 5
-
-	can_be_cybercop = TRUE
-
-/mob/living/simple_animal/hostile/hivebot/virtural_domain/strong
-	name = "strong hivebot"
-	icon_state = "strong"
-	icon_living = "strong"
-	icon_dead = "strong"
-	desc = "A robot, this one is armed and looks tough!"
-	health = 80
-	maxHealth = 80
-	ranged = TRUE
-
-	can_be_cybercop = TRUE
+// Mobs
+/mob/living/simple_animal/hostile/hivebot/strong/virtual_domain
 	loot = list(/obj/structure/closet/crate/secure/bitminer_loot/encrypted)
