@@ -98,6 +98,3 @@
 	outfit = /datum/outfit/factory/qm
 	icon_state = "corpsecargotech"
 
-// Mobs
-/mob/living/simple_animal/hostile/hivebot/strong/virtual_domain
-	loot = list(/obj/structure/closet/crate/secure/bitminer_loot/encrypted)

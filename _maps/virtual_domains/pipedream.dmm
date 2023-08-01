@@ -117,7 +117,7 @@
 /area/virtual_domain/powered)
 "eu" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "ey" = (
@@ -634,7 +634,7 @@
 /obj/structure/disposalpipe/broken{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/hivebot/strong/virtual_domain,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "qO" = (
@@ -967,6 +967,13 @@
 /obj/structure/broken_flooring/corner/directional/west,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
+"yR" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/hivebot/rapid,
+/turf/open/floor/iron,
+/area/virtual_domain/powered)
 "yT" = (
 /turf/open/floor/carpet/royalblue{
 	icon_state = "carpet_royalblue-38"
@@ -1118,6 +1125,11 @@
 /area/virtual_domain/powered)
 "Dj" = (
 /obj/structure/disposalpipe/trunk/multiz,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"DE" = (
+/obj/structure/disposalpipe/segment,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "DH" = (
@@ -4685,7 +4697,7 @@ WD
 hO
 Xn
 LL
-eR
+yR
 FJ
 Xn
 wr
@@ -4775,7 +4787,7 @@ bh
 bh
 bJ
 mG
-HL
+DE
 lx
 ar
 lu
