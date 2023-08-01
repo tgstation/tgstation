@@ -94,6 +94,7 @@
 	. = ..()
 	toast_circuit()
 	occupant_mind_refs.Cut()
+	available_domains.Cut()
 	QDEL_NULL(delete_turfs)
 	QDEL_NULL(exit_turfs)
 	QDEL_NULL(map_load_turf)

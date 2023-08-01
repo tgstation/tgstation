@@ -371,6 +371,9 @@
 /obj/machinery/netpod/proc/on_opened_or_destroyed(datum/source)
 	SIGNAL_HANDLER
 
+	if(isnull(occupant))
+		return
+
 	unprotect_occupant(occupant)
 	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR, src)
 
