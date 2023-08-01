@@ -173,6 +173,7 @@
 	desc = "A tacky suit perfect for a CRIMINAL lawyer!"
 	icon_state = "good_suit"
 	inhand_icon_state = "good_suit"
+	icon = 'icons/obj/clothing/under/suits.dmi'
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer/beige/skirt
@@ -180,7 +181,6 @@
 	desc = "A tacky suitskirt perfect for a CRIMINAL lawyer!"
 	icon_state = "good_suit_skirt"
 	inhand_icon_state = "good_suit"
-	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
