@@ -50,9 +50,8 @@
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
-	/// Also slightly snowflakey way to modify projectile wound bonus for projectiles fired from this gun.
-	/// Most bullets don't really have a non-zero wound bonus, actually, on further testing, so...
-	var/projectile_wound_multiplier = 1
+	/// Even snowflakier way to modify projectile wounding bonus/potential for projectiles fired from this gun.
+	var/projectile_wound_bonus = 0
 
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
