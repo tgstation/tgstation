@@ -25,6 +25,14 @@
 		/obj/structure/mop_bucket,
 	))
 
+/obj/item/mop/apply_fantasy_bonuses(bonus)
+	. = ..()
+	mopspeed = modify_fantasy_variable("mopspeed", mopspeed, -bonus)
+
+/obj/item/mop/remove_fantasy_bonuses(bonus)
+	mopspeed = reset_fantasy_variable("mopspeed", mopspeed)
+	return ..()
+
 /obj/item/mop/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))

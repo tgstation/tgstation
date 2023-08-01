@@ -149,7 +149,7 @@
 
 /datum/ai_planning_subtree/random_speech/tree
 	speech_chance = 3
-	emote_see = list("photosynthesizes angirly.")
+	emote_see = list("photosynthesizes angrily.")
 
 /datum/ai_planning_subtree/random_speech/pig
 	speech_chance = 3
@@ -194,3 +194,8 @@
 	speech_chance = 5
 	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")
 	emote_hear = list("squawks", "gakkers")
+
+/datum/ai_planning_subtree/random_speech/bear
+	speech_chance = 5
+	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
+	emote_see = list("stares ferociously.")
