@@ -84,6 +84,3 @@ https://freesound.org/people/aboxinghelena/sounds/401139/
 
 car_crash.ogg is adapted from squareal's "Car Crash" (CC 0)
 https://freesound.org/people/squareal/sounds/237375/
-
-portalloop1 and portalloop2.ogg are adapted from hedonfire's "Portal SFX" (CC 0)
-https://freesound.org/people/hedonfire/sounds/647448/

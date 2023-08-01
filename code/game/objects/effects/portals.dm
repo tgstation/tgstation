@@ -43,10 +43,6 @@
 	var/force_teleport = FALSE
 	/// Does this portal create spark effect when teleporting?
 	var/sparkless = FALSE
-	/// The sound that plays while we are active.
-	var/datum/looping_sound/portal/soundloop
-	/// Do we start a soundloop upon creation?
-	var/audible = TRUE
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -57,7 +53,6 @@
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 	light_on = FALSE
-	audible = FALSE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -105,8 +100,6 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
-	if(audible)
-		soundloop = new(src, TRUE)
 
 /obj/effect/portal/singularity_pull()
 	return
@@ -123,8 +116,6 @@
 		QDEL_NULL(linked)
 	else
 		linked = null
-	if(soundloop)
-		soundloop.stop()
 	return ..()
 
 /obj/effect/portal/attack_ghost(mob/dead/observer/O)
