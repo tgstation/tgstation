@@ -487,16 +487,10 @@
 				if(do_after(user, 25, target = src))
 					user.adjustStaminaLoss(40)
 					switch(picked_option)
-						if("Juice") //prioritize juicing
-							if(grinded.juice_typepath)
-								return juice_item(grinded, user)
-							else
-								return grind_item(grinded, user)
+						if("Juice")
+							return juice_item(grinded, user)
 						if("Grind")
-							if(grinded.grind_results)
-								return grind_item(grinded, user)
-							else
-								return juice_item(grinded, user)
+							return grind_item(grinded, user)
 						else
 							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
 							return
@@ -514,16 +508,16 @@
 	to_chat(user, span_warning("You can't grind this!"))
 
 /obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
-	item.on_grind()
-	reagents.add_reagent_list(item.grind_results)
-	if(item.reagents) //If grinded item has reagents within, transfer them to the mortar
-		item.reagents.trans_to(src, item.reagents.total_volume, transfered_by = user)
-	to_chat(user, span_notice("You try to juice [item] but there is no liquids in it. Instead you get nice powder."))
+	if(!item.grind(src, user))
+		to_chat(user, span_notice("You fail to grind [item]."))
+		return
+	to_chat(user, span_notice("You grind [item] into a nice powder."))
 	QDEL_NULL(item)
 
 /obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
-	item.on_juice()
-	item.reagents.trans_to(src, item.reagents.total_volume, transfered_by = user)
+	if(!item.juice(src, user))
+		to_chat(user, span_notice("You fail to juice [item]."))
+		return
 	to_chat(user, span_notice("You juice [item] into a fine liquid."))
 	QDEL_NULL(item)
 

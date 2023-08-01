@@ -135,20 +135,20 @@
 			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data, added_purity = reagent_purity)
 		reagents.del_reagent(reagent.type)
 
-/obj/item/food/grown/on_grind()
-	. = ..()
-	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-	if(grind_results?.len)
-		for(var/i in 1 to grind_results.len)
-			grind_results[grind_results[i]] = nutriment
-		reagents.del_reagent(/datum/reagent/consumable/nutriment)
-		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
-
-/obj/item/food/grown/on_juice()
-	. = ..()
-	if(!juice_typepath)
+/obj/item/food/grown/grind(datum/reagents/target_holder, mob/user)
+	if(!on_grind())
 		return FALSE
-	reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
+
+	if(LAZYLEN(grind_results))
+		var/average_purity = reagents.get_average_purity()
+		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+		var/single_reagent_amount = LAZYLEN(grind_results) > 1 ? total_nutriment_amount / LAZYLEN(grind_results) : total_nutriment_amount
+		for(var/reagent in grind_results)
+			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
+		reagents.remove_all_type(/datum/reagent/consumable/nutriment, total_nutriment_amount)
+
+	if(reagents && target_holder)
+		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER
 #undef BITE_SIZE_VOLUME_MULTIPLIER
