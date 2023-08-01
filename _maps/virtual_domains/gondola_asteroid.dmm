@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /turf/closed/indestructible/binary,
-/area/template_noop)
+/area/space)
 "d" = (
 /turf/open/space/basic,
 /area/space)
 "f" = (
 /obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "g" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -18,87 +18,78 @@
 "h" = (
 /obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
-"k" = (
-/turf/open/space/basic,
-/turf/closed/indestructible/binary,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "q" = (
 /obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "r" = (
 /mob/living/simple_animal/pet/gondola/virtual_domain,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "s" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "x" = (
 /obj/structure/flora/coconuts,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "z" = (
 /obj/structure/flora/bush/stalky/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "A" = (
 /obj/structure/water_source/puddle,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "B" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "C" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "D" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "E" = (
 /obj/structure/marker_beacon{
 	light_color = "#FFE8AA";
 	light_range = 20
 	},
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "G" = (
 /obj/structure/flora/tree/palm,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "I" = (
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "J" = (
 /obj/structure/flora/bush/reed/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "N" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "O" = (
 /turf/closed/mineral/random,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "P" = (
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "T" = (
 /turf/template_noop,
-/area/template_noop)
-"V" = (
-/turf/open/space/basic,
-/turf/closed/indestructible/binary,
-/turf/closed/indestructible/binary,
 /area/template_noop)
 "W" = (
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted/gondola,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 "X" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/tray,
@@ -109,7 +100,7 @@
 "Z" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
-/area/ruin/space/has_grav)
+/area/ruin/space/has_grav/powered/virtual_domain)
 
 (1,1,1) = {"
 T
@@ -1553,6 +1544,8 @@ T
 T
 T
 T
+T
+T
 b
 b
 b
@@ -1561,9 +1554,7 @@ b
 b
 b
 b
-b
-b
-b
+T
 T
 T
 T
@@ -1699,10 +1690,10 @@ T
 T
 T
 T
-b
-b
-b
-b
+T
+T
+T
+T
 b
 b
 b
@@ -1774,14 +1765,14 @@ T
 T
 T
 T
+T
 b
 b
 b
 b
 b
 b
-O
-O
+b
 O
 O
 O
@@ -1922,7 +1913,7 @@ T
 T
 T
 T
-b
+T
 b
 b
 b
@@ -1996,9 +1987,9 @@ T
 T
 T
 T
-V
-b
-b
+T
+T
+T
 b
 b
 O
@@ -2073,10 +2064,10 @@ T
 T
 T
 T
-k
-k
-k
-k
+T
+b
+b
+b
 O
 O
 O
@@ -2223,8 +2214,8 @@ T
 T
 T
 T
-b
-b
+T
+T
 b
 b
 b
@@ -2300,7 +2291,7 @@ T
 T
 T
 T
-b
+T
 b
 b
 O
@@ -2377,7 +2368,7 @@ T
 T
 T
 T
-b
+T
 b
 O
 O
@@ -3455,7 +3446,7 @@ T
 T
 T
 T
-b
+T
 b
 B
 B
@@ -3532,7 +3523,7 @@ T
 T
 T
 T
-b
+T
 b
 B
 B
@@ -3609,7 +3600,7 @@ T
 T
 T
 T
-b
+T
 b
 B
 B
@@ -3686,7 +3677,7 @@ T
 T
 T
 T
-b
+T
 b
 b
 B
@@ -4250,17 +4241,17 @@ b
 b
 b
 b
+T
+T
+T
+T
+T
 b
 b
 b
 b
 b
-b
-b
-b
-b
-b
-b
+T
 T
 T
 T
@@ -4304,6 +4295,7 @@ T
 T
 T
 T
+T
 b
 b
 b
@@ -4315,29 +4307,28 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
 T
 T
 T

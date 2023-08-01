@@ -34,6 +34,7 @@
 		PROC_REF(on_sever_connection),
 	)
 	RegisterSignal(hosting_netpod, COMSIG_BITMINING_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
+	RegisterSignal(hosting_netpod, COMSIG_BITMINING_NETPOD_INTEGRITY, PROC_REF(on_netpod_damaged))
 	RegisterSignal(hosting_netpod, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITMINING_DOMAIN_COMPLETE, PROC_REF(on_domain_completed))
 	RegisterSignal(server, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_sever_connection))
@@ -118,6 +119,16 @@
 		ALERT_BITMINING_CROWBAR,
 		/atom/movable/screen/alert/netpod_crowbar,
 		new_master = intruder
+	)
+
+/// Triggers when the netpod is taking damage and is under 50%
+/datum/mind/proc/on_netpod_damaged(datum/source)
+	SIGNAL_HANDLER
+
+	current.throw_alert(
+		ALERT_BITMINING_INTEGRITY,
+		/atom/movable/screen/alert/netpod_damaged,
+		new_master = source
 	)
 
 /// Safely exits without forced variables, etc

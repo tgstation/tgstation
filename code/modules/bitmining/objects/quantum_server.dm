@@ -34,6 +34,8 @@
 	var/cooling_off = FALSE
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
+	/// List of available domains
+	var/list/available_domains = list()
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
@@ -49,7 +51,7 @@
 	/// Server cooldown efficiency
 	var/server_cooldown_efficiency = 1
 	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 2 MINUTES
+	var/server_cooldown_time = 3 MINUTES
 	/// Turfs to delete whenever the server is shut down.
 	var/turf/delete_turfs = list()
 	/// The turfs we can place a hololadder on.
@@ -84,6 +86,9 @@
 	RegisterSignal(src, COMSIG_BITMINING_CLIENT_CONNECTED, PROC_REF(on_client_connected))
 	RegisterSignal(src, COMSIG_BITMINING_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
 	RefreshParts()
+
+	// This further gets sorted in the client by cost so it's random and grouped
+	available_domains = shuffle(subtypesof(/datum/map_template/virtual_domain))
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
@@ -278,6 +283,9 @@
 	if(!length(exit_turfs))
 		return
 
+	if(retries_spent >= length(exit_turfs))
+		return
+
 	var/turf/destination
 	for(var/turf/dest_turf as anything in exit_turfs)
 		if(!locate(/obj/structure/hololadder) in dest_turf)
@@ -315,6 +323,27 @@
 	spark_at_location(reward_crate)
 	return TRUE
 
+/// Compiles a list of available domains.
+/obj/machinery/quantum_server/proc/get_available_domains()
+	var/list/levels = list()
+
+	for(var/datum/map_template/virtual_domain/domain as anything in available_domains)
+		if(initial(domain.test_only))
+			continue
+		var/can_view = initial(domain.difficulty) < scanner_tier && initial(domain.cost) <= points + 5
+		var/can_view_reward = initial(domain.difficulty) < (scanner_tier + 1) && initial(domain.cost) <= points + 3
+
+		levels += list(list(
+			"cost" = initial(domain.cost),
+			"desc" = can_view ? initial(domain.desc) : "Limited scanning capabilities. Cannot infer domain details.",
+			"difficulty" = initial(domain.difficulty),
+			"id" = initial(domain.id),
+			"name" = can_view ? initial(domain.name) : REDACTED,
+			"reward" = can_view_reward ? initial(domain.reward_points) : REDACTED,
+		))
+
+	return levels
+
 /// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals
 /obj/machinery/quantum_server/proc/get_avatar_data()
 	var/list/hosted_avatars = list()
@@ -340,26 +369,6 @@
 
 	return hosted_avatars
 
-/// Compiles a list of available domains.
-/obj/machinery/quantum_server/proc/get_available_domains()
-	var/list/levels = list()
-
-	for(var/datum/map_template/virtual_domain/domain as anything in subtypesof(/datum/map_template/virtual_domain))
-		if(initial(domain.test_only))
-			continue
-		var/can_view = initial(domain.difficulty) <= scanner_tier
-		var/can_view_reward = initial(domain.difficulty) <= (scanner_tier + 1)
-
-		levels += list(list(
-			"cost" = initial(domain.cost),
-			"desc" = can_view ? initial(domain.desc) : "Limited scanning capabilities. Cannot infer domain details.",
-			"difficulty" = initial(domain.difficulty),
-			"id" = initial(domain.id),
-			"name" = can_view ? initial(domain.name) : REDACTED,
-			"reward" = can_view_reward ? initial(domain.reward_points) : REDACTED,
-		))
-
-	return levels
 
 /// Returns the current domain name if the server has the proper tier scanner and it isn't randomized
 /obj/machinery/quantum_server/proc/get_current_domain_name()
@@ -381,7 +390,7 @@
 
 	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
 		var/init_cost = initial(available.cost)
-		if(!initial(available.test_only) && init_cost > 0 && init_cost <= points)
+		if(!initial(available.test_only) && init_cost > 0 && init_cost < 4 && init_cost <= points)
 			available_domains += list(list(
 				cost = init_cost,
 				id = initial(available.id),

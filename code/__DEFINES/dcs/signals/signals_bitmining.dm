@@ -13,6 +13,9 @@
 /// from /obj/machinery/quantum_server/on_exit_turf_entered(): (atom/entered)
 #define COMSIG_BITMINING_DOMAIN_COMPLETE "bitmining_complete"
 
+/// from /obj/machinery/netpod/on_take_damage()
+#define COMSIG_BITMINING_NETPOD_INTEGRITY "bitmining_netpod_damage"
+
 /// from /obj/structure/hololadder and others:
 #define COMSIG_BITMINING_SAFE_DISCONNECT "bitmining_disconnect"
 

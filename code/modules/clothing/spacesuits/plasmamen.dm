@@ -437,7 +437,6 @@
 	icon_state = "intern_envirohelm"
 	inhand_icon_state = null
 
-
 /obj/item/clothing/head/helmet/space/plasmaman/bitminer
 	name = "bitminer's plasma envirosuit helmet"
 	desc = "An envirohelmet with extended blue light filters for bitmining plasmamen."

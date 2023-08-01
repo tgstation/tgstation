@@ -1,6 +1,6 @@
 /datum/status_effect/static_vision
 	id = "static_vision"
-
+	status_type = STATUS_EFFECT_REPLACE
 
 /datum/status_effect/static_vision/on_creation(mob/living/new_owner, duration = 3 SECONDS)
 	src.duration = duration

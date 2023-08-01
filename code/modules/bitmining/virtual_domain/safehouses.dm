@@ -26,12 +26,20 @@
 /datum/map_template/safehouse/shuttle
 	filename = "shuttle.dmm"
 
+// Has space tiles on the four corners.
+/datum/map_template/safehouse/shuttle_space
+	filename = "shuttle_space.dmm"
+
 /datum/map_template/safehouse/mine
 	filename = "mine.dmm"
 
 // Comes preloaded with mining combat gear.
 /datum/map_template/safehouse/lavaland_boss
 	filename = "lavaland_boss.dmm"
+
+// Chill out
+/datum/map_template/safehouse/ice
+	filename = "ice.dmm"
 
 /**
  * Your safehouse here

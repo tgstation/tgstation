@@ -13,7 +13,7 @@
 	var/desc = "A map."
 	/// The 'difficulty' of the map, which affects the ui and ability to scan info.
 	var/difficulty = BITMINING_DIFFICULTY_NONE
-	/// Any additional loot to add after completion
+	/// An assoc list of typepath/amount to spawn on completion. Not weighted - the value is the amount
 	var/list/extra_loot
 	/// The map file to load
 	var/filename = "virtual_domain.dmm"

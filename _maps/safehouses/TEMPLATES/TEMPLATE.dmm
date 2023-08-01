@@ -1,70 +1,70 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space/basic,
-/area/station/virtual_domain/safehouse/exit)
+/area/station/virtual_domain/safehouse)
 "p" = (
 /turf/open/space/basic,
 /area/station/virtual_domain/safehouse/send)
-"x" = (
+"v" = (
+/turf/open/space/basic,
+/area/station/virtual_domain/safehouse/exit)
+"R" = (
 /turf/open/space/basic,
 /area/template_noop)
-"K" = (
-/turf/open/space/basic,
-/area/station/virtual_domain/safehouse)
 
 (1,1,1) = {"
-K
-K
-K
-K
-K
-x
+a
+a
+a
+a
+a
+R
 "}
 (2,1,1) = {"
-K
-K
-K
-K
-K
-K
+a
+a
+a
+a
+a
+a
 "}
 (3,1,1) = {"
-K
-K
-K
-K
 a
-K
+a
+a
+a
+v
+a
 "}
 (4,1,1) = {"
-K
-K
-K
-K
 a
-K
+a
+a
+a
+v
+a
 "}
 (5,1,1) = {"
-K
-p
-p
-K
 a
-K
+a
+a
+a
+v
+a
 "}
 (6,1,1) = {"
-K
+a
 p
 p
-K
-K
-K
+a
+a
+a
 "}
 (7,1,1) = {"
-K
-K
-K
-K
-K
-K
+a
+a
+a
+a
+a
+a
 "}

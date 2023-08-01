@@ -92,7 +92,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(isliving(mob_poi)) // handles edge cases like blob
 			var/mob/living/player = mob_poi
 			serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
-
 			if(issilicon(player))
 				serialized["job"] = player.job
 			else

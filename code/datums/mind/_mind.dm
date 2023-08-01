@@ -211,7 +211,7 @@
 		var/mob/living/carbon/carbon_character = new_character
 		carbon_character.last_mind = src
 	transfer_martial_arts(new_character)
-	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time), override = TRUE)
+	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		new_character.key = key //now transfer the key to link the client to our new body
 	if(new_character.client)

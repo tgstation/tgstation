@@ -1,0 +1,44 @@
+2023-08-01:
+  Fikou:
+  - bugfix: ghost notification icons are now centered properly
+  - bugfix: coroner has an implant during cybernetic revolution
+  - bugfix: fixes wizard loadouts
+  Hatterhat:
+  - bugfix: The blood-drunk miner has remembered how to swing their cleaving saw quickly
+      without having to flick it out first.
+  Jacquerel:
+  - bugfix: Losing your hooded suit (whether to theft, or because you were turned
+      into an ape) will also cause you to lose the hood.
+  Licks-The-Crystal:
+  - spellcheck: Corrected a large quantity of spelling, grammatical and phrasing errors
+      with Exploration Drone content.
+  Paxilmaniac:
+  - image: Wall and floor lights have been resprited to be a lot less dated looking,
+      and a lot less yellow
+  Sealed101:
+  - bugfix: fixed bluespace bodybags consuming xenomorphs when folded
+  Time-Green:
+  - bugfix: fixes a runtime in SSstation setup
+  - bugfix: fixes parallax not rendering correctly for latejoins
+  Vincent983:
+  - spellcheck: fixed the interdyne modsuit's typoes
+  Watermelon914:
+  - rscadd: Expanded the RPG loot wizard event by giving various different items their
+      own statistic boost.
+  YesterdaysPromise:
+  - rscadd: Added couple new signs to the game (med, medbay, morgue, chapel, viro,
+      gene, botany)
+  - rscadd: Way-signs now have additional states, showing vertical directions.
+  - image: Made the font on the signs consistant.
+  distributivgesetz:
+  - bugfix: Photophobia should work now.
+  - bugfix: Eyes should return to their normal flash sensitivity when the quirk is
+      removed.
+  - bugfix: Fixes pAI mind transfer from a bot to their card runtiming when the bot
+      gets broken.
+  san7890:
+  - refactor: Slaughter and Laughter Demons have been refactored, please place an
+      issue report for any unexpected things/hitches.
+  - bugfix: Laughter Demons should now actually drop a kitten.
+  zeroisthebiggay:
+  - spellcheck: Minor Breakage > Minor Skin Breakage for readability.

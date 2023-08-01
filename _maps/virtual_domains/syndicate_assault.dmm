@@ -578,9 +578,7 @@
 "xc" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit,
-/obj/item/storage/medkit,
-/obj/item/storage/medkit,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "xD" = (

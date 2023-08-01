@@ -264,6 +264,7 @@
 	var/client_disconnect_received = FALSE
 	var/crowbar_alert_received = FALSE
 	var/domain_complete_received = FALSE
+	var/integrity_alert_received = FALSE
 	var/sever_avatar_received = FALSE
 	var/shutdown_alert_received = FALSE
 
@@ -291,6 +292,10 @@
 	SIGNAL_HANDLER
 	sever_avatar_received = TRUE
 
+/datum/unit_test/bitmining_signals/proc/on_netpod_integrity(datum/source)
+	SIGNAL_HANDLER
+	integrity_alert_received = TRUE
+
 /datum/unit_test/bitmining_signals/proc/on_server_crash(datum/source)
 	SIGNAL_HANDLER
 	sever_avatar_received = TRUE
@@ -316,6 +321,7 @@
 	RegisterSignal(server, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_server_crash))
 	RegisterSignal(netpod, COMSIG_BITMINING_CROWBAR_ALERT, PROC_REF(on_crowbar_alert))
 	RegisterSignal(netpod, COMSIG_BITMINING_SEVER_AVATAR, PROC_REF(on_netpod_broken))
+	RegisterSignal(netpod, COMSIG_BITMINING_NETPOD_INTEGRITY, PROC_REF(on_netpod_integrity))
 
 	server.cold_boot_map(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
@@ -327,6 +333,10 @@
 	TEST_ASSERT_NOTNULL(netpod.server_ref, "Sanity: Did not set server")
 	TEST_ASSERT_EQUAL(netpod.occupant_mind_ref, labrat_mind_ref, "Sanity: Did not set mind")
 	TEST_ASSERT_EQUAL(client_connect_received, TRUE, "Did not send COMSIG_BITMINING_CLIENT_CONNECTED")
+
+	// Will get back to this later
+	// netpod.take_damage(netpod.max_integrity - 50)
+	// TEST_ASSERT_EQUAL(integrity_alert_received, TRUE, "Did not send COMSIG_BITMINING_NETPOD_INTEGRITY")
 
 	perp.put_in_active_hand(prybar)
 	netpod.default_pry_open(prybar, perp)

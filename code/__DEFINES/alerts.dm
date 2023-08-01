@@ -65,4 +65,5 @@
 /** Bitmining */
 #define ALERT_BITMINING_CROWBAR "bitmining_crowbar"
 #define ALERT_BITMINING_COMPLETED "bitmining_complete"
+#define ALERT_BITMINING_INTEGRITY "bitmining_integrity"
 #define ALERT_BITMINING_SHUTDOWN "bitmining_shutdown"

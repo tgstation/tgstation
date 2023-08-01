@@ -1,10 +1,9 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Button, Collapsible, Icon, LabeledList, NoticeBox, ProgressBar, Section, Stack, Table, Tooltip } from '../components';
+import { Button, Collapsible, Icon, NoticeBox, ProgressBar, Section, Stack, Table, Tooltip } from '../components';
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 import { TableCell, TableRow } from '../components/Table';
-import { debounce } from 'common/timer';
 
 type Data =
   | {
@@ -48,6 +47,7 @@ type DomainEntryProps = {
 
 type DisplayDetailsProps = {
   amount: number | string;
+  color: string;
   icon: string;
 };
 
@@ -60,11 +60,6 @@ enum Difficulty {
 
 const isConnected = (data: Data): data is Data & { connected: 1 } =>
   data.connected === 1;
-
-const completionDebounce = debounce(
-  (act: (action: string) => void) => act('check_completion'),
-  300
-);
 
 const getColor = (difficulty: number) => {
   switch (difficulty) {
@@ -107,7 +102,7 @@ const AccessView = (props, context) => {
     points,
   } = data;
 
-  const sorted = available_domains.sort((a, b) => a.difficulty - b.difficulty);
+  const sorted = available_domains.sort((a, b) => a.cost - b.cost);
 
   return (
     <Stack fill vertical>
@@ -209,22 +204,22 @@ const DomainEntry = (props: DomainEntryProps, context) => {
         </>
       }>
       <Stack height={5}>
-        <Stack.Item color="label" grow={2}>
+        <Stack.Item color="label" grow={4}>
           {desc}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
-          <LabeledList>
-            <LabeledList.Item label="Cost">
-              <DisplayDetails amount={cost} icon="coins" />
-            </LabeledList.Item>
-            <LabeledList.Item label="Difficulty">
-              <DisplayDetails amount={difficulty} icon="skull" />
-            </LabeledList.Item>
-            <LabeledList.Item label="Reward">
-              <DisplayDetails amount={reward} icon="star" />
-            </LabeledList.Item>
-          </LabeledList>
+          <Table>
+            <TableRow>
+              <DisplayDetails amount={cost} color="pink" icon="star" />
+            </TableRow>
+            <TableRow>
+              <DisplayDetails amount={difficulty} color="white" icon="skull" />
+            </TableRow>
+            <TableRow>
+              <DisplayDetails amount={reward} color="gold" icon="coins" />
+            </TableRow>
+          </Table>
         </Stack.Item>
       </Stack>
     </Collapsible>
@@ -243,11 +238,15 @@ const AvatarDisplay = (props, context) => {
     <Section
       title="Connected Clients"
       buttons={
-        <Stack align="center" color="good">
+        <Stack align="center">
           {!!generated_domain && (
             <Stack.Item>
               <Tooltip content="Available bandwidth for new connections.">
-                <DisplayDetails icon="broadcast-tower" amount={retries_left} />
+                <DisplayDetails
+                  color="green"
+                  icon="broadcast-tower"
+                  amount={retries_left}
+                />
               </Tooltip>
             </Stack.Item>
           )}
@@ -312,23 +311,38 @@ const AvatarDisplay = (props, context) => {
 };
 
 const DisplayDetails = (props: DisplayDetailsProps, context) => {
-  const { amount = 0, icon = 'star' } = props;
+  const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <>None</>;
+    return <TableCell color="label">None</TableCell>;
   }
 
   if (typeof amount === 'string') {
-    return <>{String(amount)}</>; // don't ask
+    return <TableCell color="label">{String(amount)}</TableCell>; // don't ask
+  }
+
+  if (amount > 4) {
+    return (
+      <TableCell>
+        <Stack>
+          <Stack.Item>{amount}</Stack.Item>
+          <Stack.Item>
+            <Icon color={color} name={icon} />
+          </Stack.Item>
+        </Stack>
+      </TableCell>
+    );
   }
 
   return (
-    <Stack>
-      {Array.from({ length: amount }, (_, index) => (
-        <Stack.Item>
-          <Icon key={index} name={icon} />
-        </Stack.Item>
-      ))}
-    </Stack>
+    <TableCell>
+      <Stack>
+        {Array.from({ length: amount }, (_, index) => (
+          <Stack.Item>
+            <Icon color={color} key={index} name={icon} />
+          </Stack.Item>
+        ))}
+      </Stack>
+    </TableCell>
   );
 };
