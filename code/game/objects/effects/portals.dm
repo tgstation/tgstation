@@ -18,6 +18,11 @@
 	anchored = TRUE
 	density = TRUE // dense for receiving bumbs
 	layer = HIGH_OBJ_LAYER
+	light_system = STATIC_LIGHT
+	light_range = 2
+	light_power = 1
+	light_on = TRUE
+	light_color = COLOR_BLUE_LIGHT
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
@@ -28,7 +33,7 @@
 	var/last_effect = 0
 	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
-	//does this portal create spark effect when teleporting?
+	/// does this portal create spark effect when teleporting?
 	var/sparkless = FALSE
 
 /obj/effect/portal/anom
@@ -39,6 +44,7 @@
 	plane = ABOVE_GAME_PLANE
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
+	light_off = TRUE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)

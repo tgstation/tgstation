@@ -293,6 +293,8 @@
 		qdel(p_orange)
 		p_orange = P
 		P.icon_state = "portal1"
+		P.set_light_color(COLOR_MOSTLY_PURE_ORANGE)
+		P.update_light()
 	else
 		qdel(p_blue)
 		p_blue = P
