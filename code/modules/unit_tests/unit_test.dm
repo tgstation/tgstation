@@ -236,7 +236,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	fdel(file_name)
 	file(file_name) << json_encode(test_results)
 
-	SSticker.force_ending = TRUE
+	SSticker.force_ending = ADMIN_FORCE_END_ROUND
 	//We have to call this manually because del_text can preceed us, and SSticker doesn't fire in the post game
 	SSticker.declare_completion()
 

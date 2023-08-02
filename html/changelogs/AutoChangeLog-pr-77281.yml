@@ -1,0 +1,4 @@
+author: "SpaceVampire"
+delete-after: True
+changes:
+  - bugfix: "Guard Spiders are no longer unable to attack after using Web Effigy"
