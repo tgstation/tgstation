@@ -5182,6 +5182,7 @@
 #include "code\modules\surgery\organs\internal\ears\_ears.dm"
 #include "code\modules\surgery\organs\internal\eyes\_eyes.dm"
 #include "code\modules\surgery\organs\internal\heart\_heart.dm"
+#include "code\modules\surgery\organs\internal\heart\heart_ethereal.dm"
 #include "code\modules\surgery\organs\internal\liver\_liver.dm"
 #include "code\modules\surgery\organs\internal\liver\liver_golem.dm"
 #include "code\modules\surgery\organs\internal\liver\liver_plasmaman.dm"
