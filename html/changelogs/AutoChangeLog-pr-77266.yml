@@ -1,5 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - bugfix: "CentCom can no longer be raided by teleporting out of the Super Secret Room"
-  - bugfix: "The Administrative Storage and ERT Armoury blast doors can no longer be opened by building a door button."
