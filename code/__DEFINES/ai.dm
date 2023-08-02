@@ -231,6 +231,9 @@
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
 
+/// Generic key for if we only have one action so we don't need to make a million subtypes with different keys
+#define BB_TARGETTED_ACTION "BB_targetted_action"
+
 ///Targetting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
@@ -349,3 +352,9 @@
 #define BB_HIVE_PARTNER "BB_hive_partner"
 ///the machine we must repair
 #define BB_MACHINE_TARGET "BB_machine_target"
+/// Lobstrosities will only attack people with one of these traits
+#define BB_LOBSTROSITY_EXPLOIT_TRAITS "BB_lobstrosity_exploit_traits"
+/// Key where we store some tasty fingers
+#define BB_LOBSTROSITY_TARGET_LIMB "BB_lobstrosity_target_limb"
+/// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
+#define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"

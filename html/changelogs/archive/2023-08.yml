@@ -42,3 +42,53 @@
   - bugfix: Laughter Demons should now actually drop a kitten.
   zeroisthebiggay:
   - spellcheck: Minor Breakage > Minor Skin Breakage for readability.
+2023-08-02:
+  DaydreamIQ:
+  - bugfix: Birdshot's morgue has surgical tools and a laptop for the coroner to use
+  Derpguy3:
+  - qol: The Syndicate battlecruiser's fighters have received external cameras to
+      aid its pilots.
+  - qol: Warning lights have been added to the landing pad of the battlecruiser to
+      (hopefully) reduce incident numbers.
+  - bugfix: A stray air alarm was removed from the bridge of the Syndicate battlecruiser.
+  - bugfix: The turret control panel in the bridge of the battlecruiser has been moved
+      to a wall, allowing access without needing to climb the table.
+  - bugfix: Airlocks on the Syndicate battlecruiser which were missing syndicate access,
+      has had it added.
+  - bugfix: The Syndicate medibot on the battlecruiser can now be unlocked by its
+      crew.
+  Jacquerel:
+  - bugfix: Several places on Birdshot which were missing an APC now aren't.
+  - bugfix: Several places on Birdshot which were missing an air alarm now aren't.
+  Jolly:
+  - bugfix: '[Shuttles] Kilo''s Emergency Shuttle no longer has a stacked light in
+      its brig.'
+  Melbert:
+  - bugfix: Fixed BB admin add
+  - bugfix: Traitors using the sneak suit and heretics under the effects of cloak
+      no longer leak their identity via Text to Speech
+  OrionTheFox:
+  - image: resprited a lot of formal undersuits, enjoy!
+  - rscadd: Added a pre-colored type of buttondown slacks for some service roles,
+      to replace the "black suit" and "amish suit"
+  - rscdel: Removed the "amish suit", "black suit", and one of the two "white suit"s
+  Senefi:
+  - bugfix: NorthStar's Supermatter Waste Chamber guide no longer contains inaccurate
+      information
+  - qol: NorthStar's Supermatter Waste Chamber air alarm no longer shows the hallway
+      vent and scrubber on the configuration panel.
+  SyncIt21:
+  - bugfix: broken icons in RCD UI
+  Thunder12345:
+  - bugfix: CentCom can no longer be raided by teleporting out of the Super Secret
+      Room
+  - bugfix: The Administrative Storage and ERT Armoury blast doors can no longer be
+      opened by building a door button.
+  carlarctg:
+  - qol: When Space Dragons devour people they get extinguished, removing flames.
+  honkpocket:
+  - rscadd: Adds an emote to push up glasses with *glasses
+  - rscadd: Adds a visual effect to *sigh
+  timothymtorres:
+  - rscadd: Add a new 'Hall of Fame' emergency shuttle.  It even comes with it's own
+      nifty photo album.
