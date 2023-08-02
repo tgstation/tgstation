@@ -600,12 +600,12 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 
 /datum/db_query/process(seconds_per_tick)
 	if(status >= DB_QUERY_FINISHED)
-		return
+		return TRUE // we are done processing after all
 
 	status = DB_QUERY_STARTED
 	var/job_result = rustg_sql_check_query(job_id)
 	if(job_result == RUSTG_JOB_NO_RESULTS_YET)
-		return
+		return FALSE //no results yet
 
 	store_data(json_decode(job_result))
 	return TRUE
