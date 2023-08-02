@@ -175,8 +175,7 @@ SUBSYSTEM_DEF(dbcore)
 	if(SSdbcore.Connect())
 		//Execute all waiting queries
 		for(var/datum/db_query/query in queries_standby)
-			//In theory these would be async anyway as MC processing should be false during shutdown.
-			query.Execute(FALSE)
+			run_query_sync(query)
 			qdel(query)
 		for(var/datum/db_query/query in queries_active)
 			//Finish any remaining active qeries
