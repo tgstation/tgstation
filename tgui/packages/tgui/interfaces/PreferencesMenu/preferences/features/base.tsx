@@ -310,7 +310,7 @@ export const FeatureSliderInput = (
   }
 
   return (
-      <Slider
+    <Slider
       onChange={(e, value) => {
         props.handleSetValue(value);
       }}
