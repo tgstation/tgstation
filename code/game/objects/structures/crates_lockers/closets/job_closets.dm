@@ -10,7 +10,7 @@
 	var/static/items_inside = list(
 		/obj/item/clothing/head/hats/tophat = 2,
 		/obj/item/radio/headset/headset_srv = 2,
-		/obj/item/clothing/under/suit/sl = 2,
+		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
 		/obj/item/clothing/under/rank/civilian/bartender = 2,
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/head/soft/black = 2,
@@ -76,7 +76,7 @@
 
 /obj/structure/closet/lawcloset/PopulateContents()
 	..()
-	new /obj/item/clothing/under/suit/blacktwopiece(src)
+	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/beige(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/black(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/red(src)
@@ -85,7 +85,7 @@
 	new /obj/item/clothing/suit/toggle/lawyer(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/purpsuit(src)
 	new /obj/item/clothing/suit/toggle/lawyer/purple(src)
-	new /obj/item/clothing/under/suit/black(src)
+	new /obj/item/clothing/under/costume/buttondown/slacks/service(src)
 	new /obj/item/clothing/neck/tie/black(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
