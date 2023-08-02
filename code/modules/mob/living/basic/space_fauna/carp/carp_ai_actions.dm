@@ -42,8 +42,7 @@
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target
 
 /datum/ai_planning_subtree/find_nearest_magicarp_spell_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/weakref/weak_action = controller.blackboard[BB_MAGICARP_SPELL]
-	var/datum/action/cooldown/using_action = weak_action?.resolve()
+	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
 	if (QDELETED(using_action))
 		return
 	if (!using_action.IsAvailable())

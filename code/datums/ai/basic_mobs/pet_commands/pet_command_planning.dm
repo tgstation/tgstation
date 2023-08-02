@@ -8,8 +8,7 @@
 /datum/ai_planning_subtree/pet_planning
 
 /datum/ai_planning_subtree/pet_planning/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/weakref/weak_command = controller.blackboard[BB_ACTIVE_PET_COMMAND]
-	var/datum/pet_command/command = weak_command?.resolve()
+	var/datum/pet_command/command = controller.blackboard[BB_ACTIVE_PET_COMMAND]
 	if (!command)
 		return // Do something else
 	return command.execute_action(controller)
