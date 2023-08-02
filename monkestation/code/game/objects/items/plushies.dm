@@ -70,3 +70,8 @@
 	squeak_override = list('sound/magic/wand_teleport.ogg'=1)
 	icon_state = "mage"
 
+/obj/item/toy/plush/chefomancer
+	name = "chef-o-mancer plush"
+	desc = "A plushie of a budding chef-o-mancer. Rumor is her favorite spell is 'Meat Loaf'. ~Handcrafted lovingly for Ruby Flamewing."
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon_state = "chef"
