@@ -66,7 +66,7 @@
 	target.dna.features["horns_avalari"] = value
 
 /datum/preference/choiced/avalari_horns/create_default_value()
-	var/datum/sprite_accessory/horns/avalari/fluffy/horns = /datum/sprite_accessory/horns/avalari/fluffy
+	var/datum/sprite_accessory/horns/avalari/mane/horns = /datum/sprite_accessory/horns/avalari/mane
 	return initial(horns.name)
 
 /datum/preference/choiced/avalari_horns/compile_constant_data()

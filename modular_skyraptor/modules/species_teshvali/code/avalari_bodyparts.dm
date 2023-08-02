@@ -28,7 +28,7 @@
 	)
 	worn_mask_offset = new(
 		attached_part = src,
-		feature_key = OFFSET_MASK,
+		feature_key = OFFSET_FACEMASK,
 		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
 	)
 	return ..()
