@@ -10127,6 +10127,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitmining/receiving)
 "cwe" = (

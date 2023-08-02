@@ -66,7 +66,7 @@
 /// Handles generating random numbers & calculating loot totals
 /obj/structure/closet/crate/secure/bitminer_loot/decrypted/proc/calculate_loot(reward_points, rewards_multiplier, ore_multiplier)
 	var/base = 2 * (rewards_multiplier + reward_points)
-	var/random_sum = rand(FLOOR(base / 1.5, 1), ROUND_UP(base * 1.5))
+	var/random_sum = rand(0.5, 1.5) * base
 	return ROUND_UP(random_sum * ore_multiplier)
 
 /// In case you want to gate the crate behind a special condition.

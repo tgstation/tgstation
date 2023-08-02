@@ -475,6 +475,15 @@
 	rewards = server.calculate_rewards()
 	TEST_ASSERT_EQUAL(rewards, 1.6, "Should increase rewards with modded servos")
 
+/// Ensures loot crates can spawn a proper number of items
+/datum/unit_test/bitmining_loot_crate_rewards/Run()
+	var/obj/structure/closet/crate/secure/bitminer_loot/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitminer_loot/decrypted)
+
+	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(1, 1, 1)), TRUE, "Should return a number")
+	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(2, 2, 0.5)), TRUE, "Should return a number")
+	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(3.5, 3, 0.25)), TRUE, "Should return a number")
+	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(4, 4.5, 0.1)), TRUE, "Should return a number")
+
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE
 #undef TEST_MAP_MOBS

@@ -2,14 +2,15 @@
 	name = "Disposal Pipe Factory"
 	desc = "An abandoned and infested factory manufacturing disposal pipes."
 	filename = "pipedream.dmm"
+	help_text = "Not long ago, this place was thriving with activity. The workers\
+	seemed to have left in a hurry, and now productivity is in the bin. Something\
+	must have caused it, but what?"
 	id = "pipedream"
 	safehouse_path = /datum/map_template/safehouse/shuttle
 	cost = BITMINING_COST_LOW
 	difficulty = BITMINING_DIFFICULTY_MEDIUM
 	reward_points = BITMINING_REWARD_LOW
-	extra_loot = list(
-		/obj/item/stack/pipe_cleaner_coil/random/five = 1
-	)
+	extra_loot = list(/obj/item/stack/pipe_cleaner_coil/random/five = 1)
 
 // ID Trims
 /datum/id_trim/factory
