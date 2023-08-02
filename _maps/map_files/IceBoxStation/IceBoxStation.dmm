@@ -68328,7 +68328,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon                                                                Level","4"="Station                                                                Level")
+	preset_destination_names = list("3"="Icemoon                                                                                                                                Level","4"="Station                                                                                                                                Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -71467,7 +71467,6 @@
 	},
 /area/station/security/office)
 "wNo" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
