@@ -19,7 +19,8 @@
 	restricted_roles = list(JOB_AI, JOB_CYBORG)
 	required_candidates = 1
 	weight = 3
-	cost = 10
+	cost = 14
+	minimum_players = 13
 	scaling_cost = 9
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	antag_cap = list("denominator" = 24)
@@ -66,12 +67,14 @@
 	)
 	restricted_roles = list(JOB_AI, JOB_CYBORG, "Positronic Brain")
 	required_candidates = 1
-	weight = 5
-	cost = 10
+	weight = 3
+	cost = 14
+	minimum_players = 20
 	requirements = list(40,30,20,10,10,10,10,10,10,10)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/midround/bloodsucker/trim_candidates()
+	..()
 	candidates = living_players
 	for(var/mob/living/player in candidates)
 		if(!is_station_level(player.z))
@@ -80,9 +83,10 @@
 			candidates.Remove(player)
 
 /datum/dynamic_ruleset/midround/bloodsucker/execute()
-	var/mob/selected_mobs = pick(living_players)
+	if(!candidates || !candidates.len)
+		return FALSE
+	var/mob/selected_mobs = pick_n_take(candidates)
 	assigned += selected_mobs.mind
-	living_players -= selected_mobs
 	var/datum/mind/candidate_mind = selected_mobs.mind
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = candidate_mind.make_bloodsucker()
 	if(!bloodsuckerdatum)
