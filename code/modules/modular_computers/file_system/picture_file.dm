@@ -4,7 +4,7 @@
  */
 /datum/computer_file/picture
 	filetype = "PNG" // the superior filetype
-	size = 2
+	size = 1
 	/// The instance of the stored picture.
 	var/datum/picture/stored_picture
 	/// The name of the asset cache item.
