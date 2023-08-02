@@ -716,7 +716,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "dc" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+	dir = 8
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/central_command_areas/fore)
 "dd" = (
