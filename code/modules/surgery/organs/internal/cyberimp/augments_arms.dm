@@ -408,8 +408,6 @@
 		return
 
 	var/mob/living/living_target = target
-	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
-	var/armor_block = living_target.run_armor_check(target_zone, MELEE)
 	source.changeNext_move(CLICK_CD_MELEE)
 	var/picked_hit_type = pick("punch", "smash", "pummel", "bash", "slam")
 
@@ -434,6 +432,8 @@
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
+	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
+	var/armor_block = living_target.run_armor_check(target_zone, MELEE)
 	living_target.apply_damage(punch_damage, BRUTE, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
