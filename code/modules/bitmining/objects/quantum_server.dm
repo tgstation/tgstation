@@ -51,7 +51,7 @@
 	/// Server cooldown efficiency
 	var/server_cooldown_efficiency = 1
 	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 3 MINUTES
+	var/server_cooldown_time = 2 SECONDS
 	/// Turfs to delete whenever the server is shut down.
 	var/turf/delete_turfs = list()
 	/// The turfs we can place a hololadder on.
@@ -219,12 +219,9 @@
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
 	var/datum/space_level/loaded_zlevel = vdom_ref?.resolve()
-	if(isnull(loaded_zlevel))
-		if(!initialize_virtual_domain())
-			loading = FALSE
-			return FALSE
-	else
-		scrub_vdom_map()
+	if(isnull(loaded_zlevel) && !initialize_virtual_domain())
+		loading = FALSE
+		return FALSE
 
 	var/datum/map_template/virtual_domain/to_generate = initialize_domain(map_id)
 	if(isnull(to_generate))
@@ -507,7 +504,7 @@
 
 	if(generated_domain)
 		SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR)
-		scrub_vdom_contents()
+		scrub_vdom()
 
 	if(get_is_ready())
 		return
@@ -551,7 +548,7 @@
 		return
 
 /// Deletes all the tile contents
-/obj/machinery/quantum_server/proc/scrub_vdom_contents()
+/obj/machinery/quantum_server/proc/scrub_vdom()
 	for(var/turf/tile in send_turfs)
 		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
 		UnregisterSignal(tile, COMSIG_ATOM_EXAMINE)
@@ -564,20 +561,18 @@
 			if(!isobserver(thing))
 				qdel(thing)
 
-	for(var/turf/tile in delete_turfs) // some things drop items
 		for(var/thing in tile.contents)
 			if(!isobserver(thing))
 				qdel(thing)
+
+		tile.baseturfs.Cut(3)
 
 	for(var/turf/tile in safehouse_load_turf) // cleanup that one tile
 		for(var/thing in tile.contents)
 			if(!isobserver(thing))
 				qdel(thing)
 
-/// Replaces all tiles on the map with a fresh vdom
-/obj/machinery/quantum_server/proc/scrub_vdom_map()
-	var/datum/map_template/virtual_domain/fresh_map = new()
-	fresh_map.load(map_load_turf[ONLY_TURF])
+		tile.baseturfs.Cut(3)
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
@@ -592,7 +587,7 @@
 
 	SEND_SIGNAL(src, COMSIG_BITMINING_SEVER_AVATAR)
 
-	scrub_vdom_contents()
+	scrub_vdom()
 
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)

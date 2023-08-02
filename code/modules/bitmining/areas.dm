@@ -68,21 +68,20 @@
 /area/lavaland/surface/outdoors/virtual_domain
 	name = "Virtual Domain: Lava Ruins"
 	icon_state = "bit_ruin"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/icemoon/underground/explored/virtual_domain
 	name = "Virtual Domain: Ice Ruins"
 	icon_state = "bit_ice"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/ruin/space/has_grav/powered/virtual_domain
 	name = "Virtual Domain: Space Ruins"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_space"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/virtual_domain/powered
 	name = "Virtual Domain: Ruins"
 	icon_state = "bit_ruin"
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
 	requires_power = FALSE
