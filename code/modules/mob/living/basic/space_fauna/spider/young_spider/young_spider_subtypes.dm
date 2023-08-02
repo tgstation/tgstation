@@ -101,8 +101,8 @@
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_tangle"
 	icon_dead = "young_tangle_dead"
-	maxHealth = 25
-	health = 25
+	maxHealth = 30
+	health = 30
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	speed = 0.7
@@ -110,6 +110,19 @@
 	web_type = /datum/action/cooldown/lay_web/sealer
 	poison_per_bite = 2
 	poison_type = /datum/reagent/toxin/acid
+
+/mob/living/basic/young_spider/tangle/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/healing_touch,\
+		heal_brute = 5,\
+		heal_burn = 5,\
+		heal_time = 3 SECONDS,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		action_text = "%SOURCE% begins mending themselves...",\
+		complete_text = "%SOURCE%'s wounds mend together.",\
+	)
 
 /// Will differentiate into the "midwife" giant spider.
 /mob/living/basic/young_spider/midwife

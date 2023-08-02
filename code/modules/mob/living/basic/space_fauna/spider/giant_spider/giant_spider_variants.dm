@@ -173,8 +173,8 @@
 	icon_dead = "tangle_dead"
 	gender = FEMALE
 	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/food/spidereggs = 4)
-	maxHealth = 40
-	health = 40
+	maxHealth = 55
+	health = 55
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	poison_per_bite = 5
@@ -203,8 +203,9 @@
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = maxHealth * 0.5,\
-		heal_burn = maxHealth * 0.5,\
+		heal_brute = 10,\
+		heal_burn = 10,\
+		heal_time = 3 SECONDS,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
