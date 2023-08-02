@@ -214,7 +214,7 @@
 	},
 /area/centcom/basketball)
 "yY" = (
-/mob/living/simple_animal/crab,
+/mob/living/basic/crab,
 /turf/open/misc/beach/sand,
 /area/centcom/basketball)
 "zk" = (
@@ -313,7 +313,7 @@
 /turf/open/water/beach,
 /area/centcom/basketball)
 "Fy" = (
-/mob/living/simple_animal/crab/kreb,
+/mob/living/basic/crab/kreb,
 /turf/open/misc/beach/sand,
 /area/centcom/basketball)
 "FS" = (

@@ -225,7 +225,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "fS" = (
-/mob/living/simple_animal/crab{
+/mob/living/basic/crab{
 	name = "Jonny"
 	},
 /turf/open/misc/beach/sand,
@@ -581,7 +581,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "sA" = (
-/mob/living/simple_animal/crab{
+/mob/living/basic/crab{
 	name = "Jon"
 	},
 /turf/open/misc/beach/sand,
@@ -739,7 +739,7 @@
 /area/ruin/powered/beach)
 "AB" = (
 /obj/effect/turf_decal/sand,
-/mob/living/simple_animal/crab{
+/mob/living/basic/crab{
 	name = "James"
 	},
 /turf/open/misc/beach/sand,
@@ -1244,7 +1244,7 @@
 /area/ruin/powered/beach)
 "SC" = (
 /obj/machinery/light/directional/north,
-/mob/living/simple_animal/crab{
+/mob/living/basic/crab{
 	name = "Eddie"
 	},
 /turf/open/misc/beach/sand,
