@@ -52,4 +52,9 @@
 ///the tree that we will climb
 #define BB_CLIMBED_TREE "BB_climbed_tree"
 
-// Lightgeist keys
+/// Lobstrosities will only attack people with one of these traits
+#define BB_LOBSTROSITY_EXPLOIT_TRAITS "BB_lobstrosity_exploit_traits"
+/// Key where we store some tasty fingers
+#define BB_LOBSTROSITY_TARGET_LIMB "BB_lobstrosity_target_limb"
+/// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
+#define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"

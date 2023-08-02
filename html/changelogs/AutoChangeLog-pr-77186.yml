@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Several places on Birdshot which were missing an APC now aren't."
-  - bugfix: "Several places on Birdshot which were missing an air alarm now aren't."
