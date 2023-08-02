@@ -287,7 +287,7 @@
 		balloon_alert(user, "it's too dirty!")
 		return TRUE
 
-	if(istype(O, /obj/item/storage/bag/tray))
+	if(istype(O, /obj/item/storage))
 		var/obj/item/storage/T = O
 		var/loaded = 0
 		for(var/obj/S in T.contents)
