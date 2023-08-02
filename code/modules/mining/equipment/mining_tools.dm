@@ -307,11 +307,16 @@
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
 	attack_verb_simple = list("bonks", "bludgeons", "pounds")
-	usesound = 'sound/items/drill_use.ogg'
 	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 3
+	/// The factor at which the recoil becomes less.
+	var/recoil_factor = 3
+	/// Wether we knock down and launch away out enemies when we attack.
+	var/do_launch = TRUE
 
 /datum/armor/giant_wrench
 	acid = 30
@@ -325,14 +330,41 @@
 	. = ..()
 	transform = transform.Translate(-16, -16)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent( \
+		/datum/component/transforming, \
+		force_on = 40, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		sharpness_on = SHARP_POINTY, \
+		clumsy_check = TRUE, \
+		inhand_icon_change = TRUE, \
+	)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+
+/// Used when the tool is transformed through the transforming component.
+/obj/item/shovel/giant_wrench/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	usesound = (active ? 'sound/items/ratchet.ogg' : initial(usesound))
+	block_chance = (active ? 0 : initial(block_chance))
+	recoil_factor = (active ? 2 : initial(recoil_factor))
+	do_launch = (active ? FALSE : initial(do_launch))
+	tool_behaviour = (active ? TOOL_WRENCH : initial(tool_behaviour))
+	armour_penetration = (active ? 30 : initial(armour_penetration))
+	if(user)
+		balloon_alert(user, "folded Big Slappy [active ? "open" : "closed"]")
+	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shovel/giant_wrench/attack(mob/living/target_mob, mob/living/user)
 	..()
 	if(QDELETED(target_mob))
 		return
-	var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
-	target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
-	target_mob.Knockdown(2 SECONDS)
-	user.adjustBruteLoss(force / 3)
+	if(do_launch)
+		var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
+		target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
+		target_mob.Knockdown(2 SECONDS)
+	user.adjustBruteLoss(force / recoil_factor)
 	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
 	log_combat(user, user, "recoiled Big Slappy into")
