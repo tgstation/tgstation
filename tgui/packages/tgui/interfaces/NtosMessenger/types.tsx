@@ -5,6 +5,7 @@ export type NtMessage = {
   outgoing: BooleanLike;
   photo_path?: string;
   everyone: BooleanLike;
+  timestamp: string;
 };
 
 export type NtPicture = {

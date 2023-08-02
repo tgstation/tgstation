@@ -1,4 +1,4 @@
-import { Stack, Section, Button, Box, Input, Modal } from '../../components';
+import { Stack, Section, Button, Box, Input, Modal, Tooltip, Icon } from '../../components';
 import { Component, RefObject, createRef, SFC } from 'inferno';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 import { BooleanLike } from 'common/react';
@@ -185,6 +185,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             message={message.message}
             everyone={message.everyone}
             photoPath={message.photo_path}
+            timestamp={message.timestamp}
             onPreviewImage={
               message.photo_path
                 ? () => this.setState({ previewingImage: message.photo_path! })
@@ -379,18 +380,32 @@ type ChatMessageProps = {
   outgoing: BooleanLike;
   message: string;
   everyone: BooleanLike;
+  timestamp: string;
   photoPath?: string;
   onPreviewImage?: () => void;
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message, everyone, outgoing, photoPath, onPreviewImage } = props;
+  const { message, everyone, outgoing, photoPath, timestamp, onPreviewImage } =
+    props;
 
   const displayMessage = decodeHtmlEntities(message);
 
   return (
     <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
-      <Box className="NtosChatMessage__content">{displayMessage}</Box>
+      <Box className="NtosChatMessage__content">
+        <Box as="span">{displayMessage}</Box>
+        <Tooltip content={timestamp} position={outgoing ? 'left' : 'right'}>
+          <Icon
+            className="NtosChatMessage__timestamp"
+            name="clock-o"
+            size={0.8}
+          />
+        </Tooltip>
+      </Box>
+      {!!everyone && (
+        <Box className="NtosChatMessage__everyone">Sent to everyone</Box>
+      )}
       {photoPath !== null && (
         <Button
           tooltip="View image"
@@ -399,9 +414,6 @@ const ChatMessage = (props: ChatMessageProps) => {
           onClick={onPreviewImage}>
           <Box as="img" src={photoPath} mt={1} />
         </Button>
-      )}
-      {!!everyone && (
-        <Box className="NtosChatMessage__everyone">Sent to everyone</Box>
       )}
     </Box>
   );

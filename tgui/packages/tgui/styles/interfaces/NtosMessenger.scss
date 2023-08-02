@@ -35,8 +35,7 @@ $msgpadding: 0.7rem;
   display: inline-flex;
   flex-direction: column;
 
-  min-width: 10rem;
-  max-width: 30rem;
+  max-width: 25rem;
   margin: 0;
 
   padding: $msgpadding;
@@ -51,24 +50,34 @@ $msgpadding: 0.7rem;
     float: right;
   }
 
+  &__timestamp {
+    height: 0.9rem;
+    margin-top: 0.2rem;
+    margin-left: 0.5rem;
+  }
+
   &__content {
-    word-wrap: break-word;
+    display: flex;
+    justify-content: space-between;
+    min-width: 9rem;
+    overflow-wrap: break-word;
     text-align: left;
+    word-break: break-all;
   }
 
   &__everyone {
-    font-size: 0.8rem;
     margin-top: 0.5rem;
+    font-size: 0.8rem;
     color: lightgrey;
   }
-}
 
-.NtosChatMessage__image {
-  align-self: flex-start;
-  margin-top: 1rem;
-  margin-right: 3rem;
-  max-width: 25rem;
-  -ms-interpolation-mode: nearest-neighbor;
+  &__image {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    margin-right: 3rem;
+    max-width: 25rem;
+    -ms-interpolation-mode: nearest-neighbor;
+  }
 }
 
 .NtosChatLog {
@@ -80,15 +89,14 @@ $msgpadding: 0.7rem;
 .NtosChatLog__ImagePreview {
   width: fit-content;
   height: fit-content;
-}
-
-.NtosChatLog__ImagePreview img {
-  height: auto;
-  width: 30rem;
-  margin-right: 1rem;
-  justify-self: center;
-  align-self: center;
-  -ms-interpolation-mode: nearest-neighbor;
+  & img {
+    height: auto;
+    width: 30rem;
+    margin-right: 1rem;
+    justify-self: center;
+    align-self: center;
+    -ms-interpolation-mode: nearest-neighbor;
+  }
 }
 
 .UnreadDivider {

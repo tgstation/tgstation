@@ -131,10 +131,13 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers, /datum/computer_file/program/messenger)
 	var/photo_name
 	/// Whether this message was sent to everyone.
 	var/everyone
+	/// The station time at which this message was made.
+	var/timestamp
 
-/datum/pda_message/New(message, outgoing, photo_name = null, everyone = FALSE)
+/datum/pda_message/New(message, outgoing, timestamp, photo_name = null, everyone = FALSE)
 	src.message = message
 	src.outgoing = outgoing
+	src.timestamp = timestamp
 	src.photo_name = photo_name
 	src.everyone = everyone
 
@@ -145,4 +148,5 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers, /datum/computer_file/program/messenger)
 	data["outgoing"] = outgoing
 	data["photo_path"] = photo_name ? SSassets.transport.get_asset_url(photo_name) : null
 	data["everyone"] = everyone
+	data["timestamp"] = timestamp
 	return data

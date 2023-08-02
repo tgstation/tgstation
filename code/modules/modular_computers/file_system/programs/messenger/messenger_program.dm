@@ -1,6 +1,9 @@
+/// Used to generate an asset key for a temporary image unique to this user.
 #define TEMP_IMAGE_PATH(ref) ("ntos_messenger[ref]_temp_image.png")
 /// Purpose is evident by the name, hopefully.
 #define MAX_PDA_MESSAGE_LEN 1024
+/// Format of message timestamps.
+#define PDA_MESSAGE_TIMESTAMP_FORMAT "hh:mm"
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -517,7 +520,7 @@
 		return FALSE
 
 	// Log it in our logs
-	var/datum/pda_message/message_datum = new(message, TRUE, photo_asset_key, everyone)
+	var/datum/pda_message/message_datum = new(message, TRUE, station_time_timestamp(PDA_MESSAGE_TIMESTAMP_FORMAT), photo_asset_key, everyone)
 	for(var/datum/pda_chat/target_chat as anything in target_chats)
 		target_chat.add_message(message_datum, show_in_recents = !everyone)
 		target_chat.unread_messages = 0
@@ -631,7 +634,7 @@
 
 	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
-		var/datum/pda_message/message = new(signal.data["message"], FALSE, signal.data["photo"], signal.data["everyone"])
+		var/datum/pda_message/message = new(signal.data["message"], FALSE, station_time_timestamp(PDA_MESSAGE_TIMESTAMP_FORMAT), signal.data["photo"], signal.data["everyone"])
 
 		chat = find_chat_by_recipient(is_fake_user ? fake_name : sender_ref, is_fake_user)
 		if(!istype(chat))
@@ -718,5 +721,6 @@
 			var/obj/item/modular_computer/pda/comp = computer
 			comp.explode(usr, from_message_menu = TRUE)
 
+#undef PDA_MESSAGE_TIMESTAMP_FORMAT
 #undef MAX_PDA_MESSAGE_LEN
 #undef TEMP_IMAGE_PATH
