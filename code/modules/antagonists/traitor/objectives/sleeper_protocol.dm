@@ -101,7 +101,7 @@
 		"The Captain is a lizardperson.",
 		"Nanotrasen isn't real.",
 		"They put something in the food to make you forget.",
-		"You are the only real person on the station."
+		"You are the only real person on the station.",
 		"Things would be a lot better on the station if more people were screaming, someone should do something about that.",
 		"The people in charge around here have only ill intentions for the crew.",
 		"Help the crew? What have they ever done for you anyways?",
