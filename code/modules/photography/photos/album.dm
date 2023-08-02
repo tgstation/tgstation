@@ -122,3 +122,8 @@
 
 /obj/item/storage/photo_album/personal
 	icon_state = "album_green"
+
+/obj/item/storage/photo_album/hall_of_fame
+	name = "photo album (Hall of Fame)"
+	icon_state = "album_red"
+	persistence_id = "hall_of_fame"
