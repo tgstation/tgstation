@@ -39,6 +39,9 @@
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
 #define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
 
+/// Generic key for a non-specific targetted action
+#define BB_TARGETTED_ACTION "BB_targetted_action"
+
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
