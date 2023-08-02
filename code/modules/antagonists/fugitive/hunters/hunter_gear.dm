@@ -154,6 +154,14 @@
 	default_raw_text = "<b>Remember!</b> The customers love that gumball we have as a crystal ball. \
 		Even if it's completely useless to us, resist the urge to chew it."
 
+/**
+ * # Bounty Locator
+ *
+ * Locates a random, living fugitive and reports their name/location on a 40 second cooldown.
+ *
+ * Locates a random fugitive antagonist via the GLOB.antagonists list, and reads out their real name and area name.
+ * Captured or dead fugitives are not reported.
+ */
 /obj/machinery/fugitive_locator
 	name = "Bounty Locator"
 	desc = "Tracks the signatures of bounty targets in your sector. Nobody actually knows what mechanism this thing uses to track its targets. \
