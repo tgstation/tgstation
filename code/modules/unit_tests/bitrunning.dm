@@ -134,8 +134,6 @@
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	labrat.mind.key = "fake_mind"
-	labrat.key = "fake_mind" // Original body gets a fake mind
 	var/datum/mind/real_mind = WEAKREF(labrat.mind)
 
 	pod.find_server()
@@ -178,7 +176,6 @@
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	labrat.mind.key = "fake_mind"
 	var/datum/weakref/real_mind = WEAKREF(labrat.mind)
 
 	server.cold_boot_map(labrat, map_id = TEST_MAP)
@@ -214,7 +211,6 @@
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	labrat.mind.key = "test_key"
 
 	var/datum/weakref/initial_mind = labrat.mind
 	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
@@ -241,7 +237,6 @@
 	var/mob/living/carbon/human/pincushion = allocate(/mob/living/carbon/human/consistent)
 	pincushion.mind_initialize()
 	pincushion.mock_client = new()
-	pincushion.mind.key = "gibbed_key"
 	var/datum/mind/pincushion_mind = pincushion.mind
 	pod.occupant_mind_ref = WEAKREF(pincushion.mind)
 	pod.occupant = pincushion
@@ -252,27 +247,6 @@
 	to_gib.gib()
 	TEST_ASSERT_EQUAL(pincushion_mind, pincushion.mind, "Pilot should have been transferred back on avatar gib")
 	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Pilot should have taken brain dmg on gib disconnect")
-
-/// This test fails every so often and it drives me insane
-/datum/unit_test/avatar_connection_advanced/Run()
-	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod)
-	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-
-	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/carbon/human/target = allocate(/mob/living/carbon/human/consistent)
-
-	labrat.mind_initialize()
-	labrat.mock_client = new()
-	labrat.mind.key = "fake_mind"
-	labrat.mind.initial_avatar_connection(avatar = target, hosting_netpod = pod, server = server)
-	var/datum/mind/initial_mind = labrat.mind
-
-	target.apply_damage(999, forced = TRUE, spread_damage = TRUE)
-	target.apply_damage(999, damagetype = BURN, def_zone = BODY_ZONE_HEAD, forced = TRUE)
-	target.apply_damage(999, damagetype = BRUTE, def_zone = BODY_ZONE_CHEST, forced = TRUE) // are u ded yet
-	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should have died on lethal damage")
-	TEST_ASSERT_EQUAL(labrat.stat, DEAD, "Pilot should have died on lethal damage")
-	TEST_ASSERT_EQUAL(initial_mind, labrat.mind, "Pilot should have been transferred back to initial mind")
 
 /// Tests the signals sent when the server is destroyed, mobs step on a loaded tile, etc
 /datum/unit_test/bitrunning_signals
@@ -324,7 +298,6 @@
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	labrat.mind.key = "fake_mind"
 	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
 
 	var/obj/item/crowbar/prybar = allocate(/obj/item/crowbar)

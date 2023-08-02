@@ -4,12 +4,12 @@
 	name = "Bitrunning"
 
 /area/station/bitrunning/den
-	name = "Bitrunning: Den"
+	name = "Bitrunning Den"
 	desc = "Office of bitrunners, houses their equipment."
 	icon_state = "bit_den"
 
 /area/station/bitrunning/receiving
-	name = "Bitrunning: Receiving"
+	name = "Bitrunning Receiving"
 	desc = "Receives shipments from the virtual domain."
 	icon_state = "bit_receive"
 
@@ -31,7 +31,7 @@
 /// Safehouse
 
 /area/virtual_domain/safehouse
-	name = "Virtual Domain: Safehouse"
+	name = "Virtual Domain Safehouse"
 	icon_state = "bit_safe"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
@@ -66,22 +66,22 @@
 /// Custom subtypes
 
 /area/lavaland/surface/outdoors/virtual_domain
-	name = "Virtual Domain: Lava Ruins"
+	name = "Virtual Domain Lava Ruins"
 	icon_state = "bit_ruin"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/icemoon/underground/explored/virtual_domain
-	name = "Virtual Domain: Ice Ruins"
+	name = "Virtual Domain Ice Ruins"
 	icon_state = "bit_ice"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/ruin/space/has_grav/powered/virtual_domain
-	name = "Virtual Domain: Space Ruins"
+	name = "Virtual Domain Space Ruins"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_space"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
 /area/virtual_domain/powered
-	name = "Virtual Domain: Ruins"
+	name = "Virtual Domain Ruins"
 	icon_state = "bit_ruin"
 	requires_power = FALSE
