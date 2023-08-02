@@ -115,15 +115,23 @@
 /mob/living/basic/young_spider/tangle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 5,\
-		heal_burn = 5,\
+		heal_brute = 10,\
+		heal_burn = 10,\
 		heal_time = 3 SECONDS,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
+
+/// Prevent you from healing other tangle spiders, or healing when on fire
+/mob/living/basic/young_spider/tangle/proc/can_mend(mob/living/source, mob/living/target)
+	if (on_fire)
+		balloon_alert(src, "on fire!")
+		return FALSE
+	return TRUE
 
 /// Will differentiate into the "midwife" giant spider.
 /mob/living/basic/young_spider/midwife
@@ -180,16 +188,19 @@
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_flesh"
 	icon_dead = "young_flesh_dead"
+	maxHealth = 55
+	health = 55
+	web_speed = 0.7
 
 /mob/living/basic/young_spider/hunter/flesh/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
-		blood_spawn_chance = 3)
+		blood_spawn_chance = 2)
 	// It might be easier and more fitting to just replace this with Regenerator
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = maxHealth * 0.25,\
-		heal_burn = maxHealth * 0.25,\
+		heal_brute = 20,\
+		heal_burn = 20,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh)),\
@@ -198,6 +209,7 @@
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
+/// Prevent you from healing other flesh spiders, or healing when on fire
 /mob/living/basic/young_spider/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
 	if (on_fire)
 		balloon_alert(src, "on fire!")

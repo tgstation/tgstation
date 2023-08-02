@@ -203,15 +203,23 @@
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 10,\
-		heal_burn = 10,\
+		heal_brute = 15,\
+		heal_burn = 15,\
 		heal_time = 3 SECONDS,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
+
+/// Prevent you from healing other tangle spiders, or healing when on fire
+/mob/living/basic/giant_spider/tangle/proc/can_mend(mob/living/source, mob/living/target)
+	if (on_fire)
+		balloon_alert(src, "on fire!")
+		return FALSE
+	return TRUE
 
 /**
  * ### Tarantula
@@ -454,8 +462,8 @@
 		blood_spawn_chance = 5)
 	// It might be easier and more fitting to just replace this with Regenerator
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = maxHealth * 0.5,\
-		heal_burn = maxHealth * 0.5,\
+		heal_brute = 40,\
+		heal_burn = 40,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh)),\
