@@ -1,5 +1,0 @@
-author: "SeeBeeSee"
-delete-after: True
-changes:
-  - rscadd: "Added the Pet Delivery Beacon, a version of bluespace item beacons that spawns nameable pets"
-  - rscadd: "Added Pet Delivery Beacon to the Monkecoin shop (under Other, default price of 1000 coins)"

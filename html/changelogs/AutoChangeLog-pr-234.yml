@@ -1,6 +1,0 @@
-author: "NanoCats"
-delete-after: True
-changes:
-  - rscadd: "New CC medbay"
-  - bugfix: "Fixed new CC layout trolling traitors"
-  - bugfix: "Adds actual threats to the space hotel ruin so it's not just free loot for any idiot with a teleporter"
