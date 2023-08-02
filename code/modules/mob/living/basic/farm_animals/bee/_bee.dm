@@ -263,7 +263,8 @@
 		return
 	if(needle.reagents.has_reagent(chemical.type, 5))
 		needle.reagents.remove_reagent(chemical.type, 5)
-		queen.assign_reagent(chemical)
+		var/datum/reagent/bee_chem = GLOB.chemical_reagents_list[chemical.type]
+		queen.assign_reagent(bee_chem)
 		user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
 		name = queen.name
 		return
