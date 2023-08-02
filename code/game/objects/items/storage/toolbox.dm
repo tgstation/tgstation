@@ -390,6 +390,7 @@
 	name = "fake medieval helmet"
 	desc = "A classic metal helmet. Though, this one seems to be very obviously fake..."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "knight_green"
 	inhand_icon_state = "knight_helmet"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
