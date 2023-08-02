@@ -24,7 +24,7 @@ type ChatScreenState = {
   selectingPhoto: boolean;
 };
 
-const READ_UNREADS_TIME_MS = 3000;
+const READ_UNREADS_TIME_MS = 1000;
 const SEND_COOLDOWN_MS = 1000;
 
 export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {

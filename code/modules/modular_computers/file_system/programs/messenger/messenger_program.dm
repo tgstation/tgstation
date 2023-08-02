@@ -168,7 +168,12 @@
 			return TRUE
 
 		if("PDA_viewMessages")
+			if(viewing_messages_of in saved_chats)
+				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+				chat.unread_messages = 0
+
 			viewing_messages_of = params["ref"]
+
 			if (viewing_messages_of in saved_chats)
 				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
 				chat.visible_in_recents = TRUE
@@ -665,9 +670,9 @@
 		else
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
-		var/datum/computer_file/program/messenger/sender_messenger = chat.recipient.resolve()
+		// resolving w/o nullcheck here, assume the messenger exists if a real person sent a message
+		var/datum/computer_file/program/messenger/sender_messenger = chat.recipient?.resolve()
 
-		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
 		var/sender_title = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(sender_messenger)
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
 
