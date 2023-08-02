@@ -12,7 +12,6 @@ cd "$1"
 . dependencies.sh
 cd "$original_dir"
 
-
 # update rust-g
 if [ ! -d "rust-g" ]; then
 	echo "Cloning rust-g..."
