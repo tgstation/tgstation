@@ -901,6 +901,7 @@
 #include "code\datums\components\blood_walk.dm"
 #include "code\datums\components\bloodysoles.dm"
 #include "code\datums\components\boomerang.dm"
+#include "code\datums\components\boss_music.dm"
 #include "code\datums\components\bullet_intercepting.dm"
 #include "code\datums\components\bumpattack.dm"
 #include "code\datums\components\burning.dm"
