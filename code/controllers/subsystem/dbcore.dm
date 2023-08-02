@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(dbcore)
 		//Execute all waiting queries
 		for(var/datum/db_query/query in queries_standby)
 			//In theory these would be async anyway as MC processing should be false during shutdown.
-			query.Execute(false)
+			query.Execute(FALSE)
 		for(var/datum/db_query/query in queries_active)
 			//Finish any remaining active qeries
 			UNTIL(query.process())
