@@ -561,7 +561,7 @@
 			if(!isobserver(thing))
 				qdel(thing)
 
-		for(var/thing in tile.contents)
+		for(var/thing in tile.contents) // some things drop their contents
 			if(!isobserver(thing))
 				qdel(thing)
 
