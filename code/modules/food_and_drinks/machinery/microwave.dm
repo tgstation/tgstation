@@ -293,7 +293,7 @@
 
 		if(!istype(O, /obj/item/storage/bag/tray))
 			// Non-tray dumping requires a do_after
-			to_chat(user, span_notice("You start dumping out the contents of [O] into [T]..."))
+			to_chat(user, span_notice("You start dumping out the contents of [O] into [src]..."))
 			if(!do_after(user, 2 SECONDS, target = T))
 				return
 
