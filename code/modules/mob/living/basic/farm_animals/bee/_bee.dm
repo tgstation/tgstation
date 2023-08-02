@@ -256,13 +256,18 @@
 		user.visible_message(span_notice("[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"),span_warning("You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"))
 		return
 	var/datum/reagent/chemical = needle.reagents.get_master_reagent()
-	if(chemical && needle.reagents.has_reagent(chemical.type, 5))
+	if(isnull(chemical))
+		return
+	if(chemical.type == queen.beegent?.type)
+		to_chat(user, span_warning("[queen] already has this chemical!"))
+		return
+	if(needle.reagents.has_reagent(chemical.type, 5))
 		needle.reagents.remove_reagent(chemical.type, 5)
 		queen.assign_reagent(chemical)
 		user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
 		name = queen.name
-	else
-		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
+		return
+	to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
 
 /obj/item/queen_bee/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
