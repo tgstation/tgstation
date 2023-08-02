@@ -8,6 +8,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/hive_communicate,
 	)
 
@@ -15,6 +16,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/find_and_hunt_target/repair_machines,
 		/datum/ai_planning_subtree/hive_communicate,
 	)
@@ -23,6 +25,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/hivebot,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/hive_communicate,
 	)
 
@@ -30,6 +33,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/hive_communicate,
 	)
 
@@ -43,7 +47,7 @@
 
 /datum/ai_planning_subtree/hive_communicate
 	///chance to go and relay message
-	var/relay_chance = 5
+	var/relay_chance = 10
 
 /datum/ai_planning_subtree/hive_communicate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 

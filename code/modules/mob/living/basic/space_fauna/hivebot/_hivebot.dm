@@ -43,7 +43,7 @@
 	AddElement(/datum/element/appearance_on_aggro, overlay_icon = icon, overlay_state = "[initial(icon_state)]_attack")
 	if(!ranged_attacker)
 		return
-	AddElement(/datum/element/ranged_attacks, projectiletype = /obj/projectile/hivebotbullet)
+	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/hivebot)
 
 /mob/living/basic/hivebot/death(gibbed)
 	do_sparks(number = 3, cardinal_only = TRUE, source = src)
@@ -130,6 +130,10 @@
 	do_sparks(number = 3, cardinal_only = TRUE, source = bot_target)
 	to_chat(src, span_warning("Repairs complete!"))
 	COOLDOWN_START(src, repair_cooldown, 50 SECONDS)
+
+/obj/item/ammo_casing/hivebot
+	name = "hivebot bullet casing"
+	projectile_type = /obj/projectile/hivebotbullet
 
 /obj/projectile/hivebotbullet
 	damage = 10
