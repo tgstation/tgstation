@@ -45,6 +45,7 @@
 	speed = 0.5
 	poison_per_bite = 4
 	poison_type = /datum/reagent/peaceborg/confuse
+	sight = SEE_SELF|SEE_MOBS
 
 /// Will differentiate into the "hunter" giant spider.
 /mob/living/basic/young_spider/hunter

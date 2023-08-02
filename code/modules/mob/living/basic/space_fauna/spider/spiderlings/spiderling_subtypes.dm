@@ -23,6 +23,7 @@
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "scout_spiderling"
 	icon_dead = "scout_spiderling_dead"
+	sight = SEE_SELF|SEE_MOBS
 
 /// Will differentiate into the "hunter" young spider.
 /mob/living/basic/spiderling/hunter
