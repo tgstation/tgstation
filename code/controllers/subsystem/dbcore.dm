@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(dbcore)
 	connection = SSdbcore.connection
 
 /datum/controller/subsystem/dbcore/Shutdown()
-	to_chat(world, span_boldannounce("Clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(queries_all)]"))
+	to_chat(world, span_boldannounce("Clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"))
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
 		//Execute all waiting queries
@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(dbcore)
 		query_round_shutdown.Execute(FALSE)
 		qdel(query_round_shutdown)
 
-	to_chat(world, span_boldannounce("Done clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(queries_all)]"))
+	to_chat(world, span_boldannounce("Done clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"))
 	if(IsConnected())
 		Disconnect()
 	stop_db_daemon()
