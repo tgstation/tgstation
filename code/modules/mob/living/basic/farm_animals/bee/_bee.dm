@@ -132,7 +132,7 @@
 /mob/living/basic/bee/proc/reagent_incompatible(mob/living/basic/bee/ruler)
 	if(!ruler)
 		return FALSE
-	if(ruler.beegent != beegent)
+	if(ruler.beegent?.type != beegent?.type)
 		return TRUE
 	return FALSE
 

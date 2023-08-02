@@ -18,7 +18,7 @@
 /datum/ai_planning_subtree/simple_find_target/bee/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/hydro_target = controller.blackboard[BB_TARGET_HYDRO]
 	if(hydro_target)
-		return
+		return SUBTREE_RETURN_FINISH_PLANNING
 	return ..()
 
 /datum/ai_controller/basic_controller/queen_bee
