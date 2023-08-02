@@ -491,10 +491,6 @@
 /obj/structure/lattice,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/whiteship/box)
-"nd" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ruin/space/has_grav/whiteship/box)
 "nz" = (
 /obj/structure/bed/roller,
 /obj/effect/decal/cleanable/dirt,
@@ -1122,10 +1118,6 @@
 /obj/effect/turf_decal/tile/green/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
-/area/ruin/space/has_grav/whiteship/box)
-"Ke" = (
-/obj/effect/decal/cleanable/glass,
-/turf/closed/mineral/random,
 /area/ruin/space/has_grav/whiteship/box)
 "Kg" = (
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
@@ -1955,7 +1947,7 @@ kK
 TC
 Xy
 Nf
-nd
+HR
 jP
 HC
 IA
@@ -2308,7 +2300,7 @@ Jy
 Jy
 Jy
 Xx
-Ke
+Jy
 na
 ku
 jO
