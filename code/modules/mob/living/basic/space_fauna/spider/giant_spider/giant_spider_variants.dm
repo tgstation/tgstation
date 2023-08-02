@@ -287,6 +287,11 @@
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
 
+/mob/living/basic/giant_spider/viper/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/bonus_damage)
+
 /**
  * ### Spider Broodmother
  *
