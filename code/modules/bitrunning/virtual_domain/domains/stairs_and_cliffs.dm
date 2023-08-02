@@ -28,3 +28,4 @@
 	back = /obj/item/tank/internals/oxygen
 	shoes = /obj/item/clothing/shoes/winterboots
 	l_pocket = /obj/item/flashlight
+	r_pocket = /obj/item/clothing/mask/breath
