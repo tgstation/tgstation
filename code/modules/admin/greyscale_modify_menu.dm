@@ -52,8 +52,6 @@
 		else
 			stack_trace("A geyscale modify menu was instantiated with a non-atom target and no specified apply callback (DefaultApply won't do).")
 	icon_state = starting_icon_state
-	if(vv_mode)
-		Unlock()
 
 	SetupConfigOwner()
 
@@ -64,11 +62,14 @@
 		new_config = SSgreyscale.configurations["[allowed_configs[pick(allowed_configs)]]"]
 	change_config(new_config)
 
-	var/list/config_choices = list()
-	for(var/config_string in allowed_configs)
-		var/datum/greyscale_config/allowed_config = text2path("[config_string]")
-		config_choices[initial(allowed_config.name)] = config_string
-	src.allowed_configs = config_choices
+	if(vv_mode)
+		Unlock()
+	else
+		var/list/config_choices = list()
+		for(var/config_string in allowed_configs)
+			var/datum/greyscale_config/allowed_config = text2path("[config_string]")
+			config_choices[initial(allowed_config.name)] = config_string
+		src.allowed_configs = config_choices
 
 	ReadColorsFromString(starting_colors || atom_target?.greyscale_colors)
 
