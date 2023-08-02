@@ -25,10 +25,7 @@
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot
-	if(!death_loot)
-		death_loot = string_list(list(/obj/effect/gibspawner/human))
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops)
 	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 2)
