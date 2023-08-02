@@ -39,7 +39,7 @@
 	 */
 	var/unlocked = FALSE
 
-/datum/greyscale_modify_menu/New(datum/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors, vv_mode = FALSE)
+/datum/greyscale_modify_menu/New(datum/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state = "", starting_config, starting_colors, vv_mode = FALSE)
 	src.target = target
 	var/atom/atom_target
 	if(isatom(target))
@@ -51,6 +51,7 @@
 			src.apply_callback = CALLBACK(src, PROC_REF(DefaultApply))
 		else
 			stack_trace("A geyscale modify menu was instantiated with a non-atom target and no specified apply callback (DefaultApply won't do).")
+
 	icon_state = starting_icon_state
 
 	SetupConfigOwner()
@@ -69,6 +70,7 @@
 		for(var/config_string in allowed_configs)
 			var/datum/greyscale_config/allowed_config = text2path("[config_string]")
 			config_choices[initial(allowed_config.name)] = config_string
+
 		src.allowed_configs = config_choices
 
 	ReadColorsFromString(starting_colors || atom_target?.greyscale_colors)
@@ -325,6 +327,7 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 /datum/greyscale_modify_menu/proc/SetupConfigOwner()
 	if(!isatom(target))
 		return
+
 	var/atom/current = target.type
 	var/atom/parent = target.parent_type
 	if(!initial(current.greyscale_config))
