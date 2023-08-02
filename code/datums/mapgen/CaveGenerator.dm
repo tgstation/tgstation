@@ -35,7 +35,7 @@
 	///Base chance of spawning flora
 	var/flora_spawn_chance = 2
 	///Base chance of spawning features
-	var/feature_spawn_chance = 0.15
+	var/feature_spawn_chance = 0.25
 	///Unique ID for this spawner
 	var/string_gen
 
@@ -73,7 +73,9 @@
 		)
 	flora_spawn_list = expand_weights(weighted_flora_spawn_list)
 	if(!weighted_feature_spawn_list)
-		weighted_feature_spawn_list = list(/obj/structure/geyser/random = 1)
+		weighted_feature_spawn_list = list(
+			/obj/structure/geyser/random = 1,
+			/obj/structure/ore_vent/random = 1,)
 	feature_spawn_list = expand_weights(weighted_feature_spawn_list)
 	open_turf_types = expand_weights(weighted_open_turf_types)
 	closed_turf_types = expand_weights(weighted_closed_turf_types)
@@ -133,6 +135,10 @@
 
 			if(can_spawn)
 				new picked_feature(new_turf)
+				if(istype(picked_feature, /obj/structure/ore_vent))
+					SSore_generation.ore_vent_count -= 1
+					if(SSore_generation.ore_vent_count <= 0)
+						feature_spawn_list = expand_weights(weighted_feature_spawn_list - /obj/structure/ore_vent/random)
 				spawned_something = TRUE
 
 		//MOB SPAWNING HERE

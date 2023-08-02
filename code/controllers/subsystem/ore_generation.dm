@@ -7,8 +7,14 @@ SUBSYSTEM_DEF(ore_generation)
 	runlevels = RUNLEVEL_GAME
 	flags = SS_NO_INIT
 
+	/// All ore vents that are currently producing boulders.
 	var/list/processed_vents = list()
+	/// All the boulders that have been produced by ore vents to be pulled by BRM machines.
 	var/list/available_boulders = list()
+	/// All the ore vents that are currently in the game, not just the ones that are producing boulders.
+	var/list/possible_vents = list()
+	///The quantity of ore vents that mapgen will attempt to spawn.
+	var/ore_vent_count = 15
 
 
 
@@ -34,7 +40,7 @@ SUBSYSTEM_DEF(ore_generation)
 				available_boulders += new_rock
 				return
 
-		var/obj/item/boulder/new_rock = new (current_vent.loc)
+		new_rock = new (current_vent.loc)
 		var/list/mats_list = current_vent.create_mineral_contents()
 		current_vent.Shake(duration = 1.5 SECONDS)
 		new_rock.set_custom_materials(mats_list)

@@ -47,6 +47,7 @@
 
 
 /obj/structure/ore_vent/Initialize(mapload)
+	SSore_generation.possible_vents += src
 	if(tapped)
 		SSore_generation.processed_vents += src
 	. = ..()
@@ -54,6 +55,7 @@
 
 /obj/structure/ore_vent/Destroy()
 	. = ..()
+	SSore_generation.possible_vents -= src
 	if(tapped)
 		SSore_generation.processed_vents -= src
 
@@ -205,8 +207,7 @@
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
 	/// Register that the boss's death will tap the vent and end the mining event.
 	/// Later, I guess.
-
-
+	boss.say("You dare disturb my slumber?!") //to stop warnings namely
 
 
 /obj/item/boulder
@@ -249,6 +250,6 @@
 
 /obj/item/boulder/artifact/Initialize(mapload)
 	. = ..()
-	var/obj/item/relic/boulder_relic = new /obj/item/relic(src)
+	new /obj/item/relic(src) //var/obj/item/relic/boulder_relic
 
 #undef MAX_ARTIFACT_ROLL_CHANCE

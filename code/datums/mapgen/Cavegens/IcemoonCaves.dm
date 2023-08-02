@@ -15,7 +15,14 @@
 		/obj/structure/flora/ash/chilly = 2,
 	)
 	///Note that this spawn list is also in the lavaland generator
-	weighted_feature_spawn_list = list(/obj/structure/geyser/wittel = 10, /obj/structure/geyser/random = 2, /obj/structure/geyser/plasma_oxide = 10, /obj/structure/geyser/protozine = 10, /obj/structure/geyser/hollowwater = 10)
+	weighted_feature_spawn_list = list(
+		/obj/structure/geyser/wittel = 10,
+		/obj/structure/geyser/random = 2,
+		/obj/structure/geyser/plasma_oxide = 10,
+		/obj/structure/geyser/protozine = 10,
+		/obj/structure/geyser/hollowwater = 10,
+		/obj/structure/ore_vent/random = 42,
+		)
 
 /datum/map_generator/cave_generator/icemoon/surface
 	flora_spawn_chance = 4
