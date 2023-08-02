@@ -2479,7 +2479,7 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/military,
-/obj/item/ammo_box/magazine/mm7,
+/obj/item/ammo_box/magazine/m7mm,
 /obj/item/gun/ballistic/automatic/l6_saw,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
