@@ -22,9 +22,9 @@ export const AntagInfoClock = (props, context) => {
         <Section scrollable fill>
           <Stack vertical>
             <Stack.Item fontSize="20px" color={'good'}>
-              <Icon name={'cog'} rotation={0} spin={1} />
+              <Icon name={'cog'} rotation={0} spin />
               {' You are the ' + antag_name + '! '}
-              <Icon name={'cog'} rotation={35} spin={1} />
+              <Icon name={'cog'} rotation={35} spin />
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout />
