@@ -61,7 +61,7 @@
 		if(istype(clamptarget, /obj/machinery/door/airlock/))
 			var/obj/machinery/door/airlock/targetairlock = clamptarget
 			playsound(chassis, clampsound, 50, FALSE, -6)
-			targetairlock.try_to_crowbar(src, source)
+			targetairlock.try_to_crowbar(src, source, TRUE)
 			return
 		if(clamptarget.anchored)
 			to_chat(source, "[icon2html(src, source)][span_warning("[target] is firmly secured!")]")
