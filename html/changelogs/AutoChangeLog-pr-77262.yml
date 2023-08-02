@@ -1,0 +1,4 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - bugfix: "Fixes holoparasites not dusting their owners on death sometimes."
