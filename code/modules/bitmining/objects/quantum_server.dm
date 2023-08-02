@@ -308,7 +308,6 @@
 	if(!length(receive_turfs))
 		receive_turfs = get_area_turfs(preset_receive_area)
 	if(!length(receive_turfs))
-		stack_trace("Failed to find receive turfs on the station.")
 		return FALSE
 
 	points += generated_domain.reward_points
