@@ -26,6 +26,11 @@
 		feature_key = OFFSET_FACE,
 		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
 	)
+	worn_mask_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_MASK,
+		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
+	)
 	return ..()
 
 /obj/item/bodypart/chest/avalari

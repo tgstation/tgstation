@@ -154,6 +154,26 @@ GLOBAL_LIST_EMPTY(horns_list_teshvali)
 	name = "Fluffy"
 	icon_state = "fluffy"
 
+/datum/sprite_accessory/horns/teshvali/regular
+	name = "Regular"
+	icon_state = "regular"
+
+/datum/sprite_accessory/horns/teshvali/bushy
+	name = "Bushy"
+	icon_state = "bushy"
+
+/datum/sprite_accessory/horns/teshvali/spiky
+	name = "Spiky"
+	icon_state = "spiky"
+
+/datum/sprite_accessory/horns/teshvali/mohawk
+	name = "Mohawk"
+	icon_state = "mohawk"
+
+/datum/sprite_accessory/horns/teshvali/pointy
+	name = "Pointy"
+	icon_state = "Pointy"
+
 /datum/sprite_accessory/horns/teshvali/upright
 	name = "Upright"
 	icon_state = "upright"
@@ -161,6 +181,58 @@ GLOBAL_LIST_EMPTY(horns_list_teshvali)
 /datum/sprite_accessory/horns/teshvali/mane
 	name = "Mane"
 	icon_state = "mane"
+
+/datum/sprite_accessory/horns/teshvali/maneless
+	name = "Mane (Fluffless)"
+	icon_state = "maneless"
+
+/datum/sprite_accessory/horns/teshvali/droopy
+	name = "Droopy"
+	icon_state = "droopy"
+
+/datum/sprite_accessory/horns/teshvali/longway
+	name = "Longway"
+	icon_state = "longway"
+
+/datum/sprite_accessory/horns/teshvali/tree
+	name = "Tree"
+	icon_state = "tree"
+
+/datum/sprite_accessory/horns/teshvali/ponytail
+	name = "Ponytail"
+	icon_state = "ponytail"
+
+/datum/sprite_accessory/horns/teshvali/mushroom
+	name = "Mushroom"
+	icon_state = "mushroom"
+
+/datum/sprite_accessory/horns/teshvali/backstrafe
+	name = "Backstrafe"
+	icon_state = "backstrafe"
+
+/datum/sprite_accessory/horns/teshvali/thinmohawk
+	name = "Thin Mohawk"
+	icon_state = "thinmohawk"
+
+/datum/sprite_accessory/horns/teshvali/thin
+	name = "Thin"
+	icon_state = "thin"
+
+/datum/sprite_accessory/horns/teshvali/thinmane
+	name = "Thin Mane"
+	icon_state = "thinmane"
+
+/datum/sprite_accessory/horns/teshvali/thinmaneless
+	name = "Thin Mane (Fluffless)"
+	icon_state = "thinmaneless"
+
+/datum/sprite_accessory/horns/teshvali/wooly
+	name = "Wooly"
+	icon_state = "wooly"
+
+/datum/mutant_newdnafeature/teshvali_horns
+	name = "Avali Horns DNA"
+	id = "horns_teshvali"
 
 /datum/mutant_newdnafeature/teshvali_horns
 	name = "Teshari Horns DNA"

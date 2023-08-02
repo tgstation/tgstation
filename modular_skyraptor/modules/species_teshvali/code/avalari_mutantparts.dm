@@ -150,9 +150,25 @@ GLOBAL_LIST_EMPTY(horns_list_avalari)
 	else
 		return COLOR_WHITE
 
-/datum/sprite_accessory/horns/avalari/fluffy
-	name = "Fluffy"
-	icon_state = "fluffy"
+/datum/sprite_accessory/horns/avalari/regular
+	name = "Regular"
+	icon_state = "regular"
+
+/datum/sprite_accessory/horns/avalari/bushy
+	name = "Bushy"
+	icon_state = "bushy"
+
+/datum/sprite_accessory/horns/avalari/spiky
+	name = "Spiky"
+	icon_state = "spiky"
+
+/datum/sprite_accessory/horns/avalari/mohawk
+	name = "Mohawk"
+	icon_state = "mohawk"
+
+/datum/sprite_accessory/horns/avalari/pointy
+	name = "Pointy"
+	icon_state = "Pointy"
 
 /datum/sprite_accessory/horns/avalari/upright
 	name = "Upright"
@@ -161,6 +177,54 @@ GLOBAL_LIST_EMPTY(horns_list_avalari)
 /datum/sprite_accessory/horns/avalari/mane
 	name = "Mane"
 	icon_state = "mane"
+
+/datum/sprite_accessory/horns/avalari/maneless
+	name = "Mane (Fluffless)"
+	icon_state = "maneless"
+
+/datum/sprite_accessory/horns/avalari/droopy
+	name = "Droopy"
+	icon_state = "droopy"
+
+/datum/sprite_accessory/horns/avalari/longway
+	name = "Longway"
+	icon_state = "longway"
+
+/datum/sprite_accessory/horns/avalari/tree
+	name = "Tree"
+	icon_state = "tree"
+
+/datum/sprite_accessory/horns/avalari/ponytail
+	name = "Ponytail"
+	icon_state = "ponytail"
+
+/datum/sprite_accessory/horns/avalari/mushroom
+	name = "Mushroom"
+	icon_state = "mushroom"
+
+/datum/sprite_accessory/horns/avalari/backstrafe
+	name = "Backstrafe"
+	icon_state = "backstrafe"
+
+/datum/sprite_accessory/horns/avalari/thinmohawk
+	name = "Thin Mohawk"
+	icon_state = "thinmohawk"
+
+/datum/sprite_accessory/horns/avalari/thin
+	name = "Thin"
+	icon_state = "thin"
+
+/datum/sprite_accessory/horns/avalari/thinmane
+	name = "Thin Mane"
+	icon_state = "thinmane"
+
+/datum/sprite_accessory/horns/avalari/thinmaneless
+	name = "Thin Mane (Fluffless)"
+	icon_state = "thinmaneless"
+
+/datum/sprite_accessory/horns/avalari/wooly
+	name = "Wooly"
+	icon_state = "wooly"
 
 /datum/mutant_newdnafeature/avalari_horns
 	name = "Avali Horns DNA"

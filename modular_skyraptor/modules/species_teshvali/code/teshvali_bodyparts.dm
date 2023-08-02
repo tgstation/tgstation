@@ -25,6 +25,11 @@
 		feature_key = OFFSET_FACE,
 		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
 	)
+	worn_mask_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_MASK,
+		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
+	)
 	return ..()
 
 /obj/item/bodypart/chest/teshvali
