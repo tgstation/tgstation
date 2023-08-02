@@ -8,8 +8,8 @@
 /datum/preference/choiced/moth_antennae/init_possible_values()
 	var/list/values = list()
 
-	var/icon/moth_head = icon('icons/mob/species/moth/bodyparts.dmi', "moth_head")
-	moth_head.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes"), ICON_OVERLAY)
+	var/icon/moth_head = icon('icons/mob/human/species/moth/bodyparts.dmi', "moth_head")
+	moth_head.Blend(icon('icons/mob/human/human_face.dmi', "motheyes"), ICON_OVERLAY)
 
 	for (var/antennae_name in GLOB.moth_antennae_list)
 		var/datum/sprite_accessory/antennae = GLOB.moth_antennae_list[antennae_name]
@@ -41,7 +41,7 @@
 
 	var/icon/moth_body = icon('icons/blanks/32x32.dmi', "nothing")
 
-	moth_body.Blend(icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_BEHIND"), ICON_OVERLAY)
+	moth_body.Blend(icon('icons/mob/human/species/moth/moth_wings.dmi', "m_moth_wings_plain_BEHIND"), ICON_OVERLAY)
 
 	var/list/body_parts = list(
 		/obj/item/bodypart/head/moth,
@@ -52,9 +52,9 @@
 
 	for (var/obj/item/bodypart/body_part in body_parts)
 		var/gender = (initial(body_part.is_dimorphic)) ? "_m" : ""
-		moth_body.Blend(icon('icons/mob/species/moth/bodyparts.dmi', "moth_[body_part][gender]"), ICON_OVERLAY)
+		moth_body.Blend(icon('icons/mob/human/species/moth/bodyparts.dmi', "moth_[body_part][gender]"), ICON_OVERLAY)
 
-	moth_body.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes"), ICON_OVERLAY)
+	moth_body.Blend(icon('icons/mob/human/human_face.dmi', "motheyes"), ICON_OVERLAY)
 
 	for (var/markings_name in GLOB.moth_markings_list)
 		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[markings_name]
@@ -68,8 +68,8 @@
 				body_part_icon.Crop(1, 1, 32, 32)
 				icon_with_markings.Blend(body_part_icon, ICON_OVERLAY)
 
-		icon_with_markings.Blend(icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_FRONT"), ICON_OVERLAY)
-		icon_with_markings.Blend(icon('icons/mob/species/moth/moth_antennae.dmi', "m_moth_antennae_plain_FRONT"), ICON_OVERLAY)
+		icon_with_markings.Blend(icon('icons/mob/human/species/moth/moth_wings.dmi', "m_moth_wings_plain_FRONT"), ICON_OVERLAY)
+		icon_with_markings.Blend(icon('icons/mob/human/species/moth/moth_antennae.dmi', "m_moth_antennae_plain_FRONT"), ICON_OVERLAY)
 
 		// Zoom in on the top of the head and the chest
 		icon_with_markings.Scale(64, 64)
