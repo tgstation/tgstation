@@ -34,6 +34,9 @@ SUBSYSTEM_DEF(dbcore)
 	/// Queries pending execution, mapped to complete arguments
 	var/list/datum/db_query/queries_standby = list()
 
+	/// We are in the process of shutting down and should not allow more DB connections
+	var/shutting_down = FALSE
+
 
 	var/connection  // Arbitrary handle returned from rust_g.
 
@@ -170,6 +173,7 @@ SUBSYSTEM_DEF(dbcore)
 	connection = SSdbcore.connection
 
 /datum/controller/subsystem/dbcore/Shutdown()
+	shutting_down = TRUE
 	to_chat(world, span_boldannounce("Clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"))
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
@@ -184,7 +188,7 @@ SUBSYSTEM_DEF(dbcore)
 
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
-			list("end_state" = SSticker.end_state, "round_id" = GLOB.round_id)
+			list("end_state" = SSticker.end_state, "round_id" = GLOB.round_id, TRUE)
 		)
 		query_round_shutdown.Execute(FALSE)
 		qdel(query_round_shutdown)
@@ -342,7 +346,11 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/ReportError(error)
 	last_error = error
 
-/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments)
+/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, arguments, allow_during_shutdown=FALSE)
+	//If the subsystem is shutting down, disallow new queries
+	if(!allow_during_shutdown && shutting_down)
+		CRASH('Attempting to create a new db query during the world shutdown')
+
 	if(IsAdminAdvancedProcCall())
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
