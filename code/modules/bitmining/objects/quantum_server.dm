@@ -384,13 +384,13 @@
 	if(points < 1)
 		return
 
-	var/list/available_domains = list()
+	var/list/random_domains = list()
 	var/total_cost = 0
 
 	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
 		var/init_cost = initial(available.cost)
 		if(!initial(available.test_only) && init_cost > 0 && init_cost < 4 && init_cost <= points)
-			available_domains += list(list(
+			random_domains += list(list(
 				cost = init_cost,
 				id = initial(available.id),
 			))
@@ -398,7 +398,7 @@
 	var/random_value = rand(0, total_cost)
 	var/accumulated_cost = 0
 
-	for(var/available as anything in available_domains)
+	for(var/available as anything in random_domains)
 		accumulated_cost += available["cost"]
 		if(accumulated_cost >= random_value)
 			domain_randomized = TRUE
