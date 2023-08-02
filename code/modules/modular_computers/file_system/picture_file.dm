@@ -8,14 +8,14 @@
 	/// The instance of the stored picture.
 	var/datum/picture/stored_picture
 	/// The name of the asset cache item.
-	/// This is initialized after assign_path() is called.
+	/// This will be initialized after assign_path() is called.
 	var/picture_name
 
 /datum/computer_file/picture/New(datum/picture/stored_picture, picture_name)
 	..()
 	if(isnull(stored_picture))
 		return
-	src.filename = stored_picture.picture_name
+	src.filename = "[stored_picture.picture_name] ([uid])"
 	src.stored_picture = stored_picture
 	src.picture_name = picture_name
 
