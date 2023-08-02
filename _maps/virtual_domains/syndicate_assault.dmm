@@ -495,7 +495,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "tM" = (
-/obj/structure/closet/crate/secure/bitminer_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "tT" = (

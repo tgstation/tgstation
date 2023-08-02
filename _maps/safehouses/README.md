@@ -3,7 +3,7 @@
 ## Creating a new safe house
 
 1. Create a new 7x6 map inside the `_maps\safe_houses` folder.
-2. Create a new dm file inside `modules\bitmining\virtual_domain\safe_houses` folder.
+2. Create a new dm file inside `modules\bitrunning\virtual_domain\safe_houses` folder.
 3. Ensure the bottom left corner is using an area passthrough. If you don't, it won't generate.
 4. Make sure that your safe houses have all of these areas: The noop area in the BL corner, a minimum [1x1] send point, and a minimum [1x1] exits (THREE RECOMMENDED).
 5. Ideally, leave 3 spaces for gear. This has usually been xy [1x1] [1x2] [1x3]

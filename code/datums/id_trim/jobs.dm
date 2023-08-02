@@ -155,12 +155,12 @@
 		)
 	job = /datum/job/bartender
 
-/datum/id_trim/job/bitminer
-	assignment = "Bitminer"
-	trim_state = "trim_bitminer"
+/datum/id_trim/job/bitrunner
+	assignment = "Bitrunner"
+	trim_state = "trim_bitrunner"
 	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
-	sechud_icon_state = SECHUD_BITMINER
+	sechud_icon_state = SECHUD_BITRUNNER
 	minimal_access = list(
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
@@ -176,7 +176,7 @@
 		ACCESS_CHANGE_IDS,
 		ACCESS_QM,
 		)
-	job = /datum/job/bitminer
+	job = /datum/job/bitrunner
 
 /datum/id_trim/job/botanist
 	assignment = "Botanist"

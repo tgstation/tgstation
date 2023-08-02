@@ -316,7 +316,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "jX" = (
-/obj/structure/closet/crate/secure/bitminer_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
 /obj/machinery/light/dim{
 	dir = 4
 	},

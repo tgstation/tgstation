@@ -387,7 +387,7 @@
 /turf/open/indestructible/white,
 /area/virtual_domain/powered)
 "xL" = (
-/obj/structure/closet/crate/secure/bitminer_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
 /turf/open/floor/carpet,
 /area/virtual_domain/powered)
 "yn" = (

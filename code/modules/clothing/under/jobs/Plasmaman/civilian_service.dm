@@ -115,10 +115,10 @@
 	icon_state = "clown_envirosuit"
 	inhand_icon_state = null
 
-/obj/item/clothing/under/plasmaman/bitminer
-	name = "bitminer envirosuit"
+/obj/item/clothing/under/plasmaman/bitrunner
+	name = "bitrunner envirosuit"
 	desc = "An envirosuit specially designed for plasmamen with bad posture."
-	icon_state = "bitminer_envirosuit"
+	icon_state = "bitrunner_envirosuit"
 	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/clown/Initialize(mapload)

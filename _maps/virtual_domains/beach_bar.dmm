@@ -1452,7 +1452,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/virtual_domain/powered)
 "YM" = (
-/obj/effect/bitminer_loot_signal,
+/obj/effect/bitrunner_loot_signal,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/powered)
 "YR" = (

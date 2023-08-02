@@ -461,7 +461,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "abO" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15673,7 +15673,7 @@
 /area/station/service/theater)
 "euR" = (
 /turf/closed/wall,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "euS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17996,7 +17996,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "foY" = (
@@ -22460,9 +22460,9 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/decal/cleanable/oil/streak,
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "gXA" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -23336,7 +23336,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "hoN" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26819,7 +26819,7 @@
 /obj/machinery/netpod,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "iJM" = (
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/grass,
@@ -28603,7 +28603,7 @@
 	},
 /obj/machinery/netpod,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "jnR" = (
 /obj/structure/bed{
 	dir = 8
@@ -30373,9 +30373,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "jUa" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -37679,7 +37679,7 @@
 	pixel_x = 6
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "mrr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -39657,7 +39657,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "ngg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/effect/spawner/structure/window/reinforced,
@@ -41967,7 +41967,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitmining/receiving)
+/area/station/bitrunning/receiving)
 "nUM" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -44080,7 +44080,7 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "oNA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -45307,7 +45307,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitmining/receiving)
+/area/station/bitrunning/receiving)
 "plQ" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/structure/disposalpipe/segment{
@@ -46956,7 +46956,7 @@
 "pLU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "pMd" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
@@ -52953,7 +52953,7 @@
 /obj/machinery/netpod,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "rXA" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -53792,7 +53792,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "smV" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -62516,7 +62516,7 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/smooth_corner,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "vic" = (
 /obj/machinery/lift_indicator{
 	linked_elevator_id = "tram_lower_center_lift";
@@ -68926,10 +68926,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Bitmining Den"
+	name = "Bitrunning Den"
 	},
 /turf/open/floor/iron,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "xDY" = (
 /obj/structure/railing{
 	dir = 8

@@ -62,8 +62,8 @@
 #define ALERT_TEMPERATURE_HOT "temphot"
 #define ALERT_TEMPERATURE_COLD "tempcold"
 
-/** Bitmining */
-#define ALERT_BITMINING_CROWBAR "bitmining_crowbar"
-#define ALERT_BITMINING_COMPLETED "bitmining_complete"
-#define ALERT_BITMINING_INTEGRITY "bitmining_integrity"
-#define ALERT_BITMINING_SHUTDOWN "bitmining_shutdown"
+/** Bitrunning */
+#define ALERT_BITRUNNER_CROWBAR "bitrunning_crowbar"
+#define ALERT_BITRUNNER_COMPLETED "bitrunning_complete"
+#define ALERT_BITRUNNER_INTEGRITY "bitrunning_integrity"
+#define ALERT_BITRUNNER_SHUTDOWN "bitrunning_shutdown"

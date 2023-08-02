@@ -983,7 +983,7 @@
 /obj/machinery/light_switch/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "atW" = (
 /turf/open/floor/iron/chapel{
 	dir = 8
@@ -9751,7 +9751,7 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "dQP" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/decal/cleanable/dirt,
@@ -12917,9 +12917,9 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/smooth_half,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "eTL" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -19336,7 +19336,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/mining{
-	name = "Bitmining Den"
+	name = "Bitrunning Den"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19344,7 +19344,7 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "hfC" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -20922,7 +20922,7 @@
 /obj/effect/decal/cleanable/oil,
 /obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitmining/receiving)
+/area/station/bitrunning/receiving)
 "hHy" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -24399,7 +24399,7 @@
 "iUG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "iUH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/reinforced/titaniumglass,
@@ -25716,7 +25716,7 @@
 "jtQ" = (
 /obj/machinery/netpod,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "jtY" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -26148,7 +26148,7 @@
 /area/station/maintenance/port/fore)
 "jCo" = (
 /turf/closed/wall,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "jCA" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table,
@@ -27809,9 +27809,9 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/east,
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/smooth_half,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "kfC" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
@@ -28957,7 +28957,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "kzI" = (
@@ -29741,7 +29741,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "kOG" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external{
@@ -30546,7 +30546,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "ldU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32525,7 +32525,7 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "lKG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
@@ -32882,7 +32882,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "lQu" = (
 /obj/machinery/light/broken/directional/south,
 /obj/effect/spawner/random/trash/bin,
@@ -39830,7 +39830,7 @@
 /area/station/maintenance/port/aft)
 "osD" = (
 /turf/closed/wall/rust,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "osE" = (
 /obj/machinery/shower/directional/south{
 	name = "emergency shower"
@@ -58357,7 +58357,7 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "uwl" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
@@ -63889,7 +63889,7 @@
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitmining/receiving)
+/area/station/bitrunning/receiving)
 "wiT" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/newscaster/directional/south,

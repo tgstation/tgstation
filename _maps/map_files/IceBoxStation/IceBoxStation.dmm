@@ -10453,9 +10453,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "dgk" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/stripes/line{
@@ -12928,7 +12928,7 @@
 /obj/machinery/netpod,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "dUL" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "maint1"
@@ -13421,7 +13421,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitmining/receiving)
+/area/station/bitrunning/receiving)
 "edn" = (
 /obj/effect/turf_decal/bot_white/right,
 /obj/machinery/ore_silo,
@@ -16965,7 +16965,7 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "flx" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=HOP";
@@ -18648,7 +18648,7 @@
 /area/station/engineering/supermatter/room)
 "fNx" = (
 /turf/closed/wall,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "fNA" = (
 /turf/open/openspace,
 /area/station/medical/medbay/central)
@@ -20226,7 +20226,7 @@
 	},
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitmining/receiving)
+/area/station/bitrunning/receiving)
 "gpp" = (
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -27982,7 +27982,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "iSk" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -34192,7 +34192,7 @@
 /obj/structure/cable,
 /obj/machinery/computer/quantum_console,
 /turf/open/floor/iron/dark/smooth_corner,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "kQL" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -39055,7 +39055,7 @@
 /obj/machinery/netpod,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "muy" = (
 /turf/open/openspace,
 /area/station/commons/locker)
@@ -42349,7 +42349,7 @@
 /area/station/engineering/transit_tube)
 "nyB" = (
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "nyC" = (
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/service/chapel)
@@ -42536,7 +42536,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "nAS" = (
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "nBe" = (
@@ -55295,10 +55295,10 @@
 /area/station/security/prison)
 "rAS" = (
 /obj/machinery/airalarm/directional/west,
-/obj/effect/landmark/start/bitminer,
+/obj/effect/landmark/start/bitrunner,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "rAW" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -60809,7 +60809,7 @@
 /obj/machinery/netpod,
 /obj/machinery/camera/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "tqQ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -66256,14 +66256,14 @@
 "vgC" = (
 /obj/machinery/door/airlock/mining/glass{
 	id_tag = "innercargo";
-	name = "Bitmining Den"
+	name = "Bitrunning Den"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "vgD" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/iron/fifty,
@@ -68828,7 +68828,7 @@
 "vWV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "vWW" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron,
@@ -71472,7 +71472,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitmining/den)
+/area/station/bitrunning/den)
 "wNp" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"

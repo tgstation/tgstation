@@ -33,7 +33,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "j" = (
 /obj/structure/alien/weeds,
-/obj/structure/closet/crate/secure/bitminer_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "l" = (
