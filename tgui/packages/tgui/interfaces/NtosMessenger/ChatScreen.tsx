@@ -340,7 +340,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             title={`${recipient.name} (${recipient.job})`}
             scrollableRef={this.scrollRef}>
             <Stack vertical className="NtosChatLog">
-              {messages.length > 0 && canReply && (
+              {!!(messages.length > 0 && canReply) && (
                 <>
                   <Stack.Item textAlign="center" fontSize={1}>
                     This is the beginning of your chat with {recipient.name}.
