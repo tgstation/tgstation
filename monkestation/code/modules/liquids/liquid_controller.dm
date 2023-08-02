@@ -102,16 +102,22 @@ SUBSYSTEM_DEF(liquids)
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_FIRE)
 		fire_counter++
+		for(var/g in active_groups)
+			if(MC_TICK_CHECK)
+				return
+			var/datum/liquid_group/LG = g
+			if(LG.burning_members.len)
+				for(var/turf/burning_turf in LG.burning_members)
+					if(MC_TICK_CHECK)
+						return
+					LG.process_spread(burning_turf)
+
 		if(fire_counter > REQUIRED_FIRE_PROCESSES)
 			for(var/g in active_groups)
 				if(MC_TICK_CHECK)
 					return
 				var/datum/liquid_group/LG = g
 				if(LG.burning_members.len)
-					for(var/turf/burning_turf in LG.burning_members)
-						if(MC_TICK_CHECK)
-							return
-						LG.process_spread(burning_turf)
 					LG.process_fire()
 			fire_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_OCEAN

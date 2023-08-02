@@ -2,7 +2,8 @@
 	name = "Grey Tide"
 	typepath = /datum/round_event/grey_tide
 	max_occurrences = 2
-	min_players = 5
+	weight = 5 //monkie edit: 10 to 5
+	min_players = 10 //monkie edit: 5 to 10
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Bolts open all doors in one or more departments."
 	min_wizard_trigger_potency = 0

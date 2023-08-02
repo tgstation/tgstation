@@ -77,7 +77,7 @@
 	plane = ABOVE_GAME_PLANE
 	blend_mode = BLEND_ADD
 	light_system = MOVABLE_LIGHT
-	light_range = LIGHT_RANGE_FIRE
+	light_outer_range = LIGHT_RANGE_FIRE
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
@@ -155,6 +155,8 @@
 		for (var/reaction in SSair.hotspot_reactions)
 			volume += cached_results[reaction] * FIRE_GROWTH_RATE
 		temperature = reference.temperature
+
+	location.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP) //SKYRAT EDIT ADDITION
 
 	// Handles the burning of atoms.
 	if(cold_fire)
@@ -311,6 +313,6 @@
 /obj/effect/dummy/lighting_obj/moblight/fire
 	name = "fire"
 	light_color = LIGHT_COLOR_FIRE
-	light_range = LIGHT_RANGE_FIRE
+	light_outer_range = LIGHT_RANGE_FIRE
 
 #undef INSUFFICIENT

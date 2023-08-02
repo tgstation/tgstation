@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 /turf/open/floor/plating/ocean/proc/enable_starlight()
 	if(!has_starlight)
 		return
-	if(!light_range)
+	if(!light_outer_range)
 		set_light(2)
 
 
@@ -439,7 +439,7 @@ GLOBAL_LIST_INIT(the_lever, list())
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_FISSURE
 	canSmoothWith = SMOOTH_GROUP_FISSURE
-	light_range = 3
+	light_outer_range = 3
 	light_color = LIGHT_COLOR_LAVA
 
 /turf/open/floor/plating/ocean/dark/rock/medium

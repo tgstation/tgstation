@@ -9835,7 +9835,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/rock/pile/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cmI" = (
@@ -9988,7 +9988,7 @@
 "cnK" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cnL" = (
@@ -15236,13 +15236,10 @@
 	},
 /area/station/service/chapel)
 "dFi" = (
-/obj/structure/table/wood,
-/obj/item/trash/candle,
-/obj/item/cigbutt{
-	pixel_y = 7
+/obj/machinery/cryopod{
+	dir = 1
 	},
-/obj/item/razor,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "dFm" = (
 /obj/effect/landmark/start/hangover/closet,
@@ -15435,7 +15432,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/iron/white/smooth_large,
+/obj/machinery/computer/cryopod{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "dIk" = (
 /obj/structure/disposalpipe/segment{
@@ -17522,10 +17523,10 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/sign/warning/yes_smoking/circle/directional/south,
 /obj/machinery/light/small/directional/south,
-/obj/item/kirbyplants/dead{
-	name = "Lungie"
+/obj/machinery/cryopod{
+	dir = 1
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "ejX" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -19726,11 +19727,12 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "eME" = (
-/obj/structure/chair/stool/directional/west,
-/obj/effect/landmark/start/hangover,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/white,
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "eMG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21789,7 +21791,7 @@
 	dir = 5
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -30439,10 +30441,9 @@
 /area/station/tcommsat/computer)
 "hsa" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/spawner/random/vending/snackvend,
 /obj/item/radio/intercom/directional/north,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/white,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "hsg" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -43533,7 +43534,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white/smooth_large,
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "kBT" = (
 /obj/machinery/duct,
@@ -49876,7 +49877,7 @@
 	dir = 10
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -49964,7 +49965,7 @@
 "mhj" = (
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "mhl" = (
@@ -63551,9 +63552,8 @@
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
 "pEx" = (
-/obj/effect/turf_decal/bot_white,
-/obj/machinery/vending/cigarette,
-/turf/open/floor/iron/white,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "pEz" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -71880,9 +71880,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "rGd" = (
-/obj/effect/landmark/start/hangover,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
 "rGf" = (
 /obj/machinery/power/solar_control{
@@ -76909,7 +76908,7 @@
 	dir = 6
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
@@ -84078,7 +84077,7 @@
 "uCY" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "uDb" = (
@@ -84745,7 +84744,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
@@ -96737,11 +96736,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/research/abandoned)
-"xGv" = (
-/obj/effect/spawner/random/vending/colavend,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/white,
-/area/station/commons/fitness/recreation)
 "xGC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -155015,7 +155009,7 @@ fIQ
 fIQ
 aad
 mfC
-xGv
+pEx
 dHX
 eME
 uKw
@@ -155273,7 +155267,7 @@ fIQ
 aaa
 uKw
 mfC
-mfC
+uKw
 mfC
 uKw
 qYo

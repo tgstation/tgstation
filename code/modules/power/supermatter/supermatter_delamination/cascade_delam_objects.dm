@@ -10,7 +10,7 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	light_power = 1
-	light_range = 5
+	light_outer_range = 5
 	light_color = COLOR_VIVID_YELLOW
 	move_resist = INFINITY
 	///All dirs we can expand to
@@ -105,7 +105,7 @@
 	plane = MASSIVE_OBJ_PLANE
 	light_color = COLOR_RED
 	light_power = 0.7
-	light_range = 15
+	light_outer_range = 15
 	move_resist = INFINITY
 	pixel_x = -96
 	pixel_y = -96

@@ -9342,7 +9342,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/robotics/lab)
 "dlS" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
 "dmf" = (
@@ -9379,7 +9379,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "dmC" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "dmD" = (
@@ -18837,7 +18837,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "gos" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "gou" = (
@@ -20734,7 +20734,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gTD" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "gTN" = (
@@ -22243,14 +22243,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "hsJ" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 4
-	},
-/obj/structure/flora/bush/grassy/style_random,
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/leavy/style_random,
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "hsL" = (
 /obj/effect/turf_decal/stripes/line{
@@ -36449,14 +36442,6 @@
 "lYg" = (
 /turf/closed/wall,
 /area/station/science/robotics/lab)
-"lYv" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 1
-	},
-/obj/structure/flora/bush/leavy/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/floor/grass,
-/area/station/hallway/primary/fore)
 "lYE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37085,13 +37070,11 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 4
 	},
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/flora/bush/grassy/style_random,
 /obj/structure/window/reinforced/spawner{
 	dir = 1
 	},
-/obj/structure/flora/bush/flowers_yw/style_random,
-/turf/open/floor/grass,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "mjh" = (
 /turf/closed/wall/r_wall/rust,
@@ -38224,7 +38207,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "mCT" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "mCV" = (
@@ -39581,10 +39564,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "nax" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/lavendergrass/style_random,
-/turf/open/floor/grass,
+/obj/machinery/computer/cryopod{
+	pixel_y = -32;
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "naC" = (
 /obj/machinery/firealarm/directional/west,
@@ -41100,11 +41084,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "nCA" = (
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/structure/flora/bush/reed/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/light/directional/south,
-/turf/open/floor/grass,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "nCI" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -44363,11 +44344,8 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 1
 	},
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/grassy/style_random,
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "oLG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44562,7 +44540,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "oQl" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -49177,7 +49155,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
 "qpI" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "qpJ" = (
@@ -65502,7 +65480,7 @@
 	name = "core camera";
 	network = list("aicore")
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "vFv" = (
@@ -68857,7 +68835,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/service/chapel/office)
 "wFB" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "wFG" = (
@@ -96926,7 +96904,7 @@ qlC
 tbn
 lLp
 aWI
-lYv
+oLs
 nCA
 cXZ
 kxU

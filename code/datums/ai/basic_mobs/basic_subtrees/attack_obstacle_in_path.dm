@@ -7,10 +7,8 @@
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-
-	if(isnull(target))
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
 		return
 
 	var/turf/next_step = get_step_towards(controller.pawn, target)
@@ -31,10 +29,9 @@
 /datum/ai_behavior/attack_obstructions/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 
-	if (!target)
+	if (QDELETED(target))
 		finish_action(controller, succeeded = FALSE)
 		return
 
