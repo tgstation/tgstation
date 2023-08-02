@@ -25,7 +25,10 @@
 	name = "Ice Climber"
 	uniform = /obj/item/clothing/under/color/grey
 	suit = /obj/item/clothing/suit/hooded/wintercoat
-	back = /obj/item/tank/internals/oxygen
+	backpack_contents = list(
+		/obj/item/flashlight = 1,
+		/obj/item/flashlight/flare = 2,
+		/obj/item/storage/box/survival = 1,
+		)
+	backpack = /obj/item/storage/backpack/duffelbag
 	shoes = /obj/item/clothing/shoes/winterboots
-	l_pocket = /obj/item/flashlight
-	r_pocket = /obj/item/clothing/mask/breath
