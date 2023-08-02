@@ -234,4 +234,4 @@
 	name = "Outdebted"
 	desc = "I've paid my dues, shift after shift... I've done my sentence but commited no griff..."
 	database_id = MEDAL_DEBT_EXTINGUISHED
-	icon = "default" //WIP
+	icon = "outdebted"
