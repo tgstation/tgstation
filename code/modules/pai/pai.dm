@@ -353,6 +353,7 @@
 	master_name = null
 	master_dna = null
 	add_supplied_law(0, "None.")
+	leash.distance = initial(leash.distance)
 	balloon_alert(src, "software rebooted")
 	return TRUE
 
