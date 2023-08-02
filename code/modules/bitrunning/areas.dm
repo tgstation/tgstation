@@ -62,7 +62,6 @@
 	examine_text += span_info("Beneath your gaze, the floor pulses subtly with streams of encoded data.")
 	examine_text += span_info("It seems to be part of the location designated for retrieving encrypted payloads.")
 
-
 /// Custom subtypes
 
 /area/lavaland/surface/outdoors/virtual_domain

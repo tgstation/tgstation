@@ -368,7 +368,6 @@
 
 	return hosted_avatars
 
-
 /// Returns the current domain name if the server has the proper tier scanner and it isn't randomized
 /obj/machinery/quantum_server/proc/get_current_domain_name()
 	if(isnull(generated_domain))
