@@ -4,7 +4,7 @@
     desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
     charge_distance = 10
     charge_damage = 50
-
+	cooldown_time = 45 SECONDS
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
     if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
@@ -22,4 +22,4 @@
     get_step(victim, EAST).rust_heretic_act()
     get_step(victim, WEST).rust_heretic_act()
     if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
-        INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
+        INVOKE_ASYNC(owner, PROC_REF(DestroySurroundings), source)
