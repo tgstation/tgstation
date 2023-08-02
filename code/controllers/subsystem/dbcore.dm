@@ -180,11 +180,11 @@ SUBSYSTEM_DEF(dbcore)
 		//Execute all waiting queries
 		for(var/datum/db_query/query in queries_standby)
 			run_query_sync(query)
-			qdel(query)
+			queries_standby -= query
 		for(var/datum/db_query/query in queries_active)
 			//Finish any remaining active qeries
 			UNTIL(query.process())
-			qdel(query)
+			queries_active -= query
 
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
