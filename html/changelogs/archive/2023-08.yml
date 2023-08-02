@@ -38,3 +38,64 @@
       removed.
   zeroisthebiggay:
   - spellcheck: Minor Breakage > Minor Skin Breakage for readability.
+2023-08-02:
+  Jolly:
+  - bugfix: '[Shuttles] Kilo''s Emergency Shuttle no longer has a stacked light in
+      its brig.'
+  Melbert:
+  - bugfix: Traitors using the sneak suit and heretics under the effects of cloak
+      no longer leak their identity via Text to Speech
+  - bugfix: Fixed BB admin add
+  NaakaKo:
+  - bugfix: fixed bluespace bodybags consuming xenomorphs when folded
+  - bugfix: broken icons in RCD UI
+  - balance: The strong-arm implant's punches now respect armor.
+  - spellcheck: While using an arm with the strong-arm implant to punch people, you
+      no longer kick them; your implant's in your arm, after all!
+  - qol: The Syndicate battlecruiser's fighters have received external cameras to
+      aid its pilots.
+  - qol: Warning lights have been added to the landing pad of the battlecruiser to
+      (hopefully) reduce incident numbers.
+  - bugfix: A stray air alarm was removed from the bridge of the Syndicate battlecruiser.
+  - bugfix: The turret control panel in the bridge of the battlecruiser has been moved
+      to a wall, allowing access without needing to climb the table.
+  - bugfix: Airlocks on the Syndicate battlecruiser which were missing syndicate access,
+      has had it added.
+  - bugfix: The Syndicate medibot on the battlecruiser can now be unlocked by its
+      crew.
+  - qol: The random parallax layer moves more slowly, giving a more deep feel
+  - bugfix: Fix ethereal crystal destruction not removing light
+  - rscadd: Add a new 'Hall of Fame' emergency shuttle.  It even comes with it's own
+      nifty photo album.
+  - bugfix: Guard Spiders are no longer unable to attack after using Web Effigy
+  - bugfix: The blood-drunk miner has remembered how to swing their cleaving saw quickly
+      without having to flick it out first.
+  - rscadd: Expanded the RPG loot wizard event by giving various different items their
+      own statistic boost.
+  - bugfix: BoH bombing now correctly requires two bags to be done.
+  - bugfix: Your pAI card won't pop out of your PDA onto the floor alongside its hologram
+      if it enters hologram form while inside a PDA.
+  - bugfix: Birdshot's morgue has surgical tools and a laptop for the coroner to use
+  - bugfix: bluespace RPED can be put in bags again without dragging them into their
+      storage slots
+  - bugfix: normal RPED exchanges parts & displays part info again
+  - qol: When Space Dragons devour people they get extinguished, removing flames.
+  - image: resprited a lot of formal undersuits, enjoy!
+  - rscadd: Added a pre-colored type of buttondown slacks for some service roles,
+      to replace the "black suit" and "amish suit"
+  - rscdel: Removed the "amish suit", "black suit", and one of the two "white suit"s
+  - rscadd: Fugitive shuttles now have a "Fugitive Tracker" machine, which gives a
+      readout on the location of a random fugitive on a 40 second cooldown.
+  - spellcheck: Renames the fugitive pinpointer to the bounty shuttle pinpointer.
+  - rscadd: Added couple new signs to the game (med, medbay, morgue, chapel, viro,
+      gene, botany)
+  - rscadd: Way-signs now have additional states, showing vertical directions.
+  - image: Made the font on the signs consistant.
+  Senefi:
+  - bugfix: NorthStar's Supermatter Waste Chamber guide no longer contains inaccurate
+      information
+  - qol: NorthStar's Supermatter Waste Chamber air alarm no longer shows the hallway
+      vent and scrubber on the configuration panel.
+  honkpocket:
+  - rscadd: Adds an emote to push up glasses with *glasses
+  - rscadd: Adds a visual effect to *sigh
