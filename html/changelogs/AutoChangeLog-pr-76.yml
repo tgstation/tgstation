@@ -1,6 +1,0 @@
-author: "githubuser4141"
-delete-after: True
-changes:
-  - rscadd: "Adds a utility mesonic/NVG scanner to mechs."
-  - rscdel: "Removes inherent mech access requirements from stationbound mechs. Centcom/Nukie mechs are exempt, and access can still be added manually."
-  - balance: "The Gygax and Phazon mechs can now hold 3 armour modules (prev 2) and increased malfunction thresholds. Additionally, the Phazon can strafe diagonally, similar to the Gygax. The Savannah-Ivanov, and a few other mechs have increased thresholds too.\nRe-balances exosuit repair droids and generator modules to be more effective, and the generator to hold less fuel.\nExosuits can now be slowed by having a lot of equipment. In general, heavier or exotic exosuits can carry more equipment without slowdown.\nA few other things referenced by #57  !"
