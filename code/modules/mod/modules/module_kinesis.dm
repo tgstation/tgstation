@@ -269,6 +269,7 @@
 	prebuilt = TRUE
 	stat_required = CONSCIOUS
 
+/// Admin suit version of kinesis. Can grab anything at any range, may enable phasing through walls.
 /obj/item/mod/module/anomaly_locked/kinesis/admin
 	name = "MOD kinesis++ module"
 	desc = "A modular plug-in to the forearm, this module was recently reredeveloped in super secret. \
