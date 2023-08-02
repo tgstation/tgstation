@@ -607,11 +607,11 @@
 
 /// Surplus Ammo Box
 
-/obj/item/storage/box/syndie_kit/surplus
+/obj/item/storage/box/syndie_kit/sniper_surplus
 	name = "surplus .50 BMG magazine box"
 	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
 
-/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
+/obj/item/storage/box/syndie_kit/sniper_surplus/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 

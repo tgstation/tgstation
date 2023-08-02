@@ -24,7 +24,9 @@
 
 /obj/item/ammo_box/a357/heartseeker
 	name = "speed loader (.357 Heartseeker)"
-	desc = "Designed to quickly reload revolvers. Holds phasic ammo, also known as 'Ghost Lead', allowing it to pass through non-organic material."
+	desc = "Designed to quickly reload revolvers. Holds heartseeker ammo, which veers into targets with exceptional precision using \
+		an unknown method. It apparently predicts movement using neural pulses in the brain, but that's less marketable. \
+		As seen in the hit NTFlik horror-space western film, Forget-Me-Not! Brought to you by Roseus Galactic!"
 	ammo_type = /obj/item/ammo_casing/a357/heartseeker
 	ammo_band_color = "#a91e1e"
 

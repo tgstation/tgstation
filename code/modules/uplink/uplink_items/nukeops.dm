@@ -54,7 +54,7 @@
 /datum/uplink_item/weapon_kits/low_cost/shotgun
 	name = "Bulldog Shotgun Case (Moderate)"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
-			Compatible with all 12g rounds. Designed for close quarter anti-personnel engagements. Comes with three spare magazines."
+		Compatible with all 12g rounds. Designed for close quarter anti-personnel engagements. Comes with three spare magazines."
 	item = /obj/item/storage/toolbox/guncase/bulldog
 
 /datum/uplink_item/ammo_nuclear/basic/buck
@@ -65,13 +65,13 @@
 /datum/uplink_item/ammo_nuclear/basic/slug
 	name = "12g Slug Drum (Bulldog)"
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
-			Now 8 times less likely to shoot your pals."
+		Now 8 times less likely to shoot your pals."
 	item = /obj/item/ammo_box/magazine/m12g/slug
 
 /datum/uplink_item/ammo_nuclear/incendiary/dragon
 	name = "12g Dragon's Breath Drum (Bulldog)"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
-			'I'm a fire starter, twisted fire starter!'"
+		'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	purchasable_from = UPLINK_NUKE_OPS
 
@@ -98,19 +98,19 @@
 /datum/uplink_item/ammo_nuclear/ap/m10mm
 	name = "10mm Armour Piercing Magazine (Ansem)"
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
-			These rounds are less effective at injuring the target but penetrate protective gear."
+		These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m10mm/ap
 
 /datum/uplink_item/ammo_nuclear/hp/m10mm
 	name = "10mm Hollow Point Magazine (Ansem)"
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
-			These rounds are more damaging but ineffective against armour."
+		These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 
 /datum/uplink_item/ammo_nuclear/incendiary/m10mm
 	name = "10mm Incendiary Magazine (Ansem)"
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
-			Loaded with incendiary rounds which inflict less damage, but ignite the target."
+		Loaded with incendiary rounds which inflict less damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/m10mm/fire
 
 //Medium-cost: 14 TC each. Meant for more expensive purchases with a goal in mind.
@@ -125,7 +125,7 @@
 /datum/uplink_item/weapon_kits/medium_cost/smg
 	name = "C-20r Submachine Gun Case (Easy)"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
-			24-round magazine and is compatible with suppressors. Comes with spare three magazines."
+		24-round magazine and is compatible with suppressors. Comes with spare three magazines."
 	item = /obj/item/storage/toolbox/guncase/c20r
 
 /datum/uplink_item/ammo_nuclear/basic/smg
@@ -136,19 +136,19 @@
 /datum/uplink_item/ammo_nuclear/ap/smg
 	name = ".45 Armor Piercing SMG Magazine (C-20r)"
 	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun.\
-			These rounds are less effective at injuring the target but penetrate protective gear."
+		These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/smgm45/ap
 
 /datum/uplink_item/ammo_nuclear/hp/smg
 	name = ".45 Hollow Point SMG Magazine (C-20r)"
 	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun.\
-			These rounds are more damaging but ineffective against armour."
+		These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/smgm45/hp
 
 /datum/uplink_item/ammo_nuclear/incendiary/smg
 	name = ".45 Incendiary SMG Magazine (C-20r)"
 	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun.\
-			Loaded with incendiary rounds which inflict little damage, but ignite the target."
+		Loaded with incendiary rounds which inflict little damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/smgm45/incen
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
@@ -158,7 +158,7 @@
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
 	desc = "A case containing an energy sword and energy shield. The shield is capable of deflecting \
-	energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
+		energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
 
 // ~~ Syndicate Revolver ~~
@@ -167,26 +167,27 @@
 /datum/uplink_item/weapon_kits/medium_cost/revolvercase
 	name = "Syndicate Revolver Case (Moderate)"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum. \
-			A classic operative weapon, brought to the modern era. Comes with 3 additional speedloaders of .357."
+		A classic operative weapon, brought to the modern era. Comes with 3 additional speedloaders of .357."
 	item = /obj/item/storage/toolbox/guncase/revolver
 
 /datum/uplink_item/ammo_nuclear/basic/revolver
 	name = ".357 Speed Loader (Revolver)"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
-			For when you really need a lot of things dead. Operatives get a discount from most of our agents!"
+		For when you really need a lot of things dead. Operatives get a discount from most of our agents!"
 	item = /obj/item/ammo_box/a357
 
 /datum/uplink_item/ammo_nuclear/special/revolver/phasic
 	name = ".357 Phasic Speed Loader (Revolver)"
 	desc = "A speed loader that contains seven additional .357 Magnum phasic rounds; usable with the Syndicate revolver. \
-			These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
-			The name is a misnomer. It doesn't contain any lead whatsoever!"
+		These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
+		The name is a misnomer. It doesn't contain any lead whatsoever!"
 	item = /obj/item/ammo_box/a357/phasic
 
 /datum/uplink_item/ammo_nuclear/special/revolver/heartseeker
 	name = ".357 Heartseeker Speed Loader (Revolver)"
 	desc = "A speed loader that contains seven additional .357 Magnum heartseeker rounds; usable with the Syndicate revolver. \
-			Able to veer straight into targets! Don't miss a shot with heartseeker!"
+		Able to veer straight into targets! Don't miss a shot with heartseeker! As seen in the hit NTFlik horror-space western film, Forget-Me-Not!	\
+		Brought to you by Roseus Galactic!"
 	item = /obj/item/ammo_box/a357/heartseeker
 	cost = 3
 
@@ -222,37 +223,37 @@
 /datum/uplink_item/weapon_kits/high_cost/machinegun
 	name = "L6 Squad Automatic Weapon (Moderate)"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 7mm ammunition."
+		This deadly weapon has a massive 50-round magazine of devastating 7mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 
 /datum/uplink_item/ammo_nuclear/basic/machinegun
 	name = "7mm Box Magazine (L6 SAW)"
 	desc = "A 50-round magazine of 7mm ammunition for use with the L6 SAW. \
-			By the time you need to use this, you'll already be standing on a pile of corpses."
+		By the time you need to use this, you'll already be standing on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m7mm
 
 /datum/uplink_item/ammo_nuclear/ap/machinegun
 	name = "7mm (Armor Penetrating) Box Magazine (L6 SAW)"
 	desc = "A 50-round magazine of 7mm ammunition for use in the L6 SAW; equipped with special properties \
-			to puncture even the most durable armor."
+		to puncture even the most durable armor."
 	item = /obj/item/ammo_box/magazine/m7mm/ap
 
 /datum/uplink_item/ammo_nuclear/hp/machinegun
 	name = "7mm (Hollow-Point) Box Magazine (L6 SAW)"
 	desc = "A 50-round magazine of 7mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
-			with the unarmored masses of crew."
+		with the unarmored masses of crew."
 	item = /obj/item/ammo_box/magazine/m7mm/hollow
 
 /datum/uplink_item/ammo_nuclear/incendiary/machinegun
 	name = "7mm (Incendiary) Box Magazine (L6 SAW)"
 	desc = "A 50-round magazine of 7mm ammunition for use in the L6 SAW; tipped with a special flammable \
-			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
+		mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
 	item = /obj/item/ammo_box/magazine/m7mm/incen
 
 /datum/uplink_item/ammo_nuclear/special/machinegun
 	name = "7mm (Match) Box Magazine (L6 SAW)"
 	desc = "A 50-round magazine of 7mm ammunition for use in the L6 SAW; you didn't know there was a demand for match grade \
-			precision bullet hose ammo, but these rounds are finely tuned and perfect for ricocheting off walls all fancy-like."
+		precision bullet hose ammo, but these rounds are finely tuned and perfect for ricocheting off walls all fancy-like."
 	item = /obj/item/ammo_box/magazine/m7mm/match
 
 // ~~ M-90gl Carbine ~~
@@ -260,28 +261,28 @@
 /datum/uplink_item/weapon_kits/high_cost/carbine
 	name = "M-90gl Carbine Case (Hard)"
 	desc = "A fully-loaded, specialized three-round burst carbine that fires .223 ammunition from a 30 round magazine \
-			with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Comes with a spare magazine \
-			and a box of 40mm rubber slugs."
+		with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Comes with a spare magazine \
+		and a box of 40mm rubber slugs."
 	item = /obj/item/storage/toolbox/guncase/m90gl
 
 /datum/uplink_item/ammo_nuclear/basic/carbine
 	name = ".223 Toploader Magazine (M-90gl)"
 	desc = "An additional 30-round .223 magazine; suitable for use with the M-90gl carbine. \
-			These bullets pack less punch than 7mm rounds, but they still offer more power than .45 ammo due to their innate armour penetration."
+		These bullets pack less punch than 7mm rounds, but they still offer more power than .45 ammo due to their innate armour penetration."
 	item = /obj/item/ammo_box/magazine/m223
 
 /datum/uplink_item/ammo_nuclear/special/carbine
 	name = ".223 Toploader Phasic Magazine (M-90gl)"
 	desc = "An additional 30-round .223 magazine; suitable for use with the M-90gl carbine. \
-			These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
-			The name is a misnomer. It doesn't contain any lead whatsoever!"
+		These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
+		The name is a misnomer. It doesn't contain any lead whatsoever!"
 	item = /obj/item/ammo_box/magazine/m223/phasic
 
 /datum/uplink_item/ammo_nuclear/basic/carbine/a40mm
 	name = "40mm Grenade Box (M-90gl)"
 	desc = "A box of 40mm HE grenades for use with the M-90gl's under-barrel grenade launcher. \
-			Your teammates will ask you to not shoot these down small hallways. \
-			You'll do it anyway."
+		Your teammates will ask you to not shoot these down small hallways. \
+		You'll do it anyway."
 	item = /obj/item/ammo_box/a40mm
 
 // ~~ Anti-Materiel Sniper Rifle ~~
@@ -289,8 +290,8 @@
 /datum/uplink_item/weapon_kits/high_cost/sniper
 	name = "Anti-Materiel Sniper Rifle Briefcase (Hard)"
 	desc = "An outdated, but still extremely powerful anti-material sniper rifle. Fires .50 BMG cartridges from a 6 round magazine. \
-			Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault. Comes with \
-			3 spare magazines; 1 regular magazine and 2 disruptor magazines. Also comes with a suit and tie."
+		Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault. Comes with \
+		3 spare magazines; 1 regular magazine and 2 disruptor magazines. Also comes with a suit and tie."
 	item = /obj/item/storage/briefcase/sniper
 
 /datum/uplink_item/ammo_nuclear/basic/sniper
@@ -298,36 +299,36 @@
 	desc = "An additional standard 6-round magazine for use with .50 sniper rifles."
 	item = /obj/item/ammo_box/magazine/sniper_rounds
 
-/datum/uplink_item/ammo_nuclear/basic/sniper/surplusbox
+/datum/uplink_item/ammo_nuclear/basic/sniper/surplussniper
 	name = ".50 BMG Surplus Magazine Box (AMSR)"
 	desc = "A box full of surplus .50 BMG magazines. Not as good as high quality magazines, \
-			usually lacking the penetrative power and impact, but good enough to keep the gun firing. \
-			Useful for arming a squad."
+		usually lacking the penetrative power and impact, but good enough to keep the gun firing. \
+		Useful for arming a squad."
 	cost = 7 //1 TC per magazine, special price for a special deal!
-	item = /obj/item/storage/box/syndie_kit/surplus
+	item = /obj/item/storage/box/syndie_kit/sniper_surplus
 
 /datum/uplink_item/ammo_nuclear/ap/sniper/penetrator
 	name = ".50 BMG Penetrator Magazine (AMSR)"
 	desc = "A 6-round magazine of penetrator ammo designed for use with .50 sniper rifles. \
-			Can pierce walls and multiple enemies."
+		Can pierce walls and multiple enemies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
 
 /datum/uplink_item/ammo_nuclear/incendiary/sniper
 	name = ".50 BMG Incendiary Magazine (AMSR)"
 	desc = "A 6-round magazine of incendiary ammo. \
-			Sets your enemies ablaze, along with everyone else next to them!"
+		Sets your enemies ablaze, along with everyone else next to them!"
 	item = /obj/item/ammo_box/magazine/sniper_rounds/incendiary
 
 /datum/uplink_item/ammo_nuclear/basic/sniper/disruptor
 	name = ".50 BMG Disruptor Magazine (AMSR)"
 	desc = "A 6-round magazine of disruptor ammo designed for use with .50 sniper rifles. \
-			Put your enemies and their alarm clock to sleep today!"
+		Put your enemies and their alarm clock to sleep today!"
 	item = /obj/item/ammo_box/magazine/sniper_rounds/disruptor
 
 /datum/uplink_item/ammo_nuclear/special/sniper/marksman
 	name = ".50 BMG Marksman Magazine (AMSR)"
 	desc = "A 6-round magazine of marksman ammo designed for use with .50 sniper rifles. \
-			Blast your enemies with instant shots! Just watch out for the rebound..."
+		Blast your enemies with instant shots! Just watch out for the rebound..."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
 /datum/uplink_item/weapon_kits/high_cost/cqc
@@ -340,9 +341,9 @@
 /datum/uplink_item/weapon_kits/high_cost/doublesword
 	name = "Double-Energy Sword Case (Very Hard)"
 	desc = "A case containing a double-energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
-			Some say the most infamous nuclear operatives utilized this combination of equipment to slaughter hundreds \
-			of Nanotrasen employees. However, some also say this is an embellishment from the Tiger Co-operative. \
-			The soap did most of the work. Comes with a prisoner uniform so you fit the part."
+		Some say the most infamous nuclear operatives utilized this combination of equipment to slaughter hundreds \
+		of Nanotrasen employees. However, some also say this is an embellishment from the Tiger Co-operative. \
+		The soap did most of the work. Comes with a prisoner uniform so you fit the part."
 	item = /obj/item/storage/toolbox/guncase/doublesword
 
 //Meme weapons: Literally just weapons used as a joke, shouldn't be particularly expensive.
@@ -373,21 +374,21 @@
 /datum/uplink_item/explosives/grenades/buzzkill
 	name = "Buzzkill Grenade Box"
 	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
-			with random toxins. Courtesy of the BLF and Tiger Cooperative."
+		with random toxins. Courtesy of the BLF and Tiger Cooperative."
 	item = /obj/item/storage/box/syndie_kit/bee_grenades
 
 /datum/uplink_item/explosives/grenades/virus_grenade
 	name = "Fungal Tuberculosis Grenade Box"
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
-			autoinjectors for rapid application on up to two targets each, a syringe, and a bottle containing \
-			the BVAK solution."
+		autoinjectors for rapid application on up to two targets each, a syringe, and a bottle containing \
+		the BVAK solution."
 	item = /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	restricted = TRUE
 
 /datum/uplink_item/explosives/grenades/viscerators
 	name = "Viscerator Delivery Grenade Box"
 	desc = "A box containing unique grenades that deploys a swarm of viscerators upon activation, which will chase down and shred \
-			any non-operatives in the area."
+		any non-operatives in the area."
 	item = /obj/item/storage/box/syndie_kit/manhack_grenades
 
 // ~~ Grenadier's Belt Kit ~~
@@ -403,9 +404,9 @@
 /datum/uplink_item/explosives/syndicate_detonator
 	name = "Syndicate Detonator"
 	desc = "The Syndicate detonator is a companion device to the Syndicate bomb. Simply press the included button \
-			and an encrypted radio frequency will instruct all live Syndicate bombs to detonate. \
-			Useful for when speed matters or you wish to synchronize multiple bomb blasts. Be sure to stand clear of \
-			the blast radius before using the detonator."
+		and an encrypted radio frequency will instruct all live Syndicate bombs to detonate. \
+		Useful for when speed matters or you wish to synchronize multiple bomb blasts. Be sure to stand clear of \
+		the blast radius before using the detonator."
 	item = /obj/item/syndicatedetonator
 	cost = 1
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
@@ -433,21 +434,21 @@
 /datum/uplink_item/reinforcements/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
-			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
+		Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 
 /datum/uplink_item/reinforcements/medical_borg
 	name = "Syndicate Medical Cyborg"
 	desc = "A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities. \
-			It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
-			Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
+		It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
+		Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 
 /datum/uplink_item/reinforcements/saboteur_borg
 	name = "Syndicate Saboteur Cyborg"
 	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
-			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
-			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
+		Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
+		Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 
 // ~~ Disposable Sentry Gun ~~
@@ -473,7 +474,7 @@
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a tactical medkit, \
-			a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
+		a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	cost = 25 // normally 31
 	purchasable_from = UPLINK_NUKE_OPS
@@ -481,8 +482,8 @@
 /datum/uplink_item/bundles_tc/firestarter
 	name = "Spetsnaz Pyro bundle"
 	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains an Elite MODsuit with a flamethrower attachment, \
-			Stechkin APS machine pistol, two incendiary magazines, a minibomb and a stimulant syringe. \
-			Order NOW and comrade Boris will throw in an extra tracksuit."
+		Stechkin APS machine pistol, two incendiary magazines, a minibomb and a stimulant syringe. \
+		Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
 	purchasable_from = UPLINK_NUKE_OPS
@@ -490,9 +491,9 @@
 /datum/uplink_item/bundles_tc/induction_kit
 	name = "Syndicate Induction Kit"
 	desc = "Met a fellow syndicate agent on the station? Kept some TC in reserve just in case? Or are you communicating with one via the Syndicate channel? \
-			Get this kit and you'll be able to induct them into your operative team via a special implant. \
-			Additionally, it contains an assortment of useful gear for new operatives, including a space suit, an Ansem pistol, two spare magazines, and more! \
-			*NOT* for usage with Reinforcements, and does not brainwash the target!"
+		Get this kit and you'll be able to induct them into your operative team via a special implant. \
+		Additionally, it contains an assortment of useful gear for new operatives, including a space suit, an Ansem pistol, two spare magazines, and more! \
+		*NOT* for usage with Reinforcements, and does not brainwash the target!"
 	item = /obj/item/storage/box/syndie_kit/induction_kit
 	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS
@@ -514,14 +515,14 @@
 /datum/uplink_item/mech/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, ion thrusters and a Tesla energy array."
+		for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, ion thrusters and a Tesla energy array."
 	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
 	cost = 60
 
 /datum/uplink_item/mech/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring \
-			and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
+		and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 100
 
@@ -551,8 +552,8 @@
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	name = "Romerol"
 	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
-			On death, these nodules take control of the dead body, causing limited revivification, \
-			along with slurred speech, aggression, and the ability to infect others with this agent."
+		On death, these nodules take control of the dead body, causing limited revivification, \
+		along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	purchasable_from = UPLINK_CLOWN_OPS|UPLINK_NUKE_OPS
@@ -563,14 +564,14 @@
 /datum/uplink_item/suits/modsuit/elite
 	name = "Elite Syndicate MODsuit"
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
-			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
+		provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
 	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
-			within a short duration and will rapidly recharge while not under fire."
+		within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/mod/module/energy_shield
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
@@ -610,7 +611,7 @@
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
 	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
-	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
+		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
@@ -618,7 +619,7 @@
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
-			operatives in the fight, even while under fire. Don't cross the streams!"
+		operatives in the fight, even while under fire. Don't cross the streams!"
 	item = /obj/item/gun/medbeam
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
@@ -626,8 +627,8 @@
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
 	desc = "This first aid kit is a suspicious black and red. Included is a number of atropine medipens \
-			for rapid stabilization and detonation prevention, sutures and regenerative mesh for wound treatment, and patches \
-			for faster healing on the field. Also comes with basic medical tools and sterlizer."
+		for rapid stabilization and detonation prevention, sutures and regenerative mesh for wound treatment, and patches \
+		for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
@@ -635,9 +636,9 @@
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
 	desc = "This first aid kit is a suspicious black and red. Included is an unloaded combat chemical injector \
-			for suit-penetrative chem delivery, a medical science night vision HUD for quick identification of injured personnel and chemical supplies, \
-			improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
-			and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
+		for suit-penetrative chem delivery, a medical science night vision HUD for quick identification of injured personnel and chemical supplies, \
+		improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
+		and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
 	item = /obj/item/storage/medkit/tactical/premium
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
@@ -646,7 +647,7 @@
 	name = "Syndicate Sentience Potion"
 	item = /obj/item/slimepotion/slime/sentience/nuclear
 	desc = "A potion recovered at great risk by undercover Syndicate operatives and then subsequently modified with Syndicate technology. \
-			Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
+		Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
@@ -660,24 +661,24 @@
 /datum/uplink_item/implants/nuclear/deathrattle
 	name = "Box of Deathrattle Implants"
 	desc = "A collection of implants (and one reusable implanter) that should be injected into the team. When one of the team \
-	dies, all other implant holders recieve a mental message informing them of their teammates' name \
-	and the location of their death. Unlike most implants, these are designed to be implanted \
-	in any creature, biological or mechanical."
+		dies, all other implant holders recieve a mental message informing them of their teammates' name \
+		and the location of their death. Unlike most implants, these are designed to be implanted \
+		in any creature, biological or mechanical."
 	item = /obj/item/storage/box/syndie_kit/imp_deathrattle
 	cost = 4
 
 /datum/uplink_item/implants/nuclear/microbomb
 	name = "Microbomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
-			The more implants inside of you, the higher the explosive power. \
-			This will permanently destroy your body, however."
+		The more implants inside of you, the higher the explosive power. \
+		This will permanently destroy your body, however."
 	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
 
 /datum/uplink_item/implants/nuclear/macrobomb
 	name = "Macrobomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
-			Upon death, releases a massive explosion that will wipe out everything nearby."
+		Upon death, releases a massive explosion that will wipe out everything nearby."
 	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 	restricted = TRUE
@@ -709,7 +710,7 @@
 /datum/uplink_item/implants/nuclear/antidrop
 	name = "Anti-Drop Implant"
 	desc = "This implant will keep you from dropping things from your hands. Be sure to hold onto the item before activating, and \
-			activate it again to turn it off. Comes with an autosurgeon."
+		activate it again to turn it off. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_drop
 	cost = 8
 
@@ -737,174 +738,44 @@
 /datum/uplink_item/base_keys/bomb_key
 	name = "Syndicate Ordnance Laboratory Access Card"
 	desc = "Do you fancy yourself an explosives expert? If so, then consider yourself lucky! With this special Authorization Key, \
-			you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
-			very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
+		you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
+		very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
 	item = /obj/item/keycard/syndicate_bomb
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/base_keys/bio_key
 	name = "Syndicate Bio-Weapon Laboratory Access Card"
 	desc = "In the right hands, even vile corpo technology can be turned into a vast arsenal of liberation and justice. From \
-			micro-organism symbiosis to slime-core weaponization, this special Authorization Key can let you push past the boundaries \
-			of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with natural life support! *Plants not included."
+		micro-organism symbiosis to slime-core weaponization, this special Authorization Key can let you push past the boundaries \
+		of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with natural life support! *Plants not included."
 	item = /obj/item/keycard/syndicate_bio
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
 /datum/uplink_item/base_keys/chem_key
 	name = "Syndicate Chemical Plant Access Card"
 	desc = "For some of our best Operatives, watching corpo space stations blow up with a flash of retribution just isn't enough. \
-			Folks like those prefer a more personal touch to their artistry. For those interested, a special Authorization Key \
-			can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
-			and listen to the best classic music today!"
+		Folks like those prefer a more personal touch to their artistry. For those interested, a special Authorization Key \
+		can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
+		and listen to the best classic music today!"
 	item = /obj/item/keycard/syndicate_chem
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
 /datum/uplink_item/base_keys/fridge_key
 	name = "Lopez's Access Card"
 	desc = "Hungry? So is everyone in Firebase Balthazord. Lopez is a great cook, don't get me wrong, but he's stubborn when it \
-			comes to the meal plans. Sometimes you just want to pig out. Listen, don't tell anyone, ok? I picked this out of his \
-			pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
-			you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
+		comes to the meal plans. Sometimes you just want to pig out. Listen, don't tell anyone, ok? I picked this out of his \
+		pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
+		you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
 	item = /obj/item/keycard/syndicate_fridge
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
-// Clown Operative Stuff
-// Maybe someday, someone will care to maintain this
+// Hats
+// It is fundamental for the game's health for there to be a hat crate for nuclear operatives.
 
-/datum/uplink_item/weapon_kits/pie_cannon
-	name = "Banana Cream Pie Cannon"
-	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
-	cost = 10
-	item = /obj/item/pneumatic_cannon/pie/selfcharge
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/weapon_kits/bananashield
-	name = "Bananium Energy Shield"
-	desc = "A clown's most powerful defensive weapon, this personal shield provides near immunity to ranged energy attacks \
-		by bouncing them back at the ones who fired them. It can also be thrown to bounce off of people, slipping them, \
-		and returning to you even if you miss. WARNING: DO NOT ATTEMPT TO STAND ON SHIELD WHILE DEPLOYED, EVEN IF WEARING ANTI-SLIP SHOES."
-	item = /obj/item/shield/energy/bananium
-	cost = 16
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/weapon_kits/clownsword
-	name = "Bananium Energy Sword"
-	desc = "An energy sword that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
-	impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
-	item = /obj/item/melee/energy/sword/bananium
-	cost = 3
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/weapon_kits/clownoppin
-	name = "Ultra Hilarious Firing Pin"
-	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
-	cost = 1 //much cheaper for clown ops than for clowns
-	item = /obj/item/firing_pin/clown/ultra
-	purchasable_from = UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
-
-/datum/uplink_item/weapon_kits/clownopsuperpin
-	name = "Super Ultra Hilarious Firing Pin"
-	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
-	cost = 4 //much cheaper for clown ops than for clowns
-	item = /obj/item/firing_pin/clown/ultra/selfdestruct
-	purchasable_from = UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
-
-/datum/uplink_item/weapon_kits/foamsmg
-	name = "Toy Submachine Gun"
-	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade darts with a 20-round magazine."
-	item = /obj/item/gun/ballistic/automatic/c20r/toy
+/datum/uplink_item/badass/hats
+	name = "Hat Crate"
+	desc = "Hat crate! Contains hats, along with hat stabilizers to wear your hats while you're in your suit! HATS!!!"
+	item = /obj/structure/closet/crate/large/hats
 	cost = 5
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/weapon_kits/foammachinegun
-	name = "Toy Machine Gun"
-	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating \
-			riot grade darts, that can briefly incapacitate someone in just one volley."
-	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
-	cost = 10
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/explosives/bombanana
-	name = "Bombanana"
-	desc = "A banana with an explosive taste! discard the peel quickly, as it will explode with the force of a Syndicate minibomb \
-		a few seconds after the banana is eaten."
-	item = /obj/item/food/grown/banana/bombanana
-	cost = 4 //it is a bit cheaper than a minibomb because you have to take off your helmet to eat it, which is how you arm it
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/explosives/clown_bomb_clownops
-	name = "Clown Bomb"
-	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
-		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
-		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
-		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
-		be defused, and some crew may attempt to do so."
-	item = /obj/item/sbeacondrop/clownbomb
-	cost = 15
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/explosives/clown_bomb_clownops/New()
-	. = ..()
-	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
-
-/datum/uplink_item/explosives/tearstache
-	name = "Teachstache Grenade"
-	desc = "A teargas grenade that launches sticky moustaches onto the face of anyone not wearing a clown or mime mask. The moustaches will \
-		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
-	item = /obj/item/grenade/chem_grenade/teargas/moustache
-	cost = 3
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/explosives/pinata
-	name = "Weapons Grade Pinata Kit"
-	desc = "A pinata filled with both candy and explosives as well as two belts to carry them on, crack it open and see what you get!"
-	item = /obj/item/storage/box/syndie_kit/pinata
-	purchasable_from = UPLINK_CLOWN_OPS
-	limited_stock = 1
-	cost = 12 //This is effectively the clown ops version of the grenadier belt where you should on average get 8 explosives if you use a weapon with exactly 10 force.
-	surplus = 0
-
-/datum/uplink_item/reinforcement/clown_reinforcement
-	name = "Clown Reinforcements"
-	desc = "Call in an additional clown to share the fun, equipped with full starting gear, but no telecrystals."
-	item = /obj/item/antag_spawner/nuke_ops/clown
-	cost = 20
-	purchasable_from = UPLINK_CLOWN_OPS
-	restricted = TRUE
-	refundable = TRUE
-
-/datum/uplink_item/mech/honker
-	name = "Dark H.O.N.K."
-	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."
-	item = /obj/vehicle/sealed/mecha/honker/dark/loaded
-	cost = 80
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/stealthy_tools/combatbananashoes
-	name = "Combat Banana Shoes"
-	desc = "While making the wearer immune to most slipping attacks like regular combat clown shoes, these shoes \
-		can generate a large number of synthetic banana peels as the wearer walks, slipping up would-be pursuers. They also \
-		squeak significantly louder."
-	item = /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
-	cost = 6
-	surplus = 0
-	purchasable_from = UPLINK_CLOWN_OPS
-
-/datum/uplink_item/badass/clownopclumsinessinjector //clowns can buy this too, but it's in the role-restricted items section for them
-	name = "Clumsiness Injector"
-	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clown operatives who wish to reconnect with their former clownish nature or for clown operatives who wish to torment and play with their prey before killing them."
-	item = /obj/item/dnainjector/clumsymut
-	cost = 1
-	purchasable_from = UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS

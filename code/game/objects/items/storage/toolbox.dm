@@ -384,7 +384,16 @@
 	new gun_to_spawn (src)
 	new ammo_to_spawn (src)
 	new /obj/item/mod/module/hat_stabilizer (src)
-	new /obj/item/clothing/head/helmet/knight (src)
+	new /obj/item/clothing/head/costume/knight (src)
+
+/obj/item/clothing/head/costume/knight
+	name = "fake medieval helmet"
+	desc = "A classic metal helmet. Though, this one seems to be very obviously fake..."
+	icon_state = "knight_green"
+	inhand_icon_state = "knight_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	dog_fashion = null
 
 /obj/item/storage/toolbox/guncase/doublesword
 	name = "double-energy sword weapon case"
