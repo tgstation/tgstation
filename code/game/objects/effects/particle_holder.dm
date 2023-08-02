@@ -23,6 +23,8 @@
 	parent = loc
 	loc = null
 
+	// Mouse opacity can get set to opaque by some objects when placed into the object's contents (storage containers).
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	src.particle_flags = particle_flags
 	particles = new particle_path()
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
