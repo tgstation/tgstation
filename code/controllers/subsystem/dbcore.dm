@@ -177,9 +177,11 @@ SUBSYSTEM_DEF(dbcore)
 		for(var/datum/db_query/query in queries_standby)
 			//In theory these would be async anyway as MC processing should be false during shutdown.
 			query.Execute(FALSE)
+			qdel(query)
 		for(var/datum/db_query/query in queries_active)
 			//Finish any remaining active qeries
 			UNTIL(query.process())
+			qdel(query)
 
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
