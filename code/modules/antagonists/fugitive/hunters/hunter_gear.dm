@@ -154,3 +154,47 @@
 	default_raw_text = "<b>Remember!</b> The customers love that gumball we have as a crystal ball. \
 		Even if it's completely useless to us, resist the urge to chew it."
 
+/**
+ * # Bounty Locator
+ *
+ * Locates a random, living fugitive and reports their name/location on a 40 second cooldown.
+ *
+ * Locates a random fugitive antagonist via the GLOB.antagonists list, and reads out their real name and area name.
+ * Captured or dead fugitives are not reported.
+ */
+/obj/machinery/fugitive_locator
+	name = "Bounty Locator"
+	desc = "Tracks the signatures of bounty targets in your sector. Nobody actually knows what mechanism this thing uses to track its targets. \
+		Whether it be bluespace entanglement or a simple RFID implant, this machine will find you who you're looking for no matter where they're hiding."
+	icon = 'icons/obj/machines/dominator.dmi'
+	icon_state = "dominator-Purple"
+	density = TRUE
+	/// Cooldown on locating a fugitive.
+	COOLDOWN_DECLARE(locate_cooldown)
+
+/obj/machinery/fugitive_locator/interact(mob/user)
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
+		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
+		return
+	var/mob/living/bounty = locate_fugitive()
+	if(!bounty)
+		say("No bounty targets detected.")
+	else
+		say("Bounty Target Located. Bounty ID: [bounty.real_name]. Location: [get_area_name(bounty)]")
+
+	COOLDOWN_START(src, locate_cooldown, 40 SECONDS)
+
+///Locates a random fugitive via their antag datum and returns them.
+/obj/machinery/fugitive_locator/proc/locate_fugitive()
+	var/list/datum_list = shuffle(GLOB.antagonists)
+	for(var/datum/antagonist/fugitive/fugitive_datum in datum_list)
+		if(!fugitive_datum.owner)
+			stack_trace("Fugitive locator tried to locate a fugitive antag datum with no owner.")
+			continue
+		if(fugitive_datum.is_captured)
+			continue
+		var/mob/living/found_fugitive = fugitive_datum.owner.current
+		if(found_fugitive.stat == DEAD)
+			continue
+
+		return found_fugitive
