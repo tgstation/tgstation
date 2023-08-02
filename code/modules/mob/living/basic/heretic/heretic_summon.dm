@@ -79,9 +79,7 @@
 	icon_living = "star_gazer"
 	pixel_x = -32
 	base_pixel_x = -32
-	basic_mob_flags = DEL_ON_DEATH
 	mob_biotypes = MOB_HUMANOID | MOB_EPIC
-	faction = list(FACTION_HERETIC)
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	speed = -0.2
@@ -92,7 +90,6 @@
 	armour_penetration = 20
 	melee_damage_lower = 40
 	melee_damage_upper = 40
-	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	attack_verb_continuous = "ravages"
 	attack_verb_simple = "ravage"
@@ -102,11 +99,6 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	death_sound = 'sound/magic/cosmic_expansion.ogg'
 
-	unsuitable_atmos_damage = 0
-	unsuitable_cold_damage = 0
-	unsuitable_heat_damage = 0
-
-	gold_core_spawnable = NO_SPAWN
 	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
