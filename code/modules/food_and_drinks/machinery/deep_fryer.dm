@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		qdel(weapon)
 		return
 	// Make sure we have cooking oil
-	if(!reagents.has_reagent(/datum/reagent/consumable/nutriment/fat))
+	if(!reagents.has_reagent(/datum/reagent/consumable/nutriment/fat, check_subtypes = TRUE))
 		to_chat(user, span_warning("[src] has no cooking oil to fry with!"))
 		return
 	// Don't deep fry indestructible things, for sanity reasons
@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer/process(seconds_per_tick)
 	..()
-	var/datum/reagent/consumable/nutriment/fat/frying_oil = reagents.has_reagent(/datum/reagent/consumable/nutriment/fat)
+	var/datum/reagent/consumable/nutriment/fat/frying_oil = reagents.has_reagent(/datum/reagent/consumable/nutriment/fat, check_subtypes = TRUE)
 	if(!frying_oil)
 		return
 	reagents.chem_temp = frying_oil.fry_temperature
