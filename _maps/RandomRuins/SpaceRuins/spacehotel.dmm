@@ -322,6 +322,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "cP" = (
@@ -771,6 +772,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/east,
+/mob/living/basic/syndicate/ranged/smg/space,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "gQ" = (
@@ -795,6 +797,9 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "hf" = (
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "hg" = (
@@ -870,6 +875,7 @@
 "hH" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
+/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "hI" = (
@@ -1368,8 +1374,14 @@
 "kU" = (
 /obj/structure/cable,
 /obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/black/blue,
-/obj/item/clothing/head/helmet/space/syndicate/blue,
+/obj/item/clothing/suit/space/syndicate/black/blue{
+	desc = "A 'Nanotrasen Special Response Team' space suit, according to the tag.";
+	name = "Nanotrasen SRT space suit"
+	},
+/obj/item/clothing/head/helmet/space/syndicate/blue{
+	name = "Nanotrasen SRT space helmet";
+	desc = "A 'Nanotrasen Special Response Team' helmet, according to the tag."
+	},
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "kX" = (
@@ -1633,6 +1645,9 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
 	},
+/mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "mW" = (
@@ -1785,6 +1800,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "og" = (
@@ -1889,6 +1905,11 @@
 "pp" = (
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
+"pr" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/syndicate/melee/space/stormtrooper,
+/turf/open/floor/iron/dark/textured_large,
+/area/ruin/space/has_grav/hotel/dock)
 "pz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1971,6 +1992,10 @@
 	},
 /turf/open/misc/beach/sand,
 /area/ruin/space/has_grav/hotel/pool)
+"qx" = (
+/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
+/turf/open/floor/glass/reinforced,
+/area/ruin/space/has_grav/hotel/security)
 "qz" = (
 /obj/structure/frame,
 /obj/item/stack/cable_coil/five,
@@ -2294,6 +2319,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "tQ" = (
@@ -2390,6 +2418,7 @@
 	pixel_y = -1
 	},
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "uW" = (
@@ -2908,6 +2937,7 @@
 "zp" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/security)
 "zr" = (
@@ -3771,6 +3801,15 @@
 /obj/structure/rack,
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
+"JD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/hotel)
 "JE" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
@@ -3846,6 +3885,7 @@
 	dir = 1
 	},
 /obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "Km" = (
@@ -4809,6 +4849,9 @@
 	name = "Hotel Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/security,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "VA" = (
@@ -5155,6 +5198,12 @@
 /obj/item/pen,
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
+"YJ" = (
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_x = 7
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/hotel/security)
 "YL" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/maintenance,
@@ -8081,7 +8130,7 @@ YZ
 VV
 lW
 hE
-lW
+pr
 NG
 LB
 zr
@@ -9014,7 +9063,7 @@ Dc
 Ve
 Sq
 cf
-PF
+JD
 cf
 WD
 wI
@@ -9087,7 +9136,7 @@ Dc
 EW
 Sq
 cf
-PF
+JD
 cf
 WD
 wI
@@ -9377,7 +9426,7 @@ Cl
 Od
 xd
 EK
-pp
+qx
 JE
 tJ
 tQ
@@ -9454,7 +9503,7 @@ pp
 sN
 tJ
 vp
-hf
+YJ
 vM
 Dc
 cN
