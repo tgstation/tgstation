@@ -1,30 +1,32 @@
 // Rust charge, added so i could put the lion hunter rifle earlier up the tree
 /datum/action/cooldown/mob_cooldown/charge/rust
-    name = "rust charge"
-    desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
-    charge_distance = 10
-    charge_damage = 50
-    cooldown_time = 45 SECONDS
+	name = "rust charge"
+	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
+	charge_distance = 10
+	charge_damage = 50
+	cooldown_time = 45 SECONDS
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
-    if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
-        StartCooldown(135 SECONDS, 135 SECONDS)
-        charge_sequence(owner, target_atom, charge_delay, charge_past)
-        StartCooldown()
-        return TRUE
+	if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
+		StartCooldown(135 SECONDS, 135 SECONDS)
+		charge_sequence(owner, target_atom, charge_delay, charge_past)
+		StartCooldown()
+		return TRUE
 
-/datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc, turf/victim)
+/datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc)
 	var/wreck = 0
-    SIGNAL_HANDLER
-    if(!actively_moving)
-        return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-    new /obj/effect/temp_visual/decoy/fading(source.loc, source)
-    victim.rust_heretic_act()
-    get_step(victim, EAST).rust_heretic_act()
-    get_step(victim, WEST).rust_heretic_act()
-    if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
-        INVOKE_ASYNC(owner, PROC_REF(DestroySurroundings), source)
+	var/turf/victim = get_turf(owner)
+	if(!actively_moving)
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
+	victim.rust_heretic_act()
+	get_step(victim, EAST).rust_heretic_act()
+	get_step(victim, WEST).rust_heretic_act()
+	get_step(victim, NORTH).rust_heretic_act()
+	get_step(victim, SOUTH).rust_heretic_act()
+	if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
+		INVOKE_ASYNC(owner, PROC_REF(DestroySurroundings), source)
+		wreck += 1
 
-/datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
-    SIGNAL_HANDLER
-    playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
+/datum/action/cooldown/mob_cooldown/charge/on_moved(atom/source)
+	playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
