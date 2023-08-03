@@ -74,6 +74,18 @@
 
 	var/mob/listeningTo
 
+/obj/item/gun/energy/beam_rifle/apply_fantasy_bonuses(bonus)
+	. = ..()
+	delay = modify_fantasy_variable("delay", delay, -bonus * 2)
+	aiming_time = modify_fantasy_variable("aiming_time", aiming_time, -bonus * 2)
+	recoil = modify_fantasy_variable("aiming_time", aiming_time, round(-bonus / 2))
+
+/obj/item/gun/energy/beam_rifle/remove_fantasy_bonuses(bonus)
+	delay = reset_fantasy_variable("delay", delay)
+	aiming_time = reset_fantasy_variable("aiming_time", aiming_time)
+	recoil = reset_fantasy_variable("recoil", recoil)
+	return ..()
+
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
 	cell_type = /obj/item/stock_parts/cell/infinite

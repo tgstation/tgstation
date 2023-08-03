@@ -15,6 +15,8 @@
 #define HOLOFORM_MAX_RANGE 9
 /// Minimum distance you can set the holoform leash
 #define HOLOFORM_MIN_RANGE 3
+/// Default holoform leash distance
+#define HOLOFORM_DEFAULT_RANGE HOLOFORM_MAX_RANGE
 
 /// UI action to toggle huds
 #define PAI_TOGGLE_MEDICAL_HUD 0

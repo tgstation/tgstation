@@ -37,7 +37,7 @@
 // LASER RIFLE
 
 /obj/item/gun/ballistic/automatic/laser/ctf
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle
 	desc = "This looks like it could really hurt in melee."
 	force = 50
 	weapon_weight = WEAPON_HEAVY
@@ -70,7 +70,7 @@
 	inhand_icon_state = "shotgun_combat"
 	worn_icon_state = "gun"
 	slot_flags = null
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	empty_indicator = TRUE
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	semi_auto = TRUE
@@ -103,7 +103,7 @@
 	name = "designated marksman rifle"
 	icon_state = "ctfmarksman"
 	inhand_icon_state = "ctfmarksman"
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	fire_delay = 1 SECONDS
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman
@@ -125,7 +125,7 @@
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/deagle
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/deagle
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize(mapload)
 	. = ..()
@@ -236,7 +236,7 @@
 
 // Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/red
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
 	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/red
@@ -252,7 +252,7 @@
 
 // Shotgun
 /obj/item/gun/ballistic/shotgun/ctf/red
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
 	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/red
@@ -268,7 +268,7 @@
 
 // DMR
 /obj/item/gun/ballistic/automatic/laser/ctf/marksman/red
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
 	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/red
@@ -302,7 +302,7 @@
 
 // Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/blue
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
 	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/blue
@@ -316,7 +316,7 @@
 
 // Shotgun
 /obj/item/gun/ballistic/shotgun/ctf/blue
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
 	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/blue
@@ -331,7 +331,7 @@
 
 // DMR
 /obj/item/gun/ballistic/automatic/laser/ctf/marksman/blue
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
 	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/blue
@@ -361,7 +361,7 @@
 
 // Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/green
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
 	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/green
@@ -377,7 +377,7 @@
 
 // Shotgun
 /obj/item/gun/ballistic/shotgun/ctf/green
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
 	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/green
@@ -393,7 +393,7 @@
 
 // DMR
 /obj/item/gun/ballistic/automatic/laser/ctf/marksman/green
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
 	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/green
@@ -427,7 +427,7 @@
 
 // Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/yellow
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
 	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/yellow
@@ -443,7 +443,7 @@
 
 // Shotgun
 /obj/item/gun/ballistic/shotgun/ctf/yellow
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
 	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/yellow
@@ -459,7 +459,7 @@
 
 // DMR
 /obj/item/gun/ballistic/automatic/laser/ctf/marksman/yellow
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
 	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/yellow

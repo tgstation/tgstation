@@ -468,7 +468,7 @@
 	if(moderator_list[/datum/gas/bz] < (150 / power_level))
 		return
 	var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
-	picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
+	picked_corner.loc.fire_nuclear_particle(REVERSE_DIR(picked_corner.dir))
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_lightning_arcs(moderator_list)
 	if(power_level < 4)

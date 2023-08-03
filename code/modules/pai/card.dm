@@ -66,7 +66,7 @@
 
 /obj/item/pai_card/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/track_hierarchical_movement)
+
 	update_appearance()
 	SSpai.pai_card_list += src
 
@@ -117,7 +117,7 @@
 		name = pai.name,
 		transmit = pai.can_transmit,
 		receive = pai.can_receive,
-		range = pai.leashed_distance,
+		range = pai.leash.distance,
 	)
 	return data
 
