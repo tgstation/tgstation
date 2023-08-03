@@ -1,0 +1,4 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - bugfix: "Fixes an extremely rare bug where a /mob/living/brain with a client would not be moved out of nullspace correctly, causing admin log spam."
