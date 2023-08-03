@@ -78,11 +78,7 @@
 #define REDUCE_RANGE (1<<1)
 #define NOPASS (1<<2)
 
-/// Range to hear normal messages
-#define MESSAGE_RANGE 7
-/// Range to hear whispers normally
-#define WHISPER_RANGE 1
-/// Additional range to partially hear whispers
+//Eavesdropping
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 /// How close intercoms can be for radio code use
