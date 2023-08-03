@@ -212,3 +212,8 @@ GLOBAL_LIST_INIT(store_toys, generate_store_items(/datum/store_item/toys))
 	name = "Tiny Witch Plush"
 	item_path = /obj/item/toy/plush/tinywitchplush
 	item_cost = 10000
+
+/datum/store_item/toys/chefomancer
+	name = "Chef-o-Mancer Plush"
+	item_path = /obj/item/toy/plush/chefomancer
+	item_cost = 10000
