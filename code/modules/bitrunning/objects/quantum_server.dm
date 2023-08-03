@@ -53,7 +53,7 @@
 	/// Server cooldown efficiency
 	var/server_cooldown_efficiency = 1
 	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 2 SECONDS
+	var/server_cooldown_time = 2 MINUTES
 	/// Turfs to delete whenever the server is shut down.
 	var/turf/delete_turfs = list()
 	/// The turfs we can place a hololadder on.
