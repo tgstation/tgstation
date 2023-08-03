@@ -26,7 +26,7 @@ type NtosMessengerData = {
   sending_virus: BooleanLike;
 };
 
-export const NtosMessenger = (_: any, context: any) => {
+export const NtosMessenger = (props, context) => {
   const { data } = useBackend<NtosMessengerData>(context);
   const {
     is_silicon,
@@ -258,7 +258,7 @@ type ChatButtonProps = {
   chatRef: string;
 };
 
-const ChatButton = (props: ChatButtonProps, context: any) => {
+const ChatButton = (props: ChatButtonProps, context) => {
   const { act } = useBackend(context);
   const unreadMessages = props.unreads;
   const hasUnreads = unreadMessages > 0;
@@ -279,7 +279,7 @@ const ChatButton = (props: ChatButtonProps, context: any) => {
   );
 };
 
-const SendToAllSection = (_: any, context: any) => {
+const SendToAllSection = (props, context) => {
   const { data, act } = useBackend<NtosMessengerData>(context);
   const { on_spam_cooldown } = data;
 
