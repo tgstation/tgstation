@@ -3222,6 +3222,7 @@
 #include "code\modules\client\verbs\suicide.dm"
 #include "code\modules\client\verbs\who.dm"
 #include "code\modules\clothing\clothing.dm"
+#include "code\modules\clothing\belts\polymorph_belt.dm"
 #include "code\modules\clothing\chameleon\_chameleon_action.dm"
 #include "code\modules\clothing\chameleon\_chameleon_outfit.dm"
 #include "code\modules\clothing\chameleon\chameleon_action_subtypes.dm"

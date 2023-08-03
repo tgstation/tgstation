@@ -178,4 +178,11 @@
 /datum/action/cooldown/spell/shapeshift/proc/create_shapeshift_mob(atom/loc)
 	return new shapeshift_type(loc)
 
+/// Removes an active shapeshift effect from the owner
+/datum/action/cooldown/spell/shapeshift/proc/unshift_owner()
+	if (isnull(owner))
+		return
+	if (is_shifted(owner))
+		do_unshapeshift(owner)
+
 #undef is_shifted
