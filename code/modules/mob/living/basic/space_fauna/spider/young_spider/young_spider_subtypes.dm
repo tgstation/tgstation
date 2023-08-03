@@ -86,8 +86,8 @@
 	datahud.show_to(src)
 
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 10,\
-		heal_burn = 10,\
+		heal_brute = 15,\
+		heal_burn = 15,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
@@ -199,8 +199,8 @@
 		blood_spawn_chance = 2)
 	// It might be easier and more fitting to just replace this with Regenerator
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 20,\
-		heal_burn = 20,\
+		heal_brute = 25,\
+		heal_burn = 25,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh)),\
