@@ -196,7 +196,7 @@
 	. = ..()
 	AddComponent(/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
-		blood_spawn_chance = 2)
+		blood_spawn_chance = 3)
 	// It might be easier and more fitting to just replace this with Regenerator
 	AddComponent(/datum/component/healing_touch,\
 		heal_brute = 25,\
