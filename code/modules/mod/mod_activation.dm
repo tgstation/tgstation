@@ -70,6 +70,9 @@
 
 /// Deploys a part of the suit onto the user.
 /obj/item/mod/control/proc/deploy(mob/user, obj/item/part)
+	if(!wearer)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE // pAI is trying to deploy it from your hands
 	if(part.loc != src)
 		if(!user)
 			return FALSE
@@ -157,6 +160,8 @@
 		module.on_deactivation(display_message = FALSE)
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
+	if (ai_assistant)
+		to_chat(ai_assistant, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("[boots] [active ? "relax their grip on your legs" : "seal around your feet"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -175,8 +180,8 @@
 		seal_part(helmet, seal = !active)
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
-		if(ai)
-			to_chat(ai, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\"</b>"))
+		if(ai_assistant)
+			to_chat(ai_assistant, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai_assistant]\"</b>"))
 		finish_activation(on = !active)
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
