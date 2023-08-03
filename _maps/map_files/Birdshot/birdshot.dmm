@@ -5858,10 +5858,6 @@
 /obj/machinery/air_sensor/incinerator_tank,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
-"cre" = (
-/obj/item/kirbyplants/random,
-/turf/open/floor/wood/parquet,
-/area/station/service/library)
 "crm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
@@ -24238,8 +24234,8 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/ai_monitored/command/nuke_storage)
 "iTv" = (
-/obj/structure/falsewall,
-/turf/open/floor/catwalk_floor/iron_dark,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/parquet,
 /area/station/service/library)
 "iTB" = (
 /obj/structure/cable,
@@ -25383,6 +25379,10 @@
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
+"joy" = (
+/obj/structure/cable,
+/turf/open/floor/wood/parquet,
+/area/station/service/library)
 "joS" = (
 /obj/machinery/light/broken/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -39663,10 +39663,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer1,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"orW" = (
-/obj/structure/cable,
-/turf/open/floor/wood/parquet,
-/area/station/service/library)
 "osf" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -91726,7 +91722,7 @@ nzK
 lkZ
 xeO
 lpa
-cre
+iTv
 xeO
 izB
 jFY
@@ -93784,7 +93780,7 @@ xeO
 ltl
 hzY
 pum
-orW
+joy
 qgH
 wKr
 jVM
@@ -94040,7 +94036,7 @@ smf
 xeO
 lty
 xeO
-iTv
+xeO
 wMg
 dCm
 wMg
@@ -94298,7 +94294,7 @@ xeO
 oCc
 xeO
 nTg
-orW
+joy
 qgN
 pEC
 qYc
