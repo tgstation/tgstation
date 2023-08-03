@@ -1438,7 +1438,7 @@
 	RegisterSignal(account, COMSIG_BANK_ACCOUNT_DEBT_PAID, PROC_REF(on_debt_paid))
 	to_chat(client_source.mob, span_warning("You remember, you've a hefty, [debt] credits debt to pay..."))
 
-///Once the debt is extinguished, award an achievement for actually taking care of it.
+///Once the debt is extinguished, award an achievement and a pin for actually taking care of it.
 /datum/quirk/indebted/proc/on_debt_paid(datum/bank_account/source)
 	SIGNAL_HANDLER
 	if(source.account_debt)
@@ -1449,6 +1449,11 @@
 		RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(award_on_login))
 	else
 		quirk_holder.client.give_award(/datum/award/achievement/misc/debt_extinguished, quirk_holder)
+	podspawn(list(
+		"target" = get_turf(quirk_holder),
+		"style" = STYLE_BLUESPACE,
+		"spawn" = /obj/item/clothing/accessory/debt_payer_pin,
+	))
 
 /datum/quirk/indebted/proc/award_on_login(mob/source)
 	SIGNAL_HANDLER
