@@ -106,11 +106,10 @@
  */
 /datum/bank_account/proc/adjust_money(amount, reason)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
-		var/real_amount = amount
 		var/debt_collected = 0
 		if(account_debt > 0 && amount > 0)
 			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
-			account_balance += amount - debt_collected
+		account_balance += amount - debt_collected
 		if(reason)
 			add_log_to_history(amount, reason)
 		if(debt_collected)
