@@ -126,7 +126,6 @@ export class Input extends Component {
       value,
       maxLength,
       placeholder,
-      autoFocus,
       ...boxProps
     } = props;
     // Box props
@@ -143,7 +142,6 @@ export class Input extends Component {
         <div className="Input__baseline">.</div>
         <input
           ref={this.inputRef}
-          autoFocus={autoFocus}
           className="Input__input"
           placeholder={placeholder}
           onInput={this.handleInput}
