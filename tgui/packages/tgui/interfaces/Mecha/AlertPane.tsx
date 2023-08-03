@@ -34,7 +34,7 @@ export const AlertPane = (props, context) => {
     <Section
       title="Status"
       buttons={
-        (overclock_mode || can_use_overclock) && (
+        (!!overclock_mode || !!can_use_overclock) && (
           <Button
             icon="forward"
             onClick={() => !!can_use_overclock && act('toggle_overclock')}
