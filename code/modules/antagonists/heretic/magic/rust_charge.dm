@@ -14,6 +14,7 @@
         return TRUE
 
 /datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc, turf/victim)
+	var/wreck = 0
     SIGNAL_HANDLER
     if(!actively_moving)
         return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
@@ -23,3 +24,7 @@
     get_step(victim, WEST).rust_heretic_act()
     if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
         INVOKE_ASYNC(owner, PROC_REF(DestroySurroundings), source)
+
+/datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
+	SIGNAL_HANDLER
+	playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
