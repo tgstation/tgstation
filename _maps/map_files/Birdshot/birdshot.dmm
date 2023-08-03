@@ -5858,6 +5858,10 @@
 /obj/machinery/air_sensor/incinerator_tank,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
+"cre" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/parquet,
+/area/station/service/library)
 "crm" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
@@ -9100,6 +9104,7 @@
 	name = "Study"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -12951,7 +12956,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "eUW" = (
-/obj/structure/bookcase/random,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
@@ -24234,7 +24238,6 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/ai_monitored/command/nuke_storage)
 "iTv" = (
-/obj/structure/cable,
 /obj/structure/falsewall,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/service/library)
@@ -31225,10 +31228,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_command)
 "lpa" = (
-/obj/structure/lattice,
 /obj/structure/sign/poster/official/random/directional/north,
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/structure/bookcase/random,
+/turf/open/floor/wood/parquet,
+/area/station/service/library)
 "lpC" = (
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
@@ -39660,6 +39663,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer1,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"orW" = (
+/obj/structure/cable,
+/turf/open/floor/wood/parquet,
+/area/station/service/library)
 "osf" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -42519,9 +42526,12 @@
 /area/station/maintenance/port/greater)
 "pum" = (
 /obj/structure/cable,
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/arrows{
 	dir = 4
+	},
+/obj/machinery/door/window/right/directional/north{
+	name = "Library Desk Door";
+	req_access = list("library")
 	},
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
@@ -44044,7 +44054,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/structure/bookcase/random,
+/obj/structure/bookcase/random/adult,
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
 "pST" = (
@@ -44972,6 +44982,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "qgK" = (
@@ -44989,6 +45000,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "qgR" = (
@@ -91455,9 +91467,9 @@ xRV
 owR
 nAx
 tmQ
-xRV
-xRV
-xRV
+xeO
+xeO
+xeO
 xeO
 mnn
 naO
@@ -91712,9 +91724,9 @@ jXl
 vrn
 nzK
 lkZ
-xRV
+xeO
 lpa
-blb
+cre
 xeO
 izB
 jFY
@@ -91970,8 +91982,8 @@ vrn
 ncL
 qwz
 xeO
-wMg
-wMg
+wKr
+lql
 xeO
 wJV
 nbu
@@ -93772,7 +93784,7 @@ xeO
 ltl
 hzY
 pum
-wKr
+orW
 qgH
 wKr
 jVM
@@ -94286,7 +94298,7 @@ xeO
 oCc
 xeO
 nTg
-lql
+orW
 qgN
 pEC
 qYc
