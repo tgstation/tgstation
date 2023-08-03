@@ -166,7 +166,7 @@
 	pod.disconnect_occupant(labrat.mind , forced = TRUE)
 	mob_occupant = pod.occupant
 	TEST_ASSERT_NOTNULL(pod.server_ref, "Sanity: pod didn't set server")
-	TEST_ASSERT_EQUAL(mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should've taken brain damage on force disconn")
+	TEST_ASSERT_EQUAL(mob_occupant.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Should've taken brain damage on force disconn")
 
 /// Tests cases where the netpod is destroyed or the occupant unbuckled
 /datum/unit_test/netpod_break/Run()
@@ -191,7 +191,7 @@
 
 	pod.open_machine()
 	TEST_ASSERT_NULL(pod.occupant, "Should've cleared occupant")
-	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should have taken brain damage on unbuckle")
+	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Should have taken brain damage on unbuckle")
 
 	labrat.fully_heal()
 	pod.set_occupant(labrat)
@@ -200,7 +200,7 @@
 	TEST_ASSERT_EQUAL(pod.occupant_mind_ref, real_mind, "Sanity: Pod didn't set mind")
 
 	qdel(pod)
-	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should have taken brain damage on pod deletion")
+	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Should have taken brain damage on pod deletion")
 
 /// Tests the connection between avatar and pilot
 /datum/unit_test/avatar_connection_basic/Run()
@@ -233,6 +233,21 @@
 	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/bodypart/head) in labrat.get_damaged_bodyparts(burn = TRUE), "Pilot did not get damaged bodypart")
 
+	target.mind.full_avatar_disconnect()
+	TEST_ASSERT_NULL(labrat.mind.pilot_ref, "Could not clear pilot_ref")
+	TEST_ASSERT_NULL(labrat.mind.netpod_ref, "Could not clear netpod_ref")
+	TEST_ASSERT_EQUAL(labrat.mind, initial_mind, "Could not transfer mind back to pilot")
+
+	for(var/i in 1 to 5) // so sick of this failing
+		target.apply_damage(500, damagetype = BURN, def_zone = BODY_ZONE_HEAD, blocked = 0, forced = TRUE, spread_damage = TRUE)
+	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should be very dead")
+	TEST_ASSERT_EQUAL(labrat.stat, CONSCIOUS, "Pilot should be very alive")
+
+/// Gibbing specifically
+/datum/unit_test/avatar_connection_gib/Run()
+	var/obj/machinery/netpod/pod = allocate(/obj/machinery/netpod)
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
 	var/mob/living/carbon/human/to_gib = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/pincushion = allocate(/mob/living/carbon/human/consistent)
 	pincushion.mind_initialize()
@@ -246,7 +261,7 @@
 
 	to_gib.gib()
 	TEST_ASSERT_EQUAL(pincushion_mind, pincushion.mind, "Pilot should have been transferred back on avatar gib")
-	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Pilot should have taken brain dmg on gib disconnect")
+	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), pod.disconnect_damage, "Pilot should have taken brain dmg on gib disconnect")
 
 /// Tests the signals sent when the server is destroyed, mobs step on a loaded tile, etc
 /datum/unit_test/bitrunning_signals
@@ -441,11 +456,11 @@
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
 
 	var/rewards = server.calculate_rewards()
-	TEST_ASSERT_EQUAL(rewards, 1, "Should return base rewards with unmodded")
+	TEST_ASSERT_EQUAL(rewards, 1, "Should return base rewards when unmodded")
 
 	server.domain_randomized = TRUE
 	rewards = server.calculate_rewards()
-	TEST_ASSERT_EQUAL(rewards, 1.2, "Should increase rewards wehen randomized")
+	TEST_ASSERT_EQUAL(rewards, 1.2, "Should increase rewards when randomized")
 
 	server.domain_randomized = FALSE
 	server.occupant_mind_refs += labrat_mind_ref
@@ -468,10 +483,40 @@
 /datum/unit_test/bitrunning_loot_crate_rewards/Run()
 	var/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunner_loot/decrypted)
 
-	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(1, 1, 1)), TRUE, "Should return a number")
-	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(2, 2, 0.5)), TRUE, "Should return a number")
-	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(3.5, 3, 0.25)), TRUE, "Should return a number")
-	TEST_ASSERT_EQUAL(isnum(crate.calculate_loot(4, 4.5, 0.1)), TRUE, "Should return a number")
+	var/total = 0
+	total = crate.calculate_loot(1, 1, 1)
+	TEST_ASSERT_NOTEQUAL(total, 0, "Should return a number")
+
+	total = crate.calculate_loot(1, 1, 3)
+	TEST_ASSERT_NOTEQUAL(total, 0, "Should return a number")
+
+	total = crate.calculate_loot(1, 1, 0.5)
+	TEST_ASSERT_NOTEQUAL(total, 0, "Should return a number")
+
+	total = crate.calculate_loot(3, 4, 0.3)
+	TEST_ASSERT_NOTEQUAL(total, 0, "Should return a number")
+
+	total = crate.calculate_loot(3, 3.2, 0.2)
+	TEST_ASSERT_NOTEQUAL(total, 0, "Should return a number")
+
+/// Ensures the bitminers are getting their proper report cards
+/datum/unit_test/bitrunner_completion_grade/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+
+	var/grade = server.grade_completion(0, 0, 1, FALSE, 2 MINUTES)
+	TEST_ASSERT_EQUAL(grade, "D", "Should return a grade")
+
+	grade = server.grade_completion(2, 0, 3, FALSE, 10 MINUTES)
+	TEST_ASSERT_EQUAL(grade, "C", "Should return a grade")
+
+	grade = server.grade_completion(3, 0, 4, FALSE, 10 MINUTES)
+	TEST_ASSERT_EQUAL(grade, "B", "Should return a grade")
+
+	grade = server.grade_completion(2, 1, 3, FALSE, 10 MINUTES)
+	TEST_ASSERT_EQUAL(grade, "A", "Should return a grade")
+
+	grade = server.grade_completion(3, 1, 4, FALSE, 5 MINUTES)
+	TEST_ASSERT_EQUAL(grade, "S", "Should return a grade")
 
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE

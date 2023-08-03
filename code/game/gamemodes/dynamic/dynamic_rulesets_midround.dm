@@ -73,6 +73,8 @@
 			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role.title in exclusive_roles)) // Is the rule exclusive to their job?
 				trimmed_list.Remove(M)
 				continue
+			if(M.mind.pilot_ref) // are they in the vdom?
+				continue
 	return trimmed_list
 
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
@@ -896,11 +898,13 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 3
-	cost = 5
+	cost = 1
 	minimum_players = 5
 	repeatable = TRUE
 	/// Target mobs able to be mutated into a sentinel
 	var/list/mutation_candidates = list()
+	/// The chosen server
+	var/datum/weakref/server_ref
 
 /datum/dynamic_ruleset/midround/from_ghosts/cyber_police/acceptable(population = 0, threat = 0)
 	generate_candidates()
@@ -910,12 +914,16 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/cyber_police/generate_ruleset_body(mob/applicant)
-	var/datum/mind/player_mind = new /datum/mind(applicant.key)
-	player_mind.active = TRUE
+	var/obj/machinery/quantum_server/server = server_ref?.resolve()
+	if(isnull(server))
+		return
 
 	var/mob/living/target = pick(mutation_candidates)
 	if(isnull(target))
 		return
+
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
 
 	var/mob/living/carbon/human/new_agent = new(target.loc)
 	target.gib()
@@ -928,17 +936,25 @@
 	player_mind.special_role = ROLE_CYBER_POLICE
 	player_mind.add_antag_datum(/datum/antagonist/cyber_police)
 
+	SEND_SIGNAL(server, COMSIG_BITRUNNER_THREAT_CREATED, new_agent)
+
 	playsound(new_agent, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(new_agent)] has been made into Cyber Police by the midround ruleset.")
-	log_dynamic("[key_name(new_agent)] was spawned as a Cyber Police by the midround ruleset.")
+	log_dynamic("[key_name(new_agent)] was spawned as Cyber Police by the midround ruleset.")
 
 	return new_agent
 
 /datum/dynamic_ruleset/midround/from_ghosts/cyber_police/proc/generate_candidates()
 	mutation_candidates.Cut()
 
-	for(var/obj/machinery/quantum_server/server as anything in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
-		mutation_candidates += server.get_valid_domain_targets()
+	var/obj/machinery/quantum_server/server = locate(/obj/machinery/quantum_server) in SSmachines.get_all_machines(/obj/machinery/quantum_server)
+	if(isnull(server))
+		return
+
+	mutation_candidates += server.get_valid_domain_targets()
+
+	if(length(mutation_candidates))
+		server_ref = WEAKREF(server)
 
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB

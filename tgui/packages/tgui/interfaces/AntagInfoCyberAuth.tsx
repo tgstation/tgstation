@@ -41,6 +41,10 @@ export const AntagInfoCyberAuth = (props, context) => {
               <span style={textStyles.variable}>system.</span>
               <span style={textStyles.danger}>INTRUDERS</span>;
             </Stack.Item>
+            <Stack.Item mt={1}>
+              self.learn(<span style={textStyles.variable}>martial.</span>
+              <span style={textStyles.danger}>CARP</span>)
+            </Stack.Item>
             <Stack.Item>
               while <span style={textStyles.variable}>TARGETS</span>.LIFE !={' '}
               <span style={textStyles.variable}>stat.</span>DEAD

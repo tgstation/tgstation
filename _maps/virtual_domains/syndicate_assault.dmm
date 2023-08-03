@@ -361,9 +361,6 @@
 	secure = 1
 	},
 /obj/item/coin/antagtoken,
-/obj/item/encryptionkey/syndicate,
-/obj/item/encryptionkey/syndicate,
-/obj/item/encryptionkey/syndicate,
 /obj/item/dnainjector/thermal,
 /obj/item/storage/box/firingpins/syndicate,
 /obj/item/storage/box/firingpins/syndicate,

@@ -9,6 +9,8 @@
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/cyber_police)
 	/// Mob candidates that can be converted into a sentinel.
 	var/list/mutation_candidates = list()
+	/// Reference to the target server
+	var/datum/weakref/server_ref
 
 /datum/round_event_control/cyber_police/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
@@ -23,8 +25,14 @@
 /datum/round_event_control/cyber_police/proc/generate_candidates()
 	mutation_candidates.Cut()
 
-	for(var/obj/machinery/quantum_server/server as anything in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
-		mutation_candidates += server.get_valid_domain_targets()
+	var/obj/machinery/quantum_server/server = locate(/obj/machinery/quantum_server) in SSmachines.get_all_machines(/obj/machinery/quantum_server)
+	if(isnull(server))
+		return
+
+	mutation_candidates += server.get_valid_domain_targets()
+
+	if(length(mutation_candidates))
+		server_ref = WEAKREF(server)
 
 /datum/round_event/ghost_role/cyber_police
 	minimum_required = 1
@@ -33,6 +41,10 @@
 
 /datum/round_event/ghost_role/cyber_police/spawn_role()
 	var/datum/round_event_control/cyber_police/cyber_control = control
+	var/obj/machinery/quantum_server/server = cyber_control.server_ref?.resolve()
+	if(isnull(server))
+		return MAP_ERROR
+
 	var/mob/living/mutation_target = pick(cyber_control.mutation_candidates)
 	if(isnull(mutation_target))
 		return MAP_ERROR
@@ -59,6 +71,8 @@
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/cyber_police))
 	player_mind.special_role = ROLE_CYBER_POLICE
 	player_mind.add_antag_datum(/datum/antagonist/cyber_police)
+
+	SEND_SIGNAL(server, COMSIG_BITRUNNER_THREAT_CREATED, new_agent)
 
 	playsound(new_agent, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(new_agent)] has been made into Cyber Police by an event.")

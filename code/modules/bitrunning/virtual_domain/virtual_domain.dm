@@ -25,10 +25,12 @@
 	var/id
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
 	var/reward_points = BITRUNNER_REWARD_MIN
+	/// The start time of the map. Used to calculate time taken
+	var/start_time
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
 	/// The safehouse to load into the map
-	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse
+	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/den
 
 /datum/map_template/virtual_domain/New()
 	if(!name && id)
@@ -36,6 +38,11 @@
 
 	mappath = "_maps/virtual_domains/" + filename
 	..(path = mappath)
+
+/// We apply this to the zlevel after it's loaded
+/datum/map_template/virtual_domain/base_map
+	keep_cached_map = TRUE
+	test_only = TRUE
 
 /turf/closed/indestructible/binary
 	name = "tear in the fabric of reality"

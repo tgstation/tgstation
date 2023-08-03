@@ -13,5 +13,7 @@
 	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunner_loot/encrypted)
 	loot = list(/obj/structure/closet/crate/secure/bitrunner_loot/encrypted)
+	health = 1300
+	maxHealth = 1300
 
 // You may be thinking, well, what about those mini-legions? They're not part of the created_atoms list

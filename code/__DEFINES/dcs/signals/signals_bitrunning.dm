@@ -25,3 +25,5 @@
 /// from /obj/machinery/quantum_server/shutdown() : (obj/machinery/quantum_server)
 #define COMSIG_BITRUNNER_SHUTDOWN_ALERT "bitrunner_shutdown"
 
+/// from /datum/antagonist/cyber_police/proc/notify() : (mob/living/threat)
+#define COMSIG_BITRUNNER_THREAT_CREATED "bitrunner_threat"

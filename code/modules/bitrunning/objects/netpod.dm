@@ -16,7 +16,9 @@
 	/// The linked quantum server
 	var/datum/weakref/server_ref
 	/// A player selected outfit by clicking the netpod
-	var/datum/outfit/netsuit = /datum/outfit/job/miner
+	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
+	/// The amount of brain damage done from force disconnects
+	var/disconnect_damage = 40
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
 	/// Cached mob actions, stops mobs from keeping abilities
@@ -35,7 +37,7 @@
 		COMSIG_MACHINERY_BROKEN,
 		COMSIG_MACHINERY_POWER_LOST,
 		),
-		PROC_REF(on_opened_or_destroyed),
+		PROC_REF(on_broken),
 	)
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_take_damage))
@@ -141,7 +143,7 @@
 
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
-		on_opened_or_destroyed()
+		unprotect_and_signal()
 		playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)
 		flick("[base_icon_state]_opening", src)
 	return ..()
@@ -170,6 +172,11 @@
 		return ..()
 
 	if(state_open || isnull(occupant))
+		return ..()
+
+	if(!state_open && machine_stat & (BROKEN | NOPOWER))
+		open_machine()
+		crowbar.play_tool_sound(src, 50)
 		return ..()
 
 	pryer.visible_message(span_danger("[pryer] starts prying open [src]!"), span_notice("You start to pry open [src]."))
@@ -271,7 +278,7 @@
 
 	mob_occupant.Paralyze(2 SECONDS)
 	mob_occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
-	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
+	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, disconnect_damage)
 	INVOKE_ASYNC(mob_occupant, TYPE_PROC_REF(/mob/living, emote), "scream")
 	to_chat(mob_occupant, span_danger("You've been forcefully disconnected from your avatar! Your thoughts feel scrambled!"))
 
@@ -354,9 +361,24 @@
 
 	for(var/path as anything in outfit_list)
 		var/datum/outfit/outfit = path
-		collection["outfits"] += list(list("path" = path, "name" = initial(outfit.name)))
+
+		var/outfit_name = initial(outfit.name)
+		if(findtext(outfit_name, "(") != 0 || findtext(outfit_name, "-") != 0) // No special variants please
+			continue
+
+		collection["outfits"] += list(list("path" = path, "name" = outfit_name))
 
 	return list(collection)
+
+/// Machine has been broken - handles signals and reverting sprites
+/obj/machinery/netpod/proc/on_broken(datum/source)
+	SIGNAL_HANDLER
+
+	if(!state_open)
+		open_machine()
+
+	if(occupant)
+		unprotect_and_signal()
 
 /obj/machinery/netpod/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
@@ -368,12 +390,7 @@
 	examine_text += span_infoplain("It is currently occupied by [occupant].")
 
 /// On unbuckle or break, make sure the occupant ref is null
-/obj/machinery/netpod/proc/on_opened_or_destroyed(datum/source)
-	SIGNAL_HANDLER
-
-	if(isnull(occupant))
-		return
-
+/obj/machinery/netpod/proc/unprotect_and_signal()
 	unprotect_occupant(occupant)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR, src)
 

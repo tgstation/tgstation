@@ -56,6 +56,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/railing,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -92,14 +93,16 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/obj/structure/railing,
+/obj/structure/closet,
+/obj/item/gun/ballistic/rocketlauncher/unrestricted,
+/obj/item/ammo_casing/rocket,
+/obj/item/ammo_casing/rocket,
+/obj/item/ammo_casing/rocket,
+/obj/item/energy_katana,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "H" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -115,7 +118,6 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/virtual_domain/safehouse)
 "O" = (
-/obj/structure/table,
 /obj/item/gun/energy/recharge/kinetic_accelerator{
 	pixel_x = -6;
 	pixel_y = 6
@@ -128,6 +130,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
+/obj/structure/closet,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain/safehouse)
 "P" = (
@@ -141,8 +144,12 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/obj/item/kirbyplants/random,
 /obj/structure/sign/departments/cargo/directional/south,
+/obj/structure/closet,
+/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
+/obj/item/ammo_box/magazine/mm712x82,
+/obj/item/ammo_box/magazine/sniper_rounds,
+/obj/item/gun/ballistic/rifle/sniper_rifle,
 /turf/open/floor/iron/dark,
 /area/virtual_domain/safehouse)
 "X" = (
