@@ -1389,7 +1389,7 @@
 	slowdown_inactive = 1.5
 	slowdown_active = 1
 	ui_theme = "hackerman"
-	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
+	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prototype)
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
 		/obj/item/t_scanner,
@@ -1717,7 +1717,7 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
-	activation_step_time = 0.4 SECONDS
+	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.2
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -1777,7 +1777,7 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0
 	slowdown_active = 0
-	activation_step_time = 0.1 SECONDS
+	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.01
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)

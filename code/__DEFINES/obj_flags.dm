@@ -77,8 +77,8 @@
 #define LARGE_WORN_ICON (1<<12)
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<13)
-/// prevents from placing on plasmaman helmet
-#define PLASMAMAN_HELMET_EXEMPT (1<<14)
+/// prevents from placing on plasmaman helmet or modsuit hat holder
+#define STACKABLE_HELMET_EXEMPT (1<<14)
 /// Prevents plasmamen from igniting when wearing this
 #define PLASMAMAN_PREVENT_IGNITION (1<<15)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
