@@ -163,6 +163,8 @@
 
 	///Bool for leg overload on/off
 	var/overclock_mode = FALSE
+	///Whether it is possible to toggle overclocking from the cabin
+	var/can_use_overclock = FALSE
 	///Speed and energy usage modifier for leg overload
 	var/overclock_coeff = 1.5
 	///Current leg actuator temperature. Increases when overloaded, decreases when not.
@@ -376,6 +378,8 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	if(enclosed)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal, VEHICLE_CONTROL_SETTINGS)
+	if(can_use_overclock)
+		initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overclock)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
@@ -506,20 +510,14 @@
 	if(!overclock_mode && overclock_temp > 0)
 		overclock_temp -= seconds_per_tick
 		return
-	overclock_temp += seconds_per_tick
+	overclock_temp = min(overclock_temp + seconds_per_tick, overclock_temp_danger * 2)
 	if(overclock_temp < overclock_temp_danger)
 		return
-	var/damage_chance = overclock_temp / (overclock_temp_danger * 2)
-	if(!(internal_damage & MECHA_INT_SHORT_CIRCUIT) && SPT_PROB(damage_chance, seconds_per_tick))
-		set_internal_damage(MECHA_INT_SHORT_CIRCUIT)
-		return
-	else if(!(internal_damage & MECHA_INT_FIRE) && SPT_PROB(damage_chance, seconds_per_tick))
-		set_internal_damage(MECHA_INT_FIRE)
-		return
-	else
-		for(var/mob/living/occupant as anything in occupants)
-			if(SPT_PROB(damage_chance, seconds_per_tick))
-				shock(occupant)
+	var/damage_chance = 100 * ((overclock_temp - overclock_temp_danger) / (overclock_temp_danger * 2))
+	if(SPT_PROB(damage_chance, seconds_per_tick))
+		do_sparks(5, TRUE, src)
+		try_deal_internal_damage(damage_chance)
+		take_damage(seconds_per_tick, BURN, 0, 0)
 
 /obj/vehicle/sealed/mecha/proc/process_internal_damage_effects(seconds_per_tick)
 	if(internal_damage & MECHA_INT_FIRE)
@@ -541,7 +539,7 @@
 
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT && get_charge())
 		spark_system.start()
-		cell.charge -= min(10 * seconds_per_tick, cell.charge)
+		use_power(min(10 * seconds_per_tick, cell.charge))
 		cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
 
 /obj/vehicle/sealed/mecha/proc/process_cabin_air(seconds_per_tick)

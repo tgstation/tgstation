@@ -15,6 +15,10 @@ export type MainData = {
   internal_damage_keys: string[];
   mechflag_keys: string[];
 
+  can_use_overclock: boolean;
+  overclock_mode: boolean;
+  overclock_temp_percentage: number;
+
   one_access: boolean;
   regions: string[];
   accesses: string[];

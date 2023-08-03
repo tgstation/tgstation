@@ -80,6 +80,10 @@
 	data["mecha_flags"] = mecha_flags
 	data["internal_damage"] = internal_damage
 
+	data["can_use_overclock"] = can_use_overclock
+	data["overclock_mode"] = overclock_mode
+	data["overclock_temp_percentage"] = overclock_temp / overclock_temp_danger
+
 	data["dna_lock"] = dna_lock
 
 	data["one_access"] = one_access
@@ -201,6 +205,11 @@
 			set_cabin_seal(usr, !cabin_sealed)
 		if("toggle_id_lock")
 			mecha_flags ^= ID_LOCK_ON
+		if("toggle_overclock")
+			toggle_overclock()
+			var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in usr.actions
+			action.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
+			action.build_all_button_icons()
 		if("repair_int_damage")
 			ui.close() //if doing this you're likely want to watch for bad people so close the UI
 			try_repair_int_damage(usr, params["flag"])

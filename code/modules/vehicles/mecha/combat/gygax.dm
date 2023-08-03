@@ -22,6 +22,7 @@
 		MECHA_ARMOR = 2,
 	)
 	step_energy_drain = 3
+	can_use_overclock = TRUE
 
 /datum/armor/mecha_gygax
 	melee = 25
@@ -30,22 +31,6 @@
 	energy = 15
 	fire = 100
 	acid = 100
-
-/obj/vehicle/sealed/mecha/gygax/generate_actions()
-	. = ..()
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overload_mode)
-
-/datum/action/vehicle/sealed/mecha/mech_overload_mode
-	name = "Toggle overclocking"
-	button_icon_state = "mech_overload_off"
-
-/datum/action/vehicle/sealed/mecha/mech_overload_mode/Trigger(trigger_flags, forced_state = null)
-	if(!owner || !chassis || !(owner in chassis.occupants))
-		return
-	chassis.toggle_overclock(forced_state)
-	chassis.balloon_alert(owner, chassis.overclock_mode ? "started overclocking" : "stopped overclocking")
-	button_icon_state = "mech_overload_[chassis.overclock_mode ? "on" : "off"]"
-	build_all_button_icons()
 
 /obj/vehicle/sealed/mecha/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."

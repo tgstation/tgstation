@@ -26,9 +26,30 @@ export const AlertPane = (props, context) => {
     servo_rating,
     scanmod_rating,
     capacitor_rating,
+    can_use_overclock,
+    overclock_mode,
+    overclock_temp_percentage,
   } = data;
   return (
-    <Section title="Status">
+    <Section
+      title="Status"
+      buttons={
+        (overclock_mode || can_use_overclock) && (
+          <Button
+            icon="forward"
+            onClick={() => !!can_use_overclock && act('toggle_overclock')}
+            color={
+              overclock_mode &&
+              (overclock_temp_percentage > 1
+                ? 'bad'
+                : overclock_temp_percentage > 0.5
+                  ? 'average'
+                  : 'good')
+            }>
+            {overclock_mode ? 'Overclocking' : 'Overclock'}
+          </Button>
+        )
+      }>
       <Stack vertical>
         {!scanmod_rating ? (
           <Box height={8}>
