@@ -6,7 +6,7 @@
 	return ..() || (include_stamcrit && HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 
 /// SKYRAPTOR EDITS IN HERE: Majorly reworked
-/mob/living/carbon/proc/enter_stamcrit()
+/mob/living/carbon/stamina_stun()
 	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Already in stamcrit
 		return
 	if(check_stun_immunity(CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))
