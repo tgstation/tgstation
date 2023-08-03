@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - server: "Added a preventative measure to prevent calling both TGSHardRestart and TGSReboot, as well as potentially invoking sensitive procs that are only meant to be called once."
