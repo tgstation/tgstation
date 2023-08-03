@@ -186,8 +186,6 @@
 		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 
-	if(!(user in (viewers(7, target)))) //check if we can see the target (xray and thermals can give us vision through obstacles)
-		return
 	if(!(user in (view(7, target)))) //check if we are visible from the target's PoV
 		if(!crystal_lens)
 			to_chat(user, span_warning("You can't point with [src] through walls!"))
