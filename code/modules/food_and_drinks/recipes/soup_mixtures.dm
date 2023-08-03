@@ -180,6 +180,10 @@
 		else
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
+	// Any resulting_food_paths get handled here
+	if(resulting_food_path)
+		new resulting_food_path(get_turf(pot))
+
 	// Anything left in the ingredient list will get dumped out
 	pot.dump_ingredients(get_turf(pot))
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
@@ -1767,7 +1771,6 @@
 	required_catalysts = list(
 		/datum/reagent/water = 30
 	)
-	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/spaghetti/boilednoodles
 
 // Dashi Broth
@@ -2156,5 +2159,4 @@
 	required_ingredients = list(
 		/obj/item/food/fishmeat/carp = 1
 	)
-	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/volt_fish

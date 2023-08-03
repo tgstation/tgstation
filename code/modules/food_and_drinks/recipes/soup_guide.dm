@@ -20,7 +20,7 @@
 	if(!istype(chemical_reaction))
 		return
 	for(var/obj/item/ingredienttype as anything in chemical_reaction.required_ingredients)
-		reqs[ingredienttype] = chemical_reaction.required_ingredients[ingredienttype]
+		LAZYSET(reqs, ingredienttype, chemical_reaction.required_ingredients[ingredienttype])
 
 	if(ispath(result, /datum/reagent/consumable))
 		var/datum/reagent/consumable/soup_result = result
