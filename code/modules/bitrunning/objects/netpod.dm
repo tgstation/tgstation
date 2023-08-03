@@ -419,7 +419,7 @@
 
 /// Removes the in_netpod state
 /obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)
-	target.remove_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
+	target?.remove_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
 	update_use_power(IDLE_POWER_USE)
 
 /// Resolves a path to an outfit.
