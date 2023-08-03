@@ -26,8 +26,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(!works_from_distance && !user.Adjacent(attacked_object))
 		return
 
-	part_replace_action(attacked_object, user)
-	return TRUE
+	return part_replace_action(attacked_object, user)
 
 /obj/item/storage/part_replacer/proc/part_replace_action(obj/attacked_object, mob/living/user)
 	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine) && !istype(attacked_object, /obj/structure/frame/computer))
@@ -39,9 +38,9 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		if(!attacked_machinery.component_parts)
 			return FALSE
 
+		attacked_machinery.exchange_parts(user, src)
 		if(works_from_distance)
 			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
-			attacked_machinery.exchange_parts(user, src)
 		return TRUE
 
 	var/obj/structure/frame/attacked_frame = attacked_object
@@ -56,7 +55,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
-
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)

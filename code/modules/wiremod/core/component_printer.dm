@@ -304,16 +304,15 @@
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "module-fab-idle"
 	circuit = /obj/item/circuitboard/machine/module_duplicator
-
-	/// The internal material bus
-	var/datum/component/remote_materials/materials
-
 	density = TRUE
 
+	///The internal material bus
+	var/datum/component/remote_materials/materials
+	///List of designs scanned and saved
 	var/list/scanned_designs = list()
-
-	var/cost_per_component = 1000
-
+	///Constant material cost per component
+	var/cost_per_component = SHEET_MATERIAL_AMOUNT / 10
+	///Cost efficiency of this machine
 	var/efficiency_coeff = 1
 
 /obj/machinery/module_duplicator/Initialize(mapload)
