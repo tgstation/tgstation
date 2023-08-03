@@ -320,7 +320,7 @@ const SendToAllSection = (_: any, context: any) => {
   );
 };
 
-export const NoIDDimmer = () => {
+const NoIDDimmer = () => {
   return (
     <Dimmer>
       <Stack align="baseline" vertical>
