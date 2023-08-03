@@ -93,7 +93,7 @@
 	var/datum/worn_feature_offset/worn_face_offset
 
 /obj/item/bodypart/head/Destroy()
-	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
+	QDEL_NULL(brainmob) //order is sensitive, see warning in Exited() below
 	QDEL_NULL(brain)
 	QDEL_NULL(eyes)
 	QDEL_NULL(ears)

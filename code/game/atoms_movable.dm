@@ -194,7 +194,6 @@
 		if(((can_atmos_pass == ATMOS_PASS_DENSITY && density) || can_atmos_pass == ATMOS_PASS_NO) && isturf(loc))
 			can_atmos_pass = ATMOS_PASS_YES
 			air_update_turf(TRUE, FALSE)
-		loc.handle_atom_del(src)
 
 	if(opacity)
 		RemoveElement(/datum/element/light_blocking)

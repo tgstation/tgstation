@@ -199,14 +199,7 @@
 				if(istype(new_machine, /obj/machinery/computer))
 					var/obj/machinery/computer/new_computer = new_machine
 
-					// Machines will init with a set of default components.
-					// Remove references to the components so we don't trigger Exited so it doesn't deconstruct, then qdel.
-					// Finally, replace new machine's parts with this frame's parts.
-					if(new_computer.circuit)
-						QDEL_NULL(new_computer.circuit)
-					for(var/old_part in new_computer.component_parts)
-						new_computer.component_parts -= old_part
-						qdel(old_part)
+					new_machine.clear_components()
 
 					// Set anchor state and move the frame's parts over to the new machine.
 					// Then refresh parts and call on_construction().

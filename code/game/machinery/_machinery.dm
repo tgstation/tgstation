@@ -198,14 +198,7 @@
 	end_processing()
 	dump_inventory_contents()
 
-	if (!isnull(component_parts))
-		// Don't delete the stock part singletons
-		for (var/atom/atom_part in component_parts)
-			qdel(atom_part)
-		component_parts.Cut()
-		component_parts = null
-
-	QDEL_NULL(circuit)
+	clear_components()
 	unset_static_power()
 	return ..()
 
@@ -892,6 +885,20 @@
 		component_parts -= gone
 		// It would be unusual for a component_part to be qdel'd ordinarily.
 		deconstruct(FALSE)
+
+/**
+ * This should be called before mass qdeling components to make space for replacements.
+ * If not done, things will go awry as Exited() destroys the machine when it detects
+ * even a single component exiting the atom.
+ */
+/obj/machinery/proc/clear_components()
+	if(!component_parts)
+		return
+	var/list/old_components = component_parts
+	circuit = null
+	component_parts = null
+	for(var/old_part in old_components)
+		qdel(old_part)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
