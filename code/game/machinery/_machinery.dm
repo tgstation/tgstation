@@ -897,8 +897,8 @@
 	var/list/old_components = component_parts
 	circuit = null
 	component_parts = null
-	for(var/old_part in old_components)
-		qdel(old_part)
+	for(var/atom/atom_part in old_components)
+		qdel(atom_part)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
