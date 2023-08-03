@@ -30,4 +30,4 @@
 
 /mob/living/basic/heretic_summon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/generic))
+	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
