@@ -92,30 +92,34 @@
  * * imaginary_friend_owner - The living mob that owns the imaginary friend.
  * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on these prefs.
  */
-/mob/camera/imaginary_friend/Initialize(mapload, mob/living/imaginary_friend_owner, datum/preferences/appearance_from_prefs = null)
+/mob/camera/imaginary_friend/Initialize(mapload)
 	. = ..()
-
-	owner = imaginary_friend_owner
-
-	if(appearance_from_prefs)
-		INVOKE_ASYNC(src, PROC_REF(setup_friend_from_prefs), appearance_from_prefs)
-	else
-		INVOKE_ASYNC(src, PROC_REF(setup_friend))
-
 	join = new
 	join.Grant(src)
 	hide = new
 	hide.Grant(src)
 
+/// Links this imaginary friend to the provided mob
+/mob/camera/imaginary_friend/proc/attach_to_owner(mob/living/imaginary_friend_owner)
+	owner = imaginary_friend_owner
 	if(!owner.imaginary_group)
 		owner.imaginary_group = list(owner)
 	owner.imaginary_group += src
 
+/// Copies appearance from passed player prefs, or randomises them if none are provided
+/mob/camera/imaginary_friend/proc/setup_appearance(datum/preferences/appearance_from_prefs = null)
+	if(appearance_from_prefs)
+		INVOKE_ASYNC(src, PROC_REF(setup_friend_from_prefs), appearance_from_prefs)
+	else
+		INVOKE_ASYNC(src, PROC_REF(setup_friend))
+
+/// Randomise friend name and appearance
 /mob/camera/imaginary_friend/proc/setup_friend()
 	var/gender = pick(MALE, FEMALE)
 	real_name = random_unique_name(gender)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
+	Show()
 
 /**
  * Sets up the imaginary friend's name and look using a set of datum preferences.
@@ -146,13 +150,11 @@
 
 	if(istype(appearance_job, /datum/job/ai))
 		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
-		return
-
-	if(istype(appearance_job, /datum/job/cyborg))
+	else if(istype(appearance_job, /datum/job/cyborg))
 		human_image = icon('icons/mob/silicon/robots.dmi', icon_state = "robot")
-		return
-
-	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
+	else
+		human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
+	Show()
 
 /// Returns all member clients of the imaginary_group
 /mob/camera/imaginary_friend/proc/group_clients()
@@ -163,7 +165,7 @@
 	return group_clients
 
 /mob/camera/imaginary_friend/proc/Show()
-	if(!client) //nobody home
+	if(!client || !owner) //nobody home
 		return
 
 	var/list/friend_clients = group_clients() - src.client
