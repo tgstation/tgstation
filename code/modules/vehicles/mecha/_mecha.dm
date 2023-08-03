@@ -39,6 +39,8 @@
 	var/step_energy_drain = 8
 	///How much energy we drain each time we mechpunch someone
 	var/melee_energy_drain = 15
+	///Power we use to have the lights on
+	var/light_energy_drain = 2
 	///Modifiers for directional damage reduction
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
@@ -498,7 +500,7 @@
 	if(length(occupants))
 		process_occupants(seconds_per_tick)
 	if(mecha_flags & LIGHTS_ON)
-		use_power(seconds_per_tick / (capacitor?.rating || 1))
+		use_power(light_energy_drain * seconds_per_tick)
 
 /obj/vehicle/sealed/mecha/proc/process_overclock_effects(seconds_per_tick)
 	if(!overclock_mode && overclock_temp > 0)
@@ -812,3 +814,12 @@
 		step_energy_drain = 2 * initial(step_energy_drain)
 	if(overclock_mode)
 		step_energy_drain *= overclock_coeff
+
+	if(capacitor)
+		phasing_energy_drain = initial(phasing_energy_drain) / capacitor.rating
+		melee_energy_drain = initial(melee_energy_drain) / capacitor.rating
+		light_energy_drain = initial(light_energy_drain) / capacitor.rating
+	else
+		phasing_energy_drain = initial(phasing_energy_drain)
+		melee_energy_drain = initial(melee_energy_drain)
+		light_energy_drain = initial(light_energy_drain)
