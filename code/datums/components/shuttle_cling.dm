@@ -30,7 +30,7 @@
 /datum/component/shuttle_cling/Initialize(direction)
 	. = ..()
 
-	if(!ismovable(parent))
+	if(!ismovable(parent) || QDELETED(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.direction = direction
