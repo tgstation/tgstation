@@ -38,7 +38,7 @@
 
 /datum/crafting_recipe/food/reaction/New()
 	. = ..()
-	if(!reaction)
+	if(!ispath(reaction, /datum/chemical_reaction))
 		return
 
 	if(length(GLOB.chemical_reactions_list))
