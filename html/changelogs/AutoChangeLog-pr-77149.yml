@@ -1,5 +1,0 @@
-author: "tommysalami3"
-delete-after: True
-changes:
-  - rscadd: "Adds boss music functionality."
-  - sound: "Adds hierophants boss track, tweaks hierophant boss noises."

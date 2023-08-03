@@ -92,3 +92,40 @@
   timothymtorres:
   - rscadd: Add a new 'Hall of Fame' emergency shuttle.  It even comes with it's own
       nifty photo album.
+2023-08-03:
+  Fikou:
+  - balance: hat stabilizer module can now hold what plasmaman helmets can hold
+  - qol: kinesis module can be stopped without launching an object with right click
+  - balance: kinesis module stuns last until the kinesis stops
+  - rscadd: admin suit has a version of kinesis that can pick up anything at any range
+      and can be configured to make grabbed mobs phase through walls :)
+  Ghommie:
+  - bugfix: BoH bombing now correctly requires two bags to be done.
+  Hatterhat:
+  - balance: The strong-arm implant's punches now respect armor.
+  - spellcheck: While using an arm with the strong-arm implant to punch people, you
+      no longer kick them; your implant's in your arm, after all!
+  IndieanaJones:
+  - balance: Xenomorph neurotoxin has been buffed (50 -> 65 stamina damage)
+  Jacquerel:
+  - bugfix: Your pAI card won't pop out of your PDA onto the floor alongside its hologram
+      if it enters hologram form while inside a PDA.
+  Rhials:
+  - rscadd: Fugitive shuttles now have a "Fugitive Tracker" machine, which gives a
+      readout on the location of a random fugitive on a 40 second cooldown.
+  - spellcheck: Renames the fugitive pinpointer to the bounty shuttle pinpointer.
+  SpaceVampire:
+  - bugfix: Guard Spiders are no longer unable to attack after using Web Effigy
+  SyncIt21:
+  - bugfix: bluespace RPED can be put in bags again without dragging them into their
+      storage slots
+  - bugfix: normal RPED exchanges parts & displays part info again
+  Time-Green:
+  - qol: The random parallax layer moves more slowly, giving a more deep feel
+  distributivgesetz:
+  - bugfix: Fixes holoparasites not dusting their owners on death sometimes.
+  timothymtorres:
+  - bugfix: Fix ethereal crystal destruction not removing light
+  tommysalami3:
+  - rscadd: Adds boss music functionality.
+  - sound: Adds hierophants boss track, tweaks hierophant boss noises.

@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Your pAI card won't pop out of your PDA onto the floor alongside its hologram if it enters hologram form while inside a PDA."
