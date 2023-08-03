@@ -782,33 +782,27 @@
 	inhand_icon_state = null
 	worn_icon_state = "cummerbund"
 
-/obj/item/storage/belt/sabre
-	name = "sabre sheath"
-	desc = "An ornate sheath designed to hold an officer's blade."
+/obj/item/storage/belt/sheath
+	name = "sheath"
+	desc = "A debug sheath. You shouldn't have this."
 	icon_state = "sheath"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
-	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/sabre/Initialize(mapload)
+/obj/item/storage/belt/sheath/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(
-		list(
-			/obj/item/melee/sabre,
-		)
-	)
 
-/obj/item/storage/belt/sabre/examine(mob/user)
+/obj/item/storage/belt/sheath/examine(mob/user)
 	. = ..()
 	if(length(contents))
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
-/obj/item/storage/belt/sabre/AltClick(mob/user)
+/obj/item/storage/belt/sheath/AltClick(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))
@@ -819,17 +813,42 @@
 	else
 		balloon_alert(user, "it's empty!")
 
-/obj/item/storage/belt/sabre/update_icon_state()
+/obj/item/storage/belt/sheath/update_icon_state()
 	icon_state = initial(inhand_icon_state)
 	inhand_icon_state = initial(inhand_icon_state)
 	worn_icon_state = initial(worn_icon_state)
 	if(contents.len)
-		icon_state += "-sabre"
-		inhand_icon_state += "-sabre"
-		worn_icon_state += "-sabre"
+		icon_state += "-handle"
+		inhand_icon_state += "-handle"
+		worn_icon_state += "-handle"
 	return ..()
 
-/obj/item/storage/belt/sabre/PopulateContents()
+/obj/item/storage/belt/sheath/Entered(datum/thing_entered_into_this)
+	. = ..()
+	if (isitem(thing_entered_into_this))
+		playsound(thing_entered_into_this, 'sound/items/unsheath.ogg', 25, TRUE)
+
+/obj/item/storage/belt/sheath/Exited(datum/thing_exited_out_of_this)
+	. = ..()
+	if (isitem(thing_exited_out_of_this))
+		playsound(thing_exited_out_of_this, 'sound/items/sheath.ogg', 25, TRUE)
+
+/obj/item/storage/belt/sheath/sabre
+	name = "sabre sheath"
+	desc = "An ornate sheath designed to hold an officer's blade."
+	icon_state = "sheath"
+	inhand_icon_state = "sheath"
+	worn_icon_state = "sheath"
+
+/obj/item/storage/belt/sheath/sabre/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(
+		list(
+			/obj/item/melee/sabre,
+		)
+	)
+
+/obj/item/storage/belt/sheath/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
 	update_appearance()
 

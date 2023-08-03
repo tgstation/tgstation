@@ -140,11 +140,6 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/nullrod/claymore/on_exit_storage(datum/storage/container)
-	var/obj/item/storage/belt/sheath/sword = container.real_location?.resolve()
-	if(istype(sword))
-		playsound(sword, 'sound/items/unsheath.ogg', 25, TRUE)
-
 /obj/item/nullrod/claymore/darkblade
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"

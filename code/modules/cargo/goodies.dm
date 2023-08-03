@@ -275,5 +275,5 @@
 /datum/supply_pack/goody/sword
 	name = "Authentic Sword and Sheath"
 	desc = "Contains one sword with complimentary sheath. These swords were masterfully™ forged by the dwarves of Ziril Zuntîr. Contents are for display purposes only."
-	cost = PAYCHECK_CREW * 15
-	contains = list(/obj/item/storage/belt/sheath/full)
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/storage/belt/sheath/scabard/full)

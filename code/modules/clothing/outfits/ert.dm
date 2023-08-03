@@ -420,7 +420,7 @@
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/storage/box/fireworks = 3,
 	)
-	belt = /obj/item/storage/belt/sabre
+	belt = /obj/item/storage/belt/sheath/sabre
 	head = /obj/item/clothing/head/hats/coordinator
 	l_pocket = /obj/item/knife/kitchen
 	l_hand = /obj/item/toy/balloon
