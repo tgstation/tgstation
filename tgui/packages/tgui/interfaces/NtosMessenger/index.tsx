@@ -205,21 +205,19 @@ const ContactsScreen = (_: any, context: any) => {
         </Section>
       </Stack.Item>
       {filteredChatButtons.length > 0 && (
-        <Stack.Item>
-          <Stack fill vertical>
-            <Stack vertical>
-              <Section fill>
-                <Icon name="comments" mr={1} />
-                Previous Messages
-              </Section>
-            </Stack>
-            <Section maxHeight={20} scrollable mt={1}>
+        <Stack.Item grow={1}>
+          <Stack vertical fill>
+            <Section>
+              <Icon name="comments" mr={1} />
+              Previous Messages
+            </Section>
+            <Section fill scrollable>
               <Stack vertical>{filteredChatButtons}</Stack>
             </Section>
           </Stack>
         </Stack.Item>
       )}
-      <Stack.Item grow>
+      <Stack.Item grow={2}>
         <Stack vertical fill>
           <Section>
             <Stack>
