@@ -9,7 +9,6 @@
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_gygax
 	max_temperature = 25000
-	leg_overload_coeff = 80
 	force = 25
 	destruction_sleep_duration = 40
 	exit_delay = 40
@@ -37,27 +36,15 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overload_mode)
 
 /datum/action/vehicle/sealed/mecha/mech_overload_mode
-	name = "Toggle leg actuators overload"
+	name = "Toggle overclocking"
 	button_icon_state = "mech_overload_off"
 
 /datum/action/vehicle/sealed/mecha/mech_overload_mode/Trigger(trigger_flags, forced_state = null)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
-	if(!isnull(forced_state))
-		chassis.leg_overload_mode = forced_state
-	else
-		chassis.leg_overload_mode = !chassis.leg_overload_mode
-	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
-	chassis.log_message("Toggled leg actuators overload.", LOG_MECHA)
-	if(chassis.leg_overload_mode)
-		chassis.speed_mod = min(chassis.movedelay-1, round(chassis.movedelay * 0.5))
-		chassis.movedelay -= chassis.speed_mod
-		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
-		chassis.balloon_alert(owner,"leg actuators overloaded")
-	else
-		chassis.movedelay += chassis.speed_mod
-		chassis.step_energy_drain = chassis.normal_step_energy_drain
-		chassis.balloon_alert(owner, "you disable the overload")
+	chassis.toggle_overclock(forced_state)
+	chassis.balloon_alert(owner, chassis.overclock_mode ? "started overclocking" : "stopped overclocking")
+	button_icon_state = "mech_overload_[chassis.overclock_mode ? "on" : "off"]"
 	build_all_button_icons()
 
 /obj/vehicle/sealed/mecha/gygax/dark
@@ -69,7 +56,8 @@
 	max_integrity = 300
 	armor_type = /datum/armor/gygax_dark
 	max_temperature = 35000
-	leg_overload_coeff = 70
+	overclock_coeff = 2
+	overclock_temp_danger = 20
 	force = 30
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark

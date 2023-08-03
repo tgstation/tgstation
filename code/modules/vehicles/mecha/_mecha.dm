@@ -35,14 +35,10 @@
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
-	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
-	var/normal_step_energy_drain = 10
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
-	var/step_energy_drain = 10
+	var/step_energy_drain = 8
 	///How much energy we drain each time we mechpunch someone
 	var/melee_energy_drain = 15
-	///The minimum amount of energy charge consumed by leg overload
-	var/overload_step_energy_drain_min = 100
 	///Modifiers for directional damage reduction
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
@@ -164,11 +160,13 @@
 	var/defense_mode = FALSE
 
 	///Bool for leg overload on/off
-	var/leg_overload_mode = FALSE
-	///Energy use modifier for leg overload
-	var/leg_overload_coeff = 100
-	///stores value that we will add and remove from the mecha when toggling leg overload
-	var/speed_mod = 0
+	var/overclock_mode = FALSE
+	///Speed and energy usage modifier for leg overload
+	var/overclock_coeff = 1.5
+	///Current leg actuator temperature. Increases when overloaded, decreases when not.
+	var/overclock_temp = 0
+	///Temperature threshold at which actuators may start causing internal damage
+	var/overclock_temp_danger = 15
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
@@ -230,6 +228,7 @@
 	add_scanmod()
 	add_capacitor()
 	add_servo()
+	update_part_values()
 	update_access()
 	set_wires(new /datum/wires/mecha(src))
 	START_PROCESSING(SSobj, src)
@@ -421,17 +420,15 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
-	if(servo)
-		normal_step_energy_drain = 20 - (5 * servo.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
-		step_energy_drain = normal_step_energy_drain
-	else
-		normal_step_energy_drain = 500
-		step_energy_drain = normal_step_energy_drain
+	update_energy_drain()
 
 	if(capacitor)
 		var/datum/armor/stock_armor = get_armor_by_type(armor_type)
 		var/initial_energy = stock_armor.get_rating(ENERGY)
 		set_armor_rating(ENERGY, initial_energy + (capacitor.rating * 5))
+		overclock_temp_danger = initial(overclock_temp_danger) * capacitor.rating
+	else
+		overclock_temp_danger = initial(overclock_temp_danger)
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
@@ -443,7 +440,7 @@
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(mecha_flags & PANEL_OPEN)
 		if(servo)
-			. += span_notice("Micro-servos reduce movement power usage by [round((servo.rating - 1) / 3) * 100]%")
+			. += span_notice("Micro-servos reduce movement power usage by [100 - round(100 / servo.rating)]%")
 		else
 			. += span_warning("It's missing micro-servo.")
 		if(capacitor)
@@ -492,6 +489,8 @@
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(seconds_per_tick)
+	if(overclock_mode || overclock_temp > 0)
+		process_overclock_effects(seconds_per_tick)
 	if(internal_damage)
 		process_internal_damage_effects(seconds_per_tick)
 	if(cabin_sealed)
@@ -500,6 +499,25 @@
 		process_occupants(seconds_per_tick)
 	if(mecha_flags & LIGHTS_ON)
 		use_power(2*seconds_per_tick)
+
+/obj/vehicle/sealed/mecha/proc/process_overclock_effects(seconds_per_tick)
+	if(!overclock_mode && overclock_temp > 0)
+		overclock_temp -= seconds_per_tick
+	else if(overclock_mode)
+		overclock_temp += seconds_per_tick
+		if(overclock_temp < overclock_temp_danger)
+			return
+		var/damage_chance = overclock_temp / (overclock_temp_danger * 2)
+		if(!(internal_damage & MECHA_INT_SHORT_CIRCUIT) && SPT_PROB(damage_chance, seconds_per_tick))
+			set_internal_damage(MECHA_INT_SHORT_CIRCUIT)
+			return
+		else if(!(internal_damage & MECHA_INT_FIRE) && SPT_PROB(damage_chance, seconds_per_tick))
+			set_internal_damage(MECHA_INT_FIRE)
+			return
+		else
+			for(var/mob/living/occupant as anything in occupants)
+				if(SPT_PROB(damage_chance, seconds_per_tick))
+					shock(occupant)
 
 /obj/vehicle/sealed/mecha/proc/process_internal_damage_effects(seconds_per_tick)
 	if(internal_damage & MECHA_INT_FIRE)
@@ -768,3 +786,29 @@
 		return FALSE
 	do_sparks(5, TRUE, src)
 	return electrocute_mob(user, cell, src, 0.7, TRUE)
+
+/// Toggle mech overclock with a button or by hacking
+/obj/vehicle/sealed/mecha/proc/toggle_overclock(forced_state = null)
+	if(!isnull(forced_state))
+		if(overclock_mode == forced_state)
+			return
+		overclock_mode = forced_state
+	else
+		overclock_mode = !overclock_mode
+	log_message("Toggled overclocking.", LOG_MECHA)
+	if(overclock_mode)
+		movedelay = movedelay / overclock_coeff
+		visible_message(span_notice("[src] starts heating up, making humming sounds."))
+	else
+		movedelay = initial(movedelay)
+		visible_message(span_notice("[src] cools down and the humming stops."))
+	update_energy_drain()
+
+/// Update the energy drain according to parts and status
+/obj/vehicle/sealed/mecha/proc/update_energy_drain()
+	if(servo)
+		step_energy_drain = initial(step_energy_drain) / servo.rating
+	else
+		step_energy_drain = 2 * initial(step_energy_drain)
+	if(overclock_mode)
+		step_energy_drain *= overclock_coeff
