@@ -852,6 +852,59 @@
 	new /obj/item/melee/sabre(src)
 	update_appearance()
 
+/obj/item/storage/belt/sheath/scabard
+	name = "scabard"
+	desc = "A leather sheath meant to hold a variety of swords."
+	icon_state = "sheath_plain"
+	inhand_icon_state = "sheath_plain"
+	worn_icon_state = "sheath_plain"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/sheath/scabard/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(
+		list(
+			/obj/item/melee/sword,
+			/obj/item/melee/sword/gold,
+			/obj/item/melee/sword/rust,
+			/obj/item/melee/sword/rust/gold,
+			/obj/item/melee/sword/rust/claymore,
+			/obj/item/melee/sword/rust/claymoregold,
+			/obj/item/melee/sword/rust/cultblade,
+			/obj/item/claymore,
+			/obj/item/claymore/weak,
+			/obj/item/claymore/weak/ceremonial,
+			/obj/item/nullrod/claymore,
+			/obj/item/nullrod/claymore/glowing,
+			/obj/item/nullrod/claymore/darkblade,
+			/obj/item/melee/sword/claymore,
+			/obj/item/melee/sword/claymore/darkblade,
+			/obj/item/melee/cultblade,
+			/obj/item/melee/sword/reforged,
+			/obj/item/melee/sword/reforged/shitty,
+			/obj/item/melee/moonlight_greatsword,
+		), generate_can_hold_subtypes = FALSE
+	)
+
+/obj/item/storage/belt/sheath/scabard/full
+	var/swordtype = list(/obj/item/melee/sword = 20,
+		/obj/item/melee/sword/gold = 20,
+		/obj/item/melee/sword/rust = 160,
+		/obj/item/melee/sword/rust/gold = 160,
+		/obj/item/melee/sword/rust/claymore = 160,
+		/obj/item/melee/sword/rust/claymoregold = 160,
+		/obj/item/melee/sword/rust/cultblade = 160,
+		/obj/item/claymore/weak/ceremonial = 60,
+		/obj/item/melee/sword/claymore = 40,
+		/obj/item/melee/sword/claymore/darkblade = 40,
+		/obj/item/melee/sword/reforged = 9,
+		/obj/item/melee/sword/reforged/shitty = 1,)
+
+/obj/item/storage/belt/sheath/scabard/full/PopulateContents()
+	var/typepath = pick_weight(swordtype)
+	new typepath(src)
+	update_appearance()
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
