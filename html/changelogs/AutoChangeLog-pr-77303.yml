@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Fixes formatting for derelict and syndicate drone job names. They should no longer tell you they're \"the Ghost Role\" when spawning as them."
