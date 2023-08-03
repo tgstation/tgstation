@@ -67,7 +67,7 @@ export const NtosMessenger = (props, context) => {
   );
 };
 
-const ContactsScreen = (_: any, context: any) => {
+const ContactsScreen = (props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
   const {
     owner,
