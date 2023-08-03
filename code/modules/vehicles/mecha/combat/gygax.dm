@@ -21,7 +21,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 2,
 	)
-	step_energy_drain = 3
+	step_energy_drain = 4
 	can_use_overclock = TRUE
 
 /datum/armor/mecha_gygax

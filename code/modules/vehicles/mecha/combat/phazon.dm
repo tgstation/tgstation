@@ -4,7 +4,7 @@
 	icon_state = "phazon"
 	base_icon_state = "phazon"
 	movedelay = 2
-	step_energy_drain = 3
+	step_energy_drain = 4
 	max_integrity = 200
 	armor_type = /datum/armor/mecha_phazon
 	max_temperature = 25000

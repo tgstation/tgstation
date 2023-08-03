@@ -21,7 +21,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	step_energy_drain = 3
+	step_energy_drain = 4
 	color = "#87878715"
 
 /datum/armor/mecha_reticence
