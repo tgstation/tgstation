@@ -1257,6 +1257,7 @@
 		"dna_disk",
 		"dnascanner",
 		"scan_console",
+		"dnainfuser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
