@@ -45,6 +45,20 @@
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser", "green_laser", "blue_laser", "purple_laser")
 
+/obj/item/laser_pointer/Destroy(force)
+	if(crystal_lens)
+		QDEL_NULL(crystal_lens)
+	if(diode)
+		QDEL_NULL(diode)
+	return ..()
+
+/obj/item/laser_pointer/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == crystal_lens)
+		crystal_lens = null
+	if(gone == diode)
+		diode = null
+
 /obj/item/laser_pointer/upgraded/Initialize(mapload)
 	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
@@ -270,7 +284,7 @@
 	icon_state = "pointer_[pointer_icon_state]"
 
 	//setup pointer blip
-	var/mutable_appearance/laser = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', pointer_icon_state, 10)
+	var/mutable_appearance/laser = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', pointer_icon_state)
 	var/list/modifiers = params2list(params)
 	if(modifiers)
 		if(LAZYACCESS(modifiers, ICON_X))
@@ -297,7 +311,7 @@
 			recharge_locked = TRUE
 
 	//flash a pointer blip at the target
-	targloc.flick_overlay_view(laser, 1 SECONDS)
+	target.flick_overlay_view(laser, 1 SECONDS)
 	//reset pointer sprite
 	icon_state = "pointer"
 
