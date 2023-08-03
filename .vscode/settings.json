@@ -32,7 +32,7 @@
 	},
 	"[typescriptreact]": {
 		"editor.rulers": [80],
-		"editor.defaultFormatter": "vscode.typescript-language-features",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true
 	},
 	"[scss]": {
