@@ -361,7 +361,7 @@
 		var/obj/item/crowbar/mechremoval/remover = tool
 		remover.empty_mech(src, user)
 		return
-	if(!(mecha_flags ^= PANEL_OPEN))
+	if(!(mecha_flags & PANEL_OPEN))
 		balloon_alert(user, "open the cover first!")
 		return
 	if(dna_lock && user.has_dna())
