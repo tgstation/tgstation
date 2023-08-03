@@ -19,7 +19,7 @@
 	icon_state = "demon"
 	icon_living = "demon"
 
-	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID // undead is important because it means we can't be healed with sutures and the like. keep this in mind if you ever decide to change this
+	mob_biotypes = MOB_BEAST|MOB_HUMANOID
 	status_flags = CANPUSH
 
 	combat_mode = TRUE
