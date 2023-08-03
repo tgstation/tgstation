@@ -81,9 +81,10 @@
 
 /// Will differentiate into the "flesh" young spider.
 /mob/living/basic/spiderling/hunter/flesh
-	grow_as = /mob/living/basic/giant_spider/hunter/flesh
+	grow_as = /mob/living/basic/young_spider/hunter/flesh
 	name = "flesh spiderling"
 	desc = "Fleshy and red, it looks defenseless. This one has sparkling grey eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "flesh_spiderling"
 	icon_dead = "flesh_spiderling_dead"
+	spider_growth_time = 20 SECONDS

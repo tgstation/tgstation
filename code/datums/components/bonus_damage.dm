@@ -8,7 +8,7 @@
 	var/brute_damage_amount = 10
 
 /datum/component/bonus_damage/Initialize(damage_percentage, brute_damage_amount)
-	if(!ismob(parent))
+	if(!isliving(parent))
 		return ELEMENT_INCOMPATIBLE
 
 	src.damage_percentage = damage_percentage
@@ -21,12 +21,14 @@
 	UnregisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
 
 /// Add potential bonus damage to the person we attacked
-/datum/component/bonus_damage/proc/on_attacked(mob/victim, atom/attacker)
+/datum/component/bonus_damage/proc/on_attacked(mob/living/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
-	if(!isliving(victim))
+	if(!success)
 		return
-	var/mob/living/living_target = victim
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
 	var/health_percentage = (living_target.health / living_target.maxHealth) * 100
 	if(living_target.stat == DEAD || health_percentage > damage_percentage)
 		return

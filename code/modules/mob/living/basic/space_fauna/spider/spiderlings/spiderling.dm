@@ -45,6 +45,8 @@
 	var/directive = ""
 	/// Simple boolean that determines if we should apply the spider antag to the player if they possess this mob. TRUE by default since we're always going to evolve into a spider that will have an antagonistic role.
 	var/apply_spider_antag = TRUE
+	/// The time it takes for the spider to grow into the next stage
+	var/spider_growth_time = 40 SECONDS
 
 /mob/living/basic/spiderling/Initialize(mapload)
 	. = ..()
@@ -64,7 +66,7 @@
 	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 40 SECONDS,\
+		growth_time = spider_growth_time,\
 		growth_path = grow_as,\
 		growth_probability = 25,\
 		lower_growth_value = 1,\

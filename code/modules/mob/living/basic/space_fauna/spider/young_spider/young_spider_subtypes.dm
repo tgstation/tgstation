@@ -47,6 +47,10 @@
 	poison_type = /datum/reagent/peaceborg/confuse
 	sight = SEE_SELF|SEE_MOBS
 
+/mob/living/basic/young_spider/scout/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
 /// Will differentiate into the "hunter" giant spider.
 /mob/living/basic/young_spider/hunter
 	grow_as = /mob/living/basic/giant_spider/hunter
@@ -191,6 +195,7 @@
 	maxHealth = 55
 	health = 55
 	web_speed = 0.7
+	spider_growth_time = 30 SECONDS
 
 /mob/living/basic/young_spider/hunter/flesh/Initialize(mapload)
 	. = ..()

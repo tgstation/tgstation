@@ -62,11 +62,12 @@
 	var/menu_description = "Tanky and strong for the defense of the nest and other spiders."
 	/// If true then you shouldn't be told that you're a spider antagonist as soon as you are placed into this mob
 	var/apply_spider_antag = TRUE
+	/// The time it takes for the spider to grow into the next stage
+	var/spider_growth_time = 1 MINUTES
 
 /mob/living/basic/young_spider/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
@@ -81,7 +82,7 @@
 	ai_controller.set_blackboard_key(BB_SPIDER_WEB_ACTION, webbing)
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 40 SECONDS,\
+		growth_time = spider_growth_time,\
 		growth_path = grow_as,\
 		growth_probability = 25,\
 		lower_growth_value = 1,\
