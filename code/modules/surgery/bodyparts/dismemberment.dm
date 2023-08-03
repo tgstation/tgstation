@@ -62,7 +62,7 @@
 	if(isturf(chest_owner.loc))
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
-	for(var/obj/item/organ/organ as anything in chest_owner.organs)
+	for(var/obj/item/organ/organ as anything in organs)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
@@ -70,18 +70,10 @@
 		organ.forceMove(chest_owner.loc)
 		. += organ
 
-	for(var/obj/item/organ/external/ext_organ as anything in src.external_organs)
-		if(!(ext_organ.organ_flags & ORGAN_UNREMOVABLE))
-			ext_organ.Remove(chest_owner)
-			ext_organ.forceMove(chest_owner.loc)
-			. += ext_organ
-
 	if(cavity_item)
 		cavity_item.forceMove(chest_owner.loc)
 		. += cavity_item
 		cavity_item = null
-
-
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
 /obj/item/bodypart/proc/drop_limb(special, dismembered)
@@ -101,9 +93,6 @@
 	for(var/datum/scar/scar as anything in scars)
 		scar.victim = null
 		LAZYREMOVE(owner.all_scars, scar)
-
-	for(var/obj/item/organ/external/ext_organ as anything in external_organs)
-		ext_organ.transfer_to_limb(src, null) //Null is the second arg because the bodypart is being removed from it's owner.
 
 	var/mob/living/carbon/phantom_owner = set_owner(null) // so we can still refer to the guy who lost their limb after said limb forgets 'em
 
@@ -201,14 +190,18 @@
 ///Adds the organ to a bodypart, used in transfer_to_limb()
 /obj/item/organ/proc/add_to_limb(obj/item/bodypart/bodypart)
 	forceMove(bodypart)
+	bodypart.organs |= src
+	ownerlimb = bodypart
 
 ///Removes the organ from the limb, placing it into nullspace.
-/obj/item/organ/proc/remove_from_limb()
+/obj/item/organ/proc/remove_from_limb(special = FALSE)
 	moveToNullspace()
+	ownerlimb.organs -= src
+	ownerlimb = null
 
 /obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
-	Remove(head_owner) //Changeling brain concerns are now handled in Remove
-	forceMove(head)
+	..()
+
 	head.brain = src
 	if(brainmob)
 		head.brainmob = brainmob
@@ -216,15 +209,30 @@
 		head.brainmob.forceMove(head)
 		head.brainmob.set_stat(DEAD)
 
-/obj/item/organ/internal/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/eyes/add_to_limb(obj/item/bodypart/head/head)
 	head.eyes = src
 	..()
 
-/obj/item/organ/internal/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/ears/add_to_limb(obj/item/bodypart/head/head)
 	head.ears = src
 	..()
 
-/obj/item/organ/internal/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/tongue/add_to_limb(obj/item/bodypart/head/head)
+	head.tongue = src
+	..()
+
+/obj/item/organ/internal/eyes/remove_from_limb()
+	var/obj/item/bodypart/head/head = ownerlimb
+	head.eyes = src
+	..()
+
+/obj/item/organ/internal/ears/remove_from_limb()
+	var/obj/item/bodypart/head/head = ownerlimb
+	head.ears = src
+	..()
+
+/obj/item/organ/internal/tongue/remove_from_limb()
+	var/obj/item/bodypart/head/head = ownerlimb
 	head.tongue = src
 	..()
 
@@ -336,7 +344,7 @@
 				qdel(attach_surgery)
 				break
 
-	for(var/obj/item/organ/limb_organ in contents)
+	for(var/obj/item/organ/limb_organ as anything in organs)
 		limb_organ.Insert(new_limb_owner, TRUE)
 
 	for(var/datum/wound/wound as anything in wounds)

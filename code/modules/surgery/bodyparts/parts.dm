@@ -34,7 +34,7 @@
 	var/datum/worn_feature_offset/worn_neck_offset
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
-	if(owner.stat < HARD_CRIT || !get_organs())
+	if(owner.stat < HARD_CRIT || !organs.len)
 		return FALSE
 	return ..()
 

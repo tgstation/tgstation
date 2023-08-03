@@ -6,6 +6,8 @@
 	throwforce = 0
 	/// The mob that owns this organ.
 	var/mob/living/carbon/owner = null
+	/// Reference to the limb we're inside of
+	var/obj/item/bodypart/ownerlimb
 	/// The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
 	/**
@@ -98,6 +100,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	receiver.organs_slot[slot] = src
 	owner = receiver
 
+	add_to_limb(receiver.get_bodypart(deprecise_zone(zone)))
+
 	// Apply unique side-effects. Return value does not matter.
 	on_insert(receiver, special)
 
@@ -108,8 +112,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /// Override this proc to create unique side-effects for inserting your organ. Must be called by overrides.
 /obj/item/organ/proc/on_insert(mob/living/carbon/organ_owner, special)
 	SHOULD_CALL_PARENT(TRUE)
-
-	moveToNullspace()
 
 	for(var/trait in organ_traits)
 		ADD_TRAIT(organ_owner, trait, REF(src))
@@ -136,6 +138,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	organ_owner.organs -= src
 	if(organ_owner.organs_slot[slot] == src)
 		organ_owner.organs_slot.Remove(slot)
+
+	if(ownerlimb)
+		remove_from_limb(special)
 
 	owner = null
 

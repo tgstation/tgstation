@@ -12,8 +12,6 @@
 
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
-	///Reference to the limb we're inside of
-	var/obj/item/bodypart/ownerlimb
 	///If not null, overrides the appearance with this sprite accessory datum
 	var/sprite_accessory_override
 
@@ -93,14 +91,8 @@
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
-	if(ownerlimb)
-		remove_from_limb()
-		if(!moving && use_mob_sprite_as_obj_sprite) //so we're being taken out and dropped
-			update_appearance(UPDATE_OVERLAYS)
-
 	if(organ_owner)
 		organ_owner.update_body_parts()
-
 
 /obj/item/organ/external/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -119,17 +111,17 @@
 		add_to_limb(bodypart)
 
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
-	bodypart.external_organs += src
-	ownerlimb = bodypart
-	ownerlimb.add_bodypart_overlay(bodypart_overlay)
+	bodypart.add_bodypart_overlay(bodypart_overlay)
 	return ..()
 
-/obj/item/organ/external/remove_from_limb()
-	ownerlimb.external_organs -= src
+/obj/item/organ/external/remove_from_limb(special = FALSE)
 	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 	if(ownerlimb.owner && external_bodytypes)
 		ownerlimb.owner.synchronize_bodytypes()
-	ownerlimb = null
+
+	if(!special && use_mob_sprite_as_obj_sprite) //so we're being taken out and dropped
+		update_appearance(UPDATE_OVERLAYS)
+
 	return ..()
 
 /proc/should_external_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)

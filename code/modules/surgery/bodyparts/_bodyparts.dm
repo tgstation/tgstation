@@ -155,9 +155,8 @@
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
-	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
-	///If someone ever comes around to making all organs exist in the bodyparts, you can just remove this and use a typed loop
-	var/list/obj/item/organ/external/external_organs = list()
+	/// List of organs inside the limb
+	var/list/obj/item/organ/organs = list()
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
 
@@ -228,12 +227,11 @@
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
 
-	if(length(external_organs))
-		for(var/obj/item/organ/external/external_organ as anything in external_organs)
-			external_organs -= external_organ
-			qdel(external_organ) // It handles removing its references to this limb on its own.
+	if(length(organs))
+		for(var/obj/item/organ/organ as anything in organs)
+			qdel(organ) // It handles removing its references to this limb on its own.
 
-		external_organs = list()
+		organs = list()
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()
@@ -396,30 +394,13 @@
 	if(IS_ORGANIC_LIMB(src))
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
-	for(var/obj/item/organ/bodypart_organ in get_organs())
-		bodypart_organ.transfer_to_limb(src, owner)
-	for(var/obj/item/organ/external/external in external_organs)
-		external.remove_from_limb()
-		external.forceMove(drop_loc)
-	for(var/obj/item/item_in_bodypart in src)
-		item_in_bodypart.forceMove(drop_loc)
+	for(var/obj/item/organ/bodypart_organ as anything in organs)
+		bodypart_organ.remove_from_limb()
+		bodypart_organ.forceMove(drop_loc)
+	for(var/atom/movable/movable as anything in src)
+		movable.forceMove(drop_loc)
 
 	update_icon_dropped()
-
-///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
-/obj/item/bodypart/proc/get_organs()
-	SHOULD_CALL_PARENT(TRUE)
-	RETURN_TYPE(/list)
-
-	if(!owner)
-		return FALSE
-
-	var/list/bodypart_organs
-	for(var/obj/item/organ/organ_check as anything in owner.organs) //internal organs inside the dismembered limb are dropped.
-		if(check_zone(organ_check.zone) == body_zone)
-			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
-
-	return bodypart_organs
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
