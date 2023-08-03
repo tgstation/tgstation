@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/mob/species/human/bodyparts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 //actually mindblowing
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
@@ -155,8 +156,6 @@
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
-	/// List of organs inside the limb
-	var/list/obj/item/organ/organs = list()
 	///A list of all bodypart overlays to draw
 	var/list/bodypart_overlays = list()
 
@@ -227,11 +226,9 @@
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
 
-	if(length(organs))
-		for(var/obj/item/organ/organ as anything in organs)
-			qdel(organ) // It handles removing its references to this limb on its own.
+	for(var/atom/movable/movable in contents)
+		qdel(movable)
 
-		organs = list()
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()
@@ -394,7 +391,7 @@
 	if(IS_ORGANIC_LIMB(src))
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
-	for(var/obj/item/organ/bodypart_organ as anything in organs)
+	for(var/obj/item/organ/bodypart_organ in contents)
 		bodypart_organ.remove_from_limb()
 		bodypart_organ.forceMove(drop_loc)
 	for(var/atom/movable/movable as anything in src)

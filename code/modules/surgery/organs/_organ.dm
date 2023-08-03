@@ -101,6 +101,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	owner = receiver
 
 	add_to_limb(receiver.get_bodypart(deprecise_zone(zone)))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(forced_removal))
 
 	// Apply unique side-effects. Return value does not matter.
 	on_insert(receiver, special)
@@ -139,8 +140,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_owner.organs_slot[slot] == src)
 		organ_owner.organs_slot.Remove(slot)
 
-	if(ownerlimb)
-		remove_from_limb(special)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! remove_from_limb moves the organ, so we unregister before we move them physically
+	remove_from_limb(special)
 
 	owner = null
 
@@ -188,6 +189,17 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		diseases_to_add += disease
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
+
+/// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
+/obj/item/organ/proc/forced_removal()
+	SIGNAL_HANDLER
+
+	if(owner)
+		Remove(owner)
+	else if(ownerlimb)
+		remove_from_limb()
+	else
+		stack_trace("Force removed an already removed organ!")
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)

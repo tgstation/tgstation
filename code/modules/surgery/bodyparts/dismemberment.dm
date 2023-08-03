@@ -62,7 +62,7 @@
 	if(isturf(chest_owner.loc))
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
-	for(var/obj/item/organ/organ as anything in organs)
+	for(var/obj/item/organ/organ in contents)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
@@ -190,13 +190,13 @@
 ///Adds the organ to a bodypart, used in transfer_to_limb()
 /obj/item/organ/proc/add_to_limb(obj/item/bodypart/bodypart)
 	forceMove(bodypart)
-	bodypart.organs |= src
+	bodypart.contents |= src
 	ownerlimb = bodypart
 
 ///Removes the organ from the limb, placing it into nullspace.
 /obj/item/organ/proc/remove_from_limb(special = FALSE)
 	moveToNullspace()
-	ownerlimb.organs -= src
+	ownerlimb.contents -= src
 	ownerlimb = null
 
 /obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
@@ -344,7 +344,7 @@
 				qdel(attach_surgery)
 				break
 
-	for(var/obj/item/organ/limb_organ as anything in organs)
+	for(var/obj/item/organ/limb_organ in contents)
 		limb_organ.Insert(new_limb_owner, TRUE)
 
 	for(var/datum/wound/wound as anything in wounds)
