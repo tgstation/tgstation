@@ -20,7 +20,7 @@
 	/// Default wait time until can stun again.
 	var/cooldown = 0 /// SKYRAPTOR EDIT: removing cooldowns in a way that doesn't make ten billion merge conflicts
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
-	var/knockdown_time = (1.5 SECONDS)
+	var/knockdown_time = (10 SECONDS) /// SKYRAPTOR EDIT: 10 seconds, up from 1.5
 	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
 	var/stun_time_cyborg = (5 SECONDS)
 	/// The length of the knockdown applied to the user on clumsy_check()
