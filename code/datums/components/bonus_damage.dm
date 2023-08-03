@@ -15,10 +15,10 @@
 	src.brute_damage_amount = brute_damage_amount
 
 /datum/component/bonus_damage/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked))
 
 /datum/component/bonus_damage/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ATOM_WAS_ATTACKED)
+	UnregisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
 
 /// Add potential bonus damage to the person we attacked
 /datum/component/bonus_damage/proc/on_attacked(mob/victim, atom/attacker)
