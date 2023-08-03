@@ -53,8 +53,28 @@
 		if(isitem(parent))
 			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 			RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+			RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
+			RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Slip))
+
+/datum/component/slippery/proc/apply_fantasy_bonuses(obj/item/source, bonus)
+	SIGNAL_HANDLER
+	knockdown_time = source.modify_fantasy_variable("knockdown_time", knockdown_time, bonus)
+	if(bonus >= 5)
+		paralyze_time = source.modify_fantasy_variable("paralyze_time", paralyze_time, bonus)
+		LAZYSET(source.fantasy_modifications, "lube_flags", lube_flags)
+		lube_flags |= SLIDE
+	if(bonus >= 10)
+		lube_flags |= GALOSHES_DONT_HELP|SLIP_WHEN_CRAWLING
+
+/datum/component/slippery/proc/remove_fantasy_bonuses(obj/item/source, bonus)
+	SIGNAL_HANDLER
+	knockdown_time = source.reset_fantasy_variable("knockdown_time", knockdown_time)
+	paralyze_time = source.reset_fantasy_variable("paralyze_time", paralyze_time)
+	var/previous_lube_flags = LAZYACCESS(source.fantasy_modifications, "lube_flags")
+	if(!isnull(previous_lube_flags))
+		lube_flags = previous_lube_flags
 
 /datum/component/slippery/proc/add_connect_loc_behalf_to_parent()
 	if(ismovable(parent))

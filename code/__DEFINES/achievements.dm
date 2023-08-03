@@ -48,9 +48,11 @@
 #define MEDAL_GODS_WRATH "God's Wrath"
 #define MEDAL_EARTHQUAKE_VICTIM "Earthquake Victim"
 #define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
+#define MEDAL_ARCHMAGE "Archmage"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
+#define MEDAL_LEGENDARY_FISHER "Legendary Fisher"
 
 //Mafia medal hub IDs (wins)
 #define MAFIA_MEDAL_ASSISTANT "Assistant"

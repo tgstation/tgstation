@@ -30,9 +30,9 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			if(!checkT)
 				continue
 			checked_turfs[sourceT] |= dir
-			checked_turfs[checkT] |= turn(dir, 180)
+			checked_turfs[checkT] |= REVERSE_DIR(dir)
 			.[sourceT] |= dir
-			.[checkT] |= turn(dir, 180)
+			.[checkT] |= REVERSE_DIR(dir)
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
 				return FALSE
 			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)

@@ -177,7 +177,9 @@
 /mob/living/basic/bee/proc/assign_reagent(datum/reagent/toxin)
 	if(!istype(toxin))
 		return
-	var/static/list/injection_range = list(1, 5)
+	var/static/list/injection_range
+	if(!injection_range)
+		injection_range = string_numbers_list(list(1, 5))
 	if(beegent) //clear the old since this one is going to have some new value
 		RemoveElement(/datum/element/venomous, beegent.type, injection_range)
 	beegent = toxin

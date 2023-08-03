@@ -201,22 +201,20 @@
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 
 
-/datum/controller/subsystem/ticker/proc/declare_completion()
+/datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
 
 	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
 		roundend_callbacks.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
-	var/speed_round = FALSE
-	if(world.time - SSticker.round_start_time <= 300 SECONDS)
-		speed_round = TRUE
+	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
 
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
 		C?.playtitlemusic(40)
-		if(speed_round)
+		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
 

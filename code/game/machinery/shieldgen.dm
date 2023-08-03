@@ -368,7 +368,7 @@
 	var/turf/T = loc
 	var/obj/machinery/power/shieldwallgen/G
 	var/steps = 0
-	var/opposite_direction = turn(direction, 180)
+	var/opposite_direction = REVERSE_DIR(direction)
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
 		T = get_step(T, direction)
