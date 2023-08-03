@@ -138,6 +138,7 @@
 
 		if (!movable_parent.Move(to_move))
 			force_teleport_back("bad path step")
+			performing_path_move = FALSE
 			return
 
 	if (get_dist(parent, owner) > distance)

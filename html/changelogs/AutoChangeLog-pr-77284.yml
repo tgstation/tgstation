@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - balance: "The strong-arm implant's punches now respect armor."
+  - spellcheck: "While using an arm with the strong-arm implant to punch people, you no longer kick them; your implant's in your arm, after all!"

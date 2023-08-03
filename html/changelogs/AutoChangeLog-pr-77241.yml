@@ -1,0 +1,7 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - balance: "hat stabilizer module can now hold what plasmaman helmets can hold"
+  - qol: "kinesis module can be stopped without launching an object with right click"
+  - balance: "kinesis module stuns last until the kinesis stops"
+  - rscadd: "admin suit has a version of kinesis that can pick up anything at any range and can be configured to make grabbed mobs phase through walls :)"
