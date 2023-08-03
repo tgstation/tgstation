@@ -498,26 +498,26 @@
 	if(length(occupants))
 		process_occupants(seconds_per_tick)
 	if(mecha_flags & LIGHTS_ON)
-		use_power(2*seconds_per_tick)
+		use_power(seconds_per_tick / (capacitor?.rating || 1))
 
 /obj/vehicle/sealed/mecha/proc/process_overclock_effects(seconds_per_tick)
 	if(!overclock_mode && overclock_temp > 0)
 		overclock_temp -= seconds_per_tick
-	else if(overclock_mode)
-		overclock_temp += seconds_per_tick
-		if(overclock_temp < overclock_temp_danger)
-			return
-		var/damage_chance = overclock_temp / (overclock_temp_danger * 2)
-		if(!(internal_damage & MECHA_INT_SHORT_CIRCUIT) && SPT_PROB(damage_chance, seconds_per_tick))
-			set_internal_damage(MECHA_INT_SHORT_CIRCUIT)
-			return
-		else if(!(internal_damage & MECHA_INT_FIRE) && SPT_PROB(damage_chance, seconds_per_tick))
-			set_internal_damage(MECHA_INT_FIRE)
-			return
-		else
-			for(var/mob/living/occupant as anything in occupants)
-				if(SPT_PROB(damage_chance, seconds_per_tick))
-					shock(occupant)
+		return
+	overclock_temp += seconds_per_tick
+	if(overclock_temp < overclock_temp_danger)
+		return
+	var/damage_chance = overclock_temp / (overclock_temp_danger * 2)
+	if(!(internal_damage & MECHA_INT_SHORT_CIRCUIT) && SPT_PROB(damage_chance, seconds_per_tick))
+		set_internal_damage(MECHA_INT_SHORT_CIRCUIT)
+		return
+	else if(!(internal_damage & MECHA_INT_FIRE) && SPT_PROB(damage_chance, seconds_per_tick))
+		set_internal_damage(MECHA_INT_FIRE)
+		return
+	else
+		for(var/mob/living/occupant as anything in occupants)
+			if(SPT_PROB(damage_chance, seconds_per_tick))
+				shock(occupant)
 
 /obj/vehicle/sealed/mecha/proc/process_internal_damage_effects(seconds_per_tick)
 	if(internal_damage & MECHA_INT_FIRE)
