@@ -8,8 +8,9 @@ export type MainData = {
   ui_theme: string;
   name: string;
   integrity: number;
-  power_level: number | null;
-  power_max: number | null;
+  integrity_max: number;
+  power_level: number;
+  power_max: number;
   mecha_flags: number;
   internal_damage: number;
   internal_damage_keys: string[];

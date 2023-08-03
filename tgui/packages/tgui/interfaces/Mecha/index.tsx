@@ -1,6 +1,7 @@
 import { Window } from '../../layouts';
 import { useBackend, useLocalState } from '../../backend';
-import { ByondUi, Stack, Button, Section, Box, ProgressBar, LabeledList } from '../../components';
+import { ByondUi, Stack, Button, Section, ProgressBar, LabeledList } from '../../components';
+import { formatSiUnit } from '../../format';
 import { ModulesPane } from './ModulesPane';
 import { AlertPane } from './AlertPane';
 import { AccessConfig } from '../common/AccessConfig';
@@ -142,40 +143,47 @@ const PowerBar = (props, context) => {
   const { power_level, power_max } = data;
   return (
     <LabeledList.Item label="Power">
-      {power_max === null ? (
-        <Box italic content={'No power cell installed.'} />
-      ) : (
-        <ProgressBar
-          ranges={{
-            good: [0.75 * power_max, Infinity],
-            average: [0.25 * power_max, 0.75 * power_max],
-            bad: [-Infinity, 0.25 * power_max],
-          }}
-          maxValue={power_max}
-          value={power_level}
-        />
-      )}
+      <ProgressBar
+        value={power_level / power_max}
+        ranges={{
+          good: [0.5, Infinity],
+          average: [0.25, 0.5],
+          bad: [-Infinity, 0.25],
+        }}
+        style={{
+          'text-shadow': '1px 1px 0 black',
+        }}>
+        {power_max === null
+          ? 'Power Cell Missing'
+          : power_level === 1e31
+            ? 'Infinite'
+            : `${formatSiUnit(power_level * 1000, 0, 'J')} of ${formatSiUnit(
+              power_max * 1000,
+              0,
+              'J'
+            )}`}
+      </ProgressBar>
     </LabeledList.Item>
   );
 };
 
 const IntegrityBar = (props, context) => {
   const { act, data } = useBackend<MainData>(context);
-  const { integrity, scanmod_rating } = data;
+  const { integrity, integrity_max, scanmod_rating } = data;
   return (
     <LabeledList.Item label="Integrity">
-      {!scanmod_rating ? (
-        <Box italic>Unknown</Box>
-      ) : (
-        <ProgressBar
-          ranges={{
-            good: [0.5, Infinity],
-            average: [0.25, 0.5],
-            bad: [-Infinity, 0.25],
-          }}
-          value={integrity}
-        />
-      )}
+      <ProgressBar
+        value={scanmod_rating ? integrity / integrity_max : 0}
+        ranges={{
+          good: [0.5, Infinity],
+          average: [0.25, 0.5],
+          bad: [-Infinity, 0.25],
+        }}
+        style={{
+          'text-shadow': '1px 1px 0 black',
+        }}>
+        {!scanmod_rating ? 'Unknown' : `${integrity} of ${integrity_max}`}
+      </ProgressBar>
     </LabeledList.Item>
   );
 };

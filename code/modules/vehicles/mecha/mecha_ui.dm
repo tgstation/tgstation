@@ -74,7 +74,8 @@
 	data["servo"] = servo?.name
 	ui_view.appearance = appearance
 	data["name"] = name
-	data["integrity"] = atom_integrity/max_integrity
+	data["integrity"] = atom_integrity
+	data["integrity_max"] = max_integrity
 	data["power_level"] = cell?.charge
 	data["power_max"] = cell?.maxcharge
 	data["mecha_flags"] = mecha_flags
