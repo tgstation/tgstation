@@ -207,9 +207,9 @@
 			mecha_flags ^= ID_LOCK_ON
 		if("toggle_overclock")
 			toggle_overclock()
-			var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in usr.actions
-			action.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
-			action.build_all_button_icons()
+			var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in usr.actions
+			act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
+			act.build_all_button_icons()
 		if("repair_int_damage")
 			ui.close() //if doing this you're likely want to watch for bad people so close the UI
 			try_repair_int_damage(usr, params["flag"])
