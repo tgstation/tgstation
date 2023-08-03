@@ -37,7 +37,7 @@
 	SIGNAL_HANDLER
 
 	if(enterer && !HAS_TRAIT(enterer, TRAIT_HYPERSPACED))
-		enterer.AddComponent(/datum/component/shuttle_cling, turn(dir, 180))
+		enterer.AddComponent(/datum/component/shuttle_cling, REVERSE_DIR(dir))
 
 /turf/open/space/transit/proc/initialize_drifting_but_from_initialize(atom/movable/location, atom/movable/enterer, mapload)
 	SIGNAL_HANDLER

@@ -17,6 +17,16 @@
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
 
+///A negative trait that reduces the amount of products available from vending machines throughout the station.
+/datum/station_trait/vending_shortage
+	name = "Vending products shortage"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	show_in_report = TRUE
+	can_revert = FALSE //Because it touches every maploaded vending machine on the station.
+	report_message = "We haven't had the time to take care of the station's vending machines. Some may be tilted, and some products may be unavailable."
+	trait_to_give = STATION_TRAIT_VENDING_SHORTAGE
+
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -389,7 +399,7 @@
 				if(istype(current_thing, /obj/machinery/vending) && prob(45))
 					var/obj/machinery/vending/vendor_to_trash = current_thing
 					if(prob(50))
-						vendor_to_trash.tilt(get_turf(vendor_to_trash))
+						vendor_to_trash.tilt(get_turf(vendor_to_trash), 0) // crit effects can do some real weird shit, lets disable it
 
 					if(prob(50))
 						vendor_to_trash.take_damage(150)
@@ -419,27 +429,15 @@
 
 	show_in_report = TRUE
 
-	///The color of the "nebula" we send to the players client
-	var/nebula_color
 	///The parallax layer of the nebula
 	var/nebula_layer = /atom/movable/screen/parallax_layer/random/space_gas
-	///The color space 'glows'
-	var/space_light_color = COLOR_STARLIGHT
 	///If set, gives the basic carp different colors
 	var/carp_color_override
 
 /datum/station_trait/nebula/New()
 	. = ..()
 
-	///We set the parallax layer to give a visual effect
-	SSparallax.random_layer = nebula_layer
-	SSparallax.random_parallax_color = nebula_color //give a unique color to tell the player somethings up
-	GLOB.starlight_color = space_light_color //color starlight in our nebula color
-
-	//parallax is generated for quick-joiners before we can change it, so reset it for them :/
-	for(var/client/client as anything in GLOB.clients)
-		client.parallax_layers_cached?.Cut()
-		client.mob?.hud_used?.update_parallax_pref(client.mob)
+	SSparallax.swap_out_random_parallax_layer(nebula_layer)
 
 	//Color the carp in unique colors to better blend with the nebula
 	if(carp_color_override)
@@ -531,8 +529,7 @@
 	intensity_increment_time = 5 MINUTES
 	maximum_nebula_intensity = 1 HOURS + 40 MINUTES
 
-	nebula_color = list(0,0,0,0, 0,2,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //very vibrant green
-	space_light_color = COLOR_VIBRANT_LIME
+	nebula_layer = /atom/movable/screen/parallax_layer/random/space_gas/radioactive
 	carp_color_override = list(
 		COLOR_CARP_GREEN = 1,
 		COLOR_CARP_TEAL = 1,
@@ -571,6 +568,10 @@
 	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
 		//if engineering isnt valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
+
+	// Let the viro know resistence is futile
+	send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
+	force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
@@ -671,3 +672,25 @@
 /datum/station_trait/nebula/hostile/radiation/get_decal_color(atom/thing_to_color, pattern)
 	if(istype(get_area(thing_to_color), /area/station/hallway)) //color hallways green
 		return COLOR_GREEN
+
+///Starts a storm on roundstart
+/datum/station_trait/storm
+	trait_flags = STATION_TRAIT_ABSTRACT
+	var/datum/weather/storm_type
+
+/datum/station_trait/storm/on_round_start()
+	. = ..()
+
+	SSweather.run_weather(storm_type)
+
+/// Calls down an eternal storm on planetary stations
+/datum/station_trait/storm/foreverstorm
+	name = "Forever Storm"
+	trait_type = STATION_TRAIT_NEGATIVE
+	trait_flags = STATION_TRAIT_PLANETARY
+	weight = 3
+	show_in_report = TRUE
+	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
+
+	storm_type = /datum/weather/snow_storm/forever_storm
+

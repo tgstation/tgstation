@@ -1,0 +1,15 @@
+{
+	"fish_analyzer": [
+		{
+			"type": "icon_state",
+			"icon_state": "fish_analyzer_outer",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fish_analyzer_inner",
+			"blend_mode": "overlay"
+		}
+	]
+}
