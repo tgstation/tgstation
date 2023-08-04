@@ -277,7 +277,6 @@
 		"hemostat",
 		"large_beaker",
 		"mmi_m",
-		"operating",
 		"petri_dish",
 		"pillbottle",
 		"plumbing_rcd",
@@ -1149,6 +1148,7 @@
 		"mining",
 		"rdcamera",
 		"seccamera",
+		"operating",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
