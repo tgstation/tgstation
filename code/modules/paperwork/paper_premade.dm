@@ -44,12 +44,12 @@
 	* Bluespace Artillery Controls
 	* 26 cable pieces
 	* 20 iron
-	* 20 bluespace crystals (or synthetic)
+	* 20 bluespace crystals (or artificial)
 	* 5 quadratic capacitors
 	* 5 femto servos
 	* 1 glass sheet
 	<h1>2. Find suitable location</h1>
-	The BSA has a steep power requirement and functions best when it is on its own APC.  Keep other items in the room to a minimum. Ensure the BSA is placed somewhere where it will not shoot at another part of the station.  Make sure the room isn't easily accessible by someone who shouldn't be there.
+	The BSA has a steep power requirement and functions best when it is on its own APC; keep other items in the room to a minimum. Ensure the BSA is placed at the edge of the station, so that it won't shoot through another portion of the station..  Make sure the room isn't easily accessible by someone who shouldn't be there.
 	<h1>3. Construction</h1>
 	1. Build three machine frames.
 	2. Determine the desired direction you want your artillery to face.
