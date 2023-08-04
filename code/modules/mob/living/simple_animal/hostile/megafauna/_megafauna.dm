@@ -53,8 +53,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
-	var/datum/action/toggle_seethrough/seeThrough = new
-	seeThrough.Grant(src)
+	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)

@@ -19,8 +19,7 @@
 	. = ..()
 	// as a wise man once wrote: "pull over that ass too fat"
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	var/datum/action/toggle_seethrough/seeThrough = new
-	seeThrough.Grant(src)
+	AddComponent(/datum/component/seethrough_mob)
 
 /mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
 	. = ..()

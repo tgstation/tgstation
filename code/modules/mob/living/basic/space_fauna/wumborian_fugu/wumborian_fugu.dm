@@ -49,8 +49,7 @@
 
 /mob/living/basic/wumborian_fugu/Initialize(mapload)
 	. = ..()
-	var/datum/action/toggle_seethrough/seeThrough = new
-	seeThrough.Grant(src)
+	AddComponent(/datum/component/seethrough_mob)
 	var/static/list/death_loot = list(/obj/item/fugu_gland)
 	AddElement(/datum/element/death_drops, death_loot)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), ROUNDSTART_TRAIT)

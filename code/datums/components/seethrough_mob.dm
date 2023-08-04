@@ -23,6 +23,8 @@
 	src.animation_time = animation_time
 	src.clickthrough = clickthrough
 	src.is_active = FALSE
+	var/datum/action/toggle_seethrough/action = new(src)
+	action.Grant(parent)
 
 ///Set up everything we need to trick the client and keep it looking normal for everyone else
 /datum/component/seethrough_mob/proc/trick_mob()
@@ -94,6 +96,13 @@
 		seethrough.hide_plane(fool)
 	clear_image(trickery_image, fool.client)
 
+/datum/component/seethrough_mob/proc/toggle_active()
+	is_active = !is_active
+	if(is_active)
+		trick_mob()
+	else
+		untrick_mob()
+
 /datum/action/toggle_seethrough
 	name = "Toggle Seethrough"
 	desc = "Allows you to see behind your massive body and click through it."
@@ -101,23 +110,14 @@
 	button_icon_state = "alien_sneak"
 	background_icon_state = "bg_alien"
 
-
-/datum/action/toggle_seethrough/Grant(mob/grant_to)
-	. = ..()
-	if(!grant_to.GetComponent(/datum/component/seethrough_mob))
-		grant_to.AddComponent(/datum/component/seethrough_mob)
-
 /datum/action/toggle_seethrough/Remove(mob/remove_from)
-	var/datum/component/seethrough_mob/seethroughComp = owner.GetComponent(/datum/component/seethrough_mob)
+	var/datum/component/seethrough_mob/seethroughComp = target
 	if(seethroughComp.is_active)
 		seethroughComp.untrick_mob()
 	. = ..()
 
 /datum/action/toggle_seethrough/Trigger(trigger_flags)
-	..()
-	var/datum/component/seethrough_mob/seethroughComp = owner.GetComponent(/datum/component/seethrough_mob)
-	seethroughComp.is_active = !seethroughComp.is_active
-	if(seethroughComp.is_active)
-		seethroughComp.trick_mob()
-	else
-		seethroughComp.untrick_mob()
+	if(!..())
+		return
+	var/datum/component/seethrough_mob/seethroughComp = target
+	seethroughComp.toggle_active()
