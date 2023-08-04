@@ -67,3 +67,4 @@
 #define ALERT_BITRUNNER_COMPLETED "bitrunning_complete"
 #define ALERT_BITRUNNER_INTEGRITY "bitrunning_integrity"
 #define ALERT_BITRUNNER_SHUTDOWN "bitrunning_shutdown"
+#define ALERT_BITRUNNER_RESET "bitrunning_reset"

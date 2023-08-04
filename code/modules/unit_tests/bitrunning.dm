@@ -387,6 +387,16 @@
 
 	server.occupant_mind_refs += WEAKREF(labrat.mind)
 	mobs = server.get_valid_domain_targets()
+
+	var/datum/turf_reservation/res = server.generated_domain.reservations[1]
+	TEST_ASSERT_NOTNULL(res, "Sanity: Did not generate a reservation")
+
+	var/total = 0
+	for(var/turf/open/floor/tile in res.reserved_turfs)
+		for(var/mob/living in tile.contents)
+			total += 1
+
+	TEST_ASSERT_EQUAL(total, 1, "Should return a list of mobs")
 	TEST_ASSERT_EQUAL(length(mobs), 1, "Should return a list of mobs")
 
 	var/mob/living/basic/pet/dog/corgi/pupper = locate() in mobs

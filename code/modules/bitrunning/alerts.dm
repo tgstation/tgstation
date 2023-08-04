@@ -22,6 +22,12 @@
 	desc = "The domain is completed. Activate to exit."
 	timeout = 20 SECONDS
 
+/atom/movable/screen/alert/qserver_threat_deletion
+	name = "Queue Deletion"
+	icon_state = "template"
+	desc = "The server is resetting. Oblivion awaits."
+	timeout = 10 SECONDS
+
 /atom/movable/screen/alert/qserver_domain_complete/Click(location, control, params)
 	if(..())
 		return

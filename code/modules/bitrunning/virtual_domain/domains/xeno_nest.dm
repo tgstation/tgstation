@@ -5,7 +5,7 @@
 	difficulty = BITRUNNER_DIFFICULTY_LOW
 	extra_loot = list(/obj/item/toy/plush/rouny = 1)
 	map_name = "xeno_nest"
-	help_text = "You are on a barren planet filled with hostile creatures. There is a crate here, not hidden,\
+	help_text = "You are on a barren planet filled with hostile creatures. There is a crate here, not hidden, \
 	simply protected. Expect resistance."
 	id = "xeno_nest"
 	reward_points = BITRUNNER_REWARD_LOW

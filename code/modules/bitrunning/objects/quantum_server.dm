@@ -582,6 +582,26 @@
 
 	return length(receive_turfs) > 0
 
+/// Finds any mobs with minds in the zones and gives them the bad news
+/obj/machinery/quantum_server/proc/notify_spawned_threats()
+	if(isnull(generated_domain) || !length(generated_domain.reservations))
+		return
+
+	var/datum/turf_reservation/res = generated_domain.reservations[1]
+
+	for(var/turf/open/floor/tile in res.reserved_turfs)
+		var/mob/living/creature = locate() in tile
+		if(QDELETED(creature) || isnull(creature.mind))
+			continue
+
+		creature.throw_alert(
+			ALERT_BITRUNNER_RESET,
+			/atom/movable/screen/alert/qserver_threat_deletion,
+			new_master = src,
+		)
+
+		to_chat(creature, span_userdanger("You have been flagged for deletion! Thank you for your service."))
+
 /// If broken via signal, disconnects all users
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
@@ -669,7 +689,9 @@
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
-	scrub_vdom()
+	notify_spawned_threats()
+
+	addtimer(CALLBACK(src, PROC_REF(scrub_vdom)), 15 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	cooling_off = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * server_cooldown_efficiency), TIMER_UNIQUE|TIMER_STOPPABLE)

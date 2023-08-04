@@ -2,8 +2,8 @@
 	name = "Disposal Pipe Factory"
 	desc = "An abandoned and infested factory manufacturing disposal pipes."
 	map_name = "pipedream"
-	help_text = "Not long ago, this place was thriving with activity. The workers\
-	seemed to have left in a hurry, and now productivity is in the bin. Something\
+	help_text = "Not long ago, this place was thriving with activity. The workers \
+	seemed to have left in a hurry, and now productivity is in the bin. Something \
 	must have caused it, but what?"
 	id = "pipedream"
 	safehouse_path = /datum/map_template/safehouse/shuttle

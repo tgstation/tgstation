@@ -6,7 +6,7 @@
 	extra_loot = list(/obj/item/bikehorn = 1)
 	map_name = "clown_planet"
 	forced_outfit = /datum/outfit/job/clown
-	help_text = "The trials of the Honkitude have begun. The sound of bike horns wailing in the distance.\
+	help_text = "The trials of the Honkitude have begun. The sound of bike horns wailing in the distance. \
 	this realm- some sort of puzzle, has existed in legend as the final test of just how silly you are."
 	id = "clown_planet"
 	reward_points = BITRUNNER_REWARD_LOW
