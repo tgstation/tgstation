@@ -157,7 +157,7 @@
 		user.put_in_hands(cell)
 	else
 		cell.forceMove(drop_location())
-	visible_message(span_notice("[user] crowbars [cell] out from [src]."),
+	user.visible_message(span_notice("[user] crowbars [cell] out from [src]."),
 					span_notice("You pry [cell] out of [src]."))
 	cell = null
 	diag_hud_set_mulebotcell()
@@ -172,7 +172,7 @@
 			return TRUE
 		cell = I
 		diag_hud_set_mulebotcell()
-		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
+		user.visible_message(span_notice("[user] inserts \a [cell] into [src]."),
 						span_notice("You insert [cell] into [src]."))
 		return TRUE
 	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
