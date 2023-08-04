@@ -28,7 +28,7 @@
 	desc = "The domain is completed. Activate to exit."
 	timeout = 20 SECONDS
 
-/atom/movable/screen/alert/qserver_domain_complete/Click(location, control, params)
+/atom/movable/screen/alert/bitrunning/qserver_domain_complete/Click(location, control, params)
 	if(..())
 		return
 
