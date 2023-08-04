@@ -68,7 +68,7 @@
 	var/bumpsmash = FALSE
 
 	///////////ATMOS
-	///Whether the pilot is hidden from the outside viewers and whether the cabin can be sealed to be aritight
+	///Whether the pilot is hidden from the outside viewers and whether the cabin can be sealed to be airtight
 	var/enclosed = TRUE
 	///Whether the cabin exchanges gases with the environment
 	var/cabin_sealed = FALSE
