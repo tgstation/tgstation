@@ -7,9 +7,11 @@
 	cliff into rough rocks or liquid plasma."
 	extra_loot = list(/obj/item/clothing/suit/costume/snowman = 2)
 	difficulty = BITRUNNER_DIFFICULTY_LOW
-	map_name = "stairs_and_cliffs"
 	forced_outfit = /datum/outfit/job/virtual_domain_iceclimber
 	key = "stairs_and_cliffs"
+	map_name = "stairs_and_cliffs"
+	map_height = 75
+	map_width = 75
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/ice
 

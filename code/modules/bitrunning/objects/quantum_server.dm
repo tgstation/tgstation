@@ -26,6 +26,8 @@
 	var/list/available_domains = list()
 	/// Cached list of mutable mobs in zone for cybercops
 	var/list/mob/living/mutation_candidates = list()
+	/// Any ghosts that have spawned in
+	var/list/mob/living/spawned_threats = list()
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
@@ -44,10 +46,9 @@
 	var/server_cooldown_time = 2 MINUTES
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
-	/// Cached list of turfs to scan for spawned mobs in notify_spawned_threats()
-	var/turf/open/floor/floor_turf_cache = list()
 	/// The turfs on station where we generate loot.
 	var/turf/receive_turfs = list()
+
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -79,11 +80,11 @@
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 
-	available_domains.Cut()
-	mutation_candidates.Cut()
-	occupant_mind_refs.Cut()
+	QDEL_LIST(available_domains)
+	QDEL_LIST(mutation_candidates)
+	QDEL_LIST(occupant_mind_refs)
+	QDEL_LIST(spawned_threats)
 	QDEL_NULL(exit_turfs)
-	QDEL_NULL(floor_turf_cache)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(receive_turfs)
@@ -480,7 +481,7 @@
 		return
 
 	for(var/mob/living/creature as anything in mutation_candidates)
-		if(QDELETED(creature) || creature.mind || !creature.can_be_cybercop)
+		if(QDELETED(creature) || creature.mind)
 			mutation_candidates -= creature
 
 	return mutation_candidates
@@ -528,17 +529,15 @@
 	generated_domain = new to_load()
 	generated_domain.lazy_load()
 
-	if(!length(generated_domain.reservations))
-		CRASH("Failed to load domain reservations.")
+	for(var/atom/thing as anything in generated_domain.created_atoms_list)
+		if(istype(thing, /mob/living))
+			var/mob/living/creature = thing
+			if(creature.can_be_cybercop)
+				mutation_candidates += creature
+			continue
 
-	var/datum/turf_reservation/res = generated_domain.reservations[1]
-
-	for(var/turf/open/floor/tile in res.reserved_turfs)
-		floor_turf_cache += tile
-
-		var/mob/living/creature = locate() in tile
-		if(creature?.can_be_cybercop)
-			mutation_candidates += creature
+		if(istype(thing, /obj/effect/mob_spawn/ghost_role))
+			RegisterSignal(thing, COMSIG_GHOSTROLE_SPAWNED, PROC_REF(on_threat_created))
 
 	return TRUE
 
@@ -591,18 +590,17 @@
 
 /// Finds any mobs with minds in the zones and gives them the bad news
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
-	for(var/turf/open/floor/tile as anything in floor_turf_cache)
-		var/mob/living/creature = locate() in tile
-		if(QDELETED(creature) || isnull(creature.mind))
+	for(var/mob/living/baddie as anything in spawned_threats)
+		if(QDELETED(baddie) || baddie.stat >= UNCONSCIOUS || isnull(baddie.mind))
 			continue
 
-		creature.throw_alert(
+		baddie.throw_alert(
 			ALERT_BITRUNNER_RESET,
 			/atom/movable/screen/alert/qserver_threat_deletion,
 			new_master = src,
 		)
 
-		to_chat(creature, span_userdanger("You have been flagged for deletion! Thank you for your service."))
+		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
 
 /// If broken via signal, disconnects all users
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
@@ -684,6 +682,7 @@
 	SIGNAL_HANDLER
 
 	domain_threats += 1
+	spawned_threats += threat
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
@@ -715,10 +714,10 @@
 		res.Release()
 
 	exit_turfs = list()
-	floor_turf_cache = list()
 	generated_domain = null
 	generated_safehouse = null
 	mutation_candidates.Cut()
+	spawned_threats.Cut()
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/crate)

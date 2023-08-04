@@ -28,7 +28,7 @@
 	///What baseturfs to set when replacing openspace when has_ceiling is true
 	var/list/ceiling_baseturfs = list()
 
-/datum/map_template/New(path = null, rename = null, cache = FALSE)
+/datum/map_template/New(path = null, rename = null, cache = FALSE, keep_atoms_list = FALSE)
 	if(path)
 		mappath = path
 	if(mappath)
@@ -36,6 +36,8 @@
 	if(rename)
 		name = rename
 	ceiling_baseturfs.Insert(1, /turf/baseturf_bottom)
+	if(keep_atoms_list)
+		src.returns_created_atoms = keep_atoms_list
 
 /datum/map_template/proc/preload_size(path, cache = FALSE)
 	var/datum/parsed_map/parsed = new(file(path))

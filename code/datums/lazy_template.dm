@@ -7,11 +7,20 @@
 	/// If this is true each load will increment an index keyed to the type and it will load [map_name]_[index]
 	var/list/datum/turf_reservation/reservations = list()
 	var/uses_multiple_allocations = FALSE
+	/// Key to identify this template - used in caching
 	var/key
+	/// Directory of maps to prefix to the filename
 	var/map_dir = "_maps/templates/lazy_templates"
+	/// The filename (without extension) of the map to load
 	var/map_name
+	/// The map width for turf reservation
 	var/map_width
+	/// The map height for turf reservation
 	var/map_height
+	/// Whether you want the map to cache created_atoms
+	var/keep_atoms_list = FALSE
+	/// Required: keep_atoms_list. Loading maps w/ atoms cached to search through what was created
+	var/list/created_atoms_list = list()
 
 /datum/lazy_template/New()
 	reservations = list()
@@ -46,7 +55,7 @@
 	if(!load_path || !fexists(load_path))
 		CRASH("lazy template [type] has an invalid load_path: '[load_path]', check directory and map name!")
 
-	var/datum/map_template/loading = new(path = load_path, cache = TRUE)
+	var/datum/map_template/loading = new(path = load_path, cache = TRUE, keep_atoms_list = keep_atoms_list)
 	if(!loading.cached_map)
 		CRASH("Failed to cache lazy template for loading: '[key]'")
 
@@ -57,6 +66,9 @@
 	if(!loading.load(coords2turf(reservation.bottom_left_coords)))
 		CRASH("Failed to load lazy template: '[key]'")
 	reservations += reservation
+
+	if(keep_atoms_list)
+		created_atoms_list += loading.created_atoms
 
 	return reservation
 

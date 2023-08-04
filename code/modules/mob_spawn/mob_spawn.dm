@@ -223,6 +223,7 @@
 		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
 			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
 
+	SEND_SIGNAL(src, COMSIG_GHOSTROLE_SPAWNED, created)
 	check_uses() // Now we check if the spawner should delete itself or not
 
 	return created

@@ -3,9 +3,11 @@
 	cost = BITRUNNER_COST_HIGH
 	desc = "Legends speak of the ravenous Wendigo hidden deep within the caves of Icemoon."
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
-	map_name = "wendigo"
 	forced_outfit = /datum/outfit/job/miner
 	key = "wendigo"
+	map_name = "wendigo"
+	map_height = 37
+	map_width = 33
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

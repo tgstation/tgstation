@@ -5,10 +5,11 @@
  */
 /datum/lazy_template/virtual_domain
 	map_dir = "_maps/virtual_domains"
-	map_height = 75 // these should NOT extend beyond 75x75
-	map_width = 75
+	map_height = 0 // these should NOT extend beyond 75x75
+	map_width = 0
 	map_name = "None"
 	key = "Virtual Domain"
+	keep_atoms_list = TRUE
 
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE

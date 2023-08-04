@@ -3,9 +3,11 @@
 	cost = BITRUNNER_COST_MEDIUM
 	desc = "A chilling realm that houses Legion's necropolis. Those who succumb to it are forever damned."
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
-	map_name = "legion"
 	forced_outfit = /datum/outfit/job/miner
 	key = "legion"
+	map_name = "legion"
+	map_height = 61
+	map_width = 38
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 
