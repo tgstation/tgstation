@@ -261,14 +261,14 @@
 	if(chemical.type == queen.beegent?.type)
 		to_chat(user, span_warning("[queen] already has this chemical!"))
 		return
-	if(needle.reagents.has_reagent(chemical.type, 5))
-		needle.reagents.remove_reagent(chemical.type, 5)
-		var/datum/reagent/bee_chem = GLOB.chemical_reagents_list[chemical.type]
-		queen.assign_reagent(bee_chem)
-		user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
-		name = queen.name
+	if(!(needle.reagents.has_reagent(chemical.type, 5)))
+		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
 		return
-	to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
+	needle.reagents.remove_reagent(chemical.type, 5)
+	var/datum/reagent/bee_chem = GLOB.chemical_reagents_list[chemical.type]
+	queen.assign_reagent(bee_chem)
+	user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
+	name = queen.name
 
 /obj/item/queen_bee/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
