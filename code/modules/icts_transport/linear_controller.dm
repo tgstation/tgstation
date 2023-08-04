@@ -521,7 +521,7 @@
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
-/datum/transport_controller/linear/proc/move_lift_horizontally(going)
+/datum/transport_controller/linear/proc/move_transport_horizontally(going)
 	if(modular_set)
 		for(var/obj/structure/transport/linear/module_to_move as anything in transport_modules)
 			module_to_move.travel(going)
