@@ -12148,7 +12148,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/air,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "dby" = (
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -15275,7 +15275,7 @@
 	dir = 6
 	},
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "dUh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -19019,7 +19019,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "eWb" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/structure/barricade/wooden/crude,
@@ -21157,6 +21157,9 @@
 /obj/structure/rack,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard)
+"fCy" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter/waste)
 "fCz" = (
 /obj/structure/rack,
 /obj/item/storage/box/firingpins{
@@ -22554,7 +22557,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "fUD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -26123,7 +26126,7 @@
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "gRQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/broken/directional/west,
@@ -32983,7 +32986,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "iHk" = (
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/floor1/fore)
@@ -36393,7 +36396,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "jBm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41097,7 +41100,7 @@
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "kMk" = (
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/machinery/door/airlock/hatch{
@@ -47051,7 +47054,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine/air,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "mlX" = (
 /obj/structure/chair/comfy/brown,
 /obj/effect/landmark/start/assistant,
@@ -54068,7 +54071,7 @@
 	},
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "nWM" = (
 /obj/structure/table,
 /obj/item/stack/medical/suture/emergency,
@@ -54408,11 +54411,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/pink/visible/layer4{
 	dir = 4
 	},
-/obj/machinery/airalarm/directional/north{
-	req_access = list("engineering")
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/engine_access,
 /turf/open/floor/iron/dark,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "obT" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/stripes/line{
@@ -59203,7 +59205,7 @@
 	},
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "prZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -74924,7 +74926,7 @@
 	dir = 4
 	},
 /obj/item/paper{
-	default_raw_text = "Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.<br> In this order:<br> 1. Wrench in the plasma can. <br> 2. Turn on the Waste Cooling Gas pump and turn the thermomachines to cold. <br> 3. Set up the scrubbers in the  chamber using the air alarm. <br> 4. Turn on/replace the filter to the canisters. <br> 5. Decide if you want to send the gas to atmos with the Supermatter Waste To Port pump, or waste it by sending it to space with the Emergency Release Valve.";
+	default_raw_text = "Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.-<hr>To set up the waste gas cooling loop, follow these steps:<br><pre>  1. Wrench in the plasma can.<br>  2. Turn on the waste Cooling Gas pump and set the thermomachines to cold.<br>  3. Set up the scrubbers in the chamber using the air alarm.<br>  4. Turn on the filter to the canisters or replace it.<br>  5. Turn on the Supermatter Waste To Port pump.</pre><br>Once everything on that list is complete, make sure that gas isn't building up inside the chamber or the pipes and you are done.";
 	name = "HOW TO SET UP THE SM WASTE"
 	},
 /turf/open/floor/iron/dark,
@@ -77523,7 +77525,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "uph" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Elevator Shaft Access"
@@ -77749,7 +77751,7 @@
 	network = list("waste","engine")
 	},
 /turf/open/floor/engine/airless,
-/area/station/engineering/atmos/pumproom)
+/area/station/engineering/supermatter/waste)
 "usI" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -139125,11 +139127,11 @@ aof
 tZD
 iMe
 xIL
-oIy
-oIy
+fCy
+fCy
 dbx
-oIy
-oIy
+fCy
+fCy
 mOT
 jSD
 iyT
@@ -139382,11 +139384,11 @@ itP
 gnx
 nnb
 bZE
-oIy
+fCy
 dTZ
 eVY
 fUC
-oIy
+fCy
 xgW
 jSD
 fcp
@@ -139639,11 +139641,11 @@ rkf
 tZD
 jHQ
 kTc
-oIy
+fCy
 iHa
 iHa
 iHa
-oIy
+fCy
 xgW
 kfo
 iyT
@@ -139896,11 +139898,11 @@ vmr
 vmr
 skj
 kFk
-oIy
+fCy
 prX
 nWK
 iHa
-oIy
+fCy
 isp
 jSD
 iMV
@@ -140153,11 +140155,11 @@ eIt
 vmr
 jsZ
 fLn
-oIy
+fCy
 jBi
 uoW
 usH
-oIy
+fCy
 bQz
 uCe
 iyT
@@ -140410,11 +140412,11 @@ eQe
 vmr
 wul
 fKH
-oIy
+fCy
 kMh
 mlW
 gRJ
-oIy
+fCy
 oIy
 hsG
 hOR

@@ -165,7 +165,7 @@
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
-		
+
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
@@ -227,7 +227,7 @@
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/radio/headset/headset_sci = 3,
-		
+
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
@@ -348,7 +348,7 @@
 		/obj/item/clothing/head/hats/tophat = 2,
 		/obj/item/clothing/head/soft/black = 2,
 		/obj/item/clothing/neck/petcollar = 1,
-		/obj/item/clothing/under/suit/sl = 2,
+		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
 		/obj/item/clothing/under/rank/civilian/bartender = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/purple = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/skirt = 2,

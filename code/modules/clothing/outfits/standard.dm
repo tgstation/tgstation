@@ -188,7 +188,7 @@
 
 	id = /obj/item/card/id/advanced/chameleon/black
 	id_trim = /datum/id_trim/reaper_assassin
-	uniform = /obj/item/clothing/under/suit/black
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	neck = /obj/item/clothing/neck/tie/red/hitman/tied
 	belt = /obj/item/modular_computer/pda/heads
 	ears = /obj/item/radio/headset
