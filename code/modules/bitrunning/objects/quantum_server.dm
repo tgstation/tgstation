@@ -710,6 +710,8 @@
 
 /// Deletes all the tile contents
 /obj/machinery/quantum_server/proc/scrub_vdom()
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR) // just in case
+
 	if(length(generated_domain.reservations))
 		var/datum/turf_reservation/res = generated_domain.reservations[1]
 		res.Release()
