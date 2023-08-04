@@ -698,7 +698,7 @@
 	notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
-		modularInterface.saved_identification = real_name
+		modularInterface.imprint_id(name = real_name)
 	custom_name = newname
 
 

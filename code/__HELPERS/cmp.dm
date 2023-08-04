@@ -141,11 +141,11 @@
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
 
-/proc/cmp_pdaname_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
-	return sorttext(B?.saved_identification, A?.saved_identification)
+/proc/cmp_pdaname_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
+	return sorttext(B?.computer?.saved_identification, A?.computer?.saved_identification)
 
-/proc/cmp_pdajob_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
-	return sorttext(B?.saved_job, A?.saved_job)
+/proc/cmp_pdajob_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
+	return sorttext(B?.computer?.saved_job, A?.computer?.saved_job)
 
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)

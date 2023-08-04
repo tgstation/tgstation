@@ -11,7 +11,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 	dog_fashion = /datum/dog_fashion/head/helmet
@@ -89,7 +89,7 @@
 	inhand_icon_state = "marine_helmet"
 	armor_type = /datum/armor/helmet_marine
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 
@@ -243,7 +243,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
@@ -264,7 +264,7 @@
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
-	clothing_flags = PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STACKABLE_HELMET_EXEMPT
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD

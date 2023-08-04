@@ -186,6 +186,23 @@
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
+/obj/item/bodypart/apply_fantasy_bonuses(bonus)
+	. = ..()
+	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
+	unarmed_damage_high = modify_fantasy_variable("unarmed_damage_high", unarmed_damage_high, bonus, minimum = 1)
+	brute_modifier = modify_fantasy_variable("brute_modifier", brute_modifier, bonus * 0.02, minimum = 0.7)
+	burn_modifier = modify_fantasy_variable("burn_modifier", burn_modifier, bonus * 0.02, minimum = 0.7)
+	wound_resistance = modify_fantasy_variable("wound_resistance", wound_resistance, bonus)
+
+/obj/item/bodypart/remove_fantasy_bonuses(bonus)
+	unarmed_damage_low = reset_fantasy_variable("unarmed_damage_low", unarmed_damage_low)
+	unarmed_damage_high = reset_fantasy_variable("unarmed_damage_high", unarmed_damage_high)
+	brute_modifier = reset_fantasy_variable("brute_modifier", brute_modifier)
+	burn_modifier = reset_fantasy_variable("burn_modifier", burn_modifier)
+	wound_resistance = reset_fantasy_variable("wound_resistance", wound_resistance)
+	return ..()
+
+
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
 	if(can_be_disabled)
