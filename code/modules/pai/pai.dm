@@ -162,6 +162,7 @@
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
+	QDEL_NULL(leash)
 	card = null
 	GLOB.pai_list.Remove(src)
 	return ..()
@@ -335,7 +336,7 @@
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
 	add_supplied_law(0, "Do not interfere with the operations of the Syndicate.")
-	qdel(leash) // Freedom!!!
+	QDEL_NULL(leash) // Freedom!!!
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
 	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
