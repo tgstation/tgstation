@@ -69,3 +69,4 @@
 		if(our_contents)
 			var/obj/item/clothing/head/lucky_hat = pick(our_contents)
 			lucky_hat.AddComponent(/datum/component/unusual_effect, color = "#FFEA0030", include_particles = TRUE)
+			lucky_hat.name = "unusual [name]"
