@@ -246,7 +246,8 @@
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
+	if(.)
+		return
 	if(action == "reload")
 		rearm()
 		return TRUE
@@ -477,7 +478,8 @@
 	.["mode_label"] = "Honk Severiy"
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/ui_act(action, list/params)
-	. = ..()
+	if(.)
+		return
 	if(action == "change_mode")
 		harmful = !harmful
 		if(harmful)
