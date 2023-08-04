@@ -19,10 +19,13 @@
 	var/coward_casting = FALSE
 
 /datum/action/cooldown/spell/conjure/can_cast_spell(feedback = TRUE)
-	..()
+	. = ..()
+	if(!.)
+		return
 	var/mob/truecaster = get_caster_from_cast_on(owner)
-	if(!coward_casting && isstructure(truecaster.loc)
-		to_chat(owner, span_warning("You cannot cast this spell inside something!"))
+	if(!coward_casting && (isstructure(truecaster.loc)) || iseffect(truecaster.loc))
+		if(feedback)
+			to_chat(owner, span_warning("You cannot cast this spell inside something!"))
 		return FALSE
 	return TRUE
 

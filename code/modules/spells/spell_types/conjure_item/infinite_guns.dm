@@ -19,7 +19,7 @@
 // Because enchanted guns self-delete and regenerate themselves,
 // override make_item here and let's not bother with tracking their weakrefs.
 /datum/action/cooldown/spell/conjure_item/infinite_guns/make_item()
-	return new item_type()
+	return new item_type(get_turf(owner))
 
 /datum/action/cooldown/spell/conjure_item/infinite_guns/gun
 	name = "Lesser Summon Guns"
