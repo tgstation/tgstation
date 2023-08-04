@@ -75,7 +75,7 @@
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 
 	//after playing the fade-in animation, remove the image and the trick atom
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/seethrough,clear_image), trickery_image, fool.client), animation_time)
+	addtimer(CALLBACK(src, PROC_REF(clear_image), trickery_image, fool.client), animation_time)
 
 ///Remove the image and the trick atom
 /datum/component/seethrough_mob/proc/clear_image(image/removee, client/remove_from)
