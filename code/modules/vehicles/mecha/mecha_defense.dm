@@ -333,18 +333,18 @@
 	if(!(mecha_flags & PANEL_OPEN) && LAZYLEN(occupants))
 		for(var/mob/occupant as anything in occupants)
 			occupant.show_message(
-				span_userdanger("[user] is trying to open maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone trying to open maintenance panel of [src]!"), MSG_AUDIBLE,
+				span_userdanger("[user] is trying to open the maintenance panel of [src]!"), MSG_VISUAL,
+				span_userdanger("You hear someone trying to open the maintenance panel of [src]!"), MSG_AUDIBLE,
 			)
-		visible_message(span_danger("[user] is trying to open maintenance panel of [src]!"))
+		visible_message(span_danger("[user] is trying to open the maintenance panel of [src]!"))
 		if(!do_after(user, 5 SECONDS, src))
 			return
 		for(var/mob/occupant as anything in occupants)
 			occupant.show_message(
-				span_userdanger("[user] has opened maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone opening maintenance panel of [src]!"), MSG_AUDIBLE,
+				span_userdanger("[user] has opened the maintenance panel of [src]!"), MSG_VISUAL,
+				span_userdanger("You hear someone opening the maintenance panel of [src]!"), MSG_AUDIBLE,
 			)
-		visible_message(span_danger("[user] has opened maintenance panel of [src]!"))
+		visible_message(span_danger("[user] has opened the maintenance panel of [src]!"))
 
 	mecha_flags ^= PANEL_OPEN
 	if(mecha_flags & PANEL_OPEN)

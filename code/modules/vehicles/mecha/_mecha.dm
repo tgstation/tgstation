@@ -448,13 +448,13 @@
 		if(servo)
 			. += span_notice("Micro-servos reduce movement power usage by [100 - round(100 / servo.rating)]%")
 		else
-			. += span_warning("It's missing micro-servo.")
+			. += span_warning("It's missing a micro-servo.")
 		if(capacitor)
 			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
 		else
-			. += span_warning("It's missing capacitor.")
+			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
-			. += span_warning("It's missing scanning module.")
+			. += span_warning("It's missing a scanning module.")
 	if(enclosed)
 		return
 	if(mecha_flags & SILICON_PILOT)
@@ -729,7 +729,7 @@
 		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
 		return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_CABIN_SEAL))
-		balloon_alert(user, "on cooldown")
+		balloon_alert(user, "on cooldown!")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 1 SECONDS)
 
