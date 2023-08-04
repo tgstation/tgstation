@@ -844,16 +844,16 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	icon_state = "subfloor"
 	base_icon_state = "subfloor"
 
-/obj/structure/transport/linear/tram/subfloor/northwest
+/obj/structure/transport/linear/tram/structure/northwest
 	icon_state = "spoiler-subfloor-nw"
 
-/obj/structure/transport/linear/tram/subfloor/southwest
+/obj/structure/transport/linear/tram/structure/southwest
 	icon_state = "spoiler-subfloor-sw"
 
-/obj/structure/transport/linear/tram/subfloor/northeast
+/obj/structure/transport/linear/tram/structure/northeast
 	icon_state = "spoiler-subfloor-ne"
 
-/obj/structure/transport/linear/tram/subfloor/southeast
+/obj/structure/transport/linear/tram/structure/southeast
 	icon_state = "spoiler-subfloor-se"
 
 /datum/armor/structure_tram

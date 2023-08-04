@@ -11217,7 +11217,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "cNT" = (
-/obj/structure/transport/linear/tram/structure,
+/obj/structure/transport/linear/tram/structure/southeast,
 /obj/structure/tram/spoiler{
 	dir = 4
 	},
@@ -20289,7 +20289,7 @@
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "gjM" = (
-/obj/structure/transport/linear/tram/structure,
+/obj/structure/transport/linear/tram/structure/northeast,
 /obj/structure/tram/spoiler{
 	dir = 1
 	},
@@ -25864,7 +25864,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
 "irw" = (
-/obj/structure/transport/linear/tram/structure,
+/obj/structure/transport/linear/tram/structure/northwest,
 /obj/structure/tram/spoiler{
 	dir = 8
 	},
@@ -40533,7 +40533,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "nxf" = (
-/obj/structure/transport/linear/tram/structure,
+/obj/structure/transport/linear/tram/structure/southwest,
 /obj/structure/tram/spoiler,
 /turf/open/openspace,
 /area/station/tram)
