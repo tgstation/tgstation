@@ -1,6 +1,6 @@
 ///A component that lets you turn your character transparent in order to see and click through yourself.
 /datum/component/seethrough_mob
-	///The atom that enables our horseshit
+	///The atom that enables our dark magic
 	var/obj/render_source_atom
 	///The fake version of ourselves
 	var/image/trickery_image
@@ -13,7 +13,6 @@
 	///Is the seethrough effect currently active
 	var/is_active
 
-///see_through_map is a define pointing to a specific map. It's basically defining the area which is considered behind. See see_through_maps.dm for a list of maps
 /datum/component/seethrough_mob/Initialize(target_alpha = 100, animation_time = 0.5 SECONDS, clickthrough = TRUE)
 	. = ..()
 
@@ -25,7 +24,7 @@
 	src.clickthrough = clickthrough
 	src.is_active = FALSE
 
-///Apply the trickery image and animation
+///Set up everything we need to trick the client and keep it looking normal for everyone else
 /datum/component/seethrough_mob/proc/trick_mob()
 	SIGNAL_HANDLER
 
@@ -45,10 +44,6 @@
 	render_source_atom.appearance_flags |= ( RESET_COLOR | RESET_TRANSFORM)
 
 	render_source_atom.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
-
-	//32 too much
-	//64 just right
-	//96 too little
 
 	var/icon/current_mob_icon = icon(fool.icon, fool.icon_state)
 	render_source_atom.pixel_x = -fool.pixel_x
@@ -77,18 +72,18 @@
 	animate(trickery_image, alpha = 255, time = animation_time)
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 
-	//after playing the fade-in animation, remove the screen obj
+	//after playing the fade-in animation, remove the image and the trick atom
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/seethrough,clear_image), trickery_image, fool.client), animation_time)
 
-///Remove a screen image from a client
+///Remove the image and the trick atom
 /datum/component/seethrough_mob/proc/clear_image(image/removee, client/remove_from)
 	var/atom/atom_parent = parent
 	atom_parent.appearance_flags &= ~KEEP_TOGETHER
 	atom_parent.render_target = null
 	qdel(render_source_atom)
-	remove_from?.images -= removee //player could've logged out during the animation, so check just in case
+	remove_from?.images -= removee
 
-///Image is removed when they log out because client gets deleted, so drop the mob reference
+///Effect is disabled when they log out because client gets deleted
 /datum/component/seethrough_mob/proc/on_client_disconnect()
 	SIGNAL_HANDLER
 
