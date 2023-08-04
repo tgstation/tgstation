@@ -6,7 +6,7 @@
 	extra_loot = list(/obj/item/toy/plush/bubbleplush = 1)
 	map_name = "bubblegum"
 	forced_outfit = /datum/outfit/job/miner
-	id = "bubblegum"
+	key = "bubblegum"
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

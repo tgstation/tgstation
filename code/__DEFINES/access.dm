@@ -283,6 +283,7 @@
 	ACCESS_ATMOSPHERICS, \
 	ACCESS_AUX_BASE, \
 	ACCESS_BAR, \
+	ACCESS_BIT_DEN, \
 	ACCESS_BRIG, \
 	ACCESS_BRIG_ENTRANCE, \
 	ACCESS_CARGO, \
@@ -491,6 +492,7 @@
 #define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
 #define REGION_ACCESS_SUPPLY list( \
+	ACCESS_BIT_DEN, \
 	ACCESS_CARGO, \
 	ACCESS_MECH_MINING, \
 	ACCESS_MINERAL_STOREROOM, \
@@ -549,6 +551,7 @@
 	/obj/item/modular_computer/pda/heads/rd = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/captain = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/cargo = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/pda/bitrunner = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/pda/shaftminer = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/pda/chaplain = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/lawyer = list(REGION_GENERAL), \

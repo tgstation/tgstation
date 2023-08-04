@@ -5,7 +5,7 @@
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	map_name = "legion"
 	forced_outfit = /datum/outfit/job/miner
-	id = "legion"
+	key = "legion"
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

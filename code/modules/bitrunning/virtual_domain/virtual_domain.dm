@@ -8,6 +8,7 @@
 	map_height = 75 // these should NOT extend beyond 75x75
 	map_width = 75
 	map_name = "None"
+	key = "Virtual Domain"
 
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE
@@ -23,8 +24,6 @@
 	var/datum/outfit/forced_outfit
 	/// Information given to connected clients via ability
 	var/help_text
-	/// For blacklisting purposes
-	var/id
 	// Name to show in the UI
 	var/name = "Virtual Domain"
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.

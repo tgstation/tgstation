@@ -8,6 +8,6 @@
 	help_text = "A group of Syndicate operatives have stolen valuable cargo from the station. \
 	They have boarded their ship and are attempting to escape. Infiltrate their ship and recover \
 	the crate. 	Be careful, they are extremely armed."
-	id = "syndicate_assault"
+	key = "syndicate_assault"
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/shuttle

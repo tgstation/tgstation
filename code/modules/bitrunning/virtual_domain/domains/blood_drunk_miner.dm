@@ -5,7 +5,7 @@
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	map_name = "blood_drunk_miner"
 	forced_outfit = /datum/outfit/job/miner
-	id = "blood_drunk_miner"
+	key = "blood_drunk_miner"
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

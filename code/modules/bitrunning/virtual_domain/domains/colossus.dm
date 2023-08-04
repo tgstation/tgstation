@@ -5,7 +5,7 @@
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
 	map_name = "colossus"
 	forced_outfit = /datum/outfit/job/miner
-	id = "colossus"
+	key = "colossus"
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

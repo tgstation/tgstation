@@ -8,6 +8,6 @@
 	forced_outfit = /datum/outfit/job/clown
 	help_text = "The trials of the Honkitude have begun. The sound of bike horns wailing in the distance. \
 	this realm- some sort of puzzle, has existed in legend as the final test of just how silly you are."
-	id = "clown_planet"
+	key = "clown_planet"
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/mine

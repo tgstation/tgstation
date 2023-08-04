@@ -9,7 +9,7 @@
 	difficulty = BITRUNNER_DIFFICULTY_LOW
 	map_name = "stairs_and_cliffs"
 	forced_outfit = /datum/outfit/job/virtual_domain_iceclimber
-	id = "stairs_and_cliffs"
+	key = "stairs_and_cliffs"
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/ice
 

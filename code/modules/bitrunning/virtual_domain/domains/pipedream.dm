@@ -5,7 +5,7 @@
 	help_text = "Not long ago, this place was thriving with activity. The workers \
 	seemed to have left in a hurry, and now productivity is in the bin. Something \
 	must have caused it, but what?"
-	id = "pipedream"
+	key = "pipedream"
 	safehouse_path = /datum/map_template/safehouse/shuttle
 	cost = BITRUNNER_COST_LOW
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM

@@ -181,11 +181,11 @@
  *
  * This is the starting point if you have an id. Does validation and feedback on steps
  */
-/obj/machinery/quantum_server/proc/cold_boot_map(mob/user, map_id)
+/obj/machinery/quantum_server/proc/cold_boot_map(mob/user, map_key)
 	if(!get_is_ready())
 		return FALSE
 
-	if(isnull(map_id))
+	if(isnull(map_key))
 		balloon_alert(user, "no domain specified.")
 		return FALSE
 
@@ -200,7 +200,7 @@
 	loading = TRUE
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
-	if(!initialize_domain(map_id))
+	if(!initialize_domain(map_key))
 		balloon_alert(user, "invalid domain specified.")
 		loading = FALSE
 		return FALSE
@@ -336,7 +336,7 @@
 			"cost" = initial(domain.cost),
 			"desc" = can_view ? initial(domain.desc) : "Limited scanning capabilities. Cannot infer domain details.",
 			"difficulty" = initial(domain.difficulty),
-			"id" = initial(domain.id),
+			"id" = initial(domain.key),
 			"name" = can_view ? initial(domain.name) : REDACTED,
 			"reward" = can_view_reward ? initial(domain.reward_points) : REDACTED,
 		))
@@ -438,7 +438,7 @@
 		if(!initial(available.test_only) && init_cost > 0 && init_cost < 4 && init_cost <= points)
 			random_domains += list(list(
 				cost = init_cost,
-				id = initial(available.id),
+				id = initial(available.key),
 			))
 
 	var/random_value = rand(0, total_cost)
@@ -522,10 +522,10 @@
 		else
 			return "S"
 
-/// Initializes a new domain if the given id is valid and the user has enough points
-/obj/machinery/quantum_server/proc/initialize_domain(map_id)
+/// Initializes a new domain if the given key is valid and the user has enough points
+/obj/machinery/quantum_server/proc/initialize_domain(map_key)
 	for(var/datum/lazy_template/virtual_domain/available as anything in subtypesof(/datum/lazy_template/virtual_domain))
-		if(map_id != initial(available.id) || points < initial(available.cost))
+		if(map_key != initial(available.key) || points < initial(available.cost))
 			continue
 
 		generated_domain = new available()
@@ -592,7 +592,7 @@
 
 	var/datum/turf_reservation/res = generated_domain.reservations[1]
 
-	for(var/turf/open/floor/tile in res.reserved_turfs)
+	for(var/turf/open/floor/tile in res.reserved_turfs) // this is silly and not performant
 		var/mob/living/creature = locate() in tile
 		if(QDELETED(creature) || isnull(creature.mind))
 			continue
@@ -687,14 +687,17 @@
 	domain_threats += 1
 
 /// Stops the current virtual domain and disconnects all users
-/obj/machinery/quantum_server/proc/reset()
+/obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	loading = TRUE
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
 	notify_spawned_threats()
 
-	addtimer(CALLBACK(src, PROC_REF(scrub_vdom)), 15 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	if(!fast)
+		addtimer(CALLBACK(src, PROC_REF(scrub_vdom)), 15 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	else
+		scrub_vdom() // used in unit testing, no need to wait for callbacks
 
 	cooling_off = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * server_cooldown_efficiency), TIMER_UNIQUE|TIMER_STOPPABLE)

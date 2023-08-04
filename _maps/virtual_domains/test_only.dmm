@@ -1,17 +1,17 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/floor,
+/area/virtual_domain/powered)
 "I" = (
 /mob/living/basic/pet/dog/corgi,
-/turf/template_noop,
-/area/template_noop)
+/turf/open/floor,
+/area/virtual_domain/powered)
 "U" = (
-/turf/template_noop,
+/turf/open/floor,
 /area/virtual_domain/safehouse/bottom_left)
 
 (1,1,1) = {"
-a
+I
 a
 a
 a
@@ -27,7 +27,7 @@ a
 (3,1,1) = {"
 a
 a
-I
+a
 a
 a
 "}

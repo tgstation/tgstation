@@ -9,7 +9,7 @@
 	help_text = "What a lovely forest. There's a loot crate here in the middle of the map. \
 	Hmm... It doesn't budge. The gondolas don't seem to have any trouble moving it, though. \
 	I bet there's a way to move it myself."
-	id = "gondola_asteroid"
+	key = "gondola_asteroid"
 	safehouse_path = /datum/map_template/safehouse/shuttle_space
 
 /// Very pushy gondolas, great for moving loot crates.

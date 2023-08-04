@@ -5,6 +5,6 @@
 	difficulty = BITRUNNER_DIFFICULTY_NONE
 	extra_loot = list(/obj/item/stack/spacecash/c500 = 3)
 	map_name = "vaporwave"
-	id = "vaporwave"
+	key = "vaporwave"
 	reward_points = BITRUNNER_REWARD_EXTREME
 	safehouse_path = /datum/map_template/safehouse/shuttle_space

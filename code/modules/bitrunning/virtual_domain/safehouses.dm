@@ -21,6 +21,7 @@
 
 /// The default safehouse map template.
 /datum/map_template/safehouse/wood
+	filename = "wood.dmm"
 
 /datum/map_template/safehouse/den
 	filename = "den.dmm"

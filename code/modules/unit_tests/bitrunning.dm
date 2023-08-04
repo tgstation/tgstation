@@ -20,14 +20,14 @@
 
 	TEST_ASSERT_EQUAL(server.initialize_domain(TEST_MAP), TRUE, "Should initialize a domain with a valid map")
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Should set the generated_domain var")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Should have initialized the proper map")
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Should have initialized the proper map")
 
 /// Loads safehouse and turfs, etc
 /datum/unit_test/qserver_initialize_safehouse/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 
-	TEST_ASSERT_EQUAL(server.initialize_domain(map_id = TEST_MAP), TRUE, "Should initialize a domain with a valid map")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	TEST_ASSERT_EQUAL(server.initialize_domain(map_key = TEST_MAP), TRUE, "Should initialize a domain with a valid map")
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	TEST_ASSERT_EQUAL(server.initialize_safehouse_turfs(), TRUE, "Should initialize safehouse turfs")
 	TEST_ASSERT_NOTNULL(server.generated_safehouse, "Did not load generated_safehouse correctly")
@@ -39,9 +39,9 @@
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 
 	server.cold_boot_map(labrat, TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	server.reset()
+	server.reset(fast = TRUE)
 	TEST_ASSERT_NULL(server.generated_domain, "Did not stop domain")
 	TEST_ASSERT_NULL(server.generated_safehouse, "Did not stop safehouse")
 	TEST_ASSERT_EQUAL(server.get_is_ready(), FALSE, "Should cool down, but did not set ready status to FALSE")
@@ -51,11 +51,11 @@
 
 	server.cool_off()
 	server.cold_boot_map(labrat, TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Should load a new domain after cooldown")
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Should load a new domain after cooldown")
 
 	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
 	server.occupant_mind_refs += fake_mind_ref
-	server.reset()
+	server.reset(fast = TRUE)
 	TEST_ASSERT_NULL(server.generated_domain, "Should force stop a domain even with occupants")
 
 /// Handles the linking process to boot a domain from scratch
@@ -65,23 +65,23 @@
 	labrat.mind_initialize()
 	labrat.mock_client = new()
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Did not cold boot generated_domain correctly")
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP_EXPENSIVE)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Should prevent loading multiple domains")
+	server.cold_boot_map(labrat, map_key = TEST_MAP_EXPENSIVE)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Should prevent loading multiple domains")
 
-	server.reset()
+	server.reset(fast = TRUE)
 	server.cool_off()
 	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
 	server.occupant_mind_refs += fake_mind_ref
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_NULL(server.generated_domain, "Should prevent setting domains with occupants")
 
 	server.occupant_mind_refs -= fake_mind_ref
 	server.points = 3
-	server.cold_boot_map(labrat, map_id = TEST_MAP_EXPENSIVE)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_EXPENSIVE, "Sanity: Should've loaded expensive test map")
+	server.cold_boot_map(labrat, map_key = TEST_MAP_EXPENSIVE)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP_EXPENSIVE, "Sanity: Should've loaded expensive test map")
 	TEST_ASSERT_EQUAL(server.points, 0, "Should've spent 3 points on loading a 3 point domain")
 
 /// Tests the netpod's ability to buckle in and set refs
@@ -98,13 +98,12 @@
 	var/obj/machinery/quantum_server/connected_server = pod.server_ref.resolve()
 	TEST_ASSERT_EQUAL(connected_server, server, "Did not set server_ref correctly")
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	labrat.forceMove(pod.loc)
 	pod.close_machine(labrat)
 	TEST_ASSERT_NOTNULL(pod.occupant, "Did not set occupant_ref")
-	// UNTIL(!isnull(pod.occupant_mind_ref))
 	TEST_ASSERT_EQUAL(server.occupant_mind_refs[1], pod.occupant_mind_ref, "Did not add mind to server occupant_mind_refs")
 
 /// Tests the netpod's ability to disconnect
@@ -160,8 +159,8 @@
 	labrat.mock_client = new()
 	var/datum/weakref/real_mind = WEAKREF(labrat.mind)
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	labrat.forceMove(pod.loc)
 	pod.set_occupant(labrat)
@@ -309,8 +308,8 @@
 	RegisterSignal(netpod, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_netpod_broken))
 	RegisterSignal(netpod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_integrity))
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	labrat.forceMove(get_turf(netpod))
 	netpod.set_occupant(labrat)
@@ -338,8 +337,8 @@
 
 	server.cool_off()
 	server.occupant_mind_refs.Cut()
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
 /// Tests the server's ability to generate a loot crate
 /datum/unit_test/qserver_generate_rewards/Run()
@@ -351,8 +350,8 @@
 	var/turf/tiles = get_adjacent_open_turfs(server)
 	TEST_ASSERT_NOTEQUAL(length(tiles), 0, "Sanity: Did not find an open turf")
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	server.receive_turfs = tiles
 	TEST_ASSERT_EQUAL(server.generate_loot(), TRUE, "Should generate loot with a receive turf")
@@ -379,8 +378,9 @@
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
+	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
 	var/list/mobs = server.get_valid_domain_targets()
 	TEST_ASSERT_EQUAL(length(mobs), 0, "Shouldn't get a list without players")
@@ -391,16 +391,15 @@
 	var/datum/turf_reservation/res = server.generated_domain.reservations[1]
 	TEST_ASSERT_NOTNULL(res, "Sanity: Did not generate a reservation")
 
-	var/total = 0
+	var/mob/living/basic/pet/dog/corgi/pupper
 	for(var/turf/open/floor/tile in res.reserved_turfs)
-		for(var/mob/living in tile.contents)
-			total += 1
+		for(var/mob/living/basic/pet/dog/corgi/doggo in tile)
+			pupper = doggo
 
-	TEST_ASSERT_EQUAL(total, 1, "Should return a list of mobs")
-	TEST_ASSERT_EQUAL(length(mobs), 1, "Should return a list of mobs")
-
-	var/mob/living/basic/pet/dog/corgi/pupper = locate() in mobs
 	TEST_ASSERT_NOTNULL(pupper, "Should be a corgi on test map")
+
+	mobs = server.get_valid_domain_targets()
+	TEST_ASSERT_EQUAL(length(mobs), 1, "Should return a list of mobs")
 
 	mobs.Cut()
 	pupper.mind_initialize()
@@ -417,7 +416,7 @@
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 0, "Sanity: Shouldn't exist any exit turfs until boot")
 	TEST_ASSERT_EQUAL(server.retries_spent, 0, "Shouldn't create a hololadder without exit turfs")
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Should create 3 exit turfs")
 
@@ -431,7 +430,7 @@
 	server.generate_hololadder()
 	TEST_ASSERT_EQUAL(server.retries_spent, 3, "Shouldn't spend more than 3 retries")
 
-	server.reset()
+	server.reset(fast = TRUE)
 	TEST_ASSERT_EQUAL(server.retries_spent, 0, "Should reset retries on reset()")
 
 /// Tests the calculate rewards function
@@ -440,7 +439,7 @@
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	server.cold_boot_map(labrat, map_key = TEST_MAP)
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
 
 	var/rewards = server.calculate_rewards()
