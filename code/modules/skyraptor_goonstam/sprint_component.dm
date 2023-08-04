@@ -73,6 +73,11 @@
 		if(sprinting)
 			stopSprint()
 		return
+	var/turf/T = move_args[MOVE_ARG_NEW_LOC]
+	if(!isturf(T))
+		return
+	if(!T.Enter(parent, TRUE))
+		return
 
 	if(sprint_key_down && !HAS_TRAIT(carbon_parent, TRAIT_NO_SPRINT))
 		var/_step_size = (direct & (direct-1)) ? 1.4 : 1 //If we're moving diagonally, we're taking roughly 1.4x step size

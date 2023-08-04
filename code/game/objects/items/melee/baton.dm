@@ -209,7 +209,7 @@
 			var/mob/living/carbon/human/human_target = target
 			if(prob(force_say_chance))
 				human_target.force_say()
-		target.stamina.adjust(-charged_stamina_damage) /// SKYRAPTOR EDIT: differentiating batong stamdamage from regular stamdamage, switched to direct stamina adjustment
+		/// SKYRAPTOR REMOVAL: we don't need to deal stamina damage manually, the Disorient effect does that for us
 		if(!trait_check)
 			//target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override)) SKYRAPTOR REMOVAL
 			target.Disorient(6 SECONDS, charged_stamina_damage, paralyze = disable_duration, stack_status = FALSE)
