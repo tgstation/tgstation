@@ -135,7 +135,7 @@
 	. = ..()
 
 	var/turf/caster_turf = get_turf(owner)
-	if(!caster_turf)
+	if(isnull(caster_turf))
 		return FALSE
 	// Get the tile infront of the caster, based on their direction
 	var/turf/caster_front_turf = get_step(owner, owner.dir)

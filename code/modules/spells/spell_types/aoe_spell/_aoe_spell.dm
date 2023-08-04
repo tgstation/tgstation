@@ -17,7 +17,7 @@
 /datum/action/cooldown/spell/aoe/can_cast_spell(feedback = TRUE)
 	..()
 	var/mob/truecaster = get_caster_from_cast_on(owner)
-	if(!coward_casting && (istype(truecaster.loc, /obj/structure)))
+	if(!coward_casting && isstructure(truecaster.loc))
 		to_chat(owner, span_warning("You cannot cast this spell inside something!"))
 		return FALSE
 	return TRUE
