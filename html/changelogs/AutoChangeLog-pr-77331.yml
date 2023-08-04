@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - admin: "The imaginary friend smite now allows selecting \"offer to ghosts\" instead of having to perform that poll yourself manually. When offering to ghosts you can also offer for several ghosts to volunteer at the same time."
