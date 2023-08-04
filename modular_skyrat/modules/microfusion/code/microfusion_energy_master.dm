@@ -66,7 +66,7 @@
 	/// The heat dissipation bonus granted by the weapon.
 	var/heat_dissipation_bonus = 0
 	/// What slots does this gun have?
-	var/attachment_slots = list(GUN_SLOT_BARREL, GUN_SLOT_UNDERBARREL, GUN_SLOT_RAIL, GUN_SLOT_UNIQUE)
+	var/attachment_slots = list(GUN_SLOT_BARREL, GUN_SLOT_UNDERBARREL, GUN_SLOT_RAIL, GUN_SLOT_UNIQUE, GUN_SLOT_CAMO)
 	/// Our base firedelay.
 	var/base_fire_delay = 0
 	/// Do we use more power because of attachments?
@@ -350,6 +350,15 @@
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
 	var/randomized_bonus_spread = rand(base_bonus_spread, bonus_spread)
+	var/randomized_gun_spread = spread ? rand(0, spread) : 0
+	var/total_random_spread = max(0, randomized_bonus_spread + randomized_gun_spread)
+	var/burst_spread_mult = rand()
+
+	var/modified_delay = fire_delay
+	if(phase_emitter)
+		modified_delay = phase_emitter.fire_delay
+	if(user && HAS_TRAIT(user, TRAIT_DOUBLE_TAP))
+		modified_delay = ROUND_UP(fire_delay * 0.5)
 
 	if(burst_size > 1)
 		firing_burst = TRUE
