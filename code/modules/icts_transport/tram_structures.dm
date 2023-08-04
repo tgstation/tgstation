@@ -90,6 +90,7 @@
 		if(!deployed)
 			// Bring out the blades
 			deploy_spoiler()
+		return
 
 	if(!controller_active)
 		return
@@ -132,25 +133,16 @@
 	do_sparks(5, cardinal_only = FALSE, source = src)
 	obj_flags |= EMAGGED
 
-/*
-/obj/structure/tram/spoiler/welder_act(mob/living/user, obj/item/tool)
+/obj/structure/tram/spoiler/multitool_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return FALSE
 
-	if(atom_integrity >= max_integrity && !(machine_stat & BROKEN))
-		balloon_alert(user, "it doesn't need repairs!")
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "electronics reset!")
+		obj_flags &= ~EMAGGED
 		return TRUE
 
-	balloon_alert(user, "repairing display...")
-	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
-		return TRUE
-
-	balloon_alert(user, "repaired")
-	atom_integrity = max_integrity
-	set_machine_stat(machine_stat & ~BROKEN)
-	update_appearance()
-	return TRUE
-*/
+	return FALSE
 
 /obj/structure/chair/sofa/bench/tram
 	name = "bench"
