@@ -352,7 +352,7 @@
 
 	var/transmissibility
 	visibility_flags |= HIDDEN_SCANNER
-	transmissibility = requested_transmissibility
+	var/transmissibility = requested_transmissibility
 
 	if(isnull(transmissibility))
 		transmissibility = rand(1,100)
