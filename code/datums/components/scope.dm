@@ -152,7 +152,7 @@
 
 /atom/movable/screen/fullscreen/cursor_catcher/scope/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
-		var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
 	if(isnull(icon_x))
 		icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 		if(isnull(icon_x))
