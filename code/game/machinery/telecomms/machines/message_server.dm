@@ -131,14 +131,12 @@
 		return
 
 	// log the signal
-	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
-		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
-		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
-		pda_msgs += msg
-		signal.logged = msg
+	if(istype(signal, /datum/signal/subspace/messaging/tablet_message))
+		var/datum/signal/subspace/messaging/tablet_message/PDAsignal = signal
+		var/datum/data_tablet_msg/log_message = new(PDAsignal.format_target(), PDAsignal.format_sender(), PDAsignal.format_message(), PDAsignal.format_photo_path())
+		pda_msgs += log_message
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
 		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
-		signal.logged = msg
 		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
 			rc_msgs += msg
 	signal.data["reject"] = FALSE
@@ -158,7 +156,6 @@
 /datum/signal/subspace/messaging
 	frequency = FREQ_COMMON
 	server_type = /obj/machinery/telecomms/message_server
-	var/datum/logged
 
 /datum/signal/subspace/messaging/New(init_source, init_data)
 	source = init_source
@@ -175,28 +172,31 @@
 	return copy
 
 // Tablet message signal datum
-/datum/signal/subspace/messaging/tablet_msg/proc/format_target()
-	if (length(data["targets"]) > 1)
+/datum/signal/subspace/messaging/tablet_message/proc/format_target()
+	if (data["everyone"])
 		return "Everyone"
-	var/obj/item/modular_computer/target = data["targets"][1]
+	var/datum/computer_file/program/messenger/target_app = data["targets"][1]
+	var/obj/item/modular_computer/target = target_app.computer
 	return "[target.saved_identification] ([target.saved_job])"
 
-/datum/signal/subspace/messaging/tablet_msg/proc/format_message()
-	return "\"[data["message"]]\""
+/datum/signal/subspace/messaging/tablet_message/proc/format_sender()
+	var/display_name = get_messenger_name(locate(data["ref"]))
+	return display_name ? display_name : STRINGIFY_PDA_TARGET(data["fakename"], data["fakejob"])
 
-/datum/signal/subspace/messaging/tablet_msg/broadcast()
-	if (!logged)  // Can only go through if a message server logs it
-		return
-	for (var/obj/item/modular_computer/comp in data["targets"])
-		if(!QDELETED(comp))
-			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
-				if(!QDELETED(app))
-					app.receive_message(src)
+/datum/signal/subspace/messaging/tablet_message/proc/format_message()
+	return data["message"]
+
+/datum/signal/subspace/messaging/tablet_message/proc/format_photo_path()
+	return data["photo"]
+
+/datum/signal/subspace/messaging/tablet_message/broadcast()
+	for (var/datum/computer_file/program/messenger/app in data["targets"])
+		if(!QDELETED(app))
+			app.receive_message(src)
+	data["targets"] = null
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()
-	if (!logged)  // Like /pda, only if logged
-		return
 	var/recipient_department = ckey(data["recipient_department"])
 	for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
 		if(ckey(console.department) == recipient_department || (data["ore_update"] && console.receive_ore_updates))
@@ -207,8 +207,8 @@
 	var/sender = "Unspecified"
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
-	var/datum/picture/picture  // attached photo
-	var/automated = 0 //automated message
+	var/picture_asset_key  // attached photo path
+	var/automated = FALSE // automated message
 
 /datum/data_tablet_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
@@ -218,18 +218,7 @@
 	if(param_message)
 		message = param_message
 	if(param_photo)
-		picture = param_photo
-
-/datum/data_tablet_msg/Topic(href,href_list)
-	..()
-	if(href_list["photo"])
-		var/mob/M = usr
-		M << browse_rsc(picture.picture_image, "pda_photo.png")
-		M << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>PDA Photo</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=pdaphoto;size=[picture.psize_x]x[picture.psize_y];can-close=true")
-		onclose(M, "pdaphoto")
+		picture_asset_key = param_photo
 
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified"  // receiving department
