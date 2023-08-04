@@ -1,6 +1,6 @@
 /datum/disease
 	//Flags
-	var/visibility_flags = 0
+	var/visibility_flags = NONE
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
@@ -17,6 +17,8 @@
 	var/max_stages = 0
 	/// The probability of this infection advancing a stage every second the cure is not present.
 	var/stage_prob = 2
+	/// How long this infection incubates (non-visible) before revealing itself
+	var/incubation_time = 0
 
 	//Other
 	var/list/viable_mobtypes = list() //typepaths of viable mobs
@@ -62,7 +64,7 @@
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
-///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
+///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
@@ -152,7 +154,7 @@
 /datum/disease/proc/Copy()
 	//note that stage is not copied over - the copy starts over at stage 1
 	var/static/list/copy_vars = list("name", "visibility_flags", "disease_flags", "spread_flags", "form", "desc", "agent", "spread_text",
-									"cure_text", "max_stages", "stage_prob", "viable_mobtypes", "cures", "infectivity", "cure_chance",
+									"cure_text", "max_stages", "stage_prob", "incubation_time", "viable_mobtypes", "cures", "infectivity", "cure_chance",
 									"required_organ", "bypasses_immunity", "spreading_modifier", "severity", "needs_all_cures", "strain_data",
 									"infectable_biotypes", "process_dead")
 

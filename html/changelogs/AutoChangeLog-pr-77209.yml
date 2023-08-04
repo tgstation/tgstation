@@ -1,0 +1,5 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - rscdel: "removed new player status tab Readiness Status"
+  - rscadd: "added a Ready Status Blip on the Collapse Menu button"

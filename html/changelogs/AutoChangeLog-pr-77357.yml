@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Areas created with the \"land claim\" blueprints are no longer hazardous to free golems."
