@@ -32,6 +32,8 @@
 		return
 
 	ADD_TRAIT(animal, TRAIT_FUGU_GLANDED, type)
+	var/datum/action/toggle_seethrough/seeThrough = new
+	seeThrough.Grant(animal)
 	animal.maxHealth *= 1.5
 	animal.health = min(animal.maxHealth, animal.health * 1.5)
 	animal.melee_damage_lower = max((animal.melee_damage_lower * 2), 10)

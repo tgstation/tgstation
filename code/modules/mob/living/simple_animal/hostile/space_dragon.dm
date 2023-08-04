@@ -85,7 +85,6 @@
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
-	AddComponent(/datum/component/seethrough_mob)
 	var/datum/action/toggle_seethrough/seeThrough = new
 	seeThrough.Grant(src)
 

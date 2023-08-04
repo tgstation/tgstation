@@ -54,6 +54,8 @@
 
 /mob/living/basic/tree/Initialize(mapload)
 	. = ..()
+	var/datum/action/toggle_seethrough/seeThrough = new
+	seeThrough.Grant(src)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	var/static/list/death_loot = list(/obj/item/stack/sheet/mineral/wood)
 	AddElement(/datum/element/death_drops, death_loot)
