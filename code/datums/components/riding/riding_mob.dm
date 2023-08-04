@@ -408,11 +408,11 @@
 /datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
 	var/mob/living/basic/mining/goliath/goliath = parent
-	goliath.RemoveElement(/datum/element/move_cooldown, move_delay = goliath.movement_delay)
+	goliath.add_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 
 /datum/component/riding/creature/goliath/Destroy(force, silent)
 	var/mob/living/basic/mining/goliath/goliath = parent
-	goliath.AddElement(/datum/element/move_cooldown, move_delay = goliath.movement_delay)
+	goliath.remove_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 	return ..()
 
 /datum/component/riding/creature/goliath/handle_specials()
@@ -423,6 +423,8 @@
 	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+
 
 /datum/component/riding/creature/glutton/handle_specials()
 	. = ..()
