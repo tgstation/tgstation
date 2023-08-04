@@ -729,7 +729,7 @@
 		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
 		return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_CABIN_SEAL))
-		balloon_alert(usr, "on cooldown")
+		balloon_alert(usr, "on cooldown!")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 1 SECONDS)
 
