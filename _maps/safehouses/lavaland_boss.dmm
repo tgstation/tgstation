@@ -86,6 +86,9 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
+/obj/item/clothing/glasses/meson/night,
+/obj/item/clothing/glasses/meson/night,
+/obj/item/clothing/glasses/meson/night,
 /turf/open/floor/iron/dark,
 /area/virtual_domain/safehouse)
 "C" = (
@@ -130,6 +133,8 @@
 	pixel_y = -4
 	},
 /obj/structure/closet,
+/obj/item/kinetic_crusher,
+/obj/item/kinetic_crusher,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain/safehouse)
 "P" = (
