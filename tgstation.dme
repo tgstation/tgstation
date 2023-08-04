@@ -1040,6 +1040,7 @@
 #include "code\datums\components\takes_reagent_appearance.dm"
 #include "code\datums\components\tameable.dm"
 #include "code\datums\components\tattoo.dm"
+#include "code\datums\components\tear_wall.dm"
 #include "code\datums\components\technointrovert.dm"
 #include "code\datums\components\technoshy.dm"
 #include "code\datums\components\temporary_body.dm"

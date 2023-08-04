@@ -5,9 +5,9 @@
 	/// At which percentage our target has to be for us to deal bonus damage
 	var/damage_percentage = 20
 	/// The amount of brute damage we will deal
-	var/brute_damage_amount = 10
+	var/brute_damage_amount = 15
 
-/datum/component/bonus_damage/Initialize(damage_percentage, brute_damage_amount)
+/datum/component/bonus_damage/Initialize(damage_percentage = 20, brute_damage_amount = 15)
 	if(!isliving(parent))
 		return ELEMENT_INCOMPATIBLE
 
@@ -15,13 +15,13 @@
 	src.brute_damage_amount = brute_damage_amount
 
 /datum/component/bonus_damage/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked))
+	RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(attack_target))
 
 /datum/component/bonus_damage/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
 
 /// Add potential bonus damage to the person we attacked
-/datum/component/bonus_damage/proc/on_attacked(mob/living/attacker, atom/target, success)
+/datum/component/bonus_damage/proc/attack_target(mob/living/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
 	if(!success)

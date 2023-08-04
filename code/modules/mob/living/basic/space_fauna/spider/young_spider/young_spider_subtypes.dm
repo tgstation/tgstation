@@ -161,8 +161,8 @@
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_viper"
 	icon_dead = "young_viper_dead"
-	maxHealth = 25
-	health = 25
+	maxHealth = 30
+	health = 30
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	speed = 0.2
