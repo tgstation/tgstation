@@ -194,14 +194,14 @@
 		idle_platform = destination_platform
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
-		tram_registration["distance_travelled"] += travel_trip_length
+		tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 		travel_trip_length = 0
 		return PROCESS_KILL
 	else if(world.time >= scheduled_move)
 		var/start_time = TICK_USAGE
 		travel_remaining--
 
-		move_lift_horizontally(travel_direction)
+		move_transport_horizontally(travel_direction)
 
 		var/duration = TICK_USAGE_TO_MS(start_time)
 		if(recovery_mode)
