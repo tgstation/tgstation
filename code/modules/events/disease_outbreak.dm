@@ -350,7 +350,6 @@
 		if(new_symptom.severity > current_severity)
 			current_severity = new_symptom.severity
 
-	var/transmissibility
 	visibility_flags |= HIDDEN_SCANNER
 	var/transmissibility = requested_transmissibility
 
