@@ -18234,9 +18234,6 @@
 	dir = 4
 	},
 /obj/item/kirbyplants/random,
-/obj/item/kirbyplants/random,
-/obj/item/kirbyplants/random,
-/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "gQw" = (

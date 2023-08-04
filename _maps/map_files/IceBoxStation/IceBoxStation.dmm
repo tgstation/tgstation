@@ -10454,6 +10454,13 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/bitrunner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/line,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "dgk" = (
@@ -13420,6 +13427,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/bitrunning/reward_spawn,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "edn" = (
@@ -27982,6 +27990,13 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/line,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "iSk" = (
@@ -42349,6 +42364,13 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/transit_tube)
 "nyB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/line,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "nyC" = (
@@ -55298,6 +55320,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/landmark/start/bitrunner,
 /obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "rAW" = (
@@ -68329,7 +68352,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon                                                                                                                                                                                                                                                                Level","4"="Station                                                                                                                                                                                                                                                                Level")
+	preset_destination_names = list("3"="Icemoon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Level","4"="Station                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -71472,6 +71495,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "wNp" = (
