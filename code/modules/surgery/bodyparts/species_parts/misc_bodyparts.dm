@@ -481,7 +481,7 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/left/golem/set_owner(new_owner)
+/obj/item/bodypart/arm/left/golem/update_owner(new_owner)
 	. = ..()
 	if (. == FALSE)
 		return
@@ -515,7 +515,7 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/right/golem/set_owner(new_owner)
+/obj/item/bodypart/arm/right/golem/update_owner(new_owner)
 	. = ..()
 	if (. == FALSE)
 		return
