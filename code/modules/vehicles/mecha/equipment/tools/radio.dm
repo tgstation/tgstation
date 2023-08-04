@@ -27,6 +27,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/radio/ui_act(action, list/params)
 	. = ..()
+	if(.)
+		return
 	switch(action)
 		if("toggle_microphone")
 			radio.set_broadcasting(!radio.get_broadcasting())

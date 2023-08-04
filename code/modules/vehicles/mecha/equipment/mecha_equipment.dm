@@ -58,6 +58,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if(.)
+		return
 	switch(action)
 		if("detach")
 			chassis.ui_selected_module_index = null

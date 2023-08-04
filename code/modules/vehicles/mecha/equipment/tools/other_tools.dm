@@ -226,6 +226,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if(.)
+		return
 	if(action != "toggle")
 		return
 	chassis.cut_overlay(droid_overlay)
@@ -312,6 +314,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/ui_act(action, list/params)
 	. = ..()
+	if(.)
+		return
 	if(action == "toggle")
 		if(active)
 			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation enabled.")]")
