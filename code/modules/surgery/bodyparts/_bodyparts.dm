@@ -233,12 +233,16 @@
 
 	return ..()
 
-/obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
-	SHOULD_CALL_PARENT(TRUE)
+/obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
 
-	. = ..()
-	if(isturf(destination))
-		update_icon_dropped()
+	forced_removal(special = FALSE, dismembered = TRUE, move_to_floor = FALSE)
+
+/// In-case someone, somehow only teleports someones limb
+/obj/item/bodypart/proc/forced_removal(dismembered, special, move_to_floor)
+	drop_limb(special, dismembered, move_to_floor)
+
+	update_icon_dropped()
 
 /obj/item/bodypart/examine(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
@@ -392,8 +396,9 @@
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/bodypart_organ in contents)
-		bodypart_organ.remove_from_limb()
-		bodypart_organ.forceMove(drop_loc)
+		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		bodypart_organ.Remove(bodypart_organ.owner)
 	for(var/atom/movable/movable as anything in src)
 		movable.forceMove(drop_loc)
 
@@ -626,7 +631,6 @@
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 
-
 ///Proc to change the value of the `owner` variable and react to the event of its change.
 /obj/item/bodypart/proc/set_owner(new_owner)
 	SHOULD_CALL_PARENT(TRUE)
@@ -687,10 +691,15 @@
 
 		RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
 
+		forceMove(owner)
+		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(forced_removal))
+
 	refresh_bleed_rate()
 	return old_owner
 
 /obj/item/bodypart/proc/on_removal()
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
 	if(!length(bodypart_traits))
 		return
 

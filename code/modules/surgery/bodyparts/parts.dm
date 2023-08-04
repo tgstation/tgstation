@@ -33,6 +33,13 @@
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
 
+/obj/item/bodypart/chest/forced_removal(dismembered, special, move_to_floor)
+	var/mob/living/carbon/old_owner = owner
+	..(special = TRUE) //special because we're self destructing
+
+	//If someones chest is teleported away, they die pretty hard
+	old_owner?.gib(no_bodyparts = FALSE, safe_gib = TRUE)
+
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
 	if(owner.stat < HARD_CRIT || !contents.len)
 		return FALSE

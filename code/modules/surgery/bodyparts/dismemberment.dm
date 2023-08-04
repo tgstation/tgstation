@@ -76,7 +76,7 @@
 		cavity_item = null
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special, dismembered)
+/obj/item/bodypart/proc/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!owner)
 		return
 	var/atom/drop_loc = owner.drop_location()
@@ -126,16 +126,17 @@
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
 
-	if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
-		qdel(src)
-		return
-
 	if(bodypart_flags & BODYPART_PSEUDOPART)
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
 		return
 
-	forceMove(drop_loc)
+	if(move_to_floor)
+		if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+			qdel(src)
+			return
+		forceMove(drop_loc)
+
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
 
 /**
@@ -236,13 +237,13 @@
 	head.tongue = src
 	..()
 
-/obj/item/bodypart/chest/drop_limb(special)
+/obj/item/bodypart/chest/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(special)
 		return ..()
 	//if this is not a special drop, this is a mistake
 	return FALSE
 
-/obj/item/bodypart/arm/drop_limb(special)
+/obj/item/bodypart/arm/drop_limb(special, dismembered, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 
@@ -265,7 +266,7 @@
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
-/obj/item/bodypart/leg/drop_limb(special)
+/obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
@@ -276,7 +277,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE)
 	return ..()
 
-/obj/item/bodypart/head/drop_limb(special)
+/obj/item/bodypart/head/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
@@ -332,7 +333,6 @@
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
-	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
 
