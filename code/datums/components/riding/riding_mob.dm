@@ -424,8 +424,6 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
-
-
 /datum/component/riding/creature/glutton/handle_specials()
 	. = ..()
 	var/atom/movable/movable_parent = parent
