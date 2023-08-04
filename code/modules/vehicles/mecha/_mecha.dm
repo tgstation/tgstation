@@ -488,7 +488,7 @@
 
 	return examine_text
 
-//locate internal tack in the utility modules
+///Locate an internal tack in the utility modules
 /obj/vehicle/sealed/mecha/proc/get_internal_tank()
 	var/obj/item/mecha_parts/mecha_equipment/air_tank/module = locate(/obj/item/mecha_parts/mecha_equipment/air_tank) in equip_by_category[MECHA_UTILITY]
 	return module.internal_tank
@@ -723,13 +723,13 @@
 	return air?.return_temperature()
 
 ///makes cabin unsealed, dumping cabin air outside or airtight filling the cabin with external air mix
-/obj/vehicle/sealed/mecha/proc/set_cabin_seal(mob/usr, cabin_sealed)
+/obj/vehicle/sealed/mecha/proc/set_cabin_seal(mob/user, cabin_sealed)
 	if(!enclosed)
-		balloon_alert(usr, "cabin can't be sealed!")
+		balloon_alert(user, "cabin can't be sealed!")
 		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
 		return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_CABIN_SEAL))
-		balloon_alert(usr, "on cooldown")
+		balloon_alert(user, "on cooldown")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 1 SECONDS)
 
@@ -749,7 +749,7 @@
 				qdel(removed_gases)
 
 	var/obj/item/mecha_parts/mecha_equipment/air_tank/tank = locate(/obj/item/mecha_parts/mecha_equipment/air_tank) in equip_by_category[MECHA_UTILITY]
-	var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in usr.actions
+	var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in user.actions
 	if(!isnull(tank) && cabin_sealed && tank.auto_pressurize_on_seal)
 		if(!tank.active)
 			tank.set_active(TRUE)
@@ -760,7 +760,7 @@
 		action.button_icon_state = "mech_cabin_[cabin_sealed ? "closed" : "open"]"
 		action.build_all_button_icons()
 
-	balloon_alert(usr, "cabin [cabin_sealed ? "airtight" : "open"]")
+	balloon_alert(user, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
 	playsound(src, 'sound/machines/airlock.ogg', 50, TRUE)
 

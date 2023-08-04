@@ -387,7 +387,7 @@
 		var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)
 		if(!(locate(part_to_remove) in contents))
 			return
-		usr.put_in_hands(part_to_remove)
+		user.put_in_hands(part_to_remove)
 		CheckParts()
 		tool.play_tool_sound(src)
 		return
