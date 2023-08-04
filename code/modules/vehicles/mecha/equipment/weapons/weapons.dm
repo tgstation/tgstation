@@ -478,6 +478,7 @@
 	.["mode_label"] = "Honk Severiy"
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/ui_act(action, list/params)
+	. = ..()
 	if(.)
 		return
 	if(action == "change_mode")
