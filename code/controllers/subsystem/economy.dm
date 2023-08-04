@@ -113,24 +113,6 @@ SUBSYSTEM_DEF(economy)
 			return
 
 		processing_part = ECON_PRICE_UPDATE_STEP
-		var/list/obj/machinery/vending/prices_to_update = list()
-		// Assoc list of "z level" -> if it's on the station
-		// Hack, is station z level is too expensive to do for each machine, I hate this place
-		var/list/station_z_status = list()
-		for(var/obj/machinery/vending/vending_lad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
-			if(istype(vending_lad, /obj/machinery/vending/custom))
-				continue
-			var/vending_level = vending_lad.z
-			var/station_status = station_z_status["[vending_level]"]
-			if(station_status == null)
-				station_status = is_station_level(vending_level)
-				station_z_status["[vending_level]"] = station_status
-			if(!station_status)
-				continue
-
-			prices_to_update += vending_lad
-
-		cached_processing = prices_to_update
 		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
 
 	if(processing_part == ECON_PRICE_UPDATE_STEP)
@@ -182,19 +164,15 @@ SUBSYSTEM_DEF(economy)
 	return TRUE
 
 /**
- * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
- *
- * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
+ * Updates the the inflation_value, effecting newscaster alerts and the mail system.
  **/
 /datum/controller/subsystem/economy/proc/price_update()
-	var/list/cached_processing = src.cached_processing
-	for(var/i in 1 to length(cached_processing))
-		var/obj/machinery/vending/V = cached_processing[i]
-		V.reset_prices(V.product_records, V.coin_records)
-		if(MC_TICK_CHECK)
-			cached_processing.Cut(1, i + 1)
-			return FALSE
-	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>.<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br> That's all from the <i>Nanotrasen Economist Division</i>."
+	var/fluff_string = ""
+	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
+		fluff_string = ", but company countermeasures protect <b>YOU</b> from being affected!"
+	else
+		fluff_string = ", and company countermeasures are failing to protect <b>YOU</b> from being affected. We're all doomed!"
+	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>[fluff_string]<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br> That's all from the <i>Nanotrasen Economist Division</i>."
 	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
 	return TRUE
 
@@ -208,6 +186,8 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/inflation_value()
 	if(!bank_accounts_by_id.len)
 		return 1
+	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
+		return inflation_value //early return instead of the actual check
 	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
 	return inflation_value
 
@@ -227,6 +207,29 @@ SUBSYSTEM_DEF(economy)
 		"cost" = price_to_use,
 		"vendor" = vendor,
 	))
+
+/**
+ * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
+ */
+/datum/controller/subsystem/economy/proc/update_vending_prices()
+	var/list/obj/machinery/vending/prices_to_update = list()
+	// Assoc list of "z level" -> if it's on the station
+	// Hack, is station z level is too expensive to do for each machine, I hate this place
+	var/list/station_z_status = list()
+	for(var/obj/machinery/vending/vending_lad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
+		if(istype(vending_lad, /obj/machinery/vending/custom))
+			continue
+		var/vending_level = vending_lad.z
+		var/station_status = station_z_status["[vending_level]"]
+		if(station_status == null)
+			station_status = is_station_level(vending_level)
+			station_z_status["[vending_level]"] = station_status
+		if(!station_status)
+			continue
+		prices_to_update += vending_lad
+	for(var/i in 1 to length(prices_to_update))
+		var/obj/machinery/vending/V = prices_to_update[i]
+		V.reset_prices(V.product_records, V.coin_records)
 
 #undef ECON_DEPARTMENT_STEP
 #undef ECON_ACCOUNT_STEP

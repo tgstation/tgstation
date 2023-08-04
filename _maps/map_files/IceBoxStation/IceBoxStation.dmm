@@ -43852,7 +43852,7 @@
 "nWB" = (
 /obj/structure/closet,
 /obj/item/clothing/under/suit/black,
-/obj/item/clothing/under/rank/civilian/lawyer/black/skirt,
+/obj/item/clothing/under/suit/black/skirt,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

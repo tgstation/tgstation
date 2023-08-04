@@ -354,6 +354,8 @@
 	if(A && A.loc != src)
 		playsound(src, 'sound/magic/demon_attack1.ogg', 60, TRUE)
 		visible_message(span_warning("[src] swallows [A] whole!"))
+		to_chat(src, span_notice("Your acids cleanse the flames off [A] on the way down. Delicious!"))
+		A.extinguish()
 		A.forceMove(src)
 		return TRUE
 	return FALSE
