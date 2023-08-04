@@ -50,6 +50,7 @@
 
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
@@ -78,6 +79,7 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, goliath_foods)
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+
 
 /mob/living/basic/mining/goliath/Destroy()
 	QDEL_NULL(tentacles)

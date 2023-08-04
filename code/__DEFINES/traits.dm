@@ -320,6 +320,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Stops all slipping and sliding from ocurring
 #define TRAIT_NO_SLIP_ALL "noslip_all"
 
+/// Do not "glide" when moving, disables smooth tile movement
+#define TRAIT_NO_GLIDE "no_glide"
+
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
