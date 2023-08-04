@@ -448,13 +448,13 @@
 		if(servo)
 			. += span_notice("Micro-servos reduce movement power usage by [100 - round(100 / servo.rating)]%")
 		else
-			. += span_warning("It's missing micro-servo.")
+			. += span_warning("It's missing a micro-servo.")
 		if(capacitor)
 			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
 		else
-			. += span_warning("It's missing capacitor.")
+			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
-			. += span_warning("It's missing scanning module.")
+			. += span_warning("It's missing a scanning module.")
 	if(enclosed)
 		return
 	if(mecha_flags & SILICON_PILOT)
