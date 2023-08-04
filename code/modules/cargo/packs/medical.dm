@@ -38,6 +38,7 @@
 	contains = list(
 		/obj/item/autopsy_scanner = 1,
 		/obj/item/storage/medkit/coroner = 1,
+		/obj/item/circuitboard/computer/operating = 1,
 	)
 	crate_name = "autopsy kit crate"
 
