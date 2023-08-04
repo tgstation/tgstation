@@ -663,6 +663,19 @@
 	new /obj/item/storage/belt/grenade(src)
 	new /obj/item/storage/belt/military/snack(src)
 
+/obj/item/storage/box/syndie_kit/injectorsixpack
+	name = "injector 6-pack"
+	desc = "Contains 6 self-injector modules and a labeller for labelling them."
+
+/obj/item/storage/box/syndie_kit/injectorsixpack/PopulateContents()
+	new /obj/item/mod/module/selfinjector
+	new /obj/item/mod/module/selfinjector
+	new /obj/item/mod/module/selfinjector
+	new /obj/item/mod/module/selfinjector
+	new /obj/item/mod/module/selfinjector
+	new /obj/item/mod/module/selfinjector
+	new /obj/item/hand_labeler
+
 /obj/item/storage/box/syndie_kit/induction_kit
 	name = "syndicate induction kit"
 	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."

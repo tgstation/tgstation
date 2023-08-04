@@ -119,6 +119,41 @@
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
+///Self-injector - Gives the suit a configurable reagent injector, able to inject you with it's contents with a single button press.
+/obj/item/mod/module/selfinjector
+	name = "MOD self-injector module"
+	desc = "A module installed into the suit's back, \
+		it allows it's user to inject a configurable amount of it's contents into themselves. \
+		It's reccomended by the Deforest Medical Corporation to label it with a hand labeler before installation."
+	icon_state = "selfinjector"
+	module_type = MODULE_USABLE
+	complexity = 1
+	use_power_cost = DEFAULT_CHARGE_DRAIN
+	cooldown_time = 0.5 SECONDS
+	inject_amount = 5
+	/// Minimum amount we can inject.
+	var/min_inject = 1
+	/// How many reagents can fit in it.
+	var/reagent_capacity = 50
+
+/obj/item/mod/module/selfinjector/Initialize(mapload)
+	create_reagents(reagent_capacity, OPENCONTAINER)
+	return ..()
+
+/obj/item/mod/module/selfinjector/on_use()
+	. = ..()
+	reagents.trans_to(mod.wearer, inject_amount, methods = INJECT)
+
+/obj/item/mod/module/selfinjector/get_configuration()
+	. = ..()
+	.["inject_amount"] = add_ui_configuration("Injection Amount", "number", inject_amount)
+
+/obj/item/mod/module/selfinjector/configure_edit(key, value)
+	switch(key)
+		if("inject_amount")
+			set_inject_amount(clamp(value, min_inject, reagent_capacity))
+
+
 ///Organ Thrower - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organ_thrower
 	name = "MOD organ thrower module"
