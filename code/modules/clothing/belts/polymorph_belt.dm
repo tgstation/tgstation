@@ -4,9 +4,8 @@
 	desc = "This device can scan and store DNA from other life forms."
 	slot_flags = ITEM_SLOT_BELT
 	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utility"
-	inhand_icon_state = "utility"
-	worn_icon_state = "utility"
+	icon_state = "polybelt_inactive"
+	worn_icon_state = "polybelt_inactive"
 	item_flags = NOBLUDGEON
 	/// Typepath of a mob we have scanned, we only store one at a time
 	var/stored_mob_type
@@ -30,6 +29,11 @@
 /obj/item/polymorph_belt/item_action_slot_check(slot, mob/user, datum/action/action)
 	return slot & ITEM_SLOT_BELT
 
+/obj/item/polymorph_belt/update_icon_state()
+	icon_state = active ? "polybelt" : "polybelt_inactive"
+	worn_icon_state = active ? "polybelt" : "polybelt_inactive"
+	return ..()
+
 /obj/item/polymorph_belt/attackby(obj/item/weapon, mob/user, params)
 	if (!istype(weapon, /obj/item/assembly/signaler/anomaly/bioscrambler))
 		return ..()
@@ -38,6 +42,8 @@
 		return
 	qdel(weapon)
 	active = TRUE
+	update_appearance(UPDATE_ICON_STATE)
+	user.update_worn_belt()
 	update_transform_action()
 	playsound(src, 'sound/machines/crate_open.ogg', 50, FALSE)
 
@@ -80,10 +86,13 @@
 		transform_action = add_item_action(/datum/action/cooldown/spell/shapeshift/polymorph_belt)
 	transform_action.update_type(stored_mob_type)
 
-/// Functioning polymorph belt
+/// Pre-activated polymorph belt
 /obj/item/polymorph_belt/functioning
 	active = TRUE
+	icon_state = "polybelt"
+	worn_icon_state = "polybelt"
 
+/// Ability provided by the polymorph belt
 /datum/action/cooldown/spell/shapeshift/polymorph_belt
 	name = "Invert Polymorphic Field"
 	cooldown_time = 30 SECONDS
@@ -104,16 +113,28 @@
 
 	var/old_transform = cast_on.transform
 
+	var/animate_step = channel_time / 6
 	playsound(cast_on, 'sound/effects/wounds/crack1.ogg', 50)
-	animate(cast_on, transform = matrix() * 1.2, time = 0.5 SECONDS, easing = SINE_EASING, loop = -1)
-	animate(transform = matrix() * 0.8, time = 0.5 SECONDS, easing = SINE_EASING, loop = -1)
+	animate(cast_on, transform = matrix() * 1.1, time = animate_step, easing = SINE_EASING)
+	animate(transform = matrix() * 0.9, time = animate_step, easing = SINE_EASING)
+	animate(transform = matrix() * 1.2, time = animate_step, easing = SINE_EASING)
+	animate(transform = matrix() * 0.8, time = animate_step, easing = SINE_EASING)
+	animate(transform = matrix() * 1.3, time = animate_step, easing = SINE_EASING)
+	animate(transform = matrix() * 0.1, time = animate_step, easing = SINE_EASING)
 
 	cast_on.balloon_alert(cast_on, "transforming...")
 	if (!do_after(cast_on, delay = channel_time, target = cast_on))
-		animate(cast_on, transform = old_transform, time = 0.25 SECONDS, easing = SINE_EASING, loop = 0)
+		animate(cast_on, transform = matrix(), time = 0.25, easing = SINE_EASING)
+		cast_on.transform = old_transform
 		return . | SPELL_CANCEL_CAST
-	cast_on.transform = old_transform
 	playsound(cast_on, 'sound/magic/demon_consume.ogg', 50, TRUE)
+
+/datum/action/cooldown/spell/shapeshift/polymorph_belt/after_cast(atom/cast_on)
+	. = ..()
+	if (QDELETED(owner))
+		return
+	animate(owner, transform = matrix() * 0.1, time = 0, easing = JUMP_EASING)
+	animate(transform = matrix(), time = 0.25 SECONDS, easing = SINE_EASING)
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/Remove(mob/living/remove_from)
 	unshift_owner()

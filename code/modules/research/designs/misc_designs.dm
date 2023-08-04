@@ -1043,7 +1043,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/polymorph_belt
 	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/uranium = SHEET_MATERIAL_AMOUNT,
 		/datum/material/diamond = SHEET_MATERIAL_AMOUNT,
 	)
