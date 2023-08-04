@@ -16,7 +16,7 @@
 
 
 /datum/map_template/safehouse/test_only
-	filename = "test_only_safehousedmm"
+	filename = "test_only_safehouse.dmm"
 
 
 /// The default safehouse map template.

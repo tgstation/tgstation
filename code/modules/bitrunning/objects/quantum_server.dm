@@ -24,6 +24,8 @@
 	var/domain_threats = 0
 	/// List of available domains
 	var/list/available_domains = list()
+	/// Cached list of mutable mobs in zone for cybercops
+	var/list/mob/living/mutation_candidates = list()
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
@@ -39,7 +41,7 @@
 	/// Server cooldown efficiency
 	var/server_cooldown_efficiency = 1
 	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 2 SECONDS
+	var/server_cooldown_time = 2 MINUTES
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
 	/// The turfs on station where we generate loot.
@@ -239,8 +241,24 @@
 /obj/machinery/quantum_server/proc/generate_avatar(obj/structure/hololadder/wayout, datum/outfit/netsuit)
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
 
-	var/datum/outfit/to_wear = generated_domain.forced_outfit || netsuit
+	var/outfit_path = generated_domain.forced_outfit || netsuit
+	var/datum/outfit/to_wear = new outfit_path()
+
+	to_wear.suit_store = null
+	to_wear.belt = null
+	to_wear.glasses = null
+	to_wear.suit = null
+	to_wear.gloves = null
+
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
+
+	var/obj/item/storage/backpack/bag = avatar.back
+	if(istype(bag))
+		bag.contents += list(
+			new /obj/item/storage/box/survival,
+			new /obj/item/storage/medkit/regular,
+			new /obj/item/flashlight,
+		)
 
 	var/obj/item/card/id/outfit_id = avatar.wear_id
 	if(outfit_id)
@@ -259,7 +277,7 @@
 		return
 
 	var/turf/destination
-	for(var/turf/dest_turf as anything in exit_turfs)
+	for(var/turf/dest_turf in exit_turfs)
 		if(!locate(/obj/structure/hololadder) in dest_turf)
 			destination = dest_turf
 			break
@@ -447,18 +465,32 @@
 	if(!length(occupant_mind_refs))
 		return
 
-	if(isnull(generated_domain))
+	if(isnull(generated_domain) || !length(generated_domain.reservations))
 		return
 
-	var/list/mutation_candidates = list()
-	var/list/bad_list = list()
-	for(var/mob/living/creature as anything in bad_list)
-		if(QDELETED(creature) || !isliving(creature) || creature.mind || !creature.can_be_cybercop)
+	var/list/mob/living/valid_targets = list()
+
+	if(length(mutation_candidates)) // if we already have a list of mutable mobs
+		for(var/mob/living/creature as anything in mutation_candidates)
+			if(QDELETED(creature) || creature.mind || !creature.can_be_cybercop)
+				continue
+			valid_targets += creature
+
+		return valid_targets
+
+	// let's generate a list of mutable mobs and cache it
+	var/datum/turf_reservation/res = generated_domain.reservations[1]
+
+	for(var/turf/open/floor/tile in res.reserved_turfs)
+		var/mob/living/creature = locate() in tile
+		if(QDELETED(creature) || creature.mind || !creature.can_be_cybercop)
 			continue
 
-		mutation_candidates += creature
+		valid_targets += creature
 
-	return mutation_candidates
+	mutation_candidates += valid_targets
+
+	return valid_targets
 
 /// Grades the player's run based on several factors
 /obj/machinery/quantum_server/proc/grade_completion(difficulty, threats, points, randomized, completion_time)
@@ -493,7 +525,7 @@
 		if(map_id != initial(available.id) || points < initial(available.cost))
 			continue
 
-		generated_domain = new available
+		generated_domain = new available()
 		generated_domain.lazy_load()
 		return TRUE
 
@@ -513,12 +545,12 @@
 	if(!length(safehouse_load_turf))
 		CRASH("Failed to find safehouse load landmark on map.")
 
-	var/datum/map_template/safehouse/safehouse = new generated_domain.safehouse_path
+	var/datum/map_template/safehouse/safehouse = new generated_domain.safehouse_path()
 	safehouse.load(safehouse_load_turf[ONLY_TURF])
 	generated_safehouse = safehouse
 
 	var/turf/goal_turfs = list()
-	for(var/obj/thing in safehouse.created_atoms)
+	for(var/obj/effect/bitrunning/thing in safehouse.created_atoms)
 		if(istype(thing, /obj/effect/bitrunning/exit_spawn))
 			exit_turfs += get_turf(thing)
 			continue
@@ -544,7 +576,7 @@
 
 /// Locates any turfs with crate out landmarks
 /obj/machinery/quantum_server/proc/locate_receive_turfs()
-	for(var/turf/tile in oview(4, src))
+	for(var/turf/open/floor/tile in oview(4, src))
 		if(locate(/obj/effect/bitrunning/reward_spawn) in tile)
 			receive_turfs += tile
 
@@ -657,6 +689,7 @@
 	exit_turfs = list()
 	generated_domain = null
 	generated_safehouse = null
+	mutation_candidates.Cut()
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/crate)

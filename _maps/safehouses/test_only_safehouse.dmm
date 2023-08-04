@@ -7,11 +7,6 @@
 /obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
-"i" = (
-/obj/effect/bitrunning/exit_spawn,
-/obj/effect/bitrunning/exit_spawn,
-/turf/open/floor/plating,
-/area/virtual_domain/safehouse)
 "u" = (
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
@@ -22,7 +17,7 @@ u
 "}
 (2,1,1) = {"
 a
-i
+d
 "}
 (3,1,1) = {"
 u

@@ -19,10 +19,19 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_GLASS_DRANK, PROC_REF(on_drank))
 
-	var/obj/effect/bitrunning/loot_signal/signaler = locate() in orange(4, src)
-	if(signaler)
-		our_signaler = WEAKREF(signaler)
+	locate_signaler()
 
+/// Where are youuuu
+/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain/proc/locate_signaler()
+	for(var/turf/open/floor/light/colour_cycle/dancefloor_a/tile in oview(4, src))
+		var/obj/effect/bitrunning/loot_signal/signaler = locate() in tile
+		if(signaler)
+			our_signaler = WEAKREF(signaler)
+			return TRUE
+
+	return FALSE
+
+/// When drank, send a signal to the signaler.
 /obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain/proc/on_drank(datum/source, mob/target, mob/user)
 	SIGNAL_HANDLER
 
@@ -30,7 +39,8 @@
 		return
 
 	var/obj/effect/bitrunning/loot_signal/signaler = our_signaler?.resolve()
-	if(isnull(signaler))
+	if(isnull(signaler) && !locate_signaler())
+		stack_trace("Couldn't find signaler for beach bar drink.")
 		return
 
 	SEND_SIGNAL(signaler, COMSIG_BITRUNNER_GOAL_POINT, 0.5)

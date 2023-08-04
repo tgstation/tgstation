@@ -1,6 +1,5 @@
 #define TEST_MAP "test_only"
 #define TEST_MAP_EXPENSIVE "test_only_expensive"
-#define TEST_MAP_MOBS "test_only_mobs"
 
 /// The qserver and qconsole should find each other on init
 /datum/unit_test/qserver_find_console/Run()
@@ -27,10 +26,10 @@
 /datum/unit_test/qserver_initialize_safehouse/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 
-	server.initialize_domain(map_id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.initialize_domain(map_id = TEST_MAP), TRUE, "Should initialize a domain with a valid map")
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	server.initialize_safehouse_turfs()
+	TEST_ASSERT_EQUAL(server.initialize_safehouse_turfs(), TRUE, "Should initialize safehouse turfs")
 	TEST_ASSERT_NOTNULL(server.generated_safehouse, "Did not load generated_safehouse correctly")
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Did not load the correct number of exit turfs")
 
@@ -79,8 +78,6 @@
 	server.cold_boot_map(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_NULL(server.generated_domain, "Should prevent setting domains with occupants")
 
-	server.reset()
-	server.cool_off()
 	server.occupant_mind_refs -= fake_mind_ref
 	server.points = 3
 	server.cold_boot_map(labrat, map_id = TEST_MAP_EXPENSIVE)
@@ -382,7 +379,7 @@
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP_MOBS)
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
 
 	var/list/mobs = server.get_valid_domain_targets()
@@ -392,7 +389,7 @@
 	mobs = server.get_valid_domain_targets()
 	TEST_ASSERT_EQUAL(length(mobs), 1, "Should return a list of mobs")
 
-	var/mob/living/basic/pet/dog/corgi/pupper = locate(/mob/living/basic/pet/dog/corgi) in mobs
+	var/mob/living/basic/pet/dog/corgi/pupper = locate() in mobs
 	TEST_ASSERT_NOTNULL(pupper, "Should be a corgi on test map")
 
 	mobs.Cut()
@@ -410,7 +407,7 @@
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 0, "Sanity: Shouldn't exist any exit turfs until boot")
 	TEST_ASSERT_EQUAL(server.retries_spent, 0, "Shouldn't create a hololadder without exit turfs")
 
-	server.cold_boot_map(labrat, map_id = TEST_MAP_MOBS)
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Sanity: Did not load test map correctly")
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Should create 3 exit turfs")
 
@@ -501,4 +498,3 @@
 
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE
-#undef TEST_MAP_MOBS
