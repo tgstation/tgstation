@@ -129,3 +129,50 @@
   tommysalami3:
   - rscadd: Adds boss music functionality.
   - sound: Adds hierophants boss track, tweaks hierophant boss noises.
+2023-08-04:
+  GPeckman:
+  - rscadd: Added whisper-sensitive cybernetic ears, which make it much easier for
+      the user to hear whispers at the cost of being more vulnerable to loud noises
+  - rscadd: Added wall-penetrating cybernetic ears, which allow you to hear speech
+      through walls
+  - balance: Basic cybernetic ears and upgraded cybernetic ears are now unlocked with
+      the other basic/normal cybernetics
+  - balance: The welding shield and luminiscent cybernetic eyes are now unlocked with
+      the other upgraded cybernetics
+  - bugfix: radio should no longer be broken for everyone
+  Helg2:
+  - bugfix: deleted trash in the walls from whiteship ruin box.
+  Jacquerel:
+  - rscadd: pAIs can be inserted into MODsuits and can control suit modules (but are
+      not capable of moving the suit).
+  - bugfix: AIs/pAIs in MODsuits can properly pin actions
+  MTandi:
+  - bugfix: removed fire alarm that was inside a window on oldstation
+  OrionTheFox:
+  - image: resprited the entirety of RnD! Genetics, Robotics, the RD, and the Science
+      Team themselves will enjoy the fresh new looks but same great taste! No, wait,
+      great STYLE! Don't eat these, they're covered in chemicals.
+  Vekter:
+  - bugfix: Fixes formatting for derelict and syndicate drone job names. They should
+      no longer tell you they're "the Ghost Role" when spawning as them.
+  - rscadd: Remapped the Metastation kitchen for about the tenth time.
+  - spellcheck: Fixed a typo in progressbar.dm and the file name for the progress
+      bar sprites.
+  cnleth:
+  - bugfix: Spell burger now has only one recipe
+  distributivgesetz:
+  - qol: Made reading text with the PDA retro theme a bit more accessible.
+  - rscadd: Updated Direct Messenger to v6.5.3. Now including brand new individual
+      chat rooms, proper image attachments and a revolutionary message input field!
+  - rscadd: Added a "Reset Imprint" option to the PDA painter.
+  - refactor: Refactored PDA imprinting code just a bit.
+  - bugfix: PDAs should now properly respond to rigged messages.
+  - bugfix: Fixes an extremely rare bug where a /mob/living/brain with a client would
+      not be moved out of nullspace correctly, causing admin log spam.
+  peptron1:
+  - qol: TTS volume preference is not actually a volume slider, instead of a volume
+      number input.
+  san7890:
+  - server: Added a preventative measure to prevent calling both TGSHardRestart and
+      TGSReboot, as well as potentially invoking sensitive procs that are only meant
+      to be called once.
