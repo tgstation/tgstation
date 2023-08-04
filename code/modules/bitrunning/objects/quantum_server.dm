@@ -87,20 +87,17 @@
 		set_light(0)
 		return ..()
 
-	set_light_color(isnull(generated_domain) ? LIGHT_COLOR_FIRE : LIGHT_COLOR_BABY_BLUE)
+	set_light_color(cooling_off ? LIGHT_COLOR_FIRE : LIGHT_COLOR_BABY_BLUE)
 	set_light(2, 1.5)
 
 	return ..()
 
 /obj/machinery/quantum_server/update_icon_state()
-	if(generated_domain)
-		icon_state = "[base_icon_state]_on"
-		return ..()
-	if(cooling_off)
-		icon_state = "[base_icon_state]_off"
+	if(isnull(generated_domain))
+		icon_state = base_icon_state
 		return ..()
 
-	icon_state = base_icon_state
+	icon_state = "[base_icon_state]_[cooling_off ? "off" : "on"]"
 	return ..()
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
@@ -149,6 +146,12 @@
 		return
 
 	balloon_alert(user, "notifying clients...")
+	playsound(src, 'sound/machines/terminal_alert.ogg', 100, TRUE)
+	user.visible_message(
+		span_danger("[user] begins depowering the server!"),
+		span_notice("You start disconnecting clients..."),
+		span_danger("You hear frantic keying on a keyboard."),
+	)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SHUTDOWN_ALERT, user)
 
 	if(!do_after(user, 20 SECONDS, src))
@@ -222,7 +225,7 @@
 /// Resets the cooldown state and updates icons
 /obj/machinery/quantum_server/proc/cool_off()
 	cooling_off = FALSE
-	update_icon_state()
+	update_appearance()
 
 /// Attempts to connect to a quantum console
 /obj/machinery/quantum_server/proc/find_console()
