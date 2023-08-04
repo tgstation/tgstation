@@ -261,7 +261,7 @@
 /datum/uplink_item/weapon_kits/high_cost/carbine
 	name = "M-90gl Carbine Case (Hard)"
 	desc = "A fully-loaded, specialized three-round burst carbine that fires .223 ammunition from a 30 round magazine \
-		with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Comes with a spare magazine \
+		with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Comes with two spare magazines \
 		and a box of 40mm rubber slugs."
 	item = /obj/item/storage/toolbox/guncase/m90gl
 
@@ -291,7 +291,7 @@
 	name = "Anti-Materiel Sniper Rifle Briefcase (Hard)"
 	desc = "An outdated, but still extremely powerful anti-material sniper rifle. Fires .50 BMG cartridges from a 6 round magazine. \
 		Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault. Comes with \
-		3 spare magazines; 1 regular magazine and 2 disruptor magazines. Also comes with a suit and tie."
+		3 spare magazines; 2 regular magazines and 1 disruptor magazine. Also comes with a suit and tie."
 	item = /obj/item/storage/briefcase/sniper
 
 /datum/uplink_item/ammo_nuclear/basic/sniper
@@ -332,8 +332,8 @@
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
 /datum/uplink_item/weapon_kits/high_cost/cqc
-	name = "CQC Manual (Very Hard)"
-	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	name = "CQC Equipment Case (Very Hard)"
+	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant and a snazzy bandana (and a hat stabilizer to go with it)."
 	item = /obj/item/book/granter/martial/cqc
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	surplus = 0

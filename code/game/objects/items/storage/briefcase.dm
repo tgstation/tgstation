@@ -70,5 +70,5 @@
 	new /obj/item/clothing/neck/tie/red/hitman(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)

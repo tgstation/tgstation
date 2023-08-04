@@ -358,7 +358,8 @@
 
 /obj/item/storage/toolbox/guncase/m90gl/PopulateContents()
 	new gun_to_spawn (src)
-	new ammo_to_spawn (src)
+	for(var/i in 1 to 2)
+		new ammo_to_spawn (src)
 	new /obj/item/ammo_box/a40mm/rubber (src)
 
 /obj/item/storage/toolbox/guncase/rocketlauncher
@@ -385,6 +386,23 @@
 	new ammo_to_spawn (src)
 	new /obj/item/mod/module/hat_stabilizer (src)
 	new /obj/item/clothing/head/costume/knight (src)
+
+/obj/item/storage/toolbox/guncase/cqc
+	name = "\improper CQC equipment case"
+	gun_to_spawn = /obj/item/book/granter/martial/cqc
+	ammo_to_spawn = /obj/item/storage/box/syndie_kit/imp_stealth
+
+/obj/item/storage/toolbox/guncase/cqc/PopulateContents()
+	new gun_to_spawn (src)
+	new ammo_to_spawn (src)
+	new /obj/item/mod/module/hat_stabilizer (src)
+	new /obj/item/clothing/head/costume/snakeeater (src)
+
+/obj/item/clothing/head/costume/snakeeater
+	name = "strange bandana"
+	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
+	icon_state = "snake_eater"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/knight
 	name = "fake medieval helmet"
