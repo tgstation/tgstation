@@ -177,8 +177,8 @@
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_tarantula"
 	icon_dead = "young_tarantula_dead"
-	maxHealth = 130
-	health = 130
+	maxHealth = 150
+	health = 150
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	speed = 1
