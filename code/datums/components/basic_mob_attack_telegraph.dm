@@ -61,11 +61,11 @@
 	if (!do_after(source, delay = telegraph_duration, target = source, interaction_key = INTERACTION_BASIC_ATTACK_FORCEAST))
 		forget_target(target)
 		return
-	if (!current_target) // They got out of the way :(
+	if (isnull(target)) // They got out of the way :(
 		return
 	ADD_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
-	source.melee_attack(current_target)
-	forget_target(current_target)
+	forget_target(target)
+	source.melee_attack(target)
 
 /// The guy we're trying to attack moved, is he still in range?
 /datum/component/basic_mob_attack_telegraph/proc/target_moved(mob/living/target)
