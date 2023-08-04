@@ -923,7 +923,7 @@
 	if(oldname != real_name)
 		if(eyeobj)
 			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.saved_identification = real_name
+			modularInterface.imprint_id(name = real_name)
 
 		// Notify Cyborgs
 		for(var/mob/living/silicon/robot/Slave in connected_robots)
@@ -990,11 +990,6 @@
 
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
-
-/mob/living/silicon/ai/death(gibbed)
-	if(!isnull(deployed_shell))
-		disconnect_shell() // farewell my sweet prince; for a shell is nothing without an AI to control it
-	return ..()
 
 /mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()

@@ -1,0 +1,178 @@
+2023-08-01:
+  Fikou:
+  - bugfix: ghost notification icons are now centered properly
+  - bugfix: coroner has an implant during cybernetic revolution
+  - bugfix: fixes wizard loadouts
+  Hatterhat:
+  - bugfix: The blood-drunk miner has remembered how to swing their cleaving saw quickly
+      without having to flick it out first.
+  Jacquerel:
+  - bugfix: Losing your hooded suit (whether to theft, or because you were turned
+      into an ape) will also cause you to lose the hood.
+  Licks-The-Crystal:
+  - spellcheck: Corrected a large quantity of spelling, grammatical and phrasing errors
+      with Exploration Drone content.
+  Paxilmaniac:
+  - image: Wall and floor lights have been resprited to be a lot less dated looking,
+      and a lot less yellow
+  Sealed101:
+  - bugfix: fixed bluespace bodybags consuming xenomorphs when folded
+  Time-Green:
+  - bugfix: fixes a runtime in SSstation setup
+  - bugfix: fixes parallax not rendering correctly for latejoins
+  Vincent983:
+  - spellcheck: fixed the interdyne modsuit's typoes
+  Watermelon914:
+  - rscadd: Expanded the RPG loot wizard event by giving various different items their
+      own statistic boost.
+  YesterdaysPromise:
+  - rscadd: Added couple new signs to the game (med, medbay, morgue, chapel, viro,
+      gene, botany)
+  - rscadd: Way-signs now have additional states, showing vertical directions.
+  - image: Made the font on the signs consistant.
+  distributivgesetz:
+  - bugfix: Photophobia should work now.
+  - bugfix: Eyes should return to their normal flash sensitivity when the quirk is
+      removed.
+  - bugfix: Fixes pAI mind transfer from a bot to their card runtiming when the bot
+      gets broken.
+  san7890:
+  - refactor: Slaughter and Laughter Demons have been refactored, please place an
+      issue report for any unexpected things/hitches.
+  - bugfix: Laughter Demons should now actually drop a kitten.
+  zeroisthebiggay:
+  - spellcheck: Minor Breakage > Minor Skin Breakage for readability.
+2023-08-02:
+  DaydreamIQ:
+  - bugfix: Birdshot's morgue has surgical tools and a laptop for the coroner to use
+  Derpguy3:
+  - qol: The Syndicate battlecruiser's fighters have received external cameras to
+      aid its pilots.
+  - qol: Warning lights have been added to the landing pad of the battlecruiser to
+      (hopefully) reduce incident numbers.
+  - bugfix: A stray air alarm was removed from the bridge of the Syndicate battlecruiser.
+  - bugfix: The turret control panel in the bridge of the battlecruiser has been moved
+      to a wall, allowing access without needing to climb the table.
+  - bugfix: Airlocks on the Syndicate battlecruiser which were missing syndicate access,
+      has had it added.
+  - bugfix: The Syndicate medibot on the battlecruiser can now be unlocked by its
+      crew.
+  Jacquerel:
+  - bugfix: Several places on Birdshot which were missing an APC now aren't.
+  - bugfix: Several places on Birdshot which were missing an air alarm now aren't.
+  Jolly:
+  - bugfix: '[Shuttles] Kilo''s Emergency Shuttle no longer has a stacked light in
+      its brig.'
+  Melbert:
+  - bugfix: Fixed BB admin add
+  - bugfix: Traitors using the sneak suit and heretics under the effects of cloak
+      no longer leak their identity via Text to Speech
+  OrionTheFox:
+  - image: resprited a lot of formal undersuits, enjoy!
+  - rscadd: Added a pre-colored type of buttondown slacks for some service roles,
+      to replace the "black suit" and "amish suit"
+  - rscdel: Removed the "amish suit", "black suit", and one of the two "white suit"s
+  Senefi:
+  - bugfix: NorthStar's Supermatter Waste Chamber guide no longer contains inaccurate
+      information
+  - qol: NorthStar's Supermatter Waste Chamber air alarm no longer shows the hallway
+      vent and scrubber on the configuration panel.
+  SyncIt21:
+  - bugfix: broken icons in RCD UI
+  Thunder12345:
+  - bugfix: CentCom can no longer be raided by teleporting out of the Super Secret
+      Room
+  - bugfix: The Administrative Storage and ERT Armoury blast doors can no longer be
+      opened by building a door button.
+  carlarctg:
+  - qol: When Space Dragons devour people they get extinguished, removing flames.
+  honkpocket:
+  - rscadd: Adds an emote to push up glasses with *glasses
+  - rscadd: Adds a visual effect to *sigh
+  timothymtorres:
+  - rscadd: Add a new 'Hall of Fame' emergency shuttle.  It even comes with it's own
+      nifty photo album.
+2023-08-03:
+  Fikou:
+  - balance: hat stabilizer module can now hold what plasmaman helmets can hold
+  - qol: kinesis module can be stopped without launching an object with right click
+  - balance: kinesis module stuns last until the kinesis stops
+  - rscadd: admin suit has a version of kinesis that can pick up anything at any range
+      and can be configured to make grabbed mobs phase through walls :)
+  Ghommie:
+  - bugfix: BoH bombing now correctly requires two bags to be done.
+  Hatterhat:
+  - balance: The strong-arm implant's punches now respect armor.
+  - spellcheck: While using an arm with the strong-arm implant to punch people, you
+      no longer kick them; your implant's in your arm, after all!
+  IndieanaJones:
+  - balance: Xenomorph neurotoxin has been buffed (50 -> 65 stamina damage)
+  Jacquerel:
+  - bugfix: Your pAI card won't pop out of your PDA onto the floor alongside its hologram
+      if it enters hologram form while inside a PDA.
+  Rhials:
+  - rscadd: Fugitive shuttles now have a "Fugitive Tracker" machine, which gives a
+      readout on the location of a random fugitive on a 40 second cooldown.
+  - spellcheck: Renames the fugitive pinpointer to the bounty shuttle pinpointer.
+  SpaceVampire:
+  - bugfix: Guard Spiders are no longer unable to attack after using Web Effigy
+  SyncIt21:
+  - bugfix: bluespace RPED can be put in bags again without dragging them into their
+      storage slots
+  - bugfix: normal RPED exchanges parts & displays part info again
+  Time-Green:
+  - qol: The random parallax layer moves more slowly, giving a more deep feel
+  distributivgesetz:
+  - bugfix: Fixes holoparasites not dusting their owners on death sometimes.
+  timothymtorres:
+  - bugfix: Fix ethereal crystal destruction not removing light
+  tommysalami3:
+  - rscadd: Adds boss music functionality.
+  - sound: Adds hierophants boss track, tweaks hierophant boss noises.
+2023-08-04:
+  GPeckman:
+  - rscadd: Added whisper-sensitive cybernetic ears, which make it much easier for
+      the user to hear whispers at the cost of being more vulnerable to loud noises
+  - rscadd: Added wall-penetrating cybernetic ears, which allow you to hear speech
+      through walls
+  - balance: Basic cybernetic ears and upgraded cybernetic ears are now unlocked with
+      the other basic/normal cybernetics
+  - balance: The welding shield and luminiscent cybernetic eyes are now unlocked with
+      the other upgraded cybernetics
+  - bugfix: radio should no longer be broken for everyone
+  Helg2:
+  - bugfix: deleted trash in the walls from whiteship ruin box.
+  Jacquerel:
+  - rscadd: pAIs can be inserted into MODsuits and can control suit modules (but are
+      not capable of moving the suit).
+  - bugfix: AIs/pAIs in MODsuits can properly pin actions
+  MTandi:
+  - bugfix: removed fire alarm that was inside a window on oldstation
+  OrionTheFox:
+  - image: resprited the entirety of RnD! Genetics, Robotics, the RD, and the Science
+      Team themselves will enjoy the fresh new looks but same great taste! No, wait,
+      great STYLE! Don't eat these, they're covered in chemicals.
+  Vekter:
+  - bugfix: Fixes formatting for derelict and syndicate drone job names. They should
+      no longer tell you they're "the Ghost Role" when spawning as them.
+  - rscadd: Remapped the Metastation kitchen for about the tenth time.
+  - spellcheck: Fixed a typo in progressbar.dm and the file name for the progress
+      bar sprites.
+  cnleth:
+  - bugfix: Spell burger now has only one recipe
+  distributivgesetz:
+  - qol: Made reading text with the PDA retro theme a bit more accessible.
+  - rscadd: Updated Direct Messenger to v6.5.3. Now including brand new individual
+      chat rooms, proper image attachments and a revolutionary message input field!
+  - rscadd: Added a "Reset Imprint" option to the PDA painter.
+  - refactor: Refactored PDA imprinting code just a bit.
+  - bugfix: PDAs should now properly respond to rigged messages.
+  - bugfix: Fixes an extremely rare bug where a /mob/living/brain with a client would
+      not be moved out of nullspace correctly, causing admin log spam.
+  peptron1:
+  - qol: TTS volume preference is not actually a volume slider, instead of a volume
+      number input.
+  san7890:
+  - server: Added a preventative measure to prevent calling both TGSHardRestart and
+      TGSReboot, as well as potentially invoking sensitive procs that are only meant
+      to be called once.

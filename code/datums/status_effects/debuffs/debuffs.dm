@@ -418,7 +418,7 @@
 		owner.emote(pick("gasp", "gag", "choke"))
 
 /datum/status_effect/neck_slice/get_examine_text()
-	return span_warning("[owner.p_their(TRUE)] neck is cut and is bleeding profusely!")
+	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
@@ -568,7 +568,7 @@
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
 /datum/status_effect/trance/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -811,7 +811,7 @@
 	return COMPONENT_CLEANED
 
 /datum/status_effect/ants/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
+	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner
@@ -932,6 +932,28 @@
 
 /datum/status_effect/teleport_madness/tick()
 	dump_in_space(owner)
+
+/datum/status_effect/careful_driving
+	id = "careful_driving"
+	alert_type = /atom/movable/screen/alert/status_effect/careful_driving
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/careful_driving/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/datum/status_effect/careful_driving/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/atom/movable/screen/alert/status_effect/careful_driving
+	name = "Careful Driving"
+	desc = "That was close! You almost ran that one over!"
+	icon_state = "paralysis"
+
+/datum/movespeed_modifier/careful_driving
+	multiplicative_slowdown = 3
 
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER

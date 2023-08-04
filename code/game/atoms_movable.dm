@@ -1166,7 +1166,7 @@
 
 		if(update_on_z)
 			// I so much wish this could be somewhere else. alas, no.
-			for(var/image/update in update_on_z)
+			for(var/image/update as anything in update_on_z)
 				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
 		if(update_overlays_on_z)
 			// This EVEN more so
@@ -1538,7 +1538,7 @@
 	var/area/atom_area = get_area(src)
 
 	if(!atom_turf) // some machines spawn in nullspace
-		return
+		return FALSE
 
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
 		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines

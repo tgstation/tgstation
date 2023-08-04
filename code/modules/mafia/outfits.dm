@@ -46,7 +46,7 @@
 	gloves = /obj/item/clothing/gloves/color/white
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/costume/gothcoat
-	uniform = /obj/item/clothing/under/suit/black
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 
 //town
 
@@ -69,7 +69,7 @@
 /datum/outfit/mafia/psychologist
 	name = "Mafia Psychologist"
 
-	uniform = /obj/item/clothing/under/suit/black
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	neck = /obj/item/clothing/neck/tie/black/tied
 	shoes = /obj/item/clothing/shoes/laceup
 

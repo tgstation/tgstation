@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Lightgeists under AI control will selflessly heal any wounded creature that they see."
+  - balance: "Lightgeists can no longer repair non-organic tissue."
