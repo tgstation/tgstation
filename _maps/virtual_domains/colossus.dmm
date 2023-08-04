@@ -15,6 +15,14 @@
 "v" = (
 /turf/closed/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
+"z" = (
+/obj/structure/marker_beacon/teal,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"F" = (
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "G" = (
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -25,6 +33,18 @@
 "L" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse/bottom_left)
+"O" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"W" = (
+/obj/structure/marker_beacon/olive,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Y" = (
+/obj/structure/marker_beacon/indigo,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
 v
@@ -444,7 +464,7 @@ a
 a
 a
 a
-a
+O
 a
 a
 a
@@ -483,7 +503,7 @@ a
 a
 a
 a
-a
+W
 a
 a
 a
@@ -568,7 +588,7 @@ a
 a
 a
 a
-a
+F
 a
 a
 a
@@ -805,7 +825,7 @@ a
 a
 a
 a
-a
+O
 a
 a
 a
@@ -921,7 +941,7 @@ a
 a
 a
 a
-a
+Y
 a
 a
 a
@@ -1148,7 +1168,7 @@ a
 a
 a
 a
-a
+z
 a
 a
 a

@@ -5,8 +5,20 @@
 "c" = (
 /turf/template_noop,
 /area/template_noop)
+"g" = (
+/obj/structure/marker_beacon/lime,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "h" = (
 /obj/machinery/light/small/blacklight/directional/south,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"j" = (
+/obj/structure/marker_beacon/teal,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"l" = (
+/obj/structure/marker_beacon/bronze,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "q" = (
@@ -15,6 +27,10 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "s" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"u" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "v" = (
 /turf/closed/indestructible/binary,
@@ -25,6 +41,10 @@
 "L" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse/bottom_left)
+"P" = (
+/obj/structure/marker_beacon/fuchsia,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
 v
@@ -371,7 +391,7 @@ J
 J
 a
 a
-a
+u
 a
 a
 a
@@ -544,7 +564,7 @@ a
 a
 a
 a
-a
+u
 a
 a
 a
@@ -620,7 +640,7 @@ a
 a
 a
 a
-a
+g
 a
 a
 a
@@ -826,7 +846,7 @@ a
 a
 a
 a
-a
+l
 a
 a
 c
@@ -1145,7 +1165,7 @@ a
 a
 a
 a
-a
+P
 a
 a
 a
@@ -1202,7 +1222,7 @@ a
 a
 a
 a
-a
+u
 a
 a
 a
@@ -1309,7 +1329,7 @@ a
 a
 a
 a
-a
+j
 a
 a
 a

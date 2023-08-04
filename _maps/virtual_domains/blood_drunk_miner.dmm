@@ -30,6 +30,10 @@
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"j" = (
+/obj/structure/marker_beacon/jade,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "k" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -42,6 +46,14 @@
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"n" = (
+/obj/structure/marker_beacon/cerulean,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"o" = (
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "r" = (
 /obj/structure/stone_tile/block/cracked{
@@ -69,6 +81,10 @@
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"y" = (
+/obj/structure/marker_beacon/violet,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "z" = (
 /obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -79,6 +95,10 @@
 	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"C" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "G" = (
 /obj/structure/stone_tile{
@@ -570,7 +590,7 @@ a
 a
 a
 a
-a
+j
 a
 a
 a
@@ -653,7 +673,7 @@ J
 a
 a
 a
-a
+y
 a
 a
 a
@@ -963,7 +983,7 @@ a
 a
 a
 a
-a
+o
 a
 a
 c
@@ -1104,7 +1124,7 @@ a
 a
 a
 a
-a
+C
 a
 a
 a
@@ -1230,7 +1250,7 @@ a
 a
 a
 a
-a
+n
 a
 a
 a
@@ -1281,7 +1301,7 @@ a
 a
 a
 a
-a
+C
 a
 a
 a

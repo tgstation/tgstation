@@ -10,28 +10,32 @@
 "e" = (
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored/virtual_domain)
+"f" = (
+/obj/structure/marker_beacon/olive,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
 "i" = (
 /turf/closed/indestructible/binary,
 /area/icemoon/underground/explored/virtual_domain)
 "o" = (
-/obj/effect/landmark/portal_exit{
-	id = "wendigo arena exit"
+/obj/structure/marker_beacon/indigo,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored/virtual_domain)
 "q" = (
-/obj/effect/landmark/portal_exit{
-	id = "wendigo arena"
-	},
+/obj/structure/marker_beacon/yellow,
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored/virtual_domain)
 "t" = (
-/obj/effect/portal/permanent/one_way{
-	id = "wendigo arena"
+/obj/structure/marker_beacon/teal,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored/virtual_domain)
 "H" = (
 /mob/living/simple_animal/hostile/megafauna/wendigo/virtual_domain,
@@ -187,9 +191,9 @@ b
 b
 b
 b
-b
-b
-b
+e
+e
+e
 b
 b
 b
@@ -227,7 +231,7 @@ b
 b
 b
 b
-b
+e
 b
 b
 b
@@ -266,7 +270,7 @@ b
 b
 b
 b
-b
+e
 b
 b
 b
@@ -305,7 +309,7 @@ b
 b
 b
 b
-b
+e
 b
 b
 b
@@ -466,7 +470,7 @@ a
 a
 a
 a
-a
+o
 a
 a
 b
@@ -535,7 +539,7 @@ a
 a
 a
 a
-a
+q
 a
 a
 a
@@ -645,9 +649,9 @@ i
 i
 e
 e
+e
 b
 b
-b
 a
 a
 a
@@ -667,7 +671,7 @@ a
 a
 b
 b
-b
+e
 L
 e
 e
@@ -683,10 +687,10 @@ i
 (17,1,1) = {"
 i
 e
-o
-b
-b
-b
+e
+e
+e
+e
 a
 a
 a
@@ -703,11 +707,11 @@ a
 a
 a
 a
-q
-b
-b
-b
-t
+a
+e
+e
+e
+e
 R
 e
 S
@@ -723,9 +727,9 @@ i
 i
 e
 e
+e
 b
 b
-b
 a
 a
 a
@@ -745,7 +749,7 @@ a
 a
 b
 b
-b
+e
 e
 e
 e
@@ -847,7 +851,7 @@ a
 a
 a
 a
-a
+f
 a
 a
 a
@@ -935,7 +939,7 @@ a
 a
 a
 a
-a
+t
 a
 b
 b
@@ -1085,7 +1089,7 @@ b
 b
 b
 b
-b
+e
 b
 b
 b
@@ -1124,7 +1128,7 @@ b
 b
 b
 b
-b
+e
 b
 b
 b
@@ -1163,7 +1167,7 @@ b
 b
 b
 b
-b
+e
 b
 b
 b
@@ -1201,9 +1205,9 @@ b
 b
 b
 b
-b
-b
-b
+e
+e
+e
 b
 b
 b

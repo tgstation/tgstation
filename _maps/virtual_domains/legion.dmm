@@ -504,6 +504,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"uW" = (
+/obj/structure/marker_beacon/indigo,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "vf" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -691,6 +695,17 @@
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"CH" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/legioninfested,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
 "CV" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
@@ -862,6 +877,10 @@
 /obj/structure/necropolis_arch,
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"IL" = (
+/obj/effect/mob_spawn/corpse/human/legioninfested,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "JG" = (
 /turf/open/lava/smooth/lava_land_surface,
@@ -2232,7 +2251,7 @@ qq
 qq
 qq
 Hd
-qq
+IL
 wn
 qq
 qq
@@ -2471,7 +2490,7 @@ xx
 jk
 xx
 jk
-bS
+CH
 xx
 xx
 Wn
@@ -3002,7 +3021,7 @@ qq
 qq
 qq
 qq
-qq
+uW
 qq
 qq
 qq
