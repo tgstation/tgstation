@@ -147,6 +147,10 @@
 	. += mutable_appearance(icon, "[icon_state]_o_screen")
 	. += emissive_appearance(icon, "[icon_state]_o_screen", src)
 
+/obj/machinery/biogenerator/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode)
