@@ -1,0 +1,4 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - bugfix: "deleted trash in the walls from whiteship ruin box."
