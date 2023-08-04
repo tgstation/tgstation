@@ -117,7 +117,8 @@
 	. = ..()
 
 /datum/action/toggle_seethrough/Trigger(trigger_flags)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/datum/component/seethrough_mob/seethroughComp = target
 	seethroughComp.toggle_active()
