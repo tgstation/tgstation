@@ -72,7 +72,7 @@
 	player_mind.special_role = ROLE_CYBER_POLICE
 	player_mind.add_antag_datum(/datum/antagonist/cyber_police)
 
-	SEND_SIGNAL(server, COMSIG_BITRUNNER_THREAT_CREATED, new_agent)
+	SEND_SIGNAL(server, COMSIG_BITRUNNER_COP_SPAWNED, new_agent)
 
 	playsound(new_agent, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(new_agent)] has been made into Cyber Police by an event.")

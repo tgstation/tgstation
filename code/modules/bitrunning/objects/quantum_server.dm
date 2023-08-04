@@ -49,7 +49,6 @@
 	/// The turfs on station where we generate loot.
 	var/turf/receive_turfs = list()
 
-
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
 
@@ -71,7 +70,7 @@
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(src, COMSIG_BITRUNNER_CLIENT_CONNECTED, PROC_REF(on_client_connected))
 	RegisterSignal(src, COMSIG_BITRUNNER_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
-	RegisterSignal(src, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
+	RegisterSignal(src, COMSIG_BITRUNNER_COP_SPAWNED, PROC_REF(on_threat_created))
 	RefreshParts()
 
 	// This further gets sorted in the client by cost so it's random and grouped
@@ -596,7 +595,7 @@
 
 		baddie.throw_alert(
 			ALERT_BITRUNNER_RESET,
-			/atom/movable/screen/alert/qserver_threat_deletion,
+			/atom/movable/screen/alert/bitrunning/qserver_threat_deletion,
 			new_master = src,
 		)
 
@@ -683,6 +682,7 @@
 
 	domain_threats += 1
 	spawned_threats += threat
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED)
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)

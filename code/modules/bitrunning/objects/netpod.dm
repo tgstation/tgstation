@@ -264,6 +264,7 @@
 		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE)
 		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR)
 		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT)
+		receiving.UnregisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED)
 	receiving.UnregisterSignal(src, COMSIG_BITRUNNER_CROWBAR_ALERT)
 	receiving.UnregisterSignal(src, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
 	receiving.UnregisterSignal(src, COMSIG_BITRUNNER_SEVER_AVATAR)

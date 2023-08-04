@@ -16,14 +16,17 @@
 /// from /obj/machinery/netpod/on_take_damage()
 #define COMSIG_BITRUNNER_NETPOD_INTEGRITY "bitrunner_netpod_damage"
 
-/// from /obj/structure/hololadder and others:
+/// from /obj/structure/hololadder and complete alert
 #define COMSIG_BITRUNNER_SAFE_DISCONNECT "bitrunner_disconnect"
 
 /// from /obj/machinery/netpod/open_machine(), /obj/machinery/quantum_server, etc (obj/machinery/netpod)
 #define COMSIG_BITRUNNER_SEVER_AVATAR "bitrunner_sever"
 
-/// from /obj/machinery/quantum_server/shutdown() : (obj/machinery/quantum_server)
+/// from /obj/machinery/quantum_server/shutdown() : (mob/living)
 #define COMSIG_BITRUNNER_SHUTDOWN_ALERT "bitrunner_shutdown"
 
-/// from /datum/antagonist/cyber_police/proc/notify() : (mob/living/threat)
+/// from /datum/antagonist/cyber_police/proc/notify() :
 #define COMSIG_BITRUNNER_THREAT_CREATED "bitrunner_threat"
+
+/// from midround and event spawns: (mob/living)
+#define COMSIG_BITRUNNER_COP_SPAWNED "bitrunner_cop_spawned"
