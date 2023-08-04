@@ -35,7 +35,7 @@
 	name = "Bluespace Artillery (BSA) Assembly Instructions"
 	default_raw_text = {"<b>Below is a quick guide on setting up your new Bluespace Artillery Cannon.</b>
 	<br>
-	Featuring the newest in NanoTrasen technology, the Bluespace Artillery Cannon is your surefire ticket to complete and total threat elimination.
+	Featuring the newest in Nanotrasen technology, the Bluespace Artillery Cannon is your surefire ticket to complete and total threat elimination.
 	<br>
 	<h1>1. Acquire necessary resources.</h1>
 	* Bluespace Artillery Bore
@@ -68,7 +68,7 @@
 	15. Use the console to finalize construction.
 	And with that, you are done!  Feel free to look at the interface to select a target.  <b>Always make sure you are certain before attempting to fire the BSA.<b>
 	<br>
-	<i>Keep this manual for your records, failure to do so will void your 2 day limited liability warranty from NanoTrasen.</i>"}
+	<i>Keep this manual for your records, failure to do so will void your 2 day limited liability warranty from Nanotrasen.</i>"}
 
 /obj/item/paper/fluff/jobs/security/beepsky_mom
 	name = "Note from Beepsky's Mom"
