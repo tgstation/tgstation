@@ -114,7 +114,7 @@
 	var/datum/component/seethrough_mob/seethroughComp = target
 	if(seethroughComp.is_active)
 		seethroughComp.untrick_mob()
-	. = ..()
+	return ..()
 
 /datum/action/toggle_seethrough/Trigger(trigger_flags)
 	. = ..()
