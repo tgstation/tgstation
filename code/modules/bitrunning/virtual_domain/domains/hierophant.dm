@@ -1,9 +1,9 @@
-/datum/map_template/virtual_domain/hierophant
+/datum/lazy_template/virtual_domain/hierophant
 	name = "Zealot Arena"
 	cost = BITRUNNER_COST_HIGH
 	desc = "Dance, puppets, dance!"
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
-	filename = "hierophant.dmm"
+	map_name = "hierophant"
 	forced_outfit = /datum/outfit/job/miner
 	id = "hierophant"
 	reward_points = BITRUNNER_REWARD_HIGH

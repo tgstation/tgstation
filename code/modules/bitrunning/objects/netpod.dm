@@ -301,7 +301,7 @@
 		balloon_alert(neo, "no server connected!")
 		return
 
-	var/datum/map_template/virtual_domain/generated_domain = server.generated_domain
+	var/datum/lazy_template/virtual_domain/generated_domain = server.generated_domain
 	if(isnull(generated_domain))
 		balloon_alert(neo, "no connection!")
 		return

@@ -1,9 +1,9 @@
-/datum/map_template/virtual_domain/blood_drunk_miner
+/datum/lazy_template/virtual_domain/blood_drunk_miner
 	name = "Sanguine Excavation"
 	cost = BITRUNNER_COST_MEDIUM
 	desc = "Few escape the surface of Lavaland without a few scars. Some remain, maddened by the hunt."
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
-	filename = "blood_drunk_miner.dmm"
+	map_name = "blood_drunk_miner"
 	forced_outfit = /datum/outfit/job/miner
 	id = "blood_drunk_miner"
 	reward_points = BITRUNNER_REWARD_MEDIUM

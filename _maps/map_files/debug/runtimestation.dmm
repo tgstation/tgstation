@@ -2029,9 +2029,6 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
-"xD" = (
-/turf/open/floor/circuit/green,
-/area/station/bitrunning/receiving)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
@@ -2184,9 +2181,9 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "FW" = (
-/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/circuit/green,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "Ht" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -3196,7 +3193,7 @@ aa
 aa
 uI
 FW
-xD
+FW
 jR
 Oq
 uI
@@ -3287,8 +3284,8 @@ aa
 aa
 aa
 uI
-xD
-xD
+FW
+FW
 jR
 Oq
 uI
@@ -3562,9 +3559,9 @@ em
 em
 em
 em
-em
-em
-em
+uI
+uI
+uI
 OA
 qp
 uI

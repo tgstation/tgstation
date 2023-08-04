@@ -19341,6 +19341,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -20920,9 +20921,9 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "hHy" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -63888,8 +63889,9 @@
 /obj/effect/turf_decal/box/corners,
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "wiT" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/newscaster/directional/south,

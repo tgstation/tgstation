@@ -15,8 +15,9 @@
 "g" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -39,8 +40,9 @@
 "l" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/south,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "q" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/effect/decal/cleanable/dirt,
@@ -103,11 +105,9 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/generic,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/exit)
-"F" = (
-/turf/closed/wall/mineral/titanium,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "G" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -117,8 +117,9 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "H" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line,
@@ -157,8 +158,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "X" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/chair/comfy/shuttle{
@@ -174,7 +176,7 @@ t
 e
 e
 t
-F
+a
 "}
 (2,1,1) = {"
 e

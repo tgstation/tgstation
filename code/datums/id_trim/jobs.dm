@@ -162,6 +162,7 @@
 	subdepartment_color = COLOR_CARGO_BROWN
 	sechud_icon_state = SECHUD_BITRUNNER
 	minimal_access = list(
+		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MINING,
@@ -240,6 +241,7 @@
 	extra_access = list(
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
+		ACCESS_BIT_DEN,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -1100,6 +1102,7 @@
 		)
 	extra_access = list(
 		ACCESS_MAINT_TUNNELS,
+		ACCESS_BIT_DEN,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,

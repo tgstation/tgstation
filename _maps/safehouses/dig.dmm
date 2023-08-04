@@ -20,8 +20,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/plating,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -88,9 +89,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
-"Q" = (
-/turf/closed/mineral/asteroid,
-/area/template_noop)
 "S" = (
 /obj/structure/railing{
 	dir = 4
@@ -98,11 +96,13 @@
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/sand/plating,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/plating,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "T" = (
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/misc/asteroid,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "U" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -116,7 +116,7 @@ H
 A
 A
 H
-Q
+H
 "}
 (2,1,1) = {"
 A

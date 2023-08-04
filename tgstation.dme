@@ -3033,6 +3033,7 @@
 #include "code\modules\bitrunning\alerts.dm"
 #include "code\modules\bitrunning\areas.dm"
 #include "code\modules\bitrunning\mind_connection.dm"
+#include "code\modules\bitrunning\objects\effects.dm"
 #include "code\modules\bitrunning\objects\hololadder.dm"
 #include "code\modules\bitrunning\objects\loot_crate.dm"
 #include "code\modules\bitrunning\objects\netpod.dm"

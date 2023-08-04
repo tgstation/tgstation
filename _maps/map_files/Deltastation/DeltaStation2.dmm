@@ -10127,9 +10127,9 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/south,
-/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "cwe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -39243,8 +39243,9 @@
 	},
 /obj/effect/decal/cleanable/oil/streak,
 /obj/machinery/camera/directional/south,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "jLa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/railing{
@@ -63533,7 +63534,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "pUw" = (

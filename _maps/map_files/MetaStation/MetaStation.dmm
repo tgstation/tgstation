@@ -3315,8 +3315,9 @@
 /obj/effect/decal/cleanable/oil/streak,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "bjl" = (
 /obj/machinery/rnd/production/techfab/department/service,
 /obj/effect/turf_decal/trimline/brown/warning{
@@ -4567,6 +4568,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "bHb" = (
@@ -12369,7 +12371,7 @@
 /obj/machinery/door/airlock/mining{
 	name = "Bitrunning Den"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/bitrunning/den)
 "eEf" = (
@@ -29255,9 +29257,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light_switch/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "kHV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,

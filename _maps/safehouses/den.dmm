@@ -10,8 +10,9 @@
 "c" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/eighties,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "e" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/spawner/random/food_or_drink/snack{
@@ -33,14 +34,16 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
 	},
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/eighties,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "n" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/eighties,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "p" = (
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
@@ -54,14 +57,16 @@
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/dark,
 /obj/structure/sign/poster/contraband/hacking_guide/directional/east,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/eighties,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
 	},
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/pod/light,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "C" = (
 /turf/closed/wall,
 /area/virtual_domain/safehouse)
@@ -80,8 +85,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/generic,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/pod/light,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "G" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -94,8 +100,9 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 5
 	},
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/pod/light,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "J" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -109,9 +116,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
-"L" = (
-/turf/closed/wall,
-/area/template_noop)
 "M" = (
 /turf/open/floor/pod/dark,
 /area/virtual_domain/safehouse)
@@ -171,7 +175,7 @@ C
 C
 G
 G
-L
+C
 "}
 (2,1,1) = {"
 W

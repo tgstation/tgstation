@@ -10094,7 +10094,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck");
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck");
 	layer = 3.1
 	},
 /turf/closed/wall,
@@ -19650,7 +19650,7 @@
 /area/station/security/processing)
 "fWK" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen                                Supply")
+	atmos_chambers = list("o2ordance"="Oxygen                                                                Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -20219,7 +20219,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -29108,7 +29108,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck");
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck");
 	req_access = list("mining")
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -34971,7 +34971,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -39074,7 +39074,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -41966,8 +41966,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "nUM" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -43980,7 +43981,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck");
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck");
 	layer = 3.1
 	},
 /turf/closed/wall/r_wall,
@@ -45305,9 +45306,9 @@
 /obj/structure/sign/poster/random/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/bitrunning/reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/receiving)
+/area/station/bitrunning/den)
 "plQ" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/structure/disposalpipe/segment{
@@ -60142,7 +60143,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
@@ -61674,7 +61675,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -68921,13 +68922,13 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Bitrunning Den"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
 "xDY" = (

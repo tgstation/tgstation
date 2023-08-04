@@ -104,6 +104,8 @@
 #define ACCESS_VAULT "vault"
 /// Access for the Quartermaster's personal quarters in mapping, as well as some other QM-related things.
 #define ACCESS_QM "qm"
+/// Access for the bitrunning den
+#define ACCESS_BIT_DEN "bit_den"
 
 /// General access for Science, allows for entry to the general hallways of Science, as well as the main lathe room.
 #define ACCESS_SCIENCE "science"

@@ -10,24 +10,10 @@
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	base_icon_state = "qserver"
 	icon_state = "qserver"
-	/// The area type used to delete objects in the vdom
-	var/area/preset_delete_area = /area/virtual_domain/to_delete
-	/// The area type used to spawn hololadders
-	var/area/preset_exit_area = /area/virtual_domain/safehouse/exit
-	/// The area type used as a reference to load templates
-	var/area/preset_mapload_area = /area/virtual_domain/bottom_left
-	/// The area type to receive loot after a domain is completed
-	var/area/preset_receive_area = /area/station/bitrunning/receiving
-	/// The area type used as a reference to load the safehouse
-	var/area/preset_safehouse_area = /area/virtual_domain/safehouse/bottom_left
-	/// The area type used in vdom to send loot and mark completion
-	var/area/preset_send_area = /area/virtual_domain/safehouse/send
 	/// The loaded map template, map_template/virtual_domain
-	var/datum/map_template/virtual_domain/generated_domain
+	var/datum/lazy_template/virtual_domain/generated_domain
 	/// The loaded safehouse, map_template/safehouse
 	var/datum/map_template/safehouse/generated_safehouse
-	/// The generated z level to spawn other presets onto, datum/space_level
-	var/datum/weakref/vdom_ref
 	/// The connected console
 	var/datum/weakref/console_ref
 	/// If the server is cooling down from a recent despawn
@@ -53,19 +39,11 @@
 	/// Server cooldown efficiency
 	var/server_cooldown_efficiency = 1
 	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 2 MINUTES
-	/// Turfs to delete whenever the server is shut down.
-	var/turf/delete_turfs = list()
+	var/server_cooldown_time = 2 SECONDS
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
-	/// This marks the starting point (bottom left) of the virtual dom map. We use this to spawn templates. Expected: 1
-	var/turf/map_load_turf = list()
 	/// The turfs on station where we generate loot.
 	var/turf/receive_turfs = list()
-	/// This marks the starting point (bottom left) of the safehouse. We use this to spawn the safehouse. Expected: 1
-	var/turf/safehouse_load_turf = list()
-	/// Turfs to look for loot boxes.
-	var/turf/send_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -91,23 +69,19 @@
 	RefreshParts()
 
 	// This further gets sorted in the client by cost so it's random and grouped
-	available_domains = shuffle(subtypesof(/datum/map_template/virtual_domain))
+	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 	occupant_mind_refs.Cut()
 	available_domains.Cut()
-	QDEL_NULL(delete_turfs)
 	QDEL_NULL(exit_turfs)
-	QDEL_NULL(map_load_turf)
 	QDEL_NULL(receive_turfs)
-	QDEL_NULL(safehouse_load_turf)
-	QDEL_NULL(send_turfs)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 
 /obj/machinery/quantum_server/update_appearance(updates)
-	if(isnull(vdom_ref))
+	if(isnull(generated_domain))
 		set_light(0)
 		return ..()
 
@@ -169,7 +143,7 @@
 	if(!length(occupant_mind_refs))
 		balloon_alert(user, "powering down domain...")
 		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
-		stop_domain()
+		reset()
 		return
 
 	balloon_alert(user, "notifying clients...")
@@ -178,7 +152,7 @@
 	if(!do_after(user, 20 SECONDS, src))
 		return
 
-	stop_domain()
+	reset()
 
 /// Handles calculating rewards based on number of players, parts, threats, etc
 /obj/machinery/quantum_server/proc/calculate_rewards()
@@ -219,34 +193,27 @@
 		return FALSE
 
 	loading = TRUE
-	balloon_alert(user, "initializing virtual domain...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
-	var/datum/space_level/loaded_zlevel = vdom_ref?.resolve()
-	if(isnull(loaded_zlevel) && !initialize_virtual_domain())
-		balloon_alert(user, "failed to initialize.")
-		loading = FALSE
-		return FALSE
-
-	var/datum/map_template/virtual_domain/to_generate = initialize_domain(map_id)
-	if(isnull(to_generate))
+	if(!initialize_domain(map_id))
 		balloon_alert(user, "invalid domain specified.")
 		loading = FALSE
 		return FALSE
 
-	points -= to_generate.cost
+	points -= generated_domain.cost
 	if(points < 0)
 		balloon_alert(user, "not enough points.")
 		loading = FALSE
 		return FALSE
 
-	if(!load_domain(to_generate))
+	if(!initialize_safehouse_turfs())
+		balloon_alert(user, "failed to load safehouse.")
 		loading = FALSE
 		return FALSE
 
 	loading = FALSE
-	balloon_alert(user, "virtual domain generated.")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
+	balloon_alert(user, "domain loaded.")
 
 	return TRUE
 
@@ -310,9 +277,7 @@
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot()
-	if(!length(receive_turfs))
-		receive_turfs = get_area_turfs(preset_receive_area)
-	if(!length(receive_turfs))
+	if(!length(receive_turfs) && !locate_receive_turfs())
 		return FALSE
 
 	points += generated_domain.reward_points
@@ -340,7 +305,7 @@
 /obj/machinery/quantum_server/proc/get_available_domains()
 	var/list/levels = list()
 
-	for(var/datum/map_template/virtual_domain/domain as anything in available_domains)
+	for(var/datum/lazy_template/virtual_domain/domain as anything in available_domains)
 		if(initial(domain.test_only))
 			continue
 		var/can_view = initial(domain.difficulty) < scanner_tier && initial(domain.cost) <= points + 5
@@ -447,7 +412,7 @@
 	var/list/random_domains = list()
 	var/total_cost = 0
 
-	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
+	for(var/datum/lazy_template/virtual_domain/available as anything in subtypesof(/datum/lazy_template/virtual_domain))
 		var/init_cost = initial(available.cost)
 		if(!initial(available.test_only) && init_cost > 0 && init_cost < 4 && init_cost <= points)
 			random_domains += list(list(
@@ -486,7 +451,8 @@
 		return
 
 	var/list/mutation_candidates = list()
-	for(var/mob/living/creature as anything in generated_domain.created_atoms)
+	var/list/bad_list = list()
+	for(var/mob/living/creature as anything in bad_list)
 		if(QDELETED(creature) || !isliving(creature) || creature.mind || !creature.can_be_cybercop)
 			continue
 
@@ -521,29 +487,54 @@
 		else
 			return "S"
 
-/// Returns a new domain if the given id is valid and the user has enough points
+/// Initializes a new domain if the given id is valid and the user has enough points
 /obj/machinery/quantum_server/proc/initialize_domain(map_id)
-	var/datum/map_template/virtual_domain/to_generate
-	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
-		if(map_id == initial(available.id) && points >= initial(available.cost))
-			to_generate = new available
-			return to_generate
+	for(var/datum/lazy_template/virtual_domain/available as anything in subtypesof(/datum/lazy_template/virtual_domain))
+		if(map_id != initial(available.id) || points < initial(available.cost))
+			continue
 
-/// Generates a new virtual domain
-/obj/machinery/quantum_server/proc/initialize_virtual_domain()
-	var/datum/map_template/virtual_domain/base_map/fresh_vdom = new()
-	var/datum/space_level/loaded_zlevel = fresh_vdom.load_new_z()
+		generated_domain = new available
+		generated_domain.lazy_load()
+		return TRUE
 
-	if(isnull(loaded_zlevel))
-		log_game("The virtual domain z-level failed to load.")
-		message_admins("The virtual domain z-level failed to load. Hackers won't be teleported to the netverse.")
-		CRASH("Failed to initialize virtual domain z-level!")
+	return FALSE
 
-	vdom_ref = WEAKREF(loaded_zlevel)
+/// Loads the safehouse and sets turfs
+/obj/machinery/quantum_server/proc/initialize_safehouse_turfs()
+	var/datum/turf_reservation/res = generated_domain.reservations[1]
 
-	delete_turfs = get_area_turfs(preset_delete_area, loaded_zlevel.z_value)
-	map_load_turf = get_area_turfs(preset_mapload_area, loaded_zlevel.z_value)
-	safehouse_load_turf = get_area_turfs(preset_safehouse_area, loaded_zlevel.z_value)
+	var/turf/safehouse_load_turf = list()
+	for(var/turf/tile as anything in res.reserved_turfs)
+		var/area/parent = get_area(tile)
+		if(istype(parent, /area/virtual_domain/safehouse/bottom_left))
+			safehouse_load_turf += tile
+			break
+
+	if(!length(safehouse_load_turf))
+		CRASH("Failed to find safehouse load landmark on map.")
+
+	var/datum/map_template/safehouse/safehouse = new generated_domain.safehouse_path
+	safehouse.load(safehouse_load_turf[ONLY_TURF])
+	generated_safehouse = safehouse
+
+	var/turf/goal_turfs = list()
+	for(var/obj/thing in safehouse.created_atoms)
+		if(istype(thing, /obj/effect/bitrunning/exit_spawn))
+			exit_turfs += get_turf(thing)
+			continue
+		if(istype(thing, /obj/effect/bitrunning/goal_turf))
+			var/turf/tile = get_turf(thing)
+			goal_turfs += tile
+			RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_send_turf_entered))
+			RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_send_turf_examined))
+
+	if(!length(exit_turfs))
+		CRASH("Failed to find exit turfs on generated domain.")
+	if(!length(goal_turfs))
+		CRASH("Failed to find send turfs on generated domain.")
+
+	generated_domain.start_time = world.time
+	update_appearance()
 
 	return TRUE
 
@@ -551,28 +542,13 @@
 /obj/machinery/quantum_server/proc/is_valid_mob(mob/living/creature)
 	return isliving(creature) && isnull(creature.key) && creature.stat != DEAD && creature.health > 10
 
-/// Loads the safehouse and given domain into the virtual domain
-/obj/machinery/quantum_server/proc/load_domain(datum/map_template/virtual_domain/to_generate)
-	var/datum/map_template/safehouse/safehouse = new to_generate.safehouse_path
+/// Locates any turfs with crate out landmarks
+/obj/machinery/quantum_server/proc/locate_receive_turfs()
+	for(var/turf/tile in oview(4, src))
+		if(locate(/obj/effect/bitrunning/reward_spawn) in tile)
+			receive_turfs += tile
 
-	to_generate.load(map_load_turf[ONLY_TURF])
-	safehouse.load(safehouse_load_turf[ONLY_TURF])
-
-	generated_domain = to_generate
-	generated_safehouse = safehouse
-	generated_domain.start_time = world.time
-
-	var/datum/space_level/vdom = vdom_ref?.resolve()
-	exit_turfs = get_area_turfs(preset_exit_area, vdom.z_value)
-	send_turfs = get_area_turfs(preset_send_area, vdom.z_value)
-
-	for(var/turf/tile in send_turfs)
-		RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_send_turf_entered))
-		RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_send_turf_examined))
-
-	update_appearance()
-
-	return TRUE
+	return length(receive_turfs) > 0
 
 /// If broken via signal, disconnects all users
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
@@ -583,13 +559,13 @@
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
-/// Each time someone connects, mob health jumps 1.5x
+/// Someone connected via netpod
 /obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_mind)
 	SIGNAL_HANDLER
 
 	occupant_mind_refs += new_mind
 
-/// If a client disconnects, remove them from the list & nerf mobs
+/// Someone disconnected
 /obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_mind)
 	SIGNAL_HANDLER
 
@@ -653,57 +629,15 @@
 /obj/machinery/quantum_server/proc/on_threat_created(datum/source, mob/living/threat)
 	SIGNAL_HANDLER
 
-	if(isnull(generated_domain))
-		return
-
 	domain_threats += 1
 
-/// Deletes all the tile contents
-/obj/machinery/quantum_server/proc/scrub_vdom()
-	for(var/turf/tile in send_turfs)
-		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
-		UnregisterSignal(tile, COMSIG_ATOM_EXAMINE)
-
-	for(var/turf/tile in exit_turfs)
-		UnregisterSignal(tile, COMSIG_ATOM_ENTERED)
-
-	for(var/turf/tile in delete_turfs)
-		tile.baseturfs.Cut(3)
-
-		for(var/thing in tile.contents)
-			if(!isobserver(thing))
-				qdel(thing)
-
-		for(var/thing in tile.contents) // some things drop their contents
-			if(!isobserver(thing))
-				qdel(thing)
-
-	for(var/turf/tile in safehouse_load_turf) // cleanup that one tile
-		tile.baseturfs.Cut(3)
-
-		for(var/thing in tile.contents)
-			if(!isobserver(thing))
-				qdel(thing)
-
-/// Do some magic teleport sparks
-/obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
-	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
-	var/datum/effect_system/spark_spread/quantum/sparks = new()
-	sparks.set_up(5, 1, get_turf(crate))
-	sparks.start()
-
 /// Stops the current virtual domain and disconnects all users
-/obj/machinery/quantum_server/proc/stop_domain()
+/obj/machinery/quantum_server/proc/reset()
 	loading = TRUE
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 
-	terraform_vdom()
-
 	scrub_vdom()
-
-	QDEL_NULL(generated_domain)
-	QDEL_NULL(generated_safehouse)
 
 	cooling_off = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * server_cooldown_efficiency), TIMER_UNIQUE|TIMER_STOPPABLE)
@@ -714,10 +648,22 @@
 	retries_spent = 0
 	loading = FALSE
 
-/// Clean template. There are surely other ways to do this that are more performant.
-/obj/machinery/quantum_server/proc/terraform_vdom()
-	var/datum/map_template/virtual_domain/base_map/fresh_vdom = new()
-	fresh_vdom.load(map_load_turf[ONLY_TURF])
+/// Deletes all the tile contents
+/obj/machinery/quantum_server/proc/scrub_vdom()
+	if(length(generated_domain.reservations))
+		var/datum/turf_reservation/res = generated_domain.reservations[1]
+		res.Release()
+
+	exit_turfs = list()
+	generated_domain = null
+	generated_safehouse = null
+
+/// Do some magic teleport sparks
+/obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
+	playsound(crate, 'sound/magic/blink.ogg', 50, TRUE)
+	var/datum/effect_system/spark_spread/quantum/sparks = new()
+	sparks.set_up(5, 1, get_turf(crate))
+	sparks.start()
 
 #undef ONLY_TURF
 #undef REDACTED

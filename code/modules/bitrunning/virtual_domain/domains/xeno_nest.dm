@@ -1,10 +1,10 @@
-/datum/map_template/virtual_domain/xeno_nest
+/datum/lazy_template/virtual_domain/xeno_nest
 	name = "Xeno Infestation"
 	cost = BITRUNNER_COST_LOW
 	desc = "Our ship scanners have detected lifeforms of unknown origin. Friendly attempts to contact them have failed."
 	difficulty = BITRUNNER_DIFFICULTY_LOW
-	extra_loot = list(/obj/item/toy/plush/rouny)
-	filename = "xeno_nest.dmm"
+	extra_loot = list(/obj/item/toy/plush/rouny = 1)
+	map_name = "xeno_nest"
 	help_text = "You are on a barren planet filled with hostile creatures. There is a crate here, not hidden,\
 	simply protected. Expect resistance."
 	id = "xeno_nest"

@@ -6,20 +6,19 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
-"k" = (
-/turf/closed/wall/mineral/wood,
-/area/template_noop)
 "o" = (
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/carpet/green,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "p" = (
 /obj/item/kirbyplants/random/fullysynthetic,
 /turf/open/indestructible/hotelwood,
 /area/virtual_domain/safehouse)
 "s" = (
 /obj/machinery/light/small/directional/east,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/carpet/green,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "v" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
@@ -28,8 +27,9 @@
 /area/virtual_domain/safehouse)
 "x" = (
 /obj/structure/railing,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/carpet/green,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "z" = (
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/indestructible/hotelwood,
@@ -38,8 +38,9 @@
 /turf/closed/wall/mineral/wood,
 /area/virtual_domain/safehouse)
 "T" = (
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/indestructible/hotelwood,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "X" = (
 /obj/machinery/door/airlock/wood/glass,
 /obj/structure/fans/tiny,
@@ -56,7 +57,7 @@ G
 i
 G
 G
-k
+G
 "}
 (2,1,1) = {"
 i

@@ -1,21 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ag" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
+"aE" = (
+/obj/structure/stone_tile/slab/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"bl" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"bT" = (
+"aR" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
@@ -24,95 +12,272 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
-"bY" = (
+"bi" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/lava/smooth/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"ce" = (
-/obj/structure/stone_tile/block{
+"bs" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"bS" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"cb" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"cs" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"db" = (
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"dd" = (
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"dD" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"dI" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse/bottom_left)
+"dL" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"dY" = (
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"en" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"ep" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"eB" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"cC" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"cX" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/center,
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"dI" = (
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors/virtual_domain)
-"dS" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/center,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"ee" = (
-/turf/closed/indestructible/binary,
-/area/lavaland/surface/outdoors/virtual_domain)
-"ey" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/center/cracked,
-/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "eF" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/obj/structure/stone_tile/block{
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"eY" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"fv" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"fx" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/indestructible/boss,
+/obj/structure/stone_tile/center,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"eK" = (
-/obj/structure/necropolis_gate/locked,
-/obj/structure/stone_tile/slab,
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"fE" = (
-/obj/structure/stone_tile/block{
+"gp" = (
+/obj/structure/stone_tile/surrounding_tile{
 	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"gJ" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"gM" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"gP" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"hm" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"fR" = (
+"hW" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"iW" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"jk" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"jw" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"jN" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"kF" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"kW" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"ld" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"lp" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"lK" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
@@ -122,44 +287,174 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"fV" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
+"mb" = (
+/obj/structure/stone_tile{
+	dir = 1
 	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"gO" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"hx" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"mp" = (
+/obj/structure/necropolis_gate/locked,
+/obj/structure/stone_tile/slab,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"mr" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"mt" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"mw" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"nj" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"nl" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"oi" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"oJ" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"pa" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"pj" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"pt" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"pu" = (
+/obj/structure/marker_beacon/bronze,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"qb" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"qq" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"qt" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"hB" = (
-/obj/structure/stone_tile/cracked{
+"qF" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/block{
 	dir = 8
 	},
-/obj/structure/stone_tile/cracked{
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"rF" = (
+/obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
-"hF" = (
+"rN" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"sH" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"td" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
@@ -169,68 +464,336 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
-"ii" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
+"tn" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
 	},
-/obj/structure/stone_tile/block{
+/obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"ik" = (
+"tN" = (
 /obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"uc" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"uB" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"uN" = (
+/obj/structure/stone_tile/cracked{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"in" = (
-/obj/structure/fluff/drake_statue/falling,
+"uP" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"vf" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"vr" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"jp" = (
+"wn" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"jw" = (
-/obj/structure/stone_tile/block,
+"wC" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"jB" = (
+"wH" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"wP" = (
+/turf/closed/indestructible/riveted/boss/see_through,
+/area/lavaland/surface/outdoors/virtual_domain)
+"xs" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"xt" = (
+/turf/closed/indestructible/binary,
+/area/lavaland/surface/outdoors/virtual_domain)
+"xx" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"xH" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"yf" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"yk" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/center/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"zp" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"zT" = (
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Af" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"AR" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"AW" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Bt" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"BK" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"BX" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Cs" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/block/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"CG" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"CV" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/center,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"De" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Dp" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Dv" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"DC" = (
+/obj/structure/stone_tile/block,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"DO" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"DZ" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Eb" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"EP" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
 /obj/structure/stone_tile/center/cracked,
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 1
-	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"jX" = (
+"EU" = (
+/obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	dir = 1
+	dir = 8
 	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"FG" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"FJ" = (
+/obj/structure/stone_tile,
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
 /obj/structure/stone_tile{
 	dir = 8
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
-"kj" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
+"Gd" = (
 /obj/structure/stone_tile{
 	dir = 4
+	},
+/obj/structure/marker_beacon/burgundy,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Gu" = (
+/obj/structure/stone_tile/block{
+	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -238,46 +801,72 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"kx" = (
+"GD" = (
+/turf/template_noop,
+/area/space)
+"GW" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"GY" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Hd" = (
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Hf" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Hm" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
 /obj/structure/stone_tile/cracked{
 	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Hv" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"kG" = (
-/obj/structure/stone_tile/slab,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"kX" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"lu" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"lx" = (
+"Iv" = (
 /obj/structure/necropolis_gate/legion_gate,
 /obj/structure/necropolis_arch,
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
-"lT" = (
-/obj/structure/stone_tile/block/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+"JG" = (
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"lU" = (
-/turf/template_noop,
-/area/space)
-"me" = (
+"JQ" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
@@ -287,6672 +876,2705 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"mh" = (
-/obj/structure/stone_tile/block,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"nb" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"nd" = (
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"nk" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"oM" = (
-/turf/closed/indestructible/riveted/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"pB" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"pX" = (
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"qw" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"qE" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile/block/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"qU" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"rt" = (
-/obj/structure/stone_tile/block,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"rw" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/center,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"rG" = (
-/turf/closed/mineral/random/high_chance/volcanic,
-/area/lavaland/surface/outdoors/virtual_domain)
-"sn" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"td" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"tm" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"tB" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"tS" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/center,
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"tY" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"uK" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"uM" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"uX" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"vn" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"vD" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"vE" = (
-/obj/structure/stone_tile/slab/cracked,
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"vT" = (
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"vU" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"wO" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"xm" = (
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/center,
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"xo" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"xM" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"xU" = (
-/obj/structure/stone_tile/slab/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"yd" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"yy" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"zb" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"zk" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"zs" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ac" = (
-/obj/structure/stone_tile/surrounding/cracked{
-	dir = 6
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ae" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ax" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Bk" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Bl" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"BL" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ce" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Cy" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Cz" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"CB" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"CI" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Dn" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ed" = (
-/obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"EY" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Fm" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Fo" = (
-/obj/structure/fluff/drake_statue,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Fz" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"FQ" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Gb" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Gf" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Gj" = (
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Go" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Gw" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"GL" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"GN" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"GV" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ho" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Hz" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"HA" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Id" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"IV" = (
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Jr" = (
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Jv" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Jw" = (
-/obj/structure/stone_tile/center,
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Jz" = (
-/obj/structure/stone_tile/block{
-	dir = 1
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ka" = (
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Ku" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"KI" = (
-/obj/structure/stone_tile/block,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Lm" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/center/cracked,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Lu" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"LG" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"LK" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"PA" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"PE" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"PR" = (
-/obj/structure/stone_tile/block/cracked,
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Qj" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Rl" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Rp" = (
+"Kz" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
 /mob/living/simple_animal/hostile/megafauna/legion/virtual_domain,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
-"RF" = (
+"KW" = (
 /obj/structure/stone_tile/cracked,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"RM" = (
-/obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"LJ" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Mb" = (
+/turf/closed/mineral/random/high_chance/volcanic,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Mh" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
 	dir = 8
 	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Ml" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"MB" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"MG" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"MR" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Nc" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
 /obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Nr" = (
+/turf/closed/mineral/random/volcanic,
+/area/lavaland/surface/outdoors/virtual_domain)
+"NE" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"OI" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Pa" = (
+/obj/structure/fluff/drake_statue/falling,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"RT" = (
-/obj/structure/marker_beacon/burgundy,
+"Pb" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Pr" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 6
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Pu" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"PB" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"PQ" = (
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Qe" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Qr" = (
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"QH" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"RI" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Sg" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"Sf" = (
-/obj/structure/marker_beacon/bronze,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+"SA" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"SK" = (
+"Tj" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/center/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"SV" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Tv" = (
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"TX" = (
-/obj/structure/stone_tile/block/cracked,
+"Tu" = (
 /obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
 	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors/virtual_domain)
+"TD" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"UV" = (
+"Ur" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Wn" = (
 /obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"VP" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/cracked{
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"WM" = (
+/obj/structure/stone_tile{
 	dir = 1
 	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"VW" = (
-/obj/structure/stone_tile{
+/obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"WS" = (
+/obj/structure/stone_tile/surrounding_tile{
 	dir = 1
 	},
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Wd" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 8
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/center/cracked,
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 4
-	},
-/turf/open/lava/smooth/lava_land_surface,
+/obj/structure/stone_tile/center,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
-"Wq" = (
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"WB" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
+"Xj" = (
 /obj/structure/stone_tile/block,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"WF" = (
-/obj/structure/stone_tile/block/cracked{
+/obj/structure/stone_tile{
 	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"Xi" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile{
+"Xp" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block{
 	dir = 1
 	},
-/obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"Xs" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 1
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Xx" = (
-/turf/closed/indestructible/riveted/boss/see_through,
-/area/lavaland/surface/outdoors/virtual_domain)
-"Yj" = (
+"Yf" = (
 /turf/template_noop,
 /area/template_noop)
-"Yz" = (
-/obj/structure/stone_tile/surrounding_tile,
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/center/cracked,
-/obj/structure/stone_tile/surrounding_tile/cracked{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
+"Yy" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"Zj" = (
+"Zi" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/structure/marker_beacon/burgundy,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"ZB" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/virtual_domain)
-"ZO" = (
-/obj/structure/stone_tile/slab/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
-"ZU" = (
-/obj/structure/stone_tile/block,
-/obj/structure/stone_tile/cracked{
+"ZT" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/center/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (2,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (3,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (4,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+Mb
+Mb
+Mb
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (5,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+FG
+Mb
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (6,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (7,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (8,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+rN
+rN
+rN
+rN
+rN
+Mb
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (9,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+dY
+rN
+rN
+rN
+rN
+Mb
+Nr
+Nr
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
 "}
 (10,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+rN
+rN
+rN
+Mb
+Mb
+Nr
+Nr
+Mb
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+xt
 "}
 (11,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+dY
+xH
+Mb
+Nr
+Nr
+Mb
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (12,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+Mb
+Nr
+Nr
+dd
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+rN
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (13,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+QH
+JG
+JG
+JG
+JG
+JG
+JG
+eB
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (14,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+bs
+Bt
+kW
+kW
+kF
+rN
+rN
+rN
+rN
+JG
+JG
+mw
+JG
+JG
+JG
+rN
+ep
+JG
+JG
+JG
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (15,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Cs
+jw
+pa
+jw
+jw
+aE
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+gP
+qq
+pu
+qq
+qq
+qq
+iW
+qq
+qq
+wC
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (16,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Xp
+vr
+jN
+eF
+Qr
+SA
+FG
+rN
+hW
+JG
+JG
+JG
+JG
+qb
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+OI
+qq
+qq
+KW
+qq
+qq
+qq
+qq
+qq
+qq
+pu
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (17,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+mb
+DC
+Eb
+MB
+jw
+Gu
+rN
+rN
+JG
+pj
+JG
+JG
+JG
+Dv
+JG
+JG
+BK
+JG
+JG
+OI
+NE
+iW
+qq
+qq
+qq
+Hd
+qq
+wn
+qq
+qq
+Gd
+qq
+qq
+qt
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (18,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+DZ
+pt
+AW
+pt
+en
+zT
+zT
+wP
+wP
+jw
+nl
+yf
+fx
+vr
+wH
+zT
+zT
+BK
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qb
+qq
+qq
+NE
+qq
+qq
+uP
+qq
+OI
+qq
+Hd
+qq
+wn
+qq
+qq
+qq
+MR
+qq
+qq
+qq
+qq
+Yf
+Yf
+Yf
+Yf
+Yf
+dI
+qq
+zT
+xt
 "}
 (19,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+wP
+WS
+FJ
+mr
+gJ
+rF
+zT
+zT
+wP
+wP
+Tj
+jw
+jw
+jw
+jw
+pa
+zT
+Ur
+Ur
+RI
+Ur
+dD
+Ur
+zp
+Hv
+Ur
+tn
+Hv
+Hv
+Af
+qq
+Xj
+qq
+qq
+qq
+qq
+wn
+qq
+qq
+qq
+qq
+qq
+NE
+qq
+qq
+qq
+qq
+qq
+qq
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+qq
+zT
+xt
 "}
 (20,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+mt
+mt
+mp
+mt
+aR
+Kz
+Pu
+LJ
+Pu
+Pu
+Pu
+Iv
+GW
+PB
+Hf
+PB
+PB
+GW
+PQ
+uB
+hm
+uB
+oJ
+fv
+hm
+Pr
+hm
+ld
+lp
+uB
+MG
+gM
+BX
+GY
+qq
+Sg
+qq
+uP
+qq
+OI
+qq
+qq
+wn
+qq
+qq
+Hd
+uN
+qq
+qq
+qq
+qq
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+qq
+zT
+xt
 "}
 (21,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-rG
-rG
-rG
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+wP
+gp
+Mh
+Nc
+en
+oi
+zT
+zT
+wP
+wP
+ZT
+jw
+Ml
+mb
+pa
+xs
+zT
+qF
+xx
+xx
+jk
+xx
+jk
+bS
+xx
+xx
+Wn
+bS
+dL
+JQ
+qq
+db
+qq
+qq
+OI
+uN
+qq
+qq
+qq
+WM
+qq
+EU
+qq
+qq
+gP
+qq
+OI
+qq
+qq
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+qq
+zT
+xt
 "}
 (22,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-lT
-rG
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+DZ
+vf
+Tu
+td
+cb
+zT
+zT
+wP
+wP
+SA
+Qe
+eF
+EP
+jw
+Gu
+zT
+zT
+Dv
+JG
+JG
+JG
+qb
+JG
+JG
+JG
+JG
+Dv
+JG
+qq
+qq
+Hd
+qq
+qq
+Dp
+gP
+qq
+Hm
+qq
+qq
+pu
+qq
+qq
+qq
+qq
+qq
+Dp
+qq
+qq
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+qq
+zT
+xt
 "}
 (23,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+jw
+DC
+Pa
+MB
+mb
+DO
+rN
+rN
+JG
+JG
+De
+lK
+Dv
+JG
+JG
+JG
+qb
+JG
+JG
+wn
+Hd
+NE
+OI
+NE
+qq
+qq
+qq
+qq
+qq
+qq
+uN
+qq
+NE
+wn
+qq
+qq
+uN
+qq
+qq
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+qq
+zT
+xt
 "}
 (24,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Xp
+Ml
+yk
+yf
+CV
+jw
+dY
+rN
+rN
+JG
+JG
+JG
+rN
+tN
+JG
+Zi
+rN
+pj
+JG
+JG
+qq
+qq
+qq
+qq
+uP
+qq
+CG
+qq
+qq
+bi
+qq
+qq
+qq
+qq
+qq
+qq
+TD
+qq
+qq
+qq
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+qq
+zT
+xt
 "}
 (25,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-PA
-PA
-PA
-PA
-PA
-rG
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Xp
+jw
+jw
+jw
+SA
+PQ
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+rN
+AR
+JG
+JG
+JG
+qq
+uP
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (26,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rt
-PA
-PA
-PA
-PA
-rG
-dI
-dI
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+bs
+jw
+SA
+sH
+Pb
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Yy
+JG
+JG
+JG
+wn
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (27,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-PA
-PA
-PA
-rG
-rG
-dI
-dI
-rG
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+dd
+rN
+rN
+rN
+rN
+rN
+QH
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (28,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rt
-GN
-rG
-dI
-dI
-rG
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+rN
+uc
+eY
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+rN
+rN
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (29,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-rG
-dI
-dI
-pX
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-PA
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+rN
+rN
+dd
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+nj
+rN
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (30,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-Cz
-vT
-vT
-vT
-vT
-vT
-vT
-yd
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+cs
+rN
+tN
+dd
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (31,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-tY
-RM
-zb
-zb
-Id
-PA
-PA
-PA
-PA
-vT
-vT
-SV
-vT
-vT
-vT
-PA
-Jv
-vT
-vT
-vT
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+qq
+zT
+xt
 "}
 (32,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-qE
-HA
-vn
-HA
-HA
-ZO
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-GV
-lu
-Sf
-lu
-lu
-lu
-bl
-lu
-lu
-hx
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+xt
 "}
 (33,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-xo
-kX
-Yz
-Jr
-jB
-Ae
-lT
-PA
-pB
-vT
-vT
-vT
-vT
-Wq
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-ik
-lu
-lu
-Gb
-lu
-lu
-lu
-lu
-lu
-lu
-Sf
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+qb
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
 "}
 (34,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-Gw
-mh
-Fo
-Jz
-HA
-CI
-PA
-PA
-vT
-kx
-vT
-vT
-vT
-RF
-vT
-vT
-LG
-vT
-vT
-ik
-Lu
-bl
-lu
-lu
-lu
-nd
-lu
-jp
-lu
-lu
-Zj
-lu
-lu
-Hz
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+Yy
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (35,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-IV
-td
-Ho
-td
-qw
-oM
-oM
-Xx
-Xx
-HA
-Wd
-sn
-rw
-kX
-Ku
-oM
-oM
-LG
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-Wq
-lu
-lu
-Lu
-lu
-lu
-Dn
-lu
-ik
-lu
-nd
-lu
-jp
-lu
-lu
-lu
-zs
-lu
-lu
-lu
-lu
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (36,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-Xx
-tS
-nb
-Ce
-yy
-Bl
-oM
-oM
-Xx
-Xx
-Jw
-HA
-HA
-HA
-HA
-vn
-oM
-ag
-ag
-ii
-ag
-wO
-ag
-BL
-ZB
-ag
-GL
-ZB
-ZB
-WF
-lu
-jw
-lu
-lu
-lu
-lu
-jp
-lu
-lu
-lu
-lu
-lu
-Lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-lu
-Yj
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+Mb
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+JG
+JG
+JG
+rN
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qq
+qq
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (37,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-nk
-nk
-eK
-nk
-bT
-Rp
-eF
-vE
-eF
-eF
-eF
-lx
-xM
-gO
-Qj
-gO
-gO
-xM
-kG
-tm
-fV
-tm
-LK
-WB
-fV
-Ac
-fV
-vU
-Fm
-tm
-CB
-TX
-xU
-PR
-lu
-uM
-lu
-Dn
-lu
-ik
-lu
-lu
-jp
-lu
-lu
-nd
-Gf
-lu
-lu
-lu
-lu
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-lu
-Yj
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+zT
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}
 (38,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-Xx
-cX
-UV
-jX
-qw
-FQ
-oM
-oM
-Xx
-Xx
-SK
-HA
-kj
-Gw
-vn
-qU
-oM
-Cy
-Go
-Go
-Xs
-Go
-Xs
-zk
-Go
-Go
-Bk
-zk
-PE
-me
-lu
-KI
-lu
-lu
-ik
-Gf
-lu
-lu
-lu
-cC
-lu
-uK
-lu
-lu
-GV
-lu
-ik
-lu
-lu
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-lu
-Yj
-"}
-(39,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-IV
-Ax
-VP
-hF
-VW
-oM
-oM
-Xx
-Xx
-Ae
-xm
-Jr
-Lm
-HA
-CI
-oM
-oM
-RF
-vT
-vT
-vT
-Wq
-vT
-vT
-vT
-vT
-RF
-vT
-lu
-lu
-nd
-lu
-lu
-RT
-GV
-lu
-hB
-lu
-lu
-Sf
-lu
-lu
-lu
-lu
-lu
-RT
-lu
-lu
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-lu
-Yj
-"}
-(40,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-HA
-mh
-in
-Jz
-Gw
-ce
-PA
-PA
-vT
-vT
-bY
-fR
-RF
-vT
-vT
-vT
-Wq
-vT
-vT
-jp
-nd
-Lu
-ik
-Lu
-lu
-lu
-lu
-lu
-lu
-lu
-Gf
-lu
-Lu
-jp
-lu
-lu
-Gf
-lu
-lu
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-lu
-Yj
-"}
-(41,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-xo
-kj
-ey
-sn
-dS
-HA
-rt
-PA
-PA
-vT
-vT
-vT
-PA
-EY
-vT
-tB
-PA
-kx
-vT
-vT
-lu
-lu
-lu
-lu
-Dn
-lu
-Tv
-lu
-lu
-Fz
-lu
-lu
-lu
-lu
-lu
-lu
-Gj
-lu
-lu
-lu
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-lu
-Yj
-"}
-(42,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-xo
-HA
-HA
-HA
-Ae
-kG
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-PA
-vD
-vT
-vT
-vT
-lu
-Dn
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-"}
-(43,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-tY
-HA
-Ae
-Xi
-fE
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-Ed
-vT
-vT
-vT
-jp
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-"}
-(44,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-pX
-PA
-PA
-PA
-PA
-PA
-Cz
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-"}
-(45,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-PA
-uX
-Rl
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-PA
-PA
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-"}
-(46,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-PA
-PA
-pX
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-Ka
-PA
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-"}
-(47,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-ZU
-PA
-EY
-pX
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-"}
-(48,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-Yj
-"}
-(49,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-Yj
-"}
-(50,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-Wq
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-Yj
-"}
-(51,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-Ed
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(52,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(53,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-rG
-PA
-PA
-PA
-PA
-PA
-PA
-PA
-vT
-vT
-vT
-PA
-vT
-vT
-vT
-vT
-vT
-vT
-vT
-lu
-lu
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(54,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-oM
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(55,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-ee
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(56,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(57,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(58,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(59,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(60,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(61,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(62,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(63,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(64,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(65,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(66,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(67,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(68,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(69,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(70,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(71,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(72,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(73,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(74,1,1) = {"
-Yj
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-lU
-Yj
-"}
-(75,1,1) = {"
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
-Yj
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+GD
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 "}

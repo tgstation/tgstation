@@ -1,7 +1,11 @@
-/datum/map_template/virtual_domain/gondola_asteroid
+/datum/lazy_template/virtual_domain/gondola_asteroid
 	name = "Gondola Forest"
+	map_name = "testB"
+	map_height = 7
+	map_width = 7
+
 	desc = "A bountiful forest of gondolas. Peaceful."
-	filename = "gondola_asteroid.dmm"
+	map_name = "gondola_asteroid"
 	help_text = "What a lovely forest. There's a loot crate here in the middle of the map. \
 	Hmm... It doesn't budge. The gondolas don't seem to have any trouble moving it, though. \
 	I bet there's a way to move it myself."

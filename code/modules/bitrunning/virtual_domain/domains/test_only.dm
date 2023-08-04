@@ -1,13 +1,14 @@
 /// Used for unit tests only. Skipped in UI.
-/datum/map_template/virtual_domain/test_only
-	filename = "test_only.dmm"
+/datum/lazy_template/virtual_domain/test_only
+	map_name = "test_only"
 	id = "test_only"
 	test_only = TRUE
+	safehouse_path = /datum/map_template/safehouse/test_only
 
-/datum/map_template/virtual_domain/test_only/expensive
+/datum/lazy_template/virtual_domain/test_only/expensive
 	id = "test_only_expensive"
 	cost = 3
 
-/datum/map_template/virtual_domain/test_only/mobs
+/datum/lazy_template/virtual_domain/test_only/mobs
 	id = "test_only_mobs"
-	filename = "test_only_mobs.dmm"
+	map_name = "test_only_mobs"

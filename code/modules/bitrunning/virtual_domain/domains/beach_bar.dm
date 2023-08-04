@@ -1,8 +1,8 @@
-/datum/map_template/virtual_domain/beach_bar
+/datum/lazy_template/virtual_domain/beach_bar
 	name = "Beach Bar"
 	desc = "A cheerful seaside haven where friendly skeletons serve up drinks. Say, how'd you guys get so dead?"
 	extra_loot = list(/obj/item/toy/beach_ball = 1)
-	filename = "beach_bar.dmm"
+	map_name = "beach_bar"
 	help_text = "This place is running on a skeleton crew, and they don't seem to be too keen to share details.\
 	Maybe a few drinks of liquid charm will get the spirits up. As the saying goes, if you can't beat 'em, join 'em."
 	id = "beach_bar"
@@ -19,7 +19,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_GLASS_DRANK, PROC_REF(on_drank))
 
-	var/obj/effect/bitrunner_loot_signal/signaler = locate(/obj/effect/bitrunner_loot_signal) in orange(4, src)
+	var/obj/effect/bitrunning/loot_signal/signaler = locate() in orange(4, src)
 	if(signaler)
 		our_signaler = WEAKREF(signaler)
 
@@ -29,7 +29,7 @@
 	if(target != user) // Hey now!
 		return
 
-	var/obj/effect/bitrunner_loot_signal/signaler = our_signaler?.resolve()
+	var/obj/effect/bitrunning/loot_signal/signaler = our_signaler?.resolve()
 	if(isnull(signaler))
 		return
 

@@ -17,9 +17,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
-"d" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/template_noop)
 "i" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/virtual_domain/safehouse)
@@ -28,8 +25,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "n" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -64,8 +62,9 @@
 "r" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -88,13 +87,15 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "D" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/south,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "E" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -168,8 +169,9 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/generic,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/iron,
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 
 (1,1,1) = {"
 i
@@ -177,7 +179,7 @@ N
 a
 a
 N
-d
+i
 "}
 (2,1,1) = {"
 a

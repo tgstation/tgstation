@@ -1,10 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/virtual_domain/safehouse/exit)
+/area/virtual_domain/safehouse)
 "f" = (
 /turf/closed/wall,
 /area/virtual_domain/safehouse)
@@ -23,13 +24,11 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
-/area/virtual_domain/safehouse/send)
-"x" = (
-/turf/closed/wall,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "B" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -56,10 +55,11 @@
 	dir = 4
 	},
 /obj/structure/railing,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
-/area/virtual_domain/safehouse/send)
+/area/virtual_domain/safehouse)
 "H" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -122,7 +122,7 @@ f
 f
 P
 P
-x
+f
 "}
 (2,1,1) = {"
 P
