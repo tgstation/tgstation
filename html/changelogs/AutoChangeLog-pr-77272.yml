@@ -1,0 +1,6 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed disease outbreak viruses sometimes getting stuck invisible from medHUDs"
+  - admin: "Added more admin features to create/manange disease outbreaks"
+  - admin: "Pressing 'cancel' on disease outbreak setup dialogs will actually cancel the event instead of running it with default settings"
