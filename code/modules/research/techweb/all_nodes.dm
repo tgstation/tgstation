@@ -1255,9 +1255,9 @@
 	prereq_ids = list("biotech")
 	design_ids = list(
 		"dna_disk",
+		"dnainfuser",
 		"dnascanner",
 		"scan_console",
-		"dnainfuser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
