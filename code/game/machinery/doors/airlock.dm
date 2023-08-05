@@ -1744,6 +1744,8 @@
 	return source_area?.airlock_wires ? new source_area.airlock_wires(src) : new /datum/wires/airlock(src)
 
 #define TRAM_DOOR_WARNING_TIME (1.4 SECONDS)
+#define TRAM_DOOR_CYCLE_TIME (0.4 SECONDS)
+#define TRAM_DOOR_CRUSH_TIME (0.7 SECONDS)
 #define TRAM_DOOR_RECYCLE_TIME	(3 SECONDS)
 
 /obj/machinery/door/airlock/tram
@@ -1769,6 +1771,12 @@
 	var/attempt = 0
 	bound_width = 64
 
+/**
+ * Called by a transport controller to perform a close or open cycle
+ *
+ * Arguments:
+ * * rapid - boolean - if TRUE will skip safety checks and crush whatever is in the way
+ */
 /obj/machinery/door/airlock/tram/proc/cycle_tram_doors(command, rapid)
 	switch(command)
 		if(OPEN_DOORS)
@@ -1778,15 +1786,18 @@
 				return TRUE
 			SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
 			operating = TRUE
-			playsound(src, doorOpen, vol = 40, vary = FALSE)
+			playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
 			update_icon(ALL, AIRLOCK_OPENING, TRUE)
-			sleep(1.3 SECONDS)
+			if(rapid)
+				sleep(TRAM_DOOR_RAPID_TIME)
+			else
+				sleep(TRAM_DOOR_WARNING_TIME)
 			set_opacity(FALSE)
 			set_density(FALSE)
 			update_freelook_sight()
 			flags_1 &= ~PREVENT_CLICK_UNDER_1
 			air_update_turf(TRUE, FALSE)
-			sleep(0.4 SECONDS)
+			sleep(TRAM_DOOR_CYCLE_TIME)
 			layer = OPEN_DOOR_LAYER
 			update_icon(ALL, AIRLOCK_OPEN, TRUE)
 			operating = FALSE
@@ -1796,16 +1807,22 @@
 			attempt++
 
 			if(attempt >= 4 || rapid)
-				attempt_cycle(rapid = TRUE)
+				attempt_close_cycle(rapid = TRUE)
 				attempt = 0
 				return
 
 			if(attempt == 1)
 				playsound(src, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-			addtimer(CALLBACK(src, PROC_REF(verify_status)), 3 SECONDS)
-			attempt_cycle(rapid = FALSE)
+			addtimer(CALLBACK(src, PROC_REF(verify_status)), TRAM_DOOR_RECYCLE_TIME)
+			attempt_close_cycle(rapid = FALSE)
 
+/**
+ * Checks if the door close action was successful. Retries if it failed.area
+ *
+ * If some jerk is blocking the doors, they've had enough warning by attempt 3,
+ * take a chunk of skin, people have places to be!
+ */
 /obj/machinery/door/airlock/tram/proc/verify_status()
 	if(airlock_state != 1)
 		if(attempt == 3)
@@ -1815,7 +1832,13 @@
 		else
 			cycle_tram_doors(CLOSE_DOORS, rapid = FALSE)
 
-/obj/machinery/door/airlock/tram/proc/attempt_cycle(rapid = FALSE)
+/**
+ * Perform a close attempt and report TRUE/FALSE if it worked
+ *
+ * Arguments:
+ * * rapid - boolean: if TRUE will skip safety checks and crush whatever is in the way
+ */
+/obj/machinery/door/airlock/tram/proc/attempt_close_cycle(rapid = FALSE)
 	if(operating || welded || locked || seal)
 		return FALSE
 	if(density)
@@ -1830,7 +1853,7 @@
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_CLOSING, 1)
-	sleep(1.3 SECONDS)
+	sleep(TRAM_DOOR_WARNING_TIME)
 	if(!hungry_door)
 		for(var/atom/movable/blocker in get_turf(src))
 			if(blocker.density && blocker != src) //something is blocking the door
@@ -1840,19 +1863,22 @@
 				update_icon(ALL, AIRLOCK_OPEN, 1)
 				operating = FALSE
 				return FALSE
-	sleep(0.7 SECONDS)
+	sleep(TRAM_DOOR_CRUSH_TIME)
 	set_density(TRUE)
 	set_opacity(TRUE)
 	update_freelook_sight()
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)
 	crush()
-	sleep(0.4 SECONDS)
+	sleep(TRAM_DOOR_CYCLE_TIME)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	attempt = 0
 	return TRUE
 
+/**
+ * Set the weakref for the tram we're attached to
+ */
 /obj/machinery/door/airlock/tram/proc/find_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
 		if(tram.specific_transport_id == transport_linked_id)
@@ -1868,10 +1894,16 @@
 	SSicts_transport.doors -= src
 	return ..()
 
+/**
+ * Tram doors can be opened with hands when unpowered
+ */
 /obj/machinery/door/airlock/tram/examine(mob/user)
 	. = ..()
 	. += span_notice("It has an emergency mechanism to open using <b>just your hands</b> in the event of an emergency.")
 
+/**
+ * Tram doors can be opened with hands when unpowered
+ */
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
 	if(!hasPower()  && density)
 		balloon_alert(user, "pulling emergency exit...")
@@ -1879,6 +1911,10 @@
 			try_to_crowbar(null, user, TRUE)
 			return TRUE
 
+
+/**
+ * If you pry (bump) the doors open midtravel, open quickly so you can jump out and make a daring escape.
+ */
 /obj/machinery/door/airlock/tram/bumpopen(mob/user)
 	if(operating || !density)
 		return
@@ -1886,7 +1922,7 @@
 	add_fingerprint(user)
 	if(tram_part.travel_remaining < DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH)
 		return // we're already animating, don't reset that
-	open(forced = BYPASS_DOOR_CHECKS) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
+	cycle_tram_doors(OPEN_DOORS, rapid = TRUE)
 	return
 
 #undef AIRLOCK_CLOSED
@@ -1922,4 +1958,6 @@
 #undef AIRLOCK_FRAME_OPENING
 
 #undef TRAM_DOOR_WARNING_TIME
+#undef TRAM_DOOR_CYCLE_TIME
+#undef TRAM_DOOR_CRUSH_TIME
 #undef TRAM_DOOR_RECYCLE_TIME
