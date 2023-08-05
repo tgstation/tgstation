@@ -733,7 +733,7 @@
 			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",,
 			"forward_message" = "secured power cell",
 			"backward_message" = "removed power cell",
-			"icon_state" = "phazon17"
+			"icon_state" = "phazon19"
 			// This is the point where a step icon is skipped, so "icon_state" had to be set manually starting from here.
 		)
 	)
@@ -768,7 +768,7 @@
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
 			"desc" = "The external armor is welded, and the <b>bluespace anomaly core</b> socket is open.",
-			"icon_state" = "phazon24",
+			"icon_state" = "phazon26",
 			"forward_message" = "inserted bluespace anomaly core",
 			"backward_message" = "cut off external armor"
 		)

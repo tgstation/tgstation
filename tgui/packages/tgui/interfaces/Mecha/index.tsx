@@ -144,7 +144,7 @@ const PowerBar = (props, context) => {
   return (
     <LabeledList.Item label="Power">
       <ProgressBar
-        value={power_level / power_max}
+        value={power_max ? power_level / power_max : 0}
         ranges={{
           good: [0.5, Infinity],
           average: [0.25, 0.5],
@@ -154,7 +154,7 @@ const PowerBar = (props, context) => {
           'text-shadow': '1px 1px 0 black',
         }}>
         {power_max === null
-          ? 'Power Cell Missing'
+          ? 'Power cell missing'
           : power_level === 1e31
             ? 'Infinite'
             : `${formatSiUnit(power_level * 1000, 0, 'J')} of ${formatSiUnit(
