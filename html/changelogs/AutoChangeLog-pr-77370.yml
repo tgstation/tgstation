@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Goliaths no longer intermittently reset their target and retarget something else."
+  - bugfix: "Goliaths can once again step diagonally."

@@ -176,3 +176,26 @@
   - server: Added a preventative measure to prevent calling both TGSHardRestart and
       TGSReboot, as well as potentially invoking sensitive procs that are only meant
       to be called once.
+2023-08-05:
+  Ghommie:
+  - bugfix: Areas created with the "land claim" blueprints are no longer hazardous
+      to free golems.
+  Jacquerel:
+  - rscadd: Lightgeists under AI control will selflessly heal any wounded creature
+      that they see.
+  - balance: Lightgeists can no longer repair non-organic tissue.
+  - admin: The imaginary friend smite now allows selecting "offer to ghosts" instead
+      of having to perform that poll yourself manually. When offering to ghosts you
+      can also offer for several ghosts to volunteer at the same time.
+  LT3:
+  - bugfix: Fixed disease outbreak viruses sometimes getting stuck invisible from
+      medHUDs
+  - admin: Added more admin features to create/manange disease outbreaks
+  - admin: Pressing 'cancel' on disease outbreak setup dialogs will actually cancel
+      the event instead of running it with default settings
+  MTandi:
+  - qol: You can fill microwave with stuff by hitting it with a box full of stuff.
+  Sealed101:
+  - rscdel: removed new player status tab Readiness Status
+  - rscadd: added a Ready Status Blip on the Collapse Menu button
+  - bugfix: golems that ate plasma are properly immune to ash storms
