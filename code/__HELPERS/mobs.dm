@@ -132,6 +132,7 @@
 		"anime_top" = pick(GLOB.anime_top_list),
 		"anime_middle" = pick(GLOB.anime_middle_list),
 		"anime_bottom" = pick(GLOB.anime_bottom_list),
+		"arachnid_appendages" = pick(GLOB.arachnid_appendages_list),
 		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 	))
 

@@ -3,7 +3,7 @@
 	desc = "Extra legs that go on your back, don't actually work for walking sadly."
 	//I don't even know if these work
 	//icon = 'monkestation/icons/mob/species/arachnid/arachnid_appendages.dmi'
-	//icon_state = "long"
+	icon_state = "antennae"
 
 	preference = "feature_arachnid_appendages"
 	zone = BODY_ZONE_CHEST
@@ -14,7 +14,7 @@
 
 /datum/bodypart_overlay/mutant/arachnid_appendages
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
-	feature_key = "arachnidappendages"
+	feature_key = "arachnid_appendages"
 
 /datum/bodypart_overlay/mutant/arachnid_appendages/get_global_feature_list()
 	return GLOB.arachnid_appendages_list
@@ -23,10 +23,4 @@
 	return sprite_datum.icon_state //i hate you
 
 /datum/bodypart_overlay/mutant/arachnid_appendages/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!human.wear_suit)
-		return TRUE
-	if(!(human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return TRUE
-	if(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception))
-		return TRUE
-	return FALSE
+	return TRUE //show them anyway no matter what you're wearing
