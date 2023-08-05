@@ -99,7 +99,7 @@
 
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
-	icon = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
 	layers = ALL_EXTERNAL_OVERLAYS
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart

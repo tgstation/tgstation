@@ -1,13 +1,13 @@
 /proc/generate_lizard_side_shots(list/sprite_accessories, key, include_snout = TRUE)
 	var/list/values = list()
 
-	var/icon/lizard = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-	var/icon/eyes = icon('icons/mob/species/human/human_face.dmi', "eyes", EAST)
+	var/icon/lizard = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head", EAST)
+	var/icon/eyes = icon('icons/mob/human/human_face.dmi', "eyes", EAST)
 	eyes.Blend(COLOR_GRAY, ICON_MULTIPLY)
 	lizard.Blend(eyes, ICON_OVERLAY)
 
 	if (include_snout)
-		lizard.Blend(icon('icons/mob/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
+		lizard.Blend(icon('icons/mob/human/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
 
 	for (var/name in sprite_accessories)
 		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
@@ -37,7 +37,7 @@
 /datum/preference/choiced/lizard_body_markings/init_possible_values()
 	var/list/values = list()
 
-	var/icon/lizard = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_chest_m")
+	var/icon/lizard = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
 	for (var/name in GLOB.bodymarks_list_lizard)
 		var/datum/sprite_accessory/sprite_accessory = GLOB.bodymarks_list_lizard[name]
@@ -46,8 +46,13 @@
 
 		if (sprite_accessory.icon_state != "none")
 			var/icon/body_markings_icon = icon(
+<<<<<<< HEAD
 				'icons/mob/species/lizard/lizard_misc.dmi',
 				"m_bodymarks_lizard_[sprite_accessory.icon_state]_ADJ",
+=======
+				'icons/mob/human/species/lizard/lizard_misc.dmi',
+				"m_body_markings_[sprite_accessory.icon_state]_ADJ",
+>>>>>>> fc4de530ce2 (reorganizes the human sprite folder and replaces the human_basic sprite with an updated one (#77323))
 			)
 
 			final_icon.Blend(body_markings_icon, ICON_OVERLAY)
