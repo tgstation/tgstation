@@ -206,7 +206,9 @@ export const PersonalCrafting = (props, context) => {
               recipe.category === activeCategory)))
     ),
     sortBy<Recipe>((recipe) => [
-      -Number(craftability[recipe.ref]),
+      activeCategory === 'Can Make'
+        ? 99 - Object.keys(recipe.reqs).length
+        : Number(craftability[recipe.ref]),
       recipe.name.toLowerCase(),
     ]),
   ])(data.recipes);
@@ -246,7 +248,7 @@ export const PersonalCrafting = (props, context) => {
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
-                    onInput={(e, value) => {
+                    onChange={(e, value) => {
                       setPages(1);
                       setSearchText(value);
                     }}
