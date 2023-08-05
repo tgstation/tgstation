@@ -47,7 +47,7 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
-/obj/vehicle/sealed/mecha/marauder/loaded/initialize_parts(mapload)
+/obj/vehicle/sealed/mecha/marauder/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
@@ -147,7 +147,7 @@
 	. = ..()
 	max_ammo()
 
-/obj/vehicle/sealed/mecha/marauder/mauler/loaded/initialize_parts(mapload)
+/obj/vehicle/sealed/mecha/marauder/mauler/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)

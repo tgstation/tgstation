@@ -45,6 +45,8 @@
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
 	var/equipment_disabled = FALSE
+	/// Whether the mech is built manually or spawned
+	var/built_manually = FALSE
 	/// Keeps track of the mech's cell
 	var/obj/item/stock_parts/cell/cell
 	/// Keeps track of the mech's scanning module
@@ -213,6 +215,10 @@
 	fire = 100
 	acid = 100
 
+/obj/vehicle/sealed/mecha/New(loc, built_manually, ...)
+	src.built_manually = built_manually
+	return ..()
+
 /obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
 	ui_view = new()
@@ -230,7 +236,8 @@
 
 	cabin_air = new(cabin_volume)
 
-	initialize_parts(mapload)
+	if(!built_manually)
+		populate_parts()
 	update_access()
 	set_wires(new /datum/wires/mecha(src))
 	START_PROCESSING(SSobj, src)
@@ -294,12 +301,21 @@
 		diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
 
-///Load or add parts on mech construction or spawning
-/obj/vehicle/sealed/mecha/proc/initialize_parts(mapload)
-	cell = (locate(/obj/item/stock_parts/cell) in contents) || new /obj/item/stock_parts/cell/high(src)
-	scanmod = (locate(/obj/item/stock_parts/scanning_module) in contents) || new /obj/item/stock_parts/scanning_module(src)
-	capacitor = (locate(/obj/item/stock_parts/capacitor) in contents) || new /obj/item/stock_parts/capacitor(src)
-	servo = (locate(/obj/item/stock_parts/servo) in contents) || new /obj/item/stock_parts/servo(src)
+///Add parts on mech spawning. Skipped in manual construction.
+/obj/vehicle/sealed/mecha/proc/populate_parts()
+	cell = new /obj/item/stock_parts/cell/high(src)
+	scanmod = new /obj/item/stock_parts/scanning_module(src)
+	capacitor = new /obj/item/stock_parts/capacitor(src)
+	servo = new /obj/item/stock_parts/servo(src)
+	update_part_values()
+
+/obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
+	. = ..()
+	cell = locate(/obj/item/stock_parts/cell) in contents
+	diag_hud_set_mechcell()
+	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
+	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
+	servo = locate(/obj/item/stock_parts/servo) in contents
 	update_part_values()
 
 /obj/vehicle/sealed/mecha/atom_destruction()

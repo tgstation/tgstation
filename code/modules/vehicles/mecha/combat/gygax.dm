@@ -75,7 +75,7 @@
 	. = ..()
 	max_ammo()
 
-/obj/vehicle/sealed/mecha/gygax/dark/loaded/initialize_parts(mapload)
+/obj/vehicle/sealed/mecha/gygax/dark/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)

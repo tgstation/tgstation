@@ -256,6 +256,7 @@
 				return
 			cell = weapon
 			to_chat(user, span_notice("You install the power cell."))
+			diag_hud_set_mechcell()
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("Power cell installed", LOG_MECHA)
 		else
@@ -390,6 +391,7 @@
 			return
 		user.put_in_hands(part_to_remove)
 		CheckParts()
+		diag_hud_set_mechcell()
 		tool.play_tool_sound(src)
 		return
 	balloon_alert(user, "no parts!")

@@ -41,7 +41,7 @@
 		MECHA_ARMOR = list(),
 	)
 
-/obj/vehicle/sealed/mecha/reticence/loaded/initialize_parts(mapload)
+/obj/vehicle/sealed/mecha/reticence/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/super(src)

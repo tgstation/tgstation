@@ -29,16 +29,10 @@
 	if(!result)
 		return
 	// Remove default mech power cell, as we replace it with a new one.
-	var/obj/vehicle/sealed/mecha/M = new result(drop_location())
-	QDEL_NULL(M.cell)
-	QDEL_NULL(M.scanmod)
-	QDEL_NULL(M.capacitor)
-	QDEL_NULL(M.servo)
-
+	var/obj/vehicle/sealed/mecha/mech = new result(drop_location(), built_manually = TRUE)
 	var/obj/item/mecha_parts/chassis/parent_chassis = parent
-	M.CheckParts(parent_chassis.contents)
-
-	SSblackbox.record_feedback("tally", "mechas_created", 1, M.name)
+	mech.CheckParts(parent_chassis.contents)
+	SSblackbox.record_feedback("tally", "mechas_created", 1, mech.name)
 	QDEL_NULL(parent)
 
 // Default proc to generate mech steps.

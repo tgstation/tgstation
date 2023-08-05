@@ -186,7 +186,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 	return ..()
 
-/obj/vehicle/sealed/mecha/ripley/cargo/initialize_parts(mapload)
+/obj/vehicle/sealed/mecha/ripley/cargo/populate_parts()
 	cell = new /obj/item/stock_parts/cell/high(src)
 	//No scanmod for Big Bess
 	capacitor = new /obj/item/stock_parts/capacitor(src)
