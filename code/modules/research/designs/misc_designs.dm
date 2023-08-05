@@ -496,7 +496,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_SCIENCE
 
-// anitor Designs
+// Janitor Designs
 
 /datum/design/advmop
 	name = "Advanced Mop"
