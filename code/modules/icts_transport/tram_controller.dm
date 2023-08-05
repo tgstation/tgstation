@@ -423,6 +423,9 @@
 	collision_lethality = initial(collision_lethality)
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 
+/**
+ * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
+ */
 /obj/machinery/icts/controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something."
@@ -438,11 +441,21 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
+/**
+ * Mapped or built tram cabinet isn't located on a transport module.
+ *
+ * TODO: message_admins is just for debug, it should probably stack_trace on mapload only
+ * to indicate mapping error. If someone builds it midround it should give some other
+ * indication there's no tram there, dummy.
+ */
 /obj/machinery/icts/controller/LateInitialize(mapload)
 	. = ..()
 	if(!find_controller())
 		message_admins("ICTS: Tram failed to find controller!")
 
+/**
+ * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
+ */
 /obj/machinery/icts/controller/update_overlays()
 	. = ..()
 
@@ -478,6 +491,9 @@
 			. += mutable_appearance(icon, "comms")
 			. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
 
+/**
+ * Find the controller associated with the transport module the cabinet is sitting on.
+ */
 /obj/machinery/icts/controller/proc/find_controller()
 	var/obj/structure/transport/linear/tram/tram_structure = locate() in src.loc
 	if(!tram_structure)
@@ -491,11 +507,17 @@
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
 	return TRUE
 
+/**
+ * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
+ */
 /obj/machinery/icts/controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
 	if(controller != controller_datum)
 		return
 	update_appearance()
 
+/**
+ * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
+ */
 /obj/machinery/icts/controller/try_fix_machine(obj/machinery/icts/machine, mob/living/user, obj/item/tool)
 	. = ..()
 
