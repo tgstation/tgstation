@@ -157,8 +157,10 @@
 		user.put_in_hands(cell)
 	else
 		cell.forceMove(drop_location())
-	user.visible_message(span_notice("[user] crowbars [cell] out from [src]."),
-					span_notice("You pry [cell] out of [src]."))
+	user.visible_message(
+		span_notice("[user] crowbars [cell] out from [src]."),
+		span_notice("You pry [cell] out of [src]."),
+	)
 	cell = null
 	diag_hud_set_mulebotcell()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
