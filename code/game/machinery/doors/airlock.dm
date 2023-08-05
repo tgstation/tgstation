@@ -1788,11 +1788,12 @@
 				return TRUE
 			SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
 			operating = TRUE
-			playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
 			update_icon(ALL, AIRLOCK_OPENING, TRUE)
 			if(rapid)
+				playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
 				sleep(TRAM_DOOR_CYCLE_TIME)
 			else
+				playsound(src, doorOpen, vol = 40, vary = FALSE)
 				sleep(TRAM_DOOR_WARNING_TIME)
 			set_opacity(FALSE)
 			set_density(FALSE)
