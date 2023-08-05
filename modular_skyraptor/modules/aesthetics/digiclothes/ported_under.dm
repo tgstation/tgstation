@@ -22,9 +22,11 @@
 
 /obj/item/clothing/under/rank/cargo
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/cargo.dmi'
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI, BODYTYPE_AVALARI)
 	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/cargo.dmi',
-		"16" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/cargo_digi.dmi')
+		"16" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/cargo_digi.dmi',
+		"1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_cargo.dmi',
+		"2048" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/avalari_under_cargo.dmi')
 
 /obj/item/clothing/under/rank/engineering
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/engineering.dmi'
