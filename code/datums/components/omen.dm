@@ -123,17 +123,17 @@
 			to_chat(living_guy, span_warning("[evil_light] glows ominously...")) // omenously
 			evil_light.visible_message(span_boldwarning("[evil_light] suddenly flares brightly and sparks!"))
 			evil_light.break_light_tube(skip_sound_and_sparks = FALSE)
-			do_sparks(4, FALSE, evil_light)
+			do_sparks(number = 4, cardinal_only = FALSE, source = evil_light)
 			evil_light.Beam(living_guy, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-			living_guy.electrocute_act(35 * (damage_mod / 2), evil_light, flags = SHOCK_NOGLOVES)
+			living_guy.electrocute_act(35 * (damage_mod * 0.5), evil_light, flags = SHOCK_NOGLOVES)
 			INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
-			if(!permanent && !prob(66.6))
+			if(!permanent && prob(33.3))
 				qdel(src)
 
 		for(var/obj/structure/mirror/evil_mirror in the_turf)
 			to_chat(living_guy, span_warning("You pass by the mirror and glance at it..."))
 			if(evil_mirror.broken)
-				to_chat(living_guy, span_warning("You feel lucky, somehow."))
+				to_chat(living_guy, span_notice("You feel lucky, somehow."))
 				return
 			switch(rand(1, 5))
 				if(1)
@@ -163,7 +163,7 @@
 				if(istype(carbon_guy))
 					carbon_guy.set_heartattack(status = TRUE)
 
-			if(!permanent && !prob(66.6))
+			if(!permanent && prob(33.3))
 				qdel(src)
 
 /datum/component/omen/proc/slam_airlock(obj/machinery/door/airlock/darth_airlock)
