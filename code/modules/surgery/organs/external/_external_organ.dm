@@ -201,8 +201,8 @@
 	feature_key = "horns"
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
-		return FALSE
+	/*if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR)) /// SKYRAPTOR REMOVAL: no
+		return FALSE*/
 
 	return TRUE
 
