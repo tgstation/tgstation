@@ -1771,6 +1771,16 @@
 	var/attempt = 0
 	bound_width = 64
 
+/obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
+	if(forced != DEFAULT_DOOR_CHECKS)
+		cycle_tram_doors(OPEN_DOORS, rapid = TRUE)
+		return
+
+	cycle_tram_doors(OPEN_DOORS)
+
+/obj/machinery/door/airlock/tram/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
+	cycle_tram_doors(CLOSE_DOORS, force_crush)
+
 /**
  * Called by a transport controller to perform a close or open cycle
  *
@@ -1779,7 +1789,7 @@
  * Arguments:
  * * rapid - boolean - if TRUE will skip safety checks and crush whatever is in the way
  */
-/obj/machinery/door/airlock/tram/proc/cycle_tram_doors(command, rapid)
+/obj/machinery/door/airlock/tram/proc/cycle_tram_doors(command, rapid = FALSE)
 	switch(command)
 		if(OPEN_DOORS)
 			if( operating || welded || locked || seal )
