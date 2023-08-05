@@ -23,19 +23,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 /obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
-	RegisterSignal(defib, COMSIG_QDELETING, PROC_REF(on_defib_del))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
-	if(defib)
-		QDEL_NULL(defib)
+	QDEL_NULL(defib)
 	return ..()
 
-/obj/machinery/defibrillator_mount/proc/on_defib_del(atom/source)
-	SIGNAL_HANDLER
-	defib = null
-	end_processing()
+/obj/machinery/defibrillator_mount/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == defib)
+		// Make sure processing ends before the defib is nulled
+		end_processing()
+		defib = null
+		update_appearance()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()
@@ -99,7 +100,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		// Make sure the defib is set before processing begins.
 		defib = I
-		RegisterSignal(defib, COMSIG_QDELETING, PROC_REF(on_defib_del))
 		begin_processing()
 		update_appearance()
 		return
@@ -172,11 +172,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		user.visible_message(span_notice("[user] unhooks [defib] from [src]."), \
 		span_notice("You slide out [defib] from [src] and unhook the charging cables."))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	// Make sure processing ends before the defib is nulled
-	end_processing()
-	UnregisterSignal(defib, COMSIG_QDELETING)
-	defib = null
-	update_appearance()
 
 /obj/machinery/defibrillator_mount/charging
 	name = "PENLITE defibrillator mount"

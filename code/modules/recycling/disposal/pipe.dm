@@ -58,8 +58,7 @@
 
 /obj/structure/disposalpipe/Destroy()
 	spawn_pipe = FALSE
-	if(stored)
-		QDEL_NULL(stored)
+	QDEL_NULL(stored)
 	return ..()
 
 /**
@@ -79,7 +78,7 @@
 
 /obj/structure/disposalpipe/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone != stored ||QDELETED(src))
+	if(gone != stored || QDELETED(src))
 		return
 	spawn_pipe = FALSE
 	stored = null
