@@ -462,6 +462,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/dnainfuser
+	name = "DNA Infuser Board"
+	desc = "The circuit board for a DNA Infuser."
+	id = "dnainfuser"
+	build_path = /obj/item/circuitboard/machine/dna_infuser
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_GENETICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/scan_console
 	name = "DNA Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new DNA console."
