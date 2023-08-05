@@ -167,6 +167,8 @@
 	storable = list(
 		/obj/item/reagent_containers/cup/glass,
 		/obj/item/reagent_containers/condiment,
+		/obj/item/reagent_containers/cup/coffeepot,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle,
 	)
 
 /obj/item/borg/apparatus/beaker/service/add_glass()
