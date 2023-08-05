@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "bluespace RPED can be put in bags again without dragging them into their storage slots"
-  - bugfix: "normal RPED exchanges parts & displays part info again"
