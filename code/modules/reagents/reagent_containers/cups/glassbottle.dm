@@ -175,6 +175,7 @@
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	///The mask image for mimicking a broken-off bottom of the bottle
 	var/static/icon/broken_outline = icon('icons/obj/drinks/drink_effects.dmi', "broken")
 	///The mask image for mimicking a broken-off neck of the bottle
