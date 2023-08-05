@@ -13,17 +13,67 @@
 	 /obj/item/ammo_casing/energy/lawbringer/clownshot, \
 	 /obj/item/ammo_casing/energy/lawbringer/pulse, \
 	 /obj/item/ammo_casing/energy/lawbringer/tideshot)
+	pin = /obj/item/firing_pin/lawbringer
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	selfcharge = 1
 	//can_select = FALSE
 	can_charge = FALSE
-	//var/owner_prints = null
+	var/owner_dna = null
 
-/*/obj/item/gun/energy/e_gun/lawbringer/attack_self(mob/living/user as mob)
-	return
-*/
+/obj/item/gun/energy/e_gun/lawbringer/emag_act(mob/user, obj/item/card/emag/emag_card)
+	balloon_alert(user, "biometric lock reset")
+	owner_dna = null
+
+/obj/item/gun/energy/e_gun/lawbringer/attack_self(mob/living/user as mob)
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/C = user
+	if(C.dna && C.dna.unique_enzymes)
+		if(!owner_dna)
+			owner_dna = C.dna.unique_enzymes
+			balloon_alert(user, "biometric lock engaged")
+			updatepin(user)
+			nametag(user)
+		return
+
+
+/obj/item/gun/energy/e_gun/lawbringer/proc/nametag(mob/living/user)
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		src.name = "[H.real_name]'s Lawbringer"
+		src.desc += " It's biometrically linked to [H.real_name]."
+
+/obj/item/gun/energy/e_gun/lawbringer/proc/updatepin(mob/living/user)
+	var/obj/item/firing_pin/lawbringer/lawpin = pin
+	lawpin.updatepin(user)
+
+/obj/item/firing_pin/lawbringer
+	name = "Lawbringer firing pin"
+	desc = "The integrated firing pin of the Lawbringer. You probably shouldn't be seeing this."
+	icon_state = "firing_pin_dna"
+	fail_message = "dna check failed!"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //although i do find the idea of blowing up the hos gun enough to brick it funny, this probably shouldn't happen
+	pin_removable = FALSE
+	var/owner_dna = null
+
+/obj/item/firing_pin/lawbringer/proc/updatepin(mob/living/user)
+	if(!iscarbon(user))//should probably never happen
+		return
+	var/mob/living/carbon/C = user
+	owner_dna = C.dna.unique_enzymes
+
+/obj/item/firing_pin/lawbringer/pin_auth(mob/living/carbon/user)
+	if(user && user.dna && user.dna.unique_enzymes)
+		if(user.dna.unique_enzymes == owner_dna)
+			return TRUE
+	return FALSE
+
+/obj/item/firing_pin/lawbringer/auth_fail(mob/living/carbon/user)
+	to_chat(user, span_danger("The gun emits a deterring shock from its handle."))
+	var/mob/living/carbon/human/human_user = user
+	human_user.electrocute_act(10, "lawbringer deterrant") //mister electric kill this man
 
 /obj/item/stock_parts/cell/lawbringer
 	name = "Lawbringer power cell"
@@ -31,15 +81,19 @@
 
 /*
 PART 1:
-The ammo+projectiles+cell
+The ammo+projectiles+cell [DONE][MOSTLY]
 PART 2:
-Voice stuff
+Voice stuff and biometrics
 PART 3:
 Sprites
 PART 4:
 Mapping it in
 PART 5:
 In situ balance testing
+
+IDEAS:
+After 25 minutes of the owner being dead, it desychs from owner
+
 */
 
 // 6000:100 = 300:5    all energy values multiplied by 20
@@ -50,8 +104,8 @@ In situ balance testing
 	select_name = "detain"
 	fire_sound = 'sound/weapons/laser.ogg'
 	e_cost = 600 //50 + 10
-	pellets = 5
-	variance = 40
+	pellets = 4
+	variance = 50
 	harmful = FALSE
 
 /obj/projectile/lawbringer/detain
@@ -229,7 +283,7 @@ In situ balance testing
 	e_cost = 250 //25
 	harmful = FALSE
 
-/obj/projectile/lawbringer/tideshot //just make it stun the shit out of staffies
+/obj/projectile/lawbringer/tideshot
 	name = "grey disabler beam"
 	icon_state = "greyscale_bolt"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
