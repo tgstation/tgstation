@@ -526,6 +526,8 @@
 						exposed_human.skin_tone = "mixed3"
 					if("mixed3")
 						exposed_human.skin_tone = "african1"
+					if("mixed4")
+						exposed_human.skin_tone = "mixed3"
 			//take current alien color and darken it slightly
 			else if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(exposed_human, TRAIT_FIXED_MUTANT_COLORS))
 				var/newcolor = ""

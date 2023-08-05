@@ -205,6 +205,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	"mixed1" = "Chestnut",
 	"mixed2" = "Walnut",
 	"mixed3" = "Coffee",
+	"mixed4" = "Wenge",
 ))
 
 /// An assoc list of species IDs to type paths
