@@ -1,4 +1,5 @@
 import { BooleanLike, classes } from 'common/react';
+import { debounce } from 'common/timer';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
@@ -248,10 +249,10 @@ export const PersonalCrafting = (props, context) => {
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
-                    onChange={(e, value) => {
+                    onInput={debounce((e, value) => {
                       setPages(1);
                       setSearchText(value);
-                    }}
+                    }, 500)}
                     fluid
                   />
                 </Stack.Item>
