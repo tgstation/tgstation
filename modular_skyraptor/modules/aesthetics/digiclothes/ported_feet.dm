@@ -9,7 +9,7 @@
 
 
 /obj/item/clothing/shoes/sneakers
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI)
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI, BODYTYPE_AVALARI)
 
 /obj/item/clothing/shoes/sneakers/Initialize(mapload)
 	. = ..()
