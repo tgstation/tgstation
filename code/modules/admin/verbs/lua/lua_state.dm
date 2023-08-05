@@ -168,6 +168,7 @@ GLOBAL_PROTECT(lua_usr)
 		for(var/datum/lua_editor/editor as anything in editor_list)
 			SStgui.update_uis(editor)
 
+// Called by lua scripts when they add an atom to var/list/references so that it gets cleared up on delete.
 /datum/lua_state/proc/clear_on_delete(datum/to_clear)
 	RegisterSignal(to_clear, COMSIG_QDELETING, PROC_REF(on_delete))
 
