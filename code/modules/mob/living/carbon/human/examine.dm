@@ -367,7 +367,7 @@
 			if(HAS_TRAIT(src, TRAIT_DISSECTED))
 				msg += "[span_notice("[t_He] appears to have been dissected. Useless for examination....<b><i>for now.</i></b>")]\n"
 			if(HAS_TRAIT(src, TRAIT_SURGICALLY_ANALYZED))
-				msg += "[span_notice("A skilled hand has mapped this one's internal intricacies. It will far easier to perform future experimentations upon [t_him]. <b><i>Exquisite.</i></b>")]\n"
+				msg += "[span_notice("A skilled hand has mapped this one's internal intricacies. It will be far easier to perform future experimentations upon [t_him]. <b><i>Exquisite.</i></b>")]\n"
 
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
