@@ -535,14 +535,21 @@
 	return properties["transmittable"]
 
 /**
+ *  If the disease has an incubation time (such as event diseases) start the timer
+ */
+/datum/disease/advance/after_add()
+	. = ..()
+
+	if(incubation_time < world.time)
+		make_visible()
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(make_visible)), incubation_time - world.time)
+
+
+/**
  *  Make virus visible to heath scanners
  */
 /datum/disease/advance/proc/make_visible()
 	visibility_flags &= ~HIDDEN_SCANNER
-	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
-		if(!virus.id)
-			stack_trace("Advanced virus ID is empty or null!")
-			return
-
-		if(virus.id == id)
-			virus.visibility_flags &= ~HIDDEN_SCANNER
+	affected_mob.med_hud_set_status()
