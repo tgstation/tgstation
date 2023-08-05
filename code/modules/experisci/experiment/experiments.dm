@@ -339,3 +339,15 @@
 	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
 	possible_types = list(/obj/structure/mecha_wreckage)
 	total_requirement = 2
+
+/datum/experiment/scanning/random/robot
+	name = "Robot Scanning Experiment"
+	description = "At the end of the day, cyborgs are just complicated robots. Scan a simple robot, the data will help us make better cyborgs."
+	total_requirement = 1
+	possible_types = list(
+		/mob/living/simple_animal/bot/medbot,
+		/mob/living/simple_animal/bot/cleanbot,
+		/mob/living/simple_animal/bot/hygienebot,
+		/mob/living/simple_animal/bot/firebot,
+		/mob/living/simple_animal/bot/floorbot,
+	)
