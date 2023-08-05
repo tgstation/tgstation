@@ -111,6 +111,7 @@
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), \
 									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Rat'var."))
 	owner.current.log_message("has renounced the cult of Rat'var!", LOG_ATTACK, color="#960000")
+	handle_equipment_removal()
 	return ..()
 
 /datum/antagonist/clock_cultist/get_preview_icon()
@@ -197,14 +198,11 @@
 ///remove clock cult items from their inventory by dropping them
 /datum/antagonist/clock_cultist/proc/handle_equipment_removal()
 	if(silent || !length(GLOB.types_to_drop_on_clock_deonversion))
-		message_admins("EEEEE")
 		return
 
-	var/list/types_to_drop = typecacheof(GLOB.types_to_drop_on_clock_deonversion)
 	var/mob/living/current = owner.current
-	for(var/obj/item/object in current.get_all_contents())
-		if(is_type_in_typecache(object.type, types_to_drop))
-			message_admins("DROP")
+	for(var/obj/item/object as anything in current.get_all_contents())
+		if(object.type in GLOB.types_to_drop_on_clock_deonversion)
 			current.dropItemToGround(object, TRUE, TRUE)
 
 /datum/antagonist/clock_cultist/eminence
