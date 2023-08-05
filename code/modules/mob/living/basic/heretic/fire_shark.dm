@@ -20,8 +20,6 @@
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
-	death_message = "implodes into itself."
-	ai_controller = null
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
