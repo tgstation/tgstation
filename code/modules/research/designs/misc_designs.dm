@@ -1037,7 +1037,7 @@
 // Experimental designs
 
 /datum/design/polymorph_belt
-	name = "Inert Polymorphic Field Inverter"
+	name = "Polymorphic Field Inverter"
 	id = "polymorph_belt"
 	desc = "This device can scan and store DNA from other life forms, and use it to transform its wearer. It requires a Bioscrambler Anomaly Core in order to function."
 	build_type = PROTOLATHE | AWAY_LATHE
