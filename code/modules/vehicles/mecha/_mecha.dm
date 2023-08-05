@@ -232,7 +232,7 @@
 	add_scanmod()
 	add_capacitor()
 	add_servo()
-	update_part_values()
+	CheckParts()
 	update_access()
 	set_wires(new /datum/wires/mecha(src))
 	START_PROCESSING(SSobj, src)
