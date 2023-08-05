@@ -11,6 +11,17 @@
 	else
 		return 0.5
 
+/proc/get_organmanip_location_isopened(mob/living/carbon/located_mob, location)
+	for(var/datum/surgery/procedure in located_mob.surgeries)
+		if(procedure.location != location)
+			continue
+		if(!istype(procedure, /datum/surgery/organ_manipulation))
+			continue
+		var/datum/surgery/organ_manipulation/omprocedure = procedure
+		var/datum/surgery_step/step = omprocedure.get_surgery_step()
+		if(istype(step, /datum/surgery_step/manipulate_organs/internal))
+			return TRUE
+	return FALSE
 
 /proc/get_location_accessible(mob/located_mob, location)
 	var/covered_locations = 0 //based on body_parts_covered
