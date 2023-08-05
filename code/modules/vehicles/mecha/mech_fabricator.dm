@@ -469,10 +469,6 @@
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return
-
 			// SAFETY: eject_sheets checks for valid mats
 			rmat.eject_sheets(material, amount)
 			return

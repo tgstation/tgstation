@@ -2361,7 +2361,7 @@
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /obj/item/clothing/neck/tie/black,
-/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/costume/buttondown/slacks/service,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},

@@ -359,6 +359,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define IGNORING_GRAVITY_NEGATION "ignoring_gravity_negation"
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
+/// Makes whispers clearly heard from seven tiles away, the full hearing range
+#define TRAIT_GOOD_HEARING "good_hearing"
+/// Allows you to hear speech through walls
+#define TRAIT_XRAY_HEARING "xray_hearing"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
@@ -1130,6 +1134,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
 #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
+#define STATION_TRAIT_FORESTED "station_trait_forested"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
 
 ///From the market_crash event
