@@ -186,7 +186,8 @@
 
 	speaker.say(pangram_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired (radio test)")
-	TEST_ASSERT_EQUAL(islist(handle_hearing_result), speaker_radio.get_frequency() == listener_radio.get_frequency(), "Listener failed to hear radio message (radio test)")
+	TEST_ASSERT(islist(handle_hearing_result), "Listener failed to hear radio message (radio test)")
+	TEST_ASSERT_EQUAL(speaker_radio.get_frequency(), listener_radio.get_frequency(), "Radio frequencies were not equal (radio test)")
 
 	handle_speech_result = null
 	handle_hearing_result = null
@@ -194,7 +195,8 @@
 	speaker_radio.set_frequency(FREQ_CTF_RED)
 	speaker.say(pangram_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired (radio test)")
-	TEST_ASSERT_EQUAL(islist(handle_hearing_result), speaker_radio.get_frequency() == listener_radio.get_frequency(), "Listener heard radio message that should not have been heard (radio test)")
+	TEST_ASSERT_NULL(handle_hearing_result, "Listener erroneously heard radio message (radio test)")
+	TEST_ASSERT_NOTEQUAL(speaker_radio.get_frequency(), listener_radio.get_frequency(), "Radio frequencies were erroneously equal (radio test)")
 
 	handle_speech_result = null
 	handle_hearing_result = null
