@@ -1900,8 +1900,13 @@
 /obj/machinery/door/airlock/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	INVOKE_ASYNC(src, PROC_REF(open))
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/airlock/tram/LateInitialize(mapload)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(cycle_tram_doors), OPEN_DOORS)
 	SSicts_transport.doors += src
+	find_tram()
 
 /obj/machinery/door/airlock/tram/Destroy()
 	SSicts_transport.doors -= src
