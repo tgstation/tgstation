@@ -1789,7 +1789,7 @@
 			playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
 			update_icon(ALL, AIRLOCK_OPENING, TRUE)
 			if(rapid)
-				sleep(TRAM_DOOR_RAPID_TIME)
+				sleep(TRAM_DOOR_CYCLE_TIME)
 			else
 				sleep(TRAM_DOOR_WARNING_TIME)
 			set_opacity(FALSE)
