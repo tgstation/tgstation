@@ -59,10 +59,12 @@
 				mecha.toggle_overclock(FALSE)
 
 /datum/wires/mecha/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
 	var/obj/vehicle/sealed/mecha/mecha = holder
 	if(!issilicon(usr) && mecha.internal_damage & MECHA_INT_SHORT_CIRCUIT && mecha.shock(usr))
 		return FALSE
-	return ..()
 
 /datum/wires/mecha/can_reveal_wires(mob/user)
 	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))

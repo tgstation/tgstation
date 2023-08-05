@@ -204,21 +204,21 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
+/obj/vehicle/sealed/mecha/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
-	if(istype(W, /obj/item/mmi))
-		if(mmi_move_inside(W,user))
-			to_chat(user, span_notice("[src]-[W] interface initialized successfully."))
+	if(istype(weapon, /obj/item/mmi))
+		if(mmi_move_inside(weapon,user))
+			to_chat(user, span_notice("[src]-[weapon] interface initialized successfully."))
 		else
-			to_chat(user, span_warning("[src]-[W] interface initialization failed."))
+			to_chat(user, span_warning("[src]-[weapon] interface initialization failed."))
 		return
 
-	if(istype(W, /obj/item/mecha_ammo))
-		ammo_resupply(W, user)
+	if(istype(weapon, /obj/item/mecha_ammo))
+		ammo_resupply(weapon, user)
 		return
 
-	if(W.GetID())
+	if(weapon.GetID())
 		if(!allowed(user))
 			if(mecha_flags & ID_LOCK_ON)
 				to_chat(user, span_warning("Invalid ID: Access denied."))
@@ -229,69 +229,64 @@
 		to_chat(user, span_warning("ID lock [mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"]."))
 		return
 
-	if(is_wire_tool(W) && (mecha_flags & PANEL_OPEN))
+	if(istype(weapon, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/part = weapon
+		part.try_attach_part(user, src, FALSE)
+		return
+
+	if(is_wire_tool(weapon) && (mecha_flags & PANEL_OPEN))
 		wires.interact(user)
 		return
 
-	if(istype(W, /obj/item/stock_parts/cell))
-		if(mecha_flags & PANEL_OPEN)
-			if(!cell)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
-					return
-				var/obj/item/stock_parts/cell/C = W
-				to_chat(user, span_notice("You install the power cell."))
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				cell = C
-				log_message("Power cell installed", LOG_MECHA)
-			else
-				to_chat(user, span_warning("There's already a power cell installed!"))
+	if(istype(weapon, /obj/item/stock_parts/cell) && (mecha_flags & PANEL_OPEN))
+		if(!cell)
+			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
+				return
+			cell = weapon
+			to_chat(user, span_notice("You install the power cell."))
+			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+			log_message("Power cell installed", LOG_MECHA)
+		else
+			to_chat(user, span_warning("There's already a power cell installed!"))
 		return
 
-	if(istype(W, /obj/item/stock_parts/scanning_module))
-		if(mecha_flags & PANEL_OPEN)
-			if(!scanmod)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
-					return
-				to_chat(user, span_notice("You install the scanning module."))
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				scanmod = W
-				log_message("[W] installed", LOG_MECHA)
-				update_part_values()
-			else
-				to_chat(user, span_warning("There's already a scanning module installed!"))
+	if(istype(weapon, /obj/item/stock_parts/scanning_module) && (mecha_flags & PANEL_OPEN))
+		if(!scanmod)
+			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
+				return
+			scanmod = weapon
+			to_chat(user, span_notice("You install the scanning module."))
+			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+			log_message("[weapon] installed", LOG_MECHA)
+			update_part_values()
+		else
+			to_chat(user, span_warning("There's already a scanning module installed!"))
 		return
 
-	if(istype(W, /obj/item/stock_parts/capacitor))
-		if(mecha_flags & PANEL_OPEN)
-			if(!capacitor)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
-					return
-				to_chat(user, span_notice("You install the capacitor."))
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				capacitor = W
-				log_message("[W] installed", LOG_MECHA)
-				update_part_values()
-			else
-				to_chat(user, span_warning("There's already a capacitor installed!"))
+	if(istype(weapon, /obj/item/stock_parts/capacitor) && (mecha_flags & PANEL_OPEN))
+		if(!capacitor)
+			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
+				return
+			capacitor = weapon
+			to_chat(user, span_notice("You install the capacitor."))
+			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+			log_message("[weapon] installed", LOG_MECHA)
+			update_part_values()
+		else
+			to_chat(user, span_warning("There's already a capacitor installed!"))
 		return
 
-	if(istype(W, /obj/item/stock_parts/servo))
-		if(mecha_flags & PANEL_OPEN)
-			if(!servo)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
-					return
-				to_chat(user, span_notice("You install the micro-servo."))
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				servo = W
-				log_message("[W] installed", LOG_MECHA)
-				update_part_values()
-			else
-				to_chat(user, span_warning("There's already a micro-servo installed!"))
-		return
-
-	if(istype(W, /obj/item/mecha_parts))
-		var/obj/item/mecha_parts/P = W
-		P.try_attach_part(user, src, FALSE)
+	if(istype(weapon, /obj/item/stock_parts/servo) && (mecha_flags & PANEL_OPEN))
+		if(!servo)
+			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
+				return
+			servo = weapon
+			to_chat(user, span_notice("You install the micro-servo."))
+			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+			log_message("[weapon] installed", LOG_MECHA)
+			update_part_values()
+		else
+			to_chat(user, span_warning("There's already a micro-servo installed!"))
 		return
 
 	return ..()
@@ -320,7 +315,7 @@
 		try_damage_component(., user.zone_selected)
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
-	.=..()
+	. = ..()
 	if(mecha_flags & PANEL_OPEN)
 		. += span_notice("The panel is open. You could use a <b>crowbar</b> to eject parts or lock the panel back with a <b>screwdriver</b>.")
 	else
@@ -347,12 +342,8 @@
 		visible_message(span_danger("[user] has opened the maintenance panel of [src]!"))
 
 	mecha_flags ^= PANEL_OPEN
-	if(mecha_flags & PANEL_OPEN)
-		balloon_alert(user, "panel open")
-	else
-		balloon_alert(user, "panel closed")
+	balloon_alert(user, (mecha_flags & PANEL_OPEN) ? "panel open" : "panel closed")
 	tool.play_tool_sound(src)
-	return
 
 /obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/tool)
 	..()
