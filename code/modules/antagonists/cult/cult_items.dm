@@ -469,11 +469,10 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon = 'icons/obj/drinks/bottles.dmi'
-	icon_state = "holyflask"
+	icon_state = "unholyflask"
 	inhand_icon_state = "holyflask"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	color = "#333333"
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
 ///how many times can the shuttle be cursed?
