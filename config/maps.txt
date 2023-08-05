@@ -13,47 +13,41 @@ Format:
 	votable (is this map votable)
 endmap
 
-# Production-level maps.
-
-map birdshot
-	#default
-	maxplayers 66
-	votable
+map tramstation
 endmap
 
-map deltastation
-	minplayers 50
+map metastation
 	votable
 endmap
 
 map icebox
-	minplayers 25
 	votable
 endmap
 
-map metastation
-	minplayers 25
-	#voteweight 0.5
+map birdshot
 	votable
 endmap
 
 map northstar
-	minplayers 50
 	votable
 endmap
 
-map tramstation
-	minplayers 35
-	votable
-endmap
-
-# Debug-only maps.
-
-map gateway_test
+map runtimestation
 endmap
 
 map multiz_debug
 endmap
 
-map runtimestation
+##EFFIGY MAPS##
+
+map foxholestation
+	maxplayers 25
+	votable
+endmap
+
+map tramstation_icts
+	votable
+endmap
+
+map effigy_liquids
 endmap

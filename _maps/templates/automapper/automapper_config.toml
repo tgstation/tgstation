@@ -1,0 +1,119 @@
+# Automapper configuration
+# [templates.example_template] - example_template should be replaced with the name of your map template.
+# directory - The direct path to our map files.
+# map_files - These are the names of the map files, including the extension, that will be loaded. Supports multiple for randomness.
+# required_map - This is the name of the required map that needs to be loaded in order for this template to load.
+# coordinates - The coordinates of the map template placement. (X, Y, Z). PLEASE NOTE: The Z coordinate is the same as would be shown in SDMM. NOT IN GAME.
+# leave it at 1 if it is not a multi-z map. It is relative to the map file Z, not the one loaded in game.
+# trait_name - The name of the Z level trait that will be used to determine what Z level we use.
+# Traits - Station (for station relatied edits), CentCom (for edits on the CC map), Mining (for edits on Lavaland)
+# More can be found in code\__DEFINES\maps.dm
+
+# METASTATION MAP TEMPLATES
+# Metastation Cryo
+[templates.metastation_cryo]
+map_files = ["metastation_cryo.dmm"]
+directory = "_maps/templates/automapper/metastation/"
+required_map = "MetaStation.dmm"
+coordinates = [136, 172, 1]
+trait_name = "Station"
+
+# Metastation Broadcast Studio
+[templates.metastation_broadcast_studio]
+map_files = ["metastation_broadcast_studio.dmm"]
+directory = "_maps/templates/automapper/metastation/"
+required_map = "MetaStation.dmm"
+coordinates = [57, 118, 1]
+trait_name = "Station"
+
+# ICEBOX MAP TEMPLATES
+# Icebox Cryo
+[templates.icebox_cryo]
+map_files = ["icebox_cryo.dmm"]
+directory = "_maps/templates/automapper/icebox/"
+required_map = "IceBoxStation.dmm"
+coordinates = [117, 142, 3]
+trait_name = "Station"
+
+# Icebox Broadcast Studio
+[templates.icebox_broadcast_studio]
+map_files = ["icebox_broadcast_studio.dmm"]
+directory = "_maps/templates/automapper/icebox/"
+required_map = "IceBoxStation.dmm"
+coordinates = [60, 128, 2]
+trait_name = "Station"
+
+# TRAMSTATION MAP TEMPLATES
+# Tramstation Cryo
+[templates.tramstation_cryo]
+map_files = ["tramstation_cryo.dmm"]
+directory = "_maps/templates/automapper/tramstation/"
+required_map = "tramstation.dmm"
+coordinates = [68, 102, 2]
+trait_name = "Station"
+
+# Tramstation Broadcast Studio
+[templates.tramstation_broadcast_studio]
+map_files = ["tramstation_broadcast_studio.dmm"]
+directory = "_maps/templates/automapper/tramstation/"
+required_map = "tramstation.dmm"
+coordinates = [84, 90, 1]
+trait_name = "Station"
+
+# ICTS Cryo
+[templates.icts_cryo]
+map_files = ["tramstation_cryo.dmm"]
+directory = "_maps/templates/automapper/tramstation/"
+required_map = "tramstation_icts.dmm"
+coordinates = [68, 102, 2]
+trait_name = "Station"
+
+# ICTS Broadcast Studio
+[templates.icts_broadcast_studio]
+map_files = ["tramstation_broadcast_studio.dmm"]
+directory = "_maps/templates/automapper/tramstation/"
+required_map = "tramstation_icts.dmm"
+coordinates = [84, 90, 1]
+trait_name = "Station"
+
+# BIRDSHOT MAP TEMPLATES
+# Birdshot Cryo
+[templates.birdshot_cryo]
+map_files = ["birdshot_cryo.dmm"]
+directory = "_maps/templates/automapper/birdshot/"
+required_map = "birdshot.dmm"
+coordinates = [147, 142, 1]
+trait_name = "Station"
+
+# Birdshot Broadcast Studio
+[templates.birdshot_broadcast_studio]
+map_files = ["birdshot_broadcast_studio.dmm"]
+directory = "_maps/templates/automapper/birdshot/"
+required_map = "birdshot.dmm"
+coordinates = [148, 141, 1]
+trait_name = "Station"
+
+# NORTHSTAR MAP EDITS
+# Northstar Cryo
+[templates.northstar_cryo]
+map_files = ["northstar_cryo.dmm"]
+directory = "_maps/templates/automapper/northstar/"
+required_map = "north_star.dmm"
+coordinates = [130, 114, 3]
+trait_name = "Station"
+
+# Northstar Dorms
+[templates.northstar_dorms]
+map_files = ["northstar_dorms.dmm"]
+directory = "_maps/templates/automapper/northstar/"
+required_map = "north_star.dmm"
+coordinates = [137, 132, 3]
+trait_name = "Station"
+
+# Northstar Broadcast Studio
+[templates.northstar_broadcast_studio]
+map_files = ["northstar_broadcast_studio.dmm"]
+directory = "_maps/templates/automapper/northstar/"
+required_map = "north_star.dmm"
+coordinates = [115, 107, 3]
+trait_name = "Station"
