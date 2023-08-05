@@ -338,6 +338,10 @@
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
+	else if(stat == DEAD)
+		if(icon_exists(icon, "[icon_state]_offline"))
+			icon_state = "[icon_state]_offline"
+
 	if(opened)
 		if(wiresexposed)
 			add_overlay("ov-opencover +w")
