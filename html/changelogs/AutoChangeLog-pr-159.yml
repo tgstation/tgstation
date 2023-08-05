@@ -1,5 +1,0 @@
-author: "Hardly3D"
-delete-after: True
-changes:
-  - rscadd: "Added gun permit icon for sechud"
-  - rscadd: "Added mouse facing during combat mode or on harm intent"
