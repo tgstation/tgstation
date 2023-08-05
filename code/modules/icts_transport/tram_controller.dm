@@ -1,3 +1,10 @@
+/**
+ * Tram specific variant of the generic linear transport controller.
+ *
+ * Hierarchy
+ * The ssICTS_transport subsystem manages a list of controllers,
+ * A controller manages a list of transport modules (individual tiles) which together make up a transport unit (in this case a tram)
+ */
 /datum/transport_controller/linear/tram
 
 	///whether this controller is active (any state we don't accept new orders, not nessecarily moving)
@@ -53,6 +60,13 @@
 	var/distance_travelled = 0
 	var/collisions = 0
 
+/**
+ * Assign registration details to a new tram.
+ *
+ * When a new tram is created, we give it a builder's plate with the date it was created.
+ * We track a few stats about it, and keep a small historical record on the
+ * information plate inside the tram.
+ */
 /datum/tram_mfg_info/New(specific_transport_id)
 	if(GLOB.round_id)
 		serial_number = "LT306TG[add_leading(GLOB.round_id, 6, 0)]"
@@ -61,6 +75,9 @@
 	mfg_date = world.realtime
 	install_location = specific_transport_id
 
+/**
+ * Loads persistent tram data from the JSON save file on initialization.
+ */
 /datum/tram_mfg_info/proc/load_data(list/tram_data)
 	serial_number = text2path(tram_data["serial_number"])
 	mfg_date = text2path(tram_data["mfg_date"])
@@ -69,6 +86,9 @@
 	collisions = text2path(tram_data["collisions"])
 	return TRUE
 
+/**
+ * Provide JSON formatted data to the persistence subsystem to save at round end.
+ */
 /datum/transport_controller/linear/tram/proc/get_json_data()
 	. = list()
 	.["serial_number"] = tram_registration.serial_number
@@ -77,6 +97,12 @@
 	.["distance_travelled"] = tram_registration.distance_travelled
 	.["collisions"] = tram_registration.collisions
 
+/**
+ * Make sure all modules have matching speed limiter vars, pull save data from persistence
+ *
+ * We track a few stats about it, and keep a small historical record on the
+ * information plate inside the tram.
+ */
 /datum/transport_controller/linear/tram/New(obj/structure/transport/linear/tram/transport_module)
 	. = ..()
 	speed_limiter = transport_module.speed_limiter
@@ -89,15 +115,28 @@
 	check_starting_landmark()
 	INVOKE_ASYNC(src, PROC_REF(cycle_doors), OPEN_DOORS)
 
+/**
+ * If someone VVs the base speed limiter of the tram, copy it to the current active speed limiter.
+ */
 /datum/transport_controller/linear/tram/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == "base_speed_limiter")
 		speed_limiter = max(speed_limiter, base_speed_limiter)
 
+/**
+ * Register transport modules to the controller
+ *
+ * Spreads out searching neighbouring tiles for additional transport modules, to combine into one full tram.
+ * We register to every module's signal that it's collided with something, be it mob, structure, etc.
+ */
 /datum/transport_controller/linear/tram/add_transport_modules(obj/structure/transport/linear/new_transport_module)
 	. = ..()
 	RegisterSignal(new_transport_module, COMSIG_MOVABLE_BUMP, PROC_REF(gracefully_break))
 
+/**
+ * The mapper should have placed the tram at one of the stations, the controller will search for a landmark within
+ * its control area and set it as its idle position.
+ */
 /datum/transport_controller/linear/tram/check_for_landmarks(obj/structure/transport/linear/tram/new_transport_module)
 	. = ..()
 	for(var/turf/platform_loc as anything in new_transport_module.locs)
@@ -106,6 +145,13 @@
 		if(initial_destination)
 			idle_platform = initial_destination
 
+/**
+ * Verify tram is in a valid starting location, start the subsystem.
+ *
+ * Throw an error if someone mapped a tram with no landmarks available for it to register.
+ * The processing subsystem starts off because not all maps have elevators/transports.
+ * Now that the tram is aware of its surroundings, we start the subsystem.
+ */
 /datum/transport_controller/linear/tram/proc/check_starting_landmark()
 	if(!idle_platform)
 		CRASH("a tram lift_master was initialized without any tram landmark to give it direction!")
@@ -115,10 +161,12 @@
 	return TRUE
 
 /**
+ * The tram explodes if it hits a few types of objects.
+ *
  * Signal for when the tram runs into a field of which it cannot go through.
  * Stops the train's travel fully, sends a message, and destroys the train.
  * Arguments:
- * bumped_atom - The atom this tram bumped into
+ * * bumped_atom - The atom this tram bumped into
  */
 /datum/transport_controller/linear/tram/proc/gracefully_break(atom/bumped_atom)
 	SIGNAL_HANDLER
@@ -147,7 +195,17 @@
 			xing.set_signal_state(XING_STATE_MALF)
 			xing.update_appearance()
 
-
+/**
+ * Calculate the journey details to the requested platform
+ *
+ * These will eventually be passed to the transport modules as args telling them where to move.
+ * We do some sanity checking in case of discrepencany between where the subsystem thinks the
+ * tram is and where the tram actually is. (For example, moving the landmarks after round start.)
+ *
+ * TODO: the message_admins is just for debugging. remove before PRing. ideally the tram will
+ * self-recover with the SYSTEM_FAULT operational status if it finds a mismatch between subsystem
+ * and controller.
+ */
 /datum/transport_controller/linear/tram/proc/calculate_route(obj/effect/landmark/icts/nav_beacon/tram/destination)
 	if(destination == idle_platform)
 		return FALSE
@@ -161,15 +219,23 @@
 	travel_trip_length = travel_remaining
 	return TRUE
 
+/**
+ * TODO: ??? don't remember what this is or why I started it. Probabaly related to above and recovering after a fault
+ */
 ///datum/transport_controller/linear/tram/proc/get_status()
 
 /**
  * Handles moving the tram
  *
- * Tells the individual tram parts where to actually go and has an extra safety checks
- * incase multiple inputs get through, preventing conflicting directions and the tram
- * literally ripping itself apart. all of the actual movement is handled by SSicts_transport
- * Arguments: destination platform, rapid (bypass some safety checks)
+ * Called by the subsystem, the controller tells the individual tram parts where to actually go and has extra safety checks
+ * incase multiple inputs get through, preventing conflicting directions and the tram literally ripping itself apart.
+ * All of the actual movement is handled by SSicts_transport.
+ *
+ * If we're this far all the PRE_DEPARTURE checks should have passed, so we leave the PRE_DEPARTURE status and actually move.
+ * We send a signal to anything registered that cares about the physical movement of the tram.
+ *
+ * Arguments:
+ * * destination_platform - where the subsystem wants it to go
  */
 
 /datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
@@ -186,6 +252,17 @@
 
 	START_PROCESSING(SSicts_transport, src)
 
+/**
+ * Tram processing loop
+ *
+ * Moves the tram to its set destination.
+ * When it arrives at its destination perform callback to the post-arrival procs like controls and lights.
+ * We update the odometer and kill the process until we need to move again.area
+ *
+ * TODO: If the status is EMERGENCY_STOP the tram should immediately come to a stop regardless of the
+ * travel_remaining. Some extra things happen in an emergency stop (throwing the passengers) and it will
+ * run a recovery procedure to head to the nearest platform and 'reset' once the issue is resolved.
+ */
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
 	//if(controller_status & EMERGENCY_STOP)
 	//	estop()
@@ -241,9 +318,20 @@
 		transport_module.set_travelling(FALSE)
 	set_active(FALSE)
 
+/**
+ * Send a signal to any lights associated with the tram so they can change based on the status and direction.
+ */
 /datum/transport_controller/linear/tram/proc/set_lights()
 	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_LIGHTS, controller_active, controller_status, travel_direction)
 
+/**
+ * Sets the active status for the controller and sends a signal to listeners.
+ *
+ * The main signal used by most components, it has the active status, the bitfield of the controller's status, its direction, and set destination.
+ *
+ * Arguments:
+ * new_status - The active status of the controller (whether it's busy doing something and not taking commands right now)
+ */
 /datum/transport_controller/linear/tram/proc/set_active(new_status)
 	if(controller_active == new_status)
 		return
@@ -251,6 +339,17 @@
 	controller_active = new_status
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
+/**
+ * Sets the controller status bitfield
+ *
+ * This status var is used by various components like lights, crossing signals, signs
+ * Sent via signal the listening components will perform required actions based on
+ * the status codes.
+ *
+ * Arguments:
+ * * code - The status bitflag we're changing
+ * * value - boolean TRUE/FALSE to set the code
+ */
 /datum/transport_controller/linear/tram/proc/set_status_code(code, value)
 	switch(value)
 		if(TRUE)
@@ -263,6 +362,13 @@
 
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
+/**
+ * Part of the pre-departure list, checks the status of the doors on the tram
+ *
+ * Checks if all doors are closed, and updates the status code accordingly.
+ *
+ * TODO: this is probably better renamed check_door_status()
+ */
 /datum/transport_controller/linear/tram/proc/update_status()
 	set_status_code(DOORS_OPEN, FALSE)
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
@@ -271,12 +377,18 @@
 				set_status_code(DOORS_OPEN, TRUE)
 				break
 
+/**
+ * TODO: The fuck why does this exist, it's only used once to open doors.
+ */
 /datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 		if(door.transport_linked_id == specific_transport_id)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), door_status)
 		update_status()
 
+/**
+ * Make tram emergency stop.
+ */
 /datum/transport_controller/linear/tram/proc/estop()
 	if(!travel_remaining)
 		return
@@ -288,12 +400,21 @@
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
 
+/**
+ * Tram malfunction random event. Set comm error, increase tram lethality.
+ */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
 	set_status_code(COMM_ERROR, TRUE)
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
 	control_panel.generate_repair_signals()
 	collision_lethality = 1.25
 
+/**
+ * Remove effects of tram malfunction event.
+ *
+ * If engineers didn't already repair the tram by the end of the event,
+ * automagically reset it remotely.
+ */
 /datum/transport_controller/linear/tram/proc/end_malf_event()
 	if(!(controller_status & COMM_ERROR))
 		return
