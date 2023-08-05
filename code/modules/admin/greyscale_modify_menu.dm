@@ -39,7 +39,7 @@
 	 */
 	var/unlocked = FALSE
 
-/datum/greyscale_modify_menu/New(datum/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state = "", starting_config, starting_colors, vv_mode = FALSE)
+/datum/greyscale_modify_menu/New(datum/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state = "", starting_config, starting_colors, unlocked = FALSE)
 	src.target = target
 	var/atom/atom_target
 	if(isatom(target))
@@ -63,7 +63,7 @@
 		new_config = SSgreyscale.configurations["[allowed_configs[pick(allowed_configs)]]"]
 	change_config(new_config)
 
-	if(vv_mode)
+	if(unlocked)
 		Unlock()
 	else
 		var/list/config_choices = list()
