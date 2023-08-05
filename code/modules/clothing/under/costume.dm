@@ -296,6 +296,7 @@
 	greyscale_config = /datum/greyscale_config/buttondown_skirt
 	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
+	body_parts_covered = CHEST|GROIN|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
