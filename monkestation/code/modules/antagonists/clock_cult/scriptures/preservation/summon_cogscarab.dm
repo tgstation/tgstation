@@ -25,7 +25,7 @@
 		to_chat(invoker, span_warning("You must do this on Reebe!"))
 		return FALSE
 
-	if(!GLOB.cogscarabs.len < MAXIMUM_COGSCARABS)
+	if(length(GLOB.cogscarabs) > MAXIMUM_COGSCARABS)
 		to_chat(invoker, span_warning("You can't summon anymore cogscarabs."))
 		return FALSE
 

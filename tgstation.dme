@@ -360,6 +360,7 @@
 #include "code\__DEFINES\MONKESTATION_DEFINES\DNA.dm"
 #include "code\__DEFINES\MONKESTATION_DEFINES\factions.dm"
 #include "code\__DEFINES\MONKESTATION_DEFINES\lazy_templates.dm"
+#include "code\__DEFINES\MONKESTATION_DEFINES\level_traits.dm"
 #include "code\__DEFINES\MONKESTATION_DEFINES\maps.dm"
 #include "code\__DEFINES\MONKESTATION_DEFINES\mecha.dm"
 #include "code\__DEFINES\MONKESTATION_DEFINES\span.dm"

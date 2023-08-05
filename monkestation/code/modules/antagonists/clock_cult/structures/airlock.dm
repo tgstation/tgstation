@@ -21,6 +21,8 @@
 /obj/machinery/door/airlock/bronze/clock/on_break()
 	set_panel_open(TRUE)
 
+/obj/machinery/door/airlock/bronze/clock/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	return
 
 /obj/machinery/door/airlock/bronze/clock/isElectrified()
 	return FALSE

@@ -4,9 +4,39 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 	map_dir = "monkestation/_maps/lazy_templates"
 	map_name = "reebe"
 
-/// development helper proc for admins to run. to be removed
-/proc/spawn_reebe()
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_OUTPOST_OF_COGS)
+/// spawn the reeb z level and map template, lazy templates dont work because we need to give this ztraits
+/proc/spawn_reebe(forced = FALSE)
+	var/static/reebe_loaded
+	if(forced)
+		message_admins("Admin forcing reebe spawn, if it has already spawned this will break things unless you know what your doing.")
+	else if(reebe_loaded)
+		return FALSE
+
+	reebe_loaded = TRUE
+	var/datum/space_level/reebe_z = SSmapping.add_new_zlevel("Reebe", ZTRAITS_REEBE)
+	if(!reebe_z)
+		reebe_loaded = FALSE
+		CRASH("Failed to create the Reebe Z level.")
+
+	SSmapping.initialize_reserved_level(reebe_z.z_value)
+	if(!SSmapping.reservation_ready["[reebe_z.z_value]"]) //if this is not true then the block reservation will sleep forever
+		reebe_loaded = FALSE
+		CRASH("Reebe Z level not in SSmapping.reservation_ready.")
+
+	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(101, 101, reebe_z.z_value)
+	if(!reservation)
+		reebe_loaded = FALSE
+		CRASH("Failed to reserve a block for Reebe.")
+
+	var/datum/map_template/reebe_template = new(path = "monkestation/_maps/lazy_templates/reebe.dmm", cache = TRUE)
+	if(!reebe_template.cached_map) //might not be needed, im just copying lazy template code and I cant figure out what cached maps are for in this case
+		reebe_loaded = FALSE
+		CRASH("Failed to cache template for loading Reebe.")
+
+	if(!reebe_template.load(coords2turf(reservation.bottom_left_coords)))
+		reebe_loaded = FALSE
+		CRASH("Failed to load the Reebe template.")
+	return TRUE
 
 /obj/effect/mob_spawn/corpse/human/blood_cultist
 	name = "Blood Cultist"

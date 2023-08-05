@@ -37,6 +37,9 @@
 /obj/structure/window/reinforced/clockwork/ratvar_act()
 	return FALSE
 
+/obj/structure/window/reinforced/clockwork/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
+	return
+
 /obj/structure/window/reinforced/clockwork/unanchored
 	anchored = FALSE
 

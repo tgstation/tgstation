@@ -1,7 +1,5 @@
-//simple proc to check if something is in the reebe area or not, I would do this based off of z level but im unsure how to get a lazytemplate's z level
-//macro might be better here
+///check if an atom is on the reebe z level, will also return FALSE if the atom has no z level
 /proc/on_reebe(atom/checked_atom)
-	var/area/in_area = get_area(checked_atom) //is this even needed?
-	if(istype(in_area, /area/ruin/powered/reebe/city) || istype(in_area, /area/ruin/powered/reebe/space)) //might want to use a typecache for this
-		return TRUE
-	return FALSE
+	if(!checked_atom.z || !is_reebe_level(checked_atom.z))
+		return FALSE
+	return TRUE

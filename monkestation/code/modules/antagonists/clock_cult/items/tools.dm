@@ -9,6 +9,10 @@
 	random_color = FALSE
 	toolspeed = BRASS_TOOLSPEED_MOD
 
+/obj/item/wirecutters/brass/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/clockwork_pickup)
+
 /obj/item/screwdriver/brass
 	name = "brass screwdriver"
 	desc = "A screwdriver made of brass. The handle feels warm to the touch."
@@ -20,6 +24,10 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
+/obj/item/screwdriver/brass/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/clockwork_pickup)
+
 /obj/item/weldingtool/experimental/brass
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
@@ -27,6 +35,10 @@
 	icon = 'monkestation/icons/obj/clock_cult/tools.dmi'
 	icon_state = "welder_brass"
 	toolspeed = BRASS_TOOLSPEED_MOD
+
+/obj/item/weldingtool/experimental/brass/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/clockwork_pickup)
 
 /obj/item/crowbar/brass
 	name = "brass crowbar"
@@ -37,6 +49,10 @@
 	worn_icon_state = "crowbar"
 	toolspeed = BRASS_TOOLSPEED_MOD
 
+/obj/item/crowbar/brass/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/clockwork_pickup)
+
 /obj/item/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
@@ -44,6 +60,10 @@
 	icon = 'monkestation/icons/obj/clock_cult/tools.dmi'
 	icon_state = "wrench_brass"
 	toolspeed = BRASS_TOOLSPEED_MOD
+
+/obj/item/wrench/brass/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/clockwork_pickup)
 
 /obj/item/storage/belt/utility/clock
 	name = "old toolbelt"

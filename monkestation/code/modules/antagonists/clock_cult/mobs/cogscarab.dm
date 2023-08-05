@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist)
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
-	if(!GLOB.cogscarabs.len < MAXIMUM_COGSCARABS)
+	if(length(GLOB.cogscarabs) > MAXIMUM_COGSCARABS)
 		to_chat(user, span_notice("The cult currently has its maximum amount of cogscarabs."))
 		return FALSE
 	return TRUE

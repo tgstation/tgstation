@@ -42,9 +42,13 @@
 		handle_silicon_conversion(current)
 	. = ..() //have to call down here so objectives display correctly
 
+/datum/antagonist/clock_cultist/greet()
+	. = ..()
+	to_chat(owner.current, span_warning("Dont forget, your structures are by default off and must be clicked on to be turned on. Structures that are turned on have passive power use."))
+
 //given_clock_team is provided by conversion methods, although we never use it due to wanting to just set their team to the main clock cult
 /datum/antagonist/clock_cultist/create_team(datum/team/clock_cult/given_clock_team)
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_OUTPOST_OF_COGS)
+	spawn_reebe()
 	if(!given_clock_team)
 		if(GLOB.main_clock_cult)
 			clock_team = GLOB.main_clock_cult
@@ -189,6 +193,19 @@
 	converted_silicon.laws = new /datum/ai_laws/ratvar
 	converted_silicon.laws.associate(converted_silicon)
 	converted_silicon.show_laws()
+
+///remove clock cult items from their inventory by dropping them
+/datum/antagonist/clock_cultist/proc/handle_equipment_removal()
+	if(silent || !length(GLOB.types_to_drop_on_clock_deonversion))
+		message_admins("EEEEE")
+		return
+
+	var/list/types_to_drop = typecacheof(GLOB.types_to_drop_on_clock_deonversion)
+	var/mob/living/current = owner.current
+	for(var/obj/item/object in current.get_all_contents())
+		if(is_type_in_typecache(object.type, types_to_drop))
+			message_admins("DROP")
+			current.dropItemToGround(object, TRUE, TRUE)
 
 /datum/antagonist/clock_cultist/eminence
 	name = "Eminence"

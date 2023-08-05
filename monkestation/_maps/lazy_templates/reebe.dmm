@@ -151,7 +151,7 @@
 "ve" = (
 /obj/effect/servant_blocker,
 /obj/structure/lattice/catwalk/clockwork,
-/turf/open/indestructible/reebe_void,
+/turf/open/indestructible/reebe_void/walkable,
 /area/ruin/powered/reebe/city)
 "zN" = (
 /obj/structure/table/bronze,

@@ -5,7 +5,6 @@
 	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_cuirass"
 	armor_type = /datum/armor/suit_clockwork
-	slowdown = 0.6
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -17,9 +16,9 @@
 
 /datum/armor/suit_clockwork
 	melee = 50
-	bullet = 65
-	laser = 35
-	energy = 75
+	bullet = 70
+	laser = 40
+	energy = 70
 	bomb = 80
 	bio = 100
 	fire = 100
@@ -35,7 +34,7 @@
 	name = "robes of divinity"
 	desc = "A shiny suit, glowing with a vibrant energy. The wearer will be able to move quickly across battlefields, but will be able to withstand less damage before falling."
 	icon_state = "clockwork_cuirass_speed"
-	slowdown = -0.3
+	slowdown = -0.5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor_type = /datum/armor/clockwork_speed
 
@@ -55,7 +54,7 @@
 	icon_state = "clockwork_cloak"
 	armor_type = /datum/armor/clockwork_cloak
 	actions_types = list(/datum/action/item_action/toggle/clock)
-	slowdown = 0.4
+	slowdown = -0.1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	/// Is the shroud itself active or not
 	var/shroud_active = FALSE
@@ -65,10 +64,10 @@
 	var/mob/living/wearer
 
 /datum/armor/clockwork_cloak
-	melee = 10
+	melee = 30
 	bullet = 60
 	laser = 40
-	energy = 25
+	energy = 30
 	bomb = 40
 	bio = 100
 	fire = 100
@@ -111,6 +110,9 @@
 /// Apply the effects to the wearer, making them pretty hard to see
 /obj/item/clothing/suit/clockwork/cloak/proc/enable()
 	shroud_active = TRUE
+	if(!wearer)
+		return
+
 	previous_alpha = wearer.alpha
 	animate(wearer, alpha = 80, time = 3 SECONDS)
 	apply_wibbly_filters(wearer)
@@ -119,8 +121,10 @@
 
 /// Un-apply the effects of the cloak, returning the wearer to normal
 /obj/item/clothing/suit/clockwork/cloak/proc/disable()
-
 	shroud_active = FALSE
+	if(!wearer)
+		return
+
 	do_sparks(3, FALSE, wearer)
 	remove_wibbly_filters(wearer)
 	animate(wearer, alpha = previous_alpha, time = 3 SECONDS)

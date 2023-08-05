@@ -14,7 +14,10 @@
 	icon_state = "reebegame"
 
 
-/turf/open/indestructible/reebe_void/Enter(atom/movable/movable, atom/old_loc)
+/turf/open/indestructible/reebe_void/Enter(atom/movable/movable, atom/old_loc, walkable)
+	if(walkable)
+		return ..()
+
 	if(!..())
 		return FALSE
 	else
@@ -24,6 +27,12 @@
 			return TRUE
 		return FALSE
 
+
+/turf/open/indestructible/reebe_void/walkable
+	icon_state = "reebespawn"
+
+/turf/open/indestructible/reebe_void/walkable/Enter(atom/movable/movable, atom/old_loc, walkable = TRUE)
+	. = ..()
 
 /turf/open/indestructible/reebe_void/spawning
 	icon_state = "reebespawn"

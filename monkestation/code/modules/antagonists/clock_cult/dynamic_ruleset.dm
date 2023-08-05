@@ -21,7 +21,6 @@
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 20, "offset" = 1)
-	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_OUTPOST_OF_COGS)
 
 	minimum_players = 30
 
@@ -31,6 +30,7 @@
 
 /datum/dynamic_ruleset/roundstart/clock_cult/pre_execute(population)
 	. = ..()
+	INVOKE_ASYNC(GLOBAL_PROC, PROC_REF(spawn_reebe))
 	var/cultists = get_antag_cap(population)
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
