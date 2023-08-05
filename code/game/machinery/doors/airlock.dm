@@ -1774,6 +1774,8 @@
 /**
  * Called by a transport controller to perform a close or open cycle
  *
+ * Tram won't wait forever and will eventually crush whatever is in the way.
+ *
  * Arguments:
  * * rapid - boolean - if TRUE will skip safety checks and crush whatever is in the way
  */
