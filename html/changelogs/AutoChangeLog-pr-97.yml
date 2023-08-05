@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - qol: "TTS volume preference is not actually a volume slider, instead of a volume number input."
