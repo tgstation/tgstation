@@ -462,6 +462,7 @@
 		server.component_parts -= servo
 		server.component_parts += new /datum/stock_part/servo/tier4
 
+	server.RefreshParts()
 	server.occupant_mind_refs.Cut()
 	rewards = server.calculate_rewards()
 	TEST_ASSERT_EQUAL(rewards, 1.6, "Should increase rewards with modded servos")
@@ -504,6 +505,26 @@
 
 	grade = server.grade_completion(3, 1, 4, FALSE, 5 MINUTES)
 	TEST_ASSERT_EQUAL(grade, "S", "Should return a grade")
+
+/// Ensures settings on vdoms are being set correctly
+/datum/unit_test/bitrunner_vdom_settings/Run()
+	var/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunner_loot/decrypted)
+
+	for(var/path in subtypesof(/datum/lazy_template/virtual_domain))
+		var/datum/lazy_template/virtual_domain/vdom = new path
+		TEST_ASSERT_NOTNULL(vdom.key, "[path] should have a key")
+		TEST_ASSERT_NOTEQUAL(vdom.map_width, 0, "[path] should have a map width")
+		TEST_ASSERT_NOTEQUAL(vdom.map_height, 0, "[path] should have a map height")
+		TEST_ASSERT_NOTNULL(vdom.map_name, "[path] should have a map name")
+
+		// This seems to return true regardless of the map existing or not
+		// var/file_name = '_maps/virtual_domains/' + [vdom.map_name] + '.dmm'
+		// TEST_ASSERT_NOTNULL(isfile(file_name), "Could not find map file for [path]")
+
+		if(!length(vdom.extra_loot))
+			continue
+
+		TEST_ASSERT_EQUAL(crate.spawn_loot(vdom.extra_loot), TRUE, "[path] didn't spawn loot. Extra loot should be an associative list")
 
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE

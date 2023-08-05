@@ -70,14 +70,13 @@
 		if(!ispath(path))
 			continue
 
-		var/amount
 		if(isnull(extra_loot[path]))
-			amount = 1
-		else
-			amount = extra_loot[path]
+			return FALSE
 
-		for(var/i in 1 to amount)
+		for(var/i in 1 to extra_loot[path])
 			new path(src)
+
+	return TRUE
 
 #undef ORE_MULTIPLIER_IRON
 #undef ORE_MULTIPLIER_GLASS

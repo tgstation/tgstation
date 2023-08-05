@@ -1,8 +1,9 @@
+#define BASE_DISCONNECT_DAMAGE 40
+
 /obj/machinery/netpod
 	name = "net pod"
 
 	base_icon_state = "netpod"
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	icon_state = "netpod"
@@ -18,11 +19,9 @@
 	/// A player selected outfit by clicking the netpod
 	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
 	/// The amount of brain damage done from force disconnects
-	var/disconnect_damage = 40
+	var/disconnect_damage
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
-	/// Cached mob actions, stops mobs from keeping abilities
-	var/list/datum/action/cached_actions = list()
 
 /obj/machinery/netpod/Initialize(mapload)
 	. = ..()
@@ -31,6 +30,8 @@
 
 /obj/machinery/netpod/LateInitialize()
 	. = ..()
+
+	disconnect_damage = BASE_DISCONNECT_DAMAGE
 
 	RegisterSignals(src, list(
 		COMSIG_QDELETING,
@@ -47,7 +48,6 @@
 
 /obj/machinery/netpod/Destroy()
 	. = ..()
-	cached_actions.Cut()
 	cached_outfits.Cut()
 
 /obj/machinery/netpod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -251,9 +251,6 @@
 	mob_occupant.key = null
 	receiving.transfer_to(mob_occupant)
 
-	mob_occupant.actions = cached_actions
-	cached_actions.Cut()
-
 	mob_occupant.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
 	mob_occupant.set_static_vision(2 SECONDS)
 	mob_occupant.set_temp_blindness(1 SECONDS)
@@ -331,7 +328,6 @@
 
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
 	occupant_mind_ref = neo_mind_ref
-	cached_actions += neo.actions
 	SEND_SIGNAL(server, COMSIG_BITRUNNER_CLIENT_CONNECTED, neo_mind_ref)
 	neo.mind.initial_avatar_connection(
 		avatar = current_avatar,
@@ -349,6 +345,7 @@
 	server = locate(/obj/machinery/quantum_server) in oview(4, src)
 	if(server)
 		server_ref = WEAKREF(server)
+		RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded), override = TRUE)
 		return server
 
 	return
@@ -395,6 +392,12 @@
 	unprotect_occupant(occupant)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR, src)
 
+/// When the server is upgraded, drops brain damage a little
+/obj/machinery/netpod/proc/on_server_upgraded(datum/source, servo_rating)
+	SIGNAL_HANDLER
+
+	disconnect_damage = BASE_DISCONNECT_DAMAGE * (1 - servo_rating)
+
 /// Checks the integrity, alerts occupants
 /obj/machinery/netpod/proc/on_take_damage(datum/source, damage_amount)
 	SIGNAL_HANDLER
@@ -428,3 +431,5 @@
 	var/path = text2path(text)
 	if(ispath(path, /datum/outfit) && locate(path) in subtypesof(/datum/outfit))
 		return path
+
+#undef BASE_DISCONNECT_DAMAGE

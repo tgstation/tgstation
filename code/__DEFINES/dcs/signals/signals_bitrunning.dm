@@ -30,3 +30,6 @@
 
 /// from midround and event spawns: (mob/living)
 #define COMSIG_BITRUNNER_COP_SPAWNED "bitrunner_cop_spawned"
+
+/// from /obj/machinery/quantum_server/refreshParts(): (servo rating)
+#define COMSIG_BITRUNNER_SERVER_UPGRADED "bitrunner_server_upgraded"
