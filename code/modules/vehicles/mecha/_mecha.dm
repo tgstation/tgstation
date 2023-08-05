@@ -230,11 +230,14 @@
 
 	cabin_air = new(cabin_volume)
 
-	add_cell()
-	add_scanmod()
-	add_capacitor()
-	add_servo()
-	CheckParts()
+	if(mapload)
+		add_cell()
+		add_scanmod()
+		add_capacitor()
+		add_servo()
+	else
+		CheckParts()
+
 	update_access()
 	set_wires(new /datum/wires/mecha(src))
 	START_PROCESSING(SSobj, src)

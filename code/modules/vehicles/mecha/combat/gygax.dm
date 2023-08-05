@@ -74,15 +74,7 @@
 /obj/vehicle/sealed/mecha/gygax/dark/loaded/Initialize(mapload)
 	. = ..()
 	max_ammo()
-
-/obj/vehicle/sealed/mecha/gygax/dark/add_cell()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
-
-/obj/vehicle/sealed/mecha/gygax/dark/add_scanmod()
-	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
-
-/obj/vehicle/sealed/mecha/gygax/dark/add_capacitor()
-	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
-
-/obj/vehicle/sealed/mecha/gygax/dark/add_servo()
-	servo = new /obj/item/stock_parts/servo/femto(src)
+	add_cell(new /obj/item/stock_parts/cell/bluespace)
+	add_scanmod(new /obj/item/stock_parts/scanning_module/triphasic)
+	add_capacitor(new /obj/item/stock_parts/capacitor/quadratic)
+	add_servo(new /obj/item/stock_parts/servo/femto)

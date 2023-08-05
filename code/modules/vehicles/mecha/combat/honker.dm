@@ -74,17 +74,12 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/honker/dark/add_cell()
-	cell = new /obj/item/stock_parts/cell/hyper(src)
-
-/obj/vehicle/sealed/mecha/honker/dark/add_scanmod()
-	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
-
-/obj/vehicle/sealed/mecha/honker/dark/add_capacitor()
-	capacitor = new /obj/item/stock_parts/capacitor/super(src)
-
-/obj/vehicle/sealed/mecha/honker/dark/add_servo()
-	servo = new /obj/item/stock_parts/servo/pico(src)
+/obj/vehicle/sealed/mecha/honker/dark/Initialize(mapload)
+	. = ..()
+	add_cell(new /obj/item/stock_parts/cell/hyper)
+	add_scanmod(new /obj/item/stock_parts/scanning_module/phasic)
+	add_capacitor(new /obj/item/stock_parts/capacitor/super)
+	add_servo(new /obj/item/stock_parts/servo/pico)
 
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"

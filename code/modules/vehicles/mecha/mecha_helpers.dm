@@ -4,8 +4,9 @@
 	if(new_cell)
 		new_cell.forceMove(src)
 		cell = new_cell
-		return
-	cell = new /obj/item/stock_parts/cell/high(src)
+	else
+		cell = new /obj/item/stock_parts/cell/high(src)
+	update_part_values()
 
 ///Adds a scanning module, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
 /obj/vehicle/sealed/mecha/proc/add_scanmod(obj/item/stock_parts/scanning_module/new_scanmod)
@@ -13,8 +14,9 @@
 	if(new_scanmod)
 		new_scanmod.forceMove(src)
 		scanmod = new_scanmod
-		return
-	scanmod = new /obj/item/stock_parts/scanning_module(src)
+	else
+		scanmod = new /obj/item/stock_parts/scanning_module(src)
+	update_part_values()
 
 ///Adds a capacitor, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
 /obj/vehicle/sealed/mecha/proc/add_capacitor(obj/item/stock_parts/capacitor/new_capacitor)
@@ -24,6 +26,7 @@
 		capacitor = new_capacitor
 	else
 		capacitor = new /obj/item/stock_parts/capacitor(src)
+	update_part_values()
 
 ///Adds a servo, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
 /obj/vehicle/sealed/mecha/proc/add_servo(obj/item/stock_parts/servo/new_servo)
@@ -33,6 +36,7 @@
 		servo = new_servo
 	else
 		servo = new /obj/item/stock_parts/servo(src)
+	update_part_values()
 
 ///////////////////////
 ///// Power stuff /////

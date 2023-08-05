@@ -143,14 +143,10 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
-/obj/vehicle/sealed/mecha/marauder/add_cell()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
-
-/obj/vehicle/sealed/mecha/marauder/add_scanmod()
-	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
-
-/obj/vehicle/sealed/mecha/marauder/add_capacitor()
-	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
-
-/obj/vehicle/sealed/mecha/marauder/add_servo()
-	servo = new /obj/item/stock_parts/servo/femto(src)
+/obj/vehicle/sealed/mecha/marauder/loaded/Initialize(mapload)
+	. = ..()
+	max_ammo()
+	add_cell(new /obj/item/stock_parts/cell/bluespace)
+	add_scanmod(new /obj/item/stock_parts/scanning_module/triphasic)
+	add_capacitor(new /obj/item/stock_parts/capacitor/quadratic)
+	add_servo(new /obj/item/stock_parts/servo/femto)
