@@ -25,7 +25,7 @@
 	. = ..()
 	var/static/list/death_loot
 	if(!death_loot)
-		death_loot = string_list(list(/obj/effect/gibspawner/generic))
+		death_loot = (list(/obj/effect/gibspawner/generic))
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
