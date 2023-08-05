@@ -11,8 +11,16 @@
 	else
 		return 0.5
 
-/proc/get_organmanip_location_isopened(mob/living/carbon/located_mob, location)
-	for(var/datum/surgery/procedure in located_mob.surgeries)
+/**
+ * Short description of the proc
+ *
+ * You can learn is this location covered with skin
+ * Arguments:
+ * * located_mob - Carbon mob
+ * * location - Body zone, like BODY_ZONE_HEAD or BODY_ZONE_CHEST
+ */
+/proc/get_location_opened(mob/living/carbon/located_mob, location)
+	for(var/datum/surgery/procedure as anything in located_mob.surgeries)
 		if(procedure.location != location)
 			continue
 		if(!istype(procedure, /datum/surgery/organ_manipulation))

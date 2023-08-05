@@ -240,8 +240,8 @@
 		return
 
 	//since these people will be dead M != usr
-	if(!get_organmanip_location_isopened(C, BODY_ZONE_HEAD))
-		to_chat(user, span_warning("The body area appears closed."))
+	if(!get_location_opened(C, BODY_ZONE_HEAD))
+		to_chat(user, span_warning("The head area appears closed."))
 		return
 
 	if(!target_has_brain)
