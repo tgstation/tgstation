@@ -294,15 +294,13 @@
 		diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
 
-///Load or add parts on mech construction or map spawning
+///Load or add parts on mech construction or spawning
 /obj/vehicle/sealed/mecha/proc/initialize_parts(mapload)
-	if(mapload)
-		add_cell()
-		add_scanmod()
-		add_capacitor()
-		add_servo()
-	else
-		CheckParts()
+	cell = (locate(/obj/item/stock_parts/cell) in contents) || new /obj/item/stock_parts/cell/high(src)
+	scanmod = (locate(/obj/item/stock_parts/scanning_module) in contents) || new /obj/item/stock_parts/scanning_module(src)
+	capacitor = (locate(/obj/item/stock_parts/capacitor) in contents) || new /obj/item/stock_parts/capacitor(src)
+	servo = (locate(/obj/item/stock_parts/servo) in contents) || new /obj/item/stock_parts/servo(src)
+	update_part_values()
 
 /obj/vehicle/sealed/mecha/atom_destruction()
 	spark_system?.start()
@@ -424,14 +422,6 @@
 		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
 		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
 	set_mouse_pointer()
-
-/obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
-	cell = locate(/obj/item/stock_parts/cell) in contents
-	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
-	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
-	servo = locate(/obj/item/stock_parts/servo) in contents
-	update_part_values()
-	return ..()
 
 /obj/vehicle/sealed/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
 	update_energy_drain()

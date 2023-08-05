@@ -76,7 +76,8 @@
 	max_ammo()
 
 /obj/vehicle/sealed/mecha/gygax/dark/loaded/initialize_parts(mapload)
-	add_cell(new /obj/item/stock_parts/cell/bluespace)
-	add_scanmod(new /obj/item/stock_parts/scanning_module/triphasic)
-	add_capacitor(new /obj/item/stock_parts/capacitor/quadratic)
-	add_servo(new /obj/item/stock_parts/servo/femto)
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
+	servo = new /obj/item/stock_parts/servo/femto(src)
+	update_part_values()

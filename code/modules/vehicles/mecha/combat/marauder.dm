@@ -47,12 +47,12 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
-/obj/vehicle/sealed/mecha/marauder/add_cell(obj/item/stock_parts/cell/C=null)
-	if(C)
-		C.forceMove(src)
-		cell = C
-		return
+/obj/vehicle/sealed/mecha/marauder/loaded/initialize_parts(mapload)
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
+	servo = new /obj/item/stock_parts/servo/femto(src)
+	update_part_values()
 
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
@@ -143,12 +143,13 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
 
-/obj/vehicle/sealed/mecha/marauder/loaded/Initialize(mapload)
+/obj/vehicle/sealed/mecha/marauder/mauler/loaded/Initialize(mapload)
 	. = ..()
 	max_ammo()
 
-/obj/vehicle/sealed/mecha/marauder/loaded/initialize_parts(mapload)
-	add_cell(new /obj/item/stock_parts/cell/bluespace)
-	add_scanmod(new /obj/item/stock_parts/scanning_module/triphasic)
-	add_capacitor(new /obj/item/stock_parts/capacitor/quadratic)
-	add_servo(new /obj/item/stock_parts/servo/femto)
+/obj/vehicle/sealed/mecha/marauder/mauler/loaded/initialize_parts(mapload)
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
+	servo = new /obj/item/stock_parts/servo/femto(src)
+	update_part_values()

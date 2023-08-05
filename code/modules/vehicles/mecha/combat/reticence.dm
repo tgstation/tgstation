@@ -41,9 +41,9 @@
 		MECHA_ARMOR = list(),
 	)
 
-/obj/vehicle/sealed/mecha/reticence/loaded/Initialize(mapload)
-	. = ..()
-	add_cell(new /obj/item/stock_parts/cell/bluespace)
-	add_scanmod(new /obj/item/stock_parts/scanning_module/triphasic)
-	add_capacitor(new /obj/item/stock_parts/capacitor/quadratic)
-	add_servo(new /obj/item/stock_parts/servo/femto)
+/obj/vehicle/sealed/mecha/reticence/loaded/initialize_parts(mapload)
+	cell = new /obj/item/stock_parts/cell/hyper(src)
+	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
+	capacitor = new /obj/item/stock_parts/capacitor/super(src)
+	servo = new /obj/item/stock_parts/servo/pico(src)
+	update_part_values()
