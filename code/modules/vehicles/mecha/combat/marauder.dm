@@ -146,6 +146,8 @@
 /obj/vehicle/sealed/mecha/marauder/loaded/Initialize(mapload)
 	. = ..()
 	max_ammo()
+
+/obj/vehicle/sealed/mecha/marauder/loaded/initialize_parts(mapload)
 	add_cell(new /obj/item/stock_parts/cell/bluespace)
 	add_scanmod(new /obj/item/stock_parts/scanning_module/triphasic)
 	add_capacitor(new /obj/item/stock_parts/capacitor/quadratic)

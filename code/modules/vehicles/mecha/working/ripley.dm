@@ -186,8 +186,11 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 	return ..()
 
-/obj/vehicle/sealed/mecha/ripley/cargo/add_scanmod()
-	scanmod = null
+/obj/vehicle/sealed/mecha/ripley/cargo/initialize_parts(mapload)
+	add_cell()
+	//No add_scanmod() for Big Bess
+	add_capacitor()
+	add_servo()
 
 /obj/vehicle/sealed/mecha/ripley/Exit(atom/movable/leaving, direction)
 	if(leaving in cargo)

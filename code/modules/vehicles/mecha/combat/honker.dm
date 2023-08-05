@@ -74,8 +74,7 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/honker/dark/Initialize(mapload)
-	. = ..()
+/obj/vehicle/sealed/mecha/marauder/loaded/initialize_parts(mapload)
 	add_cell(new /obj/item/stock_parts/cell/hyper)
 	add_scanmod(new /obj/item/stock_parts/scanning_module/phasic)
 	add_capacitor(new /obj/item/stock_parts/capacitor/super)

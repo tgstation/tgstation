@@ -230,14 +230,7 @@
 
 	cabin_air = new(cabin_volume)
 
-	if(mapload)
-		add_cell()
-		add_scanmod()
-		add_capacitor()
-		add_servo()
-	else
-		CheckParts()
-
+	initialize_parts(mapload)
 	update_access()
 	set_wires(new /datum/wires/mecha(src))
 	START_PROCESSING(SSobj, src)
@@ -300,6 +293,16 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
+
+///Load or add parts on mech construction or map spawning
+/obj/vehicle/sealed/mecha/proc/initialize_parts(mapload)
+	if(mapload)
+		add_cell()
+		add_scanmod()
+		add_capacitor()
+		add_servo()
+	else
+		CheckParts()
 
 /obj/vehicle/sealed/mecha/atom_destruction()
 	spark_system?.start()
