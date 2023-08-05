@@ -238,7 +238,19 @@
 		wires.interact(user)
 		return
 
-	if(istype(weapon, /obj/item/stock_parts/cell) && (mecha_flags & PANEL_OPEN))
+	if(istype(weapon, /obj/item/stock_parts))
+		try_insert_part(weapon, user)
+		return
+
+	return ..()
+
+/// Try to insert a stock part into the mech
+/obj/vehicle/sealed/mecha/proc/try_insert_part(obj/item/stock_parts/weapon, mob/living/user)
+	if(!(mecha_flags & PANEL_OPEN))
+		balloon_alert(user, "open the panel first!")
+		return
+
+	if(istype(weapon, /obj/item/stock_parts/cell))
 		if(!cell)
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
@@ -250,7 +262,7 @@
 			to_chat(user, span_warning("There's already a power cell installed!"))
 		return
 
-	if(istype(weapon, /obj/item/stock_parts/scanning_module) && (mecha_flags & PANEL_OPEN))
+	if(istype(weapon, /obj/item/stock_parts/scanning_module))
 		if(!scanmod)
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
@@ -263,7 +275,7 @@
 			to_chat(user, span_warning("There's already a scanning module installed!"))
 		return
 
-	if(istype(weapon, /obj/item/stock_parts/capacitor) && (mecha_flags & PANEL_OPEN))
+	if(istype(weapon, /obj/item/stock_parts/capacitor))
 		if(!capacitor)
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
@@ -276,7 +288,7 @@
 			to_chat(user, span_warning("There's already a capacitor installed!"))
 		return
 
-	if(istype(weapon, /obj/item/stock_parts/servo) && (mecha_flags & PANEL_OPEN))
+	if(istype(weapon, /obj/item/stock_parts/servo))
 		if(!servo)
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
@@ -288,8 +300,6 @@
 		else
 			to_chat(user, span_warning("There's already a micro-servo installed!"))
 		return
-
-	return ..()
 
 /obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!attacking_item.force)
@@ -353,7 +363,7 @@
 		remover.empty_mech(src, user)
 		return
 	if(!(mecha_flags & PANEL_OPEN))
-		balloon_alert(user, "open the cover first!")
+		balloon_alert(user, "open the panel first!")
 		return
 	if(dna_lock && user.has_dna())
 		var/mob/living/carbon/user_carbon = user
