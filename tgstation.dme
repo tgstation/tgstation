@@ -3507,6 +3507,7 @@
 #include "code\modules\experisci\experiment\types\scanning.dm"
 #include "code\modules\experisci\experiment\types\scanning_machinery.dm"
 #include "code\modules\experisci\experiment\types\scanning_material.dm"
+#include "code\modules\experisci\experiment\types\scanning_people.dm"
 #include "code\modules\experisci\experiment\types\scanning_plants.dm"
 #include "code\modules\experisci\experiment\types\scanning_points.dm"
 #include "code\modules\experisci\experiment\types\scanning_vatgrown.dm"

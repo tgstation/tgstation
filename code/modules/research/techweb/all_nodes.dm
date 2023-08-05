@@ -452,9 +452,9 @@
 	description = "Use poorly understood energies to change your body."
 	prereq_ids = list("adv_biotech", "anomaly_research")
 	design_ids = list("polymorph_belt")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(
-	//	/datum/experiment/scanning/weird_organs = 9000, TODO: add this
+		/datum/experiment/scanning/people/novel_organs = 5000,
 	)
 
 /datum/techweb_node/bio_process
