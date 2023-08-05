@@ -45,7 +45,11 @@ On **2021-01-04** we have changed the way to compile the codebase.
 [Interested in some starting lore?](https://github.com/tgstation/common_core)
 
 ## LICENSE
-With thanks & apologies to [Skyrat Station](https://github.com/Skyrat-SS13/Skyrat-tg) for inspiration & inspiration for our tongue-in-cheek name, [Daedalus Dock](https://github.com/DaedalusDock/daedalusdock) for being goals, and likely many more as we move forward.
+With thanks & apologies to:
+ - [Skyrat Station](https://github.com/Skyrat-SS13/Skyrat-tg) for inspiration & inspiration for our tongue-in-cheek name, as well as a handful of sprites.
+ - [Daedalus Dock](https://github.com/DaedalusDock/daedalusdock) for being goals & reference during implementation of systems like Goonstam.
+ - [Goonstation](https://github.com/goonstation/goonstation) for its kick-ass stamina mechanics and a handful of assets.
+ - [Shiptest](https://github.com/shiptest-ss13/Shiptest) for its beaker revamp, and proof SS13 mechanics can work very well for space exploration instead of stationside drama.
 
 All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
 
