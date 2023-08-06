@@ -150,7 +150,7 @@
 		if(3)
 			intensity_state = "high"
 	///The froth fountain that we are sticking onto the bottle
-	var/mutable_appearance/froth = mutable_appearance(icon, "froth_bottle_[intensity_state]")
+	var/mutable_appearance/froth = mutable_appearance('icons/obj/drinks/drink_effects.dmi', "froth_bottle_[intensity_state]")
 	froth.pixel_x = offset_x
 	froth.pixel_y = offset_y
 	add_overlay(froth)
