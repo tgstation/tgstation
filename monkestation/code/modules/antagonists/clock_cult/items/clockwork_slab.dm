@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	icon_state = "clockwork_slab"
 	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 
 	/// The scripture currently being invoked
 	var/datum/scripture/invoking_scripture
