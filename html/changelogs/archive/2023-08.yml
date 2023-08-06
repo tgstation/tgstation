@@ -148,3 +148,20 @@
   - rscadd: Added a "Reset Imprint" option to the PDA painter.
   - refactor: Refactored PDA imprinting code just a bit.
   - bugfix: PDAs should now properly respond to rigged messages.
+2023-08-06:
+  LT3:
+  - bugfix: Fixed disease outbreak viruses sometimes getting stuck invisible from
+      medHUDs
+  - admin: Added more admin features to create/manange disease outbreaks
+  - admin: Pressing 'cancel' on disease outbreak setup dialogs will actually cancel
+      the event instead of running it with default settings
+  NaakaKo:
+  - bugfix: Areas created with the "land claim" blueprints are no longer hazardous
+      to free golems.
+  - rscadd: Lightgeists under AI control will selflessly heal any wounded creature
+      that they see.
+  - balance: Lightgeists can no longer repair non-organic tissue.
+  - admin: The imaginary friend smite now allows selecting "offer to ghosts" instead
+      of having to perform that poll yourself manually. When offering to ghosts you
+      can also offer for several ghosts to volunteer at the same time.
+  - bugfix: golems that ate plasma are properly immune to ash storms
