@@ -199,3 +199,43 @@
   - rscdel: removed new player status tab Readiness Status
   - rscadd: added a Ready Status Blip on the Collapse Menu button
   - bugfix: golems that ate plasma are properly immune to ash storms
+2023-08-06:
+  Fikou:
+  - bugfix: sniper scope and kinesis should work without widescreen
+  Jacquerel:
+  - bugfix: Goliaths no longer intermittently reset their target and retarget something
+      else.
+  - bugfix: Goliaths can once again step diagonally.
+  JohnFulpWillard:
+  - bugfix: Boss music cuts out when you die.
+  Kryson, MTandi, Zeckle (Mike):
+  - image: New bottles and holy grenade sprites
+  Rhials:
+  - qol: Most of the colored oval-shaped portals faintly glow now. Cool!
+  Senefi:
+  - code_imp: Autowiki module for stock parts
+  - bugfix: Emergency lights no longer runtime when created in nullspace
+  Vekter:
+  - bugfix: Fixed the DNA Infuser's circuit board missing from the techfab and tech
+      storage.
+  Watermelon914:
+  - bugfix: Fixed being unable to purchase regular-priced uplink items if you bought
+      the discounted variant of it.
+  carlarctg:
+  - rscadd: Cursed crewmembers can randomly, extremely rarely, spontaneously combust
+      for no reason.
+  - rscadd: Cursed crewmembers can get zapped by nearby light tubes.
+  - rscadd: Cursed crewmembers can freak out when passing by mirrors.
+  - rscadd: To make up for these, triggering a cursed effect is slightly less than
+      half as likely now when walking around now.
+  necromanceranne:
+  - bugfix: Restores a lost feature, Clarkes and Odysseus mechs once again can pivot
+      on a dime and step in the same button press.
+  - qol: Mechs universally have diagonal movement as to avoid unresponsive movement,
+      as block diagonal movement was having unintended side effects and was actually
+      intended for pivot step mechs.
+  timothymtorres:
+  - rscadd: Add pAI movement freedom when emagged.
+  - qol: The "Malicious Software Detected" button has been appropriately renamed to
+      "Reset Software" for when pAIs are emagged
+  - qol: Add a new law notification popup and flavor texts when pAI is emagged
