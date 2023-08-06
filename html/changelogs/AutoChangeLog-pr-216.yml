@@ -1,5 +1,0 @@
-author: "KittyNoodle"
-delete-after: True
-changes:
-  - balance: "Freon and hydrogen can now be purchased."
-  - bugfix: "Fixes a lot of \"nothing\" in atmos uis."
