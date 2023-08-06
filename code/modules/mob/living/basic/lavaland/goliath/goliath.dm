@@ -11,7 +11,6 @@
 	gender = MALE // Female ones are the bipedal elites
 	speed = 30
 	basic_mob_flags = IMMUNE_TO_FISTS
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 300
 	health = 300
 	friendly_verb_continuous = "wails at"
