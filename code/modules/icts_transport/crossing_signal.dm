@@ -15,6 +15,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
 	anchored = TRUE
 	density = FALSE
+	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	light_color = LIGHT_COLOR_BABY_BLUE
@@ -45,6 +46,12 @@
 	*/
 	var/amber_distance_threshold = AMBER_THRESHOLD_NORMAL
 	var/red_distance_threshold = RED_THRESHOLD_NORMAL
+
+/obj/machinery/icts/crossing_signal/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, null, null, tool) // SHOG TODO - replace null with real icon states
+
+/obj/machinery/icts/crossing_signal/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, null, null, tool)
 
 
 /** Crossing signal subtypes

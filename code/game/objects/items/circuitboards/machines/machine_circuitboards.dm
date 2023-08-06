@@ -1350,6 +1350,14 @@
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/scanning_module = 1)
 
+//Tram
+/obj/item/circuitboard/machine/crossing_signal
+	name = "Crossing Signal"
+	build_path = /obj/machinery/icts/crossing_signal
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+	)
+
 //Misc
 /obj/item/circuitboard/machine/sheetifier
 	name = "Sheet-meister 2000"
