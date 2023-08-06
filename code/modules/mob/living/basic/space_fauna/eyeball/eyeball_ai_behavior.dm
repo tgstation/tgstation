@@ -1,0 +1,96 @@
+/datum/ai_behavior/find_the_blind
+
+/datum/ai_behavior/find_the_blind/perform(seconds_per_tick, datum/ai_controller/controller, blind_key, threshold_key)
+	. = ..()
+
+	var/mob/living_pawn = controller.pawn
+	var/list/blind_list = list()
+	var/eye_damage_threshold = controller.blackboard[threshold_key]
+	if(!eye_damage_threshold)
+		finish_action(controller, FALSE)
+		return
+	for(var/mob/living/carbon/blind in oview(9, living_pawn))
+		var/obj/item/organ/internal/eyes/eyes = blind.get_organ_slot(ORGAN_SLOT_EYES)
+		if(!eyes)
+			continue
+		if(eyes.damage < eye_damage_threshold)
+			continue
+		blind_list += blind
+
+	if(length(blind_list))
+		controller.set_blackboard_key(blind_key, pick(blind_list))
+		finish_action(controller, TRUE)
+		return
+	finish_action(controller, FALSE)
+
+/datum/ai_behavior/heal_eye_damage
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+
+/datum/ai_behavior/heal_eye_damage/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	var/mob/living/carbon/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
+
+/datum/ai_behavior/heal_eye_damage/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	. = ..()
+
+	var/mob/living/carbon/target = controller.blackboard[target_key]
+	var/mob/living/living_pawn = controller.pawn
+
+	if(QDELETED(target))
+		finish_action(controller, FALSE, target_key)
+		return
+	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/datum/callback/callback = CALLBACK(living_pawn, TYPE_PROC_REF(/mob/living/basic/eyeball, heal_eye_damage), target, eyes)
+	callback.Invoke()
+
+	finish_action(controller, TRUE, target_key)
+
+/datum/ai_behavior/heal_eye_damage/finish_action(datum/ai_controller/controller, succeeded, target_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/targeted_mob_ability/glare_at_target
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	required_distance = 0
+
+/datum/ai_behavior/targeted_mob_ability/glare_at_target/setup(datum/ai_controller/controller, ability_key, target_key)
+	. = ..()
+	var/atom/target = controller.blackboard[target_key]
+	if (isnull(target))
+		return FALSE
+
+	var/turf_to_move_towards
+	for(var/turf/turf_in_view in oview(3, target))
+		if(get_dir(target, turf_in_view) != target.dir)
+			continue
+		if(turf_in_view.is_blocked_turf())
+			return FALSE
+		turf_to_move_towards = turf_in_view
+		break
+	if(isnull(turf_to_move_towards))
+		return FALSE
+	set_movement_target(controller, turf_to_move_towards)
+
+/datum/ai_behavior/targeted_mob_ability/glare_at_target/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
+	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
+	var/mob/living/target = controller.blackboard[target_key]
+
+	if(QDELETED(ability) || QDELETED(target))
+		finish_action(controller, FALSE, ability_key, target_key)
+		return
+
+	var/direction_to_compare = get_dir(target, controller.pawn)
+	var/target_direction = target.dir
+	if(direction_to_compare != target_direction)
+		finish_action(controller, FALSE, ability_key, target_key)
+		return
+
+	var/result = ability.InterceptClickOn(controller.pawn, null, target)
+	finish_action(controller, result, ability_key, target_key)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/carrot
+	hunt_cooldown = 2 SECONDS
+	always_reset_target = TRUE
