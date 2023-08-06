@@ -32,7 +32,6 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
-	allow_diagonal_movement = TRUE
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
 	/// List of all things in Ripley's Cargo Compartment

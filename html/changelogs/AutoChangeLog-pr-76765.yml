@@ -1,0 +1,5 @@
+author: "Senefi"
+delete-after: True
+changes:
+  - code_imp: "Autowiki module for stock parts"
+  - bugfix: "Emergency lights no longer runtime when created in nullspace"
