@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - bugfix: "Fix mulebots receiving the wrong message when thier cell is added/removed."
