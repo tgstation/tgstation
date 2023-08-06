@@ -208,4 +208,3 @@
 	armour_penetration = 0
 	embedding = list("embed_chance" = 5, "impact_pain_mult" = 5)
 	w_class = WEIGHT_CLASS_SMALL
-
