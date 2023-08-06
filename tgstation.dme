@@ -4097,6 +4097,7 @@
 #include "code\modules\mob\living\basic\heretic\star_gazer.dm"
 #include "code\modules\mob\living\basic\lavaland\mining.dm"
 #include "code\modules\mob\living\basic\lavaland\basilisk\basilisk.dm"
+#include "code\modules\mob\living\basic\lavaland\basilisk\basilisk_overheat.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\_bileworm.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_actions.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_ai.dm"

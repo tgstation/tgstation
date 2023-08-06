@@ -45,6 +45,9 @@
 		var/obj/projectile/temp/heat_bullet = bullet
 		if (heat_bullet.temperature < 0)
 			return
+		heat_up()
+		return
+
 	if (bullet.damage == 0 || bullet.damage_type != BURN)
 		return
 	heat_up()
@@ -58,10 +61,6 @@
 
 /// We got hit by something hot, go into heat mode
 /mob/living/basic/mining/basilisk/proc/heat_up()
-
-/// Projectile basilisks use when hot
-/obj/projectile/basilisk_hot
-	name = "energy blast"
-	icon_state= "chronobolt"
-	damage = 40
-	damage_type = BRUTE
+	if (stat != CONSCIOUS || has_status_effect(/datum/status_effect/basilisk_overheat))
+		return
+	apply_status_effect(/datum/status_effect/basilisk_overheat)
