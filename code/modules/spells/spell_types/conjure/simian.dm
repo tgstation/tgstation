@@ -7,7 +7,7 @@
 	sound = 'sound/ambience/antag/monkey.ogg'
 
 	school = SCHOOL_CONJURATION
-	cooldown_time = 2 MINUTES
+	cooldown_time = 1.5 MINUTES
 	cooldown_reduction_per_rank = 15 SECONDS
 
 	invocation = "OOGA OOGA OOGA!!!!"

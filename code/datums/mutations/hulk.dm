@@ -257,7 +257,7 @@
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
 
 /datum/mutation/human/hulk/wizardly
-	species_allowed = null //yes skeleton/lizard hulk
+	species_allowed = null //yes skeleton/lizard hulk - note that species that dont have skintone changing (like skellies) get custom handling
 	health_req = 0
 	instability = 0
 	scream_delay = 2.5 SECONDS // halved to be more annoying (spell doesn't last long anyways)
