@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Restores a lost feature, Clarkes and Odysseus mechs once again can pivot on a dime and step in the same button press."
-  - qol: "Mechs universally have diagonal movement as to avoid unresponsive movement, as block diagonal movement was having unintended side effects and was actually intended for pivot step mechs."
