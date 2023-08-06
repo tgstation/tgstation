@@ -563,8 +563,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 //monkestation edit start
 	if(GLOB.clock_ark) //might bump this up to need the ark to be active in some form, the way this is done DOES mean they can summon if clock cult has won, lets see the gods fight
-		to_chat(invoker, span_bigbrass("A vile light prvents you from saying the invocation! \
-										It looks like you will have to destroy whatever is causing this before Nar'sie may be summoned."))
+		for(var/invoker in invokers)
+			to_chat(invoker, span_bigbrass("A vile light prvents you from saying the invocation! \
+											It looks like you will have to destroy whatever is causing this before Nar'sie may be summoned."))
 		return
 //monkestation edit end
 
@@ -1007,7 +1008,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)
-	empulse(T, 0.42*(intensity), 1)
+	if(!GLOB.clock_ark) //monkestation edit: this does a little too much damage to the clock cult due to killing their cam consoles with no counterplay
+		empulse(T, 0.42*(intensity), 1)
 
 	var/list/images = list()
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
