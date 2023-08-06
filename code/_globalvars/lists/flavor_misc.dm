@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY(anime_top_list)
 GLOBAL_LIST_EMPTY(anime_middle_list)
 GLOBAL_LIST_EMPTY(anime_bottom_list)
 GLOBAL_LIST_EMPTY(arachnid_appendages_list)
+GLOBAL_LIST_EMPTY(arachnid_chelicerae_list)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",

@@ -105,6 +105,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list)
 	if(!GLOB.arachnid_appendages_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list)
+	if(!GLOB.arachnid_chelicerae_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list)
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
@@ -133,6 +135,7 @@
 		"anime_middle" = pick(GLOB.anime_middle_list),
 		"anime_bottom" = pick(GLOB.anime_bottom_list),
 		"arachnid_appendages" = pick(GLOB.arachnid_appendages_list),
+		"arachnid_chelicerae" = pick(GLOB.arachnid_chelicerae_list),
 		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 	))
 

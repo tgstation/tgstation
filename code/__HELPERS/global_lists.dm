@@ -42,6 +42,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
