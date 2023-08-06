@@ -19,7 +19,7 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT|AI_BEHAVIOR_REQUIRE_REACH
 
 
-/datum/ai_behavior/relay_message/setup(datum/ai_controller/controller, target_key, delivery_key)
+/datum/ai_behavior/relay_message/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/target = controller.blackboard[target_key]
 	// It stopped existing
@@ -28,7 +28,7 @@
 	set_movement_target(controller, target)
 
 
-/datum/ai_behavior/relay_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key, delivery_key)
+/datum/ai_behavior/relay_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
 
 	var/mob/living/target = controller.blackboard[target_key]
