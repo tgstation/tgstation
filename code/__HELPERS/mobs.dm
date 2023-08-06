@@ -185,6 +185,7 @@ GLOBAL_LIST_INIT(skin_tones, sort_list(list(
 	"mixed1",
 	"mixed2",
 	"mixed3",
+	"mixed4",
 	"african1",
 	"african2"
 	)))

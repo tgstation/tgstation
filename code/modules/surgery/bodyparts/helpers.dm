@@ -206,7 +206,7 @@
 		if("mixed3")
 			. = "#725547"
 		if("mixed4")
-			. = "#8b7a73"
+			. = "#866e63"
 		if("african1")
 			. = "#754523"
 		if("african2")
