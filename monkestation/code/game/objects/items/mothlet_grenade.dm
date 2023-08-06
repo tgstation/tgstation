@@ -1,6 +1,6 @@
 /obj/item/grenade/frag/mothlet //Grenade
 	name = "mothlet grenade"
-	desc = "CAUTION : DUBIOUS LITTLE CREATURES INSIDE."
+	desc = "CAUTION: DUBIOUS LITTLE CREATURES INSIDE."
 	icon = 'monkestation/icons/obj/mothletgrenade.dmi'
 	icon_state = "fragmoth"
 	shrapnel_type = /obj/projectile/bullet/shrapnel/mothlet
