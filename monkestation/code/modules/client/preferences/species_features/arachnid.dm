@@ -26,7 +26,7 @@
 	return possible_values_for_sprite_accessory_list_for_body_part(
 		GLOB.arachnid_chelicerae_list,
 		"arachnid_chelicerae",
-		list("FRONT"),
+		list("BEHIND", "FRONT"),
 	)
 
 /datum/preference/choiced/arachnid_chelicerae/apply_to_human(mob/living/carbon/human/target, value)

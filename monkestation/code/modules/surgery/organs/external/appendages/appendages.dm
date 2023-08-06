@@ -1,8 +1,6 @@
 /obj/item/organ/external/arachnid_appendages
 	name = "arachnid appendages"
 	desc = "Extra legs that go on your back, don't actually work for walking sadly."
-	//I don't even know if these work
-	//icon = 'monkestation/icons/mob/species/arachnid/arachnid_appendages.dmi'
 	icon_state = "antennae"
 
 	preference = "feature_arachnid_appendages"
