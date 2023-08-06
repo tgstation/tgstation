@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - bugfix: "Fixed being unable to purchase regular-priced uplink items if you bought the discounted variant of it."
