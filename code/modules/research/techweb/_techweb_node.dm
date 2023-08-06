@@ -36,6 +36,8 @@
 	var/list/required_experiments = list()
 	/// If completed, these experiments give a specific point amount discount to the node.area
 	var/list/discount_experiments = list()
+	/// A list of experiments unlocked by this node, not tied to node requirements or discounts.
+	var/list/unlock_experiments
 	/// Whether or not this node should show on the wiki
 	var/show_on_wiki = TRUE
 
@@ -88,7 +90,7 @@
 			if(actual_costs[booster])
 				var/delta = max(0, actual_costs[booster] - 250)
 				actual_costs[booster] -= min(boostlist[booster], delta)
-	
+
 	return actual_costs
 
 /datum/techweb_node/proc/price_display(datum/techweb/TN)

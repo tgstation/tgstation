@@ -128,6 +128,7 @@
 		"voice_analyzer",
 		"watering_can",
 	)
+	unlock_experiments = list(/datum/experiment/scanning/fish)
 
 /datum/techweb_node/mmi
 	id = "mmi"

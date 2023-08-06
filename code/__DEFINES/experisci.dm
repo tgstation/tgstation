@@ -26,6 +26,8 @@
 
 /// Destructive experiments which will destroy the sample
 #define EXPERIMENT_TRAIT_DESTRUCTIVE (1 << 0)
+/// Used by scanning experiments: instead of storing refs or be a number, the list for scanned atoms is used as typecache
+#define EXPERIMENT_TRAIT_TYPECACHE (1 << 1)
 
 /// Will always attempt to action every experiment eligible with a single input,
 /// no experiment selection required
@@ -33,3 +35,7 @@
 /// Experiment handlers with this flag will not automatically connect to the first techweb they find
 /// on initialization
 #define EXPERIMENT_CONFIG_NO_AUTOCONNECT (1 << 1)
+/// Experiment handlers with this flag won't pester the user of objects not pertinent to the test or if no experiment is selected
+#define EXPERIMENT_CONFIG_SILENT_FAIL (1 << 2)
+/// Experiment handlers with this flag will bypass any delay when trying to scan something
+#define EXPERIMENT_CONFIG_IMMEDIATE_ACTION (1 << 3)

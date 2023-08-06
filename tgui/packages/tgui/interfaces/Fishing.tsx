@@ -20,6 +20,7 @@ type Fish = {
   height: number;
   velocity: number;
   target: number | null;
+  opacity: number;
 };
 
 type FishAI = 'dumb' | 'zippy' | 'slow';
@@ -35,8 +36,10 @@ type FishingMinigameProps = {
   fish_ai: FishAI;
   special_rules: SpecialRule[];
   background: string;
-  win: (perfect: boolean) => void;
+  fish_icon: string;
+  win: () => void;
   lose: () => void;
+  send_sound: (sound: string) => void;
 };
 
 type FishingMinigameState = {
@@ -51,7 +54,16 @@ type SpecialRule =
   | 'heavy'
   | 'bidirectional'
   | 'no_escape'
-  | 'lubed';
+  | 'lubed'
+  | 'antigrav'
+  | 'stealth';
+
+enum ActiveEffect {
+  HasNoEffect,
+  onCooldown,
+  AntiGrav,
+  Stealth,
+}
 
 class FishingMinigame extends Component<
   FishingMinigameProps,
@@ -60,7 +72,6 @@ class FishingMinigame extends Component<
   animation_id: number;
   last_frame: number;
   reeling: ReelingState = ReelingState.Idle;
-  perfect: boolean = true;
   area_height: number = 1000;
   state: FishingMinigameState;
   currentVelocityLimit: number = 200;
@@ -74,6 +85,10 @@ class FishingMinigame extends Component<
   accel_up_coeff: number = 1;
   bidirectional: boolean = false;
   no_escape: boolean = false;
+  effect: ActiveEffect = ActiveEffect.onCooldown;
+  effect_duration: number = 0;
+  can_antigrav: boolean = false;
+  can_stealth: boolean = false;
 
   baseLongJumpChancePerSecond: number = 0.0075;
   baseShortJumpChancePerSecond: number = 0.255;
@@ -96,6 +111,16 @@ class FishingMinigame extends Component<
     this.bidirectional = props.special_rules.includes('bidirectional');
     this.no_escape = props.special_rules.includes('no_escape');
     this.accel_up_coeff = props.special_rules.includes('lubed') ? 1.4 : 1;
+
+    this.can_antigrav = props.special_rules.includes('antigrav');
+    this.can_stealth = props.special_rules.includes('stealth');
+    if (!this.can_antigrav && !this.can_stealth) {
+      this.effect = ActiveEffect.HasNoEffect;
+    }
+    // Give the player a moment to prepare for active minigame effects
+    else {
+      this.effect_duration = randomNumber(5, 9) * 1000;
+    }
 
     switch (props.fish_ai) {
       case 'dumb':
@@ -126,6 +151,7 @@ class FishingMinigame extends Component<
         height: fishHeight,
         velocity: this.idleVelocity,
         target: null,
+        opacity: 1,
       },
     };
 
@@ -166,6 +192,9 @@ class FishingMinigame extends Component<
     const last = this.last_frame === undefined ? timestamp : this.last_frame;
     const delta = timestamp - last;
     let newState: FishingMinigameState = { ...this.state };
+    if (this.effect !== ActiveEffect.HasNoEffect) {
+      this.updateEffects(delta);
+    }
     newState = this.moveFish(newState, delta, timestamp);
     newState = this.moveBait(newState, delta);
     newState = this.updateCompletion(newState, delta);
@@ -173,6 +202,53 @@ class FishingMinigame extends Component<
     // wait for next frame
     this.last_frame = timestamp;
     this.animation_id = window.requestAnimationFrame(this.updateAnimation);
+  }
+
+  updateEffects(delta: number) {
+    this.effect_duration -= delta;
+    if (this.effect_duration > 0) {
+      return;
+    }
+    let new_effect;
+    if (this.effect !== ActiveEffect.onCooldown) {
+      new_effect = ActiveEffect.onCooldown;
+    } else {
+      let possibleEffects: number[] = [];
+      if (this.can_antigrav) {
+        possibleEffects.push(ActiveEffect.AntiGrav);
+      }
+      if (this.can_stealth) {
+        possibleEffects.push(ActiveEffect.Stealth);
+      }
+      new_effect = randomPick(possibleEffects);
+    }
+    let sound = '';
+	const difficulty_mult = (1 + this.props.difficulty/100);
+    switch (new_effect) {
+      case ActiveEffect.AntiGrav:
+        this.effect_duration = randomNumber(5, 7) * 1000 * difficulty_mult;
+        sound = 'antigrav';
+        break;
+      case ActiveEffect.Stealth:
+        this.effect_duration = randomNumber(4, 5) * 1000 * difficulty_mult;
+        sound = 'stealth';
+        break;
+      case ActiveEffect.onCooldown:
+        switch (this.effect) {
+          case ActiveEffect.AntiGrav:
+            this.effect_duration = randomNumber(7, 11) * 1000;
+            sound = 'antigrav_end';
+            break;
+          case ActiveEffect.Stealth:
+            this.effect_duration = randomNumber(8, 12) * 1000;
+            sound = 'stealth';
+            break;
+        }
+    }
+    this.effect = new_effect;
+    if (sound) {
+      this.props.send_sound(sound);
+    }
   }
 
   moveFish(
@@ -282,6 +358,18 @@ class FishingMinigame extends Component<
       nextFishState.position = this.area_height - nextFishState.height;
     }
 
+    if (this.effect === ActiveEffect.AntiGrav && nextFishState.opacity > 0) {
+      nextFishState.opacity = Math.max(
+        nextFishState.opacity - 0.7 * seconds,
+        0
+      );
+    } else if (nextFishState.opacity < 1) {
+      nextFishState.opacity = Math.min(
+        nextFishState.opacity + 0.7 * seconds,
+        1
+      );
+    }
+
     const newState: FishingMinigameState = {
       ...currentState,
       fish: nextFishState,
@@ -333,11 +421,12 @@ class FishingMinigame extends Component<
         : this.reeling === ReelingState.ReelingDown
           ? -acceleration_up
           : acceleration_down;
-    // Slowdown both ways when on fish
+    // Slowdown both ways when on fish, invert if antigrav is on
     const velocity_change =
       acceleration *
       seconds *
-      (this.fishOnBait(fish, bait) ? on_point_coeff : 1);
+      (this.fishOnBait(fish, bait) ? on_point_coeff : 1) *
+      (this.effect === ActiveEffect.AntiGrav ? -1 : 1);
 
     if (this.bidirectional && this.reeling === ReelingState.Idle) {
       if (newVelocity < 0) {
@@ -376,7 +465,6 @@ class FishingMinigame extends Component<
       completion_delta = seconds * completion_gain_per_second;
     } else {
       completion_delta = seconds * completion_lost_per_second;
-      this.perfect = false;
     }
     const rawCompletion = currentState.completion + completion_delta;
     const newCompletion = clamp(rawCompletion, 0, 100);
@@ -391,7 +479,7 @@ class FishingMinigame extends Component<
       this.props.lose();
       dispatch(backendSuspendStart());
     } else if (newCompletion >= 100) {
-      this.props.win(this.perfect);
+      this.props.win();
       dispatch(backendSuspendStart());
     }
 
@@ -469,7 +557,7 @@ class FishingMinigame extends Component<
                 top: `${posToStyle(fish.position)}%`,
                 height: `${posToStyle(fish.height)}%`,
               }}>
-              <Icon name="fish" />
+              <Icon name={this.props.fish_icon} opacity={fish.opacity} />
             </div>
           </div>
         </div>
@@ -488,6 +576,7 @@ type FishingData = {
   fish_ai: FishAI;
   special_effects: SpecialRule[];
   background_image: string;
+  fish_icon: string;
 };
 
 export const Fishing = (props, context) => {
@@ -500,8 +589,10 @@ export const Fishing = (props, context) => {
           fish_ai={data.fish_ai}
           special_rules={data.special_effects}
           background={data.background_image}
-          win={(perfect) => act('win', { perfect: perfect })}
+		  fish_icon={data.fish_icon}
+          win={() => act('win')}
           lose={() => act('lose')}
+          send_sound={(sound) => act('send_sound', { sound: sound })}
         />
       </Window.Content>
     </Window>

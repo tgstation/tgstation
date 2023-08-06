@@ -46,6 +46,18 @@
 	TEST_ASSERT(!(/datum/fish_trait/dummy in evolve_jr.fish_traits), "The test aquarium's evolution fish's offspring still has the old trait that ought to be removed by the evolution datum")
 	TEST_ASSERT(/datum/fish_trait/dummy/two in evolve_jr.fish_traits, "The test aquarium's evolution fish's offspring doesn't have the evolution trait")
 
+/datum/unit_test/fish_scanning
+
+/datum/unit_test/fish_scanning/Run()
+	var/scannable_fishes = 0
+	for(var/obj/item/fish/fish_prototype as anything in subtypesof(/obj/item/fish))
+		if(initial(fish_prototype.experisci_scannable))
+			scannable_fishes++
+	for(var/datum/experiment/scanning/fish/fish_scan as anything in typesof(/datum/experiment/scanning/fish))
+		fish_scan = new fish_scan
+		if(fish_scan.required_atoms[1] > scannable_fish)
+			TEST_FAIL("[fish_scan.type] has requirements higher than the number of scannable fish species in the game")
+
 ///dummy fish item used for the tests, as well with related subtypes and datums.
 /obj/item/fish/testdummy
 	grind_results = list()

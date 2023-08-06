@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	. = ..()
 	// Wary fish require transparent line or they're harder
 	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_CLOAKED))
-		.[ADDITIVE_FISHING_MOD] = -FISH_TRAIT_MINOR_DIFFICULTY_BOOST
+		.[ADDITIVE_FISHING_MOD] += FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/shiny_lover
 	name = "Shiny Lover"
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	. = ..()
 	// These fish are easier to catch with shiny lure
 	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
-		.[ADDITIVE_FISHING_MOD] = FISH_TRAIT_MINOR_DIFFICULTY_BOOST
+		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/picky_eater
 	name = "Picky Eater"
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/necrophage
 	name = "Necrophage"
-	catalog_description = "This fish will eat the carcasses of dead fishes when hungry."
+	catalog_description = "This fish will eat carcasses of dead fish when hungry."
 	incompatible_traits = list(/datum/fish_trait/vegan)
 
 /datum/fish_trait/necrophage/apply_to_fish(obj/item/fish/fish)
@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding >= source.feeding_frequency || !isaquarium(source.loc))
+	if(!source.is_hungry() || !isaquarium(source.loc))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding >= source.feeding_frequency || !isaquarium(source.loc))
+	if(!source.is_hungry() || !isaquarium(source.loc))
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
 	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	fish.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
 
 /datum/fish_trait/lubed/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman)
-	return list(FISHING_MINIGAME_RULE_LUBED_FISH)
+	return list(FISHING_MINIGAME_RULE_LUBED)
 
 /datum/fish_trait/amphibious
 	name = "Amphibious"
@@ -336,3 +336,25 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
+
+/datum/fish_trait/mixotroph
+	name = "Mixotroph"
+	inheritability = 75
+	diff_traits_inheritability = 25
+	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
+	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
+
+/datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
+
+/datum/fish_trait/antigrav
+	name = "Anti-Gravity"
+	inheritability = 75
+	diff_traits_inheritability = 25
+	catalog_description = "This fish will invert the gravity of the bait at random, and may fall upward outside after being fished."
+
+/datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman)
+	return list(FISHING_MINIGAME_RULE_ANTIGRAV)
+
+/datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)

@@ -11,7 +11,8 @@
 	desc = "Simple fishing line."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
-	var/fishing_line_traits = NONE
+	///A list of traits that this fishing line has, checked by fish traits and the minigame.
+	var/list/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = "#808080"
 
@@ -19,21 +20,21 @@
 	name = "reinforced fishing line reel"
 	desc = "Essential for fishing in extreme environments."
 	icon_state = "reel_green"
-	fishing_line_traits = FISHING_LINE_REINFORCED
+	fishing_line_traits = list(FISHING_LINE_REINFORCED)
 	line_color = "#2b9c2b"
 
 /obj/item/fishing_line/cloaked
 	name = "cloaked fishing line reel"
 	desc = "Even harder to notice than the common variety."
 	icon_state = "reel_white"
-	fishing_line_traits = FISHING_LINE_CLOAKED
+	fishing_line_traits = list(FISHING_LINE_CLOAKED)
 	line_color = "#82cfdd"
 
 /obj/item/fishing_line/bouncy
 	name = "flexible fishing line reel"
 	desc = "This specialized line is much harder to snap."
 	icon_state = "reel_red"
-	fishing_line_traits = FISHING_LINE_BOUNCY
+	fishing_line_traits = list(FISHING_MINIGAME_RULE_LIMIT_LOSS)
 	line_color = "#99313f"
 
 /obj/item/fishing_line/sinew
@@ -59,11 +60,12 @@
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
 
-	var/fishing_hook_traits = NONE
+	/// A list of traits that this fishing hook has, checked by fish traits and the minigame
+	var/list/fishing_hook_traits
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
 	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
-	var/chasm_detritus_type = /obj/item/chasm_detritus
+	var/chasm_detritus_type = /datum/chasm_detritus
 
 
 /**
@@ -100,7 +102,7 @@
 	desc = "Won't make catching fish any easier, but it might help with looking for other things."
 	icon_state = "treasure"
 	rod_overlay_icon_state = "hook_treasure_overlay"
-	chasm_detritus_type = /obj/item/chasm_detritus/restricted/objects
+	chasm_detritus_type = /datum/chasm_detritus/restricted/objects
 
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
@@ -120,7 +122,7 @@
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"
 	icon_state = "weighted"
-	fishing_hook_traits = FISHING_HOOK_WEIGHTED
+	fishing_hook_traits = list(FISHING_MINIGAME_RULE_WEIGHTED_BAIT)
 	rod_overlay_icon_state = "hook_weighted_overlay"
 
 
@@ -129,7 +131,7 @@
 	desc = "An unwieldy hook meant to help with the rescue of those that have fallen down in chasms. You can tell there's no way you'll catch any fish with this, and that it won't be of any use outside of chasms."
 	icon_state = "rescue"
 	rod_overlay_icon_state = "hook_rescue_overlay"
-	chasm_detritus_type = /obj/item/chasm_detritus/restricted/bodies
+	chasm_detritus_type = /datum/chasm_detritus/restricted/bodies
 
 
 // This hook can only fish in chasms.
@@ -164,7 +166,7 @@
 	name = "gyro-stabilized hook"
 	desc = "A quirky hook that grants the user a better control of the tool, allowing them to move the hook both and up and down when reeling in, otherwise keeping it stabilized."
 	icon_state = "gyro"
-	fishing_hook_traits = FISHING_HOOK_BIDIRECTIONAL
+	fishing_hook_traits = list(FISHING_MINIGAME_RULE_BIDIRECTIONAL)
 	rod_overlay_icon_state = "hook_gyro_overlay"
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
@@ -175,7 +177,7 @@
 	name = "jawed hook"
 	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever is caught by its jaws."
 	icon_state = "jaws"
-	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_ENSNARE|FISHING_HOOK_KILL
+	fishing_hook_traits = list(FISHING_MINIGAME_RULE_NO_ESCAPE, FISHING_MINIGAME_RULE_LIMIT_LOSS, FISHING_MINIGAME_RULE_KILL)
 	rod_overlay_icon_state = "hook_jaws_overlay"
 
 /obj/item/storage/toolbox/fishing

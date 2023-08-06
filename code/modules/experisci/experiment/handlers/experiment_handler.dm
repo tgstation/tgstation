@@ -38,10 +38,13 @@
 	disallowed_traits = null,
 	config_flags = null,
 	datum/callback/start_experiment_callback = null,
+	list/experiment_signals
 )
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+	if(!experiment_signals)
+		CRASH("[type] added to [parent.type] with an unset 'experiment_signals' argument")
 
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
@@ -49,13 +52,8 @@
 	src.config_flags = config_flags
 	src.start_experiment_callback = start_experiment_callback
 
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(try_run_handheld_experiment))
-		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(ignored_handheld_experiment_attempt))
-	if(istype(parent, /obj/machinery/destructive_scanner))
-		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, PROC_REF(try_run_destructive_experiment))
-	if(istype(parent, /obj/machinery/computer/operating))
-		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, PROC_REF(try_run_dissection_experiment))
+	for(var/signal in experiment_signals)
+		RegisterSignal(parent, signal, experiment_signals[signal])
 
 	// Determine UI display mode
 	switch(config_mode)
@@ -88,9 +86,9 @@
  */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
-	if (!should_run_handheld_experiment(source, target, user, params))
+	if (!should_run_handheld_experiment(source, target, user))
 		return
-	INVOKE_ASYNC(src, PROC_REF(try_run_handheld_experiment_async), source, target, user, params)
+	INVOKE_ASYNC(src, PROC_REF(try_run_handheld_experiment_async), source, target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /**
@@ -101,7 +99,7 @@
 	if (!proximity_flag)
 		return
 	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
-	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
+	if ((selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || config_flags & EXPERIMENT_CONFIG_SILENT_FAIL)
 		return .
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
@@ -110,7 +108,7 @@
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
  */
-/datum/component/experiment_handler/proc/should_run_handheld_experiment(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/should_run_handheld_experiment(datum/source, atom/target, mob/user)
 	// Check that there is actually an experiment selected
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
 		return
@@ -130,16 +128,17 @@
 /**
  * This proc exists because Jared Fogle really likes async
  */
-/datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user)
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
-		to_chat(user, span_notice("You do not have an experiment selected!"))
+		if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
+			to_chat(user, span_notice("You do not have an experiment selected!"))
 		return
-	if(!do_after(user, 1 SECONDS, target = target))
+	if(!(config_flags & EXPERIMENT_CONFIG_IMMEDIATE_ACTION) && !do_after(user, 1 SECONDS, target = target))
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
 		to_chat(user, span_notice("You scan [target]."))
-	else
+	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
@@ -151,8 +150,9 @@
 	SIGNAL_HANDLER
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
-		playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(our_scanner, span_notice("No experiment selected!"))
+		if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
+			playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
+			to_chat(our_scanner, span_notice("No experiment selected!"))
 		return
 	var/successful_scan
 	for(var/scan_target in scanned_atoms)
@@ -162,7 +162,7 @@
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
 		to_chat(our_scanner, span_notice("The scan succeeds."))
-	else
+	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
 
@@ -265,6 +265,7 @@
 /datum/component/experiment_handler/proc/link_techweb(datum/techweb/new_web)
 	if (new_web == linked_web)
 		return
+	selected_experiment?.on_unselected(src)
 	selected_experiment = null
 	linked_web = new_web
 
@@ -272,6 +273,7 @@
  * Unlinks this handler from the selected techweb
  */
 /datum/component/experiment_handler/proc/unlink_techweb()
+	selected_experiment?.on_unselected(src)
 	selected_experiment = null
 	linked_web = null
 
@@ -284,11 +286,13 @@
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
 	if (experiment && can_select_experiment(experiment))
 		selected_experiment = experiment
+		selected_experiment.on_selected(src)
 
 /**
  * Unlinks this handler from the selected experiment
  */
 /datum/component/experiment_handler/proc/unlink_experiment()
+	selected_experiment?.on_unselected(src)
 	selected_experiment = null
 
 /**

@@ -32,6 +32,8 @@
 	var/obj/effect/fishing_lure/lure
 	/// Background image from /datum/asset/simple/fishing_minigame
 	var/background = "default"
+	/// If defined, the fish icon will be overridden by this, ever if the user has the TRAIT_REVEAL_FISH trait
+	var/fish_icon_override
 
 	/// Fishing line visual
 	var/datum/beam/fishing_line
@@ -59,20 +61,8 @@
 			var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
 			special_effects += trait.minigame_mod(rod, user)
 	/// Enable special parameters
-	if(rod.line)
-		if(rod.line.fishing_line_traits & FISHING_LINE_BOUNCY)
-			special_effects |= FISHING_MINIGAME_RULE_LIMIT_LOSS
-	if(rod.hook)
-		if(rod.hook.fishing_hook_traits & FISHING_HOOK_WEIGHTED)
-			special_effects |= FISHING_MINIGAME_RULE_WEIGHTED_BAIT
-		if(rod.hook.fishing_hook_traits & FISHING_HOOK_BIDIRECTIONAL)
-			special_effects |= FISHING_MINIGAME_RULE_BIDIRECTIONAL
-		if(rod.hook.fishing_hook_traits & FISHING_HOOK_NO_ESCAPE)
-			special_effects |= FISHING_MINIGAME_RULE_NO_ESCAPE
-		if(rod.hook.fishing_hook_traits & FISHING_HOOK_ENSNARE)
-			special_effects |= FISHING_MINIGAME_RULE_LIMIT_LOSS
-		if(rod.hook.fishing_hook_traits & FISHING_HOOK_KILL)
-			special_effects |= FISHING_MINIGAME_RULE_KILL
+	special_effects |= rod.line?.fishing_line_traits
+	special_effects |= rod.hook?.fishing_hook_traits
 
 	if((FISHING_MINIGAME_RULE_KILL in special_effects) && ispath(reward_path,/obj/item/fish))
 		RegisterSignal(user, COMSIG_MOB_FISHING_REWARD_DISPENSED, PROC_REF(hurt_fish))
@@ -163,7 +153,7 @@
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(lure, 'sound/effects/bigsplash.ogg', 100)
-	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win, perfect_win)
+	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win)
 	qdel(src)
 
 /datum/fishing_challenge/proc/start_baiting_phase()
@@ -239,6 +229,13 @@
 	.["fish_ai"] = fish_ai
 	.["special_effects"] = special_effects
 	.["background_image"] = background
+	var/fish_icon
+	var/reveal_fish = HAS_TRAIT(user, TRAIT_REVEAL_FISH) || HAS_TRAIT(user.mind, TRAIT_REVEAL_FISH)
+	if(reveal_fish && !fish_icon_override && reward_path != FISHING_DUD)
+		fish_icon = GLOB.specific_fish_icons[reward_path] || FA_ICON_QUESTION
+	else
+		fish_icon = fish_icon_override || FA_ICON_FISH
+	.["fish_icon"] = fish_icon
 
 /datum/fishing_challenge/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/simple/fishing_minigame)) //preset screens
@@ -260,10 +257,21 @@
 
 	switch(action)
 		if("win")
-			complete(win = TRUE, perfect_win = params["perfect"])
+			complete(win = TRUE)
 		if("lose")
 			send_alert("it got away")
 			complete(win = FALSE)
+		if("send_sound")
+			var/sound/sound
+			switch(params["sound"])
+				if("antigrav")
+					sound = sound('sound/effects/empulse.ogg')
+				if("antigrav_end")
+					sound = sound('sound/effects/empulse.ogg')
+					sound.frequency = -1
+				if("stealth")
+					sound = sound('sound/effects/space_wind.ogg')
+			SEND_SOUND(user, sound)
 
 /// The visual that appears over the fishing spot
 /obj/effect/fishing_lure

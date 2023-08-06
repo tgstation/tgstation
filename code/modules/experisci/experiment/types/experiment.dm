@@ -22,11 +22,16 @@
 	/// A textual hint shown on the UI in a tooltip to help a user determine how to perform
 	/// the experiment
 	var/performance_hint
+	/**
+	 * If set, these techweb points will be rewarded for completing the experiment.
+	 * Useful for those loose ends not tied to any specific node discount or requirement.
+	 */
+	var/list/points_reward
 
 /**
  * Performs any necessary initialization of tags and other variables
  */
-/datum/experiment/New()
+/datum/experiment/New(datum/techweb/techweb)
 	if (traits & EXPERIMENT_TRAIT_DESTRUCTIVE)
 		exp_tag = "Destructive [exp_tag]"
 
@@ -59,6 +64,14 @@
  */
 /datum/experiment/proc/actionable(...)
 	return !is_complete()
+
+///Called when the experiment is selected by an experiment handler, for specific signals and the such.
+/datum/experiment/proc/on_selected(datum/component/experiment_handler/experiment_handler)
+	return
+
+///Called when the opposite happens.
+/datum/experiment/proc/on_unselected(datum/component/experiment_handler/experiment_handler)
+	return
 
 /**
  * Proc that tries to perform the experiment, and then checks if its completed.

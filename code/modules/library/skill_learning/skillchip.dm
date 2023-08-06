@@ -489,4 +489,13 @@
 	activate_message = span_notice("You recall learning from your grandmother how they baked their cookies with love.")
 	deactivate_message = span_notice("You forget all memories imparted upon you by your grandmother. Were they even your real grandma?")
 
+/obj/item/skillchip/master_angler
+	name = "Mast-Angl-Er skillchip"
+	auto_traits = list(TRAIT_REVEAL_FISH)
+	skill_name = "Reveal Fish Type"
+	skill_description = "Grants the user the fishing knowledge to take more than a wild guess of whatever they're trying to catch."
+	skill_icon = "fish"
+	activate_message = span_notice("Memories of sunbaked, middle-aged men flood your mind. Steel-nerved, they wait for fish to catch their baits.")
+	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
+
 #undef SKILLCHIP_CATEGORY_GENERAL

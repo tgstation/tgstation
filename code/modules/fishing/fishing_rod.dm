@@ -172,6 +172,7 @@
 	currently_hooked_item = target_atom
 	hooked_item_fishing_line = create_fishing_line(target_atom)
 	RegisterSignal(hooked_item_fishing_line, COMSIG_FISHING_LINE_SNAPPED, PROC_REF(clear_hooked_item))
+	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
@@ -250,16 +251,15 @@
 	var/line_color = line?.line_color || default_line_color
 	/// Line part by the rod, always visible
 	var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
-	reel_appearance.color = line_color;
+	reel_appearance.color = line_color
 	. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)
 		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay")
-		line_overlay.color = line_color;
+		line_overlay.color = line_color
 		. += line_overlay
-		var/mutable_appearance/hook_overlay = mutable_appearance(icon, hook?.rod_overlay_icon_state || "hook_overlay")
-		. += hook_overlay
+		. += hook?.rod_overlay_icon_state || "hook_overlay"
 
 	if(bait)
 		var/bait_state = "worm_overlay" //default to worm overlay for anything without specific one
@@ -494,7 +494,7 @@
 	name = "master fishing rod"
 	desc = "The mythical rod of a lost fisher king. Said to be imbued with un-paralleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
 	difficulty_modifier = -10
-	ui_description = "This rods makes fishing easy even for an absolute beginner."
+	ui_description = "This rod makes fishing easy even for an absolute beginner."
 	icon_state = "fishing_rod_master"
 	reel_overlay = "reel_master"
 	active_force = 13 //It's that sturdy
@@ -502,12 +502,23 @@
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
 	desc = "An embedded universal constructor along with micro-fusion generator makes this marvel of technology never run out of bait. Interstellar treaties prevent using it outside of recreational fishing. And you can fish with this. "
-	ui_description = "This rod has an infinite supply of synthetic bait."
+	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
+
+	var/static/list/fishing_signals = list(
+		COMSIG_FISHING_ROD_HOOKED_ITEM = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+		COMSIG_FISHING_ROD_CAUGHT_FISH = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
+	)
+	AddComponent(/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/scanning/fish), \
+		config_flags = EXPERIMENT_CONFIG_SILENT_FAIL|EXPERIMENT_CONFIG_IMMEDIATE_ACTION, \
+		experiment_signals = fishing_signals, \
+	)
+
 	var/obj/item/food/bait/doughball/synthetic/infinite_supply_of_bait = new(src)
 	bait = infinite_supply_of_bait
 	update_icon()

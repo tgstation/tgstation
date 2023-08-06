@@ -1,28 +1,46 @@
-/// Keyed list of preset sources to configuration instance
-GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
+GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_source, list()))
 
-/// These are shared between their spots
-/proc/init_fishing_configurations()
-	. = list()
+/**
+ * When adding new fishable rewards to a table/counts, you can specify an icon to show in place of the
+ * generic fish icon in the minigame UI should the user have the TRAIT_REVEAL_FISH trait, by adding it to
+ * this list.
+ *
+ * A lot of the icons here may be a tad inaccurate, but since we're limited to the free font awesome icons we
+ * have access to, we got to make do.
+ */
+GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
+		/mob/living/basic/carp = FA_ICON_FISH,
+		/mob/living/basic/mining = FA_ICON_TRIANGLE_EXCLAMATION,
+		/obj/effect/decal/remains = FA_ICON_SKULL_CROSSBONES,
+		/obj/effect/mob_spawn/corpse = FA_ICON_SKULL_CROSSBONES,
+		/obj/item/coin = FA_ICON_DOLLAR,
+		/obj/item/fish = FA_ICON_FISH,
+		/obj/item/fish/armorfish = FA_ICON_BUG,
+		/obj/item/fish/boned = FA_ICON_BONE,
+		/obj/item/fish/catfish = FA_ICON_CAT,
+		/obj/item/fish/chasm_crab = FA_ICON_BUG,
+		/obj/item/fish/holo/crab = FA_ICON_BUG,
+		/obj/item/fish/holo/puffer = FA_ICON_BOWLING_BALL,
+		/obj/item/fish/mastodon = FA_ICON_BONE,
+		/obj/item/fish/pufferfish = FA_ICON_BOWLING_BALL,
+		/obj/item/fish/slimefish = FA_ICON_POO,
+		/obj/item/fish/sludgefish = FA_ICON_POOP,
+		/obj/item/storage/wallet = FA_ICON_WALLET,
+		/obj/item/stack/sheet/bone = FA_ICON_BONE,
+		/obj/item/stack/sheet/mineral = FA_ICON_GEM,
+		/obj/item/stack/ore = FA_ICON_GEM,
+		/obj/structure/closet/crate = FA_ICON_BOX,
+	)))
 
-	var/datum/fish_source/ocean/beach/beach_preset = new
-	.[FISHING_SPOT_PRESET_BEACH] = beach_preset
-
-	var/datum/fish_source/lavaland/lava_preset = new
-	.[FISHING_SPOT_PRESET_LAVALAND_LAVA] = lava_preset
-
-	var/datum/fish_source/lavaland/icemoon/plasma_preset = new
-	.[FISHING_SPOT_PRESET_ICEMOON_PLASMA] = plasma_preset
-
-	var/datum/fish_source/chasm/chasm_preset = new
-	.[FISHING_SPOT_PRESET_CHASM] = chasm_preset
-
-	var/datum/fish_source/toilet/toilet_preset = new
-	.[FISHING_SPOT_PRESET_TOILET] = toilet_preset
-
-/// Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes can share single source, ie single shared one for ocean/lavaland river
+/**
+ * Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes
+ * can share single source, ie single shared one for ocean/lavaland river
+ */
 /datum/fish_source
-	/// Fish catch weight table - these are relative weights
+	/**
+	 * Fish catch weight table - these are relative weights
+	 *
+	 */
 	var/list/fish_table = list()
 	/// If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing
 	var/list/fish_counts = list()
@@ -35,12 +53,22 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "fishing_background_default"
 
+///Called when src is set as the fish source of a fishing spot component
+/datum/fish_source/proc/on_fishing_spot_init(/datum/component/fishing_spot/spot)
+	return
+
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
 	return rod.reason_we_cant_fish(src)
 
-
-/// DIFFICULTY = (SPOT_BASE_VALUE + FISH_MODIFIER + ROD_MODIFIER + FAV/DISLIKED_BAIT_MODIFIER + TRAITS_ADDITIVE) * TRAITS_MULTIPLICATIVE , For non-fish it's just SPOT_BASE_VALUE
+/**
+ * Calculates the difficulty of the minigame:
+ *
+ * This includes the source's fishing difficulty, that of the fish, the rod,
+ * favorite and disliked baits, fish traits and the fisherman skill.
+ *
+ * For non-fish, it's just the source's fishing difficulty minus the fisherman skill.
+ */
 /datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
 	. = fishing_difficulty
 
@@ -92,7 +120,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
  * Used to register signals or add traits and the such right after conditions have been cleared
  * and before the minigame starts.
  */
-/datum/fish_source/proc/pre_challenge_started(obj/item/fishing_rod/rod, mob/user)
+/datum/fish_source/proc/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
 	return
 
 ///Proc called when the challenge is interrupted within the fish source code.
@@ -103,7 +131,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
  * Proc called when the COMSIG_FISHING_CHALLENGE_COMPLETED signal is sent.
  * Check if we've succeeded. If so, write into memory and dispense the reward.
  */
-/datum/fish_source/proc/on_challenge_completed(datum/fishing_challenge/source, mob/user, success, perfect)
+/datum/fish_source/proc/on_challenge_completed(datum/fishing_challenge/source, mob/user, success)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 	if(!success)
@@ -111,34 +139,40 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	var/obj/item/fish/caught = source.reward_path
 	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
 	var/turf/fishing_spot = get_turf(source.lure)
-	dispense_reward(source.reward_path, user, fishing_spot)
+	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
+	if(source.used_rod)
+		SEND_SIGNAL(source.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
 
 /// Gives out the reward if possible
-/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, fishing_spot)
+/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
 	if((reward_path in fish_counts)) // This is limited count result
-		if(fish_counts[reward_path] > 0)
-			fish_counts[reward_path] -= 1
-		else
-			reward_path = FISHING_DUD //Ran out of these since rolling (multiple fishermen on same source most likely)
-	var/atom/movable/reward
-	if(ispath(reward_path))
-		reward = new reward_path(get_turf(fisherman))
-		if(ispath(reward_path,/obj/item))
-			if(ispath(reward_path,/obj/item/fish))
-				var/obj/item/fish/caught_fish = reward
-				caught_fish.randomize_size_and_weight()
-				//fish caught signal if needed goes here and/or fishing achievements
-			//Try to put it in hand
-			INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
-			fisherman.balloon_alert(fisherman, "caught [reward]!")
-		else //If someone adds fishing out carp/chests/singularities or whatever just plop it down on the fisher's turf
-			fisherman.balloon_alert(fisherman, "caught something!")
-	else if (reward_path == FISHING_DUD)
-		//baloon alert instead
+		fish_counts[reward_path] -= 1
+		if(!fish_counts[reward_path])
+			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)ù
+
+	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
+	if(!reward) //baloon alert instead
 		fisherman.balloon_alert(fisherman,pick(duds))
+		return
+	if(isitem(reward)) //Try to put it in hand
+		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
+	fisherman.balloon_alert(fisherman, "caught [reward]!")
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
-	if(reward)
-		SEND_SIGNAL(reward, COMSIG_ATOM_FISHING_REWARD, fishing_spot)
+	return reward
+
+
+/// Spawns a reward from a atom path.
+/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman,  turf/fishing_spot)
+	if(reward_path == FISHING_DUD)
+		return
+	if(ispath(reward_path, /datum/chasm_detritus))
+		return GLOB.chasm_detritus_types[reward_path].dispense_reward(fishing_spot)
+	if(!ispath(reward_path, /atom/movable))
+		CRASH("Unsupported /datum path [reward_path] passed to fish_source/proc/spawn_reward()")
+	var/atom/movable/reward = new reward_path(get_turf(fisherman))
+	if(isfish(reward))
+		var/obj/item/fish/caught_fish = reward
+		caught_fish.randomize_size_and_weight()
 
 /// Cached fish list properties so we don't have to initalize fish every time, init deffered
 GLOBAL_LIST(fishing_property_cache)

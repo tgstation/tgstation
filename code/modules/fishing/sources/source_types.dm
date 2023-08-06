@@ -6,7 +6,7 @@
 		/obj/item/fish/pufferfish = 15,
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
-		/obj/item/fish/lanternfish = 5
+		/obj/item/fish/lanternfish = 5,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,
@@ -18,11 +18,169 @@
 
 /datum/fish_source/portal
 	fish_table = list(
-		FISHING_DUD = 5,
+		FISHING_DUD = 7,
 		/obj/item/fish/goldfish = 10,
 		/obj/item/fish/guppy = 10,
+		/obj/item/fish/angelfish = 10,
 	)
-	catalog_description = "Fish dimension (Fishing portal generator)"
+	catalog_description = "Aquarium dimension (Fishing portal generator)"
+	///The name of this option shown in the radial menu on the fishing portal generator
+	var/radial_name = "Aquarium"
+	///The icon state shown for this option in the radial menu
+	var/radial_state = "fish_tank"
+	///The icon state of the overlay shown on the machine when active.
+	var/overlay_state = "portal_aquarium"
+
+/datum/fish_source/portal/beach
+	fish_table = list(
+		FISHING_DUD = 10,
+		/obj/item/fish/clownfish = 10,
+		/obj/item/fish/pufferfish = 10,
+		/obj/item/fish/cardinal = 10,
+		/obj/item/fish/greenchromis = 10,
+	)
+	catalog_description = "Beach dimension (Fishing portal generator)"
+	radial_name = "Beach"
+	radial_state = "palm_beach"
+
+/datum/fish_source/portal/chasm
+	fish_table = list(
+		FISHING_DUD = 5,
+		/obj/item/fish/chasm_crab = 10,
+		/obj/item/fish/boned = 5,
+		/obj/item/stack/sheet/bone = 5,
+	)
+	catalog_description = "Chasm dimension (Fishing portal generator)"
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	radial_name = "Chasm"
+	overlay_state = "portal_chasm"
+	radial_state = "ground_hole"
+
+/datum/fish_source/portal/ocean
+	fish_table = list(
+		FISHING_DUD = 5,
+		/obj/item/fish/lanternfish = 5,
+		/obj/item/fish/firefish = 5,
+		/obj/item/fish/dwarf_moonfish = 5,
+		/obj/item/fish/gunner_jellyfish = 5,
+		/obj/item/fish/needlefish = 5,
+		/obj/item/fish/armorfish = 5,
+	)
+	catalog_description = "Ocean dimension (Fishing portal generator)"
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	radial_name = "Ocean"
+	overlay_state = "portal_ocean"
+	radial_state = "seaboat"
+
+/datum/fish_source/portal/hyperspace //WIP
+	fish_table = list(
+		FISHING_DUD = 5,
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/mob/living/basic/carp = 2,
+	)
+	catalog_description = "Hyperspace dimension (Fishing portal generator)"
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	radial_name = "Hyperspace"
+	overlay_state = "portal_hyperspace"
+	radial_state = "space_rocket"
+
+///Unlocked by emagging the fishing portal generator with an emag.
+/datum/fish_source/portal/syndicate
+	background = "fishing_background_lavaland"
+	fish_table = list(
+		FISHING_DUD = 5,
+		/obj/item/fish/donkfish = 5,
+		/obj/item/fish/emulsijack = 5,
+	)
+	catalog_description = "Syndicate dimension (Fishing portal generator)"
+	radial_name = "Syndicate"
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+	overlay_state = "portal_syndicate"
+	radial_state = "syndi_snake"
+
+/**
+ * A special portal fish source which fish table is populated on init with the contents of all
+ * portal fish sources, except for FISHING_DUD, and a couple more caveats.
+ */
+/datum/fish_source/portal/random
+	fish_table = null //It's populated the first time the source is loaded on a fishing portal generator.
+	catalog_description = null // it'd make a bad entry in the catalog.
+	radial_name = "Randomizer"
+	overlay_state = "portal_randomizer"
+	var/static/list/all_portal_fish_sources_at_once
+	radial_state = "misaligned_question_mark"
+
+///Generate our fancy fish table if we don't have one already.
+/datum/fish_source/portal/random/on_fishing_spot_init(datum/component/fishing_spot/spot)
+	if(fish_table)
+		return
+
+	///rewards not found in other fishing portals
+	fish_table = list(
+		/obj/item/fish/holo/checkered = 5,
+	)
+
+	for(var/portal_type in GLOB.preset_fish_sources)
+		if(portal_type == type || !ispath(portal_type, /datum/fish_source/portal))
+			continue
+		var/datum/fish_source/portal/preset_portal = GLOB.preset_fish_sources[portal_type]
+		fish_table |= preset_portal.fish_table
+
+	///We don't serve duds.
+	fish_table -= FISHING_DUD
+
+	for(var/reward_path in fish_table)
+		fish_table[reward_path] = rand(1, 4)
+
+///In the spirit of randomness, difficulty, fish icon and effects are also affected by this fishing source.
+/datum/fish_source/portal/random/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
+	challenge.fish_icon_override = pick(
+		FA_ICON_QUESTION,
+		FA_ICON_LAUGH,
+		FA_ICON_MEH,
+		FA_ICON_FISH,
+		FA_ICON_FIGHTER_JET,
+		FA_ICON_GHOST,
+		FA_ICON_ENVELOPE,
+		FA_ICON_ANCHOR,
+		FA_ICON_TRASH_ALT,
+		FA_ICON_HOTDOG)
+	challenge.difficulty += rand(-10, 15)
+
+	var/list/additional_effects = list(
+		FISHING_MINIGAME_RULE_ANTIGRAV,
+		FISHING_MINIGAME_RULE_HEAVY_FISH,
+		FISHING_MINIGAME_RULE_LUBED,
+		FISHING_MINIGAME_RULE_LIMIT_LOSS,
+		FISHING_MINIGAME_RULE_WEIGHTED_BAIT,
+		FISHING_MINIGAME_RULE_STEALTH,
+	)
+	for(var/iteration in 1 to rand(1, 3))
+		challenge.special_effects |= pick_n_take(additional_effects)
+
+///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
+/datum/fish_source/portal/random/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
+	if(!ispath(reward_path, /obj/item/fish))
+		return ..()
+
+	var/static/list/weighted_traits
+	if(!weighted_traits)
+		weighted_traits = list()
+		for(var/datum/fish_trait/trait as anything in GLOB.fish_traits)
+			weighted_traits[trait.type] = round(trait.inheritability**2/100)
+
+	var/obj/item/fish/caught_fish = new reward_path(get_turf(fisherman), FALSE)
+	var/list/fixed_traits = list()
+	for(var/trait_type in caught_fish.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(caught_fish.type in trait.guaranteed_inheritance_types)
+			fixed_traits += trait_type
+	var/list/new_traits = list()
+	for(var/iteration in rand(1, 4))
+		new_traits |= pick_weight(weighted_traits)
+	caught_fish.inherit_traits(new_traits, fixed_traits = fixed_traits)
+	caught_fish.randomize_size_and_weight(deviation = 0.3)
+	caught_fish.progenitors = full_capitalize(caught_fish.name)
 
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
@@ -30,7 +188,7 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 15,
-		/obj/item/chasm_detritus = 30,
+		/datum/chasm_detritus = 30,
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
@@ -38,7 +196,7 @@
 /datum/fish_source/chasm/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
 	var/rolled_reward = ..()
 
-	if(!rod.hook || !ispath(rolled_reward, /obj/item/chasm_detritus))
+	if(!rod.hook || !ispath(rolled_reward, /datum/chasm_detritus))
 		return rolled_reward
 
 	return rod.hook.chasm_detritus_type
@@ -97,7 +255,7 @@
 	fish_table = list(
 		FISHING_DUD = 18,
 		/obj/item/fish/sludgefish = 18,
-		/obj/item/fish/slimefish = 2,
+		/obj/item/fish/slimefish = 4,
 	)
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
@@ -124,7 +282,7 @@
 	if(!istype(get_area(fisherman), /area/station/holodeck))
 		return "You need to be inside the Holodeck to catch holographic fish."
 
-/datum/fish_source/holographic/pre_challenge_started(obj/item/fishing_rod/rod, mob/user)
+/datum/fish_source/holographic/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_area))
 
 /datum/fish_source/holographic/proc/check_area(mob/user)
@@ -132,7 +290,7 @@
 	if(!istype(get_area(user), /area/station/holodeck))
 		interrupt_challenge("exited holodeck")
 
-/datum/fish_source/holographic/on_challenge_completed(datum/fishing_challenge/source, mob/user, success, perfect)
+/datum/fish_source/holographic/on_challenge_completed(datum/fishing_challenge/source, mob/user, success)
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
