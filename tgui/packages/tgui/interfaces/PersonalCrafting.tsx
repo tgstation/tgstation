@@ -233,10 +233,11 @@ export const PersonalCrafting = (props, context) => {
   const content = document.getElementById('content');
   const CATEGORY_ICONS =
     mode === MODE.cooking ? CATEGORY_ICONS_COOKING : CATEGORY_ICONS_CRAFTING;
-  const debounceSearch = debounce((value) => {
+  const searchRecipes = (value) => {
     setPages(1);
     setSearchText(value);
-  }, 500);
+  };
+  const debouncedSearch = debounce(searchRecipes, 500);
   return (
     <Window width={700} height={720}>
       <Window.Content>
@@ -253,7 +254,7 @@ export const PersonalCrafting = (props, context) => {
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
-                    onInput={(e, value) => debounceSearch(value)}
+                    onInput={(e, value) => debouncedSearch(value)}
                     fluid
                   />
                 </Stack.Item>
