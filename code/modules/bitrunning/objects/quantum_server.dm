@@ -85,9 +85,11 @@
 	QDEL_LIST(occupant_mind_refs)
 	QDEL_LIST(spawned_threats)
 	QDEL_NULL(exit_turfs)
-	QDEL_NULL(generated_domain)
-	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(receive_turfs)
+	if(generated_domain)
+		QDEL_NULL(generated_domain)
+	if(generated_safehouse)
+		QDEL_NULL(generated_safehouse)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain))
