@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Fixed the DNA Infuser's circuit board missing from the techfab and tech storage."
