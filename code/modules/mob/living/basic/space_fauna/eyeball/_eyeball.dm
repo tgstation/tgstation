@@ -44,8 +44,6 @@
 	var/healing_factor = 3
 	/// is this eyeball crying?
 	var/crying = FALSE
-	/// the glare ability
-	var/datum/action/cooldown/spell/pointed/death_glare/glare
 	/// the crying overlay we add when is hit
 	var/mutable_appearance/on_hit_overlay
 
@@ -54,7 +52,7 @@
 
 /mob/living/basic/eyeball/Initialize(mapload)
 	. = ..()
-	glare = new
+	var/datum/action/cooldown/spell/pointed/death_glare/glare = new(src)
 	glare.Grant(src)
 	ai_controller.set_blackboard_key(BB_GLARE_ABILITY, glare)
 	AddElement(/datum/element/simple_flying)
@@ -72,7 +70,7 @@
 
 	if(istype(attack_target, /obj/item/food/grown/carrot))
 		adjustBruteLoss(-5)
-		to_chat(src, span_warning("You eat the [attack_target]! It restores some health"))
+		to_chat(src, span_warning("You eat [attack_target]! It restores some health!"))
 		qdel(attack_target)
 		return TRUE
 
@@ -112,7 +110,7 @@
 /mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/internal/eyes/eyes)
 	if(!COOLDOWN_FINISHED(src, eye_healing))
 		return
-	to_chat(target, span_warning("[src] seems to be healing our [eyes]"))
-	eyes.set_organ_damage(eyes.damage - healing_factor)
+	to_chat(target, span_warning("[src] seems to be healing your [eyes.zone]!"))
+	eyes.apply_organ_damage(-1 * healing_factor)
 	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
