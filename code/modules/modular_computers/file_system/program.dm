@@ -51,6 +51,14 @@
 	temp.usage_flags = usage_flags
 	return temp
 
+/**
+ * WARNING: this proc does not work the same as normal `ui_interact`, as the
+ * computer takes care of opening the UI. The `datum/tgui/ui` parameter will always exist.
+ * This proc only serves as a callback.
+ */
+/datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
+	SHOULD_CALL_PARENT(FALSE)
+
 ///We are not calling parent as it's handled by the computer itself, this is only called after.
 /datum/computer_file/program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	SHOULD_CALL_PARENT(FALSE)
