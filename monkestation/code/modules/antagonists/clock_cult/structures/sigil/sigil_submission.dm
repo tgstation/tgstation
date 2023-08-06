@@ -31,7 +31,7 @@
 		animate(converted_mob.client, color = previous_colour, time = 1 SECONDS)
 
 	GLOB.main_clock_cult?.check_member_distribution()
-	if(isdrone(converted_mob) && GLOB.cogscarabs.len < MAXIMUM_COGSCARABS)
+	if(isdrone(converted_mob) && (GLOB.cogscarabs.len < MAXIMUM_COGSCARABS))
 		var/mob/living/simple_animal/drone/cogscarab/cogger = new /mob/living/simple_animal/drone/cogscarab(get_turf(src))
 		cogger.key = converted_mob.key
 		cogger.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
@@ -39,12 +39,15 @@
 							   span_brass("Rat'var has granted you your freedom, you must protect the ark at all costs!"))
 		qdel(converted_mob)
 		return TRUE
+
 	else if(((GLOB.main_clock_cult?.human_servants.len < GLOB.main_clock_cult?.max_human_servants) && ishuman(converted_mob)) || !ishuman(converted_mob))
 		var/datum/antagonist/clock_cultist/servant_datum = new
 		servant_datum.give_slab = FALSE
 		converted_mob.mind.add_antag_datum(servant_datum)
 		converted_mob.Paralyze(5 SECONDS)
 		if(ishuman(converted_mob))
+			var/mob/living/carbon/human/human_converted = converted_mob
+			human_converted.uncuff()
 			new /obj/item/clockwork/clockwork_slab(get_turf(src))
 
 		var/brutedamage = converted_mob.getBruteLoss()

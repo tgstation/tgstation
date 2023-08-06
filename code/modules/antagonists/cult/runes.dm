@@ -561,6 +561,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
 		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - already summoned.")
 		return
+//monkestation edit start
+	if(GLOB.clock_ark) //might bump this up to need the ark to be active in some form, the way this is done DOES mean they can summon if clock cult has won, lets see the gods fight
+		to_chat(invoker, span_bigbrass("A vile light prvents you from saying the invocation! \
+										It looks like you will have to destroy whatever is causing this before Nar'sie may be summoned."))
+		return
+//monkestation edit end
 
 	//BEGIN THE SUMMONING
 	used = TRUE

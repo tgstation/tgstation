@@ -38,7 +38,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	var/list/parts = list()
 	var/list/checked_objectives = list()
 	var/failure = FALSE
-	if(objectives.len)
+	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
@@ -53,12 +53,12 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	else
 		parts += "<span class='greentext big'>The clock cult has succeeded! Rat'var's light shall shine forever more!</span>"
 
-	if(checked_objectives.len)
+	if(length(checked_objectives))
 		parts += "<b>The clock cultists' objectives were:</b>"
-		for(var/i in 1 to checked_objectives.len)
+		for(var/i in 1 to length(checked_objectives))
 			parts += checked_objectives[i]
 
-	if(members.len)
+	if(length(members))
 		parts += "<span class='header'>The clock cultists were:</span>"
 		parts += printplayerlist(members)
 
@@ -68,7 +68,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 /datum/team/clock_cult/proc/check_member_count()
 	check_member_distribution()
 	max_human_servants = round(max((get_active_player_count() / 6) + 6, max_human_servants))
-	var/human_servant_count = human_servants.len
+	var/human_servant_count = length(human_servants)
 	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Rat'var\
 						[get_charged_anchor_crystals() ? "." : "and an Anchoring Crystal is summoned and protected on the station."]"
 
@@ -87,7 +87,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 						   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 		warning_stage = CONVERSION_WARNING_CRITIAL
 
-	else if(human_servant_count == max_human_servants && get_charged_anchor_crystals())
+	else if((human_servant_count >= max_human_servants) && get_charged_anchor_crystals())
 		GLOB.clock_ark?.prepare_ark()
 
 ///check that our human_servants and non_human_servants lists are correct and if not then set them to be correct
@@ -109,7 +109,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 		servant_datum.recall.Grant(member.current)
 
 /datum/team/clock_cult/proc/setup_objectives()
-	if(objectives.len)
+	if(length(objectives))
 		return
 	GLOB.main_clock_cult = src
 	var/datum/objective/anchoring_crystals/crystals_objective = new
@@ -134,7 +134,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	. = ..()
 
 	var/sanity = 0
-	while(valid_areas.len < POSSIBLE_CRYSTAL_AREAS && sanity < 100)
+	while(length(valid_areas) < POSSIBLE_CRYSTAL_AREAS && sanity < 100)
 		var/area/summon_area = pick(GLOB.areas - valid_areas)
 		if(summon_area && is_station_level(summon_area.z) && (summon_area.area_flags & VALID_TERRITORY))
 			valid_areas += summon_area
