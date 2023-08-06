@@ -40,10 +40,24 @@
 	to_add += list(
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Faster",
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Agile",
 			SPECIES_PERK_DESC = "Arachnids run slightly faster than other species.",
-		)
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "spider",
+			SPECIES_PERK_NAME = "Big Appendages",
+			SPECIES_PERK_DESC = "Arachnids have appendages that are not hidden by space suits \
+			or MODsuits. This can make concealing your identity harder.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "sun",
+			SPECIES_PERK_NAME = "Maybe Too Many Eyes",
+			SPECIES_PERK_DESC = "Arachnids cannot equip any kind of glasses, requiring \
+			alternatives like welding helmets or implants. Their eyes are more durable however.",
+		),
 	)
 
 	return to_add

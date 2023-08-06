@@ -10,3 +10,5 @@
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	eye_icon_state = "arachnideyes"
 	icon_state = "arachnid_eyeballs"
+	maxHealth = 2.0 * STANDARD_ORGAN_THRESHOLD //Many eyes = More health
+	no_glasses = TRUE
