@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor_type = /datum/armor/none
-	light_range = 2 //luminosity when on
+	light_outer_range = 2 //luminosity when on
 	light_system = MOVABLE_LIGHT
 	flags_cover = HEADCOVERSEYES
 	heat = 999
@@ -63,7 +63,7 @@
 	hitsound_off = 'sound/weapons/tap.ogg'
 	damtype_on = BRUTE
 	force_on = 18 //same as epen (but much more obvious)
-	light_range = 3 //ditto
+	light_outer_range = 3 //ditto
 	heat = 0
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)

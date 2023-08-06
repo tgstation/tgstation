@@ -1,5 +1,0 @@
-author: "SeeBeeSee"
-delete-after: True
-changes:
-  - rscadd: "Added new flashlight-style functionality to moth plushes"
-  - image: "Added new \"moffplush_on\" sprite for the flashlight while turned on"

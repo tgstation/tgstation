@@ -129,7 +129,7 @@
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
 
-	minimum_players = 20
+	minimum_players = 100 // lol
 
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2

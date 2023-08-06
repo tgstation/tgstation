@@ -270,7 +270,7 @@ Difficulty: Hard
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
 	exit.id = "wendigo arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
-	exit.set_light(20, 1, COLOR_SOFT_RED)
+	exit.set_light(l_outer_range = 20, l_power = 1, l_color = COLOR_SOFT_RED)
 	return ..()
 
 /obj/projectile/colossus/wendigo_shockwave

@@ -1229,6 +1229,7 @@
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/alcohol = 4)
+	liquid_fire_power = 25
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1679,17 +1680,21 @@
 
 /datum/reagent/plantnutriment/eznutriment
 	name = "E-Z Nutrient"
-	description = "Contains electrolytes. It's what plants crave."
+	description = "Contains electrolytes. It's what plants crave. It makes plants slowly gain potency and yield"
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+// gives half the potency of saltpetre, and half the yield of diethylamine
 /datum/reagent/plantnutriment/eznutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.yieldmod = 1
 		mytray.mutmod = 1
 		myseed.adjust_lifespan(round(chems.get_reagent_amount(type) * 0.15))
+		if(myseed)
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.1))
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.1))
+
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1706,7 +1711,7 @@
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
-	description = "Very potent nutriment that slows plants from mutating."
+	description = "Very potent nutriment that slows plants from mutating whilst also making them grow faster."
 	color = "#9D9D00" // RBG: 157, 157, 0
 	tox_prob = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1729,6 +1734,8 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.yieldmod = 1.3
 		mytray.mutmod = 0
+		myseed.adjust_maturation(round(chems.get_reagent_amount(src.type) * 0.1))
+		myseed.adjust_production(round(chems.get_reagent_amount(src.type) * 0.05))
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
@@ -1777,6 +1784,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
 	default_container = /obj/effect/decal/cleanable/oil
+	liquid_fire_power = 15
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
@@ -2260,7 +2268,7 @@
 		generated_values["yield_change"] = (amount * (rand(0,2) * 0.2))
 		return generated_values
 
-// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
+// Saltpetre is used for gardening IRL, to simplify highly, it raises potency and lowers production
 /datum/reagent/saltpetre/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))

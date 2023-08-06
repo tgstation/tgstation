@@ -77,6 +77,14 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 	name = "Turnip Plushie"
 	item_path = /obj/item/toy/plush/turnipplush
 
+/datum/loadout_item/toys/tinywitch
+	name = "Tiny Witch Plush"
+	item_path = /obj/item/toy/plush/tinywitchplush
+
+/datum/loadout_item/toys/chefomancer
+	name = "Chef-o-Mancer Plush"
+	item_path = /obj/item/toy/plush/chefomancer
+
 /*
 *	CARDS
 */
@@ -185,7 +193,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 	item_path = /obj/item/toy/sword
 
 /datum/loadout_item/toys/tyria
-	name = "Tryia Plush"
+	name = "Tyria Plush"
 	item_path = /obj/item/toy/plush/moth/tyriaplush
 
 /datum/loadout_item/toys/ook

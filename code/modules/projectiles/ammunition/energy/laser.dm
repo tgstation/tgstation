@@ -24,6 +24,19 @@
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 120
 
+/obj/item/ammo_casing/energy/laser/musket
+	projectile_type = /obj/projectile/beam/laser/musket
+	e_cost = 1000
+	fire_sound = 'sound/weapons/lasercannonfire.ogg' //monke edit: sounds cooler
+
+/obj/item/ammo_casing/energy/laser/musket/prime
+	projectile_type = /obj/projectile/beam/laser/musket/prime
+
+/obj/item/ammo_casing/energy/laser/musket/syndicate//monke edit: syndicate laser musket
+	projectile_type = /obj/projectile/beam/laser/musket/syndicate
+	e_cost = 125
+	fire_sound = 'sound/weapons/laser2.ogg'
+
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice
 	select_name = "practice"

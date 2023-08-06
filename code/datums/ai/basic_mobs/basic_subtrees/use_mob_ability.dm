@@ -14,9 +14,8 @@
 	if (!ability_key)
 		CRASH("You forgot to tell this mob where to find its ability")
 
-	var/datum/weakref/weak_ability = controller.blackboard[ability_key]
-	var/datum/action/cooldown/using_action = weak_ability?.resolve()
-	if (!using_action || !using_action.IsAvailable())
+	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
+	if (QDELETED(using_action) || !using_action.IsAvailable())
 		return
 
 	controller.queue_behavior(use_ability_behaviour, ability_key)
@@ -26,9 +25,8 @@
 /datum/ai_behavior/use_mob_ability
 
 /datum/ai_behavior/use_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key)
-	var/datum/weakref/weak_ability = controller.blackboard[ability_key]
-	var/datum/action/cooldown/using_action = weak_ability?.resolve()
-	if (!using_action)
+	var/datum/action/cooldown/using_action = controller.blackboard[ability_key]
+	if (QDELETED(using_action))
 		finish_action(controller, FALSE, ability_key)
 		return
 	var/result = using_action.Trigger()

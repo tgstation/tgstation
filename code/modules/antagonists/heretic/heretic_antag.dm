@@ -762,7 +762,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
 
-/datum/antagonist/heretic/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/heretic/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
 	var/datum/antagonist/heretic/new_heretic = new()
 	hosts_mind.add_antag_datum(new_heretic)

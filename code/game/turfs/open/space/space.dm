@@ -117,7 +117,7 @@
 
 /// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
-	if(!light_range)
+	if(!light_outer_range)
 		set_light(2)
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)

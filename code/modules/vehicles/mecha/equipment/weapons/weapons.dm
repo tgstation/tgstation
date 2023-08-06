@@ -78,6 +78,7 @@
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
+	movedelay = 0.2
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
@@ -96,6 +97,7 @@
 	desc = "A weapon for combat exosuits. Shoots a bunch of weak disabler beams."
 	icon_state = "mecha_disabler"
 	energy_drain = 100
+	movedelay = 0
 	projectile = /obj/projectile/beam/disabler/weak
 	variance = 25
 	projectiles_per_shot = 5
@@ -221,6 +223,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "general ballistic weapon"
 	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	movedelay = 0.4
 	var/projectiles
 	var/projectiles_cache //ammo to be loaded in, if possible.
 	var/projectiles_cache_max
@@ -413,6 +416,7 @@
 	projectiles_cache = 999
 	equip_cooldown = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -425,6 +429,7 @@
 	projectiles_cache = 999
 	equip_cooldown = 10
 	mech_flags = EXOSUIT_MODULE_HONK
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = TRUE
@@ -438,6 +443,7 @@
 	energy_drain = 250
 	equip_cooldown = 20
 	range = MECHA_MELEE|MECHA_RANGED
+	movedelay = 0
 	missile_range = 5
 	projectile = /obj/item/punching_glove
 	fire_sound = 'sound/items/bikehorn.ogg'

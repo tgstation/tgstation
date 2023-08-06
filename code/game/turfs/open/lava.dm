@@ -12,7 +12,7 @@
 	baseturfs = /turf/open/lava //lava all the way down
 	slowdown = 2
 
-	light_range = 2
+	light_outer_range = 2
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
 	light_on = FALSE
@@ -345,7 +345,7 @@
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
 
-	light_range = 3
+	light_outer_range = 3
 	light_power = 0.75
 	light_color = LIGHT_COLOR_PURPLE
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE

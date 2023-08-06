@@ -250,15 +250,13 @@
 
 			needs_update = TRUE
 			growth += 3
-
-		if(self_sustaining && self_growing)
-			if(myseed.potency < 50)
-				myseed.adjust_potency(2)
-			if(myseed.yield < 5)
-				myseed.adjust_yield(1)
-			if(myseed.lifespan < 70)
-				myseed.adjust_lifespan(2)
-
+			if(self_sustaining && self_growing)
+				if(myseed.potency < 50)
+					myseed.adjust_potency(2)
+				if(myseed.yield < 5)
+					myseed.adjust_yield(1)
+				if(myseed.lifespan < 70)
+					myseed.adjust_lifespan(2)
 /**
  * Nutrients
  */
@@ -419,7 +417,7 @@
 		return
 	if(myseed?.get_gene(/datum/plant_gene/trait/glow)) // Hydroponics needs a refactor, badly.
 		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+		set_light(l_outer_range = G.glow_range(myseed), l_power = G.glow_power(myseed), l_color = G.glow_color)
 		return
 	set_light(0)
 

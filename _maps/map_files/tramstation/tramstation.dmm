@@ -17442,7 +17442,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "eNq" = (
 /obj/structure/flora/bush/grassy/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/station/science/lower)
 "eNx" = (
@@ -19480,7 +19480,7 @@
 /area/station/service/theater)
 "fyR" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/station/science/lower)
 "fyX" = (
@@ -24690,6 +24690,15 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
+"hCx" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "hCz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
@@ -27498,7 +27507,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "iHD" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "iHG" = (
@@ -52632,7 +52641,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -57697,6 +57706,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"tyF" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "tyV" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock"
@@ -65800,6 +65818,16 @@
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
+"wnN" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/computer/cryopod{
+	pixel_y = -32;
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "woJ" = (
 /obj/structure/closet/wardrobe/white,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -65931,7 +65959,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/openspace,
 /area/station/solars/starboard/fore)
 "wqP" = (
@@ -66738,7 +66766,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/openspace,
 /area/station/solars/port)
 "wEx" = (
@@ -68535,7 +68563,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "xtj" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/science/lower)
@@ -70548,7 +70576,7 @@
 /obj/structure/table,
 /obj/item/radio/intercom/prison,
 /obj/machinery/duct,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -154488,7 +154516,7 @@ uSe
 kQX
 fSr
 rVp
-aJi
+hCx
 aJi
 aJi
 aJi
@@ -154744,7 +154772,7 @@ gbl
 uSe
 kGJ
 fSr
-rVp
+wnN
 qOF
 xmR
 xmR
@@ -155002,7 +155030,7 @@ uSe
 agM
 fSr
 rVp
-aJi
+tyF
 aJi
 aJi
 aJi
