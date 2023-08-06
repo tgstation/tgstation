@@ -1520,3 +1520,11 @@
 		/datum/stock_part/capacitor = 1,
 	)
 
+/obj/item/circuitboard/machine/netpod
+	name = "Net pod"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/netpod
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 2,
+	)

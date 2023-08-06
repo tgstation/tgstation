@@ -1,6 +1,8 @@
+import { Button, Divider, Input, NoticeBox, Section, Stack, Tabs } from '../components';
 import { useBackend, useLocalState } from '../backend';
-import { Section, Button, Stack, Tabs, Divider } from '../components';
+
 import { Window } from '../layouts';
+import { createSearch } from '../../common/string';
 
 type Data = {
   netsuit: string;
@@ -27,13 +29,38 @@ export const NetpodOutfits = (props, context) => {
     'selectedType',
     collections[0]
   );
+  const [search, setSearch] = useLocalState<string>(
+    context,
+    'outfitSearch',
+    ''
+  );
+
+  const searchFn = createSearch(search, (outfit: Outfit) => outfit.name);
+
+  const filtered = selectedType?.outfits
+    ?.filter(searchFn)
+    .sort((a, b) => (a.name > b.name ? 1 : 0));
+
+  const selected =
+    selectedType.outfits?.find((outfit) => outfit.path === netsuit)?.name ??
+    'None';
 
   return (
-    <Window title="NetChair" height={300} width={400}>
+    <Window title="Net Pod" height={300} width={400}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
-            <Section fill title="Select an outfit">
+            <Section
+              fill
+              title="Select an outfit"
+              buttons={
+                <Input
+                  autoFocus
+                  onInput={(event, value) => setSearch(value)}
+                  placeholder="Search"
+                  value={search}
+                />
+              }>
               <Stack fill>
                 <Stack.Item grow>
                   <Tabs vertical>
@@ -53,32 +80,27 @@ export const NetpodOutfits = (props, context) => {
                 <Stack.Divider />
                 <Stack.Item grow={5}>
                   <Section fill scrollable>
-                    {selectedType?.outfits
-                      ?.sort((a, b) => (a.name > b.name ? 1 : 0))
-                      .map(({ path, name }, index) => (
-                        <Stack.Item className="candystripe" key={index}>
-                          <Button
-                            selected={netsuit === path}
-                            color="transparent"
-                            onClick={() =>
-                              act('select_outfit', { outfit: path })
-                            }>
-                            {name}
-                          </Button>
-                        </Stack.Item>
-                      ))}
+                    {filtered.map(({ path, name }, index) => (
+                      <Stack.Item className="candystripe" key={index}>
+                        <Button
+                          selected={netsuit === path}
+                          color="transparent"
+                          onClick={() =>
+                            act('select_outfit', { outfit: path })
+                          }>
+                          {name}
+                        </Button>
+                      </Stack.Item>
+                    ))}
                   </Section>
                 </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section>
-              {`Current: ${
-                selectedType.outfits?.find((outfit) => outfit.path === netsuit)
-                  ?.name
-              }`}
-            </Section>
+            <NoticeBox info align="right">
+              {selected}
+            </NoticeBox>
           </Stack.Item>
         </Stack>
       </Window.Content>

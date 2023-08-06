@@ -16,14 +16,19 @@
 
 /obj/machinery/computer/quantum_console/LateInitialize()
 	. = ..()
+
 	if(isnull(server_ref))
 		find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
+	if(!is_operational)
+		return
+
 	if(isnull(server_ref))
 		find_server()
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "QuantumConsole")

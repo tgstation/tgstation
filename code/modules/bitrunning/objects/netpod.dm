@@ -4,6 +4,7 @@
 	name = "net pod"
 
 	base_icon_state = "netpod"
+	circuit = /obj/item/circuitboard/machine/netpod
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	icon_state = "netpod"
@@ -54,8 +55,7 @@
 	. = ..()
 
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Open Machine"
-		context[SCREENTIP_CONTEXT_RMB] = "Select Outfit"
+		context[SCREENTIP_CONTEXT_LMB] = "Select Outfit"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/crowbar) && occupant)
@@ -65,7 +65,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/netpod/update_icon_state()
-	if(machine_stat & (BROKEN | NOPOWER))
+	if(!is_operational)
 		icon_state = base_icon_state
 		return ..()
 
@@ -80,57 +80,41 @@
 	return ..()
 
 /obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user) || !is_operational)
 		return
 	close_machine(target)
 
-/obj/machinery/netpod/attack_hand(mob/living/user, list/modifiers)
+/obj/machinery/netpod/crowbar_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
-		return ..()
+		attack_hand(user)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	if(occupant && user != occupant)
-		balloon_alert(user, "it's sealed shut!")
-		return TRUE
+	if(default_pry_open(tool, user) || default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	if(!state_open)
-		open_machine()
-		return TRUE
-
-	if(get_turf(user) == get_turf(src))
-		close_machine(user)
-		return TRUE
-
-	// Had the issue where calling close_machine() would pull you inside
-	state_open = FALSE
-	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
-	flick("[base_icon_state]_closing", src)
-	set_density(TRUE)
-
-	update_appearance()
-	return TRUE
-
-/obj/machinery/netpod/attack_hand_secondary(mob/user, list/modifiers)
-	var/mob/living/carbon/human/player = user
-	if(!ishuman(player) || player.combat_mode)
-		return ..()
-
+/obj/machinery/netpod/screwdriver_act(mob/living/user, obj/item/tool)
 	if(occupant)
-		balloon_alert(player, "in use!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		balloon_alert(user, "in use!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	ui_interact(player)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(state_open)
+		balloon_alert(user, "close first.")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", "[base_icon_state]_closed", tool))
+		update_appearance() // sometimes icon doesnt properly update during flick()
+		ui_close(user)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/netpod/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!state_open && user == occupant)
+		container_resist_act(user)
 
 /obj/machinery/netpod/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(!state_open && gone == occupant)
 		container_resist_act(gone)
-
-/obj/machinery/netpod/container_resist_act(mob/living/user)
-	user.visible_message(span_notice("[occupant] emerges from [src]!"),
-		span_notice("You climb out of [src]!"),
-		span_notice("With a hiss, you hear a machine opening."))
-	open_machine()
 
 /obj/machinery/netpod/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -141,15 +125,21 @@
 	if(!state_open)
 		container_resist_act(user)
 
+/obj/machinery/netpod/container_resist_act(mob/living/user)
+	user.visible_message(span_notice("[occupant] emerges from [src]!"),
+		span_notice("You climb out of [src]!"),
+		span_notice("With a hiss, you hear a machine opening."))
+	open_machine()
+
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
-	if(!state_open && !panel_open)
-		unprotect_and_signal()
-		playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)
-		flick("[base_icon_state]_opening", src)
+	unprotect_and_signal()
+	playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)
+	flick("[base_icon_state]_opening", src)
+
 	return ..()
 
 /obj/machinery/netpod/close_machine(mob/user, density_to_set = TRUE)
-	if(isnull(user) || !state_open || panel_open)
+	if(!state_open || panel_open || !is_operational)
 		return
 	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
@@ -157,49 +147,34 @@
 	protect_occupant(occupant)
 	enter_matrix()
 
-/obj/machinery/netpod/crowbar_act(mob/living/user, obj/item/crowbar)
-	. = ..()
-	if(default_pry_open(crowbar, user))
-		return TRUE
-	if(default_deconstruction_crowbar(crowbar))
-		return TRUE
-	return FALSE
-
 /obj/machinery/netpod/default_pry_open(obj/item/crowbar, mob/living/pryer)
-	if(panel_open && isnull(occupant) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR)
+	if(isnull(occupant))
+		if(!state_open)
+			open_machine()
+		else
+			shut_pod()
 		crowbar.play_tool_sound(src, 50)
-		pryer.visible_message(span_notice("[pryer] pries open [src]."), span_notice("You pry open [src]."), span_notice("You hear a machine being disassembled."))
-		return ..()
+		return TRUE
 
-	if(state_open || isnull(occupant))
-		return ..()
-
-	if(!state_open && machine_stat & (BROKEN | NOPOWER))
-		open_machine()
-		crowbar.play_tool_sound(src, 50)
-		return ..()
-
-	pryer.visible_message(span_danger("[pryer] starts prying open [src]!"), span_notice("You start to pry open [src]."))
+	pryer.visible_message(
+		span_danger("[pryer] starts prying open [src]!"),
+		span_notice("You start to pry open [src]."),
+		span_notice("You hear loud prying on metal.")
+	)
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_CROWBAR_ALERT, pryer)
 
 	if(do_after(pryer, 15 SECONDS, src))
-		open_machine()
-		return ..()
+		if(!state_open)
+			open_machine()
 
-/obj/machinery/netpod/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	. = ..()
-	if(occupant)
-		balloon_alert(user, "occupied.")
-		return TRUE
-	if(state_open)
-		balloon_alert(user, "close first.")
-		return TRUE
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", "[base_icon_state]_closed", screwdriver))
-		return TRUE
-	return FALSE
+	return TRUE
 
 /obj/machinery/netpod/ui_interact(mob/user, datum/tgui/ui)
+	if(!is_operational)
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "NetpodOutfits")
@@ -301,7 +276,7 @@
 
 	var/datum/lazy_template/virtual_domain/generated_domain = server.generated_domain
 	if(isnull(generated_domain) || !server.get_is_ready())
-		balloon_alert(neo, "no connection!")
+		balloon_alert(neo, "nothing loaded!")
 		return
 
 	var/mob/living/carbon/current_avatar = avatar_ref?.resolve()
@@ -431,5 +406,14 @@
 	var/path = text2path(text)
 	if(ispath(path, /datum/outfit) && locate(path) in subtypesof(/datum/outfit))
 		return path
+
+/// Closes the machine without shoving in an occupant
+/obj/machinery/netpod/proc/shut_pod()
+	state_open = FALSE
+	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
+	flick("[base_icon_state]_closing", src)
+	set_density(TRUE)
+
+	update_appearance()
 
 #undef BASE_DISCONNECT_DAMAGE

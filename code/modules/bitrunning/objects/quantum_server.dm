@@ -90,7 +90,7 @@
 	QDEL_NULL(generated_safehouse)
 
 /obj/machinery/quantum_server/update_appearance(updates)
-	if(isnull(generated_domain))
+	if(isnull(generated_domain) || !is_operational)
 		set_light(0)
 		return ..()
 
@@ -100,7 +100,7 @@
 	return ..()
 
 /obj/machinery/quantum_server/update_icon_state()
-	if(isnull(generated_domain))
+	if(isnull(generated_domain) || !is_operational)
 		icon_state = base_icon_state
 		return ..()
 
