@@ -1,9 +1,19 @@
+#define DETAIN 1
+#define EXECUTE 2
+#define HOTSHOT 3
+#define SMOKESHOT 4
+#define BIGSHOT 5
+#define CLOWNSHOT 6
+#define PULSE 7
+#define TIDESHOT 8
+
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	cell_type = /obj/item/stock_parts/cell/lawbringer
 	icon_state = "hoslaser" //placeholder
 	w_class = WEIGHT_CLASS_NORMAL
+	verb_say = "states"
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/lawbringer/detain, \
 	 /obj/item/ammo_casing/energy/lawbringer/execute, \
@@ -18,9 +28,46 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	selfcharge = 1
-	//can_select = FALSE
+	can_select = FALSE
 	can_charge = FALSE
 	var/owner_dna = null
+
+/obj/item/gun/energy/e_gun/lawbringer/Initialize(mapload)
+	. = ..()
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
+
+
+/////BIOMETRIC AND VOICE/////
+/obj/item/gun/energy/e_gun/lawbringer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+	if(message_mods[WHISPER_MODE]) //Speak up
+		return FALSE
+	if(speaker == src)
+		return FALSE
+	switch(raw_message) //this is non-functional and extremly non-preformant, find replacement ASAP
+		if(findtext(raw_message, "detain"),findtext(raw_message, "disable"))
+			selectammo(DETAIN)
+		if(findtext(raw_message, "execute"),findtext(raw_message, "kill"))
+			selectammo(EXECUTE)
+		if(findtext(raw_message, "hotshot"),findtext(raw_message, "burn"))
+			selectammo(HOTSHOT)
+		if(findtext(raw_message, "smokeshot"),findtext(raw_message, "smoke"))
+			selectammo(SMOKESHOT)
+		if(findtext(raw_message, "bigshot"),findtext(raw_message, "breach"))
+			selectammo(BIGSHOT)
+		if(findtext(raw_message, "clownshot"),findtext(raw_message, "clown"))
+			selectammo(CLOWNSHOT)
+		if(findtext(raw_message, "pulse"),findtext(raw_message, "throw"))
+			selectammo(PULSE)
+		if(findtext(raw_message, "tideshot"),findtext(raw_message, "grey"))
+			selectammo(TIDESHOT)
+
+/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum)
+	var/obj/item/ammo_casing/energy/shot = ammo_type[shotnum]
+	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
+	chambered = null
+	recharge_newshot(TRUE)
+	update_appearance()
 
 /obj/item/gun/energy/e_gun/lawbringer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	balloon_alert(user, "biometric lock reset")
@@ -75,6 +122,7 @@
 	var/mob/living/carbon/human/human_user = user
 	human_user.electrocute_act(10, "lawbringer deterrant") //mister electric kill this man
 
+/////PROJECTILES AND AMMO/////
 /obj/item/stock_parts/cell/lawbringer
 	name = "Lawbringer power cell"
 	maxcharge = 3000 //300
@@ -314,3 +362,11 @@ After 25 minutes of the owner being dead, it desychs from owner
 				C.set_jitter_if_lower(40 SECONDS)
 				C.set_stutter(40 SECONDS)
 
+#undef DETAIN
+#undef EXECUTE
+#undef HOTSHOT
+#undef SMOKESHOT
+#undef BIGSHOT
+#undef CLOWNSHOT
+#undef PULSE
+#undef TIDESHOT
