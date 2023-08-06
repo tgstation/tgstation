@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT_TYPED(screentip_context_icons, /image, prepare_screentip_contex
  * - allow_image = boolean (not required)
 */
 /proc/build_context(list/context, key, allow_image)
-	if(!(length(context) && context[key] && key))
+	if(!length(context) || !context[key] || !key)
 		return ""
 	// Splits key combinations from mouse buttons. e.g. `Ctrl-Shift-LMB` goes in, `Ctrl-Shift-` goes out. Will be empty for single button actions.
 	var/key_combo = length(key) > 3 ? "[copytext(key, 1, -3)]" : ""
