@@ -34,7 +34,7 @@
 		return TRUE
 	var/mob/living/carbon/human_target = target
 	if(human_target.is_blind())
-		return TRUE
+		return FALSE
 	var/eye_damage_threshold = owner.ai_controller.blackboard[BB_EYE_DAMAGE_THRESHOLD]
 	if(!eye_damage_threshold)
 		return TRUE
