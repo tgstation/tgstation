@@ -172,7 +172,7 @@
 
 /datum/action/cooldown/spell/summonitem/abductor
 	name =  "Baton Recall"
-	desc = "Activating this will trigger your baton's emergency translocation protocolm \
+	desc = "Activating this will trigger your baton's emergency translocation protocol, \
 		recalling it to your hand. Takes a long time for the translocation crystals to reset after use."
 	sound = 'sound/effects/phasein.ogg'
 
@@ -196,4 +196,5 @@
 	return TRUE
 
 /datum/action/cooldown/spell/summonitem/abductor/try_unlink_item(mob/living/caster)
-	return
+	to_chat(caster, span_warning("You can't unlink [marked_item]'s translocation crystals."))
+	return FALSE

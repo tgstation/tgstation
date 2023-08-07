@@ -1,3 +1,4 @@
+/// Tests that abductors get their baton recall spell when being equipped
 /datum/unit_test/abductor_baton_spell
 
 /datum/unit_test/abductor_baton_spell/Run()
