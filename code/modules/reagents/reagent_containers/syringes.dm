@@ -261,8 +261,8 @@
 	desc = "A crudely made syringe. Smells like bananas."
 
 /obj/item/reagent_containers/syringe/crude/tribal/Initialize(mapload)
-	var/datum/reagent/toxin_to_get = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity, /datum/reagent/ants)
-	list_reagents[toxin_to_get] = 5
+	var/toxin_to_get = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amaniin, /datum/reagent/consumable/liquidelectricity/enriched, /datum/reagent/ants)
+	list_reagents = list((toxin_to_get) = 5)
 	return ..()
 
 /obj/item/reagent_containers/syringe/spider_extract
