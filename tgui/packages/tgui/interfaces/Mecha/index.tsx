@@ -10,7 +10,7 @@ import { MainData } from './data';
 export const Mecha = (props, context) => {
   const { data } = useBackend<MainData>(context);
   return (
-    <Window theme={data.ui_theme} width={800} height={550}>
+    <Window theme={data.ui_theme} width={800} height={560}>
       <Window.Content>
         <Content />
       </Window.Content>
@@ -66,6 +66,7 @@ export const Content = (props, context) => {
                   <LabeledList>
                     <IntegrityBar />
                     <PowerBar />
+                    <LightsBar />
                     <CabinSeal />
                     <DNALock />
                     <LabeledList.Item label="ID Lock">
@@ -184,6 +185,24 @@ const IntegrityBar = (props, context) => {
         }}>
         {!scanmod_rating ? 'Unknown' : `${integrity} of ${integrity_max}`}
       </ProgressBar>
+    </LabeledList.Item>
+  );
+};
+
+const LightsBar = (props, context) => {
+  const { act, data } = useBackend<MainData>(context);
+  const { power_level, power_max, mecha_flags, mechflag_keys } = data;
+  const has_lights = mecha_flags & mechflag_keys['HAS_LIGHTS'];
+  const lights_on = mecha_flags & mechflag_keys['LIGHTS_ON'];
+  return (
+    <LabeledList.Item label="Lights">
+      <Button
+        icon="lightbulb"
+        content={lights_on ? 'On' : 'Off'}
+        selected={lights_on}
+        disabled={!has_lights}
+        onClick={() => act('toggle_lights')}
+      />
     </LabeledList.Item>
   );
 };

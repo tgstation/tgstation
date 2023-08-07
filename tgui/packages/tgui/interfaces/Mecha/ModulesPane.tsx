@@ -47,7 +47,7 @@ export const ModulesPane = (props, context) => {
     <Section
       title="Equipment"
       fill
-      scrollable
+      style={{ 'overflow-y': 'auto' }}
       buttons={
         <Button
           icon={!weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}

@@ -517,8 +517,7 @@
 		process_cabin_air(seconds_per_tick)
 	if(length(occupants))
 		process_occupants(seconds_per_tick)
-	if(mecha_flags & LIGHTS_ON)
-		use_power(light_energy_drain * seconds_per_tick)
+	process_constant_power_usage(seconds_per_tick)
 
 /obj/vehicle/sealed/mecha/proc/process_overclock_effects(seconds_per_tick)
 	if(!overclock_mode && overclock_temp > 0)
@@ -611,11 +610,17 @@
 			else if (checking == src)
 				break  // all good
 			checking = checking.loc
-
-//Diagnostic HUD updates
+	//Diagnostic HUD updates
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
+
+/obj/vehicle/sealed/mecha/proc/process_constant_power_usage(seconds_per_tick)
+	if(mecha_flags & LIGHTS_ON && !use_power(light_energy_drain * seconds_per_tick))
+		mecha_flags &= ~LIGHTS_ON
+		set_light_on(mecha_flags & LIGHTS_ON)
+		playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
+		log_message("Toggled lights off due to the lack of power.", LOG_MECHA)
 
 ///Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.
 /obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, list/modifiers)
@@ -763,18 +768,19 @@
 				qdel(removed_gases)
 
 	var/obj/item/mecha_parts/mecha_equipment/air_tank/tank = locate(/obj/item/mecha_parts/mecha_equipment/air_tank) in equip_by_category[MECHA_UTILITY]
-	var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in user.actions
-	if(!isnull(tank) && cabin_sealed && tank.auto_pressurize_on_seal)
-		if(!tank.active)
-			tank.set_active(TRUE)
+	for(var/mob/occupant as anything in occupants)
+		var/datum/action/action = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal) in occupant.actions
+		if(!isnull(tank) && cabin_sealed && tank.auto_pressurize_on_seal)
+			if(!tank.active)
+				tank.set_active(TRUE)
+			else
+				action.button_icon_state = "mech_cabin_pressurized"
+				action.build_all_button_icons()
 		else
-			action.button_icon_state = "mech_cabin_pressurized"
+			action.button_icon_state = "mech_cabin_[cabin_sealed ? "closed" : "open"]"
 			action.build_all_button_icons()
-	else
-		action.button_icon_state = "mech_cabin_[cabin_sealed ? "closed" : "open"]"
-		action.build_all_button_icons()
 
-	balloon_alert(user, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
+		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
 	playsound(src, 'sound/machines/airlock.ogg', 50, TRUE)
 
@@ -835,3 +841,26 @@
 		phasing_energy_drain = initial(phasing_energy_drain)
 		melee_energy_drain = initial(melee_energy_drain)
 		light_energy_drain = initial(light_energy_drain)
+
+/// Toggle lights on/off
+/obj/vehicle/sealed/mecha/proc/toggle_lights(forced_state = null, mob/user)
+	if(!(mecha_flags & HAS_LIGHTS))
+		if(user)
+			balloon_alert(user, "mech has no lights!")
+		return
+	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < light_energy_drain)
+		if(user)
+			balloon_alert(user, "no power for lights!")
+		return
+	mecha_flags ^= LIGHTS_ON
+	set_light_on(mecha_flags & LIGHTS_ON)
+	playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
+	log_message("Toggled lights [(mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
+	for(var/mob/occupant as anything in occupants)
+		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_lights) in occupant.actions
+		if(mecha_flags & LIGHTS_ON)
+			act.button_icon_state = "mech_lights_on"
+		else
+			act.button_icon_state = "mech_lights_off"
+		balloon_alert(occupant, "toggled lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
+		act.build_all_button_icons()

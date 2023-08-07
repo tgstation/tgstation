@@ -3,7 +3,10 @@
 	proper_name = "Mecha Control"
 
 /datum/wires/mecha/New(atom/holder)
-	wires = list(WIRE_IDSCAN, WIRE_DISARM, WIRE_ZAP, WIRE_LIGHT, WIRE_OVERCLOCK)
+	wires = list(WIRE_IDSCAN, WIRE_DISARM, WIRE_ZAP, WIRE_OVERCLOCK)
+	var/obj/vehicle/sealed/mecha/mecha = holder
+	if(mecha.mecha_flags & HAS_LIGHTS)
+		wires += WIRE_LIGHT
 	add_duds(3)
 	..()
 
@@ -19,7 +22,8 @@
 	status += "The orange light is [mecha.internal_damage & MECHA_INT_SHORT_CIRCUIT ? "on" : "off"]."
 	status += "The red light is [mecha.overclock_mode ? "blinking" : "off"]."
 	status += "The green light is [(mecha.mecha_flags & ID_LOCK_ON) || mecha.dna_lock ? "on" : "off"]."
-	status += "The yellow light is [mecha.light_on ? "on" : "off"]."
+	if(mecha.mecha_flags & HAS_LIGHTS)
+		status += "The yellow light is [mecha.light_on ? "on" : "off"]."
 	status += "The blue light is [mecha.equipment_disabled ? "on" : "off"]."
 	return status
 

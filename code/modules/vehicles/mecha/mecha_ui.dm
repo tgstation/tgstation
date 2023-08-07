@@ -206,13 +206,14 @@
 			set_cabin_seal(usr, !cabin_sealed)
 		if("toggle_id_lock")
 			mecha_flags ^= ID_LOCK_ON
+		if("toggle_lights")
+			toggle_lights(user = usr)
 		if("toggle_overclock")
 			toggle_overclock()
 			var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in usr.actions
 			act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
 			act.build_all_button_icons()
 		if("repair_int_damage")
-			ui.close() //if doing this you're likely want to watch for bad people so close the UI
 			try_repair_int_damage(usr, params["flag"])
 			return FALSE
 		if("equip_act")

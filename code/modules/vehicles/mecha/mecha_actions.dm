@@ -47,20 +47,7 @@
 /datum/action/vehicle/sealed/mecha/mech_toggle_lights/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
-
-	if(!(chassis.mecha_flags & HAS_LIGHTS))
-		chassis.balloon_alert(owner, "the mech lights are broken!")
-		return
-	chassis.mecha_flags ^= LIGHTS_ON
-	if(chassis.mecha_flags & LIGHTS_ON)
-		button_icon_state = "mech_lights_on"
-	else
-		button_icon_state = "mech_lights_off"
-	chassis.set_light_on(chassis.mecha_flags & LIGHTS_ON)
-	chassis.balloon_alert(owner, "toggled lights [chassis.mecha_flags & LIGHTS_ON ? "on":"off"]")
-	playsound(chassis,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
-	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
-	build_all_button_icons()
+	chassis.toggle_lights(user = owner)
 
 /datum/action/vehicle/sealed/mecha/mech_view_stats
 	name = "View Stats"
