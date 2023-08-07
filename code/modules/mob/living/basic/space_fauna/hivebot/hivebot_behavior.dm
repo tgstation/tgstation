@@ -13,10 +13,11 @@
 	if(length(hive_partners))
 		return pick(hive_partners)
 
-
+/// behavior that allow us to go communicate with other hivebots
 /datum/ai_behavior/relay_message
+	///length of the message we will relay
 	var/length_of_message = 4
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT|AI_BEHAVIOR_REQUIRE_REACH
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT| AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 
 /datum/ai_behavior/relay_message/setup(datum/ai_controller/controller, target_key)
@@ -39,10 +40,7 @@
 		return
 	var/message_relayed = ""
 	for(var/i in 1 to length_of_message)
-		if(prob(50))
-			message_relayed += "1"
-			continue
-		message_relayed += "0"
+		message_relayed += prob(50) ? "1" : "0"
 	living_pawn.say(message_relayed, forced = "AI Controller")
 	finish_action(controller, TRUE, target_key)
 
@@ -61,10 +59,8 @@
 /datum/ai_behavior/hunt_target/repair_machines
 	always_reset_target = TRUE
 
-/datum/ai_behavior/hunt_target/repair_machines/target_caught(mob/living/hunter, obj/machinery/repair_target)
-	var/datum/callback/callback = CALLBACK(hunter, TYPE_PROC_REF(/mob/living/basic/hivebot/mechanic, repair_machine), repair_target)
-	callback.Invoke()
-
+/datum/ai_behavior/hunt_target/repair_machines/target_caught(mob/living/basic/hivebot/mechanic/hunter, obj/machinery/repair_target)
+	hunter.repair_machine(repair_target)
 /datum/ai_behavior/basic_ranged_attack/hivebot
 	action_cooldown = 3 SECONDS
 

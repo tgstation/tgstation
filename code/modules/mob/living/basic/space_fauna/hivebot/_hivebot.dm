@@ -100,13 +100,11 @@
 	SIGNAL_HANDLER
 
 	if(ismachinery(target))
-		var/obj/machinery/fixable = target
-		repair_machine(fixable)
+		repair_machine(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(istype(target, /mob/living/basic/hivebot))
-		var/mob/living/basic/bot_target = target
-		repair_hivebot(bot_target)
+		repair_hivebot(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 /mob/living/basic/hivebot/mechanic/proc/repair_machine(obj/machinery/fixable)
@@ -114,6 +112,7 @@
 		to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))
 		return
 	if(!COOLDOWN_FINISHED(src, repair_cooldown))
+		balloon_alert(src, "recharging!")
 		return
 	fixable.repair_damage(fixable.max_integrity - fixable.get_integrity())
 	do_sparks(number = 3, cardinal_only = TRUE, source = fixable)
@@ -125,6 +124,7 @@
 		to_chat(src, span_warning("Diagnostics indicate that this unit is at peak integrity."))
 		return
 	if(!COOLDOWN_FINISHED(src, repair_cooldown))
+		balloon_alert(src, "recharging!")
 		return
 	bot_target.revive(HEAL_ALL)
 	do_sparks(number = 3, cardinal_only = TRUE, source = bot_target)
