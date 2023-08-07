@@ -1,10 +1,6 @@
 GLOBAL_LIST_EMPTY(abscond_markers)
-/datum/lazy_template/reebe
-	key = LAZY_TEMPLATE_KEY_OUTPOST_OF_COGS
-	map_dir = "monkestation/_maps/lazy_templates"
-	map_name = "reebe"
 
-/// spawn the reeb z level and map template, lazy templates dont work because we need to give this ztraits
+/// spawn the reebe z level and map template, lazy templates dont work because we need to give this ztraits
 /proc/spawn_reebe(forced = FALSE)
 	var/static/reebe_loaded
 	if(forced)
@@ -28,7 +24,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 		reebe_loaded = FALSE
 		CRASH("Failed to reserve a block for Reebe.")
 
-	var/datum/map_template/reebe_template = new(path = "monkestation/_maps/lazy_templates/reebe.dmm", cache = TRUE)
+	var/datum/map_template/reebe_template = new(path = "monkestation/_maps/templates/reebe.dmm", cache = TRUE)
 	if(!reebe_template.cached_map) //might not be needed, im just copying lazy template code and I cant figure out what cached maps are for in this case
 		reebe_loaded = FALSE
 		CRASH("Failed to cache template for loading Reebe.")
