@@ -65,6 +65,8 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
+	new /obj/item/gun/ballistic/automatic/pistol/paco(src) //monkestation edit: paco sec
+	new /obj/item/ammo_box/magazine/m35(src) //monkestation edit: paco sec
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -113,6 +115,7 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+	new /obj/item/ammo_box/magazine/m35/rubber(src) //monkestation edit: Paco sec
 
 /obj/structure/closet/secure_closet/security/sec
 

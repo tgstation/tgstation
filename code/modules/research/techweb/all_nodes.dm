@@ -1484,6 +1484,7 @@
 		"zipties",
 		"inspector",
 		"mag_autorifle",
+		"rubber_c35", //monkestation edit: paco sec
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
@@ -1523,6 +1524,7 @@
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
+		"lethal_c35", //monkestation edit: paco sec
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 5000)
