@@ -27,10 +27,6 @@
 	if(damage_type == BRUTE || damage_type == BURN)
 		playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
 
-/obj/structure/energy_net/Destroy()
-	affected_mob = null
-	return ..()
-
 /obj/structure/energy_net/atom_destruction(damage_flag)
 	for(var/mob/recovered_mob as anything in buckled_mobs)
 		recovered_mob.visible_message(span_notice("[recovered_mob] is recovered from the energy net!"), span_notice("You are recovered from the energy net!"), span_hear("You hear a grunt."))
