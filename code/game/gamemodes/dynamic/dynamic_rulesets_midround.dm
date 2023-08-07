@@ -226,7 +226,7 @@
 	)
 	required_candidates = 1
 	weight = 35
-	cost = 3
+	cost = 5
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
