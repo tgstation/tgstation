@@ -675,6 +675,13 @@
 	if(!registered_account || registered_account.replaceable)
 		set_new_account(user)
 		return
+	if(registered_account.account_debt)
+		var/choice = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Pay Debt"))
+		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
+			return
+		if(choice == "Pay Debt")
+			pay_debt(user)
+			return
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return
@@ -696,6 +703,18 @@
 	else
 		var/difference = amount_to_remove - registered_account.account_balance
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
+
+/obj/item/card/id/proc/pay_debt(user)
+	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] cr)", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
+	if(!amount_to_pay || QDELETED(src) || loc != user || !alt_click_can_use_id(user))
+		return
+	var/prev_debt = registered_account.account_debt
+	var/amount_paid = registered_account.pay_debt(amount_to_pay)
+	if(amount_paid)
+		var/message = span_notice("You pay [amount_to_pay] credits of a [prev_debt] cr debt. [registered_account.account_debt] cr to go.")
+		if(!registered_account.account_debt)
+			message = span_nicegreen("You pay the last [amount_to_pay] credits of your debt, extinguishing it. Congratulations!")
+		to_chat(user, message)
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
@@ -745,6 +764,8 @@
 		if(registered_account.mining_points)
 			. += "There's [registered_account.mining_points] mining point\s loaded onto the card's bank account."
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		if(registered_account.account_debt)
+			. += span_warning("The account is currently indebted for [registered_account.account_debt] cr. [100*DEBT_COLLECTION_COEFF]% of all earnings will go towards extinguishing it.")
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
