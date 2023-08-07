@@ -18,6 +18,7 @@
 
 	item_type = /obj/item/stack/sheet/mineral/snow
 	delete_old = FALSE
+	delete_on_failure = FALSE
 
 /datum/mutation/human/cryokinesis
 	name = "Cryokinesis"

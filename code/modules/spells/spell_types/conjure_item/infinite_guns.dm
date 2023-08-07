@@ -8,6 +8,7 @@
 	item_type = /obj/item/gun/ballistic/rifle
 	// Enchanted guns self delete / do wacky stuff, anyways
 	delete_old = FALSE
+	requires_hands = TRUE
 
 /datum/action/cooldown/spell/conjure_item/infinite_guns/Remove(mob/living/remove_from)
 	var/obj/item/existing = remove_from.is_holding_item_of_type(item_type)
@@ -18,8 +19,8 @@
 
 // Because enchanted guns self-delete and regenerate themselves,
 // override make_item here and let's not bother with tracking their weakrefs.
-/datum/action/cooldown/spell/conjure_item/infinite_guns/make_item()
-	return new item_type()
+/datum/action/cooldown/spell/conjure_item/infinite_guns/make_item(atom/caster)
+	return new item_type(caster.loc)
 
 /datum/action/cooldown/spell/conjure_item/infinite_guns/gun
 	name = "Lesser Summon Guns"

@@ -21,6 +21,10 @@
 	/// Prevents a crew member from hitting "request pAI" repeatedly
 	var/request_spam = FALSE
 
+/obj/item/pai_card/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
