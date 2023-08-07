@@ -20294,7 +20294,6 @@
 /area/station/ai_monitored/command/storage/eva)
 "fpk" = (
 /obj/structure/filingcabinet,
-/obj/structure/filingcabinet,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/library/printer)
