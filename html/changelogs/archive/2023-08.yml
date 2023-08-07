@@ -239,3 +239,28 @@
   - qol: The "Malicious Software Detected" button has been appropriately renamed to
       "Reset Software" for when pAIs are emagged
   - qol: Add a new law notification popup and flavor texts when pAI is emagged
+2023-08-07:
+  EuSouAFazer:
+  - bugfix: Removed a doubled filing cabnet in Northstar's Library Book Return room
+  - bugfix: Exorcised uneeded variables from windoors in Meta's Xenobio
+  Ghommie:
+  - bugfix: Fixed a logic mistake for chasm fishing that resulted in only generic
+      items being spawned.
+  SandPoot:
+  - image: Changed screentips icons to something a lot fancier unified with the LMB
+      / RMB text.
+  - qol: There are accessibility preferences to disable this! Look for "Screentip
+      context with images" beside the other screentip preferences.
+  Sealed101:
+  - bugfix: fixed missing froth sprites
+  - image: bubblegum's blood smack and blood grab use new bubblegum sprites
+  Senefi:
+  - qol: Bluespace Artillery Cargo Crate includes a guide paper for how to assemble
+      it.
+  Sheits:
+  - image: Re-sprites some of the oldest hairstyles
+  Watermelon914:
+  - bugfix: Fixed particles sometimes being left behind when an object drops all of
+      its contents whilst having a particle active.
+  Wisemonster:
+  - bugfix: Fix mulebots receiving the wrong message when thier cell is added/removed.

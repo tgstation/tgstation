@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes:
-  - image: "Changed screentips icons to something a lot fancier unified with the LMB / RMB text."
-  - qol: "There are accessibility preferences to disable this! Look for \"Screentip context with images\" beside the other screentip preferences."
