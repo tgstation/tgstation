@@ -49,7 +49,6 @@
 
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)

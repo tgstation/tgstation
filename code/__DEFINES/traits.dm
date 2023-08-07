@@ -1096,6 +1096,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HALLUCINATION_TRAIT "hallucination_trait"
 /// Trait given by simple/basic mob death
 #define BASIC_MOB_DEATH_TRAIT "basic_mob_death"
+/// Trait given by your current speed
+#define SPEED_TRAIT "speed_trait"
 
 
 /**

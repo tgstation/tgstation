@@ -32,7 +32,6 @@
 
 /mob/living/basic/mining/basilisk/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	AddElement(/datum/element/ranged_attacks, projectiletype = default_projectile_type, projectilesound = default_projectile_sound)
 
 /mob/living/basic/mining/basilisk/welder_act(mob/living/user, obj/item/tool)
