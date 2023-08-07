@@ -42,7 +42,7 @@
 /obj/structure/energy_net/buckle_mob(mob/living/buckled_mob, force, check_loc)
 	. = ..()
 	if(.)
-		affected_mob = WEAKREF(.)
+		affected_mob = WEAKREF(buckled_mob)
 
 /obj/structure/energy_net/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
 	. = ..()

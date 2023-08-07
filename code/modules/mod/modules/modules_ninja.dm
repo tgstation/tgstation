@@ -312,6 +312,12 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 6
 	incompatible_modules = list(/obj/item/mod/module/energy_net)
 	cooldown_time = 5 SECONDS
+	/// List of all energy nets this module made.
+	var/list/energy_nets = list()
+
+/obj/item/mod/module/energy_net/on_suit_deactivation(deleting)
+	for(var/obj/structure/energy_net/net as anything in energy_nets)
+		net.atom_destruction(ENERGY)
 
 /obj/item/mod/module/energy_net/on_select_use(atom/target)
 	. = ..()
@@ -319,12 +325,19 @@
 		return
 	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
-	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc)
+	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.preparePixelProjectile(target, mod.wearer)
 	net.firer = mod.wearer
 	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
+
+/obj/item/mod/module/energy_net/proc/add_net(obj/structure/energy_net/net)
+	energy_nets += net
+	RegisterSignal(net, COMSIG_QDELETING, PROC_REF(remove_net))
+
+/obj/item/mod/module/energy_net/proc/remove_net(obj/structure/energy_net/net)
+	energy_nets -= net
 
 /obj/projectile/energy_net
 	name = "energy net"
@@ -336,6 +349,12 @@
 	hitsound_wall = 'sound/items/fultext_deploy.ogg'
 	/// Reference to the beam following the projectile.
 	var/line
+	/// Reference to the energy net module.
+	var/obj/item/mod/module/energy_net/net_module
+
+/obj/projectile/energy_net/Initialize(mapload, net_module)
+	. = ..()
+	src.net_module = net_module
 
 /obj/projectile/energy_net/fire(setAngle)
 	if(firer)
@@ -349,6 +368,8 @@
 	if(locate(/obj/structure/energy_net) in get_turf(target))
 		return
 	var/obj/structure/energy_net/net = new /obj/structure/energy_net(target.drop_location())
+	if(net_module)
+		net_module.add_net(net)
 	firer?.visible_message(span_danger("[firer] caught [target] with an energy net!"), span_notice("You caught [target] with an energy net!"))
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, force = TRUE)
