@@ -19,6 +19,11 @@
 	. = ..()
 	AddComponent(/datum/component/action_item_overlay, item_callback = CALLBACK(src, PROC_REF(get_marked)))
 
+/datum/action/cooldown/spell/summonitem/Destroy()
+	if(!isnull(marked_item))
+		unmark_item()
+	return ..()
+
 /// For use in callbacks to get the marked item
 /datum/action/cooldown/spell/summonitem/proc/get_marked()
 	return marked_item
@@ -28,17 +33,20 @@
 
 /// Set the passed object as our marked item
 /datum/action/cooldown/spell/summonitem/proc/mark_item(obj/to_mark)
-	name = "Recall [to_mark]"
 	marked_item = to_mark
 	RegisterSignal(marked_item, COMSIG_QDELETING, PROC_REF(on_marked_item_deleted))
+
+	name = "Recall [marked_item]"
 	build_all_button_icons()
 
 /// Unset our current marked item
 /datum/action/cooldown/spell/summonitem/proc/unmark_item()
-	name = initial(name)
 	UnregisterSignal(marked_item, COMSIG_QDELETING)
 	marked_item = null
-	build_all_button_icons()
+
+	if(!QDELING(src))
+		name = initial(name)
+		build_all_button_icons()
 
 /// Signal proc for [COMSIG_QDELETING] on our marked item, unmarks our item if it's deleted
 /datum/action/cooldown/spell/summonitem/proc/on_marked_item_deleted(datum/source)
