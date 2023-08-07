@@ -47,12 +47,15 @@
 	var/amber_distance_threshold = AMBER_THRESHOLD_NORMAL
 	var/red_distance_threshold = RED_THRESHOLD_NORMAL
 
-/obj/machinery/icts/crossing_signal/screwdriver_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, null, null, tool) // SHOG TODO - replace null with real icon states
+/obj/machinery/icts/crossing_signal/attackby(obj/item/weapon, mob/user, params)
+	if (!user.combat_mode)
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
+			return
 
-/obj/machinery/icts/crossing_signal/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, null, null, tool)
+		if(default_deconstruction_crowbar(item))
+			return
 
+	return ..()
 
 /** Crossing signal subtypes
  *
