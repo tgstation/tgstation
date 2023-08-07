@@ -23,6 +23,9 @@
 
 	var/can_be_bloody = TRUE
 
+	///Prevents the article of clothing from gaining the mood boost from washing. Used for the tacticool turtleneck.
+	var/stubborn_stains = FALSE
+
 	/// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
 
