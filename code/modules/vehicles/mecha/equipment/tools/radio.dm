@@ -46,7 +46,8 @@
 ///Internal radio got deleted, somehow
 /obj/item/mecha_parts/mecha_equipment/radio/proc/radio_deleted()
 	SIGNAL_HANDLER
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/radio/mech
 	subspace_transmission = TRUE
