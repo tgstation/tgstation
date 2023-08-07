@@ -54316,10 +54316,6 @@
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/hop)
-"tgJ" = (
-/obj/structure/rack,
-/turf/open/floor/iron/small,
-/area/station/medical/chem_storage)
 "tgR" = (
 /obj/structure/disposalpipe/junction/flip{
 	dir = 1
@@ -59055,6 +59051,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"uMl" = (
+/obj/structure/rack,
+/turf/open/floor/iron/small,
+/area/station/medical/chem_storage)
 "uMu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -98845,7 +98845,7 @@ qtl
 dDB
 dDB
 qIf
-tgJ
+uMl
 cUE
 wCa
 ulb
@@ -99359,7 +99359,7 @@ qtl
 dDB
 dDB
 qIf
-tgJ
+uMl
 cUE
 bDj
 onP
