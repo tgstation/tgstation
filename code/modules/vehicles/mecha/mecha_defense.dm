@@ -221,12 +221,12 @@
 	if(weapon.GetID())
 		if(!allowed(user))
 			if(mecha_flags & ID_LOCK_ON)
-				balloon_alert(user, "Access denied!")
+				balloon_alert(user, "access denied!")
 			else
-				balloon_alert(user, "Unable to set ID lock!")
+				balloon_alert(user, "unable to set ID lock!")
 			return
 		mecha_flags ^= ID_LOCK_ON
-		balloon_alert(user, "ID lock [mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"]!")
+		balloon_alert(user, "[mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"] ID lock !")
 		return
 
 	if(istype(weapon, /obj/item/mecha_parts))
