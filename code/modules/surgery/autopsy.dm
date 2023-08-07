@@ -40,7 +40,7 @@
 	tool.scan_cadaver(user, target)
 	var/obj/machinery/computer/operating/operating_computer = surgery.locate_operating_computer(get_turf(target))
 	if (!isnull(operating_computer))
-		SEND_SIGNAL(operating_computer, COMSIG_OPERATING_COMPUTER_AUTOSPY_COMPLETE, target)
+		SEND_SIGNAL(operating_computer, COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE, target)
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
 		morbid_weirdo.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
