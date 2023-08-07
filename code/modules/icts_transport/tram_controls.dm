@@ -8,6 +8,7 @@
 	layer = SIGN_LAYER
 	density = FALSE
 	circuit = /obj/item/circuitboard/computer/icts_controls
+	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
@@ -29,14 +30,6 @@
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
 	if(icts_controller)
 		RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(update_tram_display))
-
-/obj/machinery/computer/icts_controls/attackby(obj/item/weapon, mob/living/user, params)
-	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
-
-	return ..()
-
 
 /**
  * Finds the tram from the console

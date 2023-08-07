@@ -1369,13 +1369,6 @@
 	name = "Destination Indicator"
 	build_path = /obj/machinery/icts/destination_sign/indicator
 
-/obj/item/circuitboard/machine/icts_controls
-	name = "Tram Controls"
-	build_path = /obj/machinery/computer/icts_controls
-	req_components = list(
-		/datum/stock_part/servo = 1,
-	)
-
 /obj/item/circuitboard/machine/icts_controller
 	name = "Tram Controller"
 	build_path = /obj/machinery/icts/controller
