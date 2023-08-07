@@ -324,6 +324,15 @@
 	hardcore_value = 4
 	mail_goodies = list(/obj/effect/spawner/random/medical/minor_healing)
 
+/datum/quirk/light_drinker/add() //monkestation addition
+	if(isipc(quirk_holder))
+		quirk_holder.physiology.brute_mod *= 1.3
+		quirk_holder.physiology.burn_mod *= 1.3
+
+/datum/quirk/light_drinker/post_add() //monkestation addition
+	if(isipc(quirk_holder))
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
+
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
@@ -374,6 +383,15 @@
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/reagent_containers/cup/glass/waterbottle)
+
+/datum/quirk/light_drinker/add() //monkestation addition
+	if(isipc(quirk_holder))
+		quirk_holder.physiology.brute_mod *= 1.1
+		quirk_holder.physiology.burn_mod *= 1.1
+
+/datum/quirk/light_drinker/post_add() //monkestation addition
+	if(isipc(quirk_holder))
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels very slightly weaker."))
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
@@ -544,6 +562,11 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 
+/datum/quirk/prosthetic_limb/add() //monkestation addition
+	if(isipc(quirk_holder))
+		quirk_holder.physiology.brute_mod *= 1.15
+		quirk_holder.physiology.burn_mod *= 1.15
+
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -566,6 +589,8 @@
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment."))
+	if(isipc(quirk_holder)) //monkestation addition
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels slightly weaker."))
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
@@ -575,6 +600,11 @@
 	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs."
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+
+/datum/quirk/quadruple_amputee/add() //monkestation addition
+	if(isipc(quirk_holder))
+		quirk_holder.physiology.brute_mod *= 1.3
+		quirk_holder.physiology.burn_mod *= 1.3
 
 /datum/quirk/quadruple_amputee/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -586,6 +616,9 @@
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+	if(isipc(quirk_holder)) //monkestation addition
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
+
 
 /datum/quirk/pushover
 	name = "Pushover"
@@ -922,6 +955,11 @@
 	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood,/datum/reagent/medicine/cordiolis_hepatico,/datum/reagent/medicine/synaphydramine,/datum/reagent/medicine/diphenhydramine)
 	var/allergy_string
 
+/datum/quirk/item_quirk/allergic/add() //monkestation addition
+	if(isipc(quirk_holder))
+		quirk_holder.physiology.brute_mod *= 1.3
+		quirk_holder.physiology.burn_mod *= 1.3
+
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
 	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
 	var/list/allergy_chem_names = list()
@@ -943,6 +981,8 @@
 /datum/quirk/item_quirk/allergic/post_add()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
+	if(isipc(quirk_holder)) //monkestation addition
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
 
 /datum/quirk/item_quirk/allergic/process(seconds_per_tick)
 	if(!iscarbon(quirk_holder))
@@ -1170,7 +1210,7 @@
 	icon = "diamond-exclamation"
 	//All effects are handled directly in butts.dm
 
-/datum/quirk/kleptomaniac
+/datum/quirk/kleptomaniac //Monkestation addition
 	name = "Kleptomaniac"
 	desc = "The station's just full of free stuff!  Nobody would notice if you just... took it, right?"
 	mob_trait = TRAIT_KLEPTOMANIAC
