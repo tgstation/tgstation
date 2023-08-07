@@ -22,8 +22,6 @@
 	can_buckle = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
-	///The creature currently caught in the net
-	var/datum/weakref/affected_mob
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BRUTE || damage_type == BURN)
@@ -34,20 +32,9 @@
 	return ..()
 
 /obj/structure/energy_net/atom_destruction(damage_flag)
-	var/mob/recovered_mob = affected_mob?.resolve()
-	if(recovered_mob)
+	for(var/mob/recovered_mob as anything in buckled_mobs)
 		recovered_mob.visible_message(span_notice("[recovered_mob] is recovered from the energy net!"), span_notice("You are recovered from the energy net!"), span_hear("You hear a grunt."))
 	return ..()
-
-/obj/structure/energy_net/buckle_mob(mob/living/buckled_mob, force, check_loc)
-	. = ..()
-	if(.)
-		affected_mob = WEAKREF(buckled_mob)
-
-/obj/structure/energy_net/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
-	. = ..()
-	if(.)
-		affected_mob = null
 
 /obj/structure/energy_net/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

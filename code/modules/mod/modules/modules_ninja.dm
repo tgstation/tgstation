@@ -337,6 +337,7 @@
 	RegisterSignal(net, COMSIG_QDELETING, PROC_REF(remove_net))
 
 /obj/item/mod/module/energy_net/proc/remove_net(obj/structure/energy_net/net)
+	SIGNAL_HANDLER
 	energy_nets -= net
 
 /obj/projectile/energy_net
@@ -350,11 +351,11 @@
 	/// Reference to the beam following the projectile.
 	var/line
 	/// Reference to the energy net module.
-	var/obj/item/mod/module/energy_net/net_module
+	var/datum/weakref/net_module
 
 /obj/projectile/energy_net/Initialize(mapload, net_module)
 	. = ..()
-	src.net_module = net_module
+	src.net_module = WEAKREF(net_module)
 
 /obj/projectile/energy_net/fire(setAngle)
 	if(firer)
@@ -368,8 +369,9 @@
 	if(locate(/obj/structure/energy_net) in get_turf(target))
 		return
 	var/obj/structure/energy_net/net = new /obj/structure/energy_net(target.drop_location())
-	if(net_module)
-		net_module.add_net(net)
+	var/obj/item/mod/module/energy_net/module = net_module?.resolve()
+	if(module)
+		module.add_net(net)
 	firer?.visible_message(span_danger("[firer] caught [target] with an energy net!"), span_notice("You caught [target] with an energy net!"))
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, force = TRUE)
