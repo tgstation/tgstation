@@ -14,6 +14,6 @@
 	var/mob/living/carbon/human/ayy_two = allocate(/mob/living/carbon/human/consistent)
 	ayy_two.equipOutfit(/datum/outfit/abductor/scientist/onemanteam)
 
-	var/datum/action/cooldown/spell/summonitem/abductor/summon = locate() in ayy_two.actions
-	TEST_ASSERT_NOTNULL(summon, "Abductor solo agent does not have summon item spell.")
-	TEST_ASSERT(istype(summon.marked_item, /obj/item/melee/baton/abductor), "Abductor solo agent's summon item spell did not mark their baton.")
+	var/datum/action/cooldown/spell/summonitem/abductor/summon_two = locate() in ayy_two.actions
+	TEST_ASSERT_NOTNULL(summon_two, "Abductor solo agent does not have summon item spell.")
+	TEST_ASSERT(istype(summon_two.marked_item, /obj/item/melee/baton/abductor), "Abductor solo agent's summon item spell did not mark their baton.")
