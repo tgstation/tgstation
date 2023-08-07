@@ -1,4 +1,0 @@
-author: "EuSouAFazer"
-delete-after: True
-changes:
-  - bugfix: "Exorcised uneeded variables from windoors in Meta's Xenobio"
