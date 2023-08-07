@@ -24,11 +24,18 @@
 			for(var/obj/item/abductor/gizmo/G in B.contents)
 				console.AddGizmo(G)
 
-/datum/outfit/abductor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(!visualsOnly)
-		link_to_console(H)
+/datum/outfit/abductor/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
 
+	link_to_console(user)
+
+	var/obj/item/melee/baton/abductor/batong = locate() in user
+	if(!isnull(batong))
+		var/datum/action/cooldown/spell/summonitem/abductor/ayy_summon = new(user.mind || user)
+		ayy_summon.mark_item(batong)
+		ayy_summon.Grant(user)
 
 /datum/outfit/abductor/agent
 	name = "Abductor Agent"
