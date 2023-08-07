@@ -1147,7 +1147,7 @@
 	if(C?.registered_account)
 		.["user"] = list()
 		.["user"]["name"] = C.registered_account.account_holder
-		.["user"]["cash"] = C.registered_account.account_balance
+		.["user"]["cash"] = fetch_balance_to_use(C)
 		if(C.registered_account.account_job)
 			.["user"]["job"] = C.registered_account.account_job.title
 			.["user"]["department"] = C.registered_account.account_job.paycheck_department
@@ -1282,7 +1282,8 @@
 			flick(icon_deny,src)
 			vend_ready = TRUE
 			return
-		proceed_payment(C, R, price_to_use)
+		if(!proceed_payment(C, R, price_to_use))
+			return
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
 		speak(vend_response)
@@ -1310,6 +1311,9 @@
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 	vend_ready = TRUE
 
+/obj/machinery/vending/proc/fetch_balance_to_use(obj/item/card/id/passed_id)
+	return passed_id.registered_account.account_balance
+
 /obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use)
 	var/datum/bank_account/account = paying_id_card.registered_account
 	if(account.account_job && account.account_job.paycheck_department == payment_department)
@@ -1322,7 +1326,7 @@
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
 		vend_ready = TRUE
-		return
+		return FALSE
 	//actual payment here
 	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)
 	if(paying_id_account)
@@ -1330,6 +1334,7 @@
 		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 		SSeconomy.track_purchase(account, price_to_use, name)
 		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
+	return TRUE
 
 /obj/machinery/vending/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER))
