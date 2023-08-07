@@ -36,7 +36,7 @@
 /turf/open/space/transit/proc/initialize_drifting(atom/entered, atom/movable/enterer)
 	SIGNAL_HANDLER
 
-	if(enterer && !HAS_TRAIT(enterer, TRAIT_HYPERSPACED) && !(locate(/obj/structure/lattice) in contents))
+	if(enterer && !HAS_TRAIT(enterer, TRAIT_HYPERSPACED) && !HAS_TRAIT(src, TRAIT_HYPERSPACE_STOPPED))
 		enterer.AddComponent(/datum/component/shuttle_cling, REVERSE_DIR(dir))
 
 /turf/open/space/transit/proc/initialize_drifting_but_from_initialize(atom/movable/location, atom/movable/enterer, mapload)
