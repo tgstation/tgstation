@@ -1,6 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - rscadd: "Add pAI movement freedom when emagged."
-  - qol: "The \"Malicious Software Detected\" button has been appropriately renamed to \"Reset Software\" for when pAIs are emagged"
-  - qol: "Add a new law notification popup and flavor texts when pAI is emagged"

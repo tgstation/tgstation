@@ -165,3 +165,43 @@
       of having to perform that poll yourself manually. When offering to ghosts you
       can also offer for several ghosts to volunteer at the same time.
   - bugfix: golems that ate plasma are properly immune to ash storms
+2023-08-07:
+  Kryson, MTandi, Zeckle (Mike):
+  - image: New bottles and holy grenade sprites
+  NaakaKo:
+  - bugfix: Fixed being unable to purchase regular-priced uplink items if you bought
+      the discounted variant of it.
+  - rscadd: Cursed crewmembers can randomly, extremely rarely, spontaneously combust
+      for no reason.
+  - rscadd: Cursed crewmembers can get zapped by nearby light tubes.
+  - rscadd: Cursed crewmembers can freak out when passing by mirrors.
+  - rscadd: To make up for these, triggering a cursed effect is slightly less than
+      half as likely now when walking around now.
+  - bugfix: Boss music cuts out when you die.
+  - image: bubblegum's blood smack and blood grab use new bubblegum sprites
+  - bugfix: Goliaths no longer intermittently reset their target and retarget something
+      else.
+  - bugfix: Goliaths can once again step diagonally.
+  - image: Re-sprites some of the oldest hairstyles
+  - rscadd: Add pAI movement freedom when emagged.
+  - qol: The "Malicious Software Detected" button has been appropriately renamed to
+      "Reset Software" for when pAIs are emagged
+  - qol: Add a new law notification popup and flavor texts when pAI is emagged
+  - bugfix: sniper scope and kinesis should work without widescreen
+  - image: Changed screentips icons to something a lot fancier unified with the LMB
+      / RMB text.
+  - qol: There are accessibility preferences to disable this! Look for "Screentip
+      context with images" beside the other screentip preferences.
+  - bugfix: Restores a lost feature, Clarkes and Odysseus mechs once again can pivot
+      on a dime and step in the same button press.
+  - qol: Mechs universally have diagonal movement as to avoid unresponsive movement,
+      as block diagonal movement was having unintended side effects and was actually
+      intended for pivot step mechs.
+  Rhials:
+  - qol: Most of the colored oval-shaped portals faintly glow now. Cool!
+  Senefi:
+  - code_imp: Autowiki module for stock parts
+  - bugfix: Emergency lights no longer runtime when created in nullspace
+  Vekter:
+  - bugfix: Fixed the DNA Infuser's circuit board missing from the techfab and tech
+      storage.
