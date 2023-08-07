@@ -1447,10 +1447,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
-	//when in a cryo unit we suspend all natural body regulation
-	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-
 	//Only stabilise core temp when alive and not in statis
 	if(humi.stat < DEAD && !IS_IN_STASIS(humi))
 		body_temperature_core(humi, seconds_per_tick, times_fired)

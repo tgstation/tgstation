@@ -478,7 +478,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ck" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},

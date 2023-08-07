@@ -228,16 +228,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/cryotube
-	name = "Cryotube Board"
-	desc = "The circuit board for a cryotube."
-	id = "cryotube"
-	build_path = /obj/item/circuitboard/machine/cryo_tube
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/board/chem_dispenser
 	name = "Portable Chem Dispenser Board"
 	desc = "The circuit board for a portable chem dispenser."

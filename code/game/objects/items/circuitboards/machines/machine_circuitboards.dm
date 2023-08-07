@@ -805,15 +805,6 @@
 	to_chat(user, span_notice("You change the circuit board setting to \"[new_name]\"."))
 	return TRUE
 
-/obj/item/circuitboard/machine/cryo_tube
-	name = "Cryotube"
-	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
-	req_components = list(
-		/datum/stock_part/matter_bin = 1,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/stack/sheet/glass = 4)
-
 /obj/item/circuitboard/machine/fat_sucker
 	name = "Lipid Extractor"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL

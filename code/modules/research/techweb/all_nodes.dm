@@ -1268,7 +1268,6 @@
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list(
 		"cryo_grenade",
-		"cryotube",
 		"splitbeaker",
 		"stasis",
 	)

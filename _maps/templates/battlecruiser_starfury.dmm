@@ -3885,7 +3885,6 @@
 /turf/open/floor/engine,
 /area/shuttle/sbc_starfury)
 "qQ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "qS" = (

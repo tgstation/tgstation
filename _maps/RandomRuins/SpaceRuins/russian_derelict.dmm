@@ -1390,7 +1390,6 @@
 /obj/item/circuitboard/computer/operating{
 	pixel_y = 6
 	},
-/obj/item/circuitboard/machine/cryo_tube,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "qh" = (

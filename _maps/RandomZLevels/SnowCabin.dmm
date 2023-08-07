@@ -426,7 +426,6 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bF" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bG" = (

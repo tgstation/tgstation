@@ -324,7 +324,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/storage/pill_bottle,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
-		/obj/machinery/atmospherics/components/unary/cryo_cell,
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/door/airlock/medical,
 		/obj/machinery/sleeper,
