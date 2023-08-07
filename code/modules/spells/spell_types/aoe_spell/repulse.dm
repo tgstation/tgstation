@@ -8,7 +8,7 @@
 
 /datum/action/cooldown/spell/aoe/repulse/get_caster_from_target(atom/target)
 	if(istype(target.loc, /obj/structure/closet))
-		return target.loc
+		return target
 
 	return ..()
 

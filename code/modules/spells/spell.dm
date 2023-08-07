@@ -144,9 +144,7 @@
 		return FALSE
 	if(target == owner)
 		target = get_caster_from_target(target)
-		if(isnull(target))
-			return FALSE
-	if(!is_valid_target(target))
+	if(isnull(target) || !is_valid_target(target))
 		return FALSE
 
 	return Activate(target)
