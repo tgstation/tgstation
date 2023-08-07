@@ -29,7 +29,8 @@
 	if(visualsOnly)
 		return
 
-	link_to_console(user)
+	if(!isnull(user.mind))
+		link_to_console(user)
 
 	var/obj/item/melee/baton/abductor/batong = locate() in user
 	if(!isnull(batong))
