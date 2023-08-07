@@ -24,17 +24,17 @@
 		/obj/item/stack/ore/diamond = 2,
 		/obj/item/stack/sheet/sinew = 2,
 	)
-	/// How often can we shoot?
-	var/ranged_cooldown = 3 SECONDS
-	/// What kind of beam do we fire?
-	var/default_projectile_type = /obj/projectile/temp/watcher
-	/// What does it sound like when we fire a beam?
-	var/default_projectile_sound = 'sound/weapons/pierce.ogg'
+	/// The component we use for making ranged attacks
+	var/datum/component/ranged_attacks/ranged_attacks
 
 /mob/living/basic/mining/basilisk/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ranged_attacks, projectiletype = default_projectile_type, projectilesound = default_projectile_sound)
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
+	ranged_attacks = AddComponent(/datum/component/ranged_attacks, projectile_type = /obj/projectile/temp/watcher, projectile_sound = 'sound/weapons/pierce.ogg')
+
+/mob/living/basic/mining/basilisk/Destroy()
+	QDEL_NULL(ranged_attacks)
+	. = ..()
 
 /mob/living/basic/mining/basilisk/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -65,6 +65,10 @@
 	if (stat != CONSCIOUS || has_status_effect(/datum/status_effect/basilisk_overheat))
 		return
 	apply_status_effect(/datum/status_effect/basilisk_overheat)
+
+/// Change what kind of beam we fire
+/mob/living/basic/mining/basilisk/proc/set_projectile_type(projectile_type)
+	ranged_attacks.projectile_type = projectile_type
 
 /datum/ai_controller/basic_controller/Basilisk
 	blackboard = list(

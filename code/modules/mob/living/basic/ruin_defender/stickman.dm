@@ -78,7 +78,7 @@
 	. = ..()
 	var/static/list/stickman_drops = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
 	AddElement(/datum/element/death_drops, stickman_drops)
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')
+	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/c9mm, projectile_sound = 'sound/misc/bang.ogg', cooldown_time = 5 SECONDS)
 
 /datum/ai_controller/basic_controller/stickman/ranged
 	planning_subtrees = list(

@@ -31,7 +31,7 @@
 /mob/living/basic/mining/watcher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/ranged_attacks, projectiletype = projectile_type, projectilesound = 'sound/weapons/pierce.ogg')
+	AddComponent(/datum/component/ranged_attacks, projectile_type = projectile_type, projectile_sound = 'sound/weapons/pierce.ogg')
 
 /// For map generation, has a chance to instantiate as a special subtype
 /mob/living/basic/mining/watcher/random

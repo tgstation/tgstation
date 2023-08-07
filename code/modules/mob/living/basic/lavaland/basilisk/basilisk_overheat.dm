@@ -2,8 +2,6 @@
 /datum/status_effect/basilisk_overheat
 	id = "basilisk_overheat"
 	duration = 3 MINUTES
-	/// What kind of beam do we fire when heated up?
-	var/hot_projectiles = /obj/projectile/basilisk_hot
 	/// Things which will chill us out if we get hit by them
 	var/static/list/chilling_reagents = list(
 		/datum/reagent/medicine/cryoxadone,
@@ -27,17 +25,7 @@
 	hot_stuff.icon_state = "Basilisk_alert"
 	hot_stuff.update_appearance(UPDATE_ICON_STATE)
 	hot_stuff.add_movespeed_modifier(/datum/movespeed_modifier/basilisk_overheat)
-
-	hot_stuff.RemoveElement(\
-		/datum/element/ranged_attacks,\
-		projectiletype = hot_stuff.default_projectile_type,\
-		projectilesound = hot_stuff.default_projectile_sound,\
-	)
-	hot_stuff.AddElement(\
-		/datum/element/ranged_attacks,\
-		projectiletype = hot_projectiles,\
-		projectilesound = hot_stuff.default_projectile_sound,\
-	)
+	hot_stuff.set_projectile_type(/obj/projectile/basilisk_hot)
 
 	RegisterSignal(hot_stuff, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(hot_stuff, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_splashed))
@@ -48,17 +36,7 @@
 	var/mob/living/basic/mining/basilisk/hot_stuff = owner
 	hot_stuff.icon_living = "Basilisk"
 	hot_stuff.icon_state = "Basilisk"
-
-	hot_stuff.RemoveElement(\
-		/datum/element/ranged_attacks,\
-		projectiletype = hot_projectiles,\
-		projectilesound = hot_stuff.default_projectile_sound,\
-	)
-	hot_stuff.AddElement(\
-		/datum/element/ranged_attacks,\
-		projectiletype = hot_stuff.default_projectile_type,\
-		projectilesound = hot_stuff.default_projectile_sound,\
-	)
+	hot_stuff.set_projectile_type(/obj/projectile/temp/watcher)
 
 	hot_stuff.update_appearance(UPDATE_ICON_STATE)
 	hot_stuff.remove_movespeed_modifier(/datum/movespeed_modifier/basilisk_overheat)
