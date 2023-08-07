@@ -223,3 +223,9 @@
 	desc = "Don't be such a baby, it's just a heart attack. You've bounced back from worse!"
 	database_id = MEDAL_HEALTHY
 	icon = "picofhealth"
+
+/datum/award/achievement/misc/debt_extinguished
+	name = "Outdebted"
+	desc = "I've paid my dues, shift after shift... I've done my sentence but commited no griff..."
+	database_id = MEDAL_DEBT_EXTINGUISHED
+	icon = "outdebted"

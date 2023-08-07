@@ -51,6 +51,7 @@
 #define MEDAL_NARSUPREME "Narsupreme"
 #define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
 #define MEDAL_HEALTHY "Heart Healthy"
+#define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
 #define MEDAL_ARCHMAGE "Archmage"
 
 //Skill medal hub IDs
