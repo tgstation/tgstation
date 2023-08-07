@@ -55,7 +55,7 @@
 	if(istype(parent, /obj/machinery/destructive_scanner))
 		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, PROC_REF(try_run_destructive_experiment))
 	if(istype(parent, /obj/machinery/computer/operating))
-		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_AUTOSPY_COMPLETE, PROC_REF(try_run_autopsy_experiment))
+		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE, PROC_REF(try_run_autopsy_experiment))
 
 	// Determine UI display mode
 	switch(config_mode)
