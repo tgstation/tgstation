@@ -435,11 +435,22 @@
 	density = FALSE
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
+	circuit = /obj/item/circuitboard/machine/icts_controller
 	var/datum/transport_controller/linear/tram/controller_datum
 
 /obj/machinery/icts/controller/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/icts/controller/attackby(obj/item/weapon, mob/living/user, params)
+	if (!user.combat_mode)
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
+			return
+
+		if(default_deconstruction_crowbar(weapon))
+			return
+
+	return ..()
 
 /**
  * Mapped or built tram cabinet isn't located on a transport module.

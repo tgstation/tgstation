@@ -35,9 +35,6 @@
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
 
-		if(default_deconstruction_crowbar(weapon))
-			return
-
 	return ..()
 
 

@@ -1376,6 +1376,13 @@
 		/datum/stock_part/servo = 1,
 	)
 
+/obj/item/circuitboard/machine/icts_controller
+	name = "Tram Controller"
+	build_path = /obj/machinery/icts/controller
+	req_components = list(
+		/datum/stock_part/servo = 1,
+	)
+
 /obj/item/circuitboard/machine/guideway_sensor
 	name = "Guideway Sensor"
 	build_path = /obj/machinery/icts/guideway_sensor
