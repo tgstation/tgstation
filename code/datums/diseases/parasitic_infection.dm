@@ -19,12 +19,6 @@
 	if(!.)
 		return
 
-	var/obj/item/organ/internal/liver/affected_liver = affected_mob.get_organ_by_type(/obj/item/organ/internal/liver)
-	if(!affected_liver)
-		affected_mob.visible_message(span_notice("<B>[affected_mob]'s liver is covered in tiny larva! They quickly shrivel and die after being exposed to the open air.</B>"))
-		cure()
-		return FALSE
-
 	switch(stage)
 		if(1)
 			if(SPT_PROB(2.5, seconds_per_tick))
@@ -48,6 +42,8 @@
 				else
 					to_chat(affected_mob, span_warning("You feel much, MUCH lighter!"))
 					affected_mob.vomit(20, TRUE)
+					// disease code already checks if the liver exists otherwise it is cured
+					var/obj/item/organ/internal/liver/affected_liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 					affected_liver.Remove(affected_mob)
 					affected_liver.forceMove(get_turf(affected_mob))
 					cure()
