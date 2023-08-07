@@ -51,7 +51,8 @@
 	QDEL_NULL(charge)
 	return ..()
 
-/mob/living/basic/mining/lobstrosity/ranged_secondary_attack(atom/atom_target, modifiers)
+/mob/living/basic/mining/lobstrosity/secondary_click_on_without_item_at_range(atom/atom_target, modifiers)
+	. = ..()
 	charge.Trigger(target = atom_target)
 
 /// Lavaland lobster variant, it basically just looks different
@@ -73,9 +74,12 @@
 		return
 	var/mob/living/basic/basic_source = source
 	var/mob/living/living_target = target
-	basic_source.melee_attack(living_target)
+	var/pre_combat = basic_source.combat_mode
+	basic_source.set_combat_mode(TRUE)
+	basic_source.ClickOn(living_target)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
 	basic_source.start_pulling(living_target)
+	basic_source.set_combat_mode(pre_combat)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	. = ..()
