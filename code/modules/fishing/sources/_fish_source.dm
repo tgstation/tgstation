@@ -199,7 +199,7 @@ GLOBAL_LIST(fishing_property_cache)
 				if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
 					final_table[result] *= 10
 				else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
-					final_table[result] *= 3
+					final_table[result] = round(final_table[result] * 3.5, 1)
 				else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 					final_table[result] *= 2
 				if(!HAS_TRAIT(bait, OMNI_BAIT_TRAIT))
@@ -212,9 +212,9 @@ GLOBAL_LIST(fishing_property_cache)
 					var/list/disliked_bait = fish_list_properties[result][NAMEOF(caught_fish, disliked_bait)]
 					for(var/bait_identifer in disliked_bait)
 						if(is_matching_bait(bait, bait_identifer))
-							final_table[result] *= 0.5
+							final_table[result] = round(final_table[result] * 0.5, 1)
 			else
-				final_table[result] *= 0.2 //Fishing without bait is not going to be easy
+				final_table[result] *= round(final_table[result] * 0.15, 1) //Fishing without bait is not going to be easy
 
 			// Apply fish trait modifiers
 			var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
@@ -227,7 +227,7 @@ GLOBAL_LIST(fishing_property_cache)
 				multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]
 
 			final_table[result] += additive_mod
-			final_table[result] *= multiplicative_mod
+			final_table[result] = round(final_table[result] * multiplicative_mod, 1)
 
 		if(final_table[result] <= 0)
 			final_table -= result

@@ -72,16 +72,16 @@
 
 /obj/item/fishing_rod/examine(mob/user)
 	. = ..()
-	. += "<b>Right-Click</b> this item in your active hand to access the slots UI"
+	. += "<b>Right-Click</b> in your active hand to access its slots UI"
 	var/list/equipped_stuff = list()
 	if(line)
-		equipped_stuff += "<b>[line.name]</b>"
+		equipped_stuff += "[icon2html(line, user)] <b>[line.name]</b>"
 	if(hook)
-		equipped_stuff += "<b>[hook.name]</b>"
+		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
 	if(length(equipped_stuff))
 		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
 	if(bait)
-		. += span_notice("\a <b>[bait]</b> is being used as bait.")
+		. += span_notice("\a [icon2html(bait, user)] <b>[bait]</b> is being used as bait.")
 	else
 		. += span_warning("It doesn't have any bait attached. Fishing will be more tedious!")
 

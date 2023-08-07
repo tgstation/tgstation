@@ -720,7 +720,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BASIC_QUALITY_BAIT "baic_quality_bait"
 #define TRAIT_GOOD_QUALITY_BAIT "good_quality_bait"
 #define TRAIT_GREAT_QUALITY_BAIT "great_quality_bait"
-/// Baits with this trait should be ignored by bait preferences
+/// Baits with this trait will ignore bait preferences and related fish traits.
 #define OMNI_BAIT_TRAIT "omni_bait"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"

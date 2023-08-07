@@ -53,10 +53,11 @@
 	rod_overlay_icon_state = "dough_overlay"
 
 /**
- * Bound the tech fishing rod and cannot be removed,
- * bait-related preferences and traits, both negative and positive,
- * are ignored by this bait. Otherwise you'd never be able to catch
- * some fish with it.
+ * Bound to the tech fishing rod, from which cannot be removed,
+ * Bait-related preferences and traits, both negative and positive,
+ * should be ignored by this bait.
+ * Otherwise it'd be hard/impossible to cath some fish with it,
+ * making that rod a shoddy choice in the long run.
  */
 /obj/item/food/bait/doughball/synthetic
 	name = "synthetic doughball"
