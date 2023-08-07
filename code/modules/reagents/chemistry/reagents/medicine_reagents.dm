@@ -170,22 +170,6 @@
 	mytray.adjust_plant_health(round(volume * 3))
 	mytray.adjust_toxic(-round(volume * 3))
 
-/datum/reagent/medicine/clonexadone
-	name = "Clonexadone"
-	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
-	color = "#3D3DC6"
-	taste_description = "muscle"
-	ph = 13
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
-/datum/reagent/medicine/clonexadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.bodytemperature < T0C)
-		affected_mob.adjustCloneLoss((0.00006 * (affected_mob.bodytemperature ** 2) - 6) * REM * seconds_per_tick, FALSE)
-		REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		. = TRUE
-	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (affected_mob.bodytemperature ** 2) + 0.75)
-	..()
-
 /datum/reagent/medicine/pyroxadone
 	name = "Pyroxadone"
 	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
