@@ -43,10 +43,10 @@
 
 	qdel(src)
 
-/datum/status_effect/jitter/tick()
+/datum/status_effect/jitter/tick(seconds_between_ticks)
 	// Resting helps against jitter
 	// While resting, we lose 8 seconds of duration (4 additional ticks) per tick
-	if(owner.resting && remove_duration(4 * initial(tick_interval)))
+	if(owner.resting && remove_duration(4 * seconds_between_ticks))
 		return
 
 	var/time_left_in_seconds = (duration - world.time) / 10
