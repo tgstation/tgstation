@@ -107,6 +107,8 @@
 	. = ..()
 	var/turf/target_turf = controller.blackboard[target_key]
 	var/mob/living/basic/basic_mob = controller.pawn
+	if(!basic_mob.CanReach(target_turf))
+		return
 	basic_mob.melee_attack(target_turf)
 	finish_action(controller, succeeded = TRUE)
 
