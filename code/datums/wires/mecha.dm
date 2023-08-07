@@ -35,6 +35,7 @@
 			mecha.dna_lock = null
 		if(WIRE_DISARM)
 			mecha.equipment_disabled = TRUE
+			mecha.set_mouse_pointer()
 		if(WIRE_ZAP)
 			mecha.internal_damage ^= MECHA_INT_SHORT_CIRCUIT
 		if(WIRE_LIGHT)
@@ -51,6 +52,7 @@
 				mecha.dna_lock = null
 		if(WIRE_DISARM)
 			mecha.equipment_disabled = !mend
+			mecha.set_mouse_pointer()
 		if(WIRE_ZAP)
 			if(mend)
 				mecha.internal_damage &= ~MECHA_INT_SHORT_CIRCUIT

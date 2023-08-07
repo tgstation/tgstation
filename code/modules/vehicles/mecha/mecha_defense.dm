@@ -209,9 +209,9 @@
 		return ..()
 	if(istype(weapon, /obj/item/mmi))
 		if(mmi_move_inside(weapon,user))
-			to_chat(user, span_notice("[src]-[weapon] interface initialized successfully."))
+			balloon_alert(user, "weapon initialized.")
 		else
-			to_chat(user, span_warning("[src]-[weapon] interface initialization failed."))
+			balloon_alert(user, "weapon initialization failed!")
 		return
 
 	if(istype(weapon, /obj/item/mecha_ammo))
@@ -221,12 +221,12 @@
 	if(weapon.GetID())
 		if(!allowed(user))
 			if(mecha_flags & ID_LOCK_ON)
-				to_chat(user, span_warning("Invalid ID: Access denied."))
+				balloon_alert(user, "Access denied!")
 			else
-				to_chat(user, span_warning("Invalid ID: Unable to set ID lock."))
+				balloon_alert(user, "Unable to set ID lock!")
 			return
 		mecha_flags ^= ID_LOCK_ON
-		to_chat(user, span_warning("ID lock [mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"]."))
+		balloon_alert(user, "ID lock [mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"]!")
 		return
 
 	if(istype(weapon, /obj/item/mecha_parts))
@@ -255,12 +255,12 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			cell = weapon
-			to_chat(user, span_notice("You install the power cell."))
+			balloon_alert(user, "intalled power cell")
 			diag_hud_set_mechcell()
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("Power cell installed", LOG_MECHA)
 		else
-			to_chat(user, span_warning("There's already a power cell installed!"))
+			balloon_alert(user, "already installed!")
 		return
 
 	if(istype(weapon, /obj/item/stock_parts/scanning_module))
@@ -268,12 +268,12 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			scanmod = weapon
-			to_chat(user, span_notice("You install the scanning module."))
+			balloon_alert(user, "intalled scanning module")
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
-			to_chat(user, span_warning("There's already a scanning module installed!"))
+			balloon_alert(user, "already installed!")
 		return
 
 	if(istype(weapon, /obj/item/stock_parts/capacitor))
@@ -281,12 +281,12 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			capacitor = weapon
-			to_chat(user, span_notice("You install the capacitor."))
+			balloon_alert(user, "intalled capacitor")
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
-			to_chat(user, span_warning("There's already a capacitor installed!"))
+			balloon_alert(user, "already installed!")
 		return
 
 	if(istype(weapon, /obj/item/stock_parts/servo))
@@ -294,12 +294,12 @@
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
 			servo = weapon
-			to_chat(user, span_notice("You install the micro-servo."))
+			balloon_alert(user, "intalled servo")
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
-			to_chat(user, span_warning("There's already a micro-servo installed!"))
+			balloon_alert(user, "already installed!")
 		return
 
 /obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user)
@@ -455,7 +455,7 @@
 /obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
 	if(!A.rounds)
 		if(!fail_chat_override)
-			to_chat(user, span_warning("This box of ammo is empty!"))
+			balloon_alert(user, "the box is empty!")
 		return FALSE
 	var/ammo_needed
 	var/found_gun
@@ -507,7 +507,7 @@
 		return TRUE
 	if(!fail_chat_override)
 		if(found_gun)
-			to_chat(user, span_notice("You can't fit any more ammo of this type!"))
+			balloon_alert(user, "ammo storage is full!")
 		else
-			to_chat(user, span_notice("None of the equipment on this exosuit can use this ammo!"))
+			balloon_alert(user, "can't use this ammo!")
 	return FALSE

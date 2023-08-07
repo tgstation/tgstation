@@ -4,12 +4,13 @@
 	desc = "A basic component of every vehicle."
 	icon_state = "mecha_radio"
 	equipment_slot = MECHA_UTILITY
-	/// Typepath of radio item
+	///Internal radio item
 	var/obj/item/radio/mech/radio
 
 /obj/item/mecha_parts/mecha_equipment/radio/Initialize(mapload)
 	. = ..()
 	radio = new(src)
+	RegisterSignal(radio, COMSIG_QDELETING, PROC_REF(Destroy))
 
 /obj/item/mecha_parts/mecha_equipment/radio/Destroy()
 	qdel(radio)
