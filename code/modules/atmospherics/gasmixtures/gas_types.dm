@@ -202,6 +202,7 @@
 	specific_heat = 600
 	name = "Freon"
 	dangerous = TRUE
+	purchaseable = TRUE //monkestation edit
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5
@@ -214,6 +215,7 @@
 	specific_heat = 15
 	name = "Hydrogen"
 	dangerous = TRUE
+	purchaseable = TRUE //monkestation edit
 	fusion_power = 2
 	rarity = 600
 	base_value = 1
