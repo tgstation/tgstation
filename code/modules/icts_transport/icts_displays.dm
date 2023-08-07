@@ -10,6 +10,7 @@
 	density = FALSE
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	layer = SIGN_LAYER
+	circuit = /obj/item/circuitboard/machine/destination_sign
 
 	/// The ID of the tram we're indicating
 	var/tram_id = TRAMSTATION_LINE_1
@@ -29,6 +30,7 @@
 	light_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
 	light_mask = "indicator_off_e"
+	circuit = /obj/item/circuitboard/machine/destination_sign/indicator
 
 /obj/machinery/icts/destination_sign/Initialize(mapload)
 	. = ..()
@@ -41,6 +43,17 @@
 /obj/machinery/icts/destination_sign/Destroy()
 	SSicts_transport.displays -= src
 	. = ..()
+
+/obj/machinery/icts/destination_sign/attackby(obj/item/weapon, mob/living/user, params)
+	if (!user.combat_mode)
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
+			return
+
+		if(default_deconstruction_crowbar(weapon))
+			return
+
+	return ..()
+
 
 /obj/machinery/icts/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
 	SIGNAL_HANDLER
