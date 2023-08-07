@@ -269,8 +269,9 @@
 	l_hand = /obj/item/clockwork/weapon/brass_sword
 
 
+//these can just solo invoke things that normally take multiple servants
 /datum/antagonist/clock_cultist/solo
-	name = "Clock Cultist (Solo)"
+	name = "Servant of Rat'var (Solo)"
 
 //putting this here to avoid extra edits to the main file
 /datum/antagonist/cult

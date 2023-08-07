@@ -562,14 +562,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Nar'Sie rune activated by [user] at [COORD(src)] failed - already summoned.")
 		return
 //monkestation edit start
-	if(GLOB.clock_ark) //might bump this up to need the ark to be active in some form, the way this is done DOES mean they can summon if clock cult has won, lets see the gods fight
-		for(var/invoker in invokers)
-			to_chat(invoker, span_bigbrass("A vile light prvents you from saying the invocation! \
-											It looks like you will have to destroy whatever is causing this before Nar'sie may be summoned."))
-		return
-//monkestation edit end
-
-	//BEGIN THE SUMMONING
 	used = TRUE
 	var/datum/team/cult/cult_team = user_antag.cult_team
 	if (cult_team.narsie_summoned)
@@ -578,6 +570,28 @@ structure_check() searches for nearby cultist structures required for the invoca
 			cultist_mob.client?.give_award(/datum/award/achievement/misc/narsupreme, cultist_mob)
 
 	cult_team.narsie_summoned = TRUE
+
+	if(GLOB.clock_ark) //might bump this up to need the ark to be active in some form
+		if(!GLOB.narsie_breaching_rune)
+			GLOB.narsie_breaching_rune = src
+
+		for(var/invoker in invokers)
+			to_chat(invoker, span_bigbrass("A vile light prvents you from saying the invocation! \
+											It looks like you will have to destroy whatever is causing this before Nar'sie may be summoned."))
+		return
+//monkestation edit end
+
+	//BEGIN THE SUMMONING
+//monkestation removal start
+/*	used = TRUE
+	var/datum/team/cult/cult_team = user_antag.cult_team
+	if (cult_team.narsie_summoned)
+		for (var/datum/mind/cultist_mind in cult_team.members)
+			var/mob/living/cultist_mob = cultist_mind.current
+			cultist_mob.client?.give_award(/datum/award/achievement/misc/narsupreme, cultist_mob)
+
+	cult_team.narsie_summoned = TRUE */
+//monkestation removal end
 	..()
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/rune_turf = get_turf(src)

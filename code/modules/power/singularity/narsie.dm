@@ -87,6 +87,8 @@
 
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
+	gods_battle() //monkestation edit
+	START_PROCESSING(SSobj, src) //monkestation edit
 
 /obj/narsie/Destroy()
 	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
@@ -109,6 +111,7 @@
 	if (GLOB.cult_narsie == src)
 		GLOB.cult_narsie = null
 
+	STOP_PROCESSING(SSobj, src) //monkestation edit
 	return ..()
 
 /obj/narsie/attack_ghost(mob/user)
@@ -116,6 +119,31 @@
 
 /obj/narsie/process()
 	var/datum/component/singularity/singularity_component = singularity.resolve()
+
+//monkestation edit start
+	if(GLOB.cult_ratvar)
+		singularity_component?.target = GLOB.cult_ratvar
+		if(get_dist(src, GLOB.cult_ratvar) < 5)
+			if(next_attack_tick < world.time)
+				next_attack_tick = world.time + rand(50, 100)
+				send_to_playing_players(span_danger("[pick("You hear the scratching of cogs.", "You hear the clanging of pipes.", "You feel your bones start to rust...")]"))
+				sound_to_playing_players('sound/magic/clockwork/narsie_attack.ogg', 100)
+				SpinAnimation(4, 0)
+
+				for(var/mob/living/living_player in GLOB.player_list)
+					shake_camera(living_player, 2.5 SECONDS, 5)
+					living_player.Knockdown(1 SECONDS)
+
+				if(prob(max(length(get_antag_minds(/datum/antagonist/cult))/2, 15)))
+					sound_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg', 100)
+					sound_to_playing_players('sound/effects/explosionfar.ogg', 100)
+					qdel(GLOB.cult_ratvar)
+					send_to_playing_players(span_narsie("You really thought you could best me twice?"))
+					for(var/datum/mind/servant_mind in GLOB.main_clock_cult?.members)
+						to_chat(servant_mind, span_userdanger("You feel a stabbing pain in your chest... This can't be happening!"))
+						servant_mind.current?.dust()
+		return
+//monkestation edit end
 
 	if (!isnull(singularity_component) && (!singularity_component?.target || prob(NARSIE_CHANCE_TO_PICK_NEW_TARGET)))
 		pickcultist()

@@ -67,6 +67,13 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		to_chat(current_mob, span_ratvar("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent."))
 		to_chat(current_mob, span_hypnophrase("The only thing you remember is suddenly feeling hard ground beneath you and the safety of home."))
 		current_mob.forceMove(find_safe_turf())
+
+	if(GLOB.narsie_breaching_rune)
+		if(istype(GLOB.narsie_breaching_rune, /obj/effect/rune/narsie))
+			new /obj/narsie(get_turf(GLOB.narsie_breaching_rune))
+		else
+			new /obj/narsie(get_safe_random_station_turf())
+
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(explode_reebe))
 	return ..()
 
@@ -79,7 +86,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 				current_state = ARK_STATE_FINAL
 				resistance_flags |= INDESTRUCTIBLE
 				visible_message(span_userdanger("[src] begins to pulse uncontrollably... you might want to run!"))
-				sound_to_playing_players(volume = 50, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
+				sound_to_playing_players('sound/effects/clockcult_gateway_disrupted.ogg', 50)
 				sleep(2.5 SECONDS)
 				sound_to_playing_players('sound/machines/clockcult/ark_deathrattle.ogg', 50)
 				sleep(2.7 SECONDS)
@@ -113,7 +120,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	if(current_state < ARK_STATE_SUMMONING && charging_for >= (ARK_ASSAULT_PERIOD * 0.5))
 		current_state = ARK_STATE_SUMMONING
 		icon_state = "clockwork_gateway_closing"
-		sound_to_playing_players(volume = 30, vary = TRUE, S = sound('monkestation/sound/effects/clockcult_gateway_closing.ogg'))
+		sound_to_playing_players('monkestation/sound/effects/clockcult_gateway_closing.ogg', 30, TRUE)
 
 	if(current_state >= ARK_STATE_SUMMONING && SPT_PROB(4, seconds_per_tick))
 		send_to_playing_players(span_warning("[pick(list("You feel the fabric of reality twist and bend.", \
@@ -168,7 +175,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	not a drill. Estimated time of appearance: [ARK_GRACE_PERIOD/10] seconds. Use this time to prepare for an attack on [station_name()]." \
 	,"Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
 
-	sound_to_playing_players(volume = 10, vary = TRUE, S = sound('monkestation/sound/effects/clockcult_gateway_charging.ogg'))
+	sound_to_playing_players('monkestation/sound/effects/clockcult_gateway_charging.ogg', 10, TRUE)
 	log_game("The clock cult has begun opening the Ark of the Clockwork Justiciar.")
 
 /obj/structure/destructible/clockwork/the_ark/proc/begin_assault()
@@ -192,7 +199,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	send_clock_message(null, span_bigbrass("Ratvar approaches, you shall be eternally rewarded for your servitude!"), msg_ghosts = FALSE)
 	send_to_playing_players(span_warning("You feel time slow down."))
 	GLOB.ratvar_risen = TRUE
-	sound_to_playing_players(volume = 100, S = sound('monkestation/sound/effects/ratvar_rises.ogg'))
+	sound_to_playing_players('monkestation/sound/effects/ratvar_rises.ogg', 100)
 
 	if(GLOB.main_clock_cult)
 		for(var/datum/mind/current_mind in GLOB.main_clock_cult.members)
@@ -203,7 +210,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	else
 		stack_trace("Clockwork ark calling summon_ratvar() with no set main_clock_cult.")
 
-	for(var/mob/checked_mob as anything in GLOB.player_list)
+	for(var/mob/living/checked_mob as anything in GLOB.player_list)
 		if(on_reebe(checked_mob)) //doing an addtimer to insure these run on time as the ark will be getting qdeled at this time
 			addtimer(CALLBACK(null, GLOBAL_PROC_REF(try_servant_warp), checked_mob, get_safe_random_station_turf()), 12.8 SECONDS)
 
@@ -240,3 +247,8 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 #undef ARK_READY_PERIOD
 #undef ARK_GRACE_PERIOD
 #undef ARK_ASSAULT_PERIOD
+
+/obj/effect/rune/narsie/Destroy(force)
+	if(src == GLOB.narsie_breaching_rune)
+		GLOB.narsie_breaching_rune = TRUE //we still want to summon even if destroyed
+	return ..()

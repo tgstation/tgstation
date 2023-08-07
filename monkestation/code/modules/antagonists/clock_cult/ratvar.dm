@@ -28,10 +28,8 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	/// A weak ref in case an admin removes the component to preserve the functionality.
 	var/datum/weakref/singularity
 
-	///what god are we currently trying to target
-//	var/target_god
-	///can we attack our target yet
-//	var/next_attack_tick
+	///next world tick we can attack our narsie target if we have one
+	var/next_attack_tick = 0
 
 /obj/ratvar/Initialize(mapload)
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -51,47 +49,54 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	GLOB.cult_ratvar = src
 	. = ..()
 	desc = "[text2ratvar("That's Ratvar, the Clockwork Justicar. The great one has risen.")]"
-	SEND_SOUND(world, 'monkestation/sound/effects/ratvar_reveal.ogg')
+	sound_to_playing_players('monkestation/sound/effects/ratvar_reveal.ogg', 100)
 	send_to_playing_players(span_reallybig(span_ratvar("The bluespace veil gives way to Rat'var, his light shall shine upon all mortals!")))
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)
+	if(GLOB.narsie_breaching_rune)
+		if(istype(GLOB.narsie_breaching_rune, /obj/effect/rune/narsie))
+			new /obj/narsie(get_turf(GLOB.narsie_breaching_rune))
+		else
+			new /obj/narsie(get_safe_random_station_turf())
 
 	var/area/area = get_area(src)
 	if(area)
-		notify_ghosts("Rat'var has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.", source = src, action = NOTIFY_ATTACK)
-//	check_gods_battle() todo
+		var/mutable_appearance/alert_overlay = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', "ratvar_alert")
+		notify_ghosts("Rat'var has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.", source = src, \
+					alert_overlay = alert_overlay, action = NOTIFY_ATTACK)
+	gods_battle()
+	START_PROCESSING(SSobj, src)
 
 /obj/ratvar/Destroy(force, ...)
 	if(GLOB.cult_ratvar == src)
 		GLOB.cult_ratvar = null
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/ratvar/proc/consume(atom/consumed)
-	consumed.ratvar_act()
-
-//tasty, once again god battle stuff so todo
-/*/obj/eldritch/ratvar/process(delta_time)
-	var/datum/component/singularity/singularity_component = singularity.resolve()
-	if(ratvar_target)
-		singularity_component?.target = ratvar_target
-		if(get_dist(src, ratvar_target) < 5)
+/obj/ratvar/process(seconds_per_tick)
+	var/datum/component/singularity/singularity_component = singularity?.resolve()
+	if(GLOB.cult_narsie)
+		singularity_component?.target = GLOB.cult_narsie
+		if(get_dist(src, GLOB.cult_narsie) < 5)
 			if(next_attack_tick < world.time)
 				next_attack_tick = world.time + rand(50, 100)
-				to_chat(world, "<span class='danger'>[pick("Reality shudders around you.","You hear the tearing of flesh.","The sound of bones cracking fills the air.")]</span>")
-				SEND_SOUND(world, 'sound/magic/clockwork/ratvar_attack.ogg')
+				send_to_playing_players(span_danger("[pick("Reality shudders around you.","You hear the tearing of flesh.","The sound of bones cracking fills the air.")]"))
+				sound_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg',100)
 				SpinAnimation(4, 0)
-				for(var/mob/living/M in GLOB.player_list)
-					shake_camera(M, 25, 6)
-					M.Knockdown(5 * delta_time)
-				if(prob(max(GLOB.servants_of_ratvar.len/2, 15)))
-					SEND_SOUND(world, 'sound/magic/demon_dies.ogg')
-					to_chat(world, "<span class='ratvar'>You were a fool for underestimating me...</span>")
-					qdel(ratvar_target)
-					for(var/datum/mind/M as() in SSticker.mode?.cult)
-						to_chat(M, "<span class='userdanger'>You feel a stabbing pain in your chest... This can't be happening!</span>")
-						M.current?.dust()
-				return*/
+
+				for(var/mob/living/living_player in GLOB.player_list)
+					shake_camera(living_player, 2.5 SECONDS, 5)
+					living_player.Knockdown(1 SECONDS)
+
+				if(prob(max(length(GLOB.main_clock_cult?.members)/2, 15)))
+					sound_to_playing_players('sound/magic/demon_dies.ogg', 100)
+					qdel(GLOB.cult_narsie)
+					send_to_playing_players(span_ratvar("You were a fool for underestimating me..."))
+					for(var/datum/mind/cultist_mind in get_antag_minds(/datum/antagonist/cult))
+						to_chat(cultist_mind, span_userdanger("You feel a stabbing pain in your chest... This can't be happening!"))
+						cultist_mind.current?.dust()
+		return
 
 /obj/ratvar/Bump(atom/the_atom)
 	var/turf/the_turf = get_turf(the_atom)
@@ -107,9 +112,16 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	user.mind.transfer_to(created_drone, TRUE)
 
+/obj/ratvar/proc/consume(atom/consumed)
+	consumed.ratvar_act()
+
 #undef RATVAR_CONSUME_RANGE
 #undef RATVAR_GRAV_PULL
 #undef RATVAR_SINGULARITY_SIZE
+
+/obj/narsie
+	///next world tick we can attack our ratvar target if we have one
+	var/next_attack_tick = 0
 
 /proc/clockcult_ending_start()
 	SSsecurity_level.set_level(3)
@@ -149,8 +161,9 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
 
 /obj/structure/lattice/ratvar_act()
-	new /obj/structure/lattice/clockwork(loc)
+	var/our_loc = loc
 	qdel(src)
+	new /obj/structure/lattice/clockwork(our_loc)
 
 /obj/item/stack/sheet/iron/ratvar_act()
 	new /obj/item/stack/sheet/bronze(loc, amount)
@@ -168,7 +181,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 		if(ismob(checked_atom) || .)
 			checked_atom.ratvar_act()
 
-/turf/open/ratvar_act(force, ignore_mobs)
+/turf/open/floor/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
 		ChangeTurf(/turf/open/indestructible/reebe_flooring, flags = CHANGETURF_INHERIT_AIR)
