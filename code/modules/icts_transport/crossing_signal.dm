@@ -47,12 +47,12 @@
 	var/amber_distance_threshold = AMBER_THRESHOLD_NORMAL
 	var/red_distance_threshold = RED_THRESHOLD_NORMAL
 
-/obj/machinery/icts/crossing_signal/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/icts/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
 
-		if(default_deconstruction_crowbar(item))
+		if(default_deconstruction_crowbar(weapon))
 			return
 
 	return ..()
