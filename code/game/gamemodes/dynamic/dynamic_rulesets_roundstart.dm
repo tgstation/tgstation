@@ -631,7 +631,7 @@
 	restricted_roles = list()
 	required_candidates = 0
 	maximum_players = 6
-	weight = 3
+	weight = 5
 	cost = 0
 	requirements = list(1,101,101,101,101,101,101,101,101,101)
 	flags = LONE_RULESET
