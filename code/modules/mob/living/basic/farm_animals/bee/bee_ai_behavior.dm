@@ -15,17 +15,21 @@
 /datum/ai_behavior/enter_exit_hive
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 
-/datum/ai_behavior/enter_exit_hive/setup(datum/ai_controller/controller, target_key)
+/datum/ai_behavior/enter_exit_hive/setup(datum/ai_controller/controller, target_key, attack_key)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/enter_exit_hive/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/enter_exit_hive/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
 	. = ..()
 	var/obj/structure/beebox/current_home = controller.blackboard[target_key]
 	var/mob/living/bee_pawn = controller.pawn
+	var/atom/attack_target = controller.blackboard[attack_key]
+
+	if(attack_target) // forget about who we attacking when we go home
+		controller.clear_blackboard_key(attack_key)
 
 	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), current_home)
 	callback.Invoke()

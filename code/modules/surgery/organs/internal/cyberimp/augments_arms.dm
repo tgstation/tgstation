@@ -400,7 +400,7 @@
 	return hitting_with.punch_damage
 
 /datum/attack_style/unarmed/generic_damage/muscle_punch/select_attack_verb(mob/living/carbon/attacker, mob/living/smacked, obj/item/organ/internal/cyberimp/arm/muscle/hitting_with, damage)
-	return pick("punch", "smash")
+	return pick("punch", "smash", "pummel", "bash", "slam")
 
 /datum/attack_style/unarmed/generic_damage/muscle_punch/finalize_attack(mob/living/carbon/attacker, mob/living/smacked, obj/item/bodypart/weapon, right_clicking)
 	var/obj/item/organ/internal/cyberimp/arm/muscle/implant = locate() in attacker.organs

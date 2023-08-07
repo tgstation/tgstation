@@ -4,16 +4,16 @@
 	force = 3
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/mob/species/human/bodyparts.dmi'
+	icon = 'icons/mob/human/bodyparts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
-	VAR_PROTECTED/icon_static = 'icons/mob/species/human/bodyparts.dmi'
+	VAR_PROTECTED/icon_static = 'icons/mob/human/bodyparts.dmi'
 	///The icon for husked limbs
-	VAR_PROTECTED/icon_husk = 'icons/mob/species/human/bodyparts.dmi'
+	VAR_PROTECTED/icon_husk = 'icons/mob/human/bodyparts.dmi'
 	///The icon for invisible limbs
-	VAR_PROTECTED/icon_invisible = 'icons/mob/species/human/bodyparts.dmi'
+	VAR_PROTECTED/icon_invisible = 'icons/mob/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -183,6 +183,23 @@
 	var/bodypart_trait_source = BODYPART_TRAIT
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
+
+/obj/item/bodypart/apply_fantasy_bonuses(bonus)
+	. = ..()
+	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
+	unarmed_damage_high = modify_fantasy_variable("unarmed_damage_high", unarmed_damage_high, bonus, minimum = 1)
+	brute_modifier = modify_fantasy_variable("brute_modifier", brute_modifier, bonus * 0.02, minimum = 0.7)
+	burn_modifier = modify_fantasy_variable("burn_modifier", burn_modifier, bonus * 0.02, minimum = 0.7)
+	wound_resistance = modify_fantasy_variable("wound_resistance", wound_resistance, bonus)
+
+/obj/item/bodypart/remove_fantasy_bonuses(bonus)
+	unarmed_damage_low = reset_fantasy_variable("unarmed_damage_low", unarmed_damage_low)
+	unarmed_damage_high = reset_fantasy_variable("unarmed_damage_high", unarmed_damage_high)
+	brute_modifier = reset_fantasy_variable("brute_modifier", brute_modifier)
+	burn_modifier = reset_fantasy_variable("burn_modifier", burn_modifier)
+	wound_resistance = reset_fantasy_variable("wound_resistance", wound_resistance)
+	return ..()
+
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()

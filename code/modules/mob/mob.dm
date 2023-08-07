@@ -1218,7 +1218,7 @@
 		else if( search_pda && istype(A, /obj/item/modular_computer/pda) )
 			var/obj/item/modular_computer/pda/PDA = A
 			if(PDA.saved_identification == oldname)
-				PDA.saved_identification = newname
+				PDA.imprint_id(name = newname)
 				PDA.UpdateDisplay()
 				if(!search_id)
 					break

@@ -56,9 +56,9 @@
 	..()
 
 /obj/item/bodypart/chest/monkey
-	icon = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	top_offset = -5
 	icon_state = "default_monkey_chest"
@@ -71,8 +71,8 @@
 	dmg_overlay_type = SPECIES_MONKEY
 
 /obj/item/bodypart/chest/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_chest"
 	limb_id = BODYPART_ID_ALIEN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
@@ -83,8 +83,8 @@
 	acceptable_bodytype = BODYTYPE_HUMANOID
 
 /obj/item/bodypart/chest/larva
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "larva_chest"
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE
@@ -194,9 +194,9 @@
 
 
 /obj/item/bodypart/arm/left/monkey
-	icon = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
@@ -211,8 +211,8 @@
 	unarmed_stun_threshold = 3
 
 /obj/item/bodypart/arm/left/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_arm"
 	limb_id = BODYPART_ID_ALIEN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
@@ -297,9 +297,9 @@
 
 
 /obj/item/bodypart/arm/right/monkey
-	icon = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
@@ -314,8 +314,8 @@
 	unarmed_stun_threshold = 3
 
 /obj/item/bodypart/arm/right/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_arm"
 	limb_id = BODYPART_ID_ALIEN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
@@ -412,9 +412,9 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/leg/left/monkey
-	icon = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	top_offset = -3
 	icon_state = "default_monkey_l_leg"
@@ -429,8 +429,8 @@
 	unarmed_stun_threshold = 4
 
 /obj/item/bodypart/leg/left/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_l_leg"
 	limb_id = BODYPART_ID_ALIEN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
@@ -506,9 +506,9 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/leg/right/monkey
-	icon = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
+	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/monkey/bodyparts.dmi'
+	icon_husk = 'icons/mob/human/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
 	top_offset = -3
 	icon_state = "default_monkey_r_leg"
@@ -523,8 +523,8 @@
 	unarmed_stun_threshold = 4
 
 /obj/item/bodypart/leg/right/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
+	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
+	icon_static = 'icons/mob/human/species/alien/bodyparts.dmi'
 	icon_state = "alien_r_leg"
 	limb_id = BODYPART_ID_ALIEN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC

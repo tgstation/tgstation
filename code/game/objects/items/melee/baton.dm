@@ -77,6 +77,14 @@
 
 	register_item_context()
 
+/obj/item/melee/baton/apply_fantasy_bonuses(bonus)
+	. = ..()
+	stamina_damage = modify_fantasy_variable("stamina_damage", stamina_damage, bonus * 4)
+
+/obj/item/melee/baton/remove_fantasy_bonuses(bonus)
+	stamina_damage = reset_fantasy_variable("stamina_damage", stamina_damage)
+	return ..()
+
 /obj/item/melee/baton/can_attack_with(mob/living/attacker, params)
 	if(!chunky_finger_usable && ishuman(attacker))
 		var/mob/living/carbon/human/potential_chunky_finger_human = attacker

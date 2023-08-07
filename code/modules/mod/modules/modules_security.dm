@@ -137,9 +137,9 @@
 		holstered.forceMove(drop_location())
 
 /obj/item/mod/module/holster/Exited(atom/movable/gone, direction)
-	. = ..()
 	if(gone == holstered)
 		holstered = null
+	return ..()
 
 /obj/item/mod/module/holster/Destroy()
 	QDEL_NULL(holstered)
