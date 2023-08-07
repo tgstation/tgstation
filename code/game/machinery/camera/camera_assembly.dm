@@ -67,6 +67,11 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	///Standard wall-hung object behavior.
+	var/turf/attachable_wall = get_step(src, dir)
+	if(!iswallturf(attachable_wall))
+		return //Nothing to latch onto.
+	attachable_wall.AddComponent(/datum/component/wall_link, src)
 
 /obj/structure/camera_assembly/update_icon_state()
 	icon_state = "[xray_module ? "xray" : null][initial(icon_state)]"

@@ -56,6 +56,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
+	///Standard wall-hung object behavior.
+	var/turf/attachable_wall = get_step(src, dir)
+	if(!iswallturf(attachable_wall))
+		return //Nothing to latch onto.
+	attachable_wall.AddComponent(/datum/component/wall_link, src)
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()

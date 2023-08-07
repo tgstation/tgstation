@@ -212,6 +212,11 @@
 
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
+	///Standard wall-hung object behavior.
+	var/turf/attachable_wall = get_step(src, dir)
+	if(!iswallturf(attachable_wall))
+		return //Nothing to latch onto.
+	attachable_wall.AddComponent(/datum/component/wall_link, src)
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)

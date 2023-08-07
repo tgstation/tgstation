@@ -127,6 +127,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	radio = new /obj/item/radio(src)
 	radio.set_listening(FALSE)
+	///Standard wall-hung object behavior.
+	var/turf/attachable_wall = get_step(src, dir)
+	if(!iswallturf(attachable_wall))
+		return //Nothing to latch onto.
+	attachable_wall.AddComponent(/datum/component/wall_link, src)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(radio)

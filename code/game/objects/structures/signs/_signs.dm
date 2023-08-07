@@ -23,6 +23,11 @@
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
+	///Standard wall-hung object behavior.
+	var/turf/attachable_wall = get_step(src, dir)
+	if(!iswallturf(attachable_wall))
+		return //Nothing to latch onto.
+	attachable_wall.AddComponent(/datum/component/wall_link, src)
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

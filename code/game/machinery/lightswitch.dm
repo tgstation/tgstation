@@ -32,6 +32,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!name)
 		name = "light switch ([area.name])"
 
+	///Standard wall-hung object behavior.
+	var/turf/attachable_wall = get_step(src, dir)
+	if(!iswallturf(attachable_wall))
+		return //Nothing to latch onto.
+	attachable_wall.AddComponent(/datum/component/wall_link, src)
+
 	update_appearance()
 
 /obj/machinery/light_switch/update_appearance(updates=ALL)
