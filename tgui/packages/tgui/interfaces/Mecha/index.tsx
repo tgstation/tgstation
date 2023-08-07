@@ -200,7 +200,7 @@ const LightsBar = (props, context) => {
         icon="lightbulb"
         content={lights_on ? 'On' : 'Off'}
         selected={lights_on}
-        disabled={!has_lights}
+        disabled={!has_lights || !power_max || !power_level}
         onClick={() => act('toggle_lights')}
       />
     </LabeledList.Item>

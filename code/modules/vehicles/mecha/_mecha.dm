@@ -45,8 +45,6 @@
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
 	var/equipment_disabled = FALSE
-	/// Whether the mech is built manually or spawned
-	var/built_manually = FALSE
 	/// Keeps track of the mech's cell
 	var/obj/item/stock_parts/cell/cell
 	/// Keeps track of the mech's scanning module
@@ -215,11 +213,7 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/New(loc, built_manually, ...)
-	src.built_manually = built_manually
-	return ..()
-
-/obj/vehicle/sealed/mecha/Initialize(mapload)
+/obj/vehicle/sealed/mecha/Initialize(mapload, built_manually)
 	. = ..()
 	ui_view = new()
 	ui_view.generate_view("mech_view_[REF(src)]")

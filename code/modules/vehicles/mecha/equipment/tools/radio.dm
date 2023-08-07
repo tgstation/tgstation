@@ -10,7 +10,7 @@
 /obj/item/mecha_parts/mecha_equipment/radio/Initialize(mapload)
 	. = ..()
 	radio = new(src)
-	RegisterSignal(radio, COMSIG_QDELETING, PROC_REF(Destroy))
+	RegisterSignal(radio, COMSIG_QDELETING, PROC_REF(radio_deleted))
 
 /obj/item/mecha_parts/mecha_equipment/radio/Destroy()
 	qdel(radio)
@@ -42,6 +42,11 @@
 			radio.set_frequency(sanitize_frequency(new_frequency, radio.freerange, radio.syndie))
 			return TRUE
 	return FALSE
+
+///Internal radio got deleted, somehow
+/obj/item/mecha_parts/mecha_equipment/radio/proc/radio_deleted()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /obj/item/radio/mech
 	subspace_transmission = TRUE
