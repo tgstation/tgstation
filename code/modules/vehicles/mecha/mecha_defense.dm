@@ -223,10 +223,10 @@
 			if(mecha_flags & ID_LOCK_ON)
 				balloon_alert(user, "access denied!")
 			else
-				balloon_alert(user, "unable to set ID lock!")
+				balloon_alert(user, "unable to set id lock!")
 			return
 		mecha_flags ^= ID_LOCK_ON
-		balloon_alert(user, "[mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"] ID lock !")
+		balloon_alert(user, "[mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"] id lock !")
 		return
 
 	if(istype(weapon, /obj/item/mecha_parts))
