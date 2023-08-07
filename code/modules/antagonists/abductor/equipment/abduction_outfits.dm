@@ -57,11 +57,11 @@
 		/obj/item/abductor/gizmo = 1
 		)
 
-/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(!visualsOnly)
-		var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(H)
-		beamplant.implant(H)
+/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	if(!visualsOnly && !isnull(user.mind))
+		var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(user)
+		beamplant.implant(user)
 
 /datum/outfit/abductor/scientist/onemanteam
 	name = "Abductor Scientist (w/ agent gear)"
