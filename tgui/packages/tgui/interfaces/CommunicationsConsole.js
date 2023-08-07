@@ -193,9 +193,14 @@ const PageBuyingShuttle = (props, context) => {
             />
           }>
           <Box>{shuttle.description}</Box>
-          {shuttle.prerequisites ? (
-            <b>Prerequisites: {shuttle.prerequisites}</b>
-          ) : null}
+          <Box color="teal" fontSize="10px" italic>
+            Occupancy Limit: {shuttle.occupancy_limit}
+          </Box>
+          <Box color="violet" fontSize="10px" bold>
+            {shuttle.prerequisites ? (
+              <b>Prerequisitces: {shuttle.prerequisites}</b>
+            ) : null}
+          </Box>
         </Section>
       ))}
     </Box>
