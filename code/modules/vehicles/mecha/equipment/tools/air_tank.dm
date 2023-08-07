@@ -155,8 +155,7 @@
 			var/new_pressure = text2num(params["new_pressure"])
 			tank_pump_pressure = clamp(round(new_pressure), PUMP_MIN_PRESSURE, min(PUMP_MAX_PRESSURE, internal_tank.maximum_pressure))
 			return TRUE
-		else
-			return FALSE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/full
 	start_full = TRUE
