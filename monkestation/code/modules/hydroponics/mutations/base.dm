@@ -172,6 +172,11 @@
 	created_product = /obj/item/food/grown/poppy/geranium
 	created_seed = /obj/item/seeds/poppy/geranium
 
+/datum/hydroponics/plant_mutation/fraxinella
+	mutates_from = list(/obj/item/seeds/poppy/geranium)
+	created_product = /obj/item/food/grown/poppy/geranium/fraxinella
+	created_seed = /obj/item/seeds/poppy/geranium/fraxinella
+
 /datum/hydroponics/plant_mutation/trumpet
 	mutates_from = list(/obj/item/seeds/poppy/lily)
 	created_product = /obj/item/food/grown/trumpet
