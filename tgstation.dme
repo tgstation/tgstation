@@ -806,6 +806,7 @@
 #include "code\datums\ai\basic_mobs\basic_subtrees\find_parent.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\flee_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\opportunistic_ventcrawler.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\ranged_skirmish.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_attack_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_find_nearest_target_to_flee.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_find_target.dm"

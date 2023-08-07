@@ -18,6 +18,7 @@
 	throw_blocked_message = "bounces off the shell of"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	ai_controller = /datum/ai_controller/basic_controller/Basilisk
 	butcher_results = list(
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/stack/ore/diamond = 2,
@@ -33,6 +34,7 @@
 /mob/living/basic/mining/basilisk/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ranged_attacks, projectiletype = default_projectile_type, projectilesound = default_projectile_sound)
+	AddComponent(/datum/component/basic_mob_attack_telegraph)
 
 /mob/living/basic/mining/basilisk/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -63,3 +65,17 @@
 	if (stat != CONSCIOUS || has_status_effect(/datum/status_effect/basilisk_overheat))
 		return
 	apply_status_effect(/datum/status_effect/basilisk_overheat)
+
+/datum/ai_controller/basic_controller/Basilisk
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/ranged_skirmish,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)

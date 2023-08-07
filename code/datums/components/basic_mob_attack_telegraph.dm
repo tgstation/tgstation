@@ -14,7 +14,7 @@
 /datum/component/basic_mob_attack_telegraph/Initialize(
 	telegraph_icon = 'icons/mob/telegraphing/telegraph.dmi',
 	telegraph_state = ATTACK_EFFECT_BITE,
-	telegraph_duration = 0.3 SECONDS,
+	telegraph_duration = 0.4 SECONDS,
 	datum/callback/on_began_forecast,
 )
 	. = ..()

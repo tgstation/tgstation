@@ -26,6 +26,7 @@
 	hot_stuff.icon_living = "Basilisk_alert"
 	hot_stuff.icon_state = "Basilisk_alert"
 	hot_stuff.update_appearance(UPDATE_ICON_STATE)
+	hot_stuff.add_movespeed_modifier(/datum/movespeed_modifier/basilisk_overheat)
 
 	hot_stuff.RemoveElement(\
 		/datum/element/ranged_attacks,\
@@ -60,6 +61,7 @@
 	)
 
 	hot_stuff.update_appearance(UPDATE_ICON_STATE)
+	hot_stuff.remove_movespeed_modifier(/datum/movespeed_modifier/basilisk_overheat)
 	UnregisterSignal(hot_stuff, list(COMSIG_LIVING_DEATH, COMSIG_ATOM_EXPOSE_REAGENTS, COMSIG_ATOM_BULLET_ACT))
 
 	if (hot_stuff.stat != CONSCIOUS)
