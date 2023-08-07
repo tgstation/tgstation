@@ -40,8 +40,7 @@
 			var/new_frequency = text2num(params["new_frequency"])
 			radio.set_frequency(sanitize_frequency(new_frequency, radio.freerange, radio.syndie))
 			return TRUE
-		else
-			return FALSE
+	return FALSE
 
 /obj/item/radio/mech
 	subspace_transmission = TRUE
