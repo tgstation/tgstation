@@ -87,7 +87,7 @@
 	if(tool)
 		speed_mod = tool.toolspeed
 
-	if(HAS_TRAIT(target, TRAIT_DISSECTED))
+	if(HAS_TRAIT(target, TRAIT_SURGICALLY_ANALYZED))
 		speed_mod *= SURGERY_SPEED_DISSECTION_MODIFIER
 
 	if(check_morbid_curiosity(user, tool, surgery))

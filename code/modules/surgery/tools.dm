@@ -581,7 +581,7 @@
  *
  * Bonuses if the surgery is being done by a morbid user and it is of their interest.
  *
- * Morbid users are interested in; dissections, autospies, revival surgery, plastic surgery, organ/feature manipulations, amputations
+ * Morbid users are interested in; autospies, revival surgery, plastic surgery, organ/feature manipulations, amputations
  *
  * Otherwise, normal tool.
  */
