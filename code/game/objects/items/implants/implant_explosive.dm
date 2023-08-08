@@ -169,7 +169,7 @@
 		imp_in.gib(TRUE)
 	qdel(src)
 
-//Macrobomb has the strength and delay of 10 microbombs
+///Macrobomb has the strength and delay of 10 microbombs
 /obj/item/implant/explosive/macro
 	name = "macrobomb implant"
 	desc = "And boom goes the weasel. And everything else nearby."
@@ -179,7 +179,7 @@
 	explosion_heavy = 10 * MICROBOMB_EXPLOSION_HEAVY
 	explosion_devastate = 10 * MICROBOMB_EXPLOSION_DEVASTATE
 
-//Microbomb which prevents you from going into critical condition but also explodes after a timer when you reach critical condition in the first place.
+///Microbomb which prevents you from going into critical condition but also explodes after a timer when you reach critical condition in the first place.
 /obj/item/implant/explosive/deniability
 	name = "tactical deniability implant"
 	desc = "An enhanced version of the microbomb that directly plugs into the brain. No downsides, promise!"
