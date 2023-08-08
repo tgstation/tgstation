@@ -396,22 +396,42 @@ GLOBAL_LIST_EMPTY(icts_transports)
 
 			for(var/mob/living/victim_living in dest_turf.contents)
 				var/damage_multiplier = victim_living.maxHealth * 0.01
+				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
+				for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
+					if(get_dist(my_spoiler, victim_living) != 1)
+						continue
+
+					if(my_spoiler.obj_flags & EMAGGED)
+						extra_ouch = TRUE
+						break
+
 				if(transport_controller_datum.ignored_smashthroughs[victim_living.type])
 					continue
 				to_chat(victim_living, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 				var/damage = 0
-				if(prob(15)) //sorry buddy, luck wasn't on your side
-					damage = 29 * collision_lethality * damage_multiplier
-				else
-					damage = rand(7, 21) * collision_lethality * damage_multiplier
-				victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-				victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
-				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
-				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
-				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
-				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
-				log_combat(src, victim_living, "collided with")
+				switch(extra_ouch)
+					if(TRUE)
+						playsound(src, 'sound/effects/grillehit.ogg', 50, TRUE)
+						var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
+						if(head)
+							log_combat(src, victim_living, "beheaded")
+							head.dismember()
+							victim_living.regenerate_icons()
+							add_overlay(mutable_appearance(icon, "blood_overlay"))
+
+					if(FALSE)
+						log_combat(src, victim_living, "collided with")
+						if(prob(15)) //sorry buddy, luck wasn't on your side
+							damage = 29 * collision_lethality * damage_multiplier
+						else
+							damage = rand(7, 21) * collision_lethality * damage_multiplier
+						victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+						victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
+						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
+						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
+						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
+						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
 
 				if(QDELETED(victim_living)) //in case it was a mob that dels on death
 					continue
