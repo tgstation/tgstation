@@ -70,7 +70,7 @@
 
 /**
  * Qdel a callback datum
- * This is not allowed and will stack trace. callback datums are structs, if they are referenced they exist
+ * callback datums are structs and qdeleting them acts like qdeleting a list, triggering a forceful hard delete always.
  *
  * Arguments
  * * force set to true to force the deletion to be allowed.
