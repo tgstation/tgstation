@@ -199,7 +199,7 @@
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [victim]'s cuts."))
 
-/datum/wound/slash/on_xadone(power)
+/datum/wound/slash/on_mending(power)
 	. = ..()
 	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 

@@ -94,7 +94,7 @@
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
 		tool_cauterize(I, user)
 
-/datum/wound/pierce/on_xadone(power)
+/datum/wound/pierce/on_mending(power)
 	. = ..()
 	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 

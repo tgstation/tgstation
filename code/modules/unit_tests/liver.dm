@@ -83,7 +83,7 @@
 	mrbones.reagents.add_reagent(plasma, 50)
 	mrbones.Life(SSMOBS_DT)
 	var/datum/wound/afflicted_wound = mrbones.all_wounds[1]
-	TEST_ASSERT_EQUAL(afflicted_wound.cryo_progress, expected_wound_healing, "Plasma did not reduce wound on plasmaman")
+	TEST_ASSERT_EQUAL(afflicted_wound.mend_progress, expected_wound_healing, "Plasma did not reduce wound on plasmaman")
 
 	mrbones.reagents.remove_all(mrbones.reagents.total_volume)
 	mrbones.fully_heal()
@@ -97,7 +97,7 @@
 	afflicted_wound = mrbones.all_wounds[1]
 	mrbones.reagents.add_reagent(hot_ice, 50)
 	mrbones.Life(SSMOBS_DT)
-	TEST_ASSERT_EQUAL(afflicted_wound.cryo_progress, expected_wound_healing, "Hot ice did not reduce wound on plasmaman")
+	TEST_ASSERT_EQUAL(afflicted_wound.mend_progress, expected_wound_healing, "Hot ice did not reduce wound on plasmaman")
 
 	// Test gunpowder giving plasmamen hallucinations
 

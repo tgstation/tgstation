@@ -79,8 +79,8 @@
 	var/status_effect_type
 	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
 	var/datum/surgery/attached_surgery
-	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
-	var/cryo_progress
+	/// Mending progress tracking when some special condition is met. The wound will go away after accumulating severity * 25 power
+	var/mend_progress
 
 	/// What kind of scars this wound will create description wise once healed
 	var/scar_keyword = "generic"
@@ -365,10 +365,11 @@
 /datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction)
 	return
 
-/// Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh
-/datum/wound/proc/on_xadone(power)
-	cryo_progress += power
-	if(cryo_progress > 33 * severity)
+/// Wounds will slowly be fixed separately from other methods when special conditions are met.
+/// Used to be cryox/pyrox callbacks, but those don't exist anymore. It simply doesn't feel the same.
+/datum/wound/proc/on_mending(power)
+	mend_progress += power
+	if(mend_progress > 33 * severity)
 		qdel(src)
 
 /// When synthflesh is applied to the victim, we call this. No sense in setting up an entire chem reaction system for wounds when we only care for a few chems. Probably will change in the future

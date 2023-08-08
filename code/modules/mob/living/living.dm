@@ -501,8 +501,6 @@
 	maxHealth = newMaxHealth
 
 /// Returns the health of the mob while ignoring damage of non-organic (prosthetic) limbs
-/// Used by cryo cells to not permanently imprison those with damage from prosthetics,
-/// as they cannot be healed through chemicals.
 /mob/living/proc/get_organic_health()
 	return health
 
@@ -1086,7 +1084,7 @@
 	if(buckled && last_special <= world.time)
 		resist_buckle()
 
-	//Breaking out of a container (Locker, sleeper, cryo...)
+	//Breaking out of a container (Locker, sleeper etc...)
 	else if(loc != get_turf(src))
 		loc.container_resist_act(src)
 
