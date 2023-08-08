@@ -28,7 +28,7 @@
 	/// SKYRAPTOR EDIT: switches cargotech clothes over to new system
 	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
 	/// i feel absolute despair that these can't use defines
-	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/cargo.dmi', "8" = 'icons/mob/species/misc/digitigrade.dmi')
+	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/cargo.dmi', "8" = 'icons/mob/human/species/misc/digitigrade.dmi')
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
 	name = "cargo technician's jumpskirt"
