@@ -181,11 +181,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/aoe/revenant/get_things_to_cast_on(atom/center)
-	var/list/things = list()
-	for(var/turf/nearby_turf in range(aoe_radius, center))
-		things += nearby_turf
-
-	return things
+	return RANGE_TURFS(aoe_radius, center)
 
 /datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/simple_animal/revenant/cast_on)
 	. = ..()

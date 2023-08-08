@@ -21,6 +21,15 @@
 	path_image_color = "#FF0000"
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
+	automated_announcements = list(
+		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/voice/beepsky/criminal.ogg',
+		BEEPSKY_VOICED_FREEZE = 'sound/voice/beepsky/freeze.ogg',
+		BEEPSKY_VOICED_JUSTICE = 'sound/voice/beepsky/justice.ogg',
+		BEEPSKY_VOICED_YOUR_MOVE = 'sound/voice/beepsky/creep.ogg',
+		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/voice/beepsky/iamthelaw.ogg',
+		BEEPSKY_VOICED_SECURE_DAY = 'sound/voice/beepsky/secureday.ogg',
+	)
+
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
 	///The type of cuffs we use on criminals after making arrests
@@ -453,21 +462,16 @@
 		if(threatlevel >= 4)
 			target = nearby_carbons
 			oldtarget_name = nearby_carbons.name
-			switch(bot_type)
-				if(ADVANCED_SEC_BOT)
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
-				if(HONK_BOT)
-					speak("Honk!")
-					playsound(src, pick('sound/items/bikehorn.ogg'), 50, FALSE)
-				else
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-
+			threat_react(threatlevel)
 			visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 			break
+
+/// React to detecting criminal scum by making some kind of noise
+/mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
+	speak("Level [threatlevel] infraction alert!")
+	playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(obj/item/slot_item)
 	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))

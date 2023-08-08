@@ -18,63 +18,49 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	. = ..()
 	create_storage(storage_type = /datum/storage/rped)
 
-// check to see if this rped have atleast one circuitboard
-/obj/item/storage/part_replacer/proc/has_an_circuitboard()
-	for(var/obj/item/circuitboard/machine/board in contents)
-		return TRUE
-	return FALSE
-
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
-	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
-		return ..()
+	. = ..()
+	if(.)
+		return
 
-	if(!user.Adjacent(attacked_object)) // no TK upgrading.
-		return ..()
+	if(!works_from_distance && !user.Adjacent(attacked_object))
+		return
 
-	if(ismachinery(attacked_object))
+	return part_replace_action(attacked_object, user)
+
+/obj/item/storage/part_replacer/proc/part_replace_action(obj/attacked_object, mob/living/user)
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine) && !istype(attacked_object, /obj/structure/frame/computer))
+		return FALSE
+
+	if(ismachinery(attacked_object) && !istype(attacked_object, /obj/machinery/computer))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
-			return ..()
+			return FALSE
 
+		attacked_machinery.exchange_parts(user, src)
 		if(works_from_distance)
 			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
-		attacked_machinery.exchange_parts(user, src)
 		return TRUE
 
-	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
-	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
-		return TRUE
+	var/obj/structure/frame/attacked_frame = attacked_object
+	if(istype(attacked_frame, /obj/structure/frame/machine))
+		var/obj/structure/frame/machine/machine_frame = attacked_frame
+		if(attacked_frame.state == 1 || (!machine_frame.components && !(locate(/obj/item/circuitboard/machine) in contents)))
+			return FALSE
+	else
+		if(attacked_frame.state == 0 || (attacked_frame.state == 1 && !(locate(/obj/item/circuitboard/computer) in contents)))
+			return FALSE
+
 	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
-		return ..()
-
-	if(ismachinery(attacked_object))
-		var/obj/machinery/attacked_machinery = attacked_object
-
-		if(!attacked_machinery.component_parts)
-			return ..()
-
-		if(works_from_distance)
-			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
-			attacked_machinery.exchange_parts(user, src)
-		return
-
-	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	if(!adjacent && !works_from_distance)
-		return
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
-	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
-		return
-	attacked_frame.attackby(src, user)
 	if(works_from_distance)
-		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
+		part_replace_action(attacked_object, user)
+	return ..()
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -246,6 +232,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
 	var/base_name
 	var/energy_rating = 1
+	///The generic category type that the stock part belongs to.  Generic objects that should not be instantiated should have the same type and abstract_type
+	var/abstract_type = /obj/item/stock_parts
 
 /obj/item/stock_parts/Initialize(mapload)
 	. = ..()
@@ -415,6 +403,11 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8)
 
 // Subspace stock parts
+
+/obj/item/stock_parts/subspace
+	name = "subspace stock part"
+	desc = "What?"
+	abstract_type = /obj/item/stock_parts/subspace
 
 /obj/item/stock_parts/subspace/ansible
 	name = "subspace ansible"

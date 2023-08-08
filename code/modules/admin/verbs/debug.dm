@@ -600,6 +600,9 @@
 			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
 		if (I.no_hint)
 			dellog += "<li>No hint: [I.no_hint]</li>"
+		if(LAZYLEN(I.extra_details))
+			var/details = I.extra_details.Join("</li><li>")
+			dellog += "<li>Extra Info: <ul><li>[details]</li></ul>"
 		dellog += "</ul></li>"
 
 	dellog += "</ol>"

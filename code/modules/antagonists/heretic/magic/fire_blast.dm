@@ -136,9 +136,9 @@
 
 	return TRUE
 
-/datum/status_effect/fire_blasted/tick(seconds_per_tick, times_fired)
-	owner.adjustFireLoss(tick_damage)
-	owner.adjustStaminaLoss(2 * tick_damage)
+/datum/status_effect/fire_blasted/tick(seconds_between_ticks)
+	owner.adjustFireLoss(tick_damage * seconds_between_ticks)
+	owner.adjustStaminaLoss(2 * tick_damage * seconds_between_ticks)
 
 // The beam fireblast spits out, causes people to walk through it to be on fire
 /obj/effect/ebeam/fire

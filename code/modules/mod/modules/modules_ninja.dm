@@ -257,8 +257,8 @@
 	. = ..()
 	if(. != MOD_CANCEL_ACTIVATE || !isliving(user))
 		return
-	if(mod.ai == user)
-		to_chat(mod.ai, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
+	if(mod.ai_assistant == user)
+		to_chat(mod.ai_assistant, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
 		return
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
@@ -296,7 +296,7 @@
 		all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
 		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
 		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
-	show_time = TRUE
+	display_time = TRUE
 	death_sound = null
 	death_sound_volume = null
 
