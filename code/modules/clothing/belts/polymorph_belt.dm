@@ -108,7 +108,7 @@
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
 
-/datum/action/cooldown/spell/shapeshift/Remove(mob/remove_from)
+/datum/action/cooldown/spell/shapeshift/polymorph_belt/Remove(mob/remove_from)
 	var/datum/status_effect/shapechange_mob/shapechange = remove_from.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
 	var/atom/changer = shapechange?.caster_mob || remove_from
 	changer?.transform = matrix()
