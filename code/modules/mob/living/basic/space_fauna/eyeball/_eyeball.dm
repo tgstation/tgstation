@@ -56,6 +56,7 @@
 	glare.Grant(src)
 	ai_controller.set_blackboard_key(BB_GLARE_ABILITY, glare)
 	AddElement(/datum/element/simple_flying)
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(on_tame)))
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
@@ -114,3 +115,8 @@
 	eyes.apply_organ_damage(-1 * healing_factor)
 	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
+
+/mob/living/basic/eyeball/proc/on_tame(mob/tamer)
+	spin(spintime = 5, speed = 1)
+	//become passive to the humens
+	faction |= tamer.faction
