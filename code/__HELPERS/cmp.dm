@@ -170,3 +170,9 @@
 /// Orders heretic knowledge by priority
 /proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
 	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
+
+/// Used by /datum/achievement_data/load_all_achievements() to determine in which order awards have to be loaded.
+/proc/cmp_award_priority(type_a, type_b)
+	var/datum/award/award_a = SSachievements.awards[type_a]
+	var/datum/award/award_b = SSachievements.awards[type_b]
+	return award_b?.load_priority - award_a?.load_priority
