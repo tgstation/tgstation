@@ -29,7 +29,7 @@
 
 	create_internal_organs()
 
-	add_traits(list(TRAIT_NEVER_WOUNDED, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NO_SPRINT), INNATE_TRAIT) //monkestation change: added TRAIT_NO_SPRINT
+	add_traits(list(TRAIT_NEVER_WOUNDED, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 	. = ..()
 
