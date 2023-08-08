@@ -2088,28 +2088,28 @@
 /obj/item/ammo_box/a40mm{
 	icon_state = "40mm-4"
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30"
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30"
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/item/ammo_box/magazine/m556{
+/obj/item/ammo_box/magazine/m223{
 	icon_state = "5.56m-30";
 	pixel_x = -2;
 	pixel_y = -4
@@ -2475,7 +2475,7 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/military,
-/obj/item/ammo_box/magazine/mm712x82,
+/obj/item/ammo_box/magazine/m7mm,
 /obj/item/gun/ballistic/automatic/l6_saw,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
