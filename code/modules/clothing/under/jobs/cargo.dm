@@ -4,7 +4,7 @@
 
 /obj/item/clothing/under/rank/cargo/qm
 	name = "quartermaster's outfit"
-	desc = "A brown dress shirt, coupled with a pair of black slacks. It's specially designed to prevent back injuries caused by pushing paper"
+	desc = "A brown dress shirt, coupled with a pair of black slacks. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	inhand_icon_state = "lb_suit"
 
