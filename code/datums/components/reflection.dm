@@ -44,7 +44,6 @@
 	reflection_holder.alpha = alpha
 	reflection_holder.appearance_flags = KEEP_TOGETHER
 	reflection_holder.vis_flags = VIS_INHERIT_ID
-	reflection_holder.alpha = alpha
 	reflection_holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	if(reflection_filter)
 		reflection_holder.add_filter("reflection", 1, reflection_filter)
@@ -112,8 +111,15 @@
 ///Sets up a visual overlay of the target movables, which is added to the parent's vis contents.
 /datum/component/reflection/proc/set_reflected(atom/movable/target)
 	SIGNAL_HANDLER
-	var/atom/movable/reflection = new
-	reflection.vis_contents += target
+	/**
+	 * If the loc is null, only a black (or grey depending on alpha) silhouette of the target will be rendered
+	 * Just putting this information here in case you want something like that in the future.
+	 */
+	var/obj/effect/abstract/reflection = new(parent)
+	reflection.vis_flags = VIS_INHERIT_ID
+	if(!target.render_target)
+		target.render_target = REF(target)
+	reflection.render_source = target.render_target
 	///The filter is added to the reflection holder; the matrix is not, otherwise that'd go affecting the filter.
 	if(reflection_matrix)
 		reflection.transform = reflection_matrix
