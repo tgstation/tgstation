@@ -717,6 +717,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SAFE_STORAGE "fish_case"
 /// Stuff that can go inside fish cases
 #define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
+/// If the item can be used as a bit.
+#define TRAIT_FISHING_BAIT "fishing_bait"
+/// The quality of the bait. It influences odds of catching fish
+#define TRAIT_BASIC_QUALITY_BAIT "baic_quality_bait"
+#define TRAIT_GOOD_QUALITY_BAIT "good_quality_bait"
+#define TRAIT_GREAT_QUALITY_BAIT "great_quality_bait"
+/// Baits with this trait will ignore bait preferences and related fish traits.
+#define OMNI_BAIT_TRAIT "omni_bait"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
