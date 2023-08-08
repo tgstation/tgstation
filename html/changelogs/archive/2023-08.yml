@@ -279,3 +279,11 @@
   KittyNoodle:
   - balance: Freon and hydrogen can now be purchased.
   - bugfix: Fixes a lot of "nothing" in atmos uis.
+2023-08-08:
+  MilkForever:
+  - rscadd: Security officers have been provided with a ballistic firearm, the FS
+      HG .35 Auto "Paco".
+  MomoBerri:
+  - code_imp: Fixed dynamic spawning excessive antagonists on low-pop, and increased
+      the threat cost of mid-round sleeper agents. Also gives a chance for extended
+      to roll if population is six or under.
