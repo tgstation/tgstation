@@ -13485,7 +13485,10 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay/central)
 "eZe" = (
 /obj/effect/turf_decal/siding/wood{
@@ -15363,6 +15366,16 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"fKV" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/obj/structure/sign/poster/contraband/random/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "fKZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23914,6 +23927,7 @@
 	},
 /obj/structure/sign/poster/official/safety_eye_protection/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "iOm" = (
@@ -24859,6 +24873,7 @@
 	dir = 8
 	},
 /obj/item/screwdriver,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "jew" = (
@@ -26468,6 +26483,7 @@
 	pixel_x = 6;
 	pixel_y = -2
 	},
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "jFi" = (
@@ -43622,6 +43638,16 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
+"pNW" = (
+/obj/structure/table/glass,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/item/cautery,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/surgery/theatre)
 "pNY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43971,6 +43997,7 @@
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
@@ -50645,7 +50672,6 @@
 "snb" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/sign/clock/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "snu" = (
@@ -53208,6 +53234,13 @@
 	dir = 1
 	},
 /area/station/engineering/atmos/pumproom)
+"thN" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/contraband/random/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "thQ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -56263,9 +56296,6 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "ukN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -62224,11 +62254,8 @@
 "wlt" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white/smooth_large,
+/turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wlx" = (
 /obj/machinery/camera/directional/west{
@@ -63318,11 +63345,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"wGk" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "wGz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/light_construct/directional/east,
@@ -85785,7 +85807,7 @@ xUu
 mue
 xUu
 kIR
-xUu
+thN
 xUu
 gjk
 kIR
@@ -86300,7 +86322,7 @@ tGu
 moK
 gGK
 snb
-vAF
+pNW
 jUb
 iEm
 kym
@@ -86817,7 +86839,7 @@ oZO
 bMS
 jUb
 dqN
-kym
+fKV
 jUb
 iOf
 oBv
@@ -87595,7 +87617,7 @@ jUb
 sje
 jUb
 tck
-tFr
+kHg
 nMf
 vDc
 amb
@@ -87852,7 +87874,7 @@ iov
 nwl
 vun
 lyx
-wGk
+tFr
 ukN
 vDc
 jtZ
