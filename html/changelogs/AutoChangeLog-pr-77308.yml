@@ -1,0 +1,4 @@
+author: "dieamond13"
+delete-after: True
+changes:
+  - bugfix: "removes a stray obj/item from random metastation wall"
