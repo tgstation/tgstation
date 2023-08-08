@@ -2315,7 +2315,6 @@
 	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
-<<<<<<< HEAD
 	icon = 'icons/mob/species/moth/moth_markings.dmi'
 	color_src = SPRITE_ACC_SCRIPTED_COLOR /// SKYRAPTOR EDIT
 
@@ -2341,10 +2340,6 @@
 
 	return color_intended
 /// SKYRAPTOR ADDITION END
-=======
-	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
-	color_src = null
->>>>>>> fc4de530ce2 (reorganizes the human sprite folder and replaces the human_basic sprite with an updated one (#77323))
 
 /datum/sprite_accessory/moth_markings/none
 	name = "None"
