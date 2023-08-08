@@ -43,6 +43,10 @@
 	var/delete_contents = TRUE
 
 /datum/crafting_recipe/New()
+	if(!name)
+		var/atom/atom_result = result
+		name = initial(atom_result.name)
+
 	if(!(result in reqs))
 		blacklist += result
 	// These should be excluded from all crafting recipies

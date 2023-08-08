@@ -462,7 +462,7 @@
 				else
 					if(!istype(result, /obj/effect/spawner))
 						result.forceMove(user.drop_location())
-				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
+				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)
 			else
@@ -514,7 +514,7 @@
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = recipe.name || initial(atom.name)
+	data["name"] = recipe.name
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result
