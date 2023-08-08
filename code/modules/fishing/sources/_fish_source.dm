@@ -111,7 +111,8 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	var/obj/item/fish/caught = source.reward_path
 	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
 	var/turf/fishing_spot = get_turf(source.lure)
-	dispense_reward(source.reward_path, user, fishing_spot)
+	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
+	source.used_rod?.consume_bait(reward)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, fishing_spot)
@@ -139,6 +140,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	if(reward)
 		SEND_SIGNAL(reward, COMSIG_ATOM_FISHING_REWARD, fishing_spot)
+	return reward
 
 /// Cached fish list properties so we don't have to initalize fish every time, init deffered
 GLOBAL_LIST(fishing_property_cache)
@@ -189,32 +191,30 @@ GLOBAL_LIST(fishing_property_cache)
 		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
 		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
 		if(result == FISHING_DUD)
-			//Modify dud result
-			//Bait quality reduces dud chance heavily.
-			if(bait)
-				if(HAS_TRAIT(bait, GREAT_QUALITY_BAIT_TRAIT))
-					final_table[result] *= 0.1
-				else if(HAS_TRAIT(bait, GOOD_QUALITY_BAIT_TRAIT))
-					final_table[result] *= 0.3
-				else if(HAS_TRAIT(bait, BASIC_QUALITY_BAIT_TRAIT))
-					final_table[result] *= 0.5
-			else
-				final_table[result] *= 10 //Fishing without bait is not going to be easy
 		else if(ispath(result, /obj/item/fish))
 			//Modify fish roll chance
 			var/obj/item/fish/caught_fish = result
 
 			if(bait)
-				//Bait matching likes doubles the chance
-				var/list/fav_bait = fish_list_properties[result][NAMEOF(caught_fish, favorite_bait)]
-				for(var/bait_identifer in fav_bait)
-					if(is_matching_bait(bait, bait_identifer))
-						final_table[result] *= 2
-				//Bait matching dislikes
-				var/list/disliked_bait = fish_list_properties[result][NAMEOF(caught_fish, disliked_bait)]
-				for(var/bait_identifer in disliked_bait)
-					if(is_matching_bait(bait, bait_identifer))
-						final_table[result] *= 0.5
+				if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
+					final_table[result] *= 10
+				else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
+					final_table[result] = round(final_table[result] * 3.5, 1)
+				else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
+					final_table[result] *= 2
+				if(!HAS_TRAIT(bait, OMNI_BAIT_TRAIT))
+					//Bait matching likes doubles the chance
+					var/list/fav_bait = fish_list_properties[result][NAMEOF(caught_fish, favorite_bait)]
+					for(var/bait_identifer in fav_bait)
+						if(is_matching_bait(bait, bait_identifer))
+							final_table[result] *= 2
+					//Bait matching dislikes
+					var/list/disliked_bait = fish_list_properties[result][NAMEOF(caught_fish, disliked_bait)]
+					for(var/bait_identifer in disliked_bait)
+						if(is_matching_bait(bait, bait_identifer))
+							final_table[result] = round(final_table[result] * 0.5, 1)
+			else
+				final_table[result] *= round(final_table[result] * 0.15, 1) //Fishing without bait is not going to be easy
 
 			// Apply fish trait modifiers
 			var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
@@ -227,7 +227,7 @@ GLOBAL_LIST(fishing_property_cache)
 				multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]
 
 			final_table[result] += additive_mod
-			final_table[result] *= multiplicative_mod
+			final_table[result] = round(final_table[result] * multiplicative_mod, 1)
 
 		if(final_table[result] <= 0)
 			final_table -= result
