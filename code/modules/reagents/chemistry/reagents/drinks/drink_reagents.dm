@@ -1142,3 +1142,23 @@
 			drinker.adjust_hallucinations(60 SECONDS * REM * seconds_per_tick)
 
 	return ..()
+
+/datum/reagent/consumable/t_letter
+	name = "T"
+	description = "You expected to find this in a soup, but this is fine too."
+	color = "#583d09" // rgb: 88, 61, 9
+	nutriment_factor = 0
+	taste_description = "one of your 26 favorite letters"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
+	default_container = /obj/item/reagent_containers/cup/glass/mug/t_letter
+
+/datum/reagent/consumable/t_letter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
+		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
+		affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+		if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
+			affected_mob.adjustToxLoss(-4, FALSE, required_biotype = affected_biotype)
+	..()
+	. = TRUE
