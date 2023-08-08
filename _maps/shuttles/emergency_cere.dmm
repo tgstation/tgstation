@@ -470,17 +470,11 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cj" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"ck" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
+/obj/structure/table,
+/obj/item/stack/medical/gauze,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cn" = (
@@ -495,16 +489,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cp" = (
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"cr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"cs" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 9
-	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cu" = (
@@ -885,6 +869,15 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/recharge_floor,
 /area/shuttle/escape)
+"iD" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/suture,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "ja" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/item/radio/intercom/directional/south,
@@ -1015,10 +1008,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "NP" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "NX" = (
@@ -1040,19 +1034,7 @@
 /obj/machinery/modular_computer/preset/id,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"SZ" = (
-/obj/structure/table,
-/obj/item/wrench/medical,
-/obj/item/reagent_containers/cup/beaker/cryoxadone,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "UA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 5
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1728,7 +1710,7 @@ bW
 bW
 bR
 ac
-SZ
+ci
 cp
 cw
 cC
@@ -1772,8 +1754,8 @@ bX
 bX
 bR
 ab
-ck
-cr
+iD
+cp
 cx
 co
 co
@@ -1817,7 +1799,7 @@ aZ
 bc
 ac
 cj
-cs
+cp
 cp
 cp
 cp
