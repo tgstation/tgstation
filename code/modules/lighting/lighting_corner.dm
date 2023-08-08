@@ -83,7 +83,7 @@
 			master.lighting_corner_SE = src
 
 /datum/lighting_corner/proc/self_destruct_if_idle()
-	if (!LAZYLEN(affecting))
+	if (!LAZYLEN(affecting) && !LAZYLEN(globAffect)) //monkestation edit + && !LAZYLEN(globAffect)
 		qdel(src, force = TRUE)
 
 /datum/lighting_corner/proc/vis_update()

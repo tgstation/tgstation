@@ -12,6 +12,12 @@
 #define PLANE_SPACE -25
 #define PLANE_SPACE_PARALLAX -20
 
+//monkestation begin
+//Not ever visible, place beneath everything
+#define WEATHER_OVERLAY_PLANE -80
+#define WEATHER_RENDER_TARGET "*WEATHER_OVERLAY_PLANE"
+//monkestation end
+
 #define GRAVITY_PULSE_PLANE -13
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
@@ -27,6 +33,7 @@
 #define GAME_PLANE_UPPER -6
 #define WALL_PLANE_UPPER -5
 #define GAME_PLANE_UPPER_FOV_HIDDEN -4
+#define WEATHER_EFFECT_PLANE -3 // monkestation edit
 
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -3
@@ -42,6 +49,12 @@
 #define POINT_PLANE 5
 
 //---------- LIGHTING -------------
+//monkestation begin
+// This is not rendered, a fullscreen effect uses the render_target as a layer filter to display on the lighting plane
+#define SUNLIGHTING_PLANE 9
+#define SUNLIGHTING_RENDER_TARGET "*SUNLIGHT_PLANE"
+//monkestation end
+
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
 #define LIGHTING_PLANE_ADDITIVE 11

@@ -41,6 +41,9 @@
 	/// List of additional areas that count as a part of the library
 	var/library_areas = list()
 
+	//List of particle_weather types for this map
+	var/particle_weather = list() //Monkestation addition
+
 /**
  * Proc that simply loads the default map config, which should always be functional.
  */
