@@ -9,7 +9,7 @@
 
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
-	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v5 voice activation system, the Lawbringer boasts many firing options, expriment. Or just use the manual."
 	cell_type = /obj/item/stock_parts/cell/lawbringer
 	icon_state = "hoslaser" //placeholder
 	w_class = WEIGHT_CLASS_NORMAL
@@ -28,7 +28,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	selfcharge = 1
-	can_select = FALSE
+	can_select = TRUE
 	can_charge = FALSE
 	var/owner_dna = null
 
@@ -44,27 +44,109 @@
 	if(speaker == src)
 		return FALSE
 	//placeholder code for figuring out a way of making this not an if string
+	//ammo selector v5 (abomination)
+	if(findtext(raw_message, regex(@"(?:detain|disable)")))
+		selectammo(DETAIN)
+		say("Generating detain lens")
+	if(findtext(raw_message, regex(@"(?:execute|kill|lethal)")))
+		selectammo(EXECUTE)
+		say("Fabricating lethal bullets")
+	if(findtext(raw_message, regex(@"(?:hotshot|burn|fire)")))
+		selectammo(HOTSHOT)
+		say("Forming proto-plasma")
+	if(findtext(raw_message, regex(@"(?:smokeshot|fog)")))
+		selectammo(SMOKESHOT)
+		say("Compressing Smoke")
+	if(findtext(raw_message, regex(@"(?:bigshot|breach)")))
+		selectammo(BIGSHOT)
+		say("Fabricating protomatter shell")
+	if(findtext(raw_message, @"clown")) //does not work
+		selectammo(CLOWNSHOT)
+		say("Honk")
+	if(findtext(raw_message, regex(@"(?:pulse|throw|push)"))) //only works if i say ?: before everything
+		selectammo(PULSE)
+		say("Compressing air")
+	if(findtext(raw_message, regex(@"grey|tide"))) //does not work
+		selectammo(TIDESHOT)
+		say("Greytide inversion active")
+
+	/* //ammo selector v3 (functions but only if you say ?: before the activation word)
+	if(findtext(raw_message, regex("(?:detain|disable)")))
+		selectammo(DETAIN)
+		say("Generating detain lens")
+	if(findtext(raw_message, regex("(?:execute|kill|lethal)")))
+		selectammo(EXECUTE)
+		say("Fabricating lethal bullets")
+	if(findtext(raw_message, regex("(?:hotshot|burn|fire)")))
+		selectammo(HOTSHOT)
+		say("Forming proto-plasma")
+	if(findtext(raw_message, regex("(?:smokeshot|fog)")))
+		selectammo(SMOKESHOT)
+		say("Compressing Smoke")
+	if(findtext(raw_message, regex("(?:bigshot|breach)")))
+		selectammo(BIGSHOT)
+		say("Fabricating protomatter shell")
+	if(findtext(raw_message, regex("(?:clown)")))
+		selectammo(CLOWNSHOT)
+		say("Honk")
+	if(findtext(raw_message, regex("(?:pulse|throw|push)")))
+		selectammo(PULSE)
+		say("Compressing air")
+	if(findtext(raw_message, regex("(?:grey|tide)")))
+		selectammo(TIDESHOT)
+		say("Greytide inversion active")
+	*/
+
+	/* //ammo selector v2 (untested with debug response)
 	if(findtext(raw_message, regex(@"detain|disable")))
 		selectammo(DETAIN)
+		say("Generating detain lens")
 	if(findtext(raw_message, regex(@"execute|kill|lethal")))
 		selectammo(EXECUTE)
+		say("Fabricating lethal bullets")
 	if(findtext(raw_message, regex(@"hotshot|burn|fire")))
 		selectammo(HOTSHOT)
+		say("Forming proto-plasma")
 	if(findtext(raw_message, regex(@"smokeshot|fog")))
 		selectammo(SMOKESHOT)
+		say("Compressing Smoke")
 	if(findtext(raw_message, regex(@"bigshot|breach")))
 		selectammo(BIGSHOT)
+		say("Fabricating protomatter shell")
 	if(findtext(raw_message, regex(@"clown")))
 		selectammo(CLOWNSHOT)
+		say("Honk")
 	if(findtext(raw_message, regex(@"pulse|throw|push")))
 		selectammo(PULSE)
+		say("Compressing air")
 	if(findtext(raw_message, regex(@"grey|tide")))
 		selectammo(TIDESHOT)
+		say("Greytide inversion active")
+    */
+		/* //ammo selector v1 (untested with debug response)
+	if(findtext(raw_message, regex("detain|disable")))
+		selectammo(DETAIN)
+	if(findtext(raw_message, regex("execute|kill|lethal")))
+		selectammo(EXECUTE)
+	if(findtext(raw_message, regex("hotshot|burn|fire")))
+		selectammo(HOTSHOT)
+	if(findtext(raw_message, regex("smokeshot|fog")))
+		selectammo(SMOKESHOT)
+	if(findtext(raw_message, regex("bigshot|breach")))
+		selectammo(BIGSHOT)
+	if(findtext(raw_message, regex("clown")))
+		selectammo(CLOWNSHOT)
+	if(findtext(raw_message, regex("pulse|throw|push")))
+		selectammo(PULSE)
+	if(findtext(raw_message, regex("grey|tide")))
+		selectammo(TIDESHOT)
+    */
 
-/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum)
+/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum) //BROKEN FIX ASAP (This thing is broken in such an insane way i genuinely do not even know what is wrong send help)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[shotnum]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
+	say("[shotnum]")
 	chambered = null
 	recharge_newshot(TRUE)
 	update_appearance()
