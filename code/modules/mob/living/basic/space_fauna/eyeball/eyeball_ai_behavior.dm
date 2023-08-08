@@ -63,7 +63,7 @@
 		return FALSE
 
 	var/turf/turf_to_move_towards = get_step(target, target.dir)
-	if(turf_in_view.is_blocked_turf(ignore_atoms = list(controller.pawn)))
+	if(turf_to_move_towards.is_blocked_turf(ignore_atoms = list(controller.pawn)))
 		return FALSE
 
 	if(isnull(turf_to_move_towards))
