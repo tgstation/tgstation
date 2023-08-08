@@ -61,6 +61,7 @@
 
 /datum/ai_behavior/hunt_target/repair_machines/target_caught(mob/living/basic/hivebot/mechanic/hunter, obj/machinery/repair_target)
 	hunter.repair_machine(repair_target)
+
 /datum/ai_behavior/basic_ranged_attack/hivebot
 	action_cooldown = 3 SECONDS
 
