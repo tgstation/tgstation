@@ -50,7 +50,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "o" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/basic/hivebot/range,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "p" = (
@@ -91,7 +91,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "D" = (
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/basic/hivebot,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "E" = (
@@ -99,7 +99,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "F" = (
-/mob/living/simple_animal/hostile/hivebot/mechanic,
+/mob/living/basic/hivebot/mechanic,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "G" = (
@@ -140,7 +140,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "Q" = (
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/basic/hivebot/strong,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "R" = (
@@ -171,7 +171,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "Y" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/basic/hivebot/range,
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/misc/asteroid/airless,
 /area/space)
