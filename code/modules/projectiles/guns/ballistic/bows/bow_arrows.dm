@@ -16,8 +16,7 @@
 /obj/item/ammo_casing/arrow/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/envenomable_casing)
-	//embedding handles spawning another casing when the projectile strikes.
-	AddElement(/datum/element/caseless, FALSE)
+	AddElement(/datum/element/caseless)
 
 /obj/item/ammo_casing/arrow/update_icon_state()
 	. = ..()

@@ -379,8 +379,10 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_FIRE_CASING "fire_casing"
 
-///sent to the projectile after an item is spawned by the projectile_drop element: (new_casing)
+///sent to the projectile after an item is spawned by the projectile_drop element: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
+///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
+#define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
 
 // /obj/vehicle/sealed/car/vim signals
 

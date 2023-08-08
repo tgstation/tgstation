@@ -132,7 +132,7 @@
  * checkEmbedProjectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
  *
  * If we hit a valid target, we create the shrapnel_type object and then forcefully try to embed it on its
- * behalf. DO NOT EVER add an embed element to the payload and let it handle the rest.
+ * behalf. DO NOT EVER add an embed element to the payload and let it do the rest.
  * That's awful, and it'll limit us to drop-deletable shrapnels in the worry of stuff like
  * arrows and harpoons being embeddable even when not let loose by their weapons.
  */
@@ -146,6 +146,7 @@
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	if(istype(payload, /obj/item/shrapnel/bullet))
 		payload.name = P.name
+	SEND_SIGNAL(P, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload)
 	var/mob/living/carbon/C = hit
 	var/obj/item/bodypart/limb = C.get_bodypart(hit_zone)
 	if(!limb)

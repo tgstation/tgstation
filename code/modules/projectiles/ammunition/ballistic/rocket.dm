@@ -8,7 +8,7 @@
 
 /obj/item/ammo_casing/rocket/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/caseless, FALSE)
+	AddElement(/datum/element/caseless)
 
 /obj/item/ammo_casing/rocket/update_icon_state()
 	. = ..()
@@ -35,7 +35,7 @@
 
 /obj/item/ammo_casing/a75/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/caseless, FALSE)
+	AddElement(/datum/element/caseless)
 
 /obj/item/ammo_casing/a75/update_icon_state()
 	. = ..()
