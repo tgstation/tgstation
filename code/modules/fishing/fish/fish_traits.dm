@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding >= source.feeding_frequency || !isaquarium(source.loc))
+	if(world.time - source.last_feeding < source.feeding_frequency || !isaquarium(source.loc))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding >= source.feeding_frequency || !isaquarium(source.loc))
+	if(world.time - source.last_feeding < source.feeding_frequency || !isaquarium(source.loc))
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
 	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
