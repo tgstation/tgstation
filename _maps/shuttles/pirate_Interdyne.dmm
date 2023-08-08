@@ -196,9 +196,16 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aI" = (
+/obj/structure/rack,
+/obj/item/storage/box/beakers{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 7;
+	pixel_y = -5
+	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/portable_atmospherics/canister/healium,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aJ" = (
@@ -285,11 +292,6 @@
 	dir = 4
 	},
 /obj/machinery/chem_dispenser/fullupgrade,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"aR" = (
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aS" = (
@@ -683,6 +685,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"AG" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/head/utility/welding,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "BT" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
@@ -709,12 +718,7 @@
 /area/shuttle/pirate)
 "En" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/small/blacklight/directional/south,
-/obj/item/reagent_containers/cup/beaker/meta/salbutamol{
-	list_reagents = list(/datum/reagent/medicine/c2/convermol=180)
-	},
-/obj/item/wrench/medical,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ED" = (
@@ -956,8 +960,8 @@ aj
 ey
 aF
 aj
+AG
 aW
-aR
 ek
 lW
 JT

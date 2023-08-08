@@ -425,9 +425,6 @@
 "bE" = (
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
-"bF" = (
-/turf/open/floor/iron/white,
-/area/awaymission/cabin)
 "bG" = (
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
@@ -464,8 +461,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 8
+/obj/structure/chair/office/light{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
@@ -520,13 +517,6 @@
 "cl" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/iron/freezer,
-/area/awaymission/cabin)
-"cm" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "co" = (
 /turf/open/chasm{
@@ -3058,6 +3048,10 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
+"tj" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/white,
+/area/awaymission/cabin)
 "tk" = (
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 4
@@ -4529,10 +4523,9 @@
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "LG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
-	dir = 4
-	},
 /obj/machinery/light/small/directional/east,
+/obj/structure/table/reinforced,
+/obj/item/folder/white,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "LR" = (
@@ -4915,12 +4908,6 @@
 	},
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
-"RM" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/awaymission/cabin)
 "RN" = (
 /obj/structure/ladder/unbreakable/rune{
 	desc = "Get me out of this boring room.";
@@ -34275,9 +34262,9 @@ an
 eg
 aq
 an
-bF
+bE
 bP
-cm
+bE
 ho
 bE
 lz
@@ -34532,9 +34519,9 @@ an
 eg
 nS
 an
-bF
+tj
 LG
-RM
+bE
 hp
 UH
 hp
