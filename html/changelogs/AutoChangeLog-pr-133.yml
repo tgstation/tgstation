@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - bugfix: "Fixed particles sometimes being left behind when an object drops all of its contents whilst having a particle active."
