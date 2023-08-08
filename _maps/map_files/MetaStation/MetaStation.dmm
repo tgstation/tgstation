@@ -66219,6 +66219,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xPm" = (
@@ -67120,7 +67121,6 @@
 /area/station/commons/fitness)
 "yfn" = (
 /obj/machinery/vending/dinnerware,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 5
 	},
