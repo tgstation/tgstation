@@ -70,9 +70,6 @@
 			return FALSE
 	if(cause == "death" && HAS_TRAIT(imp_in, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION))
 		return FALSE
-	explosion_devastate = round(explosion_devastate)
-	explosion_heavy = round(explosion_heavy)
-	explosion_light = round(explosion_light)
 	to_chat(imp_in, span_notice("You activate your [name]."))
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
@@ -90,19 +87,10 @@
 			if(other_implant.master_implant && master_implant) //we cant have two master implants at once
 				target.balloon_alert(target, "cannot fit implant!")
 				return FALSE
-			if(master_implant) //override the old implant and add in the old stats
-				explosion_devastate += other_implant.explosion_devastate
-				explosion_heavy += other_implant.explosion_heavy
-				explosion_light += other_implant.explosion_light
-				delay = min(delay + other_implant.delay, 30 SECONDS)
-				qdel(other_implant)
-			//We merge the two implants into a single bigger, badder one by adding the injected implant's values into the already present implant
+			if(master_implant)
+				merge_implants(src, other_implant)
 			else
-				other_implant.explosion_devastate += explosion_devastate
-				other_implant.explosion_heavy += explosion_heavy
-				other_implant.explosion_light += explosion_light
-				other_implant.delay = min(other_implant.delay + delay, 30 SECONDS)
-				qdel(src)
+				merge_implants(other_implant, src)
 				return TRUE
 
 	. = ..()
@@ -113,6 +101,18 @@
 	. = ..()
 	if(.)
 		UnregisterSignal(target, COMSIG_LIVING_DEATH)
+
+/**
+ * Merges two explosive implants together, adding the stats of the latter to the former before qdeling the latter implant.
+ * kept_implant = the implant that is kept
+ * stat_implant = the implant which has it's stats added to kept_implant, before being deleted.
+ */
+/obj/item/implant/explosive/proc/merge_implants(obj/item/implant/explosive/kept_implant, obj/item/implant/explosive/stat_implant)
+	kept_implant.explosion_devastate += stat_implant.explosion_devastate
+	kept_implant.explosion_heavy += stat_implant.explosion_heavy
+	kept_implant.explosion_light += stat_implant.explosion_light
+	kept_implant.delay = min(kept_implant.delay + stat_implant.delay, 30 SECONDS)
+	qdel(stat_implant)
 
 /**
  * Explosive activation sequence for implants with a delay longer than 0.7 seconds.
@@ -143,7 +143,7 @@
 		while(bomb_beeps_until_boom > 0)
 			//for extra spice
 			var/beep_volume = 35
-			playsound(loc, 'sound/items/timer.ogg', beep_volume, FALSE)
+			playsound(loc, 'sound/items/timer.ogg', beep_volume, vary = FALSE)
 			sleep(delay * 0.25)
 			bomb_beeps_until_boom--
 			beep_volume += 5
@@ -152,14 +152,17 @@
 		addtimer(CALLBACK(src, PROC_REF(explode)), delay)
 		while(delay > 1) //so we dont accidentally enter an infinite sleep
 			var/beep_volume = 35
-			playsound(loc, 'sound/items/timer.ogg', beep_volume, FALSE)
-			sleep(delay / 5)
-			delay -= delay / 5
+			playsound(loc, 'sound/items/timer.ogg', beep_volume, vary = FALSE)
+			sleep(delay * 0.2)
+			delay -= delay * 0.2
 			beep_volume += 5
 
 
 ///When called, just explodes
 /obj/item/implant/explosive/proc/explode()
+	explosion_devastate = round(explosion_devastate)
+	explosion_heavy = round(explosion_heavy)
+	explosion_light = round(explosion_light)
 	explosion(src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
 	if(imp_in)
 		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
@@ -176,6 +179,7 @@
 	explosion_heavy = 10 * MICROBOMB_EXPLOSION_HEAVY
 	explosion_devastate = 10 * MICROBOMB_EXPLOSION_DEVASTATE
 
+//Microbomb which prevents you from going into critical condition but also explodes after a timer when you reach critical condition in the first place.
 /obj/item/implant/explosive/deniability
 	name = "tactical deniability implant"
 	desc = "An enhanced version of the microbomb that directly plugs into the brain. No downsides, promise!"
@@ -188,13 +192,13 @@
 	. = ..()
 	if(.)
 		RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
-	target.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), IMPLANT_TRAIT)
+		target.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), IMPLANT_TRAIT)
 
 /obj/item/implant/explosive/deniability/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
 	if(.)
 		UnregisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE)
-	target.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), IMPLANT_TRAIT)
+		target.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), IMPLANT_TRAIT)
 
 /obj/item/implant/explosive/deniability/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
