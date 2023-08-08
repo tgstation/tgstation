@@ -15,23 +15,19 @@
 	TEST_ASSERT_EQUAL(connected_server, server, "Quantum server did not set console_ref correctly")
 
 /// Initializing map templates
-/datum/unit_test/qserver_initialize_domain/Run()
+/datum/unit_test/qserver_initialize/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 
 	TEST_ASSERT_EQUAL(server.initialize_domain(TEST_MAP), TRUE, "Should initialize a domain with a valid map")
 	TEST_ASSERT_NOTNULL(server.generated_domain, "Should set the generated_domain var")
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Should have initialized the proper map")
 
-/// Loads safehouse and turfs, etc
-/datum/unit_test/qserver_initialize_safehouse/Run()
-	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
-
-	TEST_ASSERT_EQUAL(server.initialize_domain(map_key = TEST_MAP), TRUE, "Should initialize a domain with a valid map")
-	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
+	TEST_ASSERT_EQUAL(server.initialize_safehouse(), TRUE, "Should initialize safehouse turfs")
+	TEST_ASSERT_NOTNULL(server.generated_safehouse, "Should set the generated_safehouse var")
 
 	TEST_ASSERT_EQUAL(server.initialize_map_items(), TRUE, "Should initialize safehouse turfs")
-	TEST_ASSERT_NOTNULL(server.generated_safehouse, "Did not load generated_safehouse correctly")
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Did not load the correct number of exit turfs")
+	TEST_ASSERT_EQUAL(length(server.mutation_candidates), 2, "Did not set the correct number of mutation candidates")
 
 /// Handles cases with stopping domains. The server should cool down etc
 /datum/unit_test/qserver_reset/Run()

@@ -218,19 +218,8 @@
 	loading = TRUE
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
-	if(!initialize_domain(map_key))
-		balloon_alert(user, "invalid domain specified.")
-		loading = FALSE
-		return FALSE
-
-	points -= generated_domain.cost
-	if(points < 0)
-		balloon_alert(user, "not enough points.")
-		loading = FALSE
-		return FALSE
-
-	if(!initialize_map_items())
-		balloon_alert(user, "failed to load safehouse.")
+	if(!initialize_domain(map_key) || !initialize_safehouse() || !initialize_map_items())
+		balloon_alert(user, "initialization failed.")
 		scrub_vdom()
 		loading = FALSE
 		return FALSE
@@ -238,7 +227,10 @@
 	loading = FALSE
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 	balloon_alert(user, "domain loaded.")
+	generated_domain.start_time = world.time
+	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)
+	update_appearance()
 
 	return TRUE
 
@@ -532,6 +524,10 @@
 	generated_domain = new to_load()
 	generated_domain.lazy_load()
 
+	return TRUE
+
+/// Loads in necessary map items, sets mutation targets, etc
+/obj/machinery/quantum_server/proc/initialize_map_items()
 	for(var/thing in generated_domain.created_atoms_list)
 		if(isliving(thing)) // so we can mutate them
 			var/mob/living/creature = thing
@@ -554,27 +550,8 @@
 
 			qdel(spawner)
 
-	return TRUE
-
-/// Loads the safehouse and sets turfs
-/obj/machinery/quantum_server/proc/initialize_map_items()
-	var/datum/turf_reservation/res = generated_domain.reservations[1]
-
-	var/turf/safehouse_load_turf = list()
-	for(var/turf/open/space/space_tile in res.reserved_turfs) // must be a template tile, therefore empty space
-		if(istype(get_area(space_tile), /area/virtual_domain/safehouse/bottom_left))
-			safehouse_load_turf += space_tile
-			break
-
-	if(!length(safehouse_load_turf))
-		CRASH("Failed to find safehouse load landmark on map.")
-
-	var/datum/map_template/safehouse/safehouse = new generated_domain.safehouse_path()
-	safehouse.load(safehouse_load_turf[ONLY_TURF])
-	generated_safehouse = safehouse
-
 	var/turf/goal_turfs = list()
-	for(var/obj/thing in safehouse.created_atoms)
+	for(var/obj/thing in generated_safehouse.created_atoms)
 		if(istype(thing, /obj/effect/bitrunning/exit_spawn)) // so there's a place to put the hololadder
 			exit_turfs += get_turf(thing)
 			continue
@@ -595,8 +572,24 @@
 	if(!length(goal_turfs))
 		CRASH("Failed to find send turfs on generated domain.")
 
-	generated_domain.start_time = world.time
-	update_appearance()
+	return TRUE
+
+/// Loads the safehouse
+/obj/machinery/quantum_server/proc/initialize_safehouse()
+	var/datum/turf_reservation/res = generated_domain.reservations[1]
+
+	var/turf/safehouse_load_turf = list()
+	for(var/turf/open/space/space_tile in res.reserved_turfs) // must be a template tile, therefore empty space
+		if(istype(get_area(space_tile), /area/virtual_domain/safehouse/bottom_left))
+			safehouse_load_turf += space_tile
+			break
+
+	if(!length(safehouse_load_turf))
+		CRASH("Failed to find safehouse load landmark on map.")
+
+	var/datum/map_template/safehouse/safehouse = new generated_domain.safehouse_path()
+	safehouse.load(safehouse_load_turf[ONLY_TURF])
+	generated_safehouse = safehouse
 
 	return TRUE
 
