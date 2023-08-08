@@ -46,13 +46,8 @@
 
 		if (sprite_accessory.icon_state != "none")
 			var/icon/body_markings_icon = icon(
-<<<<<<< HEAD
 				'icons/mob/species/lizard/lizard_misc.dmi',
 				"m_bodymarks_lizard_[sprite_accessory.icon_state]_ADJ",
-=======
-				'icons/mob/human/species/lizard/lizard_misc.dmi',
-				"m_body_markings_[sprite_accessory.icon_state]_ADJ",
->>>>>>> fc4de530ce2 (reorganizes the human sprite folder and replaces the human_basic sprite with an updated one (#77323))
 			)
 
 			final_icon.Blend(body_markings_icon, ICON_OVERLAY)
