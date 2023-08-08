@@ -374,9 +374,6 @@
 /obj/structure/table,
 /obj/item/flashlight/lamp,
 /obj/item/radio/intercom/directional/west,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/office)
 "ahj" = (
@@ -7904,9 +7901,6 @@
 /area/station/service/chapel)
 "cXz" = (
 /obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
@@ -38807,9 +38801,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/station/medical/office)
 "odI" = (
@@ -57163,9 +57154,6 @@
 "uIM" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
@@ -62086,9 +62074,6 @@
 /area/station/commons/toilet/restrooms)
 "wsv" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
