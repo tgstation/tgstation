@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "PAIs can now cast wizard spells should they have any."
+  - rscadd: "AIs located in intellicards can now cast wizard spells should they have any."
+  - rscadd: "Some spells, such as AoE or conjure spells, are now castable from within Mechas or Clown Cars. To varying degrees of success."
+  - rscadd: "Knock will now unlock and open closets you are hiding within."
+  - rscadd: "Repulse will now throw open closets you are hiding within."

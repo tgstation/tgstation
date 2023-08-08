@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Traitors can once again affix tiny bombs to lathes rather than trying to feed them to the lathe"

@@ -14,6 +14,8 @@
 	var/max_combined_w_class = 15
 	/// Max amount of items in the storage.
 	var/max_items = 7
+	/// Is nesting same-size storage items allowed?
+	var/big_nesting = FALSE
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
@@ -24,6 +26,7 @@
 /obj/item/mod/module/storage/on_install()
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
+	modstorage.allow_big_nesting = big_nesting
 	atom_storage.locked = STORAGE_NOT_LOCKED
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
@@ -83,6 +86,7 @@
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
 	max_items = 21
+	big_nesting = TRUE
 
 ///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
@@ -101,7 +105,9 @@
 	overlay_state_active = "module_jetpack_on"
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	var/stabilize = FALSE
+	/// Do we have stabilizers? If yes the user won't move from inertia.
+	var/stabilize = TRUE
+	/// Callback to see if we can thrust the user.
 	var/thrust_callback
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
@@ -182,8 +188,12 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
+	/// Does this show damage types, body temp, satiety
+	var/display_detailed_vitals = TRUE
+	/// Does this show DNA data
+	var/display_dna = FALSE
 	/// Does this show the round ID and shift time?
-	var/show_time = FALSE
+	var/display_time = FALSE
 	/// Death sound. May or may not be funny. Vareditable at your own risk.
 	var/death_sound = 'sound/effects/flatline3.ogg'
 	/// Death sound volume. Please be responsible with this.
@@ -191,20 +201,22 @@
 
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
-	.["show_time"] = show_time
-	.["statustime"] = station_time_timestamp()
-	.["statusid"] = GLOB.round_id
-	.["statushealth"] = mod.wearer?.health || 0
-	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["statusburn"] = mod.wearer?.getFireLoss() || 0
-	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
-	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
-	.["statustemp"] = mod.wearer?.bodytemperature || 0
-	.["statusnutrition"] = mod.wearer?.nutrition || 0
-	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["statusdna"] = mod.wearer?.dna.unique_enzymes
-	.["statusviruses"] = null
+	.["display_time"] = display_time
+	.["shift_time"] = station_time_timestamp()
+	.["shift_id"] = GLOB.round_id
+	.["health"] = mod.wearer?.health || 0
+	.["health_max"] = mod.wearer?.getMaxHealth() || 0
+	if(display_detailed_vitals)
+		.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
+		.["loss_fire"] = mod.wearer?.getFireLoss() || 0
+		.["loss_tox"] = mod.wearer?.getToxLoss() || 0
+		.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+		.["body_temperature"] = mod.wearer?.bodytemperature || 0
+		.["nutrition"] = mod.wearer?.nutrition || 0
+	if(display_dna)
+		.["dna_unique_identity"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
+		.["dna_unique_enzymes"] = mod.wearer?.dna.unique_enzymes
+	.["viruses"] = null
 	if(!length(mod.wearer?.diseases))
 		return .
 	var/list/viruses = list()
@@ -216,9 +228,21 @@
 		virus_data["maxstage"] = virus.max_stages
 		virus_data["cure"] = virus.cure_text
 		viruses += list(virus_data)
-	.["statusviruses"] = viruses
+	.["viruses"] = viruses
 
 	return .
+
+/obj/item/mod/module/status_readout/get_configuration()
+	. = ..()
+	.["display_detailed_vitals"] = add_ui_configuration("Detailed Vitals", "bool", display_detailed_vitals)
+	.["display_dna"] = add_ui_configuration("DNA Information", "bool", display_dna)
+
+/obj/item/mod/module/status_readout/configure_edit(key, value)
+	switch(key)
+		if("display_detailed_vitals")
+			display_detailed_vitals = text2num(value)
+		if("display_dna")
+			display_dna = text2num(value)
 
 /obj/item/mod/module/status_readout/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
@@ -486,9 +510,7 @@
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	on_emp(src, severity)
+	on_emp(src, severity, .)
 
 /obj/item/mod/module/dna_lock/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -503,9 +525,10 @@
 	balloon_alert(user, "dna locked!")
 	return FALSE
 
-/obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity)
+/obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity, protection)
 	SIGNAL_HANDLER
-
+	if(protection & EMP_PROTECT_SELF)
+		return
 	dna = null
 
 /obj/item/mod/module/dna_lock/proc/on_emag(datum/source, mob/user, obj/item/card/emag/emag_card)
@@ -564,7 +587,7 @@
 	incompatible_modules = list(/obj/item/mod/module/hat_stabilizer)
 	/*Intentionally left inheriting 0 complexity and removable = TRUE;
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
-	/// Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
+	/// Currently "stored" hat. No armor or function will be inherited, only the icon and cover flags.
 	var/obj/item/clothing/head/attached_hat
 	/// Original cover flags for the MOD helmet, before a hat is placed
 	var/former_flags
@@ -595,14 +618,18 @@
 	SIGNAL_HANDLER
 	if(!istype(hitting_item, /obj/item/clothing/head))
 		return
+	var/obj/item/clothing/hat = hitting_item
 	if(!mod.active)
 		balloon_alert(user, "suit must be active!")
 		return
 	if(attached_hat)
 		balloon_alert(user, "hat already attached!")
 		return
+	if(hat.clothing_flags & STACKABLE_HELMET_EXEMPT)
+		balloon_alert(user, "invalid hat!")
+		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
-		attached_hat = hitting_item
+		attached_hat = hat
 		former_flags = mod.helmet.flags_cover
 		former_visor_flags = mod.helmet.visor_flags_cover
 		mod.helmet.flags_cover |= attached_hat.flags_cover

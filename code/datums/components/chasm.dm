@@ -1,6 +1,3 @@
-/// List of weakrefs to containers for things which have fallen into chasms
-GLOBAL_LIST_INIT(chasm_storage, list())
-
 // Used by /turf/open/chasm and subtypes to implement the "dropping" mechanic
 /datum/component/chasm
 	var/turf/target_turf
@@ -35,6 +32,8 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
+	if(!isturf(parent))
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
@@ -45,24 +44,10 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
 		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
-	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
+	parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
 
 /datum/component/chasm/UnregisterFromParent()
-	remove_storage()
-
-/**
- * Deletes the chasm storage object and removes empty weakrefs from global list
- */
-/datum/component/chasm/proc/remove_storage()
-	if (!storage)
-		return
-	QDEL_NULL(storage)
-	var/list/chasm_storage = list()
-	for (var/datum/weakref/ref as anything in GLOB.chasm_storage)
-		if (!ref.resolve())
-			continue
-		chasm_storage += ref
-	GLOB.chasm_storage = chasm_storage
+	storage = null
 
 /datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -197,9 +182,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		return
 
 	if(!storage)
-		storage = new(get_turf(parent))
-		RegisterSignal(storage, COMSIG_ATOM_EXITED, PROC_REF(left_chasm))
-		GLOB.chasm_storage += WEAKREF(storage)
+		storage = (locate() in parent) || new(parent)
 
 	if(storage.contains(dropped_thing))
 		return
@@ -209,14 +192,11 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	dropped_thing.transform = oldtransform
 	dropped_thing.pixel_y = oldoffset
 
-	if(dropped_thing.forceMove(storage))
-		if (isliving(dropped_thing))
-			RegisterSignal(dropped_thing, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-	else
+	if(!dropped_thing.forceMove(storage))
 		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
 		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 
-	if(isliving(dropped_thing))
+	else if(isliving(dropped_thing))
 		var/mob/living/fallen_mob = dropped_thing
 		fallen_mob.notransform = FALSE
 		if (fallen_mob.stat != DEAD)
@@ -237,27 +217,8 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	SIGNAL_HANDLER
 	UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 
-#define CHASM_TRAIT "chasm trait"
-
-/**
- * Called if something comes back to life inside the pit. Expected sources are badmins and changelings.
- * Ethereals should take enough damage to be smashed and not revive.
- *
- * Arguments
- * * escapee - Lucky guy who just came back to life at the bottom of a hole.
- */
-/datum/component/chasm/proc/on_revive(mob/living/escapee)
-	SIGNAL_HANDLER
-	var/atom/parent = src.parent
-	parent.visible_message(span_boldwarning("After a long climb, [escapee] leaps out of [parent]!"))
-	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in
-	escapee.forceMove(get_turf(parent))
-	escapee.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
-	REMOVE_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT)
-	escapee.Paralyze(20 SECONDS, TRUE)
-	UnregisterSignal(escapee, COMSIG_LIVING_REVIVE)
-
-#undef CHASM_TRAIT
+///Global list needed to let fishermen with a rescue hook fish fallen mobs from any place
+GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /**
  * An abstract object which is basically just a bag that the chasm puts people inside
@@ -271,3 +232,40 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 /obj/effect/abstract/chasm_storage/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SECLUDED_LOCATION, INNATE_TRAIT)
+
+/obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
+	. = ..()
+	if (isliving(arrived))
+		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
+		GLOB.chasm_fallen_mobs += arrived
+
+/obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
+	. = ..()
+	if (isliving(gone))
+		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
+		GLOB.chasm_fallen_mobs -= gone
+
+#define CHASM_TRAIT "chasm trait"
+/**
+ * Called if something comes back to life inside the pit. Expected sources are badmins and changelings.
+ * Ethereals should take enough damage to be smashed and not revive.
+ * Arguments
+ * escapee - Lucky guy who just came back to life at the bottom of a hole.
+ */
+/obj/effect/abstract/chasm_storage/proc/on_revive(mob/living/escapee)
+	SIGNAL_HANDLER
+	var/turf/turf = get_turf(src)
+	if(turf.GetComponent(/datum/component/chasm))
+		turf.visible_message(span_boldwarning("After a long climb, [escapee] leaps out of [turf]!"))
+	else
+		playsound(turf, 'sound/effects/bang.ogg', 50, TRUE)
+		turf.visible_message(span_boldwarning("[escapee] busts through [turf], leaping out of the chasm below"))
+		turf.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in
+	escapee.forceMove(turf)
+	escapee.throw_at(get_edge_target_turf(turf, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
+	REMOVE_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT)
+	escapee.Paralyze(20 SECONDS, TRUE)
+	UnregisterSignal(escapee, COMSIG_LIVING_REVIVE)
+
+#undef CHASM_TRAIT
