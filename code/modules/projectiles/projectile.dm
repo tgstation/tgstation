@@ -198,7 +198,7 @@
 	var/embed_falloff_tile
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-		COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry),
+		COMSIG_ATOM_ATTACK_HAND = PROC_REF(attempt_parry),
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
