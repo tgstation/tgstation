@@ -120,7 +120,6 @@
 	// Chemicals that can be mixed by a single skilled Chemist.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
-		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
 		/datum/reagent/medicine/c2/convermol,\
 		/datum/reagent/medicine/ephedrine,\
@@ -156,8 +155,7 @@
 
 /datum/bounty/reagent/chemical_complex/New()
 	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
-	var/static/list/possible_reagents = list(\
-		/datum/reagent/medicine/pyroxadone,\
+	var/static/list/possible_reagents = list(
 		/datum/reagent/medicine/rezadone,\
 		/datum/reagent/medicine/regen_jelly,\
 		/datum/reagent/drug/bath_salts,\

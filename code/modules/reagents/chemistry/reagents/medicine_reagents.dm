@@ -139,7 +139,7 @@
 
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
-	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
+	description = "A chemical mixture with some healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 	taste_description = "blue"
 	ph = 11
@@ -149,19 +149,12 @@
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (affected_mob.bodytemperature ** 2) + 0.5)
-	if(affected_mob.bodytemperature >= T0C || !HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT))
-		..()
-		return
+	if(affected_mob.bodytemperature >= T0C)
+		return ..()
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
 	affected_mob.adjustOxyLoss(-3 * power * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	affected_mob.adjustFireLoss(-power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
 	affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, FALSE, affected_biotype)
-	for(var/i in affected_mob.all_wounds)
-		var/datum/wound/iter_wound = i
-		iter_wound.on_xadone(power * REM * seconds_per_tick)
-	REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 	..()
 	return TRUE
 
@@ -169,39 +162,6 @@
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(round(volume * 3))
 	mytray.adjust_toxic(-round(volume * 3))
-
-/datum/reagent/medicine/pyroxadone
-	name = "Pyroxadone"
-	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
-	color = "#f7832a"
-	taste_description = "spicy jelly"
-	ph = 12
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		var/power = 0
-		switch(affected_mob.bodytemperature)
-			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
-				power = 2
-			if(400 to 460)
-				power = 3
-			else
-				power = 5
-		if(affected_mob.on_fire)
-			power *= 2
-
-		affected_mob.adjustOxyLoss(-2 * power * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-		affected_mob.adjustFireLoss(-1.5 * power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-		affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, FALSE, TRUE, affected_biotype)
-		affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-		for(var/i in affected_mob.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(power * REM * seconds_per_tick)
-		REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		. = TRUE
-	..()
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
