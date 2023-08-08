@@ -683,6 +683,13 @@
 	cost = 20
 	restricted = TRUE
 
+/datum/uplink_item/implants/nuclear/deniability
+	name = "Tactical Deniability Implant"
+	desc = "An implant injected into the brain, and later activated either manually or automatically upon entering critical condition. \
+			Prevents collapsing from critical condition, but explodes after a while."
+	item = /obj/item/storage/box/syndie_kit/imp_deniability
+	cost = 6
+
 /datum/uplink_item/implants/nuclear/reviverplus
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
