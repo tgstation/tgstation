@@ -1,0 +1,4 @@
+author: "MomoBerri"
+delete-after: True
+changes:
+  - code_imp: "Fixed dynamic spawning excessive antagonists on low-pop, and increased the threat cost of mid-round sleeper agents. Also gives a chance for extended to roll if population is six or under."
