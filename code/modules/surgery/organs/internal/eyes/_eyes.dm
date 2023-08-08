@@ -124,13 +124,8 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-<<<<<<< HEAD
 	var/mutable_appearance/eye_left = mutable_appearance(eye_icon_file, "[eye_icon_state]_l", -BODY_LAYER) //SKYRAPTOR EDITS: Eyes modularized into their own files, maintain backwards compat
 	var/mutable_appearance/eye_right = mutable_appearance(eye_icon_file, "[eye_icon_state]_r", -BODY_LAYER)
-=======
-	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
->>>>>>> fc4de530ce2 (reorganizes the human sprite folder and replaces the human_basic sprite with an updated one (#77323))
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
