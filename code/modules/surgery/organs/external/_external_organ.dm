@@ -91,8 +91,7 @@
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
-	if(organ_owner)
-		organ_owner.update_body_parts()
+	organ_owner?.update_body_parts()
 
 /obj/item/organ/external/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -286,7 +285,8 @@
 
 /obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
+	if(organ_owner)
+		UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
 ///check if our antennae can burn off ;_;
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)

@@ -130,15 +130,16 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /*
  * Remove the organ from the select mob.
  *
- * * organ_owner - the mob who owns our organ, that we're removing the organ from.
+ * * organ_owner - the mob who owns our organ, that we're removing the organ from. Can be null
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	organ_owner.organs -= src
-	if(organ_owner.organs_slot[slot] == src)
-		organ_owner.organs_slot.Remove(slot)
+	if(organ_owner)
+		if(organ_owner.organs_slot[slot] == src)
+			organ_owner.organs_slot.Remove(slot)
+		organ_owner.organs -= src
 
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! remove_from_limb moves the organ, so we unregister before we move them physically
 	remove_from_limb(special)
