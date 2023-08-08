@@ -30,7 +30,7 @@
 	weight = 5
 	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
 	scaling_cost = 9
-	requirements = list(8,8,8,8,8,8,8,8,8,8)
+	requirements = list(101,8,8,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 38)
 
 	minimum_players = 8
@@ -630,9 +630,10 @@
 	antag_datum = null
 	restricted_roles = list()
 	required_candidates = 0
-	weight = 3
+	maximum_players = 6
+	weight = 5
 	cost = 0
-	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	requirements = list(1,101,101,101,101,101,101,101,101,101)
 	flags = LONE_RULESET
 
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()
