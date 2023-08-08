@@ -74,6 +74,7 @@
 				trimmed_list.Remove(M)
 				continue
 			if(M.mind.pilot_ref) // are they in the vdom?
+				trimmed_list.Remove(M)
 				continue
 	return trimmed_list
 

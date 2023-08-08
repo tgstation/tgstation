@@ -362,7 +362,7 @@
 	for(var/datum/weakref/mind_ref in occupant_mind_refs)
 		var/datum/mind/this_mind = mind_ref.resolve()
 		if(isnull(this_mind))
-			occupant_mind_refs -= this_mind
+			occupant_mind_refs.Remove(this_mind)
 			continue
 
 		var/mob/living/creature = this_mind.current
@@ -477,7 +477,7 @@
 
 	for(var/mob/living/creature as anything in mutation_candidates)
 		if(QDELETED(creature) || creature.mind)
-			mutation_candidates -= creature
+			mutation_candidates.Remove(creature)
 
 	return mutation_candidates
 
@@ -628,13 +628,13 @@
 /obj/machinery/quantum_server/proc/on_client_connected(datum/source, datum/weakref/new_mind)
 	SIGNAL_HANDLER
 
-	occupant_mind_refs += new_mind
+	occupant_mind_refs.Add(new_mind)
 
 /// Someone disconnected
 /obj/machinery/quantum_server/proc/on_client_disconnected(datum/source, datum/weakref/old_mind)
 	SIGNAL_HANDLER
 
-	occupant_mind_refs -= old_mind
+	occupant_mind_refs.Remove(old_mind)
 
 /// Being qdeleted - make sure the circuit and connected mobs go with it
 /obj/machinery/quantum_server/proc/on_delete(datum/source)
