@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Creatures with nobreath trait will now regenerate oxyloss. Androids, skeletons and such will no longer be stuck with un-healable damage after being revived."

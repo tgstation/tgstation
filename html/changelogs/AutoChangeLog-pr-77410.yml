@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Advanced viruses that are supposed to be stealth will again actually be stealth to analyzers"
-  - code_imp: "Virus visibility flags can now be toggled in view variables"

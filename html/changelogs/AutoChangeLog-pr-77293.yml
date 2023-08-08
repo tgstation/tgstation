@@ -1,5 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "the bee will now care more about polinating"
-  - qol: "in case u miscliked the bee queen with a seringe 2 times, the raegent will not be transfered to the quen if he alredy have this raegent"

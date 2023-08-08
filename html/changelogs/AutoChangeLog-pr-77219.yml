@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Updated some status effect tick code to be more clear of how long is elapsing between ticks. Some effects that were inadvertently weakened are now stronger as a result (fire and some heretic effects)."
