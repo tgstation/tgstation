@@ -2307,8 +2307,8 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "iq" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/hivebot/range{
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/hivebot/range{
 	desc = "Looks like he's been left behind.";
 	faction = list("russian");
 	maxHealth = 5;
