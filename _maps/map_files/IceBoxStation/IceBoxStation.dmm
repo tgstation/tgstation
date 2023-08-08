@@ -8544,7 +8544,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/maintenance/aft/greater)
+/area/station/medical/medbay/aft)
 "cBL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -16402,6 +16402,14 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"fbv" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "fbw" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Bridge Conference Room"
@@ -32246,8 +32254,9 @@
 	},
 /obj/item/stack/medical/mesh,
 /obj/item/stack/medical/suture,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/maintenance/aft/greater)
+/area/station/medical/medbay/aft)
 "kna" = (
 /obj/machinery/modular_computer/preset/cargochat/engineering,
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -68672,6 +68681,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/explab)
+"vWq" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/aft)
 "vWr" = (
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -70443,11 +70457,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"wyj" = (
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/aft)
 "wyo" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Holding Area"
@@ -247313,7 +247322,7 @@ wor
 wor
 apt
 amE
-vgx
+vWq
 lDM
 gUg
 mkO
@@ -247570,8 +247579,8 @@ aWc
 nbW
 oyy
 amE
-wyj
-sZF
+vgx
+aSo
 sZF
 sZF
 sZF
@@ -248345,7 +248354,7 @@ ozN
 cBK
 sZF
 sZF
-sKf
+fbv
 sZF
 sZF
 sZF
@@ -248600,11 +248609,11 @@ sZF
 ikw
 uWp
 sZF
-pwV
+sZF
 pwV
 sKf
 hEZ
-sKf
+pwV
 sZF
 sZF
 sZF
