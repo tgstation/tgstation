@@ -10727,7 +10727,6 @@
 	pixel_x = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/treatment_center)
 "cEA" = (
@@ -12824,7 +12823,6 @@
 /obj/item/radio/intercom/directional/east,
 /obj/item/stack/medical/mesh,
 /obj/item/stack/medical/suture,
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/treatment_center)
 "dqm" = (
@@ -14114,6 +14112,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"dOw" = (
+/obj/machinery/iv_drip,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/medical/treatment_center)
 "dOC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -20637,6 +20644,9 @@
 /obj/item/blood_filter,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "gnQ" = (
@@ -44862,6 +44872,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/treatment_center)
 "pdZ" = (
@@ -61921,6 +61932,12 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
+"uWR" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/closed/wall,
+/area/station/maintenance/department/crew_quarters/dorms)
 "uWW" = (
 /obj/structure/table/wood,
 /obj/item/folder,
@@ -165675,7 +165692,7 @@ xRx
 siE
 hsh
 gnM
-apC
+uWR
 abM
 mBq
 tgw
@@ -169015,7 +169032,7 @@ pBd
 bAT
 brx
 uem
-pdP
+dOw
 dlN
 dqe
 jtr
