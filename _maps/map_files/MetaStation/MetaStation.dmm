@@ -5591,13 +5591,13 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "caC" = (
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
 	},
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "caO" = (
@@ -12438,11 +12438,11 @@
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
 	},
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
 /obj/machinery/light/cold/dim/directional/south,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "eFC" = (
@@ -18816,10 +18816,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "hcU" = (
-/obj/effect/turf_decal/trimline/blue/filled/warning{
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "hda" = (
@@ -25416,12 +25416,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
-"jqQ" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "jrb" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
@@ -26275,7 +26269,6 @@
 /obj/machinery/iv_drip,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "jFK" = (
@@ -60956,7 +60949,6 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "vXt" = (
@@ -62299,12 +62291,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
-"wvP" = (
-/obj/machinery/iv_drip,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "wvR" = (
 /obj/machinery/mineral/stacking_machine{
 	input_dir = 2
@@ -87820,7 +87806,7 @@ oKI
 jUb
 jUb
 jUb
-wvP
+xtu
 wUQ
 kui
 ckE
@@ -89362,7 +89348,7 @@ iWD
 vDz
 pBN
 sSp
-jqQ
+ppG
 ppG
 nuO
 xQC
