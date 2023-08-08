@@ -136,11 +136,11 @@ SUBSYSTEM_DEF(outdoor_effects)
 	var/i = 0
 
 	//Add our weather particle obj to any new weather screens
-	if(SSParticleWeather.initialized)
+	if(SSparticle_weather.initialized)
 		for (i in 1 to weather_planes_need_vis.len)
 			var/atom/movable/screen/plane_master/weather_effect/W = weather_planes_need_vis[i]
 			if(W)
-				W.vis_contents = list(SSParticleWeather.getweatherEffect())
+				W.vis_contents = list(SSparticle_weather.get_weather_effect(W))
 			if(init_tick_checks)
 				CHECK_TICK
 			else if (MC_TICK_CHECK)

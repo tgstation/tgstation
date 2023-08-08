@@ -1,4 +1,4 @@
-SUBSYSTEM_DEF(ParticleWeather)
+SUBSYSTEM_DEF(particle_weather)
 	name = "Particle Weather"
 	flags = SS_BACKGROUND
 	wait = 10
@@ -8,9 +8,9 @@ SUBSYSTEM_DEF(ParticleWeather)
 	// var/list/next_hit = list() //Used by barometers to know when the next storm is coming
 
 	var/particles/weather/particleEffect
-	var/obj/weatherEffect
+	var/obj/weather_effect
 
-/datum/controller/subsystem/ParticleWeather/fire()
+/datum/controller/subsystem/particle_weather/fire()
 	// process active weather
 	if(runningWeather)
 		if(runningWeather.running)
@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 
 
 //This has been mangled - currently only supports 1 weather effect serverwide so I can finish this
-/datum/controller/subsystem/ParticleWeather/Initialize(start_timeofday)
+/datum/controller/subsystem/particle_weather/Initialize(start_timeofday)
 	for(var/V in subtypesof(/datum/particle_weather))
 		var/datum/particle_weather/W = V
 		var/probability = initial(W.probability)
@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 			elligble_weather[W] = probability
 	return ..()
 
-/datum/controller/subsystem/ParticleWeather/proc/run_weather(datum/particle_weather/weather_datum_type, force = 0)
+/datum/controller/subsystem/particle_weather/proc/run_weather(datum/particle_weather/weather_datum_type, force = 0)
 	if(runningWeather)
 		if(force)
 			runningWeather.end()
@@ -61,22 +61,22 @@ SUBSYSTEM_DEF(ParticleWeather)
 		addtimer(CALLBACK(runningWeather, /datum/particle_weather/proc/start), randTime, TIMER_UNIQUE|TIMER_STOPPABLE) //Around 0-10 minutes between weathers
 
 
-/datum/controller/subsystem/ParticleWeather/proc/make_eligible(possible_weather)
+/datum/controller/subsystem/particle_weather/proc/make_eligible(possible_weather)
 	elligble_weather = possible_weather
 // 	next_hit = null
 
-/datum/controller/subsystem/ParticleWeather/proc/getweatherEffect()
-	if(!weatherEffect)
-		weatherEffect = new /obj()
-		weatherEffect.particles = particleEffect
-		weatherEffect.filters += filter(type="alpha", render_source=WEATHER_RENDER_TARGET)
-		weatherEffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	return weatherEffect
+/datum/controller/subsystem/particle_weather/proc/get_weather_effect(atom/movable/screen/plane_master/weather_effect/W)
+	if(!weather_effect)
+		weather_effect = new /obj()
+		weather_effect.particles = particleEffect
+		weather_effect.filters += filter(type="alpha", render_source="[WEATHER_RENDER_TARGET] #[W.offset]")
+		weather_effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	return weather_effect
 
-/datum/controller/subsystem/ParticleWeather/proc/SetparticleEffect(particles/P)
+/datum/controller/subsystem/particle_weather/proc/SetparticleEffect(particles/P)
 	particleEffect = P
-	weatherEffect.particles = particleEffect
+	weather_effect.particles = particleEffect
 
-/datum/controller/subsystem/ParticleWeather/proc/stopWeather()
+/datum/controller/subsystem/particle_weather/proc/stopWeather()
 	QDEL_NULL(runningWeather)
 	QDEL_NULL(particleEffect)

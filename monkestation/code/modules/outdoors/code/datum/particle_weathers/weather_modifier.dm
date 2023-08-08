@@ -108,7 +108,7 @@
 	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
 	if(particleEffectType)
-		SSParticleWeather.SetparticleEffect(new particleEffectType);
+		SSparticle_weather.SetparticleEffect(new particleEffectType);
 
 	//Always step severity to start
 	ChangeSeverity()
@@ -127,8 +127,8 @@
 		severity = newSeverity
 
 
-	if(SSParticleWeather.particleEffect)
-		SSParticleWeather.particleEffect.animateSeverity(severityMod())
+	if(SSparticle_weather.particleEffect)
+		SSparticle_weather.particleEffect.animateSeverity(severityMod())
 
 	//Send new severity message
 	messagedMobs = list()
@@ -147,11 +147,11 @@
  */
 /datum/particle_weather/proc/wind_down()
 	severity = 0
-	if(SSParticleWeather.particleEffect)
-		SSParticleWeather.particleEffect.animateSeverity(severityMod())
+	if(SSparticle_weather.particleEffect)
+		SSparticle_weather.particleEffect.animateSeverity(severityMod())
 
 		//Wait for the last particle to fade, then qdel yourself
-		addtimer(CALLBACK(src, .proc/end), SSParticleWeather.particleEffect.lifespan + SSParticleWeather.particleEffect.fade)
+		addtimer(CALLBACK(src, .proc/end), SSparticle_weather.particleEffect.lifespan + SSparticle_weather.particleEffect.fade)
 
 
 
@@ -164,7 +164,7 @@
  */
 /datum/particle_weather/proc/end()
 	running = FALSE
-	SSParticleWeather.stopWeather()
+	SSparticle_weather.stopWeather()
 
 
 /**
