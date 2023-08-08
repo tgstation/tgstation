@@ -4900,6 +4900,17 @@
 "bXu" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/lithium{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/iron{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 1
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/chem_storage)
 "bXG" = (
@@ -5678,6 +5689,17 @@
 "cop" = (
 /obj/machinery/light_switch/directional/south,
 /obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/acidic_buffer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/basic_buffer{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/formaldehyde{
+	pixel_x = 1
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/chem_storage)
 "coA" = (
@@ -13894,6 +13916,22 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"fpM" = (
+/obj/structure/rack,
+/obj/structure/sign/warning/chem_diamond/directional/north,
+/obj/item/reagent_containers/cup/bottle/carbon{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/ethanol{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/chlorine{
+	pixel_x = 1
+	},
+/turf/open/floor/iron/small,
+/area/station/medical/chem_storage)
 "fpO" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/ce)
@@ -33186,8 +33224,19 @@
 /area/station/hallway/primary/aft)
 "lXT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/turf/open/floor/iron/white/small,
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/fluorine{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/iodine{
+	pixel_x = 1
+	},
+/turf/open/floor/iron/small,
 /area/station/medical/chem_storage)
 "lXV" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -51772,6 +51821,13 @@
 "spx" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table,
+/obj/item/storage/box/gloves{
+	pixel_y = 9;
+	pixel_x = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_y = -3
+	},
 /turf/open/floor/iron/white/small,
 /area/station/medical/chem_storage)
 "spH" = (
@@ -53854,6 +53910,12 @@
 "sYx" = (
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/table,
+/obj/item/storage/box/beakers{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = -4
+	},
 /turf/open/floor/iron/white/small,
 /area/station/medical/chem_storage)
 "sYF" = (
@@ -59053,6 +59115,18 @@
 /area/station/hallway/secondary/service)
 "uMl" = (
 /obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/potassium{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/phosphorus{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/sodium{
+	pixel_x = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/small,
 /area/station/medical/chem_storage)
 "uMu" = (
@@ -68684,6 +68758,17 @@
 "xEW" = (
 /obj/machinery/light/cold/directional/north,
 /obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/nitrogen{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/mercury{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/bottle/oxygen{
+	pixel_x = 1
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/chem_storage)
 "xFd" = (
@@ -99359,7 +99444,7 @@ qtl
 dDB
 dDB
 qIf
-uMl
+fpM
 cUE
 bDj
 onP
