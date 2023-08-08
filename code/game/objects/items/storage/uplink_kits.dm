@@ -56,10 +56,11 @@
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
-			new /obj/item/switchblade(src) //I'll count this as 2 tc
+			new /obj/item/switchblade(src) //basically 1 tc as it can be bought from BM kits
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
+			new /obj/item/implanter/storage(src) // 6 tc
 
 		if(KIT_STEALTHY)
 			new /obj/item/gun/energy/recharge/ebow(src) // 10 tc
