@@ -170,6 +170,7 @@
 	icon_state = "gumball"
 	damage = 0
 	speed = 0.5
+	embedding = null
 
 /obj/projectile/bullet/gumball/Initialize(mapload)
 	. = ..()
@@ -202,6 +203,7 @@
 	icon_state = "lollipop_1"
 	damage = 0
 	speed = 0.5
+	embedding = null
 	var/head_color
 
 /obj/projectile/bullet/lollipop/harmful
