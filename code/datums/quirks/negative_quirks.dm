@@ -1132,12 +1132,12 @@
 	name = "Mute"
 	desc = "For some reason you are completely unable to speak."
 	icon = "volume-xmark"
-	value = -4
+	value = -6 //monkestation change 4->6
 	mob_trait = TRAIT_MUTE
 	gain_text = span_danger("You find yourself unable to speak!")
 	lose_text = span_notice("You feel a growing strength in your vocal chords.")
 	medical_record_text = "The patient is unable to use their voice in any capacity."
-	hardcore_value = 4
+	hardcore_value = 6 //monkestation change 4->6
 
 /datum/quirk/body_purist
 	name = "Body Purist"
@@ -1245,3 +1245,25 @@
 /datum/quirk/kleptomaniac/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.cure_trauma_type(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/foreigner
+	name = "Foreigner"
+	desc = "You're not from around here. You don't know Galactic Common!"
+	icon = "language"
+	value = -2
+	gain_text = span_notice("The words being spoken around you don't make any sense.")
+	lose_text = span_notice("You've developed fluency in Galactic Common.")
+	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
+	mail_goodies = list(/obj/item/taperecorder) // for translation
+
+/datum/quirk/foreigner/add(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.add_blocked_language(/datum/language/common)
+	if(ishumanbasic(human_holder))
+		human_holder.grant_language(/datum/language/uncommon)
+
+/datum/quirk/foreigner/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.remove_blocked_language(/datum/language/common)
+	if(ishumanbasic(human_holder))
+		human_holder.remove_language(/datum/language/uncommon)
