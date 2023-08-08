@@ -221,6 +221,10 @@ Sunlight System
 			.["SKYVISIBLE"]   &= ceilingStat["SKYVISIBLE"]
 			.["WEATHERPROOF"] |= ceilingStat["WEATHERPROOF"]
 
+	var/area/turf_area = get_area(src)
+	if(!isspaceturf(src) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors)
+		.["SKYVISIBLE"]   =  FALSE
+		.["WEATHERPROOF"] =  TRUE
 
 /* moved this out of reconsider lights so we can call it in multiz refresh  */
 /turf/proc/reconsider_sunlight()
