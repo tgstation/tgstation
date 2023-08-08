@@ -10420,17 +10420,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
-"czA" = (
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "czB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 8
@@ -15889,14 +15878,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
-"dSz" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark,
-/area/station/service/bar)
 "dSA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white/smooth_large,
@@ -33725,6 +33706,13 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"iss" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "isy" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -52457,6 +52445,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"neT" = (
+/obj/effect/turf_decal/trimline/neutral/mid_joiner{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/coroner/surgery,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "nfd" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/engine/plasma,
@@ -64169,13 +64168,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"qcO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/dark,
-/area/station/service/bar)
 "qdc" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/chair/sofa/bench{
@@ -87345,6 +87337,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
+"vQB" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "vRn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/railing/corner,
@@ -133820,7 +133820,7 @@ pqv
 uGR
 qdl
 ewV
-qcO
+iss
 jhH
 vnU
 vnU
@@ -134077,7 +134077,7 @@ pOV
 eqM
 ask
 dep
-dSz
+vQB
 bwh
 vnU
 tOs
@@ -137770,7 +137770,7 @@ uue
 jdf
 qYL
 qpU
-czA
+neT
 aNV
 hvf
 vid

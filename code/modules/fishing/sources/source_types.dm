@@ -71,10 +71,10 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab/ice = 15,
-		/mob/living/simple_animal/hostile/asteroid/lobstrosity = 1,
-		/obj/effect/decal/remains/plasma = 1,
-		/obj/item/stack/ore/plasma = 3,
 		/obj/item/coin/plasma = 3,
+		/obj/item/stack/ore/plasma = 3,
+		/mob/living/basic/mining/lobstrosity = 1,
+		/obj/effect/decal/remains/plasma = 1,
 
 	)
 	fish_counts = list(

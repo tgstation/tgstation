@@ -670,6 +670,7 @@
 	LoseTarget()
 
 /mob/living/simple_animal/hostile/proc/add_target(new_target)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_FOUND_TARGET, new_target)
 	if(target)
 		UnregisterSignal(target, COMSIG_QDELETING)
 	target = new_target
