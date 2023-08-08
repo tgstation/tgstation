@@ -114,6 +114,7 @@
 	to_chat(target, span_warning("[src] seems to be healing your [eyes.zone]!"))
 	eyes.apply_organ_damage(-1 * healing_factor)
 	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
+	befriend(target)
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
 
 /mob/living/basic/eyeball/proc/on_tame(mob/tamer)

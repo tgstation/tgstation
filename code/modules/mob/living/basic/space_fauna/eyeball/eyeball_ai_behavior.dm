@@ -66,7 +66,7 @@
 	for(var/turf/turf_in_view in oview(3, target))
 		if(get_dir(target, turf_in_view) != target.dir)
 			continue
-		if(turf_in_view.is_blocked_turf())
+		if(turf_in_view.is_blocked_turf(ignore_atoms = list(controller.pawn)))
 			return FALSE
 		turf_to_move_towards = turf_in_view
 		break
