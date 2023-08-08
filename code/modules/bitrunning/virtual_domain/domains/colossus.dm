@@ -7,7 +7,7 @@
 	key = "colossus"
 	map_name = "colossus"
 	map_height = 46
-	map_width = 35
+	map_width = 45
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 

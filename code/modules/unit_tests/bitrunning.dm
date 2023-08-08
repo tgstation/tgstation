@@ -29,7 +29,7 @@
 	TEST_ASSERT_EQUAL(server.initialize_domain(map_key = TEST_MAP), TRUE, "Should initialize a domain with a valid map")
 	TEST_ASSERT_EQUAL(server.generated_domain.key, TEST_MAP, "Sanity: Did not load test map correctly")
 
-	TEST_ASSERT_EQUAL(server.initialize_safehouse_turfs(), TRUE, "Should initialize safehouse turfs")
+	TEST_ASSERT_EQUAL(server.initialize_map_items(), TRUE, "Should initialize safehouse turfs")
 	TEST_ASSERT_NOTNULL(server.generated_safehouse, "Did not load generated_safehouse correctly")
 	TEST_ASSERT_EQUAL(length(server.exit_turfs), 3, "Did not load the correct number of exit turfs")
 
@@ -386,26 +386,34 @@
 	TEST_ASSERT_EQUAL(length(mobs), 0, "Shouldn't get a list without players")
 
 	server.occupant_mind_refs += WEAKREF(labrat.mind)
-	mobs = server.get_valid_domain_targets()
+	mobs += server.get_valid_domain_targets()
 
 	var/datum/turf_reservation/res = server.generated_domain.reservations[1]
 	TEST_ASSERT_NOTNULL(res, "Sanity: Did not generate a reservation")
 
 	var/mob/living/basic/pet/dog/corgi/pupper
-	for(var/turf/open/floor/tile in res.reserved_turfs)
-		for(var/mob/living/basic/pet/dog/corgi/doggo in tile)
+	var/mob/living/carbon/human/corpse
+	for(var/turf/tile as anything in res.reserved_turfs)
+		var/mob/living/basic/pet/dog/corgi/doggo = locate() in tile
+		if(doggo)
 			pupper = doggo
+			continue
+		var/mob/living/carbon/human/husk = locate() in tile
+		if(husk)
+			corpse = husk
 
 	TEST_ASSERT_NOTNULL(pupper, "Should be a corgi on test map")
+	TEST_ASSERT_NOTNULL(corpse, "Should be a corpse on test map")
 
-	mobs = server.get_valid_domain_targets()
-	TEST_ASSERT_EQUAL(length(mobs), 1, "Should return a list of mobs")
+	mobs.Cut()
+	mobs += server.get_valid_domain_targets()
+	TEST_ASSERT_EQUAL(length(mobs), 2, "Should return a list of mobs")
 
 	mobs.Cut()
 	pupper.mind_initialize()
 	pupper.mock_client = new()
-	mobs = server.get_valid_domain_targets()
-	TEST_ASSERT_EQUAL(length(mobs), 0, "Should not return mobs with minds")
+	mobs += server.get_valid_domain_targets()
+	TEST_ASSERT_EQUAL(length(mobs), 1, "Should not return mobs with minds")
 
 /// Tests the ability to create hololadders and effectively, retries
 /datum/unit_test/qserver_generate_hololadder/Run()

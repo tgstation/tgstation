@@ -25,6 +25,12 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored/virtual_domain)
+"p" = (
+/obj/structure/marker_beacon/bronze,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
 "q" = (
 /obj/structure/marker_beacon/yellow,
 /turf/open/indestructible/necropolis{
@@ -37,6 +43,12 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored/virtual_domain)
+"x" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
 "H" = (
 /mob/living/simple_animal/hostile/megafauna/wendigo/virtual_domain,
 /turf/open/indestructible/necropolis{
@@ -44,7 +56,7 @@
 	},
 /area/icemoon/underground/explored/virtual_domain)
 "L" = (
-/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/obj/effect/mob_spawn/corpse/human/miner/persistent,
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored/virtual_domain)
 "R" = (
@@ -704,7 +716,7 @@ a
 a
 a
 a
-a
+x
 a
 a
 a
@@ -816,7 +828,7 @@ a
 a
 a
 a
-a
+p
 a
 a
 a
@@ -881,7 +893,7 @@ i
 "}
 (22,1,1) = {"
 i
-e
+L
 e
 b
 b

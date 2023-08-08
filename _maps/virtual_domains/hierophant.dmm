@@ -44,7 +44,7 @@
 /turf/open/indestructible/hierophant,
 /area/virtual_domain/powered)
 "W" = (
-/obj/effect/mob_spawn/corpse/human/miner,
+/obj/effect/mob_spawn/corpse/human/miner/persistent,
 /turf/open/indestructible/hierophant,
 /area/lavaland/surface/outdoors/virtual_domain)
 "Y" = (

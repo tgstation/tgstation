@@ -2,12 +2,16 @@
 "a" = (
 /turf/open/floor,
 /area/virtual_domain/powered)
+"D" = (
+/obj/effect/mob_spawn/corpse/human/miner/persistent,
+/turf/open/floor,
+/area/virtual_domain/powered)
 "I" = (
 /mob/living/basic/pet/dog/corgi,
 /turf/open/floor,
 /area/virtual_domain/powered)
 "U" = (
-/turf/open/floor,
+/turf/template_noop,
 /area/virtual_domain/safehouse/bottom_left)
 
 (1,1,1) = {"
@@ -18,7 +22,7 @@ a
 U
 "}
 (2,1,1) = {"
-a
+D
 a
 a
 a

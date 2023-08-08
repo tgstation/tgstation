@@ -42,7 +42,7 @@
 	var/retries_spent = 0
 	/// Scanner tier
 	var/scanner_tier = 1
-	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
+	/// Length of time it takes for the server to cool down after resetting. Here to give miners downtime so their faces don't get stuck like that
 	var/server_cooldown_time = 3 MINUTES
 	/// Bonus applied for each servo upgrade
 	var/servo_bonus = 0
@@ -229,8 +229,9 @@
 		loading = FALSE
 		return FALSE
 
-	if(!initialize_safehouse_turfs())
+	if(!initialize_map_items())
 		balloon_alert(user, "failed to load safehouse.")
+		scrub_vdom()
 		loading = FALSE
 		return FALSE
 
@@ -531,27 +532,38 @@
 	generated_domain = new to_load()
 	generated_domain.lazy_load()
 
-	for(var/atom/thing as anything in generated_domain.created_atoms_list)
-		if(istype(thing, /mob/living))
+	for(var/thing in generated_domain.created_atoms_list)
+		if(isliving(thing)) // so we can mutate them
 			var/mob/living/creature = thing
 			if(creature.can_be_cybercop)
 				mutation_candidates += creature
 			continue
 
-		if(istype(thing, /obj/effect/mob_spawn/ghost_role))
+		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
 			RegisterSignal(thing, COMSIG_GHOSTROLE_SPAWNED, PROC_REF(on_threat_created))
+			continue
+
+		if(istype(thing, /obj/effect/mob_spawn/corpse)) // corpses are valid targets too
+			var/obj/effect/mob_spawn/corpse/spawner = thing
+			if(isnull(spawner.mob_ref))
+				continue
+
+			var/mob/living/creature = spawner.mob_ref.resolve()
+			if(creature?.can_be_cybercop)
+				mutation_candidates += creature
+
+			qdel(spawner)
 
 	return TRUE
 
 /// Loads the safehouse and sets turfs
-/obj/machinery/quantum_server/proc/initialize_safehouse_turfs()
+/obj/machinery/quantum_server/proc/initialize_map_items()
 	var/datum/turf_reservation/res = generated_domain.reservations[1]
 
 	var/turf/safehouse_load_turf = list()
-	for(var/turf/tile as anything in res.reserved_turfs)
-		var/area/parent = get_area(tile)
-		if(istype(parent, /area/virtual_domain/safehouse/bottom_left))
-			safehouse_load_turf += tile
+	for(var/turf/open/space/space_tile in res.reserved_turfs) // must be a template tile, therefore empty space
+		if(istype(get_area(space_tile), /area/virtual_domain/safehouse/bottom_left))
+			safehouse_load_turf += space_tile
 			break
 
 	if(!length(safehouse_load_turf))
@@ -562,18 +574,21 @@
 	generated_safehouse = safehouse
 
 	var/turf/goal_turfs = list()
-	for(var/obj/effect/bitrunning/thing in safehouse.created_atoms)
-		if(istype(thing, /obj/effect/bitrunning/exit_spawn))
+	for(var/obj/thing in safehouse.created_atoms)
+		if(istype(thing, /obj/effect/bitrunning/exit_spawn)) // so there's a place to put the hololadder
 			exit_turfs += get_turf(thing)
 			continue
-		if(istype(thing, /obj/effect/bitrunning/goal_turf))
+
+		if(istype(thing, /obj/effect/bitrunning/goal_turf)) // so there's a place to put the loot
 			var/turf/tile = get_turf(thing)
 			goal_turfs += tile
 			RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_send_turf_entered))
 			RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_send_turf_examined))
+			continue
 
-	for(var/obj/machinery/machine in generated_domain.created_atoms_list)
-		machine.power_change()
+		if(ismachinery(thing)) // so machines have power
+			var/obj/machinery/machine_thing = thing
+			machine_thing.power_change()
 
 	if(!length(exit_turfs))
 		CRASH("Failed to find exit turfs on generated domain.")
