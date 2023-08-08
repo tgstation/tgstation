@@ -1046,26 +1046,6 @@
 /area/awaymission/research/interior/cryo)
 "fd" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/turf/open/floor/iron/white,
-/area/awaymission/research/interior/cryo)
-"fe" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 1
-	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "ff" = (
@@ -36350,11 +36330,11 @@ Ge
 Ge
 ea
 ew
-fe
+fd
 fE
 HD
 ev
-fe
+fd
 fE
 ea
 Ge
@@ -38406,11 +38386,11 @@ cx
 cx
 ea
 eC
-fe
+fd
 fI
 HD
 gT
-fe
+fd
 fE
 ea
 cx
