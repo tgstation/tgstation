@@ -652,6 +652,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
 ///The effects of the immerse element will be halted while this trait is present.
 #define TRAIT_IMMERSE_STOPPED "immerse_stopped"
+/// The effects of hyperspace drift are blocked when the tile has this trait
+#define TRAIT_HYPERSPACE_STOPPED "hyperspace_stopped"
+
 ///Turf slowdown will be ignored when this trait is added to a turf.
 #define TRAIT_TURF_IGNORE_SLOWDOWN "turf_ignore_slowdown"
 ///Mobs won't slip on a wet turf while it has this trait
@@ -975,6 +978,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHASM_DESTROYED "chasm_destroyed"
 /// Trait from being under the floor in some manner
 #define TRAIT_UNDERFLOOR "underfloor"
+/// If the movable shouldn't be reflected by mirrors.
+#define TRAIT_NO_MIRROR_REFLECTION "no_mirror_reflection"
 /// If this movable is currently treading in a turf with the immerse element.
 #define TRAIT_IMMERSED "immersed"
 /**

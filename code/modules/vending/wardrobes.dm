@@ -314,7 +314,11 @@
 		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
 		/obj/item/storage/box/bodybags = 3,
-		/obj/item/storage/medkit/coroner = 1,
+		/obj/item/scalpel/cruel = 1,
+		/obj/item/retractor/cruel = 1,
+		/obj/item/hemostat/cruel = 1,
+		/obj/item/cautery/cruel = 1,
+		/obj/item/toy/crayon/white = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
 	)
 	contraband = list(
@@ -325,10 +329,7 @@
 	)
 	premium = list(
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/scalpel/cruel = 1,
-		/obj/item/retractor/cruel = 1,
-		/obj/item/hemostat/cruel = 1,
-		/obj/item/cautery/cruel = 1,
+		/obj/item/storage/medkit/coroner = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/coroner_wardrobe
 	payment_department = ACCOUNT_MED
