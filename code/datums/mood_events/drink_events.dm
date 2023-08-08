@@ -50,5 +50,5 @@
 
 /datum/mood_event/wellcheers
 	description = "The crashing of the waves is urging me on."
-	mood_change = "5"
+	mood_change = 2
 	timeout = 7 MINUTES

@@ -262,7 +262,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/wellcheers
 	name = "Wellcheers Juice"
-	desc = "A strange, pre-opened can, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	desc = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
 	icon_state = "wellcheers"
 	list_reagents = list(/datum/reagent/consumable/wellcheers = 30)
 	drink_type = SUGAR | JUNKFOOD
