@@ -5261,6 +5261,7 @@
 #include "code\modules\uplink\uplink_items\ammunition.dm"
 #include "code\modules\uplink\uplink_items\badass.dm"
 #include "code\modules\uplink\uplink_items\bundle.dm"
+#include "code\modules\uplink\uplink_items\clownops.dm"
 #include "code\modules\uplink\uplink_items\dangerous.dm"
 #include "code\modules\uplink\uplink_items\device_tools.dm"
 #include "code\modules\uplink\uplink_items\explosive.dm"
