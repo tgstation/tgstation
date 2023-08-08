@@ -126,10 +126,11 @@
 		shmancy degrees? Just get started with this crate containing a medical duffelbag, \
 		Sterilizine spray and collapsible roller bed."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
-					/obj/item/reagent_containers/medigel/sterilizine,
-					/obj/item/roller,
-				)
+	contains = list(
+		/obj/item/storage/backpack/duffelbag/med/surgery,
+		/obj/item/reagent_containers/medigel/sterilizine,
+		/obj/item/roller,
+	)
 	crate_name = "surgical supplies crate"
 
 /datum/supply_pack/medical/salglucanister
