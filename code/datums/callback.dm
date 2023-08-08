@@ -81,7 +81,7 @@
 	if (force)
 		return ..()
 	stack_trace("callbacks can not be qdeleted. if they are referenced they must exist.")
-	return QDEL_HINT_LETMELIVE 
+	return QDEL_HINT_HARDDEL_NOW 
 
 /**
  * Invoke this callback
