@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "You can do autopsies on people who were revived and died again after they had already been dissected."
+  - qol: "Autopsies have become the surgery needed to complete the dissection experiments. As a result, the dissection surgery has been removed as it is now redundant."
+  - qol: "A coroner knows whether someone has been autopsied and recently dissected (and thus hasn't been revived) by examining them."
