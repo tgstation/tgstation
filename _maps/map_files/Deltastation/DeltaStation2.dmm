@@ -43127,6 +43127,7 @@
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/half{
 	dir = 1
 	},
@@ -43766,6 +43767,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "kTy" = (
@@ -45073,6 +45075,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "ljS" = (
@@ -71537,6 +71540,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"rUi" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "rUj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -76205,6 +76216,7 @@
 	name = "Mining Dock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "tcG" = (
@@ -142405,7 +142417,7 @@ xZC
 aiF
 aJE
 jCu
-usJ
+rUi
 kTs
 sgK
 iio
