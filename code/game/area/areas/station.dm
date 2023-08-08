@@ -1122,10 +1122,6 @@
 	name = "\improper Grand Surgery Theatre"
 	icon_state = "surgerytheatre"
 
-/area/station/medical/cryo
-	name = "Cryogenics"
-	icon_state = "cryo"
-
 /area/station/medical/exam_room
 	name = "\improper Exam Room"
 	icon_state = "exam_room"

@@ -1051,7 +1051,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LOCKED_BORG_TRAIT "locked-borg"
 /// trait associated to not having locomotion appendages nor the ability to fly or float
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades"
-#define CRYO_TRAIT "cryo"
 /// trait associated to not having fine manipulation appendages such as hands
 #define LACKING_MANIPULATION_APPENDAGES_TRAIT "lacking-manipulation-appengades"
 #define HANDCUFFED_TRAIT "handcuffed"
