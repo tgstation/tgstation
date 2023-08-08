@@ -325,9 +325,13 @@
 	mail_goodies = list(/obj/effect/spawner/random/medical/minor_healing)
 
 /datum/quirk/light_drinker/add() //monkestation addition
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
 	if(isipc(quirk_holder))
-		quirk_holder.physiology.brute_mod *= 1.3
-		quirk_holder.physiology.burn_mod *= 1.3
+		human_quirk_holder.physiology.brute_mod *= 1.3
+		human_quirk_holder.physiology.burn_mod *= 1.3
 
 /datum/quirk/light_drinker/post_add() //monkestation addition
 	if(isipc(quirk_holder))
@@ -385,9 +389,13 @@
 	mail_goodies = list(/obj/item/reagent_containers/cup/glass/waterbottle)
 
 /datum/quirk/light_drinker/add() //monkestation addition
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
 	if(isipc(quirk_holder))
-		quirk_holder.physiology.brute_mod *= 1.1
-		quirk_holder.physiology.burn_mod *= 1.1
+		human_quirk_holder.physiology.brute_mod *= 1.1
+		human_quirk_holder.physiology.burn_mod *= 1.1
 
 /datum/quirk/light_drinker/post_add() //monkestation addition
 	if(isipc(quirk_holder))
@@ -563,9 +571,13 @@
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 
 /datum/quirk/prosthetic_limb/add() //monkestation addition
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
 	if(isipc(quirk_holder))
-		quirk_holder.physiology.brute_mod *= 1.15
-		quirk_holder.physiology.burn_mod *= 1.15
+		human_quirk_holder.physiology.brute_mod *= 1.15
+		human_quirk_holder.physiology.burn_mod *= 1.15
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -602,9 +614,13 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 
 /datum/quirk/quadruple_amputee/add() //monkestation addition
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
 	if(isipc(quirk_holder))
-		quirk_holder.physiology.brute_mod *= 1.3
-		quirk_holder.physiology.burn_mod *= 1.3
+		human_quirk_holder.physiology.brute_mod *= 1.3
+		human_quirk_holder.physiology.burn_mod *= 1.3
 
 /datum/quirk/quadruple_amputee/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -956,9 +972,13 @@
 	var/allergy_string
 
 /datum/quirk/item_quirk/allergic/add() //monkestation addition
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
 	if(isipc(quirk_holder))
-		quirk_holder.physiology.brute_mod *= 1.3
-		quirk_holder.physiology.burn_mod *= 1.3
+		human_quirk_holder.physiology.brute_mod *= 1.3
+		human_quirk_holder.physiology.burn_mod *= 1.3
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
 	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
