@@ -19625,6 +19625,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/fore)
+"fij" = (
+/obj/effect/spawner/structure/window/hollow/middle,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/floor2/starboard)
 "fio" = (
 /obj/structure/railing/corner,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -28741,7 +28746,6 @@
 	},
 /obj/item/toy/figure/geneticist,
 /obj/machinery/newscaster/directional/north,
-/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron,
 /area/station/science/genetics)
 "hDa" = (
@@ -29697,6 +29701,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard)
 "hQp" = (
@@ -51556,6 +51561,8 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/requests_console/auto_name/directional/east,
 /turf/open/floor/iron/showroomfloor{
 	name = "lab floor"
 	},
@@ -76699,10 +76706,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
-"ufJ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/floor2/starboard)
 "ufL" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -191021,7 +191024,7 @@ vnK
 sUj
 sUj
 sUj
-sKC
+fij
 hQl
 oqU
 dYq
@@ -191535,11 +191538,11 @@ vnK
 gjC
 hJU
 uZg
-sKC
+fij
 sjW
 pog
 rwc
-ufJ
+vnK
 pQP
 eDt
 uDB
