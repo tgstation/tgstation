@@ -124,7 +124,7 @@
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly, can sprint longer distances, and take no damage from short falls." //monkestation change added ", can sprint longer distances,"
 	icon = "running"
-	value = 8
+	value = 6 //monkestation change 8->6
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = span_notice("You feel lithe on your feet!")
 	lose_text = span_danger("You feel clumsy again.")
