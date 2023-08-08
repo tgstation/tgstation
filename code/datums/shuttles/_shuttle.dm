@@ -12,8 +12,6 @@
 	var/shuttle_id
 	/// Information to display on communication console about the shuttle
 	var/description
-	/// The recommended occupancy limit for the shuttle
-	var/occupancy_limit
 	/// Description of the prerequisition that has to be achieved for the shuttle to be purchased
 	var/prerequisites
 	/// Shuttle warnings and hazards to the admin who spawns the shuttle
