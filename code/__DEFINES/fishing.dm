@@ -1,11 +1,6 @@
 /// Use in fish tables to denote miss chance.
 #define FISHING_DUD "dud"
 
-#define FISHING_BAIT_TRAIT "fishing_bait"
-#define BASIC_QUALITY_BAIT_TRAIT "removes_felinids_pr"
-#define GOOD_QUALITY_BAIT_TRAIT "adds_bitcoin_miner_pr"
-#define GREAT_QUALITY_BAIT_TRAIT "perspective_walls_pr"
-
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
 
