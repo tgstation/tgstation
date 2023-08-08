@@ -58,14 +58,15 @@
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
 
 	on_began_forecast?.Invoke(target)
-	if (!do_after(source, delay = telegraph_duration, target = source, interaction_key = INTERACTION_BASIC_ATTACK_FORCEAST))
+	//we stop the do_after if the target moves out of neighboring turfs but if they dance around us they get their face smashed
+	if (!do_after(source, delay = telegraph_duration, target = target, timed_action_flags = IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(source, TYPE_PROC_REF(/atom/movable, Adjacent), target), interaction_key = INTERACTION_BASIC_ATTACK_FORCEAST))
 		forget_target(target)
 		return
-	if (!current_target) // They got out of the way :(
+	if (isnull(target)) // They got out of the way :(
 		return
 	ADD_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
-	source.melee_attack(current_target)
-	forget_target(current_target)
+	forget_target(target)
+	source.melee_attack(target)
 
 /// The guy we're trying to attack moved, is he still in range?
 /datum/component/basic_mob_attack_telegraph/proc/target_moved(mob/living/target)

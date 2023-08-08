@@ -159,7 +159,8 @@
 	cost = CARGO_CRATE_VALUE * 30
 	special = TRUE
 	access_view = ACCESS_COMMAND
-	contains = list(/obj/item/circuitboard/machine/bsa/front,
+	contains = list(/obj/item/paper/guides/jobs/engineering/bsa,
+					/obj/item/circuitboard/machine/bsa/front,
 					/obj/item/circuitboard/machine/bsa/middle,
 					/obj/item/circuitboard/machine/bsa/back,
 					/obj/item/circuitboard/computer/bsa_control,
