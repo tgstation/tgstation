@@ -417,7 +417,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced/rglass,
-/obj/machinery/computer/records/medical/laptop,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "aeW" = (
@@ -27331,6 +27331,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 4
 	},
+/obj/vehicle/ridden/secway,
 /turf/open/floor/iron/dark,
 /area/station/security/eva)
 "hke" = (
@@ -55066,6 +55067,7 @@
 /obj/structure/cable,
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/item/key/security,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "ooY" = (
@@ -71858,6 +71860,7 @@
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
+/obj/vehicle/ridden/secway,
 /turf/open/floor/iron/dark,
 /area/station/security/eva)
 "sRO" = (
@@ -82788,7 +82791,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/item/storage/box/bodybags,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "vJH" = (
