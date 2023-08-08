@@ -65,7 +65,7 @@ https://freesound.org/people/uagadugu/sounds/222521/
 earth_rumble_distant1, earth_rumble_distant2, earth_rumble_distant3, and earth_rumble_distant4 are adapted from metrostock99's "EARTHQUAKE OR DISTANT SPACE SHUTTLE RUMBLE.WAV" (CC 0)
 https://freesound.org/people/metrostock99/sounds/203281/
 
-metal_creak.ogg is adapted from BloodPixelHero's "Metal door creak" under CC Attribution 4.0 
+metal_creak.ogg is adapted from BloodPixelHero's "Metal door creak" under CC Attribution 4.0
 https://freesound.org/people/BloodPixelHero/sounds/585323/
 
 revolutionary_tide.ogg is adapted from several audio samples:
@@ -84,3 +84,6 @@ https://freesound.org/people/aboxinghelena/sounds/401139/
 
 car_crash.ogg is adapted from squareal's "Car Crash" (CC 0)
 https://freesound.org/people/squareal/sounds/237375/
+
+ding_short.ogg is from Natty23 (CC 4)
+https://freesound.org/people/Natty23/sounds/411747/

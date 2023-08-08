@@ -47,6 +47,7 @@
 #define MEDAL_HEALTHY "Heart Healthy"
 #define MEDAL_GODS_WRATH "God's Wrath"
 #define MEDAL_EARTHQUAKE_VICTIM "Earthquake Victim"
+#define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
 #define MEDAL_ARCHMAGE "Archmage"
 
 //Skill medal hub IDs
