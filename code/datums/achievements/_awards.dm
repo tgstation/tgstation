@@ -124,8 +124,8 @@
 
 ///Defining this here 'cause it's the first score a player should see in the Scores category.
 /datum/award/score/achievements_score
-	name = "Unlocked Achievements"
-	desc = "Worry not, metagaming is all that matters."
+	name = "Achievements Unlocked"
+	desc = "Don't worry, metagaming is all that matters."
 	icon = "elephant" //Obey the reference
 	database_id = ACHIEVEMENTS_SCORE
 	load_priority = AWARD_PRIORITY_LAST //See below
