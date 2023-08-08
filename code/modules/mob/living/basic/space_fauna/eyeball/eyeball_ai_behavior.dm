@@ -62,16 +62,13 @@
 	if (isnull(target))
 		return FALSE
 
-	var/turf_to_move_towards
-	for(var/turf/turf_in_view in oview(3, target))
-		if(get_dir(target, turf_in_view) != target.dir)
-			continue
-		if(turf_in_view.is_blocked_turf(ignore_atoms = list(controller.pawn)))
-			return FALSE
-		turf_to_move_towards = turf_in_view
-		break
+	var/turf/turf_to_move_towards = get_step(target, target.dir)
+	if(turf_in_view.is_blocked_turf(ignore_atoms = list(controller.pawn)))
+		return FALSE
+
 	if(isnull(turf_to_move_towards))
 		return FALSE
+
 	set_movement_target(controller, turf_to_move_towards)
 
 /datum/ai_behavior/targeted_mob_ability/glare_at_target/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
