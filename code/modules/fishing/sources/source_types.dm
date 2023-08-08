@@ -107,15 +107,13 @@
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
 	fish_table = list(
-		/obj/item/fish/holo = 2,
-		/obj/item/fish/holo/crab = 2,
-		/obj/item/fish/holo/puffer = 2,
-		/obj/item/fish/holo/angel = 2,
-		/obj/item/fish/holo/clown = 2,
-	)
-	fish_counts = list(
-		/obj/item/fish/holo/checkered = 1,
-		/obj/item/fish/holo/halffish = 1,
+		/obj/item/fish/holo = 10,
+		/obj/item/fish/holo/crab = 10,
+		/obj/item/fish/holo/puffer = 10,
+		/obj/item/fish/holo/angel = 10,
+		/obj/item/fish/holo/clown = 10,
+		/obj/item/fish/holo/checkered = 5,
+		/obj/item/fish/holo/halffish = 5,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
 

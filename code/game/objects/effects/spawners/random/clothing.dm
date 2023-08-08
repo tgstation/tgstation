@@ -173,3 +173,62 @@
 		/obj/item/storage/backpack/duffelbag/engineering,
 		/obj/item/storage/backpack/duffelbag/clown,
 	)
+
+/obj/effect/spawner/random/clothing/funny_hats
+	name = "random hat spawner"
+	icon_state = "hat"
+	desc = "This is the update that ruined Spacestation 13 forever. I can't believe what the TG Coders have done. \
+		They've added fucking HATS! HATS!!! In MY competitive-roleplay-action-click-shooter-stabber-against-two-sides-to-detonate-the-payload game? \
+		This isn't what I signed up for and why I supported this game! My game is chugging with every update to this stupid project and \
+		I can't fucking stand it anymore. And instead of fixing the bugs or getting rid of the exploits, they just keep adding more \
+		fucking hats so that the dumbasses that keep feeding into the coders bullshit will eat it up and ignore the glaring problems with it. \
+		They've stopped caring. We've not had a REAL update in almost 5 years of development! Just removals! It's been all downhill since cloning and stuns were removed. \
+		And frankly, I don't know what to do. There isn't any other competitive-roleplay-action-click-shooter-stabber-against-two-sides-to-detonate-the-payload game \
+		out there that isn't trying to get my donator money just so I can have a single sprite added to the game and autoequipped to my character. \
+		Next thing you know, the coders are going to have us PAY for these goddamn pixels on our character! Imagine having to pay for extra pixels! \
+		I'm fucking DONE WITH THIS GAME! I'M THROUGH WITH THIS SHIT! FUCK THE CODERS! I JUST WANT TO PLAY MY COMPETITIVE-ROLEPLAY-ACTION-\
+		CLICK-SHOOTER-STABBER-AGAINST-TWO-SIDES-TO-DETONATE-THE-PAYLOAD GAME THAT ISN'T DRAGGED DOWN BY HORRIBLE ADMINS THAT BAN ME WHEN I SAY \
+		CERTAIN WORDS THAT I AM ENTITLED TO SAY ON THE INTERNET! I'M THROUGH WITH THIS! I'M GOING TO GO PLAY A PURE, GENUINE GAME. WITH NO FUCKING HATS!"
+	loot = list(
+		/obj/item/clothing/head/costume/powdered_wig,
+		/obj/item/clothing/head/costume/cueball,
+		/obj/item/clothing/head/costume/snowman,
+		/obj/item/clothing/head/costume/witchwig,
+		/obj/item/clothing/head/costume/maidheadband,
+		/obj/item/clothing/head/costume/chicken,
+		/obj/item/clothing/head/costume/griffin,
+		/obj/item/clothing/head/costume/xenos,
+		/obj/item/clothing/head/costume/lobsterhat,
+		/obj/item/clothing/head/costume/cardborg,
+		/obj/item/clothing/head/costume/football_helmet,
+		/obj/item/clothing/head/costume/tv_head/fov_less,
+		/obj/item/clothing/head/costume/tmc,
+		/obj/item/clothing/head/costume/deckers,
+		/obj/item/clothing/head/costume/yuri,
+		/obj/item/clothing/head/costume/allies,
+		/obj/item/clothing/head/frenchberet,
+		/obj/item/clothing/head/costume/crown,
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/head/beanie/red,
+		/obj/item/clothing/head/beanie/darkblue,
+		/obj/item/clothing/head/rasta,
+		/obj/item/clothing/head/costume/constable,
+		/obj/item/clothing/head/bio_hood/plague,
+		/obj/item/clothing/head/costume/nursehat,
+		/obj/item/clothing/head/hats/bowler,
+		/obj/item/clothing/head/costume/bearpelt,
+		/obj/item/clothing/head/flatcap,
+		/obj/item/clothing/head/cowboy,
+		/obj/item/clothing/head/costume/rice_hat,
+		/obj/item/clothing/head/costume/pharaoh,
+		/obj/item/clothing/head/costume/delinquent,
+		/obj/item/clothing/head/costume/jackbros,
+		/obj/item/clothing/head/costume/ushanka,
+		/obj/item/clothing/head/costume/nightcap/blue,
+		/obj/item/clothing/head/costume/nightcap/red,
+		/obj/item/clothing/head/mothcap,
+		/obj/item/clothing/head/cone,
+		/obj/item/clothing/head/collectable/petehat,
+		/obj/item/clothing/head/collectable/wizard,
+		/obj/item/clothing/head/wizard/marisa/fake,
+	)

@@ -66,3 +66,8 @@
 #define BB_BLIND_TARGET "BB_blind_target"
 ///value to store the minimum eye damage to prevent us from attacking a human
 #define BB_EYE_DAMAGE_THRESHOLD "BB_eye_damage_threshold"
+///hivebot keys
+///the machine we must go to repair
+#define BB_MACHINE_TARGET "BB_machine_target"
+///the hivebot partner we will go communicate with
+#define BB_HIVE_PARTNER "BB_hive_partner"

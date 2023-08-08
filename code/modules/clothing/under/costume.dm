@@ -265,7 +265,8 @@
 	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	species_exception = list(/datum/species/golem)
-	can_adjust = FALSE
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/costume/buttondown/slacks
 	name = "buttondown shirt with slacks"
@@ -287,6 +288,21 @@
 	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/under/costume/buttondown/skirt
+	name = "buttondown shirt with skirt"
+	desc = "A fancy buttondown shirt with skirt."
+	icon_state = "buttondown_skirt"
+	greyscale_config = /datum/greyscale_config/buttondown_skirt
+	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
+	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
+	body_parts_covered = CHEST|GROIN|ARMS
+	flags_1 = IS_PLAYER_COLORABLE_1
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/costume/buttondown/skirt/service //preset one to be a formal white shirt and black skirt
+	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"

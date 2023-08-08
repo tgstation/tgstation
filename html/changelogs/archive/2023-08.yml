@@ -239,3 +239,96 @@
   - qol: The "Malicious Software Detected" button has been appropriately renamed to
       "Reset Software" for when pAIs are emagged
   - qol: Add a new law notification popup and flavor texts when pAI is emagged
+2023-08-07:
+  EuSouAFazer:
+  - bugfix: Removed a doubled filing cabnet in Northstar's Library Book Return room
+  - bugfix: Exorcised uneeded variables from windoors in Meta's Xenobio
+  Ghommie:
+  - bugfix: Fixed a logic mistake for chasm fishing that resulted in only generic
+      items being spawned.
+  SandPoot:
+  - image: Changed screentips icons to something a lot fancier unified with the LMB
+      / RMB text.
+  - qol: There are accessibility preferences to disable this! Look for "Screentip
+      context with images" beside the other screentip preferences.
+  Sealed101:
+  - bugfix: fixed missing froth sprites
+  - image: bubblegum's blood smack and blood grab use new bubblegum sprites
+  Senefi:
+  - qol: Bluespace Artillery Cargo Crate includes a guide paper for how to assemble
+      it.
+  Sheits:
+  - image: Re-sprites some of the oldest hairstyles
+  Watermelon914:
+  - bugfix: Fixed particles sometimes being left behind when an object drops all of
+      its contents whilst having a particle active.
+  Wisemonster:
+  - bugfix: Fix mulebots receiving the wrong message when thier cell is added/removed.
+2023-08-08:
+  Ben10Omintrix:
+  - bugfix: the bee will now care more about polinating
+  - qol: in case u miscliked the bee queen with a seringe 2 times, the raegent will
+      not be transfered to the quen if he alredy have this raegent
+  BlueMemesauce:
+  - rscadd: Emagged player-controlled bots now get different flavor text (depends
+      on policy)
+  - rscadd: Bots are now notified when a silicon toggles them malfunctioning
+  Comxy:
+  - bugfix: Damage on limbs get transferred on species change.
+  GPeckman:
+  - bugfix: Creatures with nobreath trait will now regenerate oxyloss. Androids, skeletons
+      and such will no longer be stuck with un-healable damage after being revived.
+  Ghommie:
+  - image: Mirrors now display a reflection of the mobs next to them... except for
+      vampires.
+  - rscadd: Added an Indebted negative quirk to the game, which gives the holder's
+      bank account a debt averaging at 15000 credits (with a variation of 1250 cr)
+      and forces 75% of all earnings towards solving it. A little prize awaits those
+      who actually extinguish it.
+  JohnFulpWillard:
+  - rscadd: Adds the Coroner surgery duffelbag; This replaces Coroner's surgery tools
+      in their medkit and current duffel, and has the cruel surgery tools instead
+      of regular ones.
+  - balance: Cruel surgery tools are no longer premium.
+  - balance: Coroner's medkit is now premium in the vendor.
+  - balance: All Coroner medkits are the same, there is no 'large' variant.
+  - balance: Coroners no longer get a folder.
+  LT3:
+  - bugfix: Advanced viruses that are supposed to be stealth will again actually be
+      stealth to analyzers
+  - code_imp: Virus visibility flags can now be toggled in view variables
+  Melbert:
+  - code_imp: Updated some status effect tick code to be more clear of how long is
+      elapsing between ticks. Some effects that were inadvertently weakened are now
+      stronger as a result (fire and some heretic effects).
+  Sealed101:
+  - bugfix: fixed goliaths digging sand that they can't actually reach (behind windows
+      or inbetween closed turfs)
+  - bugfix: fixed goliaths melee attacking their target despite the target running
+      away from goliath melee range
+  - bugfix: fixed goliath tentacles not spawning in mineral turfs
+  - bugfix: fixed goliaths summoning tentacles on targets that moved behind cover
+      but stayed in their targeting range. this applies for most basic mobs, really,
+      so if any basic mob was targeting you despite you hauling ass behind cover,
+      they shouldn't anymore
+  Sheits:
+  - image: fixes weird inconsistency on the neck and butt of the female base sprite
+  Watermelon914:
+  - bugfix: Fixed a hard delete that would occur with lua-created atoms.
+  YakumoChen, Thalpy:
+  - rscadd: Chen And Garry's Ice Cream is proud to debut a wide selection of cool
+      new frozen treat flavours on a space station near you!
+  - rscadd: Chen And Garry's Ice Cream revolutionary Korta Cones allow our ice cream
+      vendors to profit off the lizard demographic like never before!
+  - code_imp: Ice cream flavours now are all greyscaled similarly to GAGs
+  goobliner:
+  - rscadd: 4 New skin tones, hooray!
+  itsmeow:
+  - code_imp: Optimized z-level transition mirages, saving ~0.32s init.
+  softcerv:
+  - bugfix: former blobs are no longer able to respawn after having their mind transferred
+      to a new body.
+  timothymtorres:
+  - bugfix: Fix parasitic infection to cure upon liver removal
+  - qol: Add sounds and flashing effects to slot machines
+  - sound: Add new ding sound to slot machines from https://freesound.org/people/Natty23/sounds/411747/
