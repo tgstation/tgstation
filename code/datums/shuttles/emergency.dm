@@ -3,8 +3,6 @@
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
-	/// The recommended occupancy limit for the shuttle (count chairs, beds, and benches then round to 5)
-	var/occupancy_limit
 
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
