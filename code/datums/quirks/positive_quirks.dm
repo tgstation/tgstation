@@ -54,7 +54,7 @@
 	name = "Empath"
 	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
 	icon = "smile-beam"
-	value = 8
+	value = 2 //monkestation change 8->2
 	mob_trait = TRAIT_EMPATH
 	gain_text = span_notice("You feel in tune with those around you.")
 	lose_text = span_danger("You feel isolated from others.")
@@ -252,7 +252,7 @@
 	name = "Skittish"
 	desc = "You're easy to startle, and hide frequently. Run into a closed locker to jump into it, as long as you have access. You can walk to avoid this."
 	icon = "trash"
-	value = 4 //monkestation change 8->4
+	value = 2 //monkestation change 8->2
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
 	mail_goodies = list(/obj/structure/closet/cardboard)
