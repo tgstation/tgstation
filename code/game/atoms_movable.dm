@@ -122,7 +122,7 @@
 	color = EM_BLOCK_COLOR
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
-/atom/movable/Initialize(mapload)
+/atom/movable/Initialize(mapload, ...)
 	. = ..()
 #ifdef UNIT_TESTS
 	if(explosion_block && !HAS_TRAIT(src, TRAIT_BLOCKING_EXPLOSIVES))
@@ -580,6 +580,8 @@
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8)
+	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
+		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 
@@ -1166,7 +1168,7 @@
 
 		if(update_on_z)
 			// I so much wish this could be somewhere else. alas, no.
-			for(var/image/update in update_on_z)
+			for(var/image/update as anything in update_on_z)
 				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
 		if(update_overlays_on_z)
 			// This EVEN more so
@@ -1538,16 +1540,22 @@
 	var/area/atom_area = get_area(src)
 
 	if(!atom_turf) // some machines spawn in nullspace
-		return
+		return FALSE
 
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
 		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines
 		// but docked at centcom, and I wanted those machines to also speak funny languages
 		return FALSE
+	grant_random_uncommon_language()
+	return TRUE
 
-	/// The atom's language holder - so we can randomize and change their language
-	var/datum/language_holder/atom_languages = get_language_holder()
-	atom_languages.selected_language = atom_languages.get_random_spoken_uncommon_language()
+/// Teaches a random non-common language and sets it as the active language
+/atom/movable/proc/grant_random_uncommon_language(source)
+	if (!length(GLOB.uncommon_roundstart_languages))
+		return FALSE
+	var/picked = pick(GLOB.uncommon_roundstart_languages)
+	grant_language(picked, source = source)
+	set_active_language(picked)
 	return TRUE
 
 /* End language procs */

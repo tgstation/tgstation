@@ -68,8 +68,8 @@
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
-	return
+/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
@@ -277,8 +277,8 @@
 /obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)
 	return
 
-/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user)
-	return
+/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 #define LUXURY_MESSAGE_COOLDOWN 100
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
@@ -411,7 +411,7 @@
 		alarm_beep()
 		return ..()
 
-/mob/living/simple_animal/hostile/bear/fightpit
+/mob/living/basic/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
 	environment_smash = ENVIRONMENT_SMASH_NONE

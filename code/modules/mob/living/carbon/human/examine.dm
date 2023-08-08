@@ -1,7 +1,7 @@
 /mob/living/carbon/human/examine(mob/user)
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
-	var/t_He = p_they(TRUE)
-	var/t_His = p_their(TRUE)
+	var/t_He = p_They()
+	var/t_His = p_Their()
 	var/t_his = p_their()
 	var/t_him = p_them()
 	var/t_has = p_have()
@@ -361,6 +361,14 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
+	if(isliving(user))
+		var/mob/living/morbid_weirdo = user
+		if(HAS_MIND_TRAIT(morbid_weirdo, TRAIT_MORBID))
+			if(HAS_TRAIT(src, TRAIT_DISSECTED))
+				msg += "[span_notice("[t_He] appears to have been dissected. Useless for examination... <b><i>for now.</i></b>")]\n"
+			if(HAS_TRAIT(src, TRAIT_SURGICALLY_ANALYZED))
+				msg += "[span_notice("A skilled hand has mapped this one's internal intricacies. It will be far easier to perform future experimentations upon [t_him]. <b><i>Exquisite.</i></b>")]\n"
+
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
 		var/datum/record/crew/target_record = find_record(perpname)
@@ -444,4 +452,4 @@
 			age_text = "very old"
 		if(101 to INFINITY)
 			age_text = "withering away"
-	. += list(span_notice("[p_they(TRUE)] appear[p_s()] to be [age_text]."))
+	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))

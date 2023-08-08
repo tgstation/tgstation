@@ -253,13 +253,13 @@
 /obj/item/organ/internal/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/toolset/emag_act(mob/user)
+/obj/item/organ/internal/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
 		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
 			return FALSE
 
-	to_chat(user, span_notice("You unlock [src]'s integrated knife!"))
+	balloon_alert(user, "integrated knife unlocked")
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
@@ -408,9 +408,8 @@
 		return
 
 	var/mob/living/living_target = target
-
 	source.changeNext_move(CLICK_CD_MELEE)
-	var/picked_hit_type = pick("punch", "smash", "kick")
+	var/picked_hit_type = pick("punch", "smash", "pummel", "bash", "slam")
 
 	if(organ_flags & ORGAN_FAILING)
 		if(source.body_position != LYING_DOWN && living_target != source && prob(50))
@@ -433,7 +432,9 @@
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
-	living_target.apply_damage(punch_damage, BRUTE)
+	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
+	var/armor_block = living_target.run_armor_check(target_zone, MELEE)
+	living_target.apply_damage(punch_damage, BRUTE, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)

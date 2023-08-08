@@ -140,6 +140,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PULL_BLOCKED "pullblocked"
 /// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
 #define TRAIT_RESTRAINED "restrained"
+/// Apply this to make a mob not dense, and remove it when you want it to no longer make them undense, other sorces of undesity will still apply. Always define a unique source when adding a new instance of this!
+#define TRAIT_UNDENSE "undense"
+/// Expands our FOV by 30 degrees if restricted
+#define TRAIT_EXPANDED_FOV "expanded_fov"
 /// Doesn't miss attacks
 #define TRAIT_PERFECT_ATTACKER "perfect_attacker"
 ///Recolored by item/greentext
@@ -246,6 +250,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUTANT_COLORS "mutcolors"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
+/// Species with this trait have a haircolor that cannot be chosen by the player, nor altered ingame by external means
+#define TRAIT_FIXED_HAIRCOLOR "fixed_haircolor"
 /// Humans with this trait won't get bloody hands, nor bloody feet
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
@@ -289,10 +295,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
-#define TRAIT_ANTIMAGIC "anti_magic"
+/// The mob is holy and resistance to cult magic
 #define TRAIT_HOLY "holy"
+/// This mob is antimagic, and immune to spells / cannot cast spells
+#define TRAIT_ANTIMAGIC "anti_magic"
 /// This allows a person who has antimagic to cast spells without getting blocked
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
+/// This mob recently blocked magic with some form of antimagic
+#define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
+/// The user can do things like use magic staffs without penalty
+#define TRAIT_MAGICALLY_GIFTED "magically_gifted"
 #define TRAIT_DEPRESSION "depression"
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
@@ -308,11 +320,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Stops all slipping and sliding from ocurring
 #define TRAIT_NO_SLIP_ALL "noslip_all"
 
+/// Unlinks gliding from movement speed, meaning that there will be a delay between movements rather than a single move movement between tiles
+#define TRAIT_NO_GLIDE "no_glide"
+
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
 #define TRAIT_MINDSHIELD "mindshield"
 #define TRAIT_DISSECTED "dissected"
+#define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed"
 /// Lets the user succumb even if they got NODEATH
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
@@ -347,6 +363,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define IGNORING_GRAVITY_NEGATION "ignoring_gravity_negation"
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
+/// Makes whispers clearly heard from seven tiles away, the full hearing range
+#define TRAIT_GOOD_HEARING "good_hearing"
+/// Allows you to hear speech through walls
+#define TRAIT_XRAY_HEARING "xray_hearing"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
@@ -405,6 +425,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT "free_hyperspace_softcordon_movement"
 ///Deletes the object upon being dumped into space, usually from exiting hyperspace. Useful if you're spawning in a lot of stuff for hyperspace events that dont need to flood the entire game
 #define TRAIT_DEL_ON_SPACE_DUMP "del_on_hyperspace_leave"
+/// We can walk up or around cliffs, or at least we don't fall off of it
+#define TRAIT_CLIFF_WALKER "cliff_walker"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
@@ -542,7 +564,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Projectile with this trait will always hit the defined zone of a struck living mob.
 #define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
 
-/// Mobs with this trait do care about a few grizzly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopies, dissections and amputations.
+/// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
 // METABOLISMS
@@ -629,6 +651,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LAVA_STOPPED "lava_stopped"
 ///Chasms will be safe to cross while they've this trait.
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
+///The effects of the immerse element will be halted while this trait is present.
+#define TRAIT_IMMERSE_STOPPED "immerse_stopped"
+/// The effects of hyperspace drift are blocked when the tile has this trait
+#define TRAIT_HYPERSPACE_STOPPED "hyperspace_stopped"
+
 ///Turf slowdown will be ignored when this trait is added to a turf.
 #define TRAIT_TURF_IGNORE_SLOWDOWN "turf_ignore_slowdown"
 ///Mobs won't slip on a wet turf while it has this trait
@@ -691,6 +718,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SAFE_STORAGE "fish_case"
 /// Stuff that can go inside fish cases
 #define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
+/// If the item can be used as a bit.
+#define TRAIT_FISHING_BAIT "fishing_bait"
+/// The quality of the bait. It influences odds of catching fish
+#define TRAIT_BASIC_QUALITY_BAIT "baic_quality_bait"
+#define TRAIT_GOOD_QUALITY_BAIT "good_quality_bait"
+#define TRAIT_GREAT_QUALITY_BAIT "great_quality_bait"
+/// Baits with this trait will ignore bait preferences and related fish traits.
+#define OMNI_BAIT_TRAIT "omni_bait"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
@@ -748,6 +783,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SMOKER "smoker"
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
+
+///if the atom has a sticker attached to it
+#define TRAIT_STICKERED "stickered"
+
+// Debug traits
+/// This object has light debugging tools attached to it
+#define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -834,6 +876,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mechs that can have orebox functionality on movement
 #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
 
+///fish traits
+#define TRAIT_RESIST_EMULSIFY "resist_emulsify"
+#define TRAIT_FISH_SELF_REPRODUCE "fish_self_reproduce"
+#define TRAIT_FISH_NO_MATING "fish_no_mating"
+#define TRAIT_YUCKY_FISH "yucky_fish"
+#define TRAIT_FISH_TOXIN_IMMUNE "fish_toxin_immune"
+#define TRAIT_FISH_CROSSBREEDER "fish_crossbreeder"
+#define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
+///Trait needed for the lubefish evolution
+#define TRAIT_FISH_FED_LUBE "fish_fed_lube"
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define UNCONSCIOUS_TRAIT "unconscious"
@@ -871,6 +924,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATUS_EFFECT_TRAIT "status-effect"
 /// A trait given by a specific status effect (not sure why we need both but whatever!)
 #define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+/// Trait from light debugging
+#define LIGHT_DEBUG_TRAIT "light-debug"
 
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
@@ -904,6 +959,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SUIT_TRAIT "suit"
 /// Trait associated to lying down (having a [lying_angle] of a different value than zero).
 #define LYING_DOWN_TRAIT "lying-down"
+/// A trait gained by leaning against a wall
+#define LEANING_TRAIT "leaning"
 /// Trait associated to lacking electrical power.
 #define POWER_LACK_TRAIT "power-lack"
 /// Trait associated to lacking motor movement
@@ -930,6 +987,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHASM_DESTROYED "chasm_destroyed"
 /// Trait from being under the floor in some manner
 #define TRAIT_UNDERFLOOR "underfloor"
+/// If the movable shouldn't be reflected by mirrors.
+#define TRAIT_NO_MIRROR_REFLECTION "no_mirror_reflection"
+/// If this movable is currently treading in a turf with the immerse element.
+#define TRAIT_IMMERSED "immersed"
+/**
+ * With this, the immerse overlay will give the atom its own submersion visual overlay
+ * instead of one that's also shared with other movables, thus making editing its appearance possible.
+ */
+#define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
@@ -975,7 +1041,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPECIES_FLIGHT_TRAIT "species-flight"
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
+/// A trait gained from a mob's leap action, like the leaper
 #define LEAPING_TRAIT "leaping"
+/// A trait gained from a mob's vanish action, like the herophant
+#define VANISHING_TRAIT "vanishing"
+/// A trait gained from a mob's swoop action, like the ash drake
+#define SWOOPING_TRAIT "swooping"
+/// A trait gained from a mob's mimic ability, like the mimic
+#define MIMIC_TRAIT "mimic"
+#define SHRUNKEN_TRAIT "shrunken"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 #define DNA_VAULT_TRAIT "dna_vault"
 /// sticky nodrop sounds like a bad soundcloud rapper's name
@@ -1034,6 +1108,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
+/// Trait given by simple/basic mob death
+#define BASIC_MOB_DEATH_TRAIT "basic_mob_death"
+/// Trait given to mobs that have been autopsied
+#define AUTOPSY_TRAIT "autopsy_trait"
 
 
 /**
@@ -1074,6 +1152,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
 #define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
+#define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
+#define STATION_TRAIT_FORESTED "station_trait_forested"
+#define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -1149,6 +1230,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// the object has a label applied
 #define TRAIT_HAS_LABEL "labeled"
 
+///coming from a fish trait datum.
+#define FISH_TRAIT_DATUM "fish_trait_datum"
+///coming from a fish evolution datum
+#define FISH_EVOLUTION "fish_evolution"
+
 /// some trait sorces dirived from bodyparts BODYPART_TRAIT is generic.
 #define BODYPART_TRAIT "bodypart"
 #define HEAD_TRAIT "head"
@@ -1173,3 +1259,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given by /datum/component/germ_sensitive
 #define TRAIT_GERM_SENSITIVE "germ_sensitive"
+
+/// This atom can have spells cast from it if a mob is within it
+/// This means the "caster" of the spell is changed to the mob's loc
+/// Note this doesn't mean all spells are guaranteed to work or the mob is guaranteed to cast
+#define TRAIT_CASTABLE_LOC "castable_loc"

@@ -72,13 +72,13 @@
 	user.suicide_log()
 	qdel(user)
 
+
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
 	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
-	storage_type = /datum/storage/backpack/santabag
 
 /obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
@@ -368,12 +368,8 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/imports/contraband/smuggled_goods = new
-	for(var/items in 1 to 2)
-		var/smuggled_goods_type = pick(smuggled_goods.contains)
-		new smuggled_goods_type(src)
-
-	qdel(smuggled_goods)
+	for(var/items in 1 to 4)
+		new /obj/effect/spawner/random/contraband(src)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/iron/base(src)
@@ -396,6 +392,14 @@
 	/// If this bag is zipped (contents hidden) up or not
 	/// Starts enabled so you're forced to interact with it to "get" it
 	var/zipped_up = TRUE
+	// How much time it takes to zip up (close) the duffelbag
+	var/zip_up_duration = 0.5 SECONDS
+	// Audio played during zipup
+	var/zip_up_sfx = 'sound/items/zip_up.ogg'
+	// How much time it takes to unzip the duffel
+	var/unzip_duration = 2.1 SECONDS
+	// Audio played during unzip
+	var/unzip_sfx = 'sound/items/un_zip.ogg'
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
@@ -429,9 +433,10 @@
 		return ..()
 
 	balloon_alert(user, "unzipping...")
-	playsound(src, 'sound/items/un_zip.ogg', 100, FALSE)
+	playsound(src, unzip_sfx, 100, FALSE)
 	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
-	if(!do_after(user, 2.1 SECONDS, src, extra_checks = can_unzip))
+	if(!do_after(user, unzip_duration, src, extra_checks = can_unzip))
+		user.balloon_alert(user, "unzip failed!")
 		return
 	balloon_alert(user, "unzipped")
 	set_zipper(FALSE)
@@ -445,9 +450,10 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	balloon_alert(user, "zipping...")
-	playsound(src, 'sound/items/zip_up.ogg', 100, FALSE)
+	playsound(src, zip_up_sfx, 100, FALSE)
 	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
-	if(!do_after(user, 0.5 SECONDS, src, extra_checks = can_zip))
+	if(!do_after(user, zip_up_duration, src, extra_checks = can_zip))
+		user.balloon_alert(user, "zip failed!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "zipped")
 	set_zipper(TRUE)
@@ -506,11 +512,40 @@
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
 
+/obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
+	new /obj/item/scalpel(src)
+	new /obj/item/hemostat(src)
+	new /obj/item/retractor(src)
+	new /obj/item/circular_saw(src)
+	new /obj/item/surgicaldrill(src)
+	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/razor(src)
+	new /obj/item/blood_filter(src)
+
 /obj/item/storage/backpack/duffelbag/coroner
 	name = "coroner duffel bag"
 	desc = "A large duffel bag for holding large amounts of organs at once."
 	icon_state = "duffel-coroner"
 	inhand_icon_state = "duffel-coroner"
+
+/obj/item/storage/backpack/duffelbag/coroner/surgery
+	name = "surgical coroner bag"
+	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding morbid surgical tools."
+
+/obj/item/storage/backpack/duffelbag/coroner/surgery/PopulateContents()
+	new /obj/item/scalpel/cruel(src)
+	new /obj/item/hemostat/cruel(src)
+	new /obj/item/retractor/cruel(src)
+	new /obj/item/circular_saw(src)
+	new /obj/item/surgicaldrill(src)
+	new /obj/item/cautery/cruel(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/razor(src)
+	new /obj/item/blood_filter(src)
 
 /obj/item/storage/backpack/duffelbag/explorer
 	name = "explorer duffel bag"
@@ -547,21 +582,6 @@
 	desc = "A large duffel bag for holding extra viral bottles."
 	icon_state = "duffel-virology"
 	inhand_icon_state = "duffel-virology"
-
-
-
-/obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
-	new /obj/item/scalpel(src)
-	new /obj/item/hemostat(src)
-	new /obj/item/retractor(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgical_drapes(src)
-	new /obj/item/clothing/mask/surgical(src)
-	new /obj/item/razor(src)
-	new /obj/item/blood_filter(src)
 
 /obj/item/storage/backpack/duffelbag/sec
 	name = "security duffel bag"
@@ -623,11 +643,16 @@
 
 /obj/item/storage/backpack/duffelbag/syndie
 	name = "suspicious looking duffel bag"
-	desc = "A large duffel bag for holding extra tactical supplies."
+	desc = "A large duffel bag for holding extra tactical supplies. It contains an oiled plastitanium zipper for maximum speed tactical zipping, and is better balanced on your back than an average duffelbag. Can hold two bulky items!"
 	icon_state = "duffel-syndie"
 	inhand_icon_state = "duffel-syndieammo"
 	storage_type = /datum/storage/duffel/syndicate
 	resistance_flags = FIRE_PROOF
+	// Less slowdown while unzipped. Still bulky, but it won't halve your movement speed in an active combat situation.
+	zip_slowdown = 0.3
+	// Faster unzipping. Utilizes the same noise as zipping up to fit the unzip duration.
+	unzip_duration = 0.5 SECONDS
+	unzip_sfx = 'sound/items/zip_up.ogg'
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
@@ -635,7 +660,7 @@
 	inhand_icon_state = "duffel-syndieammo"
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
-	new /obj/item/clothing/under/suit/black(src)
+	new /obj/item/clothing/under/costume/buttondown/slacks/service(src)
 	new /obj/item/clothing/neck/tie/red/hitman(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
@@ -662,7 +687,6 @@
 	new /obj/item/cautery/advanced(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/reagent_containers/medigel/sterilizine(src)
-	new /obj/item/surgicaldrill(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/blood_filter(src)
 	new /obj/item/stack/medical/bone_gel(src)
@@ -677,23 +701,6 @@
 	desc = "A large duffel bag for holding extra weapons ammunition and supplies."
 	icon_state = "duffel-syndieammo"
 	inhand_icon_state = "duffel-syndieammo"
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
-	desc = "A large duffel bag, packed to the brim with Bulldog shotgun magazines."
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g/slug(src)
-	new /obj/item/ammo_box/magazine/m12g/slug(src)
-	new /obj/item/ammo_box/magazine/m12g/dragon(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/smg
-	desc = "A large duffel bag, packed to the brim with C-20r magazines."
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/smg/PopulateContents()
-	for(var/i in 1 to 9)
-		new /obj/item/ammo_box/magazine/smgm45(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
@@ -719,30 +726,12 @@
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 
-/obj/item/storage/backpack/duffelbag/syndie/c20rbundle
-	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
-
-/obj/item/storage/backpack/duffelbag/syndie/c20rbundle/PopulateContents()
-	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/gun/ballistic/automatic/c20r(src)
-	new /obj/item/suppressor(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
-	desc = "A large duffel bag containing a Bulldog, some drums, and a pair of thermal imaging glasses."
-
-/obj/item/storage/backpack/duffelbag/syndie/bulldogbundle/PopulateContents()
-	new /obj/item/gun/ballistic/shotgun/bulldog(src)
-	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
-
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/mod/module/magboot(src)
-	new /obj/item/storage/medkit/tactical(src)
+	new /obj/item/storage/medkit/tactical/premium(src)
 	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 

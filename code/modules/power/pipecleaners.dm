@@ -384,7 +384,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			// pipe_cleaner is pointing at us, we're standing on an open tile
 			// so create a stub pointing at the clicked pipe_cleaner on our tile
 
-			var/fdirn = turn(dirn, 180) // the opposite direction
+			var/fdirn = REVERSE_DIR(dirn) // the opposite direction
 
 			for(var/obj/structure/pipe_cleaner/LC in U) // check to make sure there's not a pipe_cleaner there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)

@@ -1,7 +1,7 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon = 'icons/mob/species/human/human_face.dmi'   // default icon for all hairs
+	icon = 'icons/mob/human/human_face.dmi'   // default icon for all hairs
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "hair_vlong"
 	inhand_icon_state = "pwig"
@@ -72,7 +72,7 @@
 			return
 	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!noggin)
-		to_chat(user, span_warning("[target.p_they(TRUE)] have no head!"))
+		to_chat(user, span_warning("[target.p_They()] have no head!"))
 		return
 
 	var/selected_hairstyle = null

@@ -168,8 +168,7 @@
 		return
 
 	var/obj/item/modular_computer/pda/heads/pda = H.r_store
-	pda.saved_identification = H.real_name
-	pda.saved_job = "CentCom Official"
+	pda.imprint_id(H.real_name, "CentCom Official")
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -542,6 +541,7 @@
 	name = "Militia Man"
 
 	id = /obj/item/card/id/advanced/centcom/ert/militia
+	belt = /obj/item/storage/belt/holster/energy/smoothbore
 	suit = /obj/item/clothing/suit/armor/militia
 	suit_store = /obj/item/gun/energy/laser/musket
 	head = /obj/item/clothing/head/cowboy/black
@@ -563,6 +563,7 @@
 	name = "Militia General"
 
 	id = /obj/item/card/id/advanced/centcom/ert/militia/general
+	belt = /obj/item/gun/energy/disabler/smoothbore/prime
 	head = /obj/item/clothing/head/beret/militia
 	l_hand = /obj/item/megaphone
 	suit_store = /obj/item/gun/energy/laser/musket/prime

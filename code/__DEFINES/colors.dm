@@ -56,6 +56,7 @@
 #define COLOR_VIBRANT_LIME "#00FF00"
 #define COLOR_SERVICE_LIME "#58C800"
 #define COLOR_JADE "#5EFB6E"
+#define COLOR_EMERALD "#00CC66"
 #define COLOR_LIME "#32CD32"
 #define COLOR_DARK_LIME "#00aa00"
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
@@ -202,6 +203,8 @@
 #define LIGHT_COLOR_DEFAULT "#f3fffa"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
+/// Bright, pale "nuclear" green. rgb(120, 255, 120)
+#define LIGHT_COLOR_NUCLEAR "#78FF78"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
 #define LIGHT_COLOR_VIVID_GREEN "#3CF046"
 /// Electric green. rgb(0, 255, 0)
@@ -321,6 +324,7 @@
 #define COLOR_CARP_PALE_GREEN "#7ef099"
 #define COLOR_CARP_SILVER "#fdfbf3"
 #define COLOR_CARP_DARK_BLUE "#3a384d"
+#define COLOR_CARP_DARK_GREEN "#358102"
 
 #define COLOR_GNOME_RED_ONE "#f10b0b"
 #define COLOR_GNOME_RED_TWO "#bc5347"
@@ -341,6 +345,17 @@
 
 #define SOFA_BROWN "#a75400"
 #define SOFA_MAROON "#830000"
+
+#define COLOR_ICECREAM_VANILLA "#f2eede"
+#define COLOR_ICECREAM_CHOCOLATE "#93683c"
+#define COLOR_ICECREAM_STRAWBERRY "#f4cbcb"
+#define COLOR_ICECREAM_BLUE "#cbd5f4"
+#define COLOR_ICECREAM_LEMON "#ffff9f"
+#define COLOR_ICECREAM_CARAMEL "#d98736"
+#define COLOR_ICECREAM_ORANGESICLE "#ffa980"
+#define COLOR_ICECREAM_PEACH "#ffcc66"
+#define COLOR_ICECREAM_CUSTOM "#f3f3f3"
+#define COLOR_ICECREAM_CHERRY_CHOCOLATE "#800000"
 
 GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BLUE = CABLE_HEX_COLOR_BLUE,

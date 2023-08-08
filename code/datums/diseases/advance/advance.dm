@@ -211,7 +211,7 @@
 	var/list/possible_symptoms = list()
 	for(var/symp in SSdisease.list_symptoms)
 		var/datum/symptom/S = new symp
-		if(S.naturally_occuring && S.level >= level_min && S.level <= level_max)
+		if(S.can_generate_randomly() && S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
 				possible_symptoms += S
 
@@ -535,14 +535,24 @@
 	return properties["transmittable"]
 
 /**
+ *  If the disease has an incubation time (such as event diseases) start the timer, let properties determine if there's no timer set.
+ */
+/datum/disease/advance/after_add()
+	. = ..()
+
+	if(isnull(incubation_time))
+		return
+
+	if(incubation_time < world.time)
+		make_visible()
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(make_visible)), incubation_time - world.time)
+
+
+/**
  *  Make virus visible to heath scanners
  */
 /datum/disease/advance/proc/make_visible()
 	visibility_flags &= ~HIDDEN_SCANNER
-	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
-		if(!virus.id)
-			stack_trace("Advanced virus ID is empty or null!")
-			return
-
-		if(virus.id == id)
-			virus.visibility_flags &= ~HIDDEN_SCANNER
+	affected_mob.med_hud_set_status()

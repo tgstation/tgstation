@@ -23,7 +23,7 @@
 	location = null
 
 /datum/status_effect/crucible_soul/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] [owner.p_do()]n't seem to be all here.")
+	return span_notice("[owner.p_They()] [owner.p_do()]n't seem to be all here.")
 
 // DUSK AND DAWN
 /datum/status_effect/duskndawn
@@ -56,7 +56,7 @@
 /datum/status_effect/marshal/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
-/datum/status_effect/marshal/tick()
+/datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbie = owner

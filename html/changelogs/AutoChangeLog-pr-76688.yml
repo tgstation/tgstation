@@ -1,6 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - refactor: "paper wizard have been refactored, please report any bugs/unintended behavior"
-  - refactor: "refacted the datum/elememt/trial to an bespoken element"
-  - rscadd: "paper wizard now have effects when he walking and he will now go and look for paperes and write stuff in them"

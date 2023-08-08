@@ -66,14 +66,17 @@
 	else
 		mode() // Activate held item
 
-/mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
+/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
 	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
 
+	if(can_perform_surgery(user, params))
+		return TRUE
+
 	for(var/i in shuffle(all_wounds))
-		var/datum/wound/W = i
-		if(W.try_treating(I, user))
-			return 1
+		var/datum/wound/wound = i
+		if(wound.try_treating(item, user))
+			return TRUE
 
 	return ..()
 
@@ -152,6 +155,9 @@
 		return FALSE
 	var/atom/movable/thrown_thing
 	var/obj/item/held_item = get_active_held_item()
+	var/verb_text = pick("throw", "toss", "hurl", "chuck", "fling")
+	if(prob(0.5))
+		verb_text = "yeet"
 	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
 	if(!held_item)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
@@ -182,8 +188,12 @@
 		power_throw++
 	if(neckgrab_throw)
 		power_throw++
-	visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
-					span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
+	if(isitem(thrown_thing))
+		var/obj/item/thrown_item = thrown_thing
+		if(thrown_item.throw_verb)
+			verb_text = thrown_item.throw_verb
+	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
+					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
 	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 	newtonian_move(get_dir(target, src))
@@ -811,6 +821,8 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
 		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
@@ -844,8 +856,11 @@
 		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
 
-		for(var/obj/item/organ/organ as anything in organs)
-			organ.apply_organ_damage(excess_healing * -1) //1 excess = 5 organ damage healed
+		for(var/obj/item/organ/target_organ as anything in organs)
+			if(!target_organ.damage)
+				continue
+
+			target_organ.apply_organ_damage(excess_healing * -1, required_organ_flag = ORGAN_ORGANIC) //1 excess = 5 organ damage healed
 
 	return ..()
 

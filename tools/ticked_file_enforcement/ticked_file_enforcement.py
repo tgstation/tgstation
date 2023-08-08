@@ -108,6 +108,15 @@ def compare_lines(a, b):
     a = a[len("#include \""):-1].lower()
     b = b[len("#include \""):-1].lower()
 
+    split_by_period = a.split('.')
+    a_suffix = ""
+    if len(split_by_period) >= 2:
+        a_suffix = split_by_period[len(split_by_period) - 1]
+    split_by_period = b.split('.')
+    b_suffix = ""
+    if len(split_by_period) >= 2:
+        b_suffix = split_by_period[len(split_by_period) - 1]
+
     a_segments = a.split('\\')
     b_segments = b.split('\\')
 
@@ -124,6 +133,10 @@ def compare_lines(a, b):
 
         # interface\something.dm will ALWAYS come after code\something.dm
         if a_segment != b_segment:
+            # if we're at the end of a compare, then this is about the file name
+            # files with longer suffixes come after ones with shorter ones
+            if a_suffix != b_suffix:
+                return (a_suffix > b_suffix) - (a_suffix < b_suffix)
             return (a_segment > b_segment) - (a_segment < b_segment)
 
     print(f"Two lines were exactly the same ({a} vs. {b})")

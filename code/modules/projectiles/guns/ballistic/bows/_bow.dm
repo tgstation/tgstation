@@ -10,7 +10,7 @@
 	base_icon_state = "bow"
 	load_sound = 'sound/weapons/gun/general/ballistic_click.ogg'
 	fire_sound = 'sound/weapons/gun/bow/bow_fire.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/bow
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow
 	force = 15
 	pinless = TRUE
 	attack_verb_continuous = list("whipped", "cracked")

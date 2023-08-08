@@ -95,11 +95,11 @@
 	return ..()
 
 /datum/status_effect/golem/get_examine_text()
-	return span_notice("[owner.p_their(capitalized = TRUE)] body has been augmented with veins of [mineral_name].")
+	return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
 
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
-	icon = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
 	layers = ALL_EXTERNAL_OVERLAYS
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart
@@ -176,14 +176,14 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod *= burn_multiplier
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod /= burn_multiplier

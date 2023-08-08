@@ -1,7 +1,12 @@
+/// The damage healed per tick while sleeping without any modifiers
+#define HEALING_SLEEP_DEFAULT 0.2
+/// The sleep healing multipler for organ passive healing (since organs heal slowly)
+#define HEALING_SLEEP_ORGAN_MULTIPLIER 5
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
-	tick_interval = 0
+	tick_interval = -1
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	remove_on_fullheal = TRUE
@@ -113,7 +118,7 @@
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
-/datum/status_effect/incapacitating/unconscious/tick()
+/datum/status_effect/incapacitating/unconscious/tick(seconds_between_ticks)
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
@@ -154,9 +159,7 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
-#define HEALING_SLEEP_DEFAULT 0.2
-
-/datum/status_effect/incapacitating/sleeping/tick()
+/datum/status_effect/incapacitating/sleeping/tick(seconds_between_ticks)
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = HEALING_SLEEP_DEFAULT
@@ -202,10 +205,22 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
-		if(healing > 0 && health_ratio > 0.8)
-			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
+		if(healing > 0)
+			if(iscarbon(owner))
+				var/mob/living/carbon/carbon_owner = owner
+				for(var/obj/item/organ/target_organ as anything in carbon_owner.organs)
+					// no healing boost for robotic or dying organs
+					if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
+						continue
+
+					// organ regeneration is very low so we crank up the healing rate to give a good bonus
+					var/healing_bonus = target_organ.healing_factor * healing * HEALING_SLEEP_ORGAN_MULTIPLIER
+					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+
+			if(health_ratio > 0.8) // only heals minor physical damage
+				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
 		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
@@ -216,8 +231,6 @@
 
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
-
-#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -260,7 +273,7 @@
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.update_bodypart_bleed_overlays()
 
-/datum/status_effect/grouped/stasis/tick()
+/datum/status_effect/grouped/stasis/tick(seconds_between_ticks)
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
@@ -280,7 +293,7 @@
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1
-	tick_interval = 4
+	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/his_wrath
 
 /atom/movable/screen/alert/status_effect/his_wrath
@@ -289,7 +302,7 @@
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/datum/status_effect/his_wrath/tick()
+/datum/status_effect/his_wrath/tick(seconds_between_ticks)
 	for(var/obj/item/his_grace/HG in owner.held_items)
 		qdel(src)
 		return
@@ -306,7 +319,7 @@
 	owner.set_invis_see(SEE_INVISIBLE_OBSERVER)
 	return TRUE
 
-/datum/status_effect/cultghost/tick()
+/datum/status_effect/cultghost/tick(seconds_between_ticks)
 	if(owner.reagents)
 		owner.reagents.del_reagent(/datum/reagent/water/holywater) //can't be deconverted
 
@@ -346,7 +359,7 @@
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
-	tick_interval = 6
+	tick_interval = 0.6 SECONDS
 	delay_before_decay = 5
 	stack_threshold = 10
 	max_stacks = 10
@@ -386,7 +399,7 @@
 		return FALSE
 	return TRUE
 
-/datum/status_effect/neck_slice/tick()
+/datum/status_effect/neck_slice/tick(seconds_between_ticks)
 	var/obj/item/bodypart/throat = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(owner.stat == DEAD || !throat) // they can lose their head while it's going.
 		qdel(src)
@@ -405,7 +418,7 @@
 		owner.emote(pick("gasp", "gag", "choke"))
 
 /datum/status_effect/neck_slice/get_examine_text()
-	return span_warning("[owner.p_their(TRUE)] neck is cut and is bleeding profusely!")
+	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
@@ -420,8 +433,8 @@
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 6000 //you're cursed for 10 minutes have fun
-	tick_interval = 50
+	duration = 10 MINUTES //you're cursed for 10 minutes have fun
+	tick_interval = 5 SECONDS
 	alert_type = null
 	var/curse_flags = NONE
 	var/effect_last_activation = 0
@@ -452,7 +465,7 @@
 		owner.clear_fullscreen("curse", 50)
 	curse_flags &= ~remove_curse
 
-/datum/status_effect/necropolis_curse/tick()
+/datum/status_effect/necropolis_curse/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		return
 	if(curse_flags & CURSE_WASTING)
@@ -518,7 +531,7 @@
 	id = "trance"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
-	tick_interval = 10
+	tick_interval = 1 SECONDS
 	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 
@@ -527,7 +540,7 @@
 	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
 	icon_state = "high"
 
-/datum/status_effect/trance/tick()
+/datum/status_effect/trance/tick(seconds_between_ticks)
 	if(stun)
 		owner.Stun(6 SECONDS, TRUE)
 	owner.set_dizzy(40 SECONDS)
@@ -555,7 +568,7 @@
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
 /datum/status_effect/trance/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -578,7 +591,7 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 
-/datum/status_effect/spasms/tick()
+/datum/status_effect/spasms/tick(seconds_between_ticks)
 	if(owner.stat >= UNCONSCIOUS)
 		return
 	if(!prob(15))
@@ -640,7 +653,7 @@
 	. = ..()
 	to_chat(zappy_boy, span_boldwarning("You feel a shock moving through your body! Your hands start shaking!"))
 
-/datum/status_effect/convulsing/tick()
+/datum/status_effect/convulsing/tick(seconds_between_ticks)
 	var/mob/living/carbon/H = owner
 	if(prob(40))
 		var/obj/item/I = H.get_active_held_item()
@@ -683,7 +696,7 @@
 	id = "go_away"
 	duration = 100
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
+	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/go_away
 	var/direction
 
@@ -692,7 +705,7 @@
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
 
-/datum/status_effect/go_away/tick()
+/datum/status_effect/go_away/tick(seconds_between_ticks)
 	owner.AdjustStun(1, ignore_canstun = TRUE)
 	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
@@ -704,13 +717,13 @@
 
 /datum/status_effect/fake_virus
 	id = "fake_virus"
-	duration = 1800//3 minutes
+	duration = 3 MINUTES //3 minutes
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
+	tick_interval = 0.2 SECONDS
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
-/datum/status_effect/fake_virus/tick()
+/datum/status_effect/fake_virus/tick(seconds_between_ticks)
 	var/fake_msg = ""
 	var/fake_emote = ""
 	switch(msg_stage)
@@ -798,9 +811,9 @@
 	return COMPONENT_CLEANED
 
 /datum/status_effect/ants/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
+	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")
 
-/datum/status_effect/ants/tick()
+/datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
 	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
@@ -915,7 +928,32 @@
 	id = "teleport_madness"
 	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 
-/datum/status_effect/teleport_madness/tick()
+/datum/status_effect/teleport_madness/tick(seconds_between_ticks)
 	dump_in_space(owner)
+
+/datum/status_effect/careful_driving
+	id = "careful_driving"
+	alert_type = /atom/movable/screen/alert/status_effect/careful_driving
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/careful_driving/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/datum/status_effect/careful_driving/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/atom/movable/screen/alert/status_effect/careful_driving
+	name = "Careful Driving"
+	desc = "That was close! You almost ran that one over!"
+	icon_state = "paralysis"
+
+/datum/movespeed_modifier/careful_driving
+	multiplicative_slowdown = 3
+
+#undef HEALING_SLEEP_DEFAULT
+#undef HEALING_SLEEP_ORGAN_MULTIPLIER

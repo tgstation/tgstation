@@ -60,7 +60,7 @@
 	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
-	/// Lazylist of all images (hopefully attached to us) to update when we change z levels
+	/// Lazylist of all images (or atoms, I'm sorry) (hopefully attached to us) to update when we change z levels
 	/// You will need to manage adding/removing from this yourself, but I'll do the updating for you
 	var/list/image/update_on_z
 
@@ -103,6 +103,11 @@
 	var/light_power = 1
 	///Hexadecimal RGB string representing the colour of the light. White by default.
 	var/light_color = COLOR_WHITE
+	/// Angle of light to show in light_dir
+	/// 360 is a circle, 90 is a cone, etc.
+	var/light_angle = 360
+	/// What angle to project light in
+	var/light_dir = NORTH
 	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
 	var/light_on = TRUE
 	///Bitflags to determine lighting-related atom properties.
@@ -627,17 +632,19 @@
 /**
  * React to an EMP of the given severity
  *
- * Default behaviour is to send the [COMSIG_ATOM_EMP_ACT] signal
+ * Default behaviour is to send the [COMSIG_ATOM_PRE_EMP_ACT] and [COMSIG_ATOM_EMP_ACT] signal
  *
- * If the signal does not return protection, and there are attached wires then we call
+ * If the pre-signal does not return protection, and there are attached wires then we call
  * [emp_pulse][/datum/wires/proc/emp_pulse] on the wires
  *
  * We then return the protection value
  */
 /atom/proc/emp_act(severity)
-	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
+	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_PRE_EMP_ACT, severity)
 	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity, protection)
 	return protection // Pass the protection value collected here upwards
 
 /**
@@ -978,7 +985,7 @@
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
 	if(harmed_atom && isturf(harmed_atom.loc))
-		step(harmed_atom, turn(harmed_atom.dir, 180))
+		step(harmed_atom, REVERSE_DIR(harmed_atom.dir))
 
 ///Handle the atom being slipped over
 /atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, force_drop)
@@ -1062,10 +1069,15 @@
 /**
  * Respond to an emag being used on our atom
  *
- * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
+ * Args:
+ * * mob/user: The mob that used the emag. Nullable.
+ * * obj/item/card/emag/emag_card: The emag that was used. Nullable.
+ *
+ * Returns:
+ * TRUE if the emag had any effect, falsey otherwise.
  */
 /atom/proc/emag_act(mob/user, obj/item/card/emag/emag_card)
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, emag_card)
+	return (SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, emag_card))
 
 /**
  * Respond to narsie eating our atom
@@ -1254,6 +1266,9 @@
  * the object has been admin edited
  */
 /atom/vv_edit_var(var_name, var_value)
+	var/old_light_flags = light_flags
+	// Disable frozen lights for now, so we can actually modify it
+	light_flags &= ~LIGHT_FROZEN
 	switch(var_name)
 		if(NAMEOF(src, light_range))
 			if(light_system == STATIC_LIGHT)
@@ -1273,11 +1288,21 @@
 			else
 				set_light_color(var_value)
 			. = TRUE
+		if(NAMEOF(src, light_angle))
+			if(light_system == STATIC_LIGHT)
+				set_light(l_angle = var_value)
+				. = TRUE
+		if(NAMEOF(src, light_dir))
+			if(light_system == STATIC_LIGHT)
+				set_light(l_dir = var_value)
+				. = TRUE
 		if(NAMEOF(src, light_on))
 			set_light_on(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_flags))
 			set_light_flags(var_value)
+			// I'm sorry
+			old_light_flags = var_value
 			. = TRUE
 		if(NAMEOF(src, smoothing_junction))
 			set_smoothed_icon_state(var_value)
@@ -1292,6 +1317,7 @@
 			set_base_pixel_y(var_value)
 			. = TRUE
 
+	light_flags = old_light_flags
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
 		return
@@ -2051,15 +2077,16 @@
 				| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
 
 			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+				var/screentip_images = active_hud.screentip_images
 				// LMB and RMB on one line...
-				var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
-				var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
+				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
+				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)
 
-				if (lmb_text)
+				if (lmb_text != "")
 					lmb_rmb_line = lmb_text
-					if (rmb_text)
+					if (rmb_text != "")
 						lmb_rmb_line += " | [rmb_text]"
-				else if (rmb_text)
+				else if (rmb_text != "")
 					lmb_rmb_line = rmb_text
 
 				// Ctrl-LMB, Ctrl-RMB on one line...
@@ -2067,33 +2094,34 @@
 					lmb_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_CTRL_LMB in context)
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, screentip_images)
+
 				if (SCREENTIP_CONTEXT_CTRL_RMB in context)
 					if (ctrl_lmb_ctrl_rmb_line != "")
 						ctrl_lmb_ctrl_rmb_line += " | "
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, screentip_images)
 
 				// Alt-LMB, Alt-RMB on one line...
 				if (ctrl_lmb_ctrl_rmb_line != "")
 					ctrl_lmb_ctrl_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_ALT_LMB in context)
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_LMB, screentip_images)
 				if (SCREENTIP_CONTEXT_ALT_RMB in context)
 					if (alt_lmb_alt_rmb_line != "")
 						alt_lmb_alt_rmb_line += " | "
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB]]"
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_RMB, screentip_images)
 
 				// Shift-LMB, Ctrl-Shift-LMB on one line...
 				if (alt_lmb_alt_rmb_line != "")
 					alt_lmb_alt_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
-					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB]]"
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, screentip_images)
 				if (SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context)
 					if (shift_lmb_ctrl_shift_lmb_line != "")
 						shift_lmb_ctrl_shift_lmb_line += " | "
-					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, screentip_images)
 
 				if (shift_lmb_ctrl_shift_lmb_line != "")
 					extra_lines++
@@ -2177,3 +2205,23 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
+
+/**
+ * Proc called when you want the atom to spin around the center of its icon (or where it would be if its transform var is translated)
+ * By default, it makes the atom spin forever and ever at a speed of 60 rpm.
+ *
+ * Arguments:
+ * * speed: how much it takes for the atom to complete one 360° rotation
+ * * loops: how many times do we want the atom to rotate
+ * * clockwise: whether the atom ought to spin clockwise or counter-clockwise
+ * * segments: in how many animate calls the rotation is split. Probably unnecessary, but you shouldn't set it lower than 3 anyway.
+ * * parallel: whether the animation calls have the ANIMATION_PARALLEL flag, necessary for it to run alongside concurrent animations.
+ */
+/atom/proc/SpinAnimation(speed = 1 SECONDS, loops = -1, clockwise = TRUE, segments = 3, parallel = TRUE)
+	if(!segments)
+		return
+	var/segment = 360/segments
+	if(!clockwise)
+		segment = -segment
+	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
+	do_spin_animation(speed, loops, segments, segment, parallel)

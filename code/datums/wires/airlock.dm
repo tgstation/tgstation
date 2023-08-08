@@ -148,7 +148,7 @@
 		if(WIRE_UNRESTRICTED_EXIT) // Pulse to switch the direction around by 180 degrees (North goes to South, East goes to West, vice-versa)
 			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
 				return
-			A.unres_sides = DIRFLIP(A.unres_sides)
+			A.unres_sides = REVERSE_DIR(A.unres_sides)
 			A.update_appearance()
 
 /obj/machinery/door/airlock/proc/reset_ai_wire()
@@ -157,7 +157,7 @@
 	else if(aiControlDisabled == AI_WIRE_HACKED)
 		aiControlDisabled = AI_WIRE_DISABLED_HACKED
 
-/datum/wires/airlock/on_cut(wire, mend)
+/datum/wires/airlock/on_cut(wire, mend, source)
 	var/obj/machinery/door/airlock/A = holder
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Cut to lose power, repair all to gain power.
@@ -189,6 +189,8 @@
 				else if(A.aiControlDisabled == AI_WIRE_DISABLED_HACKED)
 					A.aiControlDisabled = AI_WIRE_HACKED
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
+			if (!isnull(source))
+				log_combat(source, A, "[mend ? "disabled" : "enabled"] shocking for")
 			if(mend)
 				if(A.secondsElectrified)
 					A.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
@@ -198,6 +200,8 @@
 				A.shock(usr, 100)
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
+			if (!isnull(source))
+				log_combat(source, A, "[mend ? "enabled" : "disabled"] door safeties for")
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.
 			A.autoclose = mend
 			if(A.autoclose && !A.density)

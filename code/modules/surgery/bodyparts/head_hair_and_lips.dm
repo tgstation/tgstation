@@ -70,7 +70,7 @@
 	facial_hairstyle = human_head_owner.facial_hairstyle
 	facial_hair_alpha = owner_species.facial_hair_alpha
 	facial_hair_color = human_head_owner.facial_hair_color
-	fixed_hair_color = owner_species.fixed_mut_color //Can be null
+	fixed_hair_color = owner_species.fixed_hair_color //Can be null
 	gradient_styles = human_head_owner.grad_style?.Copy()
 	gradient_colors = human_head_owner.grad_color?.Copy()
 
@@ -88,10 +88,10 @@
 	if(!facial_hair_hidden && lip_style && (head_flags & HEAD_LIPS))
 		//not a sprite accessory, don't ask
 		//Overlay
-		var/image/lip_overlay = image('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, image_dir)
+		var/image/lip_overlay = image('icons/mob/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, image_dir)
 		lip_overlay.color = lip_color
 		//Emissive blocker
-		if(blocks_emissive)
+		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			lip_overlay.overlays += emissive_blocker(lip_overlay.icon, lip_overlay.icon_state, location, alpha = facial_hair_alpha)
 		//Offsets
 		worn_face_offset?.apply_offset(lip_overlay)
@@ -105,7 +105,7 @@
 			facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			facial_hair_overlay.alpha = facial_hair_alpha
 			//Emissive blocker
-			if(blocks_emissive)
+			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				facial_hair_overlay.overlays += emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, alpha = facial_hair_alpha)
 			//Offsets
 			worn_face_offset?.apply_offset(facial_hair_overlay)
@@ -125,7 +125,7 @@
 			hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			hair_overlay.alpha = hair_alpha
 			//Emissive blocker
-			if(blocks_emissive)
+			if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
 			//Offsets
 			worn_face_offset?.apply_offset(hair_overlay)
@@ -162,16 +162,16 @@
 /// Returns an appropriate debrained overlay
 /obj/item/bodypart/head/proc/get_debrain_overlay(can_rotate = TRUE)
 	RETURN_TYPE(/image)
-	var/debrain_icon = 'icons/mob/species/human/human_face.dmi'
+	var/debrain_icon = 'icons/mob/human/human_face.dmi'
 	var/debrain_icon_state = "debrained"
 	if(bodytype & BODYTYPE_ALIEN)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_alien"
 	else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
-		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
+		debrain_icon = 'icons/mob/human/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_larva"
 	else if(bodytype & BODYTYPE_GOLEM)
-		debrain_icon = 'icons/mob/species/golems.dmi'
+		debrain_icon = 'icons/mob/human/species/golems.dmi'
 		debrain_icon_state = "debrained"
 
 	var/image/debrain_overlay
@@ -185,7 +185,7 @@
 /// Returns an appropriate missing eyes overlay
 /obj/item/bodypart/head/proc/get_eyeless_overlay(can_rotate = TRUE)
 	RETURN_TYPE(/image)
-	var/eyeless_icon = 'icons/mob/species/human/human_face.dmi'
+	var/eyeless_icon = 'icons/mob/human/human_face.dmi'
 	var/eyeless_icon_state = "eyes_missing"
 
 	var/image/eyeless_overlay

@@ -304,7 +304,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL|SNUG_FIT|PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL|SNUG_FIT|STACKABLE_HELMET_EXEMPT
 	body_parts_covered = HEAD
 	resistance_flags = NONE
 	flash_protect = FLASH_PROTECTION_WELDER
@@ -533,7 +533,7 @@
 	icon_state = "football_armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/football_armor
-	greyscale_config_worn = /datum/greyscale_config/football_armor_worn
+	greyscale_config_worn = /datum/greyscale_config/football_armor/worn
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 

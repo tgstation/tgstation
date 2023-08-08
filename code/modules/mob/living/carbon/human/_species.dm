@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
-///List of all roundstart languages by path
-GLOBAL_LIST_EMPTY(roundstart_languages)
+///List of all roundstart languages by path except common
+GLOBAL_LIST_EMPTY(uncommon_roundstart_languages)
 
 /// An assoc list of species types to their features (from get_features())
 GLOBAL_LIST_EMPTY(features_by_species)
@@ -111,11 +111,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///multiplier for stun durations
 	var/stunmod = 1
 	///multiplier for money paid at payday
-	var/payday_modifier = 1
+	var/payday_modifier = 1.0
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/siemens_coeff = 1
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
+	///A fixed hair color that's independent of the mcolor feature in DNA.
+	var/fixed_hair_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation = /datum/mutation/human/dwarfism
 	///Used to set the mob's death_sound upon species change
@@ -228,13 +230,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(species.check_roundstart_eligible())
 			selectable_species += species.id
 			var/datum/language_holder/temp_holder = new species.species_language_holder
-			for(var/datum/language/spoken_languages as anything in temp_holder.understood_languages)
-				if(spoken_languages in GLOB.roundstart_languages)
-					continue
-				GLOB.roundstart_languages += spoken_languages
+			for(var/datum/language/spoken_language as anything in temp_holder.understood_languages)
+				GLOB.uncommon_roundstart_languages |= spoken_language
 			qdel(temp_holder)
 			qdel(species)
 
+	GLOB.uncommon_roundstart_languages -= /datum/language/common
 	if(!selectable_species.len)
 		selectable_species += SPECIES_HUMAN
 
@@ -582,8 +583,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		quirk.mail_goodies = mail_goodies
 		return
 	if(istype(quirk, /datum/quirk/blooddeficiency))
-		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD)) // no blood packs should be sent in this case (like if a mob transforms into a plasmaman)
-			quirk.mail_goodies = list()
+		if(HAS_TRAIT(recipient, TRAIT_NOBLOOD) && isnull(recipient.dna.species.exotic_blood))  // TRAIT_NOBLOOD and no exotic blood (yes we have to check for both, jellypeople exist)
+			quirk.mail_goodies = list() // means no blood pack gets sent to them.
 			return
 
 
@@ -768,7 +769,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = source.dna.features["mcolor"]
 							else if(hair_color == "fixedmutcolor")
-								accessory_overlay.color = fixed_mut_color
+								accessory_overlay.color = fixed_hair_color
 							else
 								accessory_overlay.color = source.hair_color
 						if(FACIAL_HAIR_COLOR)
@@ -1731,7 +1732,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 // FIRE //
 //////////
 
-/datum/species/proc/handle_fire(mob/living/carbon/human/H, seconds_per_tick, times_fired, no_protection = FALSE)
+/datum/species/proc/handle_fire(mob/living/carbon/human/H, seconds_per_tick, no_protection = FALSE)
 	return no_protection
 
 ////////////
@@ -2306,6 +2307,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part = new path()
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
+			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
 /// Creates body parts for the target completely from scratch based on the species

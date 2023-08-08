@@ -87,12 +87,13 @@
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, scanned_atoms)
 
 
-/obj/machinery/destructive_scanner/emag_act(mob/user)
+/obj/machinery/destructive_scanner/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, span_notice("You disable the safety sensor BIOS on [src]."))
+	balloon_alert(user, "safety sensor BIOS disabled")
+	return TRUE
 
 /obj/machinery/destructive_scanner/update_icon_state()
 	. = ..()

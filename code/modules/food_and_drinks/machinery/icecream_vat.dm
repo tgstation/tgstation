@@ -17,13 +17,23 @@
 	var/static/list/obj/item/food/icecream/cone_prototypes
 	var/static/list/icecream_vat_reagents = list(
 		/datum/reagent/consumable/milk = 6,
+		/datum/reagent/consumable/korta_milk = 6,
 		/datum/reagent/consumable/flour = 6,
+		/datum/reagent/consumable/korta_flour = 6,
 		/datum/reagent/consumable/sugar = 6,
 		/datum/reagent/consumable/ice = 6,
 		/datum/reagent/consumable/coco = 6,
 		/datum/reagent/consumable/vanilla = 6,
 		/datum/reagent/consumable/berryjuice = 6,
-		/datum/reagent/consumable/ethanol/singulo = 6)
+		/datum/reagent/consumable/ethanol/singulo = 6,
+		/datum/reagent/consumable/lemonjuice = 6,
+		/datum/reagent/consumable/caramel = 6,
+		/datum/reagent/consumable/banana = 6,
+		/datum/reagent/consumable/orangejuice = 6,
+		/datum/reagent/consumable/cream = 6,
+		/datum/reagent/consumable/peachjuice = 6,
+		/datum/reagent/consumable/cherryjelly = 6,
+	)
 
 /obj/machinery/icecream_vat/Initialize(mapload)
 	. = ..()
@@ -126,11 +136,12 @@
 /obj/machinery/icecream_vat/Topic(href, href_list)
 	if(..())
 		return
+	var/mob/user = usr
 	if(href_list["select"])
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["select"]]
 		if(!flavour || flavour.hidden) //Nice try, tex.
 			return
-		visible_message(span_notice("[usr] sets [src] to dispense [href_list["select"]] flavoured ice cream."))
+		visible_message(span_notice("[user] sets [src] to dispense [href_list["select"]] flavoured ice cream."))
 		selected_flavour = flavour.name
 
 	if(href_list["cone"])
@@ -139,17 +150,19 @@
 			return
 		if(product_types[cone_path] >= 1)
 			product_types[cone_path]--
-			var/obj/item/food/icecream/cone = new cone_path(loc)
-			visible_message(span_info("[usr] dispenses a crunchy [cone.name] from [src]."))
+			var/obj/item/food/icecream/cone = new cone_path(get_turf(src))
+			if(!user.put_in_hands(cone))
+				cone.forceMove(drop_location())
+			visible_message(span_info("[user] dispenses a crunchy [cone.name] from [src]."))
 		else
-			to_chat(usr, span_warning("There are no [initial(cone_path.name)]s left!"))
+			to_chat(user, span_warning("There are no [initial(cone_path.name)]s left!"))
 
 	if(href_list["make"])
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["make"]]
 		if(!flavour || flavour.hidden) //Nice try, tex.
 			return
 		var/amount = (text2num(href_list["amount"]))
-		make(usr, href_list["make"], amount, flavour.ingredients)
+		make(user, href_list["make"], amount, flavour.ingredients)
 
 	if(href_list["make_cone"])
 		var/path = text2path(href_list["make_cone"])
@@ -157,7 +170,7 @@
 		if(!cone) //Nice try, tex.
 			return
 		var/amount = (text2num(href_list["amount"]))
-		make(usr, path, amount, cone.ingredients)
+		make(user, path, amount, cone.ingredients)
 
 	if(href_list["disposeI"])
 		reagents.del_reagent(text2path(href_list["disposeI"]))
@@ -171,8 +184,8 @@
 		updateDialog()
 
 	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null,"window=icecreamvat")
+		user.unset_machine()
+		user << browse(null,"window=icecreamvat")
 	return
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)

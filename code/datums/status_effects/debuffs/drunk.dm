@@ -38,17 +38,17 @@
 	// .01s are used in case the drunk value ends up to be a small decimal.
 	switch(drunk_value)
 		if(11 to 21)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] slightly flushed.")
+			return span_warning("[owner.p_They()] [owner.p_are()] slightly flushed.")
 		if(21.01 to 41)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] flushed.")
+			return span_warning("[owner.p_They()] [owner.p_are()] flushed.")
 		if(41.01 to 51)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] quite flushed and [owner.p_their()] breath smells of alcohol.")
+			return span_warning("[owner.p_They()] [owner.p_are()] quite flushed and [owner.p_their()] breath smells of alcohol.")
 		if(51.01 to 61)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] very flushed and [owner.p_their()] movements jerky, with breath reeking of alcohol.")
+			return span_warning("[owner.p_They()] [owner.p_are()] very flushed and [owner.p_their()] movements jerky, with breath reeking of alcohol.")
 		if(61.01 to 91)
-			return span_warning("[owner.p_they(TRUE)] look[owner.p_s()] like a drunken mess.")
+			return span_warning("[owner.p_They()] look[owner.p_s()] like a drunken mess.")
 		if(91.01 to INFINITY)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] a shitfaced, slobbering wreck.")
+			return span_warning("[owner.p_They()] [owner.p_are()] a shitfaced, slobbering wreck.")
 
 	return null
 
@@ -61,7 +61,7 @@
 	if(drunk_value <= 0)
 		qdel(src)
 
-/datum/status_effect/inebriated/tick()
+/datum/status_effect/inebriated/tick(seconds_between_ticks)
 	// Drunk value does not decrease while dead or in stasis
 	if(owner.stat == DEAD || IS_IN_STASIS(owner))
 		return

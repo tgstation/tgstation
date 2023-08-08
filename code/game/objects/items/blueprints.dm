@@ -7,6 +7,8 @@
 	attack_verb_simple = list("attack", "bap", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
 	var/in_use = FALSE
+	///When using it to create a new area, this will be its type.
+	var/new_area_type = /area
 
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
@@ -35,7 +37,7 @@
 			to_chat(usr, span_warning("You cannot edit restricted areas."))
 			return
 		in_use = TRUE
-		create_area(usr)
+		create_area(usr, new_area_type)
 		in_use = FALSE
 	updateUsrDialog()
 
@@ -209,6 +211,12 @@
 	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
+
+/obj/item/areaeditor/blueprints/golem
+	name = "land claim"
+	desc = "Use it to build new structures in the wastes."
+	fluffnotice = "In memory of the Liberator's brother, Delaminator, and his Scarlet Macaw-iathan, from which this artifact was stolen."
+	new_area_type = /area/golem
 
 /proc/rename_area(a, new_name)
 	var/area/A = get_area(a)
