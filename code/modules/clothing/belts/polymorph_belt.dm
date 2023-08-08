@@ -6,6 +6,7 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "polybelt_inactive"
 	worn_icon_state = "polybelt_inactive"
+	base_icon_state = "polybelt"
 	item_flags = NOBLUDGEON
 	/// Typepath of a mob we have scanned, we only store one at a time
 	var/stored_mob_type
@@ -13,6 +14,10 @@
 	var/active = FALSE
 	/// Our current transformation action
 	var/datum/action/cooldown/spell/shapeshift/polymorph_belt/transform_action
+
+/obj/item/polymorph_belt/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/polymorph_belt/Destroy(force)
 	QDEL_NULL(transform_action)
@@ -30,8 +35,8 @@
 	return slot & ITEM_SLOT_BELT
 
 /obj/item/polymorph_belt/update_icon_state()
-	icon_state = active ? "polybelt" : "polybelt_inactive"
-	worn_icon_state = active ? "polybelt" : "polybelt_inactive"
+	icon_state = base_icon_state + (active) ? "" : "_inactive"
+	worn_icon_state = base_icon_state + (active) ? "" : "_inactive"
 	return ..()
 
 /obj/item/polymorph_belt/attackby(obj/item/weapon, mob/user, params)
@@ -43,7 +48,6 @@
 	qdel(weapon)
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
-	user.update_worn_belt()
 	update_transform_action()
 	playsound(src, 'sound/machines/crate_open.ogg', 50, FALSE)
 
@@ -55,28 +59,29 @@
 		return
 	if (ishuman(target_mob) && !ismonkey(target_mob))
 		balloon_alert(user, "target too complex!")
-		return
+		return TRUE
 	if (!(target_mob.mob_biotypes & MOB_ORGANIC))
 		balloon_alert(user, "organic life only!")
-		return
+		return TRUE
 	if (isanimal_or_basicmob(target_mob))
 		if (!target_mob.compare_sentience_type(SENTIENCE_ORGANIC))
 			balloon_alert(user, "target too intelligent!")
-			return
+			return TRUE
 	if (stored_mob_type == target_mob.type)
 		balloon_alert(user, "already scanned!")
-		return
+		return TRUE
 	if (DOING_INTERACTION_WITH_TARGET(user, target_mob))
 		balloon_alert(user, "busy!")
-		return
+		return TRUE
 	balloon_alert(user, "scanning...")
 	visible_message(span_notice("[user] begins scanning [target_mob] with [src]."))
 	if (!do_after(user, delay = 5 SECONDS, target = target_mob))
-		return
+		return TRUE
 	visible_message(span_notice("[user] scans [target_mob] with [src]."))
 	stored_mob_type = target_mob.type
 	update_transform_action()
 	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+	return TRUE
 
 /// Make sure we can transform into the scanned target
 /obj/item/polymorph_belt/proc/update_transform_action()
@@ -103,6 +108,12 @@
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
 
+/datum/action/cooldown/spell/shapeshift/Remove(mob/remove_from)
+	var/datum/status_effect/shapechange_mob/shapechange = remove_from.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	var/atom/changer = shapechange?.caster_mob || remove_from
+	changer?.transform = matrix()
+	return ..()
+
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/before_cast(mob/living/cast_on)
 	. = ..()
 	if (. & SPELL_CANCEL_CAST)
@@ -125,7 +136,7 @@
 
 	cast_on.balloon_alert(cast_on, "transforming...")
 	if (!do_after(cast_on, delay = channel_time, target = cast_on))
-		animate(cast_on, transform = matrix(), time = 0.25, easing = SINE_EASING)
+		animate(cast_on, transform = matrix(), time = 0, easing = SINE_EASING)
 		cast_on.transform = old_transform
 		return . | SPELL_CANCEL_CAST
 	cast_on.visible_message(span_warning("[cast_on]'s body rearranges itself with a horrible crunching sound!"))
@@ -137,10 +148,6 @@
 		return
 	animate(owner, transform = matrix() * 0.1, time = 0, easing = JUMP_EASING)
 	animate(transform = matrix(), time = 0.25 SECONDS, easing = SINE_EASING)
-
-/datum/action/cooldown/spell/shapeshift/polymorph_belt/Remove(mob/living/remove_from)
-	unshift_owner()
-	return ..()
 
 /// Update what you are transforming to or from
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/proc/update_type(transform_type)

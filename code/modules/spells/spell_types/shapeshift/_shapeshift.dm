@@ -29,6 +29,10 @@
 	/// This should be implemented even if there is only one choice.
 	var/list/atom/possible_shapes
 
+/datum/action/cooldown/spell/shapeshift/Remove(mob/remove_from)
+	unshift_owner()
+	return ..()
+
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
