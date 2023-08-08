@@ -1513,3 +1513,12 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/navbeacon
 	req_components = list()
+
+/obj/item/circuitboard/machine/artifactzapper
+	name = "Artifact Zapper"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 3)

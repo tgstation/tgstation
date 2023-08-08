@@ -49,15 +49,15 @@
 	playsound(get_turf(powerholder), 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	var/damage = user.electrocute_act(power_gen / 1.5 KW, powerholder, flags = SHOCK_NOSTUN)
 	to_chat(user, span_userdanger("You are hit by a burst of electricity from [holder]!"))
-	if(damage > 80) //just fuckin repel them from the sheer power burst
+	if(damage > 80)
 		var/turf/owner_turf = get_turf(holder)
 		var/throwtarget = get_edge_target_turf(get_turf(user), get_dir(owner_turf, get_step_away(user, owner_turf)))
 		user.safe_throw_at(throwtarget, power_gen / 38 KW, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
-	if(damage > 350 && prob(50)) //lol, lmao
+	if(damage > 350 && prob(50))
 		user.dust(just_ash = TRUE, drop_items = TRUE)
 		Deactivate() //shortcircuit
 
-	if(prob(20)) //try to get yourself shocked with insuls many times to shortcircuit it
+	if(prob(20)) //try to get yourself shocked with insuls many times to shortcircuit it (in retrospect this sucks)
 		Deactivate()
 
 /datum/component/artifact/generator/effect_process() //todo add more
@@ -79,7 +79,7 @@
 	if(power_gen < SHITFUCK_THRESHOLD)
 		return
 		
-	if(prob(50)) //hehe
+	if(prob(50))
 		explosion(powerholder, flame_range = rand(1,2), adminlog = FALSE) //doesnt log to not spam
 	else
 		var/datum/gas_mixture/merger = new

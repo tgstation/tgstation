@@ -34,7 +34,7 @@
 			for(var/i in 1 to max_reagents)
 				reagent_datums += get_random_reagent_id() // funny
 		if(ORIGIN_SILICON)
-			var/list/silicon_reagents = list(/datum/reagent/uranium, /datum/reagent/silicon, /datum/reagent/fuel/oil, /datum/reagent/toxin/leadacetate)
+			var/list/silicon_reagents = list(/datum/reagent/uranium, /datum/reagent/silicon, /datum/reagent/fuel, /datum/reagent/cyborg_mutation_nanomachines, /datum/reagent/fuel/oil, /datum/reagent/toxin/leadacetate)
 			for(var/i in 1 to max_reagents)
 				reagent_datums += pick(silicon_reagents)
 	potency += reagent_amount + max_reagents

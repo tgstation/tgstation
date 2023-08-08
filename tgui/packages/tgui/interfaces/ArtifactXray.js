@@ -33,11 +33,11 @@ export const ArtifactXray = (props, context) => {
               <Stack fill>
                 <Stack.Item grow>
                   <Slider
-                    minValue={0}
+                    minValue={1}
                     maxValue={max_strength}
                     value={current_strength}
                     stepPixelSize={35}
-                    step={0.5}
+                    step={1}
                     unit={'Pulse Strength'}
                     onDrag={(e, nu) => act('change_rate', { target: nu })}
                   />
