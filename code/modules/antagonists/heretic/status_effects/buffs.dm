@@ -56,7 +56,7 @@
 /datum/status_effect/marshal/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
-/datum/status_effect/marshal/tick()
+/datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbie = owner

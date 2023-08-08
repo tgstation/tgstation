@@ -119,6 +119,40 @@
 	return .
 
 /**
+ * The exact same as get_hearers_in_view, but not limited by visibility. Does no filtering for traits, line of sight, or any other such criteria.
+ * Filtering is intended to be done by whatever calls this function.
+ *
+ * This function exists to allow for mobs to hear speech without line of sight, if such a thing is needed.
+ *
+ * * radius - what radius search circle we are using, worse performance as this increases
+ * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ */
+/proc/get_hearers_in_range(range, atom/source)
+	var/turf/center_turf = get_turf(source)
+	if(!center_turf)
+		return
+
+	. = list()
+
+	if(range <= 0)//special case for if only source cares
+		for(var/atom/movable/target as anything in center_turf)
+			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			if(recursive_contents)
+				. += recursive_contents
+		return .
+
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, range)
+
+	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
+		return .
+
+	for(var/atom/movable/hearable as anything in hearables_from_grid)
+		if (get_dist(center_turf, hearable) <= range)
+			. += hearable
+
+	return .
+
+/**
  * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight to source
  * the majority of the work is passed off to the spatial grid if view_radius > 0
  * because view() isnt a raycasting algorithm, this does not hold symmetry to it. something in view might not be hearable with this.
