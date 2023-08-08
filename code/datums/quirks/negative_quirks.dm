@@ -324,7 +324,7 @@
 	hardcore_value = 4
 	mail_goodies = list(/obj/effect/spawner/random/medical/minor_healing)
 
-/datum/quirk/light_drinker/add() //monkestation addition
+/datum/quirk/frail/add() //monkestation addition
 	if(!iscarbon(quirk_holder))
 		return
 
@@ -333,7 +333,7 @@
 		human_quirk_holder.physiology.brute_mod *= 1.3
 		human_quirk_holder.physiology.burn_mod *= 1.3
 
-/datum/quirk/light_drinker/post_add() //monkestation addition
+/datum/quirk/frail/post_add() //monkestation addition
 	if(isipc(quirk_holder))
 		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
 
