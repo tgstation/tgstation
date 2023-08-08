@@ -17,9 +17,12 @@ end
 
 function SS13.new(type, ...)
 	local datum = dm.global_proc("_new", type, { ... })
-	local references = SS13.state.vars.references
-	references:add(datum)
-	return datum
+	if datum then
+		local references = SS13.state.vars.references
+		references:add(datum)
+		SS13.state:call_proc("clear_on_delete", datum)
+		return datum
+	end
 end
 
 function SS13.await(thing_to_call, proc_to_call, ...)

@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - admin: "Pings an admin role on discord when a new player joins (when enabled by config)"

@@ -1,0 +1,8 @@
+author: "siliconOpossum"
+delete-after: True
+changes:
+  - rscadd: "Added greyscale suitskirt, available in clothesmates"
+  - rscadd: "You can now roll up the sleeves of greyscale buttondown shirts"
+  - qol: "Re-added previously removed black suitskirt and the RD's tan suitskirt, as pre-colored variants of the above"
+  - bugfix: "Fixed only one buttondown with slacks being available in clothesmates"
+  - image: "Slightly adjusted greyscale buttondown sprite, you look less fat now!"

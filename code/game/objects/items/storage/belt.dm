@@ -619,11 +619,10 @@
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/grenade/chem_grenade/facid = 1,
 		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/grenade/empgrenade = 2,
 		/obj/item/grenade/frag = 10,
-		/obj/item/grenade/flashbang = 1,
+		/obj/item/grenade/flashbang = 2,
 		/obj/item/grenade/gluon = 4,
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/syndieminibomb = 2,

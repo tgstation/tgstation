@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Added a score award that counts how many achievements you've unlocked so far."

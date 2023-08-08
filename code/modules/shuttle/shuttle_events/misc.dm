@@ -20,6 +20,7 @@
 	spawn_probability_per_process = 5
 
 	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
 
 ///Just spawn random maint garbage
 /datum/shuttle_event/simple_spawner/maintenance
