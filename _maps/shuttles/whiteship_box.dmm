@@ -798,7 +798,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/medical/glass{
-	name = "Cryo Room"
+	name = "Treatment Room"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
@@ -847,7 +847,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	name = "Cryo Room"
+	name = "Treatment Room"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
