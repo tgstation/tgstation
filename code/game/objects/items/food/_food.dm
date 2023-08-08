@@ -66,7 +66,7 @@
 	make_germ_sensitive(mapload)
 	make_bakeable()
 	make_microwaveable()
-	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/make_edible()
