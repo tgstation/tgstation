@@ -55936,10 +55936,6 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay/central)
-"ulb" = (
-/obj/item,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/solars/port/aft)
 "ulv" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/stripes/white/line{
@@ -85906,7 +85902,7 @@ kNV
 gnL
 ckz
 dWA
-ulb
+ecz
 aaa
 aaa
 lMJ
