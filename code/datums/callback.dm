@@ -77,10 +77,7 @@
  * * ... an optional list of extra arguments to pass to the proc
  */
 /datum/callback/Destroy(force=FALSE, ...) 
-	SHOULD_CALL_PARENT(FALSE)
-	if (force)
-		return ..()
-	stack_trace("callbacks can not be qdeleted. if they are referenced they must exist.")
+	..()
 	return QDEL_HINT_HARDDEL_NOW 
 
 /**
