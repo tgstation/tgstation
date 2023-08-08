@@ -4804,6 +4804,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/effect/turf_decal/bot_white,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/large,
 /area/station/medical/break_room)
 "biI" = (
@@ -39960,6 +39961,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/eva/abandoned)
+"jTH" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/station/medical/break_room)
 "jTI" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/north,
@@ -48307,15 +48317,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
-"mbk" = (
-/obj/structure/cable,
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/station/medical/break_room)
 "mbw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55137,6 +55138,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/structure/chair/stool/directional/west,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron,
 /area/station/medical/break_room)
 "nPF" = (
@@ -138805,8 +138807,8 @@ gQl
 bmw
 gQl
 ocP
+jTH
 oti
-mbk
 tZM
 dIq
 biv

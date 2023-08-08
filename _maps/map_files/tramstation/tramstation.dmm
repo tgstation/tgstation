@@ -14113,12 +14113,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dOw" = (
-/obj/machinery/iv_drip,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/treatment_center)
 "dOC" = (
@@ -21658,6 +21657,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "gHx" = (
@@ -31007,9 +31007,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "kcZ" = (
@@ -44867,12 +44865,11 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pdP" = (
-/obj/machinery/iv_drip,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/treatment_center)
 "pdZ" = (
@@ -50127,6 +50124,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "qVV" = (
@@ -66531,7 +66529,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,

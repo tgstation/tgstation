@@ -8539,8 +8539,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "cBK" = (
-/obj/structure/bed/roller,
 /obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -21895,6 +21897,7 @@
 "gUg" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/box,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "gUp" = (
@@ -28389,10 +28392,6 @@
 /obj/item/kitchen/spoon/plastic,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
-"iZx" = (
-/obj/machinery/airalarm/directional/south,
-/turf/closed/wall,
-/area/station/maintenance/aft/greater)
 "iZy" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
@@ -33913,7 +33912,6 @@
 	name = "Medical Cold Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark,
 /area/station/medical/coldroom)
 "kNi" = (
@@ -34345,6 +34343,11 @@
 	dir = 1
 	},
 /area/station/service/chapel/office)
+"kTn" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "kTz" = (
 /turf/open/floor/iron/smooth_half,
 /area/station/security/brig/upper)
@@ -38402,9 +38405,9 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "mkO" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/box,
 /obj/machinery/light/cold/dim/directional/east,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "mld" = (
@@ -52410,6 +52413,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"qGH" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/chem_pile,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "qGQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -64005,7 +64013,6 @@
 	name = "Medical Cold Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark,
 /area/station/medical/coldroom)
 "uvk" = (
@@ -66822,6 +66829,11 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"vru" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "vry" = (
 /obj/machinery/requests_console/directional/south{
 	department = "Head of Personnel's Desk";
@@ -74431,6 +74443,13 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
+"xJC" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "xJD" = (
 /obj/effect/decal/cleanable/generic,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -247585,7 +247604,7 @@ sZF
 sZF
 sZF
 sZF
-iZx
+sZF
 sZF
 qHz
 ekE
@@ -247839,10 +247858,10 @@ ndJ
 rHz
 cBK
 sZF
-sKf
-sKf
-sKf
-sKf
+vwr
+xJC
+ktf
+kTn
 sZF
 srb
 dUr
@@ -248096,10 +248115,10 @@ amE
 vgx
 kmY
 sZF
+jPi
+qGH
 sKf
-sKf
-sKf
-sKf
+vru
 sZF
 dXy
 qgu

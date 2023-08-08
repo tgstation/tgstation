@@ -25059,6 +25059,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "jkT" = (
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/port/aft)
 "jkX" = (
@@ -33633,6 +33634,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"mrm" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "mru" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -42603,6 +42610,7 @@
 "pBs" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/dim/directional/north,
+/obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "pBG" = (
@@ -45976,10 +45984,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
-"qNi" = (
-/obj/machinery/light/small/dim/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/port/aft)
 "qNj" = (
 /obj/machinery/light_switch/directional/south,
 /obj/structure/cable,
@@ -88043,7 +88047,7 @@ kir
 vXH
 pOa
 wKe
-aez
+mrm
 oKI
 aSe
 jUb
@@ -88560,7 +88564,7 @@ qIP
 jkT
 aez
 eRc
-qNi
+jUb
 uIM
 gNT
 oah
