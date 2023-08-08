@@ -239,7 +239,7 @@
 	forced_removal(special = FALSE, dismembered = TRUE, move_to_floor = FALSE)
 
 /// In-case someone, somehow only teleports someones limb
-/obj/item/bodypart/proc/forced_removal(dismembered, special, move_to_floor)
+/obj/item/bodypart/proc/forced_removal(special, dismembered, move_to_floor)
 	drop_limb(special, dismembered, move_to_floor)
 
 	update_icon_dropped()
@@ -698,7 +698,7 @@
 	RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
 
 	forceMove(owner)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(forced_removal))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_forced_removal))
 
 /// Called on removal of a bodypart.
 /obj/item/bodypart/proc/on_removal()
