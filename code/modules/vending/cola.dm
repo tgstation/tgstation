@@ -21,6 +21,7 @@
 	contraband = list(
 		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 6,
 		/obj/item/reagent_containers/cup/soda_cans/shamblers = 6,
+		/obj/item/reagent_containers/cup/soda_cans/wellcheers = 6,
 	)
 	premium = list(
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
@@ -101,6 +102,7 @@
 		/obj/item/reagent_containers/cup/soda_cans/lemon_lime = 10,
 		/obj/item/reagent_containers/cup/soda_cans/sol_dry = 10,
 		/obj/item/reagent_containers/cup/soda_cans/shamblers = 10,
+		/obj/item/reagent_containers/cup/soda_cans/wellcheers = 5,
 		)
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Thirsty for DNA? Satiate your craving!;Over 1 trillion souls drank!;Made with real DNA!;The hivemind demands your thirst!;Drink up!;Absorb your thirst."
