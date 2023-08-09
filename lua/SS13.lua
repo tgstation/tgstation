@@ -38,7 +38,10 @@ function SS13.new_untracked(type, ...)
 end
 
 function SS13.is_valid(datum)
-	return datum and not datum:is_null() and not datum:get_var("gc_destroyed")
+	if datum and not datum:is_null() and not datum:get_var("gc_destroyed") then
+		return true
+	end
+	return false
 end
 
 function SS13.await(thing_to_call, proc_to_call, ...)
