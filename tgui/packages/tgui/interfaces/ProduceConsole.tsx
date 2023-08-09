@@ -131,6 +131,7 @@ const ShoppingTab = (props, context) => {
                   <Stack.Item>{capitalize(item.name)}</Stack.Item>
                   <Stack.Item grow color="label" fontSize="10px">
                     <Button
+                      mt={-1}
                       color="transparent"
                       icon="info"
                       tooltipPosition="right"
@@ -138,12 +139,13 @@ const ShoppingTab = (props, context) => {
                     />
                     <br />
                   </Stack.Item>
-                  <Stack.Item mt={-0.5}>
-                    <Box fontSize="10px" color="label" textAlign="right">
+                  <Stack.Item mt={-1.5} Align="right">
+                    <Box fontSize="10px" color="label">
                       {item.cost + credit_type + ' per order.'}
                     </Box>
                     <Button
                       icon="minus"
+                      ml={2}
                       onClick={() =>
                         act('remove_one', {
                           target: item.ref,
@@ -358,10 +360,8 @@ export const ProduceConsole = (props, context) => {
               <Stack.Item grow>
                 Currently available balance: {points || 0} {credit_type}
               </Stack.Item>
-              <Stack.Item textAlign="right" fill>
+              <Stack.Item textAlign="right">
                 <Button
-                  ml={65}
-                  mt={-4}
                   color={condensed ? 'green' : 'red'}
                   content={condensed ? 'Uncondense' : 'Condense'}
                   onClick={() => setCondensed(!condensed)}
