@@ -844,9 +844,9 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	 * the threat will never go under or exceed 3 and 97, which is why we're leaving the remaining 3 points
 	 * to the random number generator.
 	 */
-	. += rand(-3, 3)
+	. +=
 
-	return round(. * max_threat, interval)
+	return round(. * max_threat + rand(-3, 3) * max_threat/100, interval)
 
 #undef FAKE_REPORT_CHANCE
 #undef FAKE_GREENSHIFT_FORM_CHANCE
