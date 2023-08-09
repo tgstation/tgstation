@@ -92,6 +92,12 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 /mob/living/eminence/canUseStorage()
 	return FALSE
 
+/mob/living/eminence/ignite_mob(silent)
+	return
+
+/mob/living/eminence/fire_act()
+	return
+
 /mob/living/eminence/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta)
 	return
 
