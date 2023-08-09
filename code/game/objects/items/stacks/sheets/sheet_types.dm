@@ -859,6 +859,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/hauntium
 	material_type = /datum/material/hauntium
 	material_modifier = 1 //None of that wussy stuff
+	grind_results = list(/datum/reagent/hauntium = 20)
 
 /obj/item/stack/sheet/hauntium/fifty
 	amount = 50
