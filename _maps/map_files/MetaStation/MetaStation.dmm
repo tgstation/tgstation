@@ -43778,6 +43778,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/space,
 /area/space/nearstation)
+"pSU" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "pTf" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -48138,6 +48146,15 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
+"rwR" = (
+/obj/effect/spawner/random/maintenance,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "rxa" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "medsecprivacy";
@@ -49062,6 +49079,14 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"rMW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "rMZ" = (
 /obj/structure/table,
 /obj/item/folder/blue{
@@ -59209,7 +59234,7 @@
 "vpU" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -85414,7 +85439,7 @@ pQu
 vEH
 jXu
 lUe
-uuD
+pSU
 xoc
 cGL
 guZ
@@ -85671,7 +85696,7 @@ eNU
 aQE
 jXu
 nME
-iUE
+rwR
 jXu
 rNV
 gQv
@@ -85928,7 +85953,7 @@ jXu
 jXu
 jXu
 jXu
-uuD
+bSm
 jXu
 jXu
 jXu
@@ -86185,7 +86210,7 @@ mVS
 xxp
 twr
 sxn
-uuD
+rMW
 vpU
 twr
 fhn
