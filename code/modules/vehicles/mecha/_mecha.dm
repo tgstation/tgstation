@@ -20,7 +20,7 @@
 /obj/vehicle/sealed/mecha
 	name = "exosuit"
 	desc = "Exosuit"
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
 	armor_type = /datum/armor/sealed_mecha
@@ -66,7 +66,9 @@
 	///Just stop the mech from doing anything
 	var/completely_disabled = FALSE
 	///Whether this mech is allowed to move diagonally
-	var/allow_diagonal_movement = FALSE
+	var/allow_diagonal_movement = TRUE
+	///Whether this mech moves into a direct as soon as it goes to move. Basically, turn and step in the same key press.
+	var/pivot_step = FALSE
 	///Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
 
@@ -130,6 +132,9 @@
 	)
 	///flat equipment for iteration
 	var/list/flat_equipment
+
+	///Handles an internal ore box for mining mechs
+	var/obj/structure/ore_box/ore_box
 
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
@@ -218,7 +223,7 @@
 	if(enclosed)
 		internal_tank = new (src)
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(play_stepsound))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 
 	spark_system = new
@@ -256,7 +261,7 @@
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
+	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), ROUNDSTART_TRAIT) //stormy weather (keeps rainin' all the time)
 	for(var/key in equip_by_category)
 		if(key == MECHA_L_ARM || key == MECHA_R_ARM)
 			var/path = equip_by_category[key]
@@ -284,6 +289,8 @@
 
 	STOP_PROCESSING(SSobj, src)
 	LAZYCLEARLIST(flat_equipment)
+
+	QDEL_NULL(ore_box)
 
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)

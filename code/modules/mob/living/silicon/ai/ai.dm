@@ -157,20 +157,19 @@
 
 	create_modularInterface()
 
+	// /mob/living/silicon/ai/apply_prefs_job() uses these to set these procs at mapload
+	// this is used when a person is being inserted into an AI core during a round
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
+		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
 
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
-
-
-	hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"default")
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
-
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -261,6 +260,33 @@
 	else
 		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
 		icon_state = resolve_ai_icon(preferred_icon)
+
+/// Apply an AI's hologram preference
+/mob/living/silicon/ai/proc/apply_pref_hologram_display(client/player_client)
+	if(player_client.prefs?.read_preference(/datum/preference/choiced/ai_hologram_display))
+		var/list/hologram_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_hologram_display)
+		if(hologram_choice == "Random")
+			hologram_choice = pick(GLOB.ai_hologram_icons)
+
+		hologram_appearance = mutable_appearance(GLOB.ai_hologram_icons[hologram_choice], GLOB.ai_hologram_icon_state[hologram_choice])
+
+	hologram_appearance ||= mutable_appearance(GLOB.ai_hologram_icons[AI_HOLOGRAM_DEFAULT], GLOB.ai_hologram_icon_state[AI_HOLOGRAM_DEFAULT])
+
+/// Apply an AI's emote display preference
+/mob/living/silicon/ai/proc/apply_pref_emote_display(client/player_client)
+	if(player_client.prefs?.read_preference(/datum/preference/choiced/ai_emote_display))
+		var/emote_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_emote_display)
+
+		if(emote_choice == "Random")
+			emote_choice = pick(GLOB.ai_status_display_emotes)
+
+		apply_emote_display(emote_choice)
+
+/// Apply an emote to all AI status displays on the station
+/mob/living/silicon/ai/proc/apply_emote_display(emote)
+	for(var/obj/machinery/status_display/ai/ai_display as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/status_display/ai))
+		ai_display.emotion = emote
+		ai_display.update()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -463,14 +489,14 @@
 			src << browse(last_tablet_note_seen, "window=show_tablet")
 	//Carn: holopad requests
 	if(href_list["jump_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad)
 		if(Holopad)
 			cam_prev = get_turf(eyeobj)
 			eyeobj.setLoc(Holopad)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
 	if(href_list["project_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type(/obj/machinery/holopad)
 		if(Holopad)
 			lastloc = get_turf(eyeobj)
 			Holopad.attack_ai_secondary(src) //may as well recycle
@@ -694,7 +720,7 @@
 			"carp" = 'icons/mob/simple/carp.dmi',
 			"chicken" = 'icons/mob/simple/animal.dmi',
 			"corgi" = 'icons/mob/simple/pets.dmi',
-			"cow" = 'icons/mob/simple/animal.dmi',
+			"cow" = 'icons/mob/simple/cows.dmi',
 			"crab" = 'icons/mob/simple/animal.dmi',
 			"fox" = 'icons/mob/simple/pets.dmi',
 			"goat" = 'icons/mob/simple/animal.dmi',
@@ -702,7 +728,7 @@
 			"cat2" = 'icons/mob/simple/pets.dmi',
 			"poly" = 'icons/mob/simple/animal.dmi',
 			"pug" = 'icons/mob/simple/pets.dmi',
-			"spider" = 'icons/mob/simple/animal.dmi'
+			"spider" = 'icons/mob/simple/arachnoid.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -867,7 +893,10 @@
 	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
 
 	var/start = "Relayed Speech: "
-	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/namepart
+	var/list/stored_name = list(null)
+	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
+	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
@@ -894,7 +923,7 @@
 	if(oldname != real_name)
 		if(eyeobj)
 			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.saved_identification = real_name
+			modularInterface.imprint_id(name = real_name)
 
 		// Notify Cyborgs
 		for(var/mob/living/silicon/robot/Slave in connected_robots)
@@ -961,11 +990,6 @@
 
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
-
-/mob/living/silicon/ai/death(gibbed)
-	if(!isnull(deployed_shell))
-		disconnect_shell() // farewell my sweet prince; for a shell is nothing without an AI to control it
-	return ..()
 
 /mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()

@@ -34,7 +34,7 @@ Slimecrossing Armor
 /obj/item/clothing/glasses/prism_glasses
 	name = "prism glasses"
 	desc = "The lenses seem to glow slightly, and reflect light into dazzling colors."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "prismglasses"
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
@@ -46,7 +46,7 @@ Slimecrossing Armor
 /obj/structure/light_prism
 	name = "light prism"
 	desc = "A shining crystal of semi-solid light. Looks fragile."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE
@@ -54,8 +54,9 @@ Slimecrossing Armor
 
 /obj/structure/light_prism/Initialize(mapload, newcolor)
 	. = ..()
-	color = newcolor
-	set_light_color(newcolor)
+	if(newcolor)
+		color = newcolor
+		set_light_color(newcolor)
 	set_light(5)
 
 /obj/structure/light_prism/attack_hand(mob/user, list/modifiers)
@@ -64,7 +65,7 @@ Slimecrossing Armor
 
 /datum/action/item_action/change_prism_colour
 	name = "Adjust Prismatic Lens"
-	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	button_icon = 'icons/obj/science/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
 /datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
@@ -78,7 +79,7 @@ Slimecrossing Armor
 
 /datum/action/item_action/place_light_prism
 	name = "Fabricate Light Prism"
-	button_icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	button_icon = 'icons/obj/science/slimecrossing.dmi'
 	button_icon_state = "lightprism"
 
 /datum/action/item_action/place_light_prism/Trigger(trigger_flags)
@@ -98,7 +99,7 @@ Slimecrossing Armor
 /obj/item/clothing/head/peaceflower
 	name = "heroine bud"
 	desc = "An extremely addictive flower, full of peace magic."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "peaceflower"
 	inhand_icon_state = null

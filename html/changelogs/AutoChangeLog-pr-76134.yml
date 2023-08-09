@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Dehardcodes some stuff with tram windows, they'll be easier to map with now"
-  - refactor: "Border objects can now smooth with each other. I'm sure something cool will come of this"

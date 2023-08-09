@@ -55,7 +55,7 @@
 	icon_state = "witch_hat"
 	greyscale_colors = "#343640#e0cab8#e0cab8"
 	greyscale_config = /datum/greyscale_config/witch_hat
-	greyscale_config_worn = /datum/greyscale_config/witch_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/witch_hat/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 	dog_fashion = null
 
@@ -220,7 +220,7 @@
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
 	playsound(loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/basic/stickman(get_turf(usr))
+	var/mob/living/M = new /mob/living/basic/stickman/lesser(get_turf(usr))
 	M.faction += list("[REF(usr)]")
 	robe_charge = FALSE
 	sleep(3 SECONDS)

@@ -2,4 +2,9 @@
 #define COMSIG_HUD_EYE_CHANGED "hud_eye_changed"
 /// Sent from /datum/hud/proc/eye_z_changed() : (old_offset, new_offset)
 #define COMSIG_HUD_OFFSET_CHANGED "hud_offset_changed"
-
+/// Sent from /atom/movable/screen/lobby/button/collapse/proc/collapse_buttons() : ()
+#define COMSIG_HUD_LOBBY_COLLAPSED "hud_lobby_collapsed"
+/// Sent from /atom/movable/screen/lobby/button/collapse/proc/expand_buttons() : ()
+#define COMSIG_HUD_LOBBY_EXPANDED "hud_lobby_expanded"
+/// Sent from /atom/movable/screen/lobby/button/ready/Click() : ()
+#define COMSIG_HUD_PLAYER_READY_TOGGLE "hud_player_ready_toggle"

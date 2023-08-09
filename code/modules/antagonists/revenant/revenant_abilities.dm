@@ -37,7 +37,7 @@
 		to_chat(src, span_revenwarning("You are already siphoning the essence of a soul!"))
 		return
 	if(!target.stat)
-		to_chat(src, span_revennotice("[target.p_their(TRUE)] soul is too strong to harvest."))
+		to_chat(src, span_revennotice("[target.p_Their()] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
@@ -48,16 +48,16 @@
 	to_chat(src, span_revennotice("You search for the soul of [target]."))
 	if(do_after(src, rand(10, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted in that second?
 		if(target.ckey)
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul burns with intelligence."))
+			to_chat(src, span_revennotice("[target.p_Their()] soul burns with intelligence."))
 			essence_drained += rand(20, 30)
 		if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul blazes with life!"))
+			to_chat(src, span_revennotice("[target.p_Their()] soul blazes with life!"))
 			essence_drained += rand(40, 50)
 		if(HAS_TRAIT(target, TRAIT_WEAK_SOUL) && !target.ckey)
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul is weak and underdeveloped. They won't be worth very much."))
+			to_chat(src, span_revennotice("[target.p_Their()] soul is weak and underdeveloped. They won't be worth very much."))
 			essence_drained = 5
 		else
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul is weak and faltering."))
+			to_chat(src, span_revennotice("[target.p_Their()] soul is weak and faltering."))
 		if(do_after(src, rand(15, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
@@ -70,7 +70,7 @@
 					to_chat(src, span_revenbignotice("Ah, the perfect soul. [target] will yield massive amounts of essence to you."))
 			if(do_after(src, rand(15, 25), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
 				if(!target.stat)
-					to_chat(src, span_revenwarning("[target.p_theyre(TRUE)] now powerful enough to fight off your draining."))
+					to_chat(src, span_revenwarning("[target.p_Theyre()] now powerful enough to fight off your draining."))
 					to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding."))
 					draining = 0
 					essence_drained = 0
@@ -107,7 +107,7 @@
 						target.investigate_log("has died from revenant harvest.", INVESTIGATE_DEATHS)
 					target.death(FALSE)
 				else
-					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken."))
+					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_Theyve()]"] been drawn out of your grasp. The link has been broken."))
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message(span_warning("[target] slumps onto the ground."), \
 											   span_revenwarning("Violets lights, dancing in your vision, receding--"))
@@ -181,11 +181,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/aoe/revenant/get_things_to_cast_on(atom/center)
-	var/list/things = list()
-	for(var/turf/nearby_turf in range(aoe_radius, center))
-		things += nearby_turf
-
-	return things
+	return RANGE_TURFS(aoe_radius, center)
 
 /datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/simple_animal/revenant/cast_on)
 	. = ..()

@@ -15,10 +15,20 @@
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
-	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
+	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
 	path_image_color = "#FF0000"
+	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
+
+	automated_announcements = list(
+		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/voice/beepsky/criminal.ogg',
+		BEEPSKY_VOICED_FREEZE = 'sound/voice/beepsky/freeze.ogg',
+		BEEPSKY_VOICED_JUSTICE = 'sound/voice/beepsky/justice.ogg',
+		BEEPSKY_VOICED_YOUR_MOVE = 'sound/voice/beepsky/creep.ogg',
+		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/voice/beepsky/iamthelaw.ogg',
+		BEEPSKY_VOICED_SECURE_DAY = 'sound/voice/beepsky/secureday.ogg',
+	)
 
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
@@ -64,13 +74,13 @@
 /mob/living/simple_animal/bot/secbot/beepsky/ofitser
 	name = "Prison Ofitser"
 	desc = "Powered by the tears and sweat of laborers."
-	bot_mode_flags = ~(BOT_MODE_PAI_CONTROLLABLE|BOT_MODE_AUTOPATROL)
+	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
 	health = 45
-	bot_mode_flags = ~(BOT_MODE_PAI_CONTROLLABLE|BOT_MODE_AUTOPATROL)
+	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
@@ -86,7 +96,7 @@
 	name = "Officer Pingsky"
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
-	bot_mode_flags = ~(BOT_MODE_PAI_CONTROLLABLE|BOT_MODE_AUTOPATROL)
+	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/genesky
@@ -233,12 +243,12 @@
 		retaliate(user)
 		special_retaliate_after_attack(user)
 
-/mob/living/simple_animal/bot/secbot/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/secbot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
-		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
+		balloon_alert(user, "target assessment circuits shorted")
 		oldtarget_name = user.name
 
 	if(bot_type == HONK_BOT)
@@ -249,6 +259,7 @@
 
 	security_mode_flags &= ~SECBOT_DECLARE_ARRESTS
 	update_appearance()
+	return TRUE
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
 	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
@@ -451,21 +462,16 @@
 		if(threatlevel >= 4)
 			target = nearby_carbons
 			oldtarget_name = nearby_carbons.name
-			switch(bot_type)
-				if(ADVANCED_SEC_BOT)
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
-				if(HONK_BOT)
-					speak("Honk!")
-					playsound(src, pick('sound/items/bikehorn.ogg'), 50, FALSE)
-				else
-					speak("Level [threatlevel] infraction alert!")
-					playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-
+			threat_react(threatlevel)
 			visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, PROC_REF(handle_automated_action))
 			break
+
+/// React to detecting criminal scum by making some kind of noise
+/mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
+	speak("Level [threatlevel] infraction alert!")
+	playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(obj/item/slot_item)
 	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))

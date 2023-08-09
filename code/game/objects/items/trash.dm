@@ -1,12 +1,12 @@
 //Added by Jack Rost
 /obj/item/trash
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	item_flags = NOBLUDGEON
+	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
 
 /obj/item/trash/Initialize(mapload)
 	var/turf/T = get_turf(src)

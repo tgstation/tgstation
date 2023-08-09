@@ -128,7 +128,7 @@
 	icon_state = "shotglass"
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
@@ -169,6 +169,21 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "irish sadness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/pickle
+	name = "Pickle Juice"
+	description = "More accurately, this is the brine the pickle was floating in"
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#302000" // rgb: 48, 32, 0
+	taste_description = "vinegar brine"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/pickle/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if((liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)))
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+		. = TRUE
+	..()
 
 /datum/reagent/consumable/grapejuice
 	name = "Grape Juice"
@@ -590,6 +605,24 @@
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/wellcheers
+	name = "Wellcheers"
+	description = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	color = "#762399" // rgb: 118, 35, 153
+	taste_description = "grapes and the fresh open sea"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/wellcheers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
+	switch(affected_mob.mob_mood.mood_level)
+		if (MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD2)
+			affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, 0)
+		if (MOOD_LEVEL_SAD2 to MOOD_LEVEL_HAPPY2)
+			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
+		if (MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
+			affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, 0)
+	return ..()
 
 /datum/reagent/consumable/monkey_energy
 	name = "Monkey Energy"

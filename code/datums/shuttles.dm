@@ -493,6 +493,13 @@
 	admin_notes = "Has a sentience fun balloon for pets."
 	credit_cost = CARGO_CRATE_VALUE * 16
 
+/datum/map_template/shuttle/emergency/fame
+	suffix = "fame"
+	name = "Hall of Fame Shuttle"
+	description = "A grandiose shuttle that has a red carpet leading to the hall of fame. Are you worthy to stand among the best spessmen in existence?"
+	admin_notes = "Designed around persistence from memories, trophies, photos, and statues."
+	credit_cost = CARGO_CRATE_VALUE * 25
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -790,6 +797,14 @@
 /datum/map_template/shuttle/pirate/grey
 	suffix = "grey"
 	name = "pirate ship (The Space Toolbox)"
+
+/datum/map_template/shuttle/pirate/irs
+	suffix = "irs"
+	name = "pirate ship (Space IRS)"
+
+/datum/map_template/shuttle/pirate/geode
+	suffix = "geode"
+	name = "pirate ship (Lustrous Geode)"
 
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"

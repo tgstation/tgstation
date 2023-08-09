@@ -14,6 +14,48 @@ When examining new issues you should immediately notify a maintainer if you see 
 - **Server Crashing** [[1]](https://github.com/tgstation/tgstation/issues/29342) [[2]](https://github.com/tgstation/tgstation/issues/25890) [[3]](https://github.com/tgstation/tgstation/issues/17475) - Something that is causing the server to _consistently_ crash
 - **Server Lagging** [[1]](https://github.com/tgstation/tgstation/issues/60193) [[2]](https://github.com/tgstation/tgstation/issues/51927) [[3]](https://github.com/tgstation/tgstation/issues/32762) - Something that is causing a _severe_ amount of lag during the game
 
+#### Runtime Issue Reports
+If an issue reports a runtime, it must have the actual runtime call stack provided by round logging or in-game debug menu (https://github.com/tgstation/tgstation/issues/70329#issuecomment-1279853883). 
+<details>
+  <summary>Example runtime call stack</summary>
+  
+  ```
+  [2022-10-15 16:12:38.902] runtime error: Cannot execute null.add().
+ - proc name: visibility (/datum/cameranet/proc/visibility)
+ -   source file: cameranet.dm,88
+ -   usr: AI (/mob/living/silicon/ai)
+ -   src: Camera Net (/datum/cameranet)
+ -   usr.loc: the floor (150,25,4) (/turf/open/floor/circuit)
+ -   call stack:
+ - Camera Net (/datum/cameranet): visibility(/list (/list), null, /list (/list), 1)
+ - AI (/mob/living/silicon/ai): camera visibility(Inactive AI Eye (/mob/camera/ai_eye))
+ - Inactive AI Eye (/mob/camera/ai_eye): setLoc(the floor (150,25,4) (/turf/open/floor/circuit), 0)
+ - AI (/mob/living/silicon/ai): create eye()
+ - AI (/mob/living/silicon/ai): Initialize(0, null, TagGamerGame2 (/mob/dead/new_player))
+ - Atoms (/datum/controller/subsystem/atoms): InitAtom(AI (/mob/living/silicon/ai), 0, /list (/list))
+ - AI (/mob/living/silicon/ai): New(0, null, TagGamerGame2 (/mob/dead/new_player))
+ - AI (/mob/living/silicon/ai): New(the floor (150,25,4) (/turf/open/floor/circuit), null, TagGamerGame2 (/mob/dead/new_player))
+ - /datum/job/ai (/datum/job/ai): get spawn mob(TagGamerGame2 (/client), AI (/obj/effect/landmark/start/ai))
+ - TagGamerGame2 (/mob/dead/new_player): create character(AI (/obj/effect/landmark/start/ai))
+ - Ticker (/datum/controller/subsystem/ticker): create characters()
+ - Ticker (/datum/controller/subsystem/ticker): setup()
+ - Ticker (/datum/controller/subsystem/ticker): fire(0)
+ - Ticker (/datum/controller/subsystem/ticker): ignite(0)
+  ```
+
+</details>
+
+#### Downstream Issues Taken Upstream
+If an issue reports a bug encountered at a branch of the codebase or on a downstream server, it __MUST__ have a link to the branch or downstream codebase repo or it is eligible for closing (https://github.com/tgstation/tgstation/issues/70875#issuecomment-1295767891). Reproducing the issue on the compiled master of our codebase is also encouraged.
+
+<details>
+  <summary>Image macro for your issue marking pleasure</summary>
+
+![image](https://user-images.githubusercontent.com/39163353/198381160-f0aa7fc4-4f2d-486f-8b33-44a1965e2ad1.svg)
+
+`![image](https://user-images.githubusercontent.com/39163353/198381160-f0aa7fc4-4f2d-486f-8b33-44a1965e2ad1.svg)`
+</details>
+
 #### Link Code Snippets
 
 To help triangulate bugs, search the GitHub repo to locate relevant code and attach it to an issue.  Do this by creating a [link to the code](https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/creating-a-permanent-link-to-a-code-snippet).  This saves the contributors time from having to identify the problem and will be appreciated.

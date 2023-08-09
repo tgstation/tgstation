@@ -123,19 +123,20 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	var/cooldown = 300
-	var/next_use = 0
+	/// Cooldown on locating booty.
+	COOLDOWN_DECLARE(locate_cooldown)
 
 /obj/machinery/loot_locator/interact(mob/user)
-	if(world.time <= next_use)
-		to_chat(user,span_warning("[src] is recharging."))
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
+		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
 		return
-	next_use = world.time + cooldown
 	var/atom/movable/found_loot = find_random_loot()
 	if(!found_loot)
 		say("No valuables located. Try again later.")
 	else
 		say("Located: [found_loot.name] at [get_area_name(found_loot)]")
+
+	COOLDOWN_START(src, locate_cooldown, 10 SECONDS)
 
 /// Looks across the station for items that are pirate specific exports
 /obj/machinery/loot_locator/proc/find_random_loot()
@@ -151,10 +152,23 @@
 		found_loot = selected_export.find_loot()
 	return found_loot
 
+/// Surgery disk for the space IRS (I don't know where to dump them anywhere else)
+/obj/item/disk/surgery/irs
+	name = "Advanced Surgery Disk"
+	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
+	surgeries = list(
+		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery_step/heal/combo/upgraded,
+		/datum/surgery_step/pacify,
+		/datum/surgery_step/revive,
+	)
+
 //Pad & Pad Terminal
 /obj/machinery/piratepad
 	name = "cargo hold pad"
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "lpad-idle-off"
 	///This is the icon_state that this telepad uses when it's not in use.
 	var/idle_state = "lpad-idle-off"
@@ -217,7 +231,7 @@
 /obj/machinery/computer/piratepad_control/LateInitialize()
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/P in GLOB.machines)
+		for(var/obj/machinery/piratepad/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad))
 			if(P.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(P)
 				return

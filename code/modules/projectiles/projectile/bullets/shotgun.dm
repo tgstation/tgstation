@@ -24,6 +24,14 @@
 	sharpness = NONE
 	embedding = null
 
+/obj/projectile/bullet/shotgun_beanbag/a40mm
+	name = "rubber slug"
+	icon_state = "cannonball"
+	damage = 20
+	stamina = 160 //BONK
+	wound_bonus = 30
+	weak_against_armour = TRUE
+
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
 	icon_state = "pellet"
@@ -128,3 +136,12 @@
 /obj/projectile/bullet/scattershot
 	icon_state = "pellet"
 	damage = 24
+
+//Breaching Ammo
+
+/obj/projectile/bullet/shotgun_breaching
+	name = "12g breaching round"
+	desc = "A breaching round designed to destroy airlocks and windows with only a few shots. Ineffective against other targets."
+	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	damage = 5 //does shit damage to everything except doors and windows
+	demolition_mod = 200 //one shot to break a window or grille, or two shots to breach an airlock door

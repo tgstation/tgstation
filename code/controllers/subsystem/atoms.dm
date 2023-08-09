@@ -154,7 +154,15 @@ SUBSYSTEM_DEF(atoms)
 	else if(!(A.flags_1 & INITIALIZED_1))
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
-		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+		SEND_SIGNAL(A, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ATOM_AFTER_POST_INIT, A)
+		var/atom/location = A.loc
+		if(location)
+			/// Sends a signal that the new atom `src`, has been created at `loc`
+			SEND_SIGNAL(location, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, A, arguments[1])
+			var/area/atom_area = get_area(location)
+			if(atom_area)
+				SEND_SIGNAL(atom_area, COMSIG_AREA_INITIALIZED_IN, A)
 		if(created_atoms && from_template && ispath(the_type, /atom/movable))//we only want to populate the list with movables
 			created_atoms += A.get_all_contents()
 

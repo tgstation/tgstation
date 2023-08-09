@@ -81,11 +81,11 @@
 	icon_state = "armorfish_fillet"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 
+///donkfish fillets. The yuck reagent is now added by the fish trait of the same name.
 /obj/item/food/fishmeat/donkfish
 	name = "donkfillet"
 	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
 	icon_state = "donkfillet"
-	food_reagents = list(/datum/reagent/yuck = 3)
 
 /obj/item/food/fishfingers
 	name = "fish fingers"
@@ -661,6 +661,7 @@
 
 /obj/item/food/nugget
 	name = "chicken nugget"
+	desc = "A \"chicken\" nugget vaguely shaped like something."
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/protein = 2,
@@ -817,6 +818,7 @@
 
 /obj/item/food/kebab/fiesta
 	name = "fiesta skewer"
+	desc = "Variety of meats and vegetables on a stick."
 	icon_state = "fiestaskewer"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 12,

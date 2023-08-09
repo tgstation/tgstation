@@ -40,6 +40,12 @@
 /// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
 
+/// The highest amount of orders you can have of one thing at any one time
+#define CARGO_MAX_ORDER 50
+
+/// Returned by /obj/docking_port/mobile/supply/proc/get_order_count to signify us going over the order limit
+#define OVER_ORDER_LIMIT "GO AWAY"
+
 /// Universal Scanner mode for export scanning.
 #define SCAN_EXPORTS 1
 /// Universal Scanner mode for using the sales tagger.

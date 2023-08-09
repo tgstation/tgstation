@@ -17,6 +17,11 @@ Intended to push a creepy, mad scientist/doctor vibe, or someone who is downrigh
 	mood_change = 2
 	timeout = 2 MINUTES
 
+/datum/mood_event/morbid_abominable_surgery_success
+	description = "Picasso himself would struggle to match with a brush what I can do with a knife."
+	mood_change = 2
+	timeout = 2 MINUTES
+
 /datum/mood_event/morbid_revival_success
 	description = "IT LIVES! AH HA HA HA HA!!"
 	mood_change = 6

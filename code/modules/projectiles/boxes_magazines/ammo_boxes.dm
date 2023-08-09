@@ -7,11 +7,28 @@
 	caliber = CALIBER_357
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	item_flags = NO_MAT_REDEMPTION
+	ammo_band_icon = "+357_ammo_band"
+	ammo_band_color = null
 
 /obj/item/ammo_box/a357/match
 	name = "speed loader (.357 Match)"
 	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/a357/match
+	ammo_band_color = "#77828a"
+
+/obj/item/ammo_box/a357/phasic
+	name = "speed loader (.357 Phasic)"
+	desc = "Designed to quickly reload revolvers. Holds phasic ammo, also known as 'Ghost Lead', allowing it to pass through non-organic material."
+	ammo_type = /obj/item/ammo_casing/a357/phasic
+	ammo_band_color = "#693a6a"
+
+/obj/item/ammo_box/a357/heartseeker
+	name = "speed loader (.357 Heartseeker)"
+	desc = "Designed to quickly reload revolvers. Holds heartseeker ammo, which veers into targets with exceptional precision using \
+		an unknown method. It apparently predicts movement using neural pulses in the brain, but that's less marketable. \
+		As seen in the hit NTFlik horror-space western film, Forget-Me-Not! Brought to you by Roseus Galactic!"
+	ammo_type = /obj/item/ammo_casing/a357/heartseeker
+	ammo_band_color = "#a91e1e"
 
 /obj/item/ammo_box/c38
 	name = "speed loader (.38)"
@@ -86,6 +103,20 @@
 	max_ammo = 4
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
+/obj/item/ammo_box/a40mm/rubber
+	name = "ammo box (40mm rubber slug)"
+	ammo_type = /obj/item/ammo_casing/a40mm/rubber
+
+/obj/item/ammo_box/rocket
+	name = "rocket bouquet (84mm HE)"
+	icon_state = "rocketbundle"
+	ammo_type = /obj/item/ammo_casing/rocket
+	max_ammo = 3
+	multiple_sprites = AMMO_BOX_PER_BULLET
+
+/obj/item/ammo_box/rocket/can_load(mob/user)
+	return FALSE
+
 /obj/item/ammo_box/a762
 	name = "stripper clip (7.62mm)"
 	desc = "A stripper clip."
@@ -109,7 +140,7 @@
 	name = "ammo box (Foam Darts)"
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
+	ammo_type = /obj/item/ammo_casing/foam_dart
 	max_ammo = 40
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 
@@ -120,7 +151,7 @@
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+	ammo_type = /obj/item/ammo_casing/foam_dart/riot
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25)
 
 /obj/item/ammo_box/foambox/riot/mini

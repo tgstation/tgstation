@@ -44,7 +44,7 @@
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/plasmaman_head.dmi'
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	icon_state = "plasmaman-helm"
 	inhand_icon_state = "plasmaman-helm"
 	strip_delay = 80
@@ -126,7 +126,7 @@
 		return
 	if(istype(hitting_item, /obj/item/clothing/head))
 		var/obj/item/clothing/hitting_clothing = hitting_item
-		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
+		if(hitting_clothing.clothing_flags & STACKABLE_HELMET_EXEMPT)
 			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
 			return
 		if(attached_hat)
@@ -385,28 +385,45 @@
 	visor_icon = "clown_envisor"
 	smile_state = "clown_smile"
 
+/obj/item/clothing/head/helmet/space/plasmaman/clown/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
+
 /obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
 	name = "head of personnel's envirosuit helmet"
 	desc = "A special containment helmet designed for the Head of Personnel. Embarrassingly enough, it looks way too much like the captain's design save for the red stripes."
 	icon_state = "hop_envirohelm"
 	inhand_icon_state = null
+	armor_type = /datum/armor/hats_hopcap/plasmaman
+
+/datum/armor/hats_hopcap/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/captain
 	name = "captain's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Captain. Embarrassingly enough, it looks way too much like the Head of Personnel's design save for the gold stripes. I mean, come on. Gold stripes can fix anything."
 	icon_state = "captain_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/space_plasmaman/captain
+	armor_type = /datum/armor/hats_caphat/plasmaman
 
-/datum/armor/space_plasmaman/captain
-	acid = 95
-	wound = 15
+/datum/armor/hats_caphat/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
 	name = "CentCom commander plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Higher Central Command Staff. Not many of these exist, as CentCom does not usually employ plasmamen to higher staff positions due to their complications."
 	icon_state = "commander_envirohelm"
 	inhand_icon_state = null
+	armor_type = /datum/armor/hats_centhat/plasmaman
+
+/datum/armor/hats_centhat/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_official
 	name = "CentCom official plasma envirosuit helmet"

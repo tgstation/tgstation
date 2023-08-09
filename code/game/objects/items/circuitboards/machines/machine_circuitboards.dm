@@ -1522,3 +1522,13 @@
 		/datum/stock_part/scanning_module = 1,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 3)
+
+/obj/item/circuitboard/machine/radioactive_nebula_shielding
+	name = "Radioactive Nebula Shielding"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/nebula_shielding/radiation
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/obj/item/mod/module/rad_protection = 1,
+		/obj/item/stack/sheet/plasteel = 2,
+	)

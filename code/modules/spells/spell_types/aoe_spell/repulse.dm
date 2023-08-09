@@ -6,6 +6,23 @@
 	/// The moveforce of the throw done by the repulsion.
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
+/datum/action/cooldown/spell/aoe/repulse/get_caster_from_target(atom/target)
+	if(istype(target.loc, /obj/structure/closet))
+		return target
+
+	return ..()
+
+/datum/action/cooldown/spell/aoe/repulse/is_valid_target(atom/cast_on)
+	return ..() || istype(cast_on.loc, /obj/structure/closet)
+
+/datum/action/cooldown/spell/aoe/repulse/cast(atom/cast_on)
+	if(istype(cast_on.loc, /obj/structure/closet))
+		var/obj/structure/closet/open_closet = cast_on.loc
+		open_closet.open(force = TRUE)
+		open_closet.visible_message(span_warning("[open_closet] suddenly flies open!"))
+
+	return ..()
+
 /datum/action/cooldown/spell/aoe/repulse/get_things_to_cast_on(atom/center)
 	var/list/things = list()
 	for(var/atom/movable/nearby_movable in view(aoe_radius, center))
@@ -44,7 +61,13 @@
 			to_chat(victim, span_userdanger("You're thrown back by [caster]!"))
 
 		// So stuff gets tossed around at the same time.
-		victim.safe_throw_at(throwtarget, ((clamp((max_throw - (clamp(dist_from_caster - 2, 0, dist_from_caster))), 3, max_throw))), 1, caster, force = repulse_force)
+		victim.safe_throw_at(
+			target = throwtarget,
+			range = clamp((max_throw - (clamp(dist_from_caster - 2, 0, dist_from_caster))), 3, max_throw),
+			speed = 1,
+			thrower = ismob(caster) ? caster : null,
+			force = repulse_force,
+		)
 
 /datum/action/cooldown/spell/aoe/repulse/wizard
 	name = "Repulse"

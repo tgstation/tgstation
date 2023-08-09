@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(tgui)
  */
 /datum/controller/subsystem/tgui/proc/get_open_ui(mob/user, datum/src_object)
 	// No UIs opened for this src_object
-	if(!LAZYLEN(src_object.open_uis))
+	if(!LAZYLEN(src_object?.open_uis))
 		return null
 	for(var/datum/tgui/ui in src_object.open_uis)
 		// Make sure we have the right user
@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(tgui)
  */
 /datum/controller/subsystem/tgui/proc/update_uis(datum/src_object)
 	// No UIs opened for this src_object
-	if(!LAZYLEN(src_object.open_uis))
+	if(!LAZYLEN(src_object?.open_uis))
 		return 0
 	var/count = 0
 	for(var/datum/tgui/ui in src_object.open_uis)
@@ -211,7 +211,7 @@ SUBSYSTEM_DEF(tgui)
  */
 /datum/controller/subsystem/tgui/proc/close_uis(datum/src_object)
 	// No UIs opened for this src_object
-	if(!LAZYLEN(src_object.open_uis))
+	if(!LAZYLEN(src_object?.open_uis))
 		return 0
 	var/count = 0
 	for(var/datum/tgui/ui in src_object.open_uis)
@@ -285,6 +285,7 @@ SUBSYSTEM_DEF(tgui)
  * required ui datum/tgui The UI to be added.
  */
 /datum/controller/subsystem/tgui/proc/on_open(datum/tgui/ui)
+	ui.user?.tgui_open_uis |= ui
 	LAZYOR(ui.src_object.open_uis, ui)
 	all_uis |= ui
 

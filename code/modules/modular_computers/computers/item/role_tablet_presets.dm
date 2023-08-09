@@ -362,7 +362,7 @@
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
 		msg.mime_mode = TRUE
-		msg.ringer_status = FALSE
+		msg.alert_silenced = TRUE
 
 /obj/item/modular_computer/pda/curator
 	name = "curator PDA"
@@ -380,7 +380,7 @@
 /obj/item/modular_computer/pda/curator/Initialize(mapload)
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
-		msg.ringer_status = FALSE
+		msg.alert_silenced = TRUE
 
 /obj/item/modular_computer/pda/psychologist
 	name = "psychologist PDA"
@@ -425,3 +425,13 @@
 	greyscale_config = null
 	greyscale_colors = null
 	long_ranged = TRUE
+
+/obj/item/modular_computer/pda/clear/Initialize(mapload)
+	. = ..()
+	var/datum/computer_file/program/themeify/theme_app = locate() in stored_files
+	if(theme_app)
+		for(var/theme_key in GLOB.pda_name_to_theme - GLOB.default_pda_themes)
+			theme_app.imported_themes += theme_key
+
+/obj/item/modular_computer/pda/clear/get_messenger_ending()
+	return "Sent from my crystal PDA"

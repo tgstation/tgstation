@@ -10,7 +10,7 @@
 		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	/// The pathfinding implant.
@@ -21,8 +21,18 @@
 	implant = new(src)
 
 /obj/item/mod/module/pathfinder/Destroy()
-	implant = null
+	QDEL_NULL(implant)
 	return ..()
+
+/obj/item/mod/module/pathfinder/Exited(atom/movable/gone, direction)
+	if(gone == implant)
+		implant = null
+		update_icon_state()
+	return ..()
+
+/obj/item/mod/module/pathfinder/update_icon_state()
+	. = ..()
+	icon_state = implant ? "pathfinder" : "pathfinder_empty"
 
 /obj/item/mod/module/pathfinder/examine(mob/user)
 	. = ..()
@@ -45,8 +55,6 @@
 	else
 		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-	icon_state = "pathfinder_empty"
-	implant = null
 
 /obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
 	if(!ishuman(user))

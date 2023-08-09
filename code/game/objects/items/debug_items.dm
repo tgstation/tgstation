@@ -67,9 +67,9 @@
 		"Scalpel" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "scalpel"),
 		"Saw" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "saw"),
 		"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
-		"Knife" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "knife"),
+		"Knife" = image(icon = 'icons/obj/service/kitchen.dmi', icon_state = "knife"),
 		"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
-		"Rolling Pin" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "rolling_pin"),
+		"Rolling Pin" = image(icon = 'icons/obj/service/kitchen.dmi', icon_state = "rolling_pin"),
 		"Wire Brush" = image(icon = 'icons/obj/tools.dmi', icon_state = "wirebrush"),
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)

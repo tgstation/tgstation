@@ -71,6 +71,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// had with a proc call, especially on one of the hottest procs in the
 	/// game (MouseEntered).
 	var/screentips_enabled = SCREENTIP_PREFERENCE_ENABLED
+	/// Whether to use text or images for click hints.
+	/// Same behavior as `screentips_enabled`--very hot, updated when the preference is updated.
+	var/screentip_images = TRUE
 	/// If this client is being shown atmos debug overlays or not
 	var/atmos_debug_overlays = FALSE
 
@@ -117,6 +120,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/datum/preferences/preferences = owner?.client?.prefs
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
 	screentips_enabled = preferences?.read_preference(/datum/preference/choiced/enable_screentips)
+	screentip_images = preferences?.read_preference(/datum/preference/toggle/screentip_images)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
@@ -135,8 +139,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(mymob.client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
-	on_eye_change(null, null, mymob.client.eye)
+	RegisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
+	on_eye_change(null, null, mymob.canon_client.eye)
 
 /datum/hud/proc/clear_client(datum/source)
 	SIGNAL_HANDLER
@@ -208,10 +212,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_NULL(module_store_icon)
 	QDEL_LIST(static_inventory)
 
+	// all already deleted by static inventory clear
 	inv_slots.Cut()
 	action_intent = null
 	zone_select = null
 	pull_icon = null
+	rest_icon = null
+	hand_slots.Cut()
 
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
@@ -440,14 +447,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hand_slots = list()
 	var/atom/movable/screen/inventory/hand/hand_box
 	for(var/i in 1 to mymob.held_items.len)
-		hand_box = new /atom/movable/screen/inventory/hand()
+		hand_box = new /atom/movable/screen/inventory/hand(null, src)
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
 		hand_box.screen_loc = ui_hand_position(i)
 		hand_box.held_index = i
 		hand_slots["[i]"] = hand_box
-		hand_box.hud = src
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
@@ -501,7 +507,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			palette_actions.insert_action(button, palette_actions.index_of(relative_to))
 		if(SCRN_OBJ_FLOATING) // If we don't have it as a define, this is a screen_loc, and we should be floating
 			floating_actions += button
-			var/client/our_client = mymob.client
+			var/client/our_client = mymob.canon_client
 			if(!our_client)
 				position_action(button, button.linked_action.default_button_position)
 				return
@@ -542,7 +548,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /// Ensures all of our buttons are properly within the bounds of our client's view, moves them if they're not
 /datum/hud/proc/view_audit_buttons()
-	var/our_view = mymob?.client?.view
+	var/our_view = mymob?.canon_client?.view
 	if(!our_view)
 		return
 	listed_actions.check_against_view()
@@ -658,7 +664,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-[pixel_north_offset]"
 
 /datum/action_group/proc/check_against_view()
-	var/owner_view = owner?.mymob?.client?.view
+	var/owner_view = owner?.mymob?.canon_client?.view
 	if(!owner_view)
 		return
 	// Unlikey as it is, we may have been changed. Want to start from our target position and fail down

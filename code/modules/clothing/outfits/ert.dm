@@ -168,8 +168,7 @@
 		return
 
 	var/obj/item/modular_computer/pda/heads/pda = H.r_store
-	pda.saved_identification = H.real_name
-	pda.saved_job = "CentCom Official"
+	pda.imprint_id(H.real_name, "CentCom Official")
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -537,3 +536,34 @@
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+/datum/outfit/centcom/militia
+	name = "Militia Man"
+
+	id = /obj/item/card/id/advanced/centcom/ert/militia
+	belt = /obj/item/storage/belt/holster/energy/smoothbore
+	suit = /obj/item/clothing/suit/armor/militia
+	suit_store = /obj/item/gun/energy/laser/musket
+	head = /obj/item/clothing/head/cowboy/black
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	shoes = /obj/item/clothing/shoes/cowboy
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack/satchel/leather
+	l_pocket = /obj/item/switchblade
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen/salacid
+	ears = /obj/item/radio/headset
+	backpack_contents = list(
+			/obj/item/storage/box/survival = 1,
+			/obj/item/storage/medkit/emergency = 1,
+			/obj/item/crowbar = 1,
+			/obj/item/restraints/handcuffs = 1,
+	)
+
+/datum/outfit/centcom/militia/general
+	name = "Militia General"
+
+	id = /obj/item/card/id/advanced/centcom/ert/militia/general
+	belt = /obj/item/gun/energy/disabler/smoothbore/prime
+	head = /obj/item/clothing/head/beret/militia
+	l_hand = /obj/item/megaphone
+	suit_store = /obj/item/gun/energy/laser/musket/prime

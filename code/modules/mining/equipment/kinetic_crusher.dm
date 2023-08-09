@@ -216,7 +216,7 @@
 /obj/item/crusher_trophy
 	name = "tail spike"
 	desc = "A strange spike with no usage."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "tail_spike"
 	var/bonus_value = 10 //if it has a bonus effect, this is how much that effect is
 	var/denied_type = /obj/item/crusher_trophy
@@ -253,26 +253,6 @@
 /obj/item/crusher_trophy/proc/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user) //the projectile fired and the user
 /obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark) //the target, the mark applied, and if the target had a mark before
 /obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
-
-//goliath
-/obj/item/crusher_trophy/goliath_tentacle
-	name = "goliath tentacle"
-	desc = "A sliced-off goliath tentacle. Suitable as a trophy for a kinetic crusher."
-	icon_state = "goliath_tentacle"
-	denied_type = /obj/item/crusher_trophy/goliath_tentacle
-	bonus_value = 2
-	var/missing_health_ratio = 0.1
-	var/missing_health_desc = 10
-
-/obj/item/crusher_trophy/goliath_tentacle/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
-
-/obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
-	var/missing_health = user.maxHealth - user.health
-	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
-	missing_health *= bonus_value //multiply the remaining amount by bonus_value
-	if(missing_health > 0)
-		target.adjustBruteLoss(missing_health) //and do that much damage
 
 //watcher
 /obj/item/crusher_trophy/watcher_wing

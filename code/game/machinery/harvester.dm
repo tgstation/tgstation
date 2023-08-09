@@ -184,12 +184,14 @@
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
 		open_machine()
 
-/obj/machinery/harvester/emag_act(mob/user)
+/obj/machinery/harvester/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	allow_living = TRUE
-	to_chat(user, span_warning("You overload [src]'s lifesign scanners."))
+	allow_clothing = TRUE
+	balloon_alert(!user, "lifesign scanners overloaded")
+	return TRUE
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)

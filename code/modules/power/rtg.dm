@@ -4,7 +4,7 @@
 /obj/machinery/power/rtg
 	name = "radioisotope thermoelectric generator"
 	desc = "A simple nuclear power generator, used in small outposts to reliably provide power for decades."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "rtg"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -55,7 +55,7 @@
 
 /obj/machinery/power/rtg/abductor
 	name = "Void Core"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "core"
 	desc = "An alien power source that produces energy seemingly out of nowhere."
 	circuit = /obj/item/circuitboard/machine/abductor/core

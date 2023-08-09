@@ -14,8 +14,11 @@
 	///Max range this atom can be thrown via telekinesis
 	var/tk_throw_range = 10
 	var/mob/pulledby = null
+	/// What language holder type to init as
 	var/initial_language_holder = /datum/language_holder
-	var/datum/language_holder/language_holder // Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
+	/// Holds all languages this mob can speak and understand
+	VAR_PRIVATE/datum/language_holder/language_holder
+
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -97,8 +100,14 @@
 	/// The voice that this movable makes when speaking
 	var/voice
 
+	/// The pitch adjustment that this movable uses when speaking.
+	var/pitch = 0
+
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
+
+	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
+	var/tts_silicon_voice_effect = ""
 
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by
@@ -113,7 +122,7 @@
 	color = EM_BLOCK_COLOR
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
-/atom/movable/Initialize(mapload)
+/atom/movable/Initialize(mapload, ...)
 	. = ..()
 #ifdef UNIT_TESTS
 	if(explosion_block && !HAS_TRAIT(src, TRAIT_BLOCKING_EXPLOSIVES))
@@ -571,6 +580,8 @@
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8)
+	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
+		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 
@@ -1157,7 +1168,7 @@
 
 		if(update_on_z)
 			// I so much wish this could be somewhere else. alas, no.
-			for(var/image/update in update_on_z)
+			for(var/image/update as anything in update_on_z)
 				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
 		if(update_overlays_on_z)
 			// This EVEN more so
@@ -1234,8 +1245,11 @@
 	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
 		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
 
-	if(!(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))) // in case a signal interceptor broke or deleted the thing before we could process our hit
-		return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	if(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))
+		return // in case a signal interceptor broke or deleted the thing before we could process our hit
+	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
+		return
+	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
@@ -1440,50 +1454,47 @@
 */
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
-/atom/movable/proc/get_language_holder(get_minds = TRUE)
+/atom/movable/proc/get_language_holder()
+	RETURN_TYPE(/datum/language_holder)
+	if(QDELING(src))
+		CRASH("get_language_holder() called on a QDELing atom, \
+			this will try to re-instantiate the language holder that's about to be deleted, which is bad.")
+
 	if(!language_holder)
 		language_holder = new initial_language_holder(src)
 	return language_holder
 
 /// Grants the supplied language and sets omnitongue true.
-/atom/movable/proc/grant_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ATOM)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.grant_language(language, understood, spoken, source)
+/atom/movable/proc/grant_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
+	return get_language_holder().grant_language(language, language_flags, source)
 
 /// Grants every language.
-/atom/movable/proc/grant_all_languages(understood = TRUE, spoken = TRUE, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.grant_all_languages(understood, spoken, grant_omnitongue, source)
+/atom/movable/proc/grant_all_languages(language_flags = ALL, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
+	return get_language_holder().grant_all_languages(language_flags, grant_omnitongue, source)
 
 /// Removes a single language.
-/atom/movable/proc/remove_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ALL)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.remove_language(language, understood, spoken, source)
+/atom/movable/proc/remove_language(language, language_flags = ALL, source = LANGUAGE_ALL)
+	return get_language_holder().remove_language(language, language_flags, source)
 
 /// Removes every language and sets omnitongue false.
 /atom/movable/proc/remove_all_languages(source = LANGUAGE_ALL, remove_omnitongue = FALSE)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.remove_all_languages(source, remove_omnitongue)
+	return get_language_holder().remove_all_languages(source, remove_omnitongue)
 
 /// Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.
 /atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.add_blocked_language(language, source)
+	return get_language_holder().add_blocked_language(language, source)
 
 /// Removes a language from the blocked language list.
 /atom/movable/proc/remove_blocked_language(language, source = LANGUAGE_ATOM)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.remove_blocked_language(language, source)
+	return get_language_holder().remove_blocked_language(language, source)
 
 /// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
-/atom/movable/proc/has_language(language, spoken = FALSE)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.has_language(language, spoken)
+/atom/movable/proc/has_language(language, flags_to_check)
+	return get_language_holder().has_language(language, flags_to_check)
 
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.can_speak_language(language)
+	return get_language_holder().can_speak_language(language)
 
 /// Returns the result of tongue specific limitations on spoken languages.
 /atom/movable/proc/could_speak_language(datum/language/language_path)
@@ -1491,33 +1502,32 @@
 
 /// Returns selected language, if it can be spoken, or finds, sets and returns a new selected language if possible.
 /atom/movable/proc/get_selected_language()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.get_selected_language()
+	return get_language_holder().get_selected_language()
 
 /// Gets a random understood language, useful for hallucinations and such.
 /atom/movable/proc/get_random_understood_language()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.get_random_understood_language()
+	return get_language_holder().get_random_understood_language()
 
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.get_random_spoken_language()
+	return get_language_holder().get_random_spoken_language()
 
 /// Copies all languages into the supplied atom/language holder. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
-/atom/movable/proc/copy_languages(from_holder, source_override)
-	if(isatom(from_holder))
+/atom/movable/proc/copy_languages(datum/language_holder/from_holder, source_override)
+	if(ismovable(from_holder))
 		var/atom/movable/thing = from_holder
 		from_holder = thing.get_language_holder()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.copy_languages(from_holder, source_override)
 
-/// Empties out the atom specific languages and updates them according to the current atoms language holder.
-/// As a side effect, it also creates missing language holders in the process.
-/atom/movable/proc/update_atom_languages()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.update_atom_languages(src)
+	return get_language_holder().copy_languages(from_holder, source_override)
+
+/// Sets the passed path as the active language
+/// Returns the currently selected language if successful, if the language was not valid, returns null
+/atom/movable/proc/set_active_language(language_path)
+	var/datum/language_holder/our_holder = get_language_holder()
+	our_holder.selected_language = language_path
+
+	return our_holder.get_selected_language() // verifies its validity, returns it if successful.
 
 /**
  * Randomizes our atom's language to an uncommon language if:
@@ -1530,16 +1540,22 @@
 	var/area/atom_area = get_area(src)
 
 	if(!atom_turf) // some machines spawn in nullspace
-		return
+		return FALSE
 
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
 		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines
 		// but docked at centcom, and I wanted those machines to also speak funny languages
 		return FALSE
+	grant_random_uncommon_language()
+	return TRUE
 
-	/// The atom's language holder - so we can randomize and change their language
-	var/datum/language_holder/atom_languages = get_language_holder()
-	atom_languages.selected_language = atom_languages.get_random_spoken_uncommon_language()
+/// Teaches a random non-common language and sets it as the active language
+/atom/movable/proc/grant_random_uncommon_language(source)
+	if (!length(GLOB.uncommon_roundstart_languages))
+		return FALSE
+	var/picked = pick(GLOB.uncommon_roundstart_languages)
+	grant_language(picked, source = source)
+	set_active_language(picked)
 	return TRUE
 
 /* End language procs */

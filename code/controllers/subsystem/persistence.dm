@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(persistence)
 
 	///instantiated wall engraving components
 	var/list/wall_engravings = list()
+	///all saved persistent engravings loaded from JSON
+	var/list/saved_engravings = list()
 	///tattoo stories that we're saving.
 	var/list/prison_tattoos_to_save = list()
 	///tattoo stories that have been selected for this round.
@@ -22,6 +24,9 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
 	var/rounds_since_engine_exploded = 0
+	var/delam_highscore = 0
+	var/tram_hits_this_round = 0
+	var/tram_hits_last_round = 0
 
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
@@ -33,7 +38,7 @@ SUBSYSTEM_DEF(persistence)
 	load_randomized_recipes()
 	load_custom_outfits()
 	load_delamination_counter()
-
+	load_tram_counter()
 	load_adventures()
 	return SS_INIT_SUCCESS
 
@@ -48,6 +53,8 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
+	if(SStramprocess.can_fire)
+		save_tram_counter()
 
 ///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()
@@ -60,6 +67,7 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file(ENGRAVING_SAVE_FILE)
 	if(!fexists(json_file))
 		return
+
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
@@ -67,7 +75,11 @@ SUBSYSTEM_DEF(persistence)
 	if(json["version"] < ENGRAVING_PERSISTENCE_VERSION)
 		update_wall_engravings(json)
 
-	var/successfully_loaded_engravings = 0
+	saved_engravings = json["entries"]
+
+	if(!saved_engravings.len)
+		log_world("Failed to load engraved messages on map [SSmapping.config.map_name]")
+		return
 
 	var/list/viable_turfs = get_area_turfs(/area/station/maintenance, subtypes = TRUE) + get_area_turfs(/area/station/security/prison, subtypes = TRUE)
 	var/list/turfs_to_pick_from = list()
@@ -77,23 +89,22 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		turfs_to_pick_from += T
 
-	var/list/engraving_entries = json["entries"]
+	var/successfully_loaded_engravings = 0
 
-	if(engraving_entries.len)
-		for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
-			var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
-			if(!islist(engraving))
-				stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
-				continue
+	for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
+		var/engraving = pick_n_take(saved_engravings)
+		if(!islist(engraving))
+			stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
+			continue
 
-			var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
+		var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
-			if(HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
-				continue
+		if(HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
+			continue
 
-			engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
-			successfully_loaded_engravings++
-			turfs_to_pick_from -= engraved_wall
+		engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+		successfully_loaded_engravings++
+		turfs_to_pick_from -= engraved_wall
 
 	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
 
@@ -125,8 +136,6 @@ SUBSYSTEM_DEF(persistence)
 
 ///This proc can update entries if the format has changed at some point.
 /datum/controller/subsystem/persistence/proc/update_wall_engravings(json)
-
-
 	for(var/engraving_entry in json["entries"])
 		continue //no versioning yet
 
@@ -182,7 +191,6 @@ SUBSYSTEM_DEF(persistence)
 
 ///This proc can update entries if the format has changed at some point.
 /datum/controller/subsystem/persistence/proc/update_prisoner_tattoos(json)
-
 	for(var/tattoo_entry in json["entries"])
 		continue //no versioning yet
 
@@ -531,19 +539,35 @@ SUBSYSTEM_DEF(persistence)
 
 	WRITE_FILE(file, json_encode(data))
 
-/// Location where we save the information about how many rounds it has been since the engine blew up
+/// Location where we save the information about how many rounds it has been since the engine blew up/tram hits
 #define DELAMINATION_COUNT_FILEPATH "data/rounds_since_delamination.txt"
+#define DELAMINATION_HIGHSCORE_FILEPATH "data/delamination_highscore.txt"
+#define TRAM_COUNT_FILEPATH "data/tram_hits_last_round.txt"
 
 /datum/controller/subsystem/persistence/proc/load_delamination_counter()
 	if (!fexists(DELAMINATION_COUNT_FILEPATH))
 		return
 	rounds_since_engine_exploded = text2num(file2text(DELAMINATION_COUNT_FILEPATH))
-	for (var/obj/structure/sign/delamination_counter/sign as anything in GLOB.map_delamination_counters)
-		sign.update_count(rounds_since_engine_exploded)
+	if (fexists(DELAMINATION_HIGHSCORE_FILEPATH))
+		delam_highscore = text2num(file2text(DELAMINATION_HIGHSCORE_FILEPATH))
+	for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
+		sign.update_delam_count(rounds_since_engine_exploded, delam_highscore)
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
 	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
+	if((rounds_since_engine_exploded + 1) > delam_highscore)
+		rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_HIGHSCORE_FILEPATH)
+
+/datum/controller/subsystem/persistence/proc/load_tram_counter()
+	if(!fexists(TRAM_COUNT_FILEPATH))
+		return
+	tram_hits_last_round = text2num(file2text(TRAM_COUNT_FILEPATH))
+
+/datum/controller/subsystem/persistence/proc/save_tram_counter()
+		rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)
 
 #undef DELAMINATION_COUNT_FILEPATH
+#undef DELAMINATION_HIGHSCORE_FILEPATH
+#undef TRAM_COUNT_FILEPATH
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
