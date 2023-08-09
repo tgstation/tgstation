@@ -123,6 +123,6 @@
 	mood_change = -8
 
 /datum/mood_event/hauntium_spirits
-	description = "I feel evil spirits inside me!"
+	description = "I feel my soul degrading!"
 	mood_change = -8
-	timeout = 2 MINUTES
+	timeout = 8 MINUTES

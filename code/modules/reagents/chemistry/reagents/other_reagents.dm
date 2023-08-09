@@ -2894,8 +2894,8 @@
 
 /datum/reagent/hauntium
 	name = "Hauntium"
-	color = "#939393"
-	description = "An eerie liquid created by purifying the prescence of ghosts. If it happens to get in your body, it starts hurting your soul."
+	color = "#3B3B3BA3"
+	description = "An eerie liquid created by purifying the prescence of ghosts. If it happens to get in your body, it starts hurting your soul." //soul as in mood and heart
 	taste_description = "evil spirits"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	material = /datum/material/hauntium
@@ -2903,17 +2903,17 @@
 	var/time_multiplier = 15 SECONDS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume)
+/datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
 	. = ..()
 	exposed_obj.AddElement(/datum/element/haunted, 0)
 	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/haunted, 0)), volume * time_multiplier, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	to_chat(affected_mob, span_userdanger("You feel an evil presence inside you!"))
-	affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, name)
+	affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, name) //8 minutes of mood debuff
 
 /datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick)
-	if(SPT_PROB(3.5, seconds_per_tick))
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick) //1 heart damage per tick
+	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote(pick("twitch","choke","shiver","gag"))
 	..()
