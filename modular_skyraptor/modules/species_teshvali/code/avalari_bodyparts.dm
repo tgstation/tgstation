@@ -49,8 +49,8 @@
 	worn_back_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_BACK,
-		offset_x = list("east" = 3, "west" = -3),
-		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
+		offset_x = list("east" = 2, "west" = -2),
+		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
 	)
 	worn_suit_offset = new(
 		attached_part = src,

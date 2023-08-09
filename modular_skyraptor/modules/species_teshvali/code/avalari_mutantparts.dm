@@ -60,6 +60,8 @@ GLOBAL_LIST_EMPTY(bodymarks_list_avalari)
 	id = "bodymarks_avalari"
 	sprite_acc = /datum/sprite_accessory/body_markings/avalari
 	default = "None"
+	hasinner = TRUE
+	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
 
 /datum/mutant_spritecat/avalari_bodymarks/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings/avalari, GLOB.bodymarks_list_avalari)
@@ -80,6 +82,16 @@ GLOBAL_LIST_EMPTY(bodymarks_list_avalari)
 	else
 		return COLOR_WHITE
 
+/datum/sprite_accessory/body_markings/avalari/innercolor_override(mob/living/carbon/human/target)
+	if(!isnull(target))
+		var/col = target.dna.features["tricolor-a3"]
+		if(!isnull(col))
+			return col
+		else
+			return COLOR_WHITE
+	else
+		return COLOR_WHITE
+
 /datum/sprite_accessory/body_markings/avalari/none
 	name = "None"
 	icon_state = "none"
@@ -87,6 +99,16 @@ GLOBAL_LIST_EMPTY(bodymarks_list_avalari)
 /datum/sprite_accessory/body_markings/avalari/lbelly
 	name = "Light Belly"
 	icon_state = "lbelly"
+	gender_specific = 1
+
+/datum/sprite_accessory/body_markings/avalari/lbelly_striped
+	name = "Striped Light Belly"
+	icon_state = "lbelly_striped"
+	gender_specific = 1
+
+/datum/sprite_accessory/body_markings/avalari/belly_striped
+	name = "Striped Belly"
+	icon_state = "belly_striped"
 	gender_specific = 1
 
 
@@ -131,7 +153,7 @@ GLOBAL_LIST_EMPTY(horns_list_avalari)
 
 /datum/mutant_spritecat/avalari_horns/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns/avalari, GLOB.horns_list_avalari)
-		world.log << "CELEBRATE: FOR THE SCUGS HAVE HORN-EARS"
+		world.log << "CELEBRATE: FOR THE AVALI HAVE HORN-EARS"
 		return ..()
 
 /datum/sprite_accessory/horns/avalari
@@ -245,14 +267,14 @@ GLOBAL_LIST_EMPTY(horns_list_avalari)
 // == SECTION 4: TAILS ==
 GLOBAL_LIST_EMPTY(tails_list_avalari)
 /datum/mutant_spritecat/avalari_tails
-	name = "Slugcat Tails"
+	name = "Avali Tails"
 	id = "tail_avalari"
 	sprite_acc = /datum/sprite_accessory/tails/avalari
 	default = "Standard"
 
 /datum/mutant_spritecat/avalari_tails/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avalari, GLOB.tails_list_avalari)
-		world.log << "CELEBRATE: FOR THE SCUGS HAVE TAILS"
+		world.log << "CELEBRATE: FOR THE AVALI HAVE TAILS"
 		return ..()
 
 /datum/sprite_accessory/tails/avalari
@@ -282,16 +304,20 @@ GLOBAL_LIST_EMPTY(tails_list_avalari)
 	else
 		return COLOR_WHITE
 
-/datum/sprite_accessory/tails/avalari/none
-	name = "None"
-	icon_state = "none"
+/datum/sprite_accessory/tails/avalari/standard
+	name = "Standard"
+	icon_state = "standard"
 
 /datum/sprite_accessory/tails/avalari/fluffy
 	name = "Fluffy"
 	icon_state = "fluffy"
 
+/datum/sprite_accessory/tails/avalari/thin
+	name = "Thin"
+	icon_state = "thin"
+
 /datum/mutant_newdnafeature/avalari_tail
-	name = "Slugcat Tails DNA"
+	name = "Avali Tails DNA"
 	id = "tail_avalari"
 
 /datum/mutant_newdnafeature/avalari_tail/gen_unique_features(var/features, var/L)

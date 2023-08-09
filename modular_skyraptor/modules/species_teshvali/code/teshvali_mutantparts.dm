@@ -60,6 +60,8 @@ GLOBAL_LIST_EMPTY(bodymarks_list_teshvali)
 	id = "bodymarks_teshvali"
 	sprite_acc = /datum/sprite_accessory/body_markings/teshvali
 	default = "None"
+	hasinner = TRUE
+	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
 
 /datum/mutant_spritecat/teshvali_bodymarks/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings/teshvali, GLOB.bodymarks_list_teshvali)
@@ -80,6 +82,16 @@ GLOBAL_LIST_EMPTY(bodymarks_list_teshvali)
 	else
 		return COLOR_WHITE
 
+/datum/sprite_accessory/body_markings/teshvali/innercolor_override(mob/living/carbon/human/target)
+	if(!isnull(target))
+		var/col = target.dna.features["tricolor-a3"]
+		if(!isnull(col))
+			return col
+		else
+			return COLOR_WHITE
+	else
+		return COLOR_WHITE
+
 /datum/sprite_accessory/body_markings/teshvali/none
 	name = "None"
 	icon_state = "none"
@@ -87,6 +99,16 @@ GLOBAL_LIST_EMPTY(bodymarks_list_teshvali)
 /datum/sprite_accessory/body_markings/teshvali/lbelly
 	name = "Light Belly"
 	icon_state = "lbelly"
+	gender_specific = 1
+
+/datum/sprite_accessory/body_markings/teshvali/lbelly_striped
+	name = "Striped Light Belly"
+	icon_state = "lbelly_striped"
+	gender_specific = 1
+
+/datum/sprite_accessory/body_markings/teshvali/belly_striped
+	name = "Striped Belly"
+	icon_state = "belly_striped"
 	gender_specific = 1
 
 
@@ -131,7 +153,7 @@ GLOBAL_LIST_EMPTY(horns_list_teshvali)
 
 /datum/mutant_spritecat/teshvali_horns/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns/teshvali, GLOB.horns_list_teshvali)
-		world.log << "CELEBRATE: FOR THE SCUGS HAVE HORN-EARS"
+		world.log << "CELEBRATE: FOR THE TESHIS HAVE HORN-EARS"
 		return ..()
 
 /datum/sprite_accessory/horns/teshvali
@@ -253,14 +275,14 @@ GLOBAL_LIST_EMPTY(horns_list_teshvali)
 // == SECTION 4: TAILS ==
 GLOBAL_LIST_EMPTY(tails_list_teshvali)
 /datum/mutant_spritecat/teshvali_tails
-	name = "Slugcat Tails"
+	name = "Teshari Tails"
 	id = "tail_teshvali"
 	sprite_acc = /datum/sprite_accessory/tails/teshvali
 	default = "Standard"
 
 /datum/mutant_spritecat/teshvali_tails/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/teshvali, GLOB.tails_list_teshvali)
-		world.log << "CELEBRATE: FOR THE SCUGS HAVE TAILS"
+		world.log << "CELEBRATE: FOR THE TESHIS HAVE TAILS"
 		return ..()
 
 /datum/sprite_accessory/tails/teshvali
@@ -290,16 +312,20 @@ GLOBAL_LIST_EMPTY(tails_list_teshvali)
 	else
 		return COLOR_WHITE
 
-/datum/sprite_accessory/tails/teshvali/none
-	name = "None"
-	icon_state = "none"
+/datum/sprite_accessory/tails/teshvali/standard
+	name = "Standard"
+	icon_state = "standard"
 
 /datum/sprite_accessory/tails/teshvali/fluffy
 	name = "Fluffy"
 	icon_state = "fluffy"
 
+/datum/sprite_accessory/tails/teshvali/thin
+	name = "Thin"
+	icon_state = "thin"
+
 /datum/mutant_newdnafeature/teshvali_tail
-	name = "Slugcat Tails DNA"
+	name = "Teshari Tails DNA"
 	id = "tail_teshvali"
 
 /datum/mutant_newdnafeature/teshvali_tail/gen_unique_features(var/features, var/L)
