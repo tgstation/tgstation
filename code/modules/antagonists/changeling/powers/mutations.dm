@@ -194,7 +194,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 10
 	bare_wound_bonus = 10
-	armour_penetration = 30
+	armour_penetration = 35
 	var/can_drop = FALSE
 	var/fake = FALSE
 
