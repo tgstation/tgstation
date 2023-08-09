@@ -152,7 +152,7 @@
 		heal_brute = 25,\
 		heal_burn = 25,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider, /mob/living/basic/young_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
 	)
@@ -210,7 +210,7 @@
 		heal_time = 3 SECONDS,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle, /mob/living/basic/young_spider/tangle)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
 		complete_text = "%SOURCE%'s wounds mend together.",\
@@ -485,7 +485,7 @@
 		heal_burn = 45,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh)),\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh, /mob/living/basic/young_spider/hunter/flesh)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
 		complete_text = "%SOURCE%'s wounds mend together.",\
