@@ -1212,8 +1212,6 @@
 /obj/machinery/vending/proc/vend_greyscale(list/params, datum/greyscale_modify_menu/menu)
 	if(usr != menu.user)
 		return
-	if(!menu.target.can_interact(usr))
-		return
 	vend(params, menu.split_colors)
 
 /obj/machinery/vending/proc/vend(list/params, list/greyscale_colors)
