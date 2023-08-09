@@ -16,13 +16,17 @@ function SS13.istype(thing, type)
 end
 
 function SS13.new(type, ...)
-	local datum = SS13.new_untracked("_new", type, table.unpack({...}))
+	local datum = SS13.new_untracked(type, table.unpack({...}))
 	if datum then
 		local references = SS13.state.vars.references
 		references:add(datum)
 		SS13.state:call_proc("clear_on_delete", datum)
 		return datum
 	end
+end
+
+function SS13.type(string_type)
+	return dm.global_proc("_text2path", string_type)
 end
 
 function SS13.new_untracked(type, ...)

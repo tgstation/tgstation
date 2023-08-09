@@ -174,6 +174,9 @@ local datum = SS13.new("/datum")
 print(SS13.is_valid(datum)) -- true
 ```
 
+### SS13.type(string)
+Converts a string into a type. Cleaner than doing `dm.global_proc("_text2path", "/path/to/type")`
+
 ### SS13.await(thing_to_call, proc_to_call, ...)
 Calls `proc_to_call` on `thing_to_call`, with `...` as its arguments, and sleeps until that proc returns.
 Returns two return values - the first is the return value of the proc, and the second is the message of any runtime exception thrown by the called proc.
