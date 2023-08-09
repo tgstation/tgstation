@@ -66,21 +66,20 @@ const ShoppingTab = (props, context) => {
   );
   let goods =
     searchItem.length > 0
-      ? order_datums.filter((item) => search(item) && item.cat === shopCategory)
+      ? order_datums.filter((item) => search(item))
       : order_datums.filter((item) => item && item.cat === shopCategory);
 
   return (
     <Stack fill vertical>
       <Section mb={-1}>
         <Stack.Item>
-          <Tabs>
+          <Tabs fluid textAlign="center">
             {order_categories.map((category) => (
               <Tabs.Tab
                 key={category}
                 selected={category === shopCategory}
                 onClick={() => {
                   setShopCategory(category);
-
                   if (searchItem.length > 0) {
                     setSearchItem('');
                   }
@@ -88,18 +87,16 @@ const ShoppingTab = (props, context) => {
                 {category}
               </Tabs.Tab>
             ))}
-            <Stack.Item grow>
+            <Stack.Item>
               <Input
                 autoFocus
-                ml={5}
-                width="150px"
                 mt={0.5}
+                width="150px"
                 placeholder="Search item..."
                 value={searchItem}
                 onInput={(e, value) => {
                   setSearchItem(value);
                 }}
-                fluid
               />
             </Stack.Item>
           </Tabs>
@@ -121,10 +118,9 @@ const ShoppingTab = (props, context) => {
                     <Stack.Item>
                       <Box
                         as="img"
-                        m={1}
                         src={`data:image/jpeg;base64,${item.product_icon}`}
-                        height="36px"
-                        width="36px"
+                        height="34px"
+                        width="34px"
                         style={{
                           '-ms-interpolation-mode': 'nearest-neighbor',
                           'vertical-align': 'middle',
@@ -133,7 +129,7 @@ const ShoppingTab = (props, context) => {
                     </Stack.Item>
                   )}
                   <Stack.Item>{capitalize(item.name)}</Stack.Item>
-                  <Stack.Item grow mt={-1} color="label" fontSize="10px">
+                  <Stack.Item grow color="label" fontSize="10px">
                     <Button
                       color="transparent"
                       icon="info"
@@ -147,7 +143,6 @@ const ShoppingTab = (props, context) => {
                       {item.cost + credit_type + ' per order.'}
                     </Box>
                     <Button
-                      ml={2}
                       icon="minus"
                       onClick={() =>
                         act('remove_one', {
@@ -228,7 +223,7 @@ const CheckoutTab = (props, context) => {
                 <Stack.Item key={key}>
                   <Stack>
                     <Stack.Item>{capitalize(item.name)}</Stack.Item>
-                    <Stack.Item grow mt={-1} color="label" fontSize="10px">
+                    <Stack.Item grow color="label" fontSize="10px">
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
@@ -323,7 +318,7 @@ const OrderSent = (props, context) => {
 
 export const ProduceConsole = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { points, off_cooldown, order_categories } = data;
+  const { credit_type, points, off_cooldown, order_categories } = data;
   const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
   const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
@@ -361,7 +356,7 @@ export const ProduceConsole = (props, context) => {
           <Section>
             <Stack direction="column">
               <Stack.Item grow>
-                Currently available balance: {points || 0}
+                Currently available balance: {points || 0} {credit_type}
               </Stack.Item>
               <Stack.Item textAlign="right" fill>
                 <Button
