@@ -64,11 +64,6 @@
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
 
-/mob/dead/new_player/get_status_tab_items()
-	. = ..()
-	if(!SSticker.HasRoundStarted()) //only show this when the round hasn't started yet
-		. += "Readiness status: [ready ? "" : "Not "]Readied Up!"
-
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
 	if(QDELETED(src) || !src.client)

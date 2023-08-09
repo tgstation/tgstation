@@ -14,6 +14,10 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
+/obj/item/aicard/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+
 /obj/item/aicard/Destroy(force)
 	if(AI)
 		AI.ghostize(can_reenter_corpse = FALSE)

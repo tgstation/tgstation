@@ -1,0 +1,5 @@
+author: "Boopideedoo"
+delete-after: True
+changes:
+  - bugfix: "fixed a Camera in atmos"
+  - rscadd: "missing Camera in chem storage"

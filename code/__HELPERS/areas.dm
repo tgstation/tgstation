@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
 
-/proc/create_area(mob/creator)
+/proc/create_area(mob/creator, new_area_type = /area)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
 		/turf/open/space,
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		return
 
 	var/list/apc_map = list()
-	var/list/areas = list("New Area" = /area)
+	var/list/areas = list("New Area" = new_area_type)
 	for(var/i in 1 to turf_count)
 		var/turf/the_turf = turfs[i]
 		var/area/place = get_area(the_turf)

@@ -870,6 +870,10 @@
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/engineering/supermatter/waste
+	name = "\improper Supermatter Waste Chamber"
+	icon_state = "engine_sm_waste"
+
 /area/station/engineering/supermatter/room
 	name = "\improper Supermatter Engine Room"
 	icon_state = "engine_sm_room"

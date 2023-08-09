@@ -65,7 +65,12 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/picky_eater/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
-	if(!rod.bait || !(HAS_TRAIT(rod.bait, GOOD_QUALITY_BAIT_TRAIT) || HAS_TRAIT(rod.bait, GREAT_QUALITY_BAIT_TRAIT)))
+	if(!rod.bait)
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
+		return
+	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+		return
+	if(HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) || HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 
@@ -105,11 +110,17 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/carnivore/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
-	.[MULTIPLICATIVE_FISHING_MOD] = 0
-	if(rod.bait && istype(rod.bait, /obj/item/food))
-		var/obj/item/food/food_bait = rod.bait
-		if(food_bait.foodtypes & MEAT)
-			.[MULTIPLICATIVE_FISHING_MOD] = 1
+	if(!rod.bait)
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
+		return
+	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+		return
+	if(!istype(rod.bait, /obj/item/food))
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
+		return
+	var/obj/item/food/food_bait = rod.bait
+	if(!(food_bait.foodtypes & MEAT))
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/vegan
 	name = "Herbivore"
@@ -118,9 +129,13 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/vegan/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
-	.[MULTIPLICATIVE_FISHING_MOD] = 0
-	if(rod.bait && istype(rod.bait, /obj/item/food/grown))
-		.[MULTIPLICATIVE_FISHING_MOD] = 1
+	if(!rod.bait)
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
+		return
+	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+		return
+	if(!istype(rod.bait, /obj/item/food/grown))
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/emulsijack
 	name = "Emulsifier"
@@ -154,7 +169,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding >= source.feeding_frequency || !isaquarium(source.loc))
+	if(world.time - source.last_feeding < source.feeding_frequency || !isaquarium(source.loc))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -218,7 +233,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding >= source.feeding_frequency || !isaquarium(source.loc))
+	if(world.time - source.last_feeding < source.feeding_frequency || !isaquarium(source.loc))
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
 	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))

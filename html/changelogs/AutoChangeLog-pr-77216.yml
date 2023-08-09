@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - bugfix: "Fixes pAI mind transfer from a bot to their card runtiming when the bot gets broken."

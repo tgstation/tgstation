@@ -7,6 +7,8 @@
 	var/account_balance = 0
 	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
 	var/mining_points = 0
+	///Debt. If higher than 0, A portion of the credits is earned (or the whole debt, whichever is lower) will go toward paying it off.
+	var/account_debt = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
 	///The job datum of the account owner.
@@ -88,16 +90,6 @@
 	being_dumped = TRUE
 
 /**
- * Performs the math component of adjusting a bank account balance.
- * Arguments:
- * * amount - the quantity of credits that will be written off if the value is negative, or added if it is positive.
- */
-/datum/bank_account/proc/_adjust_money(amount)
-	account_balance += amount
-	if(account_balance < 0)
-		account_balance = 0
-
-/**
  * Returns TRUE if a bank account has more than or equal to the amount, amt.
  * Otherwise returns false.
  * Arguments:
@@ -114,11 +106,29 @@
  */
 /datum/bank_account/proc/adjust_money(amount, reason)
 	if((amount < 0 && has_money(-amount)) || amount > 0)
-		_adjust_money(amount)
+		var/debt_collected = 0
+		if(account_debt > 0 && amount > 0)
+			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
+		account_balance += amount - debt_collected
 		if(reason)
 			add_log_to_history(amount, reason)
+		if(debt_collected)
+			pay_debt(debt_collected, FALSE)
 		return TRUE
 	return FALSE
+
+///Called when a portion of a debt is to be paid. It'll return the amount of credits put forwards to extinguish the debt.
+/datum/bank_account/proc/pay_debt(amount, is_payment = TRUE)
+	var/amount_to_pay = min(amount, account_debt)
+	if(is_payment)
+		if(!adjust_money(-amount, "Other: Debt Payment"))
+			return 0
+	else
+		add_log_to_history(-amount, "Other: Debt Collection")
+	log_econ("[amount_to_pay] credits were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
+	account_debt -= amount_to_pay
+	SEND_SIGNAL(src, COMSIG_BANK_ACCOUNT_DEBT_PAID)
+	return amount_to_pay
 
 /**
  * Performs a transfer of credits to the bank_account datum from another bank account.

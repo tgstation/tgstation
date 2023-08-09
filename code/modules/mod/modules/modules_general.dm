@@ -105,7 +105,9 @@
 	overlay_state_active = "module_jetpack_on"
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
+	/// Do we have stabilizers? If yes the user won't move from inertia.
 	var/stabilize = TRUE
+	/// Callback to see if we can thrust the user.
 	var/thrust_callback
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
@@ -585,7 +587,7 @@
 	incompatible_modules = list(/obj/item/mod/module/hat_stabilizer)
 	/*Intentionally left inheriting 0 complexity and removable = TRUE;
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
-	/// Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
+	/// Currently "stored" hat. No armor or function will be inherited, only the icon and cover flags.
 	var/obj/item/clothing/head/attached_hat
 	/// Original cover flags for the MOD helmet, before a hat is placed
 	var/former_flags
@@ -616,14 +618,18 @@
 	SIGNAL_HANDLER
 	if(!istype(hitting_item, /obj/item/clothing/head))
 		return
+	var/obj/item/clothing/hat = hitting_item
 	if(!mod.active)
 		balloon_alert(user, "suit must be active!")
 		return
 	if(attached_hat)
 		balloon_alert(user, "hat already attached!")
 		return
+	if(hat.clothing_flags & STACKABLE_HELMET_EXEMPT)
+		balloon_alert(user, "invalid hat!")
+		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
-		attached_hat = hitting_item
+		attached_hat = hat
 		former_flags = mod.helmet.flags_cover
 		former_visor_flags = mod.helmet.visor_flags_cover
 		mod.helmet.flags_cover |= attached_hat.flags_cover

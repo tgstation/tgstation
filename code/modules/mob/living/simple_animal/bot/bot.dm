@@ -135,6 +135,12 @@
 		return "Inactive"
 	return "[mode]"
 
+/**
+ * Returns a string of flavor text for emagged bots as defined by policy.
+ */
+/mob/living/simple_animal/bot/proc/get_emagged_message()
+	return get_policy(ROLE_EMAGGED_BOT) || "You are a malfunctioning bot! Disrupt everyone and cause chaos!"
+
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return FALSE
@@ -225,7 +231,7 @@
 		ban_type = ROLE_BOT,\
 		poll_candidates = can_announce,\
 		poll_ignore_key = POLL_IGNORE_BOTS,\
-		assumed_control_message = possessed_message,\
+		assumed_control_message = (bot_cover_flags & BOT_COVER_EMAGGED) ? get_emagged_message() : possessed_message,\
 		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)),\
 		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)),\
 	)
@@ -332,6 +338,7 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
+		to_chat(src, span_boldnotice(get_emagged_message()))
 		if(user)
 			log_combat(user, src, "emagged")
 		return TRUE
@@ -1019,6 +1026,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
 				usr.log_message("disabled safety lock of [src]", LOG_GAME)
 				bot_reset()
+				to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
+				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_cover_flags & BOT_COVER_HACKED))
 				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
@@ -1027,6 +1036,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 			to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
 			usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
 			bot_reset()
+			to_chat(src, span_userdanger("Software restored to standard."))
+			to_chat(src, span_boldnotice(possessed_message))
 		if("eject_pai")
 			if(!paicard)
 				return
