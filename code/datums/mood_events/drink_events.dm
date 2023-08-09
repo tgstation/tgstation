@@ -49,6 +49,6 @@
 	timeout = 10 MINUTES
 
 /datum/mood_event/wellcheers
-	description = "The crashing of the waves is urging me on."
-	mood_change = 2
+	description = "What a tasty can of Wellcheers! The salty grape taste is a great pick-me-up."
+	mood_change = 3
 	timeout = 7 MINUTES
