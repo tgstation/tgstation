@@ -31,8 +31,10 @@ end
 
 function SS13.qdel(datum)
 	if SS13.is_valid(datum) then
-		return dm.global_proc("qdel", datum)
+		dm.global_proc("qdel", datum)
+		return true
 	end
+	return false
 end
 
 function SS13.new_untracked(type, ...)
