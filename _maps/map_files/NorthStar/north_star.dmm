@@ -45935,11 +45935,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Atmospherics Cam #5";
-	dir = 5;
-	network = list("ss13","engine")
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lYu" = (
@@ -74012,6 +74007,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/camera/emp_proof/directional/east,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -86005,6 +86001,7 @@
 /area/station/medical/psychology)
 "wwW" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/camera/emp_proof/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wxb" = (
