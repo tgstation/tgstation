@@ -1,29 +1,31 @@
 /**
  * Attached to a basic mob that will then be able to tear down a wall after some time.
  */
-/datum/component/tear_wall
+/datum/element/tear_wall
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 3
 	/// The rate at which we can break regular walls
-	var/regular_tear_time = 2 SECONDS
+	var/regular_tear_time
 	/// The rate at which we can break reinforced walls
-	var/reinforced_tear_time = 4 SECONDS
+	var/reinforced_tear_time
 	/// If we are already deconstructing a wall
 	var/tearing_wall = FALSE
 
-/datum/component/tear_wall/Initialize(regular_tear_time = 2 SECONDS, reinforced_tear_time = 4 SECONDS)
-	if(!isbasicmob(parent))
+/datum/element/tear_wall/Attach(datum/target, regular_tear_time = 2 SECONDS, reinforced_tear_time = 4 SECONDS)
+	. = ..()
+	if(!isbasicmob(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.regular_tear_time = regular_tear_time
 	src.reinforced_tear_time = reinforced_tear_time
+	RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(attack_wall))
 
-/datum/component/tear_wall/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(attack_wall))
-
-/datum/component/tear_wall/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
+/datum/element/bonus_damage/Detach(datum/source)
+	UnregisterSignal(source, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
+	return ..()
 
 /// Checks if we are attacking a wall
-/datum/component/tear_wall/proc/attack_wall(mob/living/basic/attacker, atom/target, success)
+/datum/element/tear_wall/proc/attack_wall(mob/living/basic/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
 	if(!iswallturf(target))
@@ -35,7 +37,7 @@
 	INVOKE_ASYNC(src, PROC_REF(async_attack_wall), attacker, thewall, prying_time)
 
 /// Performs taking down the wall
-/datum/component/tear_wall/proc/async_attack_wall(mob/living/basic/attacker, turf/closed/wall/thewall, prying_time)
+/datum/element/tear_wall/proc/async_attack_wall(mob/living/basic/attacker, turf/closed/wall/thewall, prying_time)
 	if(tearing_wall)
 		return
 	tearing_wall = TRUE

@@ -263,7 +263,7 @@
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
 
-	AddComponent(/datum/component/tear_wall)
+	AddElement(/datum/element/tear_wall)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /mob/living/basic/giant_spider/tarantula/Destroy()
@@ -301,7 +301,7 @@
 /mob/living/basic/giant_spider/viper/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/bonus_damage)
+	AddElement(/datum/element/bonus_damage)
 
 /**
  * ### Spider Broodmother
