@@ -332,3 +332,89 @@
   - bugfix: Fix parasitic infection to cure upon liver removal
   - qol: Add sounds and flashing effects to slot machines
   - sound: Add new ding sound to slot machines from https://freesound.org/people/Natty23/sounds/411747/
+2023-08-09:
+  Ben10Omintrix:
+  - refactor: the hivebot is now a basic please report any bugs
+  CRITAWAKETS:
+  - rscadd: The Syndicate has begun rolling out new Tactical Deniability Implants
+      for their Nuclear Operative teams. It seems these implants are designed to make
+      teams "fight harder" by "giving incentives for fighting to the bitter end",
+      whatever they're talking about.
+  CliffracerX:
+  - image: resprited all duffelbags, including worn and inhand variants to match modern
+      storage.
+  Fazzie:
+  - qol: 'Many changes in Birdshot''s Library.
+
+      Makes the curator''s bookshelf be Adult rather than Random
+
+      Makes it so the curator can actually leave his desk to the main room
+
+      In order to do that I had to move one of the bookshelves away; removed the spacewindow
+      behind bookshelves since they didn''t make any sense in-universe and put the
+      moved bookcase there
+
+      Makes a wire no longer go through a wall to reach the library APC'
+  Ghommie:
+  - bugfix: Fixed certain aquarium fish eating other fish when not hungry.
+  - rscadd: Added a score award that counts how many achievements you've unlocked
+      so far.
+  - qol: Examining a fishing rod will now provide information on equipped hook, line,
+      bait, and right click functionality.
+  - balance: Fishing without a bait will only lower the odds (a smidge less, too)
+      of catching fish, not other things.
+  - balance: Catching something that isn't a fish or a living mob won't consume the
+      bait anymore.
+  - balance: The Bepis fishing rod will now ignore fish's bait preferences.
+  Melbert:
+  - rscadd: PAIs can now cast wizard spells should they have any.
+  - rscadd: AIs located in intellicards can now cast wizard spells should they have
+      any.
+  - rscadd: Some spells, such as AoE or conjure spells, are now castable from within
+      Mechas or Clown Cars. To varying degrees of success.
+  - rscadd: Knock will now unlock and open closets you are hiding within.
+  - rscadd: Repulse will now throw open closets you are hiding within.
+  - qol: Abductor Baton Recall now starts linked to their baton, and you can no longer
+      unlink your baton
+  - qol: Instant Summons now shows what item is marked over the icon
+  - bugfix: Fixes Instant Summon's name not updating when marking an item
+  Sealed101:
+  - bugfix: fixed basic mobs freezing up when in melee range of a target
+  Tattle:
+  - admin: Pings an admin role on discord when a new player joins (when enabled by
+      config)
+  Vekter:
+  - sound: Law changes will now play a sound to silicons impacted by those changes.
+  dieamond13:
+  - bugfix: removes a stray obj/item from random metastation wall
+  necromanceranne:
+  - bugfix: You can do autopsies on people who were revived and died again after they
+      had already been dissected.
+  - qol: Autopsies have become the surgery needed to complete the dissection experiments.
+      As a result, the dissection surgery has been removed as it is now redundant.
+  - qol: A coroner knows whether someone has been autopsied and recently dissected
+      (and thus hasn't been revived) by examining them.
+  - balance: Standardizes some of the nuclear operative entries to have more consistent
+      pricing within their respective categories.
+  - rscadd: Adds some new categories so that players have an easier time navigating
+      the nuclear operative uplink.
+  - balance: Many items have had prices reduced or adjusted to make them more desirable
+      or more consistent within their category.
+  - rscadd: Weapon kits have replaced almost all the individual weapons in the uplink.
+      You now buy these instead of the individual weapon. These often come with spare
+      ammo or relevant gear for success.
+  - rscadd: 'Most ammo types have been standardized in price.
+
+      refactor; Removes a lot of redundant item entry code and tidies up the actual
+      code part of the nuclear uplink so that it is much easier to find things within
+      it.'
+  - rscadd: Added 40 new cosmetic items to the Syndicate Store. Buy them now from
+      the Hat Crate, only 5 TC!
+  - code_imp: Updated the nuclear operative uplink files.
+  siliconOpossum:
+  - rscadd: Added greyscale suitskirt, available in clothesmates
+  - rscadd: You can now roll up the sleeves of greyscale buttondown shirts
+  - qol: Re-added previously removed black suitskirt and the RD's tan suitskirt, as
+      pre-colored variants of the above
+  - bugfix: Fixed only one buttondown with slacks being available in clothesmates
+  - image: Slightly adjusted greyscale buttondown sprite, you look less fat now!

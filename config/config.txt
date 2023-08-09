@@ -294,6 +294,9 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ##	Requres database
 #IRC_FIRST_CONNECTION_ALERT
 
+## Discord ID of a role that should be pinged when a new player makes their first connection
+#NEW_PLAYER_ALERT_ROLE_ID 1138188190604341308
+
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
 #PANIC_BUNKER
