@@ -76,3 +76,5 @@
 #define BB_TARGET_ROCK "BB_target_rock"
 ///the cannibal target we shall consume
 #define BB_TARGET_CANNIBAL "BB_target_cannibal"
+///the tree we will burn down
+#define BB_TARGET_TREE "BB_target_tree"

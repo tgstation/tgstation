@@ -84,7 +84,6 @@
 		/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced,
 		/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow,
 		/mob/living/simple_animal/hostile/asteroid/ice_demon,
-		/mob/living/simple_animal/hostile/asteroid/ice_whelp,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/polarbear/lesser,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
