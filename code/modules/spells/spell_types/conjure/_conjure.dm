@@ -16,6 +16,9 @@
 	/// If TRUE, no two summons can be spawned in the same turf.
 	var/summon_respects_prev_spawn_points = TRUE
 
+/datum/action/cooldown/spell/conjure/is_valid_target(atom/cast_on)
+	return isturf(cast_on.loc)
+
 /datum/action/cooldown/spell/conjure/cast(atom/cast_on)
 	. = ..()
 	var/list/to_summon_in = list()

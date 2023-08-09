@@ -260,6 +260,13 @@
 	list_reagents = list(/datum/reagent/consumable/shamblers = 30, /datum/reagent/eldritch = 5)
 	drink_type = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/cup/soda_cans/wellcheers
+	name = "Wellcheers Juice"
+	desc = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	icon_state = "wellcheers"
+	list_reagents = list(/datum/reagent/consumable/wellcheers = 30)
+	drink_type = SUGAR | JUNKFOOD
+
 /obj/item/reagent_containers/cup/soda_cans/grey_bull
 	name = "Grey Bull"
 	desc = "Grey Bull, it gives you gloves!"

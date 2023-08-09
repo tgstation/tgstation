@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed gibtonite explosions having flames and flash ranges"

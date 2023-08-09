@@ -1,7 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - rscadd: "Added whisper-sensitive cybernetic ears, which make it much easier for the user to hear whispers at the cost of being more vulnerable to loud noises"
-  - rscadd: "Added wall-penetrating cybernetic ears, which allow you to hear speech through walls"
-  - balance: "Basic cybernetic ears and upgraded cybernetic ears are now unlocked with the other basic/normal cybernetics"
-  - balance: "The welding shield and luminiscent cybernetic eyes are now unlocked with the other upgraded cybernetics"

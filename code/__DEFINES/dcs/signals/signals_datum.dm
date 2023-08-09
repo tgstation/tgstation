@@ -42,3 +42,6 @@
 #define COMSIG_GASMIX_REMOVED "comsig_gasmix_removed"
 /// From /datum/gas_mixture/proc/react: ()
 #define COMSIG_GASMIX_REACTED "comsig_gasmix_reacted"
+
+///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
+#define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"

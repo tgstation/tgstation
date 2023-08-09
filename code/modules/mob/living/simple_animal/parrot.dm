@@ -956,6 +956,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	..()
 
 /mob/living/simple_animal/parrot/poly/death(gibbed)
+	if(HAS_TRAIT(src, TRAIT_DONT_WRITE_MEMORY))
+		return ..() // Don't read memory either.
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak || prob(0.666))
@@ -964,7 +966,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			mind.transfer_to(G)
 		else
 			G.key = key
-	..(gibbed)
+	return ..()
 
 /mob/living/simple_animal/parrot/poly/proc/Read_Memory()
 	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
