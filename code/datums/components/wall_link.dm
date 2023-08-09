@@ -15,11 +15,18 @@
 /datum/component/wall_link/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_TURF_CHANGE, PROC_REF(drop_wallmount))
+	RegisterSignal(linked_object, COMSIG_QDELETING, PROC_REF(on_linked_destroyed))
 
 /datum/component/wall_link/UnregisterFromParent()
 	linked_object = null
 	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_TURF_CHANGE))
 
+/**
+ * Basic reference handling if the hanging/linked object is destroyed first.
+ */
+/datum/component/wall_link/proc/on_linked_destroyed()
+	SIGNAL_HANDLER
+	linked_object = null
 
 /**
  * When the wall is examined, explains that it's supporting the linked object.
