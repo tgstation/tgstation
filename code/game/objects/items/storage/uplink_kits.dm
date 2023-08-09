@@ -366,6 +366,12 @@
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
 	new /obj/item/implanter/explosive_macro(src)
 
+/obj/item/storage/box/syndie_kit/imp_deniability
+	name = "tactical deniability implant box"
+
+/obj/item/storage/box/syndie_kit/imp_deniability/PopulateContents()
+	new /obj/item/implanter/tactical_deniability(src)
+
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
 
@@ -588,19 +594,30 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
+/obj/item/storage/box/syndie_kit/manhack_grenades/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/grenade/spawnergrenade/manhacks(src)
+
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
 	new /obj/item/reagent_containers/cup/glass/mug/coco(src)
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
 
+/obj/item/storage/box/syndie_kit/demoman/PopulateContents()
+	new /obj/item/gun/grenadelauncher(src)
+	new /obj/item/storage/belt/grenade/full(src)
+	if(prob(1))
+		new /obj/item/clothing/head/hats/hos/shako(src)
+		new /obj/item/mod/module/hat_stabilizer(src)
+
 /// Surplus Ammo Box
 
-/obj/item/storage/box/syndie_kit/surplus
+/obj/item/storage/box/syndie_kit/sniper_surplus
 	name = "surplus .50 BMG magazine box"
 	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
 
-/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
+/obj/item/storage/box/syndie_kit/sniper_surplus/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 
