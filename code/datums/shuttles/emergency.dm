@@ -4,6 +4,11 @@
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
 
+/datum/map_template/shuttle/emergency/New()
+	. = ..()
+	if(!occupancy_limit && !who_can_purchase)
+		CRASH("The [name] needs an occupancy limit!")
+
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
 	name = "Backup Shuttle"
