@@ -306,13 +306,14 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
-	attack_verb_simple = list("bonks", "bludgeons", "pounds")
+	attack_verb_simple = list("bonk", "bludgeon", "pound")
 	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = 3
+	attack_speed = 1.2 SECONDS
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
@@ -365,6 +366,7 @@
 		var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
 		target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
 		target_mob.Knockdown(2 SECONDS)
-	user.adjustBruteLoss(force / recoil_factor)
+	var/body_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	user.apply_damage(force / recoil_factor, BRUTE, body_zone, target.run_armor_check(body_zone, MELEE))
 	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
 	log_combat(user, user, "recoiled Big Slappy into")

@@ -23,8 +23,6 @@
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
 	armor_type = /datum/armor/item_wrench
-	item_flags = SLOWS_WHILE_IN_HAND
-	slowdown = 3
 
 /datum/armor/item_wrench
 	fire = 50
