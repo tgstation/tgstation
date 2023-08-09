@@ -63,7 +63,7 @@
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 1,
 		/mob/living/simple_animal/hostile/asteroid/ice_demon = 100,
-		/mob/living/simple_animal/hostile/asteroid/ice_whelp = 60,
+		/mob/living/basic/mining/ice_whelp = 60,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 100,
 		/obj/structure/spawner/ice_moon/demonic_portal = 6,
 		/obj/structure/spawner/ice_moon/demonic_portal/ice_whelp = 6,
