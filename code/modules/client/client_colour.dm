@@ -16,8 +16,8 @@
  * Define subtypes of this datum
  */
 /datum/client_colour
-	///Any client.color-valid value
-	var/colour = ""
+	///The color we want to give to the client. This has to be either a hexadecimal color or a color matrix.
+	var/colour
 	///The mob that owns this client_colour.
 	var/mob/owner
 	/**
@@ -150,7 +150,6 @@
 
 /datum/client_colour/glass_colour
 	priority = PRIORITY_LOW
-	colour = "red"
 
 /datum/client_colour/glass_colour/green
 	colour = "#aaffaa"

@@ -194,7 +194,7 @@
 
 /datum/client_colour/cursed_heart_blood
 	priority = 100 //it's an indicator you're dying, so it's very high priority
-	colour = "red"
+	colour = "#FF0000"
 
 /obj/item/organ/internal/heart/cybernetic
 	name = "basic cybernetic heart"
