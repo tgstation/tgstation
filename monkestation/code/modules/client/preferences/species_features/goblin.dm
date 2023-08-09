@@ -9,7 +9,7 @@
 	return possible_values_for_sprite_accessory_list_for_body_part(
 		GLOB.goblin_ears_list,
 		"goblin_ears",
-		list("ADJ"),
+		list("ADJ", "FRONT"),
 	)
 
 /datum/preference/choiced/goblin_ears/apply_to_human(mob/living/carbon/human/target, value)

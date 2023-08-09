@@ -5452,6 +5452,7 @@
 #include "monkestation\code\modules\client\preferences\loadout_override_preference.dm"
 #include "monkestation\code\modules\client\preferences\alt_jobs\_job.dm"
 #include "monkestation\code\modules\client\preferences\alt_jobs\titles.dm"
+#include "monkestation\code\modules\client\preferences\species_features\goblin.dm"
 #include "monkestation\code\modules\client\preferences\species_features\ipc.dm"
 #include "monkestation\code\modules\client\preferences\species_features\simians.dm"
 #include "monkestation\code\modules\clothing\head\costume.dm"
@@ -5841,5 +5842,4 @@
 #include "monkestation\code\random_rooms\engines\kilostation.dm"
 #include "monkestation\code\random_rooms\engines\metastation.dm"
 #include "monkestation\code\random_rooms\engines\tramstation.dm"
-#include "monkestation\code\modules\client\preferences\species_features\goblin.dm"
 // END_INCLUDE

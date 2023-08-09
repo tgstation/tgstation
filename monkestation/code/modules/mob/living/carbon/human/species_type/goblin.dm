@@ -29,14 +29,14 @@
 	stunmod = 0.75
 	speedmod = -0.25
 	payday_modifier = 0.75
-	// bodypart_overrides = list(
-	// 	BODY_ZONE_HEAD = /obj/item/bodypart/head/human,
-	// 	BODY_ZONE_CHEST = /obj/item/bodypart/chest/human,
-	// 	BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/human,
-	// 	BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/human,
-	// 	BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/human,
-	// 	BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/human,
-	// )
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/goblin,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/goblin,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/goblin,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/goblin,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/goblin,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/goblin,
+	)
 
 /mob/living/carbon/human/species/goblin
     race = /datum/species/goblin
@@ -104,3 +104,29 @@
 	)
 
 	return to_add
+
+/obj/item/bodypart/head/goblin
+	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	limb_id = SPECIES_GOBLIN
+	is_dimorphic = FALSE
+
+/obj/item/bodypart/chest/goblin
+	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	limb_id = SPECIES_GOBLIN
+	is_dimorphic = TRUE
+
+/obj/item/bodypart/arm/left/goblin
+	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	limb_id = SPECIES_GOBLIN
+
+/obj/item/bodypart/arm/right/goblin
+	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	limb_id = SPECIES_GOBLIN
+
+/obj/item/bodypart/leg/left/goblin
+	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	limb_id = SPECIES_GOBLIN
+
+/obj/item/bodypart/leg/right/goblin
+	icon_greyscale = 'monkestation/icons/mob/species/goblin/bodyparts.dmi'
+	limb_id = SPECIES_GOBLIN
