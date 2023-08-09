@@ -13,7 +13,7 @@
 
 /datum/action/cooldown/mob_cooldown/defensive_mode/Remove(mob/living/remove_from)
 	var/mob/living/basic/owner_mob = owner
-	if(defense_active || istype(owner_mob))
+	if(defense_active && istype(owner_mob))
 		offence(owner_mob)
 
 	return ..()
