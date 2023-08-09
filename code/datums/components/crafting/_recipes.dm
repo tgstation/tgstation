@@ -43,7 +43,7 @@
 	var/delete_contents = TRUE
 
 /datum/crafting_recipe/New()
-	if(!name)
+	if(!name && result)
 		var/atom/atom_result = result
 		name = initial(atom_result.name)
 
