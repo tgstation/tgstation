@@ -205,27 +205,13 @@
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
 			return FALSE
 
-		// Otherwise, we can do some funny snowflake checks in case they're a hat-wearing simple or basic mob.
+		// Otherwise, we can check for contents if they have wizardly apparel. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
-			// Borgs can TECHNICALLY wear a hat if someone throws it on them. Not very smart of the thrower though.
-			if(iscyborg(owner))
-				var/mob/living/silicon/robot/borg_owner = owner
-				var/obj/item/clothing/clothing_hat = borg_owner.hat
-				if(!istype(clothing_hat) || !(clothing_hat?.clothing_flags & CASTING_CLOTHES))
-					if(feedback)
-						to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
-					return
-			// Similar with drones.
-			else if(isdrone(owner))
-				var/mob/living/simple_animal/drone/drone_owner = owner
-				var/obj/item/clothing/clothing_hat = drone_owner.head
-				if(!istype(clothing_hat) || !(clothing_hat?.clothing_flags & CASTING_CLOTHES))
-					if(feedback)
-						to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
-					return
-			// Not a drone, or a cyborg, you're screwed.
-			if(feedback)
-				to_chat(owner, span_warning("[src] can only be cast by hat-wearing entities!"))
+			for(var/atom/movable/item in owner.contents)
+				var/obj/item/clothing/clothem = item
+				if(istype(clothem) && clothem.clothing_flags & CASTING_CLOTHES)
+					return TRUE
+			to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 			return FALSE
 
 		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))

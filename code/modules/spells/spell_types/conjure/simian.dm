@@ -3,7 +3,7 @@
 	desc = "This spell reaches deep into the elemental plane of bananas (the monkey one, not the clown one), and \
 		summons monkeys and gorillas that will promptly flip out and attack everything in sight. Fun! \
 		Their lesser, easily manipulable minds will be convinced you are one of their allies, but only for a minute. Unless you also are a monkey."
-	button_icon_state = "bee"
+	button_icon_state = "simian"
 	sound = 'sound/ambience/antag/monkey.ogg'
 
 	school = SCHOOL_CONJURATION
@@ -23,6 +23,7 @@
 	if(spell_level == spell_max_level) // We reward the faithful.
 		summon_type = list(/mob/living/carbon/human/species/monkey/angry, /mob/living/simple_animal/hostile/gorilla)
 		spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC // Max level lets you cast it naked, for monkey larp.
+		to_chat(owner, span_notice("Your simian power has reached maximum capacity! You can now cast this spell naked, and you will create adult Gorillas with each cast."))
 
 /datum/action/cooldown/spell/conjure/simian/cast(atom/cast_on)
 	. = ..()
@@ -31,46 +32,43 @@
 		return
 	if(FACTION_MONKEY in cast_mob.faction)
 		return
-	cast_mob.faction |= list(FACTION_MONKEY)
+	cast_mob.faction |= FACTION_MONKEY
 	addtimer(CALLBACK(src, PROC_REF(remove_monky_faction), cast_mob), 1 MINUTES)
 
 /datum/action/cooldown/spell/conjure/simian/proc/remove_monky_faction(mob/cast_mob)
-	cast_mob.faction -= list(FACTION_MONKEY)
+	cast_mob.faction -= FACTION_MONKEY
 
 /datum/action/cooldown/spell/conjure/simian/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/alive_dude = summoned_object
 	alive_dude.faction |= list(FACTION_MONKEY)
 	if(ismonkey(alive_dude))
-		create_monky(alive_dude)
+		equip_monky(alive_dude)
 		return
 
-/datum/action/cooldown/spell/conjure/simian/proc/create_monky(mob/living/carbon/human/species/monkey/summoned_monkey)
+/** Equips summoned monky with gear depending on how the roll plays out, affected by spell lvl.
+ * Can give them bananas and garland or gatfruit and axes. Monkeys are comically inept, which balances out what might otherwise be a little crazy.
+ */
+/datum/action/cooldown/spell/conjure/simian/proc/equip_monky(mob/living/carbon/human/species/monkey/summoned_monkey)
 
+	// These are advanced monkeys we're talking about
 	var/datum/ai_controller/monkey/monky_controller = summoned_monkey.ai_controller
 	monky_controller.set_trip_mode(mode = FALSE)
+	summoned_monkey.fully_replace_character_name(summoned_monkey.real_name, "primal " + summoned_monkey.name)
 
 	// Monkeys get a random gear tier, but it's more likely to be good the more leveled the spell is!
 	var/monkey_gear_tier = rand(0, 5) + (spell_level - 1)
 	monkey_gear_tier = min(monkey_gear_tier, 5)
 
-	// Gear is separated by tier.
-	var/list/static/monky_weapon = list(
-		/obj/item/food/grown/banana = 1,
-		/obj/item/grown/bananapeel = 1,
-		/obj/item/tailclub = 2,
-		/obj/item/knife/combat/bone = 2,
-		/obj/item/shovel/serrated = 3,
-		/obj/item/spear/bamboospear = 3,
-		/obj/item/spear/bonespear = 4,
-		/obj/item/fireaxe/boneaxe = 4,
-		/obj/item/gun/syringe/blowgun = 5,
-		/obj/item/gun/ballistic/revolver = 5, // gatfruit = jungle weapon. i dont make the rules
+	// Monkey weapons, ordered by tier
+	var/static/list/monky_weapon = list(
+		list(/obj/item/food/grown/banana, /obj/item/grown/bananapeel),
+		list(/obj/item/tailclub, /obj/item/knife/combat/bone),
+		list(/obj/item/shovel/serrated, /obj/item/spear/bamboospear),
+		list(/obj/item/spear/bonespear, /obj/item/fireaxe/boneaxe),
+		list(/obj/item/gun/syringe/blowgun, /obj/item/gun/ballistic/revolver),
 	)
 
-	var/list/options = list()
-	for(var/i in monky_weapon)
-		if(monky_weapon[i] == monkey_gear_tier)
-			options.Add(i)
+	var/list/options = monky_weapon[min(monkey_gear_tier, length(monky_weapon))]
 
 	var/obj/item/weapon
 	if(monkey_gear_tier != 0)
@@ -79,7 +77,6 @@
 		summoned_monkey.equip_to_slot_or_del(weapon, ITEM_SLOT_HANDS)
 
 	// Load the ammo
-	// bugg,ed nothinfg in syringe?
 	if(istype(weapon, /obj/item/gun/syringe/blowgun))
 		var/obj/item/reagent_containers/syringe/crude/tribal/syring = new(summoned_monkey)
 		weapon.attackby(syring, summoned_monkey)
@@ -88,25 +85,14 @@
 	if(is_type_in_list(weapon, list(/obj/item/spear, /obj/item/fireaxe)))
 		weapon.attack_self(summoned_monkey)
 
+	// Fashionable ape wear, organised by tier
 	var/list/static/monky_hats = list(
-		// no t1
-		/obj/item/clothing/head/costume/garland = 2,
-		/obj/item/clothing/head/helmet/durathread = 3,
-		/obj/item/clothing/head/helmet/skull = 4,
+		null, // nothin here
+		/obj/item/clothing/head/costume/garland,
+		/obj/item/clothing/head/helmet/durathread,
+		/obj/item/clothing/head/helmet/skull,
 	)
 
-	// Not enough options here for each tier, let's cap at 4
-	monkey_gear_tier = min(monkey_gear_tier, 4)
-
-	options = list()
-	for(var/i in monky_hats)
-		if(monky_hats[i] == monkey_gear_tier)
-			options.Add(i)
-
-	var/obj/item/clothing
-	if(monkey_gear_tier > 1)
-		var/clothing_type = pick(options)
-		clothing = new clothing_type(summoned_monkey)
-		summoned_monkey.equip_to_slot_or_del(clothing, ITEM_SLOT_HEAD)
-
-	summoned_monkey.fully_replace_character_name(summoned_monkey.real_name, "primal " + summoned_monkey.name)
+	var/stylish_monkey_hat = monky_hats[min(monkey_gear_tier, length(monky_hats))]
+	if(!isnull(stylish_monkey_hat))
+		summoned_monkey.equip_to_slot_or_del(new stylish_monkey_hat(summoned_monkey), ITEM_SLOT_HEAD)

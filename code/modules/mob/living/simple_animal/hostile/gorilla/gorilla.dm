@@ -116,7 +116,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/lesser
 	name = "lesser Gorilla"
-	desc = "An adolescent Gorilla. It may not be fully grown but, much like a banana, that just means it's all the more sturdier and hard to chrew through for it!"
+	desc = "An adolescent Gorilla. It may not be fully grown but, much like a banana, that just means it's sturdier and harder to chew!"
 	speak_chance = 100 // compensating for something
 	maxHealth = 120
 	health = 120
