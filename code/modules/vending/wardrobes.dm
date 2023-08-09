@@ -25,6 +25,7 @@
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/security = 3,
+		/obj/item/clothing/suit/armor/vest = 3,
 		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
 		/obj/item/storage/backpack/security = 3,
@@ -165,7 +166,6 @@
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
-
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
@@ -227,7 +227,6 @@
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/radio/headset/headset_sci = 3,
-
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
