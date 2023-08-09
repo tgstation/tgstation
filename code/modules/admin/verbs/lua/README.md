@@ -175,7 +175,10 @@ print(SS13.is_valid(datum)) -- true
 ```
 
 ### SS13.type(string)
-Converts a string into a type. Cleaner than doing `dm.global_proc("_text2path", "/path/to/type")`
+Converts a string into a type. Equivalent to doing `dm.global_proc("_text2path", "/path/to/type")`
+
+### SS13.qdel(datum)
+Deletes a datum. You shouldn't try to reference it after calling this function. Equivalent to doing `dm.global_proc("qdel", datum)`
 
 ### SS13.await(thing_to_call, proc_to_call, ...)
 Calls `proc_to_call` on `thing_to_call`, with `...` as its arguments, and sleeps until that proc returns.

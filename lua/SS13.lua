@@ -29,6 +29,10 @@ function SS13.type(string_type)
 	return dm.global_proc("_text2path", string_type)
 end
 
+function SS13.qdel(datum)
+	return dm.global_proc("qdel", datum)
+end
+
 function SS13.new_untracked(type, ...)
 	return dm.global_proc("_new", type, { ... })
 end
