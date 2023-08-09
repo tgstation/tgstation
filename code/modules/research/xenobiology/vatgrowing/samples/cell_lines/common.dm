@@ -251,7 +251,7 @@
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/slime = 1)
 
-/datum/micro_organism/cell_line/blob_spore //shitty cell line to dilute the pool, feel free to make easier to grow if it doesn't interfer with growing the powerful mobs enough.
+/datum/micro_organism/cell_line/blob_spore //nuisance cell line
 	desc = "Immature blob spores"
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
@@ -262,7 +262,8 @@
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/tinlux = -6,
-		/datum/reagent/napalm = -4)
+		/datum/reagent/napalm = -4
+		/datum/reagent/medicine/psicodine = -2) //Blob zombies likely wouldn't appreciate psicodine so why this is here
 
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobspore/independent = 2) //These are useless so we might as well spawn 2.
