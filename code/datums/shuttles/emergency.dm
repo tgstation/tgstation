@@ -432,7 +432,7 @@
 	prerequisites = "You may need a special technology to access the signal."
 	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = CARGO_CRATE_VALUE * 16
-	occupancy_limit = "NULL"
+	occupancy_limit = "xxx"
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
