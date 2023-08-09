@@ -77,7 +77,7 @@
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
 		)
-		if(!tool.use_tool(src, user, delay=100, volume=100))
+		if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
 			return FALSE
 		welded_down = FALSE
 		to_chat(user, span_notice("You cut [src] free from the floor."))
@@ -92,7 +92,7 @@
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
-	if(!tool.use_tool(src, user, delay=100, volume=100))
+	if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
 		balloon_alert(user, "cancelled!")
 		return FALSE
 	welded_down = TRUE
