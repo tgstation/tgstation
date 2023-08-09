@@ -181,6 +181,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define ICE_CREAM_KORTA_VANILLA "korta vanilla"
 #define ICE_CREAM_MOB "mob"
 #define ICE_CREAM_CUSTOM "custom"
+#define ICE_CREAM_KORTA_CUSTOM "korta custom"
 #define ICE_CREAM_BLAND "bland"
 
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
