@@ -128,7 +128,6 @@
 /datum/component/proc/_RemoveFromParent()
 	var/datum/parent = src.parent
 	var/list/parents_components = parent._datum_components
-
 	for(var/I in _GetInverseTypeList())
 		var/list/components_of_type = parents_components[I]
 
