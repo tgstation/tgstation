@@ -28,6 +28,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(!built)
 		bulb = new(src)
+	find_and_hang_on_wall()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()

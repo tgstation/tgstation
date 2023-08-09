@@ -80,7 +80,7 @@
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
-
+	find_and_hang_on_wall()
 	update_appearance()
 
 

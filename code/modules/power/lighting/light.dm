@@ -115,11 +115,7 @@
 	set_light(l_dir = REVERSE_DIR(dir))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	///Standard wall-hung object behavior.
-	var/turf/attachable_wall = get_step(src, dir)
-	if(!iswallturf(attachable_wall))
-		return //Nothing to latch onto.
-	attachable_wall.AddComponent(/datum/component/wall_link, src)
+	find_and_hang_on_wall()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()

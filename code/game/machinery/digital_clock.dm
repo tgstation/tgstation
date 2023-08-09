@@ -83,11 +83,7 @@
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSdigital_clock, src)
-	///Standard wall-hung object behavior.
-	var/turf/attachable_wall = get_step(src, dir)
-	if(!iswallturf(attachable_wall))
-		return //Nothing to latch onto.
-	attachable_wall.AddComponent(/datum/component/wall_link, src)
+	find_and_hang_on_wall()
 
 /obj/machinery/digital_clock/Destroy()
 	STOP_PROCESSING(SSdigital_clock, src)

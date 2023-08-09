@@ -73,11 +73,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	GLOB.allCasters += src
 	GLOB.allbountyboards += src
 	update_appearance()
-	///Standard wall-hung object behavior.
-	var/turf/attachable_wall = get_step(src, dir)
-	if(!iswallturf(attachable_wall))
-		return //Nothing to latch onto.
-	attachable_wall.AddComponent(/datum/component/wall_link, src)
+	find_and_hang_on_wall()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src

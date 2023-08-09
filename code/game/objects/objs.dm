@@ -418,3 +418,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/check_on_table()
 	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
 		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+
+/// Checks object direction and then verifies if there's a wall in that direction. Finally, applies a wall_link component to the object.
+/obj/proc/find_and_hang_on_wall(directional = TRUE)
+	var/turf/attachable_wall
+	if(directional)
+		attachable_wall = get_step(src, dir)
+	else
+		attachable_wall = loc ///Pull from the curent object loc
+	if(!iswallturf(attachable_wall))
+		return FALSE//Nothing to latch onto, or not the right thing.
+	attachable_wall.AddComponent(/datum/component/wall_link, src)
+	return TRUE
