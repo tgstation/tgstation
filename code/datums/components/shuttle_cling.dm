@@ -101,8 +101,7 @@
 		return ALL_GOOD
 
 	if(!isliving(movee))
-		var/datum/component/singularity/singularity = movee.GetComponent(/datum/component/singularity)
-		if(singularity) // nothing can block the singularity
+		if(HAS_TRAIT(movee, TRAIT_FORCED_GRAVITY)) // nothing can block the singularity
 			return SUPER_NOT_HOLDING_ON
 
 		if(is_tile_solid(get_step(movee, direction))) //something is blocking us so do the cool drift
