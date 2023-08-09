@@ -298,13 +298,15 @@
 
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_QDELETING, PROC_REF(on_action_deleted))
-	if(ismob(loc))
-		// We're being held or are equipped by someone while adding an action?
-		// Then they should also probably be granted the action, given it's in a correct slot
-		var/mob/holder = loc
-		give_item_action(action, holder, holder.get_slot_by_item(src))
-
+	grant_action_to_bearer(action)
 	return action
+
+/// Grant the action to anyone who has this item equipped to an appropriate slot
+/obj/item/proc/grant_action_to_bearer(datum/action/action)
+	if(!ismob(loc))
+		return
+	var/mob/holder = loc
+	give_item_action(action, holder, holder.get_slot_by_item(src))
 
 /// Removes an instance of an action from our list of item actions.
 /obj/item/proc/remove_item_action(datum/action/action)
