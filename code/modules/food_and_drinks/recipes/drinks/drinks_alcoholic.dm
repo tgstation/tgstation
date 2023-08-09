@@ -421,7 +421,7 @@
 
 /datum/chemical_reaction/drink/cringe_weaver
 	results = list(/datum/reagent/consumable/ethanol/cringe_weaver = 4)
-	required_reagents = list(/datum/reagent/toxin/formaldehyde = 2, /datum/reagent/consumable/ethanol/_weaver = 1, /datum/reagent/consumable/ice = 1) //9 'form'adelhyde, ice
+	required_reagents = list(/datum/reagent/toxin/formaldehyde = 2, /datum/reagent/consumable/ethanol/fringe_weaver = 1, /datum/reagent/consumable/ice = 1) //9 'form'adelhyde, ice
 	mix_message = "The mix Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
 /datum/chemical_reaction/drink/sugar_rush
