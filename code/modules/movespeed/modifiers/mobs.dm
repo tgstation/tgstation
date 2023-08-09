@@ -115,6 +115,9 @@
 /datum/movespeed_modifier/slow_web
 	multiplicative_slowdown = 5
 
+/datum/movespeed_modifier/viper_defensive
+	multiplicative_slowdown = 1.5
+
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
 	variable = TRUE

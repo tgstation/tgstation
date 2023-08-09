@@ -303,6 +303,9 @@
 
 	AddElement(/datum/element/bonus_damage)
 
+	var/datum/action/cooldown/mob_cooldown/defensive_mode/defensive_action = new(src)
+	defensive_action.Grant(src)
+
 /**
  * ### Spider Broodmother
  *

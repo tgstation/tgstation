@@ -8,8 +8,6 @@
 	var/regular_tear_time
 	/// The rate at which we can break reinforced walls
 	var/reinforced_tear_time
-	/// If we are already deconstructing a wall
-	var/tearing_wall = FALSE
 
 /datum/element/tear_wall/Attach(datum/target, regular_tear_time = 2 SECONDS, reinforced_tear_time = 4 SECONDS)
 	. = ..()
@@ -38,9 +36,9 @@
 
 /// Performs taking down the wall
 /datum/element/tear_wall/proc/async_attack_wall(mob/living/basic/attacker, turf/closed/wall/thewall, prying_time)
-	if(tearing_wall)
+	if(DOING_INTERACTION_WITH_TARGET(attacker, thewall))
+		attacker.balloon_alert(attacker, "busy!")
 		return
-	tearing_wall = TRUE
 	to_chat(attacker, span_warning("You begin tearing through the wall..."))
 	playsound(attacker, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 	if(do_after(attacker, prying_time, target = thewall))
@@ -48,4 +46,3 @@
 			return
 		thewall.dismantle_wall(1)
 		playsound(attacker, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	tearing_wall = FALSE
