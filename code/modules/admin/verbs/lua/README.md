@@ -160,7 +160,7 @@ SS13.new("/obj/singularity", dm.global_proc("_get_step", dm.usr, 0))
 Works exactly like SS13.new but it does not store the value to the lua state's `references` list variable. This means that the variable could end up deleted if nothing holds a reference to it. 
 
 ### SS13.is_valid(datum)
-Can be used to determine if the datum passed is not null, not undefined and not qdel'd in one. A helper function that prevents you from needing to check the validity of the variable.
+Can be used to determine if the datum passed is not nil, not undefined and not qdel'd all in one. A helper function that allows you to check the validity from only one function.
 Example usage:
 ```lua
 local datum = SS13.new("/datum")
