@@ -40,21 +40,21 @@
 			span_hear("You hear clicking."))
 		var/floor_to_wall = get_dir(user, on_wall)
 
-		var/obj/object_result = new result_path(get_turf(user), floor_to_wall, TRUE)
-		object_result.setDir(floor_to_wall)
-		on_wall.AddComponent(/datum/component/wall_link, object_result)
+		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
+		hanging_object.setDir(floor_to_wall)
+		on_wall.AddComponent(/datum/component/wall_link, hanging_object)
 
 		if(pixel_shift)
 			switch(floor_to_wall)
 				if(NORTH)
-					object_result.pixel_y = pixel_shift
+					hanging_object.pixel_y = pixel_shift
 				if(SOUTH)
-					object_result.pixel_y = -pixel_shift
+					hanging_object.pixel_y = -pixel_shift
 				if(EAST)
-					object_result.pixel_x = pixel_shift
+					hanging_object.pixel_x = pixel_shift
 				if(WEST)
-					object_result.pixel_x = -pixel_shift
-		after_attach(object_result)
+					hanging_object.pixel_x = -pixel_shift
+		after_attach(hanging_object)
 
 	qdel(src)
 
