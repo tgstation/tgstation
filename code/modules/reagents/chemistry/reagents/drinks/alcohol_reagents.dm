@@ -1617,11 +1617,23 @@
 /datum/reagent/consumable/ethanol/fringe_weaver
 	name = "Fringe Weaver"
 	description = "Bubbly, classy, and undoubtedly strong - a Glitch City classic."
-	color = "#FFEAC4"
+	color = "#2BFE3C"
 	boozepwr = 90 //classy hooch, essentially, but lower pwr to make up for slightly easier access
 	quality = DRINK_GOOD
 	taste_description = "ethylic alcohol with a hint of sugar"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/cringe_weaver
+	name = "Cringe Weaver"
+	description = "For when they ask for a Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+	color = "#FFEAC4"
+	boozepwr = -20 //spicy. sobering. burning. cringe.
+	taste_description = "cringe and Lorem ipsum"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/cringe_weaver/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.adjust_disgust(2 * REM * seconds_per_tick)
+	..()
 
 /datum/reagent/consumable/ethanol/sugar_rush
 	name = "Sugar Rush"

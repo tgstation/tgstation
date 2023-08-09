@@ -530,6 +530,13 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "fringe_weaver"
 
+/datum/glass_style/drinking_glass/cringe_weaver
+	required_drink_type = /datum/reagent/consumable/ethanol/fringe_weaver
+	name = "Cringe Weaver"
+	desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae justo eget magna fermentum iaculis eu. Egestas congue quisque egestas diam in arcu cursus euismod."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "cringe_weaver"
+
 /datum/glass_style/drinking_glass/sugar_rush
 	required_drink_type = /datum/reagent/consumable/ethanol/sugar_rush
 	name = "Sugar Rush"
