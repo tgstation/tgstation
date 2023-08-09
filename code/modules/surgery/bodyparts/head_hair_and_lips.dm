@@ -314,7 +314,7 @@
 	return
 
 /mob/living/carbon/human/set_hair_gradient_color(new_color, update = TRUE)
-	if(LAZYACCESS(grad_color, GRADIENT_HAIR_KEY) == new_style)
+	if(LAZYACCESS(grad_color, GRADIENT_HAIR_KEY) == new_color)
 		return
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
@@ -400,7 +400,7 @@
 	return
 
 /mob/living/carbon/human/set_facial_hair_gradient_color(new_color, update = TRUE)
-	if(LAZYACCESS(grad_color, GRADIENT_FACIAL_HAIR_KEY) == new_style)
+	if(LAZYACCESS(grad_color, GRADIENT_FACIAL_HAIR_KEY) == new_color)
 		return
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
