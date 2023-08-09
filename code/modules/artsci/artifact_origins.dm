@@ -8,8 +8,9 @@
 	var/touch_descriptors = list()
 	var/destroy_message = ""
 	var/deactivation_sounds = list()
-	var/max_icons = 0 // amount of sprites we have for this origin
-	var/max_item_icons = 0 // amount of sprites we have for this origins items
+	var/max_icons = 1 // amount of sprites we have for this origin
+	var/max_item_icons = 1 // amount of sprites we have for this origins items
+
 /datum/artifact_origin/proc/generate_name()
 		return FALSE
 
@@ -25,6 +26,7 @@
 	var/list/mats = list("stone", "pearl", "golden", "ruby", "sapphire", "opal")
 	var/list/object = list("crown","trophy","staff","boon","token","amulet")
 	var/list/aspect = list("Yendor","wonder","eminence","grace","plenty","mystery")
+
 /datum/artifact_origin/wizard/generate_name()
 		return "[pick(mats)] [pick(object)] of [pick(aspect)]"
 
@@ -37,8 +39,6 @@
 	nouns_small = list("staff","pearl","rod","cane","wand","trophy")
 	touch_descriptors = list("It feels cold.", "Its rough to the touch.", "You prick yourself on its rough surface!")
 	destroy_message = "warps on itself, vanishing from sight!"
-	max_icons = 1
-	max_item_icons = 1
 
 /datum/artifact_origin/silicon
 	type_name = ORIGIN_SILICON
@@ -49,6 +49,6 @@
 	nouns_small = list("implement","device", "apparatus","mechanism")
 	touch_descriptors = list("It feels cold.","Touching it makes you feel uneasy..","It feels smooth.")
 	destroy_message = "sputters violently, falling apart!"
-	max_icons = 1
+
 /datum/artifact_origin/silicon/generate_name()
 		return "Unit-[pick(GLOB.phonetic_alphabet)] [pick(GLOB.phonetic_alphabet)] [rand(0,9000)]"
