@@ -1,7 +1,7 @@
 /proc/generate_possible_values_for_sprite_accessories_on_head(accessories)
 	var/list/values = possible_values_for_sprite_accessory_list(accessories)
 
-	var/icon/head_icon = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+	var/icon/head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
 	head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	for (var/name in values)

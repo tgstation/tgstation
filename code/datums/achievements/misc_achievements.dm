@@ -164,6 +164,12 @@
 	database_id = MEDAL_COSMOS_ASCENSION
 	icon = "cosmicascend"
 
+/datum/award/achievement/misc/grand_ritual_finale
+	name = "Archmage"
+	desc = "Made a big impression on the station with your phenomenal cosmic power."
+	database_id = MEDAL_ARCHMAGE
+	icon = "archmage"
+
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
 	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."
@@ -229,3 +235,9 @@
 	desc = "...And the earth opened its mouth and swallowed them and their station- all the HOP's men and all their possessions."
 	database_id = MEDAL_EARTHQUAKE_VICTIM
 	icon = "earthquake"
+
+/datum/award/achievement/misc/debt_extinguished
+	name = "Outdebted"
+	desc = "I've paid my dues, shift after shift... I've done my sentence but commited no griff..."
+	database_id = MEDAL_DEBT_EXTINGUISHED
+	icon = "outdebted"

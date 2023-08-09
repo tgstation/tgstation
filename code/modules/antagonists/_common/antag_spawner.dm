@@ -241,9 +241,7 @@
 
 	var/shatter_msg = span_notice("You shatter the bottle, no turning back now!")
 	var/veil_msg = span_warning("You sense a dark presence lurking just beyond the veil...")
-	var/mob/living/demon_type = /mob/living/simple_animal/hostile/imp/slaughter
-	var/antag_type = /datum/antagonist/slaughter
-
+	var/mob/living/demon_type = /mob/living/basic/demon/slaughter
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
 	if(!is_station_level(user.z))
@@ -267,15 +265,11 @@
 		to_chat(user, span_warning("The bottle's contents usually pop and boil constantly, but right now they're eerily still and calm. Perhaps you should try again later."))
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(T)
-	new /obj/effect/dummy/phased_mob(T, S)
+	var/mob/living/basic/demon/spawned = new demon_type(T)
+	new /obj/effect/dummy/phased_mob(T, spawned)
 
-	S.key = C.key
-	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
-	S.mind.special_role = ROLE_SLAUGHTER_DEMON
-	S.mind.add_antag_datum(antag_type)
-	to_chat(S, span_bold("You are currently not currently in the same plane of existence as the station. \
-		Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
+	spawned.key = C.key
+	spawned.generate_antagonist_status()
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -285,5 +279,4 @@
 	color = "#FF69B4" // HOT PINK
 
 	veil_msg = span_warning("You sense an adorable presence lurking just beyond the veil...")
-	demon_type = /mob/living/simple_animal/hostile/imp/slaughter/laughter
-	antag_type = /datum/antagonist/slaughter/laughter
+	demon_type = /mob/living/basic/demon/slaughter/laughter

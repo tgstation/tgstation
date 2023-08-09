@@ -292,6 +292,7 @@
 		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/chest/reviver,
 		/datum/job/clown = /obj/item/organ/internal/cyberimp/brain/anti_stun, //HONK!
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
+		/datum/job/coroner = /obj/item/organ/internal/tongue/bone, //hes got a bone to pick with you
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
 		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/surgery,
@@ -303,7 +304,7 @@
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
 		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/eyes/hud/medical,
 		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
-		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/upgraded,
+		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
 		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,

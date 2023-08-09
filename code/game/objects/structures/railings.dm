@@ -28,6 +28,12 @@
 	density = FALSE
 	climbable = FALSE
 
+/obj/structure/railing/corner/end //end of a segment of railing without making a loop
+	icon_state = "railing_end"
+
+/obj/structure/railing/corner/end/flip //same as above but flipped around
+	icon_state = "railing_end_flip"
+
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
 	ini_dir = dir

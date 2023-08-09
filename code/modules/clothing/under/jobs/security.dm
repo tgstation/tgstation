@@ -229,7 +229,7 @@
 
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
-	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "jumpsuit"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "prisonsuit"
@@ -243,9 +243,14 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
+/obj/item/clothing/under/rank/prisoner/nosensor
+	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"OFF\" position."
+	has_sensor = NO_SENSORS
+	sensor_mode = SENSOR_OFF
+
 /obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
-	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "jumpskirt"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "prisonskirt"

@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "Ice cream vats now count as elevated surfaces for preventing germs from getting onto germ-sensitive items (food)."
-  - qol: "Ice cream vats now dispense cones into your hands first, if possible."
-  - bugfix: "Germ-sensitive items that fail to be placed in-hand now check for all elevated surfaces, not just tables."

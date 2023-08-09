@@ -153,6 +153,7 @@
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	cooldown_time = 60 SECONDS
+	melee_cooldown_time = 0
 
 /datum/action/cooldown/web_effigy/IsAvailable(feedback = FALSE)
 	. = ..()
