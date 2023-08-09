@@ -677,6 +677,10 @@
 	if(!istype(loot_crate))
 		return
 
+	for(var/mob/person in loot_crate.contents) // no free rides
+		person.forceMove(get_turf(loot_crate))
+		to_chat(person, span_danger("The crate dematerializes beneath you!"))
+
 	spark_at_location(loot_crate)
 	qdel(loot_crate)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, arrived)
