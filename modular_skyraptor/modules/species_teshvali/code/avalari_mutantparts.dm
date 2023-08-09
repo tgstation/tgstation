@@ -60,8 +60,6 @@ GLOBAL_LIST_EMPTY(bodymarks_list_avalari)
 	id = "bodymarks_avalari"
 	sprite_acc = /datum/sprite_accessory/body_markings/avalari
 	default = "None"
-	hasinner = TRUE
-	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
 
 /datum/mutant_spritecat/avalari_bodymarks/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings/avalari, GLOB.bodymarks_list_avalari)
@@ -71,6 +69,8 @@ GLOBAL_LIST_EMPTY(bodymarks_list_avalari)
 /datum/sprite_accessory/body_markings/avalari
 	icon = 'modular_skyraptor/modules/species_teshvali/icons/avalari_external.dmi'
 	color_src = SPRITE_ACC_SCRIPTED_COLOR
+	hasinner = TRUE
+	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
 
 /datum/sprite_accessory/body_markings/avalari/color_override(mob/living/carbon/human/target)
 	if(!isnull(target))

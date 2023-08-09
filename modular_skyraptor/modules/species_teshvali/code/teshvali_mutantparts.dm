@@ -60,8 +60,6 @@ GLOBAL_LIST_EMPTY(bodymarks_list_teshvali)
 	id = "bodymarks_teshvali"
 	sprite_acc = /datum/sprite_accessory/body_markings/teshvali
 	default = "None"
-	hasinner = TRUE
-	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
 
 /datum/mutant_spritecat/teshvali_bodymarks/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings/teshvali, GLOB.bodymarks_list_teshvali)
@@ -71,6 +69,8 @@ GLOBAL_LIST_EMPTY(bodymarks_list_teshvali)
 /datum/sprite_accessory/body_markings/teshvali
 	icon = 'modular_skyraptor/modules/species_teshvali/icons/teshvali_external.dmi'
 	color_src = SPRITE_ACC_SCRIPTED_COLOR
+	hasinner = TRUE
+	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
 
 /datum/sprite_accessory/body_markings/teshvali/color_override(mob/living/carbon/human/target)
 	if(!isnull(target))
