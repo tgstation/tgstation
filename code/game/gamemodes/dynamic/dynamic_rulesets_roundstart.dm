@@ -30,10 +30,9 @@
 	weight = 5
 	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
 	scaling_cost = 9
+	minimum_players = 8
 	requirements = list(101,8,8,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 38)
-
-	minimum_players = 8
 
 	var/autotraitor_cooldown = (15 MINUTES)
 
@@ -630,8 +629,8 @@
 	antag_datum = null
 	restricted_roles = list()
 	required_candidates = 0
-	maximum_players = 6
-	weight = 5
+	maximum_players = 4
+	weight = 3
 	cost = 0
 	requirements = list(1,101,101,101,101,101,101,101,101,101)
 	flags = LONE_RULESET
