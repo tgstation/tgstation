@@ -1,19 +1,19 @@
-// 5.56mm (M-90gl Carbine)
+// .223 (M-90gl Carbine)
 
-/obj/projectile/bullet/a556
-	name = "5.56mm bullet"
+/obj/projectile/bullet/a223
+	name = ".223 bullet"
 	damage = 35
 	armour_penetration = 30
 	wound_bonus = -40
 
-/obj/projectile/bullet/a556/weak //centcom
+/obj/projectile/bullet/a223/weak //centcom
 	damage = 20
 
-/obj/projectile/bullet/a556/phasic
-	name = "5.56mm phasic bullet"
+/obj/projectile/bullet/a223/phasic
+	name = ".223 phasic bullet"
 	icon_state = "gaussphase"
-	damage = 20
-	armour_penetration = 70
+	damage = 30
+	armour_penetration = 100
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 // 7.62 (Nagant Rifle)

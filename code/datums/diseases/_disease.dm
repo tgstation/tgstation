@@ -18,7 +18,7 @@
 	/// The probability of this infection advancing a stage every second the cure is not present.
 	var/stage_prob = 2
 	/// How long this infection incubates (non-visible) before revealing itself
-	var/incubation_time = 0
+	var/incubation_time
 
 	//Other
 	var/list/viable_mobtypes = list() //typepaths of viable mobs
@@ -70,6 +70,7 @@
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
+			cure()
 			return FALSE
 
 	if(has_cure())

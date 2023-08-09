@@ -25,6 +25,7 @@
 	throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/newlaw)
 	if(announce && last_lawchange_announce != world.time)
 		to_chat(src, span_boldannounce("Your laws have been changed."))
+		SEND_SOUND(src, sound('sound/machines/cryo_warning.ogg'))
 		// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
 		addtimer(CALLBACK(src, PROC_REF(show_laws)), 0)
 		addtimer(CALLBACK(src, PROC_REF(deadchat_lawchange)), 0)
