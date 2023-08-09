@@ -490,14 +490,15 @@
 //Race swap wizard event
 #define RACE_SWAP (1<<3)
 //Wabbacjack staff projectiles
-#define WABBAJACK (1<<6)
+#define WABBAJACK (1<<4)
+
 // These flags do NOT unlock the Lepton Violet shuttle, hardcoded in wabbajack() - use for things like xenobio, admins, etc.
 //Badmin magic mirror
-#define MIRROR_BADMIN (1<<0)
+#define MIRROR_BADMIN (1<<5)
 //ERT spawn template (avoid races that don't function without correct gear)
-#define ERT_SPAWN (1<<4)
+#define ERT_SPAWN (1<<6)
 //xenobio black crossbreed
-#define SLIME_EXTRACT (1<<5)
+#define SLIME_EXTRACT (1<<7)
 
 // Randomization keys for calling wabbajack with.
 // Note the contents of these keys are important, as they're displayed to the player
