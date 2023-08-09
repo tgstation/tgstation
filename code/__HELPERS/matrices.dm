@@ -199,7 +199,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 			if(return_identity_on_fail)
 				stack_trace(message)
 				return color_matrix_identity()
-			CRASH(messsage)
+			CRASH(message)
 		return list(L[1]/255,0,0,0, 0,L[2]/255,0,0, 0,0,L[3]/255,0, 0,0,0,L.len>3?L[4]/255:1, 0,0,0,0)
 	if(!islist(color)) //invalid format
 		CRASH("Invalid/unsupported color ([color]) argument in color_to_full_rgba_matrix()")
@@ -232,7 +232,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 			if(return_identity_on_fail)
 				stack_trace(message)
 				return color_matrix_identity()
-			CRASH(messsage)
+			CRASH(message)
 
 #undef LUMA_R
 #undef LUMA_G
