@@ -29,6 +29,10 @@
 	/// This should be implemented even if there is only one choice.
 	var/list/atom/possible_shapes
 
+/datum/action/cooldown/spell/shapeshift/Remove(mob/remove_from)
+	unshift_owner()
+	return ..()
+
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
@@ -153,6 +157,7 @@
 	// Make sure it's castable even in their new form.
 	pre_shift_requirements = spell_requirements
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
+	ADD_TRAIT(new_shape, TRAIT_DONT_WRITE_MEMORY, SHAPESHIFT_TRAIT) // If you shapeshift into a pet subtype we don't want to update Poly's deathcount or something when you die
 
 	return new_shape
 
@@ -177,5 +182,12 @@
 /// Returns an instance of a living mob. Can be overridden.
 /datum/action/cooldown/spell/shapeshift/proc/create_shapeshift_mob(atom/loc)
 	return new shapeshift_type(loc)
+
+/// Removes an active shapeshift effect from the owner
+/datum/action/cooldown/spell/shapeshift/proc/unshift_owner()
+	if (isnull(owner))
+		return
+	if (is_shifted(owner))
+		do_unshapeshift(owner)
 
 #undef is_shifted
