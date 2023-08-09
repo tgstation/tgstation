@@ -140,7 +140,7 @@
 /// Will differentiate into the "midwife" giant spider.
 /mob/living/basic/young_spider/midwife
 	grow_as = /mob/living/basic/giant_spider/midwife
-	name = "youngbroodmother spider"
+	name = "young broodmother spider"
 	desc = "Furry and black, it looks defenseless. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_midwife"
@@ -172,7 +172,7 @@
 /// Will differentiate into the "tarantula" giant spider.
 /mob/living/basic/young_spider/tarantula
 	grow_as = /mob/living/basic/giant_spider/tarantula
-	name = "tarantula_spiderling"
+	name = "young tarantula spider"
 	desc = "Furry and black, it looks defenseless. This one has abyssal red eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_tarantula"
