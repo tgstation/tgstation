@@ -330,32 +330,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			reagents.remove_any(to_smoke)
 			return
 
-		var/atom/potential_smoker = smoker.loc
+		smoker = smoker.loc
 
 		// If it is, check if that mask is on a carbon mob
-		if(!iscarbon(potential_smoker))
-			reagents.remove_any(to_smoke)
-			return
-
-		// If it is, check if that mob is actually wearing the mask
-		var/mob/living/carbon/mask_holder = potential_smoker
-		if(mask_holder.wear_mask != smoker)
-			reagents.remove_any(to_smoke)
-			return
-
-		// Update smoker to the wearer of the mask
-		smoker = potential_smoker
-
-	// Check if the smoker is actually wearing the cig
-	if(src != smoker.wear_mask)
-		// If they're not, check if the mask is a gas mask
-		if(istype(smoker.wear_mask, /obj/item/clothing/mask/gas))
-			// If it is, check if the cig is being held by that gas mask
-			var/obj/item/clothing/mask/gas/mask = smoker.wear_mask
-			if(src != mask.cig)
-				reagents.remove_any(to_smoke)
-				return
-		else
+		if(!istype(smoker) || smoker.get_item_by_slot(ITEM_SLOT_MASK) != loc)
 			reagents.remove_any(to_smoke)
 			return
 
