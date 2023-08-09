@@ -6,6 +6,11 @@
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
+///the priority for which awards are orded on [/datum/achievement_data/load_all_achievements()]
+#define AWARD_PRIORITY_DEFAULT 100
+///the priority of the achievements score. NO achievement should have a priority equal or lower than this.
+#define AWARD_PRIORITY_LAST 0
+
 //Misc Medal hub IDs
 #define MEDAL_METEOR "Your Life Before Your Eyes"
 #define MEDAL_PULSE "Jackpot"
@@ -129,6 +134,9 @@
 
 // DB ID for style point count
 #define STYLE_SCORE "Style Score"
+
+/// DB ID for the amount of achievements unlocked by the player.
+#define ACHIEVEMENTS_SCORE "Achievements Score"
 
 // Tourist related achievements and scores
 
