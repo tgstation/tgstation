@@ -9,6 +9,7 @@
 	pixel_x = -12
 	base_pixel_x = -12
 	gender = MALE // Female ones are the bipedal elites
+	speed = 30
 	basic_mob_flags = IMMUNE_TO_FISTS
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 300
@@ -32,8 +33,6 @@
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
-	/// Goliath can only take a step in intervals of this
-	var/movement_delay = 4 SECONDS
 	/// Icon state to use when tentacles are available
 	var/tentacle_warning_state = "goliath_preattack"
 	/// Can this kind of goliath be tamed?
@@ -51,11 +50,11 @@
 
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
-	AddElement(/datum/element/move_cooldown, move_delay = movement_delay)
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
@@ -80,6 +79,7 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, goliath_foods)
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+
 
 /mob/living/basic/mining/goliath/Destroy()
 	QDEL_NULL(tentacles)

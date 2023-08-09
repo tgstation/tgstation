@@ -37,8 +37,6 @@
 	var/can_transmit = TRUE
 	/// The card we inhabit
 	var/obj/item/pai_card/card
-	/// The maximum distance we can travel away from our pai card
-	var/leashed_distance = 5
 	/// The current chasis that will appear when in holoform
 	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
@@ -67,6 +65,8 @@
 	var/ram = 100
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
+	/// The current leash to the owner
+	var/datum/component/leash/leash
 
 	// Onboard Items
 	/// Atmospheric analyzer
@@ -162,6 +162,7 @@
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
+	QDEL_NULL(leash)
 	card = null
 	GLOB.pai_list.Remove(src)
 	return ..()
@@ -229,25 +230,13 @@
 		pai_card.set_personality(src)
 	card = pai_card
 	forceMove(pai_card)
+	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	update_appearance(UPDATE_DESC)
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
-
-/mob/living/silicon/pai/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	check_distance()
-
-/// Checks if we're in range of our pai card
-/mob/living/silicon/pai/proc/check_distance()
-	SIGNAL_HANDLER
-	if (get_dist(get_turf(card), get_turf(src)) <= leashed_distance)
-		return
-	to_chat(src, span_warning("You moved out of range of your holotransmitter!"))
-	new /obj/effect/temp_visual/guardian/phase/out(loc)
-	forceMove(get_turf(card))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -346,7 +335,10 @@
 	master_name = "The Syndicate"
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
-	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
+	add_supplied_law(0, "Do not interfere with the operations of the Syndicate.")
+	QDEL_NULL(leash) // Freedom!!!
+	to_chat(src, span_danger("ALERT: Foreign software detected."))
+	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
 /**
@@ -362,6 +354,7 @@
 	master_name = null
 	master_dna = null
 	add_supplied_law(0, "None.")
+	leash = AddComponent(/datum/component/leash, card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	balloon_alert(src, "software rebooted")
 	return TRUE
 
@@ -461,9 +454,10 @@
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)
-	var/new_distance = leashed_distance + increment_amount
+	if(emagged)
+		return
+
+	var/new_distance = leash.distance + increment_amount
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
-	leashed_distance = new_distance
-	if (increment_amount < 0)
-		check_distance()
+	leash.set_distance(new_distance)

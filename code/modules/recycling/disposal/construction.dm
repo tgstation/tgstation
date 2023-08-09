@@ -83,7 +83,7 @@
 		if(initialize_dirs & DISP_DIR_RIGHT)
 			dpdir |= turn(dir, -90)
 		if(initialize_dirs & DISP_DIR_FLIP)
-			dpdir |= turn(dir, 180)
+			dpdir |= REVERSE_DIR(dir)
 	return dpdir
 
 /obj/structure/disposalconstruct/proc/AfterRotation(mob/user, degrees)

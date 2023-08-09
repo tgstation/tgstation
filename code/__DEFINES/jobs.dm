@@ -192,6 +192,11 @@
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
+/// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
+#define JOB_CANNOT_OPEN_SLOTS (1<<9)
+
+/// Combination flag for jobs which are considered regular crew members of the station.
+#define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

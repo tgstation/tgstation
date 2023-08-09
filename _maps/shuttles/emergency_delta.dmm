@@ -955,16 +955,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"AX" = (
-/obj/item/kirbyplants/organic/plant21{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "En" = (
 /obj/item/kirbyplants/organic/plant21{
 	pixel_x = -3;
@@ -1142,7 +1132,7 @@ ab
 ad
 af
 ah
-AX
+nU
 av
 av
 aH
@@ -1154,7 +1144,7 @@ nU
 av
 av
 av
-AX
+nU
 aE
 af
 pd

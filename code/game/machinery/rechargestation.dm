@@ -21,7 +21,6 @@
 
 	materials = AddComponent(
 		/datum/component/remote_materials, \
-		"charger", \
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT, \
 	)

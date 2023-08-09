@@ -7,8 +7,7 @@
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/effect/spawner/random/clothing/syndie,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "c" = (
@@ -46,16 +45,6 @@
 /obj/mafia_game_board,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"m" = (
-/obj/structure/closet/syndicate{
-	desc = "A storage closet for syndicate conflict resolution operatives.";
-	name = "red closet"
-	},
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
@@ -83,12 +72,6 @@
 /area/centcom/mafia)
 "r" = (
 /turf/open/floor/mineral/plastitanium,
-/area/centcom/mafia)
-"s" = (
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/mafia)
-"t" = (
-/turf/open/floor/circuit/red,
 /area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
@@ -155,19 +138,24 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "G" = (
-/obj/item/clothing/under/syndicate/tacticool,
 /obj/structure/closet/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},
-/obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/clothing/syndie,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "H" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"Q" = (
+/turf/open/floor/circuit/red,
+/area/centcom/mafia)
+"S" = (
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/mafia)
 
 (1,1,1) = {"
@@ -309,7 +297,7 @@ b
 r
 w
 o
-m
+G
 w
 j
 w
@@ -327,7 +315,7 @@ c
 c
 d
 w
-m
+G
 o
 p
 n
@@ -413,7 +401,7 @@ p
 p
 w
 p
-m
+G
 w
 d
 c
@@ -431,9 +419,9 @@ r
 r
 y
 p
-s
-t
-s
+S
+Q
+S
 p
 q
 o
@@ -456,9 +444,9 @@ p
 w
 p
 p
-t
+Q
 u
-t
+Q
 p
 p
 w
@@ -481,9 +469,9 @@ o
 o
 z
 p
-s
-t
-s
+S
+Q
+S
 p
 E
 r
@@ -501,7 +489,7 @@ w
 c
 d
 w
-m
+G
 p
 w
 p
@@ -605,7 +593,7 @@ w
 w
 j
 w
-m
+G
 o
 w
 r

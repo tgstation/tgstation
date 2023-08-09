@@ -66,14 +66,17 @@
 	else
 		mode() // Activate held item
 
-/mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
+/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
 	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
 
+	if(can_perform_surgery(user, params))
+		return TRUE
+
 	for(var/i in shuffle(all_wounds))
-		var/datum/wound/W = i
-		if(W.try_treating(I, user))
-			return 1
+		var/datum/wound/wound = i
+		if(wound.try_treating(item, user))
+			return TRUE
 
 	return ..()
 
@@ -818,6 +821,8 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
 		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))

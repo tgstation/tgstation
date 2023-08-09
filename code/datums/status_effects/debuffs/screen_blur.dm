@@ -31,7 +31,7 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("eye_blur")
 
-/datum/status_effect/eye_blur/tick(seconds_per_tick, times_fired)
+/datum/status_effect/eye_blur/tick(seconds_between_ticks)
 	// Blur lessens the closer we are to expiring, so we update per tick.
 	update_blur()
 
