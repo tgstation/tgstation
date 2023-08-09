@@ -5056,6 +5056,7 @@
 #include "code\modules\spells\spell_types\conjure\invisible_wall.dm"
 #include "code\modules\spells\spell_types\conjure\link_worlds.dm"
 #include "code\modules\spells\spell_types\conjure\presents.dm"
+#include "code\modules\spells\spell_types\conjure\simian.dm"
 #include "code\modules\spells\spell_types\conjure\soulstone.dm"
 #include "code\modules\spells\spell_types\conjure\the_traps.dm"
 #include "code\modules\spells\spell_types\conjure_item\_conjure_item.dm"
