@@ -168,6 +168,10 @@
 	results = list(/datum/reagent/consumable/ethanol/whiskeysoda = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, /datum/reagent/consumable/sodawater = 1)
 
+/datum/chemical_reaction/drink/wellcheers
+	results = list(/datum/reagent/consumable/wellcheers = 5)
+	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/watermelonjuice = 1, /datum/reagent/consumable/sodawater = 1, /datum/reagent/consumable/salt = 1, /datum/reagent/consumable/ethanol/absinthe = 1)
+
 /datum/chemical_reaction/drink/black_russian
 	results = list(/datum/reagent/consumable/ethanol/black_russian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 3, /datum/reagent/consumable/ethanol/kahlua = 2)
