@@ -20,7 +20,7 @@
 	name = "analysis form"
 	desc = "An analysis form for artifacts, has adhesive on the back."
 	gender = NEUTER
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "analysisform"
 	inhand_icon_state = "paper"
 	throwforce = 0

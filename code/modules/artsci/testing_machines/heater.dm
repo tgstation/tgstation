@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad //this is literally a fancy thermomachine
-	icon = 'icons/obj/atmospherics/components/heatingpad.dmi'
+	icon = 'icons/obj/machines/atmospherics/heatingpad.dmi'
 	icon_state = "pad_norm"
 
 	name = "Heating Pad"

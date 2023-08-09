@@ -10912,16 +10912,11 @@
 "edW" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/power/artifact_zapper{
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/artifact_zapper{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "eeg" = (
@@ -23738,7 +23733,6 @@
 	name = "Research Test Chamber";
 	req_access = list("science")
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "iMd" = (
@@ -28176,7 +28170,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "klS" = (
@@ -32857,7 +32850,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "lYu" = (
@@ -41840,11 +41832,6 @@
 "pjd" = (
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
-"pjg" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "pjh" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -48223,7 +48210,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "rzJ" = (
@@ -57281,7 +57267,7 @@
 	c_tag = "Science Firing Range";
 	network = list("ss13","rd")
 	},
-/turf/open/floor/engine,
+/turf/open/floor/iron/recharge_floor,
 /area/station/science/explab)
 "uEo" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -101579,7 +101565,7 @@ tUn
 hKV
 wXF
 edW
-pjg
+kHN
 lYp
 iLW
 kHN
