@@ -17,7 +17,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/tree_climber/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE, COMSIG_PARENT_EXAMINE))
 
 /datum/component/tree_climber/Destroy()
 	if(current_tree)
