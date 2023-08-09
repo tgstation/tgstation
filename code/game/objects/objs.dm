@@ -421,6 +421,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Checks object direction and then verifies if there's a wall in that direction. Finally, applies a wall_link component to the object.
 /obj/proc/find_and_hang_on_wall(directional = TRUE)
+	if(istype(get_area(src)), /area/shuttle)
+		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
 	var/turf/attachable_wall
 	if(directional)
 		attachable_wall = get_step(src, dir)
