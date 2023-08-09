@@ -158,9 +158,10 @@
 	if(!ismineralturf(bumped_into) || !drain_power(use_power_cost))
 		return
 	var/turf/closed/mineral/mineral_turf = bumped_into
-	if(istype(mineral_turf, /turf/closed/mineral/gibtonite))
+	var/turf/closed/mineral/gibtonite/giberal_turf = mineral_turf
+	if(istype(giberal_turf) && giberal_turf.stage != GIBTONITE_UNSTRUCK)
 		playsound(bumper, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(bumper, span_warning("[icon2html(src, bumper)] Gibtonite ore deposit detected! Drills disabled."))
+		to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected! Drills disabled."))
 		on_deactivation()
 		return
 	mineral_turf.gets_drilled(mod.wearer)
