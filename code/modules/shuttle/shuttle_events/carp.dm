@@ -9,6 +9,7 @@
 	spawn_probability_per_process = 20
 
 	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
 
 /datum/shuttle_event/simple_spawner/carp/post_spawn(mob/living/basic/carp/carpee)
 	. = ..()
@@ -26,6 +27,7 @@
 	spawn_probability_per_process = 20
 
 	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
 
 ///Spawn a bunch of friendly carp to view from inside the shuttle! May occassionally pass through and nibble some windows, but are otherwise pretty harmless
 /datum/shuttle_event/simple_spawner/carp/friendly
