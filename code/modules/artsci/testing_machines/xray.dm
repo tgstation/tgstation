@@ -143,3 +143,12 @@
 		return TRUE
 	else if(!occupant_atom.anchored)
 		return TRUE
+
+/obj/machinery/artifact_xray/screwdriver_act(mob/living/user, obj/item/tool)
+	if(pulsing)
+		return TOOL_ACT_SIGNAL_BLOCKING
+	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
+
+
+/obj/machinery/artifact_xray/crowbar_act(mob/living/user, obj/item/tool)
+	return pulsing ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_crowbar(tool)

@@ -89,6 +89,7 @@
 	potency = clamp(potency, 1, 100) //just incase
 	for(var/datum/artifact_trigger/trigger in triggers)
 		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
+		trigger.range = trigger.amount + (trigger.hint_range * 2)
 
 /datum/component/artifact/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(Artifact_Destroyed))
@@ -150,9 +151,9 @@
 			break
 		if(trigger.needed_stimulus == stimuli)
 			if(trigger.check_amount)
-				if(severity >= trigger.amount)
+				if(severity >= trigger.amount && severity <= trigger.range)
 					Activate()
-				else if(hint_text && (abs(severity - trigger.hint_range) < trigger.hint_range))
+				else if(hint_text && (trigger.hint_range > abs(severity - (trigger.hint_range + trigger.range)) || trigger.hint_range > abs(severity - trigger.hint_range)))
 					if(prob(trigger.hint_prob))
 						holder.visible_message(span_notice("[holder] [hint_text]"))
 			else
@@ -169,7 +170,7 @@
 			holder.visible_message(span_warning("[user] forcefully shoves [user.pulling] against the [holder]!"))
 			Touched(user.pulling)
 		else if(!user.combat_mode)
-			holder.visible_message(span_notice("[user] gently pushes [user.pulling] against the [holder]"))
+			holder.visible_message(span_notice("[user] gently pushes [user.pulling] against the [holder]."))
 			Stimulate(STIMULUS_CARBON_TOUCH)
 		return
 	if(artifact_size == ARTIFACT_SIZE_LARGE) //only large artifacts since the average spessman wouldnt notice)

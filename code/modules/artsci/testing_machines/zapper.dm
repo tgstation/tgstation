@@ -85,3 +85,12 @@
 	obj_flags |= EMAGGED
 	to_chat(user,span_notice("You short out the safety sensors on the [src]."))
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+
+/obj/machinery/artifact_zapper/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
+		return TOOL_ACT_SIGNAL_BLOCKING
+	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
+
+
+/obj/machinery/artifact_zapper/crowbar_act(mob/living/user, obj/item/tool)
+	return !COOLDOWN_FINISHED(src,pulse_cooldown) ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_crowbar(tool)

@@ -14,6 +14,8 @@
 	var/max_amount = 0
 	///stimulus severity needed to activate, changed after setup()..
 	var/amount = 0
+	///stimulus severity range, needs to be between amount and range for activation, done on setup()
+	var/range = 0
 	///Probability for a hint to be shown when the stimulus is hint_range close to the needed stimuli base_amount.
 	var/hint_range = 0
 	var/hint_prob = 35
@@ -31,7 +33,7 @@
 /datum/artifact_trigger/force
 	name = "Physical Force"
 	needed_stimulus = STIMULUS_FORCE
-	hint_range = 20
+	hint_range = 10
 	hint_prob = 75
 	max_amount = 35
 
@@ -64,6 +66,7 @@
 	name = "Electricity"
 	needed_stimulus = STIMULUS_SHOCK
 	max_amount = 10000
+	hint_range = 500
 
 /datum/artifact_trigger/shock/New()
 		..()
@@ -73,6 +76,7 @@
 	name = "Radiation"
 	needed_stimulus = STIMULUS_RADIATION
 	max_amount = 10
+	hint_range = 2
 	base_amount = 1
 
 /datum/artifact_trigger/data

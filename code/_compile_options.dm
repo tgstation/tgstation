@@ -1,4 +1,4 @@
-//#define TESTING //By using the testing("message") proc you can create debug-feedback for people with this
+#define TESTING //By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
 //#define DATUMVAR_DEBUGGING_MODE //Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
@@ -20,7 +20,7 @@
 // #define APPEARANCE_SUCCESS_TRACKING
 
 ///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
-//#define REFERENCE_TRACKING
+#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
 ///Used for doing dry runs of the reference finder, to test for feature completeness
