@@ -841,11 +841,9 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	. = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, rand()-0.5, scale)
 	/**
 	 * Given an x variable value of -/+5, a location of -/+ 0.5, a scale of 0.5 to 4, and a graphing calculator,
-	 * the threat will never go under or exceed 3 and 97, which is why we're leaving the remaining 3 points
-	 * to the random number generator.
+	 * the threat will go beyond the upper and lower 3% of the max threat, which is why
+	 * we're leaving the remaining 3% to the random number generator.
 	 */
-	. +=
-
 	return round(. * max_threat + rand(-3, 3) * max_threat/100, interval)
 
 #undef FAKE_REPORT_CHANCE
