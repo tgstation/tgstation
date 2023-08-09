@@ -352,7 +352,7 @@
 	outfit_type = /datum/outfit/syndicate_empty/battlecruiser
 
 /datum/preset_holoimage/hivebot
-	nonhuman_mobtype = /mob/living/simple_animal/hostile/hivebot
+	nonhuman_mobtype = /mob/living/basic/hivebot
 
 /datum/preset_holoimage/ai
 	nonhuman_mobtype = /mob/living/silicon/ai
