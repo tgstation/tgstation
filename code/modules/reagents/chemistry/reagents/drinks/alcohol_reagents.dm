@@ -1632,8 +1632,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/cringe_weaver/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	drinker.adjust_disgust(2 * REM * seconds_per_tick)
-	..()
+	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
+		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick) //coroners love drinking formaldehyde
+	else
+		drinker.adjust_disgust(1 * REM * seconds_per_tick)
+		. = TRUE
+	return ..()
 
 /datum/reagent/consumable/ethanol/sugar_rush
 	name = "Sugar Rush"
