@@ -1,7 +1,7 @@
 #define FIRE_DELAY (2 SECONDS)
 #define FIRE_RANGE 4
-#define BASE_DAMAGE 15
-#define MINIMUM_DAMAGE 7.5
+#define BASE_DAMAGE 10
+#define MINIMUM_DAMAGE 5
 #define DAMAGE_FALLOFF 1
 #define SHOOT_POWER_USE 5
 
@@ -60,7 +60,7 @@
 
 	dir = get_dir(get_turf(src), get_turf(target))
 
-	// Apply 15 damage (- 1 for each tile away they are), or 7.5, whichever is larger
+	// Apply 10 damage (- 1 for each tile away they are), or 5, whichever is larger
 	target.apply_damage(max(BASE_DAMAGE - (get_dist(src, target) * DAMAGE_FALLOFF), MINIMUM_DAMAGE) * delta_time, BURN)
 	to_chat(target, span_warning("You feel as though your soul is being burned!"))
 

@@ -21,7 +21,7 @@
 		return
 
 	for(var/mob/living/possible_cultist in range(3, src))
-		if(!IS_CLOCK(possible_cultist))
+		if(!IS_CLOCK(possible_cultist) || isnull(possible_cultist))
 			continue
 
 		if(possible_cultist.health >= possible_cultist.maxHealth)
@@ -37,7 +37,7 @@
 
 			new /obj/effect/temp_visual/heal(get_turf(possible_cultist), "#1E8CE1")
 
-			for(var/datum/reagent/negative_chem in possible_cultist.reagents.reagent_list)
+			for(var/datum/reagent/negative_chem in possible_cultist?.reagents.reagent_list)
 				if(is_type_in_typecache(negative_chem, chems_to_purge))
 					possible_cultist.reagents.remove_reagent(negative_chem.type, 2.5 * seconds_per_tick)
 

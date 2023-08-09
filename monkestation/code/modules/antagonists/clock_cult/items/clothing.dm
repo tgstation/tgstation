@@ -16,9 +16,9 @@
 
 /datum/armor/suit_clockwork
 	melee = 50
-	bullet = 70
-	laser = 40
-	energy = 70
+	bullet = 60
+	laser = 30
+	energy = 60
 	bomb = 80
 	bio = 100
 	fire = 100
