@@ -21,7 +21,7 @@
 		return
 
 	for(var/mob/living/possible_cultist in range(3, src))
-		if(!IS_CLOCK(possible_cultist) || isnull(possible_cultist))
+		if(isnull(possible_cultist) || !IS_CLOCK(possible_cultist))
 			continue
 
 		if(possible_cultist.health >= possible_cultist.maxHealth)
