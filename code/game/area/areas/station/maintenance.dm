@@ -1,7 +1,3 @@
-/*
-* Maintenance Areas and then Some
-*/
-
 /area/station/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT

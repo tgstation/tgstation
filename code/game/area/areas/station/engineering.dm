@@ -1,7 +1,3 @@
-/*
-* Engineering Areas
-*/
-
 /area/station/engineering
 	icon_state = "engie"
 	ambience_index = AMBIENCE_ENGI

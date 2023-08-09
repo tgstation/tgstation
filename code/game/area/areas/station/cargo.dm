@@ -1,7 +1,3 @@
-/*
-* Cargo Areas
-*/
-
 /area/station/cargo
 	name = "Quartermasters"
 	icon_state = "quart"

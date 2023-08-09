@@ -1,7 +1,3 @@
-/*
-* Science Areas
-*/
-
 /area/station/science
 	name = "\improper Science Division"
 	icon_state = "science"

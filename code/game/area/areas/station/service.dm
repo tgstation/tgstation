@@ -1,8 +1,3 @@
-/*
-* Service Areas
-* Not to be confused with the common areas
-*/
-
 /area/station/service
 	airlock_wires = /datum/wires/airlock/service
 

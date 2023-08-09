@@ -1,8 +1,3 @@
-/*
-* Medical Areas
-* Medbay is a large area. Additional areas help level out APC load.
-*/
-
 /area/station/medical
 	name = "Medical"
 	icon_state = "medbay"
@@ -15,7 +10,9 @@
 /area/station/medical/abandoned
 	name = "\improper Abandoned Medbay"
 	icon_state = "abandoned_medbay"
-	ambientsounds = list('sound/ambience/signal.ogg')
+	ambientsounds = list(
+		'sound/ambience/signal.ogg',
+		)
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/medical/medbay/central
@@ -123,4 +120,6 @@
 	icon_state = "psychology"
 	mood_bonus = 3
 	mood_message = "I feel at ease here."
-	ambientsounds = list('sound/ambience/aurora_caelus_short.ogg')
+	ambientsounds = list(
+		'sound/ambience/aurora_caelus_short.ogg',
+		)

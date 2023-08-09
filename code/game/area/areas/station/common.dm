@@ -1,9 +1,3 @@
-/*
-* Common Areas
-* For public or general "hangout" areas
-* For lack of better words
-*/
-
 /area/station/commons
 	name = "\improper Crew Facilities"
 	icon_state = "commons"
