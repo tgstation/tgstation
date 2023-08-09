@@ -420,9 +420,9 @@
 	mix_message = "The mix turns a pleasant cream color and foams up."
 
 /datum/chemical_reaction/drink/cringe_weaver
-	results = list(/datum/reagent/consumable/ethanol/cringe_weaver = 4)
-	required_reagents = list(/datum/reagent/toxin/formaldehyde = 2, /datum/reagent/consumable/ethanol/fringe_weaver = 1, /datum/reagent/consumable/ice = 1) //9 'form'adelhyde, ice
-	mix_message = "The mix Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+	results = list(/datum/reagent/consumable/ethanol/cringe_weaver = 10)
+	required_reagents = list(/datum/reagent/toxin/formaldehyde = 6, /datum/reagent/consumable/ethanol/fringe_weaver = 3, /datum/reagent/consumable/ice = 1) //9 'form'adelhyde, ice
+	mix_message = "The mix swells and turns a sickeningly pungent green, filling the air with a tangible miasma of... cringe."
 
 /datum/chemical_reaction/drink/sugar_rush
 	results = list(/datum/reagent/consumable/ethanol/sugar_rush = 4)
