@@ -27,7 +27,7 @@
 	/// Tracks how long we've been in no gravity
 	VAR_FINAL/seconds_in_nograv = 0 SECONDS
 
-/datum/status_effect/spacer/gravity_wellness/tick(seconds_per_tick, times_fired)
+/datum/status_effect/spacer/gravity_wellness/tick(seconds_between_ticks)
 	var/in_nograv = !owner.has_gravity()
 	var/nograv_mod = in_nograv ? 1 : 0.5
 	owner.adjust_disgust(-1 * disgust_healing_per_tick * nograv_mod)
@@ -36,7 +36,7 @@
 		seconds_in_nograv = 0 SECONDS
 		return
 
-	seconds_in_nograv += (initial(tick_interval) * 0.1)
+	seconds_in_nograv += (seconds_between_ticks * 0.1)
 
 	if(seconds_in_nograv >= 3 MINUTES)
 		// This has some interesting side effects with gravitum or similar negating effects that may be worth nothing
@@ -56,12 +56,12 @@
 	/// Tracks how many seconds this has been active
 	VAR_FINAL/seconds_active = 0 SECONDS
 
-/datum/status_effect/spacer/gravity_sickness/tick(seconds_per_tick, times_fired)
+/datum/status_effect/spacer/gravity_sickness/tick(seconds_between_ticks)
 	if(owner.mob_negates_gravity())
 		// Might seem redundant but we can totally be on a planet but have an anti-gravity effect like gravitum
 		return
 
-	seconds_active += (initial(tick_interval) * 0.1)
+	seconds_active += (seconds_between_ticks * 0.1)
 
 	var/mob/living/carbon/the_spacer = owner
 	the_spacer.adjust_disgust(disgust_per_tick, max = max_disgust + 5)

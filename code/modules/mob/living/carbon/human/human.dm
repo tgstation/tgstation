@@ -203,7 +203,7 @@
 				return
 
 			if(href_list["quirk"])
-				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
+				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL, from_scan = TRUE)
 				if(quirkstring)
 					to_chat(human_user,  "<span class='notice ml-1'>Detected physiological traits:</span>\n<span class='notice ml-2'>[quirkstring]</span>")
 				else

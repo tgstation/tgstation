@@ -26,13 +26,15 @@
 	var/random_crits_enabled = TRUE // Worst thing Valve ever added
 
 /obj/projectile/bullet/rocket/on_hit(atom/target, blocked = FALSE)
+	var/random_crit_gib = FALSE
 	if(isliving(target) && prob(1) && random_crits_enabled)
 		var/mob/living/gibbed_dude = target
 		if(gibbed_dude.stat < HARD_CRIT)
 			gibbed_dude.say("Is that a fucking ro-", forced = "hit by rocket")
+			random_crit_gib = TRUE
 	..()
 
-	do_boom(target)
+	do_boom(target, random_crit_gib)
 	if(anti_armour_damage && ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(anti_armour_damage)
@@ -43,11 +45,15 @@
 
 /** This proc allows us to customize the conditions necesary for the rocket to detonate, allowing for different explosions for living targets, turf targets,
 among other potential differences. This granularity is helpful for things like the special rockets mechs use. */
-/obj/projectile/bullet/rocket/proc/do_boom(atom/target)
+/obj/projectile/bullet/rocket/proc/do_boom(atom/target, random_crit_gib = FALSE)
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
 		explosion(target, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4, explosion_cause = src)
 	else
 		explosion(target, light_impact_range = 2, flame_range = 3, flash_range = 4,  explosion_cause = src)
+		if(random_crit_gib)
+			var/mob/living/gibbed_dude = target
+			new /obj/effect/temp_visual/crit(get_turf(gibbed_dude))
+			gibbed_dude.gib()
 
 /// PM9 HEAP rocket - the anti-anything missile you always craved.
 /obj/projectile/bullet/rocket/heap
