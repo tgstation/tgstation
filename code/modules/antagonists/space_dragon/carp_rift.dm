@@ -125,6 +125,10 @@
 /obj/structure/carp_rift/ex_act(severity, target)
 	return ..(min(EXPLODE_HEAVY, severity))
 
+// Take less damage from mechs (So they don't get two-shotted)
+/obj/structure/carp_rift/get_obj_mecha_damage_multiplier()
+	return 0.75
+
 /obj/structure/carp_rift/examine(mob/user)
 	. = ..()
 	if(time_charged < max_charge)

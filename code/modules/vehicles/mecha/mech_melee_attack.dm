@@ -42,13 +42,14 @@
 			return 0
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
 	..()
-	return take_damage(mecha_attacker.force * get_obj_mecha_damage_multiplier(), mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
+	return take_damage(mecha_attacker.force * get_obj_mecha_damage_multiplier(), mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker))
 
-/obj/proc/get_obj_mecha_damage_multiplier()
-	return 3
+/** Gets the object mecha damage multiplier.
+ * Some objects (carp rift) shouldn't have a high multiplier, override this proc if necessary.
+ */
+/obj/proc/get_obj_mecha_damage_multiplier(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	return 3// multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
-/obj/structure/carp_rift/get_obj_mecha_damage_multiplier()
-	return 0.75
 
 /obj/structure/window/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(!can_be_reached())
