@@ -1687,6 +1687,7 @@
 		"mod_health_analyzer",
 		"mod_quick_carry",
 		"mod_injector",
+		"mod_selfinjector",
 		"mod_organ_thrower",
 		"mod_dna_lock",
 		"mod_patienttransport",

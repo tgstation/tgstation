@@ -485,6 +485,18 @@
 		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
+	
+/obj/item/storage/box/syndie_kit/selfinjectorbundle
+	name = "self-injector bundle"
+	desc = "A 5-pack of self-injector modules provided by Interdyne Pharmaceuticals. It also includes a hand labeler."
+
+/obj/item/storage/box/syndie_kit/selfinjectorbundle/PopulateContents()
+	new /obj/item/mod/module/selfinjector(src)
+	new /obj/item/mod/module/selfinjector(src)
+	new /obj/item/mod/module/selfinjector(src)
+	new /obj/item/mod/module/selfinjector(src)
+	new /obj/item/mod/module/selfinjector(src)
+	new /obj/item/hand_labeler(src)
 
 /obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
