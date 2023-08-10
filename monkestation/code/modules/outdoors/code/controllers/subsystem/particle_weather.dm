@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(particle_weather)
 		if (probability && SSmapping.config.particle_weather[target_trait])
 			LAZYINITLIST(elligble_weather)
 			elligble_weather[W] = probability
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/particle_weather/proc/run_weather(datum/particle_weather/weather_datum_type, force = 0)
 	if(runningWeather)
