@@ -8,6 +8,7 @@
 	overlay_icon_state = "bg_alien_border"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
+	cooldown_time = 1.5 SECONDS
 
 	/// Stuff that we can not disguise as.
 	var/static/list/blacklist_typecache = typecacheof(list(
