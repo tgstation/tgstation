@@ -156,15 +156,15 @@
 		if(living_target.stat != DEAD)
 			return
 
-		INVOKE_ASYNC(source, PROC_REF(eat), target = living_target, delay = 3 SECONDS, update_health = -50)
+		INVOKE_ASYNC(source, PROC_REF(eat), eatable = living_target, delay = 3 SECONDS, update_health = -50)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(isitem(target)) //Eat items just to be annoying
 		var/obj/item/item_target = target
-		if(!item_target.anchored)
+		if(item_target.anchored)
 			return
 
-		INVOKE_ASYNC(source, PROC_REF(eat), target = item_target, delay = 2 SECONDS)
+		INVOKE_ASYNC(source, PROC_REF(eat), eatable = item_target, delay = 2 SECONDS)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 /// Eat stuff. Delicious. Return TRUE if we ate something, FALSE otherwise.
