@@ -33,6 +33,7 @@
 		return FALSE
 
 	return can_see(source, dinner, radius)
+
 /datum/ai_behavior/cannibalize
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
