@@ -112,6 +112,7 @@
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
 
+	src.form_weakref = form_weakref
 	var/atom/movable/our_form = form_weakref.resolve()
 	if(isnull(our_form))
 		stack_trace("Somehow [src] was passed a weakref that immediately nulled out, what?")
