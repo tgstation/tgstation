@@ -30,6 +30,7 @@
 	attack_verb_simple = "pummel"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
+	hud_type = /datum/hud/dextrous
 	held_items = list(null, null)
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	robust_searching = TRUE
