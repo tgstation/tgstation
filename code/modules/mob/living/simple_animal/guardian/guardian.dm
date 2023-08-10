@@ -366,10 +366,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return ..()
 
 /mob/living/simple_animal/hostile/guardian/death(gibbed)
-	. = ..()
 	if(!QDELETED(summoner))
 		to_chat(summoner, span_bolddanger("Your [name] died somehow!"))
 		summoner.dust()
+	return ..()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	var/severity = 0

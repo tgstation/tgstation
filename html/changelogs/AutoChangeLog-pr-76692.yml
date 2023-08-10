@@ -1,0 +1,8 @@
+author: "Comxy"
+delete-after: True
+changes:
+  - rscadd: "Young Spiders that appear between spiderlings and adult spiders."
+  - balance: "Wizard Spider version has better immunity against temp damage and can lay webs faster."
+  - balance: "Tangle Spider sucks more with self-healing but has more health."
+  - balance: "Scout spiderling gets thermal vision."
+  - balance: "Viper deals bonus damage when an enemy is below 20% health."

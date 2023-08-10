@@ -158,8 +158,6 @@
 				user.mind?.adjust_experience(/datum/skill/fishing, min(round(seconds_spent * FISHING_SKILL_EXP_PER_SECOND * experience_multiplier), FISHING_SKILL_EXP_CAP_PER_GAME))
 				if(win && user.mind?.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
 					user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
-	if(used_rod && phase == MINIGAME_PHASE)
-		used_rod.consume_bait()
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(lure, 'sound/effects/bigsplash.ogg', 100)

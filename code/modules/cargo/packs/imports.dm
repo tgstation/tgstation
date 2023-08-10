@@ -224,7 +224,7 @@
 		/obj/item/clothing/mask/russian_balaclava,
 		/obj/item/clothing/head/helmet/rus_ushanka,
 		/obj/item/clothing/suit/armor/vest/russian_coat,
-		/obj/item/storage/toolbox/mosincase = 2,
+		/obj/item/storage/toolbox/guncase/soviet = 2,
 	)
 
 /datum/supply_pack/imports/russian/fill(obj/structure/closet/crate/our_crate)

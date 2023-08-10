@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/imp/@SUBTYPES : /mob/living/basic/demon/@SUBTYPES{@OLD}
