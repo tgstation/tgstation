@@ -9,9 +9,13 @@
 
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
-	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v5 voice activation system, the Lawbringer boasts many firing options, expriment. Or just use the manual."
+	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	cell_type = /obj/item/stock_parts/cell/lawbringer
-	icon_state = "hoslaser" //placeholder
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon_state = "lawbringer"
+	inhand_icon_state = "lawbringer"
+	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	verb_say = "states"
 	force = 10
@@ -35,6 +39,7 @@
 /obj/item/gun/energy/e_gun/lawbringer/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 
 
 /////BIOMETRIC AND VOICE/////
@@ -43,32 +48,101 @@
 		return FALSE
 	if(speaker == src)
 		return FALSE
+	if(!owner_dna)//weird edge cases where speaker with no DNA would be able to communicate with lawbringer
+		return FALSE
+	if(iscarbon(speaker))
+		var/mob/living/carbon/C = speaker
+		if(!C.dna && !C.dna.unique_enzymes)
+			return FALSE
+		if(C.dna.unique_enzymes != owner_dna)
+			return FALSE
+	else
+		return FALSE
+
 	//placeholder code for figuring out a way of making this not an if string
-	//ammo selector v5 (abomination)
-	if(findtext(raw_message, regex(@"(?:detain|disable)")))
-		selectammo(DETAIN)
+	//ammo selector v-1 (i have given up)(god hates me for making this)
+	if(findtext(raw_message, @"detain"))
+		selectammo(DETAIN, speaker)
 		say("Generating detain lens")
-	if(findtext(raw_message, regex(@"(?:execute|kill|lethal)")))
-		selectammo(EXECUTE)
+	if(findtext(raw_message, @"disable"))
+		selectammo(DETAIN, speaker)
+		say("Generating detain lens")
+	if(findtext(raw_message, @"execute"))
+		selectammo(EXECUTE, speaker)
 		say("Fabricating lethal bullets")
-	if(findtext(raw_message, regex(@"(?:hotshot|burn|fire)")))
-		selectammo(HOTSHOT)
+	if(findtext(raw_message, @"kill"))
+		selectammo(EXECUTE, speaker)
+		say("Fabricating lethal bullets")
+	if(findtext(raw_message, @"lethal"))
+		selectammo(EXECUTE, speaker)
+		say("Fabricating lethal bullets")
+	if(findtext(raw_message, @"hotshot"))
+		selectammo(HOTSHOT, speaker)
 		say("Forming proto-plasma")
-	if(findtext(raw_message, regex(@"(?:smokeshot|fog)")))
-		selectammo(SMOKESHOT)
+	if(findtext(raw_message, @"burn"))
+		selectammo(HOTSHOT, speaker)
+		say("Forming proto-plasma")
+	if(findtext(raw_message, @"fire"))
+		selectammo(HOTSHOT, speaker)
+		say("Forming proto-plasma")
+	if(findtext(raw_message, @"smokeshot"))
+		selectammo(SMOKESHOT, speaker)
 		say("Compressing Smoke")
-	if(findtext(raw_message, regex(@"(?:bigshot|breach)")))
-		selectammo(BIGSHOT)
+	if(findtext(raw_message, @"fog"))
+		selectammo(SMOKESHOT, speaker)
+		say("Compressing Smoke")
+	if(findtext(raw_message, @"breach"))
+		selectammo(BIGSHOT, speaker)
 		say("Fabricating protomatter shell")
-	if(findtext(raw_message, @"clown")) //does not work
-		selectammo(CLOWNSHOT)
+	if(findtext(raw_message, @"bigshot"))
+		selectammo(BIGSHOT, speaker)
+		say("Fabricating protomatter shell")
+	if(findtext(raw_message, @"clown"))
+		selectammo(CLOWNSHOT, speaker)
 		say("Honk")
-	if(findtext(raw_message, regex(@"(?:pulse|throw|push)"))) //only works if i say ?: before everything
-		selectammo(PULSE)
+	if(findtext(raw_message, @"pulse"))
+		selectammo(PULSE, speaker)
 		say("Compressing air")
-	if(findtext(raw_message, regex(@"grey|tide"))) //does not work
-		selectammo(TIDESHOT)
+	if(findtext(raw_message, @"throw"))
+		selectammo(PULSE, speaker)
+		say("Compressing air")
+	if(findtext(raw_message, @"push"))
+		selectammo(PULSE, speaker)
+		say("Compressing air")
+	if(findtext(raw_message, @"grey"))
+		selectammo(TIDESHOT, speaker)
 		say("Greytide inversion active")
+	if(findtext(raw_message, @"tide"))
+		selectammo(TIDESHOT, speaker)
+		say("Greytide inversion active")
+
+	//ammo selector v6 (come back to me)
+	/*
+	if(findtext(raw_message, @"detain|disable"))
+		selectammo(DETAIN, speaker)
+		say("Generating detain lens")
+	if(findtext(raw_message, @"execute|kill|lethal"))
+		selectammo(EXECUTE, speaker)
+		say("Fabricating lethal bullets")
+	if(findtext(raw_message, @"hotshot|burn|fire"))
+		selectammo(HOTSHOT, speaker)
+		say("Forming proto-plasma")
+	if(findtext(raw_message, @"smokeshot|fog"))
+		selectammo(SMOKESHOT, speaker)
+		say("Compressing Smoke")
+	if(findtext(raw_message, @"bigshot|breach"))//DOES NOT WORK. * ADDENDUM: Works if i say "Bigshot|Breach" in ic
+		selectammo(BIGSHOT, speaker)
+		say("Fabricating protomatter shell")
+	if(findtext(raw_message, @"clown")) //WORKS!!!!
+		selectammo(CLOWNSHOT, speaker)
+		say("Honk")
+	if(findtext(raw_message, @"pulse|throw|push"))
+		selectammo(PULSE, speaker)
+		say("Compressing air")
+	if(findtext(raw_message, @"grey|tide"))
+		selectammo(TIDESHOT, speaker)
+		say("Greytide inversion active")
+	*/
 
 	/* //ammo selector v3 (functions but only if you say ?: before the activation word)
 	if(findtext(raw_message, regex("(?:detain|disable)")))
@@ -96,67 +170,65 @@
 		selectammo(TIDESHOT)
 		say("Greytide inversion active")
 	*/
-
-	/* //ammo selector v2 (untested with debug response)
-	if(findtext(raw_message, regex(@"detain|disable")))
-		selectammo(DETAIN)
-		say("Generating detain lens")
-	if(findtext(raw_message, regex(@"execute|kill|lethal")))
-		selectammo(EXECUTE)
-		say("Fabricating lethal bullets")
-	if(findtext(raw_message, regex(@"hotshot|burn|fire")))
-		selectammo(HOTSHOT)
-		say("Forming proto-plasma")
-	if(findtext(raw_message, regex(@"smokeshot|fog")))
-		selectammo(SMOKESHOT)
-		say("Compressing Smoke")
-	if(findtext(raw_message, regex(@"bigshot|breach")))
-		selectammo(BIGSHOT)
-		say("Fabricating protomatter shell")
-	if(findtext(raw_message, regex(@"clown")))
-		selectammo(CLOWNSHOT)
-		say("Honk")
-	if(findtext(raw_message, regex(@"pulse|throw|push")))
-		selectammo(PULSE)
-		say("Compressing air")
-	if(findtext(raw_message, regex(@"grey|tide")))
-		selectammo(TIDESHOT)
-		say("Greytide inversion active")
-    */
-		/* //ammo selector v1 (untested with debug response)
+	/*
+	//ammo selector v1 (broked)
 	if(findtext(raw_message, regex("detain|disable")))
-		selectammo(DETAIN)
+		selectammo(DETAIN, speaker)
+		say("Generating detain lens")
 	if(findtext(raw_message, regex("execute|kill|lethal")))
-		selectammo(EXECUTE)
+		selectammo(EXECUTE, speaker)
+		say("Fabricating lethal bullets")
 	if(findtext(raw_message, regex("hotshot|burn|fire")))
-		selectammo(HOTSHOT)
+		selectammo(HOTSHOT, speaker)
+		say("Forming proto-plasma")
 	if(findtext(raw_message, regex("smokeshot|fog")))
-		selectammo(SMOKESHOT)
+		selectammo(SMOKESHOT, speaker)
+		say("Compressing Smoke")
 	if(findtext(raw_message, regex("bigshot|breach")))
-		selectammo(BIGSHOT)
+		selectammo(BIGSHOT, speaker)
+		say("Fabricating protomatter shell")
 	if(findtext(raw_message, regex("clown")))
-		selectammo(CLOWNSHOT)
+		selectammo(CLOWNSHOT, speaker)
+		say("Honk")
 	if(findtext(raw_message, regex("pulse|throw|push")))
-		selectammo(PULSE)
+		selectammo(PULSE, speaker)
+		say("Compressing air")
 	if(findtext(raw_message, regex("grey|tide")))
-		selectammo(TIDESHOT)
-    */
+		selectammo(TIDESHOT, speaker)
+		say("Greytide inversion active")
+	*/
 
-/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum) //BROKEN FIX ASAP (This thing is broken in such an insane way i genuinely do not even know what is wrong send help)
-	var/obj/item/ammo_casing/energy/shot = ammo_type[shotnum]
+/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector)
+	select = shotnum
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
-	say("[shotnum]")
+	if (shot.select_name && selector)
+		balloon_alert(selector, "set to [shot.select_name]")
 	chambered = null
 	recharge_newshot(TRUE)
 	update_appearance()
 
 /obj/item/gun/energy/e_gun/lawbringer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	balloon_alert(user, "biometric lock reset")
+	user.visible_message(span_warning("[user] swipes the [emag_card] in the lawbringer's authenticator"))
+	src.name = "Lawbringer"
+	src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 	owner_dna = null
+
+/obj/item/gun/energy/e_gun/lawbringer/attackby(obj/item/weapon, mob/user, params)
+	if (istype(weapon, /obj/item/disk/nuclear))
+		user.visible_message(span_notice("[user] swipes the [weapon] in the lawbringer's authenticator"))
+		src.name = "Lawbringer"
+		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+		src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
+		owner_dna = null
+		return TRUE
 
 /obj/item/gun/energy/e_gun/lawbringer/attack_self(mob/living/user as mob)
 	if(!iscarbon(user))
+		balloon_alert(user, "invalid organism")
 		return
 	var/mob/living/carbon/C = user
 	if(C.dna && C.dna.unique_enzymes)
@@ -172,7 +244,8 @@
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		src.name = "[H.real_name]'s Lawbringer"
-		src.desc += " It's biometrically linked to [H.real_name]."
+		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+		src.desc += span_boldnotice(" It's biometrically linked to [H.real_name].")
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/updatepin(mob/living/user)
 	var/obj/item/firing_pin/lawbringer/lawpin = pin
@@ -194,6 +267,8 @@
 	owner_dna = C.dna.unique_enzymes
 
 /obj/item/firing_pin/lawbringer/pin_auth(mob/living/carbon/user)
+	if(!iscarbon(user))
+		return FALSE
 	if(user && user.dna && user.dna.unique_enzymes)
 		if(user.dna.unique_enzymes == owner_dna)
 			return TRUE
@@ -213,21 +288,18 @@
 PART 1:
 The ammo+projectiles+cell [DONE][MOSTLY]
 PART 2:
-Voice stuff and biometrics
+Voice stuff and biometrics [DONE][NOT REALLY]
 PART 3:
-Sprites
+Sprites [DONE]
 PART 4:
 Mapping it in
 PART 5:
 In situ balance testing
-
-IDEAS:
-After 25 minutes of the owner being dead, it desychs from owner
-
+PART 6:
+The manual (In game paper explaining gun's functionality)
 */
 
-// 6000:100 = 300:5    all energy values multiplied by 20
-// recharge rate was insufficent, multiply all values by 10 instead of 20
+// holds 3000 charges 100
 
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
