@@ -87,6 +87,16 @@
 	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
 	icon_state = "donkfillet"
 
+/obj/item/food/fishmeat/octopus
+	name = "octopus tentacle"
+	desc = "A large tentacle from an octopus."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "octopus_fillet"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+
+/obj/item/food/fishmeat/octopus/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_octopus, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
 /obj/item/food/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."
