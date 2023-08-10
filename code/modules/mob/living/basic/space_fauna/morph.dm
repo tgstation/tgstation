@@ -104,11 +104,6 @@
 /// Do some more logic for the morph when we disguise through the action.
 /mob/living/basic/morph/proc/on_disguise()
 	SIGNAL_HANDLER
-	visible_message(
-		span_warning("[src] suddenly twists and changes shape, becoming a copy of [initial(form_typepath.name)]!"),
-		span_notice("You twist your body and assume the form of [initial(form_typepath.name)]."),
-	)
-
 	// We are now weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
@@ -126,6 +121,10 @@
 		stack_trace("Somehow [src] has the TRAIT_DISGUISED trait but multiple sources. Will default to using the first.") //idek how this would happen but lets track if it does
 
 	var/atom/movable/our_form = potential_forms[1]
+	visible_message(
+		span_warning("[src] suddenly twists and changes shape, becoming a copy of [our_form]!"),
+		span_notice("You twist your body and assume the form of [our_form]."),
+	)
 	form_weakref = WEAKREF(our_form)
 	form_typepath = our_form.type
 

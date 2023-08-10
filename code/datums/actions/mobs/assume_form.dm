@@ -8,23 +8,19 @@
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS
 
-	/// The type of the form we began with. Here as a nice cache so we don't have to keep reading owner.
-	var/mob/living/original_type = null
-	/// The type of the form we are assuming.
-	var/atom/movable/assumed_type = null
-	/// Stuff that we can not disguise as. Not static so we can modify it on Grant() and avoid extra work in certain checks
-	var/list/blacklist_typecache = typecacheof(list(
+	/// Stuff that we can not disguise as. Not static so we can modify it on Grant() and avoid extra work in certain checks, also null by default so we know if shit breaks
+	var/list/blacklist_typecache = null
+
+/datum/action/cooldown/mob_cooldown/assume_form/Grant(mob/grant_to)
+	. = ..()
+	blacklist_typecache = typecacheof(list(
 		/atom/movable/screen,
 		/obj/effect,
 		/obj/energy_ball,
 		/obj/narsie,
 		/obj/singularity,
 	))
-
-/datum/action/cooldown/mob_cooldown/assume_form/Grant(mob/grant_to)
-	. = ..()
-	original_type = owner.type // if `original_type` ends up being null after this burn the codebase down
-	blacklist_typecache += typecacheof(original_type)
+	blacklist_typecache += typecacheof(owner.type)
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(reset_appearances))
 
 /datum/action/cooldown/mob_cooldown/assume_form/Remove(mob/remove_from)
