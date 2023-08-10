@@ -1157,6 +1157,7 @@
 #include "code\datums\diseases\gastrolisis.dm"
 #include "code\datums\diseases\gbs.dm"
 #include "code\datums\diseases\heart_failure.dm"
+#include "code\datums\diseases\hotsprings.dm"
 #include "code\datums\diseases\magnitis.dm"
 #include "code\datums\diseases\parasitic_infection.dm"
 #include "code\datums\diseases\parrotpossession.dm"
