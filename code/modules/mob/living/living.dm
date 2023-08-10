@@ -2484,7 +2484,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
 		if(!isnull(src.mind))
 			src.mind.enslave_mind_to_creator(reviver)
-		to_chat(src, span_userdanger("Serve [reviver], and assist [reviver.p_them()] in completing [reviver.p_their()] goals at any cost."))
+		to_chat(src, span_userdanger("Serve [reviver.real_name], and assist [reviver.p_them()] in completing [reviver.p_their()] goals at any cost."))
 		lazarus_policy = get_policy(ROLE_LAZARUS_BAD) || "You have been revived by a malfunctioning lazarus injector! You are now enslaved by whoever revived you."
 	to_chat(src, span_boldnotice(lazarus_policy))
 
