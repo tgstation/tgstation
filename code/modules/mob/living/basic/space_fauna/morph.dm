@@ -42,11 +42,11 @@
 	/// Stuff that we can not disguise as.
 	var/static/list/blacklist_typecache = typecacheof(list(
 		/atom/movable/screen,
-		/obj/singularity,
-		/obj/energy_ball,
-		/obj/narsie,
 		/mob/living/basic/morph,
 		/obj/effect,
+		/obj/energy_ball,
+		/obj/narsie,
+		/obj/singularity,
 	))
 
 /mob/living/basic/morph/Initialize(mapload)
