@@ -33,9 +33,16 @@
 	StartCooldown()
 	return TRUE
 
+/// Rapid proc to test if we can assume the form of a given atom. Returns TRUE if we can, FALSE if we can't. Done like this so we can be nice and explicit.
+/datum/action/cooldown/mob_cooldown/assume_form/proc/can_assume_form(atom/target_atom)
+	if(is_type_in_typecache(target_atom, blacklist_typecache) || (!isobj(target_atom) && !ismob(target_atom)))
+		return FALSE
+
+	return TRUE
+
 /// Determines what our user meant by their action. If they clicked on themselves, we reset our appearance. Otherwise, we assume the appearance of the clicked-on item.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/determine_intent(atom/target_atom)
-	if(is_type_in_typecache(target_atom, blacklist_typecache) || (!isobj(target_atom) && !ismob(target_atom)))
+	if(!can_assume_form(target_atom))
 		return
 
 	if(target_atom == owner)

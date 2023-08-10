@@ -24,7 +24,8 @@ export const AntagInfoMorph = (props, context) => {
               ...a shapeshifting abomination that can eat almost anything. You
               may take the form of anything you can see by{' '}
               <span style={noticestyle}>
-                using your &quot;Assume Form&quot; ability on it.
+                using your &quot;Assume Form&quot; ability on it. Shift-clicking
+                the object in question will also work.
               </span>{' '}
               <span style={badstyle}>
                 &ensp;This process will alert any nearby observers.
@@ -42,7 +43,8 @@ export const AntagInfoMorph = (props, context) => {
               Finally, you can restore yourself to your original form while
               morphed by{' '}
               <span style={noticestyle}>
-                using the &quot;Assume Form&quot; ability on yourself.
+                using the &quot;Assume Form&quot; ability on yourself. You can
+                also shift-click yourself.
               </span>{' '}
             </BlockQuote>
           </Stack.Item>

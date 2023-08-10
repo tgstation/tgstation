@@ -39,6 +39,9 @@
 	var/datum/weakref/form_weakref = null
 	/// A typepath pointing of the form we are currently assumed as. Remember, TYPEPATH!!!
 	var/atom/movable/form_typepath = null
+	/// The ability that allows us to disguise ourselves.
+	var/datum/action/cooldown/mob_cooldown/assume_form/disguise_ability = null
+
 	/// How much damage are we doing while disguised?
 	var/melee_damage_disguised = 0
 	/// Can we eat while disguised?
@@ -48,12 +51,13 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(src, COMSIG_CLICK_SHIFT, PROC_REF(trigger_ability))
 	RegisterSignal(src, COMSIG_ACTION_DISGUISED_APPEARANCE, PROC_REF(on_disguise))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DISGUISED), PROC_REF(on_undisguise))
 
 	AddElement(/datum/element/content_barfer)
 
-	var/datum/action/cooldown/mob_cooldown/assume_form/disguise_ability = new(src)
+	disguise_ability = new(src)
 	disguise_ability.Grant(src)
 
 /mob/living/basic/morph/examine(mob/user)
@@ -137,6 +141,14 @@
 
 	form_weakref = null
 	form_typepath = null
+
+/// Alias for the disguise ability to be used as a keybind.
+/mob/living/basic/morph/proc/trigger_ability(mob/living/basic/source, atom/target)
+	SIGNAL_HANDLER
+
+	// linters hate this if it's not async for some reason even though nothing blocks
+	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), caller = source, target = target)
+	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Handles the logic for attacking anything.
 /mob/living/basic/morph/proc/pre_attack(mob/living/basic/source, atom/target)
