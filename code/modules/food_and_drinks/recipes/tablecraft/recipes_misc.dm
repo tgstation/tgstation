@@ -428,3 +428,85 @@
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD
 	delete_contents = FALSE
+
+/datum/crafting_recipe/food/sauteed_eggplant
+	name = "Sauteed eggplant"
+	reqs = list(
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/quality_oil = 3,
+	)
+	result = /obj/item/food/sauteed_eggplant
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/stuffed_eggplant
+	name = "Stuffed eggplant"
+	reqs = list(
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/meat/cutlet = 1,
+	)
+	result = /obj/item/food/stuffed_eggplant
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/baba_ghanoush
+	name = "Baba ghanoush"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/quality_oil = 5,
+		/datum/reagent/consumable/lemonjuice = 3,
+	)
+	result = /obj/item/food/baba_ghanoush
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/moussaka
+	name = "Moussaka"
+	reqs = list(
+		/obj/item/food/grown/eggplant = 2,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/bechamel_sauce = 1,
+	)
+	result = /obj/item/food/moussaka
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/falafel
+	name = "Falafel"
+	reqs = list(
+		/obj/item/food/grown/soybeans = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/herbs = 1,
+	)
+	result = /obj/item/food/falafel
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/candied_pineapple
+	name = "Candied pineapple"
+	reqs = list(
+		/obj/item/food/pineappleslice = 1,
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/water = 2,
+	)
+	result = /obj/item/food/candied_pineapple
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/bibimbap
+	name = "Bibimbap"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/friedegg = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/cucumber = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/bibimbap
+	category = CAT_MISCFOOD

@@ -509,3 +509,74 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/stuffed_eggplant
+	name = "stuffed eggplant"
+	desc = "A cooked half of an eggplant, with the insides scooped out and mixed with meat, cheese, and veggies."
+	icon_state = "stuffed_eggplant"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+	tastes = list("cooked eggplant" = 5, "cheese" = 4, "ground meat" = 3, "veggies" = 2)
+	foodtypes = VEGETABLES | MEAT | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/moussaka
+	name = "moussaka"
+	desc = "A layered Mediterranean dish made of eggplants, potatoes, mixed veggies, and meat with a topping of bechamel sauce. Sliceable"
+	icon_state = "moussaka"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 32,
+		/datum/reagent/consumable/nutriment/vitamin = 12,
+		/datum/reagent/consumable/nutriment/protein = 20,
+	)
+	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+
+/obj/item/food/moussaka/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/moussaka_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/moussaka_slice
+	name = "moussaka slice"
+	desc = "A layered Mediterranean dish made of eggplants, potatoes, mixed veggies, and meat with a topping of bechamel sauce. Delish!"
+	icon_state = "moussaka_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/nutriment/protein = 5,
+	)
+	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+
+/obj/item/food/candied_pineapple
+	name = "candied pineapple"
+	desc = "A chunk of pineapple coated in sugar and dried into a chewy treat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	icon_state = "candied_pineapple_1"
+	base_icon_state = "candied_pineapple"
+	tastes = list("sugar" = 2, "chewy pineapple" = 4)
+	foodtypes = FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/candied_pineapple/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 3)]"
+
+/obj/item/food/bibimbap
+	name = "bibimbap"
+	desc = "A Korean rice dish of fried egg, meat, cucumber, and mixed vegetables. Crunchy!"
+	icon_state = "bibimbap"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 12,
+	)
+	tastes = list("rice" = 6, "meat" = 3, "cucumber" = 2, "fried egg" = 4, "mixed veggies" = 5)
+	foodtypes = VEGETABLES | MEAT

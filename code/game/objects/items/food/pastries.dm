@@ -493,3 +493,43 @@
 	tastes = list("peanut butter" = 1, "peanuts" = 1, "cream" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/chocolate_chip_cookie
+	name = "chocolate chip cookie"
+	desc = "A delightful-smelling chocolate chip cookie. Where's the milk?"
+	icon_state = "COOKIE!!!"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("soft cookie" = 2, "chocolate" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/snickerdoodle
+	name = "snickerdoodle"
+	desc = "A soft cookie made from vanilla and cinnamon."
+	icon_state = "snickerdoodle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("soft cookie" = 2, "vanilla" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/macaron
+	name = "snickerdoodle"
+	desc = "A sandwich-like confectionary with a soft cookie shell and a creamy icing center."
+	icon_state = "macaron"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	tastes = list("soft cookie" = 2, "creamy icing" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/thumbprint_cookie
+	name = "thumbprint cookie"
+	desc = "A cookie with a thumb-sized indent in the middle made for fillings. This one is filled with cherry jelly"
+	icon_state = "thumbprint_cookie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	tastes = list("cookie" = 2, "cherry jelly" = 3)
+	foodtypes = GRAIN | SUGAR | FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
