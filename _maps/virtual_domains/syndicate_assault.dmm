@@ -126,13 +126,13 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "cR" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "cZ" = (
 /obj/structure/table/reinforced,
-/obj/item/ammo_box/magazine/mm712x82,
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
+/obj/item/storage/toolbox/ammobox/a762,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "da" = (
@@ -151,17 +151,9 @@
 /obj/item/paper/fluff/ruins/forgottenship/powerissues,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"dk" = (
-/obj/machinery/light/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "dw" = (
-/obj/machinery/light/directional/north,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "dU" = (
 /obj/structure/cable,
@@ -200,8 +192,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "fJ" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "fM" = (
 /obj/machinery/computer/crew/syndie{
@@ -252,7 +244,7 @@
 	req_access = list("syndicate")
 	},
 /obj/item/melee/energy/sword/saber/red,
-/obj/machinery/light/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "iW" = (
@@ -339,7 +331,6 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse/bottom_left)
 "li" = (
-/obj/machinery/light/directional/south,
 /obj/structure/transit_tube/station/dispenser/reverse{
 	dir = 4
 	},
@@ -366,7 +357,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "lN" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "mo" = (
@@ -376,7 +367,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "mD" = (
-/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
@@ -457,6 +447,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "qf" = (
 /obj/structure/table/optable,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "qx" = (
@@ -467,7 +458,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "qY" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rm" = (
@@ -499,7 +490,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rP" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace,
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "sg" = (
@@ -607,6 +598,7 @@
 "wL" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "xJ" = (
@@ -659,7 +651,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "yT" = (
-/obj/machinery/light/directional/north,
 /obj/item/ai_module/core/full/cybersun,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
@@ -883,7 +874,6 @@
 /obj/structure/table/reinforced,
 /obj/item/paper,
 /obj/item/pen,
-/obj/machinery/light/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "IH" = (
@@ -903,9 +893,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Jg" = (
-/obj/machinery/light/directional/north,
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Jz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -949,14 +938,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"LW" = (
-/obj/machinery/suit_storage_unit/syndicate{
-	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black;
-	suit_type = /obj/item/clothing/suit/space/syndicate/black
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "Mc" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -989,6 +970,13 @@
 /obj/item/clothing/shoes/combat,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"MR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Nm" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1005,7 +993,7 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 30
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Nt" = (
@@ -1062,12 +1050,13 @@
 	amount = 15
 	},
 /obj/structure/cable,
-/obj/machinery/light/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "QF" = (
 /obj/structure/table/reinforced,
 /obj/item/dualsaber/green,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "QG" = (
@@ -1079,8 +1068,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Ra" = (
-/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "RQ" = (
@@ -1103,8 +1092,18 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Sd" = (
-/obj/machinery/light/directional/west,
-/obj/structure/cable,
+/obj/structure/closet/syndicate{
+	anchored = 1;
+	desc = "A basic closet for all your villainous needs.";
+	locked = 1;
+	name = "Closet";
+	req_access = list("syndicate");
+	secure = 1
+	},
+/obj/item/crowbar/red,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Sq" = (
@@ -2054,13 +2053,13 @@ Io
 uP
 uP
 QX
+lN
 uP
 uP
 uP
 uP
 uP
-uP
-uP
+lN
 uP
 uP
 uP
@@ -2224,15 +2223,15 @@ qx
 qx
 qx
 ru
-dw
-Kz
+vp
+Jg
 ru
 bh
 cR
 ru
 Qi
 sz
-nG
+Kz
 ru
 Mc
 gD
@@ -2406,13 +2405,13 @@ IC
 ru
 mD
 JN
-dk
+MR
 ru
-Mc
+Sd
 gD
 uP
 uP
-rP
+gD
 ru
 qx
 qx
@@ -2638,7 +2637,7 @@ da
 ru
 Ra
 Sc
-Cf
+uP
 ru
 JP
 qY
@@ -2712,7 +2711,7 @@ qx
 nB
 nB
 qU
-Jg
+Fp
 uP
 uP
 li
@@ -2809,11 +2808,11 @@ rm
 ru
 nk
 oM
-Sd
+oM
 oM
 yR
 oM
-Sd
+oM
 oM
 uP
 ru
@@ -2831,7 +2830,7 @@ ru
 wL
 oM
 uP
-uP
+dw
 ru
 yZ
 nB
@@ -2862,8 +2861,8 @@ qx
 qx
 qx
 ru
-XS
 uP
+dw
 ru
 rH
 uP
@@ -2875,8 +2874,8 @@ JA
 oM
 uP
 ru
-uP
-LW
+fJ
+Qg
 ru
 qx
 qx
@@ -2978,7 +2977,7 @@ qx
 qx
 qx
 ru
-XS
+uP
 uP
 dd
 uP
@@ -2992,7 +2991,7 @@ bo
 uP
 dd
 uP
-LW
+Qg
 ru
 qx
 qx
@@ -3039,7 +3038,7 @@ ru
 aO
 uP
 ru
-uP
+XS
 uP
 uP
 hD
@@ -3047,7 +3046,7 @@ aZ
 hD
 uP
 uP
-uP
+Cf
 ru
 uP
 Fp
@@ -3099,11 +3098,11 @@ hD
 ru
 zi
 uP
-lN
+uP
 uP
 FN
 Cn
-lN
+uP
 uP
 uP
 ru
@@ -3215,11 +3214,11 @@ qx
 UQ
 rM
 xJ
-fJ
+Kz
 Kz
 tI
 Kz
-fJ
+Kz
 ct
 xJ
 ru
@@ -3329,7 +3328,7 @@ ru
 ln
 Kz
 ru
-Kz
+iB
 Kz
 Kz
 fV
@@ -3337,7 +3336,7 @@ If
 Kz
 Kz
 Kz
-Kz
+nG
 ru
 cw
 cw
@@ -3384,7 +3383,7 @@ qx
 qx
 qx
 ru
-iB
+Kz
 Kz
 sq
 Kz
@@ -3398,7 +3397,7 @@ CK
 Kz
 ja
 Kz
-nG
+Jg
 ru
 qx
 qx

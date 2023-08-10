@@ -17,3 +17,4 @@
 	loot = list(/obj/structure/closet/crate/secure/bitrunner_loot/encrypted)
 	health = 1400
 	maxHealth = 1400
+	drop_portal = FALSE

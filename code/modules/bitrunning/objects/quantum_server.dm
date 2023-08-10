@@ -667,9 +667,12 @@
 	if(!istype(loot_crate))
 		return
 
-	for(var/mob/person in loot_crate.contents) // no free rides
-		person.forceMove(get_turf(loot_crate))
-		to_chat(person, span_danger("The crate dematerializes beneath you!"))
+	for(var/mob/person in loot_crate.contents)
+		if(isnull(person.mind))
+			person.forceMove(get_turf(loot_crate))
+
+		var/datum/mind/this_mind = person.mind
+		this_mind.full_avatar_disconnect()
 
 	spark_at_location(loot_crate)
 	qdel(loot_crate)
