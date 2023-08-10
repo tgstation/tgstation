@@ -8,19 +8,17 @@
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS
 
-	/// Stuff that we can not disguise as. Not static so we can modify it on Grant() and avoid extra work in certain checks, also null by default so we know if shit breaks
-	var/list/blacklist_typecache = null
-
-/datum/action/cooldown/mob_cooldown/assume_form/Grant(mob/grant_to)
-	. = ..()
-	blacklist_typecache = typecacheof(list(
+	/// Stuff that we can not disguise as.
+	var/static/list/blacklist_typecache = typecacheof(list(
 		/atom/movable/screen,
 		/obj/effect,
 		/obj/energy_ball,
 		/obj/narsie,
 		/obj/singularity,
 	))
-	blacklist_typecache += typecacheof(owner.type)
+
+/datum/action/cooldown/mob_cooldown/assume_form/Grant(mob/grant_to)
+	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(reset_appearances))
 
 /datum/action/cooldown/mob_cooldown/assume_form/Remove(mob/remove_from)
@@ -40,7 +38,9 @@
 
 	if(target_atom == owner)
 		reset_appearances()
-	else
+		return
+
+	if(target_atom.type != owner.type)
 		assume_appearances(target_atom)
 
 /// Assumes the appearance of a desired movable and applies it to our mob. Target is the movable in question.
