@@ -550,12 +550,12 @@
 	weight = 1
 	delay = 7 MINUTES
 	cost = 40
-	requirements = list(101,101,70,40,30,20,10,10,10,10)
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	antag_cap = 3
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
-	minimum_players = 35
+	minimum_players = 100
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 

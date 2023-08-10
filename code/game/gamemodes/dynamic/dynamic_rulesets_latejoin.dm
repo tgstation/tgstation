@@ -120,11 +120,11 @@
 	weight = 1
 	delay = 1 MINUTES // Prevents rule start while head is offstation.
 	cost = 10
-	requirements = list(101,101,70,40,30,20,20,20,20,20)
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 
-	minimum_players = 30
+	minimum_players = 100
 
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
