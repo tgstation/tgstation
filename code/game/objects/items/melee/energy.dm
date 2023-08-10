@@ -14,8 +14,8 @@
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
-	attack_style_path = /datum/attack_style/melee_weapon/swing/esword
-	alt_attack_style_path = /datum/attack_style/melee_weapon/stab_out/esword
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out/esword
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/esword
 	weapon_sprite_angle = 45
 	blocking_ability = 1.5
 	can_block_flags = BLOCK_ALL_BUT_TACKLE

@@ -192,9 +192,11 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	wound_bonus = -20
-	bare_wound_bonus = 20
-	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
+	wound_bonus = 10
+	bare_wound_bonus = 10
+	armour_penetration = 35
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 240
 	var/can_drop = FALSE
 	var/fake = FALSE

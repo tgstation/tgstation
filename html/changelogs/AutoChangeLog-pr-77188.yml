@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add admin blackhole shuttle event with a normal version and suicidal version."
+  - bugfix: "Fix several shuttle event runtimes"

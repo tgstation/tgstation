@@ -31,7 +31,8 @@
 	bare_wound_bonus = 20
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	item_flags = NO_BLOOD_ON_ITEM
-	attack_style_path = /datum/attack_style/melee_weapon/swing/desword
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out/desword
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/desword
 	weapon_sprite_angle = 45
 	blocking_ability = 1
 	can_block_flags = BLOCK_ALL_BUT_TACKLE
@@ -219,16 +220,30 @@
 	else
 		return ..()
 
+/datum/attack_style/melee_weapon/stab_out/desword
+	cd = CLICK_CD_MELEE * 1.25
+	slowdown = 0.5
+	sprite_size_multiplier = 1.25
+
+/datum/attack_style/melee_weapon/stab_out/desword/get_swing_description(has_alt_style)
+	return "Stabs out forwards and backwards one tile."
+
+/datum/attack_style/melee_weapon/stab_out/desword/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
+	var/list/stab_turfs = ..()
+	stab_turfs |= get_step(attacker, REVERSE_DIR(attack_direction))
+	return stab_turfs
+
 // Attack style for desword
 /datum/attack_style/melee_weapon/swing/desword
 	cd = CLICK_CD_MELEE * 1.25
 	reverse_for_lefthand = FALSE
 	time_per_turf = 0.05 SECONDS
+	slowdown = 0.75
 
 /datum/attack_style/melee_weapon/swing/desword/get_swing_description(has_alt_style)
 	. = "Swings out to all adjacent tiles besides directly behind you. It must be active to swing."
 	if(!has_alt_style)
-		. += " Right-clicking will swing in the opposite direction, if no alternate style is set."
+		. += " Right-clicking will swing in the opposite direction."
 	return .
 
 /datum/attack_style/melee_weapon/swing/desword/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)

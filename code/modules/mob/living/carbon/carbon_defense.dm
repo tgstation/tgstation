@@ -259,7 +259,7 @@
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
-	if(ishuman(helper) && body_position != STANDING_UP && !appears_alive())
+	if(ishuman(helper) && body_position != STANDING_UP && !(target.appears_alive() && target.stat != SOFT_CRIT && target.stat != HARD_CRIT))
 		var/mob/living/carbon/human/human_helper = helper
 		human_helper.do_cpr(src)
 		return
@@ -512,6 +512,9 @@
 
 
 /mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
+	if(!forced && HAS_TRAIT(src, TRAIT_NOBREATH))
+		amount = min(amount, 0) //Prevents oxy damage but not healing
+
 	. = ..()
 	check_passout(.)
 

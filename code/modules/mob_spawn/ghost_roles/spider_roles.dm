@@ -177,7 +177,8 @@
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
 		var/mob/living/basic/spiderling/chosen_spiderling = choice
-		var/mob/living/basic/giant_spider/spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/young_spider/young_spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/giant_spider/spider = initial(young_spider.grow_as)
 		spider_list[initial(spider.name)] = chosen_spiderling
 
 		var/datum/radial_menu_choice/option = new

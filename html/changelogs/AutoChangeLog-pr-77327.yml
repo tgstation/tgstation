@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - bugfix: "The bulbs of lights will now have an emissive glow when on, making it so they appear active no matter how dark the area surrounding them happens to be."

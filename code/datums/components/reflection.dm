@@ -11,7 +11,7 @@
 	 */
 	var/reflected_dir
 	/// the movable which the reflected movables are attached to, in turn added to the vis contents of the parent.
-	var/atom/movable/reflection_holder
+	var/obj/effect/abstract/reflection_holder
 	/// A lazy assoc list that keeps track of which movables are being reflected and the associated reflections.
 	var/list/reflected_movables
 	/// A callback used check to know which movables should be reflected and which not.
@@ -34,22 +34,21 @@
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_movable_entered_or_initialized),
 		COMSIG_ATOM_EXITED = PROC_REF(on_movable_exited)
 	)
-	var/atom/movable/mov_parent = parent
 	AddComponent(/datum/component/connect_range, parent, connections, 1, works_in_containers = FALSE)
 	src.reflected_dir = reflected_dir
 	src.reflection_matrix = reflection_matrix
 	src.reflection_filter = reflection_filter
 	src.can_reflect = can_reflect
-	reflection_holder = new
+	reflection_holder = new(parent)
 	reflection_holder.alpha = alpha
 	reflection_holder.appearance_flags = KEEP_TOGETHER
 	reflection_holder.vis_flags = VIS_INHERIT_ID
-	reflection_holder.alpha = alpha
 	reflection_holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	if(reflection_filter)
 		reflection_holder.add_filter("reflection", 1, reflection_filter)
-	mov_parent.vis_contents += reflection_holder
 
+	var/atom/movable/mov_parent = parent
+	mov_parent.vis_contents += reflection_holder
 	set_reflection(new_dir = mov_parent.dir)
 
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
@@ -112,8 +111,15 @@
 ///Sets up a visual overlay of the target movables, which is added to the parent's vis contents.
 /datum/component/reflection/proc/set_reflected(atom/movable/target)
 	SIGNAL_HANDLER
-	var/atom/movable/reflection = new
-	reflection.vis_contents += target
+	/**
+	 * If the loc is null, only a black (or grey depending on alpha) silhouette of the target will be rendered
+	 * Just putting this information here in case you want something like that in the future.
+	 */
+	var/obj/effect/abstract/reflection = new(parent)
+	reflection.vis_flags = VIS_INHERIT_ID
+	if(!target.render_target)
+		target.render_target = REF(target)
+	reflection.render_source = target.render_target
 	///The filter is added to the reflection holder; the matrix is not, otherwise that'd go affecting the filter.
 	if(reflection_matrix)
 		reflection.transform = reflection_matrix
