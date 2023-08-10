@@ -135,7 +135,7 @@
 		if(living_target.stat != DEAD)
 			return
 
-		INVOKE_ASYNC(user, PROC_REF(eat), target = living_target, delay = 3 SECONDS, update_health = -50)
+		INVOKE_ASYNC(source, PROC_REF(eat), target = living_target, delay = 3 SECONDS, update_health = -50)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(isitem(target)) //Eat items just to be annoying
@@ -143,7 +143,7 @@
 		if(!item_target.anchored)
 			return
 
-		INVOKE_ASYNC(user, PROC_REF(eat), target = living_target, delay = 2 SECONDS)
+		INVOKE_ASYNC(source, PROC_REF(eat), target = item_target, delay = 2 SECONDS)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 /// Eat stuff. Delicious. Return TRUE if we ate something, FALSE otherwise.
@@ -158,7 +158,7 @@
 		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
 		return FALSE
 
-	balloon_alert(user, "eating...")
+	balloon_alert(src, "eating...")
 	if((delay > 0 SECONDS) && !do_after(src, delay, target = eatable))
 		return FALSE
 
