@@ -5,6 +5,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = WEATHER_RENDER_TARGET
 	render_relay_planes = list() //Used as alpha filter for weather_effect fullscreen
+	allows_offsetting = FALSE
 	critical = PLANE_CRITICAL_DISPLAY
 
 //Contains the weather effect itself
@@ -14,6 +15,7 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_planes = list(RENDER_PLANE_GAME)
+	allows_offsetting = FALSE
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/weather_effect/Initialize()
@@ -34,3 +36,4 @@
 	render_target = SUNLIGHTING_RENDER_TARGET
 	render_relay_planes = list()  //Used as layer filter for sunlight fullscreen
 	critical = PLANE_CRITICAL_DISPLAY
+	allows_offsetting = FALSE

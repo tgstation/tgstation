@@ -157,6 +157,7 @@ Sunlight System
 //non-weatherproof turfs
 /turf/var/weatherproof = TRUE
 /turf/open/space/weatherproof = FALSE
+/turf/open/floor/plating/ocean/weatherproof = FALSE
 /turf/open/openspace/weatherproof = FALSE
 
 /* check ourselves and neighbours to see what outdoor effects we need */
@@ -222,7 +223,7 @@ Sunlight System
 			.["WEATHERPROOF"] |= ceilingStat["WEATHERPROOF"]
 
 	var/area/turf_area = get_area(src)
-	if(!isspaceturf(src) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors)
+	if(!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors)
 		.["SKYVISIBLE"]   =  FALSE
 		.["WEATHERPROOF"] =  TRUE
 
