@@ -1,3 +1,4 @@
+/// The classic morph, Corpus Accipientis (or "The body of the recipient"). It's a blob that can disguise itself as other things simply put.
 /mob/living/basic/morph
 	name = "morph"
 	real_name = "morph"
@@ -56,6 +57,11 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(src, COMSIG_CLICK_SHIFT, PROC_REF(change_form))
+
+/mob/living/basic/morph/Destroy()
+	form = null // juuuust in case
+	return ..()
 
 /mob/living/basic/morph/examine(mob/user)
 	if(isnull(form))
@@ -99,16 +105,23 @@
 		return FALSE
 	return ..()
 
-/mob/living/basic/morph/ShiftClickOn(atom/movable/A)
-	if(!stat)
-		if(A == src)
-			restore()
-			return
-		if(istype(A) && allowed_to_disguise_as(A))
-			assume(A)
-	else
+/// User-input proc that allows us to change our form to something or reset it.
+/mob/living/basic/morph/proc/change_form(atom/A)
+	SIGNAL_HANDLER
+	if(!ismovable(A))
+		return
+
+	if(stat != CONSCIOUS)
 		to_chat(src, span_warning("You need to be conscious to transform!"))
-		..()
+		return
+
+	if(A == src)
+		restore()
+		return
+
+	if(allowed_to_disguise_as(A))
+		assume(A)
+
 
 /mob/living/basic/morph/proc/pre_attack(mob/living/basic/source, atom/target)
 	SIGNAL_HANDLER
@@ -160,20 +173,15 @@
 /mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
 	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
 
+/// We've found a form we desire to assume, so let's do it.
 /mob/living/basic/morph/proc/assume(atom/movable/target)
-	form = target
 
 	visible_message(
 		span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"),
 		span_notice("You twist your body and assume the form of [target]."),
 	)
 
-	appearance = target.appearance
-	copy_overlays(target)
-	alpha = max(alpha, 150) //fucking chameleons
-	transform = initial(transform)
-	pixel_y = base_pixel_y
-	pixel_x = base_pixel_x
+
 
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
@@ -183,27 +191,20 @@
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
 
+/// Need to return back to our natural form.
 /mob/living/basic/morph/proc/restore()
 	if(!isnull(form))
 		to_chat(src, span_warning("You're already in your normal form!"))
 		return
 
-	form = null
-	alpha = initial(alpha)
-	color = initial(color)
-	desc = initial(desc)
-	animate_movement = SLIDE_STEPS
-	maptext = null
+
 
 	visible_message(
 		span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"),
 		span_notice("You reform to your normal body."),
 	)
 
-	name = initial(name)
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-	cut_overlays()
+
 
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
@@ -213,7 +214,9 @@
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
 
-/datum/ai_controller/basic_controller/cat_butcherer
+/// No fleshed out AI implementation, just something that make these fellers seem lively if they're just dropped into a station.
+/// Only real human-powered intelligence is capable of playing prop hunt in SS13 (until further notice).
+/datum/ai_controller/basic_controller/morph
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)

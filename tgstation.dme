@@ -758,6 +758,7 @@
 #include "code\datums\actions\items\unzip.dm"
 #include "code\datums\actions\items\vortex_recall.dm"
 #include "code\datums\actions\mobs\adjust_vision.dm"
+#include "code\datums\actions\mobs\assume_form.dm"
 #include "code\datums\actions\mobs\blood_warp.dm"
 #include "code\datums\actions\mobs\charge.dm"
 #include "code\datums\actions\mobs\charge_apc.dm"
