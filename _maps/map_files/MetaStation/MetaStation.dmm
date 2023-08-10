@@ -7830,7 +7830,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/requests_console/directional/east,
+/obj/machinery/requests_console/directional/east{
+	department = "Genetics";
+	name = "Genetics Requests Console"
+	},
 /obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
@@ -35341,10 +35344,13 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/machinery/requests_console/directional/south,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/announcement,
+/obj/machinery/requests_console/directional/south{
+	department = "Chief Medical Officer's Desk";
+	name = "Chief Medical Officer's Requests Console"
+	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "mSB" = (
@@ -52092,9 +52098,12 @@
 "sTD" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/machinery/requests_console/directional/east,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/requests_console/directional/east{
+	department = "Security";
+	name = "Security Requests Console"
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "sTK" = (
@@ -64567,7 +64576,10 @@
 	},
 /obj/item/pen,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/requests_console/directional/west,
+/obj/machinery/requests_console/directional/west{
+	department = "AI Chamber";
+	name = "AI Chamber Requests Console"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "xkV" = (
@@ -65182,9 +65194,12 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/armory/disablers,
-/obj/machinery/requests_console/directional/west,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/requests_console/directional/west{
+	department = "Security";
+	name = "Security Requests Console"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "xwV" = (
