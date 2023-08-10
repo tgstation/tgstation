@@ -838,13 +838,13 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
  * threat and then rounded to the nearest interval.
  */
 /datum/game_mode/dynamic/proc/lorentz_to_amount(centre, scale, max_threat = 100, interval = 1)
-	. = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, rand()-0.5, scale)
+	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, rand()-0.5, scale)
 	/**
 	 * Given an x variable value of -/+5, a location of -/+ 0.5, a scale of 0.5 to 4, and a graphing calculator,
 	 * the threat will go beyond the upper and lower 3% of the max threat, which is why
 	 * we're leaving the remaining 3% to the random number generator.
 	 */
-	return round(. * max_threat + rand(-3, 3) * max_threat/100, interval)
+	return round(lorentz_result * max_threat + rand(-3, 3) * max_threat/100, interval)
 
 #undef FAKE_REPORT_CHANCE
 #undef FAKE_GREENSHIFT_FORM_CHANCE
