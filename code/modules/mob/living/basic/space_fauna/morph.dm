@@ -57,30 +57,35 @@
 	AddElement(/datum/element/content_barfer)
 
 /mob/living/basic/morph/examine(mob/user)
-	if(morphed)
-		. = form.examine(user)
-		if(get_dist(user,src) <= 3)
-			. += span_warning("It doesn't look quite right...")
-	else
-		. = ..()
+	if(!morphed || isnull(form))
+		return ..()
+
+	. = form.examine(user)
+	if(get_dist(user,src) <= 3)
+		. += span_warning("It doesn't look quite right...")
 
 /mob/living/basic/morph/med_hud_set_health()
-	if(morphed && !isliving(form))
-		var/image/holder = hud_list[HEALTH_HUD]
-		holder.icon_state = null
-		return //we hide medical hud while morphed
-	..()
+	if(isliving(form) || !morphed)
+		return ..()
+
+	//we hide medical hud while morphed
+	var/image/holder = hud_list[HEALTH_HUD]
+	holder.icon_state = null
+
 
 /mob/living/basic/morph/med_hud_set_status()
-	if(morphed && !isliving(form))
-		var/image/holder = hud_list[STATUS_HUD]
-		holder.icon_state = null
-		return //we hide medical hud while morphed
-	..()
+	if(isliving(form) || !morphed)
+		return ..()
 
-/mob/living/basic/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
-	return !is_type_in_typecache(A, blacklist_typecache) && (isobj(A) || ismob(A))
+	//we hide medical hud while morphed
+	var/image/holder = hud_list[STATUS_HUD]
+	holder.icon_state = null
 
+/// Simple check to see if we are allowed to disguise as something.
+/mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
+	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
+
+/// Eat stuff. Delicious.
 /mob/living/basic/morph/proc/eat(atom/movable/A)
 	if(morphed && !eat_while_disguised)
 		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
@@ -96,7 +101,7 @@
 		if(A == src)
 			restore()
 			return
-		if(istype(A) && allowed(A))
+		if(istype(A) && allowed_to_disguise_as(A))
 			assume(A)
 	else
 		to_chat(src, span_warning("You need to be conscious to transform!"))
@@ -106,8 +111,10 @@
 	morphed = TRUE
 	form = target
 
-	visible_message(span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"), \
-					span_notice("You twist your body and assume the form of [target]."))
+	visible_message(
+		span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"),
+		span_notice("You twist your body and assume the form of [target]."),
+	)
 	appearance = target.appearance
 	copy_overlays(target)
 	alpha = max(alpha, 150) //fucking chameleons
@@ -136,8 +143,10 @@
 	animate_movement = SLIDE_STEPS
 	maptext = null
 
-	visible_message(span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"), \
-					span_notice("You reform to your normal body."))
+	visible_message(
+		span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"),
+		span_notice("You reform to your normal body."),
+	)
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -152,32 +161,37 @@
 	med_hud_set_status() //we are not an object
 
 /mob/living/basic/morph/death(gibbed)
-	if(morphed)
-		visible_message(span_warning("[src] twists and dissolves into a pile of green flesh!"), \
-						span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"))
-		restore()
-	..()
+	if(!morphed || isnull(form))
+		return ..()
 
-/mob/living/basic/morph/Aggro() // automated only
-	..()
-	if(morphed)
-		restore()
+	visible_message(
+		span_warning("[src] twists and dissolves into a pile of green flesh!"),
+		span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"),
+	)
+	restore()
 
-/mob/living/basic/morph/LoseAggro()
-	vision_range = initial(vision_range)
+	return ..()
 
-/mob/living/basic/morph/AIShouldSleep(list/possible_targets)
-	. = ..()
-	if(.)
-		var/list/things = list()
-		for(var/atom/movable/A in view(src))
-			if(allowed(A))
-				things += A
-		var/atom/movable/T = pick(things)
-		assume(T)
+///mob/living/basic/morph/Aggro() // automated only
+//	..()
+//	if(morphed)
+//		restore()
+//
+///mob/living/basic/morph/LoseAggro()
+//	vision_range = initial(vision_range)
+
+///mob/living/basic/morph/AIShouldSleep(list/possible_targets)
+//	. = ..()
+//	if(.)
+//		var/list/things = list()
+//		for(var/atom/movable/A in view(src))
+//			if(allowed_to_disguise_as(A))
+//				things += A
+//		var/atom/movable/T = pick(things)
+//		assume(T)
 
 /mob/living/basic/morph/can_track(mob/living/user)
-	if(morphed)
+	if(morphed || !isnull(form))
 		return FALSE
 	return ..()
 
