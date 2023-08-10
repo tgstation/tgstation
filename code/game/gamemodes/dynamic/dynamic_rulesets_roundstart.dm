@@ -632,7 +632,7 @@
 	maximum_players = 4
 	weight = 3
 	cost = 0
-	requirements = list(1,101,101,101,101,101,101,101,101,101)
+	requirements = list(101,101,101,101,101,101,101,101,101,101) //
 	flags = LONE_RULESET
 
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()
