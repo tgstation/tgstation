@@ -137,9 +137,9 @@
 		holstered.forceMove(drop_location())
 
 /obj/item/mod/module/holster/Exited(atom/movable/gone, direction)
-	. = ..()
 	if(gone == holstered)
 		holstered = null
+	return ..()
 
 /obj/item/mod/module/holster/Destroy()
 	QDEL_NULL(holstered)
@@ -365,7 +365,7 @@
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 4
-	complexity = 3
+	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 15 SECONDS
 

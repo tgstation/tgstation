@@ -184,6 +184,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
-	icon_state = "extinguisher"
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "extinguisher_assembly"
 	result_path = /obj/structure/extinguisher_cabinet
 	pixel_shift = 29

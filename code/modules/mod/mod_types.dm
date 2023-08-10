@@ -66,6 +66,7 @@
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/t_ray,
+		/obj/item/mod/module/quick_carry,
 	)
 
 /obj/item/mod/control/pre_equipped/advanced
@@ -106,6 +107,7 @@
 		/obj/item/mod/module/orebag,
 		/obj/item/mod/module/clamp,
 		/obj/item/mod/module/drill,
+		/obj/item/mod/module/mouthhole,
 	)
 	default_pins = list(
 		/obj/item/mod/module/gps,
@@ -286,6 +288,20 @@
 		/obj/item/mod/module/visor/diaghud,
 	)
 
+
+/obj/item/mod/control/pre_equipped/interdyne
+	theme = /datum/mod_theme/interdyne
+	applied_cell = /obj/item/stock_parts/cell/super
+	applied_modules = list(
+		/obj/item/mod/module/defibrillator/combat,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/health_analyzer,
+		/obj/item/mod/module/injector,
+		/obj/item/mod/module/surgical_processor/preloaded,
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/tether
+	)
+
 /obj/item/mod/control/pre_equipped/enchanted
 	theme = /datum/mod_theme/enchanted
 	applied_core = /obj/item/mod/core/infinite
@@ -301,7 +317,7 @@
 	applied_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/noslip,
-		/obj/item/mod/module/status_readout,
+		/obj/item/mod/module/status_readout/ninja,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/dna_lock/reinforced,
@@ -328,7 +344,7 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/tether,
-		/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype,
+		/obj/item/mod/module/anomaly_locked/kinesis/prototype,
 	)
 
 /obj/item/mod/control/pre_equipped/responsory
@@ -489,13 +505,13 @@
 		/obj/item/mod/module/quick_carry/advanced,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack/advanced,
-		/obj/item/mod/module/anomaly_locked/kinesis/plus,
+		/obj/item/mod/module/anomaly_locked/kinesis/admin,
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack/advanced,
-		/obj/item/mod/module/anomaly_locked/kinesis/plus,
+		/obj/item/mod/module/anomaly_locked/kinesis/admin,
 	)
 
 //these exist for the prefs menu

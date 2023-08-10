@@ -9,7 +9,7 @@
 /obj/machinery/power/tracker
 	name = "solar tracker"
 	desc = "A solar directional tracker."
-	icon = 'icons/obj/solar.dmi'
+	icon = 'icons/obj/machines/solar.dmi'
 	icon_state = "tracker_base"
 	density = TRUE
 	use_power = NO_POWER_USE

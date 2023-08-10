@@ -42,7 +42,7 @@
 	icon_state = "hgpirate"
 	inhand_icon_state = null
 
-/obj/item/clothing/suit/costume/pirate/armored
+/obj/item/clothing/suit/costume/pirate/captain/armored
 	armor_type = /datum/armor/pirate_armored
 	strip_delay = 40
 	equip_delay_other = 20
@@ -304,7 +304,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL|SNUG_FIT|PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL|SNUG_FIT|STACKABLE_HELMET_EXEMPT
 	body_parts_covered = HEAD
 	resistance_flags = NONE
 	flash_protect = FLASH_PROTECTION_WELDER
@@ -533,7 +533,7 @@
 	icon_state = "football_armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/football_armor
-	greyscale_config_worn = /datum/greyscale_config/football_armor_worn
+	greyscale_config_worn = /datum/greyscale_config/football_armor/worn
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -576,6 +576,14 @@
 	name = "powder ganger jacket"
 	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
 	icon_state = "pg_suit"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/irs
+	name = "internal revenue service jacket"
+	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
+	icon_state = "irs_suit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

@@ -124,7 +124,7 @@
 		if (machine_stat & BROKEN)
 			balloon_alert(user, "too damaged to repair!")
 			return
-		if(!welder.tool_start_check(user, amount=0))
+		if(!welder.tool_start_check(user, amount=1))
 			return
 		balloon_alert(user, "repairing...")
 		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
@@ -135,12 +135,12 @@
 	//disassembling the frame
 	if(!opened || has_electronics || terminal)
 		return
-	if(!welder.tool_start_check(user, amount=3))
+	if(!welder.tool_start_check(user, amount=1))
 		return
 	user.visible_message(span_notice("[user.name] welds [src]."), \
 						span_hear("You hear welding."))
 	balloon_alert(user, "welding the APC frame")
-	if(!welder.use_tool(src, user, 50, volume=50, amount=3))
+	if(!welder.use_tool(src, user, 50, volume=50))
 		return
 	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
@@ -202,23 +202,27 @@
 	balloon_alert(user, "has both board and cell!")
 	return FALSE
 
-/obj/machinery/power/apc/emag_act(mob/user)
+/obj/machinery/power/apc/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if((obj_flags & EMAGGED) || malfhack)
-		return
+		return FALSE
 
 	if(opened)
 		balloon_alert(user, "close the cover first!")
+		return FALSE
 	else if(panel_open)
 		balloon_alert(user, "close the panel first!")
+		return FALSE
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
+		return FALSE
 	else
 		flick("apc-spark", src)
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
-		balloon_alert(user, "you emag the APC")
+		balloon_alert(user, "interface damaged")
 		update_appearance()
+		return TRUE
 
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)
@@ -251,7 +255,5 @@
 			locked = !locked
 			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
-			if(!locked)
-				ui_interact(user)
 		else
 			balloon_alert(user, "access denied!")

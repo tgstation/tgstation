@@ -102,6 +102,10 @@
 	else
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/singularity_act()
+	set_health(0)
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
 		return

@@ -2,7 +2,7 @@
 	name = "shrapnel shard"
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "large"
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = DROPDEL

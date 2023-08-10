@@ -19,61 +19,10 @@
 	throw_speed = 3
 	throw_range = 7
 	var/empty = FALSE
-	var/damagetype_healed //defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
-
-/obj/item/storage/medkit/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/medkit/regular
-	icon_state = "medkit"
-	desc = "A first aid kit with the ability to heal common types of injuries."
-
-/obj/item/storage/medkit/regular/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return BRUTELOSS
-
-/obj/item/storage/medkit/regular/PopulateContents()
-	if(empty)
-		return
-	var/static/items_inside = list(
-		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/suture = 2,
-		/obj/item/stack/medical/mesh = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/medkit/emergency
-	icon_state = "medbriefcase"
-	name = "emergency medkit"
-	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
-
-/obj/item/storage/medkit/emergency/PopulateContents()
-	if(empty)
-		return
-	var/static/items_inside = list(
-		/obj/item/healthanalyzer/wound = 1,
-		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/suture/emergency = 1,
-		/obj/item/stack/medical/ointment = 1,
-		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
-		/obj/item/storage/pill_bottle/iron = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/medkit/surgery
-	name = "surgical medkit"
-	icon_state = "medkit_surgery"
-	inhand_icon_state = "medkit"
-	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment."
-
-/obj/item/storage/medkit/surgery/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
-	atom_storage.max_slots = 12
-	atom_storage.max_total_storage = 24
-	atom_storage.set_holdable(list(
+	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
+	var/damagetype_healed
+	/// you just type this in holdables list of medkits instead of copypasting bunch of text.
+	var/static/list/list_of_everything_medkits_can_hold = list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
@@ -93,13 +42,13 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/sensor_device,
 		/obj/item/radio,
-		/obj/item/clothing/gloves/,
+		/obj/item/clothing/gloves,
 		/obj/item/lazarus_injector,
 		/obj/item/bikehorn/rubberducky,
 		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/breath/medical,
-		/obj/item/surgical_drapes, //for true paramedics
+		/obj/item/surgical_drapes,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
 		/obj/item/bonesetter,
@@ -123,8 +72,63 @@
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
-		/obj/item/stack/sticky_tape, //surgical tape
-	))
+		/obj/item/stack/sticky_tape,
+	)
+
+/obj/item/storage/medkit/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+
+/obj/item/storage/medkit/regular
+	icon_state = "medkit"
+	desc = "A first aid kit with the ability to heal common types of injuries."
+
+/obj/item/storage/medkit/regular/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return BRUTELOSS
+
+/obj/item/storage/medkit/regular/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/suture = 2,
+		/obj/item/stack/medical/mesh = 2,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/healthanalyzer/simple = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/emergency
+	icon_state = "medbriefcase"
+	name = "emergency medkit"
+	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
+
+/obj/item/storage/medkit/emergency/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/healthanalyzer/simple = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/suture/emergency = 1,
+		/obj/item/stack/medical/ointment = 1,
+		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
+		/obj/item/storage/pill_bottle/iron = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/surgery
+	name = "surgical medkit"
+	icon_state = "medkit_surgery"
+	inhand_icon_state = "medkit"
+	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment."
+
+/obj/item/storage/medkit/surgery/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
+	atom_storage.max_slots = 12
+	atom_storage.max_total_storage = 24
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
 
 /obj/item/storage/medkit/surgery/PopulateContents()
 	if(empty)
@@ -196,10 +200,12 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-	    /obj/item/storage/pill_bottle/multiver/less = 1,
+		/obj/item/storage/pill_bottle/multiver/less = 1,
 		/obj/item/reagent_containers/syringe/syriniver = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
+		/obj/item/healthanalyzer/simple/disease = 1,
+		)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/o2
@@ -241,7 +247,9 @@
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
+		/obj/item/healthanalyzer/simple = 1,
+		)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/advanced
@@ -272,8 +280,9 @@
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 12
+	atom_storage.max_slots = 21
 	atom_storage.max_total_storage = 24
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
@@ -299,6 +308,14 @@
 	desc = "May or may not contain traces of lead."
 	grind_results = list(/datum/reagent/lead = 10)
 
+/obj/item/storage/medkit/tactical/premium/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_big_nesting = TRUE // so you can put back the box you took out
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 21
+	atom_storage.max_total_storage = 34
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
+
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
 		return
@@ -320,6 +337,7 @@
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	)
 	generate_items_inside(items_inside,src)
+	list_of_everything_medkits_can_hold += items_inside
 
 /obj/item/storage/medkit/coroner
 	name = "compact coroner's medkit"
@@ -327,14 +345,25 @@
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "compact_coronerkit"
 	inhand_icon_state = "coronerkit"
-	var/max_slots = 6
-	var/max_total_storage = 6
 
 /obj/item/storage/medkit/coroner/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //lowering this so it can't hold the autopsy scanner
-	atom_storage.max_slots = max_slots
-	atom_storage.max_total_storage = max_total_storage
+	atom_storage.max_specific_storage = 24
+	atom_storage.max_slots = 14
+	atom_storage.max_total_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers,
+		/obj/item/bodybag,
+		/obj/item/toy/crayon,
+		/obj/item/pen,
+		/obj/item/paper,
+		/obj/item/surgical_drapes,
+		/obj/item/scalpel,
+		/obj/item/retractor,
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/autopsy_scanner,
+	))
 
 /obj/item/storage/medkit/coroner/PopulateContents()
 	if(empty)
@@ -345,29 +374,6 @@
 		/obj/item/reagent_containers/blood = 1,
 		/obj/item/bodybag = 2,
 		/obj/item/reagent_containers/syringe = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/medkit/coroner/large
-	name = "coroner's medkit"
-	desc = "A medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
-	icon = 'icons/obj/storage/medkit.dmi'
-	icon_state = "coronerkit"
-	inhand_icon_state = "coronerkit"
-	max_slots = 12
-	max_total_storage = 24
-
-/obj/item/storage/medkit/coroner/large/PopulateContents()
-	if(empty)
-		return
-	var/static/items_inside = list(
-		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
-		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/toy/crayon/white = 1,
-		/obj/item/reagent_containers/blood = 1,
-		/obj/item/bodybag = 2,
-		/obj/item/reagent_containers/syringe = 1,
-		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
 	)
 	generate_items_inside(items_inside,src)
 
@@ -627,6 +633,14 @@
 /obj/item/storage/pill_bottle/naturalbait/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/food/bait/natural(src)
+
+/obj/item/storage/pill_bottle/ondansetron
+	name = "ondansetron patches"
+	desc = "A bottle containing patches of ondansetron, a drug used to treat nausea and vomiting. May cause drowsiness."
+
+/obj/item/storage/pill_bottle/ondansetron/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/patch/ondansetron(src)
 
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox

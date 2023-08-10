@@ -125,11 +125,11 @@
 	if(state != STATE_WRENCHED && state != STATE_WELDED)
 		return
 	. = TRUE
-	if(!tool.tool_start_check(user, amount=3))
+	if(!tool.tool_start_check(user, amount=1))
 		return
 	user.balloon_alert_to_viewers("[state == STATE_WELDED ? "un" : null]welding...")
 	audible_message(span_hear("You hear welding."))
-	if(!tool.use_tool(src, user, 2 SECONDS, amount=3, volume = 50))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
 		user.balloon_alert_to_viewers("stopped [state == STATE_WELDED ? "un" : null]welding!")
 		return
 	state = ((state == STATE_WELDED) ? STATE_WRENCHED : STATE_WELDED)

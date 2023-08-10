@@ -1,0 +1,12 @@
+#comment Replaces delam/collision flipsigns with incident displays. https://github.com/tgstation/tgstation/pull/75699
+
+/obj/structure/sign/collision_counter : /obj/machinery/incident_display/tram{@OLD}
+/obj/structure/sign/collision_counter/directional/north : /obj/machinery/incident_display/tram/directional/north{@OLD}
+/obj/structure/sign/collision_counter/directional/south : /obj/machinery/incident_display/tram/directional/south{@OLD}
+/obj/structure/sign/collision_counter/directional/east : /obj/machinery/incident_display/tram/directional/east{@OLD}
+/obj/structure/sign/collision_counter/directional/west : /obj/machinery/incident_display/tram/directional/west{@OLD}
+/obj/structure/sign/delamination_counter/directional : /obj/machinery/incident_display/delam/directional{@OLD}
+/obj/structure/sign/delamination_counter/directional/north : /obj/machinery/incident_display/delam/directional/north{@OLD}
+/obj/structure/sign/delamination_counter/directional/south : /obj/machinery/incident_display/delam/directional/south{@OLD}
+/obj/structure/sign/delamination_counter/directional/east : /obj/machinery/incident_display/delam/directional/east{@OLD}
+/obj/structure/sign/delamination_counter/directional/west : /obj/machinery/incident_display/delam/directional/west{@OLD}

@@ -1,7 +1,7 @@
 /obj/machinery/gulag_item_reclaimer
 	name = "equipment reclaimer station"
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp."
-	icon = 'icons/obj/terminals.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "gulag_off"
 	req_access = list(ACCESS_BRIG) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
@@ -32,13 +32,15 @@
 		linked_teleporter.linked_reclaimer = null
 	return ..()
 
-/obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
+/obj/machinery/gulag_item_reclaimer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED) // emagging lets anyone reclaim all the items
-		return
+		return FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
 	screen_icon = "emagged_general"
 	update_appearance()
+	balloon_alert(user, "id checker scrambled")
+	return TRUE
 
 /obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

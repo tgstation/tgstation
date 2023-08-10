@@ -73,8 +73,10 @@
 	layer = ABOVE_WINDOW_LAYER
 	plane = GAME_PLANE
 	vis_flags = VIS_INHERIT_PLANE
-	turf_loc_check = FALSE
 	alpha = 180
+
+/obj/effect/decal/cleanable/blood/splatter/over_window/NeverShouldHaveComeHere(turf/here_turf)
+	return isgroundlessturf(here_turf)
 
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
@@ -103,7 +105,6 @@
 	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
-	turf_loc_check = FALSE
 
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
@@ -158,7 +159,7 @@
 		return
 	if(mapload)
 		for (var/i in 1 to range)
-			if(!isgroundlessturf(loc) || SSmapping.get_turf_below(loc))
+			if(!isgroundlessturf(loc) || GET_TURF_BELOW(loc))
 				new /obj/effect/decal/cleanable/blood/splatter(loc)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
@@ -169,7 +170,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
-	if(isclosedturf(loc) || (isgroundlessturf(loc) && !SSmapping.get_turf_below(loc)))
+	if(NeverShouldHaveComeHere(loc))
 		return
 	new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
 
@@ -313,11 +314,11 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			if(species == "unknown")
 				. += "Some <B>feet</B>."
 			else if(species == SPECIES_MONKEY)
-				. += "[icon2html('icons/mob/species/human/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
+				. += "[icon2html('icons/mob/human/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
 			else if(species == SPECIES_HUMAN)
-				. += "[icon2html('icons/mob/species/human/bodyparts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
+				. += "[icon2html('icons/mob/human/bodyparts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
 			else
-				. += "[icon2html('icons/mob/species/human/bodyparts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
+				. += "[icon2html('icons/mob/human/bodyparts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us

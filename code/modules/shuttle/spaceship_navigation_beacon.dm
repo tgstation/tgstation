@@ -7,7 +7,7 @@
 /obj/machinery/spaceship_navigation_beacon
 	name = "Bluespace Navigation Gigabeacon"
 	desc = "A device that creates a bluespace anchor that allow ships jump near to it."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "core"
 	base_icon_state = "core"
 	density = TRUE

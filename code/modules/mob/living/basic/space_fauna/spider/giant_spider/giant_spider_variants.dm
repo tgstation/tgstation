@@ -6,6 +6,7 @@
 /mob/living/basic/giant_spider/ambush
 	name = "ambush spider"
 	desc = "Furry and white, it makes you shudder to look at it. This one has sparkling pink eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "ambush"
 	icon_living = "ambush"
 	icon_dead = "ambush_dead"
@@ -36,6 +37,7 @@
 /mob/living/basic/giant_spider/guard
 	name = "guard spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
@@ -53,9 +55,8 @@
 	. = ..()
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
-
-	var/datum/action/cooldown/lay_web/web_carcass/carcass_web = new(src)
-	carcass_web.Grant(src)
+	var/datum/action/cooldown/web_effigy/shed = new(src)
+	shed.Grant(src)
 
 /**
  * ### Spider Hunter
@@ -65,6 +66,7 @@
 /mob/living/basic/giant_spider/hunter
 	name = "hunter spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
@@ -90,6 +92,7 @@
 /mob/living/basic/giant_spider/scout
 	name = "scout spider"
 	desc = "Furry and blueish black, it makes you shudder to look at it. This one has sparkling blue eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "scout"
 	icon_living = "scout"
 	icon_dead = "scout_dead"
@@ -122,6 +125,7 @@
 /mob/living/basic/giant_spider/nurse
 	name = "nurse spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
@@ -145,6 +149,8 @@
 	datahud.show_to(src)
 
 	AddComponent(/datum/component/healing_touch,\
+		heal_brute = 25,\
+		heal_burn = 25,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
@@ -163,13 +169,14 @@
 /mob/living/basic/giant_spider/tangle
 	name = "tangle spider"
 	desc = "Furry and brown, it makes you shudder to look at it. This one has dim brown eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "tangle"
 	icon_living = "tangle"
 	icon_dead = "tangle_dead"
 	gender = FEMALE
 	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/food/spidereggs = 4)
-	maxHealth = 40
-	health = 40
+	maxHealth = 55
+	health = 55
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	poison_per_bite = 5
@@ -198,14 +205,23 @@
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = maxHealth * 0.5,\
-		heal_burn = maxHealth * 0.5,\
+		heal_brute = 15,\
+		heal_burn = 15,\
+		heal_time = 3 SECONDS,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
+
+/// Prevent you from healing other tangle spiders, or healing when on fire
+/mob/living/basic/giant_spider/tangle/proc/can_mend(mob/living/source, mob/living/target)
+	if (on_fire)
+		balloon_alert(src, "on fire!")
+		return FALSE
+	return TRUE
 
 /**
  * ### Tarantula
@@ -216,28 +232,38 @@
 /mob/living/basic/giant_spider/tarantula
 	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "tarantula"
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
-	maxHealth = 300 // woah nelly
-	health = 300
+	maxHealth = 360 // woah nelly
+	health = 360
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	obj_damage = 100
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	speed = 6
 	player_speed_modifier = -5.5 // Doesn't seem that slow but it gets a debuff off web
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
+	web_speed = 0.7
+	web_type = /datum/action/cooldown/lay_web/sealer
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/giant_spider/tarantula/Initialize(mapload)
 	. = ..()
+	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
+
+	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
+	passage_web.Grant(src)
+
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
 
+	AddElement(/datum/element/tear_wall)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /mob/living/basic/giant_spider/tarantula/Destroy()
@@ -257,11 +283,12 @@
 /mob/living/basic/giant_spider/viper
 	name = "viper spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "viper"
 	icon_living = "viper"
 	icon_dead = "viper_dead"
-	maxHealth = 40
-	health = 40
+	maxHealth = 55
+	health = 55
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	poison_per_bite = 5
@@ -270,6 +297,14 @@
 	player_speed_modifier = -2.5
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
+
+/mob/living/basic/giant_spider/viper/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/bonus_damage)
+
+	var/datum/action/cooldown/mob_cooldown/defensive_mode/defensive_action = new(src)
+	defensive_action.Grant(src)
 
 /**
  * ### Spider Broodmother
@@ -283,6 +318,7 @@
 	name = "broodmother spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
 	gender = FEMALE
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
@@ -427,10 +463,12 @@
  * They also occasionally leave puddles of blood when they walk around. Flavorful!
  */
 /mob/living/basic/giant_spider/hunter/flesh
-	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
-	icon_state = "flesh_spider"
-	icon_living = "flesh_spider"
-	icon_dead = "flesh_spider_dead"
+	name = "flesh spider"
+	desc = "A odd fleshy creature in the shape of a spider. Its eyes are pitch black and soulless."
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "flesh"
+	icon_living = "flesh"
+	icon_dead = "flesh_dead"
 	web_speed = 0.7
 	maxHealth = 90
 	health = 90
@@ -443,8 +481,8 @@
 		blood_spawn_chance = 5)
 	// It might be easier and more fitting to just replace this with Regenerator
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = maxHealth * 0.5,\
-		heal_burn = maxHealth * 0.5,\
+		heal_brute = 45,\
+		heal_burn = 45,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh)),\
@@ -453,6 +491,12 @@
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
+
 /// Prevent you from healing other flesh spiders, or healing when on fire
 /mob/living/basic/giant_spider/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
 	if (on_fire)
@@ -460,28 +504,37 @@
 		return FALSE
 	return TRUE
 
-/mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
-	. = ..()
-	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
-	spikes_web.Grant(src)
-
-	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
-	web_sticky.Grant(src)
-
 /**
  * ### Viper Spider (Wizard)
  *
  * A spider form for wizards. Has the viper spider's extreme speed and strong venom, with additional health and vent crawling abilities.
  */
 /mob/living/basic/giant_spider/viper/wizard
+	name = "water spider"
+	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent orange eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "water"
+	icon_living = "water"
+	icon_dead = "water_dead"
+	web_speed = 0.4
 	maxHealth = 80
 	health = 80
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	unsuitable_cold_damage = 1
+	unsuitable_heat_damage = 1
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
 	apply_spider_antag = FALSE
 
 /mob/living/basic/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
+
 
 /**
  * ### Sergeant Araneus
@@ -515,6 +568,7 @@
 /mob/living/basic/giant_spider/maintenance
 	name = "duct spider"
 	desc = "Nanotrasen's imported solution to mice, comes with its own problems."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "maint_spider"
 	icon_living = "maint_spider"
 	icon_dead = "maint_spider_dead"

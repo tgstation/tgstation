@@ -103,7 +103,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)
@@ -138,7 +138,7 @@
 		/obj/item/bikehorn,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)

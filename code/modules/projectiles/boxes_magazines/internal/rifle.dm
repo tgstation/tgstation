@@ -24,11 +24,7 @@
 	caliber = CALIBER_A762
 	ammo_type = /obj/item/ammo_casing/a762/enchanted
 
-/obj/item/ammo_box/magazine/internal/arcane_barrage
-	caliber = CALIBER_A762
-	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage
-
 /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	max_ammo = 1
 	caliber = CALIBER_HARPOON
-	ammo_type = /obj/item/ammo_casing/caseless/harpoon
+	ammo_type = /obj/item/ammo_casing/harpoon

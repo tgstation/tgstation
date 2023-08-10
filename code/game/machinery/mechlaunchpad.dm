@@ -1,7 +1,7 @@
 /obj/machinery/mechpad
 	name = "orbital mech pad"
 	desc = "A slab of heavy plating designed to withstand orbital-drop impacts. Through some sort of advanced bluespace tech, this one seems able to send and receive Mechs. Requires linking to a console to function."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "mechpad"
 	circuit = /obj/item/circuitboard/machine/mechpad
 	///ID of the console, used for linking up
@@ -14,11 +14,6 @@
 /obj/machinery/mechpad/Initialize(mapload)
 	. = ..()
 	display_name = "Orbital Pad - [get_area_name(src)]"
-	GLOB.mechpad_list += src
-
-/obj/machinery/mechpad/Destroy()
-	GLOB.mechpad_list -= src
-	return ..()
 
 /obj/machinery/mechpad/examine(mob/user)
 	. = ..()

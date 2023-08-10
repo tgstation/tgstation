@@ -3,17 +3,14 @@
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	///Boolean on whether this decal can be placed inside of groundless turfs/walls. If FALSE, will runtime and delete if it happens.
-	var/turf_loc_check = TRUE
 
 /obj/effect/decal/Initialize(mapload)
 	. = ..()
-	if(turf_loc_check && NeverShouldHaveComeHere(loc))
-#ifdef UNIT_TESTS
-		stack_trace("[name] spawned in a bad turf ([loc]) at [AREACOORD(src)] in \the [get_area(src)]. Please remove it or set turf_loc_check to FALSE on the decal if intended.")
-#else
+	if(NeverShouldHaveComeHere(loc))
+		if(mapload)
+			stack_trace("[name] spawned in a bad turf ([loc]) at [AREACOORD(src)] in \the [get_area(src)]. \
+				Please remove it or allow it to pass NeverShouldHaveComeHere if it's intended.")
 		return INITIALIZE_HINT_QDEL
-#endif
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_CHANGE = PROC_REF(on_decal_move),
 	)
@@ -23,8 +20,9 @@
 	if(B && B.loc == loc)
 		qdel(src)
 
-/obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)
-	return isclosedturf(T) || (isgroundlessturf(T) && !SSmapping.get_turf_below(T))
+///Checks if we are allowed to be in `here_turf`, and returns that result. Subtypes should override this when necessary.
+/obj/effect/decal/proc/NeverShouldHaveComeHere(turf/here_turf)
+	return isclosedturf(here_turf) || (isgroundlessturf(here_turf) && !GET_TURF_BELOW(here_turf))
 
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)
@@ -66,9 +64,10 @@
 
 	// If the tile uses holiday colors, apply them here
 	if(use_holiday_colors)
-		var/current_holiday_color = request_holiday_colors(src, pattern)
-		if(current_holiday_color)
-			color = current_holiday_color
+
+		var/custom_color = request_station_colors(src, pattern) || request_holiday_colors(src, pattern)
+		if(custom_color)
+			color = custom_color
 			alpha = DECAL_ALPHA
 
 	var/turf/T = loc

@@ -6,12 +6,12 @@
 	dressuptime = null
 	return ..()
 
-/datum/buildmode_mode/outfit/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************\n\
-		Right Mouse Button on buildmode button = Select outfit to equip.\n\
-		Left Mouse Button on mob/living/carbon/human = Equip the selected outfit.\n\
-		Right Mouse Button on mob/living/carbon/human = Strip and delete current outfit.\n\
-		***********************************************************</span>")
+/datum/buildmode_mode/outfit/show_help(client/builder)
+	to_chat(builder, span_purple(examine_block(
+		"[span_bold("Select outfit to equip")] -> Right Mouse Button on buildmode button\n\
+		[span_bold("Equip the selected outfit")] -> Left Mouse Button on mob/living/carbon/human\n\
+		[span_bold("Strip and delete current outfit")] -> Right Mouse Button on mob/living/carbon/human"))
+	)
 
 /datum/buildmode_mode/outfit/Reset()
 	. = ..()

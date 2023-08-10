@@ -26,7 +26,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	healable = FALSE
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
@@ -222,7 +221,7 @@
 	return ..()
 
 // We are literally a vessel of otherworldly destruction, we bring our own gravity unto this plane
-/mob/living/simple_animal/hostile/heretic_summon/armsy/has_gravity(turf/T)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/has_gravity(turf/gravity_turf)
 	return TRUE
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/can_be_pulled()

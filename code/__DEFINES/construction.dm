@@ -98,6 +98,7 @@
 #define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
 #define CAT_SEAFOOD "Seafood"
+#define CAT_MARTIAN "Martian Food"
 #define CAT_MISCFOOD "Misc. Food"
 #define CAT_MEXICAN "Mexican Food"
 #define CAT_MOTH "Mothic Food"
@@ -120,6 +121,7 @@ GLOBAL_LIST_INIT(crafting_category_food, list(
 	CAT_LIZARD,
 	CAT_MEAT,
 	CAT_SEAFOOD,
+	CAT_MARTIAN,
 	CAT_MISCFOOD,
 	CAT_MEXICAN,
 	CAT_MOTH,
@@ -188,6 +190,7 @@ GLOBAL_LIST_INIT(crafting_category, list(
 #define RCD_FLOODLIGHT 8
 #define RCD_WALLFRAME 9
 #define RCD_REFLECTOR 10
+#define RCD_GIRDER 11
 
 
 #define RCD_UPGRADE_FRAMES (1<<0)

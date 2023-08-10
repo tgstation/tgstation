@@ -16,7 +16,7 @@
 	potency = 60
 	growthstages = 2
 	rarity = 60 // Obtainable only with xenobio+superluck.
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	reagents_add = list(/datum/reagent/sulfur = 0.1, /datum/reagent/carbon = 0.1, /datum/reagent/nitrogen = 0.07, /datum/reagent/potassium = 0.05)
 
 /obj/item/food/grown/shell/gatfruit

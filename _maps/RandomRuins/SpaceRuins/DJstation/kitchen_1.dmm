@@ -22,16 +22,17 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
-"n" = (
-/obj/structure/closet/secure_closet/freezer/fridge/all_access,
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/ruin/space/djstation)
 "o" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+"t" = (
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
 "u" = (
@@ -152,7 +153,7 @@ a
 L
 W
 P
-n
+t
 L
 V
 b

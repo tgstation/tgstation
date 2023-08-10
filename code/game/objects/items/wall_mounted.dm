@@ -1,5 +1,5 @@
 /obj/item/wallframe
-	icon = 'icons/obj/wallframe.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 2)
 	flags_1 = CONDUCT_1
 	inhand_icon_state = "syringe_kit"
@@ -84,7 +84,7 @@
 
 /obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "door_electronics"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

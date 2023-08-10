@@ -48,6 +48,7 @@
 	has_progression = FALSE,
 	datum/uplink_handler/uplink_handler_override,
 )
+
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -119,6 +120,7 @@
 /// Sets the telecrystals of the uplink. It is bad practice to use this outside of the component itself.
 /datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
 	uplink_handler.telecrystals = new_telecrystal_amount
+	uplink_handler.on_update()
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
@@ -144,6 +146,11 @@
 
 	if(istype(item, /obj/item/stack/telecrystal))
 		load_tc(user, item)
+
+	if(!istype(item))
+		return
+
+	SEND_SIGNAL(item, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, user, src)
 
 /datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -227,9 +234,8 @@
 	var/list/extra_purchasable_stock = list()
 	var/list/extra_purchasable = list()
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
-		if(item in stock_list)
-			extra_purchasable_stock[REF(item)] = stock_list[item]
-			stock_list -= item
+		if(item.stock_key in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,

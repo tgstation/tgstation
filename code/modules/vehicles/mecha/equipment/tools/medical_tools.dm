@@ -3,17 +3,17 @@
 /obj/item/mecha_parts/mecha_equipment/medical
 	mech_flags = EXOSUIT_MODULE_MEDICAL
 
-/obj/item/mecha_parts/mecha_equipment/medical/attach(obj/vehicle/sealed/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/medical/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+
+/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach(atom/moveto)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/process()
 	if(!chassis)
 		return PROCESS_KILL
-
-/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	name = "mounted sleeper"

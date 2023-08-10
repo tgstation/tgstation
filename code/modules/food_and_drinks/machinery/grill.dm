@@ -6,7 +6,7 @@
 /obj/machinery/grill
 	name = "grill"
 	desc = "Just like the old days."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grill_open"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW

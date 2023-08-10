@@ -3,11 +3,8 @@
 	name = "\improper Podperson"
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
-	species_traits = list(
-		MUTCOLORS,
-		EYECOLOR,
-	)
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_PLANT_SAFE,
 	)
 	external_organs = list(
@@ -17,14 +14,12 @@
 	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
 
 	heatmod = 1.5
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 	meat = /obj/item/food/meat/slab/human/mutant/plant
 	exotic_blood = /datum/reagent/water
-	disliked_food = MEAT | DAIRY | SEAFOOD | BUGS
-	liked_food = VEGETABLES | FRUIT | GRAIN
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
-
+	mutanttongue = /obj/item/organ/internal/tongue/pod
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/pod,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/pod,
@@ -49,6 +44,7 @@
 	return ..()
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+	. = ..()
 	if(H.stat == DEAD)
 		return
 
@@ -67,14 +63,13 @@
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-	..()
 
-/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/pod/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		H.adjustToxLoss(3 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	return ..()
+		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/pod/create_pref_unique_perks()
 	var/list/to_add = list()

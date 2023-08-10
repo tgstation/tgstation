@@ -61,6 +61,8 @@
 	VAR_PROTECTED/lying_angle = 0
 	/// Value of lying lying_angle before last change. TODO: Remove the need for this.
 	var/lying_prev = 0
+	/// Does the mob rotate when lying
+	var/rotate_on_lying = FALSE
 	///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/last_special = 0
 	var/timeofdeath = 0
@@ -204,10 +206,12 @@
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 
-	///The y amount a mob's sprite should be offset due to the current position they're in (e.g. lying down moves your sprite down)
-	var/body_position_pixel_x_offset = 0
 	///The x amount a mob's sprite should be offset due to the current position they're in
+	var/body_position_pixel_x_offset = 0
+	///The y amount a mob's sprite should be offset due to the current position they're in or size (e.g. lying down moves your sprite down)
 	var/body_position_pixel_y_offset = 0
+	///The height offset of a mob's maptext due to their current size.
+	var/body_maptext_height_offset = 0
 
 	/// FOV view that is applied from either nativeness or traits
 	var/fov_view

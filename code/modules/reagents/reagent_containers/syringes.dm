@@ -150,7 +150,7 @@
 /// Returns a list of overlays to add that relate to the reagents inside the syringe
 /obj/item/reagent_containers/syringe/proc/update_reagent_overlay()
 	if(reagents?.total_volume)
-		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[get_rounded_vol()]")
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "syringe[get_rounded_vol()]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
 
@@ -254,6 +254,16 @@
 
 /obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
 	return
+
+	// Used by monkeys from the elemental plane of bananas. Reagents come from bungo pit, death berries, destroying angel, jupiter cups, and jumping beans.
+/obj/item/reagent_containers/syringe/crude/tribal
+	name = "tribal syringe"
+	desc = "A crudely made syringe. Smells like bananas."
+
+/obj/item/reagent_containers/syringe/crude/tribal/Initialize(mapload)
+	var/toxin_to_get = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity/enriched, /datum/reagent/ants)
+	list_reagents = list((toxin_to_get) = 5)
+	return ..()
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"

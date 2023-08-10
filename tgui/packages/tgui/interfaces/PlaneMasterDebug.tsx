@@ -7,7 +7,7 @@ import { Component, createRef, RefObject } from 'inferno';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
-import { Connections } from './IntegratedCircuit/Connections';
+import { Connection, Connections, Position } from './common/Connections';
 
 enum ConnectionType {
   Relay,
@@ -97,18 +97,6 @@ interface AssocConnected {
 interface AssocString {
   [index: string]: string;
 }
-
-type Position = {
-  x: number;
-  y: number;
-};
-
-type Connection = {
-  color: string;
-  from: Position;
-  to: Position;
-  ref: string;
-};
 
 type PlaneDebugData = {
   our_group: string;

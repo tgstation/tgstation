@@ -5,13 +5,20 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 200
+	// Should we leave a brain behind when the statue is wrecked?
+	var/brain = TRUE
 	var/timer = 480 //eventually the person will be freed
 	var/mob/living/petrified_mob
 
-/obj/structure/statue/petrified/Initialize(mapload, mob/living/L, statue_timer)
+/obj/structure/statue/petrified/relaymove()
+	return
+
+/obj/structure/statue/petrified/Initialize(mapload, mob/living/L, statue_timer, save_brain)
 	. = ..()
 	if(statue_timer)
 		timer = statue_timer
+	if(save_brain)
+		brain = save_brain
 	if(L)
 		petrified_mob = L
 		if(L.buckled)
@@ -71,7 +78,7 @@
 	if(!disassembled)
 		if(petrified_mob)
 			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
-			if(iscarbon(petrified_mob))
+			if(iscarbon(petrified_mob) && brain)
 				var/mob/living/carbon/petrified_carbon = petrified_mob
 				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
 				carbon_brain.Remove(petrified_carbon)
@@ -87,10 +94,10 @@
 
 /mob/proc/petrify(statue_timer)
 
-/mob/living/carbon/human/petrify(statue_timer)
+/mob/living/carbon/human/petrify(statue_timer, save_brain)
 	if(!isturf(loc))
 		return FALSE
-	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
+	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
 	S.name = "statue of [name]"
 	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)

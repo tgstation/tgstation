@@ -156,7 +156,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 /obj/durand_shield //projectiles get passed to this when defense mode is enabled
 	name = "defense grid"
-	icon = 'icons/mecha/durand_shield.dmi'
+	icon = 'icons/mob/effects/durand_shield.dmi'
 	icon_state = "shield_null"
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	pixel_y = 4
@@ -261,7 +261,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 	setDir(newdir)
 
-/obj/durand_shield/take_damage()
+/obj/durand_shield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(!chassis)
 		qdel(src)
 		return

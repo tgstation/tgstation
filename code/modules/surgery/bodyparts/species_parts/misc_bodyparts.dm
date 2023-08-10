@@ -3,6 +3,7 @@
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
 	burn_modifier = 2
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/snail
 	limb_id = SPECIES_SNAIL
@@ -27,11 +28,13 @@
 	limb_id = SPECIES_SNAIL
 	unarmed_damage_high = 0.5
 	burn_modifier = 2
+	speed_modifier = 3 //disgustingly slow
 
 /obj/item/bodypart/leg/right/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_damage_high = 0.5
 	burn_modifier = 2
+	speed_modifier = 3 //disgustingly slow
 
 ///ABDUCTOR
 /obj/item/bodypart/head/abductor
@@ -39,6 +42,7 @@
 	limb_id = SPECIES_ABDUCTOR
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/abductor
 	biological_state = BIO_INORGANIC
@@ -75,6 +79,7 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/jelly
 	biological_state = BIO_INORGANIC
@@ -112,6 +117,7 @@
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/slime
 	biological_state = BIO_INORGANIC
@@ -139,6 +145,7 @@
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/luminescent
 	biological_state = BIO_INORGANIC
@@ -166,6 +173,7 @@
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
@@ -188,11 +196,22 @@
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
+/obj/item/bodypart/leg/left/zombie/infectious
+	limb_id = SPECIES_ZOMBIE
+	should_draw_greyscale = FALSE
+	speed_modifier = 0.8 //braaaaains
+
+/obj/item/bodypart/leg/right/zombie/infectious
+	limb_id = SPECIES_ZOMBIE
+	should_draw_greyscale = FALSE
+	speed_modifier = 0.8 //braaaaains
+
 ///PODPEOPLE
 /obj/item/bodypart/head/pod
 	limb_id = SPECIES_PODPERSON
 	is_dimorphic = TRUE
 	burn_modifier = 1.25
+	head_flags = HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/pod
 	limb_id = SPECIES_PODPERSON
@@ -228,6 +247,7 @@
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
@@ -257,6 +277,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	burn_modifier = 1.5
+	head_flags = NONE
 
 /obj/item/bodypart/chest/shadow
 	biological_state = BIO_INORGANIC
@@ -302,6 +323,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = NONE
 
 /obj/item/bodypart/chest/skeleton
 	biological_state = BIO_BONE
@@ -339,6 +361,7 @@
 	limb_id = SPECIES_MUSHROOM
 	is_dimorphic = TRUE
 	burn_modifier = 1.25
+	head_flags = NONE
 
 /obj/item/bodypart/chest/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -366,6 +389,7 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 	burn_modifier = 1.25
+	speed_modifier = 0.75 //big big fungus
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -373,11 +397,12 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 	burn_modifier = 1.25
+	speed_modifier = 0.75 //big fungus big fungus
 
 //GOLEM
 /obj/item/bodypart/head/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_head"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -385,6 +410,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = NONE
 
 /obj/item/bodypart/head/golem/Initialize(mapload)
 	worn_ears_offset = new(
@@ -412,8 +438,8 @@
 	return ..()
 
 /obj/item/bodypart/chest/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_chest"
 	biological_state = BIO_INORGANIC
 	acceptable_bodytype = BODYTYPE_GOLEM
@@ -433,8 +459,8 @@
 	return ..()
 
 /obj/item/bodypart/arm/left/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_l_arm"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -455,9 +481,20 @@
 	)
 	return ..()
 
+/obj/item/bodypart/arm/left/golem/set_owner(new_owner)
+	. = ..()
+	if (. == FALSE)
+		return
+	if (owner)
+		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+	if (isnull(.))
+		return
+	var/mob/living/carbon/old_owner = .
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
 /obj/item/bodypart/arm/right/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_r_arm"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -478,9 +515,20 @@
 	)
 	return ..()
 
+/obj/item/bodypart/arm/right/golem/set_owner(new_owner)
+	. = ..()
+	if (. == FALSE)
+		return
+	if (owner)
+		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+	if (isnull(.))
+		return
+	var/mob/living/carbon/old_owner = .
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
 /obj/item/bodypart/leg/left/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_l_leg"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -492,8 +540,8 @@
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/right/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_r_leg"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC

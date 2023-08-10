@@ -20,7 +20,7 @@
 
 
 /obj/structure/spawner/lavaland/goliath
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
+	mob_types = list(/mob/living/basic/mining/goliath)
 
 /obj/structure/spawner/lavaland/legion
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)

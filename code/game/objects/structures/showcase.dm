@@ -4,7 +4,7 @@
 /*Completely generic structures for use by mappers to create fake objects, i.e. display rooms*/
 /obj/structure/showcase
 	name = "showcase"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
 	density = TRUE
@@ -14,7 +14,7 @@
 /obj/structure/showcase/fakeid
 	name = "\improper CentCom identification console"
 	desc = "You can use this to change ID's."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/Initialize(mapload)
@@ -25,7 +25,7 @@
 /obj/structure/showcase/fakesec
 	name = "\improper CentCom security records"
 	desc = "Used to view and edit personnel's security records."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/update_overlays()
@@ -64,19 +64,19 @@
 /obj/structure/showcase/mecha/marauder
 	name = "combat mech exhibit"
 	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/mecha.dmi'
 	icon_state = "marauder"
 
 /obj/structure/showcase/mecha/ripley
 	name = "construction mech exhibit"
 	desc = "A stand with a retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
-	icon = 'icons/mecha/mecha.dmi'
+	icon = 'icons/mob/mecha.dmi'
 	icon_state = "firefighter"
 
 /obj/structure/showcase/machinery/implanter
 	name = "\improper Nanotrasen automated mindshield implanter exhibit"
 	desc = "A flimsy model of a standard Nanotrasen automated mindshield implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!"
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 
 /obj/structure/showcase/machinery/microwave
@@ -98,7 +98,7 @@
 /obj/structure/showcase/machinery/tv
 	name = "\improper Nanotrasen corporate newsfeed"
 	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "television"
 
 /obj/structure/showcase/machinery/signal_decrypter

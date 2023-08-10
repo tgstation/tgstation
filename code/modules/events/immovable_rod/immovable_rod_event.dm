@@ -23,7 +23,7 @@
 
 /datum/round_event/immovable_rod/start()
 	var/startside = pick(GLOB.cardinals)
-	var/turf/end_turf = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
+	var/turf/end_turf = get_edge_target_turf(get_random_station_turf(), REVERSE_DIR(startside))
 	var/turf/start_turf = spaceDebrisStartLoc(startside, end_turf.z)
 	var/atom/rod = new /obj/effect/immovablerod(start_turf, end_turf, special_target, force_looping)
 	announce_to_ghosts(rod)

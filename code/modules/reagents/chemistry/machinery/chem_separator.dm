@@ -4,7 +4,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "separator"
 	light_power = 1
-	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	var/fill_icon_state = "separator"
 	/// Icons for different percentages of beaker/separator reagent volumes
 	var/list/fill_icon_thresholds = list(1,30,80)

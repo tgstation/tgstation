@@ -128,7 +128,7 @@
 	icon_state = "shotglass"
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
@@ -169,6 +169,21 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "irish sadness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/pickle
+	name = "Pickle Juice"
+	description = "More accurately, this is the brine the pickle was floating in"
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#302000" // rgb: 48, 32, 0
+	taste_description = "vinegar brine"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/pickle/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if((liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)))
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+		. = TRUE
+	..()
 
 /datum/reagent/consumable/grapejuice
 	name = "Grape Juice"
@@ -590,6 +605,24 @@
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/wellcheers
+	name = "Wellcheers"
+	description = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	color = "#762399" // rgb: 118, 35, 153
+	taste_description = "grapes and the fresh open sea"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/wellcheers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
+	switch(affected_mob.mob_mood.mood_level)
+		if (MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD2)
+			affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, 0)
+		if (MOOD_LEVEL_SAD2 to MOOD_LEVEL_HAPPY2)
+			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
+		if (MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
+			affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, 0)
+	return ..()
 
 /datum/reagent/consumable/monkey_energy
 	name = "Monkey Energy"
@@ -1127,3 +1160,41 @@
 			drinker.adjust_hallucinations(60 SECONDS * REM * seconds_per_tick)
 
 	return ..()
+
+/datum/reagent/consumable/hakka_mate
+	name = "Hakka-Mate"
+	description = "A Martian-made yerba mate soda, dragged straight out of the pits of a hacking convention."
+	color = "#c4b000"
+	taste_description = "bubbly yerba mate"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/coconut_milk
+	name = "Coconut Milk"
+	description = "A versatile milk substitute that's perfect for everything from cooking to making cocktails."
+	color = "#DFDFDF"
+	taste_description = "milky coconut"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/melon_soda
+	name = "Melon Soda"
+	description = "A neon green hit of nostalgia."
+	color = "#6FEB48"
+	taste_description = "fizzy melon"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/volt_energy
+	name = "24-Volt Energy"
+	description = "An artificially coloured and flavoured electric energy drink, in lanternfruit flavour. Made for ethereals, by ethereals."
+	color = "#99E550"
+	taste_description = "sour pear"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/volt_energy/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		stomach.adjust_charge(reac_volume * 3)

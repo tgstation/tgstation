@@ -50,7 +50,6 @@
 /obj/effect/mob_spawn/ghost_role/spider
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."
-	mob_name = "\improper spider"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "eggs"
 	move_resist = MOVE_FORCE_NORMAL
@@ -178,7 +177,8 @@
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
 		var/mob/living/basic/spiderling/chosen_spiderling = choice
-		var/mob/living/basic/giant_spider/spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/young_spider/young_spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/giant_spider/spider = initial(young_spider.grow_as)
 		spider_list[initial(spider.name)] = chosen_spiderling
 
 		var/datum/radial_menu_choice/option = new
@@ -199,5 +199,4 @@
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE
 	mob_type = chosen_spider
-	mob_name = "spiderling"
 	return ..()

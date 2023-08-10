@@ -156,6 +156,7 @@
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1 && can_select)
 		select_fire(user)
+	return ..()
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]

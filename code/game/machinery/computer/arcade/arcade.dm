@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/rouny = 2,
 		/obj/item/toy/plush/abductor = 2,
 		/obj/item/toy/plush/abductor/agent = 2,
-		/obj/item/toy/plush/greek_cucumber = 2,
+		/obj/item/toy/plush/shark = 2,
 		/obj/item/storage/belt/military/snack/full = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
@@ -620,17 +620,18 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	. += "\t[span_info("magical -> defend until outmagiced")]"
 	return .
 
-/obj/machinery/computer/arcade/battle/emag_act(mob/user)
+/obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
+	balloon_alert(user, "hard mode enabled")
 	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
 	bomb_cooldown = 18
 	var/gamerSkill = 0
-	if(usr?.mind)
-		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
+	if(user?.mind)
+		gamerSkill = user.mind.get_skill_level(/datum/skill/gaming)
 	enemy_setup(gamerSkill)
 	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
 	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
@@ -644,6 +645,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "Outbomb Cuban Pete"
 
 	updateUsrDialog()
+	return TRUE
 
 // ** AMPUTATION ** //
 

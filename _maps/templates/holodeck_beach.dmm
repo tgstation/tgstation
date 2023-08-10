@@ -22,6 +22,9 @@
 "t" = (
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
+"B" = (
+/turf/open/floor/holofloor/beach/water,
+/area/template_noop)
 "H" = (
 /obj/effect/holodeck_effect/mobspawner/monkey,
 /turf/open/floor/holofloor/beach,
@@ -64,8 +67,8 @@ R
 R
 R
 R
-R
 a
+B
 "}
 (2,1,1) = {"
 R
@@ -76,8 +79,8 @@ R
 S
 R
 Q
-R
 a
+B
 "}
 (3,1,1) = {"
 X
@@ -88,8 +91,8 @@ R
 t
 t
 R
-R
 a
+B
 "}
 (4,1,1) = {"
 R
@@ -100,8 +103,8 @@ h
 R
 R
 R
-R
 a
+B
 "}
 (5,1,1) = {"
 R
@@ -112,8 +115,8 @@ R
 t
 t
 R
-R
 a
+B
 "}
 (6,1,1) = {"
 R
@@ -124,8 +127,8 @@ X
 g
 R
 q
-R
 a
+B
 "}
 (7,1,1) = {"
 R
@@ -136,8 +139,8 @@ R
 R
 R
 f
-R
 a
+B
 "}
 (8,1,1) = {"
 W
@@ -148,8 +151,8 @@ H
 R
 M
 R
-R
 a
+B
 "}
 (9,1,1) = {"
 R
@@ -160,6 +163,6 @@ R
 R
 R
 R
-R
 a
+B
 "}

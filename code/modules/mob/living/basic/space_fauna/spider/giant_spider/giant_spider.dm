@@ -8,6 +8,7 @@
 /mob/living/basic/giant_spider
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
@@ -37,7 +38,7 @@
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	unique_name = 1
+	unique_name = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
 	// VERY red, to fit the eyes
 	lighting_cutoff_red = 22
@@ -67,6 +68,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+	AddElement(/datum/element/cliff_walking)
 
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite)

@@ -81,7 +81,9 @@
 		if(prob(10))
 			switch(rand(1,4))
 				if(1) //blood rage
-					magnification.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
+					var/datum/ai_controller/monkey/monky_controller = magnification.ai_controller
+					monky_controller.set_trip_mode(mode = FALSE)
+					monky_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
 				if(2) //brain death
 					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
 				if(3) //primal gene (gorilla)
@@ -94,7 +96,7 @@
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null
-	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
+	new /obj/effect/decal/cleanable/ash(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
 
 /obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
 	. = ..()

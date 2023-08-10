@@ -60,8 +60,9 @@
 		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		if(boozepwr > 0)
 			var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
+			var/heavy_drinker_multiplier = (HAS_TRAIT(drinker, TRAIT_HEAVY_DRINKER) ? 0.5 : 1)
 			if (istype(liver))
-				liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * seconds_per_tick, 0))/150))
+				liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * heavy_drinker_multiplier * seconds_per_tick, 0))/150))
 	return ..()
 
 /datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
@@ -129,7 +130,7 @@
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is dyed a festive green."
-	color = "#A8E61D"
+	color = COLOR_CRAYON_GREEN
 	taste_description = "green piss water"
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -226,17 +227,17 @@
 
 	if(SPT_PROB(2.5, seconds_per_tick) && iscarbon(drinker))
 		var/obj/item/organ/internal/eyes/eyes = drinker.get_organ_slot(ORGAN_SLOT_EYES)
-		if(drinker.is_blind())
-			if(istype(eyes))
+		if(eyes && IS_ORGANIC_ORGAN(eyes)) // doesn't affect robotic eyes
+			if(drinker.is_blind())
 				eyes.Remove(drinker)
 				eyes.forceMove(get_turf(drinker))
 				to_chat(drinker, span_userdanger("You double over in pain as you feel your eyeballs liquify in your head!"))
 				drinker.emote("scream")
 				drinker.adjustBruteLoss(15, required_bodytype = affected_bodytype)
-		else
-			to_chat(drinker, span_userdanger("You scream in terror as you go blind!"))
-			eyes.apply_organ_damage(eyes.maxHealth)
-			drinker.emote("scream")
+			else
+				to_chat(drinker, span_userdanger("You scream in terror as you go blind!"))
+				eyes.apply_organ_damage(eyes.maxHealth)
+				drinker.emote("scream")
 
 	if(SPT_PROB(1.5, seconds_per_tick) && iscarbon(drinker))
 		drinker.visible_message(span_danger("[drinker] starts having a seizure!"), span_userdanger("You have a seizure!"))
@@ -1229,7 +1230,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
@@ -1373,7 +1374,7 @@
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
-	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organtype = affected_organtype)
+	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organ_flag = affected_organ_flags)
 	if(SPT_PROB(10, seconds_per_tick))
 		drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		drinker.drop_all_held_items()
@@ -1384,7 +1385,7 @@
 			ADD_TRAIT(drinker, paralyzed_limb, type)
 			drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		if(current_cycle > 30)
-			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organtype = affected_organtype)
+			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 			if(current_cycle > 50 && SPT_PROB(7.5, seconds_per_tick))
 				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
 					drinker.set_heartattack(TRUE)
@@ -1451,6 +1452,16 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	boozepwr = 1
 	quality = DRINK_VERYGOOD
+	taste_description = "custard and alcohol"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/dreadnog
+	name = "Dreadnog"
+	description = "For suffering during a period of joy."
+	color = "#abb862" // rgb: 252, 253, 198
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	boozepwr = 1
+	quality = DRINK_REVOLTING
 	taste_description = "custard and alcohol"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1854,7 +1865,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
@@ -2002,17 +2013,18 @@
 	taste_description = "the pain of ten thousand slain mosquitos"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/bug_spray/on_new(data)
+	. = ..()
+	AddElement(/datum/element/bugkiller_reagent)
+
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	//Bugs should not drink Bug spray.
-	if(ismoth(drinker) || isflyperson(drinker))
-		drinker.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	return ..()
-
-/datum/reagent/consumable/ethanol/bug_spray/on_mob_metabolize(mob/living/carbon/drinker)
-
-	if(ismoth(drinker) || isflyperson(drinker))
+	// Does some damage to bug biotypes
+	var/did_damage = drinker.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	// Random chance of causing a screm if we did some damage
+	if(did_damage && SPT_PROB(2, seconds_per_tick))
 		drinker.emote("scream")
-	return ..()
+
+	return ..() || did_damage
 
 /datum/reagent/consumable/ethanol/applejack
 	name = "Applejack"
@@ -2059,14 +2071,12 @@
 	if(SPT_PROB(10, seconds_per_tick) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "#cccccc"
-			metabolizer.hair_color = "#cccccc"
-			metabolizer.update_body_parts()
+			metabolizer.set_facial_haircolor("#cccccc", update = FALSE)
+			metabolizer.set_haircolor("#cccccc", update = TRUE)
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
 				if(metabolizer.gender == MALE)
-					metabolizer.facial_hairstyle = "Beard (Very Long)"
-					metabolizer.update_body_parts()
+					metabolizer.set_facial_hairstyle("Beard (Very Long)", update = TRUE)
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))
@@ -2601,6 +2611,215 @@
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 5)
+
+// Welcome to the Blue Room Bar and Grill, home to Mars' finest cocktails
+/datum/reagent/consumable/ethanol/rice_beer
+	name = "Rice Beer"
+	description = "A light, rice-based lagered beer popular on Mars. Considered a hate crime against Bavarians under the Reinheitsgebot Act of 1516."
+	boozepwr = 20
+	color = "#664300"
+	quality = DRINK_NICE
+	taste_description = "mild carbonated malt"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/shochu
+	name = "Shochu"
+	description = "Also known as soju or baijiu, this drink is made from fermented rice, much like sake, but at a generally higher proof making it more similar to a true spirit."
+	boozepwr = 20
+	color = "#DDDDDD"
+	quality = DRINK_NICE
+	taste_description = "stiff rice wine"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/yuyake
+	name = "Yūyake"
+	description = "A sweet melon liqueur from Japan. Considered a relic of the 1980s by most, it has some niche use in cocktail making, in part due to its bright red colour."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "sweet melon"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/coconut_rum
+	name = "Coconut Rum"
+	description = "The distilled essence of the beach. Tastes like bleach-blonde hair and suncream."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "coconut rum"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+// Mixed Martian Drinks
+/datum/reagent/consumable/ethanol/yuyakita
+	name = "Yūyakita"
+	description = "A hell unleashed upon the world by an unnamed patron."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "death"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/saibasan
+	name = "Saibāsan"
+	description = "A drink glorifying Cybersun's enduring business."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "betrayal"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/banzai_ti
+	name = "Banzai-Tī"
+	description = "A variation on the Long Island Iced Tea, made with yuyake for an alternative flavour that's hard to place."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "an asian twist on the liquor cabinet"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/sanraizusoda
+	name = "Sanraizusōda"
+	description = "It's a melon cream soda, except with alcohol- what's not to love? Well... possibly the hangovers."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "creamy melon soda"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/kumicho
+	name = "Kumichō"
+	description = "A new take on a classic cocktail, the Kumicho takes the Godfather formula and adds shochu for an Asian twist."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "rice and rye"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/red_planet
+	name = "Red Planet"
+	description = "Made in celebration of the Martian Concession, the Red Planet is based on the classic El Presidente, and is as patriotic as it is bright crimson."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "the spirit of freedom"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/amaterasu
+	name = "Amaterasu"
+	description = "Named for Amaterasu, the Shinto Goddess of the Sun, this cocktail embodies radiance- or something like that, anyway."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "sweet nectar of the gods"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/nekomimosa
+	name = "Nekomimosa"
+	description = "An overly sweet cocktail, made with melon liqueur, melon juice, and champagne (which contains no melon, unfortunately)."
+	boozepwr = 20
+	color = "#FF0C8D"
+	quality = DRINK_NICE
+	taste_description = "MELON"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/sentai_quencha //melon soda, triple citrus, shochu, blue curacao
+	name = "Sentai Quencha"
+	description = "Based on the galaxy-famous \"Kyūkyoku no Ninja Pawā Sentai\", the Sentai Quencha is a favourite at anime conventions and weeb bars."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "ultimate ninja power"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/bosozoku
+	name = "Bōsōzoku"
+	description = "A simple summer drink from Mars, made from a 1:1 mix of rice beer and lemonade."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "bittersweet lemon"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/ersatzche
+	name = "Ersatzche"
+	description = "Sweet, bitter, spicy- that's a great combination."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "spicy pineapple beer"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/red_city_am
+	name = "Red City AM"
+	description = "A breakfast drink from New Osaka, for when you really need to get drunk at 9:30 in the morning in more socially acceptable manner than drinking bagwine on the bullet train. Not that you should drink this on the bullet train either."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "breakfast in a glass"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/kings_ransom
+	name = "King's Ransom"
+	description = "A stiff, bitter drink with an odd name and odder recipe."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "bitter raspberry"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/four_bit
+	name = "Four Bit"
+	description = "A drink to power your typing hands."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "cyberspace"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/white_hawaiian //coconut milk, coconut rum, coffee liqueur
+	name = "White Hawaiian"
+	description = "A take on the classic White Russian, subbing out the classics for some tropical flavours."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "COCONUT"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/maui_sunrise //coconut rum, pineapple juice, yuyake, triple citrus, lemon-lime soda
+	name = "Maui Sunrise"
+	description = "Behind this drink's red facade lurks a sharp, complex flavour."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "sunrise over the pacific"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/imperial_mai_tai //navy rum, rum, lime, triple sec, korta nectar
+	name = "Imperial Mai Tai"
+	description = "For when orgeat is in short supply, do as the spacers do- make do and mend."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "spicy nutty rum"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/konococo_rumtini //todo: add espresso | coffee, coffee liqueur, coconut rum, sugar
+	name = "Konococo Rumtini"
+	description = "Coconut rum, coffee liqueur, and espresso- an odd combination, to be sure, but a welcomed one."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "coconut coffee"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/blue_hawaiian //pineapple juice, lemon juice, coconut rum, blue curacao
+	name = "Blue Hawaiian"
+	description = "Sweet, sharp and coconutty."
+	boozepwr = 20
+	color = "#F54040"
+	quality = DRINK_NICE
+	taste_description = "the aloha state"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER

@@ -1,7 +1,7 @@
 /obj/item/book
 	name = "book"
 	desc = "Crack it open, inhale the musk of its pages, and learn something new."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state ="book"
 	worn_icon_state = "book"
 	throw_speed = 1
@@ -150,6 +150,7 @@
 					checkouts -= checkout_ref
 					computer.checkout_update()
 					user.balloon_alert(user, "book checked in")
+					playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
 					return
 
 				user.balloon_alert(user, "book not checked out!")
@@ -159,6 +160,7 @@
 				computer.inventory[ref(our_copy)] = our_copy
 				computer.inventory_update()
 				user.balloon_alert(user, "book added to inventory")
+				playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
 
 	else if(try_carve(attacking_item, user, params))
 		return

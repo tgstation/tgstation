@@ -198,6 +198,7 @@
 	var/embed_falloff_tile
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_ATTACK_HAND = PROC_REF(attempt_parry),
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
@@ -210,7 +211,6 @@
 	if(embedding)
 		updateEmbedding()
 	AddElement(/datum/element/connect_loc, projectile_connections)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_enter))
 
 /obj/projectile/proc/Range()
 	range--
@@ -381,15 +381,6 @@
 		return
 	Impact(A)
 
-/// Signal proc for when a projectile enters a turf.
-/obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
-
-	if(isturf(loc))
-		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
-
 /// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
 /obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
@@ -498,7 +489,9 @@
 		return process_hit(T, select_target(T, target, bumped), bumped, hit_something) // try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
-	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
+	if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT)
+		qdel(src)
+		return BULLET_ACT_BLOCK
 	if(mode == PROJECTILE_PIERCE_HIT)
 		++pierces
 	hit_something = TRUE

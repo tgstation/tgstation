@@ -99,7 +99,7 @@
 
 /obj/machinery/modular_shield_generator/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/modular_shield_generator(src)
+	set_wires(new /datum/wires/modular_shield_generator(src))
 	if(mapload && active && anchored)
 		activate_shields()
 
@@ -380,7 +380,7 @@
 
 	name = "Modular Shield Debugger" //Filler name and sprite for testing
 	desc = "This is filler for testing you shouldn`t see this."
-	icon = 'icons/mecha/mech_bay.dmi'
+	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
 	density = TRUE
 

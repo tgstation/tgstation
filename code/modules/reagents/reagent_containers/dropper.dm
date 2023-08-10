@@ -91,6 +91,6 @@
 	. = ..()
 	if(!reagents.total_volume)
 		return
-	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "dropper")
 	filling.color = mix_color_from_reagents(reagents.reagent_list)
 	. += filling

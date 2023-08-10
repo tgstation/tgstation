@@ -86,11 +86,12 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/jousting)
 	//fast and effective, but as a sword, it might damage the results.
 	AddComponent(/datum/component/butchering, \
-	speed = 3 SECONDS, \
-	effectiveness = 95, \
-	bonus_modifier = 5, \
+		speed = 3 SECONDS, \
+		effectiveness = 95, \
+		bonus_modifier = 5, \
 	)
 	// The weight of authority comes down on the tider's crimes.
 	AddElement(/datum/element/bane, target_type = /mob/living/carbon/human, damage_multiplier = 0.35)
@@ -214,7 +215,7 @@
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
 	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "supermatter_sword"
+	icon_state = "supermatter_sword_balanced"
 	inhand_icon_state = "supermatter_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -266,6 +267,7 @@
 /obj/item/melee/supermatter_sword/pickup(user)
 	..()
 	balanced = 0
+	icon_state = "supermatter_sword"
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
 	visible_message(
@@ -339,7 +341,7 @@
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "roastingstick"
 	inhand_icon_state = null
 	worn_icon_state = "tele_baton"

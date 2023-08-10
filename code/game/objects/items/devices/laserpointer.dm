@@ -121,7 +121,7 @@
 		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating) && S.flash_act(affect_silicon = TRUE))
-			S.Paralyze(rand(100,200))
+			S.set_temp_blindness_if_lower(5 SECONDS)
 			to_chat(S, span_danger("Your sensors were overloaded by a laser!"))
 			outmsg = span_notice("You overload [S] by shining [src] at [S.p_their()] sensors.")
 		else
@@ -165,16 +165,16 @@
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
-	var/image/I = image('icons/obj/weapons/guns/projectiles.dmi',targloc,pointer_icon_state,10)
+	var/mutable_appearance/laser = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', pointer_icon_state, 10)
 	var/list/modifiers = params2list(params)
 	if(modifiers)
 		if(LAZYACCESS(modifiers, ICON_X))
-			I.pixel_x = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)
+			laser.pixel_x = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)
 		if(LAZYACCESS(modifiers, ICON_Y))
-			I.pixel_y = (text2num(LAZYACCESS(modifiers, ICON_Y)) - 16)
+			laser.pixel_y = (text2num(LAZYACCESS(modifiers, ICON_Y)) - 16)
 	else
-		I.pixel_x = target.pixel_x + rand(-5,5)
-		I.pixel_y = target.pixel_y + rand(-5,5)
+		laser.pixel_x = target.pixel_x + rand(-5,5)
+		laser.pixel_y = target.pixel_y + rand(-5,5)
 
 	if(outmsg)
 		to_chat(user, outmsg)
@@ -190,7 +190,7 @@
 			to_chat(user, span_warning("[src]'s battery is overused, it needs time to recharge!"))
 			recharge_locked = TRUE
 
-	targloc.flick_overlay_view(I, 10)
+	targloc.flick_overlay_view(laser, 1 SECONDS)
 	icon_state = "pointer"
 
 /obj/item/laser_pointer/process(seconds_per_tick)

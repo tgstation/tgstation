@@ -470,7 +470,7 @@
 /turf/open/floor/carpet/neon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, null, null, alpha, neon_color, smoothing_junction)
-	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, EMISSIVE_COLOR, smoothing_junction)
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, GLOB.emissive_color, smoothing_junction)
 
 /turf/open/floor/carpet/neon/simple
 	name = "simple neon carpet"

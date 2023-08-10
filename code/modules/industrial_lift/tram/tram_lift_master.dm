@@ -204,7 +204,7 @@
  * The tram doors are in a list of airlocks and we apply the proc on that list.
  */
 /datum/lift_master/tram/proc/update_tram_doors(action)
-	for(var/obj/machinery/door/window/tram/tram_door in GLOB.airlocks)
+	for(var/obj/machinery/door/window/tram/tram_door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/window/tram))
 		if(tram_door.associated_lift != specific_lift_id)
 			continue
 		set_door_state(tram_door, action)

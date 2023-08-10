@@ -517,13 +517,12 @@
 
 /// Induces fake death on a living mob.
 /mob/living/proc/fakedeath(source, silent = FALSE)
-	if(stat == DEAD)
-		return
-	if(!silent)
-		emote("deathgasp")
-	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
-	tod = station_time_timestamp()
+	if(stat != DEAD)
+		if(!silent)
+			emote("deathgasp")
+		tod = station_time_timestamp()
 
+	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
@@ -722,4 +721,4 @@
 
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()
-	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)
+	return stat != DEAD && !HAS_TRAIT(src, TRAIT_FAKEDEATH)

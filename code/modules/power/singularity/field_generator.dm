@@ -141,7 +141,7 @@ no power level overlay is currently in the overlays list.
 			to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 
 		if(FG_SECURED)
-			if(!welder.tool_start_check(user, amount=0))
+			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
 				span_notice("[user] starts to weld [src] to the floor."),
@@ -152,7 +152,7 @@ no power level overlay is currently in the overlays list.
 				to_chat(user, span_notice("You weld the field generator to the floor."))
 
 		if(FG_WELDED)
-			if(!welder.tool_start_check(user, amount=0))
+			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
 				span_notice("[user] starts to cut [src] free from the floor."),

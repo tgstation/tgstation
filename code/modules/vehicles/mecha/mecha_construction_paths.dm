@@ -66,7 +66,7 @@
 
 /datum/component/construction/unordered/mecha_chassis/spawn_result()
 	var/atom/parent_atom = parent
-	parent_atom.icon = 'icons/mecha/mech_construction.dmi'
+	parent_atom.icon = 'icons/mob/mech_construction.dmi'
 	parent_atom.set_density(TRUE)
 	parent_atom.cut_overlays()
 	..()
@@ -326,7 +326,7 @@
 	)
 
 /datum/component/construction/mecha/ripley
-	result = /obj/vehicle/sealed/mecha/working/ripley
+	result = /obj/vehicle/sealed/mecha/ripley
 	base_icon = "ripley"
 
 	circuit_control = /obj/item/circuitboard/mecha/ripley/main
@@ -399,7 +399,7 @@
 	)
 
 /datum/component/construction/mecha/clarke
-	result = /obj/vehicle/sealed/mecha/working/clarke
+	result = /obj/vehicle/sealed/mecha/clarke
 	base_icon = "clarke"
 
 	circuit_control = /obj/item/circuitboard/mecha/clarke/main
@@ -559,7 +559,7 @@
 /datum/component/construction/mecha/honker/update_parent(step_index)
 	if(step_index == 1)
 		var/atom/parent_atom = parent
-		parent_atom.icon = 'icons/mecha/mech_construct.dmi'
+		parent_atom.icon = 'icons/mob/mech_construct.dmi'
 		parent_atom.icon_state = "honker_chassis"
 	..()
 

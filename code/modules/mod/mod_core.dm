@@ -370,48 +370,22 @@
 	light_system = MOVABLE_LIGHT
 	light_color = "#cc00cc"
 	light_range = 2
-
 	// Slightly better than the normal plasma core.
 	// Not super sure if this should just be the same, but will see.
 	maxcharge = 15000
 	charge = 15000
-
 	/// The mob to be spawned by the core
 	var/mob/living/spawned_mob_type = /mob/living/basic/butterfly/lavaland/temporary
 	/// Max number of mobs it can spawn
 	var/max_spawns = 3
-
 	/// Mob spawner for the core
 	var/datum/component/spawner/mob_spawner
-
+	/// Particle holder for pollen particles
+	var/obj/effect/abstract/particle_holder/particle_effect
 
 /obj/item/mod/core/plasma/lavaland/Destroy()
-	if(mod?.wearer)
-		mod.wearer.particles = null
+	QDEL_NULL(particle_effect)
 	return ..()
-
-/obj/item/mod/core/plasma/lavaland/proc/new_mob(spawner, mob/living/basic/butterfly/lavaland/temporary/spawned)
-	SIGNAL_HANDLER
-	if(spawned)
-		spawned.source = src
-
-/obj/item/mod/core/plasma/lavaland/proc/on_toggle()
-	SIGNAL_HANDLER
-	if(mod.active)
-		START_PROCESSING(SSprocessing, src)
-		mod.wearer.particles = new /particles/pollen()
-		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3)
-		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
-		RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(flowas))
-
-	else
-		STOP_PROCESSING(SSprocessing, src)
-		mod.wearer.particles = null
-		UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
-		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
-		for(var/datum/mob in mob_spawner.spawned_things)
-			qdel(mob)
-		qdel(mob_spawner)
 
 /obj/item/mod/core/plasma/lavaland/install(obj/item/mod/control/mod_unit)
 	. = ..()
@@ -421,7 +395,28 @@
 	. = ..()
 	UnregisterSignal(mod_unit, COMSIG_MOD_TOGGLED)
 
-/obj/item/mod/core/plasma/lavaland/proc/flowas(mob/living/wearer)
+/obj/item/mod/core/plasma/lavaland/proc/on_toggle()
+	SIGNAL_HANDLER
+	if(mod.active)
+		particle_effect = new(mod.wearer, /particles/pollen, PARTICLE_ATTACH_MOB)
+		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3)
+		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(spread_flowers))
+
+	else
+		QDEL_NULL(particle_effect)
+		UnregisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+		for(var/datum/mob in mob_spawner.spawned_things)
+			qdel(mob)
+		qdel(mob_spawner)
+
+/obj/item/mod/core/plasma/lavaland/proc/new_mob(spawner, mob/living/basic/butterfly/lavaland/temporary/spawned)
+	SIGNAL_HANDLER
+	if(spawned)
+		spawned.source = src
+
+/obj/item/mod/core/plasma/lavaland/proc/spread_flowers(atom/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
 	var/static/list/possible_flower_types = list(
 		/obj/structure/flora/bush/lavendergrass/style_random,
@@ -430,6 +425,6 @@
 		/obj/structure/flora/bush/flowers_pp/style_random,
 	)
 	var/chosen_type = pick(possible_flower_types)
-	var/flower_boots = new chosen_type(get_turf(wearer))
+	var/flower_boots = new chosen_type(get_turf(mod.wearer))
 	animate(flower_boots, alpha = 0, 1 SECONDS)
 	QDEL_IN(flower_boots, 1 SECONDS)

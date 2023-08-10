@@ -4,16 +4,16 @@
 	force = 3
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/mob/species/human/bodyparts.dmi'
+	icon = 'icons/mob/human/bodyparts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
 	/// The icon for Organic limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
-	VAR_PROTECTED/icon_static = 'icons/mob/species/human/bodyparts.dmi'
+	VAR_PROTECTED/icon_static = 'icons/mob/human/bodyparts.dmi'
 	///The icon for husked limbs
-	VAR_PROTECTED/icon_husk = 'icons/mob/species/human/bodyparts.dmi'
+	VAR_PROTECTED/icon_husk = 'icons/mob/human/bodyparts.dmi'
 	///The icon for invisible limbs
-	VAR_PROTECTED/icon_invisible = 'icons/mob/species/human/bodyparts.dmi'
+	VAR_PROTECTED/icon_invisible = 'icons/mob/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -62,28 +62,30 @@
 	var/list/embedded_objects = list()
 	/// are we a hand? if so, which one!
 	var/held_index = 0
+	/// A speed modifier we apply to the owner when attached, if any. Positive numbers make it move slower, negative numbers make it move faster.
+	var/speed_modifier = 0
 
 	// Limb disabling variables
+	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
+	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
 	///Handles limb disabling by damage. If 0 (0%), a limb can't be disabled via damage. If 1 (100%), it is disabled at max limb damage. Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
 	var/disabling_threshold_percentage = 0
-	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
-	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
 
-	// Damage state variables
-
+	// Damage variables
 	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
 	var/body_damage_coeff = 1
-	///Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
-	var/brutestate = 0
-	var/burnstate = 0
 	///The current amount of brute damage the limb has
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
 	var/burn_dam = 0
 	///The maximum brute OR burn damage a bodypart can take. Once we hit this cap, no more damage of either type!
 	var/max_damage = 0
+
+	//Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
+	var/brutestate = 0
+	var/burnstate = 0
 
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
@@ -93,11 +95,6 @@
 	var/brute_modifier = 1
 	/// Burn damage gets multiplied by this on receive_damage()
 	var/burn_modifier = 1
-	// Damage reduction variables for damage handled on the limb level. Handled after worn armor.
-	/// Amount subtracted from brute damage inflicted on the limb.
-	var/brute_reduction = 0
-	/// Amount subtracted from burn damage inflicted on the limb.
-	var/burn_reduction = 0
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -110,7 +107,6 @@
 	var/px_x = 0
 	var/px_y = 0
 
-	var/species_flags_list = list()
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
 	/// If we're bleeding, which icon are we displaying on this part
@@ -189,6 +185,23 @@
 	var/bodypart_trait_source = BODYPART_TRAIT
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
+
+/obj/item/bodypart/apply_fantasy_bonuses(bonus)
+	. = ..()
+	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
+	unarmed_damage_high = modify_fantasy_variable("unarmed_damage_high", unarmed_damage_high, bonus, minimum = 1)
+	brute_modifier = modify_fantasy_variable("brute_modifier", brute_modifier, bonus * 0.02, minimum = 0.7)
+	burn_modifier = modify_fantasy_variable("burn_modifier", burn_modifier, bonus * 0.02, minimum = 0.7)
+	wound_resistance = modify_fantasy_variable("wound_resistance", wound_resistance, bonus)
+
+/obj/item/bodypart/remove_fantasy_bonuses(bonus)
+	unarmed_damage_low = reset_fantasy_variable("unarmed_damage_low", unarmed_damage_low)
+	unarmed_damage_high = reset_fantasy_variable("unarmed_damage_high", unarmed_damage_high)
+	brute_modifier = reset_fantasy_variable("brute_modifier", brute_modifier)
+	burn_modifier = reset_fantasy_variable("burn_modifier", burn_modifier)
+	wound_resistance = reset_fantasy_variable("wound_resistance", wound_resistance)
+	return ..()
+
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
@@ -315,9 +328,9 @@
 			if(WOUND_SEVERITY_MODERATE)
 				check_list += "\t [span_warning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
 			if(WOUND_SEVERITY_SEVERE)
-				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
-			if(WOUND_SEVERITY_CRITICAL)
 				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!")]"
+			if(WOUND_SEVERITY_CRITICAL)
+				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!!")]"
 
 	for(var/obj/item/embedded_thing in embedded_objects)
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
@@ -444,8 +457,6 @@
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_multi * burn_modifier, 0), DAMAGE_PRECISION)
-	brute = max(0, brute - brute_reduction)
-	burn = max(0, burn - burn_reduction)
 
 	if(!brute && !burn)
 		return FALSE
@@ -556,6 +567,11 @@
 	return update_bodypart_damage_state()
 
 
+///Sets the damage of a bodypart when it is created.
+/obj/item/bodypart/proc/set_initial_damage(brute_damage, burn_damage)
+	set_brute_dam(brute_damage)
+	set_burn_dam(burn_damage)
+
 ///Proc to hook behavior associated to the change of the brute_dam variable's value.
 /obj/item/bodypart/proc/set_brute_dam(new_value)
 	PROTECTED_PROC(TRUE)
@@ -648,6 +664,15 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, old_owner)
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
 	if(old_owner)
+		if(held_index)
+			old_owner.on_lost_hand(src)
+			if(old_owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = old_owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			old_owner.update_worn_gloves()
+		if(speed_modifier)
+			old_owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
@@ -663,6 +688,15 @@
 				))
 		UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
 	if(owner)
+		if(held_index)
+			owner.on_added_hand(src, held_index)
+			if(owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			owner.update_worn_gloves()
+		if(speed_modifier)
+			owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			owner.add_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
@@ -766,10 +800,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(IS_ORGANIC_LIMB(src))
-		if(HAS_TRAIT(owner, TRAIT_HUSK))
+		if(owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
 			is_husked = TRUE
-		else if(HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
+		else if(owner && HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
 			dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
 			is_invisible = TRUE
 		else
@@ -780,7 +814,7 @@
 	if(variable_color)
 		draw_color = variable_color
 	else if(should_draw_greyscale)
-		draw_color = (species_color) || (skin_tone && skintone2hex(skin_tone))
+		draw_color = species_color || (skin_tone ? skintone2hex(skin_tone) : null)
 	else
 		draw_color = null
 
@@ -790,26 +824,24 @@
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
-	var/datum/species/owner_species = human_owner.dna.species
-	species_flags_list = owner_species.species_traits
+
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
-
-	if(owner_species.use_skintones)
+	if(HAS_TRAIT(human_owner, TRAIT_USES_SKINTONES))
 		skin_tone = human_owner.skin_tone
-	else
+	else if(HAS_TRAIT(human_owner, TRAIT_MUTANT_COLORS))
 		skin_tone = ""
-
-	if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits))) //Ethereal code. Motherfuckers.
+		var/datum/species/owner_species = human_owner.dna.species
 		if(owner_species.fixed_mut_color)
 			species_color = owner_species.fixed_mut_color
 		else
 			species_color = human_owner.dna.features["mcolor"]
 	else
-		species_color = null
+		skin_tone = ""
+		species_color = ""
 
 	draw_color = variable_color
 	if(should_draw_greyscale) //Should the limb be colored?
-		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
+		draw_color ||= species_color || (skin_tone ? skintone2hex(skin_tone) : null)
 
 	recolor_external_organs()
 	return TRUE
@@ -899,7 +931,7 @@
 		// For some reason this was applied as an overlay on the aux image and limb image before.
 		// I am very sure that this is unnecessary, and i need to treat it as part of the return list
 		// to be able to mask it proper in case this limb is a leg.
-		if(blocks_emissive)
+		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 			var/atom/location = loc || owner || src
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
@@ -911,8 +943,9 @@
 				. += aux_em_block
 		//EMISSIVE CODE END
 
-	//Ok so legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-	if((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG))
+	//No need to handle leg layering if dropped, we only face south anyways
+	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
+		//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
 		var/obj/item/bodypart/leg/leg_source = src
 		for(var/image/limb_image in .)
 			//remove the old, unmasked image
@@ -1169,7 +1202,7 @@
 
 /obj/item/bodypart/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_WIRES || !(bodytype & BODYTYPE_ROBOTIC))
+	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 

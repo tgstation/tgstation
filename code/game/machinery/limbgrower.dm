@@ -34,12 +34,14 @@
 	AddComponent(/datum/component/plumbing/simple_demand)
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
-/obj/machinery/limbgrower/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
+/obj/machinery/limbgrower/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
+	if(obj_flags & EMAGGED)
+		return FALSE
 	obj_flags |= EMAGGED
 	update_static_data(user)
+	balloon_alert(user, "illegal limb production enabled")
+	return TRUE
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -78,9 +80,9 @@
 
 	var/list/available_nodes = stored_research.researched_designs.Copy()
 	if(imported_designs.len)
-		available_nodes += imported_designs
+		available_nodes |= imported_designs
 	if(obj_flags & EMAGGED)
-		available_nodes += stored_research.hacked_designs
+		available_nodes |= stored_research.hacked_designs
 
 	for(var/design_id in available_nodes)
 		var/datum/design/limb_design = SSresearch.techweb_design_by_id(design_id)
@@ -185,7 +187,10 @@
 			use_power(power)
 			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
-			selected_category = params["active_tab"]
+			var/temp_category = params["active_tab"]
+			if( ! (temp_category in categories) )
+				return FALSE //seriously come on
+			selected_category = temp_category
 			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
 			return TRUE
 
@@ -286,4 +291,4 @@
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
 		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_HACKED in found_design.category))
-			imported_designs += found_design.id
+			imported_designs |= found_design.id

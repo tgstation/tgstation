@@ -100,3 +100,12 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full
+	name = "half full glass of water"
+	desc  = "It's a glass of water. It seems half full. Or is it half empty? You're pretty sure it's full of shit."
+	list_reagents = list(/datum/reagent/water = 25)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full/Initialize(mapload, vol)
+	. = ..()
+	name = "[pick("half full", "half empty")] glass of water"

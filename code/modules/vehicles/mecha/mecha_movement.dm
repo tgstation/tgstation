@@ -4,9 +4,24 @@
 	for(var/mob/living/occupant as anything in occupants)
 		occupant.setDir(newdir)
 
+///Called when the mech moves
+/obj/vehicle/sealed/mecha/proc/on_move()
+	SIGNAL_HANDLER
+
+	collect_ore()
+	play_stepsound()
+
+///Collects ore when we move, if there is an orebox and it is functional
+/obj/vehicle/sealed/mecha/proc/collect_ore()
+	if(isnull(ore_box) || !HAS_TRAIT(src, TRAIT_OREBOX_FUNCTIONAL))
+		return
+	for(var/obj/item/stack/ore/ore in range(1, src))
+		//we can reach it and it's in front of us? grab it!
+		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc))
+			ore.forceMove(ore_box)
+
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
-	SIGNAL_HANDLER
 	if(mecha_flags & QUIET_STEPS)
 		return
 	playsound(src, stepsound, 40, TRUE)
@@ -29,7 +44,7 @@
 		if(!istype(backup) || !movement_dir || backup.anchored || continuous_move) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
 			return TRUE
 		last_pushoff = world.time
-		if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE))
+		if(backup.newtonian_move(REVERSE_DIR(movement_dir), instant = TRUE))
 			backup.last_pushoff = world.time
 			step_silent = TRUE
 			if(return_drivers())
@@ -115,7 +130,8 @@
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
-		return TRUE
+		if(!pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
+			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally

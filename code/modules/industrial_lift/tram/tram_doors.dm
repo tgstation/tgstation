@@ -3,6 +3,7 @@
 	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	req_access = list("tcomms")
+	multi_tile = TRUE
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
 	/// Are the doors in a malfunctioning state (dangerous)
@@ -20,16 +21,17 @@
 	base_state = "right"
 
 /obj/machinery/door/window/tram/hilbert
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	associated_lift = HILBERT_TRAM
 	icon_state = "windoor"
 	base_state = "windoor"
 
-/obj/machinery/door/window/tram/emag_act(mob/living/user)
+/obj/machinery/door/window/tram/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	balloon_alert(user, "disabled motion sensors")
 	obj_flags |= EMAGGED
+	return TRUE
 
 /// Random event called by code\modules\events\tram_malfunction.dm
 /// Makes the doors malfunction
@@ -98,6 +100,8 @@
 /obj/machinery/door/window/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+	if(filler)
+		filler.set_density(FALSE) // tram doors allow you to stand on the tile
 	INVOKE_ASYNC(src, PROC_REF(open))
 	GLOB.tram_doors += src
 	find_tram()

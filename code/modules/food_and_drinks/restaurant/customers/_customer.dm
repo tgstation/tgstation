@@ -74,6 +74,7 @@
 			/obj/item/food/burger/plain = 25,
 			/obj/item/food/burger/cheese = 15,
 			/obj/item/food/burger/superbite = 1,
+			/obj/item/food/butter/on_a_stick = 8,
 			/obj/item/food/fries = 10,
 			/obj/item/food/cheesyfries = 6,
 			/obj/item/food/pie/applepie = 4,
@@ -313,7 +314,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
+	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
 	wings_behind.appearance_flags = RESET_COLOR
 	underlays += wings_behind
 
@@ -324,7 +325,7 @@
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
 
-	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
+	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
 	wings_front.appearance_flags = RESET_COLOR
 	overlays += wings_front
 

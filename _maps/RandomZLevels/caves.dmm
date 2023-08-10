@@ -1112,10 +1112,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"gC" = (
-/obj/vehicle/sealed/mecha/working/ripley/mining,
-/turf/open/floor/iron/recharge_floor,
-/area/awaymission/caves/bmp_asteroid)
 "gF" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
@@ -1851,10 +1847,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"OE" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/plating,
-/area/awaymission/caves/research)
 "OX" = (
 /turf/closed/indestructible/oldshuttle{
 	desc = "Go through.";
@@ -1961,6 +1953,10 @@
 /obj/item/storage/medkit/toxin,
 /obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
+"WH" = (
+/obj/vehicle/sealed/mecha/ripley/mining,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/caves/bmp_asteroid)
 "Xa" = (
 /mob/living/basic/bat{
@@ -9394,7 +9390,7 @@ bL
 ch
 cr
 cA
-OE
+cr
 cR
 cV
 cr
@@ -19204,7 +19200,7 @@ bL
 bL
 bL
 dX
-gC
+WH
 sI
 gG
 gJ

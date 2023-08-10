@@ -206,7 +206,7 @@
 		if("PRG_assign")
 			if(!computer || !authenticated_card || !inserted_auth_card)
 				return TRUE
-			var/new_asignment = sanitize(params["assignment"])
+			var/new_asignment = trim(sanitize(params["assignment"]), MAX_NAME_LEN)
 			inserted_auth_card.assignment = new_asignment
 			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
 			inserted_auth_card.update_label()

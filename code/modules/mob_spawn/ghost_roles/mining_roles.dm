@@ -6,7 +6,7 @@
 	name = "malfunctioning cryostasis sleeper"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
 	prompt_name = "a stranded hermit"
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	outfit = /datum/outfit/hermit
 	you_are_text = "You've been stranded in this godless prison of a planet for longer than you can remember."
@@ -60,7 +60,7 @@
 	name = "cryostasis bed"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
 	prompt_name = "a grumpy old man"
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	outfit = /datum/outfit/hermit
 	you_are_text = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
@@ -142,7 +142,7 @@
 	name = "preserved terrarium"
 	desc = "An ancient machine that seems to be used for storing plant matter. The glass is obstructed by a mat of vines."
 	prompt_name = "lifebringer"
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "terrarium"
 	density = TRUE
 	mob_species = /datum/species/pod
@@ -278,7 +278,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
