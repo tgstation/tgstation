@@ -87,14 +87,7 @@
 	var/start_time = REALTIMEOFDAY
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
-	// Area var pullouts to make accessing in the loop faster
-	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(flora_spawn_list)
-	var/feature_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(feature_spawn_list)
-	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
-	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
-
-	for(var/i in turfs) //Go through all the turfs and generate them
-		var/turf/gen_turf = i
+	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
 		var/turf/new_turf = pick(closed ? closed_turf_types : open_turf_types)
@@ -106,8 +99,21 @@
 		if(gen_turf.turf_flags & NO_RUINS)
 			new_turf.turf_flags |= NO_RUINS
 
-		if(closed)//Open turfs have some special behavior related to spawning flora and mobs.
-			CHECK_TICK
+	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
+	to_chat(world, span_boldannounce("[message]"))
+	log_world(message)
+
+/datum/map_generator/cave_generator/populate_terrain(list/turfs, area/generate_in)
+	// Area var pullouts to make accessing in the loop faster
+	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(flora_spawn_list)
+	var/feature_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(feature_spawn_list)
+	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
+	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
+
+	var/start_time = REALTIMEOFDAY
+
+	for(var/turf/turf as anything in turfs)
+		if(!(turf.type in open_turf_types)) //only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped
 			continue
 
 		// If we've spawned something yet
@@ -117,7 +123,7 @@
 		//FLORA SPAWNING HERE
 		if(flora_allowed && prob(flora_spawn_chance))
 			var/flora_type = pick(flora_spawn_list)
-			new flora_type(new_turf)
+			new flora_type(turf)
 			spawned_something = TRUE
 
 		//FEATURE SPAWNING HERE
@@ -126,13 +132,13 @@
 
 			var/atom/picked_feature = pick(feature_spawn_list)
 
-			for(var/obj/structure/existing_feature in range(7, new_turf))
+			for(var/obj/structure/existing_feature in range(7, turf))
 				if(istype(existing_feature, picked_feature))
 					can_spawn = FALSE
 					break
 
 			if(can_spawn)
-				new picked_feature(new_turf)
+				new picked_feature(turf)
 				spawned_something = TRUE
 
 		//MOB SPAWNING HERE
@@ -149,18 +155,18 @@
 
 			// prevents tendrils spawning in each other's collapse range
 			if(ispath(picked_mob, /obj/structure/spawner/lavaland))
-				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, new_turf))
+				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, turf))
 					can_spawn = FALSE
 					break
 			//if the random is a standard mob, avoid spawning if there's another one within 12 tiles
 			else if(isminingpath(picked_mob))
-				for(var/mob/living/mob_blocker in range(12, new_turf))
+				for(var/mob/living/mob_blocker in range(12, turf))
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
-				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, new_turf))
+				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, turf))
 					can_spawn = FALSE
 					break
 
@@ -169,10 +175,10 @@
 					weighted_megafauna_spawn_list.Remove(picked_mob)
 					megafauna_spawn_list = expand_weights(weighted_megafauna_spawn_list)
 					megas_allowed = megas_allowed && length(megafauna_spawn_list)
-				new picked_mob(new_turf)
+				new picked_mob(turf)
 				spawned_something = TRUE
 		CHECK_TICK
 
-	var/message = "[name] finished in [(REALTIMEOFDAY - start_time)/10]s!"
+	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"))
 	log_world(message)

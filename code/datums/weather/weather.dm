@@ -115,7 +115,8 @@
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
 	update_areas()
-	send_alert(telegraph_message, telegraph_sound)
+	if(telegraph_duration)
+		send_alert(telegraph_message, telegraph_sound)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
 /**

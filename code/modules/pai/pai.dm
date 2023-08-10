@@ -162,6 +162,7 @@
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
+	QDEL_NULL(leash)
 	card = null
 	GLOB.pai_list.Remove(src)
 	return ..()
@@ -334,7 +335,10 @@
 	master_name = "The Syndicate"
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
-	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
+	add_supplied_law(0, "Do not interfere with the operations of the Syndicate.")
+	QDEL_NULL(leash) // Freedom!!!
+	to_chat(src, span_danger("ALERT: Foreign software detected."))
+	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
 /**
@@ -350,6 +354,7 @@
 	master_name = null
 	master_dna = null
 	add_supplied_law(0, "None.")
+	leash = AddComponent(/datum/component/leash, card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	balloon_alert(src, "software rebooted")
 	return TRUE
 
@@ -449,6 +454,9 @@
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)
+	if(emagged)
+		return
+
 	var/new_distance = leash.distance + increment_amount
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return

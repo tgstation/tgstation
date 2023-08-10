@@ -1323,3 +1323,30 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/requests_console/ore_update/payload(obj/machinery/requests_console/console)
 	console.receive_ore_updates = TRUE
+
+/obj/effect/mapping_helpers/engraving
+	name = "engraving helper"
+	icon = 'icons/turf/wall_overlays.dmi'
+	icon_state = "engraving2"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/engraving/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/engraving/LateInitialize()
+	var/turf/closed/engraved_wall = get_turf(src)
+
+	if(!isclosedturf(engraved_wall) || !SSpersistence.saved_engravings.len || HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
+		qdel(src)
+		return
+
+	var/engraving = pick_n_take(SSpersistence.saved_engravings)
+	if(!islist(engraving))
+		stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
+		qdel(src)
+		return
+
+	engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+	qdel(src)

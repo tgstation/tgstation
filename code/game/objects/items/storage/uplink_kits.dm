@@ -56,10 +56,11 @@
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
-			new /obj/item/switchblade(src) //I'll count this as 2 tc
+			new /obj/item/switchblade(src) //basically 1 tc as it can be bought from BM kits
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
+			new /obj/item/implanter/storage(src) // 6 tc
 
 		if(KIT_STEALTHY)
 			new /obj/item/gun/energy/recharge/ebow(src) // 10 tc
@@ -366,6 +367,12 @@
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
 	new /obj/item/implanter/explosive_macro(src)
 
+/obj/item/storage/box/syndie_kit/imp_deniability
+	name = "tactical deniability implant box"
+
+/obj/item/storage/box/syndie_kit/imp_deniability/PopulateContents()
+	new /obj/item/implanter/tactical_deniability(src)
+
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
 
@@ -504,6 +511,7 @@
 	new /obj/item/stamp/chameleon(src)
 	new /obj/item/modular_computer/pda/chameleon(src)
 	new /obj/item/gun/energy/laser/chameleon(src)
+	new /obj/item/chameleon_scanner(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -587,19 +595,30 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
+/obj/item/storage/box/syndie_kit/manhack_grenades/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/grenade/spawnergrenade/manhacks(src)
+
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
 	new /obj/item/reagent_containers/cup/glass/mug/coco(src)
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)
 
+/obj/item/storage/box/syndie_kit/demoman/PopulateContents()
+	new /obj/item/gun/grenadelauncher(src)
+	new /obj/item/storage/belt/grenade/full(src)
+	if(prob(1))
+		new /obj/item/clothing/head/hats/hos/shako(src)
+		new /obj/item/mod/module/hat_stabilizer(src)
+
 /// Surplus Ammo Box
 
-/obj/item/storage/box/syndie_kit/surplus
+/obj/item/storage/box/syndie_kit/sniper_surplus
 	name = "surplus .50 BMG magazine box"
 	desc = "A shoddy box full of surplus .50 BMG magazines. Not as strong, but good enough to keep lead in the air."
 
-/obj/item/storage/box/syndie_kit/surplus/PopulateContents()
+/obj/item/storage/box/syndie_kit/sniper_surplus/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_box/magazine/sniper_rounds/surplus(src)
 

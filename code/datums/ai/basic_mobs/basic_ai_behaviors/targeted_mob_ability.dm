@@ -46,3 +46,17 @@
 /datum/ai_behavior/targeted_mob_ability/and_clear_target/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+/**
+ * Attempts to move into the provided range and then use a mob's cooldown ability on a target
+ */
+/datum/ai_behavior/targeted_mob_ability/min_range
+	required_distance = 6
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+
+/datum/ai_behavior/targeted_mob_ability/min_range/setup(datum/ai_controller/controller, ability_key, target_key)
+	. = ..()
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
