@@ -42,6 +42,7 @@
 #define VENTCRAWLER_ALWAYS 2
 
 //Mob bio-types flags
+///The mob is organic, can can heal from medical sutures.
 #define MOB_ORGANIC (1 << 0)
 #define MOB_MINERAL (1 << 1)
 #define MOB_ROBOTIC (1 << 2)
@@ -53,6 +54,7 @@
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
+#define MOB_SLIME (1 << 11)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)

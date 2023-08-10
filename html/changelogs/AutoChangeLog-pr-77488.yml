@@ -1,0 +1,4 @@
+author: "iain0"
+delete-after: True
+changes:
+  - bugfix: "A small clerical error fixed which will cause the Ukrainian station naming prefix to be properly applied to the Independence Day of Ukraine holiday on 24th August, rather than overwriting the Indigenous People's Day station prefixes."

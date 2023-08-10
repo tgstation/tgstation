@@ -190,8 +190,7 @@ GLOBAL_LIST(fishing_property_cache)
 
 		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
 		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
-		if(result == FISHING_DUD)
-		else if(ispath(result, /obj/item/fish))
+		if(ispath(result, /obj/item/fish))
 			//Modify fish roll chance
 			var/obj/item/fish/caught_fish = result
 
@@ -214,7 +213,7 @@ GLOBAL_LIST(fishing_property_cache)
 						if(is_matching_bait(bait, bait_identifer))
 							final_table[result] = round(final_table[result] * 0.5, 1)
 			else
-				final_table[result] *= round(final_table[result] * 0.15, 1) //Fishing without bait is not going to be easy
+				final_table[result] = round(final_table[result] * 0.15, 1) //Fishing without bait is not going to be easy
 
 			// Apply fish trait modifiers
 			var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]

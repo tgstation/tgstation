@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed fired foam darts, gumballs and (harmless) lollipops being embeddable."
+  - bugfix: "Projectiles that should embed while being reusable will now do so correctly, actually embedding the reusable casing instead of a shrapnel."
+  - balance: "Arrows are generally more likely to embed now, except for blazing ones, that kind of just blaze."
+  - qol: "the quiver storage now uses numerical stacking (like botany and ore bags, or the RPED, for example)."

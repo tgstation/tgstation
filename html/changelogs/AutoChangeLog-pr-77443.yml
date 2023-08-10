@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed an oversight with processable items that lead to the same chat message being sent multiple times."
