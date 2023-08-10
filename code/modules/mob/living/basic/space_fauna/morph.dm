@@ -3,7 +3,7 @@
 	real_name = "morph"
 	desc = "A revolting, pulsating pile of flesh."
 	speak_emote = list("gurgles")
-	emote_hear = list("gurgles")
+	//emote_hear = list("gurgles")
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "morph"
 	icon_living = "morph"
@@ -53,6 +53,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 /mob/living/basic/morph/examine(mob/user)
 	if(isnull(form))
@@ -78,9 +79,23 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	holder.icon_state = null
 
-/// Simple check to see if we are allowed to disguise as something.
-/mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
-	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
+/mob/living/basic/morph/death(gibbed)
+	if(isnull(form))
+		return ..()
+
+	visible_message(
+		span_warning("[src] twists and dissolves into a pile of green flesh!"),
+		span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"),
+	)
+
+	restore()
+
+	return ..()
+
+/mob/living/basic/morph/can_track(mob/living/user)
+	if(!isnull(form))
+		return FALSE
+	return ..()
 
 /mob/living/basic/morph/ShiftClickOn(atom/movable/A)
 	if(!stat)
@@ -93,8 +108,38 @@
 		to_chat(src, span_warning("You need to be conscious to transform!"))
 		..()
 
+/mob/living/basic/morph/proc/pre_attack(mob/living/basic/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!isnull(form) && (melee_damage_disguised >= 0))
+		to_chat(src, span_warning("You can not attack while disguised!"))
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(isliving(target)) //Eat Corpses to regen health
+		var/mob/living/living_target = target
+		if(living_target.stat != DEAD)
+			return
+
+		INVOKE_ASYNC(user, PROC_REF(eat), target = living_target, delay = 3 SECONDS, update_health = -50)
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(isitem(target)) //Eat items just to be annoying
+		var/obj/item/item_target = target
+		if(!item_target.anchored)
+			return
+
+		INVOKE_ASYNC(user, PROC_REF(eat), target = living_target, delay = 2 SECONDS)
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+/// Simple check to see if we are allowed to disguise as something.
+/mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
+	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
+
 /// Eat stuff. Delicious. Return TRUE if we ate something, FALSE otherwise.
-/mob/living/basic/morph/proc/eat(atom/movable/eatable)
+/// Required: `eatable` is the thing (item or mob) that we are going to eat.
+/// Optional: `delay` is the applicable time-based delay to pass into `do_after()` before the logic is ran.
+/// Optional: `update_health` is an integer that will be added (or maybe subtracted if you're cruel) to our health after we eat something. Passed into `adjust_health()` so make sure what you pass in is accurate.
+/mob/living/basic/morph/proc/eat(atom/movable/eatable, delay = 0 SECONDS, update_health = 0)
 	if(QDELETED(eatable) || eatable.loc == src)
 		return FALSE
 
@@ -102,8 +147,15 @@
 		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
 		return FALSE
 
+	balloon_alert(user, "eating...")
+	if((delay > 0 SECONDS) && !do_after(src, delay, target = eatable))
+		return FALSE
+
 	visible_message(span_warning("[src] swallows [eatable] whole!"))
 	eatable.forceMove(src)
+	if(update_health != 0)
+		adjust_health(update_health)
+
 	return TRUE
 
 /mob/living/basic/morph/proc/assume(atom/movable/target)
@@ -159,19 +211,6 @@
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
 
-/mob/living/basic/morph/death(gibbed)
-	if(isnull(form))
-		return ..()
-
-	visible_message(
-		span_warning("[src] twists and dissolves into a pile of green flesh!"),
-		span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"),
-	)
-
-	restore()
-
-	return ..()
-
 ///mob/living/basic/morph/Aggro() // automated only
 //	..()
 //	if(morphed)
@@ -189,27 +228,3 @@
 //				things += A
 //		var/atom/movable/T = pick(things)
 //		assume(T)
-
-/mob/living/basic/morph/can_track(mob/living/user)
-	if(!isnull(form))
-		return FALSE
-	return ..()
-
-/mob/living/basic/morph/AttackingTarget()
-	if(!isnull(form) && (melee_damage_disguised >= 0))
-		to_chat(src, span_warning("You can not attack while disguised!"))
-		return
-	if(isliving(target)) //Eat Corpses to regen health
-		var/mob/living/L = target
-		if(L.stat == DEAD)
-			if(do_after(src, 30, target = L))
-				if(eat(L))
-					adjustHealth(-50)
-			return
-	else if(isitem(target)) //Eat items just to be annoying
-		var/obj/item/I = target
-		if(!I.anchored)
-			if(do_after(src, 20, target = I))
-				eat(I)
-			return
-	return ..()
