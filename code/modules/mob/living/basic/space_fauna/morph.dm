@@ -36,6 +36,10 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/morph
 
+	/// A weakref pointing to the form we are currently assumed as.
+	var/datum/weakref/form_weakref = null
+	/// A typepath pointing of the form we are currently assumed as. Remember, TYPEPATH!!!
+	var/atom/movable/form_typepath = null
 	/// How much damage are we doing while disguised?
 	var/melee_damage_disguised = 0
 	/// Can we eat while disguised?
@@ -54,39 +58,41 @@
 	disguise_ability.Grant(src)
 
 /mob/living/basic/morph/examine(mob/user)
-	if(isnull(form))
+	if(!HAS_TRAIT(src, TRAIT_DISGUISED))
 		return ..()
 
-	. = form.examine(user)
-	if(get_dist(user,src) <= 3)
+	var/atom/movable/form_reference = form_weakref.resolve()
+	if(!isnull(form_reference))
+		. = form_reference.examine(user)
+
+	if(get_dist(user, src) <= 3) // always add this because if the form_reference somehow nulls out we still want to have something look "weird" about an item when someone is close
 		. += span_warning("It doesn't look quite right...")
 
 /mob/living/basic/morph/med_hud_set_health()
-	if(isliving(form))
+	if(isliving(form_typepath))
 		return ..()
 
-	//we hide medical hud while morphed
+	//we hide medical hud while in regular state or an item
 	var/image/holder = hud_list[HEALTH_HUD]
 	holder.icon_state = null
 
 /mob/living/basic/morph/med_hud_set_status()
-	if(isliving(form))
+	if(isliving(form_typepath))
 		return ..()
 
-	//we hide medical hud while morphed
+	//we hide medical hud while in regular state or an item
 	var/image/holder = hud_list[STATUS_HUD]
 	holder.icon_state = null
 
 /mob/living/basic/morph/death(gibbed)
-	if(isnull(form))
+	if(!HAS_TRAIT(src, TRAIT_DISGUISED))
 		return ..()
 
+	// the action should handle the rest
 	visible_message(
 		span_warning("[src] twists and dissolves into a pile of green flesh!"),
 		span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"),
 	)
-
-	restore()
 
 	return ..()
 
@@ -99,8 +105,8 @@
 /mob/living/basic/morph/proc/on_disguise()
 	SIGNAL_HANDLER
 	visible_message(
-		span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"),
-		span_notice("You twist your body and assume the form of [target]."),
+		span_warning("[src] suddenly twists and changes shape, becoming a copy of [initial(form_typepath.name)]!"),
+		span_notice("You twist your body and assume the form of [initial(form_typepath.name)]."),
 	)
 
 	// We are now weaker
@@ -111,8 +117,21 @@
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
 
+	var/list/potential_forms = GET_TRAIT_SOURCES(src, TRAIT_DISGUISED)
+	if(length(potential_forms) == 0)
+		stack_trace("Somehow [src] has the TRAIT_DISGUISED trait but no sources.")
+		return
+
+	if(length(potential_forms) > 1)
+		stack_trace("Somehow [src] has the TRAIT_DISGUISED trait but multiple sources. Will default to using the first.") //idek how this would happen but lets track if it does
+
+	var/atom/movable/our_form = potential_forms[1]
+	form_weakref = WEAKREF(our_form)
+	form_typepath = our_form.type
+
 /// Do some more logic for the morph when we undisguise through the action.
 /mob/living/basic/morph/proc/on_undisguise()
+	SIGNAL_HANDLER
 	visible_message(
 		span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"),
 		span_notice("You reform to your normal body."),
@@ -125,6 +144,9 @@
 
 	med_hud_set_health()
 	med_hud_set_status() //we are no longer an object
+
+	form_weakref = null
+	form_typepath = null
 
 /// Handles the logic for attacking anything.
 /mob/living/basic/morph/proc/pre_attack(mob/living/basic/source, atom/target)

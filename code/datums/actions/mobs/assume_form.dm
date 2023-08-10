@@ -23,14 +23,12 @@
 
 /datum/action/cooldown/mob_cooldown/assume_form/Grant(mob/grant_to)
 	. = ..()
-	original_type = grant_to.type // if `original_type` ends up being null after this burn the codebase down
+	original_type = owner.type // if `original_type` ends up being null after this burn the codebase down
 	blacklist_typecache += typecacheof(original_type)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(reset_appearances))
 
 /datum/action/cooldown/mob_cooldown/assume_form/Remove(mob/remove_from)
-	if(isnull(assumed_type))
-		return ..()
-
-	reset_appearances()
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/assume_form/Activate(atom/target_atom)
@@ -53,16 +51,20 @@
 /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target)
 	owner.appearance = target.appearance
 	owner.copy_overlays(target)
-	owner.alpha = max(owner.alpha, 150) //fucking chameleons
-	owner.transform = initial(owner.transform)
-	owner.pixel_x = owner.base_pixel_x
-	owner.pixel_y = owner.base_pixel_y
+	owner.alpha = max(target.alpha, 150) //fucking chameleons
+	owner.transform = initial(target.transform)
+	owner.pixel_x = target.base_pixel_x
+	owner.pixel_y = target.base_pixel_y
 
-	assumed_type = target.type
-	ADD_TRAIT(owner, TRAIT_DISGUISED, assumed_type) // important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
+	ADD_TRAIT(owner, TRAIT_DISGUISED, target) // important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
 
 /// Resets the appearances of the mob to the default.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/reset_appearances()
+	SIGNAL_HANDLER
+
+	if(!HAS_TRAIT(owner, TRAIT_DISGUISED))
+		return // in case we're being invoked on death and we aren't disguised, no need to do this additional work.
+
 	owner.animate_movement = SLIDE_STEPS
 	owner.maptext = null
 	owner.alpha = initial(owner.alpha)
@@ -74,5 +76,4 @@
 	owner.icon_state = initial(owner.icon_state)
 	owner.cut_overlays()
 
-	REMOVE_TRAIT(owner, TRAIT_DISGUISED, assumed_type) // important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
-	assumed_type = null
+	REMOVE_TRAIT(owner, TRAIT_DISGUISED, target) // important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
