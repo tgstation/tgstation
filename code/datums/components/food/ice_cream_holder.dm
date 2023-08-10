@@ -342,6 +342,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	ingredients_text = "optional flavorings"
 
 /datum/ice_cream_flavour/custom/korta
+	name = ICE_CREAM_KORTA_CUSTOM
 	desc = "filled with artisanal lizard-friendly icecream. Made with real $CUSTOM_NAME. Ain't that something."
 	ingredients = list(/datum/reagent/consumable/korta_milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"

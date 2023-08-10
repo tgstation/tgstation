@@ -55936,10 +55936,6 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay/central)
-"ulb" = (
-/obj/item,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/solars/port/aft)
 "ulv" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/stripes/white/line{
@@ -66223,6 +66219,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xPm" = (
@@ -67124,7 +67121,6 @@
 /area/station/commons/fitness)
 "yfn" = (
 /obj/machinery/vending/dinnerware,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 5
 	},
@@ -85906,7 +85902,7 @@ kNV
 gnL
 ckz
 dWA
-ulb
+ecz
 aaa
 aaa
 lMJ

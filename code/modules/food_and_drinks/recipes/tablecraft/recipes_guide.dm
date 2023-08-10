@@ -38,7 +38,7 @@
 
 /datum/crafting_recipe/food/reaction/New()
 	. = ..()
-	if(!reaction)
+	if(!ispath(reaction, /datum/chemical_reaction))
 		return
 
 	if(length(GLOB.chemical_reactions_list))
@@ -48,6 +48,7 @@
 		var/datum/chemical_reaction/chemical_reaction = new reaction()
 		setup_chemical_reaction_details(chemical_reaction)
 		qdel(chemical_reaction)
+	..()
 
 /**
  * Sets up information for our recipe based on the chemical reaction we have set.

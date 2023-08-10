@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed an oddity with morgue corpses being shakeable like they're just unconscious."

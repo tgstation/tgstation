@@ -85,6 +85,10 @@
 		if(ALL_GOOD)
 			should_loop = FALSE
 
+	// the hyperloop can get reset to null from the above procs
+	if(!hyperloop)
+		return
+
 	//Do pause/unpause/nothing for the hyperloop
 	if(should_loop && hyperloop.paused)
 		hyperloop.resume_loop()
@@ -97,8 +101,12 @@
 		return ALL_GOOD
 
 	if(!isliving(movee))
+		if(HAS_TRAIT(movee, TRAIT_FORCED_GRAVITY)) // nothing can block the singularity
+			return SUPER_NOT_HOLDING_ON
+
 		if(is_tile_solid(get_step(movee, direction))) //something is blocking us so do the cool drift
 			return CLINGING
+
 		return SUPER_NOT_HOLDING_ON
 
 	var/mob/living/living = movee

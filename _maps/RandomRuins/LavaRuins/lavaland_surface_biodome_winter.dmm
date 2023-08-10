@@ -176,7 +176,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aO" = (
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/glass,
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
@@ -360,7 +360,7 @@
 /area/ruin/powered/snow_biodome)
 "Ez" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/glass,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "EA" = (

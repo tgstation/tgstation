@@ -38,3 +38,24 @@
 	while(islist(spawn_list))
 		spawn_list = pick_weight(spawn_list)
 	return spawn_list
+
+///Sensors indicate that a black hole's gravitational field is affecting the region of space we were headed through
+/datum/shuttle_event/simple_spawner/black_hole
+	name = "Black Hole (Oh no!)"
+	event_probability = 0 // only admin spawnable
+	spawn_probability_per_process = 10
+	activation_fraction = 0.35
+	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
+	spawning_list = list(/obj/singularity/shuttle_event = 1)
+	// only spawn it once
+	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
+
+///Kobayashi Maru version
+/datum/shuttle_event/simple_spawner/black_hole/adminbus
+	name = "Black Holes (OH GOD!)"
+	event_probability = 0
+	spawn_probability_per_process = 50
+	activation_fraction = 0.2
+	spawning_list = list(/obj/singularity/shuttle_event = 10)
+	remove_from_list_when_spawned = TRUE
