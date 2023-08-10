@@ -102,7 +102,7 @@
 	return ..()
 
 /// Do some more logic for the morph when we disguise through the action.
-/mob/living/basic/morph/proc/on_disguise(mob/living/basic/user, datum/weakref/form_weakref)
+/mob/living/basic/morph/proc/on_disguise(mob/living/basic/user, atom/movable/target)
 	SIGNAL_HANDLER
 	// We are now weaker
 	melee_damage_lower = melee_damage_disguised
@@ -112,18 +112,13 @@
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
 
-	src.form_weakref = form_weakref
-	var/atom/movable/our_form = form_weakref.resolve()
-	if(isnull(our_form))
-		stack_trace("Somehow [src] was passed a weakref that immediately nulled out, what?")
-		return
-
 	visible_message(
-		span_warning("[src] suddenly twists and changes shape, becoming a copy of [our_form]!"),
-		span_notice("You twist your body and assume the form of [our_form]."),
+		span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"),
+		span_notice("You twist your body and assume the form of [target]."),
 	)
 
-	form_typepath = our_form.type
+	form_weakref = WEAKREF(target)
+	form_typepath = target.type
 
 /// Do some more logic for the morph when we undisguise through the action.
 /mob/living/basic/morph/proc/on_undisguise()

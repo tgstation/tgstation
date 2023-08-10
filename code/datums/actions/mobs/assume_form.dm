@@ -54,8 +54,7 @@
 	owner.pixel_y = target_atom.base_pixel_y
 
 	// important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
-	var/dispatchable_weakref = WEAKREF(target_atom)
-	SEND_SIGNAL(owner, COMSIG_ACTION_DISGUISED_APPEARANCE, dispatchable_weakref)
+	SEND_SIGNAL(owner, COMSIG_ACTION_DISGUISED_APPEARANCE, target_atom)
 	ADD_TRAIT(owner, TRAIT_DISGUISED, REF(src))
 
 /// Resets the appearances of the mob to the default.
