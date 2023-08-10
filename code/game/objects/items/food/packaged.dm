@@ -188,7 +188,10 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3
 	)
+<<<<<<< HEAD
 	burns_on_grill = TRUE
+=======
+>>>>>>> 1c852d28636 (Martian Food: A Taste of the Red Planet (#75988))
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -265,6 +268,35 @@
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
+/obj/item/food/ready_donk/nachos_grandes //which translates to... big nachos
+	name = "\improper Ready-Donk: Donk Sol Series Boritos Nachos Grandes"
+	desc = "Get ready for game day with Donk's classic Nachos Grandes, sponsors of the Donk Sol Series! Boritos chips loaded with cheese, spicy meat and beans, alongside separate guac, pico and donk sauce. Batter up!"
+	tastes = list("nachos" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/nachos_grandes
+
+/obj/item/food/ready_donk/warm/nachos_grandes
+	name = "warm Ready-Donk: Donk Sol Series Boritos Nachos Grandes"
+	desc = "Get ready for game day with Donk's classic Nachos Grandes, sponsors of the Donk Sol Series! Boritos chips loaded with cheese, spicy meat and beans, alongside separate guac, pico and donk sauce. Served hotter than Sakamoto's fastball!"
+	icon_state = "ready_donk_warm_nachos"
+	tastes = list("nachos" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/ready_donk/donkrange_chicken
+	name = "\improper Ready-Donk: Donk-range Chicken"
+	desc = "A Chinese classic, it's Donk's original spicy orange chicken with stir-fried peppers and onions, all over steamed rice."
+	tastes = list("orange chicken" = 2, "laziness" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/donkrange_chicken
+
+/obj/item/food/ready_donk/warm/donkrange_chicken
+	name = "warm Ready-Donk: Ready-Donk: Donk-range Chicken"
+	desc = "A Chinese classic, it's Donk's original spicy orange chicken with stir-fried peppers and onions, all over steamed rice and served hotter than a dragon's breath."
+	icon_state = "ready_donk_warm_orange"
+	tastes = list("orange chicken" = 2, "laziness" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES | JUNKFOOD
 
 // Rations
 /obj/item/food/rationpack

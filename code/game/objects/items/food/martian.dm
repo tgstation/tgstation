@@ -166,7 +166,10 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 15
 	)
+<<<<<<< HEAD
 	burns_in_oven = TRUE
+=======
+>>>>>>> 1c852d28636 (Martian Food: A Taste of the Red Planet (#75988))
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN | VEGETABLES
 	venue_value = FOOD_PRICE_TRASH
@@ -1177,8 +1180,11 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/salt = 1,
 	)
+<<<<<<< HEAD
 	burns_on_grill = TRUE
 	burns_in_oven = TRUE
+=======
+>>>>>>> 1c852d28636 (Martian Food: A Taste of the Red Planet (#75988))
 	tastes = list("bread" = 1, "salt" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -1208,7 +1214,10 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment = 4,
 	)
+<<<<<<< HEAD
 	burns_on_grill = TRUE
+=======
+>>>>>>> 1c852d28636 (Martian Food: A Taste of the Red Planet (#75988))
 	tastes = list("chicken" = 1, "umami sauce" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
