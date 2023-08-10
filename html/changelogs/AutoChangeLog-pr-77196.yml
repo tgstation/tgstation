@@ -1,8 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Adds Summon Simians, a spell that summons four monkeys or lesser gorillas, with the amount increasing per upgrade. The monkeys have various fun gear depending on how lucky you get and how leveled the spell is. If the spell is maximum level, it only summons normal gorillas."
-  - balance: "Wizard Mutate spell works on non-human races. It also gives you Gigantism now (funny). If the Race can't support tinted bodyparts, your whole sprite is temporarily turned green."
-  - balance: "Made Laser eyes projectiles a subtype of actual lasers, which has various properties such as on-hit effects and upping the damage to 30."
-  - rscadd: "Added further support for nonhuman robed casting: Monkeys, cyborgs, and drones can all now cast robed spells as long as they're wearing a wizardly hat as well."
-  - balance: "Made monkeys able to wield two-handed things again."

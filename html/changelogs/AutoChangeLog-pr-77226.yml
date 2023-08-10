@@ -1,5 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - balance: "Geode Pirates have upgraded their launchpad room to be more usable"
-  - bugfix: "Fixes a bug in the navigational computer of the Geode pirates causing their shuttle to move sideways."
