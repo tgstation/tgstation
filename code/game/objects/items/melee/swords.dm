@@ -52,12 +52,36 @@
 	worn_icon_state = "broadsword"
 	force = 15
 	wound_bonus = 0
-	///Icon thats used for object, inhands and worn sprites when it breaks.
+	/// Name used after the item breaks.
+	var/broken_name = "broken rusty broadsword"
+	/// Description used after the item breaks.
+	var/broken_desc = "A sharp steel forged sword. It's edge is rusty, corroded and broken."
+	/// Icon thats used for object, inhands and worn sprites when it breaks.
 	var/broken_icon = "broadsword_broken"
-	/// How many hits a sword can deal and block before it breaks, with one additional final attack.
-	var/rustiness = 15 // It may say 15, but it's 16 hits/blocks before it breaks.
-	/// If the sword is broken or not.
+	/// How many hits an item can deal and block before it breaks, with one additional final usage.
+	var/durability = 15
+	/// If the item is broken or not.
 	var/broken = FALSE
+	/// The message displayed when the item breaks.
+	var/break_message_others = "'s sword snaps in half!"
+	/// The message displayed when the item breaks.
+	var/break_message_self = "'s blade breaks leaving you with half a sword!"
+	/// Sound used when the item breaks.
+	var/break_sound = 'sound/effects/structure_stress/pop3.ogg'
+	/// How much damage the item loses after it breaks.
+	var/damage_decrease = 5
+	/// The new wound bonus after the item breaks.
+	var/broken_wound = 1
+	/// The throw range of the item after it breaks.
+	var/broken_throw = 2
+	/// The embedding of the item after it breaks.
+	var/broken_embed_chance = 10
+	/// The embedding of the item after it breaks.
+	var/broken_embed_pain = 15
+	/// The block chance of the item after it breaks.
+	var/broken_block = 20
+	/// The weight class of the item after it breaks
+	var/broken_weight = WEIGHT_CLASS_SMALL
 
 /obj/item/melee/sword/rust/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -75,28 +99,29 @@
 	decrease_uses(user)
 
 /obj/item/melee/sword/rust/proc/decrease_uses(mob/user)
-	if(rustiness == 0)
+	if(durability == 0)
 		no_uses(user)
 		return
-	rustiness--
+	durability--
 
 /obj/item/melee/sword/rust/proc/no_uses(mob/user)
 	if(broken == TRUE)
 		return
-	user.visible_message(span_notice("[user]'s sword snaps in half."), span_notice("[src]'s blade breaks leaving you with half a sword!"))
+	user.visible_message(span_notice("[user][break_message_others]"), span_notice("[src][break_message_self]"))
 	broken = TRUE
-	name = "broken [initial(name)]"
+	name = broken_name
+	desc = broken_desc
 	icon_state = broken_icon
 	inhand_icon_state = broken_icon
 	worn_icon_state = broken_icon
 	update_appearance()
-	playsound(user, 'sound/effects/structure_stress/pop3.ogg', 100, TRUE)
-	force -= 5
-	wound_bonus = 1
-	throw_range = 2
-	embedding = list("embed_chance" = 10, "impact_pain_mult" = 15)//jagged metal in wound would be more painful.
-	block_chance = 20
-	w_class = WEIGHT_CLASS_SMALL
+	playsound(user, break_sound, 100, TRUE)
+	force -= damage_decrease
+	wound_bonus = broken_wound
+	throw_range = broken_throw
+	embedding = list("embed_chance" = broken_embed_chance, "impact_pain_mult" = broken_embed_pain)
+	block_chance = broken_block
+	w_class = broken_weight
 
 /obj/item/melee/sword/rust/gold
 	name = "rusty gilded broadsword"
