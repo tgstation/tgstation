@@ -262,7 +262,7 @@
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/tinlux = -6,
-		/datum/reagent/napalm = -4
+		/datum/reagent/napalm = -4,
 		/datum/reagent/medicine/psicodine = -2) //Blob zombies likely wouldn't appreciate psicodine so why this is here
 
 	virus_suspectibility = 0
