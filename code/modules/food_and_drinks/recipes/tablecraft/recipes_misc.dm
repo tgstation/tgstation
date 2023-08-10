@@ -496,17 +496,3 @@
 	)
 	result = /obj/item/food/candied_pineapple
 	category = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/bibimbap
-	name = "Bibimbap"
-	reqs = list(
-		/obj/item/reagent_containers/cup/bowl = 1,
-		/obj/item/food/boiledrice = 1,
-		/obj/item/food/friedegg = 1,
-		/obj/item/food/meat/cutlet = 1,
-		/obj/item/food/grown/carrot = 1,
-		/obj/item/food/grown/cucumber = 1,
-		/obj/item/food/grown/onion = 1,
-	)
-	result = /obj/item/food/bibimbap
-	category = CAT_MISCFOOD

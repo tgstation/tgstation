@@ -567,16 +567,3 @@
 /obj/item/food/candied_pineapple/Initialize(mapload)
 	. = ..()
 	icon_state = "[base_icon_state]_[rand(1, 3)]"
-
-/obj/item/food/bibimbap
-	name = "bibimbap"
-	desc = "A Korean rice dish of fried egg, meat, cucumber, and mixed vegetables. Crunchy!"
-	icon_state = "bibimbap"
-	trash_type = /obj/item/reagent_containers/cup/bowl
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 12,
-		/datum/reagent/consumable/nutriment/vitamin = 8,
-		/datum/reagent/consumable/nutriment/protein = 12,
-	)
-	tastes = list("rice" = 6, "meat" = 3, "cucumber" = 2, "fried egg" = 4, "mixed veggies" = 5)
-	foodtypes = VEGETABLES | MEAT
