@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixing some jank with the a greyscale modify menu, like inputs not being sanitized."

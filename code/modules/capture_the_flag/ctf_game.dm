@@ -263,7 +263,7 @@
 /obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/ctf_flag))
 		return ..()
-		
+
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))

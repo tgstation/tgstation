@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Dismounting from a piggyback no longer allows you to phase through other players."

@@ -11,6 +11,7 @@
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
 	examine_limb_id = SPECIES_JELLYPERSON
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SLIME
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TOXINLOVER,

@@ -129,7 +129,7 @@
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_NORMAL
-	var/datum/action/item_action/chameleon/change/chameleon_action
+	actions_types = list(/datum/action/item_action/chameleon/change/belt)
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
@@ -154,22 +154,6 @@
 	))
 
 	atom_storage.silent = TRUE
-
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/storage/belt
-	chameleon_action.chameleon_name = "Belt"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/storage/belt/holster/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/storage/belt/holster/nukie
 	name = "operative holster"
