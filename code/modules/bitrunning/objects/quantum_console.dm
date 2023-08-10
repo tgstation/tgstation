@@ -43,7 +43,7 @@
 		return data
 
 	data["connected"] = TRUE
-	data["generated_domain"] = server.get_current_domain_name()
+	data["generated_domain"] = server.generated_domain?.key
 	data["occupants"] = length(server.occupant_mind_refs)
 	data["points"] = server.points
 	data["randomized"] = server.domain_randomized

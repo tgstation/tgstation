@@ -104,6 +104,8 @@ const AccessView = (props, context) => {
 
   const sorted = available_domains.sort((a, b) => a.cost - b.cost);
 
+  const selected = sorted.find(({ id }) => id === generated_domain);
+
   return (
     <Stack fill vertical>
       <Stack.Item grow>
@@ -142,7 +144,7 @@ const AccessView = (props, context) => {
           <Stack fill>
             <Stack.Item grow>
               <NoticeBox info={!!generated_domain}>
-                {generated_domain ?? 'Nothing loaded'}
+                {selected?.name ?? 'Nothing loaded'}
               </NoticeBox>
             </Stack.Item>
             <Stack.Item>
@@ -171,7 +173,7 @@ const DomainEntry = (props: DomainEntryProps, context) => {
 
   const { generated_domain, ready, occupants, randomized, points } = data;
 
-  const current = generated_domain === name;
+  const current = generated_domain === id;
   const occupied = occupants > 0;
   let buttonIcon, buttonName;
   if (randomized) {

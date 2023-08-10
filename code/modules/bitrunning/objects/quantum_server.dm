@@ -427,16 +427,6 @@
 
 	return text
 
-/// Returns the current domain name if the server has the proper tier scanner and it isn't randomized
-/obj/machinery/quantum_server/proc/get_current_domain_name()
-	if(isnull(generated_domain))
-		return null
-
-	if(scanner_tier < generated_domain.difficulty || domain_randomized)
-		return REDACTED
-
-	return generated_domain.name
-
 /// Gets a random available domain given the current points. Weighted towards higher cost domains.
 /obj/machinery/quantum_server/proc/get_random_domain_id()
 	if(points < 1)
