@@ -13,7 +13,6 @@
 	cell_type = /obj/item/stock_parts/cell/lawbringer
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "lawbringer"
-	inhand_icon_state = "lawbringer"
 	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -32,7 +31,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	selfcharge = 1
-	can_select = TRUE
+	can_select = FALSE
 	can_charge = FALSE
 	var/owner_dna = null
 
