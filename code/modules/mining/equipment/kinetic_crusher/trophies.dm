@@ -70,9 +70,15 @@
 	bonus_value = 2
 	///How much of user's missing health is converted into bonus damage, %
 	var/missing_health_ratio = 0.1
+	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
+	var/missing_health_desc
+
+/obj/item/crusher_trophy/goliath_tentacle/Initialize(mapload)
+	. = ..()
+	missing_health_desc = 100 * missing_health_ratio
 
 /obj/item/crusher_trophy/goliath_tentacle/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_ratio * 100]</b> health you are missing"
+	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
 
 /obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
 	var/missing_health = user.maxHealth - user.health
