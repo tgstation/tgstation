@@ -39,18 +39,6 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/spiderling_web)
 
-	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
-	AddComponent(\
-		/datum/component/growth_and_differentiation,\
-		growth_time = spider_growth_time,\
-		growth_path = grow_as,\
-		growth_probability = 25,\
-		lower_growth_value = 1,\
-		upper_growth_value = 2,\
-		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
-		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_into_young_spider))\
-	)
-
 	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
 	// but, also remember the more time we aren't in a vent, the more susceptible we are to dying to anything and everything.
 	// also remember we can't evolve if we're in a vent. lots to keep in mind when you set these variables.
