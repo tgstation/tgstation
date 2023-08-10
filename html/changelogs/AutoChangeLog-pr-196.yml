@@ -1,8 +1,0 @@
-author: "KittyNoodle"
-delete-after: True
-changes:
-  - balance: "many of the round ending ghost roles now only happen late in the round and on higher pop"
-  - balance: "blob and greytide virus weight have been reduced significantly."
-  - balance: "meteors only happen after an hour into the round"
-  - balance: "less carp"
-  - rscadd: "morphs have made their return."

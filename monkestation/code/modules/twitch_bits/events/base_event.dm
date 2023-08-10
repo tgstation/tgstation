@@ -9,8 +9,10 @@
 	var/random_count = 0
 	///list of targets
 	var/list/targets = list()
-	///the tag tied to this event
+	///the tag tied to this event, should make these be defines at some point
 	var/id_tag
+	///should we announce this event
+	var/announce = TRUE
 
 /datum/twitch_event/proc/run_event(name)
 	if(event_flags & TWITCH_AFFECTS_STREAMER)
@@ -26,7 +28,8 @@
 			targets += picked
 			living_players -= picked
 
-	minor_announce("[event_name] has just been triggered by [name].", "The Observers")
+	if(announce)
+		minor_announce("[event_name] has just been triggered by [name].", "The Observers")
 
 /datum/twitch_event/proc/end_event()
 	return

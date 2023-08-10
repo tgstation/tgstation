@@ -1,7 +1,0 @@
-author: "wraith-54321"
-delete-after: True
-changes:
-  - rscadd: "Added Lesser Summon Apes"
-  - rscadd: "Added Magical Chem Sprayer"
-  - balance: "Replaced Mjollnir with Summon Mjollnir"
-  - balance: "Summon rituals are now restricted to 35 or more pop instead of 100 threat"

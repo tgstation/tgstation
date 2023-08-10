@@ -52,12 +52,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		return FALSE
 	if(!owner.patreon.has_access(ACCESS_TRAITOR_RANK))
 		return FALSE
-	if(!GLOB.used_monthly_token.len)
-		var/json_file = file("data/monthly_tokens.json")
-		if(!fexists(json_file))
-			return TRUE
-		GLOB.used_monthly_token = json_decode(file2text(json_file))
-	if(owner.ckey in GLOB.used_monthly_token)
+	var/month_number = text2num(time2text(world.time, "MM"))
+	if(owner.prefs.token_month == month_number)
 		return FALSE
 	return TRUE
 
@@ -65,13 +61,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	if(use_donor)
 		if(donator_token)
 			donator_token = FALSE
-			var/json_file = file("data/monthly_tokens.json")
-			if(!GLOB.used_monthly_token.len)
-				GLOB.used_monthly_token = json_decode(file2text(json_file))
-			GLOB.used_monthly_token += owner.ckey
-
-			fdel(json_file)
-			WRITE_FILE(json_file, json_encode(GLOB.used_monthly_token))
+			owner.prefs.token_month = text2num(time2text(world.time, "MM"))
+			owner.prefs.save_preferences()
 			return
 
 	switch(tier)
