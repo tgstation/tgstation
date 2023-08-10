@@ -418,3 +418,61 @@
       pre-colored variants of the above
   - bugfix: Fixed only one buttondown with slacks being available in clothesmates
   - image: Slightly adjusted greyscale buttondown sprite, you look less fat now!
+2023-08-10:
+  Boopideedoo:
+  - bugfix: fixed a Camera in atmos
+  - rscadd: missing Camera in chem storage
+  CoiledLamb:
+  - rscadd: Added wellcheers, a contraband soda with various side effects.
+  - image: resprites all cans in the drinks icon file
+  - image: resprites the canholder sprite in storage.dmi
+  Comxy:
+  - rscadd: Young Spiders that appear between spiderlings and adult spiders.
+  - balance: Wizard Spider version has better immunity against temp damage and can
+      lay webs faster.
+  - balance: Tangle Spider sucks more with self-healing but has more health.
+  - balance: Scout spiderling gets thermal vision.
+  - balance: Viper deals bonus damage when an enemy is below 20% health.
+  DeerJesus:
+  - balance: added the storage implanter to the syndie-kit tactical 'spy' kit to make
+      it decent.
+  Derpguy3:
+  - bugfix: The service cyborg's beverage apparatus is now capable of grabbing coffee
+      pots and syrup bottles.
+  Inari-Whitebear:
+  - bugfix: Metastation Kitchen APC is wired to the grid again.
+  Jacquerel:
+  - rscadd: Adds a new technology which utilises Bioscrambler anomaly cores to allow
+      you to transform into animals.
+  Momo8289:
+  - rscadd: Cigarettes can now be placed in and smoked through gas masks, so long
+      as the mask has no filters installed and is not covering the mouth.
+  Sealed101:
+  - bugfix: fixed gibtonite explosions having flames and flash ranges
+  Singul0:
+  - balance: Geode Pirates have upgraded their launchpad room to be more usable
+  - bugfix: Fixes a bug in the navigational computer of the Geode pirates causing
+      their shuttle to move sideways.
+  Vincent983:
+  - spellcheck: fixes one of the virus thresholds saying "scrathing" instead of scratching
+  carlarctg:
+  - qol: Biogenerators can be unwrenched
+  - rscadd: Adds Summon Simians, a spell that summons four monkeys or lesser gorillas,
+      with the amount increasing per upgrade. The monkeys have various fun gear depending
+      on how lucky you get and how leveled the spell is. If the spell is maximum level,
+      it only summons normal gorillas.
+  - balance: Wizard Mutate spell works on non-human races. It also gives you Gigantism
+      now (funny). If the Race can't support tinted bodyparts, your whole sprite is
+      temporarily turned green.
+  - balance: Made Laser eyes projectiles a subtype of actual lasers, which has various
+      properties such as on-hit effects and upping the damage to 30.
+  - rscadd: 'Added further support for nonhuman robed casting: Monkeys, cyborgs, and
+      drones can all now cast robed spells as long as they''re wearing a wizardly
+      hat as well.'
+  - balance: Made monkeys able to wield two-handed things again.
+  improvedname:
+  - balance: Removes standard vest from all security lockers and adds 3 of them to
+      the security wardrobe.
+  xPokee:
+  - bugfix: Fixed the tramstation kitchen not having any lights
+  - image: added a wagging tail for cake cats to match other cats
