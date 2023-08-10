@@ -196,7 +196,7 @@
 	return ..()
 
 /mob/living/basic/morph/AttackingTarget()
-	if(morphed && !melee_damage_disguised)
+	if(!isnull(form) && (melee_damage_disguised >= 0))
 		to_chat(src, span_warning("You can not attack while disguised!"))
 		return
 	if(isliving(target)) //Eat Corpses to regen health
