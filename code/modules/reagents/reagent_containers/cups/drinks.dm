@@ -436,6 +436,9 @@
 	isGlass = FALSE
 	var/capped = TRUE
 	var/shaken = FALSE
+	var/cap_icon = 'icons/obj/drinks/drink_effects.dmi'
+	var/cap_icon_state = "shaker_cap"
+	var/mutable_appearance/cap_overlay
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
 	. = ..()
@@ -444,18 +447,18 @@
 		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
-	if(cap_on)
+	if(capped)
 		spillable = FALSE
 		update_appearance()
 
 /obj/item/reagent_containers/cup/glass/shaker/update_overlays()
 	. = ..()
-	if(cap_on)
+	if(capped)
 		. += cap_overlay
 
 /obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
 	. = ..()
-	if(cap_on)
+	if(capped)
 		. += span_notice("The cap is firmly fitted and the shaker's ready to rumble. Alt-click to remove the cap.")
 	else
 		. += span_notice("The cap has been taken off and the shaker can be filled or emptied. Alt-click to put a cap on.")
