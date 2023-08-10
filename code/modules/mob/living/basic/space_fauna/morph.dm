@@ -33,8 +33,6 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE //nom nom nom
 	butcher_results = list(/obj/item/food/meat/slab = 2)
 
-	/// Are we currently disguised as an object?
-	var/morphed = FALSE
 	/// How much damage are we doing while disguised?
 	var/melee_damage_disguised = 0
 	/// Can we eat while disguised?
@@ -57,7 +55,7 @@
 	AddElement(/datum/element/content_barfer)
 
 /mob/living/basic/morph/examine(mob/user)
-	if(!morphed || isnull(form))
+	if(isnull(form))
 		return ..()
 
 	. = form.examine(user)
@@ -65,7 +63,7 @@
 		. += span_warning("It doesn't look quite right...")
 
 /mob/living/basic/morph/med_hud_set_health()
-	if(isliving(form) || !morphed)
+	if(isliving(form))
 		return ..()
 
 	//we hide medical hud while morphed
@@ -74,7 +72,7 @@
 
 
 /mob/living/basic/morph/med_hud_set_status()
-	if(isliving(form) || !morphed)
+	if(isliving(form))
 		return ..()
 
 	//we hide medical hud while morphed
@@ -132,10 +130,10 @@
 	return
 
 /mob/living/basic/morph/proc/restore()
-	if(!morphed)
+	if(!isnull(form))
 		to_chat(src, span_warning("You're already in your normal form!"))
 		return
-	morphed = FALSE
+
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
@@ -161,7 +159,7 @@
 	med_hud_set_status() //we are not an object
 
 /mob/living/basic/morph/death(gibbed)
-	if(!morphed || isnull(form))
+	if(isnull(form))
 		return ..()
 
 	visible_message(
@@ -191,7 +189,7 @@
 //		assume(T)
 
 /mob/living/basic/morph/can_track(mob/living/user)
-	if(morphed || !isnull(form))
+	if(!isnull(form))
 		return FALSE
 	return ..()
 
