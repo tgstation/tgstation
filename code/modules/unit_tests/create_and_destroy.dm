@@ -156,6 +156,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		time_needed += SSgarbage.collection_timeout[index]
 
 	var/start_time = world.time
+	var/real_start_time = REALTIMEOFDAY
 	var/garbage_queue_processed = FALSE
 
 	sleep(time_needed)
@@ -173,11 +174,12 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
 
 		//If we've found a packet that got del'd later then we finished, then all our shit has been processed
-		if(oldest_packet_creation > start_time)
+		//That said, if there are any pending hard deletes you may NOT sleep, we gotta handle that shit
+		if(oldest_packet_creation > start_time && !length(SSgarbage.queues[GC_QUEUE_HARDDELETE]))
 			garbage_queue_processed = TRUE
 			break
 
-		if(world.time > start_time + time_needed + 30 MINUTES) //If this gets us gitbanned I'm going to laugh so hard
+		if(REALTIMEOFDAY > real_start_time + time_needed + 50 MINUTES) //If this gets us gitbanned I'm going to laugh so hard
 			TEST_FAIL("Something has gone horribly wrong, the garbage queue has been processing for well over 30 minutes. What the hell did you do")
 			break
 
