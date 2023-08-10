@@ -70,7 +70,6 @@
 	var/image/holder = hud_list[HEALTH_HUD]
 	holder.icon_state = null
 
-
 /mob/living/basic/morph/med_hud_set_status()
 	if(isliving(form))
 		return ..()
@@ -83,17 +82,6 @@
 /mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
 	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
 
-/// Eat stuff. Delicious.
-/mob/living/basic/morph/proc/eat(atom/movable/A)
-	if(morphed && !eat_while_disguised)
-		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
-		return FALSE
-	if(A && A.loc != src)
-		visible_message(span_warning("[src] swallows [A] whole!"))
-		A.forceMove(src)
-		return TRUE
-	return FALSE
-
 /mob/living/basic/morph/ShiftClickOn(atom/movable/A)
 	if(!stat)
 		if(A == src)
@@ -105,14 +93,27 @@
 		to_chat(src, span_warning("You need to be conscious to transform!"))
 		..()
 
+/// Eat stuff. Delicious. Return TRUE if we ate something, FALSE otherwise.
+/mob/living/basic/morph/proc/eat(atom/movable/eatable)
+	if(QDELETED(eatable) || eatable.loc == src)
+		return FALSE
+
+	if(!isnull(form) && !eat_while_disguised)
+		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
+		return FALSE
+
+	visible_message(span_warning("[src] swallows [eatable] whole!"))
+	eatable.forceMove(src)
+	return TRUE
+
 /mob/living/basic/morph/proc/assume(atom/movable/target)
-	morphed = TRUE
 	form = target
 
 	visible_message(
 		span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"),
 		span_notice("You twist your body and assume the form of [target]."),
 	)
+
 	appearance = target.appearance
 	copy_overlays(target)
 	alpha = max(alpha, 150) //fucking chameleons
@@ -127,7 +128,6 @@
 
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
-	return
 
 /mob/living/basic/morph/proc/restore()
 	if(!isnull(form))
@@ -145,6 +145,7 @@
 		span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"),
 		span_notice("You reform to your normal body."),
 	)
+
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -166,6 +167,7 @@
 		span_warning("[src] twists and dissolves into a pile of green flesh!"),
 		span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"),
 	)
+
 	restore()
 
 	return ..()
