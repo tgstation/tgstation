@@ -124,7 +124,7 @@
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 
-	minimum_players = 100 //Originally 30, disabled for now, Monkestation 2.0 change.
+	minimum_players = 100 //Originally 30, changed to 100 so it's disabled for now, Monkestation 2.0 change.
 
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
