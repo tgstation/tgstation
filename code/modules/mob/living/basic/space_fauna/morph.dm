@@ -49,7 +49,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DISGUISED), PROC_REF(on_disguise))
+	RegisterSignal(src, COMSIG_ACTION_DISGUISED_APPEARANCE, PROC_REF(on_disguise))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DISGUISED), PROC_REF(on_undisguise))
 
 	AddElement(/datum/element/content_barfer)
@@ -102,7 +102,7 @@
 	return ..()
 
 /// Do some more logic for the morph when we disguise through the action.
-/mob/living/basic/morph/proc/on_disguise()
+/mob/living/basic/morph/proc/on_disguise(mob/living/basic/user, datum/weakref/form_weakref)
 	SIGNAL_HANDLER
 	// We are now weaker
 	melee_damage_lower = melee_damage_disguised
@@ -112,12 +112,6 @@
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
 
-	var/list/potential_forms = GET_TRAIT_SOURCES(src, TRAIT_DISGUISED)
-	if(length(potential_forms) == 0)
-		stack_trace("Somehow [src] has the TRAIT_DISGUISED trait but no sources.")
-		return
-
-	form_weakref = WEAKREF(potential_forms[1])
 	var/atom/movable/our_form = form_weakref.resolve()
 	if(isnull(our_form))
 		stack_trace("Somehow [src] was passed a weakref that immediately nulled out, what?")

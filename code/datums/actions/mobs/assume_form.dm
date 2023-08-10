@@ -9,8 +9,6 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 
-	/// Weakref to the thing that we are currently disguised as for stuff as needed
-	var/datum/weakref/disguised_weakref = null
 	/// Stuff that we can not disguise as.
 	var/static/list/blacklist_typecache = typecacheof(list(
 		/atom/movable/screen,
@@ -56,8 +54,9 @@
 	owner.pixel_y = target_atom.base_pixel_y
 
 	// important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
-	disguised_weakref = WEAKREF(target_atom)
-	ADD_TRAIT(owner, TRAIT_DISGUISED, disguised_weakref)
+	var/dispatchable_weakref = WEAKREF(target_atom)
+	SEND_SIGNAL(owner, COMSIG_ACTION_DISGUISED_APPEARANCE, dispatchable_weakref)
+	ADD_TRAIT(owner, TRAIT_DISGUISED, REF(src))
 
 /// Resets the appearances of the mob to the default.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/reset_appearances()
@@ -78,5 +77,4 @@
 	owner.cut_overlays()
 
 	// important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
-	REMOVE_TRAIT(owner, TRAIT_DISGUISED, disguised_weakref)
-	disguised_weakref = null
+	REMOVE_TRAIT(owner, TRAIT_DISGUISED, REF(src))
