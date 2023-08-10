@@ -37,7 +37,6 @@
 	non_craftable = TRUE
 
 /datum/crafting_recipe/food/reaction/New()
-	. = ..()
 	if(!reaction)
 		return
 
@@ -48,6 +47,7 @@
 		var/datum/chemical_reaction/chemical_reaction = new reaction()
 		setup_chemical_reaction_details(chemical_reaction)
 		qdel(chemical_reaction)
+	..()
 
 /**
  * Sets up information for our recipe based on the chemical reaction we have set.
