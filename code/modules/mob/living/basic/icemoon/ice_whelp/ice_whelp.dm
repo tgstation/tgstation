@@ -30,20 +30,23 @@
 	pull_force = MOVE_FORCE_VERY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/ice_whelp
+	///how much we will heal when cannibalizing a target
+	var/heal_on_cannibalize = 5
 
 /mob/living/basic/mining/ice_whelp/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
-	AddComponent(/datum/component/telegraph_ability, telegraph_time = 2 SECONDS)
+	AddComponent(/datum/component/basic_mob_ability_telegraph)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
-	var/datum/action/cooldown/ice_breathe/flamethrower = new(src)
-	var/datum/action/cooldown/ice_breathe/all_directions/wide_flames = new(src)
+	var/datum/action/cooldown/mob_cooldown/ice_breathe/flamethrower = new(src)
+	var/datum/action/cooldown/mob_cooldown/ice_breathe_all_directions/wide_flames = new(src)
 	flamethrower.Grant(src)
 	wide_flames.Grant(src)
 	ai_controller.set_blackboard_key(BB_WHELP_WIDESPREAD_FIRE, wide_flames)
 	ai_controller.set_blackboard_key(BB_WHELP_STRAIGHTLINE_FIRE, flamethrower)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
 
 /mob/living/basic/mining/ice_whelp/proc/pre_attack(mob/living/sculptor, atom/target)
 	SIGNAL_HANDLER
@@ -51,6 +54,16 @@
 	if(istype(target, /obj/structure/flora/rock/icy))
 		INVOKE_ASYNC(src, PROC_REF(create_sculpture), target)
 		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(!istype(target, src.type))
+		return
+
+	var/mob/living/victim = target
+	if(victim.stat != DEAD)
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(cannibalize_victim), victim)
+	return COMPONENT_HOSTILE_NO_ATTACK
 
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)
 	to_chat(src, span_warning("You start using your fine claws to create a sculpture"))
@@ -61,3 +74,9 @@
 	dragon_statue.name = "statue of [src]"
 	dragon_statue.desc = "Let this serve as a warning."
 	qdel(target)
+
+/mob/living/basic/mining/ice_whelp/proc/cannibalize_victim(mob/living/target)
+	if(!do_after(src, 5 SECONDS, target))
+		return
+	target.gib()
+	adjustBruteLoss(-1 * heal_on_cannibalize)

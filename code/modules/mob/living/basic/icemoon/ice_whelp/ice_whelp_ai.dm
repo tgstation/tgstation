@@ -12,51 +12,29 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/sculpt_statues,
-		/datum/ai_planning_subtree/cannibalize,
+		/datum/ai_planning_subtree/find_and_hunt_target/cannibalize,
 		/datum/ai_planning_subtree/burn_trees,
 	)
 
-///subtree to find corpses of our kind and consume them
-/datum/ai_planning_subtree/cannibalize
 
-/datum/ai_planning_subtree/cannibalize/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/target = controller.blackboard[BB_TARGET_CANNIBAL]
+/datum/ai_planning_subtree/find_and_hunt_target/cannibalize
+	target_key = BB_TARGET_CANNIBAL
+	hunting_behavior = /datum/ai_behavior/cannibalize
+	finding_behavior = /datum/ai_behavior/find_hunt_target/dragon_corpse
+	hunt_targets = list(/mob/living/basic/mining/ice_whelp)
+	hunt_range = 10
 
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_cannibal_food, BB_TARGET_CANNIBAL)
-		return
+/datum/ai_behavior/find_hunt_target/dragon_corpse
 
-	controller.queue_behavior(/datum/ai_behavior/cannibalize, BB_TARGET_CANNIBAL)
-	return SUBTREE_RETURN_FINISH_PLANNING
+/datum/ai_behavior/find_hunt_target/dragon_corpse/valid_dinner(mob/living/source, mob/living/dinner, radius)
+	if(dinner.stat != DEAD)
+		return FALSE
+	if(dinner.pulledby) //someone already got him before us
+		return FALSE
 
-/datum/ai_behavior/find_cannibal_food/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-
-	var/mob/living_pawn = controller.pawn
-
-	var/mob/to_be_consumed
-
-	for(var/mob/potential_food in oview(9, living_pawn))
-		if(!istype(potential_food, living_pawn.type))
-			continue
-		if(potential_food.stat != DEAD)
-			continue
-		if(potential_food.pulledby) //someone already got him before us
-			continue
-		to_be_consumed = potential_food
-		break
-
-	if(!to_be_consumed)
-		finish_action(controller, FALSE)
-		return
-
-	controller.set_blackboard_key(target_key, to_be_consumed)
-	finish_action(controller, TRUE)
-
+	return can_see(source, dinner, radius)
 /datum/ai_behavior/cannibalize
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	///the hp we'll regain after cannibalizing
-	var/health_boost = 5
 
 /datum/ai_behavior/cannibalize/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -67,7 +45,7 @@
 
 /datum/ai_behavior/cannibalize/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
 	. = ..()
-	var/mob/living/living_pawn = controller.pawn
+	var/mob/living/basic/living_pawn = controller.pawn
 	var/mob/living/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
@@ -79,12 +57,7 @@
 		return
 
 	living_pawn.start_pulling(target)
-	if(!do_after(living_pawn, 5 SECONDS, target))
-		finish_action(controller, FALSE)
-		return
-
-	target.gib()
-	living_pawn.adjustBruteLoss(-1 * health_boost)
+	living_pawn.melee_attack(target)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/cannibalize/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -119,13 +92,13 @@
 	. = ..()
 
 	var/atom/target = controller.blackboard[target_key]
-	var/mob/living/basic/mining/ice_whelp/living_pawn = controller.pawn
+	var/mob/living/basic/living_pawn = controller.pawn
 
 	if(QDELETED(target))
 		finish_action(controller, FALSE, target_key)
 		return
 
-	living_pawn.create_sculpture(target)
+	living_pawn.melee_attack(target)
 	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/sculpt_statue/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -146,25 +119,15 @@
 	///key that stores the ability we will use instead if we are fully enraged
 	var/secondary_ability_key = BB_WHELP_WIDESPREAD_FIRE
 
-/datum/ai_behavior/targeted_mob_ability/ice_whelp/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
-	var/datum/action/cooldown/ability
+/datum/ai_behavior/targeted_mob_ability/ice_whelp/get_ability_to_use(datum/ai_controller/controller, ability_key)
 	var/enraged_value = controller.blackboard[enraged_key]
 
 	if(prob(enraged_value))
-		ability = controller.blackboard[secondary_ability_key]
 		controller.set_blackboard_key(enraged_key, 0)
-	else
-		ability = controller.blackboard[ability_key]
-		controller.set_blackboard_key(enraged_key, enraged_value + 25)
+		return controller.blackboard[secondary_ability_key]
 
-	var/mob/living/target = controller.blackboard[target_key]
-	if(QDELETED(ability) || QDELETED(target))
-		finish_action(controller, FALSE, ability_key, target_key)
-		return
-
-	var/mob/pawn = controller.pawn
-	var/result = ability.InterceptClickOn(pawn, null, target)
-	finish_action(controller, result, ability_key, target_key)
+	controller.set_blackboard_key(enraged_key, enraged_value + 25)
+	return controller.blackboard[ability_key]
 
 ///subtree to look for trees and burn them with our flamethrower
 /datum/ai_planning_subtree/burn_trees
