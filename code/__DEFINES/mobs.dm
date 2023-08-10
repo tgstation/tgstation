@@ -42,6 +42,7 @@
 #define VENTCRAWLER_ALWAYS 2
 
 //Mob bio-types flags
+///The mob is organic, can can heal from medical sutures.
 #define MOB_ORGANIC (1 << 0)
 #define MOB_MINERAL (1 << 1)
 #define MOB_ROBOTIC (1 << 2)
@@ -53,12 +54,13 @@
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
+#define MOB_SLIME (1 << 11)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
-#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
+#define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"

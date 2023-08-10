@@ -1,4 +1,0 @@
-author: "Thebleh"
-delete-after: True
-changes:
-  - bugfix: "Fixed several APC related issues."

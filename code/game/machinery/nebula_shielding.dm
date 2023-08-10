@@ -119,11 +119,19 @@
 
 	..()
 
-///Small explanation for engineering on how to set-up the radioactive nebula shielding
+/// Small explanation for engineering on how to set-up the radioactive nebula shielding
 /obj/item/paper/fluff/radiation_nebula
 	name = "radioactive nebula shielding"
 	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
 		Set up these radioactive nebula shielding units before the gravity generators native shielding is overwhelmed! <br>
 		Shielding units passively generate tritium, so make sure to properly ventilate/isolate the area before setting up a shielding unit!
 		More circuit boards can be ordered through cargo. Consider setting up auxillary shielding units in-case of destruction, power loss or sabotage.
+	"}
+
+/// Warns the viro that they can't use radioactive resonance
+/obj/item/paper/fluff/radiation_nebula_virologist
+	name = "radioactive resonance"
+	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
+		During routine bloodscreening on employees working in the nebula, we found no traces of the sympton called 'Radioactive Resonance'. <br>
+		Something inside the nebula is interfering with it, be wary of a more shallow viral genepool.
 	"}

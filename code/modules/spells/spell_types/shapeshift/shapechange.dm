@@ -4,7 +4,8 @@
 		Once you've made your choice, it cannot be changed."
 
 	cooldown_time = 20 SECONDS
-	cooldown_reduction_per_rank = 3.75 SECONDS
+	cooldown_reduction_per_rank = 8 SECONDS
+	spell_max_level = 3
 
 	invocation = "RAC'WA NO!"
 	invocation_type = INVOCATION_SHOUT

@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "Drill module automatically disables if it's about to drill into gibtonite"

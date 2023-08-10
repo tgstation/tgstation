@@ -16,7 +16,7 @@
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/components/binary/get_node_connects()
-	return list(turn(dir, 180), dir)
+	return list(REVERSE_DIR(dir), dir)
 
 /**
  * Used by binary devices to set what the offset will be for each layer, called in update_icon_nopipes()

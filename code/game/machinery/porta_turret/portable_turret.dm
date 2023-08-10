@@ -388,7 +388,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/porta_turret/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && atom_integrity > 0) //damage received
 		if(prob(30))
@@ -1109,7 +1109,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/item/gun/ballistic/get_turret_properties()
 	. = ..()
-	var/obj/item/ammo_box/mag = mag_type
+	var/obj/item/ammo_box/mag = spawn_magazine_type
 	var/obj/item/ammo_casing/primary_ammo = initial(mag.ammo_type)
 
 	.["base_icon_state"] = "syndie"

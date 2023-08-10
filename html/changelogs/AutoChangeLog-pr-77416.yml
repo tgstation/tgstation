@@ -1,0 +1,6 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - balance: "Changeling arm blade has an armour penetration of 35%."
+  - balance: "Changeling arm blade has a wound bonus of 10, from -20."
+  - balance: "Changeling has a bare wound bonus of 10, from 20."

@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///multiplier for stun durations
 	var/stunmod = 1
 	///multiplier for money paid at payday
-	var/payday_modifier = 1
+	var/payday_modifier = 1.0
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/siemens_coeff = 1
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
@@ -1100,7 +1100,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(attacker_style?.help_act(user, target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 
-	if(target.body_position == STANDING_UP || target.appears_alive())
+	if(target.body_position == STANDING_UP || (target.appears_alive() && target.stat != SOFT_CRIT && target.stat != HARD_CRIT))
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaken")
@@ -1732,7 +1732,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 // FIRE //
 //////////
 
-/datum/species/proc/handle_fire(mob/living/carbon/human/H, seconds_per_tick, times_fired, no_protection = FALSE)
+/datum/species/proc/handle_fire(mob/living/carbon/human/H, seconds_per_tick, no_protection = FALSE)
 	return no_protection
 
 ////////////
@@ -2307,6 +2307,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part = new path()
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
+			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
 /// Creates body parts for the target completely from scratch based on the species
