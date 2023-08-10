@@ -438,8 +438,8 @@
 	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
 	icon_state = "mosin_case"
 	inhand_icon_state = "mosin_case"
-	weapon_to_spawn = /obj/effect/spawner/random/mosin
-	extra_to_spawn = /obj/effect/spawner/random/mosin/ammo
+	weapon_to_spawn = /obj/effect/spawner/random/sakhno
+	extra_to_spawn = /obj/effect/spawner/random/sakhno/ammo
 
 /obj/item/storage/toolbox/guncase/soviet/plastikov
 	name = "ancient surplus gun case"
