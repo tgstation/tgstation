@@ -259,7 +259,7 @@
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
-	if(ishuman(helper) && body_position != STANDING_UP && !(target.appears_alive() && target.stat != SOFT_CRIT && target.stat != HARD_CRIT))
+	if(ishuman(helper) && body_position != STANDING_UP && !(appears_alive() && stat != SOFT_CRIT && stat != HARD_CRIT))
 		var/mob/living/carbon/human/human_helper = helper
 		human_helper.do_cpr(src)
 		return
