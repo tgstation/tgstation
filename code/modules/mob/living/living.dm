@@ -2483,8 +2483,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (malfunctioning)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
 		lazarus_policy = get_policy(ROLE_LAZARUS_BAD)
-	if(lazarus_policy)
-		to_chat(src, span_boldnotice(lazarus_policy))
+	to_chat(src, span_boldnotice(lazarus_policy))
 
 /// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)
