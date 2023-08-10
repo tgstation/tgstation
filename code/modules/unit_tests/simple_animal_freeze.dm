@@ -118,6 +118,7 @@
 		/mob/living/simple_animal/hostile/dark_wizard,
 		/mob/living/simple_animal/hostile/eyeball,
 		/mob/living/simple_animal/hostile/gorilla,
+		/mob/living/simple_animal/hostile/gorilla/lesser,
 		/mob/living/simple_animal/hostile/gorilla/cargo_domestic,
 		/mob/living/simple_animal/hostile/guardian,
 		/mob/living/simple_animal/hostile/guardian/assassin,

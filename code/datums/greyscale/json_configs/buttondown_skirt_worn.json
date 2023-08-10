@@ -1,5 +1,5 @@
 {
-	"buttondown_slacks": [
+	"buttondown_skirt": [
 		{
 			"type": "icon_state",
 			"icon_state": "buttondown",
@@ -20,12 +20,12 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "slacks",
+			"icon_state": "skirt",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		}
 	],
-	"buttondown_slacks_d": [
+	"buttondown_skirt_d": [
 		{
 			"type": "icon_state",
 			"icon_state": "buttondown_d",
@@ -46,7 +46,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "slacks",
+			"icon_state": "skirt",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		}
