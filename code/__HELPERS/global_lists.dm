@@ -42,6 +42,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_eyes, GLOB.goblin_eyes_list)//Remove when eyes work with dwarfism
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
