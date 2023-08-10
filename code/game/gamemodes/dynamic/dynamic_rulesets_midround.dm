@@ -226,9 +226,9 @@
 	)
 	required_candidates = 1
 	minimum_players = 8
-	weight = 15
-	cost = 10
-	requirements = list(20,15,15,15,15,15,15,15,15,15)
+	weight = 25
+	cost = 5
+	requirements = list(8,10,10,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
