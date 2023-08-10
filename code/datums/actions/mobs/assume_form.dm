@@ -41,8 +41,7 @@
 		reset_appearances()
 		return
 
-	if(target_atom.type != owner.type)
-		assume_appearances(target_atom)
+	assume_appearances(target_atom)
 
 /// Assumes the appearance of a desired movable and applies it to our mob. Target is the movable in question.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target_atom)
@@ -63,7 +62,7 @@
 	SIGNAL_HANDLER
 
 	if(!HAS_TRAIT(owner, TRAIT_DISGUISED))
-		return // in case we're being invoked on death and we aren't disguised, no need to do this additional work.
+		return // in case we're being invoked on death and we aren't disguised (or we just click on ourselves randomly), no need to do this additional work.
 
 	owner.animate_movement = SLIDE_STEPS
 	owner.maptext = null
