@@ -555,7 +555,7 @@
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
-	minimum_players = 40
+	minimum_players = 35
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
