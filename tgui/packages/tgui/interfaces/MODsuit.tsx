@@ -33,6 +33,8 @@ type SuitStatus = {
   complexity: number;
   selected_module: string;
   ai_name: string;
+  has_pai: boolean;
+  is_ai: boolean;
 };
 
 type UserStatus = {
@@ -313,6 +315,8 @@ const SuitStatusSection = (props, context) => {
     malfunctioning,
     locked,
     ai_name,
+    has_pai,
+    is_ai,
   } = data.suit_status;
   const { display_time, shift_time, shift_id } = data.module_custom_status;
   const status = malfunctioning
@@ -384,7 +388,16 @@ const SuitStatusSection = (props, context) => {
           </LabeledList.Item>
         )}
         {!!ai_name && (
-          <LabeledList.Item label="AI Core">{ai_name}</LabeledList.Item>
+          <LabeledList.Item label="pAI Control">
+            {has_pai && (
+              <Button
+                icon="eject"
+                content="Eject pAI"
+                disabled={is_ai}
+                onClick={() => act('eject_pai')}
+              />
+            )}
+          </LabeledList.Item>
         )}
       </LabeledList>
 
@@ -409,8 +422,8 @@ const HardwareSection = (props, context) => {
   return (
     <Section title="Hardware" style={{ 'text-transform': 'capitalize' }}>
       <LabeledList>
-        <LabeledList.Item label="AI Card">
-          {ai_name || 'No AI Card Detected'}
+        <LabeledList.Item label="AI Assistant">
+          {ai_name || 'No AI Detected'}
         </LabeledList.Item>
         <LabeledList.Item label="Core">
           {core_name || 'No Core Detected'}

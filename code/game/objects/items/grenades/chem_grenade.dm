@@ -40,6 +40,12 @@
 	QDEL_LIST(beakers)
 	return ..()
 
+/obj/item/grenade/chem_grenade/apply_grenade_fantasy_bonuses(quality)
+	threatscale = modify_fantasy_variable("threatscale", threatscale, quality/10)
+
+/obj/item/grenade/chem_grenade/remove_grenade_fantasy_bonuses(quality)
+	threatscale = reset_fantasy_variable("threatscale", threatscale)
+
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == GRENADE_READY) //show/hide the timer based on assembly state
 	. = ..()

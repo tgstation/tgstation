@@ -60,7 +60,7 @@
 	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/storage/briefcase/sniperbundle
+/obj/item/storage/briefcase/sniper
 	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	force = 10
 
@@ -69,6 +69,6 @@
 	new /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate(src)
 	new /obj/item/clothing/neck/tie/red/hitman(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
-	new /obj/item/suppressor(src)

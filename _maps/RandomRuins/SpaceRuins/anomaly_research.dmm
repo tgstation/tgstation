@@ -731,6 +731,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
 /area/misc/anomaly_research)
+"tG" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/misc/anomaly_research)
 "tK" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -2967,7 +2972,7 @@ rX
 xo
 xo
 aX
-ek
+tG
 Cl
 xE
 xE
@@ -3005,7 +3010,7 @@ Ew
 AV
 lL
 QP
-ek
+tG
 Cl
 xE
 xE
@@ -3043,7 +3048,7 @@ QI
 AV
 SQ
 Iw
-ek
+tG
 Cl
 Cl
 AV
@@ -3082,8 +3087,8 @@ AV
 wz
 Iw
 Ov
-ek
-ek
+tG
+tG
 AV
 Ya
 xE
@@ -3121,7 +3126,7 @@ GI
 Iw
 iK
 wg
-ek
+tG
 AV
 Ya
 xE
@@ -3159,7 +3164,7 @@ ok
 Iw
 uB
 oq
-ek
+tG
 AV
 Ya
 xE
@@ -3197,7 +3202,7 @@ sg
 Iw
 hU
 Ia
-ek
+tG
 AV
 Ya
 Ya
@@ -3274,7 +3279,7 @@ Iw
 Iw
 iq
 Iw
-Bc
+tG
 xQ
 AV
 nA
@@ -3348,7 +3353,7 @@ kY
 oK
 ip
 ii
-ek
+tG
 Iw
 fe
 YA
@@ -3386,7 +3391,7 @@ Gr
 mC
 nh
 cA
-ek
+tG
 ZL
 Ng
 Ox
@@ -3502,7 +3507,7 @@ ut
 cA
 Cf
 sE
-ek
+tG
 xQ
 AV
 jN

@@ -343,7 +343,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(locked > force)
-		user.balloon_alert(user, "closed!")
+		if(user && messages)
+			user.balloon_alert(user, "closed!")
 		return FALSE
 
 	if((to_insert == resolve_parent) || (to_insert == real_location))

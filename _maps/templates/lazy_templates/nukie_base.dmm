@@ -3556,7 +3556,7 @@
 /area/centcom/syndicate_mothership/control)
 "Qh" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south{
-	name = "Frosted Window";
+	name = "Frosted Window"
 	},
 /obj/item/soap/syndie,
 /obj/structure/sign/poster/contraband/got_wood/directional/east,

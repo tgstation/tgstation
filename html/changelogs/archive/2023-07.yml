@@ -1192,3 +1192,110 @@
   - bugfix: Some explosions should be more flashy and fiery, probably.
   xPokee:
   - rscadd: Photophobia as a negative quirk.
+2023-07-29:
+  DaydreamIQ:
+  - bugfix: Birdshot AI sat now has unrestricted exit instead of entrance
+  Ghommie:
+  - rscadd: Added a 'Vending products shortage' station trait, that randomly lowers
+      the availability of all vending products from vending machines on the station,
+      with a 1/20 chance of the vending machine itself being tilted.
+  Mothblocks:
+  - qol: pAIs now try to stay within range of their owner, and teleport back only
+      when necessary
+  - qol: Default max pAI range has been changed to the maximum range you can choose
+      (9 tiles)
+  Paxilmaniac:
+  - bugfix: The anomaly research ruin is no longer missing several tiles on the inside
+      to the void
+  Sealed101:
+  - bugfix: fixed gibtonite countdown animation interrupting clicks with the mining
+      scanner
+  Senefi:
+  - bugfix: Replaced 5 space tiles in the wall of the anomaly research ruin with rocks.
+  - bugfix: Replaced the tile under the window in the mimes vs clowns ruin with plating.
+  - bugfix: Replaced space tile in the emergency fish shuttle with plastitanium flooring.
+  - bugfix: Removed space tiles from the exterior of some ruins templates.
+  Time-Green:
+  - rscadd: Adds cliffs to the north of icebox. Try not to fall of of them!
+  mc-oofert:
+  - bugfix: you can no longer fireman carry to bypass puzzle doors
+  vinylspiders:
+  - bugfix: non-opaque curtains will no longer block emissives
+2023-07-30:
+  ArcaneMusic:
+  - qol: Improvements to the accounting console in the HOP office.
+  - balance: Non-human species now receive a 90% racial paycut, up from 75%.
+  - balance: The inflation mechanic affecting vending machines has been removed, except
+      during the market crash event.
+  - balance: The market crash event now stands as it's own separate event, and ramps
+      up the cost of vendor items until finally popping and returning to normal. Market
+      crash now lasts longer to have more impact while it scales with time.
+  - image: New cargo exo-drone scanner sprites!
+  Ben10Omintrix:
+  - refactor: the bear is a basic now. please report any bugs
+  - rscadd: the bear will climb trees and search honey
+  Ghommie:
+  - bugfix: Put a cap to the amount of stickers that can be sticked to an atom (12)
+      to prevent icon-related issues.
+  - bugfix: Fixing some jank with the a greyscale modify menu, like inputs not being
+      sanitized.
+  Jacquerel:
+  - bugfix: Dismounting from a piggyback no longer allows you to phase through other
+      players.
+  - rscadd: You can now earn an achievement for completing the Grand Ritual.
+  - bugfix: Summon Magic and Summon Guns work again
+  - rscadd: Player-controlled bots can now play the prerecorded lines associated with
+      that bot.
+  - rscadd: Placing a pAI into a bot temporarily teaches that bot all the langauges
+      the pAI could speak.
+  Melbert:
+  - refactor: Refactored chameleon actions a fair bit
+  - rscadd: Adds outfit saving to chameleon clothes. RMB the "chameleon outfit" action
+      to save your current chameleon setup for quick swapping.
+  - rscadd: Swapping between chameleon outfits now has a slight "animation" associated,
+      to distinguish traitors from lings slightly.
+  - rscadd: Adds a new chameleon item, the "Chameleon Scanner". Use it on other crewmembers
+      to stealthily save their current outfit as a custom outfit to use later. And
+      of course, it's chameleon too.
+  - bugfix: Ethereals, the DNA lock mod, GPSs, and storage items now respect EMP protection
+  - balance: The "Long Shift" achievement is now feasibly obtainable, and admins can
+      no longer trigger it unknowingly
+  - bugfix: Fixes runtime from trying to put two pots on one stove.
+  SyncIt21:
+  - bugfix: some things not connecting to the ore silo round start
+  Time-Green:
+  - rscadd: Adds a Forested planetary station trait! Icebox exterior is now a forest!
+  - rscadd: Adds a Forever Storm planetary station trait! Sometimes, the storm never
+      stops. Stay inside or get some coffee and warm clothes
+  - bugfix: fixes stuff spawning in rivers and above chasms
+  - bugfix: emissive blockers on random flora not updating
+  - code_imp: Splits terrain generation and terrain population in SSmapping
+  - rscadd: Starlight will color with space gas parallax
+  - code_imp: Cleans up random parallax code / radioactive nebula parallax code
+  - bugfix: Staff of laval no longer works on space
+  necromanceranne:
+  - bugfix: Fixes revolvers losing ammo capacity when you reload them.
+  san7890:
+  - bugfix: Carbons with tails (felinids, lizards) who have that tail removed will
+      now have that tail actually look like it came from the person in question, rather
+      than just be a grey thing of sadness.
+2023-07-31:
+  CRITAWAKETS:
+  - balance: The bluespace MOD storage can now hold bulky storage items (backpacks,
+      toolbelts) just like the bag of holding.
+  GoldenAlpharex:
+  - bugfix: Clothes equipped in the jumpsuit slot that happen to cover your feet will
+      no longer get bloody when you walk over blood if you are also wearing shoes.
+      Your kilt won't be getting bloody instantly anymore, it only will if you take
+      your shoes off!
+  - bugfix: Chat highlights now escape special RegEx characters from non-RegEx highlights.
+  - bugfix: Broken RegEx expressions no longer cause the chat to bluescreen, allowing
+      you to properly fix them.
+  SyncIt21:
+  - bugfix: Module duplicator has cheaper costs for circuit duplication
+  - rscadd: RPED can carry & install computer boards and complete computer frames
+  cnleth:
+  - bugfix: Using the timeline jumper MOD module updates stamina after resetting it,
+      no more infinite stamcrits
+  vinylspiders:
+  - bugfix: fixed a bug that would cause pAIs to be able to break their leash

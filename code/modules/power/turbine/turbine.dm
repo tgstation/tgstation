@@ -257,7 +257,7 @@
 	compressor_work = 0
 	compressor_pressure = MINIMUM_TURBINE_PRESSURE
 	if(QDELETED(input_turf))
-		input_turf = get_step(loc, turn(dir, 180))
+		input_turf = get_step(loc, REVERSE_DIR(dir))
 
 	var/datum/gas_mixture/input_turf_mixture = input_turf.return_air()
 	if(!input_turf_mixture)
@@ -452,19 +452,19 @@
 
 	//locate compressor & turbine, when checking we simply check to see if they are still there
 	if(!check_only)
-		compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, turn(dir, 180))
+		compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, REVERSE_DIR(dir))
 		turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, dir)
 
 		//maybe look for them the other way around. we want the rotor to allign with them either way for player convinience
 		if(!compressor && !turbine)
 			compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, dir)
-			turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, turn(dir, 180))
+			turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, REVERSE_DIR(dir))
 
 	//sanity checks for compressor
 	if(QDELETED(compressor))
 		feedback(user, "missing compressor!")
 		return (all_parts_connected = FALSE)
-	if(compressor.dir != dir && compressor.dir != turn(dir, 180)) //make sure it's not perpendicular to the rotor
+	if(compressor.dir != dir && compressor.dir != REVERSE_DIR(dir)) //make sure it's not perpendicular to the rotor
 		feedback(user, "compressor not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!compressor.can_connect)
@@ -478,7 +478,7 @@
 	if(QDELETED(turbine))
 		feedback(user, "missing turbine!")
 		return (all_parts_connected = FALSE)
-	if(turbine.dir != dir && turbine.dir != turn(dir, 180))
+	if(turbine.dir != dir && turbine.dir != REVERSE_DIR(dir))
 		feedback(user, "turbine not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!turbine.can_connect)

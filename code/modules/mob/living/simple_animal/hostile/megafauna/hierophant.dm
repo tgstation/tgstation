@@ -90,6 +90,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	spawned_beacon = new(loc)
+	AddComponent(/datum/component/boss_music, 'sound/lavaland/hiero_boss.ogg', 145 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	QDEL_NULL(spawned_beacon)
@@ -293,7 +294,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/hierophant/telegraph/diagonal(T, src)
 	else
 		new /obj/effect/temp_visual/hierophant/telegraph(T, src)
-	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
+	playsound(T, 'sound/effects/bin_close.ogg', 75, TRUE)
 	SLEEP_CHECK_DEATH(2, src)
 	new /obj/effect/temp_visual/hierophant/blast/damaging(T, src, FALSE)
 	for(var/d in directions)
@@ -341,8 +342,8 @@ Difficulty: Hard
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
-	playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
+	playsound(T,'sound/magic/wand_teleport.ogg', 80, TRUE)
+	playsound(source,'sound/machines/airlockopen.ogg', 80, TRUE)
 	blinking = TRUE
 	SLEEP_CHECK_DEATH(2, src) //short delay before we start...
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
@@ -374,14 +375,14 @@ Difficulty: Hard
 	if(!T)
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
-	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
+	playsound(T,'sound/effects/bin_close.ogg', 75, TRUE)
 	SLEEP_CHECK_DEATH(2, src)
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/temp_visual/hierophant/blast/damaging(t, src, FALSE)
 
 //expanding square
 /proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
-	playsound(original,'sound/machines/airlockopen.ogg', 200, TRUE)
+	playsound(original,'sound/machines/airlockopen.ogg', 750, TRUE)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
@@ -489,7 +490,7 @@ Difficulty: Hard
 	if(!stat && .)
 		var/obj/effect/temp_visual/hierophant/squares/HS = new(old_loc)
 		HS.setDir(movement_dir)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 150, TRUE, -4)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 80, TRUE, -4)
 		if(target)
 			arena_trap(target)
 
@@ -680,7 +681,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	playsound(T,'sound/magic/blind.ogg', 125, TRUE, -5) //make a sound
+	playsound(T,'sound/magic/blind.ogg', 65, TRUE, -5) //make a sound
 	sleep(0.6 SECONDS) //wait a little
 	bursting = TRUE
 	do_damage(T) //do damage and mark us as bursting
@@ -739,7 +740,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/blast/visual/Initialize(mapload, new_caster)
 	. = ..()
 	var/turf/src_turf = get_turf(src)
-	playsound(src_turf,'sound/magic/blind.ogg', 125, TRUE, -5)
+	playsound(src_turf,'sound/magic/blind.ogg', 65, TRUE, -5)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"
@@ -756,7 +757,7 @@ Difficulty: Hard
 		if(club.beacon == src)
 			to_chat(user, span_notice("You start removing your hierophant beacon..."))
 			if(do_after(user, 50, target = src))
-				playsound(src,'sound/magic/blind.ogg', 200, TRUE, -4)
+				playsound(src,'sound/magic/blind.ogg', 100, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
 				club.beacon = null
