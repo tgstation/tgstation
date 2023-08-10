@@ -1,14 +1,14 @@
 /// Percentage of tick to leave for master controller to run
-#define MAPTICK_MC_MIN_RESERVE 70
+#define MAPTICK_MC_MIN_RESERVE 7000
 #define MAPTICK_LAST_INTERNAL_TICK_USAGE (world.map_cpu)
 
 /// Tick limit while running normally
 #define TICK_BYOND_RESERVE 2
-#define TICK_LIMIT_RUNNING (max(100 - TICK_BYOND_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE, MAPTICK_MC_MIN_RESERVE))
+#define TICK_LIMIT_RUNNING (max(10000 - TICK_BYOND_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE, MAPTICK_MC_MIN_RESERVE))
 /// Tick limit used to resume things in stoplag
-#define TICK_LIMIT_TO_RUN 70
+#define TICK_LIMIT_TO_RUN 8000
 /// Tick limit for MC while running
-#define TICK_LIMIT_MC 70
+#define TICK_LIMIT_MC 7000
 
 /// for general usage of tick_usage
 #define TICK_USAGE world.tick_usage
@@ -26,6 +26,6 @@
 #define VERB_SHOULD_YIELD ( TICK_CHECK || RUNNING_BEFORE_MASTER )
 
 /// Returns true if tick usage is above 95, for high priority usage
-#define TICK_CHECK_HIGH_PRIORITY ( TICK_USAGE > 95 )
+#define TICK_CHECK_HIGH_PRIORITY ( TICK_USAGE > 9500 )
 /// runs stoplag if tick_usage is above 95, for high priority usage
 #define CHECK_TICK_HIGH_PRIORITY ( TICK_CHECK_HIGH_PRIORITY? stoplag() : 0 )
