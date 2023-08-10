@@ -9,33 +9,39 @@
 	icon_living = "morph"
 	icon_dead = "morph_dead"
 	combat_mode = TRUE
-	stop_automated_movement = 1
-	status_flags = CANPUSH
+
+	mob_biotypes = MOB_BEAST
 	pass_flags = PASSTABLE
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+
 	maxHealth = 150
 	health = 150
-	healable = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = TCMB
+
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+
 	// Oh you KNOW it's gonna be real green
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 15
-	vision_range = 1 // Only attack when target is close
-	wander = FALSE
+
 	attack_verb_continuous = "glomps"
 	attack_verb_simple = "glomp"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE //nom nom nom
 	butcher_results = list(/obj/item/food/meat/slab = 2)
 
+	/// Are we currently disguised as an object?
 	var/morphed = FALSE
+	/// How much damage are we doing while disguised?
 	var/melee_damage_disguised = 0
+	/// Can we eat while disguised?
 	var/eat_while_disguised = FALSE
+	/// What are we disguised as?
 	var/atom/movable/form = null
+	/// Stuff that we can not disguise as.
 	var/static/list/blacklist_typecache = typecacheof(list(
 		/atom/movable/screen,
 		/obj/singularity,
