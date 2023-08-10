@@ -141,14 +141,12 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	// Drastically lower the amount of time it takes to GC, since we don't have clients that can hold it up.
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = 10 SECONDS
-	//Prevent the garbage subsystem from harddeling anything, if only to save time
-	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
 	//Clear it, just in case
 	cached_contents.Cut()
 
 	var/list/queues_we_care_about = list()
-	// All up to harddel
-	for(var/i in 1 to GC_QUEUE_HARDDELETE - 1)
+	// All of em, I want hard deletes too, since we rely on the debug info from them
+	for(var/i in 1 to GC_QUEUE_HARDDELETE)
 		queues_we_care_about += i
 
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
@@ -214,4 +212,3 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	//This shouldn't be needed, but let's be polite
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = GC_CHECK_QUEUE
-	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = GC_DEL_QUEUE
