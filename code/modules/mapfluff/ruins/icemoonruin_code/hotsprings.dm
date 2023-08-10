@@ -24,10 +24,10 @@
 	if(to_transform.HasDisease(D))
 		return
 
-	D.infect(to_transform)
+	to_transform.ForceContractDisease(new D, FALSE, TRUE)
 
 
 /datum/mood_event/cursedhotspring
-	description = span_nicegreen("I recently had a paddle in some nice warm water! It was almost unusual how good it felt.\n") /// >:)
+	description = span_nicegreen("I recently had a paddle in some nice warm water! It was almost unusual how good it felt.\n")
 	mood_change = 5
 	timeout = 20 MINUTES
