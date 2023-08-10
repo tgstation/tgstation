@@ -2479,11 +2479,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	revive(HEAL_ALL)
 	befriend(reviver)
 	faction = (malfunctioning) ? list("[REF(reviver)]") : list(FACTION_NEUTRAL)
+	var/lazarus_policy = get_policy(ROLE_LAZARUS_GOOD)
 	if (malfunctioning)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
-		var/lazarus_policy = get_policy(ROLE_LAZARUS_BAD)
-	else
-		var/lazarus_policy = get_policy(ROLE_LAZARUS_GOOD)
+		lazarus_policy = get_policy(ROLE_LAZARUS_BAD)
 	if(lazarus_policy)
 		to_chat(src, span_boldnotice(lazarus_policy))
 
