@@ -33,6 +33,8 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE //nom nom nom
 	butcher_results = list(/obj/item/food/meat/slab = 2)
 
+	ai_controller = /datum/ai_controller/basic_controller/morph
+
 	/// How much damage are we doing while disguised?
 	var/melee_damage_disguised = 0
 	/// Can we eat while disguised?
@@ -131,10 +133,6 @@
 		INVOKE_ASYNC(user, PROC_REF(eat), target = living_target, delay = 2 SECONDS)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-/// Simple check to see if we are allowed to disguise as something.
-/mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
-	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
-
 /// Eat stuff. Delicious. Return TRUE if we ate something, FALSE otherwise.
 /// Required: `eatable` is the thing (item or mob) that we are going to eat.
 /// Optional: `delay` is the applicable time-based delay to pass into `do_after()` before the logic is ran.
@@ -157,6 +155,10 @@
 		adjust_health(update_health)
 
 	return TRUE
+
+/// Simple check to see if we are allowed to disguise as something.
+/mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
+	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
 
 /mob/living/basic/morph/proc/assume(atom/movable/target)
 	form = target
@@ -211,20 +213,17 @@
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
 
-///mob/living/basic/morph/Aggro() // automated only
-//	..()
-//	if(morphed)
-//		restore()
-//
-///mob/living/basic/morph/LoseAggro()
-//	vision_range = initial(vision_range)
+/datum/ai_controller/basic_controller/cat_butcherer
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
 
-///mob/living/basic/morph/AIShouldSleep(list/possible_targets)
-//	. = ..()
-//	if(.)
-//		var/list/things = list()
-//		for(var/atom/movable/A in view(src))
-//			if(allowed_to_disguise_as(A))
-//				things += A
-//		var/atom/movable/T = pick(things)
-//		assume(T)
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
