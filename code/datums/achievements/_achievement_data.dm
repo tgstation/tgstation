@@ -45,13 +45,13 @@
 		kv[key] = value
 	qdel(Query)
 
-	for(var/T in subtypesof(/datum/award))
-		var/datum/award/A = SSachievements.awards[T]
-		if(!A || !A.name) //Skip abstract achievements types
+	for(var/award_type in sortTim(subtypesof(/datum/award), GLOBAL_PROC_REF(cmp_award_priority)))
+		var/datum/award/award = SSachievements.awards[award_type]
+		if(!award || !award.name) //Skip abstract achievements types
 			continue
-		if(!data[T])
-			data[T] = A.parse_value(kv[A.database_id])
-			original_cached_data[T] = data[T]
+		if(!data[award_type])
+			data[award_type] = award.parse_value(kv[award.database_id], data)
+			original_cached_data[award_type] = data[award_type]
 
 ///Updates local cache with db data for the given achievement type if it wasn't loaded yet.
 /datum/achievement_data/proc/get_data(achievement_type)

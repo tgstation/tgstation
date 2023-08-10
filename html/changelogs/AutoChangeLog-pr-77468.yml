@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - admin: "Added new lua functions: SS13.is_valid, SS13.stop_tracking, SS13.new_untracked, SS13.type and SS13.qdel"

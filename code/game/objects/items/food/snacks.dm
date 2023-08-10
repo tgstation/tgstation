@@ -38,9 +38,9 @@
 
 /obj/item/food/candy/bronx/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)))
 
-/obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
+/obj/item/food/candy/bronx/proc/on_consume(mob/living/eater)
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater
 		var/datum/disease/disease = new /datum/disease/parasite()

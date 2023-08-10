@@ -367,6 +367,15 @@
 		/datum/reagent/consumable/coco,
 	)
 
+/obj/item/food/icecream/korta
+	name = "korta cone"
+	desc = "Delicious lizard-friendly cone, but no ice cream."
+	foodtypes = NUTS | SUGAR
+	ingredients = list(
+		/datum/reagent/consumable/korta_flour,
+		/datum/reagent/consumable/sugar,
+	)
+
 /obj/item/food/cookie/peanut_butter
 	name = "peanut butter cookie"
 	desc = "A tasty, chewy peanut butter cookie."

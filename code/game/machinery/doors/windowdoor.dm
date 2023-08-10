@@ -417,7 +417,7 @@
 
 /obj/machinery/door/window/unrestricted_side(mob/opener)
 	if(get_turf(opener) == loc)
-		return turn(dir,180) & unres_sides
+		return REVERSE_DIR(dir) & unres_sides
 	return ..()
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)

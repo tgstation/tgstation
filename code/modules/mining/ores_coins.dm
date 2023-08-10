@@ -112,6 +112,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, check_density = FALSE, category = CAT_TILES)\
 ))
 
+/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	AddComponent(/datum/component/storm_hating)
+
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
 	. += GLOB.sand_recipes
@@ -325,11 +329,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(primed)
 		switch(quality)
 			if(GIBTONITE_QUALITY_HIGH)
-				explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 9, adminlog = notify_admins)
+				explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 9, flame_range = 0, flash_range = 0, adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_MEDIUM)
-				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, adminlog = notify_admins)
+				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, flame_range = 0, flash_range = 0, adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_LOW)
-				explosion(src, heavy_impact_range = 1, light_impact_range = 3, adminlog = notify_admins)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 0, flash_range = 0, adminlog = notify_admins)
 		qdel(src)
 
 /obj/item/gibtonite/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

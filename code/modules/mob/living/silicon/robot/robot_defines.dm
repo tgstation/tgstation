@@ -100,6 +100,8 @@
 	var/lockcharge = FALSE
 	///Boolean of whether the borg was locked by its AI or nothing
 	var/ai_lockdown = FALSE
+	///Timer that allows the borg to self-unlock after a set amount of time
+	var/lockdown_timer = null
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
@@ -211,8 +213,7 @@
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
-		modularInterface.saved_identification = real_name
-		modularInterface.saved_job = "Cyborg"
+		modularInterface.imprint_id(job_name = "Cyborg")
 	return ..()
 
 /mob/living/silicon/robot/model/syndicate/proc/show_playstyle()

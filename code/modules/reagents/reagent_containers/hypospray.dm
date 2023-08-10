@@ -178,6 +178,13 @@
 	amount_per_transfer_from_this = 50
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
+/obj/item/reagent_containers/hypospray/medipen/methamphetamine
+	name = "methamphetamine medipen"
+	volume = 24
+	amount_per_transfer_from_this = 24
+	desc = "Contains a relatively safe quantity of methamphetamine, along with mannitol to ensure that brain damage is kept at a minimum."
+	list_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/medicine/mannitol = 14)
+
 /obj/item/reagent_containers/hypospray/medipen/morphine
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."

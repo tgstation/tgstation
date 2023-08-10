@@ -44,7 +44,7 @@
 		if(!istype(backup) || !movement_dir || backup.anchored || continuous_move) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
 			return TRUE
 		last_pushoff = world.time
-		if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE))
+		if(backup.newtonian_move(REVERSE_DIR(movement_dir), instant = TRUE))
 			backup.last_pushoff = world.time
 			step_silent = TRUE
 			if(return_drivers())
@@ -130,7 +130,8 @@
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
-		return TRUE
+		if(!pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
+			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally

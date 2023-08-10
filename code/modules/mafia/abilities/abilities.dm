@@ -56,7 +56,7 @@
 		return FALSE
 
 	if(potential_target)
-		if(!(use_flags & CAN_USE_ON_DEAD) && (potential_target.game_status == MAFIA_DEAD))
+		if((use_flags & CAN_USE_ON_DEAD) && (potential_target.game_status != MAFIA_DEAD))
 			if(!silent)
 				to_chat(host_role.body, span_notice("This can only be used on dead players."))
 			return FALSE

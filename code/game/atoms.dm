@@ -632,17 +632,19 @@
 /**
  * React to an EMP of the given severity
  *
- * Default behaviour is to send the [COMSIG_ATOM_EMP_ACT] signal
+ * Default behaviour is to send the [COMSIG_ATOM_PRE_EMP_ACT] and [COMSIG_ATOM_EMP_ACT] signal
  *
- * If the signal does not return protection, and there are attached wires then we call
+ * If the pre-signal does not return protection, and there are attached wires then we call
  * [emp_pulse][/datum/wires/proc/emp_pulse] on the wires
  *
  * We then return the protection value
  */
 /atom/proc/emp_act(severity)
-	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
+	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_PRE_EMP_ACT, severity)
 	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity, protection)
 	return protection // Pass the protection value collected here upwards
 
 /**
@@ -983,7 +985,7 @@
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
 	if(harmed_atom && isturf(harmed_atom.loc))
-		step(harmed_atom, turn(harmed_atom.dir, 180))
+		step(harmed_atom, REVERSE_DIR(harmed_atom.dir))
 
 ///Handle the atom being slipped over
 /atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, force_drop)
@@ -1639,18 +1641,19 @@
 	if(process_item.use_tool(src, user, processing_time, volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
-		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
+		var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
+		for(var/i = 1 to amount_to_create)
 			var/atom/created_atom = new atom_to_create(drop_location())
 			if(custom_materials)
-				created_atom.set_custom_materials(custom_materials, 1 / chosen_option[TOOL_PROCESSING_AMOUNT])
+				created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
 			created_atom.pixel_x = pixel_x
 			created_atom.pixel_y = pixel_y
 			if(i > 1)
 				created_atom.pixel_x += rand(-8,8)
 				created_atom.pixel_y += rand(-8,8)
 			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 			created_atoms.Add(created_atom)
+		to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
 		UsedforProcessing(user, process_item, chosen_option)
 		return
@@ -2075,15 +2078,16 @@
 				| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
 
 			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+				var/screentip_images = active_hud.screentip_images
 				// LMB and RMB on one line...
-				var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
-				var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
+				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
+				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)
 
-				if (lmb_text)
+				if (lmb_text != "")
 					lmb_rmb_line = lmb_text
-					if (rmb_text)
+					if (rmb_text != "")
 						lmb_rmb_line += " | [rmb_text]"
-				else if (rmb_text)
+				else if (rmb_text != "")
 					lmb_rmb_line = rmb_text
 
 				// Ctrl-LMB, Ctrl-RMB on one line...
@@ -2091,33 +2095,34 @@
 					lmb_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_CTRL_LMB in context)
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, screentip_images)
+
 				if (SCREENTIP_CONTEXT_CTRL_RMB in context)
 					if (ctrl_lmb_ctrl_rmb_line != "")
 						ctrl_lmb_ctrl_rmb_line += " | "
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, screentip_images)
 
 				// Alt-LMB, Alt-RMB on one line...
 				if (ctrl_lmb_ctrl_rmb_line != "")
 					ctrl_lmb_ctrl_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_ALT_LMB in context)
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_LMB, screentip_images)
 				if (SCREENTIP_CONTEXT_ALT_RMB in context)
 					if (alt_lmb_alt_rmb_line != "")
 						alt_lmb_alt_rmb_line += " | "
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB]]"
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_RMB, screentip_images)
 
 				// Shift-LMB, Ctrl-Shift-LMB on one line...
 				if (alt_lmb_alt_rmb_line != "")
 					alt_lmb_alt_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
-					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB]]"
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, screentip_images)
 				if (SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context)
 					if (shift_lmb_ctrl_shift_lmb_line != "")
 						shift_lmb_ctrl_shift_lmb_line += " | "
-					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, screentip_images)
 
 				if (shift_lmb_ctrl_shift_lmb_line != "")
 					extra_lines++

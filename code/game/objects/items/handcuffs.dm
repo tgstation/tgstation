@@ -46,6 +46,7 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
+	var/handcuff_time = 3 SECONDS
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
 	///Sound that plays when starting to put handcuffs on someone
@@ -54,6 +55,14 @@
 	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
 	var/restraint_strength = HANDCUFFS_TYPE_STRONG
+
+/obj/item/restraints/handcuffs/apply_fantasy_bonuses(bonus)
+	. = ..()
+	handcuff_time = modify_fantasy_variable("handcuff_time", handcuff_time, -bonus * 2, minimum = 0.3 SECONDS)
+
+/obj/item/restraints/handcuffs/remove_fantasy_bonuses(bonus)
+	handcuff_time = reset_fantasy_variable("handcuff_time", handcuff_time)
+	return ..()
 
 /datum/armor/restraints_handcuffs
 	fire = 50
@@ -78,7 +87,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
-			if(do_after(user, 3 SECONDS, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
+			if(do_after(user, handcuff_time, C, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else

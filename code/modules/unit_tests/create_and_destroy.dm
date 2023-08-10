@@ -1,6 +1,6 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
-	//You absolutely must run last
+	//You absolutely must run after (almost) everything else
 	priority = TEST_CREATE_AND_DESTROY
 
 GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
@@ -138,8 +138,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 				qdel(to_kill)
 
 	GLOB.running_create_and_destroy = FALSE
-	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
-	SSticker.delay_end = TRUE
 
 	// Drastically lower the amount of time it takes to GC, since we don't have clients that can hold it up.
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = 10 SECONDS
@@ -200,6 +198,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			TEST_FAIL("[item.name] failed to respect force deletion [item.no_respect_force] times out of a total del count of [item.qdels]")
 		if(item.no_hint)
 			TEST_FAIL("[item.name] failed to return a qdel hint [item.no_hint] times out of a total del count of [item.qdels]")
+		if(LAZYLEN(item.extra_details))
+			var/details = item.extra_details.Join("\n")
+			TEST_FAIL("[item.name] failed with extra info: \n[details]")
 
 	cache_for_sonic_speed = SSatoms.BadInitializeCalls
 	for(var/path in cache_for_sonic_speed)
@@ -211,7 +212,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		if(fails & BAD_INIT_SLEPT)
 			TEST_FAIL("[path] slept during Initialize()")
 
-	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = GC_CHECK_QUEUE
 	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = GC_DEL_QUEUE

@@ -121,7 +121,7 @@
 		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating) && S.flash_act(affect_silicon = TRUE))
-			S.Paralyze(rand(100,200))
+			S.set_temp_blindness_if_lower(5 SECONDS)
 			to_chat(S, span_danger("Your sensors were overloaded by a laser!"))
 			outmsg = span_notice("You overload [S] by shining [src] at [S.p_their()] sensors.")
 		else

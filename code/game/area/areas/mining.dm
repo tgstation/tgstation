@@ -211,6 +211,12 @@
 
 /area/icemoon/surface/outdoors/nospawn // this is the area you use for stuff to not spawn, but if you still want weather.
 
+/area/icemoon/surface/outdoors/nospawn/New() // unless you roll forested trait lol
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
+		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED//flip this on, the generator has already disabled dangerous fauna
+
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NOTELEPORT
 
@@ -230,6 +236,12 @@
 /area/icemoon/surface/outdoors/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
 	map_generator = /datum/map_generator/cave_generator/icemoon/surface
+
+/area/icemoon/surface/outdoors/unexplored/rivers/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
+		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		area_flags |= MOB_SPAWN_ALLOWED //flip this on, the generator has already disabled dangerous fauna
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED

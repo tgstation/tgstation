@@ -44,15 +44,17 @@
 	weight_action = new(src)
 	weight_action.weightpress = src
 
-	var/static/list/tool_behaviors = list(
-		TOOL_CROWBAR = list(
-			SCREENTIP_CONTEXT_RMB = "Deconstruct",
-		),
+	var/static/list/tool_behaviors
+	if(!tool_behaviors)
+		tool_behaviors = string_assoc_nested_list(list(
+			TOOL_CROWBAR = list(
+				SCREENTIP_CONTEXT_RMB = "Deconstruct",
+			),
 
-		TOOL_WRENCH = list(
-			SCREENTIP_CONTEXT_RMB = "Anchor",
-		),
-	)
+			TOOL_WRENCH = list(
+				SCREENTIP_CONTEXT_RMB = "Anchor",
+			),
+		))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/weightmachine/Destroy()

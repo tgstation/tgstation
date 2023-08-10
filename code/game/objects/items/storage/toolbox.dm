@@ -313,24 +313,136 @@
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = SMALL_MATERIAL_AMOUNT*5)
 
-/obj/item/storage/toolbox/mosincase
-	name = "ancient gun case"
-	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
+/obj/item/storage/toolbox/guncase
+	name = "gun case"
+	desc = "A weapon's case. Has a blood-red 'S' stamped on the cover."
 	icon = 'icons/obj/storage/case.dmi'
-	icon_state = "mosin_case"
+	icon_state = "infiltrator_case"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	inhand_icon_state = "mosin_case"
+	inhand_icon_state = "infiltrator_case"
 	has_latches = FALSE
+	var/weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol
+	var/extra_to_spawn = /obj/item/ammo_box/magazine/m9mm
 
-/obj/item/storage/toolbox/mosincase/Initialize(mapload)
+/obj/item/storage/toolbox/guncase/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.max_total_storage = 7 //enough to hold ONE mosin and the ammo boxes
+	atom_storage.max_total_storage = 7 //enough to hold ONE bulky gun and the ammo boxes
 	atom_storage.max_slots = 4
 
-/obj/item/storage/toolbox/mosincase/PopulateContents()
-	new /obj/effect/spawner/random/mosin (src)
+/obj/item/storage/toolbox/guncase/PopulateContents()
+	new weapon_to_spawn (src)
 	for(var/i in 1 to 3)
-		new /obj/effect/spawner/random/mosin/ammo (src)
+		new extra_to_spawn (src)
 
+/obj/item/storage/toolbox/guncase/bulldog
+	name = "bulldog gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/bulldog
+	extra_to_spawn = /obj/item/ammo_box/magazine/m12g
+
+/obj/item/storage/toolbox/guncase/c20r
+	name = "c-20r gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/c20r
+	extra_to_spawn = /obj/item/ammo_box/magazine/smgm45
+
+/obj/item/storage/toolbox/guncase/clandestine
+	name = "clandestine gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	extra_to_spawn = /obj/item/ammo_box/magazine/m10mm
+
+/obj/item/storage/toolbox/guncase/m90gl
+	name = "m-90gl gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/m90
+	extra_to_spawn = /obj/item/ammo_box/magazine/m223
+
+/obj/item/storage/toolbox/guncase/m90gl/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 2)
+		new extra_to_spawn (src)
+	new /obj/item/ammo_box/a40mm/rubber (src)
+
+/obj/item/storage/toolbox/guncase/rocketlauncher
+	name = "rocket launcher gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/rocketlauncher
+	extra_to_spawn = /obj/item/ammo_box/rocket
+
+/obj/item/storage/toolbox/guncase/rocketlauncher/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+
+/obj/item/storage/toolbox/guncase/revolver
+	name = "revolver gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate
+	extra_to_spawn = /obj/item/ammo_box/a357
+
+/obj/item/storage/toolbox/guncase/sword_and_board
+	name = "energy sword and shield weapon case"
+	weapon_to_spawn = /obj/item/melee/energy/sword
+	extra_to_spawn = /obj/item/shield/energy
+
+/obj/item/storage/toolbox/guncase/sword_and_board/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new /obj/item/mod/module/hat_stabilizer (src)
+	new /obj/item/clothing/head/costume/knight (src)
+
+/obj/item/storage/toolbox/guncase/cqc
+	name = "\improper CQC equipment case"
+	weapon_to_spawn = /obj/item/book/granter/martial/cqc
+	extra_to_spawn = /obj/item/storage/box/syndie_kit/imp_stealth
+
+/obj/item/storage/toolbox/guncase/cqc/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new /obj/item/mod/module/hat_stabilizer (src)
+	new /obj/item/clothing/head/costume/snakeeater (src)
+
+/obj/item/clothing/head/costume/snakeeater
+	name = "strange bandana"
+	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
+	icon_state = "snake_eater"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/knight
+	name = "fake medieval helmet"
+	desc = "A classic metal helmet. Though, this one seems to be very obviously fake..."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
+	icon_state = "knight_green"
+	inhand_icon_state = "knight_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	dog_fashion = null
+
+/obj/item/storage/toolbox/guncase/doublesword
+	name = "double-energy sword weapon case"
+	weapon_to_spawn = /obj/item/dualsaber
+	extra_to_spawn = /obj/item/soap/syndie
+
+/obj/item/storage/toolbox/guncase/doublesword/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.max_total_storage = 10 //it'll hold enough
+	atom_storage.max_slots = 5
+
+/obj/item/storage/toolbox/guncase/doublesword/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new /obj/item/mod/module/noslip (src)
+	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine (src)
+	new /obj/item/clothing/under/rank/prisoner/nosensor (src)
+
+/obj/item/storage/toolbox/guncase/soviet
+	name = "ancient gun case"
+	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
+	icon_state = "mosin_case"
+	inhand_icon_state = "mosin_case"
+	weapon_to_spawn = /obj/effect/spawner/random/mosin
+	extra_to_spawn = /obj/effect/spawner/random/mosin/ammo
+
+/obj/item/storage/toolbox/guncase/soviet/plastikov
+	name = "ancient surplus gun case"
+	desc = "A gun case. Has the symbol of the Third Soviet Union stamped on the side."
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/plastikov
+	extra_to_spawn = /obj/item/food/rationpack //sorry comrade, cannot get you more ammo, here, have lunch

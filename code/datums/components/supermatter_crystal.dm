@@ -213,6 +213,8 @@
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER
 	for(var/atom/movable/hit_object as anything in falling_movables)
+		if(hit_object == source)
+			continue
 		bumped_hit(parent, hit_object)
 	return FALL_INTERCEPTED | FALL_NO_MESSAGE
 

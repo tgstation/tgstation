@@ -37,7 +37,6 @@
 	non_craftable = TRUE
 
 /datum/crafting_recipe/food/reaction/New()
-	. = ..()
 	if(!reaction)
 		return
 
@@ -48,6 +47,7 @@
 		var/datum/chemical_reaction/chemical_reaction = new reaction()
 		setup_chemical_reaction_details(chemical_reaction)
 		qdel(chemical_reaction)
+	..()
 
 /**
  * Sets up information for our recipe based on the chemical reaction we have set.
@@ -612,10 +612,6 @@
 	reqs = list(/obj/item/food/tempehstarter = 1)
 	result = /obj/item/food/tempeh
 
-/datum/crafting_recipe/food/processor/yakiimo
-	reqs = list(/obj/item/food/grown/potato/sweet = 1)
-	result = /obj/item/food/yakiimo
-
 /datum/crafting_recipe/food/processor/popsicle_stick
 	reqs = list(/obj/item/grown/log = 1)
 	result = /obj/item/popsicle_stick
@@ -768,7 +764,7 @@
 /datum/crafting_recipe/food/oven/yakiimo
 	reqs = list(/obj/item/food/grown/potato/sweet = 1)
 	result = /obj/item/food/yakiimo
-	category = CAT_SALAD
+	category = CAT_MISCFOOD
 
 // Machinery: Drying rack
 /datum/crafting_recipe/food/drying
