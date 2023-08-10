@@ -40,28 +40,18 @@
 	var/melee_damage_disguised = 0
 	/// Can we eat while disguised?
 	var/eat_while_disguised = FALSE
-	/// What are we disguised as?
-	var/atom/movable/form = null
-	/// Stuff that we can not disguise as.
-	var/static/list/blacklist_typecache = typecacheof(list(
-		/atom/movable/screen,
-		/mob/living/basic/morph,
-		/obj/effect,
-		/obj/energy_ball,
-		/obj/narsie,
-		/obj/singularity,
-	))
 
 /mob/living/basic/morph/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/content_barfer)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	RegisterSignal(src, COMSIG_CLICK_SHIFT, PROC_REF(change_form))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DISGUISED), PROC_REF(on_disguise))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DISGUISED), PROC_REF(on_undisguise))
 
-/mob/living/basic/morph/Destroy()
-	form = null // juuuust in case
-	return ..()
+	AddElement(/datum/element/content_barfer)
+
+	var/datum/action/cooldown/mob_cooldown/assume_form/disguise_ability = new(src)
+	disguise_ability.Grant(src)
 
 /mob/living/basic/morph/examine(mob/user)
 	if(isnull(form))
@@ -101,32 +91,46 @@
 	return ..()
 
 /mob/living/basic/morph/can_track(mob/living/user)
-	if(!isnull(form))
+	if(!HAS_TRAIT(src, TRAIT_DISGUISED))
 		return FALSE
 	return ..()
 
-/// User-input proc that allows us to change our form to something or reset it.
-/mob/living/basic/morph/proc/change_form(atom/A)
+/// Do some more logic for the morph when we disguise through the action.
+/mob/living/basic/morph/proc/on_disguise()
 	SIGNAL_HANDLER
-	if(!ismovable(A))
-		return
+	visible_message(
+		span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"),
+		span_notice("You twist your body and assume the form of [target]."),
+	)
 
-	if(stat != CONSCIOUS)
-		to_chat(src, span_warning("You need to be conscious to transform!"))
-		return
+	// We are now weaker
+	melee_damage_lower = melee_damage_disguised
+	melee_damage_upper = melee_damage_disguised
+	add_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
-	if(A == src)
-		restore()
-		return
+	med_hud_set_health()
+	med_hud_set_status() //we're an object honest
 
-	if(allowed_to_disguise_as(A))
-		assume(A)
+/// Do some more logic for the morph when we undisguise through the action.
+/mob/living/basic/morph/proc/on_undisguise()
+	visible_message(
+		span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"),
+		span_notice("You reform to your normal body."),
+	)
 
+	//Baseline stats
+	melee_damage_lower = initial(melee_damage_lower)
+	melee_damage_upper = initial(melee_damage_upper)
+	remove_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
+	med_hud_set_health()
+	med_hud_set_status() //we are no longer an object
+
+/// Handles the logic for attacking anything.
 /mob/living/basic/morph/proc/pre_attack(mob/living/basic/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(!isnull(form) && (melee_damage_disguised >= 0))
+	if(HAS_TRAIT(src, TRAIT_DISGUISED) && (melee_damage_disguised >= 0))
 		to_chat(src, span_warning("You can not attack while disguised!"))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
@@ -154,7 +158,7 @@
 	if(QDELETED(eatable) || eatable.loc == src)
 		return FALSE
 
-	if(!isnull(form) && !eat_while_disguised)
+	if(HAS_TRAIT(src, TRAIT_DISGUISED) && !eat_while_disguised)
 		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
 		return FALSE
 
@@ -168,51 +172,6 @@
 		adjust_health(update_health)
 
 	return TRUE
-
-/// Simple check to see if we are allowed to disguise as something.
-/mob/living/basic/morph/proc/allowed_to_disguise_as(atom/movable/checkable)
-	return !is_type_in_typecache(checkable, blacklist_typecache) && (isobj(checkable) || ismob(checkable))
-
-/// We've found a form we desire to assume, so let's do it.
-/mob/living/basic/morph/proc/assume(atom/movable/target)
-
-	visible_message(
-		span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"),
-		span_notice("You twist your body and assume the form of [target]."),
-	)
-
-
-
-	//Morphed is weaker
-	melee_damage_lower = melee_damage_disguised
-	melee_damage_upper = melee_damage_disguised
-	add_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
-
-	med_hud_set_health()
-	med_hud_set_status() //we're an object honest
-
-/// Need to return back to our natural form.
-/mob/living/basic/morph/proc/restore()
-	if(!isnull(form))
-		to_chat(src, span_warning("You're already in your normal form!"))
-		return
-
-
-
-	visible_message(
-		span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"),
-		span_notice("You reform to your normal body."),
-	)
-
-
-
-	//Baseline stats
-	melee_damage_lower = initial(melee_damage_lower)
-	melee_damage_upper = initial(melee_damage_upper)
-	remove_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
-
-	med_hud_set_health()
-	med_hud_set_status() //we are not an object
 
 /// No fleshed out AI implementation, just something that make these fellers seem lively if they're just dropped into a station.
 /// Only real human-powered intelligence is capable of playing prop hunt in SS13 (until further notice).
