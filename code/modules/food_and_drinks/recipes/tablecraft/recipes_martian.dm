@@ -667,7 +667,7 @@
 /datum/crafting_recipe/food/vulgaris_spekkoek
 	name = "Vulgaris spekkoek"
 	reqs = list(
-		/obj/item/food/cake = 1,
+		/obj/item/food/cake/plain = 1,
 		/obj/item/food/grown/ambrosia/vulgaris = 1,
 		/obj/item/food/butter = 1,
 	)

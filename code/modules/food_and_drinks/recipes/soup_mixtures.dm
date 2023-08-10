@@ -1796,6 +1796,9 @@
 // Martian Food
 // Boiled Noodles
 /datum/chemical_reaction/food/soup/boilednoodles
+	required_reagents = list(
+		/datum/reagent/consumable/salt = 2
+	)
 	required_ingredients = list(
 		/obj/item/food/spaghetti/rawnoodles = 1
 	)
