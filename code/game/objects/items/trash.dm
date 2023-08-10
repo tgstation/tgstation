@@ -185,7 +185,7 @@
 	icon_state = "squidinkcan_empty"
 
 /obj/item/trash/can/food/chap
-	name = "can of chap"
+	name = "can of CHAP"
 	icon_state = "chapcan_empty"
 
 /obj/item/trash/hot_shots

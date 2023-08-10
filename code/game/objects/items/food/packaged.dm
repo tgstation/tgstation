@@ -154,7 +154,7 @@
 	foodtypes = SEAFOOD
 
 /obj/item/food/canned/chap
-	name = "can of chap"
+	name = "can of CHAP"
 	desc = "CHAP: Chopped Ham And Pork. The classic American canned meat product that won a world war, then sent millions of servicemen home with heart congestion."
 	icon_state = "chapcan"
 	trash_type = /obj/item/trash/can/food/chap
