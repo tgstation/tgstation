@@ -148,7 +148,7 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(src, TRAIT_DISGUISED) && (melee_damage_disguised >= 0))
-		to_chat(src, span_warning("You can not attack while disguised!"))
+		balloon_alert(src, "can't attack while disguised!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(isliving(target)) //Eat Corpses to regen health
