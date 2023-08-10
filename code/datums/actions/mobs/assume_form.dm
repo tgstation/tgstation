@@ -6,8 +6,11 @@
 	button_icon_state = "sniper_zoom"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 
+	/// Ref to the thing that we are currently disguised as for trait shit
+	var/disguised_ref = null
 	/// Stuff that we can not disguise as.
 	var/static/list/blacklist_typecache = typecacheof(list(
 		/atom/movable/screen,
@@ -44,15 +47,25 @@
 		assume_appearances(target_atom)
 
 /// Assumes the appearance of a desired movable and applies it to our mob. Target is the movable in question.
-/datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target)
-	owner.appearance = target.appearance
-	owner.copy_overlays(target)
-	owner.alpha = max(target.alpha, 150) //fucking chameleons
-	owner.transform = initial(target.transform)
-	owner.pixel_x = target.base_pixel_x
-	owner.pixel_y = target.base_pixel_y
+/datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target_atom)
+	owner.appearance = target_atom.appearance
+	owner.copy_overlays(target_atom)
+	owner.alpha = max(target_atom.alpha, 150) //fucking chameleons
+	owner.transform = initial(target_atom.transform)
+	owner.pixel_x = target_atom.base_pixel_x
+	owner.pixel_y = target_atom.base_pixel_y
 
-	ADD_TRAIT(owner, TRAIT_DISGUISED, target) // important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
+	// important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
+	// Yes, traits work this way. We send the target_atom out so our lad can get the info on what we're disguised as in case they need to do more work,
+	// as well as cache the ref so we can clear the whole trait when we reset our appearance.
+	disguised_ref = REF(target_atom)
+
+	var/list/trait_addition_sources = list(
+		target_atom,
+		disguised_ref,
+	)
+
+	ADD_TRAIT(owner, TRAIT_DISGUISED, trait_addition_sources)
 
 /// Resets the appearances of the mob to the default.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/reset_appearances()
@@ -72,4 +85,7 @@
 	owner.icon_state = initial(owner.icon_state)
 	owner.cut_overlays()
 
-	REMOVE_TRAIT(owner, TRAIT_DISGUISED, target) // important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
+	// important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
+	// also it's ugly i know but i promise it's the cleanest implementation i could possibly think of man c'mon
+	REMOVE_TRAITS_IN(owner, disguised_ref)
+	disguised_ref = null
