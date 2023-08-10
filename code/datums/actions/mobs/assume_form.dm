@@ -9,8 +9,8 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 
-	/// Ref to the thing that we are currently disguised as for trait shit
-	var/disguised_ref = null
+	/// Weakref to the thing that we are currently disguised as for stuff as needed
+	var/datum/weakref/disguised_weakref = null
 	/// Stuff that we can not disguise as.
 	var/static/list/blacklist_typecache = typecacheof(list(
 		/atom/movable/screen,
@@ -56,16 +56,8 @@
 	owner.pixel_y = target_atom.base_pixel_y
 
 	// important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
-	// Yes, traits work this way. We send the target_atom out so our lad can get the info on what we're disguised as in case they need to do more work,
-	// as well as cache the ref so we can clear the whole trait when we reset our appearance.
-	disguised_ref = REF(target_atom)
-
-	var/list/trait_addition_sources = list(
-		target_atom,
-		disguised_ref,
-	)
-
-	ADD_TRAIT(owner, TRAIT_DISGUISED, trait_addition_sources)
+	disguised_weakref = WEAKREF(target_atom)
+	ADD_TRAIT(owner, TRAIT_DISGUISED, disguised_weakref)
 
 /// Resets the appearances of the mob to the default.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/reset_appearances()
@@ -86,6 +78,5 @@
 	owner.cut_overlays()
 
 	// important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
-	// also it's ugly i know but i promise it's the cleanest implementation i could possibly think of man c'mon
-	REMOVE_TRAITS_IN(owner, disguised_ref)
-	disguised_ref = null
+	REMOVE_TRAIT(owner, TRAIT_DISGUISED, disguised_weakref)
+	disguised_weakref = null

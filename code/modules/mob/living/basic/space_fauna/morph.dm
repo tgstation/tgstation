@@ -117,15 +117,17 @@
 		stack_trace("Somehow [src] has the TRAIT_DISGUISED trait but no sources.")
 		return
 
-	if(length(potential_forms) > 1)
-		stack_trace("Somehow [src] has the TRAIT_DISGUISED trait but multiple sources. Will default to using the first.") //idek how this would happen but lets track if it does
+	form_weakref = WEAKREF(potential_forms[1])
+	var/atom/movable/our_form = form_weakref.resolve()
+	if(isnull(our_form))
+		stack_trace("Somehow [src] was passed a weakref that immediately nulled out, what?")
+		return
 
-	var/atom/movable/our_form = potential_forms[1]
 	visible_message(
 		span_warning("[src] suddenly twists and changes shape, becoming a copy of [our_form]!"),
 		span_notice("You twist your body and assume the form of [our_form]."),
 	)
-	form_weakref = WEAKREF(our_form)
+
 	form_typepath = our_form.type
 
 /// Do some more logic for the morph when we undisguise through the action.
