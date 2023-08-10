@@ -57,8 +57,8 @@
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
-	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
-	. += span_notice("Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.")
+	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[detonation_damage]</b> bonus damage.")
+	. += span_notice("Does <b>[detonation_damage + backstab_bonus]</b> bonus damage if the target is backstabbed, instead of <b>[detonation_damage]</b>.")
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		. += span_notice("[icon2html(attached_trophy, user)] It has \a <b>[attached_trophy]</b> attached, which causes [attached_trophy.effect_desc()].")
 

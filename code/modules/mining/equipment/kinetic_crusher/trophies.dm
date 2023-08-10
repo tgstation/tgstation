@@ -454,14 +454,14 @@
 	if(.)
 		target_crusher.force += bonus_value * 0.2
 		target_crusher.detonation_damage += bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
+		AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = (20 + bonus_value * 0.2))
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/target_crusher, mob/living/user)
 	. = ..()
 	if(.)
 		target_crusher.force -= bonus_value * 0.2
 		target_crusher.detonation_damage -= bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_wielded=20)
+		AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
@@ -499,6 +499,7 @@
 	deadly_shot = TRUE
 	addtimer(CALLBACK(src, PROC_REF(reset_deadly_shot)), 30 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
+///Resets the crusher's mark shot to default, removing the special effects
 /obj/item/crusher_trophy/blaster_tubes/proc/reset_deadly_shot()
 	deadly_shot = FALSE
 
@@ -599,9 +600,9 @@
 /obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
+		crusher.AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 40)
 
 /obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
+		crusher.AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = 20)
