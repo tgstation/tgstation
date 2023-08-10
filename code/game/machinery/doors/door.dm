@@ -161,7 +161,7 @@
 		return
 	if(!filler)
 		filler = new(get_step(src, get_adjusted_dir(dir)))
-		filler.filled_airlock = src
+		filler.pair_airlock(src)
 	else
 		filler.loc = get_step(src, get_adjusted_dir(dir))
 

@@ -1742,13 +1742,20 @@
 	var/area/source_area = get_area(src)
 	return source_area?.airlock_wires ? new source_area.airlock_wires(src) : new /datum/wires/airlock(src)
 
-/obj/structure/fluff/airlock_filler/Initialize(mapload)
-	. = ..()
-	RegisterSignal(filled_airlock, COMSIG_QDELETING, PROC_REF(no_airlock))
-
 /obj/structure/fluff/airlock_filler/Destroy(force)
 	filled_airlock = null
 	return ..()
+
+/**
+ * Create a ref to our parent airlock and listen for a QDEL, which we will al
+ */
+/obj/structure/fluff/airlock_filler/proc/pair_airlock(obj/machinery/door/parent_airlock)
+	if(isnull(parent_airlock))
+		stack_trace("Attempted to pair an airlock filler with no parent airlock specified!")
+		return
+
+	filled_airlock = parent_airlock
+	RegisterSignal(filled_airlock, COMSIG_QDELETING, PROC_REF(no_airlock))
 
 /**
  * Multi-tile airlocks pair with a filler panel, if one goes so does the other.
@@ -2422,11 +2429,14 @@
 	bound_width = 64 // 2x1
 
 /obj/structure/fluff/airlock_filler
+	name = "airlock fluff"
+	desc = "You shouldn't be able to see this fluff!"
 	icon = null
 	icon_state = null
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	/// The door/airlock this fluff panel is attached to
 	var/obj/machinery/door/filled_airlock
