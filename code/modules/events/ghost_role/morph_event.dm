@@ -26,7 +26,7 @@
 	if(isnull(spawn_loc))
 		return MAP_ERROR
 
-	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(spawn_loc)
+	var/mob/living/basic/morph/S = new /mob/living/basic/morph(spawn_loc)
 	player_mind.transfer_to(S)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
 	player_mind.special_role = ROLE_MORPH

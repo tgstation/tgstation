@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/morph
+/mob/living/basic/morph
 	name = "morph"
 	real_name = "morph"
 	desc = "A revolting, pulsating pile of flesh."
@@ -41,16 +41,16 @@
 		/obj/singularity,
 		/obj/energy_ball,
 		/obj/narsie,
-		/mob/living/simple_animal/hostile/morph,
+		/mob/living/basic/morph,
 		/obj/effect,
 	))
 
-/mob/living/simple_animal/hostile/morph/Initialize(mapload)
+/mob/living/basic/morph/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 
-/mob/living/simple_animal/hostile/morph/examine(mob/user)
+/mob/living/basic/morph/examine(mob/user)
 	if(morphed)
 		. = form.examine(user)
 		if(get_dist(user,src) <= 3)
@@ -58,24 +58,24 @@
 	else
 		. = ..()
 
-/mob/living/simple_animal/hostile/morph/med_hud_set_health()
+/mob/living/basic/morph/med_hud_set_health()
 	if(morphed && !isliving(form))
 		var/image/holder = hud_list[HEALTH_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
 	..()
 
-/mob/living/simple_animal/hostile/morph/med_hud_set_status()
+/mob/living/basic/morph/med_hud_set_status()
 	if(morphed && !isliving(form))
 		var/image/holder = hud_list[STATUS_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
 	..()
 
-/mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
+/mob/living/basic/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
 	return !is_type_in_typecache(A, blacklist_typecache) && (isobj(A) || ismob(A))
 
-/mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
+/mob/living/basic/morph/proc/eat(atom/movable/A)
 	if(morphed && !eat_while_disguised)
 		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
 		return FALSE
@@ -85,7 +85,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
+/mob/living/basic/morph/ShiftClickOn(atom/movable/A)
 	if(!stat)
 		if(A == src)
 			restore()
@@ -96,7 +96,7 @@
 		to_chat(src, span_warning("You need to be conscious to transform!"))
 		..()
 
-/mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
+/mob/living/basic/morph/proc/assume(atom/movable/target)
 	morphed = TRUE
 	form = target
 
@@ -118,7 +118,7 @@
 	med_hud_set_status() //we're an object honest
 	return
 
-/mob/living/simple_animal/hostile/morph/proc/restore()
+/mob/living/basic/morph/proc/restore()
 	if(!morphed)
 		to_chat(src, span_warning("You're already in your normal form!"))
 		return
@@ -145,22 +145,22 @@
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
 
-/mob/living/simple_animal/hostile/morph/death(gibbed)
+/mob/living/basic/morph/death(gibbed)
 	if(morphed)
 		visible_message(span_warning("[src] twists and dissolves into a pile of green flesh!"), \
 						span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"))
 		restore()
 	..()
 
-/mob/living/simple_animal/hostile/morph/Aggro() // automated only
+/mob/living/basic/morph/Aggro() // automated only
 	..()
 	if(morphed)
 		restore()
 
-/mob/living/simple_animal/hostile/morph/LoseAggro()
+/mob/living/basic/morph/LoseAggro()
 	vision_range = initial(vision_range)
 
-/mob/living/simple_animal/hostile/morph/AIShouldSleep(list/possible_targets)
+/mob/living/basic/morph/AIShouldSleep(list/possible_targets)
 	. = ..()
 	if(.)
 		var/list/things = list()
@@ -170,12 +170,12 @@
 		var/atom/movable/T = pick(things)
 		assume(T)
 
-/mob/living/simple_animal/hostile/morph/can_track(mob/living/user)
+/mob/living/basic/morph/can_track(mob/living/user)
 	if(morphed)
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/morph/AttackingTarget()
+/mob/living/basic/morph/AttackingTarget()
 	if(morphed && !melee_damage_disguised)
 		to_chat(src, span_warning("You can not attack while disguised!"))
 		return

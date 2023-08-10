@@ -274,7 +274,7 @@
 		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 		/mob/living/simple_animal/hostile/gorilla,
 		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-		/mob/living/simple_animal/hostile/morph,
+		/mob/living/basic/morph,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/pet/cat,
