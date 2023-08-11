@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Abductor Baton Recall now starts linked to their baton, and you can no longer unlink your baton"
-  - qol: "Instant Summons now shows what item is marked over the icon"
-  - bugfix: "Fixes Instant Summon's name not updating when marking an item"

@@ -29499,6 +29499,7 @@
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/bot_white,
 /obj/item/reagent_containers/condiment/rice,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/white/side,
 /area/station/service/kitchen)
 "jEc" = (
@@ -37250,6 +37251,7 @@
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/rack,
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -40345,6 +40347,7 @@
 /obj/item/book/manual/chef_recipes,
 /obj/item/holosign_creator/robot_seat/restaurant,
 /obj/item/reagent_containers/condiment/enzyme,
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -50078,6 +50081,12 @@
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
+"qXa" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/white/side,
+/area/station/service/kitchen)
 "qXg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -168796,7 +168805,7 @@ aaa
 aaa
 aaa
 eSx
-scT
+qXa
 kWH
 uzM
 uuB

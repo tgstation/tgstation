@@ -40,11 +40,13 @@
 	lighting_cutoff_blue = 5
 
 	/// The mob we will grow into.
-	var/mob/living/basic/giant_spider/grow_as = null
+	var/mob/living/basic/young_spider/grow_as = null
 	/// The message that the mother left for our big strong selves.
 	var/directive = ""
 	/// Simple boolean that determines if we should apply the spider antag to the player if they possess this mob. TRUE by default since we're always going to evolve into a spider that will have an antagonistic role.
 	var/apply_spider_antag = TRUE
+	/// The time it takes for the spider to grow into the next stage
+	var/spider_growth_time = 40 SECONDS
 
 /mob/living/basic/spiderling/Initialize(mapload)
 	. = ..()
@@ -64,13 +66,13 @@
 	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 1 MINUTES,\
+		growth_time = spider_growth_time,\
 		growth_path = grow_as,\
 		growth_probability = 25,\
 		lower_growth_value = 1,\
 		upper_growth_value = 2,\
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
-		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_into_giant_spider))\
+		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_into_young_spider))\
 	)
 
 	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
@@ -117,15 +119,15 @@
 
 	return FALSE
 
-/// Actually grows the spiderling into a giant spider. We have to do a bunch of unique behavior that really can't be genericized, so we have to override the component in this manner.
-/mob/living/basic/spiderling/proc/grow_into_giant_spider()
+/// Actually grows the spiderling into a young spider. We have to do a bunch of unique behavior that really can't be genericized, so we have to override the component in this manner.
+/mob/living/basic/spiderling/proc/grow_into_young_spider()
 	if(isnull(grow_as))
 		if(prob(3))
-			grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
+			grow_as = pick(/mob/living/basic/young_spider/tarantula, /mob/living/basic/young_spider/viper, /mob/living/basic/young_spider/midwife)
 		else
-			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/ambush, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/scout, /mob/living/basic/giant_spider/nurse, /mob/living/basic/giant_spider/tangle)
+			grow_as = pick(/mob/living/basic/young_spider/guard, /mob/living/basic/young_spider/ambush, /mob/living/basic/young_spider/hunter, /mob/living/basic/young_spider/scout, /mob/living/basic/young_spider/nurse, /mob/living/basic/young_spider/tangle)
 
-	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
+	var/mob/living/basic/young_spider/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
 	grown.faction = faction.Copy()
 	grown.directive = directive
