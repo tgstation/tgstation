@@ -139,7 +139,7 @@
 		playsound(src, 'sound/items/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
-		It can now be used to shine through obstacles at the cost of double the energy drain."))
+			It can now be used to shine through obstacles at the cost of double the energy drain."))
 		return TRUE
 
 	return ..()
