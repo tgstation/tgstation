@@ -142,7 +142,6 @@
 	embedding = list("embed_chance" = 30, "impact_pain_mult" = 10)
 
 /obj/item/melee/sword/reforged/shitty
-var/broken_name
 
 /obj/item/melee/sword/reforged/shitty/Initialize(mapload)
 	. = ..()
