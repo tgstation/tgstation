@@ -280,6 +280,20 @@
 	account_holder = SSeconomy.department_accounts[dep_id]
 	SSeconomy.departmental_accounts += src
 
+/datum/bank_account/department/adjust_money(amount, reason)
+	. = ..()
+	if(department_id != ACCOUNT_CAR)
+		return
+	// If we're under (or equal) 3 crates woth of money (600?) in the cargo department, we unlock the scrapheap, which gives us a buncha money. Useful in an emergency?
+	if(account_balance >= CARGO_CRATE_VALUE * 3)
+		return
+	// We only allow people to actually buy the shuttle once the round gets going - otherwise you'd just be able to do it roundstart (Not really intended)
+	var/minimum_allowed_purchase_time = (CONFIG_GET(number/shuttle_refuel_delay) * 0.6)
+	if((world.time - SSticker.round_start_time) > minimum_allowed_purchase_time)
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP] = TRUE
+	else
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP] = FALSE
+
 /datum/bank_account/remote // Bank account not belonging to the local station
 	add_to_accounts = FALSE
 

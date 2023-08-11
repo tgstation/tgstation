@@ -283,8 +283,51 @@
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	drink_type = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/cup/soda_cans/volt_energy
+	name = "24-Volt Energy"
+	desc = "Recharge, with 24-Volt Energy!"
+	icon_state = "volt_energy"
+	list_reagents = list(/datum/reagent/consumable/volt_energy = 30)
+	drink_type = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/cup/soda_cans/melon_soda
+	name = "Kansumi Melon Soda"
+	desc = "Japan's favourite melon soda, now available in can form!"
+	icon_state = "melon_soda"
+	list_reagents = list(/datum/reagent/consumable/melon_soda = 30)
+	drink_type = SUGAR | JUNKFOOD
+
 /obj/item/reagent_containers/cup/soda_cans/air
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)
+
+/obj/item/reagent_containers/cup/soda_cans/beer
+	name = "space beer"
+	desc = "Canned beer. In space."
+	icon_state = "beer"
+	volume = 40
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 40)
+	drink_type = GRAIN
+
+/obj/item/reagent_containers/cup/soda_cans/beer/rice
+	name = "rice beer"
+	desc = "A light, rice-based lagered beer popular on Mars. Considered a hate crime against Bavarians under the Reinheitsgebot Act of 1516."
+	icon_state = "ebisu"
+	list_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 40)
+
+/obj/item/reagent_containers/cup/soda_cans/beer/rice/Initialize(mapload)
+	. = ..()
+	var/brand = pick("Ebisu Super Dry", "Shimauma Ichiban", "Moonlabor Malt's")
+	name = "[brand]"
+	switch(brand)
+		if("Ebisu Super Dry")
+			icon_state = "ebisu"
+			desc = "Mars' favourite rice beer brand, 200 years running."
+		if("Shimauma Ichiban")
+			icon_state = "shimauma"
+			desc = "Mars' most middling rice beer brand. Not as popular as Ebisu, but it's comfortable in second place."
+		if("Moonlabor Malt's")
+			icon_state = "moonlabor"
+			desc = "Mars' underdog rice beer brand. Popular amongst the Yakuza, for reasons unknown."

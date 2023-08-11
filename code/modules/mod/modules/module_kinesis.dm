@@ -159,7 +159,7 @@
 /obj/item/mod/module/anomaly_locked/kinesis/proc/grab_atom(atom/movable/target)
 	grabbed_atom = target
 	if(isliving(grabbed_atom))
-		add_traits(grabbed_atom, list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), REF(src))
+		grabbed_atom.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), REF(src))
 		RegisterSignal(grabbed_atom, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
 	ADD_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_setanchored))
