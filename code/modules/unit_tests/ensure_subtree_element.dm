@@ -1,5 +1,5 @@
-/// Unit Test that ensure that if we add a specific planning subtree to a basic mob's planning tree, that we also have the element.
-/// This can be extended to other "mandatory" elements for certain subtrees to work.
+/// Unit Test that ensure that if we add a specific planning subtree to a basic mob's planning tree, that we also have the operational datum needed for it (component/element).
+/// This can be extended to other "mandatory" operational datums for certain subtrees to work.
 /datum/unit_test/ensure_subtree_element
 	/// Associated list of mobs that we need to test this on. Key is the typepath of the mob, value is a list of the element and the subtree that requires it.
 	var/list/testable_mobs = list()
@@ -22,13 +22,13 @@
 
 		for(var/datum/ai_planning_subtree/subtree as anything in ai_planning_subtress) // we do as anything here
 			TEST_ASSERT(istype(subtree), "The planning subtree on [checkable_mob] is not a valid type! Got [subtree]") // so we can run this check here because you never know sometimes
-			var/datum/element/necessary_element = initial(subtree.necessary_element)
-			if(isnull(necessary_element))
+			var/datum/necessary_datum = initial(subtree.operational_datum)
+			if(isnull(necessary_datum))
 				continue
 
 			testable_mobs[checkable_mob] = list(
 				subtree,
-				necessary_element,
+				necessary_datum,
 			)
 
 /// Then, test the mobs that we've found
@@ -38,17 +38,17 @@
 		checkable_mob = allocate(checkable_mob)
 
 		var/datum/ai_planning_subtree/test_subtree = checkable_mob_data[1]
-		var/list/trait_sources = GET_TRAIT_SOURCES(checkable_mob, TRAIT_SUBTREE_REQUIRED_ELEMENT)
+		var/list/trait_sources = GET_TRAIT_SOURCES(checkable_mob, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM)
 		if(!length(trait_sources)) // yes yes we could use `COUNT_TRAIT_SOURCES` but why invoke the same macro twice
-			TEST_FAIL("The mob [checkable_mob] ([checkable_mob.type]) does not have ANY instances of TRAIT_SUBTREE_REQUIRED_ELEMENT, but has a planning subtree ([test_subtree]) that requires it!")
+			TEST_FAIL("The mob [checkable_mob] ([checkable_mob.type]) does not have ANY instances of TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, but has a planning subtree ([test_subtree]) that requires it!")
 			continue
 
 		var/has_element = FALSE
-		var/datum/element/testable_element = checkable_mob_data[2]
+		var/datum/testable_operational_datum = checkable_mob_data[2]
 		for(var/iterable in trait_sources)
-			if(iterable == testable_element)
+			if(iterable == testable_operational_datum)
 				has_element = TRUE
 				break
 
-		TEST_ASSERT(has_element, "The mob [checkable_mob] ([checkable_mob.type]) has a planning subtree ([test_subtree]) that requires the element [testable_element], but does not have it!")
+		TEST_ASSERT(has_element, "The mob [checkable_mob] ([checkable_mob.type]) has a planning subtree ([test_subtree]) that requires the element [testable_operational_datum], but does not have it!")
 
