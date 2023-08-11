@@ -46,10 +46,8 @@
 		pointer_icon_state = pick("red_laser", "green_laser", "blue_laser", "purple_laser")
 
 /obj/item/laser_pointer/Destroy(force)
-	if(crystal_lens)
-		QDEL_NULL(crystal_lens)
-	if(diode)
-		QDEL_NULL(diode)
+	QDEL_NULL(crystal_lens)
+	QDEL_NULL(diode)
 	return ..()
 
 /obj/item/laser_pointer/Exited(atom/movable/gone, direction)
@@ -66,19 +64,20 @@
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(diode)
 		tool.play_tool_sound(src)
-		balloon_alert(user, "removed \the [diode.name]")
+		balloon_alert(user, "removed diode")
 		diode.forceMove(drop_location())
 		diode = null
 		return TRUE
 
 /obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(crystal_lens && (tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_HEMOSTAT))
-		tool.play_tool_sound(src)
-		balloon_alert(user, "removed \the [crystal_lens.name]")
-		crystal_lens.forceMove(drop_location())
-		crystal_lens = null
-		return TRUE
+	if(isnull(crystal_lens) || !(tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_HEMOSTAT))
+		return
+	tool.play_tool_sound(src)
+	balloon_alert(user, "removed crystal lens")
+	crystal_lens.forceMove(drop_location())
+	crystal_lens = null
+	return TRUE
 
 /obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, params)
 	if(istype(attack_item, /obj/item/stock_parts/micro_laser))
@@ -108,6 +107,7 @@
 		//we have a diode now, try starting a charge sequence in case the pointer was charging when we took out the diode
 		recharging = TRUE
 		START_PROCESSING(SSobj, src)
+		return TRUE
 
 	if(istype(attack_item, /obj/item/stack/ore/bluespace_crystal))
 		if(crystal_lens)
@@ -140,34 +140,35 @@
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
 		It can now be used to shine through obstacles at the cost of double the energy drain."))
+		return TRUE
 
 	return ..()
 
 /obj/item/laser_pointer/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		if(!diode)
+		if(isnull(diode))
 			. += span_notice("The diode is missing.")
 		else
 			. += span_notice("A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.")
 		. += span_notice("A small display reads out that[recharge_locked ? " it is currently recharging to full, and" : ""] there is <b>[energy * 10]%</b> total charge remaining.")
 		if(crystal_lens)
 			. += span_notice("There is a <b>[crystal_lens.name]</b> fit neatly before the focus lens. It can be <i>plucked out</i> with some <i>wirecutters</i>.")
-		else
-			if(diode) //hint at the ability to modify the pointer with a crystal only if we have a diode
-				. += span_notice("<i>You could examine it more thoroughly...</i>")
+		else if(diode) //hint at the ability to modify the pointer with a crystal only if we have a diode
+			. += span_notice("<i>You could examine it more thoroughly...</i>")
 
 /obj/item/laser_pointer/examine_more(mob/user)
 	. = ..()
-	if(!crystal_lens && diode)
-		switch(diode.rating)
-			if(1)
-				. += "<i>\The [diode.name] is fit neatly into the casing.</i>"
-			if(2)
-				. += "<i>\The [diode.name] is secured in place, with a little bit of room left between it and the focus lens.</i>"
-			if(3 to 4)
-				. += "<i>\The [diode.name]'s size is much smaller compared to the previous generation lasers, \
-				and the wide margin between it and the focus lens could probably house <b>a crystal</b> of some sort.</i>"
+	if(!isnull(crystal_lens) || isnull(diode))
+		return
+	switch(diode.rating)
+		if(1)
+			. += "<i>\The [diode.name] is fit neatly into the casing.</i>"
+		if(2)
+			. += "<i>\The [diode.name] is secured in place, with a little bit of room left between it and the focus lens.</i>"
+		if(3 to 4)
+			. += "<i>\The [diode.name]'s size is much smaller compared to the previous generation lasers, \
+			and the wide margin between it and the focus lens could probably house <b>a crystal</b> of some sort.</i>"
 
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
@@ -176,7 +177,7 @@
 
 ///Handles shining the clicked atom,
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
-	if(!diode)
+	if(isnull(diode))
 		to_chat(user, span_notice("You point [src] at [target], but nothing happens!"))
 		return
 	if(!ISADVANCEDTOOLUSER(user))
@@ -187,7 +188,7 @@
 		return
 
 	if(!(user in (view(7, target)))) //check if we are visible from the target's PoV
-		if(!crystal_lens)
+		if(isnull(crystal_lens))
 			to_chat(user, span_warning("You can't point with [src] through walls!"))
 			return
 		if(!((user.sight & SEE_OBJS) || (user.sight & SEE_MOBS))) //only let it work if we have xray or thermals. mesons don't count because they are easier to get.
@@ -314,7 +315,7 @@
 	icon_state = "pointer"
 
 /obj/item/laser_pointer/process(seconds_per_tick)
-	if(!diode)
+	if(isnull(diode))
 		recharging = FALSE
 		return PROCESS_KILL
 	if(SPT_PROB(10 + diode.rating * 10, seconds_per_tick)) //+10% chance per diode tier to recharge one use per process
