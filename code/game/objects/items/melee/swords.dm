@@ -130,6 +130,8 @@
 	inhand_icon_state = "broadsword_gold"
 	worn_icon_state = "broadsword_gold"
 	broken_icon = "broadsword_gold_broken"
+	broken_name = "broken rusty gilded broadsword"
+	broken_desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's edge is rusty, corroded and broken."
 
 /obj/item/melee/sword/rust/claymore
 	name = "rusty claymore"
@@ -138,6 +140,8 @@
 	inhand_icon_state = "claymore"
 	worn_icon_state = "claymore"
 	broken_icon = "claymore_broken"
+	broken_name = "broken rusty claymore"
+	broken_desc = "A rusted claymore, it smells damp, its edge broke and it has seen better days."
 
 /obj/item/melee/sword/rust/claymoregold
 	name = "rusty holy claymore"
@@ -146,6 +150,8 @@
 	inhand_icon_state = "claymore_gold"
 	worn_icon_state = "claymore_gold"
 	broken_icon = "claymore_gold_broken"
+	broken_name = "broken rusty holy claymore"
+	broken_desc = "A weapon fit for a crusade... or it used to be... and its broken."
 
 /obj/item/melee/sword/rust/cultblade
 	name = "rusty dark blade"
@@ -153,6 +159,8 @@
 	icon_state = "cultblade_rust"
 	inhand_icon_state = "cultblade_rust"
 	broken_icon = "cultblade_broken"
+	broken_name = "broken rusty dark blade"
+	broken_desc = "Once used by worshipers of forbidden gods, now its covered in old rust and broken."
 
 /obj/item/melee/sword/claymore
 	name = "holy claymore"
