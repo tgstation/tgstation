@@ -52,86 +52,35 @@
 	worn_icon_state = "broadsword"
 	force = 15
 	wound_bonus = 0
-	/// Name used after the item breaks.
-	var/broken_name = "broken rusty broadsword"
-	/// Description used after the item breaks.
-	var/broken_desc = "A sharp steel forged sword. It's edge is rusty, corroded and broken."
-	/// Icon thats used for object, inhands and worn sprites when it breaks.
-	var/broken_icon = "broadsword_broken"
-	/// How many hits an item can deal and block before it breaks, with one additional final usage.
-	var/durability = 15
-	/// If the item is broken or not.
-	var/broken = FALSE
-	/// The message displayed when the item breaks.
-	var/break_message_others = "'s sword snaps in half!"
-	/// The message displayed when the item breaks.
-	var/break_message_self = "'s blade breaks leaving you with half a sword!"
-	/// Sound used when the item breaks.
-	var/break_sound = 'sound/effects/structure_stress/pop3.ogg'
-	/// How much damage the item loses after it breaks.
-	var/damage_decrease = 5
-	/// The new wound bonus after the item breaks.
-	var/broken_wound = 1
-	/// The throw range of the item after it breaks.
-	var/broken_throw = 2
-	/// The embedding of the item after it breaks.
-	var/broken_embed_chance = 10
-	/// The embedding of the item after it breaks.
-	var/broken_embed_pain = 15
-	/// The block chance of the item after it breaks.
-	var/broken_block = 20
-	/// The weight class of the item after it breaks
-	var/broken_weight = WEIGHT_CLASS_SMALL
+	var/broken_icon_state
+	var/broken_desc
 
-/obj/item/melee/sword/rust/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/melee/sword/rust/Initialize(mapload)
 	. = ..()
-	if(broken)
-		return
-	if(ismovable(target))
-		decrease_uses(user)
 
-/obj/item/melee/sword/rust/hit_reaction(mob/user)
-	. = ..()
-	if(!.)
-		return
-	if(broken)
-		return
-	decrease_uses(user)
-
-/obj/item/melee/sword/rust/proc/decrease_uses(mob/user)
-	if(durability == 0)
-		no_uses(user)
-		return
-	durability--
-
-/obj/item/melee/sword/rust/proc/no_uses(mob/user)
-	if(broken == TRUE)
-		return
-	user.visible_message(span_notice("[user][break_message_others]"), span_notice("[src][break_message_self]"))
-	broken = TRUE
-	name = broken_name
-	desc = broken_desc
-	icon_state = broken_icon
-	inhand_icon_state = broken_icon
-	worn_icon_state = broken_icon
-	update_appearance()
-	playsound(user, break_sound, 100, TRUE)
-	force -= damage_decrease
-	wound_bonus = broken_wound
-	throw_range = broken_throw
-	embedding = list("embed_chance" = broken_embed_chance, "impact_pain_mult" = broken_embed_pain)
-	block_chance = broken_block
-	w_class = broken_weight
+	AddComponent( \
+		/datum/component/durability, \
+		broken_icon_state = "broadsword_broken", \
+		broken_desc = "A sharp steel forged sword. Its edge is rusty, corroded and broken.", \
+		max_durability = 20, \
+		break_sound = 'sound/effects/structure_stress/pop3.ogg', \
+		broken_force_decrease = 5, \
+		broken_throw_force_decrease = 5, \
+		broken_throw_range = 2, \
+		broken_embedding = list("embed_chance" = 10, "impact_pain_mult" = 15), \
+		broken_block_chance = 15, \
+		broken_message = span_warning("The sword breaks."), \
+		broken_w_class = WEIGHT_CLASS_SMALL \
+	)
 
 /obj/item/melee/sword/rust/gold
 	name = "rusty gilded broadsword"
-	desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's edge is rusty and corroded."
+	desc = "A sharp steel forged sword. Its got a rich guard and pommel. Its edge is rusty and corroded."
 	icon_state = "broadsword_gold_rust"
 	inhand_icon_state = "broadsword_gold"
 	worn_icon_state = "broadsword_gold"
-	broken_icon = "broadsword_gold_broken"
-	broken_name = "broken rusty gilded broadsword"
-	broken_desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's edge is rusty, corroded and broken."
+	broken_icon_state = "broadsword_gold_broken"
+	broken_desc = "A sharp steel forged sword. Its got a rich guard and pommel. Its edge is rusty, corroded and broken."
 
 /obj/item/melee/sword/rust/claymore
 	name = "rusty claymore"
@@ -139,8 +88,7 @@
 	icon_state = "claymore_rust"
 	inhand_icon_state = "claymore"
 	worn_icon_state = "claymore"
-	broken_icon = "claymore_broken"
-	broken_name = "broken rusty claymore"
+	broken_icon_state = "claymore_broken"
 	broken_desc = "A rusted claymore, it smells damp, its edge broke and it has seen better days."
 
 /obj/item/melee/sword/rust/claymoregold
@@ -149,8 +97,7 @@
 	icon_state = "claymore_gold_rust"
 	inhand_icon_state = "claymore_gold"
 	worn_icon_state = "claymore_gold"
-	broken_icon = "claymore_gold_broken"
-	broken_name = "broken rusty holy claymore"
+	broken_icon_state = "claymore_gold_broken"
 	broken_desc = "A weapon fit for a crusade... or it used to be... and its broken."
 
 /obj/item/melee/sword/rust/cultblade
@@ -158,9 +105,8 @@
 	desc = "Once used by worshipers of forbidden gods, now its covered in old rust."
 	icon_state = "cultblade_rust"
 	inhand_icon_state = "cultblade_rust"
-	broken_icon = "cultblade_broken"
-	broken_name = "broken rusty dark blade"
-	broken_desc = "Once used by worshipers of forbidden gods, now its covered in old rust and broken."
+	broken_icon_state = "cultblade_broken"
+	broken_desc = "Once used by worshipers of forbidden gods, now its broken and covered in old rust."
 
 /obj/item/melee/sword/claymore
 	name = "holy claymore"
@@ -196,48 +142,23 @@
 	embedding = list("embed_chance" = 30, "impact_pain_mult" = 10)
 
 /obj/item/melee/sword/reforged/shitty
-	var/broken = FALSE
-	var/rustiness = 0 //This isn't a mistake, this causes it to break instantly upon use.
-	var/broken_icon = "reforged_broken"
+var/broken_name
 
-/obj/item/melee/sword/reforged/shitty/afterattack(target, mob/user, proximity_flag)
+/obj/item/melee/sword/reforged/shitty/Initialize(mapload)
 	. = ..()
-	if(broken)
-		return ..()
-	if(ismovable(target))
-		decrease_uses(user)
 
-/obj/item/melee/sword/reforged/shitty/hit_reaction(mob/user)
-	. = ..()
-	if(broken)
-		return ..()
-	if(!.)
-		return
-	decrease_uses(user)
-
-/obj/item/melee/sword/reforged/shitty/proc/decrease_uses(mob/user)
-	if(rustiness == 0)
-		no_uses(user)
-		return
-	rustiness--
-
-/obj/item/melee/sword/reforged/shitty/proc/no_uses(mob/user)
-	if(broken == TRUE)
-		return
-	user.visible_message(span_notice("[user]'s sword breaks. WHAT AN IDIOT!"), span_notice("The [src]'s blade shatters! It was a cheap felinid imitation! WHAT A PIECE OF SHIT!"))
-	broken = TRUE
-	name = "broken fake longsword"
-	desc = "A cheap piece of felinid forged trash."
-	icon_state = broken_icon
-	inhand_icon_state = broken_icon
-	worn_icon_state = broken_icon
-	update_appearance()
-	playsound(user, 'sound/effects/glassbr1.ogg', 100, TRUE)
-	force -= 20
-	throwforce = 5
-	throw_range = 1
-	block_chance = 5
-	wound_bonus = -10
-	armour_penetration = 0
-	embedding = list("embed_chance" = 5, "impact_pain_mult" = 5)
-	w_class = WEIGHT_CLASS_SMALL
+	AddComponent( \
+		/datum/component/durability, \
+		broken_name = "broken fake longsword", \
+		broken_icon_state = "reforged_broken", \
+		broken_desc = "A cheap piece of felinid forged trash.", \
+		max_durability = 1, \
+		break_sound = 'sound/effects/glassbr1.ogg', \
+		broken_force_decrease = 20, \
+		broken_throw_force_decrease = 10, \
+		broken_throw_range = 1, \
+		broken_embedding = list("embed_chance" = 5, "impact_pain_mult" = 5), \
+		broken_block_chance = 5, \
+		broken_message = span_warning("The sword breaks in a single motion. WHAT A PIECE OF SHIT!"), \
+		broken_w_class = WEIGHT_CLASS_SMALL \
+	)

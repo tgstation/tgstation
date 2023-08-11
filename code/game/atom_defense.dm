@@ -16,7 +16,6 @@
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_TAKE_DAMAGE, damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration) & COMPONENT_NO_TAKE_DAMAGE)
 		return
-
 	. = damage_amount
 
 	update_integrity(atom_integrity - damage_amount)
