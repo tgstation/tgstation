@@ -74,7 +74,7 @@
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	belt = null
 	icon_state = "ctf_assaulter"
-	class_description = "Close combat class. Armed with a shotgun and rocket gloves."
+	class_description = "Close combat class. Armed with a shotgun and rocket gloves. Has significantly lower shield values due to higher moving speed."
 
 /datum/outfit/ctf/marksman
 	name = "CTF Marksman (Solo)"

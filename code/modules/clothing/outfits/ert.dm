@@ -150,9 +150,9 @@
 	id_trim = /datum/id_trim/centcom/official
 	uniform = /obj/item/clothing/under/rank/centcom/official
 	back = /obj/item/storage/backpack/satchel
+	box = /obj/item/storage/box/survival
 	backpack_contents = list(
 		/obj/item/stamp/centcom = 1,
-		/obj/item/storage/box/survival = 1,
 	)
 	belt = /obj/item/gun/energy/e_gun
 	ears = /obj/item/radio/headset/headset_cent
@@ -181,9 +181,7 @@
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	r_hand = /obj/item/nullrod/vibro/talking/chainsword
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-	)
+	backpack_contents = null
 
 /datum/outfit/centcom/ert/security/inquisitor
 	name = "Inquisition Security"
