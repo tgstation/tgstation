@@ -52,6 +52,7 @@
 	pilot_ref = WEAKREF(pilot)
 	pilot_mind_ref = WEAKREF(host_mind)
 
+	// This should never need to override but unit tests are insisting that it does
 	RegisterSignal(pilot, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_change), override = TRUE)
 	RegisterSignals(host_mind, list(COMSIG_BITRUNNER_SAFE_DISCONNECT, COMSIG_BITRUNNER_SEVER_AVATAR), PROC_REF(on_detached), override = TRUE)
 
