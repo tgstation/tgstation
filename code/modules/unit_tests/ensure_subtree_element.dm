@@ -34,20 +34,21 @@
 /// Then, test the mobs that we've found
 /datum/unit_test/ensure_subtree_element/proc/test_applicable_mobs()
 	for(var/mob/living/basic/checkable_mob as anything in testable_mobs)
+		var/list/checkable_mob_data = testable_mobs[checkable_mob]
 		checkable_mob = allocate(checkable_mob)
 
-		var/datum/ai_planning_subtree = testable_mobs[checkable_mob][1]
+		var/datum/ai_planning_subtree/test_subtree = checkable_mob_data[1]
 		var/list/trait_sources = GET_TRAIT_SOURCES(checkable_mob, TRAIT_SUBTREE_REQUIRED_ELEMENT)
 		if(!length(trait_sources)) // yes yes we could use `COUNT_TRAIT_SOURCES` but why invoke the same macro twice
-			TEST_FAIL("The mob [checkable_mob] does not have ANY instances of TRAIT_SUBTREE_REQUIRED_ELEMENT, but has a planning subtree ([ai_planning_subtree]) that requires it!")
+			TEST_FAIL("The mob [checkable_mob] does not have ANY instances of TRAIT_SUBTREE_REQUIRED_ELEMENT, but has a planning subtree ([test_subtree]) that requires it!")
 			continue
 
 		var/has_element = FALSE
-		var/datum/element/testable_element = testable_mobs[checkable_mob][2]
+		var/datum/element/testable_element = checkable_mob_data[2]
 		for(var/iterable in trait_sources)
 			if(iterable == testable_element)
 				has_element = TRUE
 				break
 
-		TEST_ASSERT(has_element, "The mob [checkable_mob] has a planning subtree ([ai_planning_subtree]) that requires the element [testable_element], but does not have it!")
+		TEST_ASSERT(has_element, "The mob [checkable_mob] has a planning subtree ([test_subtree]) that requires the element [testable_element], but does not have it!")
 
