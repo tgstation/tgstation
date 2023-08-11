@@ -2904,7 +2904,7 @@
 
 /datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
 	. = ..()
-	if(HAS_TRAIT_FROM(exposed_obj, TRAIT_HAUNTED, HAUNTIUM_REAGENT_TRAIT)
+	if(HAS_TRAIT_FROM(exposed_obj, TRAIT_HAUNTED, HAUNTIUM_REAGENT_TRAIT))
 		return
 	exposed_obj.make_haunted(HAUNTIUM_REAGENT_TRAIT, "#f8f8ff")
 	addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), volume * 20 SECONDS)
