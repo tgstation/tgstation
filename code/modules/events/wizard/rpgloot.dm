@@ -23,21 +23,28 @@
 	var/can_backfire = TRUE
 	var/uses = 1
 
-/obj/item/upgradescroll/afterattack(obj/item/target, mob/user, proximity)
+/obj/item/upgradescroll/apply_fantasy_bonuses(bonus)
 	. = ..()
-	if(!proximity || !istype(target))
+	if(bonus >= 15)
+		can_backfire = FALSE
+	upgrade_amount = modify_fantasy_variable("upgrade_amount", upgrade_amount, round(bonus / 4), minimum = 1)
+
+/obj/item/upgradescroll/remove_fantasy_bonuses(bonus)
+	upgrade_amount = reset_fantasy_variable("upgrade_amount", upgrade_amount)
+	can_backfire = TRUE
+	return ..()
+
+
+/obj/item/upgradescroll/pre_attack(obj/item/target, mob/living/user)
+	. = ..()
+	if(. || !istype(target) || !user.combat_mode)
 		return
-
-	. |= AFTERATTACK_PROCESSED_ITEM
-
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
-
 	uses -= 1
 	if(!uses)
 		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
 		qdel(src)
-
-	return .
+	return TRUE
 
 /obj/item/upgradescroll/unlimited
 	name = "unlimited foolproof item fortification scroll"
@@ -66,13 +73,16 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 /datum/rpgloot_controller/New()
 	. = ..()
 	//second operation takes MUCH longer, so lets set up signals first.
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(on_new_item_in_existence))
+	RegisterSignal(SSdcs, COMSIG_GLOB_ATOM_AFTER_POST_INIT, PROC_REF(on_new_item_in_existence))
 	handle_current_items()
 
 ///signal sent by a new item being created.
 /datum/rpgloot_controller/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
 	SIGNAL_HANDLER
-
+	if(!istype(created_item))
+		return
+	if(created_item.item_flags & SKIP_FANTASY_ON_SPAWN)
+		return
 	created_item.AddComponent(/datum/component/fantasy)
 
 /**
@@ -90,6 +100,9 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 			continue
 
 		fantasy_item.AddComponent(/datum/component/fantasy)
+
+		if(isnull(fantasy_item.loc))
+			continue
 
 		if(istype(fantasy_item, /obj/item/storage))
 			var/obj/item/storage/storage_item = fantasy_item

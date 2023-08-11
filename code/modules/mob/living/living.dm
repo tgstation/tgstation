@@ -993,7 +993,7 @@
 		else if(newdir == (EAST|WEST))
 			newdir = EAST
 	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = turn(get_dir(target_turf, start), 180)
+		newdir = REVERSE_DIR(get_dir(target_turf, start))
 	if(!blood_exists)
 		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
 
@@ -1408,6 +1408,7 @@
 		if(WABBAJACK_ANIMAL)
 			var/picked_animal = pick(
 				/mob/living/basic/bat,
+				/mob/living/basic/bear,
 				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
 				/mob/living/basic/carp/magic,
@@ -1432,7 +1433,6 @@
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
 				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
@@ -1487,6 +1487,12 @@
 	// transfering the mind and observerse, and other miscellaneous
 	// actions that should be done before we delete the original mob.
 	on_wabbajacked(new_mob)
+
+	// Valid polymorph types unlock the Lepton.
+	if((change_flags & (WABBAJACK|MIRROR_MAGIC|MIRROR_PRIDE|RACE_SWAP)) && (SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] != TRUE))
+		to_chat(new_mob, span_revennotice("You have the strangest feeling, for a moment. A fragile, dizzying memory wanders into your mind.. all you can make out is-"))
+		to_chat(new_mob, span_hypnophrase("You sleep so it may wake. You wake so it may sleep. It wakes. Do not sleep."))
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] = TRUE
 
 	qdel(src)
 	return new_mob
@@ -1658,7 +1664,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * fire_handler: Current fire status effect that called the proc
  */
 
-/mob/living/proc/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	return
 
 //Mobs on Fire end

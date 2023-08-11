@@ -2,7 +2,7 @@
 "aa" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/teal,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "aA" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
@@ -270,7 +270,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "nv" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "ny" = (
 /obj/machinery/oven,
@@ -1050,7 +1050,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "SU" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "SZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1221,7 +1221,7 @@
 "Yd" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/fuchsia,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space)
 "Yo" = (
 /obj/structure/table/wood,

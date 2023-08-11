@@ -23,7 +23,7 @@
 	owner.add_overlay(cube)
 
 
-/datum/status_effect/freon/tick()
+/datum/status_effect/freon/tick(seconds_between_ticks)
 	if(can_melt && owner.bodytemperature >= owner.get_body_temp_normal())
 		qdel(src)
 

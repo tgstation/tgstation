@@ -8032,7 +8032,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/minipost)
 "AG" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/post/minipost)
 "AH" = (
@@ -8795,7 +8795,7 @@
 /area/awaymission/snowdin/cave)
 "DY" = (
 /obj/effect/turf_decal/weather/snow,
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/cave)
 "Ea" = (
@@ -10130,7 +10130,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Li" = (
@@ -10147,7 +10147,7 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/post/minipost)
 "Lm" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -10459,7 +10459,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "MV" = (
 /obj/item/shard,
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -11424,7 +11424,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/garage)
 "Sa" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Sb" = (
@@ -11675,7 +11675,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "Tf" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Tk" = (
@@ -11983,7 +11983,7 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Vi" = (
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/basic/bear/snow,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Vl" = (

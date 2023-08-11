@@ -404,7 +404,7 @@
 	if((machine_stat & NOPOWER))
 		return
 	var/image/ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[input_dir]")
-	var/image/ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[turn(input_dir, 180)]")
+	var/image/ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[REVERSE_DIR(input_dir)]")
 
 	switch(input_dir)
 		if(NORTH)

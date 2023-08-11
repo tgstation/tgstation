@@ -51,7 +51,7 @@
 		for(var/d in GLOB.cardinals)
 			var/turf/T = get_step(src, d)
 			for(var/obj/machinery/power/terminal/term in T)
-				if(term && term.dir == turn(d, 180))
+				if(term && term.dir == REVERSE_DIR(d))
 					terminal = term
 					break dir_loop
 
@@ -97,7 +97,7 @@
 		terminal = null
 		var/turf/T = get_step(src, dir)
 		for(var/obj/machinery/power/terminal/term in T)
-			if(term && term.dir == turn(dir, 180))
+			if(term && term.dir == REVERSE_DIR(dir))
 				terminal = term
 				terminal.master = src
 				to_chat(user, span_notice("Terminal found."))

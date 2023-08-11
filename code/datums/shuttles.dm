@@ -343,10 +343,13 @@
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
-	credit_cost = CARGO_CRATE_VALUE * -2
-	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean too heavily on the exterior windows, they are fragile."
-	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
+	credit_cost = CARGO_CRATE_VALUE * -18
+	description = "Comrade! We see you are having trouble with money, yes? If you have money issue, very little money, we are looking for good shuttle, emergency shuttle. You take best in sector shuttle, we take yours, you get money, da? Please do not lean on window, fragile like fina china. -Ivan"
+	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight. When bought, gives a good influx of money, but can only be bought if the budget is literally 0 credits."
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+
+/datum/map_template/shuttle/emergency/scrapheap/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP]
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -411,7 +414,7 @@
 	description = "Developed by a member of Nanotrasen's R&D crew that claims to have travelled from the year 2028. \
 	He says this shuttle is based off an old entertainment complex from the 1990s, though our database has no records on anything pertaining to that decade."
 	admin_notes = "ONLY NINETIES KIDS REMEMBER. Uses the fun balloon and drone from the Emergency Bar."
-	credit_cost = CARGO_CRATE_VALUE * 5
+	credit_cost = CARGO_CRATE_VALUE * 30
 
 /datum/map_template/shuttle/emergency/basketball
 	suffix = "bballhooper"
@@ -430,6 +433,9 @@
 	Needless to say, no engineering team wanted to go near the thing, and it's only being used as an Emergency Escape Shuttle because there is literally nothing else available."
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = CARGO_CRATE_VALUE * 30
+
+/datum/map_template/shuttle/emergency/wabbajack/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK]
 
 /datum/map_template/shuttle/emergency/omega
 	suffix = "omega"
@@ -492,6 +498,13 @@
 	description = "A small cozy shuttle with plenty of beds for tired or sensitive spacemen, and a box for pillow-fights."
 	admin_notes = "Has a sentience fun balloon for pets."
 	credit_cost = CARGO_CRATE_VALUE * 16
+
+/datum/map_template/shuttle/emergency/fame
+	suffix = "fame"
+	name = "Hall of Fame Shuttle"
+	description = "A grandiose shuttle that has a red carpet leading to the hall of fame. Are you worthy to stand among the best spessmen in existence?"
+	admin_notes = "Designed around persistence from memories, trophies, photos, and statues."
+	credit_cost = CARGO_CRATE_VALUE * 25
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
