@@ -124,7 +124,7 @@
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
 		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE)
-	..()
+	return ..()
 
 /obj/projectile/tether/on_hit(atom/target)
 	. = ..()

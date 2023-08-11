@@ -57,7 +57,7 @@
 	SIGNAL_HANDLER
 	var/list/chasm_contents = get_chasm_contents(fishing_spot)
 
-	if (length(chasm_contents))
+	if (!length(chasm_contents))
 		create_default_object()
 		return
 

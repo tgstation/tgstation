@@ -232,6 +232,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
 	var/base_name
 	var/energy_rating = 1
+	///The generic category type that the stock part belongs to.  Generic objects that should not be instantiated should have the same type and abstract_type
+	var/abstract_type = /obj/item/stock_parts
 
 /obj/item/stock_parts/Initialize(mapload)
 	. = ..()
@@ -401,6 +403,11 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8)
 
 // Subspace stock parts
+
+/obj/item/stock_parts/subspace
+	name = "subspace stock part"
+	desc = "What?"
+	abstract_type = /obj/item/stock_parts/subspace
 
 /obj/item/stock_parts/subspace/ansible
 	name = "subspace ansible"
