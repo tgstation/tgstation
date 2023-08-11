@@ -48,7 +48,6 @@ GLOBAL_LIST_EMPTY(anime_top_list)
 GLOBAL_LIST_EMPTY(anime_middle_list)
 GLOBAL_LIST_EMPTY(anime_bottom_list)
 GLOBAL_LIST_EMPTY(goblin_ears_list)
-GLOBAL_LIST_EMPTY(goblin_eyes_list)//Remove when eyes work with dwarfism
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",

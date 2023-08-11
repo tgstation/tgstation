@@ -21,7 +21,6 @@
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
 	external_organs = list(
 		/obj/item/organ/external/goblin_ears = "long",
-		/obj/itme/organ/external/goblin_eyes = "normal"//Remove when eyes work with dwarfism
 		)
 	meat = /obj/item/food/meat/steak
 	disliked_food = VEGETABLES
