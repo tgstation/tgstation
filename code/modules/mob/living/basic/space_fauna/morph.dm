@@ -181,7 +181,7 @@
 		return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_DISGUISED) && !eat_while_disguised)
-		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
+		balloon_alert(src, "can't eat while disguised!")
 		return FALSE
 
 	balloon_alert(src, "eating...")
