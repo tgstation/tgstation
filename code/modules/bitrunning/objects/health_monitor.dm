@@ -52,22 +52,22 @@
 	pilot_ref = WEAKREF(pilot)
 	pilot_mind_ref = WEAKREF(host_mind)
 
-	RegisterSignal(pilot, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_change))
-	RegisterSignals(host_mind, list(COMSIG_BITRUNNER_SAFE_DISCONNECT, COMSIG_BITRUNNER_SEVER_AVATAR), PROC_REF(on_detached))
+	RegisterSignal(pilot, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_change), override = TRUE)
+	RegisterSignals(host_mind, list(COMSIG_BITRUNNER_SAFE_DISCONNECT, COMSIG_BITRUNNER_SEVER_AVATAR), PROC_REF(on_detached), override = TRUE)
 
 /// Called when the monitor is detached from an avatar
 /obj/item/bitrunner_health_monitor/proc/on_detached(datum/source)
 	SIGNAL_HANDLER
 
 	var/mob/living/pilot = pilot_ref?.resolve()
-	if(isnull(pilot) || QDELETED(pilot))
+	if(QDELETED(pilot))
 		return
 
 	pilot_ref = null
 	UnregisterSignal(pilot, COMSIG_LIVING_HEALTH_UPDATE)
 
 	var/datum/mind/our_mind = pilot_mind_ref?.resolve()
-	if(isnull(our_mind) || QDELETED(our_mind))
+	if(QDELETED(our_mind))
 		return
 
 	pilot_mind_ref = null
