@@ -46,11 +46,6 @@
 	name = "NT Frigate"
 	description = "A standard whiteship with big spiders onboard. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 
-/datum/map_template/shuttle/whiteship/pod
-	suffix = "whiteship_pod"
-	name = "Salvage Pod"
-	description = "There is no map for this vessel and it was supposed to be used with the Meta-class. Do not try to spawn it!"
-
 /datum/map_template/shuttle/whiteship/personalshuttle
 	suffix = "personalshuttle"
 	name = "Personal Travel Shuttle"
