@@ -40,7 +40,7 @@
 		var/datum/ai_planning_subtree/test_subtree = checkable_mob_data[1]
 		var/list/trait_sources = GET_TRAIT_SOURCES(checkable_mob, TRAIT_SUBTREE_REQUIRED_ELEMENT)
 		if(!length(trait_sources)) // yes yes we could use `COUNT_TRAIT_SOURCES` but why invoke the same macro twice
-			TEST_FAIL("The mob [checkable_mob] does not have ANY instances of TRAIT_SUBTREE_REQUIRED_ELEMENT, but has a planning subtree ([test_subtree]) that requires it!")
+			TEST_FAIL("The mob [checkable_mob] ([checkable_mob.type]) does not have ANY instances of TRAIT_SUBTREE_REQUIRED_ELEMENT, but has a planning subtree ([test_subtree]) that requires it!")
 			continue
 
 		var/has_element = FALSE
@@ -50,5 +50,5 @@
 				has_element = TRUE
 				break
 
-		TEST_ASSERT(has_element, "The mob [checkable_mob] has a planning subtree ([test_subtree]) that requires the element [testable_element], but does not have it!")
+		TEST_ASSERT(has_element, "The mob [checkable_mob] ([checkable_mob.type]) has a planning subtree ([test_subtree]) that requires the element [testable_element], but does not have it!")
 
