@@ -11,17 +11,18 @@
 		return
 	for(var/mob/living/carbon/blind in oview(9, living_pawn))
 		var/obj/item/organ/internal/eyes/eyes = blind.get_organ_slot(ORGAN_SLOT_EYES)
-		if(!eyes)
+		if(isnull(eyes))
 			continue
 		if(eyes.damage < eye_damage_threshold)
 			continue
 		blind_list += blind
 
-	if(length(blind_list))
-		controller.set_blackboard_key(blind_key, pick(blind_list))
-		finish_action(controller, TRUE)
+	if(!length(blind_list))
+		finish_action(controller, FALSE)
 		return
-	finish_action(controller, FALSE)
+
+	controller.set_blackboard_key(blind_key, pick(blind_list))
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/heal_eye_damage
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
