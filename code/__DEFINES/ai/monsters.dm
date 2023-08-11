@@ -65,7 +65,7 @@
 ///the hivebot partner we will go communicate with
 #define BB_HIVE_PARTNER "BB_hive_partner"
 
-/// Ice Whelps
+// Ice Whelps
 ///whelp's straight line fire ability
 #define BB_WHELP_STRAIGHTLINE_FIRE "BB_whelp_straightline_fire"
 ///whelp's secondary enraged ability

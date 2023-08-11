@@ -43,7 +43,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
-	var/datum/action/cooldown/mob_cooldown/ice_breathe/flamethrower = new(src)
+	var/datum/action/cooldown/mob_cooldown/ice_breath/flamethrower = new(src)
 	var/datum/action/cooldown/mob_cooldown/ice_breathe_all_directions/wide_flames = new(src)
 	flamethrower.Grant(src)
 	wide_flames.Grant(src)
@@ -70,16 +70,18 @@
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)
-	to_chat(src, span_warning("You start using your fine claws to create a sculpture"))
+	balloon_alert(src, "sculpting...")
 	if(!do_after(src, 5 SECONDS, target = target))
 		return
 	var/obj/structure/statue/custom/dragon_statue = new(get_turf(target))
 	dragon_statue.set_visuals(src)
 	dragon_statue.name = "statue of [src]"
 	dragon_statue.desc = "Let this serve as a warning."
+	dragon_statue.set_anchored(TRUE)
 	qdel(target)
 
 /mob/living/basic/mining/ice_whelp/proc/cannibalize_victim(mob/living/target)
+	balloon_alert(src, "devouring...")
 	if(!do_after(src, 5 SECONDS, target))
 		return
 	target.gib()

@@ -1,3 +1,4 @@
+#define ENRAGE_ADDITION 25
 /datum/ai_controller/basic_controller/ice_whelp
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath,
@@ -127,7 +128,7 @@
 		controller.set_blackboard_key(enraged_key, 0)
 		return controller.blackboard[secondary_ability_key]
 
-	controller.set_blackboard_key(enraged_key, enraged_value + 25)
+	controller.set_blackboard_key(enraged_key, enraged_value + ENRAGE_ADDITION)
 	return controller.blackboard[ability_key]
 
 ///subtree to look for trees and burn them with our flamethrower
@@ -177,3 +178,5 @@
 	if(QDELETED(target))
 		return FALSE
 	set_movement_target(controller, target)
+
+#undef ENRAGE_ADDITION

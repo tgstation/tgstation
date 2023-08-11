@@ -22,6 +22,7 @@
 /datum/component/basic_mob_ability_telegraph/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_ABILITY_STARTED)
 
+///delay the ability
 /datum/component/basic_mob_ability_telegraph/proc/on_ability_activate(mob/living/source, datum/action/cooldown/activated, atom/target)
 	SIGNAL_HANDLER
 
@@ -36,11 +37,13 @@
 	addtimer(CALLBACK(src, PROC_REF(use_ability), source, activated, target), telegraph_time)
 	return COMPONENT_BLOCK_ABILITY_START
 
+///generates the telegraph signs to inform the player we're about to launch an attack
 /datum/component/basic_mob_ability_telegraph/proc/generate_tell_signs(mob/living/source)
 	if(sound_path)
 		playsound(source, sound_path, 50, FALSE)
 	source.Shake(duration = telegraph_time)
 
+///use the ability
 /datum/component/basic_mob_ability_telegraph/proc/use_ability(mob/living/source, datum/action/cooldown/activated, atom/target)
 	if(!QDELETED(target) && source.stat != DEAD) //target is gone or we died
 		activated.Activate(target)
