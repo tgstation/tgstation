@@ -438,6 +438,9 @@
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
 	AddComponent(/datum/component/simple_rotation)
 
+/obj/machinery/iv_drip/deconstruct(disassembled)
+	qdel(src)
+
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
