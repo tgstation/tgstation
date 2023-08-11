@@ -1,0 +1,4 @@
+author: "Ical92"
+delete-after: True
+changes:
+  - bugfix: "fixed missing departments and names in request consoles"
