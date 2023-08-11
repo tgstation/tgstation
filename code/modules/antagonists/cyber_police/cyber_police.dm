@@ -86,7 +86,7 @@
 		return TRUE
 
 	for(var/obj/machinery/quantum_server/server as anything in servers)
-		if(server.machine_stat & (BROKEN|NOPOWER))
+		if(!server.is_operational)
 			continue
 		return FALSE
 
