@@ -118,6 +118,6 @@
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
 
 /mob/living/basic/eyeball/proc/on_tame(mob/tamer)
-	spin(spintime = 5, speed = 1)
+	spin(spintime = 2 SECONDS, speed = 1)
 	//become passive to the humens
 	faction |= tamer.faction
