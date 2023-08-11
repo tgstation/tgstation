@@ -9,7 +9,7 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))	
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 	if(sticker_type)
 		stick_type = sticker_type
 	washable = cleanable
@@ -36,6 +36,9 @@
 
 ///Add our stick_type to the target with px and py as pixel x and pixel y respectively
 /datum/element/sticker/proc/do_stick(obj/item/source, atom/target, mob/living/user, px, py)
+	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_ALLOWED_STICKERS)
+		source.balloon_alert_to_viewers("sticker won't stick!")
+		return FALSE
 	target.AddComponent(stick_type, px, py, source, user, washable)
 
 /datum/element/sticker/proc/on_throw_impact(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)

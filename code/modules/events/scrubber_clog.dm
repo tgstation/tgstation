@@ -151,7 +151,7 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/spider/giant,
 	)
 	return pick(mob_list)
 

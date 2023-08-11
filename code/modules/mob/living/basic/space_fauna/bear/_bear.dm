@@ -62,12 +62,7 @@
 		add_overlay("armor_bear")
 
 /mob/living/basic/bear/proc/extract_combs(obj/structure/beebox/hive)
-	if(!length(hive.honeycombs))
-		return
-	var/obj/item/food/honeycomb/honey_food = pick_n_take(hive.honeycombs)
-	if(isnull(honey_food))
-		return
-	honey_food.forceMove(get_turf(src))
+	return
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/basic/bear/hudson
