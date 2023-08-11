@@ -84,9 +84,8 @@ const LayerIconSection = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { layer_icon } = data;
   return (
-    <Button
+    <Box
       m={1}
-      selected="true"
       className={classes(['plumbing-tgui32x32', layer_icon])}
       style={{
         transform: 'scale(2)',
