@@ -1001,6 +1001,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
+
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
 #define STATUE_MUTE "statue"
@@ -1082,6 +1083,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
 #define BRAIN_UNAIDED "brain-unaided"
+/// Trait applied to a mob when it gets a required element. Sends out the source as the type of the element.
+#define TRAIT_SUBTREE_REQUIRED_ELEMENT "element-required"
 /// Trait applied by MODsuits.
 #define MOD_TRAIT "mod"
 /// Trait applied by element
