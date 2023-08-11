@@ -7,11 +7,15 @@
 	icon_dead = "ice_whelp_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	butcher_results = list(/obj/item/stack/ore/diamond = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 10, /obj/item/stack/sheet/animalhide/ashdrake = 1)
+	butcher_results = list(
+		/obj/item/stack/ore/diamond = 3,
+		/obj/item/stack/sheet/animalhide/ashdrake = 1,
+		/obj/item/stack/sheet/bone = 10,
+		/obj/item/stack/sheet/sinew = 2,
+	)
 	crusher_loot = /obj/item/crusher_trophy/tail_spike
 	speed = 12
 
-	maxHealth = 300
 	maxHealth = 300
 	health = 300
 	obj_damage = 40

@@ -31,7 +31,7 @@
 	if(!activated.IsAvailable())
 		return
 
-	currently_telegraphing = !currently_telegraphing
+	currently_telegraphing = TRUE
 	generate_tell_signs(source)
 	addtimer(CALLBACK(src, PROC_REF(use_ability), source, activated, target), telegraph_time)
 	return COMPONENT_BLOCK_ABILITY_START
@@ -44,4 +44,4 @@
 /datum/component/basic_mob_ability_telegraph/proc/use_ability(mob/living/source, datum/action/cooldown/activated, atom/target)
 	if(!QDELETED(target) && source.stat != DEAD) //target is gone or we died
 		activated.Activate(target)
-	currently_telegraphing = !currently_telegraphing
+	currently_telegraphing = FALSE

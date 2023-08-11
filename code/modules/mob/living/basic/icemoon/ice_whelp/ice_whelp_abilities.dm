@@ -4,7 +4,7 @@
 	button_icon = 'icons/effects/magic.dmi'
 	button_icon_state = "fireball"
 	cooldown_time = 2 SECONDS
-	melee_cooldown_time = 0
+	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 	///the range of fire
 	var/fire_range = 4
@@ -22,7 +22,7 @@
 	button_icon = 'icons/effects/fire.dmi'
 	button_icon_state = "1"
 	cooldown_time = 2 SECONDS
-	melee_cooldown_time = 0
+	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 	var/fire_range = 6
 
