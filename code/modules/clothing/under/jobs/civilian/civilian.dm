@@ -109,8 +109,10 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/lawyer
-	desc = "Slick threads."
 	name = "Lawyer suit"
+	desc = "Slick threads."
+	icon = 'icons/obj/clothing/under/suits.dmi'
+	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/lawyer/dye_item(dye_color, dye_key_override)
@@ -140,8 +142,6 @@
 	desc = "A tacky suit perfect for a CRIMINAL lawyer!"
 	icon_state = "good_suit"
 	inhand_icon_state = "good_suit"
-	icon = 'icons/obj/clothing/under/suits.dmi'
-	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer/beige/skirt
 	name = "good lawyer's suitskirt"
