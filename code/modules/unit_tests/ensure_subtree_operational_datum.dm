@@ -9,8 +9,6 @@
 	/// Associated list of mobs that we need to test this on. Key is the typepath of the mob, value is a list of the planning subtree and the operational datums that are required for it.
 	var/list/testable_mobs = list()
 
-TEST_FOCUS(/datum/unit_test/ensure_subtree_operational_datum)
-
 /datum/unit_test/ensure_subtree_operational_datum/Run()
 	gather_testable_mobs()
 	test_applicable_mobs()
