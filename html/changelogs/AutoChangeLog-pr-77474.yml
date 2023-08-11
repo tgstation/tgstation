@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed latejoiners being affected by certain things twice, such as Summon Guns and Summon Magic"
