@@ -126,7 +126,3 @@
 	description = "I feel my soul degrading!"
 	mood_change = -8
 	timeout = 8 MINUTES
-/datum/mood_event/hauntium_morbid
-	description = "I feel a better connection with the spirits, I love this!"
-	mood_change = 3
-	timeout = 8 MINUTES

@@ -2900,24 +2900,27 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	material = /datum/material/hauntium
 	ph = 10
-	var/time_multiplier = 15 SECONDS
+	var/time_multiplier = 20 SECONDS
+	var/haunt_timer
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
 	. = ..()
-	exposed_obj.AddElement(/datum/element/haunted, 0)
-	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/haunted, 0)), volume * time_multiplier, TIMER_UNIQUE|TIMER_OVERRIDE)
+	exposed_obj.make_haunted(HAUNTIUM_REAGENT_TRAIT, "#f8f8ff")
+	haunt_timer = addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), volume * time_multiplier, TIMER_UNIQUE|TIMER_STOPPABLE)
+	if(haunt_timer) //if the timer for haunt removal is going and its splashed again, reset the timer.
+		deltimer(haunt_timer) //this looks kind of scuffed but every other way I tried it it just wouldn't work properly
+		haunt_timer = addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), volume * time_multiplier, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	to_chat(affected_mob, span_userdanger("You feel an evil presence inside you!"))
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID))
-		affected_mob.add_mood_event("hauntium_morbid", /datum/mood_event/hauntium_morbid, name) //8 minutes of slight mood buff if undead or morbid
+		affected_mob.add_mood_event("morbid_hauntium", /datum/mood_event/morbid_hauntium, name) //8 minutes of slight mood buff if undead or morbid
 	else
 		affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, name) //8 minutes of mood debuff
 
 /datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less recreational drug
-		affected_mob.set_drugginess(30 SECONDS * REM * seconds_per_tick)
+	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
 		affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
