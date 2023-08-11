@@ -27,15 +27,15 @@ TEST_FOCUS(/datum/unit_test/ensure_subtree_operational_datum)
 		if(!length(ai_planning_subtress))
 			continue
 
-		for(var/datum/ai_planning_subtree/subtree as anything in ai_planning_subtress) // we do as anything here
-			TEST_ASSERT(istype(subtree), "The planning subtree on [checkable_mob] is not a valid type! Got [subtree]") // so we can run this check here because you never know sometimes
-			subtree = allocate(subtree)
-			var/list/necessary_datums = subtree.operational_datums
+		for(var/subtree in ai_planning_subtress)
+			var/datum/ai_planning_subtree/testable_subtree = SSai_controllers.ai_subtrees[subtree] // easy money
+			TEST_ASSERT(istype(testable_subtree), "The planning subtree on [checkable_mob] is not a valid type! Got [subtree]")
+			var/list/necessary_datums = testable_subtree.operational_datums
 			if(isnull(necessary_datums))
 				continue
 
 			testable_mobs[checkable_mob] = list(
-				REQUIRED_SUBTREE = subtree,
+				REQUIRED_SUBTREE = testable_subtree.type,
 				REQUIRED_OPERATIONAL_DATUMS = necessary_datums,
 			)
 
