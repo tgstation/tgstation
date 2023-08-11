@@ -5303,6 +5303,7 @@
 #include "monkestation\code\game\machinery\prize_vendor.dm"
 #include "monkestation\code\game\machinery\computer\cloning.dm"
 #include "monkestation\code\game\machinery\power\ptl.dm"
+#include "monkestation\code\game\machinery\suit_storage_unit.dm"
 #include "monkestation\code\game\machinery\trains\train_cart.dm"
 #include "monkestation\code\game\machinery\trains\train_head.dm"
 #include "monkestation\code\game\machinery\trains\train_network.dm"
