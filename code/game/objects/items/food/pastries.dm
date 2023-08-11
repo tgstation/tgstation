@@ -517,7 +517,6 @@
 /obj/item/food/cookie/macaron
 	name = "macaron"
 	desc = "A sandwich-like confectionary with a soft cookie shell and a creamy icing center."
-	food_reagents = list(
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	icon_state = "macaron_1"
 	base_icon_state = "macaron"
