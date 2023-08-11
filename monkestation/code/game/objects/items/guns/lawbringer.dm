@@ -567,6 +567,7 @@
 				C.Paralyze(10 SECONDS)
 				C.set_jitter_if_lower(40 SECONDS)
 				C.set_stutter(40 SECONDS)
+
 //LOCKER OVERRIDES//
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -575,12 +576,15 @@
 	new /obj/item/gun/energy/e_gun/lawbringer(src)
 
 //OBJECTIVE OVERRIDES//
-/datum/objective_item/steal/hoslaser
+/datum/objective_item/steal/lawbringer
 	name = "the head of security's lawbringer"
 	targetitem = /obj/item/gun/energy/e_gun/lawbringer
+	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	item_owner = list(JOB_HEAD_OF_SECURITY)
+	exists_on_map = TRUE
 
-/obj/item/gun/energy/e_gun/lawbringer/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/lawbringer)
+/obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
 
 //THE MANUAL//
 /obj/item/paper/guides/lawbringer

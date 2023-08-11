@@ -206,12 +206,14 @@
 /obj/item/gun/energy/laser/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/laser/captain)
 
+/* //monkestation removal
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
+*/
 
 /obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
