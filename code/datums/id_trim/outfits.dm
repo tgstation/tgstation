@@ -72,4 +72,5 @@
 
 /datum/id_trim/cyber_police/New()
 	. = ..()
-	access |= SSid_access.get_region_access_list(list(REGION_ACCESS_ALL_GLOBAL))
+
+	access |= SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL))

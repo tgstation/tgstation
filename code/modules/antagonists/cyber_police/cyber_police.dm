@@ -2,7 +2,6 @@
 	name = "Cyber Police"
 	antagpanel_category = ANTAG_GROUP_CYBERAUTH
 	job_rank = ROLE_CYBER_POLICE
-	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoCyberAuth"
 	suicide_cry = "ALT F4!"
@@ -15,10 +14,11 @@
 /datum/antagonist/cyber_police/on_gain()
 	forge_objectives()
 
+	var/mob/living/carbon/player = owner.current
 	var/datum/martial_art/the_sleeping_carp/carp = new()
-	carp.teach(owner.current)
+	carp.teach(player)
 
-	owner.current.add_traits(list(
+	player.add_traits(list(
 		TRAIT_NOBREATH,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
@@ -29,6 +29,13 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_RESISTCOLD,
 		), TRAIT_GENERIC,
+	)
+
+	player.faction |= list(
+		ROLE_SYNDICATE,
+		FACTION_HOSTILE,
+		FACTION_BOSS,
+		FACTION_STICKMAN,
 	)
 
 	return ..()
