@@ -69,14 +69,6 @@
 	stamina = 60 //monke edit: damage changed from 45 to 60
 	weak_against_armour = FALSE
 
-/obj/projectile/beam/laser/musket/syndicate //monke edit: syndicate laser musket
-	name = "resonant laser"
-	damage = 30
-	stamina = 65
-	weak_against_armour = FALSE
-	armour_penetration = 25 //less powerful than armor piercing rounds
-	wound_bonus = 10
-
 /obj/projectile/beam/weak
 	damage = 15
 
