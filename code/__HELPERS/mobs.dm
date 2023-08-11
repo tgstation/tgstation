@@ -103,8 +103,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list)
 	if(!GLOB.anime_top_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list)
-	if(!GLOB.goblin_ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list)
+	if(!GLOB.goblin_ears_list.len)//monkestation addition
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list)//monkestation addition
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
@@ -133,7 +133,7 @@
 		"anime_middle" = pick(GLOB.anime_middle_list),
 		"anime_bottom" = pick(GLOB.anime_bottom_list),
 		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
-		"goblin_ears" = pick(GLOB.goblin_ears_list),
+		"goblin_ears" = pick(GLOB.goblin_ears_list),//monkestation addition
 	))
 
 /proc/random_hairstyle(gender)

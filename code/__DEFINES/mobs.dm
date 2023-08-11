@@ -129,7 +129,7 @@
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
 #define SPECIES_SIMIAN "simian"
-#define SPECIES_GOBLIN "goblin"
+#define SPECIES_GOBLIN "goblin"//monkestation addition
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
