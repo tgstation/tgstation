@@ -22,13 +22,14 @@
 
 		for(var/datum/ai_planning_subtree/subtree as anything in ai_planning_subtress) // we do as anything here
 			TEST_ASSERT(istype(subtree), "The planning subtree on [checkable_mob] is not a valid type! Got [subtree]") // so we can run this check here because you never know sometimes
-			var/datum/necessary_datum = initial(subtree.operational_datum)
-			if(isnull(necessary_datum))
+			subtree = allocate(subtree)
+			var/list/necessary_datums = subtree.operational_datums
+			if(isnull(necessary_datums))
 				continue
 
 			testable_mobs[checkable_mob] = list(
 				subtree,
-				necessary_datum,
+				necessary_datums,
 			)
 
 /// Then, test the mobs that we've found
@@ -44,9 +45,9 @@
 			continue
 
 		var/has_element = FALSE
-		var/datum/testable_operational_datum = checkable_mob_data[2]
+		var/list/testable_operational_datums = checkable_mob_data[2]
 		for(var/iterable in trait_sources)
-			if(iterable == testable_operational_datum)
+			if(iterable in testable_operational_datums)
 				has_element = TRUE
 				break
 
