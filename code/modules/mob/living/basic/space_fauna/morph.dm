@@ -88,14 +88,11 @@
 	holder.icon_state = null
 
 /mob/living/basic/morph/death(gibbed)
-	if(!HAS_TRAIT(src, TRAIT_DISGUISED))
-		return ..()
-
-	// the action should handle the rest
-	visible_message(
-		span_warning("[src] twists and dissolves into a pile of green flesh!"),
-		span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"),
-	)
+	if(HAS_TRAIT(src, TRAIT_DISGUISED))
+		visible_message(
+			span_warning("[src] twists and dissolves into a pile of green flesh!"),
+			span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"),
+		)
 
 	return ..()
 
