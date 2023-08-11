@@ -443,7 +443,7 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
+/obj/machinery/iv_drip/plumbing/deconstruct(disassembled = TRUE)
 	qdel(src)
 
 /atom/movable/screen/alert/iv_connected
