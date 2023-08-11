@@ -25,6 +25,7 @@
 				/obj/item/clothing/neck/large_scarf/blue = 6,
 				/obj/item/clothing/neck/infinity_scarf = 6,
 				/obj/item/clothing/neck/tie = 6,
+				/obj/item/clothing/neck/bowtie = 6,
 				/obj/item/clothing/head/rasta = 3,
 				/obj/item/clothing/head/chaplain/kippah = 3,
 				/obj/item/clothing/head/chaplain/taqiyah/red = 3,

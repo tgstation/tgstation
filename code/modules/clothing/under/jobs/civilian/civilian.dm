@@ -4,28 +4,11 @@
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
-/obj/item/clothing/under/rank/civilian/bartender
-	desc = "It looks like it could use some more flair."
-	name = "bartender's uniform"
-	icon_state = "barman"
-	inhand_icon_state = "bar_suit"
-	alt_covers_chest = TRUE
-
 /obj/item/clothing/under/rank/civilian/bartender/purple
 	desc = "It looks like it has lots of flair!"
 	name = "purple bartender's uniform"
 	icon_state = "purplebartender"
 	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/civilian/bartender/skirt
-	name = "bartender's skirt"
-	desc = "It looks like it could use some more flair."
-	icon_state = "barman_skirt"
-	inhand_icon_state = "bar_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/civilian/chaplain
 	desc = "It's a black jumpsuit, often worn by religious folk."
