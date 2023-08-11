@@ -85,16 +85,14 @@
 		var/obj/item/gun/our_gun = loc
 		// grab the damage multiplier.
 		proj_damage_mult = our_gun.projectile_damage_multiplier
-
 	var/list/readout = list()
-	// No dividing by 0
-	if(proj_damage_mult)
-		if(initial(exam_proj.damage) > 0)
-			readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * proj_damage_mult) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round."
-		if(initial(exam_proj.stamina) > 0)
-			readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * proj_damage_mult) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds."
-	if(!readout.len) // Everything else failed, give generic text
+	if(!proj_damage_mult || proj_damage_mult <= 0)
 		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric."
+	// No dividing by 0
+	if(initial(exam_proj.damage) > 0)
+		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * proj_damage_mult) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round."
+	if(initial(exam_proj.stamina) > 0)
+		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * proj_damage_mult) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds."
 	return readout.Join("\n") // Sending over a single string, rather than the whole list
 
 /obj/item/ammo_casing/update_icon_state()
