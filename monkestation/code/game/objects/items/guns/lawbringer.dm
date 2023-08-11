@@ -63,84 +63,114 @@
 	if(findtext(raw_message, @"detain"))
 		selectammo(DETAIN, speaker)
 		say("Generating detain lens")
+		return TRUE
 	if(findtext(raw_message, @"disable"))
 		selectammo(DETAIN, speaker)
 		say("Generating detain lens")
+		return TRUE
+	if(findtext(raw_message, @"stun"))
+		selectammo(DETAIN, speaker)
+		say("Generating detain lens")
+		return TRUE
 	if(findtext(raw_message, @"execute"))
 		selectammo(EXECUTE, speaker)
 		say("Fabricating lethal bullets")
+		return TRUE
 	if(findtext(raw_message, @"kill"))
 		selectammo(EXECUTE, speaker)
 		say("Fabricating lethal bullets")
+		return TRUE
 	if(findtext(raw_message, @"lethal"))
 		selectammo(EXECUTE, speaker)
 		say("Fabricating lethal bullets")
-	if(findtext(raw_message, @"hotshot"))
+		return TRUE
+	if(findtext(raw_message, @"hot"))
 		selectammo(HOTSHOT, speaker)
 		say("Forming proto-plasma")
+		return TRUE
 	if(findtext(raw_message, @"burn"))
 		selectammo(HOTSHOT, speaker)
 		say("Forming proto-plasma")
+		return TRUE
 	if(findtext(raw_message, @"fire"))
 		selectammo(HOTSHOT, speaker)
 		say("Forming proto-plasma")
-	if(findtext(raw_message, @"smokeshot"))
+		return TRUE
+	if(findtext(raw_message, @"smoke"))
 		selectammo(SMOKESHOT, speaker)
 		say("Compressing Smoke")
+		return TRUE
 	if(findtext(raw_message, @"fog"))
 		selectammo(SMOKESHOT, speaker)
 		say("Compressing Smoke")
+		return TRUE
 	if(findtext(raw_message, @"breach"))
 		selectammo(BIGSHOT, speaker)
 		say("Fabricating protomatter shell")
+		return TRUE
 	if(findtext(raw_message, @"bigshot"))
 		selectammo(BIGSHOT, speaker)
 		say("Fabricating protomatter shell")
+		return TRUE
 	if(findtext(raw_message, @"clown"))
 		selectammo(CLOWNSHOT, speaker)
 		say("Honk")
+		return TRUE
 	if(findtext(raw_message, @"pulse"))
 		selectammo(PULSE, speaker)
 		say("Compressing air")
+		return TRUE
 	if(findtext(raw_message, @"throw"))
 		selectammo(PULSE, speaker)
 		say("Compressing air")
+		return TRUE
 	if(findtext(raw_message, @"push"))
 		selectammo(PULSE, speaker)
 		say("Compressing air")
+		return TRUE
 	if(findtext(raw_message, @"grey"))
 		selectammo(TIDESHOT, speaker)
 		say("Greytide inversion active")
+		return TRUE
 	if(findtext(raw_message, @"tide"))
 		selectammo(TIDESHOT, speaker)
 		say("Greytide inversion active")
+		return TRUE
 
 	//ammo selector v6 (come back to me)
 	/*
-	if(findtext(raw_message, @"detain|disable"))
+	if(findtext(raw_message, @"detain|disable|stun"))
 		selectammo(DETAIN, speaker)
 		say("Generating detain lens")
+		return TRUE
 	if(findtext(raw_message, @"execute|kill|lethal"))
 		selectammo(EXECUTE, speaker)
 		say("Fabricating lethal bullets")
-	if(findtext(raw_message, @"hotshot|burn|fire"))
+		return TRUE
+	if(findtext(raw_message, @"hot|burn|fire"))
 		selectammo(HOTSHOT, speaker)
 		say("Forming proto-plasma")
-	if(findtext(raw_message, @"smokeshot|fog"))
+		return TRUE
+	if(findtext(raw_message, @"smoke|fog"))
 		selectammo(SMOKESHOT, speaker)
 		say("Compressing Smoke")
+		return TRUE
 	if(findtext(raw_message, @"bigshot|breach"))//DOES NOT WORK. * ADDENDUM: Works if i say "Bigshot|Breach" in ic
 		selectammo(BIGSHOT, speaker)
 		say("Fabricating protomatter shell")
+		return TRUE
 	if(findtext(raw_message, @"clown")) //WORKS!!!!
 		selectammo(CLOWNSHOT, speaker)
 		say("Honk")
+		return TRUE
 	if(findtext(raw_message, @"pulse|throw|push"))
 		selectammo(PULSE, speaker)
 		say("Compressing air")
+		return TRUE
 	if(findtext(raw_message, @"grey|tide"))
 		selectammo(TIDESHOT, speaker)
 		say("Greytide inversion active")
+		return TRUE
 	*/
 
 	/* //ammo selector v3 (functions but only if you say ?: before the activation word)
@@ -234,6 +264,8 @@
 		if(!owner_dna)
 			owner_dna = C.dna.unique_enzymes
 			balloon_alert(user, "biometric lock engaged")
+			new /obj/item/paper/guides/lawbringer(get_turf(src))
+			user.visible_message(span_notice("The [src] prints out a sheet of paper from its authenticator"))
 			updatepin(user)
 			nametag(user)
 		return
@@ -282,21 +314,6 @@
 /obj/item/stock_parts/cell/lawbringer
 	name = "Lawbringer power cell"
 	maxcharge = 3000 //300
-
-/*
-PART 1:
-The ammo+projectiles+cell [DONE][MOSTLY]
-PART 2:
-Voice stuff and biometrics [DONE][NOT REALLY]
-PART 3:
-Sprites [DONE]
-PART 4:
-Mapping it in
-PART 5:
-In situ balance testing
-PART 6:
-The manual (In game paper explaining gun's functionality)
-*/
 
 // holds 3000 charges 100
 
@@ -469,6 +486,7 @@ The manual (In game paper explaining gun's functionality)
 	icon_state = "chronobolt"
 	damage = 0
 	damage_type = BRUTE
+	range = 5
 
 /obj/projectile/lawbringer/pulse/on_hit(mob/living/target, blocked = FALSE)
 	. = ..()
@@ -514,6 +532,75 @@ The manual (In game paper explaining gun's functionality)
 				C.Paralyze(10 SECONDS)
 				C.set_jitter_if_lower(40 SECONDS)
 				C.set_stutter(40 SECONDS)
+//LOCKER OVERRIDES//
+/obj/structure/closet/secure_closet/hos/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objectives
+	new /obj/item/gun/energy/e_gun/lawbringer(src)
+
+//OBJECTIVE OVERRIDES//
+/datum/objective_item/steal/hoslaser
+	name = "the head of security's lawbringer"
+	targetitem = /obj/item/gun/energy/e_gun/lawbringer
+
+/obj/item/gun/energy/e_gun/lawbringer/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/lawbringer)
+
+//THE MANUAL//
+/obj/item/paper/guides/lawbringer
+	name = "paper - lawbringer manual"
+	color = "#d110eb"
+	default_raw_text = {"
+Dear valued customer, thank you for purchasing, inheriting, finding, or otherwise acquiring the Aetherofusion Lawbringer v6
+
+<br>The lawbringer is equipped with a state of the art protomatter emitter system, able to produce both energy and ballistic projectiles from one output system.
+The emitter is controlled by an onboard low-level ai, which responds to the voice of the owner, and changes the output in response.
+Due to the exotic methods of ammunition, it cannot be externally charged, and relies on the internal protomatter generation system for power.
+<br>
+<br><h3><B>Onboard Security</B></h3>
+<br>The lawbringer uses a biometric lock on its firing pin, set by moving a finger over the authenticator.
+The onboard AI is then given your biometric information, and calibrates itself to only respond to your voice.
+It is able to discern your voice through voice obscuring and altering software, <i>we do not know how it does this</i>.
+In the event someone not authorised attepts to use the lawbringer, it will result in the handle releasing a deterring electric shock.
+<br>
+<br><h3><B>Firing Modes</B></h3>
+<br>Testing with the onboard ai has revealed 8 consistant firing modes. Speaking into the lawbringer will prompt the ai to change firing modes.
+<br><B>Detain</B>
+<br>This mode fires 4 highly focused disabler shots, the high focus allows for the ai to preform predictive adjustments on the shots, causing them to reflect into targets.
+The focused beams reduce the stopping power of each individual beam.
+Its activation codes are "Detain", "Disable", and "Stun".
+<br><B>Execute</B>
+<br>This mode fires a single protomatter bullet, this has remarkably no special qualities to it.
+Its activation codes are "Execute", "Lethal", and "Kill".
+<br><B>Hotshot</B>
+<br>This mode fires a glob of self-contained plasma, apon contact with a target, the plasma will rapidly expand, setting the target on fire.
+Its activation codes are "Hot", "Burn", and "Fire".
+<br><B>Smokeshot</B>
+<br>This mode fires a ball of smoke, contained within a sphere of rapidly disintegrating ash, apon contact with the ground, it will create a cloud of smoke.
+Its activation codes are "Smoke", and "Fog".
+<br><B>Bigshot</B>
+<br>This mode fires an energized plasma spheroid, which surrounds a spherical protomatter shell, apon contact with a soft target, like a human, the plasma will rapidly dissapate, and disarm the shell.
+However, on contact with a hard target, like a borg, mechanized exosuit, or wall, it the plasma will surround the target, after which the shell will detonate, causing the plasma to rapidly implode around the target.
+Attempts to reproduce this on soft targets has been unsuccessful.
+Its activation codes are "Bigshot", and "Breach".
+<br><B>Clownshot</B>
+<br>This mode fires a bananium bullet from a catalyzed protomatter reaction. It seems to do minimal damage. <B><i>Untested on clowns</i></B>.
+It is only activated by saying "Clown".
+<br><B>Pulse</B>
+<br>This mode causes the gun to release a blast of air from its emitter, air seems to be mostly n2, with around 0.03% being antinoblium. The blast of air is enough to launch someone back.   Fun fact: This mode was discovered when attempting to replicate a pulse rifle with the lawbringer.
+Its activation codes are "Pulse", "Throw", and "Push".
+<br><B>Tideshot</B>
+<br>This mode fires an anomalous disabler shot. At first thought to be simply an inferior and colorless disabler, it was discovered to rapidly immobilize the unemployed.
+The exact mechanism behind this is unknown, however what is known is that it triggers an electrical impulse that travels along the skin of the target, which would then travel into motor nerves, immobilizing all surface muscles.
+Its activation codes are "Grey", and "Tide".
+<br>
+<br><h3><B>Transfer of ownership</B></h3>
+<br>In the event of your unfortunate demise, a peaceful(?) transfer of power, or an extreme dosage of mutagens, you may need to transfer ownership between yourself and another.
+This can be done via swiping an authentication disk, (which can be set by you after purchase, or by an employer) on the authenticator. Only the disk's serial is read, conents are left private* for security purposes.
+<br>
+<br><small><sub>*nuclear secrecy not guaranteed</sub></small>
+	"}
 
 #undef DETAIN
 #undef EXECUTE
