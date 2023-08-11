@@ -1,5 +1,6 @@
 /// Sets the BB target to a mob which you can see and who has recently attacked you
 /datum/ai_planning_subtree/target_retaliate
+	necessary_element = /datum/element/ai_retaliate
 	/// Blackboard key which tells us how to select valid targets
 	var/targetting_datum_key = BB_TARGETTING_DATUM
 	/// Blackboard key in which to store selected target

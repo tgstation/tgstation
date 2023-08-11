@@ -129,6 +129,7 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
 #include "emoting.dm"
+#include "ensure_subtree_element.dm"
 #include "explosion_action.dm"
 #include "fish_unit_tests.dm"
 #include "focus_only_tests.dm"
