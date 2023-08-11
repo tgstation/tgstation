@@ -55,6 +55,7 @@
 	RegisterSignal(src, COMSIG_ACTION_DISGUISED_APPEARANCE, PROC_REF(on_disguise))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DISGUISED), PROC_REF(on_undisguise))
 
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/content_barfer)
 
 	disguise_ability = new(src)
