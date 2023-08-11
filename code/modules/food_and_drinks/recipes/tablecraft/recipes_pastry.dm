@@ -662,8 +662,9 @@
 /datum/crafting_recipe/food/macaron
 	name = "Macaron"
 	reqs = list(
-		/datum/reagent/consumable/eggwhite = 12,
+		/datum/reagent/consumable/eggwhite = 2,
 		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/flour = 5,
 	)
 	result = /obj/item/food/cookie/macaron
 	category = CAT_PASTRY

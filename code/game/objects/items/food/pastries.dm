@@ -520,7 +520,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	icon_state = "macaron_1"
 	base_icon_state = "macaron"
-	tastes = list("wafer" = 2, "creamy frosting" = 3)
+	tastes = list("wafer" = 2, "creamy meringue" = 3)
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
