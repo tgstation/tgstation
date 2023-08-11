@@ -87,7 +87,7 @@ where you don't want to be tied to the formal layout of the class structure.
 On /tg/station we do this by adding markdown files inside the `code` directory
 that will also be rendered and added to the modules tree. The structure for
 these is deliberately not defined, so you can be as freeform and as wheeling as
-you would like.
+you would like. 
 
 [Here is a representative example of what you might write](http://codedocs.tgstation13.org/code/modules/keybindings/readme.html)
 
