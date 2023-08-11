@@ -66,7 +66,7 @@
 
 	if(isanimal(meal))
 		var/mob/living/simple_animal/simple_meal = meal
-		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
 			if(silent)
 				return FALSE
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
@@ -76,7 +76,7 @@
 			return FALSE
 	else if(isbasicmob(meal))
 		var/mob/living/basic/basic_meal = meal
-		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[CLONE] <= 0)
+		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[BRUTE] <= 0)
 			if (silent)
 				return FALSE
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
@@ -132,6 +132,23 @@
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
 			"I do not feel nourished", "This subject is not food")]!</span>")
+		var/mob/living/carbon/carbon_victim = buckled
+		if(istype(carbon_victim))
+			var/should_apply_effect = TRUE
+			if(ishuman(carbon_victim))
+				var/mob/living/carbon/human/lucky_owner = carbon_victim
+				var/head_rating = istype(lucky_owner.head) ? lucky_owner.head.get_armor_rating(BIO) : 0
+				var/suit_rating = istype(lucky_owner.wear_suit) ? lucky_owner.wear_suit.get_armor_rating(BIO) : 0
+				var/uniform_rating = istype(lucky_owner.w_uniform) ? lucky_owner.w_uniform.get_armor_rating(BIO) : 0
+
+				// start off at 100 prob, get reduced the higher the helmet, suit and uniform armor is
+				var/apply_chance = 100 - ((head_rating + min(suit_rating + uniform_rating, 100)) / 200)
+				if(!prob(apply_chance))
+					should_apply_effect = FALSE
+
+			if(should_apply_effect)
+				carbon_victim.apply_status_effect(/datum/status_effect/slimed)
+
 		if(!silent)
 			visible_message(span_warning("[src] lets go of [buckled]!"), \
 							span_notice("<i>I stopped feeding.</i>"))
