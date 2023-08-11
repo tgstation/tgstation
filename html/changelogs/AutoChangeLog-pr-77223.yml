@@ -1,0 +1,7 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - qol: "Gigabeacons no longer need to be constructed like standard machines, instead being printed as items that can be deployed quickly inhand without tools."
+  - qol: "Gigabeacons are no longer their own research node, instead being a part of telecomms tech (due to the fact they're RADIO navigation beacons)"
+  - image: "Navigation gigabeacons now have their own unique sprites, inspired by maritime EPIRB devices. If you find a yellow box with an antenna on it, you probably found a nav beacon!"
+  - code_imp: "The deployable component now gives you an option to disable the examine blurb it adds to its parent"
