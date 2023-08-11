@@ -32,8 +32,8 @@
 	///Same as above, but on removal.
 	var/fade_out = 0
 
-/datum/client_colour/New(mob/_owner)
-	owner = _owner
+/datum/client_colour/New(mob/owner)
+	src.owner = owner
 
 /datum/client_colour/Destroy()
 	if(!QDELETED(owner))
@@ -211,9 +211,10 @@
 	colour = list(0,0,0,0,0,0,0,0,0,1,0,0) //pure red.
 	fade_out = 10
 
-/datum/client_colour/bloodlust/New(mob/_owner)
+/datum/client_colour/bloodlust/New(mob/owner)
 	..()
-	addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
+	if(owner)
+		addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
 
 /datum/client_colour/rave
 	priority = PRIORITY_LOW
