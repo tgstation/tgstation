@@ -89,11 +89,19 @@
 #define SHUTTLE_DEFAULT_SHUTTLE_AREA_TYPE /area/shuttle
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
 
-//Shuttle unlocks
+/// Shuttle unlocks
+// Needs Alien Technology researched.
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
+// Needs bubblegum to die.
 #define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+// Needs one to set the holodeck to Medieval Sim.
 #define SHUTTLE_UNLOCK_MEDISIM "holodeck"
+// Needs a rune to be cleared by a null rod.
 #define SHUTTLE_UNLOCK_NARNAR "narnar"
+// Needs someone to be polymorphed - Pride Mirror, Magic Mirror, Race Swap, Polymorph Staff/Wand. Badmin Mirror doesn't count, neither does xenobio.
+#define SHUTTLE_UNLOCK_WABBAJACK "wabbajack"
+// Needs cargo budget to be almost empty to be purchasable.
+#define SHUTTLE_UNLOCK_SCRAPHEAP "scrapheap"
 
 //Shuttle Events
 

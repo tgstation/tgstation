@@ -1,0 +1,6 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - balance: "Lepton Violet (wabbajack) shuttle must be unlocked by having some form of polymorph happen in-game first (Pride Mirror or the cursed springs are the most accessible sources)"
+  - balance: "Scrapheap shuttle can only be bought if the Cargo budget is below 600 credits, and the shuttle has just less than half of its usual refueling time left. However, it gives the cargo budget an influx of 3000 credits!"
+  - qol: "Uncle Pete's Rollerdome has had its price increased, and the disco machine is no longer unbreakable."
