@@ -2095,12 +2095,12 @@
 	glass = TRUE
 //////////////////////////////////
 /*
-	Station2 Airlocks
+	Public Airlocks
 */
 
 /obj/machinery/door/airlock/public
-	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/public/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
 
 /obj/machinery/door/airlock/public/glass
@@ -2415,16 +2415,15 @@
 
 //////////////////////////////////
 /*
-	Misc Airlocks
+	Multi-tile (Large) Airlocks
 */
 
-/obj/machinery/door/airlock/multi_tile/glass
+/obj/machinery/door/airlock/multi_tile
+	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_public
 	multi_tile = TRUE
-	name = "large glass airlock"
-	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
 	opacity = FALSE
-	assemblytype = /obj/structure/door_assembly/multi_tile/glass
 	glass = TRUE
 	bound_width = 64 // 2x1
 
@@ -2440,6 +2439,8 @@
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	/// The door/airlock this fluff panel is attached to
 	var/obj/machinery/door/filled_airlock
+
+/obj/machinery/door/airlock/multi_tile/public/glass
 
 /obj/machinery/door/airlock/multi_tile/narsie_act()
 	return
