@@ -476,3 +476,59 @@
   xPokee:
   - bugfix: Fixed the tramstation kitchen not having any lights
   - image: added a wagging tail for cake cats to match other cats
+2023-08-11:
+  EOBGames, MrMelbert:
+  - rscadd: Mars celebrates the 250th anniversary of the Martian Concession this year,
+      and this has brought Martian cuisine to new heights of popularity. Find a new
+      selection of Martian foods and drinks available in your crafting menu today!
+  FernandoJ8:
+  - bugfix: crafting recipes without a name, such as the mothic pizzas, will inherit
+      the name of the item they make
+  Fikou:
+  - bugfix: fixes kinesis not actually immobilizing or blocking hands of grabbed mobs
+  - balance: Space Ninja's energy net uses a projectile to catch people now.
+  Ghommie:
+  - bugfix: Fixed fired foam darts, gumballs and (harmless) lollipops being embeddable.
+  - bugfix: Projectiles that should embed while being reusable will now do so correctly,
+      actually embedding the reusable casing instead of a shrapnel.
+  - balance: Arrows are generally more likely to embed now, except for blazing ones,
+      that kind of just blaze.
+  - qol: the quiver storage now uses numerical stacking (like botany and ore bags,
+      or the RPED, for example).
+  - bugfix: Fixed an oddity with morgue corpses being shakeable like they're just
+      unconscious.
+  - bugfix: Mirror reflections no longer display progress bars or runechat.
+  - bugfix: Fixed an oversight with processable items that lead to the same chat message
+      being sent multiple times.
+  LT3:
+  - bugfix: Large airlocks are now a subtype and function on both tiles
+  Melbert:
+  - bugfix: Fix some missing wizard spellbook flavor
+  - bugfix: Fixed latejoiners being affected by certain things twice, such as Summon
+      Guns and Summon Magic
+  Paxilmaniac:
+  - bugfix: The bulbs of lights will now have an emissive glow when on, making it
+      so they appear active no matter how dark the area surrounding them happens to
+      be.
+  Pickle-Coding:
+  - balance: Changeling arm blade has an armour penetration of 35%.
+  - balance: Changeling arm blade has a wound bonus of 10, from -20.
+  - balance: Changeling has a bare wound bonus of 10, from 20.
+  Vekter:
+  - bugfix: FRAG-12 shells no longer require sulfuric acid, instead needing 10 fluorosulfuric
+      acid. This should prevent them from leaving byproducts if crafted in a specific
+      way.
+  Vincent983:
+  - spellcheck: improvised fire extinguishers aren't full of typoes now
+  Watermelon914:
+  - admin: 'Added new lua functions: SS13.is_valid, SS13.stop_tracking, SS13.new_untracked,
+      SS13.type and SS13.qdel'
+  carlarctg:
+  - qol: Drill module automatically disables if it's about to drill into gibtonite
+  iain0:
+  - bugfix: A small clerical error fixed which will cause the Ukrainian station naming
+      prefix to be properly applied to the Independence Day of Ukraine holiday on
+      24th August, rather than overwriting the Indigenous People's Day station prefixes.
+  timothymtorres:
+  - rscadd: Add admin blackhole shuttle event with a normal version and suicidal version.
+  - bugfix: Fix several shuttle event runtimes

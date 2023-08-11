@@ -1,4 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - bugfix: "FRAG-12 shells no longer require sulfuric acid, instead needing 10 fluorosulfuric acid. This should prevent them from leaving byproducts if crafted in a specific way."
