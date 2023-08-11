@@ -21,13 +21,14 @@ TEST_FOCUS(/datum/unit_test/ensure_subtree_operational_datum)
 		var/datum/ai_controller/testable_controller = initial(checkable_mob.ai_controller)
 		if(isnull(testable_controller))
 			continue
+
 		// we can't do inital() memes on lists so it's allocation time
 		testable_controller = allocate(testable_controller)
-		var/list/ai_planning_subtress = testable_controller.planning_subtrees // list of instantiated datums. easy money
-		if(!length(ai_planning_subtress))
+		var/list/ai_planning_subtrees = testable_controller.planning_subtrees // list of instantiated datums. easy money
+		if(!length(ai_planning_subtrees))
 			continue
 
-		for(var/datum/ai_planning_subtree/testable_subtree as anything in ai_planning_subtress)
+		for(var/datum/ai_planning_subtree/testable_subtree as anything in ai_planning_subtrees)
 			var/list/necessary_datums = testable_subtree.operational_datums
 			if(isnull(necessary_datums))
 				continue
