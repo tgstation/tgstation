@@ -125,7 +125,7 @@
 		try_draw_new_rune(user, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if (istype(target, /obj/effect/decal/cleanable/traitor_rune))
+	if (istype(target, /obj/effect/decal/cleanable/traitor_rune) && multi_stage) //monkestation edit: adds multi_stage check
 		try_complete_rune(user, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 

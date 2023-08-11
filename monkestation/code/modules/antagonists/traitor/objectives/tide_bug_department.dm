@@ -142,16 +142,21 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_GREY_TIDE_TRAITOR, resolved_objective.affected_areas, TRUE)
 
+#define TIME_TO_UNBOLT 5 MINUTES
 /obj/machinery/door/airlock/proc/traitor_bug_tide()
 	if(obj_flags & EMAGGED)
 		return
 
-	locked = FALSE
+	unbolt()
 	open()
 
 //its random if it gets bolted or electrifried or not
 	if(prob(70))
-		locked = TRUE
+		bolt()
 
 	if(prob(30))
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
+
+	addtimer(CALLBACK(src, PROC_REF(unbolt)), TIME_TO_UNBOLT) //unbolt the airlocks in 5 minutes
+
+#undef TIME_TO_UNBOLT
