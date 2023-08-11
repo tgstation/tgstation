@@ -42,7 +42,7 @@
 
 		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
 		hanging_object.setDir(floor_to_wall)
-		on_wall.AddComponent(/datum/component/wall_link, hanging_object)
+		on_wall.AddComponent(/datum/component/wall_mounted, hanging_object)
 
 		if(pixel_shift)
 			switch(floor_to_wall)
