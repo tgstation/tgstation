@@ -515,14 +515,20 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cookie/macaron
-	name = "snickerdoodle"
+	name = "macaron"
 	desc = "A sandwich-like confectionary with a soft cookie shell and a creamy icing center."
-	icon_state = "macaron"
+	food_reagents = list(
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
-	tastes = list("soft cookie" = 2, "creamy icing" = 3)
+	icon_state = "macaron_1"
+	base_icon_state = "macaron"
+	tastes = list("wafer" = 2, "creamy frosting" = 3)
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/cookie/macaron/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 4)]"
 
 /obj/item/food/cookie/thumbprint_cookie
 	name = "thumbprint cookie"
