@@ -12,6 +12,10 @@
 		var/datum/action/avatar_domain_info/action = new(help_datum)
 		action.Grant(avatar)
 
+	var/obj/item/bitrunner_health_monitor/monitor = locate() in avatar
+	if(monitor)
+		SEND_SIGNAL(monitor, COMSIG_BITRUNNER_MONITOR_ON, pilot_mob, src)
+
 	pilot_ref = WEAKREF(pilot_mob)
 	netpod_ref = WEAKREF(hosting_netpod)
 
