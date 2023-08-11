@@ -24,6 +24,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(reset_appearances))
 
 /datum/action/cooldown/mob_cooldown/assume_form/Remove(mob/remove_from)
+	reset_appearances()
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	return ..()
 
