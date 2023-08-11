@@ -662,7 +662,7 @@
 /datum/crafting_recipe/food/macaron
 	name = "Macaron"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/eggwhite = 12,
 		/datum/reagent/consumable/cream = 5,
 	)
 	result = /obj/item/food/cookie/macaron
