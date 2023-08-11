@@ -640,7 +640,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 15,
 	)
 	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
-	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE
 	slice_type = /obj/item/food/cakeslice/pineapple_cream_cake
 
 /obj/item/food/cakeslice/pineapple_cream_cake
@@ -653,4 +653,4 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
-	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE

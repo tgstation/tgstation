@@ -313,5 +313,5 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("pineapple" = 4, "tomato" = 3, "onion" = 2, "chili" = 2)
-	foodtypes = VEGETABLES | FRUIT
+	foodtypes = VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL

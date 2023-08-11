@@ -975,7 +975,7 @@
 		/datum/reagent/consumable/nutriment = 8,
 	)
 	tastes = list("meat" = 5, "savory sauce" = 4, "tangy pineapple" = 3, "pepper" = 2)
-	foodtypes = MEAT | VEGETABLES | FRUIT
+	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
 
 /obj/item/food/kebab/pineapple_skewer
 	name = "pineapple skewer"
@@ -987,7 +987,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	tastes = list("juicy meat" = 4, "pineapple" = 3)
-	foodtypes = MEAT | FRUIT
+	foodtypes = MEAT | FRUIT | PINEAPPLE
 
 /obj/item/food/futomaki_sushi_roll
 	name = "futomaki sushi roll"
