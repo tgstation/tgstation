@@ -975,6 +975,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NUKE_OP_MINION_TRAIT "nuke-op-minion"
 /// Trait given by mech equipment
 #define TRAIT_MECH_EQUIPMENT(equipment_type) "mech_equipment_[equipment_type]"
+/// Trait given to you by shapeshifting
+#define SHAPESHIFT_TRAIT "shapeshift_trait"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.

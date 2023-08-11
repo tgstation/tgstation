@@ -86,10 +86,6 @@
 		patient.balloon_alert(user, "they're dead!")
 		return
 	if(isanimal_or_basicmob(patient) && heal_brute) // only brute can heal
-		var/mob/living/simple_animal/critter = patient
-		if (istype(critter) && !critter.healable)
-			patient.balloon_alert(user, "won't work!")
-			return FALSE
 		if (!(patient.mob_biotypes & MOB_ORGANIC))
 			patient.balloon_alert(user, "can't fix that!")
 			return FALSE
