@@ -81,6 +81,10 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 	name = "Tiny Witch Plush"
 	item_path = /obj/item/toy/plush/tinywitchplush
 
+/datum/loadout_item/toys/chefomancer
+	name = "Chef-o-Mancer Plush"
+	item_path = /obj/item/toy/plush/chefomancer
+
 /*
 *	CARDS
 */
