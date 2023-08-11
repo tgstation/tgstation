@@ -59,6 +59,42 @@
 		return FALSE
 
 	//placeholder code for figuring out a way of making this not an if string
+	//ammo selector v7 (everything about this is horrible but it actually works perfectly so)
+	/*
+	var/fixed_message = "?:[raw_message]" //horrible horrible horrible
+	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
+		selectammo(DETAIN)
+		say("Generating detain lens")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:execute|kill|lethal)")))
+		selectammo(EXECUTE)
+		say("Fabricating lethal bullets")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:bigshot|breach)")))
+		selectammo(BIGSHOT)
+		say("Fabricating protomatter shell")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:smoke|fog)")))
+		selectammo(SMOKESHOT)
+		say("Compressing Smoke")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:clown)")))
+		selectammo(CLOWNSHOT)
+		say("Honk")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:pulse|throw|push)")))
+		selectammo(PULSE)
+		say("Compressing air")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:grey|tide)")))
+		selectammo(TIDESHOT)
+		say("Greytide inversion active")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:hot|burn|fire)"))) //hot is a part of shot
+		selectammo(HOTSHOT)
+		say("Forming proto-plasma")
+		return TRUE
+	*/
 	//ammo selector v-1 (i have given up)(god hates me for making this)
 	if(findtext(raw_message, @"detain"))
 		selectammo(DETAIN, speaker)
@@ -136,7 +172,6 @@
 		selectammo(TIDESHOT, speaker)
 		say("Greytide inversion active")
 		return TRUE
-
 	//ammo selector v6 (come back to me)
 	/*
 	if(findtext(raw_message, @"detain|disable|stun"))
