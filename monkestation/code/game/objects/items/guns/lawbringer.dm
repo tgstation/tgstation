@@ -59,9 +59,8 @@
 		return FALSE
 
 	//placeholder code for figuring out a way of making this not an if string
-	//ammo selector v7 (everything about this is horrible but it actually works perfectly so)
-	/*
-	var/fixed_message = "?:[raw_message]" //horrible horrible horrible
+	//ammo selector v7
+	var/fixed_message = "[lowertext(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
 		selectammo(DETAIN)
 		say("Generating detain lens")
@@ -94,173 +93,6 @@
 		selectammo(HOTSHOT)
 		say("Forming proto-plasma")
 		return TRUE
-	*/
-	//ammo selector v-1 (i have given up)(god hates me for making this)
-	if(findtext(raw_message, @"detain"))
-		selectammo(DETAIN, speaker)
-		say("Generating detain lens")
-		return TRUE
-	if(findtext(raw_message, @"disable"))
-		selectammo(DETAIN, speaker)
-		say("Generating detain lens")
-		return TRUE
-	if(findtext(raw_message, @"stun"))
-		selectammo(DETAIN, speaker)
-		say("Generating detain lens")
-		return TRUE
-	if(findtext(raw_message, @"execute"))
-		selectammo(EXECUTE, speaker)
-		say("Fabricating lethal bullets")
-		return TRUE
-	if(findtext(raw_message, @"kill"))
-		selectammo(EXECUTE, speaker)
-		say("Fabricating lethal bullets")
-		return TRUE
-	if(findtext(raw_message, @"lethal"))
-		selectammo(EXECUTE, speaker)
-		say("Fabricating lethal bullets")
-		return TRUE
-	if(findtext(raw_message, @"hot"))
-		selectammo(HOTSHOT, speaker)
-		say("Forming proto-plasma")
-		return TRUE
-	if(findtext(raw_message, @"burn"))
-		selectammo(HOTSHOT, speaker)
-		say("Forming proto-plasma")
-		return TRUE
-	if(findtext(raw_message, @"fire"))
-		selectammo(HOTSHOT, speaker)
-		say("Forming proto-plasma")
-		return TRUE
-	if(findtext(raw_message, @"smoke"))
-		selectammo(SMOKESHOT, speaker)
-		say("Compressing Smoke")
-		return TRUE
-	if(findtext(raw_message, @"fog"))
-		selectammo(SMOKESHOT, speaker)
-		say("Compressing Smoke")
-		return TRUE
-	if(findtext(raw_message, @"breach"))
-		selectammo(BIGSHOT, speaker)
-		say("Fabricating protomatter shell")
-		return TRUE
-	if(findtext(raw_message, @"bigshot"))
-		selectammo(BIGSHOT, speaker)
-		say("Fabricating protomatter shell")
-		return TRUE
-	if(findtext(raw_message, @"clown"))
-		selectammo(CLOWNSHOT, speaker)
-		say("Honk")
-		return TRUE
-	if(findtext(raw_message, @"pulse"))
-		selectammo(PULSE, speaker)
-		say("Compressing air")
-		return TRUE
-	if(findtext(raw_message, @"throw"))
-		selectammo(PULSE, speaker)
-		say("Compressing air")
-		return TRUE
-	if(findtext(raw_message, @"push"))
-		selectammo(PULSE, speaker)
-		say("Compressing air")
-		return TRUE
-	if(findtext(raw_message, @"grey"))
-		selectammo(TIDESHOT, speaker)
-		say("Greytide inversion active")
-		return TRUE
-	if(findtext(raw_message, @"tide"))
-		selectammo(TIDESHOT, speaker)
-		say("Greytide inversion active")
-		return TRUE
-	//ammo selector v6 (come back to me)
-	/*
-	if(findtext(raw_message, @"detain|disable|stun"))
-		selectammo(DETAIN, speaker)
-		say("Generating detain lens")
-		return TRUE
-	if(findtext(raw_message, @"execute|kill|lethal"))
-		selectammo(EXECUTE, speaker)
-		say("Fabricating lethal bullets")
-		return TRUE
-	if(findtext(raw_message, @"hot|burn|fire"))
-		selectammo(HOTSHOT, speaker)
-		say("Forming proto-plasma")
-		return TRUE
-	if(findtext(raw_message, @"smoke|fog"))
-		selectammo(SMOKESHOT, speaker)
-		say("Compressing Smoke")
-		return TRUE
-	if(findtext(raw_message, @"bigshot|breach"))//DOES NOT WORK. * ADDENDUM: Works if i say "Bigshot|Breach" in ic
-		selectammo(BIGSHOT, speaker)
-		say("Fabricating protomatter shell")
-		return TRUE
-	if(findtext(raw_message, @"clown")) //WORKS!!!!
-		selectammo(CLOWNSHOT, speaker)
-		say("Honk")
-		return TRUE
-	if(findtext(raw_message, @"pulse|throw|push"))
-		selectammo(PULSE, speaker)
-		say("Compressing air")
-		return TRUE
-	if(findtext(raw_message, @"grey|tide"))
-		selectammo(TIDESHOT, speaker)
-		say("Greytide inversion active")
-		return TRUE
-	*/
-
-	/* //ammo selector v3 (functions but only if you say ?: before the activation word)
-	if(findtext(raw_message, regex("(?:detain|disable)")))
-		selectammo(DETAIN)
-		say("Generating detain lens")
-	if(findtext(raw_message, regex("(?:execute|kill|lethal)")))
-		selectammo(EXECUTE)
-		say("Fabricating lethal bullets")
-	if(findtext(raw_message, regex("(?:hotshot|burn|fire)")))
-		selectammo(HOTSHOT)
-		say("Forming proto-plasma")
-	if(findtext(raw_message, regex("(?:smokeshot|fog)")))
-		selectammo(SMOKESHOT)
-		say("Compressing Smoke")
-	if(findtext(raw_message, regex("(?:bigshot|breach)")))
-		selectammo(BIGSHOT)
-		say("Fabricating protomatter shell")
-	if(findtext(raw_message, regex("(?:clown)")))
-		selectammo(CLOWNSHOT)
-		say("Honk")
-	if(findtext(raw_message, regex("(?:pulse|throw|push)")))
-		selectammo(PULSE)
-		say("Compressing air")
-	if(findtext(raw_message, regex("(?:grey|tide)")))
-		selectammo(TIDESHOT)
-		say("Greytide inversion active")
-	*/
-	/*
-	//ammo selector v1 (broked)
-	if(findtext(raw_message, regex("detain|disable")))
-		selectammo(DETAIN, speaker)
-		say("Generating detain lens")
-	if(findtext(raw_message, regex("execute|kill|lethal")))
-		selectammo(EXECUTE, speaker)
-		say("Fabricating lethal bullets")
-	if(findtext(raw_message, regex("hotshot|burn|fire")))
-		selectammo(HOTSHOT, speaker)
-		say("Forming proto-plasma")
-	if(findtext(raw_message, regex("smokeshot|fog")))
-		selectammo(SMOKESHOT, speaker)
-		say("Compressing Smoke")
-	if(findtext(raw_message, regex("bigshot|breach")))
-		selectammo(BIGSHOT, speaker)
-		say("Fabricating protomatter shell")
-	if(findtext(raw_message, regex("clown")))
-		selectammo(CLOWNSHOT, speaker)
-		say("Honk")
-	if(findtext(raw_message, regex("pulse|throw|push")))
-		selectammo(PULSE, speaker)
-		say("Compressing air")
-	if(findtext(raw_message, regex("grey|tide")))
-		selectammo(TIDESHOT, speaker)
-		say("Greytide inversion active")
-	*/
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector)
 	select = shotnum
@@ -584,7 +416,7 @@
 	exists_on_map = TRUE
 
 /obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
+	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/lawbringer)
 
 //THE MANUAL//
 /obj/item/paper/guides/lawbringer
