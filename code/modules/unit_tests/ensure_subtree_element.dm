@@ -1,22 +1,21 @@
 /// Unit Test that ensure that if we add a specific planning subtree to a basic mob's planning tree, that we also have the element.
 /// This can be extended to other "mandatory" elements for certain subtrees to work.
-/datum/unit_test/ensure_retaliation
+/datum/unit_test/ensure_subtree_element
 	/// Associated list of mobs that we need to test this on. Key is the typepath of the mob, value is a list of the element and the subtree that requires it.
 	var/list/testable_mobs = list()
 
-
-
-/datum/unit_test/ensure_retaliation/Run()
+/datum/unit_test/ensure_subtree_element/Run()
 	gather_testable_mobs()
 	test_applicable_mobs()
 
 /// First, look for all mobs that have a planning subtree that requires an element, then add it to the list for stuff to test afterwards. Done like this to not have one mumbo proc that's hard to read.
-/datum/unit_test/ensure_retaliation/proc/gather_testable_mobs()
+/datum/unit_test/ensure_subtree_element/proc/gather_testable_mobs()
 	for(var/mob/living/basic/checkable_mob as anything in subtypesof(/mob/living/basic))
-		if(isnull(initial(checkable_mob.ai_controller)))
+		var/datum/ai_controller/testable_controller = initial(checkable_mob.ai_controller)
+		if(isnull(testable_controller))
 			continue
 		// we can't do inital() memes on lists so it's allocation time
-		var/datum/ai_controller/testable_controller = allocate(checkable_mob.ai_controller)
+		testable_controller = allocate(testable_controller)
 		var/list/ai_planning_subtress = testable_controller.planning_subtrees
 		if(!length(ai_planning_subtress))
 			continue
@@ -33,7 +32,7 @@
 			)
 
 /// Then, test the mobs that we've found
-/datum/unit_test/ensure_retaliation/proc/test_applicable_mobs()
+/datum/unit_test/ensure_subtree_element/proc/test_applicable_mobs()
 	for(var/mob/living/basic/checkable_mob as anything in testable_mobs)
 		checkable_mob = allocate(checkable_mob)
 
