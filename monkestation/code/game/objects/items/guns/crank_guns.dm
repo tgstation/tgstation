@@ -29,6 +29,9 @@
 	damage = 35
 	stamina = 60
 
+/obj/projectile/beam/disabler/smoothbore/prime
+	stamina = 65
+
 /obj/item/ammo_casing/energy/laser/musket
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
