@@ -9,7 +9,7 @@
 
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
-	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	cell_type = /obj/item/stock_parts/cell/lawbringer
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "lawbringer"
@@ -423,7 +423,7 @@
 	name = "paper - lawbringer manual"
 	color = "#d110eb"
 	default_raw_text = {"
-Dear valued customer, thank you for purchasing, inheriting, finding, or otherwise acquiring the Aetherofusion Lawbringer v6
+Dear valued customer, thank you for purchasing, inheriting, finding, or otherwise acquiring the Aetherofusion Lawbringer v7
 
 <br>The lawbringer is equipped with a state of the art protomatter emitter system, able to produce both energy and ballistic projectiles from one output system.
 The emitter is controlled by an onboard low-level ai, which responds to the voice of the owner, and changes the output in response.
