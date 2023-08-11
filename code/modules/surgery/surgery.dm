@@ -103,6 +103,18 @@
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
 
+/datum/surgery/proc/describe_steps(mob/living/user)
+	if(!locate(/obj/item/healthanalyzer) in user.held_items)
+		return
+
+	var/list/step_info = list()
+	var/datum/surgery_step/step = get_surgery_step()
+	step_info += "Next step: [capitalize(step.name)]"
+	if (step.repeatable)
+		var/datum/surgery_step/alternate_step = get_surgery_next_step()
+		step_info += "Alternate step: [capitalize(alternate_step.name)]"
+	to_chat(user, examine_block(jointext(step_info, "\n")))
+
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
 		return FALSE
@@ -120,9 +132,11 @@
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		describe_steps(user)
 		return TRUE
 	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 		to_chat(user, span_warning("This step requires a different tool!"))
+		describe_steps(user)
 		return TRUE
 
 	return FALSE
