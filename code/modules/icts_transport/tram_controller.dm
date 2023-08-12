@@ -532,9 +532,14 @@
 	update_appearance()
 
 /obj/machinery/icts/controller/attack_hand(mob/living/user, params)
-	if(cover_locked)
-		balloon_alert(user, "it's locked!")
-		return
+	if(user.get_idcard())
+		if(allowed(user) && !(obj_flags & EMAGGED))
+			cover_locked = !cover_locked
+			balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
+		else if(obj_flags & EMAGGED)
+			balloon_alert(user, "access controller damaged!")
+		else
+			balloon_alert(user, "access denied")
 
 /obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
@@ -549,6 +554,17 @@
 	cover_open = !cover_open
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/icts/controller/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "already fried!")
+		return FALSE
+	obj_flags |= EMAGGED
+	cover_locked = FALSE
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	balloon_alert(user, "access controller shorted")
+	return TRUE
+
 
 /**
  * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
