@@ -99,6 +99,10 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	fire_delay = 1 SECONDS
 
+/obj/item/gun/ballistic/automatic/laser/ctf/marksman/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
+
 /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman
 	max_ammo = 10
