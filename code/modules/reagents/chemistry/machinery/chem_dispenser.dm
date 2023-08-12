@@ -494,6 +494,7 @@
 		/datum/reagent/consumable/lemonjuice,
 		/datum/reagent/consumable/lemon_lime,
 		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/melon_soda,
 		/datum/reagent/consumable/menthol,
 		/datum/reagent/consumable/orangejuice,
 		/datum/reagent/consumable/pineapplejuice,
@@ -567,6 +568,7 @@
 		/datum/reagent/consumable/ethanol/ale,
 		/datum/reagent/consumable/ethanol/applejack,
 		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/consumable/ethanol/coconut_rum,
 		/datum/reagent/consumable/ethanol/cognac,
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
 		/datum/reagent/consumable/ethanol/creme_de_coconut,
@@ -577,6 +579,7 @@
 		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/beer/maltliquor,
 		/datum/reagent/consumable/ethanol/navy_rum,
+		/datum/reagent/consumable/ethanol/rice_beer,
 		/datum/reagent/consumable/ethanol/rum,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/tequila,
@@ -585,6 +588,7 @@
 		/datum/reagent/consumable/ethanol/vodka,
 		/datum/reagent/consumable/ethanol/whiskey,
 		/datum/reagent/consumable/ethanol/wine,
+		/datum/reagent/consumable/ethanol/yuyake,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
