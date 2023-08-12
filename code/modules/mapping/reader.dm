@@ -330,7 +330,7 @@
 	var/relative_y = first_column.ycrd
 	var/highest_y = relative_y + y_relative_to_absolute
 
-	if(!cropMap && highest_y > world.maxx)
+	if(!cropMap && highest_y > world.maxy)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
 			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - 1)
@@ -343,7 +343,7 @@
 	var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
 	// How many lines to skip because they'd be above the y cuttoff line
 	var/y_starting_skip = relative_y - y_skip_above
-	highest_y += y_starting_skip
+	highest_y -= y_starting_skip
 
 
 	// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
