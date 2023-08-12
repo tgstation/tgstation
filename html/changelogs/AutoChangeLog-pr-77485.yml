@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "The mining order console is now a bit more compact, and the search bar works regardless of which tab you are currently on."

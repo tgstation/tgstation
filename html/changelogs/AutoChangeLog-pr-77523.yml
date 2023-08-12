@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Giant Spiders only have an antag datum if created by the round event."
+  - balance: "Flesh spider eggs hatch into adult spiders instead of baby spiders."
+  - balance: "The eggs spawned by the start of the spider infestation event hatch into adult Midwife spiders instead of baby ones."
