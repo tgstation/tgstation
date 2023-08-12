@@ -459,10 +459,6 @@
 
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
- *
- * TODO: message_admins is just for debug, it should probably stack_trace on mapload only
- * to indicate mapping error. If someone builds it midround it should give some other
- * indication there's no tram there, dummy.
  */
 /obj/machinery/icts/controller/LateInitialize(mapload)
 	. = ..()
@@ -537,7 +533,7 @@
 
 /obj/machinery/icts/controller/attack_hand(mob/living/user, params)
 	if(cover_locked)
-		balloon_alert(user, "it's cover_locked!")
+		balloon_alert(user, "it's locked!")
 		return
 
 /obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
