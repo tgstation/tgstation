@@ -119,6 +119,8 @@
 	. = ..()
 	find_tram()
 	link_sensor(src)
+	auto_link(TRAMCTRL_INBOUND)
+	auto_link(TRAMCTRL_OUTBOUND)
 
 /obj/machinery/icts/crossing_signal/Destroy()
 	SSicts_transport.crossing_signals -= src
@@ -132,13 +134,14 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/icts/crossing_signal/proc/start_event_malfunction()
-	if(operating_status == ICTS_SYSTEM_NORMAL)
-		operating_status = ICTS_REMOTE_FAULT
+/obj/machinery/icts/crossing_signal/module/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
 
-/obj/machinery/icts/crossing_signal/proc/end_event_malfunction()
-	if(operating_status == ICTS_REMOTE_FAULT)
-		operating_status = ICTS_SYSTEM_NORMAL
+	if(default_change_direction_wrench(user, tool))
+		inbound = auto_link(src, TRAMCTRL_INBOUND)
+		outbound = auto_link(src, TRAMCTRL_OUTBOUND)
+		update_appearance()
+		return TRUE
 
 /**
  * Finds the tram, just like the tram computer
@@ -469,6 +472,14 @@
 		paired_sensor = null
 	. = ..()
 
+/obj/machinery/icts/guideway_sensor/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(default_change_direction_wrench(user, tool))
+		update_appearance()
+		pair_sensor()
+		return TRUE
+
 /obj/machinery/icts/guideway_sensor/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
@@ -531,22 +542,22 @@
 	buddy.update_appearance()
 	update_appearance()
 
-/obj/machinery/icts/crossing_signal/proc/return_closest_sensor(obj/machinery/icts/crossing_signal/comparison, allow_multiple_answers = FALSE)
-	if(!istype(comparison) || !comparison.z)
+/obj/machinery/icts/crossing_signal/proc/return_closest_sensor()
+	if(!istype(src) || !src.z)
 		return FALSE
 
 	var/list/obj/machinery/icts/guideway_sensor/candidate_sensors = list()
 
 	for(var/obj/machinery/icts/guideway_sensor/sensor in SSicts_transport.sensors)
-		if(sensor.z == comparison.z)
-			if((sensor.x == comparison.x && sensor.dir & NORTH|SOUTH) || (sensor.y == comparison.y && sensor.dir & EAST|WEST))
+		if(sensor.z == src.z)
+			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
 				candidate_sensors += sensor
 
 	var/obj/machinery/icts/guideway_sensor/winner = candidate_sensors[1]
-	var/winner_distance = get_dist(comparison, winner)
+	var/winner_distance = get_dist(src, winner)
 
 	for(var/obj/machinery/icts/guideway_sensor/sensor_to_sort as anything in candidate_sensors)
-		var/sensor_distance = get_dist(comparison, sensor_to_sort)
+		var/sensor_distance = get_dist(src, sensor_to_sort)
 
 		if(sensor_distance < winner_distance)
 			winner = sensor_to_sort
@@ -556,3 +567,56 @@
 		return winner
 
 	return FALSE
+
+/obj/machinery/icts/crossing_signal/proc/auto_link(path_inbound = TRAMCTRL_INBOUND)
+	if(!istype(src) || !src.z)
+		return FALSE
+
+	var/list/obj/effect/landmark/icts/nav_beacon/tram/candidate_beacons = list()
+
+	if(path_inbound)
+		inbound = null
+	else
+		outbound = null
+
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/beacon in SSicts_transport.nav_beacons[tram_id])
+		if(beacon.z != src.z)
+			continue
+		var/beacon_dir = NONE
+		while(!beacon_dir) // Yes, we have to make sure get_cardinal_dir doesn't return the wrong direction somehow. This is why we drink.
+			var/temp_dir = get_cardinal_dir(src, beacon)
+			switch(dir)
+				if(EAST, WEST)
+					if(temp_dir == EAST || temp_dir == WEST)
+						beacon_dir = temp_dir
+				if(NORTH, SOUTH)
+					if(temp_dir == NORTH || temp_dir == SOUTH)
+						beacon_dir = temp_dir
+
+		switch(beacon_dir)
+			if(WEST, NORTH)
+				if(path_inbound)
+					candidate_beacons += beacon
+			if(EAST, SOUTH)
+				if(!path_inbound)
+					candidate_beacons += beacon
+			else
+				return FALSE
+
+	var/obj/effect/landmark/icts/nav_beacon/tram/winner = candidate_beacons[1]
+	var/winner_distance = get_dist(src, winner)
+
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/beacon_to_sort as anything in candidate_beacons)
+		var/beacon_distance = get_dist(src, beacon_to_sort)
+
+		if(beacon_distance < winner_distance)
+			winner = beacon_to_sort
+			winner_distance = beacon_distance
+
+	if(!winner)
+		return
+
+	if(path_inbound)
+		inbound = winner.platform_code
+	else
+		outbound = winner.platform_code
