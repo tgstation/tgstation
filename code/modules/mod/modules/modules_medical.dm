@@ -119,6 +119,28 @@
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
+///Self-injector - Lets you inject 15 units of a chem preloaded into it into yourself.
+/obj/item/mod/module/selfinjector
+	name  = "MOD self-injector module"
+	desc  = "A module installed into the suit that, when loaded with reagents prior to installation into the suit, \
+		allows you to inject them into yourself with a simple button press. "
+	icon_state = "self_injector"
+	module_type = MODULE_USABLE
+	complexity = 1
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	incompatible_modules = list(/obj/item/mod/module/selfinjector)
+	cooldown_time = 0.5 SECONDS
+	//How many reagents it fits
+	var/volume = 15
+
+/obj/item/mod/module/selfinjector/Initialize(mapload)
+	create_reagents(volume, OPENCONTAINER)
+	return ..()
+
+/obj/item/mod/module/selfinjector/on_use()
+	. = ..()
+	reagents.trans_to(mod.wearer, volume, methods = INJECT)
+
 ///Organ Thrower - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organ_thrower
 	name = "MOD organ thrower module"

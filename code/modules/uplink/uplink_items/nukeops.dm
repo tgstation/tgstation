@@ -590,6 +590,14 @@
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/suits/selfinjector
+	name = "MODsuit Self-injector Module"
+	desc = "A self-injector module for a MODsuit. It is a module that on use, when preloaded with up to 15 units of reagents, \
+		injects all of them into you"
+	item = /obj/item/mod/module/selfinjector
+	cost = 1
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
