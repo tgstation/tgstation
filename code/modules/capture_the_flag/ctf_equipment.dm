@@ -197,7 +197,7 @@
 	///Icon state to be fed into the shielded component
 	var/team_shield_icon = "shield-old"
 	var/max_charges = 150
-	var/recharge_start_delay = 8 SECONDS
+	var/recharge_start_delay = 12 SECONDS
 	var/charge_increment_delay = 1 SECONDS
 	var/charge_recovery = 30
 	var/lose_multiple_charges = TRUE
