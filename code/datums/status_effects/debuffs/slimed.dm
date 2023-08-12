@@ -1,5 +1,5 @@
 #define WATER_STACK_TO_SLIME_WASH_RATIO (1/2)
-#define MIN_WATER_STACKS 10
+#define MIN_WATER_STACKS 5
 
 /atom/movable/screen/alert/status_effect/slimed
 	name = "Covered in Slime"
@@ -8,14 +8,11 @@
 
 /datum/status_effect/slimed
 	id = "slimed"
-	tick_interval = 2 SECONDS
+	tick_interval = 3 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/slimed
 	remove_on_fullheal = TRUE
 
-	var/washing_required = 20
-
-/datum/status_effect/slimed/on_creation(mob/living/new_owner, ...)
-	return ..()
+	var/slime_stacks = 10
 
 /datum/status_effect/slimed/on_apply()
 	to_chat(owner, span_userdanger("You have been covered in thick slime residue!"))
@@ -25,16 +22,16 @@
 	// handle washing slime off
 	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in owner.status_effects
 	if(istype(wetness) && wetness.stacks > MIN_WATER_STACKS)
-		washing_required--
-		wetness.adjust_stacks(-5)
+		slime_stacks -= seconds_per_tick // lose 1 stack per second
+		wetness.adjust_stacks(-5 * seconds_per_tick)
 
-		if(washing_required <= 0)
+		if(slime_stacks <= 0)
 			to_chat(owner, span_notice("You manage to wash off the slime completely."))
 			qdel(src)
 			return
 
 		if(SPT_PROB(10, seconds_per_tick))
-			to_chat(owner, span_warning("The slime is slowly washing off your skin."))
+			to_chat(owner, span_warning("The slime layer is slowly washing off your skin."))
 		return
 
 	// otherwise deal brute damage

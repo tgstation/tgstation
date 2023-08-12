@@ -143,7 +143,7 @@
 				var/uniform_rating = istype(lucky_owner.w_uniform) ? lucky_owner.w_uniform.get_armor_rating(BIO) : 0
 
 				// the higher the rating, the higher the chance of being protected
-				var/protected_chance = (head_rating + min(suit_rating + uniform_rating, 100)) / 200
+				var/protected_chance = head_rating * 1/3 + min(suit_rating + uniform_rating, 100) * 2/3
 				if(prob(protected_chance))
 					should_apply_effect = FALSE
 
