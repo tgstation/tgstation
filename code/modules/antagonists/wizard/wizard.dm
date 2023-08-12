@@ -24,7 +24,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/datum/action/cooldown/grand_ritual/ritual
 
 /datum/antagonist/wizard/antag_token(datum/mind/hosts_mind, mob/spender)
-	hosts_mind.make_wizard()
+	if(isobserver(spender))
+		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
+		newmob.mind.make_wizard()
+	else
+		hosts_mind.make_wizard()
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
