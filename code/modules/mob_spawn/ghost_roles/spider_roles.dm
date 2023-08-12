@@ -173,9 +173,9 @@
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
-		var/mob/living/basic/spiderling/chosen_spiderling = choice
-		var/mob/living/basic/young_spider/young_spider = initial(chosen_spiderling.grow_as)
-		var/mob/living/basic/giant_spider/spider = initial(young_spider.grow_as)
+		var/mob/living/basic/spider/growing/spiderling/chosen_spiderling = choice
+		var/mob/living/basic/spider/growing/young/young_spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/spider/giant/spider = initial(young_spider.grow_as) // God this is so stupid
 		spider_list[initial(spider.name)] = chosen_spiderling
 
 		var/datum/radial_menu_choice/option = new

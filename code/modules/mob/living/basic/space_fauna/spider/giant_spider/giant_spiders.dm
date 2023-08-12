@@ -227,14 +227,14 @@
 		heal_time = 3 SECONDS,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
 /// Prevent you from healing other tangle spiders, or healing when on fire
-/mob/living/basic/giant_spider/tangle/proc/can_mend(mob/living/source, mob/living/target)
+/mob/living/basic/spider/giant/tangle/proc/can_mend(mob/living/source, mob/living/target)
 	if (on_fire)
 		balloon_alert(src, "on fire!")
 		return FALSE
@@ -313,7 +313,7 @@
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
 
-/mob/living/basic/giant_spider/viper/Initialize(mapload)
+/mob/living/basic/spider/giant/viper/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/bonus_damage)
@@ -476,7 +476,7 @@
  * Has the base stats of a hunter, but they can heal themselves and spin webs faster.
  * They also occasionally leave puddles of blood when they walk around. Flavorful!
  */
-/mob/living/basic/giant_spider/hunter/flesh
+/mob/living/basic/spider/giant/hunter/flesh
 	name = "flesh spider"
 	desc = "A odd fleshy creature in the shape of a spider. Its eyes are pitch black and soulless."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -523,7 +523,7 @@
  *
  * A spider form for wizards. Has the viper spider's extreme speed and strong venom, with additional health and vent crawling abilities.
  */
-/mob/living/basic/giant_spider/viper/wizard
+/mob/living/basic/spider/giant/viper/wizard
 	name = "water spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent orange eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -539,7 +539,7 @@
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
 	apply_spider_antag = FALSE
 
-/mob/living/basic/giant_spider/viper/wizard/Initialize(mapload)
+/mob/living/basic/spider/giant/viper/wizard/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

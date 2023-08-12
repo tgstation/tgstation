@@ -18,7 +18,7 @@
 	status_flags = NONE
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
-	istate = ISTATE_HARM | ISTATE_BLOCKING
+	combat_mode = TRUE
 	faction = list(FACTION_SPIDER)
 	pass_flags = PASSTABLE
 	attack_verb_continuous = "bites"
