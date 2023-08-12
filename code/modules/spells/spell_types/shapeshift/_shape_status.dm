@@ -81,6 +81,16 @@
 	caster_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 	owner.mind?.transfer_to(caster_mob)
 
+	var/disgorged_mobs = FALSE
+	for (var/mob/living/eaten_mob in owner.contents)
+		eaten_mob.forceMove(get_turf(caster_mob))
+		disgorged_mobs = TRUE
+	if (disgorged_mobs)
+		caster_mob.visible_message(span_warning("[caster_mob] vomits as the size of [caster_mob.p_their()] stomach changes!"))
+		if (iscarbon(caster_mob))
+			var/mob/living/carbon/vomiter = caster_mob
+			vomiter.vomit(stun = FALSE)
+
 	if(kill_caster_after)
 		caster_mob.death()
 
