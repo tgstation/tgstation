@@ -543,3 +543,14 @@
 	)
 	result = /obj/item/food/vegetarian_gyro
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/raw_pita_bread
+	name = "Raw pita bread"
+	reqs = list(
+		/datum/reagent/consumable/flour = 10,
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/sugar = 2,
+	)
+	result = /obj/item/food/raw_pita_bread
+	category = CAT_MISCFOOD
