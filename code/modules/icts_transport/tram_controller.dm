@@ -30,6 +30,9 @@
 	/// and the destination landmark.
 	var/obj/effect/landmark/icts/nav_beacon/tram/destination_platform
 
+	var/current_speed = 0
+	var/current_load = 0
+
 	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
 	var/speed_limiter = 0.5
 
@@ -273,6 +276,8 @@
 		addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
 		tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 		travel_trip_length = 0
+		current_speed = 0
+		current_load = 0
 		return PROCESS_KILL
 	else if(world.time >= scheduled_move)
 		var/start_time = TICK_USAGE
@@ -281,6 +286,8 @@
 		move_transport_horizontally(travel_direction)
 
 		var/duration = TICK_USAGE_TO_MS(start_time)
+		current_load = duration
+		current_speed = transport_modules[1].glide_size
 		if(recovery_mode)
 			if(duration <= (SSicts_transport.max_time / 2))
 				recovery_clear_count++
@@ -561,14 +568,10 @@
 	update_appearance()
 
 /obj/machinery/icts/controller/attack_hand(mob/living/user, params)
-	if(user.get_idcard() && !cover_open)
-		if(allowed(user) && !(obj_flags & EMAGGED))
-			cover_locked = !cover_locked
-			balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
-		else if(obj_flags & EMAGGED)
-			balloon_alert(user, "access controller damaged!")
-		else
-			balloon_alert(user, "access denied")
+	. = ..()
+
+	if(!cover_open)
+		return try_toggle_lock(user)
 
 /obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
@@ -583,6 +586,22 @@
 	cover_open = !cover_open
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/icts/controller/proc/try_toggle_lock(mob/living/user, item, params)
+	if(user.get_idcard() && !cover_open)
+		if(allowed(user) && !(obj_flags & EMAGGED))
+			cover_locked = !cover_locked
+			balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
+			update_appearance()
+			return TRUE
+
+		else if(obj_flags & EMAGGED)
+			balloon_alert(user, "access controller damaged!")
+			return FALSE
+
+		else
+			balloon_alert(user, "access denied")
+			return FALSE
 
 /obj/machinery/icts/controller/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -608,3 +627,31 @@
 		return
 
 	controller_datum.end_malf_event()
+
+/obj/machinery/icts/controller/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+
+	if(!is_operational || !cover_open)
+		return
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ICTSTransportControls")
+		ui.open()
+
+/obj/machinery/icts/controller/ui_data(mob/user)
+	var/list/data = list()
+
+	data = list(
+		"transportId" = controller_datum.specific_transport_id,
+		"controllerActive" = controller_datum.controller_active,
+		"controllerOperational" = controller_datum.controller_operational,
+		"travelDirection" = controller_datum.travel_direction,
+		"destinationPlatform" = controller_datum.destination_platform,
+		"idlePlatform" = controller_datum.idle_platform,
+		"recoveryMode" = controller_datum.recovery_mode,
+		"currentSpeed" = controller_datum.current_speed,
+		"currentLoad" = controller_datum.current_load,
+	)
+
+	return data
