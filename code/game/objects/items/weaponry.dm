@@ -867,13 +867,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/basic/ant,
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/mob/living/basic/spiderling,
+		/mob/living/basic/spider/growing/spiderling,
 		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
 		/obj/item/queen_bee,
 	))
 	strong_against = typecacheof(list(
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/spider/giant,
 	))
 
 
