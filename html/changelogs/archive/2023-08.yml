@@ -532,3 +532,43 @@
   timothymtorres:
   - rscadd: Add admin blackhole shuttle event with a normal version and suicidal version.
   - bugfix: Fix several shuttle event runtimes
+2023-08-12:
+  Cheshify:
+  - qol: North Star's Cytology and Xenobiology are now significantly more usable.
+  - rscadd: North Star's Genetics has been tweaked.
+  - bugfix: The North Star's AI SAT has a working vent and it's service hall has a
+      working lightswitch
+  Derpguy3:
+  - bugfix: The metastation law office's shutters now function again.
+  EuSouAFazer:
+  - qol: The flowers in Meta's chapel are no longer stacked atop eachother
+  Ical92:
+  - bugfix: fixed missing departments and names in request consoles
+  Melbert:
+  - bugfix: Fix antimagic effect not expiring
+  Paxilmaniac:
+  - qol: Gigabeacons no longer need to be constructed like standard machines, instead
+      being printed as items that can be deployed quickly inhand without tools.
+  - qol: Gigabeacons are no longer their own research node, instead being a part of
+      telecomms tech (due to the fact they're RADIO navigation beacons)
+  - image: Navigation gigabeacons now have their own unique sprites, inspired by maritime
+      EPIRB devices. If you find a yellow box with an antenna on it, you probably
+      found a nav beacon!
+  - code_imp: The deployable component now gives you an option to disable the examine
+      blurb it adds to its parent
+  Wallem:
+  - rscadd: T
+  carlarctg:
+  - balance: Lepton Violet (wabbajack) shuttle must be unlocked by having some form
+      of polymorph happen in-game first (Pride Mirror or the cursed springs are the
+      most accessible sources)
+  - balance: Scrapheap shuttle can only be bought if the Cargo budget is below 600
+      credits, and the shuttle has just less than half of its usual refueling time
+      left. However, it gives the cargo budget an influx of 3000 credits!
+  - qol: Uncle Pete's Rollerdome has had its price increased, and the disco machine
+      is no longer unbreakable.
+  timothymtorres:
+  - qol: Emergency shuttle now gracefully display occupancy limits and prerequisites
+      in the communication console.
+  - balance: Change mousetraps to kill mice instead of damaging them (except regal
+      rats)
