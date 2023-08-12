@@ -1,0 +1,5 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - rscadd: "Added Pulse of Entropy, a new ritual for rust heretic unlocked after leeching walk. This ritual can be completed with 20 iron sheets, 2 garbage items to rust in a 4 tiles radius round the rune. Useful for establishing bases and fighting area."
+  - bugfix: "fixed detect_room not running correctly when break_if_found is not passed"

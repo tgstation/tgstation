@@ -581,6 +581,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	gender = PLURAL
 	icon = 'icons/effects/magic.dmi'
 	icon_state = "ectoplasm"
+	grind_results = list(/datum/reagent/hauntium = 25) //can be ground into hauntium
 
 /obj/item/ectoplasm/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))
@@ -866,13 +867,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/basic/ant,
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/mob/living/basic/spiderling,
+		/mob/living/basic/spider/growing/spiderling,
 		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
 		/obj/item/queen_bee,
 	))
 	strong_against = typecacheof(list(
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/spider/giant,
 	))
 
 
