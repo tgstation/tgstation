@@ -1,0 +1,4 @@
+author: "softcerv"
+delete-after: True
+changes:
+  - bugfix: "former blobs are no longer able to respawn after having their mind transferred to a new body."

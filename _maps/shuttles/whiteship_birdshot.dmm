@@ -1008,13 +1008,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/bar)
-"Gh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth_large,
-/area/shuttle/abandoned/cargo)
 "Gi" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
@@ -1365,11 +1358,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
-"Sx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/iron/smooth_large,
-/area/shuttle/abandoned/cargo)
 "SZ" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -1698,7 +1686,7 @@ kQ
 DK
 er
 er
-Gh
+er
 kQ
 Vp
 AV
@@ -1709,8 +1697,8 @@ AV
 Vp
 kQ
 uF
-Sx
-Sx
+uF
+uF
 BR
 kQ
 ma

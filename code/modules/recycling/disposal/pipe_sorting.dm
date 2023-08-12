@@ -7,7 +7,7 @@
 	initialize_dirs = DISP_DIR_RIGHT | DISP_DIR_FLIP
 
 /obj/structure/disposalpipe/sorting/nextdir(obj/structure/disposalholder/H)
-	var/sortdir = dpdir & ~(dir | turn(dir, 180))
+	var/sortdir = dpdir & ~(dir | REVERSE_DIR(dir))
 	if(H.dir != sortdir) // probably came from the negdir
 		if(check_sorting(H)) // if destination matches filtered type...
 			return sortdir // exit through sortdirection

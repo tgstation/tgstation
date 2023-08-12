@@ -40,7 +40,8 @@
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
 	cooldown_time = 40 SECONDS
-	cooldown_reduction_per_rank = 2.5 SECONDS
+	cooldown_reduction_per_rank = 5 SECONDS
+	spell_max_level = 3
 
 	invocation = "BIRUZ BENNAR"
 	invocation_type = INVOCATION_SHOUT

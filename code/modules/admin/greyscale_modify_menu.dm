@@ -35,11 +35,15 @@
 	/// Whether the menu is currently locked down to prevent abuse from players. Currently is only unlocked when opened from vv.
 	var/unlocked = FALSE
 
-/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors)
+	/// If defined, the always state will be used, and the user will be able to set the alpha channel of the colors too.
+	var/vv_mode = FALSE
+
+/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors, vv_mode = FALSE)
 	src.target = target
 	src.user = user
 	src.apply_callback = apply_callback || CALLBACK(src, PROC_REF(DefaultApply))
 	icon_state = starting_icon_state
+	src.vv_mode = vv_mode
 
 	SetupConfigOwner()
 
@@ -68,7 +72,7 @@
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
-	return GLOB.always_state
+	return vv_mode ? GLOB.always_state : GLOB.greyscale_menu_state
 
 /datum/greyscale_modify_menu/ui_close()
 	qdel(src)
@@ -135,14 +139,13 @@
 		if("recolor")
 			var/index = text2num(params["color_index"])
 			var/new_color = lowertext(params["new_color"])
-			if(split_colors[index] != new_color)
+			if(split_colors[index] != new_color && (findtext(new_color, GLOB.is_color) || (vv_mode && findtext(new_color, GLOB.is_alpha_color))))
 				split_colors[index] = new_color
 				queue_refresh()
 
 		if("recolor_from_string")
 			var/full_color_string = lowertext(params["color_string"])
-			if(full_color_string != split_colors.Join())
-				ReadColorsFromString(full_color_string)
+			if(full_color_string != split_colors.Join() && ReadColorsFromString(full_color_string))
 				queue_refresh()
 
 		if("pick_color")
@@ -222,10 +225,15 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 			config.EnableAutoRefresh(config_owner_type)
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
-	var/list/raw_colors = splittext(colorString, "#")
-	split_colors = list()
-	for(var/i in 2 to length(raw_colors))
-		split_colors += "#[raw_colors[i]]"
+	var/list/new_split_colors = list()
+	var/list/colors = splittext(colorString, "#")
+	for(var/index in 2 to length(colors))
+		var/color = "#[colors[index]]"
+		if(!findtext(color, GLOB.is_color) && (!vv_mode || !findtext(color, GLOB.is_alpha_color)))
+			return FALSE
+		new_split_colors += color
+	split_colors = new_split_colors
+	return TRUE
 
 /datum/greyscale_modify_menu/proc/randomize_color(color_index)
 	var/new_color = "#"
@@ -246,7 +254,7 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
 	for(var/i in length(split_colors) + 1 to config.expected_colors)
-		split_colors += rgb(100, 100, 100)
+		LAZYADD(split_colors, rgb(100, 100, 100))
 	var/list/used_colors = split_colors.Copy(1, config.expected_colors+1)
 
 	sprite_data = list()

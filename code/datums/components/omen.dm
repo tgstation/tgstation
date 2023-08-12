@@ -14,7 +14,7 @@
 	var/permanent = FALSE
 	/// Base probability of negative events. Cursed are half as unlucky.
 	var/luck_mod = 1
-	/// Base damage from negative events. Cursed take 25% less damage.
+	/// Base damage from negative events. Cursed take 25% of this damage.
 	var/damage_mod = 1
 
 /datum/component/omen/Initialize(obj/vessel, permanent, luck_mod, damage_mod)
@@ -65,7 +65,17 @@
 		return
 
 	var/mob/living/living_guy = our_guy
-	if(!prob(15 * luck_mod))
+
+	if(prob(0.001) && (living_guy.stat != DEAD)) // You hit the lottery! Kinda.
+		living_guy.visible_message(span_danger("[living_guy] suddenly bursts into flames!"), span_danger("You suddenly burst into flames!"))
+		INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+		living_guy.adjust_fire_stacks(20)
+		living_guy.ignite_mob(silent = TRUE)
+		if(!permanent)
+			qdel(src)
+		return
+
+	if(!prob(8 * luck_mod))
 		return
 
 	var/our_guy_pos = get_turf(living_guy)
@@ -103,6 +113,58 @@
 			if(!permanent)
 				qdel(src)
 			return
+
+		for(var/obj/machinery/light/evil_light in the_turf)
+			if((evil_light.status == LIGHT_BURNED || evil_light.status == LIGHT_BROKEN) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // we cant do anything :( // Why in the world is there no get_siemens_coeff proc???
+				to_chat(living_guy, span_warning("[evil_light] sparks weakly for a second."))
+				do_sparks(2, FALSE, evil_light) // hey maybe it'll ignite them
+				return
+
+			to_chat(living_guy, span_warning("[evil_light] glows ominously...")) // omenously
+			evil_light.visible_message(span_boldwarning("[evil_light] suddenly flares brightly and sparks!"))
+			evil_light.break_light_tube(skip_sound_and_sparks = FALSE)
+			do_sparks(number = 4, cardinal_only = FALSE, source = evil_light)
+			evil_light.Beam(living_guy, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
+			living_guy.electrocute_act(35 * (damage_mod * 0.5), evil_light, flags = SHOCK_NOGLOVES)
+			INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+			if(!permanent && prob(33.3))
+				qdel(src)
+
+		for(var/obj/structure/mirror/evil_mirror in the_turf)
+			to_chat(living_guy, span_warning("You pass by the mirror and glance at it..."))
+			if(evil_mirror.broken)
+				to_chat(living_guy, span_notice("You feel lucky, somehow."))
+				return
+			switch(rand(1, 5))
+				if(1)
+					to_chat(living_guy, span_warning("The mirror explodes into a million pieces! Wait, does that mean you're even more unlucky?"))
+					if(prob(50 * luck_mod)) // sometimes
+						luck_mod += 0.25
+						damage_mod += 0.25
+				if(2 to 3)
+					to_chat(living_guy, span_big(span_hypnophrase("Oh god, you can't see your reflection!!")))
+					if(isvampire(living_guy)) // not so living i suppose
+						to_chat(living_guy, span_green("Well, obviously."))
+						return
+					INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+
+				if(4 to 5)
+					if(isvampire(living_guy))
+						to_chat(living_guy, span_warning("You don't see anything of notice. Huh."))
+						return
+					to_chat(living_guy, span_userdanger("You see your reflection, but it is grinning malevolently and staring directly at you!"))
+					INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+
+			living_guy.set_jitter_if_lower(25 SECONDS)
+			if(prob(7 * luck_mod))
+				to_chat(living_guy, span_warning("You are completely shocked by this turn of events!"))
+				var/mob/living/carbon/carbon_guy = living_guy
+				to_chat(living_guy, span_userdanger("You clutch at your heart!"))
+				if(istype(carbon_guy))
+					carbon_guy.set_heartattack(status = TRUE)
+
+			if(!permanent && prob(33.3))
+				qdel(src)
 
 /datum/component/omen/proc/slam_airlock(obj/machinery/door/airlock/darth_airlock)
 	. = darth_airlock.close(force_crush = TRUE)

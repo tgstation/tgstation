@@ -100,7 +100,7 @@
 				/obj/item/clothing/under/suit/burgundy = 1,
 				/obj/item/clothing/under/suit/charcoal = 1,
 				/obj/item/clothing/under/suit/white = 1,
-				/obj/item/clothing/under/suit/sl = 1,
+				/obj/item/clothing/under/costume/buttondown/slacks/service = 1,
 				/obj/item/clothing/suit/jacket/bomber = 2,
 				/obj/item/clothing/suit/jacket/puffer/vest = 2,
 				/obj/item/clothing/suit/jacket/puffer = 2,

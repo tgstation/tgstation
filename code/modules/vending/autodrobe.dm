@@ -46,7 +46,7 @@
 				/obj/item/clothing/under/costume/referee = 1,
 				/obj/item/clothing/mask/whistle = 1,
 				/obj/item/storage/backpack/henchmen = 5,
-				/obj/item/clothing/under/suit/henchmen = 5,
+				/obj/item/clothing/under/costume/henchmen = 5,
 				/obj/item/clothing/head/costume/jackbros = 5,
 				/obj/item/clothing/under/costume/jackbros = 5,
 				/obj/item/clothing/under/costume/deckers = 5,
@@ -104,7 +104,6 @@
 				/obj/item/clothing/shoes/singerb = 1,
 				/obj/item/clothing/under/costume/singer/blue = 1,
 				/obj/item/clothing/head/costume/cueball = 1,
-				/obj/item/clothing/under/suit/white_on_white = 1,
 			),
 		),
 		list(
@@ -160,8 +159,7 @@
 			"name" = "Service",
 			"icon" = "kitchen-set",
 			"products" = list(
-				/obj/item/clothing/under/suit/black = 1,
-				/obj/item/clothing/under/suit/sl = 1,
+				/obj/item/clothing/under/costume/buttondown/slacks/service = 1,
 				/obj/item/clothing/accessory/waistcoat = 1,
 				/obj/item/clothing/under/suit/waiter = 1,
 				/obj/item/clothing/suit/apron = 1,

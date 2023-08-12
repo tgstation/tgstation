@@ -4,6 +4,14 @@
 		return
 	if(!loc)
 		return
+
+	if(!isnull(container))
+		if(!istype(container))
+			stack_trace("/mob/living/brain with container set, but container was not an MMI!")
+			container = null
+		if(!container.contains(src))
+			stack_trace("/mob/living/brain with container set, but we weren't inside of it!")
+			container = null
 	. = ..()
 	handle_emp_damage(seconds_per_tick, times_fired)
 

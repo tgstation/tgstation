@@ -91,6 +91,16 @@
 		QDEL_NULL(suppressed)
 	return ..()
 
+/obj/item/gun/apply_fantasy_bonuses(bonus)
+	. = ..()
+	fire_delay = modify_fantasy_variable("fire_delay", fire_delay, -bonus, 0)
+	projectile_damage_multiplier = modify_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier, bonus/10, 0.1)
+
+/obj/item/gun/remove_fantasy_bonuses(bonus)
+	fire_delay = reset_fantasy_variable("fire_delay", fire_delay)
+	projectile_damage_multiplier = reset_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier)
+	return ..()
+
 /// Handles adding [the seclite mount component][/datum/component/seclite_attachable] to the gun.
 /// If the gun shouldn't have a seclight mount, override this with a return.
 /// Or, if a child of a gun with a seclite mount has slightly different behavior or icons, extend this.

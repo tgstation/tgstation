@@ -60,7 +60,7 @@
 				affected_mob.emote("sneeze")
 				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you
-				var/turf/target = get_ranged_target_turf(affected_mob, turn(affected_mob.dir, 180), sneeze_distance)
+				var/turf/target = get_ranged_target_turf(affected_mob, REVERSE_DIR(affected_mob.dir), sneeze_distance)
 				affected_mob.throw_at(target, sneeze_distance, rand(1,4)) //with the wounds update, sneezing at 7 speed was causing peoples bones to spontaneously explode, turning cartoonish sneezing into a nightmarishly lethal GBS 2.0 outbreak
 			else if(COOLDOWN_FINISHED(src, sneeze_cooldown) || !COOLDOWN_FINISHED(src, sneeze_cooldown) && prob(60) && !off_cooldown_sneezed)
 				affected_mob.emote("sneeze")

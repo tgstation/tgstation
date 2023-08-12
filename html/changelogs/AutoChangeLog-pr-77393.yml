@@ -1,0 +1,7 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed goliaths digging sand that they can't actually reach (behind windows or inbetween closed turfs)"
+  - bugfix: "fixed goliaths melee attacking their target despite the target running away from goliath melee range"
+  - bugfix: "fixed goliath tentacles not spawning in mineral turfs"
+  - bugfix: "fixed goliaths summoning tentacles on targets that moved behind cover but stayed in their targeting range. this applies for most basic mobs, really, so if any basic mob was targeting you despite you hauling ass behind cover, they shouldn't anymore"

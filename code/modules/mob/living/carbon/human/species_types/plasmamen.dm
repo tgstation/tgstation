@@ -11,6 +11,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
 	)
 
@@ -23,7 +24,7 @@
 	mutantappendix = null
 	mutantheart = null
 	heatmod = 1.5
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 	breathid = GAS_PLASMA
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	species_cookie = /obj/item/reagent_containers/condiment/milk

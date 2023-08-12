@@ -123,8 +123,8 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
+	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
@@ -657,12 +657,12 @@
 
 	switch(eye_color_mode)
 		if(MATCH_LIGHT_COLOR)
-			eyes_overlay = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
+			eyes_overlay = emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_gs", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
 			eyes_overlay.color = current_color_string
 			eye_owner.add_overlay(eyes_overlay)
 		if(USE_CUSTOM_COLOR)
-			eyes_overlay_left = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs_left", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
-			eyes_overlay_right = emissive_appearance('icons/mob/species/human/human_face.dmi', "eyes_glow_gs_right", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
+			eyes_overlay_left = emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_gs_left", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
+			eyes_overlay_right = emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_gs_right", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
 			eyes_overlay_left.color = eye_color_left
 			eyes_overlay_right.color = eye_color_right
 			eye_owner.add_overlay(eyes_overlay_left)

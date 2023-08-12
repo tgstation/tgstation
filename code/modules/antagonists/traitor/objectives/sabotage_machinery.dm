@@ -160,17 +160,13 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 		. += span_notice("This device must be placed by <b>clicking on a [initial(target_machine_path.name)]</b> with it. It can be removed with a screwdriver.")
 	. += span_notice("Remember, you may leave behind fingerprints on the device. Wear <b>gloves</b> when handling it to be safe!")
 
-/obj/item/traitor_machine_trapper/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
+/obj/item/traitor_machine_trapper/pre_attack(atom/target, mob/living/user, params)
 	. = ..()
-	if(!user.Adjacent(target))
+	if (. || !istype(target, target_machine_path))
 		return
-	if(!istype(target, target_machine_path))
-		balloon_alert(user, "invalid target!")
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	balloon_alert(user, "planting device...")
 	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
-		return
+		return TRUE
 	target.AddComponent(\
 		/datum/component/interaction_booby_trap,\
 		additional_triggers = list(COMSIG_ORM_COLLECTED_ORE),\
@@ -179,6 +175,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	)
 	RegisterSignal(target, COMSIG_QDELETING, GLOBAL_PROC_REF(qdel), src)
 	moveToNullspace()
+	return TRUE
 
 /// Called when applied trap is triggered, mark success
 /obj/item/traitor_machine_trapper/proc/on_triggered(atom/machine)

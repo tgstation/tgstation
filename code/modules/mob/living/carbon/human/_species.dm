@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///multiplier for stun durations
 	var/stunmod = 1
 	///multiplier for money paid at payday
-	var/payday_modifier = 1
+	var/payday_modifier = 1.0
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
 	var/siemens_coeff = 1
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
@@ -2307,6 +2307,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part = new path()
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
+			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
 /// Creates body parts for the target completely from scratch based on the species

@@ -2,7 +2,7 @@
 	name = "\improper .357 revolver"
 	desc = "A suspicious revolver. Uses .357 ammo."
 	icon_state = "revolver"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
 	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
@@ -100,7 +100,7 @@
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 
@@ -154,7 +154,7 @@
 	icon_state = "nagant"
 	can_suppress = TRUE
 
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
 
 
 // A gun to play Russian Roulette!
@@ -164,7 +164,7 @@
 	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	icon_state = "russianrevolver"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN

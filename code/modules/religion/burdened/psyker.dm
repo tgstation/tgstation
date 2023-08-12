@@ -129,7 +129,7 @@
 	icon_state = "lucky"
 	force = 10
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
 	actions_types = list(/datum/action/item_action/pray_refill)

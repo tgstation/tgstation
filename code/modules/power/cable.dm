@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
 					if(S && (!S.terminal || S.terminal == search_parent))
 						continue
-		var/inverse = turn(check_dir, 180)
+		var/inverse = REVERSE_DIR(check_dir)
 		for(var/obj/structure/cable/C in TB)
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
 	for(var/check_dir in GLOB.cardinals)
-		var/inverse = turn(check_dir, 180)
+		var/inverse = REVERSE_DIR(check_dir)
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
 			for(var/obj/structure/cable/C in TB)
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(direction)
 
-	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
+	var/inverse_dir = (!direction)? 0 : REVERSE_DIR(direction) //flip the direction, to match with the source position on its turf
 
 	var/turf/TB = get_step(src, direction)
 

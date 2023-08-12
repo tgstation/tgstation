@@ -612,10 +612,6 @@
 	reqs = list(/obj/item/food/tempehstarter = 1)
 	result = /obj/item/food/tempeh
 
-/datum/crafting_recipe/food/processor/yakiimo
-	reqs = list(/obj/item/food/grown/potato/sweet = 1)
-	result = /obj/item/food/yakiimo
-
 /datum/crafting_recipe/food/processor/popsicle_stick
 	reqs = list(/obj/item/grown/log = 1)
 	result = /obj/item/popsicle_stick
@@ -768,7 +764,7 @@
 /datum/crafting_recipe/food/oven/yakiimo
 	reqs = list(/obj/item/food/grown/potato/sweet = 1)
 	result = /obj/item/food/yakiimo
-	category = CAT_SALAD
+	category = CAT_MISCFOOD
 
 // Machinery: Drying rack
 /datum/crafting_recipe/food/drying
