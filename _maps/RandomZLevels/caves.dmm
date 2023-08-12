@@ -1264,7 +1264,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "kE" = (
-/mob/living/basic/giant_spider/hunter,
+/mob/living/basic/spider/giant/hunter,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "kL" = (
@@ -1336,7 +1336,7 @@
 /area/awaymission/caves/northblock)
 "pC" = (
 /obj/item/mjollnir,
-/mob/living/basic/giant_spider/nurse,
+/mob/living/basic/spider/giant/nurse,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1440,7 +1440,7 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/mob/living/basic/giant_spider/hunter,
+/mob/living/basic/spider/giant/hunter,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "uO" = (
@@ -1598,7 +1598,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Bz" = (
-/mob/living/basic/giant_spider/nurse,
+/mob/living/basic/spider/giant/nurse,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1680,7 +1680,7 @@
 "FS" = (
 /obj/machinery/light/small/built/directional/north,
 /obj/structure/spider/stickyweb,
-/mob/living/basic/giant_spider/hunter,
+/mob/living/basic/spider/giant/hunter,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "FV" = (
@@ -1966,7 +1966,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
 "Xs" = (
-/mob/living/basic/giant_spider/hunter,
+/mob/living/basic/spider/giant/hunter,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1988,7 +1988,7 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "XR" = (
 /obj/structure/spider/stickyweb,
-/mob/living/basic/giant_spider/hunter,
+/mob/living/basic/spider/giant/hunter,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

@@ -446,6 +446,17 @@
 		/datum/experiment/autopsy/xenomorph = 5000,
 	)
 
+/datum/techweb_node/morphological_theory
+	id = "morphological_theory"
+	display_name = "Anomalous Morphology"
+	description = "Use poorly understood energies to change your body."
+	prereq_ids = list("adv_biotech", "anomaly_research")
+	design_ids = list("polymorph_belt")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(
+		/datum/experiment/scanning/people/novel_organs = 5000,
+	)
+
 /datum/techweb_node/bio_process
 	id = "bio_process"
 	display_name = "Biological Processing"
@@ -765,16 +776,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = 3000)
-
-/datum/techweb_node/regulated_bluespace
-	id = "regulated_bluespace"
-	display_name = "Regulated Bluespace Research"
-	description = "Bluespace technology using stable and balanced procedures. Required by galactic convention for public use."
-	prereq_ids = list("base")
-	design_ids = list(
-		"spaceship_navigation_beacon",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/unregulated_bluespace
 	id = "unregulated_bluespace"
@@ -1217,6 +1218,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud

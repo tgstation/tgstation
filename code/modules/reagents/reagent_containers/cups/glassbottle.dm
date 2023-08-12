@@ -734,6 +734,30 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 30)
 	isGlass = FALSE
 
+/obj/item/reagent_containers/cup/glass/bottle/hakka_mate
+	name = "Hakka-Mate"
+	desc = "Hakka-Mate: it's an acquired taste."
+	icon_state = "hakka_mate_bottle"
+	list_reagents = list(/datum/reagent/consumable/hakka_mate = 30)
+
+/obj/item/reagent_containers/cup/glass/bottle/shochu
+	name = "Shu-Kouba Straight Shochu"
+	desc = "A boozier form of shochu designed for mixing. Comes straight from Mars' Dusty City itself, Shu-Kouba."
+	icon_state = "shochu_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/shochu = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/yuyake
+	name = "Moonlabor Yūyake"
+	desc = "The distilled essence of disco and flared pants, captured like lightning in a bottle."
+	icon_state = "yuyake_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/yuyake = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/coconut_rum
+	name = "Breezy Shoals Coconut Rum"
+	desc = "Live the breezy life with Breezy Shoals, made with only the *finest Caribbean rum."
+	icon_state = "coconut_rum_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 100)
+
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/cup/glass/bottle/molotov
 	name = "molotov cocktail"

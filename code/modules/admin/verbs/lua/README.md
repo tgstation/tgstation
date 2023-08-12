@@ -156,6 +156,30 @@ The following example spawns a singularity at the caller's current turf:
 SS13.new("/obj/singularity", dm.global_proc("_get_step", dm.usr, 0))
 ```
 
+### SS13.new_untracked(type, ...)
+Works exactly like SS13.new but it does not store the value to the lua state's `references` list variable. This means that the variable could end up deleted if nothing holds a reference to it. 
+
+### SS13.is_valid(datum)
+Can be used to determine if the datum passed is not nil, not undefined and not qdel'd all in one. A helper function that allows you to check the validity from only one function.
+Example usage:
+```lua
+local datum = SS13.new("/datum")
+dm.global_proc("qdel", datum)
+print(SS13.is_valid(datum)) -- false
+
+local null = nil
+print(SS13.is_valid(null)) -- false
+
+local datum = SS13.new("/datum")
+print(SS13.is_valid(datum)) -- true
+```
+
+### SS13.type(string)
+Converts a string into a type. Equivalent to doing `dm.global_proc("_text2path", "/path/to/type")`
+
+### SS13.qdel(datum)
+Deletes a datum. You shouldn't try to reference it after calling this function. Equivalent to doing `dm.global_proc("qdel", datum)`
+
 ### SS13.await(thing_to_call, proc_to_call, ...)
 Calls `proc_to_call` on `thing_to_call`, with `...` as its arguments, and sleeps until that proc returns.
 Returns two return values - the first is the return value of the proc, and the second is the message of any runtime exception thrown by the called proc.
@@ -199,6 +223,9 @@ SS13.set_timeout(5, function()
 	dm.global_proc("to_chat", dm.world, "Hello World!")
 end)
 ```
+
+### SS13.stop_tracking(datum)
+Stops tracking a datum that was created via `SS13.new` so that it can be garbage collected and deleted without having to qdel. Should be used for things like callbacks and other such datums where the reference to the variable is no longer needed.
 
 ---
 
