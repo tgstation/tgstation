@@ -1421,7 +1421,6 @@
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
 				/mob/living/basic/mining/goliath,
-				/mob/living/basic/mining/goliath,
 				/mob/living/basic/morph,
 				/mob/living/basic/mouse,
 				/mob/living/basic/mushroom,
