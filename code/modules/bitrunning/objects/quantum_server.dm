@@ -724,6 +724,13 @@
 		var/datum/turf_reservation/res = generated_domain.reservations[1]
 		res.Release()
 
+	var/list/mob/living/creatures = spawned_threats + mutation_candidates
+	for(var/mob/living/creature as anything in creatures)
+		if(QDELETED(creature))
+			continue
+
+		creature.dust() // sometimes mobs just don't die
+
 	exit_turfs = list()
 	generated_domain = null
 	generated_safehouse = null
