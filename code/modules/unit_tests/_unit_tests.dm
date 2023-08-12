@@ -110,6 +110,7 @@
 #include "chain_pull_through_space.dm"
 #include "chat_filter.dm"
 #include "circuit_component_category.dm"
+#include "client_colours.dm"
 #include "closets.dm"
 #include "clothing_under_armor_subtype_check.dm"
 #include "combat.dm"
