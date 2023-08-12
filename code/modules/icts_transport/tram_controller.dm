@@ -532,7 +532,7 @@
 	update_appearance()
 
 /obj/machinery/icts/controller/attack_hand(mob/living/user, params)
-	if(user.get_idcard())
+	if(user.get_idcard() && !cover_open)
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			cover_locked = !cover_locked
 			balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
