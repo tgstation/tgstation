@@ -603,7 +603,7 @@
 /obj/item/food/tzatziki_sauce
 	name = "tzatziki sauce"
 	desc = "A garlic-based sauce or dip widely used in Mediterranean and Middle Eastern cuisine. Delicious on its own when dipped with pita bread or vegetables."
-	icon_state = "tzaziki_sauce"
+	icon_state = "tzatziki_sauce"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
