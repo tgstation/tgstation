@@ -39,7 +39,7 @@
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "watcher_emissive", src, alpha = 0.1)
+	. += emissive_appearance(icon, "watcher_emissive", src)
 
 /// For map generation, has a chance to instantiate as a special subtype
 /mob/living/basic/mining/watcher/random
