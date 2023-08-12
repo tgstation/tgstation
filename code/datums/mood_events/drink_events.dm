@@ -47,3 +47,8 @@
 	description = "Amazing taste!"
 	mood_change = 50
 	timeout = 10 MINUTES
+
+/datum/mood_event/wellcheers
+	description = "What a tasty can of Wellcheers! The salty grape taste is a great pick-me-up."
+	mood_change = 3
+	timeout = 7 MINUTES
