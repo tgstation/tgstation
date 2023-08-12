@@ -1,6 +1,6 @@
 /obj/machinery/icts
 	/// ID of the transport we're associated with for filtering commands
-	var/configured_transport_id
+	var/configured_transport_id = TRAMSTATION_LINE_1
 	/// weakref of the transport we're associated with
 	var/datum/weakref/transport_ref
 	var/list/methods_to_fix
