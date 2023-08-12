@@ -1,0 +1,6 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - qol: "North Star's Cytology and Xenobiology are now significantly more usable."
+  - rscadd: "North Star's Genetics has been tweaked."
+  - bugfix: "The North Star's AI SAT has a working vent and it's service hall has a working lightswitch"
