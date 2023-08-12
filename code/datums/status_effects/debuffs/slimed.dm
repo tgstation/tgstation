@@ -12,10 +12,10 @@
 	alert_type = /atom/movable/screen/alert/status_effect/slimed
 	remove_on_fullheal = TRUE
 
-	var/slime_stacks = 10
+	var/slime_stacks = 10 // ~10 seconds of standing under a shower
 
 /datum/status_effect/slimed/on_apply()
-	to_chat(owner, span_userdanger("You have been covered in thick slime residue!"))
+	to_chat(owner, span_userdanger("You have been covered in thick slime residue! You need to wash it off!"))
 	return ..()
 
 /datum/status_effect/slimed/tick(seconds_per_tick)
@@ -35,7 +35,7 @@
 		return
 
 	// otherwise deal brute damage
-	owner.adjustBruteLoss(rand(1,3) * seconds_per_tick)
+	owner.adjustBruteLoss(rand(3,5) * seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(owner, span_userdanger(pick("Your entire body is stinging with pain!",
 		"Your skin feels like it's coming off!", "Your body feels like it's melting together!")))
