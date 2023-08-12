@@ -655,7 +655,7 @@
 	results = list(/datum/reagent/consumable/ethanol/konococo_rumtini = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/ethanol/kahlua = 3, /datum/reagent/consumable/coffee = 3, /datum/reagent/consumable/sugar = 2)
 
-/datum/chemical_reaction/drink/blue_hawaiian
+/datum/chemical_reaction/drink/shaken/blue_hawaiian
 	results = list(/datum/reagent/consumable/ethanol/blue_hawaiian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/curacao = 1)
 
