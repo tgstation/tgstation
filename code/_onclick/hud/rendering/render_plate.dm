@@ -164,7 +164,7 @@
 	//monkestation edit start
 	var/atom/movable/screen/sunlight = mymob.overlay_fullscreen("sunlight_backdrop_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/sunlight)
 	sunlight.filters += filter(type="layer", render_source="[SUNLIGHTING_RENDER_TARGET] #[offset]")
-	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(sunlight.plane), src)
+	SET_PLANE_EXPLICIT(sunlight, PLANE_TO_TRUE(sunlight.plane), src)
 	//monkestation edit end
 
 	// Sorry, this is a bit annoying

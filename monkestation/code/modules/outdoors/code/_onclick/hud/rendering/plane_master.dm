@@ -36,4 +36,3 @@
 	render_target = SUNLIGHTING_RENDER_TARGET
 	render_relay_planes = list()  //Used as layer filter for sunlight fullscreen
 	critical = PLANE_CRITICAL_DISPLAY
-	allows_offsetting = FALSE

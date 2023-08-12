@@ -11,7 +11,7 @@
 	show_when_dead = TRUE
 	needs_offsetting = FALSE
 
-/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize()
+/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize(offset)
 	. = ..()
 	SSoutdoor_effects.sunlighting_planes |= src
 	color = SSoutdoor_effects.last_color

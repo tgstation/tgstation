@@ -10,7 +10,7 @@
 	if(!weather_type)
 		return
 
-	SSparticle_weather.run_weather(weather_type, TRUE)
+	SSparticle_weather.run_weather(new weather_type(), TRUE)
 
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type].")
 	log_admin("[key_name(usr)] started weather of type [weather_type].")

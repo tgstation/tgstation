@@ -17846,6 +17846,12 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
+"fIE" = (
+/obj/machinery/siren/weather{
+	dir = 2
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "fIH" = (
 /obj/structure/closet/lasertag/red,
 /obj/effect/spawner/random/contraband/permabrig_gear,
@@ -21867,6 +21873,9 @@
 "gZa" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
+	},
+/obj/machinery/siren/weather{
+	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -218890,7 +218899,7 @@ gXS
 fsv
 fMJ
 rvE
-bln
+fIE
 bln
 bln
 bln

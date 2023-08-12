@@ -232,6 +232,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 	ZTRAIT_BASETURF = /turf/open/floor/plating/ocean/dark)
 
 // boolean - particle weather types that occur on the level
+#define WEATHER_MESSAGE_DELAY 30 SECONDS
 #define ZTRAIT_DAYCYCLE "Daycycle"
 #define PARTICLEWEATHER_RAIN "weather_rain"
 #define PARTICLEWEATHER_SNOW "weather_snow"
