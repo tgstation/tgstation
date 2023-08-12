@@ -477,34 +477,6 @@
 			return
 
 	return ..()
-
-/obj/machinery/icts/controller/attack_hand(mob/living/user, params)
-	. = ..()
-
-	if(cover_locked && !cover_open)
-		balloon_alert(user, "locked!")
-		return
-
-	if(!cover_open)
-		toggle_cover()
-		return
-
-	balloon_alert("controls here!")
-
-
-/obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
-	. = ..()
-
-	if(cover_locked)
-		balloon_alert(user, "locked!")
-		return
-
-	toggle_cover()
-
-/obj/machinery/icts/controller/proc/toggle_cover()
-	cover_open = !cover_open
-	update_appearance()
-
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
  */
