@@ -21470,17 +21470,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "gFm" = (
-/obj/effect/turf_decal/box/red/corners{
-	dir = 4
-	},
-/obj/effect/turf_decal/box/red/corners{
+/obj/machinery/light/small/directional/west,
+/obj/machinery/plumbing/input{
 	dir = 8
 	},
-/obj/effect/turf_decal/box/red/corners{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/red/corners,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gFt" = (
@@ -23633,6 +23626,13 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/service)
+"hwQ" = (
+/obj/effect/turf_decal/box/red,
+/obj/machinery/plumbing/growing_vat{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "hyE" = (
 /obj/structure/table/glass,
 /obj/item/book/manual/wiki/security_space_law{
@@ -31958,6 +31958,10 @@
 	name = "Secure Pen Lockdown"
 	},
 /obj/machinery/light/directional/north,
+/obj/item/soap{
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "kwe" = (
@@ -41737,17 +41741,10 @@
 /turf/closed/wall/r_wall,
 /area/station/commons/vacant_room/commissary)
 "nSR" = (
-/obj/effect/turf_decal/box/red/corners{
-	dir = 4
-	},
-/obj/effect/turf_decal/box/red/corners{
+/obj/machinery/light/small/directional/east,
+/obj/machinery/plumbing/input{
 	dir = 8
 	},
-/obj/effect/turf_decal/box/red/corners{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/red/corners,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "nSV" = (
@@ -47512,17 +47509,6 @@
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "pZM" = (
-/obj/structure/rack,
-/obj/item/storage/box/gloves{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/storage/box/masks{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/wrench,
-/obj/item/knife/kitchen,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
@@ -47531,6 +47517,7 @@
 	c_tag = "Science - Cytology West";
 	network = list("ss13","rd","xeno")
 	},
+/obj/machinery/hydroponics/constructable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "pZW" = (
@@ -51684,6 +51671,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/machinery/hydroponics/constructable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "rzO" = (
@@ -67163,6 +67151,17 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
+/obj/structure/rack,
+/obj/item/storage/box/gloves{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/wrench,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "wXx" = (
@@ -179924,7 +179923,7 @@ aaa
 aaa
 qVr
 gFm
-bfH
+hwQ
 soq
 abM
 abM
@@ -183522,7 +183521,7 @@ aaa
 aaa
 qVr
 nSR
-bfH
+hwQ
 qVr
 aaa
 aaa
