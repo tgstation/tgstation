@@ -661,11 +661,10 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/suits/selfinjectorfivepack
-	name = "MODsuit Self-injector Bundle"
-	desc = "A bundle of 5 self-injectors and a hand labeler for quick and easy delivery of chemicals to your bloodstream. \
-			It is recommended to label the self-injectors with their chemical contents using the provided labeler."
-	item = /obj/item/storage/box/syndie_kit/selfinjectorbundle
-	cost = 3
+	name = "MODsuit Self-injector Module"
+	desc = "A self-injector module for a MODsuit. It allows for a single-time dose of 15 reagents."
+	item = /obj/item/mod/module/selfinjector
+	cost = 1
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/suits/holster
