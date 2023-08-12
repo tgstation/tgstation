@@ -438,7 +438,7 @@
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/iv_drip/deconstruct(disassembled)
+/obj/machinery/iv_drip/plumbing/deconstruct(disassembled)
 	qdel(src)
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
