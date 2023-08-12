@@ -1178,7 +1178,7 @@
 		/datum/reagent/consumable/salt = 1,
 	)
 	burns_on_grill = TRUE
-	burns_in_oven =  = TRUE
+	burns_in_oven = TRUE
 	tastes = list("bread" = 1, "salt" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
