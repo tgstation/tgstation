@@ -57,10 +57,8 @@
 
 		if(!has_element)
 			var/list/message_list = list("The mob [checkable_mob] ([checkable_mob.type]) has a planning subtree ([test_subtree]) that requires a component/element, but does not have any!")
-			message_list += "Needs one of the following to satisfy the requirement: [testable_operational_datums.Join(", ")]"
-			var/message_string = message_list.Join(" ")
-			TEST_FAIL(message_string)
-
+			message_list += "Needs one of the following to satisfy the requirement: ([testable_operational_datums.Join(", ")])"
+			TEST_FAIL(message_list.Join(" "))
 
 #undef REQUIRED_SUBTREE
 #undef REQUIRED_OPERATIONAL_DATUMS
