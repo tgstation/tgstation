@@ -455,6 +455,7 @@
 	name = "Baba ghanoush"
 	reqs = list(
 		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/pita_bread = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/quality_oil = 5,

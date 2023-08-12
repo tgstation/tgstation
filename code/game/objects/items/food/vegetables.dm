@@ -168,15 +168,15 @@
 
 /obj/item/food/baba_ghanoush
 	name = "baba ghanoush"
-	desc = "A thick dip made from mashed eggplant, olive oil, garlic, and lemon juice. You'll either love it or hate it."
+	desc = "A thick dip made from mashed eggplant, olive oil, garlic, and lemon juice with some pita bread for dipping. You'll either love it or hate it."
 	icon_state = "baba_ghanoush"
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
-		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
-	tastes = list("mashed eggplant" = 5, "garlic" = 3, "olive oil" = 4, "lemon juice" = 2)
-	foodtypes = VEGETABLES
+	tastes = list("mashed eggplant" = 5, "pita bread" = 4, "garlic" = 3, "olive oil" = 4, "lemon juice" = 2)
+	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/falafel
