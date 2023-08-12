@@ -135,15 +135,16 @@
 		var/mob/living/carbon/carbon_victim = buckled
 		if(istype(carbon_victim))
 			var/should_apply_effect = TRUE
+
 			if(ishuman(carbon_victim))
 				var/mob/living/carbon/human/lucky_owner = carbon_victim
 				var/head_rating = istype(lucky_owner.head) ? lucky_owner.head.get_armor_rating(BIO) : 0
 				var/suit_rating = istype(lucky_owner.wear_suit) ? lucky_owner.wear_suit.get_armor_rating(BIO) : 0
 				var/uniform_rating = istype(lucky_owner.w_uniform) ? lucky_owner.w_uniform.get_armor_rating(BIO) : 0
 
-				// start off at 100 prob, get reduced the higher the helmet, suit and uniform armor is
-				var/apply_chance = 100 - ((head_rating + min(suit_rating + uniform_rating, 100)) / 200)
-				if(!prob(apply_chance))
+				// the higher the rating, the higher the chance of being protected
+				var/protected_chance = (head_rating + min(suit_rating + uniform_rating, 100)) / 200
+				if(prob(protected_chance))
 					should_apply_effect = FALSE
 
 			if(should_apply_effect)
