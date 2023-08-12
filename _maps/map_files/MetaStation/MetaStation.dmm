@@ -25134,6 +25134,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/soap,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "jld" = (
@@ -40830,7 +40831,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "oQk" = (
-/obj/machinery/duct,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "oQx" = (
@@ -50556,10 +50560,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "sri" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "srk" = (
@@ -110095,8 +110096,8 @@ aaa
 aaa
 oMA
 sKf
-oQk
-oQk
+sri
+sri
 kCr
 tsy
 sRa
@@ -110352,7 +110353,7 @@ aaa
 aaa
 uaR
 jHX
-sri
+oQk
 toR
 toR
 syV
