@@ -229,6 +229,7 @@
 #include "species_unique_id.dm"
 #include "species_whitelists.dm"
 #include "spell_invocations.dm"
+#include "spell_jaunt.dm"
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"

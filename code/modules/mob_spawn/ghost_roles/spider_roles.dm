@@ -23,7 +23,7 @@
 /obj/structure/spider/eggcluster/examine_more(mob/user)
 	. = ..()
 
-	if(istype(user, /mob/living/basic/giant_spider/midwife))
+	if(istype(user, /mob/living/basic/spider/giant/midwife))
 		switch(spawner.amount_grown)
 			if(0 to 24)
 				. += span_info("These eggs look shrunken and dormant.")
@@ -74,12 +74,12 @@
 	var/obj/structure/spider/eggcluster/egg
 	/// The types of spiders that the spawner can produce
 	var/list/potentialspawns = list(
-		/mob/living/basic/spiderling/nurse,
-		/mob/living/basic/spiderling/hunter,
-		/mob/living/basic/spiderling/ambush,
-		/mob/living/basic/spiderling/tangle,
-		/mob/living/basic/spiderling/guard,
-		/mob/living/basic/spiderling/scout,
+		/mob/living/basic/spider/growing/spiderling/nurse,
+		/mob/living/basic/spider/growing/spiderling/hunter,
+		/mob/living/basic/spider/growing/spiderling/ambush,
+		/mob/living/basic/spider/growing/spiderling/tangle,
+		/mob/living/basic/spider/growing/spiderling/guard,
+		/mob/living/basic/spider/growing/spiderling/scout,
 	)
 	/// Do we flash the byond window when this particular egg type is available?
 	var/flash_window = FALSE
@@ -122,11 +122,13 @@
 			to_chat(user, span_warning("\The [src] is not ready to hatch yet!"))
 		return FALSE
 
-/obj/effect/mob_spawn/ghost_role/spider/special(mob/living/basic/giant_spider/spawned_mob, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/spider/special(mob/living/basic/spider/spawned_mob, mob/mob_possessor)
+	. = ..()
 	spawned_mob.directive = directive
 	egg.spawner = null
 	QDEL_NULL(egg)
-	return ..()
+	var/datum/antagonist/spider/spider_antag = new(directive)
+	spawned_mob.mind.add_antag_datum(spider_antag)
 
 /obj/effect/mob_spawn/ghost_role/spider/enriched
 	name = "enriched egg cluster"
@@ -134,9 +136,9 @@
 	you_are_text = "You are an enriched spider."
 	cluster_type = /obj/structure/spider/eggcluster/enriched
 	potentialspawns = list(
-		/mob/living/basic/spiderling/tarantula,
-		/mob/living/basic/spiderling/viper,
-		/mob/living/basic/spiderling/midwife,
+		/mob/living/basic/spider/growing/spiderling/tarantula,
+		/mob/living/basic/spider/growing/spiderling/viper,
+		/mob/living/basic/spider/growing/spiderling/midwife,
 	)
 	flash_window = TRUE
 
@@ -148,7 +150,7 @@
 	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
-		/mob/living/basic/spiderling/hunter/flesh,
+		/mob/living/basic/spider/giant/hunter/flesh,
 	)
 	flash_window = TRUE
 
@@ -159,7 +161,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/basic/spiderling/midwife,
+		/mob/living/basic/spider/giant/midwife, // We don't want the event to end instantly because of a 2 hp spiderling dying
 	)
 	flash_window = TRUE
 
@@ -176,9 +178,9 @@
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
-		var/mob/living/basic/spiderling/chosen_spiderling = choice
-		var/mob/living/basic/young_spider/young_spider = initial(chosen_spiderling.grow_as)
-		var/mob/living/basic/giant_spider/spider = initial(young_spider.grow_as)
+		var/mob/living/basic/spider/growing/spiderling/chosen_spiderling = choice
+		var/mob/living/basic/spider/growing/young/young_spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/spider/giant/spider = initial(young_spider.grow_as) // God this is so stupid
 		spider_list[initial(spider.name)] = chosen_spiderling
 
 		var/datum/radial_menu_choice/option = new
