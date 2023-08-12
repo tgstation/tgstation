@@ -22,10 +22,6 @@
 	luminosity = 1
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
-	/// The ID of the tram we control
-	var/tram_id = TRAMSTATION_LINE_1
-	/// Weakref to the tram we're tracking
-	var/datum/weakref/tram_ref
 	/// the sensor we use
 	var/obj/machinery/icts/guideway_sensor/linked_sensor
 	/// Inbound station
@@ -117,10 +113,9 @@
 
 /obj/machinery/icts/crossing_signal/LateInitialize(mapload)
 	. = ..()
-	find_tram()
-	link_sensor(src)
-	auto_link(TRAMCTRL_INBOUND)
-	auto_link(TRAMCTRL_OUTBOUND)
+	link_tram()
+	link_sensor()
+	find_uplink()
 
 /obj/machinery/icts/crossing_signal/Destroy()
 	SSicts_transport.crossing_signals -= src
@@ -138,8 +133,7 @@
 	. = ..()
 
 	if(default_change_direction_wrench(user, tool))
-		auto_link(TRAMCTRL_INBOUND)
-		auto_link(TRAMCTRL_OUTBOUND)
+		clear_uplink()
 		update_appearance()
 		return TRUE
 
@@ -148,16 +142,17 @@
  *
  * Locates tram parts in the lift global list after everything is done.
  */
-/obj/machinery/icts/crossing_signal/proc/find_tram()
+/obj/machinery/icts/proc/link_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
-		if(tram.specific_transport_id != tram_id)
+		if(tram.specific_transport_id != configured_transport_id)
 			continue
-		tram_ref = WEAKREF(tram)
+		transport_ref = WEAKREF(tram)
 		break
 
 /obj/machinery/icts/crossing_signal/proc/link_sensor()
-	linked_sensor = return_closest_sensor(src)
+	linked_sensor = find_closest_valid_sensor()
 	RegisterSignal(linked_sensor, COMSIG_QDELETING, PROC_REF(unlink_sensor))
+	update_appearance()
 
 /obj/machinery/icts/crossing_signal/proc/unlink_sensor()
 	SIGNAL_HANDLER
@@ -166,6 +161,7 @@
 	if(operating_status < ICTS_REMOTE_WARNING)
 		operating_status = ICTS_REMOTE_WARNING
 		degraded_response()
+	update_appearance()
 
 /obj/machinery/icts/crossing_signal/proc/wake_sensor()
 	if(operating_status > ICTS_REMOTE_WARNING)
@@ -192,6 +188,11 @@
 	amber_distance_threshold = AMBER_THRESHOLD_DEGRADED
 	red_distance_threshold = RED_THRESHOLD_DEGRADED
 
+/obj/machinery/icts/crossing_signal/proc/clear_uplink()
+	inbound = null
+	outbound = null
+	update_appearance()
+
 /**
  * Only process if the tram is actually moving
  */
@@ -207,7 +208,7 @@
 
 	operating_status = ICTS_SYSTEM_NORMAL
 
-	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
 	if(!tram || tram.controller_status & COMM_ERROR)
 		operating_status = ICTS_REMOTE_FAULT
@@ -231,6 +232,11 @@
 
 /obj/machinery/icts/crossing_signal/proc/comms_change(source, controller, new_status)
 	SIGNAL_HANDLER
+
+	var/datum/transport_controller/linear/tram/updated_controller = controller
+
+	if(updated_controller.specific_transport_id != configured_transport_id)
+		return
 
 	switch(new_status)
 		if(TRUE)
@@ -257,7 +263,7 @@
 
 /obj/machinery/icts/crossing_signal/process()
 
-	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
 	// Check for stopped states.
 	if(!tram || !tram.controller_operational || !is_operational || !inbound || !outbound)
@@ -476,7 +482,6 @@
 	. = ..()
 
 	if(default_change_direction_wrench(user, tool))
-		update_appearance()
 		pair_sensor()
 		return TRUE
 
@@ -542,81 +547,56 @@
 	buddy.update_appearance()
 	update_appearance()
 
-/obj/machinery/icts/crossing_signal/proc/return_closest_sensor()
+/obj/machinery/icts/crossing_signal/proc/find_closest_valid_sensor()
 	if(!istype(src) || !src.z)
 		return FALSE
 
-	var/list/obj/machinery/icts/guideway_sensor/candidate_sensors = list()
+	var/list/obj/machinery/icts/guideway_sensor/sensor_candidates = list()
 
 	for(var/obj/machinery/icts/guideway_sensor/sensor in SSicts_transport.sensors)
 		if(sensor.z == src.z)
 			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
-				candidate_sensors += sensor
+				sensor_candidates += sensor
 
-	var/obj/machinery/icts/guideway_sensor/winner = candidate_sensors[1]
-	var/winner_distance = get_dist(src, winner)
-
-	for(var/obj/machinery/icts/guideway_sensor/sensor_to_sort as anything in candidate_sensors)
-		var/sensor_distance = get_dist(src, sensor_to_sort)
-
-		if(sensor_distance < winner_distance)
-			winner = sensor_to_sort
-			winner_distance = sensor_distance
-
-	if(winner_distance <= DEFAULT_TRAM_LENGTH)
-		return winner
+	var/obj/machinery/icts/guideway_sensor/selected_sensor = get_closest_atom(/obj/machinery/icts/guideway_sensor, sensor_candidates, src)
+	var/sensor_distance = get_dist(src, selected_sensor)
+	if(sensor_distance <= DEFAULT_TRAM_LENGTH)
+		return selected_sensor
 
 	return FALSE
 
-/obj/machinery/icts/crossing_signal/proc/auto_link(path_inbound = TRAMCTRL_INBOUND)
+/obj/machinery/icts/crossing_signal/proc/find_uplink()
 	if(!istype(src) || !src.z)
 		return FALSE
 
-	var/list/obj/effect/landmark/icts/nav_beacon/tram/candidate_beacons = list()
+	var/list/obj/effect/landmark/icts/nav_beacon/tram/inbound_candidates = list()
+	var/list/obj/effect/landmark/icts/nav_beacon/tram/outbound_candidates = list()
 
-	if(path_inbound)
-		inbound = null
-	else
-		outbound = null
+	inbound = null
+	outbound = null
 
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/beacon in SSicts_transport.nav_beacons[tram_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/beacon in SSicts_transport.nav_beacons[configured_transport_id])
 		if(beacon.z != src.z)
 			continue
-		var/beacon_dir = NONE
-		while(!beacon_dir) // Yes, we have to make sure get_cardinal_dir doesn't return the wrong direction somehow. This is why we drink.
-			var/temp_dir = get_cardinal_dir(src, beacon)
-			switch(dir)
-				if(EAST, WEST)
-					if(temp_dir == EAST || temp_dir == WEST)
-						beacon_dir = temp_dir
-				if(NORTH, SOUTH)
-					if(temp_dir == NORTH || temp_dir == SOUTH)
-						beacon_dir = temp_dir
 
-		switch(beacon_dir)
-			if(WEST, NORTH)
-				if(path_inbound)
-					candidate_beacons += beacon
-			if(EAST, SOUTH)
-				if(!path_inbound)
-					candidate_beacons += beacon
-			else
-				return FALSE
+		switch(src.dir)
+			if(EAST, WEST)
+				if(abs((beacon.y - src.y)) <= DEFAULT_TRAM_LENGTH)
+					if(beacon.x < src.x)
+						inbound_candidates += beacon
+					else
+						outbound_candidates += beacon
+			if(NORTH, SOUTH)
+				if(abs((beacon.x - src.x)) <= DEFAULT_TRAM_LENGTH)
+					if(beacon.y < src.y)
+						inbound_candidates += beacon
+					else
+						outbound_candidates += beacon
 
-	var/obj/effect/landmark/icts/nav_beacon/tram/winner = candidate_beacons[1]
-	var/winner_distance = get_dist(src, winner)
+	var/obj/effect/landmark/icts/nav_beacon/tram/selected_inbound = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram, inbound_candidates, src)
+	inbound = selected_inbound.platform_code
 
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/beacon_to_sort as anything in candidate_beacons)
-		var/beacon_distance = get_dist(src, beacon_to_sort)
+	var/obj/effect/landmark/icts/nav_beacon/tram/selected_outbound = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram, outbound_candidates, src)
+	outbound = selected_outbound.platform_code
 
-		if(beacon_distance < winner_distance)
-			winner = beacon_to_sort
-			winner_distance = beacon_distance
-
-	if(!winner)
-		return
-
-	if(path_inbound)
-		inbound = winner.platform_code
-	else
-		outbound = winner.platform_code
+	update_appearance()
