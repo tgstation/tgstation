@@ -443,6 +443,9 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/iv_drip/plumbing/deconstruct(disassembled = TRUE)
+	qdel(src)
+
 /atom/movable/screen/alert/iv_connected
 	name = "IV Connected"
 	desc = "You have an IV connected to your arm. Remember to remove it or drag the IV stand with you before moving, or else it will rip out!"
