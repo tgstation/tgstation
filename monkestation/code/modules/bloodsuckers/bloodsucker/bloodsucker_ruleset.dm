@@ -70,7 +70,7 @@
 	weight = 3
 	cost = 14
 	minimum_players = 20
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(101,101,60,30,30,25,20,20,14,14)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/midround/bloodsucker/trim_candidates()
@@ -118,7 +118,7 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(101,101,60,20,20,20,20,20,14,14)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/latejoin/bloodsucker/execute()
