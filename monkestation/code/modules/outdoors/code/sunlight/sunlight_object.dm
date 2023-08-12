@@ -185,8 +185,8 @@ Sunlight System
 		outdoor_effect.weatherproof = roofStat["WEATHERPROOF"]
 
 /* runs up the Z stack for this turf, returns a assoc (SKYVISIBLE, WEATHERPROOF)*/
-/* pass recursionStarted=TRUE when we are checking our ceiling's stats */
-/turf/proc/get_ceiling_status(recursionStarted = FALSE)
+/* pass recursion_started=TRUE when we are checking our ceiling's stats */
+/turf/proc/get_ceiling_status(recursion_started = FALSE)
 	. = list()
 
 	//Check yourself (before you wreck yourself)
@@ -194,7 +194,7 @@ Sunlight System
 		.["SKYVISIBLE"]   =  istransparentturf(src) // a column of glass should still let the sun in
 		.["WEATHERPROOF"] =  TRUE
 	else
-		if(recursionStarted)
+		if(recursion_started)
 			// This src is acting as a ceiling - so if we are a floor we weatherproof + block the sunlight of our down-Z turf
 			.["SKYVISIBLE"]   = istransparentturf(src) //If we are glass floor, we don't block
 			.["WEATHERPROOF"] = weatherproof //If we are air or space, we aren't weatherproof
@@ -223,7 +223,7 @@ Sunlight System
 			.["WEATHERPROOF"] |= ceilingStat["WEATHERPROOF"]
 
 	var/area/turf_area = get_area(src)
-	if(!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors)
+	if((!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above() && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors) || !SSmapping.level_trait(src.z, ZTRAIT_STATION))
 		.["SKYVISIBLE"]   =  FALSE
 		.["WEATHERPROOF"] =  TRUE
 

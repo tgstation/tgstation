@@ -141,6 +141,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		//monkestation addition start
 		if(SSoutdoor_effects.initialized)
 			outdoor_effect = old_outdoor_effect
+			get_sky_and_weather_states()
+
 		//monkestation addition end
 		if(!space_lit)
 			// Should have a lighting object if we never had one
