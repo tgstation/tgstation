@@ -28628,7 +28628,10 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "jcC" = (
-/obj/machinery/requests_console/directional/north,
+/obj/machinery/requests_console/directional/north{
+	department = "Ordnance";
+	name = "Ordnance Lab Requests Console"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "jcP" = (
@@ -40583,9 +40586,12 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/requests_console/directional/east,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
+/obj/machinery/requests_console/directional/east{
+	department = "Security";
+	name = "Security Requests Console"
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "mYG" = (
