@@ -31,3 +31,12 @@
 	requires_power = TRUE
 	ambience_index = AMBIENCE_MINING
 	area_flags = UNIQUE_AREA
+
+/area/station/tram
+	name = "\improper Tram Guideway"
+	icon_state = "tram"
+	ambience_index = AMBIENCE_MAINT
+	airlock_wires = /datum/wires/tram_door
+	sound_environment = SOUND_ENVIRONMENT_CITY
+	ambientsounds = list('sound/ambience/ambigen12.ogg','sound/ambience/ambigen13.ogg')
+	ambient_buzz = 'sound/ambience/ambinice.ogg'
