@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	var/sound = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg'
 
 /obj/machinery/siren/proc/siren_warning(var/msg = "WARNING, bla bla bla bluh.", var/sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
-	playsound(loc, sound_ch, 80, 0)
+	playsound(loc, sound_ch, 50, 0)
 	visible_message(span_danger("[src] make signal. [msg]."))
 
 /obj/machinery/siren/proc/siren_warning_start(var/msg, var/sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
