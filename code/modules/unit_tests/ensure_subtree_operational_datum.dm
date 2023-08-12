@@ -32,8 +32,8 @@
 				continue
 
 			testable_mobs[checkable_mob] = list(
-				REQUIRED_SUBTREE = testable_subtree.type,
 				REQUIRED_OPERATIONAL_DATUMS = necessary_datums,
+				REQUIRED_SUBTREE = testable_subtree.type,
 			)
 
 /// Then, test the mobs that we've found
