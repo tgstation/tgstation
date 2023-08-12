@@ -639,7 +639,7 @@
 
 /obj/item/food/vegetarian_gyro
 	name = "vegetarian gyro"
-	desc = "A traditional Greek gyro, with cucumbers substituted for meat. Still full of flavor and very nourishing."
+	desc = "A traditional Greek gyro with cucumbers substituted for meat. Still full of flavor and very nourishing."
 	icon_state = "vegetarian_gyro"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
