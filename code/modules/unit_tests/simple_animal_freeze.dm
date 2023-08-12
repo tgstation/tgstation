@@ -174,7 +174,6 @@
 		/mob/living/simple_animal/hostile/mimic/crate,
 		/mob/living/simple_animal/hostile/mimic/xenobio,
 		/mob/living/simple_animal/hostile/mining_drone,
-		/mob/living/simple_animal/hostile/morph,
 		/mob/living/simple_animal/hostile/nanotrasen,
 		/mob/living/simple_animal/hostile/nanotrasen/elite,
 		/mob/living/simple_animal/hostile/nanotrasen/ranged,
