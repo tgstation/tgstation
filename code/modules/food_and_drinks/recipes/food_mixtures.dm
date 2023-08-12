@@ -268,3 +268,9 @@
 	required_reagents = list(/datum/reagent/consumable/flour = 1, /datum/reagent/consumable/nutriment/soup/dashi = 1)
 	mix_message = "A smooth batter forms."
 	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/raw_pita_bread
+	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/consumable/flour = 10, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/quality_oil = 2)
+	mix_message = "The ingredients form a flat, sticky dough."
+	reaction_flags = REACTION_INSTANT
+	resulting_food_path = /obj/item/food/raw_pita_bread

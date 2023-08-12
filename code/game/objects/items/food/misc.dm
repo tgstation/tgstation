@@ -567,3 +567,84 @@
 /obj/item/food/candied_pineapple/Initialize(mapload)
 	. = ..()
 	icon_state = "[base_icon_state]_[rand(1, 3)]"
+
+/obj/item/food/raw_pita_bread
+	name = "raw pita bread"
+	desc = "a sticky disk of raw pita bread."
+	icon = 'icons/obj/food/food_ingredients.dmi'
+	icon_state = "raw_pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	tastes = list("dough" = 2)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/raw_pita_bread/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/raw_pita_bread/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/pita_bread
+	name = "pita bread"
+	desc = "a multi-purposed flatbread of Mediterranean origins."
+	icon = 'icons/obj/food/food_ingredients.dmi'
+	icon_state = "pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	tastes = list("pita bread" = 2)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/tzatziki_sauce
+	name = "tzatziki sauce"
+	desc = "A garlic-based sauce or dip widely used in Mediterranean and Middle Eastern cuisine. Delicious on its own when dipped with pita bread or vegetables."
+	icon_state = "tzaziki_sauce"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	tastes = list("garlic" = 4, "cucumber" = 2, "olive oil" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/tzatziki_and_pita_bread
+	name = "tzatziki and pita bread"
+	desc = "Tzatziki sauce, now with pita bread for dipping. Very healthy and delicious all in one."
+	icon_state = "tzatziki_and_pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+	)
+	tastes = list("pita bread" = 4, "tzatziki sauce" = 2, "olive oil" = 2)
+	foodtypes = VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/grilled_beef_gyro
+	name = "grilled beef gyro"
+	desc = "A traditional Greek dish of meat wrapped in pita bread with tomato, cabbage, onion, and tzatziki sauce."
+	icon_state = "grilled_beef_gyro"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	tastes = list("pita bread" = 4, "tender meat" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
+	foodtypes = VEGETABLES | GRAIN | MEAT
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/vegetarian_gyro
+	name = "vegetarian gyro"
+	desc = "A traditional Greek gyro, with cucumbers substituted for meat. Still full of flavor and very filling."
+	icon_state = "vegetarian_gyro"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 12,
+	)
+	tastes = list("pita bread" = 4, "cucumber" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
+	foodtypes = VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_TINY

@@ -496,3 +496,49 @@
 	)
 	result = /obj/item/food/candied_pineapple
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tzatziki_sauce
+	name = "Tzatziki sauce"
+	reqs = list(
+		/obj/item/food/grown/cucumber = 1,
+		/datum/reagent/consumable/quality_oil = 2,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/salt = 1,
+	)
+	result = /obj/item/food/tzatziki_sauce
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tzatziki_and_pita_bread
+	name = "Tzatziki and pita bread"
+	reqs = list(
+		/obj/item/food/tzatziki_sauce = 1,
+		/obj/item/food/pita_bread = 1,
+	)
+	result = /obj/item/food/tzatziki_and_pita_bread
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/grilled_beef_gyro
+	name = "Grilled beef gyro"
+	reqs = list(
+		/obj/item/food/tzatziki_sauce = 1,
+		/obj/item/food/pita_bread = 1,
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/grilled_beef_gyro
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/vegetarian_gyro
+	name = "Vegetarian gyro"
+	reqs = list(
+		/obj/item/food/tzatziki_sauce = 1,
+		/obj/item/food/pita_bread = 1,
+		/obj/item/food/grown/cucumber = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/vegetarian_gyro
+	category = CAT_MISCFOOD
