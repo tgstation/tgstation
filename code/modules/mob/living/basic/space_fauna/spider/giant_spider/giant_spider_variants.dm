@@ -179,7 +179,7 @@
 	health = 55
 	melee_damage_lower = 1
 	melee_damage_upper = 1
-	poison_per_bite = 2
+	poison_per_bite = 5
 	poison_type = /datum/reagent/toxin/acid
 	obj_damage = 40
 	web_speed = 0.25
