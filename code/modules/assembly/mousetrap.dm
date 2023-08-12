@@ -138,11 +138,7 @@
 	else if(ismouse(target))
 		var/mob/living/basic/mouse/splatted = target
 		visible_message(span_boldannounce("SPLAT!"))
-		if(splatted.health <= 5)
-			splatted.splat()
-		else
-			splatted.adjust_health(5)
-			splatted.Stun(1 SECONDS)
+		splatted.splat() // mousetraps are instadeath for mice
 
 	else if(isregalrat(target))
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.

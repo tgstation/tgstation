@@ -167,13 +167,6 @@
 /datum/component/two_handed/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
-	if(ismonkey(user))
-		if(require_twohands)
-			to_chat(user, span_notice("[parent] is too heavy and cumbersome for you to carry!"))
-			user.dropItemToGround(parent, force=TRUE)
-		else
-			to_chat(user, span_notice("It's too heavy for you to wield fully."))
-		return
 	if(user.get_inactive_held_item())
 		if(require_twohands)
 			to_chat(user, span_notice("[parent] is too cumbersome to carry in one hand!"))
