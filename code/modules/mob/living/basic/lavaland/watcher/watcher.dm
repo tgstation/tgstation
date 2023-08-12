@@ -27,11 +27,19 @@
 	var/projectile_type = /obj/projectile/temp/watcher
 	// TODO: hunts pens and diamonds for some reason
 	var/wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
+	/// Icon state for our eye overlay
+	var/eye_glow = "ice_glow"
 
 /mob/living/basic/mining/watcher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/ranged_attacks, projectile_type = projectile_type, projectile_sound = 'sound/weapons/pierce.ogg')
+	AddComponent(/datum/component/basic_ranged_ready_overlay, overlay_state = eye_glow)
+	AddComponent(/datum/component/ranged_attacks, cooldown_time = ranged_cooldown, projectile_type = projectile_type, projectile_sound = 'sound/weapons/pierce.ogg')
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/watcher/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "watcher_emissive", src, alpha = 0.1)
 
 /// For map generation, has a chance to instantiate as a special subtype
 /mob/living/basic/mining/watcher/random
@@ -53,12 +61,9 @@
 	icon_state = "watcher_magmawing"
 	icon_living = "watcher_magmawing"
 	icon_dead = "watcher_magmawing_dead"
+	eye_glow = "fire_glow"
 	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
 	health = 215
-	light_system = MOVABLE_LIGHT
-	light_range = 3
-	light_power = 2.5
-	light_color = LIGHT_COLOR_LAVA
 	projectile_type = /obj/projectile/temp/watcher/magmawing
 	crusher_loot = /obj/item/crusher_trophy/blaster_tubes/magma_wing
 	crusher_drop_chance = 100 // There's only going to be one of these per round throw them a bone

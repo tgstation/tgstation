@@ -47,6 +47,7 @@
 		return
 	COOLDOWN_START(src, fire_cooldown, cooldown_time)
 	INVOKE_ASYNC(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers)
+	SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
 
 /// Actually fire the damn thing
 /datum/component/ranged_attacks/proc/async_fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)
