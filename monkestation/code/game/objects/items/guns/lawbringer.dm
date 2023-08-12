@@ -109,7 +109,7 @@
 	balloon_alert(user, "biometric lock reset")
 	user.visible_message(span_warning("[user] swipes the [emag_card] in the lawbringer's authenticator"))
 	src.name = "Lawbringer"
-	src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+	src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 	owner_dna = null
 
@@ -117,7 +117,7 @@
 	if (istype(weapon, /obj/item/disk/nuclear))
 		user.visible_message(span_notice("[user] swipes the [weapon] in the lawbringer's authenticator"))
 		src.name = "Lawbringer"
-		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 		src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 		owner_dna = null
 		return TRUE
@@ -142,7 +142,7 @@
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		src.name = "[H.real_name]'s Lawbringer"
-		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v-1 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 		src.desc += span_boldnotice(" It's biometrically linked to [H.real_name].")
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/updatepin(mob/living/user)
