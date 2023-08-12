@@ -436,7 +436,7 @@
 	isGlass = FALSE
 	var/capped = TRUE
 	var/shaken = FALSE
-	var/cap_icon = 'icons/obj/drinks/drink_effects.dmi'
+	var/cap_icon = 'icons/obj/drinks/bottles.dmi'
 	var/cap_icon_state = "shaker_cap"
 	var/mutable_appearance/cap_overlay
 
@@ -469,12 +469,13 @@
 		capped = FALSE
 		spillable = TRUE
 		animate(src, transform = null, time = 2, loop = 0)
-		to_chat(user, span_notice("You remove the cap from [src]."))
+		balloon_alert(user, "cap removed...")
 		playsound(loc, 'sound/effects/can_open1.ogg', 50, TRUE)
 	else
 		capped = TRUE
 		spillable = FALSE
-		to_chat(user, span_notice("You put the cap on [src]."))
+		balloon_alert(user, "cap added...")
+		playsound(loc, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
 	update_appearance()
 
 /obj/item/reagent_containers/cup/glass/shaker/is_refillable()
@@ -506,8 +507,14 @@
 
 	return . | ..()
 
-/obj/item/reagent_containers/cup/glass/shaker/attack_self()
+/obj/item/reagent_containers/cup/glass/shaker/attack_self(mob/user)
 	if(!is_drainable())
+		balloon_alert(user, "shaking...")
+		Shake(duration = 1 SECONDS)
+		if(reagents.total_volume)
+			playsound(loc, 'sound/effects/can_shake.ogg', 50, TRUE)
+		if(!do_after(user, 1 SECONDS, target = user))
+			return FALSE
 		shaken = TRUE
 		addtimer(VARSET_CALLBACK(src, shaken, FALSE), 2 SECONDS)
 		reagents.handle_reactions()

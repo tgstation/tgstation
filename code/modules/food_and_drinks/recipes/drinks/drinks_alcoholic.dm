@@ -505,10 +505,6 @@
 	results = list(/datum/reagent/consumable/ethanol/white_hawaiian = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/coconut_rum = 1, /datum/reagent/consumable/coconut_milk = 2)
 
-/datum/chemical_reaction/drink/shaken/maui_sunrise
-	results = list(/datum/reagent/consumable/ethanol/maui_sunrise = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 2, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/triple_citrus = 1, /datum/reagent/consumable/lemon_lime = 4)
-
 // Shaken Recipes
 /datum/chemical_reaction/drink/shaken/vodkamartini
 	results = list(/datum/reagent/consumable/ethanol/vodkamartini = 3)
@@ -662,3 +658,7 @@
 /datum/chemical_reaction/drink/blue_hawaiian
 	results = list(/datum/reagent/consumable/ethanol/blue_hawaiian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/curacao = 1)
+
+/datum/chemical_reaction/drink/shaken/maui_sunrise
+	results = list(/datum/reagent/consumable/ethanol/maui_sunrise = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 2, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/triple_citrus = 1, /datum/reagent/consumable/lemon_lime = 4)

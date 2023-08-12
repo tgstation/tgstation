@@ -1,3 +1,6 @@
+/*	Shake shake shake!
+	Shaken drinks are made in, believe it or not, the shaker.
+*/
 /datum/chemical_reaction/drink/shaken
 	required_other = TRUE
 	required_container_accepts_subtypes = TRUE
