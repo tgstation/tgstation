@@ -13,6 +13,8 @@
 	src.post_retaliate_callback = post_retaliate_callback
 	parent.AddElement(/datum/element/relay_attackers)
 
+	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+
 /datum/component/ai_retaliate_advanced/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
