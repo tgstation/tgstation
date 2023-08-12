@@ -435,8 +435,12 @@
 	density = FALSE
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
+	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/icts_controller
 	var/datum/transport_controller/linear/tram/controller_datum
+	var/cabinet_open = FALSE
+	/// If the cabinet door is open, closed, locked
+	var/locked = FALSE
 
 /obj/machinery/icts/controller/Initialize(mapload)
 	. = ..()
@@ -470,7 +474,7 @@
 /obj/machinery/icts/controller/update_overlays()
 	. = ..()
 
-	if(!panel_open)
+	if(!cabinet_open)
 		. += mutable_appearance(icon, "controller-door")
 
 	if(machine_stat & NOPOWER)
@@ -480,6 +484,8 @@
 	. += emissive_appearance(icon, "power", src, alpha = src.alpha)
 
 	if(!controller_datum)
+		. += mutable_appearance(icon, "fault")
+		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
 		return
 
 	if(controller_datum.controller_status & DOORS_OPEN)
@@ -525,6 +531,25 @@
 	if(controller != controller_datum)
 		return
 	update_appearance()
+
+/obj/machinery/icts/controller/attack_hand(mob/living/user, params)
+	if(locked)
+		balloon_alert(user, "it's locked!")
+		return
+
+/obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
+	. = ..()
+
+	if(locked)
+		return
+
+	if(!cabinet_open)
+		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
+	else
+		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
+	cabinet_open = !cabinet_open
+	update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
