@@ -360,7 +360,23 @@
 			stack_trace("Transport controller received invalid status code request [code]/[value]")
 			return
 
+	validate_status()
+
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+
+/datum/transport_controller/linear/tram/proc/validate_status()
+	if(!(controller_status & SYSTEM_FAULT))
+		if(controller_status & COMM_ERROR)
+			set_status_code(SYSTEM_FAULT, TRUE)
+			return
+
+		if(controller_status & EMERGENCY_STOP)
+			set_status_code(SYSTEM_FAULT, TRUE)
+			return
+
+	else
+		if(!(controller_status & COMM_ERROR) && !(controller_status & EMERGENCY_STOP))
+			set_status_code(SYSTEM_FAULT, FALSE)
 
 /**
  * Part of the pre-departure list, checks the status of the doors on the tram
@@ -404,6 +420,7 @@
  * Tram malfunction random event. Set comm error, increase tram lethality.
  */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
+	set_status_code(SYSTEM_FAULT, TRUE)
 	set_status_code(COMM_ERROR, TRUE)
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
 	control_panel.generate_repair_signals()
@@ -433,6 +450,10 @@
 	icon_state = "controller-panel"
 	anchored = TRUE
 	density = FALSE
+	armor_type = /datum/armor/transport_module
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	max_integrity = 1000
+	integrity_failure = 0.25
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
 	flags_1 = NODECONSTRUCT_1
@@ -457,6 +478,33 @@
 
 	return ..()
 
+/obj/machinery/icts/controller/attack_hand(mob/living/user, params)
+	. = ..()
+
+	if(cover_locked && !cover_open)
+		balloon_alert(user, "locked!")
+		return
+
+	if(!cover_open)
+		toggle_cover()
+		return
+
+	balloon_alert("controls here!")
+
+
+/obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
+	. = ..()
+
+	if(cover_locked)
+		balloon_alert(user, "locked!")
+		return
+
+	toggle_cover()
+
+/obj/machinery/icts/controller/proc/toggle_cover()
+	cover_open = !cover_open
+	update_appearance()
+
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
  */
@@ -466,6 +514,15 @@
 		stack_trace("Tram cabinet failed to find controller datum!")
 
 	update_appearance()
+
+/obj/machinery/icts/controller/atom_break()
+	var/controller_integrity = get_integrity()
+	if(controller_integrity <= 0)
+		update_integrity(1)
+
+	set_machine_stat(machine_stat | BROKEN)
+
+	..()
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
@@ -571,6 +628,9 @@
  */
 /obj/machinery/icts/controller/try_fix_machine(obj/machinery/icts/machine, mob/living/user, obj/item/tool)
 	. = ..()
+
+	if(. == FALSE)
+		return
 
 	if(!controller_datum)
 		return

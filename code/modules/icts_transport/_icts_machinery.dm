@@ -72,12 +72,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	machine.balloon_alert(user, "percussive maintenance...")
-	// Fairly long do after. It shouldn't be SUPER easy to just run in and stop it.
 	// A tider can fix it if they want,
-	// but only an equipped engineer should be able to handle it painlessly.
+	// but only an equipped engineer should be able to handle it effortlessly.
 	if(!tool.use_tool(machine, user, 7 SECONDS, volume = 50))
 		machine.balloon_alert(user, "interrupted!")
-		return
+		return FALSE
 
 	playsound(src, 'sound/machines/synth_yes.ogg', 75, use_reverb = TRUE)
 	machine.balloon_alert(user, "success!")
@@ -87,3 +86,4 @@
 	set_machine_stat(machine_stat & ~BROKEN)
 	set_machine_stat(machine_stat & ~EMAGGED)
 	update_appearance()
+	return TRUE
