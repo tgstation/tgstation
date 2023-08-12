@@ -43,6 +43,7 @@
 		RegisterSignals(src, repair_signals, PROC_REF(on_machine_tooled))
 
 /obj/machinery/icts/proc/clear_repair_signals()
+	UnregisterSignal(src, repair_signals)
 	QDEL_LAZYLIST(repair_signals)
 
 /obj/machinery/icts/examine(mob/user)
@@ -76,6 +77,7 @@
 
 	playsound(src, 'sound/machines/synth_yes.ogg', 75, use_reverb = TRUE)
 	machine.balloon_alert(user, "success!")
+	UnregisterSignal(src, repair_signals)
 	QDEL_LAZYLIST(repair_signals)
 	QDEL_LAZYLIST(methods_to_fix)
 	set_machine_stat(machine_stat & ~BROKEN)

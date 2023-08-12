@@ -821,8 +821,9 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	name = "tram"
 	desc = "A tram for tramversing the station."
 	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
-	icon_state = "titanium_white"
-	layer = TRAM_FLOOR_LAYER
+	icon_state = "subfloor"
+	base_icon_state = "subfloor"
+	layer = TRAM_STRUCTURE_LAYER
 	base_icon_state = null
 	smoothing_flags = NONE
 	smoothing_groups = null
@@ -843,27 +844,6 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	var/speed_limiter = 0.5
 
 	create_modular_set = TRUE
-
-/obj/structure/transport/linear/tram/grey
-	icon_state = "titanium"
-
-/obj/structure/transport/linear/tram/purple
-	icon_state = "titanium_purple"
-
-/obj/structure/transport/linear/tram/accessible
-	icon_state = "titanium_accessible"
-
-/obj/structure/transport/linear/tram/blue
-	icon_state = "titanium_blue"
-
-/obj/structure/transport/linear/tram/noslip
-	icon_state = "noslip"
-
-/obj/structure/transport/linear/tram/structure
-	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
-	icon_state = "subfloor"
-	base_icon_state = "subfloor"
-
 /obj/structure/transport/linear/tram/structure/northwest
 	icon_state = "spoiler-subfloor-nw"
 
@@ -955,3 +935,19 @@ GLOBAL_LIST_EMPTY(icts_transports)
 		passenger.throw_at()
 		var/datum/callback/land_slam = new(passenger, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 		passenger.throw_at(throw_target, 400, 2, force = MOVE_FORCE_OVERPOWERING, callback = land_slam)
+
+/obj/structure/thermoplastic
+	name = "tram"
+	desc = "A lightweight thermoplastic flooring. These prevent you falling through the structure of the tram."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snowplating"
+	density = FALSE
+	anchored = TRUE
+	armor_type = /datum/armor/structure_lattice
+	max_integrity = 50
+	layer = TRAM_FLOOR_LAYER
+	plane = FLOOR_PLANE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	smoothing_groups = SMOOTH_GROUP_CATWALK
+	canSmoothWith = SMOOTH_GROUP_CATWALK
+	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER

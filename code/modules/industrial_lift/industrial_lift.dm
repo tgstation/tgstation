@@ -799,7 +799,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "textured_large"
-	layer = TRAM_FLOOR_LAYER
+	layer = TRAM_STRUCTURE_LAYER
 	base_icon_state = null
 	smoothing_flags = NONE
 	smoothing_groups = null
