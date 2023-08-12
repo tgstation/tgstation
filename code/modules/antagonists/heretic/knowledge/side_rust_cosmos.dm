@@ -26,7 +26,7 @@
 		/obj/item/stack/sheet/iron = 20,
 		/obj/item/trash = 2
 	)
-	cost = 1
+	cost = 0
 	route = PATH_SIDE
 	var/rusting_range = 4
 
