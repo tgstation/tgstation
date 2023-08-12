@@ -138,8 +138,8 @@
 	. = ..()
 
 	if(default_change_direction_wrench(user, tool))
-		inbound = auto_link(src, TRAMCTRL_INBOUND)
-		outbound = auto_link(src, TRAMCTRL_OUTBOUND)
+		auto_link(TRAMCTRL_INBOUND)
+		auto_link(TRAMCTRL_OUTBOUND)
 		update_appearance()
 		return TRUE
 
