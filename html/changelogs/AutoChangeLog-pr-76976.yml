@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "Labor Camp Sustenance vendor is no longer free; instead, it takes your labor points that you'd otherwise use for paying off your point goal."
