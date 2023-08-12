@@ -29769,7 +29769,10 @@
 	name = "Law Office Fax Machine"
 	},
 /obj/machinery/light/small/directional/south,
-/obj/machinery/button/door/directional/west,
+/obj/machinery/button/door/directional/west{
+	name = "Privacy Shutters";
+	id = "lawyer_shutters"
+	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "kRV" = (
