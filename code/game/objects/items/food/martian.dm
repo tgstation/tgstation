@@ -942,7 +942,6 @@
 	)
 	tastes = list("winter spices" = 2, "ambrosia vulgaris" = 2, "cake" = 5)
 	foodtypes = GRAIN | SUGAR | DAIRY
-	burns_in_oven = TRUE
 
 /obj/item/food/cake/spekkoek/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/spekkoek, 5, 3 SECONDS, table_required = TRUE)

@@ -40,7 +40,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	tastes = list("bread" = 1)
 	foodtypes = GRAIN
-	burns_in_oven = TRUE
 
 /obj/item/food/pizzabread/Initialize(mapload)
 	. = ..()
@@ -71,7 +70,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("bun" = 1) // the bun tastes of bun.
 	foodtypes = GRAIN
-	burns_in_oven = TRUE
 
 /obj/item/food/bun/Initialize(mapload)
 	. = ..()
@@ -129,4 +127,3 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY
-	burns_in_oven = TRUE

@@ -357,7 +357,6 @@
 	)
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
-	burns_in_oven = TRUE
 
 /obj/item/food/pierogi
 	name = "pierogi"

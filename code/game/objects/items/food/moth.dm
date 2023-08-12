@@ -133,7 +133,6 @@
 	tastes = list("cheese" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 /obj/item/food/baked_cheese_platter
 	name = "stanntkraktælo" //stannt = oven, krakt = baked, ælo = cheese
@@ -179,7 +178,6 @@
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
 	foodtypes = VEGETABLES | GRAIN | NUTS
 	w_class = WEIGHT_CLASS_NORMAL
-	burns_in_oven = TRUE
 
 /obj/item/food/green_lasagne/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
@@ -226,7 +224,6 @@
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
-	burns_in_oven = TRUE
 
 /obj/item/food/big_baked_rice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -257,7 +254,6 @@
 	tastes = list("corn" = 1, "char" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 /obj/item/food/buttered_baked_corn
 	name = "buttered baked corn"
@@ -317,7 +313,6 @@
 	tastes = list("veggies" = 1, "roasted peppers" = 1, "char" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 /obj/item/food/mozzarella_sticks
 	name = "mozzarella sticks"
@@ -360,7 +355,6 @@
 	tastes = list("creamy cheese" = 1, "herbs" = 1, "onion" = 1, "bell pepper" = 1)
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 /obj/item/food/fueljacks_lunch
 	name = "\improper Fueljack's lunch"

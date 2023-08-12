@@ -24,7 +24,6 @@
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 /obj/item/food/roastparsnip
 	name = "roast parsnip"
@@ -74,7 +73,6 @@
 	tastes = list("baked potato" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 /obj/item/food/buttered_baked_potato
 	name = "buttered baked potato"

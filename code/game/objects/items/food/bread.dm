@@ -46,7 +46,6 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	burns_in_oven = TRUE
 	slice_type = /obj/item/food/breadslice/plain
 
 /obj/item/food/bread/plain/Initialize(mapload)
@@ -525,7 +524,6 @@
 	tastes = list("fluffy bread" = 1, "butter" = 2)
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 /obj/item/food/raw_croissant
 	name = "raw croissant"
@@ -549,7 +547,6 @@
 	tastes = list("fluffy bread" = 1, "butter" = 2)
 	foodtypes = GRAIN | DAIRY | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 
 // Enhanced weaponised bread
 /obj/item/food/croissant/throwing
