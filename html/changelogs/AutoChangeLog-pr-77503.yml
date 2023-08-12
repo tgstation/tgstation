@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - refactor: "Morphs are now basic mobs with a nice new ability to help you change forms rather than the old shift-click method, much more intuitive."
+  - admin: "With the morph rework comes a new ability you can add to mobs, \"Assume Form\". Feel free to add that to any simple or basic mob for le funnies as Runtime turns into a pen or something."
