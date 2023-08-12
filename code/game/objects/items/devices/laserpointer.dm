@@ -20,6 +20,8 @@
 	var/energy = 10
 	///Maximum possible battery charge of the laser. Draining the battery puts the pointer in a recharge state, preventing use, which ends upon full recharge
 	var/max_energy = 10
+	///Maximum use range
+	var/max_range = 7
 	///Icon for the laser, affects both the laser dot and the laser pointer itself, as it shines a laser on the item itself
 	var/pointer_icon_state = null
 	///Whether the pointer is currently in a full recharge state. Triggered upon fully draining the battery
@@ -187,7 +189,10 @@
 		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 
-	if(!(user in (view(7, target)))) //check if we are visible from the target's PoV
+	if(!IN_GIVEN_RANGE(target, user, max_range))
+		to_chat(user, span_warning("\The [target] is too far away!"))
+		return
+	if(!(user in (view(max_range, target)))) //check if we are visible from the target's PoV
 		if(isnull(crystal_lens))
 			to_chat(user, span_warning("You can't point with [src] through walls!"))
 			return
