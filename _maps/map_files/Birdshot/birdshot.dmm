@@ -36915,9 +36915,12 @@
 	dir = 8
 	},
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
-/obj/machinery/requests_console/directional/south,
 /obj/machinery/computer/records/security{
 	dir = 4
+	},
+/obj/machinery/requests_console/directional/south{
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/supply)
@@ -39287,7 +39290,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/glass{
 	name = "Library"
 	},
 /obj/machinery/door/firedoor,
@@ -49014,8 +49017,11 @@
 "rvD" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
-/obj/machinery/requests_console/directional/south,
 /obj/structure/closet/secure_closet/security,
+/obj/machinery/requests_console/directional/south{
+	department = "Security";
+	name = "Security Requests Console"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/escape)
 "rvE" = (
@@ -53594,7 +53600,7 @@
 "sTa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/glass{
 	name = "Diner"
 	},
 /obj/machinery/door/firedoor,
@@ -53677,7 +53683,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "sTW" = (
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/glass{
 	name = "Theatre"
 	},
 /obj/machinery/door/firedoor,

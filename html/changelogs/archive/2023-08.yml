@@ -418,3 +418,157 @@
       pre-colored variants of the above
   - bugfix: Fixed only one buttondown with slacks being available in clothesmates
   - image: Slightly adjusted greyscale buttondown sprite, you look less fat now!
+2023-08-10:
+  Boopideedoo:
+  - bugfix: fixed a Camera in atmos
+  - rscadd: missing Camera in chem storage
+  CoiledLamb:
+  - rscadd: Added wellcheers, a contraband soda with various side effects.
+  - image: resprites all cans in the drinks icon file
+  - image: resprites the canholder sprite in storage.dmi
+  Comxy:
+  - rscadd: Young Spiders that appear between spiderlings and adult spiders.
+  - balance: Wizard Spider version has better immunity against temp damage and can
+      lay webs faster.
+  - balance: Tangle Spider sucks more with self-healing but has more health.
+  - balance: Scout spiderling gets thermal vision.
+  - balance: Viper deals bonus damage when an enemy is below 20% health.
+  DeerJesus:
+  - balance: added the storage implanter to the syndie-kit tactical 'spy' kit to make
+      it decent.
+  Derpguy3:
+  - bugfix: The service cyborg's beverage apparatus is now capable of grabbing coffee
+      pots and syrup bottles.
+  Inari-Whitebear:
+  - bugfix: Metastation Kitchen APC is wired to the grid again.
+  Jacquerel:
+  - rscadd: Adds a new technology which utilises Bioscrambler anomaly cores to allow
+      you to transform into animals.
+  Momo8289:
+  - rscadd: Cigarettes can now be placed in and smoked through gas masks, so long
+      as the mask has no filters installed and is not covering the mouth.
+  Sealed101:
+  - bugfix: fixed gibtonite explosions having flames and flash ranges
+  Singul0:
+  - balance: Geode Pirates have upgraded their launchpad room to be more usable
+  - bugfix: Fixes a bug in the navigational computer of the Geode pirates causing
+      their shuttle to move sideways.
+  Vincent983:
+  - spellcheck: fixes one of the virus thresholds saying "scrathing" instead of scratching
+  carlarctg:
+  - qol: Biogenerators can be unwrenched
+  - rscadd: Adds Summon Simians, a spell that summons four monkeys or lesser gorillas,
+      with the amount increasing per upgrade. The monkeys have various fun gear depending
+      on how lucky you get and how leveled the spell is. If the spell is maximum level,
+      it only summons normal gorillas.
+  - balance: Wizard Mutate spell works on non-human races. It also gives you Gigantism
+      now (funny). If the Race can't support tinted bodyparts, your whole sprite is
+      temporarily turned green.
+  - balance: Made Laser eyes projectiles a subtype of actual lasers, which has various
+      properties such as on-hit effects and upping the damage to 30.
+  - rscadd: 'Added further support for nonhuman robed casting: Monkeys, cyborgs, and
+      drones can all now cast robed spells as long as they''re wearing a wizardly
+      hat as well.'
+  - balance: Made monkeys able to wield two-handed things again.
+  improvedname:
+  - balance: Removes standard vest from all security lockers and adds 3 of them to
+      the security wardrobe.
+  xPokee:
+  - bugfix: Fixed the tramstation kitchen not having any lights
+  - image: added a wagging tail for cake cats to match other cats
+2023-08-11:
+  EOBGames, MrMelbert:
+  - rscadd: Mars celebrates the 250th anniversary of the Martian Concession this year,
+      and this has brought Martian cuisine to new heights of popularity. Find a new
+      selection of Martian foods and drinks available in your crafting menu today!
+  FernandoJ8:
+  - bugfix: crafting recipes without a name, such as the mothic pizzas, will inherit
+      the name of the item they make
+  Fikou:
+  - bugfix: fixes kinesis not actually immobilizing or blocking hands of grabbed mobs
+  - balance: Space Ninja's energy net uses a projectile to catch people now.
+  Ghommie:
+  - bugfix: Fixed fired foam darts, gumballs and (harmless) lollipops being embeddable.
+  - bugfix: Projectiles that should embed while being reusable will now do so correctly,
+      actually embedding the reusable casing instead of a shrapnel.
+  - balance: Arrows are generally more likely to embed now, except for blazing ones,
+      that kind of just blaze.
+  - qol: the quiver storage now uses numerical stacking (like botany and ore bags,
+      or the RPED, for example).
+  - bugfix: Fixed an oddity with morgue corpses being shakeable like they're just
+      unconscious.
+  - bugfix: Mirror reflections no longer display progress bars or runechat.
+  - bugfix: Fixed an oversight with processable items that lead to the same chat message
+      being sent multiple times.
+  LT3:
+  - bugfix: Large airlocks are now a subtype and function on both tiles
+  Melbert:
+  - bugfix: Fix some missing wizard spellbook flavor
+  - bugfix: Fixed latejoiners being affected by certain things twice, such as Summon
+      Guns and Summon Magic
+  Paxilmaniac:
+  - bugfix: The bulbs of lights will now have an emissive glow when on, making it
+      so they appear active no matter how dark the area surrounding them happens to
+      be.
+  Pickle-Coding:
+  - balance: Changeling arm blade has an armour penetration of 35%.
+  - balance: Changeling arm blade has a wound bonus of 10, from -20.
+  - balance: Changeling has a bare wound bonus of 10, from 20.
+  Vekter:
+  - bugfix: FRAG-12 shells no longer require sulfuric acid, instead needing 10 fluorosulfuric
+      acid. This should prevent them from leaving byproducts if crafted in a specific
+      way.
+  Vincent983:
+  - spellcheck: improvised fire extinguishers aren't full of typoes now
+  Watermelon914:
+  - admin: 'Added new lua functions: SS13.is_valid, SS13.stop_tracking, SS13.new_untracked,
+      SS13.type and SS13.qdel'
+  carlarctg:
+  - qol: Drill module automatically disables if it's about to drill into gibtonite
+  iain0:
+  - bugfix: A small clerical error fixed which will cause the Ukrainian station naming
+      prefix to be properly applied to the Independence Day of Ukraine holiday on
+      24th August, rather than overwriting the Indigenous People's Day station prefixes.
+  timothymtorres:
+  - rscadd: Add admin blackhole shuttle event with a normal version and suicidal version.
+  - bugfix: Fix several shuttle event runtimes
+2023-08-12:
+  Cheshify:
+  - qol: North Star's Cytology and Xenobiology are now significantly more usable.
+  - rscadd: North Star's Genetics has been tweaked.
+  - bugfix: The North Star's AI SAT has a working vent and it's service hall has a
+      working lightswitch
+  Derpguy3:
+  - bugfix: The metastation law office's shutters now function again.
+  EuSouAFazer:
+  - qol: The flowers in Meta's chapel are no longer stacked atop eachother
+  Ical92:
+  - bugfix: fixed missing departments and names in request consoles
+  Melbert:
+  - bugfix: Fix antimagic effect not expiring
+  Paxilmaniac:
+  - qol: Gigabeacons no longer need to be constructed like standard machines, instead
+      being printed as items that can be deployed quickly inhand without tools.
+  - qol: Gigabeacons are no longer their own research node, instead being a part of
+      telecomms tech (due to the fact they're RADIO navigation beacons)
+  - image: Navigation gigabeacons now have their own unique sprites, inspired by maritime
+      EPIRB devices. If you find a yellow box with an antenna on it, you probably
+      found a nav beacon!
+  - code_imp: The deployable component now gives you an option to disable the examine
+      blurb it adds to its parent
+  Wallem:
+  - rscadd: T
+  carlarctg:
+  - balance: Lepton Violet (wabbajack) shuttle must be unlocked by having some form
+      of polymorph happen in-game first (Pride Mirror or the cursed springs are the
+      most accessible sources)
+  - balance: Scrapheap shuttle can only be bought if the Cargo budget is below 600
+      credits, and the shuttle has just less than half of its usual refueling time
+      left. However, it gives the cargo budget an influx of 3000 credits!
+  - qol: Uncle Pete's Rollerdome has had its price increased, and the disco machine
+      is no longer unbreakable.
+  timothymtorres:
+  - qol: Emergency shuttle now gracefully display occupancy limits and prerequisites
+      in the communication console.
+  - balance: Change mousetraps to kill mice instead of damaging them (except regal
+      rats)
