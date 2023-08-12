@@ -83,7 +83,7 @@
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	belt = null
 	icon_state = "ctf_marksman"
-	class_description = "Long range class. Armed with a hitscan laser rifle."
+	class_description = "Long range class. Armed with a hitscan laser rifle with a scope."
 
 // RED TEAM CLASSES
 
