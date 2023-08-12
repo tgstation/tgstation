@@ -79,4 +79,5 @@
 	QDEL_LAZYLIST(repair_signals)
 	QDEL_LAZYLIST(methods_to_fix)
 	set_machine_stat(machine_stat & ~BROKEN)
+	set_machine_stat(machine_stat & ~EMAGGED)
 	update_appearance()
