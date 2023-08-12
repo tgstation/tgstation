@@ -1,0 +1,4 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - bugfix: "antag tokens can now be spent while your an observer for all tokens"
