@@ -485,7 +485,6 @@
 		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
-	
 /obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
 
