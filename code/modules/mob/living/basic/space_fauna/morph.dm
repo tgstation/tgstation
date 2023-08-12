@@ -152,7 +152,7 @@
 /mob/living/basic/morph/proc/pre_attack(mob/living/basic/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(src, TRAIT_DISGUISED) && (melee_damage_disguised >= 0))
+	if(HAS_TRAIT(src, TRAIT_DISGUISED) && (melee_damage_disguised <= 0))
 		balloon_alert(src, "can't attack while disguised!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 
