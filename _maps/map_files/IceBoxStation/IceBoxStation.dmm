@@ -2771,9 +2771,9 @@
 "aTJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "pharmacy_shutters";
-	name = "Pharmacy Shutters";
-	dir = 4
+	name = "Pharmacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
@@ -7978,9 +7978,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "pharmacy_shutters";
-	name = "Pharmacy Shutters";
-	dir = 4
+	name = "Pharmacy Shutters"
 	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
@@ -32469,8 +32469,8 @@
 /turf/open/floor/iron/white/corner,
 /area/station/engineering/atmos)
 "kqs" = (
-/obj/machinery/vending/sustenance,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/sustenance/labor_camp,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "kqw" = (
@@ -39700,9 +39700,9 @@
 "mIt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "pharmacy_shutters3";
-	name = "Pharmacy Shutters";
-	dir = 1
+	name = "Pharmacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
@@ -45900,15 +45900,15 @@
 "oCA" = (
 /obj/structure/closet/secure_closet/cytology,
 /obj/machinery/button/door/directional/north{
-	name = "Containment Blast Doors";
 	id = "xenobiomain";
-	req_access = list("xenobiology");
-	pixel_y = 32
+	name = "Containment Blast Doors";
+	pixel_y = 32;
+	req_access = list("xenobiology")
 	},
 /obj/machinery/button/door/directional/north{
-	pixel_y = 23;
-	name = "Test Chamber Blast Doors";
 	id = "misclab";
+	name = "Test Chamber Blast Doors";
+	pixel_y = 23;
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/glass/reinforced,
@@ -46341,9 +46341,9 @@
 "oKb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
 	id = "pharmacy_shutters3";
-	name = "Pharmacy Shutters";
-	dir = 1
+	name = "Pharmacy Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
@@ -48176,8 +48176,8 @@
 	},
 /obj/effect/landmark/event_spawn,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	req_access = list("morgue_secure");
-	name = "Coroner's Office"
+	name = "Coroner's Office";
+	req_access = list("morgue_secure")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -59218,8 +59218,8 @@
 	req_access = list("hop")
 	},
 /obj/machinery/flasher/directional/south{
-	pixel_y = -23;
-	id = "hopflash"
+	id = "hopflash";
+	pixel_y = -23
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -60728,9 +60728,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "pharmacy_shutters2";
-	name = "Pharmacy Shutters";
-	dir = 4
+	name = "Pharmacy Shutters"
 	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
