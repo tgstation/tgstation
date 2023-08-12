@@ -460,8 +460,8 @@
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/grill/ballpark_tsukune
-	reqs = list(/obj/item/food/raw_ballpark_tsukune = 1)
-	result = /obj/item/food/ballpark_tsukune
+	reqs = list(/obj/item/food/kebab/raw_ballpark_tsukune = 1)
+	result = /obj/item/food/kebab/ballpark_tsukune
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/grill/chapslice
