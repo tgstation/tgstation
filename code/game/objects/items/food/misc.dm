@@ -96,6 +96,12 @@
 	if(stink_particles)
 		particles = new stink_particles
 
+// We override the parent procs here to prevent burned messes from cooking into burned messes.
+/obj/item/food/badrecipe/make_grillable()
+	return
+/obj/item/food/badrecipe/make_bakeable()
+	return
+
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
 	desc = "A rancid, disgusting culture of mold and ants. Somewhere under there, at <i>some point,</i> there was food."

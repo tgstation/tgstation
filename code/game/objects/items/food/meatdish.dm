@@ -408,7 +408,6 @@
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/meatball/human
@@ -476,7 +475,6 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 
 ///Exists purely for the crafting recipe (because itll take subtypes)
 /obj/item/food/patty/plain
@@ -531,7 +529,6 @@
 	food_flags = FOOD_FINGER_FOOD
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sausage/make_processable()
@@ -590,7 +587,6 @@
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 
 /obj/item/food/meatbun
 	name = "meat bun"
@@ -633,7 +629,6 @@
 	tastes = list("hot peppers" = 1, "cobwebs" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 
 /obj/item/food/spidereggsham
 	name = "green eggs and ham"

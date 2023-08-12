@@ -121,7 +121,6 @@
 	tastes = list("aged cheese" = 1)
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	rat_heal = 10
 
 /obj/item/food/cheese/firm_cheese_slice/make_grillable()

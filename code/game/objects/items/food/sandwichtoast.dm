@@ -26,8 +26,6 @@
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/sandwich/cheese/make_grillable()
-	if(burns_on_grill)
-		return ..()
 	AddComponent(/datum/component/grillable, /obj/item/food/sandwich/cheese/grilled, rand(30 SECONDS, 60 SECONDS), TRUE)
 
 /obj/item/food/sandwich/cheese/grilled
@@ -41,7 +39,9 @@
 		/datum/reagent/carbon = 4,
 	)
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
-	burns_on_grill = TRUE
+
+/obj/item/food/sandwich/cheese/grilled/make_grillable() // need to override our parent here to avoid grilled cheeso-bouros
+	return
 
 /obj/item/food/sandwich/jelly
 	name = "jelly sandwich"
@@ -79,7 +79,6 @@
 	tastes = list("toast" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/food/butteredtoast

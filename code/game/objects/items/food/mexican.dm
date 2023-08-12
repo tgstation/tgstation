@@ -234,7 +234,6 @@
 	tastes = list("hard corn tortilla" = 1)
 	foodtypes = GRAIN | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 
 /obj/item/food/hard_taco_shell/Initialize(mapload)
 	. = ..()

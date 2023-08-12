@@ -496,7 +496,6 @@
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 
 /obj/item/food/raw_breadstick
 	name = "raw breadstick"

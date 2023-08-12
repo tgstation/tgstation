@@ -266,7 +266,6 @@
 	)
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
-	burns_on_grill = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/moonfish_demiglace
@@ -418,7 +417,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8)
 	tastes = list("bread" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
-	burns_on_grill = TRUE
 
 /obj/item/food/rootroll
 	name = "rootroll"
