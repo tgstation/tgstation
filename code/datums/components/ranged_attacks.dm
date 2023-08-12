@@ -36,10 +36,12 @@
 /datum/component/ranged_attacks/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_RANGED, PROC_REF(fire_ranged_attack))
+	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 
 /datum/component/ranged_attacks/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_MOB_ATTACK_RANGED)
+	REMOVE_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 
 /datum/component/ranged_attacks/proc/fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)
 	SIGNAL_HANDLER
