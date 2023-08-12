@@ -244,7 +244,7 @@
 
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
-			return //we don't care to undo locked controls, though, as that will resolve itself
+			return //we don't care to undo cover_locked controls, though, as that will resolve itself
 		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(speed_limiter)
 		transport_module.set_travelling(TRUE)
 
@@ -438,9 +438,10 @@
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/icts_controller
 	var/datum/transport_controller/linear/tram/controller_datum
-	var/cabinet_open = FALSE
-	/// If the cabinet door is open, closed, locked
-	var/locked = FALSE
+	/// If the cover is open
+	var/cover_open = FALSE
+	/// If the cover is locked
+	var/cover_locked = FALSE
 
 /obj/machinery/icts/controller/Initialize(mapload)
 	. = ..()
@@ -466,7 +467,9 @@
 /obj/machinery/icts/controller/LateInitialize(mapload)
 	. = ..()
 	if(!find_controller())
-		message_admins("ICTS: Tram failed to find controller!")
+		stack_trace("Tram cabinet failed to find controller datum!")
+
+	update_appearance()
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
@@ -474,7 +477,7 @@
 /obj/machinery/icts/controller/update_overlays()
 	. = ..()
 
-	if(!cabinet_open)
+	if(!cover_open)
 		. += mutable_appearance(icon, "controller-door")
 
 	if(machine_stat & NOPOWER)
@@ -533,21 +536,21 @@
 	update_appearance()
 
 /obj/machinery/icts/controller/attack_hand(mob/living/user, params)
-	if(locked)
-		balloon_alert(user, "it's locked!")
+	if(cover_locked)
+		balloon_alert(user, "it's cover_locked!")
 		return
 
 /obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
 
-	if(locked)
+	if(cover_locked)
 		return
 
-	if(!cabinet_open)
+	if(!cover_open)
 		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
 	else
 		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
-	cabinet_open = !cabinet_open
+	cover_open = !cover_open
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
