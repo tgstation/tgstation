@@ -67,6 +67,8 @@
 /obj/item/ammo_casing/proc/add_notes_ammo()
 	// Try to get a projectile to derive stats from
 	var/obj/projectile/exam_proj = projectile_type
+	var/initial_damage = initial(exam_proj.damage)
+	var/initial_stamina = initial(exam_proj.stamina)
 	// projectile damage multiplier for guns with snowflaked damage multipliers
 	var/proj_damage_mult = 1
 	if(!ispath(exam_proj) || pellets == 0)
@@ -86,12 +88,12 @@
 		// grab the damage multiplier.
 		proj_damage_mult = our_gun.projectile_damage_multiplier
 	var/list/readout = list()
-	if(!proj_damage_mult || proj_damage_mult <= 0)
+	if(proj_damage_mult <= 0 || (initial_damage <= 0 && initial_stamina <= 0))
 		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric."
 	// No dividing by 0
-	if(initial(exam_proj.damage) > 0)
+	if(initial_damage)
 		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * proj_damage_mult) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round."
-	if(initial(exam_proj.stamina) > 0)
+	if(initial_stamina)
 		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * proj_damage_mult) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds."
 	return readout.Join("\n") // Sending over a single string, rather than the whole list
 
