@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Projectile damage multipliers on guns are now reflected in their combat information."
+  - admin: "Admins can now make a gun's fired projectiles better or worse at wounding by changing the gun's projectile_wound_bonus. Surely this will not have any repercussions."
