@@ -86,6 +86,7 @@
 		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."),\
 		span_hear("You hear someone rustle around in a plastic bag, and remove something."))
 		cut_overlays() //remove the overlays
+		user.put_in_hands
 		w_class = WEIGHT_CLASS_TINY
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
