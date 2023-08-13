@@ -217,6 +217,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/civilian/lawyer/galaxy
+	icon = 'icons/obj/clothing/under/lawyer_galaxy.dmi'
 	worn_icon = 'icons/mob/clothing/under/lawyer_galaxy.dmi'
 	can_adjust = FALSE
 	name = "blue galaxy suit"
