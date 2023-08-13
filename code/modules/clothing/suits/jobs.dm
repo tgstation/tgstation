@@ -173,8 +173,8 @@
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
-	name = "blue suit jacket"
-	desc = "A snappy dress jacket."
+	name = "blue formal suit jacket"
+	desc = "A professional suit jacket."
 	icon_state = "suitjacket_blue"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
@@ -184,16 +184,22 @@
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/toggle/lawyer/purple
-	name = "purple suit jacket"
-	desc = "A foppish dress jacket."
+	name = "purple formal suit jacket"
 	icon_state = "suitjacket_purp"
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/toggle/lawyer/black
-	name = "black suit jacket"
-	desc = "A professional suit jacket."
+	name = "black formal suit jacket"
 	icon_state = "suitjacket_black"
 	inhand_icon_state = "ro_suit"
+
+/obj/item/clothing/suit/toggle/lawyer/greyscale
+	name = "formal suit jacket"
+	icon_state = "jacket_lawyer"
+	inhand_icon_state = ""
+	greyscale_config = /datum/greyscale_config/jacket_lawyer
+	greyscale_config_worn = /datum/greyscale_config/jacket_lawyer/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 //Mime
 /obj/item/clothing/suit/toggle/suspenders
@@ -295,7 +301,6 @@
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
 
-//Robotocist
 /datum/armor/jacket_curator
 	melee = 25
 	bullet = 10
@@ -303,6 +308,7 @@
 	energy = 35
 	acid = 45
 
+//Robotocist
 /obj/item/clothing/suit/hooded/techpriest
 	name = "techpriest robes"
 	desc = "For those who REALLY love their toasters."

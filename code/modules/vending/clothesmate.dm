@@ -94,6 +94,7 @@
 				/obj/item/clothing/suit/toggle/jacket/sweater = 4,
 				/obj/item/clothing/suit/jacket/oversized = 4,
 				/obj/item/clothing/suit/jacket/fancy = 4,
+				/obj/item/clothing/suit/toggle/lawyer/greyscale = 4,
 				/obj/item/clothing/suit/hooded/wintercoat/custom = 2,
 				/obj/item/clothing/suit/hooded/wintercoat = 2,
 				/obj/item/clothing/under/suit/navy = 1,
