@@ -65,9 +65,9 @@
 	clear_failed_targets = FALSE
 
 /datum/ai_behavior/run_away_from_target/lobster/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
+	var/atom/target = controller.blackboard[target_key]
 	if(isnull(target))
 		return ..()
-  var/atom/target = controller.blackboard[target_key]
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
 		if (!HAS_TRAIT(target, trait))
 			continue
