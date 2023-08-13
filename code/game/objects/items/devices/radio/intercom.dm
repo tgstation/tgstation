@@ -35,7 +35,8 @@
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	GLOB.intercoms_list += src
 	if(!unscrewed)
-		find_and_hang_on_wall(TRUE, CALLBACK(src, PROC_REF(knock_down)))
+		find_and_hang_on_wall(directional = TRUE, \
+			custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 
 /obj/item/radio/intercom/Destroy()
 	. = ..()

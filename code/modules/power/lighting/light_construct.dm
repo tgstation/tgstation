@@ -33,6 +33,7 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	find_and_hang_on_wall()
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)

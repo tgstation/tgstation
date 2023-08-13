@@ -6,7 +6,7 @@
 	/// Callback to the parent's proc to call on the linked object when the wall disappear's or changes.
 	var/datum/callback/on_drop
 
-/datum/component/wall_mounted/Initialize(target_hung_object, target_wall, on_drop_callback)
+/datum/component/wall_mounted/Initialize(target_hung_object, on_drop_callback)
 	. = ..()
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
