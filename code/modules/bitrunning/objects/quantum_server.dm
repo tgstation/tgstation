@@ -553,10 +553,6 @@
 			RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_send_turf_examined))
 			continue
 
-		if(ismachinery(thing)) // so machines have power
-			var/obj/machinery/machine_thing = thing
-			machine_thing.power_change()
-
 	if(!length(exit_turfs))
 		CRASH("Failed to find exit turfs on generated domain.")
 	if(!length(goal_turfs))

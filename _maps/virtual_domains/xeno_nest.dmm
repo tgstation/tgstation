@@ -39,7 +39,7 @@
 "j" = (
 /obj/machinery/suit_storage_unit/spaceruin,
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "k" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/wall,
@@ -56,6 +56,9 @@
 /obj/structure/alien/resin/wall,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"n" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "o" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -129,7 +132,7 @@
 	pixel_y = 6
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "G" = (
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/weeds,
@@ -146,7 +149,7 @@
 	pixel_y = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "I" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -171,7 +174,7 @@
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/regular,
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "M" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall{
@@ -1304,11 +1307,11 @@ E
 E
 z
 z
-a
-a
-a
-a
-a
+n
+n
+n
+n
+n
 v
 A
 E
@@ -1345,12 +1348,12 @@ z
 z
 k
 e
-a
+n
 j
 j
 j
-a
-a
+n
+n
 A
 E
 "}
@@ -1386,12 +1389,12 @@ V
 e
 e
 e
-a
-a
-a
-a
-a
-a
+n
+n
+n
+n
+n
+n
 A
 E
 "}
@@ -1427,12 +1430,12 @@ V
 t
 e
 e
-a
-a
+n
+n
 F
 H
-a
-a
+n
+n
 A
 E
 "}
@@ -1468,12 +1471,12 @@ z
 k
 e
 e
-a
-a
-a
-a
-a
-a
+n
+n
+n
+n
+n
+n
 A
 E
 "}
@@ -1509,12 +1512,12 @@ E
 z
 e
 e
-a
+n
 L
-a
-a
-a
-a
+n
+n
+n
+n
 A
 E
 "}
@@ -1550,12 +1553,12 @@ E
 z
 e
 e
-a
-a
-a
-a
-a
-a
+n
+n
+n
+n
+n
+n
 A
 E
 "}

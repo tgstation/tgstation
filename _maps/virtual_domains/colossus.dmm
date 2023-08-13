@@ -63,13 +63,16 @@
 /obj/structure/marker_beacon/yellow,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"N" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse/bottom_left)
 "T" = (
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "U" = (
 /turf/template_noop,
-/area/space)
+/area/virtual_domain/safehouse)
 "W" = (
 /obj/structure/marker_beacon/fuchsia,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -1078,7 +1081,7 @@ U
 U
 U
 U
-U
+N
 a
 k
 v

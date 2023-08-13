@@ -353,6 +353,13 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
+"lt" = (
+/obj/structure/disposalpipe/sorting{
+	dir = 8
+	},
+/mob/living/basic/hivebot/range,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
 "lx" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 4;
@@ -580,7 +587,7 @@
 /obj/structure/disposalpipe/broken{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/basic/hivebot/strong,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "rO" = (
@@ -625,8 +632,8 @@
 /area/virtual_domain/powered)
 "tE" = (
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/hostile/hivebot/strong,
-/turf/open/floor/plating,
+/mob/living/basic/hivebot/range,
+/turf/open/floor/iron,
 /area/virtual_domain/powered)
 "ud" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -761,6 +768,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/mob/living/basic/hivebot,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "wU" = (
@@ -879,9 +887,11 @@
 /turf/open/space/basic,
 /area/space)
 "Aw" = (
-/obj/structure/broken_flooring/side,
-/mob/living/simple_animal/hostile/hivebot/range,
-/turf/open/floor/plating,
+/obj/structure/lattice/catwalk{
+	name = "industrial lift"
+	},
+/mob/living/basic/hivebot/rapid,
+/turf/open/chasm,
 /area/virtual_domain/powered)
 "AJ" = (
 /obj/effect/decal/cleanable/generic,
@@ -1206,7 +1216,6 @@
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/random/directional/west,
-/mob/living/simple_animal/hostile/hivebot/range,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "JE" = (
@@ -1217,10 +1226,8 @@
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "JR" = (
-/obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/hostile/hivebot/range,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "JT" = (
 /obj/structure/lattice/catwalk{
 	name = "industrial lift"
@@ -1351,7 +1358,7 @@
 /area/virtual_domain/powered)
 "NW" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/basic/hivebot/strong,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "Ok" = (
@@ -1550,11 +1557,8 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "SC" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/hivebot/rapid,
-/turf/open/floor/iron,
+/mob/living/basic/hivebot/strong,
+/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "SR" = (
 /obj/effect/turf_decal/trimline/yellow/line,
@@ -1585,8 +1589,10 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "Tn" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/hivebot,
+/obj/structure/broken_flooring/corner{
+	dir = 4
+	},
+/mob/living/basic/hivebot,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "Tp" = (
@@ -2209,7 +2215,7 @@ yQ
 RJ
 eg
 jQ
-lW
+lt
 kU
 vU
 lN
@@ -2258,10 +2264,10 @@ yQ
 yQ
 RJ
 eg
-Aw
+uU
 gj
 kU
-pb
+Tn
 OR
 eg
 RJ
@@ -2428,11 +2434,11 @@ eY
 aK
 aK
 aK
-yQ
-yQ
-yQ
-yQ
-yQ
+JR
+JR
+JR
+JR
+JR
 Qo
 aK
 RJ
@@ -2478,12 +2484,12 @@ eY
 eY
 aK
 aK
-yQ
-yQ
-yQ
-yQ
-yQ
-yQ
+JR
+JR
+JR
+JR
+JR
+JR
 aK
 RJ
 "}
@@ -2501,7 +2507,7 @@ bA
 eg
 kU
 sB
-SC
+WT
 mh
 kU
 pv
@@ -2510,7 +2516,7 @@ IZ
 KX
 Wd
 uv
-Tn
+DE
 Mi
 gj
 xT
@@ -2528,12 +2534,12 @@ XL
 eg
 tr
 eY
-yQ
-yQ
-yQ
-yQ
-yQ
-yQ
+JR
+JR
+JR
+JR
+JR
+JR
 aK
 RJ
 "}
@@ -2564,7 +2570,7 @@ DA
 DA
 zE
 gc
-tE
+mu
 Yz
 lW
 pi
@@ -2578,12 +2584,12 @@ Wp
 Ru
 hi
 gs
-yQ
-yQ
-yQ
-yQ
-yQ
-yQ
+JR
+JR
+JR
+JR
+JR
+JR
 aK
 RJ
 "}
@@ -2607,14 +2613,14 @@ jS
 gj
 rJ
 KX
-KX
+Aw
 Wd
 Ff
 lN
 XO
 gj
 DE
-kU
+SC
 tl
 qk
 mu
@@ -2628,12 +2634,12 @@ cw
 eY
 tr
 eY
-yQ
-yQ
-yQ
-yQ
-yQ
-yQ
+JR
+JR
+JR
+JR
+JR
+JR
 aK
 RJ
 "}
@@ -2678,12 +2684,12 @@ eY
 eY
 aK
 aK
-yQ
-yQ
-yQ
-yQ
-yQ
-yQ
+JR
+JR
+JR
+JR
+JR
+JR
 aK
 RJ
 "}
@@ -2728,12 +2734,12 @@ eY
 aK
 aK
 aK
-yQ
-yQ
-yQ
-yQ
-yQ
-yQ
+JR
+JR
+JR
+JR
+JR
+JR
 aK
 RJ
 "}
@@ -2912,8 +2918,8 @@ mu
 rM
 gc
 vQ
-vQ
-JR
+tE
+mu
 mu
 eg
 Mx

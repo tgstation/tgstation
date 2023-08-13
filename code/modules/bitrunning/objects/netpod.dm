@@ -80,8 +80,13 @@
 	return ..()
 
 /obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user) || !is_operational)
+	var/mob/living/carbon/player = user
+	if(!iscarbon(player))
 		return
+
+	if((HAS_TRAIT(player, TRAIT_UI_BLOCKED) && !player.resting) || !Adjacent(player) || !player.Adjacent(target) || !ISADVANCEDTOOLUSER(player) || !is_operational)
+		return
+
 	close_machine(target)
 
 /obj/machinery/netpod/crowbar_act(mob/living/user, obj/item/tool)

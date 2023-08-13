@@ -37,6 +37,9 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"t" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "w" = (
 /obj/structure/water_source/puddle,
 /turf/open/floor/grass,
@@ -54,7 +57,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "C" = (
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -80,7 +83,7 @@
 /obj/item/kitchen/fork,
 /obj/item/knife/kitchen,
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "N" = (
 /obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
@@ -861,11 +864,11 @@ h
 h
 h
 h
-o
-o
-o
-o
-o
+t
+t
+t
+t
+t
 O
 c
 a
@@ -906,12 +909,12 @@ C
 h
 h
 h
-o
-o
+t
+t
 M
 M
-o
-o
+t
+t
 c
 a
 "}
@@ -951,12 +954,12 @@ C
 h
 C
 C
-o
-o
+t
+t
 A
 A
-o
-o
+t
+t
 c
 a
 "}
@@ -996,12 +999,12 @@ C
 C
 C
 C
-o
-o
-o
-o
-o
-o
+t
+t
+t
+t
+t
+t
 c
 a
 "}
@@ -1041,12 +1044,12 @@ C
 C
 C
 C
-o
-o
-o
-o
-o
-o
+t
+t
+t
+t
+t
+t
 c
 a
 "}
@@ -1086,12 +1089,12 @@ C
 h
 h
 h
-o
-o
-o
-o
-o
-o
+t
+t
+t
+t
+t
+t
 c
 a
 "}
@@ -1131,12 +1134,12 @@ C
 h
 h
 h
-o
-o
-o
-o
-o
-o
+t
+t
+t
+t
+t
+t
 c
 a
 "}

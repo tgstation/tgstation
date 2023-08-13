@@ -19748,6 +19748,10 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark/corner,
 /area/station/security/brig)
+"fhw" = (
+/obj/item/radio/intercom/directional/north,
+/turf/open/space/basic,
+/area/space)
 "fhx" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/fakebasalt,
@@ -115588,7 +115592,7 @@ owI
 owI
 owI
 owI
-owI
+fhw
 owI
 owI
 bAh

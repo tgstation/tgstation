@@ -11,7 +11,7 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "c" = (
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "f" = (
 /obj/structure/stone_tile{
 	dir = 1

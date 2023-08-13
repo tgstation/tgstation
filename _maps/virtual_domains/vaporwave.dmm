@@ -150,10 +150,10 @@
 "C" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "D" = (
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "E" = (
 /turf/open/floor/holofloor/beach/water,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -198,7 +198,7 @@
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "O" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/airless,

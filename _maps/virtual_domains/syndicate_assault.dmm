@@ -535,7 +535,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "sM" = (
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "tv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -694,7 +694,7 @@
 "BN" = (
 /obj/structure/transit_tube/crossing,
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "Cf" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
@@ -1146,7 +1146,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "Wd" = (
 /obj/structure/sign/poster/contraband/tools,
 /turf/closed/wall/r_wall/syndicate,

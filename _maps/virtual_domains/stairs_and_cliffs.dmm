@@ -189,7 +189,7 @@
 /area/icemoon/underground/explored/virtual_domain)
 "J" = (
 /turf/template_noop,
-/area/template_noop)
+/area/virtual_domain/safehouse)
 "K" = (
 /turf/open/floor/wood,
 /area/icemoon/underground/explored/virtual_domain)

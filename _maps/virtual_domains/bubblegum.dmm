@@ -58,7 +58,10 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "S" = (
 /turf/template_noop,
-/area/space)
+/area/virtual_domain/safehouse)
+"T" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse/bottom_left)
 "W" = (
 /obj/structure/marker_beacon/cerulean,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -1078,7 +1081,7 @@ S
 S
 S
 S
-S
+T
 a
 Z
 F
