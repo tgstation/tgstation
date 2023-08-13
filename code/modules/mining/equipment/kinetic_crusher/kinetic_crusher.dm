@@ -46,6 +46,7 @@
 		force_unwielded = 0, \
 		force_wielded = 20, \
 	)
+	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_MELEE)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -82,11 +83,9 @@
 		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
 		user.drop_all_held_items()
 		return
-	var/datum/status_effect/crusher_damage/crusher_damage_tracker = target.has_status_effect(/datum/status_effect/crusher_damage)
-	if(!crusher_damage_tracker)
-		crusher_damage_tracker = target.apply_status_effect(/datum/status_effect/crusher_damage)
 	var/target_health = target.health
 	. = ..()
+	var/datum/status_effect/crusher_damage/crusher_damage_tracker = target.has_status_effect(/datum/status_effect/crusher_damage)
 	for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
 		if(!QDELETED(target))
 			found_trophy.on_melee_hit(target, user)
@@ -102,8 +101,6 @@
 		if(!mark_field || mark_field.hammer_synced != src || !victim.remove_status_effect(/datum/status_effect/crusher_mark))
 			return
 		var/datum/status_effect/crusher_damage/crusher_damage_tracker = victim.has_status_effect(/datum/status_effect/crusher_damage)
-		if(!crusher_damage_tracker)
-			crusher_damage_tracker = victim.apply_status_effect(/datum/status_effect/crusher_damage)
 		var/target_health = victim.health
 		for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
 			found_trophy.on_mark_detonation(target, user)
@@ -206,6 +203,13 @@
 	log_override = TRUE
 	///The crusher that fired the projectile
 	var/obj/item/kinetic_crusher/hammer_synced
+
+/obj/projectile/destabilizer/Initialize(mapload)
+	. = ..()
+	//we don't really care if the projectile doesn't do damage
+	//(if it hits a living mob, we are proably going to attack it more with the crusher),
+	//so just make every fired projectile have this property
+	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_PROJECTILE)
 
 /obj/projectile/destabilizer/Destroy()
 	hammer_synced = null

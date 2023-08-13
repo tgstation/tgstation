@@ -246,12 +246,18 @@
 	check_flags = NONE
 	owner_has_control = FALSE
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/bileworm_acid
+	projectile_type = /obj/projectile/bileworm_acid/spewlet_trophy
 	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
 	firing_directions = GLOB.cardinals.Copy()
 	return ..()
+
+/obj/projectile/bileworm_acid/spewlet_trophy
+
+/obj/projectile/bileworm_acid/spewlet_trophy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_PROJECTILE)
 
 /**
  * Polar bear

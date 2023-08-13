@@ -1,0 +1,44 @@
+/**
+ * Element that handles applying a crusher damage tracker status effect on a struck target.
+ */
+/datum/element/crusher_damage_applicant
+
+/datum/element/crusher_damage_applicant/Attach(datum/target, listen_to)
+	. = ..()
+
+	if(!ismovable(target))
+		return ELEMENT_INCOMPATIBLE
+	if(isnull(listen_to))
+		stack_trace("crusher_damage_applicant element was not passed a listen_to for [target] to determine what to listen to.")
+		return ELEMENT_INCOMPATIBLE
+
+	switch(listen_to)
+		if(APPLY_WITH_MELEE)
+			RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_melee_attack))
+		if(APPLY_WITH_PROJECTILE)
+			RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
+		/*if(APPLY_WITH_SPELL)
+			RegisterSignal(target, %IOU_COMSIG_DEFINE%, PROC_REF(on_applied_spell))*/
+
+/datum/element/crusher_damage_applicant/Detach(datum/source, ...)
+	UnregisterSignal(source, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_PROJECTILE_ON_HIT/*, %IOU_COMSIG_DEFINE%*/))
+	return ..()
+
+/datum/element/crusher_damage_applicant/proc/try_apply_damage_tracker(mob/living/living_target)
+	if(living_target.has_status_effect(/datum/status_effect/crusher_damage))
+		return
+	living_target.apply_status_effect(/datum/status_effect/crusher_damage)
+
+/datum/element/crusher_damage_applicant/proc/on_melee_attack(datum/source, atom/target, mob/user, params)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	try_apply_damage_tracker(target)
+
+/datum/element/crusher_damage_applicant/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	try_apply_damage_tracker(target)
