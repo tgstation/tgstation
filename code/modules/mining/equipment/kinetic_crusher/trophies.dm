@@ -524,11 +524,20 @@
 	return "mark detonation to create a homing hierophant chaser"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
-	if(isliving(target))
-		var/obj/effect/temp_visual/hierophant/chaser/chaser = new(get_turf(user), user, target, bonus_value, TRUE)
-		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
-		chaser.damage = 20
-		log_combat(user, target, "fired a hierophant chaser at", src)
+	new /obj/effect/temp_visual/hierophant/chaser/crusher(get_turf(user), user, target, bonus_value, TRUE)
+	log_combat(user, target, "fired a hierophant chaser at", src)
+
+/obj/effect/temp_visual/hierophant/chaser/crusher
+	damage = 20
+	monster_damage_boost = FALSE
+	created_blast = /obj/effect/temp_visual/hierophant/blast/damaging/crusher
+
+/obj/effect/temp_visual/hierophant/blast/damaging/crusher
+	trophy_spawned = TRUE
+
+/obj/effect/temp_visual/hierophant/blast/damaging/crusher/Initialize(mapload, new_caster, friendly_fire)
+	. = ..()
+	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_SPELL)
 
 /**
  * Demonic frost miner

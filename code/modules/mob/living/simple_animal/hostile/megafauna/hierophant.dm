@@ -579,6 +579,8 @@ Difficulty: Hard
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 	var/monster_damage_boost = TRUE
 	var/damage = 10
+	///What type of blast does the chaser create
+	var/obj/effect/temp_visual/hierophant/blast/damaging/created_blast = /obj/effect/temp_visual/hierophant/blast/damaging
 
 /obj/effect/temp_visual/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
 	. = ..()
@@ -622,10 +624,11 @@ Difficulty: Hard
 				moving--
 				sleep(speed)
 			targetturf = get_turf(target)
+
 /obj/effect/temp_visual/hierophant/chaser/proc/make_blast()
-	var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(loc, caster, friendly_fire_check)
-	B.damage = damage
-	B.monster_damage_boost = monster_damage_boost
+	var/obj/effect/temp_visual/hierophant/blast/damaging/new_blast = new created_blast(loc, caster, friendly_fire_check)
+	new_blast.damage = damage
+	new_blast.monster_damage_boost = monster_damage_boost
 
 /obj/effect/temp_visual/hierophant/telegraph
 	icon = 'icons/effects/96x96.dmi'
@@ -662,6 +665,8 @@ Difficulty: Hard
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
+	///Whether this blast was created by a hierophant crusher trophy
+	var/trophy_spawned = FALSE
 
 /obj/effect/temp_visual/hierophant/blast/damaging/Initialize(mapload, new_caster, friendly_fire)
 	. = ..()
@@ -706,6 +711,8 @@ Difficulty: Hard
 		to_chat(L, span_userdanger("You're struck by a [name]!"))
 		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
+		if(trophy_spawned)
+			SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, L, caster, limb_to_hit, armor)
 		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...

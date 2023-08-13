@@ -17,17 +17,19 @@
 			RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_melee_attack))
 		if(APPLY_WITH_PROJECTILE)
 			RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
-		/*if(APPLY_WITH_SPELL)
-			RegisterSignal(target, %IOU_COMSIG_DEFINE%, PROC_REF(on_applied_spell))*/
+		if(APPLY_WITH_SPELL)
+			RegisterSignal(target, COMSIG_CRUSHER_SPELL_HIT, PROC_REF(on_applied_spell))
 
 /datum/element/crusher_damage_applicant/Detach(datum/source, ...)
-	UnregisterSignal(source, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_PROJECTILE_ON_HIT/*, %IOU_COMSIG_DEFINE%*/))
+	UnregisterSignal(source, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_PROJECTILE_ON_HIT, COMSIG_CRUSHER_SPELL_HIT))
 	return ..()
 
 /datum/element/crusher_damage_applicant/proc/try_apply_damage_tracker(mob/living/living_target)
 	if(living_target.has_status_effect(/datum/status_effect/crusher_damage))
+		message_admins("[living_target] already has a crusher damage tracker") //debug
 		return
 	living_target.apply_status_effect(/datum/status_effect/crusher_damage)
+	message_admins("[living_target] has received a crusher damage tracker") //debug
 
 /datum/element/crusher_damage_applicant/proc/on_melee_attack(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
@@ -37,6 +39,13 @@
 	try_apply_damage_tracker(target)
 
 /datum/element/crusher_damage_applicant/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	try_apply_damage_tracker(target)
+
+/datum/element/crusher_damage_applicant/proc/on_applied_spell(datum/source, atom/target, mob/living/caster, limb_to_hit, armor)
 	SIGNAL_HANDLER
 
 	if(!isliving(target))
