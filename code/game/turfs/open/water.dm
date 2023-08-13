@@ -22,10 +22,6 @@
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/turf/open/water/LateInitialize()
-	. = ..()
 	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
 
 /turf/open/water/jungle
