@@ -18,16 +18,15 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
 	var/obj/item/bodypart/part = owner?.get_holding_bodypart_of_item(scythe)
-	. = ..() // No, this line cannot be above get_holding_bodypart_of_item() OR below punish_the_arrogant. I'm sorry.
 	if(!scythe)
 		return FALSE
+/* IMPORTANT!! - The parent call here has to be below the declarations for scythe and part (otherwise we'll retract first and
+ they will always be null) and above receive_damage() (otherwise we will runtime if it dismembers us) */
+	. = ..()
 	if(scythe.empowerment < SCYTHE_SATED && part)
-		punish_the_arrogant(part)
-
-/obj/item/organ/internal/cyberimp/arm/shard/scythe/proc/punish_the_arrogant(var/obj/item/bodypart/held_part)
-	to_chat(owner, span_userdanger("[active_item] tears into you for your unworthy display of arrogance!"))
-	playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
-	held_part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+		to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
+		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
+		part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
 
 /obj/item/vorpalscythe
 	name = "vorpal scythe"
