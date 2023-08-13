@@ -222,7 +222,7 @@
 /mob/living/basic/update_stamina()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
-/mob/living/basic/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/basic/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
 /mob/living/basic/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")

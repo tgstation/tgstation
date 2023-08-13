@@ -372,7 +372,7 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "sigh")
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "sigh")
 	flick_overlay_global(emote_animation, GLOB.clients, 2.0 SECONDS)
 
 /datum/emote/living/sit

@@ -25,6 +25,7 @@
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/security = 3,
+		/obj/item/clothing/suit/armor/vest = 3,
 		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
 		/obj/item/storage/backpack/security = 3,
@@ -165,7 +166,6 @@
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
-
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
@@ -227,7 +227,6 @@
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/radio/headset/headset_sci = 3,
-
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
@@ -314,7 +313,11 @@
 		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
 		/obj/item/storage/box/bodybags = 3,
-		/obj/item/storage/medkit/coroner = 1,
+		/obj/item/scalpel/cruel = 1,
+		/obj/item/retractor/cruel = 1,
+		/obj/item/hemostat/cruel = 1,
+		/obj/item/cautery/cruel = 1,
+		/obj/item/toy/crayon/white = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
 	)
 	contraband = list(
@@ -325,10 +328,7 @@
 	)
 	premium = list(
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/scalpel/cruel = 1,
-		/obj/item/retractor/cruel = 1,
-		/obj/item/hemostat/cruel = 1,
-		/obj/item/cautery/cruel = 1,
+		/obj/item/storage/medkit/coroner = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/coroner_wardrobe
 	payment_department = ACCOUNT_MED

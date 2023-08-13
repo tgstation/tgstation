@@ -108,6 +108,7 @@
 	new /obj/item/clothing/under/rank/rnd/research_director(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/skirt(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/alt(src)
+	new /obj/item/clothing/under/rank/rnd/research_director/alt/skirt(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)

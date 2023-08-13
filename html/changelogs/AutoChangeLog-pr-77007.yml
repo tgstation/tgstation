@@ -1,0 +1,7 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - rscadd: "you can upgrade laser pointers with a bluespace crystal to let them shine through walls at double the power cost, if the laser in the pointer is of tier 3 or higher."
+  - qol: "laser pointer charge can be seen by examining it"
+  - bugfix: "fixed laser pointers luring dead cats when shone upon"
+  - code_imp: "laser pointer code cleaned up a tad"
