@@ -1160,8 +1160,6 @@
 			drinker.adjust_hallucinations(60 SECONDS * REM * seconds_per_tick)
 
 	return ..()
-<<<<<<< HEAD
-=======
 
 /datum/reagent/consumable/t_letter
 	name = "T"
@@ -1217,4 +1215,3 @@
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 3)
->>>>>>> 5335bbfdf5b (T (#77442))
