@@ -6022,7 +6022,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "cwg" = (
-/mob/living/simple_animal/hostile/asteroid/lobstrosity,
+/mob/living/basic/mining/lobstrosity,
 /turf/open/misc/asteroid/airless,
 /area/station/engineering/supermatter/room)
 "cwp" = (
