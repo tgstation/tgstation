@@ -11,7 +11,7 @@
 
 // Caliber defines: (current count stands at 24)
 /// The caliber used by the [L6 SAW][/obj/item/gun/ballistic/automatic/l6_saw].
-#define CALIBER_712X82MM "mm71282"
+#define CALIBER_A7MM "a7mm"
 /// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
 #define CALIBER_46X30MM "4.6x30mm"
 /// The caliber used by the Nanotrasen Saber SMG, PP-95 SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
@@ -33,7 +33,7 @@
 /// The caliber used by [one revolver variant][/obj/item/gun/ballistic/revolver/nagant].
 #define CALIBER_N762 "n762"
 /// The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.
-#define CALIBER_A556 "a556"
+#define CALIBER_A223 "a223"
 /// The caliber used by bolt action rifles.
 #define CALIBER_A762 "a762"
 /// The caliber used by shotguns.

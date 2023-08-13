@@ -15,19 +15,6 @@
 	. = ..()
 	AddComponent(/datum/component/gps, SPACE_SIGNAL_GPSTAG)
 
-/obj/machinery/computer/shuttle/white_ship/pod
-	name = "Salvage Pod Console"
-	desc = "Used to control the Salvage Pod."
-	circuit = /obj/item/circuitboard/computer/white_ship/pod
-	shuttleId = "whiteship_pod"
-	possible_destinations = "whiteship_pod_home;whiteship_pod_custom"
-
-/obj/machinery/computer/shuttle/white_ship/pod/recall
-	name = "Salvage Pod Recall Console"
-	desc = "Used to recall the Salvage Pod."
-	circuit = /obj/item/circuitboard/computer/white_ship/pod/recall
-	possible_destinations = "whiteship_pod_home"
-
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship
 	name = "White Ship Navigation Computer"
 	desc = "Used to designate a precise transit location for the White Ship."
@@ -39,17 +26,6 @@
 	x_offset = -6
 	y_offset = -10
 	designate_time = 100
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/pod
-	name = "Salvage Pod Navigation Computer"
-	desc = "Used to designate a precise transit location for the Salvage Pod."
-	shuttleId = "whiteship_pod"
-	shuttlePortId = "whiteship_pod_custom"
-	jump_to_ports = list("whiteship_pod_home" = 1)
-	view_range = 0
-	x_offset = -2
-	y_offset = 0
-	designate_time = 0
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize(mapload)
 	. = ..()

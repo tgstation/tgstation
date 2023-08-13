@@ -24817,6 +24817,7 @@
 	dir = 4
 	},
 /obj/machinery/requests_console/directional/north{
+	department = "Ordnance";
 	name = "Ordnance Mixing Lab Requests Console"
 	},
 /obj/effect/turf_decal/box/red,
@@ -25391,8 +25392,8 @@
 /area/station/science/xenobiology)
 "gmK" = (
 /obj/structure/cable,
-/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/machinery/mining_weather_monitor/directional/south,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "gmP" = (
@@ -50456,7 +50457,7 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "mDO" = (
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/glass{
 	name = "Laundromat"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -61975,7 +61976,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/glass{
 	name = "Laundromat"
 	},
 /turf/open/floor/iron,
@@ -78737,7 +78738,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/requests_console/directional/east,
+/obj/machinery/requests_console/directional/east{
+	department = "Theater";
+	name = "Theater Requests Console"
+	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/service/theater)
@@ -80350,7 +80354,10 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
 /obj/item/pen,
-/obj/machinery/requests_console/directional/west,
+/obj/machinery/requests_console/directional/west{
+	department = "AI Chamber";
+	name = "AI Chamber Requests Console"
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)

@@ -8,7 +8,7 @@
 	argument_hash_start_idx = 2
 	var/reusable = FALSE
 
-/datum/element/caseless/Attach(datum/target, reusable)
+/datum/element/caseless/Attach(datum/target, reusable = FALSE)
 	. = ..()
 	if(!isammocasing(target))
 		return ELEMENT_INCOMPATIBLE
