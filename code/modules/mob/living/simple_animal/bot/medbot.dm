@@ -134,7 +134,7 @@
 
 /mob/living/simple_animal/bot/medbot/nukie
 	name = "Oppenheimer"
-	desc = "A Nanotrasen medibot, stolen and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
+	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
 	skin = "bezerk"
 	health = 40
 	maxHealth = 40
