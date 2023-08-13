@@ -204,7 +204,7 @@
 		/obj/item/food/spaghetti/boilednoodles = 1,
 		/datum/reagent/consumable/soysauce = 3,
 	)
-	result = /obj/item/food/salad/martian_fried_noodles
+	result = /obj/item/food/salad/simple_fried_noodles
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/setagaya_curry
@@ -310,7 +310,7 @@
 		/obj/item/food/omelette = 1,
 		/obj/item/food/pickle = 1,
 	)
-	result = /obj/item/food/croque_martienne
+	result = /obj/item/food/prospect_sunrise
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/takoyaki
@@ -669,7 +669,7 @@
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/grown/ambrosia/vulgaris = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 2,
 	)
 	result = /obj/item/food/cake/spekkoek
 	category = CAT_MARTIAN
@@ -700,7 +700,7 @@
 	name = "Boh loh yah"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/datum/reagent/consumable/sugar = 5,
 	)
 	result = /obj/item/food/boh_loh_yah

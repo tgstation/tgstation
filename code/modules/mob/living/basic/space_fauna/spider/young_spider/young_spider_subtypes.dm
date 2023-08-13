@@ -1,8 +1,8 @@
 // This whole file is just a container for the young spider subtypes that actually differentiate into different giant spiders. None of them are particularly special as of now.
 
 /// Will differentiate into the base giant spider (known colloquially as the "guard" spider).
-/mob/living/basic/young_spider/guard
-	grow_as = /mob/living/basic/giant_spider/guard
+/mob/living/basic/spider/growing/young/guard
+	grow_as = /mob/living/basic/spider/giant/guard
 	name = "young guard spider"
 	desc = "Furry and brown, it looks defenseless. This one has sparkling red eyes."
 	maxHealth = 70
@@ -12,8 +12,8 @@
 	speed = 0.7
 
 /// Will differentiate into the "ambush" giant spider.
-/mob/living/basic/young_spider/ambush
-	grow_as = /mob/living/basic/giant_spider/ambush
+/mob/living/basic/spider/growing/young/ambush
+	grow_as = /mob/living/basic/spider/giant/ambush
 	name = "young ambush spider"
 	desc = "Furry and white, it looks defenseless. This one has sparkling pink eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -25,14 +25,14 @@
 	melee_damage_upper = 18
 	speed = 1
 
-/mob/living/basic/young_spider/ambush/Initialize(mapload)
+/mob/living/basic/spider/growing/young/ambush/Initialize(mapload)
 	. = ..()
 	var/datum/action/cooldown/sneak/spider/sneak_web = new(src)
 	sneak_web.Grant(src)
 
 /// Will differentiate into the "scout" giant spider.
-/mob/living/basic/young_spider/scout
-	grow_as = /mob/living/basic/giant_spider/scout
+/mob/living/basic/spider/growing/young/scout
+	grow_as = /mob/living/basic/spider/giant/scout
 	name = "young scout spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling blue eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -47,13 +47,13 @@
 	poison_type = /datum/reagent/peaceborg/confuse
 	sight = SEE_SELF|SEE_MOBS
 
-/mob/living/basic/young_spider/scout/Initialize(mapload)
+/mob/living/basic/spider/growing/young/scout/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /// Will differentiate into the "hunter" giant spider.
-/mob/living/basic/young_spider/hunter
-	grow_as = /mob/living/basic/giant_spider/hunter
+/mob/living/basic/spider/growing/young/hunter
+	grow_as = /mob/living/basic/spider/giant/hunter
 	name = "young hunter spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling purple eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -67,8 +67,8 @@
 	poison_per_bite = 2
 
 /// Will differentiate into the "nurse" giant spider.
-/mob/living/basic/young_spider/nurse
-	grow_as = /mob/living/basic/giant_spider/nurse
+/mob/living/basic/spider/growing/young/nurse
+	grow_as = /mob/living/basic/spider/giant/nurse
 	name = "young nurse spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling green eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -84,7 +84,7 @@
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
-/mob/living/basic/young_spider/nurse/Initialize(mapload)
+/mob/living/basic/spider/growing/young/nurse/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.show_to(src)
@@ -93,14 +93,14 @@
 		heal_brute = 15,\
 		heal_burn = 15,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
 	)
 
 /// Will differentiate into the "tangle" giant spider.
-/mob/living/basic/young_spider/tangle
-	grow_as = /mob/living/basic/giant_spider/tangle
+/mob/living/basic/spider/growing/young/tangle
+	grow_as = /mob/living/basic/spider/giant/tangle
 	name = "young tangle spider"
 	desc = "Furry and brown, it looks defenseless. This one has dim brown eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -116,7 +116,7 @@
 	poison_per_bite = 2
 	poison_type = /datum/reagent/toxin/acid
 
-/mob/living/basic/young_spider/tangle/Initialize(mapload)
+/mob/living/basic/spider/growing/young/tangle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/healing_touch,\
 		heal_brute = 10,\
@@ -124,22 +124,22 @@
 		heal_time = 3 SECONDS,\
 		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
 		action_text = "%SOURCE% begins mending themselves...",\
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
 /// Prevent you from healing other tangle spiders, or healing when on fire
-/mob/living/basic/young_spider/tangle/proc/can_mend(mob/living/source, mob/living/target)
+/mob/living/basic/spider/growing/young/tangle/proc/can_mend(mob/living/source, mob/living/target)
 	if (on_fire)
 		balloon_alert(src, "on fire!")
 		return FALSE
 	return TRUE
 
 /// Will differentiate into the "midwife" giant spider.
-/mob/living/basic/young_spider/midwife
-	grow_as = /mob/living/basic/giant_spider/midwife
+/mob/living/basic/spider/growing/young/midwife
+	grow_as = /mob/living/basic/spider/giant/midwife
 	name = "young broodmother spider"
 	desc = "Furry and black, it looks defenseless. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -154,8 +154,8 @@
 	web_type = /datum/action/cooldown/lay_web/sealer
 
 /// Will differentiate into the "viper" giant spider.
-/mob/living/basic/young_spider/viper
-	grow_as = /mob/living/basic/giant_spider/viper
+/mob/living/basic/spider/growing/young/viper
+	grow_as = /mob/living/basic/spider/giant/viper
 	name = "young viper spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling magenta eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -170,8 +170,8 @@
 	poison_per_bite = 2
 
 /// Will differentiate into the "tarantula" giant spider.
-/mob/living/basic/young_spider/tarantula
-	grow_as = /mob/living/basic/giant_spider/tarantula
+/mob/living/basic/spider/growing/young/tarantula
+	grow_as = /mob/living/basic/spider/giant/tarantula
 	name = "young tarantula spider"
 	desc = "Furry and black, it looks defenseless. This one has abyssal red eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
@@ -183,40 +183,3 @@
 	melee_damage_upper = 25
 	speed = 1
 	obj_damage = 40
-
-/// Will differentiate into the "flesh" giant spider.
-/mob/living/basic/young_spider/hunter/flesh
-	grow_as = /mob/living/basic/giant_spider/hunter/flesh
-	name = "young flesh spider"
-	desc = "Furry and red, it looks defenseless. This one has sparkling grey eyes."
-	icon = 'icons/mob/simple/arachnoid.dmi'
-	icon_state = "young_flesh"
-	icon_dead = "young_flesh_dead"
-	maxHealth = 55
-	health = 55
-	web_speed = 0.7
-	spider_growth_time = 30 SECONDS
-
-/mob/living/basic/young_spider/hunter/flesh/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/blood_walk, \
-		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
-		blood_spawn_chance = 3)
-	// It might be easier and more fitting to just replace this with Regenerator
-	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 25,\
-		heal_burn = 25,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
-		interaction_key = DOAFTER_SOURCE_SPIDER,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/hunter/flesh)),\
-		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
-		action_text = "%SOURCE% begins mending themselves...",\
-		complete_text = "%SOURCE%'s wounds mend together.",\
-	)
-
-/// Prevent you from healing other flesh spiders, or healing when on fire
-/mob/living/basic/young_spider/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
-	if (on_fire)
-		balloon_alert(src, "on fire!")
-		return FALSE
-	return TRUE

@@ -17866,7 +17866,6 @@
 "fnv" = (
 /obj/structure/table/wood,
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /obj/machinery/light_switch/directional/south{
@@ -27122,7 +27121,6 @@
 	pixel_y = -23
 	},
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /turf/open/floor/carpet,
@@ -31327,7 +31325,8 @@
 	dir = 5
 	},
 /obj/machinery/requests_console/directional/north{
-	department = "Security"
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
@@ -44045,7 +44044,6 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "oMP" = (
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /turf/closed/mineral/random/stationside/asteroid/porus,
@@ -59338,6 +59336,7 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/mining_weather_monitor/directional/north,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "uhw" = (
@@ -62431,8 +62430,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light_switch/directional/south{
-	pixel_x = -8;
-	pixel_y = -26
+	pixel_x = -8
 	},
 /turf/open/floor/iron/dark/corner{
 	dir = 8
@@ -65280,7 +65278,8 @@
 	dir = 1
 	},
 /obj/machinery/requests_console/directional/south{
-	department = "Security"
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)

@@ -4705,11 +4705,21 @@
 /area/station/medical/storage)
 "bJc" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
-/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell{
+	pixel_y = 10;
+	pixel_x = -6
+	},
+/obj/item/food/grown/harebell{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/food/grown/harebell{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/food/grown/harebell{
+	pixel_y = 7
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -7848,7 +7858,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/requests_console/directional/east,
+/obj/machinery/requests_console/directional/east{
+	department = "Genetics";
+	name = "Genetics Requests Console"
+	},
 /obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
@@ -8506,6 +8519,7 @@
 /obj/item/stack/rods/fifty,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/machinery/mining_weather_monitor/directional/east,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "dhi" = (
@@ -9482,22 +9496,14 @@
 /area/station/science/robotics/mechbay)
 "dEp" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/food/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/food/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/food/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/food/grown/poppy{
-	pixel_y = 2
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/food/grown/poppy{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/food/grown/poppy{
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "dEx" = (
@@ -28242,7 +28248,7 @@
 "kms" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/basic/giant_spider/sgt_araneus,
+/mob/living/basic/spider/giant/sgt_araneus,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "kmN" = (
@@ -29814,7 +29820,10 @@
 	name = "Law Office Fax Machine"
 	},
 /obj/machinery/light/small/directional/south,
-/obj/machinery/button/door/directional/west,
+/obj/machinery/button/door/directional/west{
+	name = "Privacy Shutters";
+	id = "lawyer_shutters"
+	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "kRV" = (
@@ -32377,6 +32386,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/mining_weather_monitor/directional/east,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
 "lRS" = (
@@ -35392,10 +35402,13 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/machinery/requests_console/directional/south,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/announcement,
+/obj/machinery/requests_console/directional/south{
+	department = "Chief Medical Officer's Desk";
+	name = "Chief Medical Officer's Requests Console"
+	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "mSB" = (
@@ -39700,7 +39713,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "oum" = (
-/obj/item/flashlight/flare/candle,
+/obj/item/flashlight/flare/candle{
+	pixel_y = 10;
+	pixel_x = 1
+	},
 /obj/machinery/light_switch/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table/wood,
@@ -41242,7 +41258,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "hop";
 	name = "Privacy Shutters Control";
-	req_access = list("kitchen")
+	req_access = list("hop")
 	},
 /obj/machinery/computer/accounting,
 /turf/open/floor/wood,
@@ -49278,11 +49294,22 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "rQB" = (
-/obj/item/flashlight/flare/candle,
 /obj/machinery/light_switch/directional/west,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/food/grown/poppy{
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/item/food/grown/poppy{
+	pixel_y = 7;
+	pixel_x = 7
+	},
+/obj/item/flashlight/flare/candle{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "rQS" = (
@@ -52224,9 +52251,12 @@
 "sTD" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/machinery/requests_console/directional/east,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/requests_console/directional/east{
+	department = "Security";
+	name = "Security Requests Console"
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "sTK" = (
@@ -59714,13 +59744,22 @@
 /turf/closed/wall/r_wall,
 /area/station/command/corporate_showroom)
 "vyl" = (
-/obj/item/book/bible,
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Chapel - Fore"
 	},
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/food/grown/poppy{
+	pixel_y = 11
+	},
+/obj/item/book/bible{
+	pixel_y = 3
+	},
+/obj/item/food/grown/harebell{
+	pixel_x = -11;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vyv" = (
@@ -64711,7 +64750,10 @@
 	},
 /obj/item/pen,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/requests_console/directional/west,
+/obj/machinery/requests_console/directional/west{
+	department = "AI Chamber";
+	name = "AI Chamber Requests Console"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "xkV" = (
@@ -65326,9 +65368,12 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/armory/disablers,
-/obj/machinery/requests_console/directional/west,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/requests_console/directional/west{
+	department = "Security";
+	name = "Security Requests Console"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "xwV" = (
