@@ -1,7 +1,7 @@
 ///A component that lets you turn your character transparent in order to see and click through yourself.
 /datum/component/seethrough_mob
 	///The atom that enables our dark magic
-	var/obj/render_source_atom
+	var/atom/movable/render_source_atom
 	///The fake version of ourselves
 	var/image/trickery_image
 	///Which alpha do we animate towards?
