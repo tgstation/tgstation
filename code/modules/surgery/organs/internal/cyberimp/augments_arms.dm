@@ -132,7 +132,6 @@
 		owner.transferItemToLoc(active_item, src, TRUE)
 	else
 		active_item.forceMove(src)
-		hand.visible_message(span_notice("[src] snaps back into [hand]."))
 
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
 	active_item = null
