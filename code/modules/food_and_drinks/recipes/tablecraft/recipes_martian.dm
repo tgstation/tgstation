@@ -204,7 +204,7 @@
 		/obj/item/food/spaghetti/boilednoodles = 1,
 		/datum/reagent/consumable/soysauce = 3,
 	)
-	result = /obj/item/food/salad/martian_fried_noodles
+	result = /obj/item/food/salad/simple_fried_noodles
 	category = CAT_MARTIAN
 
 /datum/crafting_recipe/food/setagaya_curry

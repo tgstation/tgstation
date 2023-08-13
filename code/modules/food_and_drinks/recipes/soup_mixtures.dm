@@ -2192,7 +2192,7 @@
 		/datum/reagent/consumable/volt_energy = 15,
 	)
 	required_ingredients = list(
-		/obj/item/food/fishmeat/carp = 1
+		/obj/item/food/fishmeat = 1
 	)
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
