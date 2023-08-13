@@ -1,0 +1,4 @@
+author: "CoiledLamb, Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Adds mining weather radio"
