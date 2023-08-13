@@ -31828,7 +31828,7 @@
 	id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
+	transport_linked_id = "publicElevator";
 	elevator_mode = 1
 	},
 /obj/machinery/lift_indicator/directional/north{
@@ -45170,7 +45170,7 @@
 	linked_elevator_id = "publicElevator"
 	},
 /obj/machinery/door/window/elevator/left/directional/west{
-	elevator_linked_id = "publicElevator";
+	transport_linked_id = "publicElevator";
 	elevator_mode = 1;
 	req_access = null
 	},

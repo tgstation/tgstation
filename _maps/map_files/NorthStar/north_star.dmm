@@ -3002,7 +3002,7 @@
 "aOQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "aft_vator";
+	transport_linked_id = "aft_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -9692,7 +9692,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor/preopen{
-	elevator_linked_id = "com_vator";
+	transport_linked_id = "com_vator";
 	elevator_mode = 1
 	},
 /obj/effect/turf_decal/trimline/blue/line{
@@ -16483,7 +16483,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "com_vator";
+	transport_linked_id = "com_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -27645,7 +27645,7 @@
 "hoc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	elevator_linked_id = "aft_vator";
+	transport_linked_id = "aft_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -27721,7 +27721,7 @@
 "hpd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "fore_vator";
+	transport_linked_id = "fore_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -30812,7 +30812,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "com_vator";
+	transport_linked_id = "com_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -35529,7 +35529,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "com_vator";
+	transport_linked_id = "com_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -48560,7 +48560,7 @@
 "mIA" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "aft_vator";
+	transport_linked_id = "aft_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -56939,7 +56939,7 @@
 "oQx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	elevator_linked_id = "fore_vator";
+	transport_linked_id = "fore_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/catwalk_floor,
@@ -81520,7 +81520,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor/preopen{
-	elevator_linked_id = "com_vator";
+	transport_linked_id = "com_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -82057,7 +82057,7 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "com_vator";
+	transport_linked_id = "com_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
@@ -85223,7 +85223,7 @@
 "woV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	elevator_linked_id = "fore_vator";
+	transport_linked_id = "fore_vator";
 	elevator_mode = 1
 	},
 /turf/open/floor/iron/dark,
