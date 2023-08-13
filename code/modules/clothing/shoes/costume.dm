@@ -109,7 +109,7 @@
 	name = "jester shoes"
 	desc = "Shoes that jingle with every step!!"
 	icon_state = "green_jester_shoes"
-	inhand_icon_state = "green_jester_shoes"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/jester_shoes/Initialize(mapload)
 	. = ..()
