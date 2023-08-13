@@ -132,23 +132,13 @@
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
 			"I do not feel nourished", "This subject is not food")]!</span>")
-		var/mob/living/carbon/carbon_victim = buckled
-		if(istype(carbon_victim))
-			var/should_apply_effect = TRUE
 
-			if(ishuman(carbon_victim))
-				var/mob/living/carbon/human/lucky_owner = carbon_victim
-				var/head_rating = istype(lucky_owner.head) ? lucky_owner.head.get_armor_rating(BIO) : 0
-				var/suit_rating = istype(lucky_owner.wear_suit) ? lucky_owner.wear_suit.get_armor_rating(BIO) : 0
-				var/uniform_rating = istype(lucky_owner.w_uniform) ? lucky_owner.w_uniform.get_armor_rating(BIO) : 0
+		var/mob/living/victim = buckled
 
-				// the higher the rating, the higher the chance of being protected
-				var/protected_chance = head_rating * 1/3 + min(suit_rating + uniform_rating, 100) * 2/3
-				if(prob(protected_chance))
-					should_apply_effect = FALSE
-
-			if(should_apply_effect)
-				carbon_victim.apply_status_effect(/datum/status_effect/slimed)
+		if(istype(victim))
+			var/bio_protection = 100 - victim.getarmor(null, BIO)
+			if(prob(bio_protection))
+				victim.apply_status_effect(/datum/status_effect/slimed)
 
 		if(!silent)
 			visible_message(span_warning("[src] lets go of [buckled]!"), \
