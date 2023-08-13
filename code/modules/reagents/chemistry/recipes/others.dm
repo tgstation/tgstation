@@ -21,7 +21,7 @@
 
 /datum/chemical_reaction/glitter/pink
 	results = list(/datum/reagent/glitter/pink = 2)
-	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/colorful_reagent/powder/purple = 1)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/colorful_reagent/powder/blue = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/glitter/white
