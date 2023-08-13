@@ -16,6 +16,7 @@
 		/mob/living/simple_animal/bot/medbot/autopatrol,
 		/mob/living/simple_animal/bot/medbot/derelict,
 		/mob/living/simple_animal/bot/medbot/mysterious,
+		/mob/living/simple_animal/bot/medbot/nukie,
 		/mob/living/simple_animal/bot/medbot/stationary,
 		/mob/living/simple_animal/bot/mulebot,
 		/mob/living/simple_animal/bot/mulebot/paranormal,
