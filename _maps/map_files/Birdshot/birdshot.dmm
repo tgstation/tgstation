@@ -35610,6 +35610,12 @@
 	dir = 9
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/trimline/purple/end{
+	dir = 4
+	},
+/obj/machinery/shower/directional/east{
+	name = "emergency shower"
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/science/xenobiology)
 "mQF" = (
