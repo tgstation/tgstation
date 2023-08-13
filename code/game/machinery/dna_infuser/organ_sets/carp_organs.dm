@@ -48,7 +48,7 @@
 	AddElement(/datum/element/noticable_organ, "teeth are big and sharp.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
-/obj/item/organ/internal/tongue/carp/on_insert(mob/living/carbon/tongue_owner)
+/obj/item/organ/internal/tongue/carp/on_mob_insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
 	if(!ishuman(tongue_owner))
 		return
@@ -57,12 +57,14 @@
 		return
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
-	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
-	head.unarmed_damage_low = 10
-	head.unarmed_damage_high = 15
-	head.unarmed_stun_threshold = 15
 
-/obj/item/organ/internal/tongue/carp/on_remove(mob/living/carbon/tongue_owner)
+/obj/item/organ/internal/tongue/carp/on_limb_insert(obj/item/bodypart/limb)
+	. = ..()
+	limb.unarmed_damage_low = 10
+	limb.unarmed_damage_high = 15
+	limb.unarmed_stun_threshold = 15
+
+/obj/item/organ/internal/tongue/carp/on_mob_remove(mob/living/carbon/tongue_owner)
 	. = ..()
 	if(!ishuman(tongue_owner))
 		return
@@ -72,9 +74,12 @@
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
-	head.unarmed_damage_low = initial(head.unarmed_damage_low)
-	head.unarmed_damage_high = initial(head.unarmed_damage_high)
-	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
+
+/obj/item/organ/internal/tongue/carp/on_limb_remove(obj/item/bodypart/limb)
+	. = ..()
+	limb.unarmed_damage_low = initial(limb.unarmed_damage_low)
+	limb.unarmed_damage_high = initial(limb.unarmed_damage_high)
+	limb.unarmed_stun_threshold = initial(limb.unarmed_stun_threshold)
 
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -110,13 +115,13 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 	AddElement(/datum/element/noticable_organ, "seem%PRONOUN_S unable to stay still.")
 
-/obj/item/organ/internal/brain/carp/on_insert(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/carp/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
 
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
-/obj/item/organ/internal/brain/carp/on_remove(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/carp/on_mob_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)

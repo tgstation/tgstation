@@ -194,8 +194,8 @@
 	bodypart.contents |= src
 	ownerlimb = bodypart
 
-///Removes the organ from the limb, placing it into nullspace.
-/obj/item/organ/proc/remove_from_limb(special = FALSE)
+/// Removes the organ from the limb, placing it into nullspace.
+/obj/item/organ/proc/remove_from_limb()
 	moveToNullspace()
 	ownerlimb.contents -= src
 	ownerlimb = null

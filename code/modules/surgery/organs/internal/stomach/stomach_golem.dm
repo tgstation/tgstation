@@ -11,11 +11,11 @@
 	/// How slow are you if you have absolutely nothing in the tank?
 	var/max_hunger_slowdown = 4
 
-/obj/item/organ/internal/stomach/golem/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/stomach/golem/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, PROC_REF(try_eating))
 
-/obj/item/organ/internal/stomach/golem/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/stomach/golem/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_CARBON_ATTEMPT_EAT)
 	organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/golem_hunger)

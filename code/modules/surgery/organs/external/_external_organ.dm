@@ -88,12 +88,11 @@
 
 	receiver.update_body_parts()
 
-/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/on_mob_remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
+	organ_owner.update_body_parts()
 
-	organ_owner?.update_body_parts()
-
-/obj/item/organ/external/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/on_limb_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
 
