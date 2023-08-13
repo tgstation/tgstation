@@ -418,6 +418,9 @@
 		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
+	var/obj/item/clothing/has_clown_mask = src.get_item_by_slot(ITEM_SLOT_MASK)
+	var/obj/item/organ/external/snout/has_snout = src.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT)
+
 	if(on_fire)
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
@@ -447,10 +450,10 @@
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
 	else if(helper.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		if(src.get_item_by_slot(ITEM_SLOT_MASK) == var/obj/item/clothing/clown_mask)
-			playsound(src, 'sound/misc/boop.ogg', 40, 0)
+		if(has_clown_mask == obj/item/clothing/clown_mask)
+			//playsound(src, 'sound/misc/boop.ogg', 40, 0)
 			helper.visible_message(span_notice("[helper] honks [src]'s nose."), span_notice("You honk [src]'s nose."))
-		else if(src.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT) == var/obj/item/organ/external/snout)
+		else if(has_snout == obj/item/organ/external/snout)
 			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the snout."))
 		else
 			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the nose."))
