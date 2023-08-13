@@ -19,6 +19,26 @@
 	required_reagents = list(/datum/reagent/consumable/orangejuice = 1, /datum/reagent/consumable/cornoil = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
+/datum/chemical_reaction/glitter/pink
+	results = list(/datum/reagent/glitter/pink = 2)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/colorful_reagent/powder/purple = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/glitter/white
+	results = list(/datum/reagent/glitter/white = 2)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/colorful_reagent/powder/white = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/glitter/blue
+	results = list(/datum/reagent/glitter/blue = 2)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/colorful_reagent/powder/purple = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/glitter/confetti
+	results = list(/datum/reagent/glitter/confetti = 2)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/colorful_reagent = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
 /datum/chemical_reaction/impedrezene
 	results = list(/datum/reagent/impedrezene = 2)
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1)

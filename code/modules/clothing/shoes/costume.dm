@@ -104,3 +104,14 @@
 /obj/item/clothing/shoes/ducky_shoes/dropped(mob/living/user)
 	. = ..()
 	user.RemoveElement(/datum/element/waddling)
+
+/obj/item/clothing/shoes/jester_shoes
+	name = "jester shoes"
+	desc = "Shoes that jingle with every step!!"
+	icon_state = "green_jester_shoes"
+	inhand_icon_state = "green_jester_shoes"
+
+/obj/item/clothing/shoes/jester_shoes/Initialize(mapload)
+	. = ..()
+
+	LoadComponent(/datum/component/squeak, list('sound/effects/jingle.ogg' = 1), 50, falloff_exponent = 20, step_delay_override = 0)
