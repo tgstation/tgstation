@@ -18,7 +18,7 @@
 	var/sound_extra_range = -1
 	///when sounds start falling off for the squeak
 	var/sound_falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE
-	///sound exponent for squeak. Defaults to 10 as squeaking is loud and annoying enough	.
+	///sound exponent for squeak. Defaults to 10 as squeaking is loud and annoying enough.
 	var/sound_falloff_exponent = 10
 
 	///what we set connect_loc to if parent is an item
