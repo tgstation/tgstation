@@ -8501,6 +8501,7 @@
 /obj/item/stack/rods/fifty,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/machinery/mining_weather_monitor/directional/east,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "dhi" = (
@@ -32337,6 +32338,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/mining_weather_monitor/directional/east,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
 "lRS" = (
