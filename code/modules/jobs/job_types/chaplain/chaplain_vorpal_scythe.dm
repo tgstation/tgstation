@@ -17,7 +17,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
-	if(!active_item)
+	if(!scythe)
 		return FALSE
 	var/obj/item/bodypart/part = hand
 	if(scythe.empowerment < SCYTHE_SATED && part)
