@@ -146,6 +146,8 @@
 /obj/machinery/computer/records/security/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
+	if(hacking_module.security_console_hack_success)
+		return NONE
 	if(!can_hack(ninja, feedback = TRUE))
 		return NONE
 
@@ -163,6 +165,7 @@
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return
+	hacking_module.security_console_hack_success = TRUE
 	var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
 	if(objective)
 		objective.completed = TRUE
@@ -284,6 +287,8 @@
 /mob/living/silicon/robot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module || (ROLE_NINJA in faction))
 		return NONE
+	if(hacking_module.borg_hack_success)
+		return
 
 	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
 	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
@@ -305,6 +310,7 @@
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return
+	hacking_module.borg_hack_success = TRUE
 	var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
 	if(objective)
 		objective.completed = TRUE
