@@ -243,6 +243,8 @@
 ///Stop consuming the mob; dump them on the floor
 /datum/action/consume/proc/stop_consuming()
 	STOP_PROCESSING(SSprocessing, src)
+	if (isnull(vored_mob))
+		return
 	vored_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
