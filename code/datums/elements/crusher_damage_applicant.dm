@@ -45,7 +45,7 @@
 		return
 	try_apply_damage_tracker(target)
 
-/datum/element/crusher_damage_applicant/proc/on_applied_spell(datum/source, atom/target, mob/living/caster, limb_to_hit, armor)
+/datum/element/crusher_damage_applicant/proc/on_applied_spell(datum/source, atom/target, mob/living/caster)
 	SIGNAL_HANDLER
 
 	if(!isliving(target))

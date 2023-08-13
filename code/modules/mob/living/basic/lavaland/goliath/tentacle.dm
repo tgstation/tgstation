@@ -14,9 +14,15 @@
 	var/min_damage = 10
 	/// Upper bound of damage to inflict
 	var/max_damage =  15
+	/// The mob that has casted the tentacle
+	var/mob/living/caster
 
-/obj/effect/goliath_tentacle/Initialize(mapload)
+	var/trophy_spawned = FALSE
+
+/obj/effect/goliath_tentacle/Initialize(mapload, mob/living/new_caster)
 	. = ..()
+	if(!QDELETED(new_caster))
+		caster = new_caster
 	if (ismineralturf(loc))
 		var/turf/closed/mineral/floor = loc
 		floor.gets_drilled()
@@ -41,10 +47,12 @@
 /// Grab everyone we share space with. If it's nobody, go home.
 /obj/effect/goliath_tentacle/proc/grab()
 	for (var/mob/living/victim in loc)
-		if (victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE))
+		if (victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE) || caster.faction_check_mob(victim))
 			continue
 		balloon_alert(victim, "grabbed")
 		visible_message(span_danger("[src] grabs hold of [victim]!"))
+		if(trophy_spawned)
+			SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, victim, caster)
 		victim.adjustBruteLoss(rand(min_damage, max_damage))
 		if (victim.apply_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled, grapple_time, src))
 			buckle_mob(victim, TRUE)

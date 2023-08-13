@@ -218,19 +218,23 @@
 	min_damage = 30
 	max_damage = 35
 
+/obj/effect/goliath_tentacle/broodmother/patch
+	///What type of tentacle does the patch produce
+	var/obj/effect/goliath_tentacle/created_tentacle = /obj/effect/goliath_tentacle/broodmother
+
 /obj/effect/goliath_tentacle/broodmother/patch/Initialize(mapload, new_spawner)
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(createpatch))
+	INVOKE_ASYNC(src, PROC_REF(createpatch), new_spawner)
 
-/obj/effect/goliath_tentacle/broodmother/patch/proc/createpatch()
+/obj/effect/goliath_tentacle/broodmother/patch/proc/createpatch(mob/living/caster)
 	var/tentacle_locs = spiral_range_turfs(1, get_turf(src))
 	for(var/T in tentacle_locs)
-		new /obj/effect/goliath_tentacle/broodmother(T)
+		new created_tentacle(T, caster)
 	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in directions)
 		var/turf/T = get_step(get_turf(src), i)
 		T = get_step(T, i)
-		new /obj/effect/goliath_tentacle/broodmother(T)
+		new created_tentacle(T, caster)
 
 #undef CALL_CHILDREN
 #undef RAGE

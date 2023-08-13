@@ -21,13 +21,13 @@
 
 /datum/action/cooldown/goliath_tentacles/Activate(atom/target)
 	. = ..()
-	new /obj/effect/goliath_tentacle(target)
+	new /obj/effect/goliath_tentacle(target, owner)
 	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in 1 to 3)
 		var/spawndir = pick_n_take(directions)
 		var/turf/adjacent_target = get_step(target, spawndir)
 		if(adjacent_target)
-			new /obj/effect/goliath_tentacle(adjacent_target)
+			new /obj/effect/goliath_tentacle(adjacent_target, owner)
 
 	if (isliving(target))
 		owner.visible_message(span_warning("[owner] digs its tentacles under [target]!"))
@@ -51,7 +51,7 @@
 	for (var/dir in directions)
 		var/turf/adjacent_target = get_step(target, dir)
 		if(adjacent_target)
-			new /obj/effect/goliath_tentacle(adjacent_target)
+			new /obj/effect/goliath_tentacle(adjacent_target, owner)
 	owner.visible_message(span_warning("[owner] unleashes tentacles from the ground around it!"))
 	return TRUE
 

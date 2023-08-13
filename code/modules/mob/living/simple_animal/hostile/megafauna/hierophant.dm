@@ -712,7 +712,7 @@ Difficulty: Hard
 		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
 		if(trophy_spawned)
-			SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, L, caster, limb_to_hit, armor)
+			SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, L, caster)
 		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...

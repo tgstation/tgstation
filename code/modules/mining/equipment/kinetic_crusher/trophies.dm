@@ -325,7 +325,7 @@
 
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
 	if(prob(bonus_value) && target.stat != DEAD)
-		new /obj/effect/goliath_tentacle/broodmother/patch(get_turf(target), user)
+		new /obj/effect/goliath_tentacle/broodmother/patch/crusher(get_turf(target), user)
 
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
 	. = ..()
@@ -343,6 +343,16 @@
 	playsound(get_turf(living_user), 'sound/effects/slosh.ogg', 30, TRUE)
 	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_LAVA_IMMUNE, type), use_buff_duration)
 	COOLDOWN_START(src, broodmother_tongue_cooldown, use_cooldown)
+
+/obj/effect/goliath_tentacle/broodmother/patch/crusher
+	created_tentacle = /obj/effect/goliath_tentacle/broodmother/crusher
+
+/obj/effect/goliath_tentacle/broodmother/crusher
+	trophy_spawned = TRUE
+
+/obj/effect/goliath_tentacle/broodmother/crusher/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_SPELL)
 
 /**
  * Legionnaire
