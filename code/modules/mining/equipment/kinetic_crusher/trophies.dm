@@ -430,6 +430,10 @@
 	denied_type = /obj/item/crusher_trophy/tail_spike
 	bonus_value = 5
 
+/obj/item/crusher_trophy/tail_spike/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_SPELL)
+
 /obj/item/crusher_trophy/tail_spike/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
 
@@ -440,6 +444,7 @@
 		playsound(victim, 'sound/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(get_turf(victim))
 		addtimer(CALLBACK(src, PROC_REF(pushback), victim, user), 1) //no free backstabs, we push AFTER module stuff is done
+		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, victim, user)
 		victim.adjustFireLoss(bonus_value, forced = TRUE)
 
 ///Pushes the victim away from the user a single tile
