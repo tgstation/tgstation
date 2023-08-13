@@ -446,6 +446,15 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
+	else if(helper.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		if(src.get_item_by_slot(ITEM_SLOT_MASK) == var/obj/item/clothing/clown_mask)
+			playsound(src, 'sound/misc/boop.ogg', 40, 0)
+			helper.visible_message(span_notice("[helper] honks [src]'s nose."), span_notice("You honk [src]'s nose."))
+		else if(src.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT) == var/obj/item/organ/external/snout)
+			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the snout."))
+		else
+			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the nose."))
+
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/external/tail)))
 		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
