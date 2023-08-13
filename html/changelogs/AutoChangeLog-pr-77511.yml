@@ -1,5 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "rabbits are now small-sized rather than human-sized, as well as capable of being picked up"
-  - bugfix: "baseballs are now small sized rather than large"
