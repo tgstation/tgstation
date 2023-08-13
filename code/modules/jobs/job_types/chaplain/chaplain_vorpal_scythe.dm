@@ -17,12 +17,14 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
-	. = ..() // The parent does the actual retracting, so we declare scythe first to get it from active_item
+	if(!active_item)
+		return FALSE
+	var/obj/item/bodypart/part = hand
 	if(scythe.empowerment < SCYTHE_SATED && part)
-		var/obj/item/bodypart/part = owner.get_bodypart(zone)
 		to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
-		part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED) // Will cause runtimes if it's called before the parent and dismembers.
+		part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+	..()
 
 /obj/item/vorpalscythe
 	name = "vorpal scythe"
