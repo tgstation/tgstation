@@ -352,7 +352,6 @@
 		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
 		/obj/item/clothing/under/costume/buttondown/skirt/service = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/purple = 2,
-		/obj/item/clothing/suit/apron/purple_bartender = 2,
 		/obj/item/clothing/suit/armor/vest/alt = 1,
 		/obj/item/clothing/shoes/sneakers/black = 2,
 		/obj/item/storage/belt/bandolier = 1,

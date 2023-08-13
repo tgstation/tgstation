@@ -92,13 +92,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/apron/purple_bartender
-	name = "purple bartender apron"
-	desc = "A fancy purple apron for a stylish person."
-	icon_state = "purplebartenderapron"
-	inhand_icon_state = null
-	body_parts_covered = CHEST|GROIN
-
 /obj/item/clothing/suit/syndicatefake
 	name = "black and red space suit replica"
 	icon_state = "syndicate-black-red"
