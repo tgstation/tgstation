@@ -59,6 +59,13 @@
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
 
+///eyeball keys
+///the death glare ability
+#define BB_GLARE_ABILITY "BB_glare_ability"
+///the blind target we must protect
+#define BB_BLIND_TARGET "BB_blind_target"
+///value to store the minimum eye damage to prevent us from attacking a human
+#define BB_EYE_DAMAGE_THRESHOLD "BB_eye_damage_threshold"
 ///hivebot keys
 ///the machine we must go to repair
 #define BB_MACHINE_TARGET "BB_machine_target"
