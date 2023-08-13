@@ -34,7 +34,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
 		list("Bilingual", "Foreigner"),
-		list("Spacer", "Paraplegic")
+		list("Spacer", "Paraplegic"),
+		list("Photophobia", "Nyctophobia"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()

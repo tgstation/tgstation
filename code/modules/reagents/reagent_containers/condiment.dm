@@ -324,6 +324,51 @@
 	list_reagents = list(/datum/reagent/consumable/ketchup = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/worcestershire
+	name = "worcestershire sauce"
+	desc = "A fermented sauce of legend from old England. Makes almost anything better."
+	icon_state = "worcestershire"
+	list_reagents = list(/datum/reagent/consumable/worcestershire = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/red_bay
+	name = "\improper Red Bay seasoning"
+	desc = "Mars' favourite seasoning."
+	icon_state = "red_bay"
+	list_reagents = list(/datum/reagent/consumable/red_bay = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/curry_powder
+	name = "curry powder"
+	desc = "It's this yellow magic that makes curry taste like curry."
+	icon_state = "curry_powder"
+	list_reagents = list(/datum/reagent/consumable/curry_powder = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/dashi_concentrate
+	name = "dashi concentrate"
+	desc = "A bottle of Amagi brand dashi concentrate. Simmer with water in a 1:8 ratio for a perfect dashi broth."
+	icon_state = "dashi_concentrate"
+	list_reagents = list(/datum/reagent/consumable/dashi_concentrate = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/coconut_milk
+	name = "coconut milk"
+	desc = "It's coconut milk. Toasty!"
+	icon_state = "coconut_milk"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/coconut_milk = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/grounding_solution
+	name = "grounding solution"
+	desc = "A food-safe ionic solution designed to neutralise the enigmatic \"liquid electricity\" that is common to food from Sprout, forming harmless salt on contact."
+	icon_state = "grounding_solution"
+	list_reagents = list(/datum/reagent/consumable/grounding_solution = 50)
+	fill_icon_thresholds = null
+
 //technically condiment packs but they are non transparent
 
 /obj/item/reagent_containers/condiment/creamer

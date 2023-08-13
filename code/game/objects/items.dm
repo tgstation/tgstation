@@ -219,8 +219,10 @@
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
 
-/obj/item/Initialize(mapload)
+	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
+	var/list/fantasy_modifications
 
+/obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
 	if(attack_verb_simple)
@@ -296,13 +298,15 @@
 
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_QDELETING, PROC_REF(on_action_deleted))
-	if(ismob(loc))
-		// We're being held or are equipped by someone while adding an action?
-		// Then they should also probably be granted the action, given it's in a correct slot
-		var/mob/holder = loc
-		give_item_action(action, holder, holder.get_slot_by_item(src))
-
+	grant_action_to_bearer(action)
 	return action
+
+/// Grant the action to anyone who has this item equipped to an appropriate slot
+/obj/item/proc/grant_action_to_bearer(datum/action/action)
+	if(!ismob(loc))
+		return
+	var/mob/holder = loc
+	give_item_action(action, holder, holder.get_slot_by_item(src))
 
 /// Removes an instance of an action from our list of item actions.
 /obj/item/proc/remove_item_action(datum/action/action)
@@ -642,6 +646,22 @@
 	return
 
 /**
+ * Called after an item is placed in an equipment slot. Runs equipped(), then sends a signal.
+ * This should be called last or near-to-last, after all other inventory code stuff is handled.
+ *
+ * Arguments:
+ * * user is mob that equipped it
+ * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
+ * * initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ */
+/obj/item/proc/on_equipped(mob/user, slot, initial = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	equipped(user, slot, initial)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) && COMPONENT_EQUIPPED_FAILED)
+		return FALSE
+	return TRUE
+
+/**
  * To be overwritten to only perform visual tasks;
  * this is directly called instead of `equipped` on visual-only features like human dummies equipping outfits.
  *
@@ -652,7 +672,7 @@
 	return
 
 /**
- * Called after an item is placed in an equipment slot.
+ * Called by on_equipped. Don't call this directly, we want the ITEM_POST_EQUIPPED signal to be sent after everything else.
  *
  * Note that hands count as slots.
  *
@@ -663,7 +683,7 @@
  */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(user, COMSIG_HUMAN_EQUIPPING_ITEM, src, slot)
+	PROTECTED_PROC(TRUE)
 	visual_equipped(user, slot, initial)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED_ITEM, src, slot)
@@ -1539,3 +1559,41 @@
 /obj/item/update_atom_colour()
 	. = ..()
 	update_slot_icon()
+
+/// Modifies the fantasy variable
+/obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
+	if(LAZYACCESS(fantasy_modifications, variable_key) != null)
+		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
+	var/intended_target = value + bonus
+	value = max(minimum, intended_target)
+
+	var/difference = intended_target - value
+	var/modified_amount = bonus - difference
+	LAZYSET(fantasy_modifications, variable_key, modified_amount)
+	return value
+
+/// Returns the original fantasy variable value
+/obj/item/proc/reset_fantasy_variable(variable_key, current_value)
+	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+	LAZYREMOVE(fantasy_modifications, variable_key)
+	if(!modification)
+		return current_value
+	return current_value - modification
+
+/obj/item/proc/apply_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_APPLY_FANTASY_BONUSES, bonus)
+	force = modify_fantasy_variable("force", force, bonus)
+	throwforce = modify_fantasy_variable("throwforce", throwforce, bonus)
+	wound_bonus = modify_fantasy_variable("wound_bonus", wound_bonus, bonus)
+	bare_wound_bonus = modify_fantasy_variable("bare_wound_bonus", bare_wound_bonus, bonus)
+	toolspeed = modify_fantasy_variable("toolspeed", toolspeed, -bonus/10, minimum = 0.1)
+
+/obj/item/proc/remove_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	force = reset_fantasy_variable("force", force)
+	throwforce = reset_fantasy_variable("throwforce", throwforce)
+	wound_bonus = reset_fantasy_variable("wound_bonus", wound_bonus)
+	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
+	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
+	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)

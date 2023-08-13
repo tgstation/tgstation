@@ -362,7 +362,7 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
-					C.grippedby(src)
+					C.grabbedby(src)
 
 			update_pull_movespeed()
 
@@ -942,6 +942,22 @@
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
 
+/**
+ * Called by mob/living attackby()
+ * Checks if there's active surgery on the mob that can be continued with the item
+ */
+/mob/living/proc/can_perform_surgery(mob/living/user, params)
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.combat_mode)
+			break
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
+			continue
+		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
+			continue
+		var/list/modifiers = params2list(params)
+		if(operations.next_step(user, modifiers))
+			return TRUE
+	return FALSE
 
 ///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
 /mob/living/proc/lying_angle_on_movement(direct)
@@ -977,7 +993,7 @@
 		else if(newdir == (EAST|WEST))
 			newdir = EAST
 	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = turn(get_dir(target_turf, start), 180)
+		newdir = REVERSE_DIR(get_dir(target_turf, start))
 	if(!blood_exists)
 		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
 
@@ -1392,6 +1408,7 @@
 		if(WABBAJACK_ANIMAL)
 			var/picked_animal = pick(
 				/mob/living/basic/bat,
+				/mob/living/basic/bear,
 				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
 				/mob/living/basic/carp/magic,
@@ -1399,28 +1416,27 @@
 				/mob/living/basic/chick,
 				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
-				/mob/living/basic/giant_spider,
-				/mob/living/basic/giant_spider/hunter,
-				/mob/living/basic/mining/goliath,
+				/mob/living/basic/crab,
 				/mob/living/basic/headslug,
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
+				/mob/living/basic/mining/goliath,
+				/mob/living/basic/morph,
 				/mob/living/basic/mouse,
 				/mob/living/basic/mushroom,
 				/mob/living/basic/pet/dog/breaddog,
 				/mob/living/basic/pet/dog/corgi,
 				/mob/living/basic/pet/dog/pug,
 				/mob/living/basic/pet/fox,
+				/mob/living/basic/spider/giant,
+				/mob/living/basic/spider/giant/hunter,
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/crab,
 				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-				/mob/living/simple_animal/hostile/morph,
 				/mob/living/simple_animal/hostile/retaliate/goat,
 				/mob/living/simple_animal/parrot,
 				/mob/living/simple_animal/pet/cat,
@@ -1471,6 +1487,12 @@
 	// transfering the mind and observerse, and other miscellaneous
 	// actions that should be done before we delete the original mob.
 	on_wabbajacked(new_mob)
+
+	// Valid polymorph types unlock the Lepton.
+	if((change_flags & (WABBAJACK|MIRROR_MAGIC|MIRROR_PRIDE|RACE_SWAP)) && (SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] != TRUE))
+		to_chat(new_mob, span_revennotice("You have the strangest feeling, for a moment. A fragile, dizzying memory wanders into your mind.. all you can make out is-"))
+		to_chat(new_mob, span_hypnophrase("You sleep so it may wake. You wake so it may sleep. It wakes. Do not sleep."))
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] = TRUE
 
 	qdel(src)
 	return new_mob
@@ -1642,7 +1664,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * fire_handler: Current fire status effect that called the proc
  */
 
-/mob/living/proc/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	return
 
 //Mobs on Fire end

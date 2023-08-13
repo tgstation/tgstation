@@ -144,7 +144,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/turf/open/space/basic,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "iA" = (
 /obj/structure/chair/pew/right{

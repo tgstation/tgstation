@@ -47,7 +47,8 @@
 
 /mob/living/basic/star_gazer/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/cosmic_domain))
+	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
+	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)

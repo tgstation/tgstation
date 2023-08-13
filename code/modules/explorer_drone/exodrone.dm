@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /// Exploration drone
 /obj/item/exodrone
 	name = "exploration drone"
-	desc = "long range semi-autonomous exploration drone"
+	desc = "A long range, semi-autonomous exploration drone."
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "drone"
 	w_class = WEIGHT_CLASS_BULKY
@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(!fuel_canister)
 		return
 
-	to_chat(user, span_notice("You remove [fuel_canister] from [src]."))
+	to_chat(user, span_notice("You remove the [fuel_canister] from the [src]."))
 	fuel_canister.forceMove(drop_location())
 	fuel_canister = null
 	update_icon()
