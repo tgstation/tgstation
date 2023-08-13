@@ -20,6 +20,8 @@
 	if(casingtype && projectiletype)
 		CRASH("Set both casing type and projectile type in [target]'s ranged attacks element! uhoh! stinky!")
 
+	ADD_TRAIT(target, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+
 /datum/element/ranged_attacks/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_MOB_ATTACK_RANGED)
 	return ..()

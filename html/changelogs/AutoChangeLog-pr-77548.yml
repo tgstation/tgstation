@@ -1,0 +1,4 @@
+author: "EuSouAFazer"
+delete-after: True
+changes:
+  - bugfix: "The chef can no longer close the shutters in Meta's HoP office."

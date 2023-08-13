@@ -75,7 +75,7 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/mob/living/basic/giant_spider/maintenance,
+		/mob/living/basic/spider/maintenance,
 		/mob/living/basic/mouse,
 	)
 	return pick(mob_list)
@@ -222,7 +222,7 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/bee,
 		/mob/living/basic/cockroach/hauberoach,
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/spider/giant,
 		/mob/living/basic/mouse/rat,
 	)
 	return pick(mob_list)

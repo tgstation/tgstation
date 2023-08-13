@@ -532,3 +532,98 @@
   timothymtorres:
   - rscadd: Add admin blackhole shuttle event with a normal version and suicidal version.
   - bugfix: Fix several shuttle event runtimes
+2023-08-12:
+  Cheshify:
+  - qol: North Star's Cytology and Xenobiology are now significantly more usable.
+  - rscadd: North Star's Genetics has been tweaked.
+  - bugfix: The North Star's AI SAT has a working vent and it's service hall has a
+      working lightswitch
+  Derpguy3:
+  - bugfix: The metastation law office's shutters now function again.
+  EuSouAFazer:
+  - qol: The flowers in Meta's chapel are no longer stacked atop eachother
+  Ical92:
+  - bugfix: fixed missing departments and names in request consoles
+  Melbert:
+  - bugfix: Fix antimagic effect not expiring
+  Paxilmaniac:
+  - qol: Gigabeacons no longer need to be constructed like standard machines, instead
+      being printed as items that can be deployed quickly inhand without tools.
+  - qol: Gigabeacons are no longer their own research node, instead being a part of
+      telecomms tech (due to the fact they're RADIO navigation beacons)
+  - image: Navigation gigabeacons now have their own unique sprites, inspired by maritime
+      EPIRB devices. If you find a yellow box with an antenna on it, you probably
+      found a nav beacon!
+  - code_imp: The deployable component now gives you an option to disable the examine
+      blurb it adds to its parent
+  Wallem:
+  - rscadd: T
+  carlarctg:
+  - balance: Lepton Violet (wabbajack) shuttle must be unlocked by having some form
+      of polymorph happen in-game first (Pride Mirror or the cursed springs are the
+      most accessible sources)
+  - balance: Scrapheap shuttle can only be bought if the Cargo budget is below 600
+      credits, and the shuttle has just less than half of its usual refueling time
+      left. However, it gives the cargo budget an influx of 3000 credits!
+  - qol: Uncle Pete's Rollerdome has had its price increased, and the disco machine
+      is no longer unbreakable.
+  timothymtorres:
+  - qol: Emergency shuttle now gracefully display occupancy limits and prerequisites
+      in the communication console.
+  - balance: Change mousetraps to kill mice instead of damaging them (except regal
+      rats)
+2023-08-13:
+  FernandoJ8:
+  - bugfix: Plumbing Constructors can now deconstruct every machine they can make,
+      including the plumbing IV.
+  - bugfix: Plumbing IV drips no longer drop metal when deconstructed
+  - bugfix: rabbits are now small-sized rather than human-sized, as well as capable
+      of being picked up
+  - bugfix: baseballs are now small sized rather than large
+  Ghommie:
+  - bugfix: Fixed wheelchairs being silent.
+  IndieanaJones:
+  - bugfix: After a collective brain fart lasting for 6 months, monkeys and xenomorphs
+      now know how to remove embedded objects from their own bodies.
+  Jacquerel:
+  - bugfix: Giant Spiders only have an antag datum if created by the round event.
+  - balance: Flesh spider eggs hatch into adult spiders instead of baby spiders.
+  - balance: The eggs spawned by the start of the spider infestation event hatch into
+      adult Midwife spiders instead of baby ones.
+  JohnFulpWillard:
+  - qol: The mining order console is now a bit more compact, and the search bar works
+      regardless of which tab you are currently on.
+  - bugfix: X'ing out of the podpeople no soul prompt will no longer harvest the seeds.
+  - bugfix: Mime spell books don't eat itself when used in the dark or cancelled out
+      of.
+  - qol: Gateway access no longer requires a Silver ID.
+  Melbert:
+  - bugfix: Fixes Shadow Walk
+  Sealed101:
+  - bugfix: Labor Camp Sustenance vendor is no longer free; instead, it takes your
+      labor points that you'd otherwise use for paying off your point goal.
+  - rscadd: you can upgrade laser pointers with a bluespace crystal to let them shine
+      through walls at double the power cost, if the laser in the pointer is of tier
+      3 or higher.
+  - qol: laser pointer charge can be seen by examining it
+  - bugfix: fixed laser pointers luring dead cats when shone upon
+  - code_imp: laser pointer code cleaned up a tad
+  TheBoondock:
+  - rscadd: Added Pulse of Entropy, a new ritual for rust heretic unlocked after leeching
+      walk. This ritual can be completed with 20 iron sheets, 2 garbage items to rust
+      in a 4 tiles radius round the rune. Useful for establishing bases and fighting
+      area.
+  - bugfix: fixed detect_room not running correctly when break_if_found is not passed
+  dieamond13:
+  - rscadd: Lets you grind things into a hauntium reagent which works similarly to
+      the solid form but is versatile and has some unique effects.
+  lizardqueenlexi:
+  - bugfix: The Nuke Op/Lone Op sniper briefcase now properly contains a sniper rifle.
+  san7890:
+  - refactor: Morphs are now basic mobs with a nice new ability to help you change
+      forms rather than the old shift-click method, much more intuitive.
+  - admin: With the morph rework comes a new ability you can add to mobs, "Assume
+      Form". Feel free to add that to any simple or basic mob for le funnies as Runtime
+      turns into a pen or something.
+  - bugfix: Growing spiders will now retaliate against you like they were always meant
+      to.
