@@ -22,8 +22,6 @@
 	var/current_layer = "Default Layer"
 	///Current selected color, for ducts
 	var/current_color = "omni"
-	///Current category selected
-	var/current_category = "Synthesizers"
 	///maps layer name to layer number value. didnt make this global cause only this class needs it
 	var/static/list/name_to_number = list(
 		"First Layer" = 1,
@@ -72,10 +70,12 @@
 
 	plumbing_design_types = general_design_types
 
-	current_category = plumbing_design_types[1]
-	for(var/obj/machinery/recipe as anything in plumbing_design_types[current_category])
-		blueprint =  recipe
-		break
+	/**
+	 * plumbing_design_types[1] = "Synthesizers"
+	 * plumbing_design_types["Synthesizers"] = <list of designs under synthesizers>
+	 * <list of designs under synthesizers>[1] = <first design in this list>
+	 */
+	blueprint = plumbing_design_types[plumbing_design_types[1]][1]
 
 /obj/item/construction/plumbing/equipped(mob/user, slot, initial)
 	. = ..()
@@ -170,15 +170,11 @@
 			var/category = params["category"]
 			if(!plumbing_design_types[category])
 				return FALSE
-			current_category = category
 
-			var/selected_index = text2num(params["id"])
-			var/current_index = 0
-			for(var/obj/machinery/design as anything in plumbing_design_types[current_category])
-				if(current_index++ != selected_index)
-					continue
-				blueprint = design
-				break
+			var/design = plumbing_design_types[category][text2num(params["id"]) + 1]
+			if(!design)
+				return FALSE
+			blueprint = design
 
 			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
 
@@ -191,11 +187,10 @@
 		return FALSE
 
 	var/cost = 0
-	for(var/obj/machinery/recipe as anything in plumbing_design_types[current_category])
-		if(recipe != blueprint)
-			continue
-		cost = plumbing_design_types[current_category][recipe]
-		break
+	for(var/category in plumbing_design_types)
+		cost = plumbing_design_types[category][blueprint]
+		if(cost)
+			break
 	if(!cost)
 		return FALSE
 
