@@ -141,14 +141,12 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	// Drastically lower the amount of time it takes to GC, since we don't have clients that can hold it up.
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = 10 SECONDS
-	//Prevent the garbage subsystem from harddeling anything, if only to save time
-	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
 	//Clear it, just in case
 	cached_contents.Cut()
 
 	var/list/queues_we_care_about = list()
-	// All up to harddel
-	for(var/i in 1 to GC_QUEUE_HARDDELETE - 1)
+	// All of em, I want hard deletes too, since we rely on the debug info from them
+	for(var/i in 1 to GC_QUEUE_HARDDELETE)
 		queues_we_care_about += i
 
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
@@ -158,6 +156,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		time_needed += SSgarbage.collection_timeout[index]
 
 	var/start_time = world.time
+	var/real_start_time = REALTIMEOFDAY
 	var/garbage_queue_processed = FALSE
 
 	sleep(time_needed)
@@ -175,11 +174,12 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
 
 		//If we've found a packet that got del'd later then we finished, then all our shit has been processed
-		if(oldest_packet_creation > start_time)
+		//That said, if there are any pending hard deletes you may NOT sleep, we gotta handle that shit
+		if(oldest_packet_creation > start_time && !length(SSgarbage.queues[GC_QUEUE_HARDDELETE]))
 			garbage_queue_processed = TRUE
 			break
 
-		if(world.time > start_time + time_needed + 30 MINUTES) //If this gets us gitbanned I'm going to laugh so hard
+		if(REALTIMEOFDAY > real_start_time + time_needed + 50 MINUTES) //If this gets us gitbanned I'm going to laugh so hard
 			TEST_FAIL("Something has gone horribly wrong, the garbage queue has been processing for well over 30 minutes. What the hell did you do")
 			break
 
@@ -214,4 +214,3 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	//This shouldn't be needed, but let's be polite
 	SSgarbage.collection_timeout[GC_QUEUE_CHECK] = GC_CHECK_QUEUE
-	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = GC_DEL_QUEUE

@@ -1036,7 +1036,7 @@
 
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay)), antimagic_effect, 5 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob
