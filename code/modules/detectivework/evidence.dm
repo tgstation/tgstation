@@ -59,6 +59,9 @@
 		if(!user.is_holding(I) || HAS_TRAIT(I, TRAIT_NODROP))
 			return
 
+	if(QDELETED(I))
+		return
+
 	user.visible_message(span_notice("[user] puts [I] into [src]."), span_notice("You put [I] inside [src]."),\
 	span_hear("You hear a rustle as someone puts something into a plastic bag."))
 
@@ -83,7 +86,6 @@
 		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."),\
 		span_hear("You hear someone rustle around in a plastic bag, and remove something."))
 		cut_overlays() //remove the overlays
-		user.put_in_hands(I)
 		w_class = WEIGHT_CLASS_TINY
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
