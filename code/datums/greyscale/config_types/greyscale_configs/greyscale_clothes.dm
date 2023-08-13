@@ -426,7 +426,7 @@
 /datum/greyscale_config/jacket_lawyer
 	name = "Formal Suit Jacket"
 	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jacket_oversized.json'
+	json_config = 'code/datums/greyscale/json_configs/jacket_lawyer.json'
 
 /datum/greyscale_config/jacket_lawyer/worn
 	name = "Formal Suit Jacket (Worn)"
