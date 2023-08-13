@@ -387,6 +387,7 @@
 		balloon_alert(user, "items inside!")
 		return
 
+	///if you add a new one don't forget to update /datum/crafting_recipe/medbot/on_craft_completion()
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
 	if (istype(src, /obj/item/storage/medkit/fire))
 		medbot_assembly.set_skin("ointment")
