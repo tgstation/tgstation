@@ -3,14 +3,19 @@
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// The object that is currently linked to the wall.
 	var/obj/linked_object
+	/// Callback to the parent's proc to call on the linked object when the wall disappear's or changes.
+	var/datum/callback/on_drop
 
-/datum/component/wall_mounted/Initialize(target_hung_object, target_wall)
+/datum/component/wall_mounted/Initialize(target_hung_object, target_wall, on_drop_callback)
 	. = ..()
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(!isobj(target_hung_object))
 		return COMPONENT_INCOMPATIBLE
+	if(!on_drop_callback)
+		return COMPONENT_INCOMPATIBLE //We need to have a callback to call when the wall is destroyed for sanity.
 	linked_object = target_hung_object
+	on_drop = on_drop_callback
 
 /datum/component/wall_mounted/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -42,21 +47,15 @@
 /datum/component/wall_mounted/proc/drop_wallmount()
 	SIGNAL_HANDLER
 	linked_object.visible_message(message = span_notice("\The [linked_object] falls off the wall!"), vision_distance = 5)
-	if(ismachinery(linked_object))
-		var/obj/machinery/machine_mount = linked_object
-		machine_mount.deconstruct()
-		return
-	if(isstructure(linked_object))
-		var/obj/structure/structure_mount = linked_object
-		structure_mount.deconstruct()
-		return
-	if(istype(linked_object, /obj/item/radio/intercom)) //This is probably awful practice
-		new /obj/item/wallframe/intercom(get_turf(linked_object))
-		qdel(linked_object)
-		return
+	on_drop?.Invoke(parent)
 
-/// Checks object direction and then verifies if there's a wall in that direction. Finally, applies a wall_mounted component to the object.
-/obj/proc/find_and_hang_on_wall(directional = TRUE)
+/**
+ *	Checks object direction and then verifies if there's a wall in that direction. Finally, applies a wall_mounted component to the object.
+ *
+ * 	@param directional If TRUE, will use the direction of the object to determine the wall to attach to. If FALSE, will use the object's loc.
+ *	@param custom_drop_callback If set, will use this callback instead of the default deconstruct callback.
+ */
+/obj/proc/find_and_hang_on_wall(directional = TRUE, custom_drop_callback)
 	if(istype(get_area(src), /area/shuttle))
 		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
 	var/turf/attachable_wall
@@ -66,5 +65,8 @@
 		attachable_wall = loc ///Pull from the curent object loc
 	if(!iswallturf(attachable_wall))
 		return FALSE//Nothing to latch onto, or not the right thing.
-	attachable_wall.AddComponent(/datum/component/wall_mounted, src)
+	var/datum/callback/drop_callback = CALLBACK(src, PROC_REF(deconstruct))
+	if(custom_drop_callback)
+		drop_callback = custom_drop_callback
+	attachable_wall.AddComponent(/datum/component/wall_mounted, src, drop_callback)
 	return TRUE
