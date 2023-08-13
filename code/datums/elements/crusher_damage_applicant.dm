@@ -19,6 +19,8 @@
 			RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
 		if(APPLY_WITH_SPELL)
 			RegisterSignal(target, COMSIG_CRUSHER_SPELL_HIT, PROC_REF(on_applied_spell))
+		if(APPLY_WITH_MOB_ATTACK)
+			RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_mob_attack))
 
 /datum/element/crusher_damage_applicant/Detach(datum/source, ...)
 	UnregisterSignal(source, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_PROJECTILE_ON_HIT, COMSIG_CRUSHER_SPELL_HIT))
@@ -46,6 +48,13 @@
 	try_apply_damage_tracker(target)
 
 /datum/element/crusher_damage_applicant/proc/on_applied_spell(datum/source, atom/target, mob/living/caster)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	try_apply_damage_tracker(target)
+
+/datum/element/crusher_damage_applicant/proc/on_mob_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
 
 	if(!isliving(target))

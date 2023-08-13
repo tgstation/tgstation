@@ -378,6 +378,7 @@
 		return
 	playsound(get_turf(user), prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(get_turf(user))
+	summoned_skull.AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_MOB_ATTACK)
 	summoned_skull.GiveTarget(target)
 	summoned_skull.friends += user
 	summoned_skull.faction = user.faction.Copy()
@@ -388,10 +389,10 @@
 		return
 	var/mob/living/living_user = user
 	if(!COOLDOWN_FINISHED(src, legionnaire_spine_cooldown))
-		living_user.visible_message(span_warning("[living_user] shakes the [src], but nothing happens..."))
+		living_user.visible_message(span_warning("[living_user] shakes \the [src], but nothing happens..."))
 		balloon_alert(living_user, "not ready!")
 		return
-	living_user.visible_message(span_boldwarning("[living_user] shakes the [src] and summons a legion skull!"))
+	living_user.visible_message(span_boldwarning("[living_user] shakes \the [src] and summons a legion skull!"))
 	playsound(get_turf(user), prob(0.5) ? 'sound/magic/RATTLEMEBONES2.ogg' : 'sound/magic/RATTLEMEBONES.ogg', 80, TRUE)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/summoned_skull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(get_turf(living_user))
 	summoned_skull.friends += living_user
