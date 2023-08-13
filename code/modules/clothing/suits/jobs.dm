@@ -40,6 +40,18 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
 
+/obj/item/clothing/suit/apron/overalls
+	name = "coveralls"
+	desc = "A set of overalls, good for protecting thinner clothes from the elements."
+	icon_state = "overalls"
+	inhand_icon_state = ""
+	body_parts_covered = CHEST|GROIN|LEGS
+	species_exception = list(/datum/species/golem)
+	greyscale_config = /datum/greyscale_config/overalls
+	greyscale_config_worn = /datum/greyscale_config/overalls/worn
+	greyscale_colors = "#313c6e"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 //Captain
 /obj/item/clothing/suit/jacket/capjacket
 	name = "captain's parade jacket"
