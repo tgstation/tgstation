@@ -1,5 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "Plumbing Constructors can now deconstruct every machine they can make, including the plumbing IV."
-  - bugfix: "Plumbing IV drips no longer drop metal when deconstructed"
