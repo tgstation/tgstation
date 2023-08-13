@@ -35606,12 +35606,11 @@
 /turf/closed/wall,
 /area/station/maintenance/department/engine)
 "mQE" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 9
-	},
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/trimline/purple/end{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 9
 	},
 /obj/machinery/shower/directional/east{
 	name = "emergency shower"
@@ -58323,6 +58322,15 @@
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"uxQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/stairs{
+	dir = 8
+	},
+/area/station/science/xenobiology)
 "uya" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -112594,7 +112602,7 @@ wMH
 wMH
 aSy
 aSy
-roC
+uxQ
 pWZ
 qZe
 xvF

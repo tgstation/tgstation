@@ -66791,11 +66791,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "rwA" = (
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/shower/directional/north,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/structure/sink/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "rwG" = (
@@ -82640,17 +82640,16 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "vHV" = (
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/sink/kitchen/directional/west,
 /obj/machinery/requests_console/directional/east{
 	department = "Xenobiology";
 	name = "Xenobiology Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/ore_update,
-/turf/open/floor/iron/white,
+/obj/machinery/shower/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/noslip,
 /area/station/science/xenobiology)
 "vHX" = (
 /obj/effect/spawner/random/decoration/glowstick,
