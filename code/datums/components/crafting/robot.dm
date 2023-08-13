@@ -86,6 +86,8 @@
 		bot.skin = "brute"
 	else if (istype(medkit, /obj/item/storage/medkit/advanced))
 		bot.skin = "advanced"
+	else if (istype(src, /obj/item/storage/medkit/tactical))
+		bot.skin = "bezerk"
 
 	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
