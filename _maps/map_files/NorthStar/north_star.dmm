@@ -29944,10 +29944,10 @@
 /turf/open/floor/iron/checker,
 /area/station/commons/vacant_room/commissary)
 "hTf" = (
-/obj/effect/landmark/start/medical_doctor,
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/checker,
 /area/station/commons/vacant_room/commissary)
 "hTj" = (
@@ -31564,10 +31564,10 @@
 /area/station/security/prison)
 "ipB" = (
 /obj/structure/sign/poster/official/random/directional/north,
-/obj/effect/landmark/start/medical_doctor,
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/checker,
 /area/station/commons/vacant_room/commissary)
 "ipI" = (
@@ -77068,7 +77068,9 @@
 /area/station/maintenance/disposal/incinerator)
 "uko" = (
 /obj/structure/table,
-/obj/item/pai_card,
+/obj/item/pai_card{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/checker,
 /area/station/commons/vacant_room/commissary)
 "ukr" = (
