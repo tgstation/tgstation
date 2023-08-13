@@ -12,6 +12,10 @@
 	var/clickthrough
 	///Is the seethrough effect currently active
 	var/is_active
+	///The mob's original render_target value
+	var/initial_render_target_value
+	///This component's personal uid
+	var/personal_uid
 
 /datum/component/seethrough_mob/Initialize(target_alpha = 100, animation_time = 0.5 SECONDS, clickthrough = TRUE)
 	. = ..()
@@ -23,8 +27,17 @@
 	src.animation_time = animation_time
 	src.clickthrough = clickthrough
 	src.is_active = FALSE
+	src.render_source_atom = new()
 	var/datum/action/toggle_seethrough/action = new(src)
+	var/static/uid = 0
+	uid++
+	src.personal_uid = uid
+
 	action.Grant(parent)
+
+/datum/component/seethrough_mob/Destroy(force, silent)
+	qdel(render_source_atom)
+	return ..()
 
 ///Set up everything we need to trick the client and keep it looking normal for everyone else
 /datum/component/seethrough_mob/proc/trick_mob()
@@ -35,11 +48,8 @@
 	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
 		seethrough.unhide_plane(fool)
 
-	render_source_atom = new()
-
-	var/static/uid = 0
-	uid++
-	fool.render_target = "*transparent_bigmob[uid]"
+	initial_render_target_value = fool.render_target
+	fool.render_target = "*transparent_bigmob[personal_uid]"
 	fool.vis_contents.Add(render_source_atom)
 	render_source_atom.render_source = fool.render_target
 
@@ -80,9 +90,7 @@
 ///Remove the image and the trick atom
 /datum/component/seethrough_mob/proc/clear_image(image/removee, client/remove_from)
 	var/atom/atom_parent = parent
-	atom_parent.appearance_flags &= ~KEEP_TOGETHER
-	atom_parent.render_target = null
-	qdel(render_source_atom)
+	atom_parent.render_target = initial_render_target_value
 	remove_from?.images -= removee
 
 ///Effect is disabled when they log out because client gets deleted
