@@ -998,12 +998,6 @@
 /obj/item/stock_parts/cell,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
-"aGk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/textured,
-/area/station/hallway/primary/central/fore)
 "aGo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -75601,7 +75595,7 @@ ujw
 ujw
 bwm
 gDz
-aGk
+pUc
 daX
 vwa
 jTM
