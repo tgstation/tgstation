@@ -286,16 +286,12 @@
 
 		//not a solid subtype or an hologram
 		if((target.item_flags & ABSTRACT) || (target.flags_1 & HOLOGRAM_1))
-			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
-				user.put_in_active_hand(target)
 			continue
 
 		//item is either not allowed for redemption, not in the allowed types
 		if((target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				to_chat(user, span_warning("[parent] won't accept [target]!"))
-			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
-				user.put_in_active_hand(target)
 			continue
 
 		//untouchable, move it out the way, code copied from recycler

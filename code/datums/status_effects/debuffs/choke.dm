@@ -267,23 +267,23 @@
 		victim.adjustBruteLoss(0.2)
 	return TRUE
 
-/datum/status_effect/choke/tick(seconds_per_tick)
+/datum/status_effect/choke/tick(seconds_between_ticks)
 	if(!should_do_effects())
 		return
 
-	deal_damage(seconds_per_tick)
+	deal_damage(seconds_between_ticks)
 
 	var/client/client_owner = owner.client
 	if(client_owner)
 		do_vfx(client_owner)
 
-/datum/status_effect/choke/proc/deal_damage(seconds_per_tick)
-	owner.losebreath += 1 * seconds_per_tick // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
+/datum/status_effect/choke/proc/deal_damage(seconds_between_ticks)
+	owner.losebreath += 1 * seconds_between_ticks // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * seconds_per_tick, damage_source = "choking")
-		owner.adjustStaminaLoss(2 * seconds_per_tick)
+			head.receive_damage(0, 2 * seconds_between_ticks, damage_source = "choking")
+		owner.adjustStaminaLoss(2 * seconds_between_ticks)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)
 	var/old_x = delta_x

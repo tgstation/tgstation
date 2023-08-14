@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Put a cap to the amount of stickers that can be sticked to an atom (12) to prevent icon-related issues."

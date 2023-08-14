@@ -255,6 +255,14 @@
 /// Game has round finished
 #define GAME_STATE_FINISHED 4
 
+// Used for SSticker.force_ending
+/// Default, round is not being forced to end.
+#define END_ROUND_AS_NORMAL 0
+/// End the round now as normal
+#define FORCE_END_ROUND 1
+/// For admin forcing roundend, can be used to distinguish the two
+#define ADMIN_FORCE_END_ROUND 2
+
 /**
 	Create a new timer and add it to the queue.
 	* Arguments:

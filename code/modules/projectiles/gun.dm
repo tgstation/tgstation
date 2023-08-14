@@ -50,6 +50,9 @@
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
+	/// Even snowflakier way to modify projectile wounding bonus/potential for projectiles fired from this gun.
+	var/projectile_wound_bonus = 0
+
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
@@ -89,6 +92,16 @@
 		QDEL_NULL(chambered)
 	if(isatom(suppressed)) //SUPPRESSED IS USED AS BOTH A TRUE/FALSE AND AS A REF, WHAT THE FUCKKKKKKKKKKKKKKKKK
 		QDEL_NULL(suppressed)
+	return ..()
+
+/obj/item/gun/apply_fantasy_bonuses(bonus)
+	. = ..()
+	fire_delay = modify_fantasy_variable("fire_delay", fire_delay, -bonus, 0)
+	projectile_damage_multiplier = modify_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier, bonus/10, 0.1)
+
+/obj/item/gun/remove_fantasy_bonuses(bonus)
+	fire_delay = reset_fantasy_variable("fire_delay", fire_delay)
+	projectile_damage_multiplier = reset_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier)
 	return ..()
 
 /// Handles adding [the seclite mount component][/datum/component/seclite_attachable] to the gun.

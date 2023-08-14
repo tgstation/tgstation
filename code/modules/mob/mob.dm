@@ -1036,7 +1036,7 @@
 
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay)), antimagic_effect, 5 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob
@@ -1218,7 +1218,7 @@
 		else if( search_pda && istype(A, /obj/item/modular_computer/pda) )
 			var/obj/item/modular_computer/pda/PDA = A
 			if(PDA.saved_identification == oldname)
-				PDA.saved_identification = newname
+				PDA.imprint_id(name = newname)
 				PDA.UpdateDisplay()
 				if(!search_id)
 					break

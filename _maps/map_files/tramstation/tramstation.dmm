@@ -17878,7 +17878,6 @@
 "fnv" = (
 /obj/structure/table/wood,
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /obj/machinery/light_switch/directional/south{
@@ -27062,7 +27061,6 @@
 	pixel_y = -23
 	},
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /turf/open/floor/carpet,
@@ -29499,6 +29497,7 @@
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/bot_white,
 /obj/item/reagent_containers/condiment/rice,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/white/side,
 /area/station/service/kitchen)
 "jEc" = (
@@ -31252,7 +31251,8 @@
 	dir = 5
 	},
 /obj/machinery/requests_console/directional/north{
-	department = "Security"
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
@@ -37250,6 +37250,7 @@
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/rack,
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -40345,6 +40346,7 @@
 /obj/item/book/manual/chef_recipes,
 /obj/item/holosign_creator/robot_seat/restaurant,
 /obj/item/reagent_containers/condiment/enzyme,
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -43932,7 +43934,6 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "oMP" = (
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /turf/closed/mineral/random/stationside/asteroid/porus,
@@ -48572,7 +48573,7 @@
 	pixel_y = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/storage/backpack/duffelbag/coroner/surgery,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -50078,6 +50079,12 @@
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
+"qXa" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/white/side,
+/area/station/service/kitchen)
 "qXg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -59174,6 +59181,7 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/mining_weather_monitor/directional/north,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "uhw" = (
@@ -62261,8 +62269,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light_switch/directional/south{
-	pixel_x = -8;
-	pixel_y = -26
+	pixel_x = -8
 	},
 /turf/open/floor/iron/dark/corner{
 	dir = 8
@@ -65090,7 +65097,8 @@
 	dir = 1
 	},
 /obj/machinery/requests_console/directional/south{
-	department = "Security"
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
@@ -168796,7 +168804,7 @@ aaa
 aaa
 aaa
 eSx
-scT
+qXa
 kWH
 uzM
 uuB

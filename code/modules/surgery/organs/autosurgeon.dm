@@ -157,6 +157,9 @@
 /obj/item/autosurgeon/syndicate/anti_stun
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun
 
+/obj/item/autosurgeon/syndicate/anti_drop
+	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_drop
+
 /obj/item/autosurgeon/syndicate/reviver
 	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver
 

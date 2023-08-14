@@ -52,9 +52,6 @@ SUBSYSTEM_DEF(radioactive_nebula)
 			for (var/atom/movable/target as anything in turf)
 				fake_irradiate(target)
 
-			if (isspaceturf(turf))
-				turf.space_light_color = radioactive_nebula.space_light_color
-
 			CHECK_TICK
 
 #undef TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED

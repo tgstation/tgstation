@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(minor_mapping)
 
 		to_spawn--
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_SPIDER_INFESTATION) && prob(PROB_SPIDER_REPLACEMENT))
-			new /mob/living/basic/giant_spider/maintenance(proposed_turf)
+			new /mob/living/basic/spider/maintenance(proposed_turf)
 			return
 
 		if (prob(PROB_MOUSE_SPAWN))

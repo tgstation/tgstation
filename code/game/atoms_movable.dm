@@ -580,6 +580,8 @@
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8)
+	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
+		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 
@@ -1538,7 +1540,7 @@
 	var/area/atom_area = get_area(src)
 
 	if(!atom_turf) // some machines spawn in nullspace
-		return
+		return FALSE
 
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
 		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines
