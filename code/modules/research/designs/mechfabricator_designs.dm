@@ -1548,6 +1548,18 @@
 		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
 	)
 
+/datum/design/modlink_scryer
+	name = "MODLink Scryer"
+	desc = "A neck-worn piece of gear that can call with another MODlink-compatible device."
+	id = "modlink_scryer"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 3)
+	construction_time = 5 SECONDS
+	build_path = /obj/item/clothing/neck/link_scryer
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
+	)
+
 //MODsuit modules
 
 /datum/design/module

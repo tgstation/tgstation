@@ -74,7 +74,7 @@
 		return
 
 	var/obj/item/multitool/M = I
-	M.buffer = src
+	M.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 

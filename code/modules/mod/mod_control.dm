@@ -173,6 +173,7 @@
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(wires)
+	QDEL_NULL(mod_link)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -586,6 +587,9 @@
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
+
+/obj/item/mod/control/proc/get_wearer()
+	return wearer
 
 /obj/item/mod/control/proc/update_access(mob/user, obj/item/card/id/card)
 	if(!allowed(user))
