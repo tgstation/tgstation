@@ -52,16 +52,16 @@
 	worn_icon_state = "broadsword"
 	force = 15
 	wound_bonus = 0
-	var/broken_icon_state
-	var/broken_desc
+	var/broken_icon_state = "broadsword_broken"
+	var/broken_desc = "A sharp steel forged sword. Its edge is rusty, corroded and broken."
 
 /obj/item/melee/sword/rust/Initialize(mapload)
 	. = ..()
 
 	AddComponent( \
 		/datum/component/durability, \
-		broken_icon_state = "broadsword_broken", \
-		broken_desc = "A sharp steel forged sword. Its edge is rusty, corroded and broken.", \
+		broken_icon_state = broken_icon_state, \
+		broken_desc = broken_desc, \
 		max_durability = 20, \
 		break_sound = 'sound/effects/structure_stress/pop3.ogg', \
 		broken_force_decrease = 5, \
