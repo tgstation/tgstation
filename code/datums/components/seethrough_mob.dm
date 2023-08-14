@@ -22,17 +22,27 @@
 
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
+	var/mob/fool = parent
 
 	src.target_alpha = target_alpha
 	src.animation_time = animation_time
 	src.clickthrough = clickthrough
 	src.is_active = FALSE
 	src.render_source_atom = new()
-	var/datum/action/toggle_seethrough/action = new(src)
+
 	var/static/uid = 0
 	uid++
 	src.personal_uid = uid
 
+	render_source_atom.appearance_flags |= ( RESET_COLOR | RESET_TRANSFORM)
+
+	render_source_atom.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
+
+	var/icon/current_mob_icon = icon(fool.icon, fool.icon_state)
+	render_source_atom.pixel_x = -fool.pixel_x
+	render_source_atom.pixel_y = ((current_mob_icon.Height() - 32) * 0.5)
+
+	var/datum/action/toggle_seethrough/action = new(src)
 	action.Grant(parent)
 
 /datum/component/seethrough_mob/Destroy(force, silent)
@@ -45,21 +55,13 @@
 
 	var/mob/fool = parent
 	var/datum/hud/our_hud = fool.hud_used
-	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
 		seethrough.unhide_plane(fool)
 
 	initial_render_target_value = fool.render_target
 	fool.render_target = "*transparent_bigmob[personal_uid]"
 	fool.vis_contents.Add(render_source_atom)
 	render_source_atom.render_source = fool.render_target
-
-	render_source_atom.appearance_flags |= ( RESET_COLOR | RESET_TRANSFORM)
-
-	render_source_atom.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
-
-	var/icon/current_mob_icon = icon(fool.icon, fool.icon_state)
-	render_source_atom.pixel_x = -fool.pixel_x
-	render_source_atom.pixel_y = ((current_mob_icon.Height() - 32) * 0.5)
 
 	trickery_image = new(render_source_atom)
 	trickery_image.loc = render_source_atom
@@ -89,7 +91,8 @@
 
 ///Remove the image and the trick atom
 /datum/component/seethrough_mob/proc/clear_image(image/removee, client/remove_from)
-	var/atom/atom_parent = parent
+	var/atom/movable/atom_parent = parent
+	atom_parent.vis_contents -= render_source_atom
 	atom_parent.render_target = initial_render_target_value
 	remove_from?.images -= removee
 
@@ -100,7 +103,7 @@
 	var/mob/fool = parent
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
 	var/datum/hud/our_hud = fool.hud_used
-	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
+	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
 		seethrough.hide_plane(fool)
 	clear_image(trickery_image, fool.client)
 
