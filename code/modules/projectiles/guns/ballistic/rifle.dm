@@ -54,8 +54,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
-	knife_x_offset = 37
-	knife_y_offset = 14
+	knife_x_offset = 42
+	knife_y_offset = 12
 	can_be_sawn_off = TRUE
 	weapon_weight = WEAPON_HEAVY
 	var/jamming_chance = 20
@@ -71,6 +71,7 @@
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
+		SET_BASE_PIXEL(0, 0)
 		update_appearance()
 
 /obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
