@@ -825,12 +825,12 @@
 /obj/item/storage/belt/sheath/Entered(datum/thing_entered_into_this)
 	. = ..()
 	if (isitem(thing_entered_into_this))
-		playsound(thing_entered_into_this, 'sound/items/unsheath.ogg', 25, TRUE)
+		playsound(thing_entered_into_this, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/storage/belt/sheath/Exited(datum/thing_exited_out_of_this)
 	. = ..()
 	if (isitem(thing_exited_out_of_this))
-		playsound(thing_exited_out_of_this, 'sound/items/sheath.ogg', 25, TRUE)
+		playsound(thing_exited_out_of_this, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/storage/belt/sheath/sabre
 	name = "sabre sheath"
