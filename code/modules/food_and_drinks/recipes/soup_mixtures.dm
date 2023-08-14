@@ -1757,8 +1757,6 @@
 		/datum/reagent/consumable/sugar = 8,
 	)
 	percentage_of_nutriment_converted = 0.1
-<<<<<<< HEAD
-=======
 
 // Martian Food
 // Boiled Noodles
@@ -2164,4 +2162,3 @@
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
->>>>>>> b981014c51d (martian hotfix (#77562))
