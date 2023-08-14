@@ -71,3 +71,11 @@
 #define BB_MACHINE_TARGET "BB_machine_target"
 ///the hivebot partner we will go communicate with
 #define BB_HIVE_PARTNER "BB_hive_partner"
+
+// mega arachnid keys
+/// ability to throw restrain projectiles
+#define BB_ARACHNID_RESTRAIN "BB_arachnid_restrain"
+/// the found surveillance item we must destroy
+#define BB_SURVEILLANCE_TARGET "BB_surveillance_target"
+/// our acid slip ability
+#define BB_ARACHNID_SLIP "BB_arachnid_slip"
