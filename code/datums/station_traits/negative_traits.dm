@@ -444,7 +444,6 @@
 	///We set the parallax layer to give a visual effect
 	SSparallax.random_layer = nebula_layer
 	SSparallax.random_parallax_color = nebula_color //give a unique color to tell the player somethings up
-	GLOB.starlight_color = space_light_color //color starlight in our nebula color
 
 	//parallax is generated for quick-joiners before we can change it, so reset it for them :/
 	for(var/client/client as anything in GLOB.clients)
