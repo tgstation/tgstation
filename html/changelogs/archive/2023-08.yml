@@ -506,3 +506,30 @@
   - bugfix: A small clerical error fixed which will cause the Ukrainian station naming
       prefix to be properly applied to the Independence Day of Ukraine holiday on
       24th August, rather than overwriting the Indigenous People's Day station prefixes.
+2023-08-14:
+  CliffracerX:
+  - bugfix: pr bot made an oopsy, the game broke
+  CoiledLamb, Jacquerel:
+  - rscadd: Adds mining weather radio
+  LT3:
+  - bugfix: Large airlocks are now a subtype and function on both tiles
+  NaakaKo:
+  - bugfix: The modular receiver is now only printable from a hacked autolathe.
+  - bugfix: Inquisitor Commander now has just 1 box.
+  - bugfix: You can no longer stand up without legs.
+  - bugfix: Projectile damage multipliers on guns are now reflected in their combat
+      information.
+  - admin: Admins can now make a gun's fired projectiles better or worse at wounding
+      by changing the gun's projectile_wound_bonus. Surely this will not have any
+      repercussions.
+  - bugfix: The chef can no longer close the shutters in Meta's HoP office.
+  - bugfix: Player-controlled basic mobs with ranged attacks can now only fire about
+      as fast as AI-controlled ones.
+  - qol: The icebox bridge had its items moved to better positions. No items were
+      added or removed, and none left their original room (except the captain's electric
+      razor, which went to the bathroom).
+  - bugfix: a few issues with Martian food
+  - bugfix: Doctors no longer spawn in the bedroom in the northstar
+  - qol: xenos rest verb now is a hud button instead
+  - bugfix: If you shapeshift into a mob which can eat things such as player corpses,
+      those things will fall out when you stop shapeshifting
