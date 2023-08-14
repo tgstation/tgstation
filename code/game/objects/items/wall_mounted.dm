@@ -55,7 +55,7 @@
 				if(WEST)
 					hanging_object.pixel_x = -pixel_shift
 		after_attach(hanging_object)
-
+		hanging_object.find_and_hang_on_wall()
 	qdel(src)
 
 /obj/item/wallframe/proc/after_attach(obj/attached_to)
