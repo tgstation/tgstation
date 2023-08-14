@@ -52,6 +52,15 @@
 	var/projectile_sound
 	/// Did the overwatch ever trigger during our run?
 	var/overwatch_triggered = FALSE
+	/// Signals which trigger a hostile response
+	var/static/list/forbidden_actions = list(
+		COMSIG_MOB_ABILITY_STARTED,
+		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_FIRED_GUN,
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOB_THROW,
+		COMSIG_MOVABLE_MOVED,
+	)
 
 /datum/status_effect/overwatch/on_creation(mob/living/new_owner, set_duration, mob/living/watcher, projectile_type, projectile_sound)
 	if (isnull(watcher) || isnull(projectile_type))
@@ -71,11 +80,11 @@
 	owner.Immobilize(0.5 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
 	link = owner.Beam(watcher, icon_state = "r_beam", override_target_pixel_x = 0)
-	RegisterSignals(owner, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN, COMSIG_MOB_THROW), PROC_REF(opportunity_attack))
+	RegisterSignals(owner, forbidden_actions, PROC_REF(opportunity_attack))
 	RegisterSignals(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_watcher_died))
 
 /datum/status_effect/overwatch/on_remove()
-	UnregisterSignal(owner, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN, COMSIG_MOB_THROW))
+	UnregisterSignal(owner, forbidden_actions)
 	UnregisterSignal(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	QDEL_NULL(link)
 	if (!overwatch_triggered && !QDELETED(watcher))

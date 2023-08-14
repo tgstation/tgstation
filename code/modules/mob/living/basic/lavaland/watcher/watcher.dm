@@ -17,6 +17,7 @@
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	ai_controller = /datum/ai_controller/basic_controller/watcher
+	faction = list(FACTION_WATCHER)
 	butcher_results = list(
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/stack/ore/diamond = 2,
@@ -43,7 +44,7 @@
 	var/datum/action/cooldown/watcher_overwatch/overwatch = new(src)
 	overwatch.Grant(src)
 	overwatch.projectile_type = projectile_type
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, overwatch)
+	ai_controller.set_blackboard_key(BB_WATCHER_OVERWATCH, overwatch)
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
