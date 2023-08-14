@@ -23,21 +23,21 @@
 	var/malfunctioning = FALSE
 	bound_width = 64
 
-/obj/machinery/door/airlock/tram/open(checks = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
 		return FALSE
 
 	if(!density)
 		return TRUE
 
-	if(checks == DEFAULT_DOOR_CHECKS && (!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED)))
+	if(forced == DEFAULT_DOOR_CHECKS && (!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED)))
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 
-	if(checks >= BYPASS_DOOR_CHECKS)
+	if(forced >= BYPASS_DOOR_CHECKS)
 		playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
 		sleep(TRAM_DOOR_CYCLE_TIME)
 	else
@@ -58,10 +58,10 @@
 
 	return TRUE
 
-/obj/machinery/door/airlock/tram/close(checks = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
+/obj/machinery/door/airlock/tram/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
 	retry_counter++
-	if(retry_counter >= 4 || force_crush || checks == BYPASS_DOOR_CHECKS)
-		try_to_close(checks = BYPASS_DOOR_CHECKS)
+	if(retry_counter >= 4 || force_crush || forced == BYPASS_DOOR_CHECKS)
+		try_to_close(forced = BYPASS_DOOR_CHECKS)
 		return
 
 	if(retry_counter == 1)
@@ -76,12 +76,12 @@
  * Arguments:
  * * rapid - boolean: if TRUE will skip safety checks and crush whatever is in the way
  */
-/obj/machinery/door/airlock/tram/proc/try_to_close(checks = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/tram/proc/try_to_close(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
 		return FALSE
 	if(density)
 		return TRUE
-	var/hungry_door = (checks == BYPASS_DOOR_CHECKS || malfunctioning)
+	var/hungry_door = (forced == BYPASS_DOOR_CHECKS || malfunctioning)
 	if((obj_flags & EMAGGED) || malfunctioning)
 		do_sparks(3, TRUE, src)
 		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
@@ -92,14 +92,15 @@
 	update_icon(ALL, AIRLOCK_CLOSING, 1)
 	sleep(TRAM_DOOR_WARNING_TIME)
 	if(!hungry_door)
-		for(var/atom/movable/blocker in get_turf(src))
-			if(blocker.density && blocker != src) //something is blocking the door
-				say("Please stand clear of the doors!")
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-				layer = OPEN_DOOR_LAYER
-				update_icon(ALL, AIRLOCK_OPEN, 1)
-				operating = FALSE
-				return FALSE
+		for(var/turf/checked_turf in locs)
+			for(var/atom/movable/blocker in checked_turf)
+				if(blocker.density && blocker != src) //something is blocking the door
+					say("Please stand clear of the doors!")
+					playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+					layer = OPEN_DOOR_LAYER
+					update_icon(ALL, AIRLOCK_OPEN, 1)
+					operating = FALSE
+					return FALSE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
 	sleep(TRAM_DOOR_CRUSH_TIME)
 	set_density(TRUE)
@@ -117,6 +118,37 @@
 	return TRUE
 
 /**
+ * Crush the jerk holding up the tram from moving
+ *
+ * Tram doors need their own crush proc because the normal one
+ * leaves you stunned far too long, leading to the doors crushing
+ * you over and over, no escape!
+ *
+ * While funny to watch, not ideal for the player.
+ */
+/obj/machinery/door/airlock/tram/crush()
+	for(var/turf/checked_turf in locs)
+		for(var/mob/living/future_pancake in checked_turf)
+			future_pancake.visible_message(span_warning("[src] beeps angrily and closes on [future_pancake]!"), span_userdanger("[src] beeps angrily and closes on you!"))
+			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			if(ishuman(future_pancake) || ismonkey(future_pancake))
+				future_pancake.emote("scream")
+				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 2)
+				future_pancake.Paralyze(2 SECONDS)
+
+			else //for simple_animals & borgs
+				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 2)
+				var/turf/location = get_turf(src)
+				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+				future_pancake.add_splatter_floor(location)
+
+			log_combat(src, future_pancake, "crushed")
+
+		for(var/obj/vehicle/sealed/mecha/mech in checked_turf) // Your fancy metal won't save you here!
+			mech.take_damage(DOOR_CRUSH_DAMAGE)
+			log_combat(src, mech, "crushed")
+
+/**
  * Checks if the door close action was successful. Retries if it failed
  *
  * If some jerk is blocking the doors, they've had enough warning by attempt 3,
@@ -127,7 +159,7 @@
 		if(retry_counter == 3)
 			playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
-			close(checks = BYPASS_DOOR_CHECKS)
+			close(forced = BYPASS_DOOR_CHECKS)
 		else
 			close()
 
@@ -175,14 +207,14 @@
 /**
  * If you pry (bump) the doors open midtravel, open quickly so you can jump out and make a daring escape.
  */
-/obj/machinery/door/airlock/tram/bumpopen(mob/user, checks = BYPASS_DOOR_CHECKS)
+/obj/machinery/door/airlock/tram/bumpopen(mob/user, forced = BYPASS_DOOR_CHECKS)
 	if(operating || !density)
 		return
 	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
 	add_fingerprint(user)
 	if(tram_part.travel_remaining < DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH)
 		return // we're already animating, don't reset that
-	open(checks = BYPASS_DOOR_CHECKS)
+	open(forced = BYPASS_DOOR_CHECKS)
 	return
 
 #undef TRAM_DOOR_WARNING_TIME
