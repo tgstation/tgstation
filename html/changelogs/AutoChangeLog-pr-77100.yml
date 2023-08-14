@@ -1,5 +1,0 @@
-author: "BlueMemesauce"
-delete-after: True
-changes:
-  - rscadd: "Emagged player-controlled bots now get different flavor text (depends on policy)"
-  - rscadd: "Bots are now notified when a silicon toggles them malfunctioning"

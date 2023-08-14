@@ -109,7 +109,7 @@
 
 	H.update_fire()
 
-/datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, seconds_per_tick, times_fired, no_protection = FALSE)
+/datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, seconds_per_tick, no_protection = FALSE)
 	if(internal_fire)
 		no_protection = TRUE
 	. = ..()
