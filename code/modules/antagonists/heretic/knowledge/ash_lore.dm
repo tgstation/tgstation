@@ -223,6 +223,9 @@
 		existing_beam_spell.beam_duration *= 0.66 // Faster beams
 		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
 
+	var/datum/action/cooldown/spell/aoe/fiery_rebirth = locate() in user.actions
+	fiery_rebirth?.cooldown_time /= 6
+
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
 	if(length(traits_to_apply))
 		user.add_traits(traits_to_apply, MAGIC_TRAIT)
