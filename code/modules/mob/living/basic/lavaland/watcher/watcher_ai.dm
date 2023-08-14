@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/watcher
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

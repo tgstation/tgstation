@@ -33,14 +33,24 @@
 	var/shoot_sound = 'sound/weapons/pierce.ogg'
 	/// Typepath of our gaze ability
 	var/gaze_attack = /datum/action/cooldown/watcher_gaze
-	// TODO: hunts pens and diamonds for some reason
-	var/wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
+	// We attract and eat these things for some reason
+	var/wanted_objects = list(
+		/obj/item/stack/sheet/mineral/diamond,
+		/obj/item/stack/ore/diamond,
+		/obj/item/pen/survival,
+	)
 
 /mob/living/basic/mining/watcher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/content_barfer)
 	AddComponent(/datum/component/basic_ranged_ready_overlay, overlay_state = eye_glow)
 	AddComponent(/datum/component/ranged_attacks, cooldown_time = ranged_cooldown, projectile_type = projectile_type, projectile_sound = shoot_sound)
+	AddComponent(\
+		/datum/component/magnet,\
+		attracted_typecache = wanted_objects,\
+		on_contact = CALLBACK(src, PROC_REF(consume)),\
+	)
 	update_appearance(UPDATE_OVERLAYS)
 
 	var/datum/action/cooldown/watcher_overwatch/overwatch = new(src)
@@ -55,6 +65,11 @@
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "watcher_emissive", src)
+
+/// I love eating diamonds yum
+/mob/living/basic/mining/watcher/proc/consume(atom/movable/thing)
+	visible_message(span_warning("[thing] seems to vanish into [src]'s body!"))
+	thing.forceMove(src)
 
 /// For map generation, has a chance to instantiate as a special subtype
 /mob/living/basic/mining/watcher/random
