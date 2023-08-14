@@ -45,8 +45,6 @@
 	cooldown_time = 15 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
-	/// the acid we will secrete
-	var/obj/effect/slippery_acid/acid
 
 /datum/action/cooldown/mob_cooldown/secrete_acid/Activate(atom/target_atom)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(release_acid))
@@ -55,10 +53,13 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/secrete_acid/proc/release_acid()
-	var/turf/current_turf = get_turf(owner)
-	if(locate(acid) in current_turf.contents)
+	SIGNAL_HANDLER
+
+	var/turf/current_turf = owner.loc
+	if(locate(/obj/effect/slippery_acid) in current_turf.contents)
 		return
-	acid = new(current_turf)
+
+	new /obj/effect/slippery_acid(current_turf)
 
 /datum/action/cooldown/mob_cooldown/secrete_acid/proc/deactivate_ability()
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
@@ -75,5 +76,5 @@
 
 /obj/effect/slippery_acid/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slippery, 60)
+	AddComponent(/datum/component/slippery, 6 SECONDS)
 	QDEL_IN(src, duration_time)

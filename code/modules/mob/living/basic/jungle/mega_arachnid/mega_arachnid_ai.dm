@@ -65,6 +65,7 @@
 		return
 
 	return ..()
+
 /datum/ai_planning_subtree/targeted_mob_ability/arachnid_restrain
 	ability_key = BB_ARACHNID_RESTRAIN
 
