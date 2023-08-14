@@ -596,4 +596,9 @@
 	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.cult_team = get_team()
 	new_cultist.give_equipment = TRUE
-	hosts_mind.add_antag_datum(new_cultist)
+	if(isobserver(spender))
+		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
+		newmob.equipOutfit(/datum/outfit/job/assistant)
+		newmob.mind.add_antag_datum(new_cultist)
+	else
+		hosts_mind.add_antag_datum(new_cultist)
