@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - bugfix: "Fix parasitic infection to cure upon liver removal"

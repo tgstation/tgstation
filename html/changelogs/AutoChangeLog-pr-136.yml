@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - code_imp: "Optimized z-level transition mirages, saving ~0.32s init."

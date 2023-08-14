@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - bugfix: "Fixed a hard delete that would occur with lua-created atoms."

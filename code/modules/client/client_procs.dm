@@ -466,7 +466,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (nnpa >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (CONFIG_GET(flag/irc_first_connection_alert))
-				send2tgs_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
+				var/new_player_alert_role = CONFIG_GET(string/new_player_alert_role_id)
+				send2tgs_adminless_only(
+					"New-user",
+					"[key_name(src)] is connecting for the first time![new_player_alert_role ? " <@&[new_player_alert_role]>" : ""]"
+				)
 	else if (isnum(cached_player_age) && cached_player_age < nnpa)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age == 1?"":"s")]")
 	if(CONFIG_GET(flag/use_account_age_for_jobs) && account_age >= 0)
@@ -474,7 +478,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(account_age >= 0 && account_age < nnpa)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
 		if (CONFIG_GET(flag/irc_first_connection_alert))
-			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].")
+			var/new_player_alert_role = CONFIG_GET(string/new_player_alert_role_id)
+			send2tgs_adminless_only(
+				"new_byond_user",
+				"[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age == 1?"":"s")] old, created on [account_join_date].[new_player_alert_role ? " <@&[new_player_alert_role]>" : ""]"
+			)
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 	validate_key_in_db()
@@ -824,9 +832,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/list/modifiers = params2list(params)
 
 	var/button_clicked = LAZYACCESS(modifiers, "button")
-	
+
 	var/dragged = LAZYACCESS(modifiers, DRAG)
-	if(dragged && button_clicked != dragged) 
+	if(dragged && button_clicked != dragged)
 		return
 
 	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && button_clicked == LEFT_CLICK)

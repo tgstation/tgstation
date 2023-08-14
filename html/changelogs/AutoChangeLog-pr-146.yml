@@ -1,5 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - qol: "Add sounds and flashing effects to slot machines"
-  - sound: "Add new ding sound to slot machines from https://freesound.org/people/Natty23/sounds/411747/"

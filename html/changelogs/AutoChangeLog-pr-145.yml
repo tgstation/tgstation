@@ -1,8 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - rscadd: "Adds the Coroner surgery duffelbag; This replaces Coroner's surgery tools in their medkit and current duffel, and has the cruel surgery tools instead of regular ones."
-  - balance: "Cruel surgery tools are no longer premium."
-  - balance: "Coroner's medkit is now premium in the vendor."
-  - balance: "All Coroner medkits are the same, there is no 'large' variant."
-  - balance: "Coroners no longer get a folder."

@@ -42,6 +42,17 @@
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
 	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks/worn
 	greyscale_colors = "#ffeeb6#c2d3da#402912#615233"
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/rnd/research_director/alt/skirt
+	name = "research director's tan suitskirt"
+	icon_state = "buttondown_skirt"
+	greyscale_config = /datum/greyscale_config/buttondown_skirt
+	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
+	body_parts_covered = CHEST|GROIN|ARMS
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck
 	desc = "A Nanotrasen-purple turtleneck and black jeans, for a director with a superior sense of style."

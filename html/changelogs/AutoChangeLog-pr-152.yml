@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - rscadd: "Added an Indebted negative quirk to the game, which gives the holder's bank account a debt averaging at 15000 credits (with a variation of 1250 cr) and forces 75% of all earnings towards solving it. A little prize awaits those who actually extinguish it."
