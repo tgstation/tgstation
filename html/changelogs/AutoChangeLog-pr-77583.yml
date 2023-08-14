@@ -1,0 +1,4 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "mob holders no longer bug out and harddel when put into evidence bags."
