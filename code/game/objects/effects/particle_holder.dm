@@ -12,7 +12,7 @@
 	/// See \code\__DEFINES\particles.dm
 	var/particle_flags = NONE
 
-	var/atom/parent
+	var/datum/weakref/parent_ref
 
 /obj/effect/abstract/particle_holder/Initialize(mapload, particle_path = /particles/smoke, particle_flags = NONE)
 	. = ..()
@@ -20,7 +20,7 @@
 		stack_trace("particle holder was created with no loc!")
 		return INITIALIZE_HINT_QDEL
 	// We nullspace ourselves because some objects use their contents (e.g. storage) and some items may drop everything in their contents on deconstruct.
-	parent = loc
+	parent_ref = WEAKREF(loc)
 	loc = null
 
 	// Mouse opacity can get set to opaque by some objects when placed into the object's contents (storage containers).
@@ -28,7 +28,12 @@
 	src.particle_flags = particle_flags
 	particles = new particle_path()
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
-	var/atom/movable/lie_about_areas = parent
+	var/atom/movable/parent = parent_ref.resolve()
+	if(!parent)
+		parent_ref = null
+		stack_trace("particle holder was created without a valid parent!")
+		return INITIALIZE_HINT_QDEL
+
 	lie_about_areas.vis_contents += src
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_deleted))
 
