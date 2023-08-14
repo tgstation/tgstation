@@ -1,4 +1,0 @@
-author: "Fazzie"
-delete-after: True
-changes:
-  - qol: "Many changes in Birdshot's Library.\nMakes the curator's bookshelf be Adult rather than Random\nMakes it so the curator can actually leave his desk to the main room\nIn order to do that I had to move one of the bookshelves away; removed the spacewindow behind bookshelves since they didn't make any sense in-universe and put the moved bookcase there\nMakes a wire no longer go through a wall to reach the library APC"
