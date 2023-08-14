@@ -18,11 +18,11 @@
 	if(lying_angle != lying_prev && rotate_on_lying)
 		changed = TRUE
 		ntransform.TurnTo(lying_prev, lying_angle)
-		if(lying_angle && lying_prev == 0) //Standing to lying
+		if(lying_angle && lying_prev == 0)
 			ntransform.Translate(0, -translate)
-			if(dir & (EAST|WEST)) //Facing east or west
+			if(dir & (EAST|WEST)) //Standing to lying and facing east or west
 				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-		else if(!lying_angle && lying_prev != 0) //Lying to standing
+		else if(!lying_angle && lying_prev != 0)
 			ntransform.Translate(0, translate)
 
 	if(resize != RESIZE_DEFAULT_SIZE)
@@ -38,7 +38,7 @@
 			//Make sure the body position y offset is also updated
 			body_position_pixel_y_offset = get_pixel_y_offset_standing(current_size)
 			var/new_translate = (body_position_pixel_y_offset - round(body_position_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
-			if(old_translate || new_translation_value)
+			if(translate || new_translate)
 				ntransform.Translate(0, new_translate - translate)
 			final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 
