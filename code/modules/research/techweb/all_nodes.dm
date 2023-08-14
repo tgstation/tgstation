@@ -1299,22 +1299,13 @@
 	design_ids = list(
 		"cybernetic_ears_u",
 		"cybernetic_eyes_improved",
+		"cybernetic_eyes_improved_moth",
 		"cybernetic_heart_tier2",
 		"cybernetic_liver_tier2",
 		"cybernetic_lungs_tier2",
 		"cybernetic_stomach_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
-
-/datum/techweb_node/cyber_motheyes
-	id = "improved_cyber_moth"
-	display_name = "Cybernetic Moth Eyes"
-	description = "Enlarged cybernetic eyes for moths."
-	prereq_ids = list("cyber_organs","xenoorgan_bio")
-	design_ids = list(
-		"cybernetic_eyes_improved_moth",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
 /datum/techweb_node/cyber_organs/New()
 	..()
@@ -1331,23 +1322,14 @@
 		"cybernetic_ears_xray",
 		"ci-gloweyes",
 		"ci-welding",
+		"ci-gloweyes-moth",
+		"ci-welding-moth",
 		"cybernetic_heart_tier3",
 		"cybernetic_liver_tier3",
 		"cybernetic_lungs_tier3",
 		"cybernetic_stomach_tier3",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-
-/datum/techweb_node/upgraded_motheyes
-	id = "upgraded_motheyes"
-	display_name = "Upgraded Cybernetic Moth Eyes"
-	description = "Better moth eye imitations, for more efficient work production."
-	prereq_ids = list("cyber_organs_upgraded","xenoorgan_bio")
-	design_ids = list(
-		"ci-gloweyes-moth",
-		"ci-welding-moth",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
 /datum/techweb_node/cyber_organs_upgraded/New()
 	..()
@@ -1402,19 +1384,10 @@
 		"ci-thermals",
 		"ci-thrusters",
 		"ci-xray",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/combat_motheyes
-	id = "combat_motheyes"
-	display_name = "Combat Cybernetic Moth Eyes"
-	description = "Military grade moth eye imitations, for our wageslave nonhumans."
-	prereq_ids = list("combat_cyber_implants","xenoorgan_bio")
-	design_ids = list(
 		"ci-thermals-moth",
 		"ci-xray-moth",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/combat_cyber_implants/New()
 	..()
