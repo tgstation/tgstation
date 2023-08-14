@@ -47,13 +47,13 @@
 		return	
 	holder.Beam(user, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(get_turf(powerholder), 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-	var/damage = user.electrocute_act(power_gen / 1.5 KW, powerholder, flags = SHOCK_NOSTUN)
+	var/damage = user.electrocute_act(power_gen / 2 KW, powerholder, flags = SHOCK_NOSTUN)
 	to_chat(user, span_userdanger("You are hit by a burst of electricity from [holder]!"))
 	if(damage > 80)
 		var/turf/owner_turf = get_turf(holder)
 		var/throwtarget = get_edge_target_turf(get_turf(user), get_dir(owner_turf, get_step_away(user, owner_turf)))
 		user.safe_throw_at(throwtarget, power_gen / 38 KW, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
-	if(damage > 350 && prob(50))
+	if(damage > 400 && prob(50))
 		user.dust(just_ash = TRUE, drop_items = TRUE)
 		Deactivate() //shortcircuit
 

@@ -1,7 +1,7 @@
 /obj/machinery/artifact_xray
 	name = "artifact x-ray machine"
 	desc = "An x-ray machine, used to scan artifacts."
-	icon = 'icons/obj/artifact_machines.dmi'
+	icon = 'icons/obj/machines/artifact_machines.dmi'
 	icon_state = "xray-0"
 	base_icon_state = "xray"
 	density = TRUE

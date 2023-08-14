@@ -1,11 +1,9 @@
 /obj/machinery/artifact_zapper
 	name = "artifact zapper"
 	desc = "A directed tesla coil, zaps the artifact that it is facing. VERY power-consuming."
-	//icon = 'icons/obj/artifact_machines.dmi'
-	//icon_state = "xray-open"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "reflector_map"
-	base_icon_state = "xray"
+	icon = 'icons/obj/machines/artifact_machines.dmi'
+	icon_state = "zapper"
+	base_icon_state = "zapper"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/artifactzapper
