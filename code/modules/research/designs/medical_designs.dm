@@ -480,7 +480,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/cyberimp_thermals/moth
-	name = "Moth X-ray Eyes"
+	name = "Moth Thermal Eyes"
 	id = "ci-thermals-moth"
 	build_path = /obj/item/organ/internal/eyes/robotic/thermals/moth
 
