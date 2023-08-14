@@ -917,6 +917,7 @@
 	icon = 'icons/obj/toys/balls.dmi'
 	icon_state = "baseball"
 	inhand_icon_state = "baseball"
+	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 9
 	throw_speed = 0.5
 
