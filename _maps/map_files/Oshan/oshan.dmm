@@ -25866,7 +25866,6 @@
 "rrX" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/merge_conflict_marker,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "rrZ" = (
