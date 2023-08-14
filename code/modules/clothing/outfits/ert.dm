@@ -150,9 +150,9 @@
 	id_trim = /datum/id_trim/centcom/official
 	uniform = /obj/item/clothing/under/rank/centcom/official
 	back = /obj/item/storage/backpack/satchel
+	box = /obj/item/storage/box/survival
 	backpack_contents = list(
 		/obj/item/stamp/centcom = 1,
-		/obj/item/storage/box/survival = 1,
 	)
 	belt = /obj/item/gun/energy/e_gun
 	ears = /obj/item/radio/headset/headset_cent
@@ -181,9 +181,7 @@
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	r_hand = /obj/item/nullrod/vibro/talking/chainsword
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-	)
+	backpack_contents = null
 
 /datum/outfit/centcom/ert/security/inquisitor
 	name = "Inquisition Security"
@@ -295,9 +293,7 @@
 	id_trim = /datum/id_trim/centcom/intern
 	uniform = /obj/item/clothing/under/rank/centcom/intern
 	back = /obj/item/storage/backpack/satchel
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-	)
+	box = /obj/item/storage/box/survival
 	belt = /obj/item/melee/baton
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -549,11 +545,11 @@
 	shoes = /obj/item/clothing/shoes/cowboy
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/satchel/leather
+	box = /obj/item/storage/box/survival
 	l_pocket = /obj/item/switchblade
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/salacid
 	ears = /obj/item/radio/headset
 	backpack_contents = list(
-			/obj/item/storage/box/survival = 1,
 			/obj/item/storage/medkit/emergency = 1,
 			/obj/item/crowbar = 1,
 			/obj/item/restraints/handcuffs = 1,

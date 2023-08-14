@@ -1,0 +1,5 @@
+author: "SmoSmoSmoSmok"
+delete-after: True
+changes:
+  - refactor: "ice whelps have been refactored to basic mobs"
+  - rscadd: "ice whelps have a new dangerous ability which theyll use once their enraged meter is full"

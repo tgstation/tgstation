@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Minor mapping work to Metastation. Wallmounts, decal changes, etc - especially around Medbay."
+  - qol: "Remapped Meta's Morgue slightly."

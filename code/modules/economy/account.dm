@@ -205,7 +205,7 @@
 			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(card, /mob)
 		if(ismob(card_holder)) //If on a mob
-			if(!card_holder.client || (!(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
+			if(!card_holder.client || (!(get_chat_toggles(card_holder.client) & CHAT_BANKCARD) && !force))
 				return
 
 			if(card_holder.can_hear())
@@ -214,7 +214,7 @@
 		else if(isturf(card.loc)) //If on the ground
 			var/turf/card_location = card.loc
 			for(var/mob/potential_hearer in hearers(1,card_location))
-				if(!potential_hearer.client || (!(potential_hearer.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
+				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
 				if(potential_hearer.can_hear())
 					potential_hearer.playsound_local(card_location, 'sound/machines/twobeep_high.ogg', 50, TRUE)
@@ -222,7 +222,7 @@
 		else
 			var/atom/sound_atom
 			for(var/mob/potential_hearer in card.loc) //If inside a container with other mobs (e.g. locker)
-				if(!potential_hearer.client || (!(potential_hearer.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
+				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.

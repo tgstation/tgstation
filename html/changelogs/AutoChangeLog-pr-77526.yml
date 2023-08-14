@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "X'ing out of the podpeople no soul prompt will no longer harvest the seeds."

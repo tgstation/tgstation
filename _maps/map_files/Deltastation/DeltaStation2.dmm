@@ -25392,8 +25392,8 @@
 /area/station/science/xenobiology)
 "gmK" = (
 /obj/structure/cable,
-/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/machinery/mining_weather_monitor/directional/south,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "gmP" = (
