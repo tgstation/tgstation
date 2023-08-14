@@ -351,7 +351,7 @@
 		scar.victim = new_limb_owner
 		LAZYADD(new_limb_owner.all_scars, scar)
 
-	new_limb_owner.clear_mood_event("[body_zone]")
+	new_limb_owner.clear_mood_event("dismembered_[body_zone]")
 
 	update_bodypart_damage_state()
 	if(can_be_disabled)
