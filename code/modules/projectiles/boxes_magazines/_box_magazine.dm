@@ -53,8 +53,11 @@
 /obj/item/ammo_box/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone in stored_ammo)
-		stored_ammo -= gone
-		update_appearance()
+		remove_from_stored_ammo(gone)
+
+/obj/item/ammo_box/proc/remove_from_stored_ammo(atom/movable/gone)
+	stored_ammo -= gone
+	update_appearance()
 
 /obj/item/ammo_box/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_box))

@@ -5,8 +5,7 @@
 	max_ammo = 7
 
 ///Here, we have to maintain the list size, to emulate a cylinder with several chambers, empty or otherwise.
-/obj/item/ammo_box/magazine/internal/cylinder/Exited(atom/movable/gone, direction)
-	. = ..()
+/obj/item/ammo_box/magazine/internal/cylinder/remove_from_stored_ammo(atom/movable/gone)
 	for(var/index in 1 to length(stored_ammo))
 		var/obj/item/ammo_casing/bullet = stored_ammo[index]
 		if(gone == bullet)
@@ -28,7 +27,9 @@
 		rotate()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_list(drop_list = FALSE)
-	return list_clear_nulls(stored_ammo.Copy())
+	var/list/no_nulls_ammo = stored_ammo.Copy()
+	list_clear_nulls(no_nulls_ammo)
+	return no_nulls_ammo
 
 /obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
