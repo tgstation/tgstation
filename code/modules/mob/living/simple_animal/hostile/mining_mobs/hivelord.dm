@@ -164,9 +164,9 @@
 		if(from_spawner)
 			new /obj/effect/mob_spawn/corpse/human/charredskeleton(our_turf)
 		else if(dwarf_mob)
-			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(T)
+			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(our_turf)
 		else if(snow_legion)
-			new /obj/effect/mob_spawn/corpse/human/legioninfested/snow(T)
+			new /obj/effect/mob_spawn/corpse/human/legioninfested/snow(our_turf)
 
 			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(our_turf)
 		else
