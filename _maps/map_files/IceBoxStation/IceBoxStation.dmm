@@ -135,6 +135,9 @@
 	id = "garbage"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "ade" = (
@@ -4427,6 +4430,9 @@
 	id = "garbage"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "btg" = (
@@ -7049,6 +7055,7 @@
 	id = "garbage";
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/red/box,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "cgs" = (
@@ -12393,6 +12400,7 @@
 /area/station/tcommsat/computer)
 "dKl" = (
 /obj/structure/chair/stool/directional/west,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plastic,
 /area/station/commons/dorms/laundry)
 "dKt" = (
@@ -15784,6 +15792,9 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -33136,6 +33147,7 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "kwK" = (
@@ -33441,6 +33453,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"kCe" = (
+/obj/machinery/conveyor{
+	id = "garbage";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
 "kCg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -37301,6 +37323,7 @@
 	dir = 4;
 	id = "garbage"
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "lOq" = (
@@ -45094,6 +45117,9 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/cold_temp/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "ond" = (
@@ -48348,14 +48374,14 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/holding_cell)
 "pmx" = (
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/machinery/mineral/stacking_machine{
 	stack_amt = 10;
 	output_dir = 2
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
 /area/station/maintenance/disposal)
 "pna" = (
 /obj/machinery/door/poddoor/preopen{
@@ -50667,6 +50693,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "pXn" = (
@@ -50823,6 +50852,7 @@
 	id = "garbage"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "qam" = (
@@ -63420,6 +63450,7 @@
 "udc" = (
 /obj/machinery/light/small/dim/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/grime,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
 "udd" = (
@@ -66507,6 +66538,9 @@
 	dir = 10;
 	id = "garbage"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "vdW" = (
@@ -68718,7 +68752,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon                                                                                                                                Level","4"="Station                                                                                                                                Level")
+	preset_destination_names = list("3"="Icemoon                                                                                                                                                                                                                                                                Level","4"="Station                                                                                                                                                                                                                                                                Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -68776,6 +68810,7 @@
 	},
 /obj/structure/sign/warning/secure_area/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "vPM" = (
@@ -68812,6 +68847,9 @@
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "garbage"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -69493,8 +69531,9 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "waa" = (
-/obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/red/box,
+/obj/machinery/door/poddoor/massdriver_trash,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "wab" = (
@@ -70313,6 +70352,9 @@
 	id = "garbage"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "wnp" = (
@@ -74903,6 +74945,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "xGI" = (
@@ -157233,7 +157278,7 @@ thA
 thA
 thA
 mxg
-lFr
+ipa
 jLv
 lZl
 oHG
@@ -161594,7 +161639,7 @@ qfO
 waa
 omS
 cgq
-xGH
+kCe
 xGH
 xGH
 xGH
