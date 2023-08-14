@@ -180,13 +180,14 @@
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
 
+	return ..()
+
+/obj/item/ammo_box/update_overlays()
+	. = ..()
 	if(ammo_band_color && ammo_band_icon)
 		update_ammo_band()
 
-	return ..()
-
 /obj/item/ammo_box/proc/update_ammo_band()
-	overlays.Cut()
 	var/band_icon = ammo_band_icon
 	if(!(length(stored_ammo)) && ammo_band_icon_empty)
 		band_icon = ammo_band_icon_empty
