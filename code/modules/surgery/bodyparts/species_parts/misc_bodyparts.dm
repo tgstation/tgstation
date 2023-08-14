@@ -401,8 +401,8 @@
 
 //GOLEM
 /obj/item/bodypart/head/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_head"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -438,8 +438,8 @@
 	return ..()
 
 /obj/item/bodypart/chest/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_chest"
 	biological_state = BIO_INORGANIC
 	acceptable_bodytype = BODYTYPE_GOLEM
@@ -459,8 +459,8 @@
 	return ..()
 
 /obj/item/bodypart/arm/left/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_l_arm"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -493,8 +493,8 @@
 	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/arm/right/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_r_arm"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -527,8 +527,8 @@
 	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/leg/left/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_l_leg"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC
@@ -540,8 +540,8 @@
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/right/golem
-	icon = 'icons/mob/species/golems.dmi'
-	icon_static = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
+	icon_static = 'icons/mob/human/species/golems.dmi'
 	icon_state = "golem_r_leg"
 	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_GOLEM | BODYTYPE_ORGANIC

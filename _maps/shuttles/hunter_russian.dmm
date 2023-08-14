@@ -381,6 +381,7 @@
 	req_access = list("hunter");
 	specialfunctions = 4
 	},
+/obj/item/soap,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
 "Dw" = (
@@ -451,8 +452,7 @@
 /area/shuttle/hunter/russian)
 "GF" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/soap,
+/obj/machinery/fugitive_locator,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "IV" = (

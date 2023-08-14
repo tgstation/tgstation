@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "You can now earn an achievement for completing the Grand Ritual."
-  - bugfix: "Summon Magic and Summon Guns work again"
