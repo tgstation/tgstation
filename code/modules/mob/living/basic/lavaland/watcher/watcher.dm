@@ -16,6 +16,7 @@
 	attack_verb_continuous = "buffets"
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
+	ai_controller = /datum/ai_controller/basic_controller/watcher
 	butcher_results = list(
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/stack/ore/diamond = 2,
@@ -25,21 +26,24 @@
 	var/ranged_cooldown = 3 SECONDS
 	/// What kind of beams we got?
 	var/projectile_type = /obj/projectile/temp/watcher
-	// TODO: hunts pens and diamonds for some reason
-	var/wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 	/// Icon state for our eye overlay
 	var/eye_glow = "ice_glow"
+	/// Sound to play when we shoot
+	var/shoot_sound = 'sound/weapons/pierce.ogg'
+	// TODO: hunts pens and diamonds for some reason
+	var/wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 
 /mob/living/basic/mining/watcher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/basic_ranged_ready_overlay, overlay_state = eye_glow)
-	AddComponent(/datum/component/ranged_attacks, cooldown_time = ranged_cooldown, projectile_type = projectile_type, projectile_sound = 'sound/weapons/pierce.ogg')
+	AddComponent(/datum/component/ranged_attacks, cooldown_time = ranged_cooldown, projectile_type = projectile_type, projectile_sound = shoot_sound)
 	update_appearance(UPDATE_OVERLAYS)
 
 	var/datum/action/cooldown/watcher_overwatch/overwatch = new(src)
 	overwatch.Grant(src)
 	overwatch.projectile_type = projectile_type
+	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, overwatch)
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
