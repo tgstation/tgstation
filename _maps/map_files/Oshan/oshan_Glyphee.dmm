@@ -147,15 +147,6 @@
 "aej" = (
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
-"aeJ" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "ceprivacy";
-	name = "Privacy Shutter"
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/ce)
 "aeL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2804,14 +2795,14 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "bWT" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "Privacy Shutter"
 	},
+/obj/structure/cable/industrial,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
+/area/station/command/heads_quarters/ce)
 "bXg" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/n2,
@@ -4923,7 +4914,6 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "dul" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/station_engineer,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -7233,7 +7223,6 @@
 /turf/closed/wall/r_wall,
 /area/station/service/hydroponics/garden)
 "fdP" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
 	dir = 4
@@ -14992,7 +14981,6 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "kJy" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
@@ -16236,7 +16224,6 @@
 	name = "Robotics Desk";
 	req_access = list("robotics")
 	},
-/obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Engineering Desk";
@@ -22456,7 +22443,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qlM" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/orange,
 /area/station/engineering/break_room)
@@ -22989,7 +22975,6 @@
 	},
 /area/station/science/robotics)
 "qAL" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -23522,7 +23507,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "qVN" = (
-/obj/structure/cable,
 /obj/structure/chair/sofa/corp/right{
 	desc = "Looks like someone threw it out. Covered in donut crumbs.";
 	name = "couch";
@@ -29061,15 +29045,6 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
-"uXS" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "ceprivacy";
-	name = "Privacy Shutter"
-	},
-/turf/open/floor/plating,
-/area/ocean)
 "uXU" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -30360,6 +30335,15 @@
 	dir = 1
 	},
 /area/station/ai_monitored/turret_protected/ai)
+"vSf" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 8
+	},
+/area/station/engineering/main)
 "vSt" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue"
@@ -73267,7 +73251,7 @@ xMy
 tUG
 qtx
 qtx
-qtx
+vSf
 uGe
 xBP
 gyH
@@ -77115,7 +77099,7 @@ iWu
 jtT
 aYn
 aBy
-aeJ
+bWT
 vkI
 uOh
 pns
@@ -77372,11 +77356,11 @@ iWu
 iWu
 iWu
 iWu
-uXS
-uXS
 bWT
 bWT
-pDS
+bWT
+bWT
+aBy
 pDS
 che
 che
