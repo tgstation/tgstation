@@ -515,7 +515,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/data_key in raw_data)
 		if(character_slot_regex.Find(data_key))
 			var/slot_id = text2num(replacetext(data_key, "character", ""))
-			if(slot_id <= max_save_slots)
+			if(slot_id > max_save_slots)
 				continue
 
 			var/list/character_data_raw = raw_data[data_key]
