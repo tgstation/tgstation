@@ -1,0 +1,4 @@
+author: "Kapu1178"
+delete-after: True
+changes:
+  - rscadd: "Lockers, crates, and machines no longer block click attempts in adjacency checks. Basically, you can reach tables cornered between lockers/machines."
