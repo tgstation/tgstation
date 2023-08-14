@@ -124,9 +124,7 @@
 /area/station/cargo/warehouse)
 "aeL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
 	},
@@ -21601,10 +21599,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/storage/primary)
-"otW" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/security/checkpoint/customs)
 "ouo" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
@@ -24464,7 +24458,6 @@
 "qsU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
@@ -29000,11 +28993,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
-"twy" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/floor/plating/ocean,
-/area/ocean)
 "twA" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal)
@@ -69648,8 +69636,8 @@ njn
 njn
 njn
 mdW
-twy
-twy
+mdW
+mdW
 mdW
 mdW
 mdW
@@ -70163,10 +70151,10 @@ ctg
 ctg
 ctg
 vHZ
-otW
-otW
-otW
-otW
+vtK
+vtK
+vtK
+vtK
 vtK
 uOH
 xQI
@@ -70420,7 +70408,7 @@ naN
 naN
 naN
 kBN
-otW
+vtK
 aZu
 iSC
 wYV

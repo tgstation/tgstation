@@ -126,9 +126,7 @@
 /area/station/cargo/warehouse)
 "aeL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
 	},
@@ -5397,11 +5395,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
-"dwU" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/floor/plating/ocean,
-/area/ocean)
 "dxb" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 5
@@ -24183,7 +24176,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "robopriv";
@@ -31762,10 +31754,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
-"vHD" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/security/checkpoint/customs)
 "vHE" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -69102,8 +69090,8 @@ meJ
 meJ
 meJ
 mdW
-dwU
-dwU
+mdW
+mdW
 mdW
 mdW
 mdW
@@ -69617,10 +69605,10 @@ rvq
 rvq
 rvq
 vHZ
-vHD
-vHD
-vHD
-vHD
+ogd
+ogd
+ogd
+ogd
 ogd
 pZM
 rDE
@@ -69874,7 +69862,7 @@ naN
 naN
 naN
 kBN
-vHD
+ogd
 vhE
 iLq
 fvT
