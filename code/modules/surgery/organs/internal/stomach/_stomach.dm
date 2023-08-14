@@ -175,14 +175,25 @@
 	else if(nutrition > NUTRITION_LEVEL_FED && human.satiety > 80)
 		if(human.metabolism_efficiency != 1.25)
 			to_chat(human, span_notice("You feel vigorous."))
+			human.stamina.regmods["hunger_SATI"] = 3 /// SKYRAPTOR ADDITION
+			human.stamina.warnings["hunger_status"] = 2
+			human.stamina.majorbufflist["Vigorous"] = "Supercharged metabolism, +3 regen"
+			human.stamina.bufflist["Sluggish"] = ""
 			human.metabolism_efficiency = 1.25
 	else if(nutrition < NUTRITION_LEVEL_STARVING + 50)
 		if(human.metabolism_efficiency != 0.8)
 			to_chat(human, span_notice("You feel sluggish."))
+			human.stamina.regmods["hunger_SATI"] = -1 /// SKYRAPTOR ADDITION
+			human.stamina.warnings["hunger_status"] = 1
+			human.stamina.majorbufflist["Vigorous"] = ""
+			human.stamina.bufflist["Sluggish"] = "Hungry, -1 regen"
 		human.metabolism_efficiency = 0.8
 	else
 		if(human.metabolism_efficiency == 1.25)
 			to_chat(human, span_notice("You no longer feel vigorous."))
+			human.stamina.regmods["hunger_SATI"] = 0 /// SKYRAPTOR ADDITION
+			human.stamina.majorbufflist["Vigorous"] = ""
+			human.stamina.bufflist["Sluggish"] = ""
 		human.metabolism_efficiency = 1
 
 	//Hunger slowdown for if mood isn't enabled
@@ -194,12 +205,28 @@
 	switch(nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/fat)
+			human.stamina.regmods["hunger_NUTR"] = -1 /// SKYRAPTOR ADDITION
+			human.stamina.capmods["hunger_NUTR"] = 100 /// SKYRAPTOR ADDITION
+			human.stamina.majorbufflist["Overweight"] = "Full of energy, 100 capacity and -1 regen"
+			human.stamina.majorbufflist["Starving"] = ""
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
 			human.clear_alert(ALERT_NUTRITION)
+			human.stamina.regmods["hunger_NUTR"] = 0 /// SKYRAPTOR ADDITION
+			human.stamina.capmods["hunger_NUTR"] = 0 /// SKYRAPTOR ADDITION
+			human.stamina.majorbufflist["Overweight"] = ""
+			human.stamina.majorbufflist["Starving"] = ""
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/hungry)
+			human.stamina.regmods["hunger_NUTR"] = -1 /// SKYRAPTOR ADDITION
+			human.stamina.capmods["hunger_NUTR"] = -25 /// SKYRAPTOR ADDITION
+			human.stamina.majorbufflist["Overweight"] = ""
+			human.stamina.majorbufflist["Starving"] = "Malnourished, -25 capacity and -1 regen"
 		if(0 to NUTRITION_LEVEL_STARVING)
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/starving)
+			human.stamina.regmods["hunger_NUTR"] = -3 /// SKYRAPTOR ADDITION
+			human.stamina.capmods["hunger_NUTR"] = -75 /// SKYRAPTOR ADDITION
+			human.stamina.majorbufflist["Overweight"] = ""
+			human.stamina.majorbufflist["Starving"] = "Extremely malnourished, -75 capacity and -3 regen"
 
 ///for when mood is disabled and hunger should handle slowdowns
 /obj/item/organ/internal/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)

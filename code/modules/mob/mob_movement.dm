@@ -521,6 +521,14 @@
 		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_appearance()
 
+/// SKYRAPTOR ADDITION
+/mob/proc/set_move_intent(new_state)
+	m_intent = new_state
+	if(hud_used?.static_inventory)
+		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
+			selector.update_appearance()
+/// SKYRAPTOR END
+
 ///Moves a mob upwards in z level
 /mob/verb/up()
 	set name = "Move Upwards"

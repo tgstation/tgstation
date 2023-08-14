@@ -71,12 +71,29 @@
 	. = ..()
 	update_move_intent_slowdown()
 
+/// SKYRAPTOR ADDITION BEGIN
+/mob/living/set_move_intent(new_state)
+	. = ..()
+	update_move_intent_slowdown()
+/// SKYRAPTOR ADDITION END
+
 /mob/living/update_config_movespeed()
 	update_move_intent_slowdown()
 	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
-	add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
+	/// SKYRAPTOR REMOVAL
+	//add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
+	/// SKYRAPTOR ADDITION BEGIN
+	var/modifier
+	if(m_intent == MOVE_INTENT_WALK)
+		modifier = /datum/movespeed_modifier/config_walk_run/walk
+	else if(m_intent == MOVE_INTENT_RUN)
+		modifier =  /datum/movespeed_modifier/config_walk_run/run
+	else
+		modifier = /datum/movespeed_modifier/config_walk_run/sprint
+	add_movespeed_modifier(modifier)
+	/// SKYRAPTOR ADDITION END
 
 /mob/living/proc/update_turf_movespeed(turf/open/turf)
 	if(isopenturf(turf) && !HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLOWDOWN))

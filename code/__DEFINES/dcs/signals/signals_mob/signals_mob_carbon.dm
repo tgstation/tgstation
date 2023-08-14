@@ -150,3 +150,7 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+/// SKYRAPTOR ADDITION: used to interrupt sprinting
+#define COMSIG_CARBON_PRE_SPRINT "carbon_pre_sprint"
+	#define INTERRUPT_SPRINT (1<<0)

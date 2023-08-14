@@ -97,6 +97,8 @@
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.plaintext_zone, affecting)
+	if(I.stamina_damage) /// Skyraptor addition: item stamina damage
+		stamina.adjust(-1 * (I.stamina_damage * (prob(I.stamina_critical_chance) ? I.stamina_critical_modifier : 1)))
 	if(I.force)
 		var/attack_direction = get_dir(user, src)
 		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction, attacking_item = I)
@@ -265,6 +267,9 @@
  * or another carbon.
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
+	/// SKYRAPTOR ADDITION: disarm costs stamina now.
+	src.stamina_swing(STAMINA_DISARM_COST)
+
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))
@@ -288,13 +293,27 @@
 	if(!shove_blocked)
 		target.setGrabState(GRAB_PASSIVE)
 
-	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
+	/// SKYRAPTOR REMOVAL BEGIN
+	/*if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
 		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
 						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
-		log_combat(src, target, "kicks", "onto their side (paralyzing)")
+		log_combat(src, target, "kicks", "onto their side (paralyzing)")*/
+	/// SKYRAPTOR REMOVAL END, REWRITE BEGIN
+	if(target.IsKnockdown()) //KICK HIM IN THE NUTS - harm intent go brrr
+		target.apply_damage(STAMINA_DISARM_DMG * 4, STAMINA, BODY_ZONE_CHEST, spread_damage = TRUE)
+		target.adjustOxyLoss(10) //Knock the wind right out of his sails
+		target.visible_message(
+			span_danger("<b>[name]</b> kicks <b>[target.name]</b> in [target.p_their()] chest, knocking the wind out of them!"),
+			span_danger("<b>[name]</b> kicks <b>[target.name]</b> in [target.p_their()] chest, knocking the wind out of them!"),
+			span_hear("You hear aggressive shuffling followed by a loud thud!"),
+			COMBAT_MESSAGE_RANGE,
+			//src
+		)
+		log_combat(src, target, "kicks", "in the chest")
+	/// SKYRAPTOR REWRITE END
 
 	var/directional_blocked = FALSE
 	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
@@ -328,10 +347,11 @@
 		span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name]!"))
 
+	/// SKYRAPTOR REMOVAL BEGIN
 	//Take their lunch money
-	var/target_held_item = target.get_active_held_item()
+	//var/target_held_item = target.get_active_held_item()
 	var/append_message = ""
-	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
+	/*if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
 		target_held_item = null
 
 	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
@@ -346,7 +366,23 @@
 		target.dropItemToGround(target_held_item)
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
 		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
-			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)*/
+	/// SKYRAPTOR REMOVAL END, REWRITE BEGIN
+	//Roll disarm chance based on the target's missing stamina
+	var/disarm_success_chance = target.stamina.loss_as_percent/2
+	if(prob(disarm_success_chance) && length(target.held_items))
+		var/list/dropped = list()
+		for(var/obj/item/I as anything in target.held_items)
+			if(target.dropItemToGround(I))
+				target.visible_message(
+					span_danger("<b>[target]</b> loses [target.p_their()] grip on [I]"),
+					span_userdanger("You drop [I]!"),
+					null,
+					COMBAT_MESSAGE_RANGE
+				)
+				dropped += I
+		append_message = "causing them to drop [length(dropped) ? english_list(dropped) : "nothing"]"
+	/// SKYRAPTOR REWRITE END
 
 	log_combat(src, target, "shoved", append_message)
 

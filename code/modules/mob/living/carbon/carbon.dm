@@ -10,6 +10,7 @@
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddComponent(/datum/component/carbon_sprint) /// SKYRAPTOR ADDITION: sprinting
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -529,7 +530,8 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/update_stamina()
-	var/stam = getStaminaLoss()
+	/// SKYRAPTOR REMOVAL BEGIN
+	/*var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold)
 		if (!stat)
 			enter_stamcrit()
@@ -538,8 +540,29 @@
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	else
-		return
+		return*/
+	/// SKYRAPTOR REMOVAL END, REWRITE BEGIN
+	var/stam = stamina.current
+	var/max = stamina.maximum
+	var/is_exhausted = HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA)
+	var/is_stam_stunned = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
+	if((stam < max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) && !is_exhausted)
+		ADD_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
+		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+	if((stam < max * STAMINA_STUN_THRESHOLD_MODIFIER) && !is_stam_stunned)
+		stamina_stun()
+	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_RECOVERY_THRESHOLD_MODIFIER))
+		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+	/// SKYRAPTOR REMOVAL END
 	update_stamina_hud()
+
+/// SKYRAPTOR ADDITION BEGIN
+/mob/living/carbon/pre_stamina_change(diff as num, forced)
+	if(!forced && (status_flags & GODMODE))
+		return 0
+	return diff
+/// SKYRAPTOR ADDITION END
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -770,9 +793,15 @@
 	if(!client || !hud_used?.stamina)
 		return
 
-	var/stam_crit_threshold = maxHealth - crit_threshold
+	if(!hud_used?.stamina_capmod || !hud_used?.stamina_regmod || !hud_used?.stamina_stamcrit || !hud_used?.stamina_alerts) /// SKYRAPTOR ADDITIONS: sanity checks for new content
+		return
 
-	if(stat == DEAD)
+	if(!hud_used?.stamina_hunger)
+		return
+
+	//var/stam_crit_threshold = maxHealth - crit_threshold /// SKYRAPTOR REMOVALS BEGIN HERE; we're doing a massive edit
+
+	/*if(stat == DEAD)
 		hud_used.stamina.icon_state = "stamina_dead"
 	else
 
@@ -792,7 +821,96 @@
 		else if(shown_stamina_loss > 0)
 			hud_used.stamina.icon_state = "stamina_1"
 		else
-			hud_used.stamina.icon_state = "stamina_full"
+			hud_used.stamina.icon_state = "stamina_full"*/
+	/// SKYRAPTOR REMOVALS END HERE, ADDITIONS BEGIN HERE
+
+	// Stamina bar
+	if(stamina.current <= stamina.maximum * 0.125)
+		hud_used.stamina.icon_state = "stamina_0"
+	else if(stamina.current <= stamina.maximum * 0.25)
+		hud_used.stamina.icon_state = "stamina_1"
+	else if(stamina.current <= stamina.maximum * 0.375)
+		hud_used.stamina.icon_state = "stamina_2"
+	else if(stamina.current <= stamina.maximum * 0.5)
+		hud_used.stamina.icon_state = "stamina_3"
+	else if(stamina.current <= stamina.maximum * 0.625)
+		hud_used.stamina.icon_state = "stamina_4"
+	else if(stamina.current <= stamina.maximum * 0.75)
+		hud_used.stamina.icon_state = "stamina_5"
+	else if(stamina.current <= stamina.maximum * 0.875)
+		hud_used.stamina.icon_state = "stamina_6"
+	else
+		hud_used.stamina.icon_state = "stamina_7"
+
+	// Stamcrit warning
+	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
+		hud_used.stamina_stamcrit.icon_state = "stamina_crit"
+		if(stamina.warnings["stamcrit"] == 0)
+			stamina.warnings["stamcrit"] = 1
+			flick("stamina_alert_crit", hud_used.stamina_alerts)
+	else
+		hud_used.stamina_stamcrit.icon_state = "stamina_nomod"
+		stamina.warnings["stamcrit"] = 0
+
+	// Exhaustion warning
+	if(HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA))
+		if(stamina.warnings["exhausted"] == 0)
+			stamina.warnings["exhausted"] = 1
+			flick("stamina_alert_exhausted", hud_used.stamina_alerts)
+	else
+		stamina.warnings["exhausted"] = 0
+
+	/// starvation/well-fed warnings
+	if(stamina.warnings["hunger_status"] != 0)
+		if(stamina.warnings["hunger_status"] == 1)
+			flick("stamina_alert_starve", hud_used.stamina_alerts)
+		else if(stamina.warnings["hunger_status"] == 2)
+			flick("stamina_alert_fed", hud_used.stamina_alerts)
+		stamina.warnings["hunger_status"] = 0
+
+	// Regen notifier
+	if(stamina.regen_rate < stamina.regen_rate_original * 0.5)
+		hud_used.stamina_regmod.icon_state = "stamina_reg_verylow"
+	else if(stamina.regen_rate < stamina.regen_rate_original * 0.75)
+		hud_used.stamina_regmod.icon_state = "stamina_reg_low"
+	else if(stamina.regen_rate > stamina.regen_rate_original * 1.25)
+		hud_used.stamina_regmod.icon_state = "stamina_reg_high"
+	else if(stamina.regen_rate > stamina.regen_rate_original * 1.5)
+		hud_used.stamina_regmod.icon_state = "stamina_reg_veryhigh"
+	else
+		hud_used.stamina_regmod.icon_state = "stamina_nomod"
+
+	// Capacity notifier
+	if(stamina.maximum < stamina.maximum_original * 0.75)
+		hud_used.stamina_capmod.icon_state = "stamina_cap_verylow"
+	else if(stamina.maximum < stamina.maximum_original * 0.875)
+		hud_used.stamina_capmod.icon_state = "stamina_cap_low"
+	else if(stamina.maximum > stamina.maximum_original * 1.125)
+		hud_used.stamina_capmod.icon_state = "stamina_cap_high"
+	else if(stamina.maximum > stamina.maximum_original * 1.25)
+		hud_used.stamina_capmod.icon_state = "stamina_cap_veryhigh"
+	else
+		hud_used.stamina_capmod.icon_state = "stamina_nomod"
+
+	// Nutrition
+	if(nutrition >= NUTRITION_LEVEL_FAT * 0.875)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_7"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.75)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_6"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.625)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_5"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.5)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_4"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.375)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_3"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.25)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_2"
+	else if(nutrition >= NUTRITION_LEVEL_FAT * 0.125)
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_1"
+	else
+		hud_used.stamina_hunger.icon_state = "stamina_foodbar_0"
+	/// SKYRAPTOR EDITS (FINALLY) END
+
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)
@@ -912,6 +1030,8 @@
 		QDEL_NULL(legcuffed)
 		set_handcuffed(null)
 		update_handcuffed()
+
+	exit_stamina_stun() //always exit stamstun
 
 	return ..()
 

@@ -18,15 +18,15 @@
 	/// Used interally, you don't want to modify
 	var/cooldown_check = 0
 	/// Default wait time until can stun again.
-	var/cooldown = (4 SECONDS)
+	var/cooldown = 0 /// SKYRAPTOR EDIT: removing cooldowns in a way that doesn't make ten billion merge conflicts
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
-	var/knockdown_time = (1.5 SECONDS)
+	var/knockdown_time = (10 SECONDS) /// SKYRAPTOR EDIT: 10 seconds, up from 1.5
 	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
 	var/stun_time_cyborg = (5 SECONDS)
 	/// The length of the knockdown applied to the user on clumsy_check()
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 55
+	var/charged_stamina_damage = 130 /// SKYRAPTOR EDIT: differentiating batong stamdamage from regular stamdamage, buffed to 130
 	/// Chance of causing force_say() when stunning a human mob
 	var/force_say_chance = 33
 	/// Can we stun cyborgs?
@@ -63,8 +63,8 @@
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
 	// Adding an extra break for the sake of presentation
-	if(stamina_damage != 0)
-		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
+	if(charged_stamina_damage != 0) /// SKYRAPTOR EDIT: differentiating batong stamdamage from regular stamdamage
+		offensive_notes = "It takes [span_warning("[CEILING(STAMINA_MAX / charged_stamina_damage, 1)] stunning hit\s")] to stun an enemy." /// SKYRAPTOR EDIT: differentiating batong stamdamage from regular stamdamage
 
 	register_item_context()
 
@@ -152,9 +152,11 @@
 	if(check_parried(target, user))
 		return BATON_ATTACK_DONE
 
-	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
+	// SKYRAPTOR REMOVAL BEGIN
+	/*if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
 		to_chat(user, span_danger("You fumble and miss [target]!"))
-		return BATON_ATTACK_DONE
+		return BATON_ATTACK_DONE*/
+	// SKYRAPTOR REMOVAL END
 
 	if(stun_animation)
 		user.do_attack_animation(target)
@@ -184,8 +186,10 @@
 		return TRUE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
-	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
-		return BATON_ATTACK_DONE
+	/// SKYRAPTOR REMOVAL BEGIN
+	/*if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
+		return BATON_ATTACK_DONE*/
+	/// SKYRAPTOR REMOVAL END
 
 	cooldown_check = world.time + cooldown
 	if(on_stun_sound)
@@ -201,20 +205,23 @@
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
+	var/disable_duration =  knockdown_time * (trait_check ? 0.1 : 1)
 	if(iscyborg(target))
 		if(!affect_cyborg)
 			return FALSE
 		target.flash_act(affect_silicon = TRUE)
-		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
+		//target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1)) SKYRAPTOR REMOVAL
+		target.Disorient(6 SECONDS, charged_stamina_damage, paralyze = disable_duration, stack_status = FALSE) //replacement
 		additional_effects_cyborg(target, user)
 	else
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target
 			if(prob(force_say_chance))
 				human_target.force_say()
-		target.apply_damage(stamina_damage, STAMINA)
+		/// SKYRAPTOR REMOVAL: we don't need to deal stamina damage manually, the Disorient effect does that for us
 		if(!trait_check)
-			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
+			//target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override)) SKYRAPTOR REMOVAL
+			target.Disorient(6 SECONDS, charged_stamina_damage, paralyze = disable_duration, stack_status = FALSE)
 		additional_effects_non_cyborg(target, user)
 	return TRUE
 
@@ -258,11 +265,12 @@
 	return
 
 /obj/item/melee/baton/proc/set_batoned(mob/living/target, mob/living/user, cooldown)
-	if(!cooldown)
+	/// SKYRAPTOR REMOVAL: Entire function made defunct by stamina rework.
+	/*if(!cooldown)
 		return
 	var/user_ref = REF(user) // avoids harddels.
 	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
+	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)*/
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
@@ -284,7 +292,7 @@
 			var/mob/living/carbon/human/human_user = user
 			human_user.force_say()
 		user.Knockdown(clumsy_knockdown_time)
-		user.apply_damage(stamina_damage, STAMINA)
+		user.stamina.adjust(-charged_stamina_damage) /// SKYRAPTOR EDIT: differentiating batong stamdamage from regular stamdamage, changing to direct stamina adjustment
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
@@ -389,9 +397,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 5
-	cooldown = 2.5 SECONDS
+	cooldown = 2.5 SECONDS /// SKYRAPTOR EDIT: removing cooldowns in a way that doesn't make ten billion merge conflicts
 	force_say_chance = 80 //very high force say chance because it's funny
-	stamina_damage = 85
+	charged_stamina_damage = 85 /// SKYRAPTOR EDIT: differentiating batong stamdamage from regular stamdamage
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
@@ -422,10 +430,10 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 60
+	charged_stamina_damage = 130 /// SKYRAPTOR EDIT: differentiating batong stamdamage from regular stamdamage, buffed to 130
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 2.5 SECONDS
+	cooldown = 2.5 SECONDS /// SKYRAPTOR EDIT: removing cooldowns in a way that doesn't make ten billion merge conflicts
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
@@ -599,21 +607,22 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.set_jitter_if_lower(40 SECONDS)
+	target.set_jitter_if_lower(10 SECONDS) /// SKYRAPTOR EDIT: jitter down to 10 seconds
 	target.set_confusion_if_lower(10 SECONDS)
-	target.set_stutter_if_lower(16 SECONDS)
+	target.set_stutter_if_lower(10 SECONDS) /// SKYRAPTOR EDIT: stutter down to 10 seconds
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS)
+	//addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS) SKYRAPTOR REMOVAL
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	/// SKYRAPTOR REMOVAL: this goes bye-bye
+	/*var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
 		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
 	if(!trait_check)
-		target.Knockdown(knockdown_time)
+		target.Knockdown(knockdown_time)*/
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")

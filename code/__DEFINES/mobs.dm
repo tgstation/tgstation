@@ -9,6 +9,8 @@
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
+/// SKYRAPTOR ADDITION: sprinting intent
+#define MOVE_INTENT_SPRINT "sprint"
 
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL 2150

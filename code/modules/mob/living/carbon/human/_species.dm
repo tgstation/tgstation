@@ -1336,6 +1336,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return // dont attack after
 	if(owner.combat_mode)
 		harm(owner, target, attacker_style)
+		/// SKYRAPTOR ADDITION BEGIN
+		if(. & ATTACK_CONSUME_STAMINA)
+			owner.stamina_swing(STAMINA_SWING_COST_UNARMED)
+		/// SKYRAPTOR ADDITION END
 	else
 		help(owner, target, attacker_style)
 
@@ -1371,6 +1375,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/attack_direction = get_dir(user, human)
 	apply_damage(weapon.force * weakness, weapon.damtype, def_zone, armor_block, human, wound_bonus = Iwound_bonus, bare_wound_bonus = weapon.bare_wound_bonus, sharpness = weapon.get_sharpness(), attack_direction = attack_direction, attacking_item = weapon)
+	if(weapon.stamina_damage) /// SKYRAPTOR ADDITION
+		human.stamina.adjust(-weapon.stamina_damage * (prob(weapon.stamina_critical_chance) ? weapon.stamina_critical_modifier : 1))
 
 	if(!weapon.force)
 		return FALSE //item force is zero

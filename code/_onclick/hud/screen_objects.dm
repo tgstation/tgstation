@@ -710,7 +710,170 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		add_overlay(intent_icon)
 	return ..()
 
+/// STAMINA IS HEAVILY REWORKED HERE: SKYRAPTOR ADDITION BEGIN
 /atom/movable/screen/stamina
 	name = "stamina"
-	icon_state = "stamina0"
+	icon_state = "stamina_7"
 	screen_loc = ui_stamina
+	icon = 'icons/hud/screen_goonstam.dmi'
+
+/atom/movable/screen/stamina/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/content = {"
+		<div class='notice'>
+			[span_boldnotice("You have [C.stamina.current]/[C.stamina.maximum] stamina, and are regenerating [C.stamina.regen_rate] per tick.")]
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+	var/_content = {"
+		Stamina: [L.stamina.current]/[L.stamina.maximum]<br>
+		Regen: [L.stamina.regen_rate]
+	"}
+	openToolTip(usr, src, params, title = "Stamina", content = _content)
+
+/atom/movable/screen/stamina/MouseExited(location, control, params)
+	. = ..()
+	closeToolTip(usr)
+
+
+/// These are simple overlays
+/atom/movable/screen/stamina/capmod
+	name = "stamina capacity"
+	icon_state = "stamina_nomod"
+
+/atom/movable/screen/stamina/regenmod
+	name = "stamina regen"
+	icon_state = "stamina_nomod"
+
+
+/// Crit warning
+/atom/movable/screen/stamina/crit
+	name = "stamcrit alert"
+	icon_state = "stamina_nomod"
+
+/atom/movable/screen/stamina/crit/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/content = {"
+		<div class='notice'>
+			[span_bolddanger("You're in STAMCRIT - you'll be stuck like this until you recover enough to get to safety!")]
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/crit/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+	var/_content = {"
+		You're in STAMCRIT!
+	"}
+	openToolTip(usr, src, params, title = "Stamcrit Warning", content = _content)
+
+
+/// These are are complicated overlays
+/atom/movable/screen/stamina/alert_up
+	name = "stamina buffs & alerts"
+	icon_state = "stamina_alert_base"
+	var/last_alert_index = 0
+
+/atom/movable/screen/stamina/alert_up/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/bufflist = ""
+		var/firstbuff = TRUE
+		for(var/buffname in C.stamina.majorbufflist)
+			if(C.stamina.majorbufflist[buffname] == "")
+				continue
+			if(firstbuff)
+				bufflist = "[buffname]: [C.stamina.majorbufflist[buffname]]<br>"
+				firstbuff = FALSE
+			else
+				bufflist = "[bufflist][buffname]: [C.stamina.majorbufflist[buffname]]<br>"
+		var/bufflist2 = ""
+		firstbuff = TRUE
+		for(var/buffname in C.stamina.bufflist)
+			if(C.stamina.bufflist[buffname] == "")
+				continue
+			if(firstbuff)
+				bufflist2 = "[buffname]: [C.stamina.bufflist[buffname]]<br>"
+				firstbuff = FALSE
+			else
+				bufflist2 = "[bufflist2][buffname]: [C.stamina.bufflist[buffname]]<br>"
+		var/content = {"
+		<div class='notice'>
+			[span_boldnotice("MAJOR BUFFS:")]<br>
+			[bufflist]<br>
+			[span_boldnotice("MINOR BUFFS:")]<br>
+			[bufflist2]<br>
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/alert_up/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+
+	var/mob/living/carbon/C = usr
+	var/bufflist = ""
+	var/firstbuff = TRUE
+	for(var/buffname in C.stamina.majorbufflist)
+		if(C.stamina.majorbufflist[buffname] == "")
+			continue
+		if(firstbuff)
+			bufflist = buffname
+			firstbuff = FALSE
+		else
+			bufflist = "[bufflist] [buffname]"
+	var/_content = {"
+		Effects: [bufflist]
+	"}
+	openToolTip(usr, src, params, title = "Status Effects", content = _content)
+
+/// These are are complicated overlays
+/atom/movable/screen/stamina/hunger
+	name = "satiety alert"
+	icon_state = "stamina_foodbar_7"
+
+/atom/movable/screen/stamina/hunger/Click(location, control, params)
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		var/content = {"
+		<div class='notice'>
+			[span_bolddanger("This will be implemented properly when food 2.0 arrives!")]<br>
+			[span_boldnotice("Nutrition/Satiety: [C.nutrition]/[C.satiety]")]
+		</div>
+		"}
+		to_chat(C, content)
+
+/atom/movable/screen/stamina/hunger/MouseEntered(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+
+	if(QDELETED(src))
+		return
+	var/_content = {"
+		Nutrition/Satiety: [L.nutrition]/[L.satiety]
+	"}
+	openToolTip(usr, src, params, title = "Hunger", content = _content)

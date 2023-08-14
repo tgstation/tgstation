@@ -1,5 +1,6 @@
 /mob/living/Initialize(mapload)
 	. = ..()
+	stamina = new(src) /// SKYRAPTOR ADDITION
 	if(current_size != RESIZE_DEFAULT_SIZE)
 		update_transform(current_size)
 	AddElement(/datum/element/movetype_handler)
@@ -26,6 +27,7 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
+	qdel(stamina) /// SKYRAPTOR ADDITION
 	for(var/datum/status_effect/effect as anything in status_effects)
 		// The status effect calls on_remove when its mob is deleted
 		if(effect.on_remove_on_mob_delete)
@@ -858,6 +860,9 @@
 		setFireLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_STAM)
 		setStaminaLoss(0, FALSE, TRUE)
+		/// Skyraptor small edits
+		stamina.adjust(INFINITY)
+		exit_stamina_stun()
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
@@ -1856,9 +1861,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[getOxyLoss()]</a>
 			CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[getCloneLoss()]</a>
 			BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[get_organ_loss(ORGAN_SLOT_BRAIN)]</a>
-			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
+			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[stamina.current]</a>
 		</font>
-	"}
+	"} /// skyraptor edit within: stamloss to stamina.current
 
 /mob/living/vv_get_dropdown()
 	. = ..()
@@ -2593,3 +2598,16 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
+
+
+
+/// SKYRAPTOR ADDITIONS BEGIN
+// Take away stamina from an attack being thrown.
+/mob/living/proc/stamina_swing(cost as num)
+	if((stamina.current - cost) > STAMINA_MAXIMUM_TO_SWING)
+		stamina.adjust(-cost)
+
+///Called by the stamina holder, passing the change in stamina to modify.
+/mob/living/proc/pre_stamina_change(diff as num, forced)
+	return diff
+/// SKYRAPTOR ADDITIONS END

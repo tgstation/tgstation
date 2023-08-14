@@ -124,7 +124,7 @@
 		to_chat(user, span_warning("You can't bring yourself to noogie [target]! You don't want to risk harming anyone..."))
 		return
 
-	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || user.getStaminaLoss() > 80)
+	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || HAS_TRAIT(user, TRAIT_EXHAUSTED)) /// SKYRAPTOR EDIT: replaces stamloss check with exhausted
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
@@ -170,7 +170,7 @@
 	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target)
 		return FALSE
 
-	if(user.getStaminaLoss() > 80)
+	if(HAS_TRAIT(user, TRAIT_EXHAUSTED)) /// SKYRAPTOR EDIT: replace stamloss check with exhausted
 		to_chat(user, span_warning("You're too tired to continue giving [target] a noogie!"))
 		to_chat(target, span_danger("[user] is too tired to continue giving you a noogie!"))
 		return

@@ -134,6 +134,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FLOORED "floored"
 /// Forces user to stay standing
 #define TRAIT_FORCED_STANDING "forcedstanding"
+
+/// SKYRAPTOR ADDITION: Slows the user, with additional effects based on the source..  part of goonstam
+#define TRAIT_DISORIENTED "disoriented"
+
 /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
 #define TRAIT_HANDS_BLOCKED "handsblocked"
 /// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
@@ -151,6 +155,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Recolored by item/greentext
 #define TRAIT_GREENTEXT_CURSED "greentext_curse"
 #define TRAIT_INCAPACITATED "incapacitated"
+
+/// SKYRAPTOR ADDITION BEGIN
+///User's stamina is over the STAMINA_EXHAUSTION_THRESHOLD
+#define TRAIT_EXHAUSTED "exhausted"
+///User is sprinting, full speed ahead
+#define TRAIT_SPRINTING "sprinting"
+///User cannot sprint
+#define TRAIT_NO_SPRINT "no_sprint"
+/// In softcrit.
+#define TRAIT_SOFT_CRITICAL_CONDITION "soft-critical-condition"
+/// SKYRAPTOR ADDITION END
+
 /// In some kind of critical condition. Is able to succumb.
 #define TRAIT_CRITICAL_CONDITION "critical-condition"
 /// Whitelist for mobs that can read or write

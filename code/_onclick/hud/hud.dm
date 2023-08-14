@@ -95,6 +95,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
 	var/atom/movable/screen/spacesuit
+	
+	/// SKYRAPTOR ADDITIONS
+	var/atom/movable/screen/stamina_capmod
+	var/atom/movable/screen/stamina_regmod
+	var/atom/movable/screen/stamina_stamcrit
+	var/atom/movable/screen/stamina/alert_up/stamina_alerts
+	var/atom/movable/screen/stamina/hunger/stamina_hunger
+	
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 

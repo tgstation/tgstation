@@ -15,7 +15,7 @@
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
-	var/stamina_damage = 60 //Same as normal batong
+	var/charged_stamina_damage = 60 //Same as normal batong - SKYRAPTOR EDIT: Renamed
 	/// Cost to use the stun arm
 	var/charge_cost = 200
 	var/cooldown_check = 0
@@ -37,7 +37,7 @@
 			return
 
 	user.do_attack_animation(attacked_mob)
-	attacked_mob.adjustStaminaLoss(stamina_damage)
+	attacked_mob.adjustStaminaLoss(charged_stamina_damage) // SKYRAPTOR EDIT: Renamed
 	attacked_mob.set_confusion_if_lower(5 SECONDS)
 	attacked_mob.adjust_stutter(20 SECONDS)
 	attacked_mob.set_jitter_if_lower(5 SECONDS)

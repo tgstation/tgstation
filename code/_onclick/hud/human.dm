@@ -273,6 +273,29 @@
 
 	stamina = new /atom/movable/screen/stamina(null, src)
 	infodisplay += stamina
+	
+	/// SKYRAPTOR ADDITIONS BEGIN
+	stamina_capmod = new /atom/movable/screen/stamina/capmod()
+	stamina_capmod.hud = src
+	infodisplay += stamina_capmod
+	
+	stamina_regmod = new /atom/movable/screen/stamina/regenmod()
+	stamina_regmod.hud = src
+	infodisplay += stamina_regmod
+	
+	stamina_stamcrit = new /atom/movable/screen/stamina/crit()
+	stamina_stamcrit.hud = src
+	infodisplay += stamina_stamcrit
+	
+	stamina_alerts = new /atom/movable/screen/stamina/alert_up()
+	stamina_alerts.hud = src
+	infodisplay += stamina_alerts
+	
+	// food
+	stamina_hunger = new /atom/movable/screen/stamina/hunger()
+	stamina_hunger.hud = src
+	infodisplay += stamina_hunger
+	/// SKYRAPTOR ADDITIONS END
 
 	pull_icon = new /atom/movable/screen/pull(null, src)
 	pull_icon.icon = ui_style

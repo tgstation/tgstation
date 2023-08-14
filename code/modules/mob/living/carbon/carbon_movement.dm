@@ -13,7 +13,9 @@
 			set_nutrition(NUTRITION_LEVEL_FED - 1) //just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
 			adjust_nutrition(-(HUNGER_FACTOR/10))
-			if(m_intent == MOVE_INTENT_RUN)
+			if(m_intent != MOVE_INTENT_WALK) /// SKYRAPTOR CHANGE: sprinting should cost hunger too!
+				adjust_nutrition(-(HUNGER_FACTOR/10))
+			if(m_intent == MOVE_INTENT_SPRINT) /// SKYRAPTOR ADDITION: sprinting should cost hunger too!
 				adjust_nutrition(-(HUNGER_FACTOR/10))
 
 

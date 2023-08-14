@@ -16,6 +16,9 @@
 	/// The mob's current health.
 	var/health = MAX_LIVING_HEALTH
 
+	/// SKYRAPTOR ADDITION: the stamina container we use for Goonstam.
+	var/datum/stamina_container/stamina
+
 	/// The max amount of stamina damage we can have at once (Does NOT effect stamcrit thresholds. See crit_threshold)
 	var/max_stamina = 120
 	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
