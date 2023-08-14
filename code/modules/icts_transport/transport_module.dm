@@ -844,6 +844,12 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	var/speed_limiter = 0.5
 
 	create_modular_set = TRUE
+
+/datum/armor/structure_tram
+	melee = 50
+	fire = 80
+	acid = 50
+
 /obj/structure/transport/linear/tram/structure/northwest
 	icon_state = "spoiler-subfloor-nw"
 
@@ -856,10 +862,16 @@ GLOBAL_LIST_EMPTY(icts_transports)
 /obj/structure/transport/linear/tram/structure/southeast
 	icon_state = "spoiler-subfloor-se"
 
-/datum/armor/structure_tram
-	melee = 50
-	fire = 80
-	acid = 50
+/obj/structure/transport/linear/tram/structure/thermoplastic
+	desc = "A lightweight thermoplastic flooring. These prevent you falling through the structure of the tram, don't you know how gravity works?"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "tram_dark"
+
+/obj/structure/transport/linear/tram/structure/thermoplastic/blue
+	icon_state = "tram_blue"
+
+/obj/structure/transport/linear/tram/structure/thermoplastic/light
+	icon_state = "tram_light"
 
 /obj/structure/transport/linear/tram/add_item_on_transport(datum/source, atom/movable/item)
 	. = ..()

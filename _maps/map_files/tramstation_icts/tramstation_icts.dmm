@@ -5753,15 +5753,13 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure,
 /obj/machinery/computer/icts_controls/directional/south{
 	pixel_x = 8
 	},
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "aPI" = (
@@ -15681,15 +15679,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/lower)
-"evi" = (
-/obj/effect/turf_decal/trimline/tram/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/tram/filled/warning{
-	dir = 1
-	},
-/turf/open/floor/catwalk_floor/titanium,
-/area/station/hallway/primary/tram/center)
 "evq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 9
@@ -16213,8 +16202,7 @@
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "eFd" = (
@@ -16493,9 +16481,8 @@
 /turf/open/floor/grass,
 /area/station/science/lower)
 "eNw" = (
-/obj/structure/transport/linear/tram/structure,
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /obj/machinery/door/airlock/tram,
-/obj/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "eNx" = (
@@ -18191,8 +18178,7 @@
 /obj/structure/chair/sofa/bench/tram{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "ftm" = (
@@ -20782,11 +20768,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "gsq" = (
-/obj/structure/transport/linear/tram/structure,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 4
 	},
-/obj/structure/thermoplastic,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "gsu" = (
@@ -21658,8 +21643,7 @@
 /area/station/science/ordnance/storage)
 "gIm" = (
 /obj/effect/landmark/icts/transport_id/tramstation/line_1,
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "gIu" = (
@@ -24217,15 +24201,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"hKN" = (
-/obj/effect/turf_decal/trimline/tram/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/tram/filled/warning{
-	dir = 1
-	},
-/turf/open/floor/catwalk_floor/flat_white,
-/area/station/hallway/primary/tram/center)
 "hKV" = (
 /obj/machinery/vending/snack,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -28900,8 +28875,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "juu" = (
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "juw" = (
@@ -30221,6 +30195,13 @@
 /obj/structure/table/optable,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
+"jSk" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram/structure/thermoplastic,
+/turf/open/openspace,
+/area/station/tram)
 "jSJ" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -31337,8 +31318,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /turf/open/openspace,
 /area/station/tram)
 "kkx" = (
@@ -34466,8 +34446,7 @@
 /area/station/security/checkpoint/escape)
 "lpc" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /turf/open/openspace,
 /area/station/tram)
 "lpg" = (
@@ -35716,6 +35695,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/violet/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"lLk" = (
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
+/turf/open/floor/noslip/tram_plate,
+/area/station/tram)
 "lLq" = (
 /obj/structure/bed{
 	dir = 8
@@ -36393,8 +36376,7 @@
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
 	},
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "lVu" = (
@@ -37759,11 +37741,10 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
-/obj/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "mvy" = (
@@ -42034,8 +42015,7 @@
 	pixel_x = -8
 	},
 /obj/structure/chair/sofa/bench/tram/left,
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "nXP" = (
@@ -42787,12 +42767,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"olw" = (
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
-/obj/machinery/door/airlock/tram,
-/turf/open/openspace,
-/area/station/tram)
 "olG" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
@@ -44501,8 +44475,7 @@
 /area/station/security/brig)
 "oZC" = (
 /obj/effect/landmark/icts/nav_beacon/tram/tramstation/central,
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "pal" = (
@@ -45700,8 +45673,7 @@
 "puz" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/chair/sofa/bench/tram/right,
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "puL" = (
@@ -50937,8 +50909,7 @@
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
 "rlO" = (
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /turf/open/openspace,
 /area/station/tram)
 "rlU" = (
@@ -59872,8 +59843,7 @@
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "utB" = (
@@ -69793,8 +69763,7 @@
 "ycb" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/chair/sofa/bench/tram,
-/obj/structure/transport/linear/tram/structure,
-/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "ycg" = (
@@ -69970,6 +69939,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"yeH" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
+/turf/open/openspace,
+/area/station/tram)
 "yeN" = (
 /obj/structure/closet/secure_closet/medical3,
 /obj/item/clothing/glasses/hud/health,
@@ -166907,7 +166881,7 @@ aEk
 mYI
 fhc
 rrg
-lpc
+yeH
 gsq
 mvn
 jUi
@@ -167163,13 +167137,13 @@ aEj
 rOu
 mYI
 ykP
-olw
+eNw
 lpc
-juu
+lLk
 kkw
 eNw
 ykP
-hKN
+lej
 iVr
 lDt
 kiN
@@ -167422,11 +167396,11 @@ kjY
 ykP
 rlO
 lpc
-juu
+lLk
 kkw
 rlO
 ykP
-evi
+lej
 iVr
 rks
 pwx
@@ -168448,9 +168422,9 @@ iZV
 tQy
 cHj
 ykP
-olw
+eNw
 lpc
-juu
+lLk
 kkw
 eNw
 ykP
@@ -168707,7 +168681,7 @@ mpa
 ykP
 rlO
 lpc
-juu
+lLk
 kkw
 rlO
 ykP
@@ -168965,7 +168939,7 @@ aiH
 jUi
 eEQ
 lVr
-kkw
+jSk
 ray
 dhI
 lej
