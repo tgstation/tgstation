@@ -239,7 +239,7 @@
 /datum/status_effect/buffering_block
 	id = "buffering_block"
 	alert_type = null
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	duration = 12 SECONDS // This is just a failsafe, it should never last this long
 
 /datum/status_effect/buffering_block/on_apply()

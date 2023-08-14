@@ -61,19 +61,17 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
 
-/mob/living/basic/eyeball/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(!.)
-		return
-
+/mob/living/basic/eyeball/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	if(!proximity_flag)
-		return
+		return ..()
 
 	if(istype(attack_target, /obj/item/food/grown/carrot))
 		adjustBruteLoss(-5)
 		to_chat(src, span_warning("You eat [attack_target]! It restores some health!"))
 		qdel(attack_target)
 		return TRUE
+
+	return ..()
 
 /mob/living/basic/eyeball/attackby(obj/item/weapon, mob/living/carbon/human/user, list/modifiers)
 	. = ..()

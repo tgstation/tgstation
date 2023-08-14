@@ -22,6 +22,7 @@
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
+	#define RESIST_HANDLED (1<<0)
 ///from base of mob/living/ignite_mob() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"
 ///from base of mob/living/extinguish_mob() (/mob/living)

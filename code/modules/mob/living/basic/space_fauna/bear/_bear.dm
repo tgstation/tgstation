@@ -158,12 +158,16 @@
 		name = new_name
 
 /mob/living/basic/bear/butter/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers) //Makes the butter bear's attacks against vertical targets slip said targets
-	. = ..()
-	if(. || !isliving(attack_target))
-		return
+	if(!proximity_flag)
+		return ..()
+
+	if(!isliving(attack_target))
+		return ..()
+
 	var/mob/living/victim = attack_target
 	if(victim.body_position != STANDING_UP)
-		return
-	victim.Knockdown(20)
+		return ..()
+	victim.Knockdown(2 SECONDS)
 	playsound(loc, 'sound/misc/slip.ogg', 15)
 	victim.visible_message(span_danger("[victim] slips on [src]'s butter!"))
+	return TRUE

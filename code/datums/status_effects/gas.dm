@@ -30,6 +30,7 @@
 /datum/status_effect/freon/proc/owner_resist()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(do_resist))
+	return RESIST_HANDLED
 
 /datum/status_effect/freon/proc/do_resist()
 	to_chat(owner, span_notice("You start breaking out of the ice cube..."))

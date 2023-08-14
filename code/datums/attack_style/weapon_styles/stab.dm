@@ -66,6 +66,6 @@
 	)
 
 /datum/attack_style/melee_weapon/stab_out/spear
-	cd = CLICK_CD_MELEE * 2
+	cd = CLICK_CD_MELEE * 1.5
 	stab_range = 2
 	sprite_size_multiplier = 1.5

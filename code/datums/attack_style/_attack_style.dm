@@ -143,9 +143,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Main attack loop starts here.
 	while(affecting_index <= length(affected_turfs))
 		var/turf/hitting = affected_turfs[affecting_index]
-		// Check for continguous reach between the current and former turf hit
-		if(!hitting.Adjacent(affecting_index == 1 ? starting_loc : affected_turfs[affecting_index - 1]))
+		// Check for continguous reach between the current and the starting location OR the last hit turf
+		if(!hitting.Adjacent(starting_loc) && (affecting_index == 1 || !hitting.Adjacent(affected_turfs[affecting_index - 1])))
 			break
+		// melbert todo : STILL need to figure out border objects
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting_index)
@@ -348,7 +349,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 #endif
 
 /datum/attack_style/melee_weapon
+	/// Params passed onto attack chain when left clicking
 	VAR_FINAL/left_click_params
+	/// Params passed onto attack chain when right clicking
 	VAR_FINAL/right_click_params
 
 	/// The attack effect is scaled by this amount
@@ -442,6 +445,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /// Creates an image for use in attack animations
 /datum/attack_style/melee_weapon/proc/create_attack_image(mob/living/attacker, obj/item/weapon, turf/initial_loc, angle)
+	if(isnull(initial_loc))
+		initial_loc = attacker.loc
 	if(isnull(angle))
 		angle = -weapon.weapon_sprite_angle + get_angle(attacker, initial_loc)
 

@@ -38,14 +38,10 @@
 	)
 
 /mob/living/basic/pet/penguin/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(.)
-		return
-
 	if(!proximity_flag)
-		return
+		return ..()
 	if(!istype(attack_target, /obj/item/food/egg/penguin_egg))
-		return
+		return ..()
 
 	remove_egg() //to check if we already have a egg
 	var/obj/item/egg_target = attack_target
@@ -53,6 +49,7 @@
 	carried_egg = attack_target
 	add_overlay("penguin_egg_overlay")
 	RegisterSignal(egg_target, COMSIG_QDELETING, PROC_REF(on_hatch_egg))
+	return TRUE
 
 /mob/living/basic/pet/penguin/death(gibbed)
 	. = ..()

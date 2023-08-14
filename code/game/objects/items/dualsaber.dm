@@ -222,8 +222,9 @@
 
 /datum/attack_style/melee_weapon/stab_out/desword
 	cd = CLICK_CD_MELEE * 1.25
+	time_per_turf = 0.1 SECONDS
 	slowdown = 0.5
-	sprite_size_multiplier = 1.25
+	sprite_size_multiplier = 1.5
 
 /datum/attack_style/melee_weapon/stab_out/desword/get_swing_description(has_alt_style)
 	return "Stabs out forwards and backwards one tile."
@@ -233,12 +234,38 @@
 	stab_turfs |= get_step(attacker, REVERSE_DIR(attack_direction))
 	return stab_turfs
 
+/datum/attack_style/melee_weapon/stab_out/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
+	if(length(affected_turfs) < 2)
+		return ..()
+
+	var/animation_length = time_per_turf * 4
+	var/side_angle = prob(50) ? -15 : 15
+	var/image/attack_image = create_attack_image(attacker, weapon)
+	attack_image.transform = turn(attack_image.transform, side_angle)
+	var/matrix/final_transform = turn(attack_image.transform, -1 * side_angle)
+
+	attacker.do_attack_animation(affected_turfs[1], no_effect = TRUE)
+	flick_overlay_global(attack_image, GLOB.clients, animation_length)
+
+	animate(
+		attack_image,
+		time = animation_length * 0.75,
+		transform = final_transform,
+		easing = CUBIC_EASING|EASE_OUT,
+	)
+	animate(
+		time = animation_length * 0.25,
+		alpha = 0,
+		easing = CIRCULAR_EASING|EASE_OUT,
+	)
+
 // Attack style for desword
 /datum/attack_style/melee_weapon/swing/desword
 	cd = CLICK_CD_MELEE * 1.25
 	reverse_for_lefthand = FALSE
-	time_per_turf = 0.05 SECONDS
+	time_per_turf = 0.1 SECONDS
 	slowdown = 0.75
+	sprite_size_multiplier = 2
 
 /datum/attack_style/melee_weapon/swing/desword/get_swing_description(has_alt_style)
 	. = "Swings out to all adjacent tiles besides directly behind you. It must be active to swing."
@@ -248,9 +275,9 @@
 
 /datum/attack_style/melee_weapon/swing/desword/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	var/list/turfs_in_order = list()
-	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, 90))
+	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, 90), reversed = TRUE)
 	turfs_in_order |= get_step(attacker, attack_direction)
-	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, -90))
+	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, -90), reversed = TRUE)
 	if(right_clicking)
 		reverse_range(turfs_in_order)
 	return turfs_in_order

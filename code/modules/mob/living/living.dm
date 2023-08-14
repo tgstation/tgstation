@@ -1071,29 +1071,44 @@
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
 /mob/living/proc/execute_resist()
 	if(!can_resist())
-		return
-	changeNext_move(CLICK_CD_RESIST)
+		return FALSE
 
-	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_RESIST) & RESIST_HANDLED)
+		changeNext_move(CLICK_CD_RESIST)
+		// We only want to throw on the resist CD if we fail to resist
+		return TRUE
+
 	//resisting grabs (as if it helps anyone...)
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED) && pulledby)
 		log_combat(src, pulledby, "resisted grab")
 		resist_grab()
-		return
+		changeNext_move(CLICK_CD_RESIST)
+		return TRUE
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
 		resist_buckle()
+		changeNext_move(CLICK_CD_RESIST)
+		return TRUE
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(loc != get_turf(src))
+	if(loc != get_turf(src))
 		loc.container_resist_act(src)
+		changeNext_move(CLICK_CD_RESIST)
+		return TRUE
 
-	else if(mobility_flags & MOBILITY_MOVE)
+	if(mobility_flags & MOBILITY_MOVE)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-		else if(last_special <= world.time)
+			changeNext_move(CLICK_CD_RESIST)
+			return TRUE
+
+		if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
+			changeNext_move(CLICK_CD_RESIST)
+			return TRUE
+
+	return FALSE
 
 /mob/proc/resist_grab(moving_resist)
 	return 1 //returning 0 means we successfully broke free

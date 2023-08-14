@@ -1,6 +1,6 @@
 // Swings at 3 targets in a direction
 /datum/attack_style/melee_weapon/swing
-	cd = CLICK_CD_MELEE * 3 // Three times the turfs, 3 times the cooldown
+	cd = CLICK_CD_MELEE * 2
 	sprite_size_multiplier = 1.5
 	time_per_turf = 0.2 SECONDS
 	/// If TRUE, the list of affected turfs will be reversed if the attack is being sourced from the lefthand
@@ -37,10 +37,8 @@
 	)
 
 /datum/attack_style/melee_weapon/swing/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
-	var/list/swing_turfs = get_turfs_and_adjacent_in_direction(attacker, attack_direction)
-	if(reverse_for_lefthand && (attacker.active_hand_index % 2 == 1))
-		reverse_range(swing_turfs)
-	return swing_turfs
+	var/should_reverse = reverse_for_lefthand && (attacker.active_hand_index % 2 == 1)
+	return get_turfs_and_adjacent_in_direction(attacker, attack_direction, reversed = should_reverse)
 
 /datum/attack_style/melee_weapon/swing/wider_arc
 
@@ -63,7 +61,7 @@
 	return swing_turfs
 
 /datum/attack_style/melee_weapon/swing/only_left
-	cd = CLICK_CD_MELEE * 1.5
+	cd = CLICK_CD_MELEE * 1.25
 	slowdown = 0.8
 	time_per_turf = 0.1 SECONDS
 
@@ -78,6 +76,6 @@
 	return swing_turfs
 
 /datum/attack_style/melee_weapon/swing/fast
-	cd = CLICK_CD_MELEE * 1.5
+	cd = CLICK_CD_MELEE * 1.25
 	slowdown = 0.75
 	time_per_turf = 0.1 SECONDS

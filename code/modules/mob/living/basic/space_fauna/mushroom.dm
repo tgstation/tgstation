@@ -95,16 +95,14 @@
 	always_reset_target = TRUE
 
 /mob/living/basic/mushroom/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(.)
-		return
-
 	if(!proximity_flag)
-		return
+		return ..()
 
 	if(istype(attack_target, /obj/item/food/grown/mushroom))
 		recover(attack_target)
 		return TRUE
+
+	return ..()
 
 /mob/living/basic/mushroom/proc/on_attacked_target(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER

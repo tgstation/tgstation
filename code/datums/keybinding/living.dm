@@ -25,13 +25,11 @@
 		blocker.apply_status_effect(/datum/status_effect/buffering_block)
 	else
 		blocker.begin_blocking()
-	return TRUE
 
 /datum/keybinding/living/hold_block/up(client/user)
 	var/mob/living/blocker = user.mob
 	blocker.remove_status_effect(/datum/status_effect/blocking)
 	blocker.remove_status_effect(/datum/status_effect/buffering_block)
-	return TRUE
 
 /datum/keybinding/living/toggle_block
 	hotkey_keys = list("Unbound")
@@ -51,16 +49,16 @@
 
 	// buffering -> not buffering
 	if(blocker.remove_status_effect(/datum/status_effect/buffering_block))
-		return TRUE
+		return
 	// blocking -> not blocking
 	if(blocker.remove_status_effect(/datum/status_effect/blocking))
-		return TRUE
+		return
 	// not buffering -> buffering
 	if(blocker.next_move > world.time && blocker.apply_status_effect(/datum/status_effect/buffering_block))
-		return TRUE
+		return
 	// not blocking -> blocking
 	blocker.begin_blocking()
-	return TRUE
+	return
 
 // must come after block. todo : resolve this with keybind priority
 /datum/keybinding/living/resist
@@ -77,7 +75,6 @@
 		return
 	var/mob/living/L = user.mob
 	L.resist()
-	return TRUE
 
 /datum/keybinding/living/strafe
 	hotkey_keys = list("Unbound")
@@ -92,7 +89,6 @@
 		return
 	var/mob/living/strafer = user.mob
 	strafer.toggle_strafe_lock()
-	return TRUE
 
 /datum/keybinding/living/look_up
 	hotkey_keys = list("L")
