@@ -205,8 +205,8 @@
 
 # Expensive files that touching basically always cause performance problems
 ## Init times
-/code/game/atoms_initializing_EXPENSIVE.dm @tgstation/dev-cycles-initiative
-/code/game/turfs/open/space/space_EXPENSIVE.dm @tgstation/dev-cycles-initiative
+/code/game/atoms_initializing_EXPENSIVE.dm @Mothblocks @LemonInTheDark
+/code/game/turfs/open/space/space_EXPENSIVE.dm @Mothblocks @LemonInTheDark
 
 # SIC SEMPER TYRANNIS
 
