@@ -17,7 +17,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 
 /obj/item/clothing/under/rank/cargo/tech
-	name = "cargo worker outfit"
+	name = "cargo worker's outfit"
 	desc = "A brown sweater and black jeans, because, honestly, who likes shorts?"
 	icon_state = "cargotech"
 	inhand_icon_state = "lb_suit"
@@ -31,7 +31,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
-	name = "cargo technician's jumpskirt"
+	name = "cargo worker's skirt"
 	desc = "Skiiiiirts! They're comfy and easy to wear!"
 	icon_state = "cargo_skirt"
 	inhand_icon_state = "lb_suit"
