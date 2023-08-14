@@ -37,7 +37,7 @@ for excluded_file in excluded_files:
         post_error(f"Excluded file {full_file_path} does not exist, please remove it!")
         sys.exit(1)
 
-file_extensions = (".dm", ".dmf")
+file_extensions = ("dm", "dmf")
 
 reading = False
 lines = []
@@ -64,7 +64,7 @@ fail_no_include = False
 
 scannable_files = []
 for file_extension in file_extensions:
-    compiled_directory = f"{scannable_directory}/**/*{file_extension}"
+    compiled_directory = f"{scannable_directory}/**/*.{file_extension}"
     scannable_files += glob.glob(compiled_directory, recursive=True)
 
 if len(scannable_files) == 0:
