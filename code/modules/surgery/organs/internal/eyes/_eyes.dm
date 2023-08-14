@@ -681,6 +681,43 @@
 	icon_state = "eyeballs-moth"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
+/obj/item/organ/internal/eyes/robotic/moth
+	name = "robotic moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+	desc = "Your vision is augmented. Much like actual moth eyes, very sensitive to bright lights."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/basic/moth
+	name = "basic robotic moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/xray/moth
+	name = "robotic eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+	desc = "These cybernetic imitation moth eyes will give you X-ray vision. Blinking is futile. Much like actual moth eyes, very sensitive to bright lights."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/shield/moth
+	name = "shielded robotic moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+
+/obj/item/organ/internal/eyes/robotic/glow/moth
+	name = "High Luminosity Moth Eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+	desc = "Special glowing eyes, to be one with the lamp. Much like actual moth eyes, very sensitive to bright lights."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/thermals/moth //we inherit flash weakness from thermals
+	name = "thermal moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+
 /obj/item/organ/internal/eyes/snail
 	name = "snail eyes"
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."

@@ -267,6 +267,7 @@
 		"circular_saw",
 		"cybernetic_ears",
 		"cybernetic_eyes",
+		"cybernetic_eyes_moth",
 		"cybernetic_heart",
 		"cybernetic_liver",
 		"cybernetic_lungs",
@@ -1305,6 +1306,16 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
+/datum/techweb_node/cyber_motheyes
+	id = "improved_cyber_moth"
+	display_name = "Cybernetic Moth Eyes"
+	description = "Enlarged cybernetic eyes for moths."
+	prereq_ids = list("cyber_organs","xenoorgan_bio")
+	design_ids = list(
+		"cybernetic_eyes_improved_moth",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+
 /datum/techweb_node/cyber_organs/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
@@ -1326,6 +1337,17 @@
 		"cybernetic_stomach_tier3",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
+/datum/techweb_node/upgraded_motheyes
+	id = "upgraded_motheyes"
+	display_name = "Upgraded Cybernetic Moth Eyes"
+	description = "Better moth eye imitations, for more efficient work production."
+	prereq_ids = list("cyber_organs_upgraded","xenoorgan_bio")
+	design_ids = list(
+		"ci-gloweyes-moth",
+		"ci-welding-moth",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
 /datum/techweb_node/cyber_organs_upgraded/New()
 	..()
@@ -1382,6 +1404,17 @@
 		"ci-xray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/combat_motheyes
+	id = "combat_motheyes"
+	display_name = "Combat Cybernetic Moth Eyes"
+	description = "Military grade moth eye imitations, for our wageslave nonhumans."
+	prereq_ids = list("combat_cyber_implants","xenoorgan_bio")
+	design_ids = list(
+		"ci-thermals-moth",
+		"ci-xray-moth",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/combat_cyber_implants/New()
 	..()
