@@ -647,7 +647,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating,
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/glass{
 	name = "Disembarkents"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,

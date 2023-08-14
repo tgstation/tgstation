@@ -198,6 +198,7 @@
 	var/embed_falloff_tile
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_ATTACK_HAND = PROC_REF(attempt_parry),
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
@@ -210,7 +211,6 @@
 	if(embedding)
 		updateEmbedding()
 	AddElement(/datum/element/connect_loc, projectile_connections)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_enter))
 
 /obj/projectile/proc/Range()
 	range--
@@ -380,15 +380,6 @@
 	if(!can_hit_target(A, A == original, TRUE, TRUE))
 		return
 	Impact(A)
-
-/// Signal proc for when a projectile enters a turf.
-/obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
-
-	if(isturf(loc))
-		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 
 /// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
 /obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)

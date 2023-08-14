@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/giant_spider))
+#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 
 
 //Misc mobs
@@ -237,6 +237,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isprojectile(A) (istype(A, /obj/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
+
+#define isammobox(A) (istype(A, /obj/item/ammo_box))
 
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
