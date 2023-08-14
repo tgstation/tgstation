@@ -659,11 +659,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, any of which could be in this bag!"
 
 /obj/item/food/shok_roks/random/Initialize(mapload)
-<<<<<<< HEAD
 	var/random_flavour = pick(subtypesof(/obj/item/food/shok_roks) - /obj/item/food/shok_roks/random)
-=======
-	var/random_flavour = pick(subtypesof(/obj/item/food/sticko) - /obj/item/food/sticko/random)
->>>>>>> 1c852d28636 (Martian Food: A Taste of the Red Planet (#75988))
 	var/obj/item/food/sample = new random_flavour(loc)
 	name = sample.name
 	desc = sample.desc
