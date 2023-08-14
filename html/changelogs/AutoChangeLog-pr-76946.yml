@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a bug that can cause emotes to stop working if a client is being created or deleted"
