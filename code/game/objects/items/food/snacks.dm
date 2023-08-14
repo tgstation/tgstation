@@ -519,8 +519,6 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	qdel(sample)
 
 	. = ..()
-<<<<<<< HEAD
-=======
 
 /obj/item/food/hot_shots
 	name = "\improper Hot Shots"
@@ -671,4 +669,3 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	qdel(sample)
 
 	. = ..()
->>>>>>> b981014c51d (martian hotfix (#77562))

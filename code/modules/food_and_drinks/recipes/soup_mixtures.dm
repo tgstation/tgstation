@@ -85,6 +85,12 @@
 	if(!length(required_ingredients))
 		return
 
+	// This only happens if we're being instant reacted so let's just skip to what we really want
+	if(isnull(reaction))
+		testing("Soup reaction of type [type] instant reacted, cleaning up.")
+		clean_up(holder)
+		return
+
 	if(isnull(total_ingredient_max))
 		total_ingredient_max = 0
 		// We only need to calculate this once, effectively static per-type
@@ -158,9 +164,21 @@
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
 		CRASH("[pot ? "Non-pot atom" : "Null pot"]) made it to the end of the [type] reaction chain.")
-	reaction.data["ingredients"] = null
 
 	testing("Soup reaction finished with a total react volume of [react_vol] and [length(pot.added_ingredients)] ingredients. Cleaning up.")
+	clean_up(holder, reaction, react_vol)
+
+/**
+ * Cleans up the ingredients and adds whatever leftover reagents to the mixture
+ *
+ * * holder: The sou ppot
+ * * reaction: The reaction being cleaned up, note this CAN be null if being instant reacted
+ * * react_vol: How much soup was produced
+ */
+/datum/chemical_reaction/food/soup/proc/clean_up(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
+	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+
+	reaction?.data["ingredients"] = null
 
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
 		// Let's not mess with  indestructible items.
@@ -180,12 +198,28 @@
 		else
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
+	// Spawning physical food results
+	if(resulting_food_path)
+		var/obj/item/created = new resulting_food_path(get_turf(pot))
+		created.pixel_y += 8
+
 	// Anything left in the ingredient list will get dumped out
-	pot.dump_ingredients(get_turf(pot))
+	pot.dump_ingredients(get_turf(pot), y_offset = 8)
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
 	BLACKBOX_LOG_FOOD_MADE(type)
 
+/**
+ * Transfers reagents from the passed reagent to the soup pot, as a "result"
+ *
+ * Also handles deleting a portion of nutriment reagents present, pseudo-converting it into soup reagent
+ *
+ * * ingredient: The ingredient to transfer reagents from
+ * * holder: The reagent holder of the soup pot the reaction is taking place in
+ * * amount: The amount of reagents to transfer, if null will transfer all reagents
+ */
 /datum/chemical_reaction/food/soup/proc/transfer_ingredient_reagents(obj/item/ingredient, datum/reagents/holder, amount)
+	if(ingredient_reagent_multiplier <= 0)
+		return
 	var/datum/reagents/ingredient_pool = ingredient.reagents
 	// Some ingredients are purely flavor (no pun intended) and will have reagents
 	if(isnull(ingredient_pool) || ingredient_pool.total_volume <= 0)
@@ -201,6 +235,7 @@
 	// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
 	ingredient_pool.trans_to(holder, amount, ingredient_reagent_multiplier, no_react = TRUE)
 
+/// Called whenever the soup pot overfills with reagent.
 /datum/chemical_reaction/food/soup/proc/boil_over(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/turf/below_pot = get_turf(pot)
@@ -1757,8 +1792,6 @@
 		/datum/reagent/consumable/sugar = 8,
 	)
 	percentage_of_nutriment_converted = 0.1
-<<<<<<< HEAD
-=======
 
 // Martian Food
 // Boiled Noodles
@@ -2160,8 +2193,8 @@
 	)
 	required_ingredients = list(
 		/obj/item/food/fishmeat = 1
+		/obj/item/food/fishmeat/carp = 1
 	)
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
->>>>>>> b981014c51d (martian hotfix (#77562))
