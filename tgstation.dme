@@ -3764,6 +3764,7 @@
 #include "code\modules\icts_transport\linear_controller.dm"
 #include "code\modules\icts_transport\tram_controller.dm"
 #include "code\modules\icts_transport\tram_controls.dm"
+#include "code\modules\icts_transport\tram_doors.dm"
 #include "code\modules\icts_transport\tram_machinery.dm"
 #include "code\modules\icts_transport\tram_remote.dm"
 #include "code\modules\icts_transport\tram_structures.dm"

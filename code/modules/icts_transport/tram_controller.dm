@@ -116,7 +116,6 @@
 		tram_registration = new /datum/tram_mfg_info(specific_transport_id)
 
 	check_starting_landmark()
-	INVOKE_ASYNC(src, PROC_REF(cycle_doors), OPEN_DOORS)
 
 /**
  * If someone VVs the base speed limiter of the tram, copy it to the current active speed limiter.
@@ -401,13 +400,22 @@
 				break
 
 /**
- * TODO: The fuck why does this exist, it's only used once to open doors.
+ * Cycle all the doors on the tram.
  */
 /datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
-	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
-		if(door.transport_linked_id == specific_transport_id)
-			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), door_status)
-		update_status()
+	switch(door_status)
+		if(OPEN_DOORS)
+			for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+				if(door.transport_linked_id == specific_transport_id)
+					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
+
+		if(CLOSE_DOORS)
+			for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+				if(door.transport_linked_id == specific_transport_id)
+					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close))
+
+	update_status()
+
 
 /**
  * Make tram emergency stop.

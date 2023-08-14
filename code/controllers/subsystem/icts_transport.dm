@@ -88,13 +88,13 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	transport_controller.set_lights()
 	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS) // bypass for unsafe, rapid departure
 		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
-			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = TRUE)
+			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close), BYPASS_DOOR_CHECKS)
 		if(request_flags & RAPID_MODE)
 			transport_controller.dispatch_transport()
 			return
 	else
 		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
-			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = FALSE)
+			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close))
 
 	addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller), 3 SECONDS)
 
@@ -124,4 +124,4 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	transport_controller.set_status_code(SYSTEM_FAULT, TRUE)
 	message_admins("ICTS: Transport Controller Failed!")
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
-		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), OPEN_DOORS)
+		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
