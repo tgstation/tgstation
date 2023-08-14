@@ -41,6 +41,7 @@
 	var/icon/current_mob_icon = icon(fool.icon, fool.icon_state)
 	render_source_atom.pixel_x = -fool.pixel_x
 	render_source_atom.pixel_y = ((current_mob_icon.Height() - 32) * 0.5)
+	render_source_atom.render_source = "*transparent_bigmob[personal_uid]"
 
 	var/datum/action/toggle_seethrough/action = new(src)
 	action.Grant(parent)
@@ -61,7 +62,6 @@
 	initial_render_target_value = fool.render_target
 	fool.render_target = "*transparent_bigmob[personal_uid]"
 	fool.vis_contents.Add(render_source_atom)
-	render_source_atom.render_source = fool.render_target
 
 	trickery_image = new(render_source_atom)
 	trickery_image.loc = render_source_atom
