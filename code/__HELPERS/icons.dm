@@ -757,7 +757,7 @@ world
 
 	var/curicon = appearance.icon || deficon
 	var/curstate = appearance.icon_state || defstate
-	var/curdir = (!appearance.dir || appearance.dir == SOUTH) ? defdir : appearance.dir
+	var/curdir = defdir || appearance.dir || SOUTH
 
 	var/render_icon = curicon
 
