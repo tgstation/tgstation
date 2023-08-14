@@ -38,13 +38,3 @@
 
 	if(tgui_alert(living_owner, "Disconnect safely?", "Server Message", list("Exit", "Remain"), 10 SECONDS) == "Exit")
 		SEND_SIGNAL(living_owner.mind, COMSIG_BITRUNNER_SAFE_DISCONNECT)
-
-/datum/status_effect/grouped/embryonic
-	id = "embryonic"
-	duration = -1
-	alert_type = /atom/movable/screen/alert/status_effect/embryonic
-
-/atom/movable/screen/alert/status_effect/embryonic
-	name = "Embryonic Stasis"
-	icon_state = "netpod_stasis"
-	desc = "You feel like you're in a dream."

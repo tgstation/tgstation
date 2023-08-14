@@ -11,14 +11,14 @@
 	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
+	/// A player selected outfit by clicking the netpod
+	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
 	/// Holds this to see if it needs to generate a new one
 	var/datum/weakref/avatar_ref
 	/// Mind weakref used to keep track of the original mind
 	var/datum/weakref/occupant_mind_ref
 	/// The linked quantum server
 	var/datum/weakref/server_ref
-	/// A player selected outfit by clicking the netpod
-	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
 	/// The amount of brain damage done from force disconnects
 	var/disconnect_damage
 	/// Static list of outfits to select from
@@ -397,13 +397,24 @@
 	if(target != occupant)
 		return
 
-	target.apply_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
+	target.AddComponent(/datum/component/netpod_healing, \
+		brute_heal = 0.4, \
+		burn_heal = 0.4, \
+		toxin_heal = 0.4, \
+		clone_heal = 0.4, \
+		blood_heal = 0.4, \
+	)
+
 	target.extinguish_mob()
+	target.playsound_local(src, 'sound/effects/submerge.ogg', 50, TRUE)
 	update_use_power(ACTIVE_POWER_USE)
 
 /// Removes the in_netpod state
 /obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)
-	target?.remove_status_effect(/datum/status_effect/grouped/embryonic, STASIS_NETPOD_EFFECT)
+	var/datum/component/netpod_healing/healing_eff = target.GetComponent(/datum/component/netpod_healing)
+	if(healing_eff)
+		qdel(healing_eff)
+
 	update_use_power(IDLE_POWER_USE)
 
 /// Resolves a path to an outfit.
