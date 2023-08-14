@@ -26892,7 +26892,6 @@
 /area/station/medical/medbay/central)
 "rZv" = (
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /obj/machinery/camera/directional/north{
 	c_tag = "Chief Engineer's Office"
 	},
