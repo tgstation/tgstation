@@ -476,3 +476,184 @@
   xPokee:
   - bugfix: Fixed the tramstation kitchen not having any lights
   - image: added a wagging tail for cake cats to match other cats
+2023-08-11:
+  EOBGames, MrMelbert:
+  - rscadd: Mars celebrates the 250th anniversary of the Martian Concession this year,
+      and this has brought Martian cuisine to new heights of popularity. Find a new
+      selection of Martian foods and drinks available in your crafting menu today!
+  FernandoJ8:
+  - bugfix: crafting recipes without a name, such as the mothic pizzas, will inherit
+      the name of the item they make
+  Fikou:
+  - bugfix: fixes kinesis not actually immobilizing or blocking hands of grabbed mobs
+  - balance: Space Ninja's energy net uses a projectile to catch people now.
+  Ghommie:
+  - bugfix: Fixed fired foam darts, gumballs and (harmless) lollipops being embeddable.
+  - bugfix: Projectiles that should embed while being reusable will now do so correctly,
+      actually embedding the reusable casing instead of a shrapnel.
+  - balance: Arrows are generally more likely to embed now, except for blazing ones,
+      that kind of just blaze.
+  - qol: the quiver storage now uses numerical stacking (like botany and ore bags,
+      or the RPED, for example).
+  - bugfix: Fixed an oddity with morgue corpses being shakeable like they're just
+      unconscious.
+  - bugfix: Mirror reflections no longer display progress bars or runechat.
+  - bugfix: Fixed an oversight with processable items that lead to the same chat message
+      being sent multiple times.
+  LT3:
+  - bugfix: Large airlocks are now a subtype and function on both tiles
+  Melbert:
+  - bugfix: Fix some missing wizard spellbook flavor
+  - bugfix: Fixed latejoiners being affected by certain things twice, such as Summon
+      Guns and Summon Magic
+  Paxilmaniac:
+  - bugfix: The bulbs of lights will now have an emissive glow when on, making it
+      so they appear active no matter how dark the area surrounding them happens to
+      be.
+  Pickle-Coding:
+  - balance: Changeling arm blade has an armour penetration of 35%.
+  - balance: Changeling arm blade has a wound bonus of 10, from -20.
+  - balance: Changeling has a bare wound bonus of 10, from 20.
+  Vekter:
+  - bugfix: FRAG-12 shells no longer require sulfuric acid, instead needing 10 fluorosulfuric
+      acid. This should prevent them from leaving byproducts if crafted in a specific
+      way.
+  Vincent983:
+  - spellcheck: improvised fire extinguishers aren't full of typoes now
+  Watermelon914:
+  - admin: 'Added new lua functions: SS13.is_valid, SS13.stop_tracking, SS13.new_untracked,
+      SS13.type and SS13.qdel'
+  carlarctg:
+  - qol: Drill module automatically disables if it's about to drill into gibtonite
+  iain0:
+  - bugfix: A small clerical error fixed which will cause the Ukrainian station naming
+      prefix to be properly applied to the Independence Day of Ukraine holiday on
+      24th August, rather than overwriting the Indigenous People's Day station prefixes.
+  timothymtorres:
+  - rscadd: Add admin blackhole shuttle event with a normal version and suicidal version.
+  - bugfix: Fix several shuttle event runtimes
+2023-08-12:
+  Cheshify:
+  - qol: North Star's Cytology and Xenobiology are now significantly more usable.
+  - rscadd: North Star's Genetics has been tweaked.
+  - bugfix: The North Star's AI SAT has a working vent and it's service hall has a
+      working lightswitch
+  Derpguy3:
+  - bugfix: The metastation law office's shutters now function again.
+  EuSouAFazer:
+  - qol: The flowers in Meta's chapel are no longer stacked atop eachother
+  Ical92:
+  - bugfix: fixed missing departments and names in request consoles
+  Melbert:
+  - bugfix: Fix antimagic effect not expiring
+  Paxilmaniac:
+  - qol: Gigabeacons no longer need to be constructed like standard machines, instead
+      being printed as items that can be deployed quickly inhand without tools.
+  - qol: Gigabeacons are no longer their own research node, instead being a part of
+      telecomms tech (due to the fact they're RADIO navigation beacons)
+  - image: Navigation gigabeacons now have their own unique sprites, inspired by maritime
+      EPIRB devices. If you find a yellow box with an antenna on it, you probably
+      found a nav beacon!
+  - code_imp: The deployable component now gives you an option to disable the examine
+      blurb it adds to its parent
+  Wallem:
+  - rscadd: T
+  carlarctg:
+  - balance: Lepton Violet (wabbajack) shuttle must be unlocked by having some form
+      of polymorph happen in-game first (Pride Mirror or the cursed springs are the
+      most accessible sources)
+  - balance: Scrapheap shuttle can only be bought if the Cargo budget is below 600
+      credits, and the shuttle has just less than half of its usual refueling time
+      left. However, it gives the cargo budget an influx of 3000 credits!
+  - qol: Uncle Pete's Rollerdome has had its price increased, and the disco machine
+      is no longer unbreakable.
+  timothymtorres:
+  - qol: Emergency shuttle now gracefully display occupancy limits and prerequisites
+      in the communication console.
+  - balance: Change mousetraps to kill mice instead of damaging them (except regal
+      rats)
+2023-08-13:
+  FernandoJ8:
+  - bugfix: Plumbing Constructors can now deconstruct every machine they can make,
+      including the plumbing IV.
+  - bugfix: Plumbing IV drips no longer drop metal when deconstructed
+  - bugfix: rabbits are now small-sized rather than human-sized, as well as capable
+      of being picked up
+  - bugfix: baseballs are now small sized rather than large
+  Ghommie:
+  - bugfix: Fixed wheelchairs being silent.
+  IndieanaJones:
+  - bugfix: After a collective brain fart lasting for 6 months, monkeys and xenomorphs
+      now know how to remove embedded objects from their own bodies.
+  Jacquerel:
+  - bugfix: Giant Spiders only have an antag datum if created by the round event.
+  - balance: Flesh spider eggs hatch into adult spiders instead of baby spiders.
+  - balance: The eggs spawned by the start of the spider infestation event hatch into
+      adult Midwife spiders instead of baby ones.
+  JohnFulpWillard:
+  - qol: The mining order console is now a bit more compact, and the search bar works
+      regardless of which tab you are currently on.
+  - bugfix: X'ing out of the podpeople no soul prompt will no longer harvest the seeds.
+  - bugfix: Mime spell books don't eat itself when used in the dark or cancelled out
+      of.
+  - qol: Gateway access no longer requires a Silver ID.
+  Melbert:
+  - bugfix: Fixes Shadow Walk
+  Sealed101:
+  - bugfix: Labor Camp Sustenance vendor is no longer free; instead, it takes your
+      labor points that you'd otherwise use for paying off your point goal.
+  - rscadd: you can upgrade laser pointers with a bluespace crystal to let them shine
+      through walls at double the power cost, if the laser in the pointer is of tier
+      3 or higher.
+  - qol: laser pointer charge can be seen by examining it
+  - bugfix: fixed laser pointers luring dead cats when shone upon
+  - code_imp: laser pointer code cleaned up a tad
+  TheBoondock:
+  - rscadd: Added Pulse of Entropy, a new ritual for rust heretic unlocked after leeching
+      walk. This ritual can be completed with 20 iron sheets, 2 garbage items to rust
+      in a 4 tiles radius round the rune. Useful for establishing bases and fighting
+      area.
+  - bugfix: fixed detect_room not running correctly when break_if_found is not passed
+  dieamond13:
+  - rscadd: Lets you grind things into a hauntium reagent which works similarly to
+      the solid form but is versatile and has some unique effects.
+  lizardqueenlexi:
+  - bugfix: The Nuke Op/Lone Op sniper briefcase now properly contains a sniper rifle.
+  san7890:
+  - refactor: Morphs are now basic mobs with a nice new ability to help you change
+      forms rather than the old shift-click method, much more intuitive.
+  - admin: With the morph rework comes a new ability you can add to mobs, "Assume
+      Form". Feel free to add that to any simple or basic mob for le funnies as Runtime
+      turns into a pen or something.
+  - bugfix: Growing spiders will now retaliate against you like they were always meant
+      to.
+2023-08-14:
+  CoiledLamb, Jacquerel:
+  - rscadd: Adds mining weather radio
+  EOBGames:
+  - bugfix: a few issues with Martian food
+  EuSouAFazer:
+  - bugfix: The chef can no longer close the shutters in Meta's HoP office.
+  - bugfix: Doctors no longer spawn in the bedroom in the northstar
+  - qol: The icebox bridge had its items moved to better positions. No items were
+      added or removed, and none left their original room (except the captain's electric
+      razor, which went to the bathroom).
+  Hatterhat:
+  - bugfix: Projectile damage multipliers on guns are now reflected in their combat
+      information.
+  - admin: Admins can now make a gun's fired projectiles better or worse at wounding
+      by changing the gun's projectile_wound_bonus. Surely this will not have any
+      repercussions.
+  Helg2:
+  - bugfix: Inquisitor Commander now has just 1 box.
+  Jacquerel:
+  - bugfix: If you shapeshift into a mob which can eat things such as player corpses,
+      those things will fall out when you stop shapeshifting
+  - bugfix: Player-controlled basic mobs with ranged attacks can now only fire about
+      as fast as AI-controlled ones.
+  Shroopy:
+  - bugfix: You can no longer stand up without legs.
+  Vincent983:
+  - qol: xenos rest verb now is a hud button instead
+  lizardqueenlexi:
+  - bugfix: The modular receiver is now only printable from a hacked autolathe.

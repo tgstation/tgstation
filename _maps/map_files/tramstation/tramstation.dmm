@@ -17878,7 +17878,6 @@
 "fnv" = (
 /obj/structure/table/wood,
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /obj/machinery/light_switch/directional/south{
@@ -18965,6 +18964,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"fIV" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/flashlight/lamp,
+/turf/open/floor/iron/dark,
+/area/station/escapepodbay)
 "fJe" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/cable,
@@ -22344,6 +22352,16 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/medical/break_room)
+"gVW" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "gWd" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -23175,6 +23193,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/solars/starboard/fore)
+"hmb" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "hmd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -27062,7 +27087,6 @@
 	pixel_y = -23
 	},
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /turf/open/floor/carpet,
@@ -30807,6 +30831,16 @@
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
+"kbA" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "kbF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -31253,7 +31287,8 @@
 	dir = 5
 	},
 /obj/machinery/requests_console/directional/north{
-	department = "Security"
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
@@ -39409,7 +39444,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/bar{
 	dir = 8
 	},
@@ -43420,6 +43454,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/escapepodbay)
 "oyK" = (
@@ -43935,7 +43970,6 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "oMP" = (
 /obj/machinery/firealarm/directional/south{
-	pixel_y = -26;
 	pixel_x = 3
 	},
 /turf/closed/mineral/random/stationside/asteroid/porus,
@@ -56693,10 +56727,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/bar{
 	dir = 8
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/escapepodbay)
 "tpB" = (
@@ -58356,6 +58390,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/escapepodbay)
 "tSp" = (
@@ -59183,6 +59218,7 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/mining_weather_monitor/directional/north,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "uhw" = (
@@ -62270,8 +62306,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light_switch/directional/south{
-	pixel_x = -8;
-	pixel_y = -26
+	pixel_x = -8
 	},
 /turf/open/floor/iron/dark/corner{
 	dir = 8
@@ -64829,6 +64864,13 @@
 /obj/machinery/computer/records/medical,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
+"waV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "wbb" = (
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -65099,7 +65141,8 @@
 	dir = 1
 	},
 /obj/machinery/requests_console/directional/south{
-	department = "Security"
+	department = "Security";
+	name = "Security Requests Console"
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
@@ -83505,11 +83548,11 @@ dDk
 dDk
 mXt
 abA
-itN
+gVW
 dDk
 dDk
 dDk
-mXt
+kbA
 abA
 itN
 dDk
@@ -83757,7 +83800,7 @@ abF
 abf
 abf
 abF
-abF
+hmb
 lzJ
 abF
 abf
@@ -83769,13 +83812,13 @@ ndN
 abf
 abf
 abF
-abF
+hmb
 lzJ
 abF
 abf
 abf
 abF
-abF
+hmb
 abF
 qPE
 apC
@@ -84266,7 +84309,7 @@ aaa
 aaa
 dDk
 abb
-abg
+waV
 pPA
 abg
 abB
@@ -84798,7 +84841,7 @@ dDk
 adp
 adA
 adB
-adF
+fIV
 lIS
 adF
 adK
@@ -85300,7 +85343,7 @@ abM
 abM
 pZW
 abK
-abg
+waV
 acc
 ack
 acu
