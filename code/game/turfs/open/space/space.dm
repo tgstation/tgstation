@@ -56,7 +56,7 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 			stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
- 	light_color = GLOB.starlight_color
+	light_color = GLOB.starlight_color
 
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
