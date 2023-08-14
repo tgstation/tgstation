@@ -144,8 +144,6 @@
 	playsound(loc, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	qdel(src)
 
-<<<<<<< HEAD
-=======
 /obj/item/food/canned/squid_ink
 	name = "canned squid ink"
 	desc = "An odd ingredient in typical cooking, squid ink lends a taste of the sea to any dish- while also dyeing it jet black in the process."
@@ -194,7 +192,6 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
->>>>>>> b981014c51d (martian hotfix (#77562))
 
 // DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
 /obj/item/food/ready_donk
