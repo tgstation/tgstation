@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(snouts_list_lizard)
 		return ..()
 
 /datum/sprite_accessory/snouts/lizard
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 	hasinner = TRUE
 	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(bodymarks_list_lizard)
 		return ..()
 
 /datum/sprite_accessory/body_markings/lizard
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	color_src = SPRITE_ACC_SCRIPTED_COLOR
 	hasinner = TRUE
 	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(horns_list_lizard)
 		return ..()
 
 /datum/sprite_accessory/horns/lizard
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/horns/lizard/none
@@ -193,7 +193,7 @@ GLOBAL_LIST_EMPTY(frills_list_lizard)
 		return ..()
 
 /datum/sprite_accessory/frills/lizard
-	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 
 /datum/sprite_accessory/frills/lizard/none

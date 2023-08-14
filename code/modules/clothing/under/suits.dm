@@ -88,7 +88,7 @@
 	/// SKYRAPTOR EDIT: switches pun pun's uniform over
 	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_MONKEY)
 	/// i feel absolute despair that these can't use defines
-	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/cargo.dmi', "16" = 'icons/mob/species/monkey/uniform.dmi')
+	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/cargo.dmi', "8" = 'icons/mob/human/species/monkey/uniform.dmi')
 
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"

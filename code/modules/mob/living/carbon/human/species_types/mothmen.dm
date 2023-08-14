@@ -10,6 +10,7 @@
 		USE_TRICOLOR_ALPHA, /// SKYRAPTOR ADDITIONS
 		USE_TRICOLOR_BETA,
 		USE_TRICOLOR_CHARLIE,
+		TRAIT_MUTANT_COLORS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_markings" = "None")

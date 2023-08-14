@@ -843,6 +843,39 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				/// SKYRAPTOR ADDITION END
 
 				standing += inner_accessory_overlay
+			/// SKYRAPTOR ADDITION #2 BEGIN
+			if(accessory.hasinner2)
+				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
+				if(accessory.gender_specific)
+					inner_accessory_overlay.icon_state = "[g]_[bodypart]inner_[accessory.icon_state]_[layertext]"
+				else
+					inner_accessory_overlay.icon_state = "m_[bodypart]inner_[accessory.icon_state]_[layertext]"
+
+				if(accessory.center)
+					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
+
+				switch(accessory.inner2_color_src)
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							inner_accessory_overlay.color = fixed_mut_color
+						else
+							inner_accessory_overlay.color = source.dna.features["mcolor"]
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							inner_accessory_overlay.color = source.dna.features["mcolor"]
+						else if(hair_color == "fixedmutcolor")
+							inner_accessory_overlay.color = fixed_mut_color
+						else
+							inner_accessory_overlay.color = source.hair_color
+					if(FACEHAIR)
+						inner_accessory_overlay.color = source.facial_hair_color
+					if(EYECOLOR)
+						inner_accessory_overlay.color = source.eye_color_left
+					if(SPRITE_ACC_SCRIPTED_COLOR)
+						inner_accessory_overlay.color = accessory.innercolor2_override(source)
+
+				standing += inner_accessory_overlay
+			/// SKYRAPTOR ADDITION END
 
 		source.overlays_standing[layer] = standing.Copy()
 		standing = list()

@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(tails_list_monkey)
 
 /datum/sprite_accessory/tails/monkey
 	name = "Debug"
-	icon = 'icons/mob/species/monkey/monkey_tail.dmi'
+	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
 	icon_state = "monkey"
 	color_src = FALSE
 

@@ -1,27 +1,19 @@
-/datum/species/talonmoth
+/datum/species/moth/talonmoth
 	// Slugcats from Rain World, revamped to fit into
 	name = "\improper Talon IV Moth"
 	plural_form = "\improper Tal4 Moths"
 	id = SPECIES_TALONMOTH
-	//old stuff
-	/*species_traits = list(
-		MUTCOLORS,
-		EYECOLOR,
-		HAIR,
-		LIPS,
-		USE_TRICOLOR_ALPHA,
-		USE_TRICOLOR_BETA,
-	)*/
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_WINGED_ATTACKER,
 		TRAIT_TACKLING_TAILED_DEFENDER,
+		TRAIT_ANTENNAE,
 		USE_TRICOLOR_ALPHA,
 		USE_TRICOLOR_BETA,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	species_language_holder = /datum/language_holder/synthetic
+	species_language_holder = /datum/language_holder/moth
 
 	mutant_bodyparts = list("bodymarks_talonmoth" = "None")
 	external_organs = list(

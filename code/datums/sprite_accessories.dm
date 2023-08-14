@@ -65,9 +65,13 @@
 	var/color_src = MUTANT_COLOR
 	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 	var/hasinner = FALSE
+	/// SKYRAPTOR ADDITION: Used for those rare few cases where you need three layers.
+	var/hasinner2 = FALSE
 
 	/// SKYRAPTOR ADDITION - this is used with hasinner and works the same way as normal color_src.
 	var/inner_color_src = 0
+	/// SKYRAPTOR ADDITION - secondary innercolor hngh
+	var/inner2_color_src = 0
 
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
 	var/locked = FALSE
@@ -85,13 +89,17 @@
 	return COLOR_WHITE
 
 /datum/sprite_accessory/proc/innercolor_override(mob/living/carbon/human/target) /// SKYRAPTOR ADDITION: meant to be used with SPRITE_ACC_SCRIPTED_COLOR
-	world.log << "Sprite accessory had color_override called without an implementation!"
+	world.log << "Sprite accessory had innercolor_override called without an implementation!"
+	return COLOR_WHITE
+
+/datum/sprite_accessory/proc/innercolor2_override(mob/living/carbon/human/target) /// SKYRAPTOR ADDITION: meant to be used with SPRITE_ACC_SCRIPTED_COLOR
+	world.log << "Sprite accessory had innercolor2_override called without an implementation!"
 	return COLOR_WHITE
 
 /datum/sprite_accessory/blank
 	name = "None"
 	icon_state = "None"
-	icon = 'icons/mob/species/human/human_face.dmi' //forcing this as a fallback
+	icon = 'icons/mob/human/human_face.dmi' //forcing this as a fallback
 
 //////////////////////
 // Hair Definitions //
@@ -2315,7 +2323,7 @@
 	icon_state = "moffra"
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
-	icon = 'icons/mob/species/moth/moth_markings.dmi'
+	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = SPRITE_ACC_SCRIPTED_COLOR /// SKYRAPTOR EDIT
 
 /// SKYRAPTOR ADDITION

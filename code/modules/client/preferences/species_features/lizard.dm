@@ -46,7 +46,7 @@
 
 		if (sprite_accessory.icon_state != "none")
 			var/icon/body_markings_icon = icon(
-				'icons/mob/species/lizard/lizard_misc.dmi',
+				'icons/mob/human/species/lizard/lizard_misc.dmi',
 				"m_bodymarks_lizard_[sprite_accessory.icon_state]_ADJ",
 			)
 
