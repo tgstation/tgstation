@@ -947,7 +947,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
 	light_outer_range = 0
 	light_power = 0
-	fancy = FALSE
 
 /obj/item/lighter/mime/ignition_effect(atom/A, mob/user)
 	. = span_infoplain("[user] lifts the [name] to the [A], which miraculously lights!")
@@ -961,7 +960,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
 	light_outer_range = 8
 	light_power = 3 //Irritatingly bright and large enough to cover a small room.
-	fancy = FALSE
 
 /obj/item/lighter/bright/examine(mob/user)
 	. = ..()
