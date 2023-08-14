@@ -601,6 +601,7 @@
 	SIGNAL_HANDLER
 
 	exiter.remove_filter(GLOW_NEBULA)
+	REMOVE_TRAIT(exiter, TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED)
 	// The component handles its own removal
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)

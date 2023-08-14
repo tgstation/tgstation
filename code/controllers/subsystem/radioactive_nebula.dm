@@ -13,13 +13,14 @@ SUBSYSTEM_DEF(radioactive_nebula)
 	radioactive_nebula = locate() in SSstation.station_traits
 	if (!radioactive_nebula)
 		can_fire = FALSE
-		return SS_INIT_NO_NEED
+		return SS_INIT_NO_MESSAGE
 
 	// We don't *really* care that this happens by the time the server is ready to play.
 	ASYNC
 		irradiate_everything()
 
-	return SS_INIT_SUCCESS
+	// Don't leak that the station trait has been picked
+	return SS_INIT_NO_MESSAGE
 
 /// Makes something appear irradiated for the purposes of the Radioactive Nebula
 /datum/controller/subsystem/radioactive_nebula/proc/fake_irradiate(atom/movable/target)
