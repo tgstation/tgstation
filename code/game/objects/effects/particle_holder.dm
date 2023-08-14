@@ -34,7 +34,7 @@
 		stack_trace("particle holder was created without a valid parent!")
 		return INITIALIZE_HINT_QDEL
 
-	lie_about_areas.vis_contents += src
+	parent.vis_contents += src
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_deleted))
 
 	if(particle_flags & PARTICLE_ATTACH_MOB)
