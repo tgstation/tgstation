@@ -59,7 +59,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	if(path)
 		rustg_file_write(json_encode(tree), path)
 
-/datum/json_savefile/serialize_list(list/options, list/semvers)
+/datum/json_savefile/serialize_list(list/options = list(), list/semvers = list())
 	SHOULD_CALL_PARENT(FALSE)
 	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return tree.Copy()

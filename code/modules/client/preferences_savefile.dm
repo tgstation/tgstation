@@ -1,11 +1,3 @@
-//This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN 32
-
-//This is the current version, anything below this will attempt to update (if it's not obsolete)
-// You do not need to raise this if you are adding new values that have sane defaults.
-// Only raise this value when changing the meaning/format/name/layout of an existing value
-// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 44
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -13,10 +5,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	It is to be used by the load_character and load_preferences procs.
 	(S.cd == "/" is preferences, S.cd == "/character[integer]" is a character slot, etc)
 
-	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
+	if the current directory's version is below PREFERENCES_VERSION_MINIMUM it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
 
-	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
+	if its version is below PREFERENCES_VERSION_CURRENT but above the minimum, it will load data but later call the
 	respective update_preferences() or update_character() proc.
 	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
 
@@ -26,15 +18,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_data_needs_update(list/save_data)
 	if(!save_data) // empty list, either savefile isnt loaded or its a new char
 		return -1
-	if(save_data["version"] < SAVEFILE_VERSION_MIN)
+	if(save_data["version"] < PREFERENCES_VERSION_MINIMUM)
 		return -2
-	if(save_data["version"] < SAVEFILE_VERSION_MAX)
+	if(save_data["version"] < PREFERENCES_VERSION_CURRENT)
 		return save_data["version"]
 	return -1
 
 //should these procs get fairly long
-//just increase SAVEFILE_VERSION_MIN so it's not as far behind
-//SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
+//just increase PREFERENCES_VERSION_MINIMUM so it's not as far behind
+//PREFERENCES_VERSION_CURRENT and then delete any obsolete if clauses
 //from these procs.
 //This only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
@@ -241,7 +233,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_preferences()
 	if(!savefile)
 		CRASH("Attempted to save the preferences of [parent] without a savefile. This should have been handled by load_preferences()")
-	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
+	savefile.set_entry("version", PREFERENCES_VERSION_CURRENT) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
@@ -342,11 +334,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (preference.type in value_cache)
 			write_preference(preference, preference.serialize(value_cache[preference.type]))
 
-	save_data["version"] = SAVEFILE_VERSION_MAX //load_character will sanitize any bad data, so assume up-to-date.
+	save_data["version"] = PREFERENCES_VERSION_CURRENT //load_character will sanitize any bad data, so assume up-to-date.
 
 	// This is the version when the random security department was removed.
 	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
-	#if SAVEFILE_VERSION_MIN > 40
+	#if PREFERENCES_VERSION_MINIMUM > 40
 	#warn The prefered_security_department check in code/modules/client/preferences/security_department.dm is no longer necessary.
 	#endif
 
@@ -376,6 +368,3 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (!(keybind_name in GLOB.keybindings_by_name))
 			base_bindings -= keybind_name
 	return base_bindings
-
-#undef SAVEFILE_VERSION_MAX
-#undef SAVEFILE_VERSION_MIN

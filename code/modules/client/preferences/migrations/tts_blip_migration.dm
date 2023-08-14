@@ -6,7 +6,10 @@
 	var/sound_blips_enabled = savefile.get_entry("sound_tts_blips")
 	if(sound_blips_enabled)
 		write_preference(GLOB.preference_entries[/datum/preference/choiced/sound_tts], TTS_SOUND_BLIPS)
+		savefile.remove_entry("sound_tts_blips")
+		savefile.save()
 		return
+
 	var/tts_enabled = savefile.get_entry("sound_tts")
 	if(!tts_enabled)
 		write_preference(GLOB.preference_entries[/datum/preference/choiced/sound_tts], TTS_SOUND_OFF)

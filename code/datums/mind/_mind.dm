@@ -120,7 +120,7 @@
 	set_current(null)
 	return ..()
 
-/datum/mind/serialize_list(list/options, list/semvers)
+/datum/mind/serialize_list(list/options = list(), list/semvers = list())
 	. = ..()
 
 	.["key"] = key

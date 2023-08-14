@@ -188,7 +188,7 @@
 #endif
 
 /// Return a list of data which can be used to investigate the datum, also ensure that you set the semver in the options list
-/datum/proc/serialize_list(list/options, list/semvers)
+/datum/proc/serialize_list(list/options = list(), list/semvers = list())
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = list()

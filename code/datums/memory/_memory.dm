@@ -75,7 +75,7 @@
 	memorizer_mind = null
 	return ..()
 
-/datum/memory/serialize_list(list/options, list/semvers)
+/datum/memory/serialize_list(list/options = list(), list/semvers = list())
 	. = ..()
 
 	.["name"] = name

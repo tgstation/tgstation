@@ -16,7 +16,7 @@
 	/// If set to true this style allows you to punch people despite being a pacifist (for instance Boxing, which does no damage)
 	var/pacifist_style = FALSE
 
-/datum/martial_art/serialize_list(list/options, list/semvers)
+/datum/martial_art/serialize_list(list/options = list(), list/semvers = list())
 	. = ..()
 
 	.["name"] = name

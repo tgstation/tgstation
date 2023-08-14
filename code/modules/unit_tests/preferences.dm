@@ -49,3 +49,46 @@
 			continue
 
 		TEST_ASSERT(!isnull(preference.main_feature_name), "Preference [preference_type] does not have a main_feature_name set!")
+
+/// Ensures that exporting and importing preferences functions
+/datum/unit_test/preferences_export_import
+
+/datum/unit_test/preferences_export_import/Run()
+	// make default client
+	var/datum/client_interface/mock_client = new
+	mock_client.prefs = new(mock_client)
+
+	// iterate over all default possible character slots to populate them with defaults
+	for(var/slot_id in 1 to mock_client.prefs.max_save_slots)
+		mock_client.prefs.load_character(slot_id)
+		mock_client.prefs.save_character()
+
+	// save them to populate the json tree
+	mock_client.prefs.save_preferences()
+
+	// now we export it and instantly reimport it
+	var/json_export = mock_client.prefs.savefile.serialize_json()
+	mock_client.prefs.handle_client_importing(json_export)
+	TEST_ASSERT(!length(mock_client.prefs.last_import_error_map), "errors occured while importing valid preferences!")
+
+	// now we fuck up the json format
+	var/messed_json_export = "{{[json_export]"
+	mock_client.prefs.handle_client_importing(messed_json_export)
+	TEST_ASSERT(PREFERENCE_IMPORT_ERROR_INVALID_JSON in mock_client.prefs.last_import_error_map, "failed to identify malformed json")
+
+	// now we test just not even passing in text
+	mock_client.prefs.handle_client_importing(null)
+	TEST_ASSERT(PREFERENCE_IMPORT_ERROR_INVALID_JSON in mock_client.prefs.last_import_error_map, "failed to identify invalid json")
+
+	// check an empty string
+	mock_client.prefs.handle_client_importing("")
+	TEST_ASSERT(PREFERENCE_IMPORT_ERROR_INVALID_JSON in mock_client.prefs.last_import_error_map, "failed to identify empty json")
+
+	// change a string peference to a number
+	var/datum/preference/name/real_name = /datum/preference/name/real_name
+	var/savefile_ident = initial(real_name.savefile_key)
+	var/list/character_data = mock_client.prefs.savefile.get_entry("character1")
+	character_data[savefile_ident] = 2
+	var/wrong_json = mock_client.prefs.savefile.serialize_json()
+	mock_client.prefs.handle_client_importing(wrong_json)
+	TEST_ASSERT(PREFERENCE_IMPORT_ERROR_INVALID_VALUE in mock_client.prefs.last_import_error_map, "failed to identify invalid value")

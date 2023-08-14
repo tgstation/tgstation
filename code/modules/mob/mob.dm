@@ -109,7 +109,7 @@
 	. = ..()
 	tag = "mob_[next_mob_id++]"
 
-/mob/serialize_list(list/options, list/semvers)
+/mob/serialize_list(list/options = list(), list/semvers = list())
 	. = ..()
 
 	.["tag"] = tag

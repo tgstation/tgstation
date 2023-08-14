@@ -58,7 +58,7 @@
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	picture_icon = ic
 
-/datum/picture/serialize_list(list/options, list/semvers)
+/datum/picture/serialize_list(list/options = list(), list/semvers = list())
 	. = ..()
 
 	.["id"] = id

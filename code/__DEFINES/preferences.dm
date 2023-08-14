@@ -1,4 +1,26 @@
 
+/// The minimum possible version for a savefile to be migrated, if it's below this we need to wipe everything.
+#define PREFERENCES_VERSION_MINIMUM 32
+
+/**
+ * This is the current version, anything below this will attempt to update (if it's not obsolete)
+ * You do not need to raise this if you are adding new values that have sane defaults.
+ * Only raise this value when changing the meaning/format/name/layout of an existing value
+ * where you would want the updater procs below to run
+ */
+#define PREFERENCES_VERSION_CURRENT 44
+
+#define PREFERENCE_IMPORT_ERROR_VERSION "version"
+#define PREFERENCE_IMPORT_ERROR_INVALID_JSON "invalid-json"
+#define PREFERENCE_IMPORT_ERROR_NOT_ENOUGH_CHARACTER_SLOTS "not-enough-character-slots"
+#define PREFERENCE_IMPORT_ERROR_UNKNOWN_PLAYER_DATA_KEY "unknown-player-data-key"
+#define PREFERENCE_IMPORT_ERROR_UNKNOWN_CHARACTER_DATA_KEY "unknown-character-data-key"
+#define PREFERENCE_IMPORT_ERROR_INVALID_SAVEFILE_IDENTIFIER "invalid-savefile-identifier"
+#define PREFERENCE_IMPORT_ERROR_INVALID_VALUE "invalid-value"
+#define PREFERENCE_IMPORT_ERROR_INVALID_VALUE_QUIRK_TYPE "invalid-value-quirk-type"
+#define PREFERENCE_IMPORT_ERROR_INVALID_VALUE_RANDOMIZATION_KEY "invalid-value-randomization-key"
+#define PREFERENCE_IMPORT_ERROR_INVALID_VALUE_JOB_TITLE "invalid-value-job-title"
+
 // Legacy preference toggles.
 // !!! DO NOT ADD ANY NEW ONES HERE !!!
 // Use `/datum/preference/toggle` instead.
