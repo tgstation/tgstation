@@ -37,6 +37,10 @@
 	AddComponent(/datum/component/ranged_attacks, cooldown_time = ranged_cooldown, projectile_type = projectile_type, projectile_sound = 'sound/weapons/pierce.ogg')
 	update_appearance(UPDATE_OVERLAYS)
 
+	var/datum/action/cooldown/watcher_overwatch/overwatch = new(src)
+	overwatch.Grant(src)
+	overwatch.projectile_type = projectile_type
+
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "watcher_emissive", src)

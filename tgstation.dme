@@ -4153,6 +4153,7 @@
 #include "code\modules\mob\living\basic\lavaland\lobstrosity\lobstrosity_ai.dm"
 #include "code\modules\mob\living\basic\lavaland\lobstrosity\lobstrosity_trophy.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher.dm"
+#include "code\modules\mob\living\basic\lavaland\watcher\watcher_overwatch.dm"
 #include "code\modules\mob\living\basic\lavaland\watcher\watcher_projectiles.dm"
 #include "code\modules\mob\living\basic\pets\fox.dm"
 #include "code\modules\mob\living\basic\pets\penguin.dm"
