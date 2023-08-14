@@ -46,7 +46,7 @@
 	action.Grant(parent)
 
 /datum/component/seethrough_mob/Destroy(force, silent)
-	qdel(render_source_atom)
+	QDEL_NULL(render_source_atom)
 	return ..()
 
 ///Set up everything we need to trick the client and keep it looking normal for everyone else
