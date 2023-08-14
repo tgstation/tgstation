@@ -1,4 +1,15 @@
 
+/// The minimum possible version for a savefile to be migrated, if it's below this we need to wipe everything.
+#define PREFERENCES_VERSION_MINIMUM 32
+
+/**
+ * This is the current version, anything below this will attempt to update (if it's not obsolete)
+ * You do not need to raise this if you are adding new values that have sane defaults.
+ * Only raise this value when changing the meaning/format/name/layout of an existing value
+ * where you would want the updater procs below to run
+ */
+#define PREFERENCES_VERSION_CURRENT 44
+
 // Legacy preference toggles.
 // !!! DO NOT ADD ANY NEW ONES HERE !!!
 // Use `/datum/preference/toggle` instead.

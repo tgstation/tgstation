@@ -49,3 +49,12 @@
 			continue
 
 		TEST_ASSERT(!isnull(preference.main_feature_name), "Preference [preference_type] does not have a main_feature_name set!")
+
+/// Ensures that exporting and importing preferences functions
+/datum/unit_test/preferences_export_import
+
+/datum/unit_test/preferences_export_import/Run()
+	var/datum/client_interface/mock_client = new
+	mock_client.prefs = new(mock_client)
+	var/json_export = mock_client.prefs.savefile.serialize_json()
+	mock_client.prefs.handle_client_importing(json_decode(json_export))
