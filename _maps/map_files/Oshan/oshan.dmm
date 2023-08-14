@@ -4969,6 +4969,15 @@
 /obj/effect/turf_decal/trimline/yellow/line,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
+"dcW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central/fore)
 "dda" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -8911,6 +8920,14 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/theatre)
+"fAr" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central/fore)
 "fAx" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
@@ -24965,6 +24982,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"pYz" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central/fore)
 "pYG" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/structure/disposalpipe/segment{
@@ -28015,14 +28040,6 @@
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"rTX" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron/dark/textured,
-/area/station/hallway/primary/central/fore)
 "rUb" = (
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -63000,8 +63017,8 @@ oHX
 luQ
 luQ
 cqL
-hxk
-scQ
+sIy
+fAr
 jTM
 sZu
 tam
@@ -63771,8 +63788,8 @@ jRy
 xpi
 xpi
 kht
-hxk
-enh
+bjW
+dcW
 jTM
 sZu
 eDf
@@ -69426,7 +69443,7 @@ mgH
 wzZ
 sfm
 rpA
-rTX
+gZm
 nrk
 fjV
 ymc
@@ -69683,7 +69700,7 @@ mgH
 plv
 iFB
 ayU
-scQ
+pYz
 hgO
 ucj
 sgy
