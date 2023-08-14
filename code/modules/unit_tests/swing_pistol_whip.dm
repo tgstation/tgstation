@@ -6,6 +6,7 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/gun/ballistic/automatic/pistol/gun = allocate(/obj/item/gun/ballistic/automatic/pistol)
 
+	attacker.put_in_active_hand(gun, forced = TRUE)
 	victim.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
 
 	var/expected_ammo = gun.magazine.max_ammo + 1

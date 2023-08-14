@@ -23,10 +23,10 @@
  *
  * The setup:
  *
- * . V1 .
- * A V2 .
- * . V3 .
- *
+ * [] .  .  VA
+ * [] .  A  VB
+ * [] .  VD VC
+ * [] [] [] []
  */
 /datum/unit_test/check_swings/Run()
 	attacker = allocate(/mob/living/carbon/human/consistent)
@@ -35,7 +35,7 @@
 	victim_C = allocate(/mob/living/carbon/human/consistent)
 	victim_D = allocate(/mob/living/carbon/human/consistent)
 
-	attacker.forceMove(locate(attacker.x, attacker.y + 1, attacker.z))
+	attacker.forceMove(locate(attacker.x + 1, attacker.y + 1, attacker.z))
 	victim_A.forceMove(locate(attacker.x + 1, attacker.y + 1, attacker.z))
 	victim_B.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
 	victim_C.forceMove(locate(attacker.x + 1, attacker.y - 1, attacker.z))
@@ -106,6 +106,7 @@
 	. = ..()
 
 	var/obj/item/dualsaber/desword = allocate(/obj/item/dualsaber)
+	desword.attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing/desword]
 	attacker.put_in_active_hand(desword, forced = TRUE)
 	desword.attack_self(attacker)
 	attacker.set_combat_mode(TRUE)
