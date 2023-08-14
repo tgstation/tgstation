@@ -42,6 +42,7 @@
 
 /mob/living/basic/mining/watcher/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
 	AddComponent(/datum/component/basic_ranged_ready_overlay, overlay_state = eye_glow)

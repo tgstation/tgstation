@@ -1,5 +1,6 @@
 /// Fire a ranged attack without interrupting movement.
 /datum/ai_planning_subtree/ranged_skirmish
+	operational_datums = list(/datum/component/ranged_attacks)
 	/// Blackboard key holding target atom
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// What AI behaviour do we actually run?
