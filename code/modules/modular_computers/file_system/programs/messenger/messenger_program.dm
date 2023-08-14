@@ -607,8 +607,9 @@
 	message = emoji_parse(message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
 
 	// Show it to ghosts
-	var/ghost_message = span_name("[sender] [rigged ? "(as [fake_name]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
-	for(var/mob/player_mob as anything in GLOB.current_observers_list)
+	var/ghost_message = span_game_say("[span_name("[sender]")] [rigged ? "(as [span_name(fake_name)]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
+	var/list/ghosts = GLOB.dead_player_list + GLOB.current_observers_list
+	for(var/mob/player_mob as anything in ghosts)
 		if(player_mob.client && !player_mob.client?.prefs)
 			stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
 			continue
