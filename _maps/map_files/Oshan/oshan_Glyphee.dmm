@@ -10651,7 +10651,6 @@
 /area/station/maintenance/starboard/upper)
 "hDU" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "hDV" = (
@@ -11677,7 +11676,6 @@
 /obj/machinery/power/emitter/welded{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "iqc" = (
@@ -15391,7 +15389,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "kXY" = (
-/obj/structure/cable,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "kYh" = (
@@ -65251,7 +65249,7 @@ mSq
 jOH
 jHg
 ipO
-kXY
+csW
 kND
 kND
 meJ
@@ -65765,7 +65763,7 @@ xLI
 jOH
 mSq
 csW
-kXY
+csW
 csW
 kND
 meJ
