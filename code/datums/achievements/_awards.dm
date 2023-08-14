@@ -87,7 +87,6 @@
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
-	user.client.give_award(/datum/award/score/achievements_score, user, 1)
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
@@ -142,7 +141,7 @@
 	if(isnum(database_value))
 		return ..()
 	//We need to keep the value differents so that it's properly saved at the end of the round.
-	holder.original_cached_data[type] = null
+	holder.original_cached_data[type] = 0
 	var/value = 0
 	for(var/award_type in holder.data)
 		if(ispath(award_type, /datum/award/achievement) && holder.data[award_type])
