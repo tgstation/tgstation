@@ -7,15 +7,15 @@
 		// Try positive
 		object.apply_fantasy_bonuses(bonus = 5)
 		object.remove_fantasy_bonuses(bonus = 5)
-		TEST_ASSERT_NULL(object.fantasy_modifications)
+		TEST_ASSERT_NULL(object.fantasy_modifications, "Fantasy modifications list is not null when fantasy bonuses are removed (with positive values).")
 		// Then negative
 		object.apply_fantasy_bonuses(bonus = -5)
 		object.remove_fantasy_bonuses(bonus = -5)
-		TEST_ASSERT_NULL(object.fantasy_modifications)
+		TEST_ASSERT_NULL(object.fantasy_modifications, "Fantasy modifications list is not null when fantasy bonuses are removed (with negative values).")
 		// Now try the extremes of each
 		object.apply_fantasy_bonuses(bonus = 500)
 		object.remove_fantasy_bonuses(bonus = 500)
-		TEST_ASSERT_NULL(object.fantasy_modifications)
+		TEST_ASSERT_NULL(object.fantasy_modifications, "Fantasy modifications list is not null when fantasy bonuses are removed (with positive extreme values).")
 		object.apply_fantasy_bonuses(bonus = -500)
 		object.remove_fantasy_bonuses(bonus = -500)
-		TEST_ASSERT_NULL(object.fantasy_modifications)
+		TEST_ASSERT_NULL(object.fantasy_modifications, "Fantasy modifications list is not null when fantasy bonuses are removed (with negative extreme values).")
