@@ -1161,7 +1161,6 @@
 
 	return ..()
 
-<<<<<<< HEAD
 /datum/reagent/consumable/t_letter
 	name = "T"
 	description = "You expected to find this in a soup, but this is fine too."
@@ -1179,8 +1178,6 @@
 		affected_mob.adjustToxLoss(-2, FALSE, required_biotype = affected_biotype)
 	return ..()
 
-=======
->>>>>>> 1c852d28636 (Martian Food: A Taste of the Red Planet (#75988))
 /datum/reagent/consumable/hakka_mate
 	name = "Hakka-Mate"
 	description = "A Martian-made yerba mate soda, dragged straight out of the pits of a hacking convention."

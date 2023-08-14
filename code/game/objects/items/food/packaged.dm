@@ -188,10 +188,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3
 	)
-<<<<<<< HEAD
 	burns_on_grill = TRUE
-=======
->>>>>>> 1c852d28636 (Martian Food: A Taste of the Red Planet (#75988))
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
