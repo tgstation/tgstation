@@ -29,7 +29,7 @@
 	particles = new particle_path()
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
 	var/atom/movable/parent = parent_ref.resolve()
-	if(!parent)
+	if(isnull(parent))
 		parent_ref = null
 		stack_trace("particle holder was created without a valid parent!")
 		return INITIALIZE_HINT_QDEL
