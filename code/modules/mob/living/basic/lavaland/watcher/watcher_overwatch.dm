@@ -44,6 +44,8 @@
 	duration = 5 SECONDS
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/overwatch
+	/// Distance at which we break off the ability
+	var/watch_range = 9
 	/// Visual effect to make the status obvious
 	var/datum/beam/link
 	/// Which watcher is watching?
@@ -97,7 +99,7 @@
 /// Uh oh, you did something within my threat radius, now we're going to shoot you
 /datum/status_effect/overwatch/proc/opportunity_attack()
 	SIGNAL_HANDLER
-	if (!can_see(watcher, owner))
+	if (!can_see(watcher, owner, length = watch_range))
 		qdel(src)
 		return
 	overwatch_triggered = TRUE
