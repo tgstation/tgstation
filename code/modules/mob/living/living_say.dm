@@ -354,14 +354,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
 			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing
-				if(player_mob.client && !player_mob.client?.prefs)
-					stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
-					continue
-
 				if(is_speaker_whispering)
-					if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+					if(!(get_chat_toggles(player_mob.client) & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 						continue
-				else if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				else if(!(get_chat_toggles(player_mob.client) & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
 			listening |= player_mob
 
