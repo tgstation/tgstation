@@ -14799,7 +14799,6 @@
 /area/station/maintenance/starboard/aft)
 "jlS" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
@@ -28016,6 +28015,14 @@
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
+"rTX" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/central/fore)
 "rUb" = (
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -69419,7 +69426,7 @@ mgH
 wzZ
 sfm
 rpA
-gZm
+rTX
 nrk
 fjV
 ymc
