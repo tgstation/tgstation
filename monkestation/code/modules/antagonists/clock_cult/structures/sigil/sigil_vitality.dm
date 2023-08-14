@@ -15,7 +15,7 @@
 	if(affected_mob.stat == DEAD)
 		return FALSE
 
-	if(HAS_TRAIT(affected_mob, TRAIT_NODEATH))
+	if(HAS_TRAIT(affected_mob, TRAIT_NODEATH) || HAS_TRAIT(affected_mob, TRAIT_NO_SOUL))
 		return FALSE
 
 	if(!ishuman(affected_mob))
@@ -79,6 +79,7 @@
 		to_chat(affected_mob, span_clockred("The last of your life is drained away..."))
 		check_special_role(affected_mob)
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 40, GLOB.max_clock_vitality) // 100 (for clients) total in the ideal situation, since it'll take 6 pulses to go from full to crit
+		ADD_TRAIT(affected_mob, TRAIT_NO_SOUL, CULT_TRAIT)
 		if(affected_mob.client)
 			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))

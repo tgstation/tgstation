@@ -255,6 +255,9 @@
 
 	return ..()
 
+/obj/item/gun/ballistic/bow/clockwork/can_trigger_gun(mob/living/user, akimbo_usage)
+	return IS_CLOCK(user) //clock cultists should always be able to use their weapons
+
 /obj/item/gun/ballistic/bow/clockwork/shoot_live_shot(mob/living/user, pointblank, atom/pbtarget, message)
 	. = ..()
 	var/turf/user_turf = get_turf(user)

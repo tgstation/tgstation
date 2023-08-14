@@ -169,8 +169,8 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 		creation_scripture.update_info()
 
 	switch(get_charged_anchor_crystals())
-		if(1) //add 2 more max servants
-			GLOB.main_clock_cult.max_human_servants += 2
+		if(1) //add 4 more max servants
+			GLOB.main_clock_cult.max_human_servants += 4
 		if(2) //create a steam helios on reebe
 			if(GLOB.abscond_markers.len)
 				var/turf/created_at = get_turf(pick(GLOB.abscond_markers))
@@ -208,7 +208,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	var/message
 	switch(get_charged_anchor_crystals())
 		if(1)
-			message = "[completed ? "We can now" : "We will be able to"] support 2 more servants and the ark can be opened."
+			message = "[completed ? "We can now" : "We will be able to"] support 4 more servants and the ark can be opened."
 		if(2)
 			message = "The Steam Helios, a strong 2 pilot mech, [completed ? "has been" : "will be"] summoned to reebe."
 		if(3)
