@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+import { formatPower } from '../format';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NumberInput, ProgressBar, Chart, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
@@ -80,13 +81,10 @@ export const SolarControl = (props, context) => {
                       bad: [-Infinity, 0.33],
                     }}>
                     {capacity > 0
-                      ? Math.round(supply).toLocaleString() +
-                      ' of ' +
-                      Math.round(capacity).toLocaleString() +
-                      ' W (' +
-                      Math.round((100 * supply) / capacity) +
-                      '%)'
-                      : 0 + ' W'}
+                      ? `${formatPower(supply)} of ${formatPower(
+                        capacity
+                      )} (${Math.round((100 * supply) / capacity)}%)`
+                      : formatPower(0)}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item

@@ -287,16 +287,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
-"aY" = (
-/obj/structure/bed/dogbed{
-	name = "kitty bed"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/corpse/human/damaged{
-	outfit_override = list("head" = /obj/item/clothing/head/costume/kitty)
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/cat_man)
 "aZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -304,12 +294,6 @@
 "ba" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/turf/open/floor/carpet,
-/area/ruin/space/has_grav/powered/cat_man)
-"bb" = (
-/obj/machinery/light/directional/east,
-/obj/structure/closet/cabinet,
-/obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bc" = (
@@ -409,12 +393,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
-"bs" = (
-/mob/living/basic/cat_butcherer,
-/turf/open/floor/iron/white/side{
-	dir = 4
-	},
-/area/ruin/space/has_grav/powered/cat_man)
 "bt" = (
 /obj/structure/table/optable,
 /obj/effect/mob_spawn/corpse/human/damaged,
@@ -429,17 +407,6 @@
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
-/area/ruin/space/has_grav/powered/cat_man)
-"bv" = (
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("catstation1" = "Chamber 1", "catstation2" = "Chamber 2", "catstation3" = "Chamber 3", "catstation4" = "Chamber 4", "catstation5" = "Chamber 5", "catstation6" = "Chamber 6", "catstationsupply" = "Supply");
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bw" = (
 /obj/structure/table/wood,
@@ -611,17 +578,6 @@
 "bV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/cat_man)
-"bW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/dogbed{
-	name = "kitty bed"
-	},
-/obj/effect/mob_spawn/corpse/human/damaged{
-	outfit_override = list("head" = /obj/item/clothing/head/costume/kitty)
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bX" = (
@@ -850,12 +806,59 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
+"lQ" = (
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head"=/obj/item/clothing/head/costume/kitty)
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"mm" = (
+/obj/structure/closet/cabinet,
+/obj/item/gps/spaceruin,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"nv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head"=/obj/item/clothing/head/costume/kitty)
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"uy" = (
+/mob/living/basic/cat_butcherer,
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"yx" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
 "Bl" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"BX" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("catstation1"="Chamber 1","catstation2"="Chamber 2","catstation3"="Chamber 3","catstation4"="Chamber 4","catstation5"="Chamber 5","catstation6"="Chamber 6","catstationsupply"="Supply");
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "RT" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -1203,8 +1206,8 @@ ax
 aH
 ad
 aT
-bb
-aS
+mm
+yx
 by
 ad
 bM
@@ -1332,7 +1335,7 @@ ay
 aP
 aw
 be
-bs
+uy
 bA
 aG
 aP
@@ -1401,7 +1404,7 @@ bC
 aG
 bO
 aK
-bW
+nv
 ad
 an
 ad
@@ -1460,7 +1463,7 @@ ay
 aQ
 aW
 bh
-bv
+BX
 bh
 bG
 bO
@@ -1586,7 +1589,7 @@ at
 cb
 aM
 ad
-aY
+lQ
 bl
 ad
 bD

@@ -44,7 +44,7 @@
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
 					target = A
-			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 				if(apc.malfhack && apc.occupier)
 					target = apc
 		if(TRACK_INFILTRATOR)

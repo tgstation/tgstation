@@ -128,6 +128,10 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
+/datum/mood_event/photophobia
+	description = "The lights are too bright..."
+	mood_change = -3
+
 /datum/mood_event/nyctophobia
 	description = "It sure is dark around here..."
 	mood_change = -3

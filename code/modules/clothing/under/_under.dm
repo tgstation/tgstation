@@ -181,11 +181,6 @@
 /obj/item/clothing/under/proc/attach_accessory(obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
 	if(!istype(accessory))
 		return
-	if(length(attached_accessories) >= max_number_of_accessories)
-		if(user)
-			balloon_alert(user, "too many accessories!")
-		return
-
 	if(!accessory.can_attach_accessory(src, user))
 		return
 	if(user && !user.temporarilyRemoveItemFromInventory(accessory))

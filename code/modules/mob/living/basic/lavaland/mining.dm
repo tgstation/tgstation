@@ -17,11 +17,14 @@
 	. = ..()
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	var/static/list/vulnerable_projectiles
+	if(!vulnerable_projectiles)
+		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)
 	AddElement(\
 		/datum/element/ranged_armour,\
 		minimum_projectile_force = 30,\
 		below_projectile_multiplier = 0.3,\
-		vulnerable_projectile_types = MINING_MOB_PROJECTILE_VULNERABILITY,\
+		vulnerable_projectile_types = vulnerable_projectiles,\
 		minimum_thrown_force = 20,\
 		throw_blocked_message = throw_blocked_message,\
 	)

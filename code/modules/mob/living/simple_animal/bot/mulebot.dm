@@ -24,6 +24,7 @@
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
+	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
@@ -156,8 +157,10 @@
 		user.put_in_hands(cell)
 	else
 		cell.forceMove(drop_location())
-	visible_message(span_notice("[user] crowbars [cell] out from [src]."),
-					span_notice("You pry [cell] out of [src]."))
+	user.visible_message(
+		span_notice("[user] crowbars [cell] out from [src]."),
+		span_notice("You pry [cell] out of [src]."),
+	)
 	cell = null
 	diag_hud_set_mulebotcell()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -171,8 +174,10 @@
 			return TRUE
 		cell = I
 		diag_hud_set_mulebotcell()
-		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
-						span_notice("You insert [cell] into [src]."))
+		user.visible_message(
+			span_notice("[user] inserts \a [cell] into [src]."),
+			span_notice("You insert [cell] into [src]."),
+		)
 		return TRUE
 	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
 		return attack_hand(user)
@@ -232,7 +237,7 @@
 			unload(0)
 		if(prob(25))
 			visible_message(span_danger("Something shorts out inside [src]!"))
-			wires.cut_random()
+			wires.cut_random(source = Proj.firer)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -671,6 +676,12 @@
 
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
+	if (!(bot_cover_flags & BOT_COVER_EMAGGED) && !wires.is_cut(WIRE_AVOIDANCE))
+		if (!has_status_effect(/datum/status_effect/careful_driving))
+			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
+		apply_status_effect(/datum/status_effect/careful_driving)
+		return // Player mules must be emagged before they can trample
+
 	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
 	crushed.visible_message(
 		span_danger("[src] drives over [crushed]!"),

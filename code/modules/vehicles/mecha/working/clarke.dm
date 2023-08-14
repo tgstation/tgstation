@@ -28,7 +28,8 @@
 	enter_delay = 40
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
-	allow_diagonal_movement = TRUE
+	allow_diagonal_movement = FALSE
+	pivot_step = TRUE
 
 /datum/armor/mecha_clarke
 	melee = 20

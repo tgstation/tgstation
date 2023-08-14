@@ -27,7 +27,6 @@
 
 /obj/machinery/power/apc/update_icon_state()
 	if(!update_state)
-		icon = 'icons/obj/machines/wallmounts.dmi'
 		icon_state = "apc0"
 		return ..()
 	if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))

@@ -535,14 +535,14 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "Om" = (
-/mob/living/simple_animal/hostile/bear/fightpit,
+/mob/living/basic/bear/fightpit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "OB" = (
-/mob/living/simple_animal/hostile/bear/fightpit,
+/mob/living/basic/bear/fightpit,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "PU" = (

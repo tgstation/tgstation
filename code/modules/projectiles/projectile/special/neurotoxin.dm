@@ -1,7 +1,7 @@
 /obj/projectile/neurotoxin
 	name = "neurotoxin spit"
 	icon_state = "neurotoxin"
-	damage = 50
+	damage = 65
 	damage_type = STAMINA
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin

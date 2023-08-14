@@ -31,6 +31,12 @@
 		"You feel robust!",
 		"You feel indestructible!",
 	)
+	var/static/list/finished_silicon_message = list(
+		"You feel nothing!",
+		"No pain, no gain!",
+		"Chassis hardness rating... Unchanged.",
+		"You feel the exact same. Nothing.",
+	)
 
 /obj/structure/weightmachine/Initialize(mapload)
 	. = ..()
@@ -38,20 +44,17 @@
 	weight_action = new(src)
 	weight_action.weightpress = src
 
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Work out", \
-	)
+	var/static/list/tool_behaviors
+	if(!tool_behaviors)
+		tool_behaviors = string_assoc_nested_list(list(
+			TOOL_CROWBAR = list(
+				SCREENTIP_CONTEXT_RMB = "Deconstruct",
+			),
 
-	var/static/list/tool_behaviors = list(
-		TOOL_CROWBAR = list(
-			SCREENTIP_CONTEXT_RMB = "Deconstruct",
-		),
-
-		TOOL_WRENCH = list(
-			SCREENTIP_CONTEXT_RMB = "Anchor",
-		),
-	)
+			TOOL_WRENCH = list(
+				SCREENTIP_CONTEXT_RMB = "Anchor",
+			),
+		))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/weightmachine/Destroy()
@@ -91,7 +94,10 @@
 	START_PROCESSING(SSobj, src)
 	if(do_after(user, 8 SECONDS, src) && user.has_gravity())
 		user.Stun(2 SECONDS)
-		user.balloon_alert(user, pick(finished_message))
+		if(issilicon(user))
+			user.balloon_alert(user, pick(finished_silicon_message))
+		else
+			user.balloon_alert(user, pick(finished_message))
 		user.add_mood_event("exercise", /datum/mood_event/exercise)
 		user.apply_status_effect(/datum/status_effect/exercised)
 	end_workout()
@@ -105,9 +111,9 @@
 	if(!has_buckled_mobs())
 		end_workout()
 		return FALSE
-	var/image/workout_icon = new(icon, src, "[base_icon_state]-o", ABOVE_MOB_LAYER)
-	workout_icon.plane = GAME_PLANE_UPPER
-	flick_overlay_view(workout_icon, 8)
+	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(workout, GAME_PLANE_UPPER, src)
+	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
 	animate(user, pixel_y = pixel_shift_y, time = 4)

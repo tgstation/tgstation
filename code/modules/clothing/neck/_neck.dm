@@ -26,7 +26,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/ties
-	greyscale_config_worn = /datum/greyscale_config/ties_worn
+	greyscale_config_worn = /datum/greyscale_config/ties/worn
 	greyscale_colors = "#4d4e4e"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	/// All ties start untied unless otherwise specified
@@ -212,13 +212,13 @@
 				render_list += "<span class='danger ml-1'>[M] doesn't have any lungs!</span>\n"
 			else
 				if(carbon_patient.stat == DEAD || (HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)) || (HAS_TRAIT(carbon_patient, TRAIT_NOBREATH))|| carbon_patient.failed_last_breath || carbon_patient.losebreath)//If pt is dead or otherwise not breathing
-					render_list += "<span class='danger ml-1'>[M.p_theyre(TRUE)] not breathing!</span>\n"
+					render_list += "<span class='danger ml-1'>[M.p_Theyre()] not breathing!</span>\n"
 				else if(lungs.damage > 10)//if breathing, check for lung damage
 					render_list += "<span class='danger ml-1'>You hear fluid in [M.p_their()] lungs!</span>\n"
 				else if(oxy_loss > 10)//if they have suffocation damage
-					render_list += "<span class='danger ml-1'>[M.p_theyre(TRUE)] breathing heavily!</span>\n"
+					render_list += "<span class='danger ml-1'>[M.p_Theyre()] breathing heavily!</span>\n"
 				else
-					render_list += "<span class='notice ml-1'>[M.p_theyre(TRUE)] breathing normally.</span>\n"//they're okay :D
+					render_list += "<span class='notice ml-1'>[M.p_Theyre()] breathing normally.</span>\n"//they're okay :D
 
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
@@ -245,7 +245,7 @@
 					liver_okay = FALSE
 				else
 					if(liver.damage > 10)
-						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] liver feels firm.</span>\n"//their liver is damaged
+						render_list += "<span class='danger ml-1'>[M.p_Their()] liver feels firm.</span>\n"//their liver is damaged
 						liver_okay = FALSE
 
 				if(!appendix)//sanity check, ensure the patient actually has an appendix
@@ -293,7 +293,7 @@
 					else
 						pulse_pressure = span_notice("strong")//they're okay :D
 
-					render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pulse is [pulse_pressure] and [heart_strength].</span>\n"
+					render_list += "<span class='notice ml-1'>[M.p_Their()] pulse is [pulse_pressure] and [heart_strength].</span>\n"
 
 	//display our packaged information in an examine block for easy reading
 	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
@@ -312,7 +312,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	greyscale_config = /datum/greyscale_config/scarf
-	greyscale_config_worn = /datum/greyscale_config/scarf_worn
+	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/scarf/black
@@ -365,8 +365,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"
-	greyscale_config = /datum/greyscale_config/large_scarf
-	greyscale_config_worn = /datum/greyscale_config/large_scarf_worn
+	greyscale_config = /datum/greyscale_config/scarf
+	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/large_scarf/red
@@ -394,7 +394,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE"
 	greyscale_config = /datum/greyscale_config/infinity_scarf
-	greyscale_config_worn = /datum/greyscale_config/infinity_scarf_worn
+	greyscale_config_worn = /datum/greyscale_config/infinity_scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/petcollar

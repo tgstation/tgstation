@@ -318,6 +318,19 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
+"qK" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 1
+	},
+/obj/effect/turf_decal{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "qO" = (
 /obj/effect/turf_decal/lunar_sand,
 /obj/structure/table/wood,
@@ -491,7 +504,8 @@
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Pirate Ship";
-	port_direction = 2
+	port_direction = 2;
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -513,7 +527,16 @@
 /area/shuttle/pirate)
 "BI" = (
 /obj/effect/turf_decal/lunar_sand/plating,
-/obj/machinery/computer/launchpad{
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/clothing/glasses/hud/diagnostic{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/obj/effect/turf_decal{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -624,6 +647,19 @@
 "HY" = (
 /obj/machinery/loot_locator,
 /turf/open/misc/dirt/jungle,
+/area/shuttle/pirate)
+"Ig" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/machinery/computer/launchpad{
+	dir = 1
+	},
+/obj/effect/turf_decal{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Ih" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -1317,7 +1353,7 @@ Zw
 cx
 Js
 Ec
-Od
+qK
 Od
 jx
 lt
@@ -1359,7 +1395,7 @@ Rv
 uP
 JV
 QL
-Od
+Ig
 Od
 jx
 lt

@@ -66,12 +66,13 @@
 
 /obj/item/pai_card/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/track_hierarchical_movement)
+
 	update_appearance()
 	SSpai.pai_card_list += src
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/item/pai_card/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they(TRUE)] can't keep living without real human intimacy!"))
+	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_They()] can't keep living without real human intimacy!"))
 	return OXYLOSS
 
 /obj/item/pai_card/update_overlays()
@@ -117,7 +118,7 @@
 		name = pai.name,
 		transmit = pai.can_transmit,
 		receive = pai.can_receive,
-		range = pai.leashed_distance,
+		range = pai.leash?.distance,
 	)
 	return data
 

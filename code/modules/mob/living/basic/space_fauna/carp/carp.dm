@@ -78,25 +78,6 @@
 		/obj/machinery/vending,
 		/obj/structure/window,
 	))
-	/// Weighted list of colours a carp can be
-	/// Weighted list of usual carp colors
-	var/static/list/carp_colors = list(
-		COLOR_CARP_PURPLE = 7,
-		COLOR_CARP_PINK = 7,
-		COLOR_CARP_GREEN = 7,
-		COLOR_CARP_GRAPE = 7,
-		COLOR_CARP_SWAMP = 7,
-		COLOR_CARP_TURQUOISE = 7,
-		COLOR_CARP_BROWN = 7,
-		COLOR_CARP_TEAL = 7,
-		COLOR_CARP_LIGHT_BLUE = 7,
-		COLOR_CARP_RUSTY = 7,
-		COLOR_CARP_RED = 7,
-		COLOR_CARP_YELLOW = 7,
-		COLOR_CARP_BLUE = 7,
-		COLOR_CARP_PALE_GREEN = 7,
-		COLOR_CARP_SILVER = 1, // The rare silver carp
-	)
 
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
@@ -138,7 +119,7 @@
 /mob/living/basic/carp/proc/apply_colour()
 	if (!greyscale_config)
 		return
-	set_greyscale(colors = list(pick_weight(carp_colors)))
+	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)

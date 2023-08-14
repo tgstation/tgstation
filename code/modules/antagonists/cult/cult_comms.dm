@@ -97,6 +97,8 @@
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 
 /datum/action/innate/cult/mastervote/IsAvailable(feedback = FALSE)
+	if(!owner || !owner.mind)
+		return FALSE
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C || C.cult_team.cult_vote_called || !ishuman(owner))
 		return FALSE

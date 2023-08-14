@@ -52,17 +52,6 @@
 /obj/machinery/power/shuttle_engine/heater,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"eb" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/head/collectable/welding,
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "en" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -122,13 +111,6 @@
 /obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"jW" = (
-/obj/structure/statue/diamond/ai2{
-	anchored = 1;
-	name = "statue of an AI core."
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "kd" = (
 /turf/template_noop,
 /area/template_noop)
@@ -164,6 +146,19 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"lg" = (
+/obj/machinery/computer/station_alert{
+	desc = "Used to access the shuttle's automated alert system.";
+	dir = 8;
+	name = "ship alert console"
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "lJ" = (
@@ -202,20 +197,13 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"oH" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
+"oQ" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "oZ" = (
 /obj/machinery/computer/crew,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"pk" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qd" = (
@@ -228,16 +216,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"qr" = (
-/obj/machinery/computer/station_alert{
-	desc = "Used to access the shuttle's automated alert system.";
-	dir = 8;
-	name = "ship alert console"
+"qs" = (
+/obj/structure/statue/diamond/ai1{
+	anchored = 1;
+	name = "statue of an AI hologram"
 	},
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qw" = (
@@ -258,11 +242,11 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"rs" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+"rp" = (
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rw" = (
@@ -310,13 +294,6 @@
 	name = "Shuttle Captain seat"
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"tB" = (
-/obj/structure/statue/diamond/ai1{
-	anchored = 1;
-	name = "statue of an AI hologram"
-	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (
@@ -422,18 +399,6 @@
 /obj/machinery/vending/snack/green,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"yH" = (
-/obj/machinery/modular_computer/preset/research{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "zm" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
@@ -467,11 +432,6 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"BB" = (
-/obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Cn" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
@@ -485,11 +445,6 @@
 "Cw" = (
 /obj/machinery/vending/snack/orange,
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"CK" = (
-/obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "CR" = (
 /obj/machinery/door/airlock/shuttle,
@@ -514,13 +469,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"Do" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Dq" = (
 /obj/structure/table/wood/fancy,
 /obj/item/food/salad/jungle{
@@ -533,14 +481,13 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"DZ" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "El" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"En" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Eo" = (
@@ -565,6 +512,14 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"Fx" = (
+/obj/structure/statue/diamond/ai2{
+	anchored = 1;
+	name = "statue of an AI core."
+	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "FR" = (
@@ -628,11 +583,6 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"Iu" = (
-/obj/machinery/computer/slot_machine,
-/obj/machinery/light/directional/north,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "IL" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -642,17 +592,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Js" = (
-/obj/structure/showcase/mecha/marauder{
-	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The seraph is described as the most valuable unit in defending the VIPs of Nanotrasen.";
-	dir = 8;
-	icon_state = "seraph";
-	max_integrity = 2500;
-	name = "seraph mech exhibit"
-	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Kc" = (
@@ -678,6 +617,35 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "KD" = (
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"KM" = (
+/obj/machinery/modular_computer/preset/research{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"KS" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"KU" = (
+/obj/structure/showcase/mecha/marauder{
+	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The marauder is described as the premier unit used to defend corporate interests and employees.";
+	dir = 4;
+	max_integrity = 2500;
+	name = "marauder mech exhibit"
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Lo" = (
@@ -739,31 +707,18 @@
 "OJ" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
-"Pb" = (
+"Rf" = (
 /obj/structure/showcase/mecha/marauder{
-	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The marauder is described as the premier unit used to defend corporate interests and employees.";
-	dir = 4;
+	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The seraph is described as the most valuable unit in defending the VIPs of Nanotrasen.";
+	dir = 8;
+	icon_state = "seraph";
 	max_integrity = 2500;
-	name = "marauder mech exhibit"
+	name = "seraph mech exhibit"
 	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Pr" = (
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "So" = (
 /obj/item/storage/cans/sixbeer,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"Sp" = (
-/obj/structure{
-	desc = "A jukebox for playing music. Seems like it ran out of charge.";
-	icon = 'icons/obj/machines/music.dmi';
-	icon_state = "jukebox";
-	name = "jukebox"
-	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Sx" = (
@@ -815,10 +770,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"UJ" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "UN" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/cup/rag{
@@ -835,11 +786,6 @@
 /area/shuttle/escape)
 "Vm" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/escape)
-"Vv" = (
-/obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "VO" = (
 /obj/structure/table/reinforced,
@@ -867,6 +813,27 @@
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"YN" = (
+/obj/structure{
+	desc = "A jukebox for playing music. Seems like it ran out of charge.";
+	icon = 'icons/obj/machines/music.dmi';
+	icon_state = "jukebox";
+	name = "jukebox"
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"YV" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/collectable/welding,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YZ" = (
@@ -999,7 +966,7 @@ aY
 jt
 WT
 nU
-WT
+DZ
 jt
 kd
 kd
@@ -1034,7 +1001,7 @@ WT
 WT
 WT
 WT
-YZ
+WT
 WT
 WT
 WT
@@ -1069,7 +1036,7 @@ WT
 WT
 WT
 WT
-oo
+WT
 WT
 WT
 WT
@@ -1135,7 +1102,7 @@ Vm
 dQ
 Vm
 Vm
-oo
+WT
 WT
 WT
 WT
@@ -1156,7 +1123,7 @@ jt
 en
 qw
 FR
-yH
+KM
 Vm
 jT
 qw
@@ -1166,18 +1133,18 @@ TI
 qw
 jT
 Vm
-TI
-rs
-TI
-TI
+rp
+yn
 TI
 TI
-En
 TI
+TI
+HA
+rp
 Vm
 jT
 qw
-Pb
+KU
 qw
 jT
 Vm
@@ -1204,13 +1171,13 @@ qw
 Ud
 Bp
 Vm
-Pr
+KD
 qw
 qw
 qw
 qw
 qw
-oH
+KD
 Vm
 HA
 qw
@@ -1227,7 +1194,7 @@ qw
 qw
 cf
 KD
-Vv
+jT
 Vm
 Vm
 WT
@@ -1235,7 +1202,7 @@ WT
 NH
 NH
 NH
-UJ
+DZ
 uV
 dR
 xj
@@ -1247,7 +1214,7 @@ en
 qd
 KB
 qw
-Uo
+qw
 uV
 Vm
 KD
@@ -1295,7 +1262,7 @@ qw
 qw
 qw
 Vm
-BB
+jT
 KD
 qw
 Ki
@@ -1303,16 +1270,16 @@ Ki
 Ki
 qw
 KD
-CK
+jT
 Vm
-DJ
+qw
 Ki
 Ki
 Ki
 Ki
 Uo
 Vm
-BB
+jT
 Vk
 Nv
 xB
@@ -1366,9 +1333,9 @@ Cn
 Dn
 SK
 UF
-jW
+Fx
 Vm
-Iu
+oQ
 WT
 ni
 OJ
@@ -1412,15 +1379,15 @@ Gv
 iO
 SK
 cf
-tB
+qs
 Vm
-Iu
+oQ
 WT
 OJ
 ni
 OJ
 WT
-Sp
+YN
 uV
 So
 uV
@@ -1433,7 +1400,7 @@ qw
 qw
 qw
 Vm
-BB
+jT
 KD
 qw
 TI
@@ -1441,16 +1408,16 @@ TI
 TI
 qw
 KD
-CK
+jT
 Vm
 DJ
 TI
 TI
 TI
 TI
-Uo
+qw
 Vm
-BB
+jT
 ju
 Nv
 vL
@@ -1477,7 +1444,7 @@ en
 oZ
 Ho
 qw
-Uo
+qw
 uV
 Vm
 KD
@@ -1524,15 +1491,15 @@ dd
 sv
 qw
 IL
-eb
+YV
 Vm
-Pr
+KD
 qw
 qw
 qw
 qw
 qw
-oH
+KD
 Vm
 rX
 qw
@@ -1557,7 +1524,7 @@ WT
 nU
 nU
 nU
-UJ
+DZ
 uV
 dR
 xj
@@ -1570,7 +1537,7 @@ jt
 en
 qw
 uX
-qr
+lg
 Vm
 jT
 qw
@@ -1580,18 +1547,18 @@ Ki
 qw
 jT
 Vm
-Ki
-Do
-Ki
-Ki
+KS
+mv
 Ki
 Ki
-pk
 Ki
+Ki
+rX
+KS
 Vm
 jT
 qw
-Js
+Rf
 qw
 jT
 Vm
@@ -1641,7 +1608,7 @@ Vm
 dQ
 Vm
 Vm
-YZ
+WT
 WT
 WT
 EC
@@ -1667,7 +1634,7 @@ WT
 WT
 WT
 WT
-YZ
+WT
 WT
 WT
 WT
@@ -1724,7 +1691,7 @@ WT
 WT
 WT
 WT
-oo
+WT
 WT
 WT
 WT
@@ -1781,7 +1748,7 @@ qE
 jt
 WT
 NH
-WT
+DZ
 jt
 kd
 kd

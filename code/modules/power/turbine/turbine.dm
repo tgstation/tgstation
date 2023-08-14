@@ -242,15 +242,11 @@
 	///Ratio of the amount of gas going in the turbine
 	var/intake_regulator = 0.5
 
-/obj/machinery/power/turbine/inlet_compressor/activate_parts(mob/user, check_only)
-	. = ..()
-	input_turf = get_step(loc, turn(dir, 180))
-
 /obj/machinery/power/turbine/inlet_compressor/deactivate_parts(mob/user)
 	. = ..()
-	if(!isnull(rotor))
+	if(!QDELETED(rotor))
 		rotor.deactivate_parts()
-		rotor = null
+	rotor = null
 	input_turf = null
 
 /**
@@ -260,6 +256,9 @@
 /obj/machinery/power/turbine/inlet_compressor/proc/compress_gases()
 	compressor_work = 0
 	compressor_pressure = MINIMUM_TURBINE_PRESSURE
+	if(QDELETED(input_turf))
+		input_turf = get_step(loc, REVERSE_DIR(dir))
+
 	var/datum/gas_mixture/input_turf_mixture = input_turf.return_air()
 	if(!input_turf_mixture)
 		return 0
@@ -299,19 +298,17 @@
 	/// The turf to puch the gases out into
 	var/turf/open/output_turf
 
-/obj/machinery/power/turbine/turbine_outlet/activate_parts(mob/user, check_only)
-	. = ..()
-	output_turf = get_step(loc, dir)
-
 /obj/machinery/power/turbine/turbine_outlet/deactivate_parts(mob/user)
 	. = ..()
-	if(!isnull(rotor))
+	if(!QDELETED(rotor))
 		rotor.deactivate_parts()
-		rotor = null
+	rotor = null
 	output_turf = null
 
 /// push gases from its gas mix to output turf
 /obj/machinery/power/turbine/turbine_outlet/proc/expel_gases()
+	if(QDELETED(output_turf))
+		output_turf = get_step(loc, dir)
 	//turf is blocked don't eject gases
 	if(!TURF_SHARES(output_turf))
 		return FALSE
@@ -403,6 +400,8 @@
 	. = ..()
 	if(!panel_open)
 		. += span_notice("[EXAMINE_HINT("screw")] open its panel to change cable layer.")
+	if(!all_parts_connected)
+		. += span_warning("The parts need to be linked via a [EXAMINE_HINT("multitool")]")
 
 /obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
 	if(!panel_open)
@@ -453,19 +452,19 @@
 
 	//locate compressor & turbine, when checking we simply check to see if they are still there
 	if(!check_only)
-		compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, turn(dir, 180))
+		compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, REVERSE_DIR(dir))
 		turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, dir)
 
 		//maybe look for them the other way around. we want the rotor to allign with them either way for player convinience
 		if(!compressor && !turbine)
 			compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, dir)
-			turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, turn(dir, 180))
+			turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, REVERSE_DIR(dir))
 
 	//sanity checks for compressor
 	if(QDELETED(compressor))
 		feedback(user, "missing compressor!")
 		return (all_parts_connected = FALSE)
-	if(compressor.dir != dir && compressor.dir != turn(dir, 180)) //make sure it's not perpendicular to the rotor
+	if(compressor.dir != dir && compressor.dir != REVERSE_DIR(dir)) //make sure it's not perpendicular to the rotor
 		feedback(user, "compressor not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!compressor.can_connect)
@@ -479,7 +478,7 @@
 	if(QDELETED(turbine))
 		feedback(user, "missing turbine!")
 		return (all_parts_connected = FALSE)
-	if(turbine.dir != dir && turbine.dir != turn(dir, 180))
+	if(turbine.dir != dir && turbine.dir != REVERSE_DIR(dir))
 		feedback(user, "turbine not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!turbine.can_connect)

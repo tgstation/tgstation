@@ -80,7 +80,7 @@
 			return
 
 	//Call back for item being equipped to drone
-	equipping.equipped(src, slot)
+	equipping.on_equipped(src, slot)
 
 /mob/living/simple_animal/drone/getBackSlot()
 	return ITEM_SLOT_DEX_STORAGE
