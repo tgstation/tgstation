@@ -1279,3 +1279,23 @@
   - bugfix: Carbons with tails (felinids, lizards) who have that tail removed will
       now have that tail actually look like it came from the person in question, rather
       than just be a grey thing of sadness.
+2023-07-31:
+  CRITAWAKETS:
+  - balance: The bluespace MOD storage can now hold bulky storage items (backpacks,
+      toolbelts) just like the bag of holding.
+  GoldenAlpharex:
+  - bugfix: Clothes equipped in the jumpsuit slot that happen to cover your feet will
+      no longer get bloody when you walk over blood if you are also wearing shoes.
+      Your kilt won't be getting bloody instantly anymore, it only will if you take
+      your shoes off!
+  - bugfix: Chat highlights now escape special RegEx characters from non-RegEx highlights.
+  - bugfix: Broken RegEx expressions no longer cause the chat to bluescreen, allowing
+      you to properly fix them.
+  SyncIt21:
+  - bugfix: Module duplicator has cheaper costs for circuit duplication
+  - rscadd: RPED can carry & install computer boards and complete computer frames
+  cnleth:
+  - bugfix: Using the timeline jumper MOD module updates stamina after resetting it,
+      no more infinite stamcrits
+  vinylspiders:
+  - bugfix: fixed a bug that would cause pAIs to be able to break their leash

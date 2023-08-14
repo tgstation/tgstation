@@ -3,7 +3,6 @@
 	name = "\improper Gygax"
 	icon_state = "gygax"
 	base_icon_state = "gygax"
-	allow_diagonal_movement = TRUE
 	movedelay = 3
 	max_integrity = 250
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)

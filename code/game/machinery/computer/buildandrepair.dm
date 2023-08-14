@@ -8,6 +8,21 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
+/// Installs the board in the computer
+/obj/structure/frame/computer/proc/install_board(obj/item/circuitboard/computer/board, mob/user, by_hand)
+	if(by_hand && !user.transferItemToLoc(board, src))
+		return FALSE
+	else if(!board.forceMove(src))
+		return FALSE
+
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	to_chat(user, span_notice("You place [board] inside the frame."))
+	icon_state = "1"
+	circuit = board
+	circuit.add_fingerprint(user)
+
+	return TRUE
+
 /obj/structure/frame/computer/attackby(obj/item/P, mob/living/user, params)
 	add_fingerprint(user)
 	switch(state)
@@ -39,51 +54,94 @@
 					set_anchored(FALSE)
 					state = 0
 				return
-			if(istype(P, /obj/item/circuitboard/computer) && !circuit)
-				if(!user.transferItemToLoc(P, src))
-					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				to_chat(user, span_notice("You place [P] inside the frame."))
-				icon_state = "1"
-				circuit = P
-				circuit.add_fingerprint(user)
-				return
 
-			else if(istype(P, /obj/item/circuitboard) && !circuit)
-				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
-				return
-			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You screw [circuit] into place."))
-				state = 2
-				icon_state = "2"
-				return
-			if(P.tool_behaviour == TOOL_CROWBAR && circuit)
-				P.play_tool_sound(src)
-				to_chat(user, span_notice("You remove [circuit]."))
-				state = 1
-				icon_state = "0"
-				circuit.forceMove(drop_location())
-				circuit.add_fingerprint(user)
-				circuit = null
-				return
+			if(!circuit)
+				//attempt to install circuitboard from part replacer
+				if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
+					var/obj/item/storage/part_replacer/replacer = P
+					// map of circuitboard names to the board
+					var/list/circuit_boards = list()
+					for(var/obj/item/circuitboard/computer/board in replacer.contents)
+						circuit_boards[board.name] = board
+					if(!length(circuit_boards))
+						return
+					//if there is only one board directly install it else pick from list
+					var/obj/item/circuitboard/computer/target_board
+					if(circuit_boards.len == 1)
+						for(var/board_name in circuit_boards)
+							target_board = circuit_boards[board_name]
+					else
+						var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
+						target_board = circuit_boards[option]
+						if(!target_board)
+							return
+
+					if(install_board(target_board, user, by_hand = FALSE))
+						replacer.play_rped_sound()
+						//automatically screw the board in as well, a perk of using the rped
+						to_chat(user, span_notice("You screw [circuit] into place."))
+						state = 2
+						icon_state = "2"
+						//attack again so we can install the cable & glass
+						attackby(replacer, user, params)
+						return
+
+				//attempt to install circuitboard by hand
+				if(istype(P, /obj/item/circuitboard/computer))
+					install_board(P, user, by_hand = TRUE)
+					return
+				else if(istype(P, /obj/item/circuitboard))
+					to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
+					return
+			else
+				if(P.tool_behaviour == TOOL_SCREWDRIVER)
+					P.play_tool_sound(src)
+					to_chat(user, span_notice("You screw [circuit] into place."))
+					state = 2
+					icon_state = "2"
+					return
+				if(P.tool_behaviour == TOOL_CROWBAR)
+					P.play_tool_sound(src)
+					to_chat(user, span_notice("You remove [circuit]."))
+					state = 1
+					icon_state = "0"
+					circuit.forceMove(drop_location())
+					circuit.add_fingerprint(user)
+					circuit = null
+					return
 		if(2)
 			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
 				P.play_tool_sound(src)
 				to_chat(user, span_notice("You unfasten the circuit board."))
 				state = 1
 				icon_state = "1"
-				return
-			if(istype(P, /obj/item/stack/cable_coil))
-				if(!P.tool_start_check(user, amount=5))
+			else
+				//serach for cable which can either be the attacking item or inside an rped
+				var/obj/item/stack/cable_coil/cable = null
+				if(istype(P, /obj/item/stack/cable_coil))
+					cable = P
+				else if(istype(P, /obj/item/storage/part_replacer))
+					cable = locate(/obj/item/stack/cable_coil) in P.contents
+				if(!cable)
+					return
+
+				//install cable
+				if(!cable.tool_start_check(user, amount = 5))
 					return
 				to_chat(user, span_notice("You start adding cables to the frame..."))
-				if(P.use_tool(src, user, 20, volume=50, amount=5))
+				if(cable.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, volume = 50, amount = 5))
 					if(state != 2)
 						return
 					to_chat(user, span_notice("You add cables to the frame."))
 					state = 3
 					icon_state = "3"
+
+				//if the item was an rped then it could have glass sheets for the next stage so let it continue
+				if(istype(P, /obj/item/storage/part_replacer))
+					var/obj/item/storage/part_replacer/replacer = P
+					replacer.play_rped_sound()
+					//reattack to install the glass sheets as well
+					attackby(replacer, user, params)
 				return
 		if(3)
 			if(P.tool_behaviour == TOOL_WIRECUTTER)
@@ -94,19 +152,31 @@
 				var/obj/item/stack/cable_coil/A = new (drop_location(), 5)
 				if (!QDELETED(A))
 					A.add_fingerprint(user)
-				return
+			else
+				//search for glass sheets which can either be the attacking item or inside an rped
+				var/obj/item/stack/sheet/glass/glass_sheets = null
+				if(istype(P, /obj/item/stack/sheet/glass))
+					glass_sheets = P
+				else if(istype(P, /obj/item/storage/part_replacer))
+					glass_sheets = locate(/obj/item/stack/sheet/glass) in P.contents
+				if(!glass_sheets)
+					return
 
-			if(istype(P, /obj/item/stack/sheet/glass))
-				if(!P.tool_start_check(user, amount=2))
+				//install glass sheets
+				if(!glass_sheets.tool_start_check(user, amount = 2))
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, span_notice("You start to put in the glass panel..."))
-				if(P.use_tool(src, user, 20, amount=2))
+				if(glass_sheets.use_tool(src, user, istype(P, /obj/item/storage/part_replacer) ? 0 : 20, amount = 2))
 					if(state != 3)
 						return
 					to_chat(user, span_notice("You put in the glass panel."))
 					state = 4
-					src.icon_state = "4"
+					icon_state = "4"
+
+				if(istype(P, /obj/item/storage/part_replacer))
+					var/obj/item/storage/part_replacer/replacer = P
+					replacer.play_rped_sound()
 				return
 		if(4)
 			if(P.tool_behaviour == TOOL_CROWBAR)

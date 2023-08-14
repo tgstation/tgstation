@@ -106,10 +106,12 @@
 	. = ..()
 
 	if(!.)
-		return FALSE
+		return
 
-	if(!LAZYLEN(spawning_list) && self_destruct_when_empty)
-		return SHUTTLE_EVENT_CLEAR
+	if(!LAZYLEN(spawning_list))
+		if(self_destruct_when_empty)
+			return SHUTTLE_EVENT_CLEAR
+		return
 
 	if(prob(spawn_probability_per_process))
 		for(var/i in 1 to spawns_per_spawn)

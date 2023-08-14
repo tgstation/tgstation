@@ -133,6 +133,11 @@
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
 #define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
 
+///from base of obj/item/apply_fantasy_bonuses(): (bonus)
+#define COMSIG_ITEM_APPLY_FANTASY_BONUSES "item_apply_fantasy_bonuses"
+///from base of obj/item/remove_fantasy_bonuses(): (bonus)
+#define COMSIG_ITEM_REMOVE_FANTASY_BONUSES "item_remove_fantasy_bonuses"
+
 /// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
 #define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
 	/// Return to prevent the default behavior (attack_selfing) from ocurring.
@@ -182,6 +187,10 @@
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
+
+/// from [/obj/item/stack/proc/can_merge]: (obj/item/stack/merge_with, in_hand)
+#define COMSIG_STACK_CAN_MERGE "stack_can_merge"
+	#define CANCEL_STACK_MERGE (1<<0)
 
 ///from /obj/item/book/bible/afterattack(): (mob/user, proximity)
 #define COMSIG_BIBLE_SMACKED "bible_smacked"
@@ -370,8 +379,10 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_FIRE_CASING "fire_casing"
 
-///sent to the projectile after an item is spawned by the projectile_drop element: (new_casing)
+///sent to the projectile after an item is spawned by the projectile_drop element: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
+///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
+#define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
 
 // /obj/vehicle/sealed/car/vim signals
 

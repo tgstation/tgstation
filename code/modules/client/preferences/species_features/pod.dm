@@ -8,7 +8,7 @@
 /datum/preference/choiced/pod_hair/init_possible_values()
 	var/list/values = list()
 
-	var/icon/pod_head = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "pod_head_m")
+	var/icon/pod_head = icon('icons/mob/human/bodyparts_greyscale.dmi', "pod_head_m")
 
 	for (var/pod_name in GLOB.pod_hair_list)
 		var/datum/sprite_accessory/pod_hair = GLOB.pod_hair_list[pod_name]
