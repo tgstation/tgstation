@@ -40,7 +40,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		CRASH("Attempted to instantiate [eletype] as a /datum/element")
 
 	if(initial(eletype.element_flags) & ELEMENT_BESPOKE)
-		element_id = GetIdFromArguments(arguments)
+		element_id = length(arguments) == 1 ? "[arguments[1]]" : GetIdFromArguments(arguments)
 
 	. = elements_by_type[element_id]
 	if(. || !init_element)
