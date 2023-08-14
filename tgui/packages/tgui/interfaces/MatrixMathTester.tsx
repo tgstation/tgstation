@@ -50,7 +50,7 @@ export const MatrixMathTester = (props, context) => {
   const [shearY, setShearY] = useLocalState(context, 'shear_y', 0);
   const [angle, setAngle] = useLocalState(context, 'angle', 0);
   return (
-    <Window title="Nobody Wants to Learn Matrix Math" width={290} height={265}>
+    <Window title="Nobody Wants to Learn Matrix Math" width={290} height={270}>
       <Window.Content>
         <Section fill>
           <Table>
