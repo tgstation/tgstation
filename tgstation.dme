@@ -807,7 +807,7 @@
 #include "code\datums\ai\basic_mobs\basic_subtrees\find_paper_and_write.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\find_parent.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\flee_target.dm"
-#include "code\datums\ai\basic_mobs\basic_subtrees\keep_away.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\maintain_distance.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\opportunistic_ventcrawler.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\ranged_skirmish.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_attack_target.dm"

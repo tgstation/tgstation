@@ -9,8 +9,8 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/use_mob_ability/gaze,
 		/datum/ai_planning_subtree/targeted_mob_ability/overwatch,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/keep_away,
+		/datum/ai_planning_subtree/ranged_skirmish/watcher,
+		/datum/ai_planning_subtree/maintain_distance,
 	)
 
 /datum/ai_planning_subtree/targeted_mob_ability/overwatch
@@ -18,8 +18,8 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/overwatch/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (!isliving(target)) // Do not overwatch at items
-		return
+	if (QDELETED(target) || HAS_TRAIT(target, TRAIT_OVERWATCH_IMMUNE))
+		return // We should probably let miners move sometimes
 	return ..()
 
 /datum/ai_planning_subtree/use_mob_ability/gaze
@@ -37,6 +37,12 @@
 
 /datum/ai_planning_subtree/ranged_skirmish/watcher
 	attack_behavior = /datum/ai_behavior/ranged_skirmish/watcher
+
+/datum/ai_planning_subtree/ranged_skirmish/watcher/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if (QDELETED(target) || HAS_TRAIT(target, TRAIT_OVERWATCHED))
+		return // Don't bully people who are playing red light green light
+	return ..()
 
 /datum/ai_behavior/ranged_skirmish/watcher
 	min_range = 0

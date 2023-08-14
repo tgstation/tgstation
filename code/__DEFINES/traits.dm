@@ -642,6 +642,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Cannot be grabbed by goliath tentacles
 #define TRAIT_TENTACLE_IMMUNE "tentacle_immune"
+/// Currently under the effect of overwatch
+#define TRAIT_OVERWATCHED "diamond_rank_mercy_player"
+/// Cannot be targetted by watcher overwatch
+#define TRAIT_OVERWATCH_IMMUNE "exclusive_fortnite_enjoyer"
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.

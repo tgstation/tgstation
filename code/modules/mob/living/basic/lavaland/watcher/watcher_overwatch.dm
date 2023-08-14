@@ -9,7 +9,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = TRUE
-	cooldown_time = 16 SECONDS
+	cooldown_time = 20 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	/// Furthest range we can activate ability at
 	var/max_range = 7
@@ -18,7 +18,7 @@
 	/// Sound the projectile we fire makes
 	var/projectile_sound = 'sound/weapons/pierce.ogg'
 	/// Time to watch for
-	var/overwatch_duration = 4 SECONDS
+	var/overwatch_duration = 3 SECONDS
 
 /datum/action/cooldown/watcher_overwatch/New(Target, original)
 	. = ..()
@@ -69,6 +69,8 @@
 /datum/status_effect/overwatch/on_creation(mob/living/new_owner, set_duration, mob/living/watcher, projectile_type, projectile_sound)
 	if (isnull(watcher) || isnull(projectile_type))
 		return FALSE
+	if (HAS_TRAIT(new_owner, TRAIT_OVERWATCH_IMMUNE))
+		return FALSE
 	src.watcher = watcher
 	src.projectile_type = projectile_type
 	src.projectile_sound = projectile_sound
@@ -80,6 +82,7 @@
 	. = ..()
 	if (!.)
 		return
+	ADD_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
 	owner.do_alert_animation()
 	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
@@ -91,9 +94,12 @@
 	UnregisterSignal(owner, forbidden_actions)
 	UnregisterSignal(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	QDEL_NULL(link)
+	REMOVE_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
 	if (!overwatch_triggered && !QDELETED(watcher))
 		watcher.Stun(2 SECONDS, ignore_canstun = TRUE) // Reward for standing still
 	watcher = null
+	if (!QDELETED(owner))
+		owner.apply_status_effect(/datum/status_effect/overwatch_immune)
 	return ..()
 
 /// Uh oh, you did something within my threat radius, now we're going to shoot you
@@ -114,3 +120,17 @@
 	name = "Overwatched"
 	desc = "Freeze! You are being watched!"
 	icon_state = "aimed"
+
+/// Blocks further applications of the ability for a little while
+/datum/status_effect/overwatch_immune
+	id = "watcher_overwatch_immunity"
+	duration = 10 SECONDS // To stop watcher tendrils spamming the shit out of you
+	alert_type = null
+
+/datum/status_effect/overwatch_immune/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_OVERWATCH_IMMUNE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/overwatch_immune/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_OVERWATCH_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	return ..()
