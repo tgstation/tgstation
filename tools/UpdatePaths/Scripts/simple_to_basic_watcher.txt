@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/@SUBTYPES : /mob/living/basic/mining/watcher/@SUBTYPES{@OLD}
+/mob/living/simple_animal/hostile/asteroid/basilisk : /mob/living/basic/mining/basilisk{@OLD}
