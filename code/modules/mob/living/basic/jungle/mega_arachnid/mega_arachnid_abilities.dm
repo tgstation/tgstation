@@ -21,7 +21,7 @@
 	. = ..()
 	if(!iscarbon(target) || blocked >= 100)
 		return
-	var/obj/item/restraints/legcuffs/beartrap/mega_arachnid/restraint = new /obj/item/restraints/legcuffs/beartrap/mega_arachnid(get_turf(target))
+	var/obj/item/restraints/legcuffs/beartrap/mega_arachnid/restraint = new(get_turf(target))
 	restraint.spring_trap(null, target)
 
 /obj/item/restraints/legcuffs/beartrap/mega_arachnid
