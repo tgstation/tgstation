@@ -20,7 +20,7 @@
 		current_size *= resize
 		//Update the height of the maptext according to the size of the mob so they don't overlap.
 		var/old_maptext_offset = body_maptext_height_offset
-		body_maptext_height_offset = initial(maptext_height) * (current_size - 1)
+		body_maptext_height_offset = initial(maptext_height) * (current_size - 1) * 0.5
 		maptext_height += body_maptext_height_offset - old_maptext_offset
 		//Update final_pixel_y so our mob doesn't go out of the southern bounds of the tile when standing
 		if(!lying_angle || !rotate_on_lying) //But not if the mob has been rotated.

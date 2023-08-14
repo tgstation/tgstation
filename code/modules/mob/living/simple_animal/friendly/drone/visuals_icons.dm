@@ -17,6 +17,15 @@
 		cut_overlay(I)
 		drone_overlays[cache_index] = null
 
+/mob/living/simple_animal/drone/update_clothing(slot_flags)
+	if(slot_flags & ITEM_SLOT_HEAD)
+		update_worn_head()
+	if(slot_flags & ITEM_SLOT_MASK)
+		update_worn_mask()
+	if(slot_flags & ITEM_SLOT_HANDS)
+		update_held_items()
+	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_BACKPACK|ITEM_SLOT_DEX_STORAGE))
+		update_inv_internal_storage()
 
 /mob/living/simple_animal/drone/update_held_items()
 	remove_overlay(DRONE_HANDS_LAYER)

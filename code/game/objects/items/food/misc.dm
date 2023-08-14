@@ -238,6 +238,7 @@
 	tastes = list("butter" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	dog_fashion = /datum/dog_fashion/head/butter
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()

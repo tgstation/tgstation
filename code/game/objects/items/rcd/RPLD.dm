@@ -249,7 +249,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target, /obj/machinery/plumbing))
+	if(target.type in plumbing_design_types)
 		var/obj/machinery/machine_target = target
 		if(machine_target.anchored)
 			balloon_alert(user, "anchor first!")

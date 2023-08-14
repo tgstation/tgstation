@@ -67,6 +67,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_toggle_pressed))
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_SLOT_CHECKED, PROC_REF(on_action_slot_checked))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_parent_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(remove_deployable))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, PROC_REF(on_parent_equipped_outfit))
 	if (down_overlay_state_suffix)
 		var/overlay_state = "[initial(clothing_parent.icon_state)][down_overlay_state_suffix]"
@@ -187,6 +188,7 @@
 
 /// Removes our deployed equipment from the wearer
 /datum/component/toggle_attached_clothing/proc/remove_deployable()
+	SIGNAL_HANDLER
 	unequip_deployable()
 	if (!currently_deployed)
 		return

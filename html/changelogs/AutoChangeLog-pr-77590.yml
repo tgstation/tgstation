@@ -1,0 +1,5 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "The formatting on PDA messages displayed to observers is now back to what it used to be, rather than being all bold."
+  - bugfix: "PDA messages are now displayed to observers from dead players, and not just dedicated observers."

@@ -21,6 +21,7 @@
 /area/shuttle/hunter)
 "ag" = (
 /obj/effect/turf_decal/delivery,
+/obj/machinery/fugitive_locator,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ah" = (

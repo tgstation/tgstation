@@ -42,8 +42,8 @@
 /turf/open/floor/iron/dark/smooth_large/airless,
 /area/ruin/space)
 "bz" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bM" = (
 /obj/item/ammo_casing/a357/spent{
 	dir = 1;
@@ -335,9 +335,6 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
-"ka" = (
-/turf/open/space/basic,
-/area/template_noop)
 "kC" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/airless,
@@ -1408,11 +1405,11 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
-ka
-ka
+bz
+bz
+bz
+bz
+bz
 bz
 bz
 bz
@@ -1438,18 +1435,18 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
-ka
-ka
 bz
-ka
-ka
+bz
+bz
+bz
+bz
+bz
+bz
+bz
 Er
 Er
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1474,23 +1471,23 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
-ka
-ka
-ka
+bz
+bz
+bz
 Er
 Er
 Er
 Er
-ka
-ka
-ka
-ka
-ka
+bz
+bz
+bz
+bz
+bz
 bz
 bz
 bz
@@ -1510,14 +1507,14 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
 Er
 Er
-ka
+bz
 Er
 Er
 Er
@@ -1527,8 +1524,8 @@ Er
 Er
 Er
 Er
-ka
-ka
+bz
+bz
 bz
 bz
 bz
@@ -1546,8 +1543,8 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
@@ -1565,7 +1562,7 @@ ED
 ED
 Er
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1582,8 +1579,8 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
@@ -1602,7 +1599,7 @@ so
 ED
 ED
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1617,9 +1614,9 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
+bz
+bz
+bz
 Er
 ED
 Er
@@ -1639,7 +1636,7 @@ Ck
 fR
 xT
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1653,8 +1650,8 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
@@ -1676,7 +1673,7 @@ yx
 Dm
 Er
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1688,9 +1685,9 @@ bz
 (12,1,1) = {"
 bz
 bz
-ka
-ka
-ka
+bz
+bz
+bz
 Er
 Er
 ED
@@ -1713,7 +1710,7 @@ rG
 ED
 ED
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1724,8 +1721,8 @@ bz
 "}
 (13,1,1) = {"
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
@@ -1750,7 +1747,7 @@ Er
 Er
 Er
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1761,7 +1758,7 @@ bz
 "}
 (14,1,1) = {"
 bz
-ka
+bz
 Er
 Er
 Er
@@ -1785,9 +1782,9 @@ vZ
 xT
 Er
 Er
-ka
-ka
-ka
+bz
+bz
+bz
 bz
 bz
 bz
@@ -1798,7 +1795,7 @@ bz
 "}
 (15,1,1) = {"
 bz
-ka
+bz
 Er
 Er
 Er
@@ -1821,9 +1818,9 @@ je
 ZC
 ED
 Er
-ka
-ka
-ka
+bz
+bz
+bz
 bz
 bz
 bz
@@ -1835,8 +1832,8 @@ bz
 "}
 (16,1,1) = {"
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 AV
@@ -1860,8 +1857,8 @@ ij
 Er
 Er
 Er
-ka
-ka
+bz
+bz
 bz
 bz
 bz
@@ -1873,7 +1870,7 @@ bz
 (17,1,1) = {"
 bz
 bz
-ka
+bz
 Er
 ED
 wW
@@ -1898,8 +1895,8 @@ ED
 ED
 ED
 Er
-ka
-ka
+bz
+bz
 bz
 bz
 bz
@@ -1910,7 +1907,7 @@ bz
 (18,1,1) = {"
 bz
 bz
-ka
+bz
 Er
 ED
 fa
@@ -1936,7 +1933,7 @@ ch
 ED
 Er
 Er
-ka
+bz
 bz
 bz
 bz
@@ -1947,8 +1944,8 @@ bz
 (19,1,1) = {"
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 ED
 ou
@@ -1973,9 +1970,9 @@ ZC
 HG
 ED
 Er
-ka
-ka
-ka
+bz
+bz
+bz
 bz
 bz
 bz
@@ -1985,7 +1982,7 @@ bz
 bz
 bz
 bz
-ka
+bz
 Er
 ED
 ED
@@ -2011,8 +2008,8 @@ ZC
 ED
 ED
 Er
-ka
-ka
+bz
+bz
 bz
 bz
 bz
@@ -2022,8 +2019,8 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
@@ -2049,7 +2046,7 @@ ZC
 ED
 ED
 Er
-ka
+bz
 bz
 bz
 bz
@@ -2060,8 +2057,8 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 ED
@@ -2086,7 +2083,7 @@ ZO
 aC
 ED
 Er
-ka
+bz
 bz
 bz
 bz
@@ -2098,9 +2095,9 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
+bz
+bz
+bz
 Er
 Er
 Er
@@ -2123,7 +2120,7 @@ Ef
 Ef
 ED
 Er
-ka
+bz
 bz
 bz
 bz
@@ -2137,9 +2134,9 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
+bz
+bz
+bz
 Er
 ED
 LX
@@ -2160,7 +2157,7 @@ Ef
 GX
 eA
 Er
-ka
+bz
 bz
 bz
 bz
@@ -2176,7 +2173,7 @@ bz
 bz
 bz
 bz
-ka
+bz
 Er
 ED
 mG
@@ -2197,7 +2194,7 @@ YI
 YI
 Qx
 Er
-ka
+bz
 bz
 bz
 bz
@@ -2213,7 +2210,7 @@ bz
 bz
 bz
 bz
-ka
+bz
 Er
 Er
 Er
@@ -2233,8 +2230,8 @@ xI
 sa
 Ds
 eA
-ka
-ka
+bz
+bz
 bz
 bz
 bz
@@ -2250,11 +2247,11 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
-ka
-ka
+bz
+bz
+bz
+bz
+bz
 Er
 ED
 ED
@@ -2270,7 +2267,7 @@ YI
 eA
 Ds
 eA
-ka
+bz
 bz
 bz
 bz
@@ -2291,7 +2288,7 @@ bz
 bz
 bz
 bz
-ka
+bz
 Er
 Er
 Er
@@ -2307,7 +2304,7 @@ Ts
 nl
 cq
 nl
-ka
+bz
 bz
 bz
 bz
@@ -2328,10 +2325,10 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
-ka
+bz
+bz
+bz
+bz
 Er
 Er
 ED
@@ -2339,12 +2336,12 @@ ED
 sZ
 ED
 Er
-ka
-ka
-ka
-ka
-ka
-ka
+bz
+bz
+bz
+bz
+bz
+bz
 bz
 bz
 bz
@@ -2368,15 +2365,15 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
+bz
+bz
+bz
 Er
 ED
 ED
 ED
 Er
-ka
+bz
 bz
 bz
 bz
@@ -2407,13 +2404,13 @@ bz
 bz
 bz
 bz
-ka
-ka
+bz
+bz
 Er
 Er
 Er
 Er
-ka
+bz
 bz
 bz
 bz
@@ -2445,12 +2442,12 @@ bz
 bz
 bz
 bz
-ka
-ka
-ka
-ka
-ka
-ka
+bz
+bz
+bz
+bz
+bz
+bz
 bz
 bz
 bz
