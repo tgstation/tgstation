@@ -9,7 +9,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = TRUE
-	cooldown_time = 18 SECONDS
+	cooldown_time = 16 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	/// Furthest range we can activate ability at
 	var/max_range = 7
@@ -18,7 +18,7 @@
 	/// Sound the projectile we fire makes
 	var/projectile_sound = 'sound/weapons/pierce.ogg'
 	/// Time to watch for
-	var/overwatch_duration = 5 SECONDS
+	var/overwatch_duration = 4 SECONDS
 
 /datum/action/cooldown/watcher_overwatch/New(Target, original)
 	. = ..()
@@ -26,6 +26,8 @@
 
 /datum/action/cooldown/watcher_overwatch/PreActivate(atom/target)
 	if (!isliving(target))
+		return
+	if (get_dist(owner, target) > max_range)
 		return
 	return ..()
 
@@ -77,7 +79,7 @@
 	if (!.)
 		return
 	owner.do_alert_animation()
-	owner.Immobilize(0.5 SECONDS) // Just long enough that they don't trigger it by mistake
+	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
 	link = owner.Beam(watcher, icon_state = "r_beam", override_target_pixel_x = 0)
 	RegisterSignals(owner, forbidden_actions, PROC_REF(opportunity_attack))
