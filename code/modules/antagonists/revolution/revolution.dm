@@ -473,9 +473,8 @@
 /datum/team/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in get_head_revolutionaries())
 		var/turf/rev_turf = get_turf(rev_mind.current)
-		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(rev_turf.z))
-			if(ishuman(rev_mind.current))
-				return FALSE
+		if(!considered_afk(rev_mind) && considered_alive(rev_mind, enforce_human = TRUE) && is_station_level(rev_turf.z))
+			return FALSE
 	return TRUE
 
 /// Updates the state of the world depending on if revs won or loss.
