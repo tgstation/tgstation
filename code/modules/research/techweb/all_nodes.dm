@@ -89,7 +89,6 @@
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
-		"receiver",
 		"recorder",
 		"rglass",
 		"roll",

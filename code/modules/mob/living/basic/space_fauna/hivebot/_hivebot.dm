@@ -34,6 +34,8 @@
 	ai_controller = /datum/ai_controller/basic_controller/hivebot
 	///does this type do range attacks?
 	var/ranged_attacker = FALSE
+	/// How often can we shoot?
+	var/ranged_attack_cooldown = 3 SECONDS
 
 
 /mob/living/basic/hivebot/Initialize(mapload)
@@ -43,7 +45,7 @@
 	AddElement(/datum/element/appearance_on_aggro, overlay_icon = icon, overlay_state = "[initial(icon_state)]_attack")
 	if(!ranged_attacker)
 		return
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/hivebot)
+	AddComponent(/datum/component/ranged_attacks, /obj/item/ammo_casing/hivebot, cooldown_time = ranged_attack_cooldown)
 
 /mob/living/basic/hivebot/death(gibbed)
 	do_sparks(number = 3, cardinal_only = TRUE, source = src)
@@ -64,6 +66,7 @@
 	icon_dead = "ranged"
 	ranged_attacker = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/hivebot/ranged/rapid
+	ranged_attack_cooldown = 1.5 SECONDS
 
 /mob/living/basic/hivebot/strong
 	name = "strong hivebot"

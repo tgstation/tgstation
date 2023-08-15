@@ -1,0 +1,7 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - rscadd: "Added the Bowtie! Bartenders start with one on, but they can also be found in the Bardrobe, Autodrobe, and Clothesmate. No need to tie it either, it's just a clip-on."
+  - rscadd: "Added a Greyscale \"Formal Jacket\" of the style that most suits use, for crew who want to make their own using the buttondown shirt."
+  - rscdel: "Removed the generic Cook/Bartender uniforms and changed them to use the Service buttondown w/ slacks."
+  - image: "updated the majority of Lawyer suit sprites, along with the Cook's Apron-Jacket and Hat, and updated/greyscaled Botany's Overalls! Also the Overalls are available in the clothesmate, and the Cook Jorts' shirt is less crusty."
