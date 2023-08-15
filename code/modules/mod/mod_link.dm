@@ -132,7 +132,7 @@
 
 /obj/item/clothing/neck/link_scryer
 	name = "\improper MODLink scryer"
-	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device."
+	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device. Essentially a video necklace."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
 	var/obj/item/stock_parts/cell/cell
