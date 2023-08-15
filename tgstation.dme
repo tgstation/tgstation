@@ -3428,6 +3428,7 @@
 #include "code\modules\escape_menu\title.dm"
 #include "code\modules\events\_event.dm"
 #include "code\modules\events\_event_admin_setup.dm"
+#include "code\modules\events\artifact_spawn.dm"
 #include "code\modules\events\aurora_caelus.dm"
 #include "code\modules\events\brain_trauma.dm"
 #include "code\modules\events\brand_intelligence.dm"

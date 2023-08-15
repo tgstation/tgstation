@@ -70,7 +70,7 @@
 			dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_item_icons)]"
 	holder.icon_state = dat_icon
 
-	act_effect = mutable_appearance(holder.icon, holder.icon_state + "fx", plane = LIGHTING_PLANE + 0.5, alpha = rand(artifact_origin.overlay_alpha_minimum, artifact_origin.overlay_alpha_maximum))
+	act_effect = mutable_appearance(holder.icon, holder.icon_state + "fx", offset_spokesman = holder, plane = LIGHTING_PLANE + 0.5, alpha = rand(artifact_origin.overlay_alpha_minimum, artifact_origin.overlay_alpha_maximum))
 	act_effect.color = rgb(rand(artifact_origin.overlay_red_minimum,artifact_origin.overlay_red_maximum),rand(artifact_origin.overlay_green_minimum,artifact_origin.overlay_green_maximum),rand(artifact_origin.overlay_blue_minimum,artifact_origin.overlay_blue_maximum))
 	act_effect.blend_mode = BLEND_ADD
 	activation_sound = pick(artifact_origin.activation_sounds)
