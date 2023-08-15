@@ -229,7 +229,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 
 /datum/objective/mutiny/check_completion()
-	if(!target || !considered_alive(target, enforce_human = TRUE) || considered_afk(target) || considered_exiled(target))
+	if(!target || !considered_alive(target) || considered_afk(target) || considered_exiled(target))
 		return TRUE
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
