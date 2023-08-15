@@ -1,0 +1,4 @@
+author: "Onule"
+delete-after: True
+changes:
+  - image: "modified light fixtures' sprites and overlays to be more pronounced"

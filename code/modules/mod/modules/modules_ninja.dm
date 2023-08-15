@@ -311,33 +311,75 @@
 	module_type = MODULE_ACTIVE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 6
 	incompatible_modules = list(/obj/item/mod/module/energy_net)
-	cooldown_time = 1.5 SECONDS
+	cooldown_time = 5 SECONDS
+	/// List of all energy nets this module made.
+	var/list/energy_nets = list()
+
+/obj/item/mod/module/energy_net/on_suit_deactivation(deleting)
+	for(var/obj/structure/energy_net/net as anything in energy_nets)
+		net.atom_destruction(ENERGY)
 
 /obj/item/mod/module/energy_net/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	if(!isliving(target))
-		balloon_alert(mod.wearer, "invalid target!")
-		return
-	var/mob/living/living_target = target
-	if(locate(/obj/structure/energy_net) in get_turf(living_target))
-		balloon_alert(mod.wearer, "already trapped!")
-		return
-	for(var/turf/between_turf as anything in get_line(get_turf(mod.wearer), get_turf(living_target)))
-		if(between_turf.density)
-			balloon_alert(mod.wearer, "not through obstacles!")
-			return
-	if(IS_SPACE_NINJA(mod.wearer))
+	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
-	mod.wearer.Beam(living_target, "n_beam", time = 1.5 SECONDS)
-	var/obj/structure/energy_net/net = new /obj/structure/energy_net(living_target.drop_location())
-	net.affected_mob = living_target
-	mod.wearer.visible_message(span_danger("[mod.wearer] caught [living_target] with an energy net!"), span_notice("You caught [living_target] with an energy net!"))
-	if(living_target.buckled)
-		living_target.buckled.unbuckle_mob(living_target, force = TRUE)
-	net.buckle_mob(living_target, force = TRUE)
+	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
+	net.preparePixelProjectile(target, mod.wearer)
+	net.firer = mod.wearer
+	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
+
+/obj/item/mod/module/energy_net/proc/add_net(obj/structure/energy_net/net)
+	energy_nets += net
+	RegisterSignal(net, COMSIG_QDELETING, PROC_REF(remove_net))
+
+/obj/item/mod/module/energy_net/proc/remove_net(obj/structure/energy_net/net)
+	SIGNAL_HANDLER
+	energy_nets -= net
+
+/obj/projectile/energy_net
+	name = "energy net"
+	icon_state = "net_projectile"
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	damage = 0
+	range = 9
+	hitsound = 'sound/items/fultext_deploy.ogg'
+	hitsound_wall = 'sound/items/fultext_deploy.ogg'
+	/// Reference to the beam following the projectile.
+	var/line
+	/// Reference to the energy net module.
+	var/datum/weakref/net_module
+
+/obj/projectile/energy_net/Initialize(mapload, net_module)
+	. = ..()
+	src.net_module = WEAKREF(net_module)
+
+/obj/projectile/energy_net/fire(setAngle)
+	if(firer)
+		line = firer.Beam(src, "net_beam", 'icons/obj/clothing/modsuit/mod_modules.dmi')
+	return ..()
+
+/obj/projectile/energy_net/on_hit(mob/living/target)
+	. = ..()
+	if(!istype(target))
+		return
+	if(locate(/obj/structure/energy_net) in get_turf(target))
+		return
+	var/obj/structure/energy_net/net = new /obj/structure/energy_net(target.drop_location())
+	var/obj/item/mod/module/energy_net/module = net_module?.resolve()
+	if(module)
+		module.add_net(net)
+	firer?.visible_message(span_danger("[firer] caught [target] with an energy net!"), span_notice("You caught [target] with an energy net!"))
+	if(target.buckled)
+		target.buckled.unbuckle_mob(target, force = TRUE)
+	net.buckle_mob(target, force = TRUE)
+
+/obj/projectile/energy_net/Destroy()
+	QDEL_NULL(line)
+	return ..()
 
 ///Adrenaline Boost - Stops all stuns the ninja is affected with, increases his speed.
 /obj/item/mod/module/adrenaline_boost

@@ -142,3 +142,17 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/giant_wrench
+	name = "Big Slappy"
+	result = /obj/item/shovel/giant_wrench
+	tool_behaviors = list(TOOL_CROWBAR, TOOL_SCREWDRIVER, TOOL_WELDER)
+	reqs = list(
+		/obj/item/wrench = 4,
+		/obj/item/weaponcrafting/giant_wrench = 1,
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stack/rods = 10,
+		/obj/item/pickaxe/drill = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE

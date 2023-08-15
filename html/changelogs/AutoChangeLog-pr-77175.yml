@@ -1,7 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Cursed crewmembers can randomly, extremely rarely, spontaneously combust for no reason."
-  - rscadd: "Cursed crewmembers can get zapped by nearby light tubes."
-  - rscadd: "Cursed crewmembers can freak out when passing by mirrors."
-  - rscadd: "To make up for these, triggering a cursed effect is slightly less than half as likely now when walking around now."

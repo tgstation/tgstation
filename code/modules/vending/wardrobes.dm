@@ -25,6 +25,7 @@
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/security = 3,
+		/obj/item/clothing/suit/armor/vest = 3,
 		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
 		/obj/item/storage/backpack/security = 3,
@@ -165,7 +166,6 @@
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
-
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
@@ -227,7 +227,6 @@
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/radio/headset/headset_sci = 3,
-
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
@@ -282,6 +281,7 @@
 		/obj/item/clothing/under/rank/captain/suit/skirt = 1,
 		/obj/item/clothing/under/rank/civilian/head_of_personnel/suit = 1,
 		/obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt = 1,
+		/obj/item/clothing/suit/toggle/lawyer/greyscale = 1,
 		/obj/item/storage/backpack/satchel/explorer = 1,
 		/obj/item/storage/bag/books = 1,
 		/obj/item/radio/headset/headset_srv = 2,
@@ -314,7 +314,11 @@
 		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
 		/obj/item/storage/box/bodybags = 3,
-		/obj/item/storage/medkit/coroner = 1,
+		/obj/item/scalpel/cruel = 1,
+		/obj/item/retractor/cruel = 1,
+		/obj/item/hemostat/cruel = 1,
+		/obj/item/cautery/cruel = 1,
+		/obj/item/toy/crayon/white = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
 	)
 	contraband = list(
@@ -325,10 +329,7 @@
 	)
 	premium = list(
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/scalpel/cruel = 1,
-		/obj/item/retractor/cruel = 1,
-		/obj/item/hemostat/cruel = 1,
-		/obj/item/cautery/cruel = 1,
+		/obj/item/storage/medkit/coroner = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/coroner_wardrobe
 	payment_department = ACCOUNT_MED
@@ -348,11 +349,11 @@
 		/obj/item/clothing/head/hats/tophat = 2,
 		/obj/item/clothing/head/soft/black = 2,
 		/obj/item/clothing/neck/petcollar = 1,
+		/obj/item/clothing/neck/bowtie = 2,
 		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
-		/obj/item/clothing/under/rank/civilian/bartender = 2,
+		/obj/item/clothing/under/costume/buttondown/skirt/service = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/purple = 2,
-		/obj/item/clothing/under/rank/civilian/bartender/skirt = 2,
-		/obj/item/clothing/suit/apron/purple_bartender = 2,
+		/obj/item/clothing/suit/toggle/lawyer/greyscale = 1,
 		/obj/item/clothing/suit/armor/vest/alt = 1,
 		/obj/item/clothing/shoes/sneakers/black = 2,
 		/obj/item/storage/belt/bandolier = 1,
@@ -382,8 +383,8 @@
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/head/soft/mime = 2,
 		/obj/item/clothing/head/utility/chefhat = 2,
-		/obj/item/clothing/under/rank/civilian/chef = 2,
-		/obj/item/clothing/under/rank/civilian/chef/skirt = 2,
+		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
+		/obj/item/clothing/under/costume/buttondown/skirt/service = 2,
 		/obj/item/clothing/under/rank/civilian/cookjorts = 2,
 		/obj/item/clothing/under/suit/waiter = 2,
 		/obj/item/clothing/suit/apron/chef = 2,
@@ -456,9 +457,12 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/purpsuit = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/purpsuit/skirt = 1,
 		/obj/item/clothing/suit/toggle/lawyer/purple = 1,
+		/obj/item/clothing/under/costume/buttondown/slacks/service = 1,
+		/obj/item/clothing/under/costume/buttondown/skirt/service = 1,
+		/obj/item/clothing/suit/toggle/lawyer/black = 1,
+		/obj/item/clothing/suit/toggle/lawyer/greyscale = 1,
 		/obj/item/clothing/under/suit/black = 1,
 		/obj/item/clothing/under/suit/black/skirt = 1,
-		/obj/item/clothing/suit/toggle/lawyer/black = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/beige = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/beige/skirt = 1,
 		/obj/item/clothing/under/suit/black_really = 1,
