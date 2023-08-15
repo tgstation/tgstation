@@ -16,6 +16,15 @@
 
 	/// The amount of slime stacks that were applied, reduced by showering yourself under water.
 	var/slime_stacks = 10 // ~10 seconds of standing under a shower
+	/// Slime color, used for particles.
+	var/slime_color
+	/// Changes particle colors to rainbow, this overrides `slime_color`.
+	var/rainbow
+
+/datum/status_effect/slimed/on_creation(mob/living/new_owner, slime_color = COLOR_SLIME_GREY, rainbow = FALSE)
+	src.slime_color = slime_color
+	src.rainbow = rainbow
+	return ..()
 
 /datum/status_effect/slimed/on_apply()
 	if(owner.get_organic_health() <= MIN_HEALTH)
@@ -51,9 +60,20 @@
 	owner.adjustBruteLoss(rand(2,4) * seconds_between_ticks)
 
 	if(SPT_PROB(10, seconds_between_ticks))
-		to_chat(owner, span_userdanger("[pick("Your entire body screams with pain",
+		var/feedback_text = pick(list(
+			"Your entire body screams with pain",
 			"Your skin feels like it's coming off",
-			"Your body feels like it's melting together")] as the layer of slime eats away at you!"))
+			"Your body feels like it's melting together"
+		))
+		to_chat(owner, span_userdanger("[feedback_text] as the layer of slime eats away at you!"))
+
+/datum/status_effect/slimed/update_particles()
+	if(particle_effect)
+		return
+	// taste the rainbow
+	particle_effect = new(owner, rainbow ? /particles/slime/rainbow : /particles/slime)
+	if(!rainbow)
+		particle_effect.particles.color = "[slime_color]a0"
 
 /datum/status_effect/slimed/get_examine_text()
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in bubbling slime!")

@@ -138,7 +138,7 @@
 		if(istype(victim))
 			var/bio_protection = 100 - victim.getarmor(null, BIO)
 			if(prob(bio_protection))
-				victim.apply_status_effect(/datum/status_effect/slimed)
+				victim.apply_status_effect(/datum/status_effect/slimed, slime_colours_to_rgb[colour], colour == SLIME_TYPE_RAINBOW)
 
 		if(!silent)
 			visible_message(span_warning("[src] lets go of [buckled]!"), \
@@ -200,7 +200,7 @@
 			for(var/i in 1 to 4)
 				var/child_colour
 				if(mutation_chance >= 100)
-					child_colour = "rainbow"
+					child_colour = SLIME_TYPE_RAINBOW
 				else if(prob(mutation_chance))
 					child_colour = slime_mutation[rand(1,4)]
 				else
