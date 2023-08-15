@@ -33,21 +33,25 @@
 	var/atom/current_target = controller.blackboard[target_key]
 	if (QDELETED(current_target))
 		return FALSE
+
 	var/mob/living/our_pawn = controller.pawn
 	our_pawn.face_atom(current_target)
+
 	var/turf/next_step = get_step_away(controller.pawn, current_target)
 	if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
 		set_movement_target(controller, target = next_step, new_movement = /datum/ai_movement/basic_avoidance/backstep)
-		return
+		return TRUE
+
 	var/list/all_dirs = GLOB.alldirs.Copy()
 	all_dirs -= get_dir(controller.pawn, next_step)
 	all_dirs -= get_dir(controller.pawn, current_target)
 	shuffle_inplace(all_dirs)
+
 	for (var/dir in all_dirs)
 		next_step = get_step(controller.pawn, dir)
 		if (!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
 			set_movement_target(controller, target = next_step, new_movement = /datum/ai_movement/basic_avoidance/backstep)
-			return
+			return TRUE
 	return FALSE
 
 /datum/ai_behavior/step_away/perform(seconds_per_tick, datum/ai_controller/controller)

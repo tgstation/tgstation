@@ -107,7 +107,6 @@
 
 /datum/status_effect/overwatch/on_remove()
 	UnregisterSignal(owner, forbidden_actions + list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
-	UnregisterSignal(owner, forbidden_actions)
 	QDEL_NULL(link)
 	REMOVE_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
 	if (!QDELETED(owner))
@@ -116,13 +115,17 @@
 
 /datum/status_effect/overwatch/Destroy()
 	QDEL_NULL(link)
-	if (isnull(watcher))
-		return ..()
-	if (!overwatch_triggered) // Side effects in Destroy? Well it turns out `on_remove` is also just called on Destroy. But only if the owner isn't deleting.
+	if (!isnull(watcher))  // Side effects in Destroy? Well it turns out `on_remove` is also just called on Destroy. But only if the owner isn't deleting.
+		INVOKE_ASYNC(src, PROC_REF(unregister_watcher))
+
+	return ..()
+
+/// Clean up our association with the caster of this ability.
+/datum/status_effect/overwatch/proc/unregister_watcher()
+	if (!overwatch_triggered)
 		watcher.Stun(2 SECONDS, ignore_canstun = TRUE)
 	UnregisterSignal(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	watcher = null
-	return ..()
 
 /// Uh oh, you did something within my threat radius, now we're going to shoot you
 /datum/status_effect/overwatch/proc/opportunity_attack()

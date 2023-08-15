@@ -19,7 +19,7 @@
 )
 	. = ..()
 	if (!length(attracted_typecache))
-		CRASH("Attempted to instantiage a [src] on [parent] which does not do anything.")
+		CRASH("Attempted to instantiate a [src] on [parent] which does not do anything.")
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 

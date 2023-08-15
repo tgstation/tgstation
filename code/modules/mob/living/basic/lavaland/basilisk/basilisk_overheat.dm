@@ -18,8 +18,8 @@
 	var/mob/living/basic/mining/basilisk/hot_stuff = owner
 	hot_stuff.visible_message(span_warning("[hot_stuff] is getting fired up!"))
 	hot_stuff.fully_heal()
-	hot_stuff.icon_living = "Basilisk_alert"
-	hot_stuff.icon_state = "Basilisk_alert"
+	hot_stuff.icon_living = "basilisk_alert"
+	hot_stuff.icon_state = "basilisk_alert"
 	hot_stuff.update_appearance(UPDATE_ICON_STATE)
 	hot_stuff.add_movespeed_modifier(/datum/movespeed_modifier/basilisk_overheat)
 	hot_stuff.set_projectile_type(/obj/projectile/basilisk_hot)
@@ -31,8 +31,8 @@
 /datum/status_effect/basilisk_overheat/on_remove()
 	. = ..()
 	var/mob/living/basic/mining/basilisk/hot_stuff = owner
-	hot_stuff.icon_living = "Basilisk"
-	hot_stuff.icon_state = "Basilisk"
+	hot_stuff.icon_living = "basilisk"
+	hot_stuff.icon_state = "basilisk"
 	hot_stuff.set_projectile_type(/obj/projectile/temp/watcher)
 
 	hot_stuff.update_appearance(UPDATE_ICON_STATE)

@@ -2,9 +2,9 @@
 /mob/living/basic/mining/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a diamond shell which absorbs heat. Its stare causes victims to freeze from the inside."
-	icon_state = "Basilisk"
-	icon_living = "Basilisk"
-	icon_dead = "Basilisk_dead"
+	icon_state = "basilisk"
+	icon_living = "basilisk"
+	icon_dead = "basilisk_dead"
 	speak_emote = list("chimes")
 	damage_coeff = list(BRUTE = 1, BURN = 0.1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	speed = 20
@@ -18,7 +18,7 @@
 	throw_blocked_message = "bounces off the shell of"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	ai_controller = /datum/ai_controller/basic_controller/Basilisk
+	ai_controller = /datum/ai_controller/basic_controller/basilisk
 	butcher_results = list(
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/stack/ore/diamond = 2,
@@ -42,7 +42,7 @@
 	heat_up() // Who would do this?
 
 /mob/living/basic/mining/basilisk/bullet_act(obj/projectile/bullet, def_zone, piercing_hit)
-	. = .. ()
+	. = ..()
 	if (istype(bullet, /obj/projectile/temp))
 		var/obj/projectile/temp/heat_bullet = bullet
 		if (heat_bullet.temperature < 0)
@@ -72,7 +72,7 @@
 /mob/living/basic/mining/basilisk/proc/set_projectile_type(projectile_type)
 	ranged_attacks.projectile_type = projectile_type
 
-/datum/ai_controller/basic_controller/Basilisk
+/datum/ai_controller/basic_controller/basilisk
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
