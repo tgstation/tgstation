@@ -62,12 +62,7 @@
 	if(isnull(console_ref))
 		find_console()
 
-	RegisterSignals(src, list(
-		COMSIG_MACHINERY_BROKEN,
-		COMSIG_MACHINERY_POWER_LOST,
-		),
-		PROC_REF(on_broken)
-	)
+	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(src, COMSIG_BITRUNNER_CLIENT_CONNECTED, PROC_REF(on_client_connected))
@@ -703,7 +698,7 @@
 		scrub_vdom() // used in unit testing, no need to wait for callbacks
 
 	cooling_off = TRUE
-	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * capacitor_coefficient), TIMER_UNIQUE|TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * capacitor_coefficient), TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 	update_appearance()
 
 	update_use_power(IDLE_POWER_USE)

@@ -149,7 +149,6 @@
 	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
 	..()
-	protect_occupant(occupant)
 	enter_matrix()
 
 /obj/machinery/netpod/default_pry_open(obj/item/crowbar, mob/living/pryer)
@@ -215,6 +214,24 @@
 
 	return FALSE
 
+/// Disconnects the occupant after a certain time so they aren't just hibernating in netpod stasis. A balance change
+/obj/machinery/netpod/proc/auto_disconnect()
+	if(isnull(occupant) || state_open)
+		return
+
+	if(!iscarbon(occupant))
+		return
+
+	var/mob/living/carbon/player = occupant
+
+	if(player.stat == DEAD)
+		open_machine()
+		return
+
+	player.playsound_local(src, 'sound/effects/splash.ogg', 60, TRUE)
+	to_chat(player, span_notice("The machine disconnects itself and begins to drain."))
+	unprotect_occupant(player)
+
 /**
  * ### Disconnect occupant
  * If this goes smoothly, should reconnect a receiving mind to the occupant's body
@@ -247,9 +264,12 @@
 	receiving.UnregisterSignal(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 	occupant_mind_ref = null
 
-	if(mob_occupant.stat >= HARD_CRIT)
+	if(mob_occupant.stat == DEAD)
 		open_machine()
 		return
+
+	var/heal_time = (mob_occupant.stat + 2) * 5
+	addtimer(CALLBACK(src, PROC_REF(auto_disconnect)), heal_time SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 	if(!forced)
 		return
@@ -295,6 +315,7 @@
 		avatar_ref = WEAKREF(current_avatar)
 
 	neo.set_static_vision(3 SECONDS)
+	protect_occupant(occupant)
 	if(!do_after(neo, 2 SECONDS, src))
 		return
 
@@ -398,15 +419,15 @@
 		return
 
 	target.AddComponent(/datum/component/netpod_healing, \
-		brute_heal = 0.4, \
-		burn_heal = 0.4, \
-		toxin_heal = 0.4, \
-		clone_heal = 0.4, \
-		blood_heal = 0.4, \
+		brute_heal = 1, \
+		burn_heal = 1, \
+		toxin_heal = 1, \
+		clone_heal = 1, \
+		blood_heal = 1, \
 	)
 
+	target.playsound_local(src, 'sound/effects/submerge.ogg', 20, TRUE)
 	target.extinguish_mob()
-	target.playsound_local(src, 'sound/effects/submerge.ogg', 50, TRUE)
 	update_use_power(ACTIVE_POWER_USE)
 
 /// Removes the in_netpod state

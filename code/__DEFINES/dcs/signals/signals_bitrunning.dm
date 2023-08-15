@@ -33,6 +33,3 @@
 
 /// from /obj/machinery/quantum_server/refreshParts(): (servo rating)
 #define COMSIG_BITRUNNER_SERVER_UPGRADED "bitrunner_server_upgraded"
-
-/// from /datum/mind/initial_avatar_connection(): (mob/living) as the pilot
-#define COMSIG_BITRUNNER_MONITOR_ON "bitrunner_monitor_on"
