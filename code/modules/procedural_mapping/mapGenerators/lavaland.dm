@@ -12,7 +12,7 @@
 	spawnableTurfs = list()
 	spawnableAtoms = list(
 		/mob/living/basic/mining/goliath = 10,
-		/mob/living/basic/mining/watcher/random = 10,
+		/obj/effect/spawner/random/watcher = 10,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 10,
 	)
 
