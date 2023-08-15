@@ -135,13 +135,13 @@
 	var/datum/mod_link/mod_link
 	var/starting_frequency = "NT"
 
-/obj/item/clothing/neck/link_scryer/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
+/obj/item/clothing/neck/link_scryer/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/high(src)
 	mod_link = new(src, starting_frequency, CALLBACK(src, PROC_REF(get_user)), CALLBACK(src, PROC_REF(can_call)), CALLBACK(src, PROC_REF(make_link_visual)), CALLBACK(src, PROC_REF(get_link_visual)), CALLBACK(src, PROC_REF(delete_link_visual)))
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/neck/link_scryer/Destroy()
+	QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -247,6 +247,13 @@
 	SIGNAL_HANDLER
 	on_user_set_dir_generic(mod_link, newdir)
 
+/obj/item/clothing/neck/link_scryer/loaded/Initialize(mapload)
+	. = ..()
+	cell = new /obj/item/stock_parts/cell/high(src)
+
+/obj/item/clothing/neck/link_scryer/loaded/charlie
+	starting_frequency = MODLINK_FREQ_CHARLIE
+
 /datum/mod_link
 	var/frequency
 	var/id = ""
@@ -314,6 +321,7 @@
 		holder.balloon_alert(user, "can't call!")
 		return
 	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
+	alert.desc = "[holder] ([id]) is calling you! Click this to respond to the call."
 	alert.caller_ref = WEAKREF(src)
 	alert.receiver_ref = WEAKREF(called)
 
