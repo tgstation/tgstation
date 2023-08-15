@@ -335,12 +335,25 @@
 
 	emp_act(EMP_HEAVY)
 
-//MEDIBOTS//
+//BOTS//
+/mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+	playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 35, TRUE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), get_turf(src), 0, 1, 2, 3), 2.5 SECONDS)
+
 /mob/living/simple_animal/bot/medbot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/static/list/worried_line = list(
 		MEDIBOT_VOICED_NO_SAD,
 		MEDIBOT_VOICED_OH_FUCK,
 	)
 	speak(pick(worried_line))
-	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), get_turf(src), 0, 1, 2, 3), 2.5 SECONDS)
+	. = ..()
+
+/obj/item/gun/energy/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if (do_after(ninja, 1 SECONDS, target = src))
+		hacking_module.mod.add_charge(cell.charge)
+		cell.charge = 0
+		update_appearance()
+		visible_message(span_warning("[ninja] drains the energy from the [src]!"))
+		do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
