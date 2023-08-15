@@ -21,6 +21,7 @@
 ///the specific_lift_id of the trams on birdshot station
 #define PRISON_TRAM "prison_tram"
 #define MAINTENANCE_TRAM "maint_tram"
+#define IMMOVABLE_ROD "immovable_rod"
 
 // Defines for update_lift_doors
 #define OPEN_DOORS "open"

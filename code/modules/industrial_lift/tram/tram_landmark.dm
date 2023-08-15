@@ -36,6 +36,15 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	platform_code = TRAMSTATION_EAST
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
 
+/obj/effect/landmark/tram/tramstation/rod
+	specific_lift_id = IMMOVABLE_ROD
+
+/obj/effect/landmark/tram/tramstation/rod/west
+	name = "Immovable Rod Landmark (West)"
+
+/obj/effect/landmark/tram/tramstation/rod/east
+	name = "Immovable Rod Landmark (East)"
+
 //birdshot
 
 /obj/effect/landmark/tram/birdshot/sec_wing

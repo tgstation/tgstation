@@ -183,6 +183,13 @@
 		return ..()
 
 	if(isobj(clong))
+		if(istramwall(clong) && !special_target)
+			switch(dir)
+				if(NORTHEAST, EAST, SOUTHEAST, NORTHWEST, WEST, SOUTHWEST)
+					rod_vs_tram_battle(clong)
+				else
+					return ..()
+
 		var/obj/clong_obj = clong
 		clong_obj.take_damage(INFINITY, BRUTE, NONE, TRUE, dir, INFINITY)
 		return ..()
@@ -290,3 +297,37 @@
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
 	destination_turf = get_edge_target_turf(src, direction)
 	SSmove_manager.move_towards(src, destination_turf)
+
+/**
+ * Rod will push the tram if it's travelling parallel east/west.
+ *
+ * Arguments:
+ * * clong - the object the rod hits (in this case, the tram)
+ */
+/obj/effect/immovablerod/proc/rod_vs_tram_battle(clong)
+	var/tram_turf = get_turf(clong)
+	var/obj/structure/industrial_lift/tram/industrial_lift = locate() in tram_turf
+
+	if(isnull(industrial_lift))
+		return
+
+	var/datum/lift_master/tram/lift_master = industrial_lift.lift_master_datum
+
+	if(isnull(lift_master))
+		return
+
+	var/obj/effect/landmark/tram/tramstation/rod/push_target
+	switch(dir)
+		if(EAST, NORTHEAST, SOUTHEAST)
+			for(var/obj/effect/landmark/tram/tramstation/rod/east/target in GLOB.tram_landmarks[IMMOVABLE_ROD])
+				push_target = target
+		if(WEST, SOUTHWEST, SOUTHEAST)
+			for(var/obj/effect/landmark/tram/tramstation/rod/west/target in GLOB.tram_landmarks[IMMOVABLE_ROD])
+				push_target = target
+
+	if(!push_target)
+		return
+
+	special_target = push_target
+	lift_master.tram_travel(push_target, TRUE)
+	go_for_a_walk(push_target)

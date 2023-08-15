@@ -11889,6 +11889,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
+"cXX" = (
+/obj/effect/landmark/tram/tramstation/rod/east,
+/turf/closed/wall,
+/area/station/hallway/secondary/exit/departure_lounge)
 "cYi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -12806,6 +12810,7 @@
 /area/station/medical/treatment_center)
 "dpG" = (
 /obj/machinery/holopad,
+/obj/effect/landmark/tram/tramstation/rod/west,
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "dpN" = (
@@ -187080,7 +187085,7 @@ qSm
 kIo
 qSm
 sXo
-fmy
+cXX
 aGs
 kIo
 fFx
