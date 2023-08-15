@@ -220,7 +220,7 @@
 	var/throw_verb
 
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
-	var/list/fantasy_modifications
+	var/list/fantasy_modifications = null
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
