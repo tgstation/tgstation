@@ -1,6 +1,7 @@
 // Unit test to make sure that there are no duplicate keys when modify_fantasy_variable is called when applying fantasy bonuses.
 // Also to make sure the fantasy_modifications list is null when fantasy bonuses are removed.
 /datum/unit_test/modify_fantasy_variable
+	priority = TEST_LONGER
 
 /datum/unit_test/modify_fantasy_variable/Run()
 	var/list/applicable_types = subtypesof(/obj/item) - uncreatables
