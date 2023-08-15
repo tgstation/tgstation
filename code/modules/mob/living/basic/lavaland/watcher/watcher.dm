@@ -17,7 +17,6 @@
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	ai_controller = /datum/ai_controller/basic_controller/watcher
-	faction = list(FACTION_WATCHER)
 	butcher_results = list(
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/stack/ore/diamond = 2,
