@@ -285,8 +285,8 @@
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		if(SPT_PROB(10, seconds_per_tick))
-			to_chatted = TRUE
 			iter_wound.tea_life_process(affected_mob, to_chatted)
+			to_chatted = TRUE
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
