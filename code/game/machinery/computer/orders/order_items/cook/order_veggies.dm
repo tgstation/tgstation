@@ -118,7 +118,7 @@
 
 /datum/orderable_item/veggies/jupitercup
 	name = "Jupiter Cup"
-	item_path = /obj/item/grown/jupitercup
+	item_path = /obj/item/food/grown/mushroom/jupitercup
 	cost_per_order = 50
 
 /datum/orderable_item/veggies/kortanut
@@ -127,7 +127,7 @@
 
 /datum/orderable_item/veggies/sweetkortanut
 	name = "Sweet Korta Nut"
-	item_path = /obj/item/food/grown/sweetkortanut
+	item_path = /obj/item/food/grown/korta_nut/sweet
 	cost_per_order = 50
 
 /datum/orderable_item/veggies/orange
@@ -139,7 +139,7 @@
 	item_path = /obj/item/food/grown/citrus/lemon
 
 /datum/orderable_item/veggies/lime
- 	name = "Lime"
+	name = "Lime"
 	item_path = /obj/item/food/grown/citrus/lime
 
 /datum/orderable_item/veggies/wheat
@@ -174,7 +174,7 @@
 
 /datum/orderable_item/veggies/sweetpotato
 	name = "Sweet Potato"
-	item_path = /obj/item/food/grown/sweetpotato
+	item_path = /obj/item/food/grown/potato/sweet
 	cost_per_order = 50
 
 /datum/orderable_item/veggies/pineapple
@@ -183,7 +183,7 @@
 
 /datum/orderable_item/veggies/redonion
 	name = "Red Onion"
-	item_path = /obj/item/food/grown/redonion
+	item_path = /obj/item/food/grown/onion/red
 	cost_per_order = 50
 
 /datum/orderable_item/veggies/tochtause
