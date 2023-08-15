@@ -6,7 +6,7 @@
 	LAZYADD(mod_link.holder.update_on_z, link_visual)
 	link_visual.appearance_flags |= KEEP_TOGETHER
 	link_visual.makeHologram(0.75)
-	mod_link.visual_overlays = user.overlays.Copy()
+	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
 	link_visual.add_overlay(mod_link.visual_overlays)
 	mod_link.visual = link_visual
 	mod_link.holder.become_hearing_sensitive(REF(mod_link))
@@ -38,7 +38,7 @@
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
 	var/atom/other_visual = mod_link.get_other().visual
-	if(newdir == null)
+	if(!newdir) //can sometimes be null or 0
 		return
 	other_visual.setDir(SOUTH)
 	other_visual.pixel_x = 0
@@ -89,6 +89,8 @@
 		mod_link.frequency = tool_frequency
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODLink Frequency", list("Copy", "Imprint"))
+		if(!user.is_holding(tool))
+			return
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
@@ -118,8 +120,10 @@
 	addtimer(CALLBACK(src, PROC_REF(update_link_visual)), 1 TICKS, TIMER_UNIQUE)
 
 /obj/item/mod/control/proc/update_link_visual()
+	if(QDELETED(mod_link.link_call))
+		return
 	mod_link.visual.cut_overlay(mod_link.visual_overlays)
-	mod_link.visual_overlays = wearer.overlays.Copy()
+	mod_link.visual_overlays = wearer.overlays - wearer.active_thinking_indicator
 	mod_link.visual.add_overlay(mod_link.visual_overlays)
 
 /obj/item/mod/control/proc/on_wearer_set_dir(atom/source, dir, newdir)
@@ -142,8 +146,14 @@
 
 /obj/item/clothing/neck/link_scryer/Destroy()
 	QDEL_NULL(cell)
+	QDEL_NULL(mod_link)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/clothing/neck/link_scryer/examine(mob/user)
+	. = ..()
+	. += span_notice("The battery charge reads [cell.percent()]%.")
+	. += span_notice("The MODLink ID reads [mod_link.id] and frequency reads [mod_link.frequency].")
 
 /obj/item/clothing/neck/link_scryer/dropped(mob/living/user)
 	. = ..()
@@ -239,8 +249,9 @@
 /obj/item/clothing/neck/link_scryer/proc/update_link_visual()
 	if(QDELETED(mod_link.link_call))
 		return
+	var/mob/living/user = loc
 	mod_link.visual.cut_overlay(mod_link.visual_overlays)
-	mod_link.visual_overlays = loc.overlays.Copy()
+	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
 	mod_link.visual.add_overlay(mod_link.visual_overlays)
 
 /obj/item/clothing/neck/link_scryer/proc/on_user_set_dir(atom/source, dir, newdir)
@@ -304,7 +315,7 @@
 /datum/mod_link/proc/call_link(datum/mod_link/called, mob/user)
 	if(!frequency)
 		return
-	if(!called)
+	if(QDELETED(called))
 		holder.balloon_alert(user, "invalid target!")
 		return
 	var/mob/living/link_user = get_user_callback.Invoke()
@@ -314,12 +325,16 @@
 		holder.balloon_alert(user, "user already in call!")
 		return
 	var/mob/living/link_target = called.get_user_callback.Invoke()
+	if(!link_target)
+		holder.balloon_alert(user, "invalid target!")
+		return
 	if(HAS_TRAIT(link_target, TRAIT_IN_CALL))
 		holder.balloon_alert(user, "target already in call!")
 		return
 	if(!can_call_callback.Invoke() || !called.can_call_callback.Invoke())
 		holder.balloon_alert(user, "can't call!")
 		return
+	link_target.playsound_local(get_turf(called.holder), 'sound/weapons/ring.ogg', 15, vary = TRUE)
 	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
 	alert.desc = "[holder] ([id]) is calling you! Click this to respond to the call."
 	alert.caller_ref = WEAKREF(src)
