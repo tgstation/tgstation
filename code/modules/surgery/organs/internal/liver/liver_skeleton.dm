@@ -43,7 +43,7 @@
 		if(chem.volume > 50)
 			organ_owner.reagents.remove_reagent(chem.type, (chem.volume - 50))
 			to_chat(organ_owner, span_warning("The excess milk is dripping off your bones!"))
-		organ_owner.heal_bodypart_damage(2.5 * REM * seconds_per_tick)
+		organ_owner.heal_bodypart_damage(2.5 * REM * seconds_per_tick, 2.5 * REM * seconds_per_tick)
 		for(var/datum/wound/iter_wound as anything in organ_owner.all_wounds)
 			iter_wound.on_xadone(1 * REM * seconds_per_tick)
 		return // Do normal metabolism
