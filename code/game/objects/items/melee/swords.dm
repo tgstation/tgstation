@@ -52,7 +52,9 @@
 	worn_icon_state = "broadsword"
 	force = 15
 	wound_bonus = 0
+	///Determines Icon State used by the item when it breaks.
 	var/broken_icon_state = "broadsword_broken"
+	///Determines Description used by the item when it breaks.
 	var/broken_desc = "A sharp steel forged sword. Its edge is rusty, corroded and broken."
 
 /obj/item/melee/sword/rust/Initialize(mapload)
