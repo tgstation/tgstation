@@ -1610,7 +1610,7 @@
 	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
 	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
 	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
-	wire["lights"] = !wires.is_cut(WIRE_LIGHT)
+	wire["lights"] = !wires.is_cut(WIRE_BOLTLIGHT)
 	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
 	wire["timing"] = !wires.is_cut(WIRE_TIMING)
 
