@@ -31,6 +31,7 @@
 	. = ..()
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	ranged_attacks = AddComponent(/datum/component/ranged_attacks, projectile_type = /obj/projectile/temp/watcher, projectile_sound = 'sound/weapons/pierce.ogg')
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_lava))
 
 /mob/living/basic/mining/basilisk/Destroy()
 	QDEL_NULL(ranged_attacks)
@@ -53,8 +54,9 @@
 		return
 	heat_up()
 
-/mob/living/basic/mining/basilisk/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
+/// Are we standing in lava?
+/mob/living/basic/mining/basilisk/proc/check_lava()
+	SIGNAL_HANDLER
 	var/turf/open/lava/entered_lava = loc
 	if (!islava(entered_lava) || entered_lava.immunity_trait != TRAIT_LAVA_IMMUNE)
 		return
