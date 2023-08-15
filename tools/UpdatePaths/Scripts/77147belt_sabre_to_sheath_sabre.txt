@@ -1,0 +1,3 @@
+#comment This repaths the captains sabre sheath to being a subtype.
+
+/obj/item/storage/belt/sabre : /obj/item/storage/belt/sheath/sabre
