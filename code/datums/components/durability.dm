@@ -136,8 +136,7 @@
 
 	current_durability -= 1
 
-	if(current_durability > 0)
-		return
+	if(!isnull(max_durability) && current_durability == 0)
 		broken = TRUE
 
 		if (!isnull(broken_prefix))
