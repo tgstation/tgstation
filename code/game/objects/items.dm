@@ -1562,8 +1562,13 @@
 
 /// Modifies the fantasy variable
 /obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
-	if(LAZYACCESS(fantasy_modifications, variable_key) != null)
+	var/result = LAZYACCESS(fantasy_modifications, variable_key)
+	if(!isnull(result))
+		if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+			return result // we are immune to your foul magicks you inferior wizard, we keep our bonuses
+
 		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
+
 	var/intended_target = value + bonus
 	value = max(minimum, intended_target)
 
@@ -1575,9 +1580,13 @@
 /// Returns the original fantasy variable value
 /obj/item/proc/reset_fantasy_variable(variable_key, current_value)
 	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+	if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+		return modification // we are immune to your foul magicks you inferior wizard, we keep our bonuses
+
 	LAZYREMOVE(fantasy_modifications, variable_key)
-	if(!modification)
+	if(isnull(modification))
 		return current_value
+
 	return current_value - modification
 
 /obj/item/proc/apply_fantasy_bonuses(bonus)
