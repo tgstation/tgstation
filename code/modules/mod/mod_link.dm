@@ -406,7 +406,7 @@
 			continue
 		callers["[link.holder] ([id])"] = id
 	if(!length(callers))
-		calling_link.holder.balloon_alert(user, "no targets on freq [frequency]!")
+		calling_link.holder.balloon_alert(user, "no targets on freq [calling_link.frequency]!")
 		return
 	var/chosen_link = tgui_input_list(user, "Choose ID to call from [calling_link.frequency] frequency", "MODLink", callers)
 	if(!chosen_link)
