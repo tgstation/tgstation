@@ -82,7 +82,7 @@
 	mood_change = -10
 	timeout = 8 MINUTES
 
-/datum/mood_event/dismembered/add_effects(var/obj/item/bodypart/limb)
+/datum/mood_event/dismembered/add_effects(obj/item/bodypart/limb)
 	if(limb)
 		description = "AHH! I WAS USING THAT [full_capitalize(limb.plaintext_zone)]"
 
@@ -91,7 +91,7 @@
 	mood_change = -3
 	timeout = 60 SECONDS
 
-/datum/mood_event/reattachment/add_effects(var/obj/item/bodypart/limb)
+/datum/mood_event/reattachment/add_effects(obj/item/bodypart/limb)
 	if(limb)
 		description = "Ouch! My [limb.plaintext_zone] feels like I feel asleep on it."
 
