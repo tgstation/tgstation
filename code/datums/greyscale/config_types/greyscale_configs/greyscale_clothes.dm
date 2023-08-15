@@ -423,6 +423,24 @@
 	name = "Oversized Jacket (Worn)"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
 
+/datum/greyscale_config/jacket_lawyer
+	name = "Formal Suit Jacket"
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jacket_lawyer.json'
+
+/datum/greyscale_config/jacket_lawyer/worn
+	name = "Formal Suit Jacket (Worn)"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+
+/datum/greyscale_config/overalls
+	name = "Overalls"
+	icon_file = 'icons/obj/clothing/suits/utility.dmi'
+	json_config = 'code/datums/greyscale/json_configs/overalls.json'
+
+/datum/greyscale_config/overalls/worn
+	name = "Overalls (Worn)"
+	icon_file = 'icons/mob/clothing/suits/utility.dmi'
+
 //
 // SHOES
 //
