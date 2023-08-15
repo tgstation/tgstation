@@ -210,10 +210,10 @@
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(
 		/obj/item/food/rationpack,
-		/obj/item/ammo_box/a762,
-		/obj/item/ammo_box/a762/surplus,
-		/obj/item/storage/toolbox/ammobox/a762,
-		/obj/item/storage/toolbox/ammobox/a762/surplus,
+		/obj/item/ammo_box/strilka310,
+		/obj/item/ammo_box/strilka310/surplus,
+		/obj/item/storage/toolbox/ammobox/strilka310,
+		/obj/item/storage/toolbox/ammobox/strilka310/surplus,
 		/obj/item/storage/toolbox/maint_kit,
 		/obj/item/clothing/suit/armor/vest/russian,
 		/obj/item/clothing/head/helmet/rus_helmet,
@@ -233,7 +233,7 @@
 		new item(our_crate)
 
 /datum/supply_pack/imports/moistnuggets
-	name = "Refurbished Mosin Nagant Crate"
+	name = "Refurbished Sakhno Precision Rifle Crate"
 	desc = "Hello Comrade Operative. You need gun? You hate garbage we sell to station normally? \
 		Then we have the perfect weapon for you! Special price for good friends! \
 		We don't have enough spare ammo, so you'll have to pick up the weapon of \
