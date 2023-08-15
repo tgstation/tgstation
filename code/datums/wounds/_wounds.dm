@@ -92,6 +92,10 @@
 	/// What flags apply to this wound
 	var/wound_flags = (FLESH_WOUND | BONE_WOUND | ACCEPTS_GAUZE)
 
+	/// What biological_state flags a limb must have to receive this wound
+	var/required_limb_biostate = NONE
+	var/requires_all_biostates = FALSE
+
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)
@@ -118,12 +122,12 @@
  * * wound_source: The source of the wound, such as a weapon.
  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED) || (L.owner.status_flags & GODMODE))
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED) || (L.owner.status_flags & GODMODE))
 		qdel(src)
 		return
 
 	// Checks for biological state, to ensure only valid wounds are applied on the limb
-	if(((wound_flags & BONE_WOUND) && !(L.biological_state & BIO_BONE)) || ((wound_flags & FLESH_WOUND) && !(L.biological_state & BIO_FLESH)))
+	if (!(L.biological_state & required_limb_biostate))
 		qdel(src)
 		return
 
@@ -361,7 +365,7 @@
 /datum/wound/proc/still_exists()
 	return (!QDELETED(src) && limb)
 
-/// When our parent bodypart is hurt
+/// When our parent bodypart is hurt.
 /datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction)
 	return
 
@@ -427,9 +431,43 @@
 	return .
 
 /datum/wound/proc/get_wound_description(mob/user)
-	. = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
-	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
-	return .
+	var/desc
+
+	if ((wound_flags & ACCEPTS_GAUZE) && limb.current_gauze)
+		var/sling_condition = get_gauze_condition()
+		desc = "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
+	else
+		desc = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
+
+	desc = modify_desc_before_span(desc)
+
+	return get_desc_intensity(desc)
+
+/datum/wound/proc/modify_desc_before_span(desc)
+	SHOULD_BE_PURE(TRUE)
+
+	return desc
+
+/datum/wound/proc/get_gauze_condition()
+	SHOULD_BE_PURE(TRUE)
+	if (!limb.current_gauze)
+		return null
+
+	switch(limb.current_gauze.absorption_capacity)
+		if(0 to 1.25)
+			return "just barely"
+		if(1.25 to 2.75)
+			return "loosely"
+		if(2.75 to 4)
+			return "mostly"
+		if(4 to INFINITY)
+			return "tightly"
+
+/datum/wound/proc/get_desc_intensity(desc)
+	SHOULD_BE_PURE(TRUE)
+	if (severity > WOUND_SEVERITY_MODERATE)
+		return span_bold("[desc]!")
+	return "[desc]."
 
 /datum/wound/proc/get_scanner_description(mob/user)
 	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"

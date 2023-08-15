@@ -46,10 +46,26 @@
 /// While someone has determination in their system, their bleed rate is slightly reduced
 #define WOUND_DETERMINATION_BLEED_MOD 0.85
 
+// ~biology defines
+// What kind of biology a limb has, and what wounds it can suffer
+/// golems and androids, cannot suffer any wounds
+#define BIO_INORGANIC NONE
+/// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
+#define BIO_BONE (1<<0)
+/// nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds
+#define BIO_FLESH (1<<1)
+/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_BONE and BIO_FLESH
+#define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
+#define BIO_ROBOTIC (1<<2)
+
 // ~wound global lists
 // list in order of highest severity to lowest
 GLOBAL_LIST_INIT(global_wound_types, list(
-	WOUND_BLUNT = list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate),
+	WOUND_BLUNT = list(
+		"[BIO_BONE]" = list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/moderate),
+		//"[BIO_ARTIFICIAL]" = list() // cheap prosthetics
+		"[BIO_ROBOTIC]" = list(/datum/wound/blunt/robotic/critical, /datum/wound/blunt/robotic/severe, /datum/wound/blunt/robotic/moderate) // cyborg limbs
+	),
 	WOUND_SLASH = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate),
 	WOUND_PIERCE = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
 	WOUND_BURN = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate),
@@ -57,9 +73,9 @@ GLOBAL_LIST_INIT(global_wound_types, list(
 
 // every single type of wound that can be rolled naturally, in case you need to pull a random one
 GLOBAL_LIST_INIT(global_all_wound_types, list(
-	/datum/wound/blunt/critical,
-	/datum/wound/blunt/severe,
-	/datum/wound/blunt/moderate,
+	/datum/wound/blunt/bone/critical,
+	/datum/wound/blunt/bone/severe,
+	/datum/wound/blunt/bone/moderate,
 	/datum/wound/slash/critical,
 	/datum/wound/slash/severe,
 	/datum/wound/slash/moderate,
@@ -106,19 +122,6 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define BODYPART_MANGLED_BONE (1<<0)
 #define BODYPART_MANGLED_FLESH (1<<1)
 #define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_BONE | BODYPART_MANGLED_FLESH)
-
-
-// ~biology defines
-// What kind of biology a limb has, and what wounds it can suffer
-/// golems and androids, cannot suffer any wounds
-#define BIO_INORGANIC NONE
-/// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
-#define BIO_BONE (1<<0)
-/// nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds
-#define BIO_FLESH (1<<1)
-/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_BONE and BIO_FLESH
-#define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
-
 
 // ~wound flag defines
 /// If this wound requires having the BIO_FLESH biological_state on the limb

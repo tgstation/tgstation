@@ -1,0 +1,2 @@
+1. Convert wound_flags to required_limb_biostate
+2. Convert all wounds to further abstracted versions (/wound/burn -> /wound/burn/flesh)

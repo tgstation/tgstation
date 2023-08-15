@@ -955,7 +955,7 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
 				if(IS_ORGANIC_LIMB(squish_part))
-					var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
+					var/type_wound = pick(list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/moderate))
 					squish_part.force_wound_upwards(type_wound, wound_source = "crushed by [src]")
 				else
 					squish_part.receive_damage(brute=30)

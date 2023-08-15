@@ -12,6 +12,7 @@
 	treatable_tool = TOOL_CAUTERY
 	base_treat_time = 3 SECONDS
 	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE)
+	required_limb_biostate = BIO_FLESH
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow

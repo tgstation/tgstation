@@ -167,20 +167,20 @@
 
 
 // bones
-/datum/status_effect/wound/blunt
+/datum/status_effect/wound/blunt/bone
 
-/datum/status_effect/wound/blunt/on_apply()
+/datum/status_effect/wound/blunt/bone/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
 	on_swap_hands()
 
-/datum/status_effect/wound/blunt/on_remove()
+/datum/status_effect/wound/blunt/bone/on_remove()
 	. = ..()
 	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
 	var/mob/living/carbon/wound_owner = owner
 	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
-/datum/status_effect/wound/blunt/proc/on_swap_hands()
+/datum/status_effect/wound/blunt/bone/proc/on_swap_hands()
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/wound_owner = owner
@@ -189,7 +189,7 @@
 	else
 		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
-/datum/status_effect/wound/blunt/nextmove_modifier()
+/datum/status_effect/wound/blunt/bone/nextmove_modifier()
 	var/mob/living/carbon/C = owner
 
 	if(C.get_active_hand() == linked_limb)
@@ -198,12 +198,23 @@
 	return 1
 
 // blunt
-/datum/status_effect/wound/blunt/moderate
+/datum/status_effect/wound/blunt/bone/moderate
 	id = "disjoint"
-/datum/status_effect/wound/blunt/severe
+/datum/status_effect/wound/blunt/bone/severe
 	id = "hairline"
-/datum/status_effect/wound/blunt/critical
+/datum/status_effect/wound/blunt/bone/critical
 	id = "compound"
+
+/datum/status_effect/wound/blunt/robotic/moderate
+	id = "unsecure"
+
+/datum/status_effect/wound/blunt/robotic/severe
+	id = "unsecure"
+
+/datum/status_effect/wound/blunt/robotic/critical
+	id = "unsecure"
+
+/datum
 // slash
 /datum/status_effect/wound/slash/moderate
 	id = "abrasion"

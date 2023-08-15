@@ -11,6 +11,7 @@
 	processes = TRUE
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE)
+	required_limb_biostate = BIO_FLESH
 
 	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
 

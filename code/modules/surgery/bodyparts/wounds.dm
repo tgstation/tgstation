@@ -82,7 +82,10 @@
 		dismembering.apply_dismember(src, woundtype, outright = TRUE, attack_direction = attack_direction)
 		return
 
-	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
+	var/list/datum/wound/possible_wounds = list()
+	for (var/wound_type as anything in GLOB.global_wound_types[woundtype])
+		if (biological_state & text2num(wound_type)) // must be stored as a string, sadly, due to how indexes and shit work
+			possible_wounds += GLOB.global_wound_types[woundtype][wound_type]
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -94,10 +97,10 @@
 				break
 
 	//cycle through the wounds of the relevant category from the most severe down
-	for(var/datum/wound/possible_wound as anything in wounds_checking)
+	for(var/datum/wound/possible_wound as anything in possible_wounds)
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)
-			if(existing_wound.type in wounds_checking)
+			if(existing_wound.type in possible_wounds)
 				if(existing_wound.severity >= initial(possible_wound.severity))
 					return
 				else
