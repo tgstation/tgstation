@@ -134,7 +134,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/anti_interrupt
-	name = "RCD stronger deconstruction designs upgrade"
+	name = "RCD anti disruption designs upgrade"
 	desc = "Prevents interruption of RCD construction and deconstruction."
 	id = "rcd_upgrade_anti_interrupt"
 	build_type = PROTOLATHE
