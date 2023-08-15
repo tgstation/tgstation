@@ -2616,7 +2616,7 @@
 /datum/reagent/consumable/ethanol/rice_beer
 	name = "Rice Beer"
 	description = "A light, rice-based lagered beer popular on Mars. Considered a hate crime against Bavarians under the Reinheitsgebot Act of 1516."
-	boozepwr = 20
+	boozepwr = 5
 	color = "#664300"
 	quality = DRINK_NICE
 	taste_description = "mild carbonated malt"
@@ -2625,7 +2625,7 @@
 /datum/reagent/consumable/ethanol/shochu
 	name = "Shochu"
 	description = "Also known as soju or baijiu, this drink is made from fermented rice, much like sake, but at a generally higher proof making it more similar to a true spirit."
-	boozepwr = 20
+	boozepwr = 45
 	color = "#DDDDDD"
 	quality = DRINK_NICE
 	taste_description = "stiff rice wine"
@@ -2634,7 +2634,7 @@
 /datum/reagent/consumable/ethanol/yuyake
 	name = "Yūyake"
 	description = "A sweet melon liqueur from Japan. Considered a relic of the 1980s by most, it has some niche use in cocktail making, in part due to its bright red colour."
-	boozepwr = 20
+	boozepwr = 40
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "sweet melon"
@@ -2643,7 +2643,7 @@
 /datum/reagent/consumable/ethanol/coconut_rum
 	name = "Coconut Rum"
 	description = "The distilled essence of the beach. Tastes like bleach-blonde hair and suncream."
-	boozepwr = 20
+	boozepwr = 21
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "coconut rum"
