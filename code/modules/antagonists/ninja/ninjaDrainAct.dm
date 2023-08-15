@@ -337,6 +337,9 @@
 
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 2))
+		return
+
 	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
 	playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 35, TRUE)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), get_turf(src), 0, 1, 2, 3), 2.5 SECONDS)
@@ -350,10 +353,12 @@
 	. = ..()
 
 /obj/item/gun/energy/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if (do_after(ninja, 1 SECONDS, target = src))
-		hacking_module.mod.add_charge(cell.charge)
-		cell.charge = 0
-		update_appearance()
-		visible_message(span_warning("[ninja] drains the energy from the [src]!"))
-		do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+	if(!do_after(ninja, 1 SECONDS, target = src))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	hacking_module.mod.add_charge(cell.charge)
+	cell.charge = 0
+	update_appearance()
+	visible_message(span_warning("[ninja] drains the energy from the [src]!"))
+	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
