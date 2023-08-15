@@ -863,6 +863,11 @@
 	. = ..()
 	atom_storage.set_holdable(
 		list(
+			/obj/item/claymore,
+			/obj/item/claymore/weak,
+			/obj/item/claymore/weak/ceremonial,
+			/obj/item/melee/cultblade,
+			/obj/item/melee/moonlight_greatsword,
 			/obj/item/melee/sword,
 			/obj/item/melee/sword/gold,
 			/obj/item/melee/sword/rust,
@@ -870,32 +875,28 @@
 			/obj/item/melee/sword/rust/claymore,
 			/obj/item/melee/sword/rust/claymoregold,
 			/obj/item/melee/sword/rust/cultblade,
-			/obj/item/claymore,
-			/obj/item/claymore/weak,
-			/obj/item/claymore/weak/ceremonial,
-			/obj/item/nullrod/claymore,
-			/obj/item/nullrod/claymore/glowing,
-			/obj/item/nullrod/claymore/darkblade,
 			/obj/item/melee/sword/claymore,
 			/obj/item/melee/sword/claymore/darkblade,
-			/obj/item/melee/cultblade,
 			/obj/item/melee/sword/reforged,
 			/obj/item/melee/sword/reforged/shitty,
-			/obj/item/melee/moonlight_greatsword,
-		), generate_can_hold_subtypes = FALSE
+			/obj/item/nullrod/claymore,
+			/obj/item/nullrod/claymore/darkblade,
+			/obj/item/nullrod/claymore/glowing,
+		),
+		generate_can_hold_subtypes = FALSE
 	)
 
 /obj/item/storage/belt/sheath/scabard/full
-	var/swordtype = list(/obj/item/melee/sword = 20,
-		/obj/item/melee/sword/gold = 20,
-		/obj/item/melee/sword/rust = 160,
-		/obj/item/melee/sword/rust/gold = 160,
-		/obj/item/melee/sword/rust/claymore = 160,
-		/obj/item/melee/sword/rust/claymoregold = 160,
-		/obj/item/melee/sword/rust/cultblade = 160,
+	var/swordtype = list(/obj/item/melee/sword/rust = 80,
+		/obj/item/melee/sword/rust/claymore = 80,
+		/obj/item/melee/sword/rust/claymoregold = 80,
+		/obj/item/melee/sword/rust/cultblade = 80,
+		/obj/item/melee/sword/rust/gold = 80,
 		/obj/item/claymore/weak/ceremonial = 60,
 		/obj/item/melee/sword/claymore = 40,
 		/obj/item/melee/sword/claymore/darkblade = 40,
+		/obj/item/melee/sword = 20,
+		/obj/item/melee/sword/gold = 20,
 		/obj/item/melee/sword/reforged = 9,
 		/obj/item/melee/sword/reforged/shitty = 1,)
 
