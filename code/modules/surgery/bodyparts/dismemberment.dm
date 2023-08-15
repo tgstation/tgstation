@@ -352,7 +352,7 @@
 		LAZYADD(new_limb_owner.all_scars, scar)
 
 	if(new_limb_owner.mob_mood.has_mood_of_category("dismembered_[body_zone]"))
-		new_limb_onwer.clear_mood_event("dismembered_[body_zone]")
+		new_limb_owner.clear_mood_event("dismembered_[body_zone]")
 		new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 
 	update_bodypart_damage_state()

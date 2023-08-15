@@ -89,7 +89,7 @@
 /datum/mood_event/reattachment
 	description = "Ouch! My limb feels like I feel asleep on it."
 	mood_change = -3
-	timeout = 60 SECONDS
+	timeout = 2 MINUTES
 
 /datum/mood_event/reattachment/add_effects(obj/item/bodypart/limb)
 	if(limb)
