@@ -28,7 +28,7 @@
 
 	else
 		animate(owner, alpha = sneak_alpha, time = animation_time)
-		owner.balloon_alert(owner, "you blend into the environment...")
+		owner.balloon_alert(owner, "you blend into the environment")
 		ADD_TRAIT(owner, TRAIT_SNEAK, name)
 
 	return TRUE
