@@ -519,6 +519,8 @@
 		obj_flags &= ~CAN_BE_HIT
 
 /obj/effect/constructing_effect/update_name(updates)
+	. = ..()
+
 	if (status == RCD_DECONSTRUCT)
 		name = "deconstruction effect"
 	else
