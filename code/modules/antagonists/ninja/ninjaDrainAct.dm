@@ -337,7 +337,7 @@
 
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 2))
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 3))
 		return
 
 	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
@@ -352,6 +352,7 @@
 	speak(pick(worried_line))
 	. = ..()
 
+//ENERGY WEAPONS//
 /obj/item/gun/energy/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!do_after(ninja, 1 SECONDS, target = src))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -362,3 +363,12 @@
 	visible_message(span_warning("[ninja] drains the energy from the [src]!"))
 	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//VENDING MACHINES//
+/obj/machinery/vending/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 2))
+		return
+
+	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+	wires.on_pulse(WIRE_THROW)
+	visible_message(span_warning("[ninja] fires an arc of electricity from their gloves at [src], overloading it!"))
