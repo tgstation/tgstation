@@ -220,17 +220,14 @@
 		return
 
 	if(!iscarbon(occupant))
+		open_machine()
 		return
 
 	var/mob/living/carbon/player = occupant
 
-	if(player.stat == DEAD)
-		open_machine()
-		return
-
 	player.playsound_local(src, 'sound/effects/splash.ogg', 60, TRUE)
 	to_chat(player, span_notice("The machine disconnects itself and begins to drain."))
-	unprotect_occupant(player)
+	open_machine()
 
 /**
  * ### Disconnect occupant
