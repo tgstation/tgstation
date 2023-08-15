@@ -233,7 +233,10 @@
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
-	subtract_charge((charge_drain + malfunctioning_charge_drain)*seconds_per_tick)
+	var/link_charge_drain = 0
+	if(mod_link.link_call)
+		link_charge_drain = DEFAULT_CHARGE_DRAIN * 0.25
+	subtract_charge((charge_drain + link_charge_drain + malfunctioning_charge_drain) * seconds_per_tick)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && SPT_PROB(5, seconds_per_tick))

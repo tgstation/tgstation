@@ -385,6 +385,7 @@ const SuitStatusSection = (props, context) => {
           <Button
             icon={'wifi'}
             color={link_call ? 'good' : 'default'}
+            disabled={!link_id}
             content={
               link_call
                 ? 'Calling (' + link_call + ')'

@@ -131,12 +131,49 @@
 	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
+	var/obj/item/stock_parts/cell/cell
 	var/datum/mod_link/mod_link
 	var/starting_frequency = "NT"
 
 /obj/item/clothing/neck/link_scryer/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
+	cell = new /obj/item/stock_parts/cell/high(src)
 	mod_link = new(src, starting_frequency, CALLBACK(src, PROC_REF(get_user)), CALLBACK(src, PROC_REF(can_call)), CALLBACK(src, PROC_REF(make_link_visual)), CALLBACK(src, PROC_REF(get_link_visual)), CALLBACK(src, PROC_REF(delete_link_visual)))
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/neck/link_scryer/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/neck/link_scryer/dropped(mob/living/user)
+	. = ..()
+	mod_link.end_call()
+
+/obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
+	if(!mod_link.link_call)
+		return
+	cell.use(min(30 * seconds_per_tick, cell.charge))
+
+/obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, params)
+	. = ..()
+	if(cell || !istype(attacked_by, /obj/item/stock_parts/cell))
+		return
+	if(!user.transferItemToLoc(attacked_by, src))
+		return
+	cell = attacked_by
+	balloon_alert(user, "installed [cell.name]")
+
+/obj/item/clothing/neck/link_scryer/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
+		cell = null
+
+/obj/item/clothing/neck/link_scryer/attack_hand_secondary(mob/user, list/modifiers)
+	if(!cell)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	balloon_alert(user, "removed [cell.name]")
+	user.put_in_hands(cell)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/neck/link_scryer/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
 	if(!multitool_check_buffer(user, tool))
@@ -163,15 +200,18 @@
 		. += mutable_appearance('icons/mob/clothing/neck.dmi', "modlink_active")
 
 /obj/item/clothing/neck/link_scryer/ui_action_click(mob/user)
-	call_link(user, mod_link)
+	if(mod_link.link_call)
+		mod_link.end_call()
+	else
+		call_link(user, mod_link)
 
 /obj/item/clothing/neck/link_scryer/proc/get_user()
-	var/mob/living/user = loc
-	return istype(user) ? user : null
+	var/mob/living/carbon/user = loc
+	return istype(user) && user.wear_neck == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
-	return istype(user) && user.stat < DEAD
+	return istype(user) && cell.charge && user.stat < DEAD
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
@@ -261,6 +301,8 @@
 		holder.balloon_alert(user, "invalid target!")
 		return
 	var/mob/living/link_user = get_user_callback.Invoke()
+	if(!link_user)
+		return
 	if(HAS_TRAIT(link_user, TRAIT_IN_CALL))
 		holder.balloon_alert(user, "user already in call!")
 		return
@@ -271,7 +313,9 @@
 	if(!can_call_callback.Invoke() || !called.can_call_callback.Invoke())
 		holder.balloon_alert(user, "can't call!")
 		return
-	new /datum/mod_link_call(src, called)
+	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
+	alert.caller_ref = WEAKREF(src)
+	alert.receiver_ref = WEAKREF(called)
 
 /datum/mod_link/proc/end_call()
 	QDEL_NULL(link_call)
@@ -338,5 +382,26 @@
 		callers["[link.holder] ([id])"] = id
 	if(!length(callers))
 		calling_link.holder.balloon_alert(user, "no available targets!")
+		return
 	var/chosen_link = tgui_input_list(user, "Choose ID to call from [calling_link.frequency] frequency", "MODLink", callers)
 	calling_link.call_link(GLOB.mod_link_ids[callers[chosen_link]], user)
+
+/atom/movable/screen/alert/modlink_call
+	name = "MODLink Call Incoming"
+	desc = "Someone is calling you! Click this to respond to the call."
+	icon_state = "called"
+	timeout = 10 SECONDS
+	var/datum/weakref/caller_ref
+	var/datum/weakref/receiver_ref
+
+/atom/movable/screen/alert/modlink_call/Click(location, control, params)
+	. = ..()
+	if(usr != owner)
+		return
+	var/datum/mod_link/caller = caller_ref.resolve()
+	var/datum/mod_link/receiver = receiver_ref.resolve()
+	if(!caller || !receiver)
+		return
+	if(caller.link_call || receiver.link_call)
+		return
+	new /datum/mod_link_call(caller, receiver)
