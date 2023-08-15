@@ -36,7 +36,8 @@
 	living_owner.face_atom(target)
 	living_owner.Stun(overwatch_duration, ignore_canstun = TRUE)
 	target.apply_status_effect(/datum/status_effect/overwatch, overwatch_duration, owner, projectile_type, projectile_sound)
-	return ..()
+	StartCooldown()
+	return TRUE
 
 /// Status effect which tracks whether our overwatched mob moves or acts
 /datum/status_effect/overwatch
@@ -58,7 +59,7 @@
 	var/overwatch_triggered = FALSE
 	/// Signals which trigger a hostile response
 	var/static/list/forbidden_actions = list(
-		COMSIG_MOB_ABILITY_STARTED,
+		COMSIG_MOB_ABILITY_FINISHED,
 		COMSIG_MOB_ATTACK_HAND,
 		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_ITEM_ATTACK,
@@ -81,25 +82,33 @@
 /datum/status_effect/overwatch/on_apply()
 	. = ..()
 	if (!.)
-		return
+		return FALSE
 	ADD_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
 	owner.do_alert_animation()
 	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
 	link = owner.Beam(watcher, icon_state = "r_beam", override_target_pixel_x = 0)
 	RegisterSignals(owner, forbidden_actions, PROC_REF(opportunity_attack))
-	RegisterSignals(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_watcher_died))
+	RegisterSignals(owner, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_participant_died))
+	RegisterSignals(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_participant_died))
 
 /datum/status_effect/overwatch/on_remove()
+	UnregisterSignal(owner, forbidden_actions + list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	UnregisterSignal(owner, forbidden_actions)
-	UnregisterSignal(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	QDEL_NULL(link)
 	REMOVE_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
-	if (!overwatch_triggered && !QDELETED(watcher))
-		watcher.Stun(2 SECONDS, ignore_canstun = TRUE) // Reward for standing still
-	watcher = null
 	if (!QDELETED(owner))
 		owner.apply_status_effect(/datum/status_effect/overwatch_immune)
+	return ..()
+
+/datum/status_effect/overwatch/Destroy()
+	QDEL_NULL(link)
+	if (isnull(watcher))
+		return ..()
+	if (!overwatch_triggered) // Side effects in Destroy? Well it turns out `on_remove` is also just called on Destroy. But only if the owner isn't deleting.
+		watcher.Stun(2 SECONDS, ignore_canstun = TRUE)
+	UnregisterSignal(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
+	watcher = null
 	return ..()
 
 /// Uh oh, you did something within my threat radius, now we're going to shoot you
@@ -112,7 +121,7 @@
 	INVOKE_ASYNC(watcher, TYPE_PROC_REF(/atom/, fire_projectile), projectile_type, owner, projectile_sound)
 
 /// Can't overwatch you if I don't exist
-/datum/status_effect/overwatch/proc/on_watcher_died()
+/datum/status_effect/overwatch/proc/on_participant_died()
 	SIGNAL_HANDLER
 	qdel(src)
 

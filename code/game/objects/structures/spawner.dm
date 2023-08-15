@@ -77,9 +77,9 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_types = list(
+		/mob/living/basic/mining/basilisk,
 		/mob/living/basic/mining/goliath/ancient,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/basic/mining/basilisk,
 		/mob/living/simple_animal/hostile/asteroid/goldgrub,
 		/mob/living/simple_animal/hostile/asteroid/hivelord,
 	)

@@ -11,13 +11,10 @@
 		/datum/reagent/water,
 	)
 
-/datum/status_effect/basilisk_overheat/on_creation(mob/living/new_owner, ...)
-	if (!istype(new_owner, /mob/living/basic/mining/basilisk))
-		return FALSE // Behaviour here is too specific to be reused
-	return ..()
-
 /datum/status_effect/basilisk_overheat/on_apply()
 	. = ..()
+	if (!. || !istype(owner, /mob/living/basic/mining/basilisk) || owner.stat != CONSCIOUS)
+		return FALSE
 	var/mob/living/basic/mining/basilisk/hot_stuff = owner
 	hot_stuff.visible_message(span_warning("[hot_stuff] is getting fired up!"))
 	hot_stuff.fully_heal()
@@ -74,6 +71,6 @@
 /// Projectile basilisks use when hot
 /obj/projectile/basilisk_hot
 	name = "energy blast"
-	icon_state= "chronobolt"
+	icon_state = "chronobolt"
 	damage = 40
 	damage_type = BRUTE

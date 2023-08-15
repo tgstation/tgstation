@@ -34,7 +34,7 @@
 
 /mob/living/basic/mining/basilisk/Destroy()
 	QDEL_NULL(ranged_attacks)
-	. = ..()
+	return ..()
 
 /mob/living/basic/mining/basilisk/welder_act(mob/living/user, obj/item/tool)
 	. = ..()

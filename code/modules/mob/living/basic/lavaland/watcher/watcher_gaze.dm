@@ -22,14 +22,16 @@
 	var/stage_timer
 
 /datum/action/cooldown/watcher_gaze/Activate(mob/living/target)
-	. = ..()
 	show_indicator_overlay("eye_open")
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(show_indicator_overlay), "eye_pulse"), animation_time, TIMER_STOPPABLE)
-	if (!do_after(owner, delay = wait_delay, target = owner))
+	StartCooldown(360 SECONDS, 360 SECONDS)
+	if (do_after(owner, delay = wait_delay, target = owner))
+		trigger_effect()
+	else
 		deltimer(stage_timer)
 		clear_current_overlay()
-		return
-	trigger_effect()
+	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/watcher_gaze/Destroy()
 	deltimer(stage_timer)

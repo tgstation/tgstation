@@ -29,7 +29,7 @@
 
 /datum/ai_planning_subtree/use_mob_ability/gaze/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/watcher = controller.pawn
-	if (watcher.health > watcher.maxHealth / 1.5) // When we're a little hurt
+	if (watcher.health > watcher.maxHealth * 0.66) // When we're a little hurt
 		return
 	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if (QDELETED(target))

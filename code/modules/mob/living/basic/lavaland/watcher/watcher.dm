@@ -34,7 +34,7 @@
 	/// Typepath of our gaze ability
 	var/gaze_attack = /datum/action/cooldown/watcher_gaze
 	// We attract and eat these things for some reason
-	var/wanted_objects = list(
+	var/list/wanted_objects = list(
 		/obj/item/stack/sheet/mineral/diamond,
 		/obj/item/stack/ore/diamond,
 		/obj/item/pen/survival,
@@ -46,7 +46,12 @@
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
 	AddComponent(/datum/component/basic_ranged_ready_overlay, overlay_state = eye_glow)
-	AddComponent(/datum/component/ranged_attacks, cooldown_time = ranged_cooldown, projectile_type = projectile_type, projectile_sound = shoot_sound)
+	AddComponent(\
+		/datum/component/ranged_attacks,\
+		cooldown_time = ranged_cooldown,\
+		projectile_type = projectile_type,\
+		projectile_sound = shoot_sound,\
+	)
 	AddComponent(\
 		/datum/component/magnet,\
 		attracted_typecache = wanted_objects,\
