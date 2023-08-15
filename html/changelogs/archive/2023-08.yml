@@ -533,3 +533,38 @@
   - qol: xenos rest verb now is a hud button instead
   - bugfix: If you shapeshift into a mob which can eat things such as player corpses,
       those things will fall out when you stop shapeshifting
+2023-08-15:
+  CliffracerX:
+  - bugfix: significantly more uniform types use digi sprites
+  - bugfix: wintercoat hoods aren't CS:GO errors now
+  - bugfix: 'added some fallbacks for costumes (todo: real digi robes for wiznerds)'
+  - qol: Moths use mutcolors now
+  - rscadd: Teshari species, WIP
+  - rscadd: Avali species, very WIP
+  - rscadd: languages for slugcats and avali
+  - image: updated clothing to better fit modern digisprites
+  - image: new cargo clothes
+  - rscadd: Goonstam core
+  - rscadd: Sprint button (costs stamina)
+  - image: Significantly revamped stamina UI
+  - image: Stamina UI tracks buffs and debuffs
+  - image: Stamina UI also includes hunger meter
+  - refactor: Tons of refactors under the hood
+  - refactor: Slowly switching all stamloss code to stamina.adjust
+  - config: Config setting for sprint speed now exists
+  - bugfix: compile errors
+  Melbert:
+  - qol: Minor mapping work to Metastation. Wallmounts, decal changes, etc - especially
+      around Medbay.
+  - qol: Remapped Meta's Morgue slightly.
+  NaakaKo:
+  - bugfix: fixed the Tram Pod Bay having no lights
+  - refactor: ice whelps have been refactored to basic mobs
+  - rscadd: ice whelps have a new dangerous ability which theyll use once their enraged
+      meter is full
+  - rscadd: Lockers, crates, and machines no longer block click attempts in adjacency
+      checks. Basically, you can reach tables cornered between lockers/machines.
+  - bugfix: fixes immerse overlays not being added the first time a mob enters a water
+      turf
+  ShizCalev:
+  - bugfix: Medbots made with tactical medical kits now have the correct skin
