@@ -497,7 +497,7 @@
 		retract(null, part)
 	if(active)
 		finish_activation(on = FALSE)
-	mod_link.end_call()
+		mod_link?.end_call()
 	var/mob/old_wearer = wearer
 	unset_wearer()
 	old_wearer.temporarilyRemoveItemFromInventory(src)
