@@ -1580,11 +1580,13 @@
 /// Returns the original fantasy variable value
 /obj/item/proc/reset_fantasy_variable(variable_key, current_value)
 	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
-	if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
-		return modification // we are immune to your foul magicks you inferior wizard, we keep our bonuses
+	var/modification_exists = !isnull(modification)
+
+	if(modification_exists && HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+		return modification // we are immune to your foul magicks you inferior wizard, we keep our bonuses the way they are
 
 	LAZYREMOVE(fantasy_modifications, variable_key)
-	if(isnull(modification))
+	if(!modification_exists)
 		return current_value
 
 	return current_value - modification
