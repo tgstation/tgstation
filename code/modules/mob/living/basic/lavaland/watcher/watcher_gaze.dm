@@ -1,7 +1,7 @@
 /**
  * Do something nasty to everyone nearby if they're looking at us.
  */
-/datum/action/cooldown/watcher_gaze
+/datum/action/cooldown/mob_cooldown/watcher_gaze
 	name = "Disorienting Gaze"
 	desc = "After a delay, flash everyone looking at you."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
@@ -10,6 +10,8 @@
 	overlay_icon_state = "bg_demon_border"
 	cooldown_time = 30 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	click_to_activate = FALSE
+	shared_cooldown = null
 	/// At what range do we check for vision?
 	var/effect_radius = 7
 	/// How long does it take to play our various animation stages
@@ -21,7 +23,7 @@
 	/// Timer until we go to the next stage
 	var/stage_timer
 
-/datum/action/cooldown/watcher_gaze/Activate(mob/living/target)
+/datum/action/cooldown/mob_cooldown/watcher_gaze/Activate(mob/living/target)
 	show_indicator_overlay("eye_open")
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(show_indicator_overlay), "eye_pulse"), animation_time, TIMER_STOPPABLE)
 	StartCooldown(360 SECONDS, 360 SECONDS)
@@ -33,18 +35,18 @@
 	StartCooldown()
 	return TRUE
 
-/datum/action/cooldown/watcher_gaze/Destroy()
+/datum/action/cooldown/mob_cooldown/watcher_gaze/Destroy()
 	deltimer(stage_timer)
 	clear_current_overlay()
 	return ..()
 
-/datum/action/cooldown/watcher_gaze/Remove(mob/removed_from)
+/datum/action/cooldown/mob_cooldown/watcher_gaze/Remove(mob/removed_from)
 	deltimer(stage_timer)
 	clear_current_overlay()
 	return ..()
 
 /// Do some effects to whoever is looking at us
-/datum/action/cooldown/watcher_gaze/proc/trigger_effect()
+/datum/action/cooldown/mob_cooldown/watcher_gaze/proc/trigger_effect()
 	deltimer(stage_timer)
 	show_indicator_overlay("eye_flash")
 	for (var/mob/living/viewer in viewers(effect_radius, owner))
@@ -64,49 +66,49 @@
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(hide_eye)), animation_time, TIMER_STOPPABLE)
 
 /// Do something bad to someone who was looking at us
-/datum/action/cooldown/watcher_gaze/proc/apply_effect(mob/living/viewer)
+/datum/action/cooldown/mob_cooldown/watcher_gaze/proc/apply_effect(mob/living/viewer)
 	if (!viewer.flash_act(intensity = 4, affect_silicon = TRUE, visual = TRUE, length = 3 SECONDS))
 		return FALSE
 	viewer.set_confusion_if_lower(12 SECONDS)
 	return TRUE
 
 /// Animate our effect out
-/datum/action/cooldown/watcher_gaze/proc/hide_eye()
+/datum/action/cooldown/mob_cooldown/watcher_gaze/proc/hide_eye()
 	show_indicator_overlay("eye_close")
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(clear_current_overlay)), animation_time, TIMER_STOPPABLE)
 
 /// Display an animated overlay over our head to indicate what's going on
-/datum/action/cooldown/watcher_gaze/proc/show_indicator_overlay(overlay_state)
+/datum/action/cooldown/mob_cooldown/watcher_gaze/proc/show_indicator_overlay(overlay_state)
 	clear_current_overlay()
 	current_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = overlay_state, pixel_x = -owner.pixel_x, pixel_y = 28)
 	for(var/client/add_to in GLOB.clients)
 		add_to.images += current_overlay
 
 /// Hide whatever overlay we are showing
-/datum/action/cooldown/watcher_gaze/proc/clear_current_overlay()
+/datum/action/cooldown/mob_cooldown/watcher_gaze/proc/clear_current_overlay()
 	if (!isnull(current_overlay))
 		remove_image_from_clients(current_overlay, GLOB.clients)
 	current_overlay = null
 
 /// Magmawing glare burns you
-/datum/action/cooldown/watcher_gaze/fire
+/datum/action/cooldown/mob_cooldown/watcher_gaze/fire
 	name = "Searing Glare"
 	desc = "After a delay, burn and stun everyone looking at you."
 
-/datum/action/cooldown/watcher_gaze/fire/apply_effect(mob/living/viewer)
+/datum/action/cooldown/mob_cooldown/watcher_gaze/fire/apply_effect(mob/living/viewer)
 	viewer.Paralyze(3 SECONDS)
 	viewer.adjust_fire_stacks(10)
 	viewer.ignite_mob()
 	return TRUE
 
 /// Icewing glare freezes you
-/datum/action/cooldown/watcher_gaze/ice
+/datum/action/cooldown/mob_cooldown/watcher_gaze/ice
 	name = "Cold Stare"
 	desc = "After a delay, freeze and repulse everyone looking at you."
 	/// Max distance to throw people looking at us
 	var/max_throw = 3
 
-/datum/action/cooldown/watcher_gaze/ice/apply_effect(mob/living/viewer)
+/datum/action/cooldown/mob_cooldown/watcher_gaze/ice/apply_effect(mob/living/viewer)
 	viewer.apply_status_effect(/datum/status_effect/freon/watcher/extended)
 	viewer.safe_throw_at(
 		target = get_edge_target_turf(owner, get_dir(owner, get_step_away(viewer, owner))),

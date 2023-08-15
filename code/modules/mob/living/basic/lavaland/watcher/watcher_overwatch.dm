@@ -1,16 +1,17 @@
 /**
  * Automatically shoot at a target if they do anything while this is active on them.
  */
-/datum/action/cooldown/watcher_overwatch
+/datum/action/cooldown/mob_cooldown/watcher_overwatch
 	name = "Overwatch"
 	desc = "Keep a close eye on the target's actions, automatically firing upon them if they act."
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "eye"
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
-	click_to_activate = TRUE
 	cooldown_time = 20 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	click_to_activate = TRUE
+	shared_cooldown = null
 	/// Furthest range we can activate ability at
 	var/max_range = 7
 	/// Type of projectile to fire
@@ -20,11 +21,13 @@
 	/// Time to watch for
 	var/overwatch_duration = 3 SECONDS
 
-/datum/action/cooldown/watcher_overwatch/New(Target, original)
+/datum/action/cooldown/mob_cooldown/watcher_overwatch/New(Target, original)
 	. = ..()
 	melee_cooldown_time = overwatch_duration
 
-/datum/action/cooldown/watcher_overwatch/PreActivate(atom/target)
+/datum/action/cooldown/mob_cooldown/watcher_overwatch/PreActivate(atom/target)
+	if (target == owner)
+		return
 	if (ismecha(target))
 		var/obj/vehicle/sealed/mecha/mech = target
 		var/list/drivers = mech.return_drivers()
@@ -37,7 +40,7 @@
 		return
 	return ..()
 
-/datum/action/cooldown/watcher_overwatch/Activate(mob/living/target)
+/datum/action/cooldown/mob_cooldown/watcher_overwatch/Activate(mob/living/target)
 	var/mob/living/living_owner = owner
 	living_owner.face_atom(target)
 	living_owner.Stun(overwatch_duration, ignore_canstun = TRUE)

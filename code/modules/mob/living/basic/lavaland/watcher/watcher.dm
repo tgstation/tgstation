@@ -32,7 +32,7 @@
 	/// Sound to play when we shoot
 	var/shoot_sound = 'sound/weapons/pierce.ogg'
 	/// Typepath of our gaze ability
-	var/gaze_attack = /datum/action/cooldown/watcher_gaze
+	var/gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze
 	// We attract and eat these things for some reason
 	var/list/wanted_objects = list(
 		/obj/item/stack/sheet/mineral/diamond,
@@ -59,12 +59,12 @@
 	)
 	update_appearance(UPDATE_OVERLAYS)
 
-	var/datum/action/cooldown/watcher_overwatch/overwatch = new(src)
+	var/datum/action/cooldown/mob_cooldown/watcher_overwatch/overwatch = new(src)
 	overwatch.Grant(src)
 	overwatch.projectile_type = projectile_type
 	ai_controller.set_blackboard_key(BB_WATCHER_OVERWATCH, overwatch)
 
-	var/datum/action/cooldown/watcher_gaze/gaze = new gaze_attack(src)
+	var/datum/action/cooldown/mob_cooldown/watcher_gaze/gaze = new gaze_attack(src)
 	gaze.Grant(src)
 	ai_controller.set_blackboard_key(BB_WATCHER_GAZE, gaze)
 
@@ -101,7 +101,7 @@
 	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
 	health = 215
 	projectile_type = /obj/projectile/temp/watcher/magmawing
-	gaze_attack = /datum/action/cooldown/watcher_gaze/fire
+	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/fire
 	crusher_loot = /obj/item/crusher_trophy/blaster_tubes/magma_wing
 	crusher_drop_chance = 100 // There's only going to be one of these per round throw them a bone
 
@@ -115,7 +115,7 @@
 	maxHealth = 170
 	health = 170
 	projectile_type = /obj/projectile/temp/watcher/icewing
-	gaze_attack = /datum/action/cooldown/watcher_gaze/ice
+	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/ice
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1)
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	crusher_drop_chance = 100
