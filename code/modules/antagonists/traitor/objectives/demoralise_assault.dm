@@ -122,12 +122,12 @@
 
 /datum/traitor_objective/target_player/assault/proc/on_target_qdeleted()
 	SIGNAL_HANDLER
-	if(objective_state == OBJECTIVE_STATE_INACTIVE)
-		//don't take an objective target of someone who is already obliterated
-		fail_objective()
+
+	//don't take an objective target of someone who is already obliterated
+	fail_objective()
 
 /datum/traitor_objective/target_player/assault/proc/on_target_death()
 	SIGNAL_HANDLER
-	if(objective_state == OBJECTIVE_STATE_INACTIVE)
-		//don't take an objective target of someone who is already dead
-		fail_objective()
+
+	//don't take an objective target of someone who is already dead
+	fail_objective()
