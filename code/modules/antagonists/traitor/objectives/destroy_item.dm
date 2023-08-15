@@ -46,7 +46,6 @@
 	telecrystal_reward = list(0, 1)
 
 	possible_items = list(
-		/datum/objective_item/steal/traitor/donut_box,
 		/datum/objective_item/steal/traitor/rpd,
 		/datum/objective_item/steal/traitor/space_law,
 		/datum/objective_item/steal/traitor/granted_stamp,
