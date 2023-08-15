@@ -429,7 +429,7 @@
 
 /// Removes the in_netpod state
 /obj/machinery/netpod/proc/unprotect_occupant(mob/living/target)
-	var/datum/component/netpod_healing/healing_eff = target.GetComponent(/datum/component/netpod_healing)
+	var/datum/component/netpod_healing/healing_eff = target?.GetComponent(/datum/component/netpod_healing)
 	if(healing_eff)
 		qdel(healing_eff)
 
