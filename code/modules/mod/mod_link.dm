@@ -240,7 +240,7 @@
 	. = ..()
 	if(speaker != loc)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 3)
 
 /obj/item/clothing/neck/link_scryer/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -315,7 +315,7 @@
 /datum/mod_link/proc/call_link(datum/mod_link/called, mob/user)
 	if(!frequency)
 		return
-	if(QDELETED(called))
+	if(!istype(called))
 		holder.balloon_alert(user, "invalid target!")
 		return
 	var/mob/living/link_user = get_user_callback.Invoke()
@@ -393,6 +393,8 @@
 	receiver.delete_visual_callback.Invoke()
 
 /proc/call_link(mob/user, datum/mod_link/calling_link)
+	if(!calling_link.frequency)
+		return
 	var/list/callers = list()
 	for(var/id in GLOB.mod_link_ids)
 		var/datum/mod_link/link = GLOB.mod_link_ids[id]
@@ -404,9 +406,11 @@
 			continue
 		callers["[link.holder] ([id])"] = id
 	if(!length(callers))
-		calling_link.holder.balloon_alert(user, "no available targets!")
+		calling_link.holder.balloon_alert(user, "no targets on freq [frequency]!")
 		return
 	var/chosen_link = tgui_input_list(user, "Choose ID to call from [calling_link.frequency] frequency", "MODLink", callers)
+	if(!chosen_link)
+		return
 	calling_link.call_link(GLOB.mod_link_ids[callers[chosen_link]], user)
 
 /atom/movable/screen/alert/modlink_call
