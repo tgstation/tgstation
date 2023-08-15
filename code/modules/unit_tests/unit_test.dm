@@ -224,8 +224,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list = list(
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
-		//Nother template type, doesn't like being created with no seed
-		/obj/item/food/grown,
 		//And another
 		/obj/item/slimecross/recurring,
 		//This should be obvious
