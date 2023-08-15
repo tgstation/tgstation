@@ -101,7 +101,7 @@
 
 /obj/item/gun/ballistic/automatic/laser/ctf/marksman/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 1.5)
+	AddComponent(/datum/component/scope, range_modifier = 1.7)
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman
@@ -223,7 +223,7 @@
 	greyscale_config = /datum/greyscale_config/ctf_light
 	greyscale_config_worn = /datum/greyscale_config/ctf_light/worn
 	slowdown = -0.25
-	max_charges = 50
+	max_charges = 30
 
 // RED TEAM GUNS
 
