@@ -56,23 +56,21 @@
 /datum/component/durability/Initialize(
 	broken = FALSE,
 	broken_prefix,
-	broken_name,
-	broken_desc,
+	broken_name = "broken item",
+	broken_desc = "broken item description",
 	broken_embedding,
-	max_durability,
-	worn_durability,
-	current_durability,
-	worn_icon_state,
-	broken_icon_state,
-	break_sound,
-	broken_force,
-	broken_force_decrease,
-	broken_throw_force,
-	broken_throw_force_decrease,
-	broken_throw_range,
-	broken_block_chance,
-	broken_message,
-	broken_w_class
+	max_durability = 0,
+	current_durability = 0,
+	broken_icon_state = "broken_item",
+	break_sound = 'sound/effects/glassbr1.ogg',
+	broken_force = 0,
+	broken_force_decrease = 0,
+	broken_throw_force = 0,
+	broken_throw_force_decrease = 0,
+	broken_throw_range = 0,
+	broken_block_chance = 0,
+	broken_message = "It broke",
+	broken_w_class = WEIGHT_CLASS_TINY
 )
 	if (broken)
 		src.broken = broken
