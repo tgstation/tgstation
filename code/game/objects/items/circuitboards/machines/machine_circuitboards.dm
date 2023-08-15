@@ -955,15 +955,6 @@
 		/datum/stock_part/servo = 1,
 		/datum/stock_part/micro_laser = 1)
 
-/obj/item/circuitboard/machine/experimentor
-	name = "E.X.P.E.R.I-MENTOR"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/rnd/experimentor
-	req_components = list(
-		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/servo = 2,
-		/datum/stock_part/micro_laser = 2)
-
 /obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

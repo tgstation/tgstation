@@ -338,16 +338,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/experimentor
-	name = "E.X.P.E.R.I-MENTOR Board"
-	desc = "The circuit board for an E.X.P.E.R.I-MENTOR."
-	id = "experimentor"
-	build_path = /obj/item/circuitboard/machine/experimentor
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/bepis
 	name = "B.E.P.I.S. Board"
 	desc = "The circuit board for a B.E.P.I.S."

@@ -46,7 +46,6 @@
 		"earmuffs",
 		"electropack",
 		"experi_scanner",
-		"experimentor",
 		"extinguisher",
 		"fax",
 		"fishing_rod",
