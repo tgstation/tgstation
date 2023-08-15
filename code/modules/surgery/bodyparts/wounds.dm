@@ -17,7 +17,7 @@
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
 	switch(biological_state)
 		// if we're bone only, all cutting attacks go straight to the bone
-		if(BIO_BONE)
+		if(BIO_BONE, BIO_ROBOTIC)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
 				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.6)
