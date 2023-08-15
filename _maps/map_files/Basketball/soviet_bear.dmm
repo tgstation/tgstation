@@ -6,9 +6,9 @@
 /area/centcom/basketball)
 "aw" = (
 /obj/structure/table,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -353,9 +353,9 @@
 /area/centcom/basketball)
 "Bd" = (
 /obj/structure/table,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "BJ" = (
