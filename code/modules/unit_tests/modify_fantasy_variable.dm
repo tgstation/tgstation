@@ -10,7 +10,7 @@
 		// objects will have fantasy bonuses inherent to their type (like butterdogs and the slippery component), so we need to take this into account
 		var/number_of_extant_bonuses = LAZYLEN(object.fantasy_modifications)
 
-		#define TEST_SUCCESS LAZYLEN(object.fantasy_modifications) == number_of_extant_bonuses
+#define TEST_SUCCESS LAZYLEN(object.fantasy_modifications) == number_of_extant_bonuses
 
 		// Try positive
 		object.apply_fantasy_bonuses(bonus = 5)
