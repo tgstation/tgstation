@@ -418,9 +418,6 @@
 		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
-	var/obj/item/clothing/has_clown_mask = src.get_item_by_slot(ITEM_SLOT_MASK)
-	var/obj/item/organ/external/snout/has_snout = src.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT)
-
 	if(on_fire)
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
@@ -440,6 +437,16 @@
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[helper] shakes you to get you up!"))
+	else if(helper.zone_selected == BODY_ZONE_PRECISE_MOUTH) //Boops
+		if(HAS_TRAIT(src, TRAIT_BADTOUCH) & prob(50))
+			helper.visible_message(span_notice("[src] doesn't let [helper] touch their face!"), span_notice("[src] doesn't let you near their face!"))
+		else if(istype(get_item_by_slot(ITEM_SLOT_MASK), /obj/item/clothing/mask/gas/clown_hat))
+			playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+			helper.visible_message(span_notice("[helper] honks [src]'s nose"), span_notice("You honk [src]'s nose."))
+		else if(src.bodytype & BODYTYPE_SNOUTED)
+			helper.visible_message(span_notice("[helper] boops [src]'s snout."), span_notice("You boop [src] on the snout."))
+		else
+			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the nose."))
 	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
 		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
@@ -448,16 +455,6 @@
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
-
-	else if(helper.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		if(has_clown_mask == obj/item/clothing/clown_mask)
-			//playsound(src, 'sound/misc/boop.ogg', 40, 0)
-			helper.visible_message(span_notice("[helper] honks [src]'s nose."), span_notice("You honk [src]'s nose."))
-		else if(has_snout == obj/item/organ/external/snout)
-			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the snout."))
-		else
-			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the nose."))
-
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/external/tail)))
 		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
