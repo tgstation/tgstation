@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Adds a unique medibot to the Syndicate Infiltrator. It doesn't like nukes - when one is armed, disarmed, or detonating, it says an unique line. Players can optionally enable personalities on it if they want to. Probably best to just let it stay on the shuttle though. (It's also in the Interdyne Pharmaceuticals ship, renamed)"
-  - bugfix: "Fixed an issue that made mapload medibots unable to load custom skins."

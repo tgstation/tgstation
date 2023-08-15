@@ -657,3 +657,47 @@
   - qol: xenos rest verb now is a hud button instead
   lizardqueenlexi:
   - bugfix: The modular receiver is now only printable from a hacked autolathe.
+2023-08-15:
+  ABS-Helmet:
+  - image: modified glass pane wall mount icon
+  Comxy:
+  - rscadd: Added big slappy
+  - image: Added big slappy parts and big slappy sprites
+  DeerJesus:
+  - bugfix: you can no longer tactially stealth-hide donuts in your right hand
+  FernandoJ8:
+  - bugfix: mob holders no longer bug out and harddel when put into evidence bags.
+  GoldenAlpharex:
+  - bugfix: The formatting on PDA messages displayed to observers is now back to what
+      it used to be, rather than being all bold.
+  - bugfix: PDA messages are now displayed to observers from dead players, and not
+      just dedicated observers.
+  Kapu1178:
+  - rscadd: Lockers, crates, and machines no longer block click attempts in adjacency
+      checks. Basically, you can reach tables cornered between lockers/machines.
+  Melbert:
+  - qol: Minor mapping work to Metastation. Wallmounts, decal changes, etc - especially
+      around Medbay.
+  - qol: Remapped Meta's Morgue slightly.
+  OrionTheFox:
+  - bugfix: fixed the Tram Pod Bay having no lights
+  ShizCalev:
+  - bugfix: Medbots made with tactical medical kits now have the correct skin
+  SmoSmoSmoSmok:
+  - refactor: ice whelps have been refactored to basic mobs
+  - rscadd: ice whelps have a new dangerous ability which theyll use once their enraged
+      meter is full
+  YehnBeep:
+  - bugfix: fixed missing seating at the All American Diner
+  carlarctg:
+  - rscadd: Adds a unique medibot to the Syndicate Infiltrator. It doesn't like nukes
+      - when one is armed, disarmed, or detonating, it says an unique line. Players
+      can optionally enable personalities on it if they want to. Probably best to
+      just let it stay on the shuttle though. (It's also in the Interdyne Pharmaceuticals
+      ship, renamed)
+  - bugfix: Fixed an issue that made mapload medibots unable to load custom skins.
+  vinylspiders:
+  - bugfix: fixes a bug that can cause emotes to stop working if a client is being
+      created or deleted
+  - bugfix: fixes immerse overlays not being added the first time a mob enters a water
+      turf
