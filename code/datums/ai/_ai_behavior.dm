@@ -36,3 +36,21 @@
 	if (controller.movement_target_source != type)
 		return
 	controller.set_movement_target(type, null)
+
+/**
+ * Wrapper for easily performing an "attack click" on an atom.
+ * Intended for use in AI controllers.
+ *
+ * * clicking_what - The atom to click on.
+ * * combat_mode - The combat mode to set the mob to while performing the click. If null, uses the mob's current combat mode.
+ * * optional_params - Optional parameters to pass to the mob's ClickOn() proc.
+ */
+/mob/living/proc/ai_controller_click(atom/clicking_what, combat_mode, optional_params)
+	if(isnull(combat_mode))
+		return ClickOn(clicking_what, optional_params)
+
+	var/pre_combat = combat_mode
+	set_combat_mode(combat_mode)
+	. = ClickOn(clicking_what, optional_params)
+	set_combat_mode(pre_combat)
+	return .

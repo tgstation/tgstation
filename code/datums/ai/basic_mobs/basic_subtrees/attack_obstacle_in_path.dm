@@ -59,11 +59,11 @@
 	for (var/obj/object as anything in next_step.contents)
 		if (!can_smash_object(basic_mob, object))
 			continue
-		basic_mob.ClickOn(object)
+		basic_mob.ai_controller_click(object, combat_mode = TRUE)
 		return TRUE
 
 	if (can_attack_turfs)
-		basic_mob.ClickOn(next_step)
+		basic_mob.ai_controller_click(next_step, combat_mode = TRUE)
 		return TRUE
 	return FALSE
 

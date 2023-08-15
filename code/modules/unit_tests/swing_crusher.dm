@@ -8,6 +8,6 @@
 	attacker.put_in_active_hand(crusher, forced = TRUE)
 	crusher.attack_self(attacker)
 
-	click_wrapper(attacker, run_loc_floor_top_right, list2params(list(RIGHT_CLICK = TRUE)))
+	click_wrapper(attacker, run_loc_floor_top_right, list2params(list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK)))
 
 	TEST_ASSERT(!crusher.charged, "Attacker failed to fire the kinetic crusher on right clicking a distant target")

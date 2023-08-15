@@ -5,7 +5,7 @@
 /datum/unit_test/knockoff_component/Run()
 	var/mob/living/carbon/human/wears_the_glasses = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/shoves_the_guy = allocate(/mob/living/carbon/human/consistent)
-	var/push_params = list2params(list(RIGHT_CLICK = TRUE))
+	var/push_params = list2params(list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
 
 	// No pre-existing items have a 100% chance of being knocked off,
 	// so we'll just apply it to a relatively generic item (glasses)

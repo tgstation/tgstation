@@ -110,7 +110,7 @@
 	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/penguin_egg/target_caught(mob/living/basic/hunter, obj/item/food/egg/target)
-	hunter.ClickOn(target)
+	hunter.ai_controller_click(target, combat_mode = FALSE)
 
 /mob/living/basic/pet/penguin/emperor
 	name = "emperor penguin"

@@ -200,7 +200,7 @@
 	if (QDELETED(fingers) || living_pawn.pulling != fingers)
 		finish_action(controller, succeeded = FALSE, target_key = target_key)
 		return
-	living_pawn.ClickOn(fingers)
+	living_pawn.ai_controller_click(fingers)
 	finish_action(controller, succeeded = TRUE, target_key = target_key)
 
 /datum/ai_behavior/hoard_fingers/finish_action(datum/ai_controller/controller, succeeded, target_key)

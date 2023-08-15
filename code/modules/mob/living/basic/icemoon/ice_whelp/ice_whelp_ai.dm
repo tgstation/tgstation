@@ -59,7 +59,7 @@
 		return
 
 	living_pawn.start_pulling(target)
-	living_pawn.melee_attack(target)
+	living_pawn.ai_controller_click(target, combat_mode = TRUE)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/cannibalize/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -100,7 +100,7 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	living_pawn.melee_attack(target)
+	living_pawn.ai_controller_click(target, combat_mode = TRUE)
 	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/sculpt_statue/finish_action(datum/ai_controller/controller, succeeded, target_key)

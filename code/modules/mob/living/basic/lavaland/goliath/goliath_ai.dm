@@ -109,7 +109,7 @@
 	var/mob/living/basic/basic_mob = controller.pawn
 	if(!basic_mob.CanReach(target_turf))
 		return
-	basic_mob.ClickOn(target_turf)
+	basic_mob.ai_controller_click(target_turf)
 	finish_action(controller, succeeded = TRUE)
 
 /datum/ai_behavior/goliath_dig/finish_action(datum/ai_controller/controller, succeeded, target_key)

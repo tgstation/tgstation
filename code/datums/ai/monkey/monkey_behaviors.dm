@@ -181,15 +181,19 @@
 		living_pawn.swap_hand()
 		weapon = living_pawn.get_active_held_item()
 
-	living_pawn.set_combat_mode(TRUE)
+	living_pawn.set_combat_mode(TRUE) // no shuffling
 
 	if(isnull(controller.blackboard[BB_MONKEY_GUN_WORKED]))
 		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE)
 
 	// attack with weapon if we have one
 	if(living_pawn.CanReach(target, weapon))
-		var/fake_params = list2params(list((disarm ? RIGHT_CLICK : LEFT_CLICK) = TRUE)) // Sets up params for either attacking or disarming
-		living_pawn.ClickOn(target, fake_params)
+		var/fake_params
+		if(disarm)
+			fake_params = list2params(list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
+		else
+			fake_params = list2params(list(RIGHT_CLICK = FALSE, BUTTON = LEFT_CLICK))
+		living_pawn.ai_controller_click(target, optional_params = fake_params)
 		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // We reset their memory of the gun being 'broken' if they accomplish some other attack
 
 	else if(weapon)
@@ -201,13 +205,13 @@
 			var/obj/item/gun/gun = locate() in living_pawn.held_items
 			var/can_shoot = gun?.can_shoot() || FALSE
 			if(isgun(weapon) && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
-				living_pawn.ClickOn(real_target)
+				living_pawn.ai_controller_click(real_target, combat_mode = FALSE)
 				controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot || prob(80)) // Only 20% likely to notice it didn't work
 				if(can_shoot)
 					controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
 		else
 			living_pawn.toggle_throw_mode()
-			living_pawn.ClickOn(real_target)
+			living_pawn.ai_controller_click(real_target)
 			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // 'worked'
 
 	// no de-aggro

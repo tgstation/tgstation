@@ -30,13 +30,7 @@
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	var/pre_combat = basic_mob.combat_mode
-	basic_mob.set_combat_mode(TRUE)
-	if(hiding_target) //Slap it!
-		basic_mob.ClickOn(hiding_target)
-	else
-		basic_mob.ClickOn(target)
-	basic_mob.set_combat_mode(pre_combat)
+	basic_mob.ai_controller_click(hiding_target || target, combat_mode = TRUE)
 
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -89,7 +83,7 @@
 			addtimer(callback, (i - 1) * burst_interval)
 		callback.Invoke()
 	else
-		basic_mob.ClickOn(final_target)
+		basic_mob.ai_controller_click(final_target)
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()

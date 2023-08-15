@@ -49,9 +49,6 @@
 	return TRUE
 
 /datum/status_effect/amok/tick(seconds_between_ticks)
-	var/prev_combat_mode = owner.combat_mode
-	owner.set_combat_mode(TRUE)
-
 	// If we're holding a gun, expand the range a bit.
 	// Otherwise, just look for adjacent targets
 	var/search_radius = isgun(owner.get_active_held_item()) ? 3 : 1
@@ -64,9 +61,7 @@
 
 	if(LAZYLEN(targets))
 		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
-		owner.ClickOn(pick(targets))
-
-	owner.set_combat_mode(prev_combat_mode)
+		owner.ai_controller_click(pick(targets), combat_mode = TRUE)
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"

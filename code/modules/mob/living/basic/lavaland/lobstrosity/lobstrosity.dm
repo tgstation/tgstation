@@ -73,13 +73,9 @@
 	if(!isliving(target) || !isbasicmob(source))
 		return
 	var/mob/living/basic/basic_source = source
-	var/mob/living/living_target = target
-	var/pre_combat = basic_source.combat_mode
-	basic_source.set_combat_mode(TRUE)
-	basic_source.ClickOn(living_target)
+	basic_source.ai_controller_click(target, combat_mode = TRUE)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
-	basic_source.start_pulling(living_target)
-	basic_source.set_combat_mode(pre_combat)
+	basic_source.start_pulling(target)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	. = ..()

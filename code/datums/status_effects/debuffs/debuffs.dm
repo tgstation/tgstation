@@ -611,8 +611,6 @@
 			owner.log_message("used [held_item] due to a Muscle Spasm", LOG_ATTACK)
 			held_item.attack_self(owner)
 		if(3)
-			owner.set_combat_mode(TRUE)
-
 			var/range = 1
 			if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
 				range = 7
@@ -623,14 +621,11 @@
 			if(LAZYLEN(targets))
 				to_chat(owner, span_warning("Your arm spasms!"))
 				owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
-				owner.ClickOn(pick(targets))
-			owner.set_combat_mode(FALSE)
+				owner.ai_controller_click(pick(targets), combat_mode = TRUE)
 		if(4)
-			owner.set_combat_mode(TRUE)
 			to_chat(owner, span_warning("Your arm spasms!"))
 			owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
-			owner.ClickOn(owner)
-			owner.set_combat_mode(FALSE)
+			owner.ai_controller_click(owner, combat_mode = TRUE)
 		if(5)
 			if(owner.incapacitated())
 				return

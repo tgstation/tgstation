@@ -359,8 +359,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/melee_weapon/New()
 	. = ..()
-	left_click_params = list2params(list(LEFT_CLICK = TRUE))
-	right_click_params = list2params(list(RIGHT_CLICK = TRUE))
+	left_click_params = list2params(list(LEFT_CLICK = TRUE, BUTTON = LEFT_CLICK))
+	right_click_params = list2params(list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
 
 /datum/attack_style/melee_weapon/check_pacifism(mob/living/attacker, obj/item/weapon)
 	return weapon.force > 0 && weapon.damtype != STAMINA

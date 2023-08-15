@@ -66,10 +66,7 @@
 		return
 	ADD_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
 	forget_target(target)
-	var/pre_combat = source.combat_mode
-	source.set_combat_mode(TRUE)
-	source.ClickOn(current_target)
-	source.set_combat_mode(pre_combat)
+	source.ai_controller_click(target, combat_mode = TRUE)
 
 /// The guy we're trying to attack moved, is he still in range?
 /datum/component/basic_mob_attack_telegraph/proc/target_moved(mob/living/target)

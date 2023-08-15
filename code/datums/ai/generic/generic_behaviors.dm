@@ -106,8 +106,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	pawn.set_combat_mode(FALSE)
-	pawn.ClickOn(target)
+	pawn.ai_controller_click(target, combat_mode = FALSE)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/give
@@ -250,7 +249,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
-	living_pawn.ClickOn(living_target, list())
+	living_pawn.ai_controller_click(living_target, combat_mode = TRUE)
 
 /// This behavior involves attacking a target.
 /datum/ai_behavior/follow

@@ -115,7 +115,7 @@
 	if(!basic_pawn.Adjacent(snack))
 		return
 
-	basic_pawn.ClickOn(snack) // snack attack!
+	basic_pawn.ai_controller_click(snack, combat_mode = FALSE) // snack attack!
 
 	if(QDELETED(snack)) // we ate it!
 		finish_action(controller, TRUE, target_key, delivery_key)

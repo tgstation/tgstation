@@ -300,7 +300,7 @@
 	toolspeed = 0.1
 	force = 30
 	throwforce = 20
-	block_chance = 30
+	blocking_ability = 2
 	throw_range = 2
 	demolition_mod = 2
 	armor_type = /datum/armor/giant_wrench
@@ -314,7 +314,7 @@
 	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = 3
-	attack_speed = 1.2 SECONDS
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
@@ -349,13 +349,12 @@
 	SIGNAL_HANDLER
 
 	usesound = (active ? 'sound/items/ratchet.ogg' : initial(usesound))
-	block_chance = (active ? 0 : initial(block_chance))
 	recoil_factor = (active ? 2 : initial(recoil_factor))
 	do_launch = (active ? FALSE : initial(do_launch))
 	tool_behaviour = (active ? TOOL_WRENCH : initial(tool_behaviour))
 	armour_penetration = (active ? 30 : initial(armour_penetration))
 	if(user)
-		balloon_alert(user, "folded Big Slappy [active ? "open" : "closed"]")
+		balloon_alert(user, "folded [active ? "open" : "closed"]")
 	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -369,5 +368,8 @@
 		target_mob.Knockdown(2 SECONDS)
 	var/body_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	user.apply_damage(force / recoil_factor, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
-	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
-	log_combat(user, user, "recoiled Big Slappy into")
+	to_chat(user, span_danger("The weight of [src] recoils!"))
+	log_combat(user, user, "recoiled [src] into")
+
+/obj/item/shovel/giant_wrench/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? DEFAULT_ITEM_DEFENSE_MULTIPLIER : blocking_ability
