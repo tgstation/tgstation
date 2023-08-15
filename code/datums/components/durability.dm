@@ -3,7 +3,7 @@
 /// Upon breaking, a number of effects can be applied to the item.
 /datum/component/durability
 	/// Whether the item has broken.
-	var/broken = FALSE
+	var/broken
 
 	/// The prefix applied to the item when it breaks.
 	var/broken_prefix = "broken"
@@ -54,7 +54,7 @@
 	var/broken_message
 
 /datum/component/durability/Initialize(
-	broken,
+	broken = FALSE,
 	broken_prefix,
 	broken_name,
 	broken_desc,
@@ -70,58 +70,57 @@
 	broken_throw_force,
 	broken_throw_force_decrease,
 	broken_throw_range,
-	list,
 	broken_block_chance,
 	broken_message,
 	broken_w_class
 )
-	if (!isnull(broken))
+	if (broken)
 		src.broken = broken
 
-	if (!isnull(broken_prefix))
+	if (broken_prefix)
 		src.broken_prefix = broken_prefix
 
-	if (!isnull(broken_name))
+	if (broken_name)
 		src.broken_name = broken_name
 
-	if (!isnull(broken_desc))
+	if (broken_desc)
 		src.broken_desc = broken_desc
 
-	if (!isnull(max_durability))
+	if (max_durability)
 		src.max_durability = max_durability
 		src.current_durability = max_durability
 
-	if (!isnull(current_durability))
+	if (current_durability)
 		src.current_durability = current_durability
 
-	if (!isnull(broken_icon_state))
+	if (broken_icon_state)
 		src.broken_icon_state = broken_icon_state
 
-	if (!isnull(break_sound))
+	if (break_sound)
 		src.break_sound = break_sound
 
-	if (!isnull(broken_force))
+	if (broken_force)
 		src.broken_force = broken_force
 
-	if (!isnull(broken_throw_force))
+	if (broken_throw_force)
 		src.broken_throw_force = broken_throw_force
 
-	if (!isnull(broken_throw_force_decrease))
+	if (broken_throw_force_decrease)
 		src.broken_throw_force_decrease = broken_throw_force_decrease
 
-	if (!isnull(broken_throw_range))
+	if (broken_throw_range)
 		src.broken_throw_range = broken_throw_range
 
-	if (!isnull(broken_embedding))
+	if (broken_embedding)
 		src.broken_embedding = broken_embedding
 
-	if (!isnull(broken_block_chance))
+	if (broken_block_chance)
 		src.broken_block_chance = broken_block_chance
 
-	if (!isnull(broken_message))
+	if (broken_message)
 		src.broken_message = broken_message
 
-	if (!isnull(broken_w_class))
+	if (broken_w_class)
 		src.broken_w_class = broken_w_class
 
 
