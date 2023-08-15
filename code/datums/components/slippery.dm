@@ -75,6 +75,7 @@
 	var/previous_lube_flags = LAZYACCESS(source.fantasy_modifications, "lube_flags")
 	if(!isnull(previous_lube_flags))
 		lube_flags = previous_lube_flags
+	LAZYREMOVE(source.fantasy_modifications, "lube_flags")
 
 /datum/component/slippery/proc/add_connect_loc_behalf_to_parent()
 	if(ismovable(parent))
