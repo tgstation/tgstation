@@ -23,7 +23,7 @@
 		// It's safest to go to the initial alpha of the mob.
 		// Otherwise we get permanent invisbility exploits.
 		animate(owner, alpha = initial(owner.alpha), time = animation_time)
-		owner.balloon_alert(owner, "you reveal yourself!")
+		owner.balloon_alert(owner, "you reveal yourself")
 		REMOVE_TRAIT(owner, TRAIT_SNEAK, name)
 
 	else
