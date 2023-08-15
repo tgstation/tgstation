@@ -152,7 +152,7 @@
 		/datum/component/durability, \
 		broken_name = "broken fake longsword", \
 		broken_icon_state = "reforged_broken", \
-		broken_desc = "A cheap piece of felinid forged trash.", \
+		broken_desc = "A cheap piece of felinid-forged trash.", \
 		max_durability = 1, \
 		break_sound = 'sound/effects/glassbr1.ogg', \
 		broken_force_decrease = 20, \
