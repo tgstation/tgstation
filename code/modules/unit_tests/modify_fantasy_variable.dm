@@ -2,18 +2,11 @@
 // Also to make sure the fantasy_modifications list is null when fantasy bonuses are removed.
 /datum/unit_test/modify_fantasy_variable
 
-TEST_FOCUS(/datum/unit_test/modify_fantasy_variable)
-
 /datum/unit_test/modify_fantasy_variable/Run()
 	var/list/applicable_types = subtypesof(/obj/item) - uncreatables
 
 	for(var/obj/item/path as anything in applicable_types)
 		var/obj/item/object = allocate(path)
-
-		if(istype(object, /obj/item/food/butterdog))
-			log_world("raaagh")
-
-
 		// objects will have fantasy bonuses inherent to their type (like butterdogs and the slippery component), so we need to take this into account
 		var/number_of_extant_bonuses = LAZYLEN(object.fantasy_modifications)
 
@@ -22,7 +15,6 @@ TEST_FOCUS(/datum/unit_test/modify_fantasy_variable)
 		// Try positive
 		object.apply_fantasy_bonuses(bonus = 5)
 		object.remove_fantasy_bonuses(bonus = 5)
-		ASSERT(TEST_SUCCESS, generate_failure_message(object))
 		TEST_ASSERT(TEST_SUCCESS, generate_failure_message(object))
 
 		// Then negative
