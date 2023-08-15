@@ -64,7 +64,8 @@ multiple modular subtrees with behaviors
 	if(idle_behavior)
 		idle_behavior = new idle_behavior()
 
-	PossessPawn(new_pawn)
+	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
+		PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
 	set_ai_status(AI_STATUS_OFF)
@@ -148,6 +149,9 @@ multiple modular subtrees with behaviors
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
+	if(isnull(pawn))
+		return // instantiated without an applicable pawn, fine
+
 	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -155,7 +159,6 @@ multiple modular subtrees with behaviors
 	pawn = null
 	if(destroy)
 		qdel(src)
-	return
 
 ///Returns TRUE if the ai controller can actually run at the moment.
 /datum/ai_controller/proc/able_to_run()

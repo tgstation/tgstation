@@ -89,7 +89,6 @@
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
-		"receiver",
 		"recorder",
 		"rglass",
 		"roll",
@@ -777,16 +776,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = 3000)
 
-/datum/techweb_node/regulated_bluespace
-	id = "regulated_bluespace"
-	display_name = "Regulated Bluespace Research"
-	description = "Bluespace technology using stable and balanced procedures. Required by galactic convention for public use."
-	prereq_ids = list("base")
-	design_ids = list(
-		"spaceship_navigation_beacon",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/unregulated_bluespace
 	id = "unregulated_bluespace"
 	display_name = "Unregulated Bluespace Research"
@@ -1228,6 +1217,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud
