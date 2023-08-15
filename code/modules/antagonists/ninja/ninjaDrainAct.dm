@@ -322,3 +322,25 @@
 		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
 		Knockdown(3 SECONDS)
 	return NONE
+
+//CAMERAS//
+/obj/machinery/camera/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!status)
+		balloon_alert(ninja, "camera offline!")
+		return
+
+	if(isEmpProof(TRUE))
+		balloon_alert(ninja, "camera is shielded!") //This wouldn't do anything otherwise so it's nice to have feedback
+		return
+
+	emp_act(EMP_HEAVY)
+
+//MEDIBOTS//
+/mob/living/simple_animal/bot/medbot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	var/static/list/worried_line = list(
+		MEDIBOT_VOICED_NO_SAD,
+		MEDIBOT_VOICED_OH_FUCK,
+	)
+	speak(pick(worried_line))
+	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), get_turf(src), 0, 1, 2, 3), 2.5 SECONDS)
