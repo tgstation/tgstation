@@ -4136,7 +4136,6 @@
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_wisdom.dm"
 #include "code\modules\mob\living\basic\heretic\fire_shark.dm"
 #include "code\modules\mob\living\basic\heretic\star_gazer.dm"
-#include "code\modules\mob\living\basic\jungle\jungle_mobs.dm"
 #include "code\modules\mob\living\basic\jungle\mega_arachnid\mega_arachnid.dm"
 #include "code\modules\mob\living\basic\jungle\mega_arachnid\mega_arachnid_abilities.dm"
 #include "code\modules\mob\living\basic\jungle\mega_arachnid\mega_arachnid_ai.dm"
