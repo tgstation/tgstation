@@ -16,6 +16,7 @@
 #define WIRE_BACKUP1 "Auxiliary Power 1"
 #define WIRE_BACKUP2 "Auxiliary Power 2"
 #define WIRE_BEACON "Beacon"
+#define WIRE_BOLTLIGHT "Bolt Lights"
 #define WIRE_BOLTS "Bolts"
 #define WIRE_BOOM "Boom Wire 1"
 #define WIRE_BOOM2 "Boom Wire 2"
@@ -30,7 +31,7 @@
 #define WIRE_IDSCAN "ID Scan"
 #define WIRE_INTERFACE "Interface"
 #define WIRE_LAWSYNC "AI Law Synchronization"
-#define WIRE_LIGHT "Bolt Lights"
+#define WIRE_LIGHT "Lights"
 #define WIRE_LIMIT "Limiter"
 #define WIRE_LOADCHECK "Load Check"
 #define WIRE_LOCKDOWN "Lockdown"
@@ -59,6 +60,7 @@
 #define WIRE_ZAP "High Voltage Circuit"
 #define WIRE_ZAP1 "High Voltage Circuit 1"
 #define WIRE_ZAP2 "High Voltage Circuit 2"
+#define WIRE_OVERCLOCK "Overclock"
 
 // Wire states for the AI
 #define AI_WIRE_NORMAL 0
