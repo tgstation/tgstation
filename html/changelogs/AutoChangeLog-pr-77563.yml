@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "multiple balloon alerts when the plumbing RCD is low on ammo"
-  - code_imp: "organized all plumbing designs into static lists for memory savings"
-  - refactor: "removed unused vars for further memory savings"
