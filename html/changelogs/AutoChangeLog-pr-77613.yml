@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "items no longer stay in your hands after their respective arm is dismembered"
