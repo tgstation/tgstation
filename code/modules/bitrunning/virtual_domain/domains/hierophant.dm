@@ -16,7 +16,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual_domain
 	can_be_cybercop = FALSE
-	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunner_loot/encrypted)
-	loot = list(/obj/structure/closet/crate/secure/bitrunner_loot/encrypted)
+	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
+	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 	health = 1400
 	maxHealth = 1400

@@ -37,7 +37,7 @@
 /obj/effect/bitrunning/loot_signal/proc/reveal()
 	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
 	var/turf/tile = get_turf(src)
-	var/obj/structure/closet/crate/secure/bitrunner_loot/encrypted/loot = new(tile)
+	var/obj/structure/closet/crate/secure/bitrunning/encrypted/loot = new(tile)
 	var/datum/effect_system/spark_spread/quantum/sparks = new(tile)
 	sparks.set_up(5, 1, get_turf(loot))
 	sparks.start()
