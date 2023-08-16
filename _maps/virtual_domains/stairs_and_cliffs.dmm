@@ -201,7 +201,7 @@
 /turf/open/cliff/snowrock/virtual_domain,
 /area/icemoon/underground/explored/virtual_domain)
 "N" = (
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
 /turf/open/floor/plating/snowed/smoothed,
 /area/icemoon/underground/explored/virtual_domain)
 "O" = (

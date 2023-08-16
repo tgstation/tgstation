@@ -341,12 +341,14 @@
 		return server
 
 	server = locate(/obj/machinery/quantum_server) in oview(4, src)
-	if(server)
-		server_ref = WEAKREF(server)
-		RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded), override = TRUE)
-		return server
+	if(isnull(server))
+		return
 
-	return
+	server_ref = WEAKREF(server)
+	RegisterSignal(server, COMSIG_BITRUNNER_SERVER_UPGRADED, PROC_REF(on_server_upgraded), override = TRUE)
+	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete), override = TRUE)
+
+	return server
 
 /// Creates a list of outfit entries for the UI.
 /obj/machinery/netpod/proc/make_outfit_collection(identifier, list/outfit_list)
@@ -375,6 +377,21 @@
 
 	if(occupant)
 		unprotect_and_signal()
+
+/// Puts points on the current occupant's card account
+/obj/machinery/netpod/proc/on_domain_complete(datum/source, atom/movable/crate, reward_points)
+	SIGNAL_HANDLER
+
+	if(isnull(occupant) || isnull(occupant_mind_ref) || !iscarbon(occupant))
+		return
+
+	var/mob/living/carbon/player = occupant
+
+	var/datum/bank_account/account = player.get_bank_account()
+	if(isnull(account))
+		return
+
+	account.bitrunning_points += reward_points
 
 /obj/machinery/netpod/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER

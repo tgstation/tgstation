@@ -867,7 +867,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Io" = (
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "IC" = (

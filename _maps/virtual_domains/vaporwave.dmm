@@ -211,7 +211,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Q" = (
 /obj/structure/window/spawner/directional/east,
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "R" = (

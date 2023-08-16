@@ -255,7 +255,7 @@
 	var/datum/outfit/to_wear = new outfit_path()
 
 	to_wear.suit_store = null
-	to_wear.belt = /obj/item/bitrunner_health_monitor
+	to_wear.belt = /obj/item/bitrunning_health_monitor
 	to_wear.glasses = null
 	to_wear.suit = null
 	to_wear.gloves = null
@@ -322,7 +322,7 @@
 	certificate.add_raw_text(get_completion_certificate())
 	certificate.update_appearance()
 
-	var/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/reward_crate = new(dest_turf, generated_domain, bonus)
+	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_crate = new(dest_turf, generated_domain, bonus)
 	reward_crate.manifest = certificate
 	reward_crate.update_appearance()
 
@@ -518,6 +518,7 @@
 			var/mob/living/creature = thing
 			if(creature.can_be_cybercop)
 				mutation_candidates += creature
+
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
@@ -526,13 +527,12 @@
 
 		if(istype(thing, /obj/effect/mob_spawn/corpse)) // corpses are valid targets too
 			var/obj/effect/mob_spawn/corpse/spawner = thing
-			if(isnull(spawner.mob_ref))
+			var/mob/living/creature = spawner.mob_ref?.resolve()
+
+			if(!creature?.can_be_cybercop)
 				continue
 
-			var/mob/living/creature = spawner.mob_ref.resolve()
-			if(creature?.can_be_cybercop)
-				mutation_candidates += creature
-
+			mutation_candidates += creature
 			qdel(spawner)
 
 	var/turf/goal_turfs = list()
@@ -544,8 +544,8 @@
 		if(istype(thing, /obj/effect/bitrunning/goal_turf)) // so there's a place to put the loot
 			var/turf/tile = get_turf(thing)
 			goal_turfs += tile
-			RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_send_turf_entered))
-			RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_send_turf_examined))
+			RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_goal_turf_entered))
+			RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_goal_turf_examined))
 			continue
 
 	if(!length(exit_turfs))
@@ -648,13 +648,13 @@
 		return
 
 /// Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.
-/obj/machinery/quantum_server/proc/on_send_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!istype(arrived, /obj/structure/closet/crate/secure/bitrunner_loot/encrypted))
+	if(!istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
 		return
 
-	var/obj/structure/closet/crate/secure/bitrunner_loot/encrypted/loot_crate = arrived
+	var/obj/structure/closet/crate/secure/bitrunning/encrypted/loot_crate = arrived
 	if(!istype(loot_crate))
 		return
 
@@ -667,11 +667,11 @@
 
 	spark_at_location(loot_crate)
 	qdel(loot_crate)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, arrived)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, arrived, generated_domain.reward_points)
 	generate_loot()
 
 /// Handles examining the server. Shows cooldown time and efficiency.
-/obj/machinery/quantum_server/proc/on_send_turf_examined(datum/source, mob/examiner, list/examine_text)
+/obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
 	examine_text += span_info("Beneath your gaze, the floor pulses subtly with streams of encoded data.")

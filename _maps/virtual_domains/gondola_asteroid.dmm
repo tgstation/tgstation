@@ -19,7 +19,7 @@
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "m" = (
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted/gondola,
+/obj/structure/closet/crate/secure/bitrunning/encrypted/gondola,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "n" = (

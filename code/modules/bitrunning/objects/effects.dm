@@ -52,7 +52,7 @@
 	name = "Bitrunning hololadder spawn"
 	icon_state = "bit_exit"
 
-/// Place this where you want the receive turf to be
+/// Place this where you want crates to end up
 /obj/effect/bitrunning/goal_turf
 	name = "Bitrunning goal turf"
 	icon_state = "bit_goal"

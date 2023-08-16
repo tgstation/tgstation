@@ -3083,6 +3083,7 @@
 #include "code\modules\bitrunning\areas.dm"
 #include "code\modules\bitrunning\mind_connection.dm"
 #include "code\modules\bitrunning\netpod_healing.dm"
+#include "code\modules\bitrunning\objects\bit_vendor.dm"
 #include "code\modules\bitrunning\objects\effects.dm"
 #include "code\modules\bitrunning\objects\health_monitor.dm"
 #include "code\modules\bitrunning\objects\hololadder.dm"

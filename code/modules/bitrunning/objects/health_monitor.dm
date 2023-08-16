@@ -1,4 +1,4 @@
-/obj/item/bitrunner_health_monitor
+/obj/item/bitrunning_health_monitor
 	name = "host monitor"
 
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "electronic"
 
-/obj/item/bitrunner_health_monitor/attack_self(mob/user, modifiers)
+/obj/item/bitrunning_health_monitor/attack_self(mob/user, modifiers)
 	. = ..()
 
 	var/datum/mind/our_mind = user.mind

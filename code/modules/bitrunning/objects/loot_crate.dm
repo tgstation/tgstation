@@ -8,26 +8,26 @@
 #define ORE_MULTIPLIER_DIAMOND 0.3
 #define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2
 
-/obj/structure/closet/crate/secure/bitrunner_loot // Base class. Do not spawn this.
+/obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
 	name = "base class loot crate"
 	desc = "Talk to a coder."
 
 /// The virtual domain - side of the bitrunning crate. Deliver to the send location.
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted
+/obj/structure/closet/crate/secure/bitrunning/encrypted
 	name = "encrypted loot crate"
 	desc = "Needs decrypted at the safehouse to be opened."
 	locked = TRUE
 
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
+/obj/structure/closet/crate/secure/bitrunning/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
 	return FALSE
 
 /// The bitrunner den - side of the bitrunning crate. Appears in the receive location.
-/obj/structure/closet/crate/secure/bitrunner_loot/decrypted
+/obj/structure/closet/crate/secure/bitrunning/decrypted
 	name = "decrypted loot crate"
 	desc = "Materialized from the virtual domain. The reward of a successful bitrunner."
 	locked = FALSE
 
-/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/Initialize(
+/obj/structure/closet/crate/secure/bitrunning/decrypted/Initialize(
 	mapload,
 	datum/lazy_template/virtual_domain/completed_domain,
 	rewards_multiplier = 1,
@@ -40,7 +40,7 @@
 
 	PopulateContents(completed_domain.reward_points, completed_domain.extra_loot, rewards_multiplier)
 
-/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/PopulateContents(reward_points, list/extra_loot, rewards_multiplier)
+/obj/structure/closet/crate/secure/bitrunning/decrypted/PopulateContents(reward_points, list/extra_loot, rewards_multiplier)
 	. = ..()
 	spawn_loot(extra_loot)
 
@@ -59,13 +59,13 @@
 		new /obj/item/stack/ore/bluespace_crystal(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_BLUESPACE_CRYSTAL))
 
 /// Handles generating random numbers & calculating loot totals
-/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/proc/calculate_loot(reward_points, rewards_multiplier, ore_multiplier)
+/obj/structure/closet/crate/secure/bitrunning/decrypted/proc/calculate_loot(reward_points, rewards_multiplier, ore_multiplier)
 	var/base = 3 * (rewards_multiplier + reward_points)
 	var/random_sum = (rand() * 1.0 + 0.5) * base
 	return ROUND_UP(random_sum * ore_multiplier)
 
 /// Handles spawning extra loot. This tries to handle bad flat and assoc lists
-/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/proc/spawn_loot(list/extra_loot)
+/obj/structure/closet/crate/secure/bitrunning/decrypted/proc/spawn_loot(list/extra_loot)
 	for(var/path in extra_loot)
 		if(!ispath(path))
 			continue

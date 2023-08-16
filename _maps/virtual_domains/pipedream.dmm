@@ -797,7 +797,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "xk" = (
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
 /obj/machinery/light/dim{
 	dir = 4
 	},

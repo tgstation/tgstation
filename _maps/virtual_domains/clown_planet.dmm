@@ -619,7 +619,7 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "QX" = (
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted,
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
 /turf/open/floor/carpet,
 /area/virtual_domain/powered)
 "Rh" = (
