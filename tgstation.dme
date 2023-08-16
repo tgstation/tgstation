@@ -5830,6 +5830,7 @@
 #include "monkestation\code\modules\twitch_bits\events\rod.dm"
 #include "monkestation\code\modules\twitch_bits\events\skinny.dm"
 #include "monkestation\code\modules\uplink\uplink_items\job.dm"
+#include "monkestation\code\modules\uplink\uplink_items\species.dm"
 #include "monkestation\code\modules\vehicles\monkey_ball.dm"
 #include "monkestation\code\modules\vehicles\mecha\mecha_actions.dm"
 #include "monkestation\code\modules\vehicles\mecha\equipment\tools\other_tools.dm"
