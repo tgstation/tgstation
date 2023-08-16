@@ -36,6 +36,8 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	platform_code = TRAMSTATION_EAST
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
 
+//immovable rod landmarks (so the tram knows how to get back on track when hit)
+
 /obj/effect/landmark/tram/tramstation/rod
 	specific_lift_id = IMMOVABLE_ROD
 

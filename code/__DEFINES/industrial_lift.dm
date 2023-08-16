@@ -11,7 +11,8 @@
 #define TRAM_LIFT_ID "tram"
 ///debug lift_id
 #define DEBUG_LIFT_ID "debug"
-
+///immovable rod uses lift_id when colliding with the tram
+#define IMMOVABLE_ROD "immovable_rod"
 
 //specific_lift_id's
 ///the specific_lift_id of the main station tram landmark for tramstation that spawns roundstart.
@@ -21,7 +22,6 @@
 ///the specific_lift_id of the trams on birdshot station
 #define PRISON_TRAM "prison_tram"
 #define MAINTENANCE_TRAM "maint_tram"
-#define IMMOVABLE_ROD "immovable_rod"
 
 // Defines for update_lift_doors
 #define OPEN_DOORS "open"
