@@ -37,7 +37,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/datum/component/material_container, \
 		materials_list, \
 		INFINITY, \
-		MATCONTAINER_NO_INSERT, \
+		container_signals = list( \
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/ore_silo, log_item_consumed), \
+			COMSIG_MATCONTAINER_SHEETS_RETRIVED = TYPE_PROC_REF(/obj/machinery/ore_silo, log_sheets_ejected), \
+		), \
 		allowed_items = /obj/item/stack \
 	)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
@@ -55,39 +58,21 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/living/user, obj/item/stack/I, breakdown_flags=NONE)
-	if(user.combat_mode)
-		return
-	if(I.item_flags & ABSTRACT)
-		return
-	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
-		to_chat(user, span_warning("[M] won't accept [I]!"))
-		return
-	var/item_mats = materials.get_item_material_amount(I, breakdown_flags)
-	if(!item_mats)
-		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [M]."))
-		return
-	// assumes unlimited space...
-	var/amount = I.amount
-	materials.user_insert(I, user, breakdown_flags)
-	var/list/matlist = I.get_material_composition(breakdown_flags)
-	silo_log(M, "deposited", amount, I.name, matlist)
-	return TRUE
+/obj/machinery/ore_silo/proc/log_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
+	SIGNAL_HANDLER
 
-/obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
-		updateUsrDialog()
-		return
-	if(default_deconstruction_crowbar(W))
-		return
+	silo_log(context, "deposited", amount_inserted, item_inserted.name, mats_consumed)
 
-	if(!powered())
-		return ..()
+/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context)
+	SIGNAL_HANDLER
 
-	if (isstack(W))
-		return remote_attackby(src, user, W)
+	silo_log(context, "ejected", -sheets.amount, "[sheets.singular_name]", sheets.custom_materials)
 
-	return ..()
+/obj/machinery/ore_silo/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
+
+/obj/machinery/ore_silo/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/ore_silo/ui_interact(mob/user)
 	user.set_machine(src)
@@ -169,10 +154,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return TRUE
 	else if(href_list["ejectsheet"])
 		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
-		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
-		var/list/matlist = list()
-		matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
-		silo_log(src, "ejected", -count, "sheets", matlist)
+		var/amount = text2num(href_list["eject_amt"])
+		materials.retrieve_sheets(amount, eject_sheet, drop_location())
 		return TRUE
 	else if(href_list["page"])
 		log_page = text2num(href_list["page"]) || 1
