@@ -6,7 +6,7 @@
 /datum/unit_test/dismemberment/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
-	var/obj/item/testing_item = new /obj/item/analyzer
+	var/obj/item/testing_item = allocate(/obj/item/analyzer)
 	testing_item.name = "testing item"
 
 	// Standard situation: We're holding a normal item and get dismembered.
