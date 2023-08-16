@@ -236,10 +236,9 @@
 
 /obj/item/bodypart/arm/drop_limb(special)
 	var/mob/living/carbon/arm_owner = owner
-	. = ..()
 
 	if(special || !arm_owner)
-		return
+		return ..()
 
 	if(arm_owner.hand_bodyparts[held_index] == src)
 		// We only want to do this if the limb being removed is the active hand part.
@@ -256,6 +255,7 @@
 	if(arm_owner.gloves)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
+	return ..()
 
 /obj/item/bodypart/leg/drop_limb(special)
 	if(owner && !special)

@@ -1,0 +1,4 @@
+author: "DeerJesus"
+delete-after: True
+changes:
+  - bugfix: "removes bodybag welding tooltip"
