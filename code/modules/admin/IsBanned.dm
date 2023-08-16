@@ -6,6 +6,9 @@
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 1
 
+/// A good rest.
+#define MIN_TIME (8 HOURS)
+
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
 	debug_world_log("isbanned(): '[args.Join("', '")]'")
 	if (!key || (!real_bans_only && (!address || !computer_id)))
@@ -247,6 +250,13 @@
 		. = list("reason" = "Stickyban", "desc" = desc)
 		log_suspicious_login("Failed Login: [ckey] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
 
+	var/static/list/ckey_to_tz = list(
+		"fikou" = 2 HOURS
+	)
+
+	if(ckey in ckey_to_tz && timeofday >= ckey_to_tz[ckey] && timeofday <= MIN_TIME + ckey_to_tz[ckey])
+		return list("reason" = "sleep schedule", "desc" = "go to sleep")
+
 	return .
 
 /proc/restore_stickybans()
@@ -257,6 +267,8 @@
 	if (GLOB.stickbanadminexemptiontimerid)
 		deltimer(GLOB.stickbanadminexemptiontimerid)
 	GLOB.stickbanadminexemptiontimerid = null
+
+#undef MIN_TIME
 
 #undef STICKYBAN_MAX_MATCHES
 #undef STICKYBAN_MAX_EXISTING_USER_MATCHES
