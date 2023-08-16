@@ -5,7 +5,7 @@
 	button_icon = 'icons/mob/simple/meteor_heart.dmi'
 	button_icon_state = "spikes_stabbing"
 	cooldown_time = 15 SECONDS
-	shared_cooldown = null
+	shared_cooldown = NONE
 	click_to_activate = FALSE
 	/// Create zones at most this far away
 	var/range = 3

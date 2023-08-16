@@ -12,7 +12,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 0
 	melee_cooldown_time = 0
-	shared_cooldown = null
+	shared_cooldown = NONE
 	click_to_activate = FALSE
 	/// Current directive to apply
 	var/current_directive = ""
@@ -40,7 +40,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 0
 	melee_cooldown_time = 0
-	shared_cooldown = null
+	shared_cooldown = NONE
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/command_spiders/Activate(trigger_flags)

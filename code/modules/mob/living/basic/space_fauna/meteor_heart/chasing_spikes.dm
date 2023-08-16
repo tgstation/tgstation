@@ -6,7 +6,7 @@
 	button_icon_state = "spike"
 	cooldown_time = 10 SECONDS
 	click_to_activate = TRUE
-	shared_cooldown = null
+	shared_cooldown = NONE
 	/// Lazy list of references to spike trails
 	var/list/active_chasers
 

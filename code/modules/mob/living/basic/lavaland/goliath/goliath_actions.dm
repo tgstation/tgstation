@@ -10,7 +10,7 @@
 	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	shared_cooldown = null
+	shared_cooldown = NONE
 	/// Furthest range we can activate ability at
 	var/max_range = 7
 
@@ -45,7 +45,7 @@
 	cooldown_time = 24 SECONDS
 	melee_cooldown_time = 0
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	shared_cooldown = null
+	shared_cooldown = NONE
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/tentacle_burst/Activate(atom/target)
@@ -70,7 +70,7 @@
 	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	shared_cooldown = null
+	shared_cooldown = NONE
 
 /datum/action/cooldown/mob_cooldown/tentacle_grasp/Activate(atom/target)
 	new /obj/effect/temp_visual/effect_trail/burrowed_tentacle(owner.loc, target)

@@ -11,7 +11,7 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
-	shared_cooldown = null
+	shared_cooldown = NONE
 	/// The time it takes to wrap something.
 	var/wrap_time = 5 SECONDS
 

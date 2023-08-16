@@ -8,7 +8,7 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0
 	melee_cooldown_time = 0
-	shared_cooldown = null
+	shared_cooldown = NONE
 	click_to_activate = FALSE
 	///How long it takes for a broodmother to lay eggs.
 	var/egg_lay_time = 4 SECONDS

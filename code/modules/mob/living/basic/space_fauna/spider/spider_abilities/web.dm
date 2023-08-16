@@ -9,7 +9,7 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
-	shared_cooldown = null
+	shared_cooldown = NONE
 	click_to_activate = FALSE
 	/// How long it takes to lay a web
 	var/webbing_time = 4 SECONDS
@@ -156,7 +156,7 @@
 	overlay_icon_state = "bg_alien_border"
 	cooldown_time = 60 SECONDS
 	melee_cooldown_time = 0
-	shared_cooldown = null
+	shared_cooldown = NONE
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/web_effigy/IsAvailable(feedback = FALSE)
