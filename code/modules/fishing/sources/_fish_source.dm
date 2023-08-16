@@ -67,6 +67,9 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 			if(is_matching_bait(bait, bait_identifer))
 				. += DISLIKED_BAIT_DIFFICULTY_MOD
 
+	if(HAS_TRAIT(fisherman, TRAIT_SETTLER))
+		. += SETTLER_DIFFICULTY_MOD
+
 	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
