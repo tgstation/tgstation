@@ -12,13 +12,13 @@
 	firing_effect_type = null
 	caliber = CALIBER_ARROW
 	is_cased_ammo = FALSE
-	/// Whether the arrow type is single use or reusable
-	var/is_retrievable = TRUE
+	/// Whether the arrow is single use. By default all arrows can be retrieved after firing.
+	var/is_single_use
 
 /obj/item/ammo_casing/arrow/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/envenomable_casing)
-	AddElement(/datum/element/caseless, reusable = is_retrievable)
+	AddElement(/datum/element/caseless, reusable = !is_single_use)
 
 /obj/item/ammo_casing/arrow/update_icon_state()
 	. = ..()
