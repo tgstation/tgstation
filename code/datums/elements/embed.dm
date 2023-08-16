@@ -152,7 +152,7 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	tryForceEmbed(payload, limb, relay = source)
+	tryForceEmbed(payload, limb)
 	Detach(source)
 
 /**
