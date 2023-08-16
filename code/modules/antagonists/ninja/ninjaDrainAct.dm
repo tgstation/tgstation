@@ -334,6 +334,7 @@
 		return
 
 	emp_act(EMP_HEAVY)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -347,15 +348,19 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/simple_animal/bot/medbot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	var/static/list/worried_line = list(
+	var/static/list/death_cry = list(
 		MEDIBOT_VOICED_NO_SAD,
 		MEDIBOT_VOICED_OH_FUCK,
 	)
-	speak(pick(worried_line))
+	speak(pick(death_cry))
 	. = ..()
 
 //ENERGY WEAPONS//
 /obj/item/gun/energy/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(cell.charge == 0)
+		balloon_alert(ninja, "no energy!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(!do_after(ninja, 1 SECONDS, target = src))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -378,14 +383,50 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(number = 3, cardinal_only = FALSE, source = src)
-	visible_message(span_warning("[ninja] fires an arc of electricity from their gloves at [src], overloading it!"))
+	balloon_alert(ninja, "system overloaded!")
 	wires.on_pulse(WIRE_THROW)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+//RECYCLER//
 /obj/machinery/recycler/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	AI_notify_hack()
-	if(!do_after(ninja, 20 SECONDS, target = src))
+	if(obj_flags & EMAGGED)
+		balloon_alert(ninja, "already hacked!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	AI_notify_hack()
+	if(!do_after(ninja, 25 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	do_sparks(3, cardinal_only = FALSE, source = hacking_module.mod)
+	emag_act(ninja)
+
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//ELEVATOR CONTROLS//
+/obj/machinery/elevator_control_panel/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(obj_flags & EMAGGED)
+		balloon_alert(ninja, "already hacked!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!do_after(ninja, 5 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	do_sparks(3, cardinal_only = FALSE, source = hacking_module.mod)
+	balloon_alert(ninja, "system overloaded!")
+	emag_act(ninja)
+
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//TRAM CONTROLS//
+/obj/machinery/computer/tram_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(obj_flags & EMAGGED)
+		balloon_alert(ninja, "already hacked!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	AI_notify_hack()
+	if(!do_after(ninja, 30 SECONDS, target = src)) //Long hack duration, in a frequently travelled area. Completing this is, more than anything, an insult to the crew.
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	emag_act(ninja)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
