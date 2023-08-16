@@ -688,6 +688,7 @@
 		return
 	use_power(melee_energy_drain)
 
+	SEND_SIGNAL(user, COMSIG_MOB_USED_MECH_MELEE, src)
 	target.mech_melee_attack(src, user)
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
