@@ -1129,5 +1129,9 @@
 
 	return FALSE
 
+///Checks if the projectile can embed into someone
+/obj/projectile/proc/can_embed_into(atom/hit)
+	return embedding && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
+
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
