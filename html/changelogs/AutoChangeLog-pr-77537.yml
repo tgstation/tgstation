@@ -1,0 +1,6 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Base large airlock subtype no longer spawns a normal sized airlock"
+  - image: "Added mapping icons for large airlocks"
+  - code_imp: "Repathed all public airlocks to consistent naming"
