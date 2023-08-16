@@ -19,12 +19,13 @@
 	gender = NEUTER
 	advanced_simple = TRUE
 	can_be_held = TRUE
+	wander = FALSE
 	/// how much hp we regen per process
 	var/health_regeneration = 1
 	/// the item we are currently
 	var/obj/item/stored_item
 	///rendered overlays
-	var/list/possession_overlays[1]
+	var/list/possession_overlays[2]
 	/// OFFSET SECTION - This is controllable by admins if they want
 	///the shifted y offset of the left hand
 	var/l_y_shift = 0
@@ -36,10 +37,16 @@
 	var/l_x_shift = 0
 	/// base amount of pixels this offsets upwards for each set of additional arms past 2
 	var/base_vertical_shift = 0
+	///the shifted y offset of the head
+	var/head_y_shift = 0
+	/// the shifted x offset of the head
+	var/head_x_shift = 0
 	///the held id card
 	var/obj/item/id
+	///the held head item
+	var/obj/item/head
 
-/mob/living/simple_animal/possession_holder/New(loc, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = 0, _r_x_shift = 0, _l_x_shift = 0)
+/mob/living/simple_animal/possession_holder/New(loc, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = 0, _r_x_shift = 0, _l_x_shift = 0, _head_y_shift = 0, _head_x_shift = 0)
 	. = ..()
 	if(!_stored_item)
 		_stored_item = new /obj/item/toy/plush/cirno_plush/ballin(src)
@@ -50,6 +57,8 @@
 	r_y_shift = _r_y_shift
 	r_x_shift = _r_x_shift
 	l_x_shift = _l_x_shift
+	head_x_shift = _head_x_shift
+	head_y_shift = _head_y_shift
 
 	_stored_item.forceMove(src)
 
@@ -227,17 +236,27 @@
 			if(!((I.slot_flags & ITEM_SLOT_ID)))
 				return FALSE
 			return TRUE
+		if(ITEM_SLOT_HEAD)
+			if(head)
+				return FALSE
+			if(!((I.slot_flags & ITEM_SLOT_HEAD) || (I.slot_flags & ITEM_SLOT_MASK)))
+				return FALSE
+			return TRUE
 	..()
 
 /mob/living/simple_animal/possession_holder/get_item_by_slot(slot_id)
 	switch(slot_id)
 		if(ITEM_SLOT_ID)
 			return id
+		if(ITEM_SLOT_HEAD)
+			return head
 	return ..()
 
 /mob/living/simple_animal/possession_holder/get_slot_by_item(obj/item/looking_for)
 	if(id == looking_for)
 		return ITEM_SLOT_ID
+	if(head == looking_for)
+		return ITEM_SLOT_HEAD
 	return ..()
 
 /mob/living/simple_animal/possession_holder/equip_to_slot(obj/item/I, slot)
@@ -262,6 +281,9 @@
 		if(ITEM_SLOT_ID)
 			id = I
 			update_id_inv()
+		if(ITEM_SLOT_HEAD)
+			head = I
+			update_worn_head()
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 			return
@@ -275,6 +297,9 @@
 		if(I == id)
 			id = null
 			update_id_inv()
+		if(I == head)
+			head = null
+			update_worn_head()
 		return TRUE
 	return FALSE
 
@@ -286,12 +311,33 @@
 /mob/living/simple_animal/possession_holder/regenerate_icons()
 	update_id_inv()
 	update_held_items()
+	update_worn_head()
+
+/mob/living/simple_animal/possession_holder/update_worn_head()
+	remove_overlay(2)
+
+	if(head)
+		if(client && hud_used?.hud_shown)
+			head.screen_loc = ui_head
+			client.screen += head
+		var/used_head_icon = 'icons/mob/clothing/head/utility.dmi'
+		if(istype(head, /obj/item/clothing/mask))
+			used_head_icon = 'icons/mob/clothing/mask.dmi'
+		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = 2, default_icon_file = used_head_icon)
+		head_overlay.pixel_y += head_y_shift
+
+		possession_overlays[2] = head_overlay
+
+	apply_overlay(2)
 
 /mob/living/simple_animal/possession_holder/mob_pickup(mob/living/L)
 	stored_item.forceMove(get_turf(src))
 	src.forceMove(stored_item)
 
 	RegisterSignal(stored_item, COMSIG_ITEM_DROPPED, PROC_REF(return_control))
+
+	L.visible_message(span_warning("[L] scoops up [src]!"))
+	L.put_in_hands(stored_item)
 
 /mob/living/simple_animal/possession_holder/proc/return_control()
 	SIGNAL_HANDLER

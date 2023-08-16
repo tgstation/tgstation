@@ -22,6 +22,16 @@
 	inv_box.hud = src
 	static_inventory += inv_box
 
+	inv_box = new /atom/movable/screen/inventory()
+	inv_box.name = "head"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "head"
+	inv_box.icon_full = "template"
+	inv_box.screen_loc = ui_head
+	inv_box.slot_id = ITEM_SLOT_HEAD
+	inv_box.hud = src
+	toggleable_inventory += inv_box
+
 	using = new/atom/movable/screen/navigate
 	using.icon = ui_style
 	using.hud = src
@@ -91,10 +101,6 @@
 	rest_icon.hud = src
 	rest_icon.update_appearance()
 	static_inventory += rest_icon
-
-	healths = new /atom/movable/screen/healths()
-	healths.hud = src
-	infodisplay += healths
 
 	healthdoll = new /atom/movable/screen/healthdoll()
 	healthdoll.hud = src
