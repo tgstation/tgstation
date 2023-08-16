@@ -159,7 +159,7 @@
 	var/selected_kingdom = pick(kingdoms)
 
 	name = "[selected_title] [selected_kingdom], the [pick(descriptors)]" // ex "Tsar Maintenance, the Brute"
-	special_moniker = "You better not screw with [p_theirs()] [selected_kingdom]... How do you become a [selected_title] of that anyways?"
+	special_moniker = "You better not screw with [p_their()] [selected_kingdom]... How do you become a [selected_title] of that anyways?"
 
 /// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
 /mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
