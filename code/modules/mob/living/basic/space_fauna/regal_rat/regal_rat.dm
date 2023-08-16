@@ -86,6 +86,21 @@
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
+/mob/living/basic/regal_rat/proc/became_player_controlled()
+	notify_ghosts(
+		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
+		source = src,
+		action = NOTIFY_ORBIT,
+		flashwindow = FALSE,
+		header = "Sentient Rat Created",
+	)
+
+/mob/living/basic/regal_rat/handle_automated_action()
+	if(prob(20))
+		riot.Trigger()
+	else if(prob(50))
+		domain.Trigger()
+	return ..()
 
 /mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
 	SIGNAL_HANDLER
@@ -93,11 +108,19 @@
 	if(DOING_INTERACTION(src, REGALRAT_INTERACTION) || !allowed_to_attack(target))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(istype(target, /obj/machinery/door/airlock))
-		pry_door(target)
-		return
+	if(SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src) & COMPONENT_RAT_INTERACTED)
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if(isnull(mind))
+		return
+
+	if(istype(target, /obj/machinery/door/airlock))
+		INVOKE_ASYNC(src, PROC_REF(pry_door), target)
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(!combat_mode)
+		INVOKE_ASYNC(src, PROC_REF(poison_target), target)
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 /// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
 /mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)
@@ -116,32 +139,22 @@
 		balloon_alert(src, "one of your soldiers!")
 		return FALSE
 
-/mob/living/basic/regal_rat/proc/became_player_controlled()
-	notify_ghosts(
-		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
-		source = src,
-		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
-		header = "Sentient Rat Created",
-	)
-
-/mob/living/basic/regal_rat/handle_automated_action()
-	if(prob(20))
-		riot.Trigger()
-	else if(prob(50))
-		domain.Trigger()
-	return ..()
-
-/mob/living/basic/regal_rat/AttackingTarget()
-
-	if (src.mind && !src.combat_mode && target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
-		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
-		if (do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
-			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
-			to_chat(src, span_notice("You finish licking [target]."))
+/// Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+/mob/living/basic/regal_rat/proc/poison_target(atom/target)
+	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
 		return
 
-	return ..()
+	visible_message(
+		span_warning("[src] starts licking [target] passionately!"),
+		span_notice("You start licking [target]..."),
+		span_warning("You hear a disgusting slurping sound...")
+	)
+
+	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
+		return
+
+	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
+	balloon_alert(src, "licked")
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
