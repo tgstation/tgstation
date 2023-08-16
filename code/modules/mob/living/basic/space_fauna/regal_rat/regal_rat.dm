@@ -29,7 +29,6 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
 	// Slightly brown red, for the eyes
-	// Might be a bit too dim
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 8
 	lighting_cutoff_blue = 5
