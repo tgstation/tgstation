@@ -19,6 +19,7 @@
 
 /datum/orderable_item/bitrunning/medkit
 	item_path = /obj/item/storage/medkit/brute
+	desc = "Don't beat yourself up, it's just a game!"
 	cost_per_order = 500
 
 /datum/orderable_item/bitrunning/medkit_fire
