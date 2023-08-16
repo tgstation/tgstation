@@ -1,6 +1,28 @@
 /datum/hud/possessed
 	has_interaction_ui = TRUE
 
+/atom/movable/screen/possessed/toggle
+	name = "toggle"
+	icon_state = "toggle"
+
+/atom/movable/screen/possessed/toggle/Click()
+
+	var/mob/targetmob = usr
+
+	if(isobserver(usr))
+		if(ishuman(usr.client.eye) && (usr.client.eye != usr))
+			var/mob/M = usr.client.eye
+			targetmob = M
+
+	if(usr.hud_used.inventory_shown && targetmob.hud_used)
+		usr.hud_used.inventory_shown = FALSE
+		usr.client.screen -= targetmob.hud_used.toggleable_inventory
+	else
+		usr.hud_used.inventory_shown = TRUE
+		usr.client.screen += targetmob.hud_used.toggleable_inventory
+
+	targetmob.hud_used.hidden_inventory_update(usr)
+
 /datum/hud/possessed/New(mob/living/carbon/owner)
 	..()
 
@@ -77,7 +99,7 @@
 	using.hud = src
 	hotkeybuttons += using
 
-	using = new /atom/movable/screen/human/toggle()
+	using = new /atom/movable/screen/possessed/toggle()
 	using.icon = ui_style
 	using.screen_loc = ui_inventory
 	using.hud = src
@@ -138,3 +160,18 @@
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = null
 			H.client.screen -= I
+
+/datum/hud/human/hidden_inventory_update(mob/viewer)
+	if(!mymob)
+		return
+	var/mob/living/simple_animal/possession_holder/H = mymob
+
+	var/mob/screenmob = viewer || H
+
+	if(screenmob.hud_used.inventory_shown && screenmob.hud_used.hud_shown)
+		if(H.head)
+			H.head.screen_loc = ui_head
+			screenmob.client.screen += H.head
+	else
+		if(H.head)
+			screenmob.client.screen -= H.head
