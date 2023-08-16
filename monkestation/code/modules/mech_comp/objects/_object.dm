@@ -43,7 +43,7 @@
 
 /obj/item/mcobject/attack_self_secondary(mob/user, modifiers)
 	. = ..()
-	var/datum/component/mclinker/link = tool.GetComponent(/datum/component/mclinker)
+	var/datum/component/mclinker/link = src.GetComponent(/datum/component/mclinker)
 	if(link)
 		to_chat(user, span_warning("Link buffer cleared."))
 		qdel(link)
