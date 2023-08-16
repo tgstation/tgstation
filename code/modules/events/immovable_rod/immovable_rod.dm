@@ -330,5 +330,5 @@
 	if(!push_target)
 		return
 
-	lift_master.tram_travel(push_target, TRUE)
+	lift_master.rod_collision(push_target, TRUE)
 	go_for_a_walk(push_target)

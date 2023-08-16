@@ -128,6 +128,24 @@
 		update_tram_doors(CLOSE_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
 
+/datum/lift_master/tram/proc/rod_collision(obj/effect/landmark/tram/destination_platform)
+	travel_direction = get_dir(idle_platform, destination_platform)
+	travel_distance = get_dist(get_turf(lift_platforms[1]), destination_platform)
+	switch(travel_direction)
+		if(EAST)
+			travel_distance -= (XING_DEFAULT_TRAM_LENGTH * 0.5)
+		if(WEST)
+			travel_distance += (XING_DEFAULT_TRAM_LENGTH * 0.5)
+		else
+			stack_trace("Tram travel receieved invalid direction to push.")
+			return
+
+	travel_trip_length = travel_distance
+	idle_platform = destination_platform
+	set_travelling(TRUE)
+	set_controls(LIFT_PLATFORM_LOCKED)
+	dispatch_tram(destination_platform)
+
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
