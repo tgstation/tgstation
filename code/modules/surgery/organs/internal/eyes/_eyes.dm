@@ -130,7 +130,6 @@
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
-			
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
