@@ -87,7 +87,7 @@
 		description = "AHH! I WAS USING THAT [full_capitalize(limb.plaintext_zone)]"
 
 /datum/mood_event/reattachment
-	description = "Ouch! My limb feels like I feel asleep on it."
+	description = "Ouch! My limb feels like I fell asleep on it."
 	mood_change = -3
 	timeout = 2 MINUTES
 
