@@ -83178,13 +83178,13 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "uND" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/computer/order_console/bitrunning,
 /turf/open/floor/iron/half{
 	dir = 1
 	},

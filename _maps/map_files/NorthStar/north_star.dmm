@@ -67236,6 +67236,12 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine/air,
 /area/station/engineering/supermatter/waste)
+"rBO" = (
+/obj/machinery/computer/order_console/bitrunning{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "rBP" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/lobby)
@@ -117618,7 +117624,7 @@ aQK
 aQK
 cfO
 jWJ
-mnR
+rBO
 mnk
 mnR
 aHb

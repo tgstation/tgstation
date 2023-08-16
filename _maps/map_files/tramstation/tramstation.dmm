@@ -3864,6 +3864,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/machinery/computer/order_console/bitrunning{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "axG" = (

@@ -26570,6 +26570,13 @@
 "ivr" = (
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
+"ivv" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/computer/order_console/bitrunning{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "ivB" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron,
@@ -228051,7 +228058,7 @@ irD
 irD
 pzX
 gdN
-pYT
+ivv
 maT
 bln
 qjQ
