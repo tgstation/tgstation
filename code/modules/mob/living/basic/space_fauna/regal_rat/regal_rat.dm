@@ -7,6 +7,7 @@
 	icon_state = "regalrat"
 	icon_living = "regalrat"
 	icon_dead = "regalrat_dead"
+	gender = MALE
 
 	maxHealth = 70
 	health = 70
@@ -41,12 +42,15 @@
 
 	///Should we request a mind immediately upon spawning?
 	var/poll_ghosts = FALSE
+	/// String tied to our special moniker for examination. Contains a nice message tied to the potential funny regal name we have.
+	var/special_moniker = ""
 
 /mob/living/basic/regal_rat/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(src, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
 	AddElement(/datum/element/waddling)
 	AddElement(/datum/element/ai_retaliate)
@@ -77,10 +81,13 @@
 		return
 
 	if(ismouse(user))
-		if(user.faction_check_mob(src, TRUE))
+		if(user.faction_check_mob(src, exact_match = TRUE))
 			. += span_notice("This is your king. Long live [p_their()] majesty!")
 		else
 			. += span_warning("This is a false king! Strike [p_them()] down!")
+		return
+
+	. += special_moniker
 
 /mob/living/basic/regal_rat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
@@ -93,12 +100,66 @@
 /// Triggers an alert to all ghosts that the rat has become player controlled.
 /mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
-		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
+		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
 		source = src,
 		action = NOTIFY_ORBIT,
 		flashwindow = FALSE,
 		header = "Sentient Rat Created",
 	)
+
+/// Supplementary work we do when we login. Done this way so we synchronize with the ai controller shutting off and all that jazz as well as allowing more shit to be passed in if need be in future.
+/mob/living/basic/regal_rat/proc/on_login()
+	SIGNAL_HANDLER
+	if(!special_moniker)
+		grant_titles() // all players are special :)
+
+/// Grants the rat a special name.
+/mob/living/basic/regal_rat/proc/grant_titles()
+	// The title conveyed upon us thanks to our position.
+	var/static/list/titles = list(
+		"Bojar",
+		"Emperor",
+		"King",
+		"Lord",
+		"Master",
+		"Overlord",
+		"Prince",
+		"Shogun",
+		"Supreme",
+		"Tsar",
+	)
+
+	// The domain which we have conquered by inheritance or sheer force.
+	var/static/list/kingdoms = list(
+		"Cheese",
+		"Garbage",
+		"Maintenance",
+		"Miasma",
+		"Plague",
+		"Trash",
+		"Vermin",
+	)
+
+	// The descriptor of our character.
+	var/static/list/descriptors = list(
+		"Big Cheese",
+		"Brute",
+		"Champion of All Mislaid Creatures",
+		"Foul",
+		"Great",
+		"Grey",
+		"Horrible",
+		"Populator",
+		"Powerful",
+		"Quiet",
+		"Vain",
+	)
+
+	var/selected_title = pick(titles)
+	var/selected_kingdom = pick(kingdoms)
+
+	name = "[selected_title] [selected_kingdom], the [pick(descriptors)]" // ex "Tsar Maintenance, the Brute"
+	special_moniker = "You better not screw with [p_theirs()] [selected_kingdom]... How do you become a [selected_title] of that anyways?"
 
 /// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
 /mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
@@ -211,33 +272,5 @@
 
 /mob/living/basic/regal_rat/controlled
 	poll_ghosts = TRUE
-	/// The prefix to our name, the domain of which we are inherited.
-	var/static/list/kingdoms = list(
-		"Cheese",
-		"Garbage",
-		"Maintenance",
-		"Miasma",
-		"Plague",
-		"Rat",
-		"Trash",
-		"Vermin",
-	)
-	/// The suffix to our name, the title of which we are entitled to.
-	var/static/list/titles = list(
-		"Bojar",
-		"Emperor",
-		"King",
-		"Lord",
-		"Master",
-		"Overlord",
-		"Prince",
-		"Shogun",
-		"Supreme",
-		"Tsar",
-	)
-
-/mob/living/basic/regal_rat/controlled/Initialize(mapload)
-	. = ..()
-	name = "[pick(kingdoms)] [pick(titles)]"
 
 #undef REGALRAT_INTERACTION
