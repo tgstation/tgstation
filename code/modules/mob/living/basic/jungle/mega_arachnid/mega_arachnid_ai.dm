@@ -13,7 +13,6 @@
 		/datum/ai_planning_subtree/flee_target/mega_arachnid,
 		/datum/ai_planning_subtree/climb_trees,
 		/datum/ai_planning_subtree/find_and_hunt_target/destroy_surveillance,
-
 	)
 
 ///destroy surveillance objects to boost our stealth
