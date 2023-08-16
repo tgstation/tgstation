@@ -1602,6 +1602,7 @@
 #include "code\datums\wounds\loss.dm"
 #include "code\datums\wounds\pierce.dm"
 #include "code\datums\wounds\slash.dm"
+#include "code\datums\wounds\robotic\robotic_burns.dm"
 #include "code\datums\wounds\robotic\securing.dm"
 #include "code\datums\wounds\robotic\short_circuit.dm"
 #include "code\datums\wounds\scars\_scars.dm"

@@ -209,7 +209,9 @@
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
-	remove_wound_from_victim()
+
+	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
+
 	if(limb && !ignore_limb)
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds(replaced)
@@ -342,8 +344,7 @@
 			return TRUE
 
 	// lastly, treat them
-	treat(I, user)
-	return TRUE
+	return treat(I, user) // we allow treat to return a value so it can control if the item does its normal interaction or not
 
 /// Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling]). Treatment is still is handled in [/datum/wound/proc/treat]
 /datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)

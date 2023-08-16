@@ -155,11 +155,11 @@
 
 /datum/wound/slash/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
-		las_cauterize(I, user)
+		return las_cauterize(I, user)
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
-		tool_cauterize(I, user)
+		return tool_cauterize(I, user)
 	else if(istype(I, /obj/item/stack/medical/suture))
-		suture(I, user)
+		return suture(I, user)
 
 /datum/wound/slash/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || !isfelinid(user) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
@@ -222,6 +222,7 @@
 	victim.emote("scream")
 	adjust_blood_flow(-1 * (damage / (5 * self_penalty_mult))) // 20 / 5 = 4 bloodflow removed, p good
 	victim.visible_message(span_warning("The cuts on [victim]'s [limb.plaintext_zone] scar over!"))
+	return TRUE
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
 /datum/wound/slash/proc/tool_cauterize(obj/item/I, mob/user)
@@ -247,9 +248,11 @@
 	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > minimum_flow)
-		try_treating(I, user)
+		return try_treating(I, user)
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts."))
+		return TRUE
+	return FALSE
 
 /// If someone is using a suture to close this cut
 /datum/wound/slash/proc/suture(obj/item/stack/medical/suture/I, mob/user)
@@ -263,7 +266,7 @@
 		user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return
+		return TRUE
 	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
@@ -272,9 +275,11 @@
 	I.use(1)
 
 	if(blood_flow > minimum_flow)
-		try_treating(I, user)
+		return try_treating(I, user)
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts."))
+		return TRUE
+	return TRUE
 
 /datum/wound/slash/moderate
 	name = "Rough Abrasion"

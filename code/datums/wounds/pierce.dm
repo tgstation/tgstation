@@ -91,9 +91,9 @@
 
 /datum/wound/pierce/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/suture))
-		suture(I, user)
+		return suture(I, user)
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
-		tool_cauterize(I, user)
+		return tool_cauterize(I, user)
 
 /datum/wound/pierce/on_xadone(power)
 	. = ..()
@@ -115,7 +115,7 @@
 		user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return
+		return TRUE
 	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
@@ -124,9 +124,10 @@
 	I.use(1)
 
 	if(blood_flow > 0)
-		try_treating(I, user)
+		return try_treating(I, user)
 	else
 		to_chat(user, span_green("You successfully close the hole in [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
+		return TRUE
 
 /// If someone is using either a cautery tool or something with heat to cauterize this pierce
 /datum/wound/pierce/proc/tool_cauterize(obj/item/I, mob/user)
@@ -143,7 +144,7 @@
 		user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return
+		return TRUE
 
 	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
@@ -154,7 +155,8 @@
 	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > 0)
-		try_treating(I, user)
+		return try_treating(I, user)
+	return TRUE
 
 /datum/wound/pierce/moderate
 	name = "Minor Skin Breakage"

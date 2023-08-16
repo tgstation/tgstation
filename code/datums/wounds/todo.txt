@@ -1,2 +1,5 @@
 1. Convert wound_flags to required_limb_biostate
 2. Convert all wounds to further abstracted versions (/wound/burn -> /wound/burn/flesh)
+
+3. Completely chance how the treat() chain works to make it so you can choose if a item will be used normally or not in a failure state/normal state
+4. maybe add oil decals if T2/3 blunt wounds happen

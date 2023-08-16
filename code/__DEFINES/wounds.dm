@@ -66,9 +66,15 @@ GLOBAL_LIST_INIT(global_wound_types, list(
 		//"[BIO_ARTIFICIAL]" = list() // cheap prosthetics
 		"[BIO_ROBOTIC]" = list(/datum/wound/blunt/robotic/critical, /datum/wound/blunt/robotic/severe, /datum/wound/blunt/robotic/moderate) // cyborg limbs
 	),
-	WOUND_SLASH = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate),
-	WOUND_PIERCE = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
-	WOUND_BURN = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate),
+	WOUND_SLASH = list(
+		"[BIO_FLESH]" = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate)
+	),
+	WOUND_PIERCE = list(
+		"[BIO_FLESH]" = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
+	),
+	WOUND_BURN = list(
+		"[BIO_FLESH]" = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate),
+	)
 ))
 
 // every single type of wound that can be rolled naturally, in case you need to pull a random one
