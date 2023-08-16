@@ -124,12 +124,17 @@
 /obj/item/organ/internal/cyberimp/arm/proc/Retract()
 	if(!active_item || (active_item in src))
 		return FALSE
+	if(owner)
+		owner.visible_message(
+			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+			span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+			span_hear("You hear a short mechanical noise."),
+		)
 
-	owner?.visible_message(span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-		span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-		span_hear("You hear a short mechanical noise."))
+		owner.transferItemToLoc(active_item, src, TRUE)
+	else
+		active_item.forceMove(src)
 
-	owner.transferItemToLoc(active_item, src, TRUE)
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
 	active_item = null
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
