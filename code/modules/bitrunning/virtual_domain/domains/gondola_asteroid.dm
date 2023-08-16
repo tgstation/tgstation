@@ -12,7 +12,7 @@
 	safehouse_path = /datum/map_template/safehouse/shuttle_space
 
 /// Very pushy gondolas, great for moving loot crates.
-/obj/structure/closet/crate/secure/bitrunner_loot/encrypted/gondola
+/obj/structure/closet/crate/secure/bitrunning/encrypted/gondola
 	move_resist = MOVE_FORCE_STRONG
 
 /mob/living/simple_animal/pet/gondola/virtual_domain
