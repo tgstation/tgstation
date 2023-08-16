@@ -701,3 +701,72 @@
       created or deleted
   - bugfix: fixes immerse overlays not being added the first time a mob enters a water
       turf
+2023-08-16:
+  DeerJesus:
+  - bugfix: removes bodybag welding tooltip
+  FernandoJ8:
+  - bugfix: items no longer stay in your hands after their respective arm is dismembered
+  MTandi:
+  - refactor: Refactored Mech UI
+  - refactor: Refactored mech radio into a utility module, adding extra slot to all
+      mechs
+  - refactor: Refactored mech air tank into a utility module with an air pump, adding
+      extra slot to all mechs
+  - refactor: Refactored mech cabin air - there is now a button to seal or unseal
+      cabin to make it airtight or exchanging gases with the environment
+  - refactor: Removed mech maintenance UI Access is set in mech UI, and parts are
+      ejected with a crowbar
+  - rscadd: Mech now has wires and can be hacked
+  - qol: Roboticists now can see MOD suit and mech wires
+  - rscadd: Mechs now require servo motor stock part and it affects movement power
+      usage instead of scanning module
+  - rscadd: Scanning module absence doesnt block mech movement and hides some UI data
+      instead. Big Bess starts without one.
+  - qol: Hitting mech with ID card now toggles ID lock on/off if the card has required
+      access
+  - bugfix: Fixed concealed weapon bay not being concealed on mech examine
+  - bugfix: Fixed mech radio not changing frequency
+  - bugfix: Fixed mech launcher type weapons ignoring specified cooldown
+  - bugfix: Fixed mech launcher type weapons not using specified power amount
+  - bugfix: Fixed mech temperature regulator ignoring gas heat capacity
+  - bugfix: Fixed mech stopping processing other things while not heating internal
+      air
+  - bugfix: Fixed mech being able to leave transit tube in transit
+  - bugfix: Fixed mech internal damage flags working incorrectly
+  - bugfix: Fixed Gygax leg overloading being useless
+  - bugfix: Fixed mechs ignoring their stock parts on creation. Syndicate mechs now
+      stronger against lasers and consume less energy on move. Upgrading from tier
+      1 to tier 2 doesn't make mech consume MORE energy than before the upgrade.
+  - balance: Rebalanced mech energy drain with part upgrades. Base energy drain reduced
+      by 50%, 33%, 25% with upgrades and applies to movement (Servo rating), phasing,
+      punching, light (Capacitor rating).
+  - balance: Hydraulic clamp now can force open airlocks
+  - balance: Made mech RCS pack consume reasonable amount of gas
+  - code_imp: Fixed some other minor bugs and made some minor changes in the mech
+      code
+  Onule:
+  - image: modified light fixtures' sprites and overlays to be more pronounced
+  OrionTheFox:
+  - rscadd: Added the Bowtie! Bartenders start with one on, but they can also be found
+      in the Bardrobe, Autodrobe, and Clothesmate. No need to tie it either, it's
+      just a clip-on.
+  - rscadd: Added a Greyscale "Formal Jacket" of the style that most suits use, for
+      crew who want to make their own using the buttondown shirt.
+  - rscdel: Removed the generic Cook/Bartender uniforms and changed them to use the
+      Service buttondown w/ slacks.
+  - image: updated the majority of Lawyer suit sprites, along with the Cook's Apron-Jacket
+      and Hat, and updated/greyscaled Botany's Overalls! Also the Overalls are available
+      in the clothesmate, and the Cook Jorts' shirt is less crusty.
+  Paxilmaniac:
+  - image: The Mosin-Nagant has been given new sprites and a reflavor, looking for
+      the old rifle? Look for the Sakhno Precision Rifle.
+  - balance: The tiniest balance thing, but since Silverscales use the Sakhno-Zhihao
+      rifle, which has a scope on it, their main weapon now has a scope.
+  - sound: The cargo rifle now has a new, considerably more rifle sized firing sound.
+      Gotten from tgmc from https://github.com/tgstation/TerraGov-Marine-Corps/pull/12280.
+  SyncIt21:
+  - bugfix: multiple balloon alerts when the plumbing RCD is low on ammo
+  - code_imp: organized all plumbing designs into static lists for memory savings
+  - refactor: removed unused vars for further memory savings
+  YehnBeep:
+  - bugfix: fixed a disconnected APC in Delta's tech storage.
