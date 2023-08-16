@@ -14,17 +14,17 @@
 	button_icon_state = "coffer"
 
 /datum/action/cooldown/mob_cooldown/domain/proc/domain()
-	var/turf/T = get_turf(owner)
-	T.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
+	var/turf/location = get_turf(owner)
+	location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
 	switch (rand(1,10))
 		if (8)
-			new /obj/effect/decal/cleanable/vomit(T)
+			new /obj/effect/decal/cleanable/vomit(location)
 		if (9)
-			new /obj/effect/decal/cleanable/vomit/old(T)
+			new /obj/effect/decal/cleanable/vomit/old(location)
 		if (10)
-			new /obj/effect/decal/cleanable/oil/slippery(T)
+			new /obj/effect/decal/cleanable/oil/slippery(location)
 		else
-			new /obj/effect/decal/cleanable/dirt(T)
+			new /obj/effect/decal/cleanable/dirt(location)
 	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/domain/Activate(atom/target)
