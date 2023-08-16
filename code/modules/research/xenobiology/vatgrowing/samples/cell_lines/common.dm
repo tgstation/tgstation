@@ -736,6 +736,6 @@
 		/datum/reagent/drug/nicotine = -1,
 		/datum/reagent/toxin/pestkiller = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/mega_arachnid = 1)
+	resulting_atoms = list(/mob/living/basic/mega_arachnid = 1)
 
 #undef VAT_GROWTH_RATE
