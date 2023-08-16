@@ -16,10 +16,11 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_eat))
 
-/obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
+/obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
 
 	king.cheese_heal(src, rat_heal, span_green("You eat [src], restoring some health."))
+	return COMPONENT_RAT_INTERACTED
 
 /obj/item/food/cheese/wedge
 	name = "cheese wedge"

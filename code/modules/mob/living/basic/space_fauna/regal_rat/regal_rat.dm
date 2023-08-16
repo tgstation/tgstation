@@ -44,6 +44,9 @@
 /mob/living/basic/regal_rat/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
 	AddElement(/datum/element/waddling)
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
@@ -59,31 +62,6 @@
 
 	riot = new(src)
 	riot.Grant(src)
-
-
-/mob/living/basic/regal_rat/proc/became_player_controlled()
-	notify_ghosts(
-		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
-		source = src,
-		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
-		header = "Sentient Rat Created",
-	)
-
-/mob/living/basic/regal_rat/handle_automated_action()
-	if(prob(20))
-		riot.Trigger()
-	else if(prob(50))
-		domain.Trigger()
-	return ..()
-
-/mob/living/basic/regal_rat/CanAttack(atom/the_target)
-	if(isliving(the_target))
-		var/mob/living/living_target = the_target
-		if (living_target.stat != DEAD)
-			return !living_target.faction_check_mob(src, exact_match = TRUE)
-
-	return ..()
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
@@ -108,20 +86,61 @@
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
-/mob/living/basic/regal_rat/AttackingTarget()
-	if (DOING_INTERACTION(src, REGALRAT_INTERACTION) || QDELETED(target))
-		return
-	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
+
+/mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(DOING_INTERACTION(src, REGALRAT_INTERACTION) || !allowed_to_attack(target))
+		return COMPONENT_HOSTILE_NO_ATTACK
+
+	if(istype(target, /obj/machinery/door/airlock))
 		pry_door(target)
 		return
+
+	if(isnull(mind))
+
+/// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
+/mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)
+	if(QDELETED(the_target))
+		return FALSE //wat
+
+	if(!isliving(the_target))
+		return TRUE // it might be possible to attack this? we'll find out soon enough
+
+	var/mob/living/living_target = the_target
+	if (living_target.stat == DEAD)
+		balloon_alert(src, "already dead!")
+		return FALSE
+
+	if(living_target.faction_check_mob(src, exact_match = TRUE))
+		balloon_alert(src, "one of your soldiers!")
+		return FALSE
+
+/mob/living/basic/regal_rat/proc/became_player_controlled()
+	notify_ghosts(
+		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
+		source = src,
+		action = NOTIFY_ORBIT,
+		flashwindow = FALSE,
+		header = "Sentient Rat Created",
+	)
+
+/mob/living/basic/regal_rat/handle_automated_action()
+	if(prob(20))
+		riot.Trigger()
+	else if(prob(50))
+		domain.Trigger()
+	return ..()
+
+/mob/living/basic/regal_rat/AttackingTarget()
+
 	if (src.mind && !src.combat_mode && target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
 		if (do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
 		return
-	else
-		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+
 	return ..()
 
 /**
@@ -149,19 +168,26 @@
  * accessible doors, something which is common in certain rat king spawn points.
  */
 /mob/living/basic/regal_rat/proc/pry_door(target)
+	if(!opening_airlock)
+		return FALSE
+
 	var/obj/machinery/door/airlock/prying_door = target
 	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
 		return FALSE
+
 	opening_airlock = TRUE
+
 	visible_message(
 		span_warning("[src] begins prying open the airlock..."),
 		span_notice("You begin digging your claws into the airlock..."),
 		span_warning("You hear groaning metal..."),
 	)
 	var/time_to_open = 0.5 SECONDS
+
 	if(prying_door.hasPower())
 		time_to_open = 5 SECONDS
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
+
 	if(do_after(src, time_to_open, prying_door))
 		opening_airlock = FALSE
 		if(prying_door.density && !prying_door.open(BYPASS_DOOR_CHECKS))
@@ -169,6 +195,7 @@
 			return FALSE
 		prying_door.open()
 		return FALSE
+
 	opening_airlock = FALSE
 
 /mob/living/basic/regal_rat/controlled
