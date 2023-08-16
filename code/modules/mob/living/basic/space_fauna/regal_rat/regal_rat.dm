@@ -179,6 +179,8 @@
  * A proc used for letting the rat king pry open airlocks instead of just attacking them.
  * This allows the rat king to traverse the station when there is a lack of vents or
  * accessible doors, something which is common in certain rat king spawn points.
+ *
+ * Returns TRUE if the door opens, FALSE otherwise.
  */
 /mob/living/basic/regal_rat/proc/pry_door(target)
 	if(!opening_airlock)
@@ -201,15 +203,17 @@
 		time_to_open = 5 SECONDS
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
 
-	if(do_after(src, time_to_open, prying_door))
+	if(!do_after(src, time_to_open, prying_door))
 		opening_airlock = FALSE
-		if(prying_door.density && !prying_door.open(BYPASS_DOOR_CHECKS))
-			to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))
-			return FALSE
-		prying_door.open()
 		return FALSE
 
 	opening_airlock = FALSE
+	if(prying_door.density && !prying_door.open(BYPASS_DOOR_CHECKS))
+		balloon_alert(src, "failed to open!")
+		return FALSE
+
+	prying_door.open()
+	return TRUE
 
 /mob/living/basic/regal_rat/controlled
 	poll_ghosts = TRUE
