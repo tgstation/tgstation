@@ -31080,9 +31080,6 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
-"sRH" = (
-/turf/open/space/basic,
-/area/ocean/generated_above)
 "sRK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -62830,7 +62827,7 @@ aah
 aah
 aah
 aah
-sRH
+aah
 aah
 aah
 aah
@@ -63087,7 +63084,7 @@ njn
 aah
 aah
 aah
-sRH
+aah
 aah
 aah
 aah
@@ -63344,7 +63341,7 @@ njn
 aah
 aah
 aah
-sRH
+aah
 aah
 aah
 aah
