@@ -286,7 +286,7 @@
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/machinery/netpod/netpod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/obj/structure/closet/crate/secure/bitrunner_loot/encrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunner_loot/encrypted)
+	var/obj/structure/closet/crate/secure/bitrunning/encrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
@@ -353,7 +353,7 @@
 	TEST_ASSERT_EQUAL(server.generate_loot(), TRUE, "Should generate loot with a receive turf")
 
 	// This is a pretty shallow test. I keep getting null crates with locate(), so I'm not sure how to test this
-	// var/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/crate = locate(/obj/structure/closet/crate/secure/bitrunner_loot/decrypted) in tiles
+	// var/obj/structure/closet/crate/secure/bitrunning/decrypted/crate = locate(/obj/structure/closet/crate/secure/bitrunning/decrypted) in tiles
 	// TEST_ASSERT_NOTNULL(crate, "Should generate a loot crate")
 
 /// Server side randomization of domains
@@ -473,7 +473,7 @@
 
 /// Ensures loot crates can spawn a proper number of items
 /datum/unit_test/bitrunning_loot_crate_rewards/Run()
-	var/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunner_loot/decrypted)
+	var/obj/structure/closet/crate/secure/bitrunning/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunning/decrypted)
 
 	var/total = 0
 	total = crate.calculate_loot(1, 1, 1)
@@ -512,7 +512,7 @@
 
 /// Ensures settings on vdoms are being set correctly
 /datum/unit_test/bitrunner_vdom_settings/Run()
-	var/obj/structure/closet/crate/secure/bitrunner_loot/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunner_loot/decrypted)
+	var/obj/structure/closet/crate/secure/bitrunning/decrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunning/decrypted)
 
 	for(var/path in subtypesof(/datum/lazy_template/virtual_domain))
 		var/datum/lazy_template/virtual_domain/vdom = new path
