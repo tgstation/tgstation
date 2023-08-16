@@ -12,6 +12,7 @@
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
 	button_icon_state = "coffer"
+	shared_cooldown = NONE
 
 /datum/action/cooldown/mob_cooldown/domain/proc/domain()
 	var/turf/location = get_turf(owner)
@@ -46,6 +47,7 @@
 	overlay_icon_state = "bg_clock_border"
 	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0 SECONDS
+	shared_cooldown = NONE
 	/// How close does something need to be for us to recruit it?
 	var/range = 5
 	/// Commands you can give to your mouse army
