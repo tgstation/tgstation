@@ -1,33 +1,38 @@
 #define REGALRAT_INTERACTION "regalrat"
 
+/// The cheesiest, most crowned rat of them all. Regent superior of all rats in maintenance... at least until someone else tries to encroach on their claim.
 /mob/living/basic/regal_rat
 	name = "feral regal rat"
-	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom. Not technically a king."
+	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom."
 	icon_state = "regalrat"
 	icon_living = "regalrat"
 	icon_dead = "regalrat_dead"
-	speak_chance = 0
-	turns_per_move = 5
+
 	maxHealth = 70
 	health = 70
-	// Slightly brown red, for the eyes
-	// Might be a bit too dim
-	lighting_cutoff_red = 22
-	lighting_cutoff_green = 8
-	lighting_cutoff_blue = 5
-	obj_damage = 10
+
 	butcher_results = list(/obj/item/food/meat/slab/mouse = 2, /obj/item/clothing/head/costume/crown = 1)
+
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
 	response_disarm_continuous = "skoffs at"
 	response_disarm_simple = "skoff at"
 	response_harm_continuous = "slashes"
 	response_harm_simple = "slash"
+
+	obj_damage = 10
 	melee_damage_lower = 13
 	melee_damage_upper = 15
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+
+	// Slightly brown red, for the eyes
+	// Might be a bit too dim
+	lighting_cutoff_red = 22
+	lighting_cutoff_green = 8
+	lighting_cutoff_blue = 5
+
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
 	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES)
@@ -181,8 +186,6 @@
 	var/obj/machinery/door/airlock/prying_door = target
 	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
 		return FALSE
-
-	opening_airlock = TRUE
 
 	visible_message(
 		span_warning("[src] begins prying open the airlock..."),

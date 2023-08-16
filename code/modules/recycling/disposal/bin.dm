@@ -135,7 +135,7 @@
 		return ..()
 
 /// The regal rat spawns ratty treasures from the disposal
-/obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
+/obj/machinery/disposal/proc/rat_rummage(mob/living/basic/regal_rat/king)
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
 	if (!do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
 		return
@@ -545,7 +545,7 @@
 	return
 
 /// Handles the signal for the rat king looking inside the disposal
-/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/basic/regal_rat/king)
+/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
 	if(king.combat_mode)
 		return
