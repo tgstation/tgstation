@@ -116,16 +116,16 @@
 /datum/status_effect/overwatch/Destroy()
 	QDEL_NULL(link)
 	if (!isnull(watcher))  // Side effects in Destroy? Well it turns out `on_remove` is also just called on Destroy. But only if the owner isn't deleting.
-		INVOKE_ASYNC(src, PROC_REF(unregister_watcher))
+		INVOKE_ASYNC(src, PROC_REF(unregister_watcher), watcher)
+		watcher = null
 
 	return ..()
 
 /// Clean up our association with the caster of this ability.
-/datum/status_effect/overwatch/proc/unregister_watcher()
+/datum/status_effect/overwatch/proc/unregister_watcher(mob/living/former_overwatcher)
 	if (!overwatch_triggered)
-		watcher.Stun(2 SECONDS, ignore_canstun = TRUE)
-	UnregisterSignal(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
-	watcher = null
+		former_overwatcher.Stun(2 SECONDS, ignore_canstun = TRUE)
+	UnregisterSignal(former_overwatcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 
 /// Uh oh, you did something within my threat radius, now we're going to shoot you
 /datum/status_effect/overwatch/proc/opportunity_attack()
