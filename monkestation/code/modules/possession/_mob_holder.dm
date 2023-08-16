@@ -36,7 +36,7 @@
 	/// base amount of pixels this offsets upwards for each set of additional arms past 2
 	var/base_vertical_shift = 0
 	///the held id card
-	var/obj/item/id_card
+	var/obj/item/id
 
 /mob/living/simple_animal/possession_holder/Initialize(mapload, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = 0, _r_x_shift = 0, _l_x_shift = 0)
 	. = ..()
@@ -260,6 +260,7 @@
 	switch(slot)
 		if(ITEM_SLOT_ID)
 			id = I
+			update_id_inv()
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 			return
@@ -272,5 +273,15 @@
 		update_held_items()
 		if(I == id)
 			id = null
+			update_id_inv()
 		return TRUE
 	return FALSE
+
+/mob/living/simple_animal/possession_holder/proc/update_id_inv()
+	if(id && client && hud_used?.hud_shown)
+		id.screen_loc = ui_id
+		client.screen += id
+
+/mob/living/simple_animal/possession_holder/regenerate_icons()
+	update_id_inv()
+	update_held_items()
