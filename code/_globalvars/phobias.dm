@@ -377,6 +377,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/neck/heretic_focus,
 		/obj/item/clothing/suit/hooded/cultrobes/eldritch,
 		/obj/item/codex_cicatrix,
+		/obj/item/coin/eldritch,
 		/obj/item/gun/ballistic/rifle/lionhunter,
 		/obj/item/melee/rune_carver,
 		/obj/item/melee/sickly_blade,
