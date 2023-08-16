@@ -163,5 +163,5 @@
 	multiplicative_slowdown = -26
 
 /datum/movespeed_modifier/settler
-	multiplicative_slowdown = 0.5
+	multiplicative_slowdown = 0.2
 	blacklisted_movetypes = FLOATING|FLYING
