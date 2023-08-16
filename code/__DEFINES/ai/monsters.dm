@@ -85,3 +85,9 @@
 #define BB_TARGET_CANNIBAL "BB_target_cannibal"
 ///the tree we will burn down
 #define BB_TARGET_TREE "BB_target_tree"
+
+// Regal Rats
+/// The rat's ability to corrupt an area.
+#define BB_DOMAIN_ABILITY "BB_domain_ability"
+/// The rat's ability to raise a horde of soldiers.
+#define BB_RAISE_HORDE_ABILITY "BB_raise_horde_ability"

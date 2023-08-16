@@ -34,10 +34,6 @@
 
 	///Should we request a mind immediately upon spawning?
 	var/poll_ghosts = FALSE
-	///The spell that the rat uses to generate miasma
-	var/datum/action/cooldown/mob_cooldown/domain/domain
-	///The Spell that the rat uses to recruit/convert more rats.
-	var/datum/action/cooldown/mob_cooldown/riot/riot
 
 /mob/living/basic/regal_rat/Initialize(mapload)
 	. = ..()
@@ -46,6 +42,7 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 	AddElement(/datum/element/waddling)
+	AddElement(/datum/element/ai_retaliate)
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = poll_ghosts,\
@@ -55,11 +52,13 @@
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)
 
-	domain = new(src)
+	var/datum/action/cooldown/mob_cooldown/domain/domain = new(src)
 	domain.Grant(src)
+	ai_controller.set_blackboard_key(BB_DOMAIN_ABILITY, domain)
 
-	riot = new(src)
+	var/datum/action/cooldown/mob_cooldown/riot/riot = new(src)
 	riot.Grant(src)
+	ai_controller.set_blackboard_key(BB_RAISE_HORDE_ABILITY, riot)
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
@@ -84,6 +83,14 @@
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
+/mob/living/basic/regal_rat/handle_automated_action()
+	if(prob(20))
+		riot.Trigger()
+	else if(prob(50))
+		domain.Trigger()
+	return ..()
+
+/// Triggers an alert to all ghosts that the rat has become player controlled.
 /mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
 		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
@@ -93,13 +100,7 @@
 		header = "Sentient Rat Created",
 	)
 
-/mob/living/basic/regal_rat/handle_automated_action()
-	if(prob(20))
-		riot.Trigger()
-	else if(prob(50))
-		domain.Trigger()
-	return ..()
-
+/// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
 /mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
