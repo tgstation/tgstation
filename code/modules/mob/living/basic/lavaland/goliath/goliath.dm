@@ -11,7 +11,6 @@
 	gender = MALE // Female ones are the bipedal elites
 	speed = 30
 	basic_mob_flags = IMMUNE_TO_FISTS
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 300
 	health = 300
 	friendly_verb_continuous = "wails at"
@@ -50,7 +49,6 @@
 
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
@@ -168,16 +166,6 @@
 	. = ..()
 	faction = new_friend.faction.Copy()
 
-/// Goliath which sometimes replaces itself with a rare variant
-/mob/living/basic/mining/goliath/random
-
-/mob/living/basic/mining/goliath/random/Initialize(mapload)
-	. = ..()
-	if(!prob(1))
-		return
-	new /mob/living/basic/mining/goliath/ancient/immortal(loc)
-	return INITIALIZE_HINT_QDEL
-
 /// Legacy Goliath mob with different sprites, largely the same behaviour
 /mob/living/basic/mining/goliath/ancient
 	name = "ancient goliath"
@@ -234,3 +222,15 @@
 	desc = "This rough saddle will give you a serviceable seat upon a goliath! Provided you can get one to stand still."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
+
+/// For map generation, has a chance to instantiate as a special subtype
+/obj/effect/spawner/random/goliath
+	name = "random goliath"
+	desc = "Chance to spawn a rare shiny version."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
+	icon_state = "goliath"
+	pixel_x = -12
+	loot = list(
+		/mob/living/basic/mining/goliath = 99,
+		/mob/living/basic/mining/goliath/ancient/immortal = 1,
+	)

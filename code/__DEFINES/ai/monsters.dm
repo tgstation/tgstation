@@ -59,14 +59,20 @@
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
 
-///eyeball keys
+/// Key containing overwatch ability information
+#define BB_WATCHER_OVERWATCH "BB_watcher_overwatch"
+/// Key containing gazae ability information
+#define BB_WATCHER_GAZE "BB_watcher_gaze"
+
+// eyeball keys
 ///the death glare ability
 #define BB_GLARE_ABILITY "BB_glare_ability"
 ///the blind target we must protect
 #define BB_BLIND_TARGET "BB_blind_target"
 ///value to store the minimum eye damage to prevent us from attacking a human
 #define BB_EYE_DAMAGE_THRESHOLD "BB_eye_damage_threshold"
-///hivebot keys
+
+// hivebot keys
 ///the machine we must go to repair
 #define BB_MACHINE_TARGET "BB_machine_target"
 ///the hivebot partner we will go communicate with
@@ -85,3 +91,11 @@
 #define BB_TARGET_CANNIBAL "BB_target_cannibal"
 ///the tree we will burn down
 #define BB_TARGET_TREE "BB_target_tree"
+
+// mega arachnid keys
+/// ability to throw restrain projectiles
+#define BB_ARACHNID_RESTRAIN "BB_arachnid_restrain"
+/// the found surveillance item we must destroy
+#define BB_SURVEILLANCE_TARGET "BB_surveillance_target"
+/// our acid slip ability
+#define BB_ARACHNID_SLIP "BB_arachnid_slip"
