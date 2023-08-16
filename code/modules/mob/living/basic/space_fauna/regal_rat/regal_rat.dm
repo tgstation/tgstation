@@ -53,15 +53,13 @@
 		assumed_control_message = "You are an independent, invasive force on the station! Hoard coins, trash, cheese, and the like from the safety of darkness!",\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)
+
 	domain = new(src)
-	riot = new(src)
 	domain.Grant(src)
+
+	riot = new(src)
 	riot.Grant(src)
 
-/mob/living/basic/regal_rat/Destroy()
-	QDEL_NULL(domain)
-	QDEL_NULL(riot)
-	return ..()
 
 /mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
@@ -89,6 +87,12 @@
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
+	if(user == src)
+		return
+
+	if(isregalrat(user))
+		. += span_warning("Who is this foolish false king? This will not stand!")
+		return
 
 	if(ismouse(user))
 		if(user.faction_check_mob(src, TRUE))
@@ -96,12 +100,9 @@
 		else
 			. += span_warning("This is a false king! Strike [p_them()] down!")
 
-	else if(user != src && isregalrat(user))
-		. += span_warning("Who is this foolish false king? This will not stand!")
-
 /mob/living/basic/regal_rat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
-	if(stat == DEAD || !environment || !environment.gases[/datum/gas/miasma])
+	if(stat == DEAD || isnull(environment) || isnull(environment.gases[/datum/gas/miasma]))
 		return
 	var/miasma_percentage = environment.gases[/datum/gas/miasma][MOLES] / environment.total_moles()
 	if(miasma_percentage >= 0.25)
@@ -132,12 +133,13 @@
  * place.
  */
 /mob/living/basic/regal_rat/proc/cheese_heal(obj/item/target, amount, message)
-	if(health < maxHealth)
-		to_chat(src, message)
-		heal_bodypart_damage(amount)
-		qdel(target)
-	else
-		to_chat(src, span_warning("You feel fine, no need to eat anything!"))
+	if(health >= maxHealth)
+		balloon_alert(src, "you feel full!")
+		return
+
+	to_chat(src, message)
+	heal_bodypart_damage(amount)
+	qdel(target)
 
 /**
  * Allows rat king to pry open an airlock if it isn't locked.
