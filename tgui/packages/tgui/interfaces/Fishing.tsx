@@ -223,7 +223,7 @@ class FishingMinigame extends Component<
       new_effect = randomPick(possibleEffects);
     }
     let sound = '';
-	const difficulty_mult = (1 + this.props.difficulty/100);
+    const difficulty_mult = 1 + this.props.difficulty / 100;
     switch (new_effect) {
       case ActiveEffect.AntiGrav:
         this.effect_duration = randomNumber(5, 7) * 1000 * difficulty_mult;
@@ -589,7 +589,7 @@ export const Fishing = (props, context) => {
           fish_ai={data.fish_ai}
           special_rules={data.special_effects}
           background={data.background_image}
-		  fish_icon={data.fish_icon}
+          fish_icon={data.fish_icon}
           win={() => act('win')}
           lose={() => act('lose')}
           send_sound={(sound) => act('send_sound', { sound: sound })}

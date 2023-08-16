@@ -160,10 +160,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
 	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
 	return reward
-	return reward
 
-
-/// Spawns a reward from a atom path.
+/// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman,  turf/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
@@ -175,6 +173,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	if(isfish(reward))
 		var/obj/item/fish/caught_fish = reward
 		caught_fish.randomize_size_and_weight()
+	return reward
 
 /// Cached fish list properties so we don't have to initalize fish every time, init deffered
 GLOBAL_LIST(fishing_property_cache)

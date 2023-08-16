@@ -17,8 +17,8 @@
 	var/list/required_atoms = list()
 	/// The list of atoms with sub-lists of atom references for scanned atoms contributing to the experiment (Or a count of atoms destoryed for destructive expiriments)
 	var/list/scanned = list()
-	///Used in serialize_progress_stage as a portion of the feedback message.
-	var/scan_of_message = "Scan samples of"
+	/// If set, it'll be used in place of the generic "Scan samples of \a [initial(target.name)]" in serialize_progress_stage()
+	var/scan_message
 
 /**
  * Initializes the scanned atoms lists
@@ -72,7 +72,8 @@
  */
 /datum/experiment/scanning/proc/serialize_progress_stage(atom/target, list/seen_instances)
 	var/scanned_total = (traits & EXPERIMENT_TRAIT_DESTRUCTIVE && !(traits & EXPERIMENT_TRAIT_TYPECACHE)) ? scanned[target] : seen_instances.len
-	return EXPERIMENT_PROG_INT("[scan_of_message] \a [initial(target.name)]", scanned_total, required_atoms[target])
+	var/message = scan_message || "Scan samples of \a [initial(target.name)]"
+	return EXPERIMENT_PROG_INT(message, scanned_total, required_atoms[target])
 
 /**
  * Attempts to scan an atom towards the experiment's goal

@@ -281,7 +281,7 @@
  * * experiment - The experiment to attempt to link to
  */
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
-	if (experiment && can_select_experiment(experiment))
+	if (can_select_experiment(experiment))
 		selected_experiment = experiment
 		selected_experiment.on_selected(src)
 
@@ -304,31 +304,19 @@
 		return FALSE
 
 	// Check against the list of allowed experimentors
-	if (experiment.allowed_experimentors && experiment.allowed_experimentors.len)
-		var/matched = FALSE
-		for (var/experimentor in experiment.allowed_experimentors)
-			if (istype(parent, experimentor))
-				matched = TRUE
-				break
-		if (!matched)
-			return FALSE
+	if (length(experiment.allowed_experimentors) && !is_type_in_list(parent, experiment.allowed_experimentors))
+		return FALSE
 
 	// Check that this experiment is visible currently
-	if (!linked_web || !(experiment in linked_web.available_experiments))
+	if (!(experiment in linked_web?.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted
-	for (var/badsci in blacklisted_experiments)
-		if (istype(experiment, badsci))
-			return FALSE
+	if(is_type_in_list(experiment, blacklisted_experiments))
+		return FALSE
 
-	// Check against the allowed experiment types
-	for (var/goodsci in allowed_experiments)
-		if (istype(experiment, goodsci))
-			return TRUE
-
-	// If we haven't returned yet then this shouldn't be allowed
-	return FALSE
+	// Finally, check against the allowed experiment types
+	return is_type_in_list(experiment, allowed_experiments)
 
 /**
  * Goes through all techwebs and goes through their servers to find ones on a valid z-level
@@ -386,12 +374,13 @@
 		.["techwebs"] += list(data)
 	.["experiments"] = list()
 	if (linked_web)
-		for (var/datum/experiment/experiment in linked_web.available_experiments)
+		for (var/datum/experiment/experiment as anything in linked_web.available_experiments)
+			if(!can_select_experiment(experiment))
+				continue
 			var/list/data = list(
 				name = experiment.name,
 				description = experiment.description,
 				tag = experiment.exp_tag,
-				selectable = can_select_experiment(experiment),
 				selected = selected_experiment == experiment,
 				progress = experiment.check_progress(),
 				performance_hint = experiment.performance_hint,

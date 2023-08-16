@@ -171,14 +171,19 @@
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
-	. += span_notice("While fishing, you can press the Ctrl key down to move the bait down, rather than up.")
+	. += span_notice("While fishing, you can hold the <b>Ctrl</b> key to move the bait down, rather than up.")
 
 /obj/item/fishing_hook/jaws
 	name = "jawed hook"
-	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever is caught by its jaws."
+	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever gets caught in its jaws."
 	icon_state = "jaws"
 	fishing_hook_traits = list(FISHING_MINIGAME_RULE_NO_ESCAPE, FISHING_MINIGAME_RULE_LIMIT_LOSS, FISHING_MINIGAME_RULE_KILL)
 	rod_overlay_icon_state = "hook_jaws_overlay"
+
+/obj/item/fishing_hook/active_effects_debug
+	name = "effects debug hook"
+	desc = "Contains the 'Stealth' and 'Anti-gravity' negative effects. Not suitable for children under the age of 3."
+	fishing_hook_traits = list(FISHING_MINIGAME_RULE_STEALTH, FISHING_MINIGAME_RULE_ANTIGRAV)
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"

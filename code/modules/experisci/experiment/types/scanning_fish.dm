@@ -10,14 +10,15 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	name = "Fish Scanning Experiment 1"
 	description = "An experiment requiring different fish species scanned to unlock the 'Beach' setting for the fishing portal generator."
 	performance_hint = "Scan fish. Examine scanner to review progress. Unlock new fishing portals."
+	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner, /obj/item/fishing_rod/tech)
 	traits = EXPERIMENT_TRAIT_TYPECACHE
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = 750)
 	required_atoms = list(/obj/item/fish = 4)
-	scan_of_message = "Scan species of"
 	///Further experiments added to the techweb when this one is completed.
 	var/list/next_experiments = list(/datum/experiment/scanning/fish/second)
 	///Completing a experiment may also enable a fish source to be used for use for the portal generator.
 	var/fish_source_reward = /datum/fish_source/portal/beach
+	scan_message = "Scan different species of fish"
 
 /**
  * We make sure the scanned list is shared between all fish scanning experiments for this techweb,
@@ -97,6 +98,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	performance_hint = "You need load in the 'Beach' template at the Holodeck."
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 	required_atoms = list(/obj/item/fish/holo = 4)
+	scan_message = "Scan different species of holographic fish"
 	next_experiments = null
 	fish_source_reward = /datum/fish_source/portal/random
 
