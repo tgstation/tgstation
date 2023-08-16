@@ -1,6 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - image: "The Mosin-Nagant has been given new sprites and a reflavor, looking for the old rifle? Look for the Sakhno Precision Rifle."
-  - balance: "The tiniest balance thing, but since Silverscales use the Sakhno-Zhihao rifle, which has a scope on it, their main weapon now has a scope."
-  - sound: "The cargo rifle now has a new, considerably more rifle sized firing sound. Gotten from tgmc from https://github.com/tgstation/TerraGov-Marine-Corps/pull/12280."

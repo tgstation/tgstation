@@ -42,3 +42,8 @@ export const tts_voice_pitch: FeatureNumeric = {
   name: 'Voice Pitch Adjustment',
   component: FeatureSliderInput,
 };
+
+export const tts_voice_style: FeatureChoiced = {
+  name: 'Voice Style',
+  component: FeatureDropdownInput,
+};

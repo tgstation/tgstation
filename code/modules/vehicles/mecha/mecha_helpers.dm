@@ -1,30 +1,3 @@
-///Adds a cell, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
-/obj/vehicle/sealed/mecha/proc/add_cell(obj/item/stock_parts/cell/new_cell)
-	QDEL_NULL(cell)
-	if(new_cell)
-		new_cell.forceMove(src)
-		cell = new_cell
-		return
-	cell = new /obj/item/stock_parts/cell/high(src)
-
-///Adds a scanning module, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
-/obj/vehicle/sealed/mecha/proc/add_scanmod(obj/item/stock_parts/scanning_module/new_scanmod)
-	QDEL_NULL(scanmod)
-	if(new_scanmod)
-		new_scanmod.forceMove(src)
-		scanmod = new_scanmod
-		return
-	scanmod = new /obj/item/stock_parts/scanning_module(src)
-
-///Adds a capacitor, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
-/obj/vehicle/sealed/mecha/proc/add_capacitor(obj/item/stock_parts/capacitor/new_capacitor)
-	QDEL_NULL(capacitor)
-	if(new_capacitor)
-		new_capacitor.forceMove(src)
-		capacitor = new_capacitor
-	else
-		capacitor = new /obj/item/stock_parts/capacitor(src)
-
 ///////////////////////
 ///// Power stuff /////
 ///////////////////////

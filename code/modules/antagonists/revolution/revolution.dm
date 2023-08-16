@@ -474,8 +474,7 @@
 	for(var/datum/mind/rev_mind in get_head_revolutionaries())
 		var/turf/rev_turf = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(rev_turf.z))
-			if(ishuman(rev_mind.current))
-				return FALSE
+			return FALSE
 	return TRUE
 
 /// Updates the state of the world depending on if revs won or loss.
