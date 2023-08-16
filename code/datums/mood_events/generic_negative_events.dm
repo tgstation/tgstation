@@ -93,7 +93,7 @@
 
 /datum/mood_event/reattachment/add_effects(obj/item/bodypart/limb)
 	if(limb)
-		description = "Ouch! My [limb.plaintext_zone] feels like I feel asleep on it."
+		description = "Ouch! My [limb.plaintext_zone] feels like I fell asleep on it."
 
 /datum/mood_event/tased
 	description = "There's no \"z\" in \"taser\". It's in the zap."
