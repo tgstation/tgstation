@@ -1,4 +1,4 @@
-/// bumped big 3x3 car only available to admins which can run people over
+/// Big 3x3 car only available to admins which can run people over
 /obj/vehicle/sealed/car/speedwagon
 	name = "BM Speedwagon"
 	desc = "Push it to the limit, walk along the razor's edge."
