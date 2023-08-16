@@ -20,7 +20,7 @@
 	if(!proj)
 		return
 
-	if(reusable)
+	if(reusable && proj.shrapnel_type != shell.type) // we will let the shrapnel handle the projectile 'dropping' if the shrapnel is the ammo type (e.g. arrows)
 		proj.AddElement(/datum/element/projectile_drop, shell.type)
 
 	if(isgun(fired_from))
