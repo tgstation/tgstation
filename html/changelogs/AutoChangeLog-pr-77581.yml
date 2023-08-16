@@ -1,0 +1,5 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "dismemberment moodlets are replaced by a lesser mood debuff when you recover the limb in question."
+  - balance: "dismemberment moodlets can now stack for each limb you lose, and are cleared separately. Their descriptions have been updated to reflect this."
