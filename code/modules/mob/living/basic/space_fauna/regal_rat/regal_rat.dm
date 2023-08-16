@@ -32,8 +32,6 @@
 	unique_name = TRUE
 	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES)
 
-	///Whether or not the regal rat is already opening an airlock
-	var/opening_airlock = FALSE
 	///Should we request a mind immediately upon spawning?
 	var/poll_ghosts = FALSE
 	///The spell that the rat uses to generate miasma
@@ -183,7 +181,7 @@
  * Returns TRUE if the door opens, FALSE otherwise.
  */
 /mob/living/basic/regal_rat/proc/pry_door(target)
-	if(!opening_airlock)
+	if(DOING_INTERACTION(src, REGALRAT_INTERACTION))
 		return FALSE
 
 	var/obj/machinery/door/airlock/prying_door = target
@@ -203,16 +201,13 @@
 		time_to_open = 5 SECONDS
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
 
-	if(!do_after(src, time_to_open, prying_door))
-		opening_airlock = FALSE
+	if(!do_after(src, time_to_open, prying_door, interaction_key = REGALRAT_INTERACTION))
 		return FALSE
 
-	opening_airlock = FALSE
-	if(prying_door.density && !prying_door.open(BYPASS_DOOR_CHECKS))
+	if(!prying_door.open(BYPASS_DOOR_CHECKS))
 		balloon_alert(src, "failed to open!")
 		return FALSE
 
-	prying_door.open()
 	return TRUE
 
 /mob/living/basic/regal_rat/controlled
