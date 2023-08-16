@@ -319,10 +319,41 @@
 	circuit = /obj/item/circuitboard/machine/refinery
 	usage_sound = 'sound/machines/mining/refinery.ogg'
 
+	/// Reagents that we can use to wash the boulders
+	var/list/allowed_reagents = list(/datum/reagent/water, /datum/reagent/lube)
+	/// Internal beaker for storing washing fluid
+	var/obj/item/reagent_containers/cup/beaker/large/washing_input
+
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
-	///We need a component like reaction chamber, but really it should be a simple demand, and then a more selective supply.
-	///It only accepts water, lube, and maybe some third chem, and should output WHEN USED, industrial waste chem to the output. Do not use any chemicals if waste output is full.
+
+	washing_input = new()
+	create_reagents(100, TRANSPARENT)
+	AddComponent(/datum/component/plumbing/selective, anchored, custom_receiver = washing_input.reagents, allowed_reagents = src.allowed_reagents)
+
+/// Try and draw reagents and produce waste
+/obj/machinery/bouldertech/refinery/proc/process_reagents(volume = MACHINE_REAGENT_TRANSFER)
+	if(volume > washing_input.reagents.total_volume) //not enough washing fluid
+		return null
+
+	if(reagents.maximum_volume < reagents.total_volume + volume) //we dont have enough space for waste!
+		return null
+
+	. = list() //keep track of which reagents we use and how much. list(type = volume)
+
+	// Pull washing fluids from the washing input and remove it, but record they've been used
+	for(var/datum/reagent/reagent as anything in washing_input.reagents.reagent_list)
+		var/volume_to_draw = min(reagent.volume, volume)
+
+		volume -= volume_to_draw
+		.[reagent.type] = volume_to_draw
+		washing_input.reagents.remove_reagent(reagent.type, volume_to_draw)
+
+	generate_waste(.)
+
+/// Generate waste reagents, depending on boulders and washing fluid
+/obj/machinery/bouldertech/refinery/proc/generate_waste(list/used_reagents)
+	reagents.add_reagent(/datum/reagent/consumable/bbqsauce, MACHINE_REAGENT_TRANSFER) // probably use the reagents to determine how much waste you make?
 
 /obj/machinery/bouldertech/refinery/RefreshParts()
 	. = ..()
