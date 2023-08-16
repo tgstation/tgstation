@@ -39,7 +39,8 @@
 	var/datum/supply_pack/custom/mining_pack = new(
 		purchaser = purchaser, \
 		cost = get_total_cost(), \
-		contains = things_to_order,
+		contains = things_to_order, \
+		pack_name = "Mining"
 	)
 	var/datum/supply_order/new_order = new(
 		pack = mining_pack,

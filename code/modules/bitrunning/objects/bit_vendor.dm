@@ -37,6 +37,7 @@
 		purchaser = purchaser, \
 		cost = get_total_cost(), \
 		contains = things_to_order,
+		pack_name = "Bitrunning",
 	)
 	var/datum/supply_order/new_order = new(
 		pack = bitrunning_pack,

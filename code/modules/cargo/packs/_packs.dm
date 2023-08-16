@@ -86,7 +86,7 @@
 		return FALSE
 	var/list/open_turfs = list()
 	for(var/turf/open/floor/found_turf in get_area_turfs(pick(areas), subtypes = TRUE))
-		open_turfs += found_turf 
+		open_turfs += found_turf
 
 	if(!length(open_turfs))
 		return FALSE
@@ -105,8 +105,10 @@
 	crate_name = "shaft mining delivery crate"
 	access = list(ACCESS_MINING)
 
-/datum/supply_pack/custom/New(purchaser, cost, list/contains)
+/datum/supply_pack/custom/New(purchaser, cost, list/contains, pack_name)
 	. = ..()
-	name = "[purchaser]'s Mining Order"
+	var/order_name = pack_name ? pack_name + " Order" : "Order"
+
+	name = "[purchaser]'s [order_name]"
 	src.cost = cost
 	src.contains = contains

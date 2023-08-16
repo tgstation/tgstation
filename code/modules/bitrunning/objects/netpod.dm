@@ -391,7 +391,7 @@
 	if(isnull(account))
 		return
 
-	account.bitrunning_points += reward_points
+	account.bitrunning_points += reward_points * 100
 
 /obj/machinery/netpod/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER

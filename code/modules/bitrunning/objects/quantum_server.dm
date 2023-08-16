@@ -255,7 +255,7 @@
 	var/datum/outfit/to_wear = new outfit_path()
 
 	to_wear.suit_store = null
-	to_wear.belt = /obj/item/bitrunning_health_monitor
+	to_wear.belt = /obj/item/bitrunning_host_monitor
 	to_wear.glasses = null
 	to_wear.suit = null
 	to_wear.gloves = null
