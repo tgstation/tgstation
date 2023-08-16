@@ -430,3 +430,9 @@
 	emag_act(ninja)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//WINDOOR//
+/obj/machinery/door/window/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
