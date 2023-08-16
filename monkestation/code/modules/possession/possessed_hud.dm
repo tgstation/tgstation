@@ -5,11 +5,22 @@
 	..()
 
 	var/atom/movable/screen/using
+	var/atom/movable/screen/inventory/inv_box
 
 	using = new/atom/movable/screen/language_menu
 	using.icon = ui_style
 	using.hud = src
 	static_inventory += using
+
+	inv_box = new /atom/movable/screen/inventory()
+	inv_box.name = "id"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "id"
+	inv_box.icon_full = "template_small"
+	inv_box.screen_loc = ui_id
+	inv_box.slot_id = ITEM_SLOT_ID
+	inv_box.hud = src
+	static_inventory += inv_box
 
 	using = new/atom/movable/screen/navigate
 	using.icon = ui_style
@@ -108,3 +119,16 @@
 
 	combo_display = new /atom/movable/screen/combo()
 	infodisplay += combo_display
+
+/datum/hud/possessed/persistent_inventory_update()
+	if(!mymob)
+		return
+	var/mob/living/H = mymob
+	if(hud_version != HUD_STYLE_NOHUD)
+		for(var/obj/item/I in H.held_items)
+			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))
+			H.client.screen += I
+	else
+		for(var/obj/item/I in H.held_items)
+			I.screen_loc = null
+			H.client.screen -= I
