@@ -438,7 +438,7 @@
 		to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[helper] shakes you to get you up!"))
 	else if(helper.zone_selected == BODY_ZONE_PRECISE_MOUTH) //Boops
-		if(HAS_TRAIT(src, TRAIT_BADTOUCH) & prob(50))
+		if(HAS_TRAIT(src, TRAIT_BADTOUCH) && prob(50))
 			helper.visible_message(span_notice("[src] doesn't let [helper] touch their face!"), span_notice("[src] doesn't let you near their face!"))
 		else if(istype(get_item_by_slot(ITEM_SLOT_MASK), /obj/item/clothing/mask/gas/clown_hat))
 			playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
