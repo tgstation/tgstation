@@ -35,6 +35,8 @@
 	var/l_x_shift = 0
 	/// base amount of pixels this offsets upwards for each set of additional arms past 2
 	var/base_vertical_shift = 0
+	///the held id card
+	var/obj/item/id_card
 
 /mob/living/simple_animal/possession_holder/Initialize(mapload, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = 0, _r_x_shift = 0, _l_x_shift = 0)
 	. = ..()
@@ -219,8 +221,56 @@
 /mob/living/simple_animal/possession_holder/can_equip(obj/item/I, slot, disable_warning, bypass_equip_delay_self)
 	switch(slot)
 		if(ITEM_SLOT_ID)
+			if(id)
+				return FALSE
 			if(!((I.slot_flags & ITEM_SLOT_ID)))
 				return FALSE
 			return TRUE
+	..()
+
+/mob/living/simple_animal/possession_holder/get_item_by_slot(slot_id)
+	switch(slot_id)
+		if(ITEM_SLOT_ID)
+			return id
+	return ..()
+
+/mob/living/simple_animal/possession_holder/get_slot_by_item(obj/item/looking_for)
+	if(id == looking_for)
+		return ITEM_SLOT_ID
+	return ..()
+
+/mob/living/simple_animal/possession_holder/equip_to_slot(obj/item/I, slot)
+	if(!slot)
+		return
+	if(!istype(I))
+		return
+
+	var/index = get_held_index_of_item(I)
+	if(index)
+		held_items[index] = null
+	update_held_items()
+
+	if(I.pulledby)
+		I.pulledby.stop_pulling()
+
+	I.screen_loc = null // will get moved if inventory is visible
+	I.forceMove(src)
+	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
+
+	switch(slot)
+		if(ITEM_SLOT_ID)
+			id = I
 		else
-			return FALSE
+			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
+			return
+
+	//Call back for item being equipped to drone
+	I.equipped(src, slot)
+
+/mob/living/simple_animal/possession_holder/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+	if(..())
+		update_held_items()
+		if(I == id)
+			id = null
+		return TRUE
+	return FALSE
