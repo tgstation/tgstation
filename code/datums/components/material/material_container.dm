@@ -608,7 +608,7 @@
  *
  * Arguments:
  * - target: drop location of the sheets
- * - context: the atom which is ejectign the sheets. Used mostly in silo logging
+ * - context: the atom which is ejecting the sheets. Used mostly in silo logging
  */
 /datum/component/material_container/proc/retrieve_all(target = null, atom/context = parent)
 	var/result = 0
