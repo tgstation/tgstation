@@ -37,6 +37,8 @@
 	unique_name = TRUE
 	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES)
 
+	ai_controller = /datum/ai_controller/basic_controller/regal_rat
+
 	///Should we request a mind immediately upon spawning?
 	var/poll_ghosts = FALSE
 
