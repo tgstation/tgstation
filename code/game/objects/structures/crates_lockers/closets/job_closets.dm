@@ -40,7 +40,7 @@
 		/obj/item/storage/box/mousetraps = 2,
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/clothing/suit/toggle/chef = 1,
-		/obj/item/clothing/under/rank/civilian/chef = 1,
+		/obj/item/clothing/under/costume/buttondown/slacks/service = 1,
 		/obj/item/clothing/head/utility/chefhat = 1,
 		/obj/item/reagent_containers/cup/rag = 1)
 	generate_items_inside(items_inside,src)

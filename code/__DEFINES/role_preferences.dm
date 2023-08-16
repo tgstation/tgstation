@@ -58,6 +58,8 @@
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_ANOMALY_GHOST "Ectoplasmic Anomaly Ghost"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
+#define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
+#define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_POSIBRAIN "Posibrain"
 #define ROLE_DRONE "Drone"
 #define ROLE_EMAGGED_BOT "Malfunctioning Bot"

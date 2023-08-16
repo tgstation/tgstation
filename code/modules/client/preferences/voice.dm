@@ -43,3 +43,22 @@
 /datum/preference/numeric/tts_voice_pitch/apply_to_human(mob/living/carbon/human/target, value)
 	if(SStts.tts_enabled && SStts.pitch_enabled)
 		target.pitch = value
+
+/datum/preference/choiced/tts_voice_style
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "tts_voice_style"
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+
+/datum/preference/choiced/tts_voice_style/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled)
+		return FALSE
+	return ..()
+
+/datum/preference/choiced/tts_voice_style/init_possible_values()
+	return list(TTS_VOICE_STYLE_SPEECH, TTS_VOICE_STYLE_BLIPS)
+
+/datum/preference/choiced/tts_voice_style/create_default_value()
+	return TTS_VOICE_STYLE_SPEECH
+
+/datum/preference/choiced/tts_voice_style/apply_to_human(mob/living/carbon/human/target, value)
+	target.voice_style = value

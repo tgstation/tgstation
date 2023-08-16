@@ -1,0 +1,4 @@
+author: "DeerJesus"
+delete-after: True
+changes:
+  - balance: "metal bat damage changed from 12 -> 20"
