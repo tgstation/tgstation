@@ -29,14 +29,15 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
 	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES)
+
 	///Whether or not the regal rat is already opening an airlock
 	var/opening_airlock = FALSE
-	///The spell that the rat uses to generate miasma
-	var/datum/action/cooldown/domain/domain
-	///The Spell that the rat uses to recruit/convert more rats.
-	var/datum/action/cooldown/riot/riot
 	///Should we request a mind immediately upon spawning?
 	var/poll_ghosts = FALSE
+	///The spell that the rat uses to generate miasma
+	var/datum/action/cooldown/mob_cooldown/domain/domain
+	///The Spell that the rat uses to recruit/convert more rats.
+	var/datum/action/cooldown/mob_cooldown/riot/riot
 
 /mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
 	. = ..()

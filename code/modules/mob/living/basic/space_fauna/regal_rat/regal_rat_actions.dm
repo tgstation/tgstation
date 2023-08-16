@@ -2,7 +2,7 @@
  *Increase the rat king's domain
  */
 
-/datum/action/cooldown/domain
+/datum/action/cooldown/mob_cooldown/domain
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
@@ -13,7 +13,7 @@
 	overlay_icon_state = "bg_clock_border"
 	button_icon_state = "coffer"
 
-/datum/action/cooldown/domain/proc/domain()
+/datum/action/cooldown/mob_cooldown/domain/proc/domain()
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
 	switch (rand(1,10))
@@ -27,7 +27,7 @@
 			new /obj/effect/decal/cleanable/dirt(T)
 	StartCooldown()
 
-/datum/action/cooldown/domain/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/domain/Activate(atom/target)
 	StartCooldown(10 SECONDS)
 	domain()
 	StartCooldown()
@@ -36,7 +36,7 @@
  * This action checks some nearby maintenance animals and makes them your minions.
  * If none are nearby, creates a new mouse.
  */
-/datum/action/cooldown/riot
+/datum/action/cooldown/mob_cooldown/riot
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
@@ -63,7 +63,7 @@
 		/datum/pet_command/point_targetting/attack/glockroach
 	)
 
-/datum/action/cooldown/riot/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)
 	StartCooldown(10 SECONDS)
 	riot()
 	StartCooldown()
@@ -75,7 +75,7 @@
  * * Convert nearby frogs into aggressive frogs.
  * * Spawn a single mouse if below the mouse cap.
  */
-/datum/action/cooldown/riot/proc/riot()
+/datum/action/cooldown/mob_cooldown/riot/proc/riot()
 	var/uplifted_mice = FALSE
 	for (var/mob/living/basic/mouse/nearby_mouse in oview(owner, range))
 		uplifted_mice = convert_mouse(nearby_mouse) || uplifted_mice
@@ -106,7 +106,7 @@
 	owner.visible_message(span_warning("[owner] commands a rat to their side!"))
 
 /// Makes a passed mob into our minion
-/datum/action/cooldown/riot/proc/make_minion(mob/living/new_minion, minion_desc, list/command_list = mouse_commands)
+/datum/action/cooldown/mob_cooldown/riot/proc/make_minion(mob/living/new_minion, minion_desc, list/command_list = mouse_commands)
 	if (isbasicmob(new_minion))
 		new_minion.AddComponent(/datum/component/obeys_commands, command_list)
 		qdel(new_minion.GetComponent(/datum/component/tameable)) // Rats don't share
@@ -117,7 +117,7 @@
 	new_minion.balloon_alert_to_viewers("squeak")
 
 /// Turns a mouse into an angry mouse
-/datum/action/cooldown/riot/proc/convert_mouse(mob/living/basic/mouse/nearby_mouse)
+/datum/action/cooldown/mob_cooldown/riot/proc/convert_mouse(mob/living/basic/mouse/nearby_mouse)
 	// This mouse is already rat controlled, let's not bother with it.
 	if (istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
 		return FALSE
@@ -138,7 +138,7 @@
 	return TRUE
 
 /// Turns a roach into an angry roach
-/datum/action/cooldown/riot/proc/convert_roach(mob/living/basic/cockroach/nearby_roach, list/converted_check_list)
+/datum/action/cooldown/mob_cooldown/riot/proc/convert_roach(mob/living/basic/cockroach/nearby_roach, list/converted_check_list)
 	// No need to convert when not on the same team.
 	if (faction_check(nearby_roach.faction, converted_check_list))
 		return FALSE
@@ -165,7 +165,7 @@
 	return TRUE
 
 /// Turns a frog into a crazy frog. This doesn't do anything interesting and should when it becomes a basic mob.
-/datum/action/cooldown/riot/proc/convert_frog(mob/living/basic/frog/nearby_frog, list/converted_check_list)
+/datum/action/cooldown/mob_cooldown/riot/proc/convert_frog(mob/living/basic/frog/nearby_frog, list/converted_check_list)
 	// No need to convert when not on the same team.
 	if(faction_check(nearby_frog.faction, converted_check_list) || nearby_frog.stat == DEAD)
 		return FALSE
