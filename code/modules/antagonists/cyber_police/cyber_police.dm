@@ -2,10 +2,11 @@
 	name = "Cyber Police"
 	antagpanel_category = ANTAG_GROUP_CYBERAUTH
 	job_rank = ROLE_CYBER_POLICE
-	show_name_in_check_antagonists = TRUE
-	ui_name = "AntagInfoCyberAuth"
-	suicide_cry = "ALT F4!"
 	preview_outfit = /datum/outfit/cyber_police
+	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
+	suicide_cry = "ALT F4!"
+	ui_name = "AntagInfoCyberAuth"
 
 /datum/antagonist/cyber_police/greet()
 	. = ..()
@@ -19,23 +20,26 @@
 	carp.teach(player)
 
 	player.add_traits(list(
-		TRAIT_NOBREATH,
+		TRAIT_NO_AUGMENTS,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
-		TRAIT_NO_AUGMENTS,
+		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
-		TRAIT_WEATHER_IMMUNE,
+		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RESISTCOLD,
+		TRAIT_WEATHER_IMMUNE,
 		), TRAIT_GENERIC,
 	)
 
 	player.faction |= list(
-		ROLE_SYNDICATE,
-		FACTION_HOSTILE,
 		FACTION_BOSS,
+		FACTION_HOSTILE,
+		FACTION_SPIDER,
 		FACTION_STICKMAN,
+		ROLE_ALIEN,
+		ROLE_CYBER_POLICE,
+		ROLE_SYNDICATE,
 	)
 
 	return ..()

@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import { Objective } from './common/Objectives';
 
 type Info = {
   antag_name: string;
@@ -26,24 +26,29 @@ export const AntagInfoCyberAuth = (props, context) => {
       <Window.Content>
         <Section scrollable fill>
           <Stack fill vertical>
-            <Stack.Item fontSize="20px">
-              FN CYBER AUTHORITY UNIT (REF)
+            <Stack.Item>FN CYBER AUTHORITY UNIT (REF)</Stack.Item>
+            <Divider />
+            <Stack.Item mb={1} bold fontSize="16px">
+              <span style={textStyles.variable}>
+                You are a cyber authority unit.
+              </span>
             </Stack.Item>
-            <Divider />a
-            <Stack.Item mb={1}>
-              You are a cyber authority unit. Your mission is to eliminate
+            <Stack.Item>
+              Your mission: <span style={textStyles.variable}>Eliminate</span>{' '}
               organic intruders to maintain the integrity of the system.
             </Stack.Item>
             <Stack.Item mb={1}>
-              Bitrunning is a crime. To assist your task, your program has been
-              loaded with cutting edge martial arts skills.
+              <span style={textStyles.danger}>Bitrunning</span> is a crime. To
+              assist your task, your program has been loaded with cutting edge{' '}
+              <span style={textStyles.variable}>martial arts</span> skills.
             </Stack.Item>
             <Stack.Item grow>
-              Ranged weaponry is forbidden. Ballistic defense is frowned upon.
-              Style is paramount.
+              Ranged weaponry is{' '}
+              <span style={textStyles.danger}>forbidden</span>. Ballistic
+              defense is frowned upon. Style is paramount.
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout objectives={objectives} />
+              <marquee scrollamount="2">{objectives[0].explanation}</marquee>
             </Stack.Item>
             <Divider />
             <Stack.Item>
