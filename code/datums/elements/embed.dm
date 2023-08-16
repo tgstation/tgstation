@@ -152,7 +152,8 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	tryForceEmbed(payload, limb)
+	if(!tryForceEmbed(payload, limb))
+		payload.failedEmbed()
 	Detach(source)
 
 /**
