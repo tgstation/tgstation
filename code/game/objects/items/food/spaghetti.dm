@@ -154,3 +154,81 @@
 	)
 	tastes = list("cheese" = 1, "breadcrumbs" = 1, "pasta" = 1)
 	foodtypes = GRAIN | DAIRY
+
+/obj/item/food/spaghetti/shoyu_tonkotsu_ramen
+	name = "shoyu tonkotsu ramen"
+	desc = "A simple ramen made of meat, egg, onion, and a sheet of seaweed."
+	icon_state = "shoyu_tonkotsu_ramen"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	tastes = list("noodles" = 5, "meat" = 3, "egg" = 4, "dried seaweed" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+
+/obj/item/food/spaghetti/kitakata_ramen
+	name = "kitakata ramen"
+	desc = "A hearty ramen composed of meat, mushrooms, onion, and garlic. Often given to the sick to comfort them"
+	icon_state = "kitakata_ramen"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	tastes = list("noodles" = 5, "meat" = 4, "mushrooms" = 3, "onion" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+
+/obj/item/food/spaghetti/kitsune_udon
+	name = "kitsune udon"
+	desc = "A vegetarian udon made of fried tofu and onions, made sweet and savory with sugar and soy sauce. The name comes from an old folktale about a fox enjoying fried tofu."
+	icon_state = "kitsune_udon"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+	tastes = list("noodles" = 5, "tofu" = 4, "sugar" = 3, "soy sauce" = 2)
+	foodtypes = GRAIN | VEGETABLES
+
+/obj/item/food/spaghetti/nikujaga
+	name = "nikujaga"
+	desc = "A delightful Japanese stew of noodles, onions, potatoes, and meat with mixed vegetables."
+	icon_state = "nikujaga"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 16,
+		/datum/reagent/consumable/nutriment/vitamin = 12,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	tastes = list("noodles" = 5, "meat" = 4, "potato" = 3, "onion" = 2, "mixed veggies" = 2)
+	foodtypes = GRAIN | VEGETABLES | MEAT
+
+/obj/item/food/spaghetti/pho
+	name = "pho"
+	desc = "A Vietnamese dish made of noodles, vegetables, herbs, and meat. Makes for a very popular street food."
+	icon_state = "pho"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	tastes = list("noodles" = 5, "meat" = 4, "cabbage" = 3, "onion" = 2, "herbs" = 2)
+	foodtypes = GRAIN | VEGETABLES | MEAT
+
+/obj/item/food/spaghetti/pad_thai
+	name = "pad thai"
+	desc = "A stir-fried noodle dish popular in Thailand made of peanuts, tofu, lime, and onions."
+	icon_state = "pad_thai"
+	trash_type = /obj/item/reagent_containers/cup/bowl
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+	tastes = list("noodles" = 5, "fried tofu" = 4, "lime" = 2, "peanut" = 3, "onion" = 2)
+	foodtypes = GRAIN | VEGETABLES | NUTS | FRUIT

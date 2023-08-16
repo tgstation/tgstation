@@ -245,7 +245,7 @@ SUBSYSTEM_DEF(tts)
 			else if(current_target.when_to_play < world.time)
 				audio_file = new(current_target.audio_file)
 				audio_file_blips = new(current_target.audio_file_blips)
-				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range, current_target.volume_offset)
+				play_tts(tts_target, current_target.listeners, current_target.use_blips ? audio_file_blips : audio_file, audio_file_blips, current_target.language, current_target.message_range, current_target.volume_offset)
 				if(length(data) != 1)
 					var/datum/tts_request/next_target = data[2]
 					next_target.when_to_play = world.time + current_target.audio_length
@@ -261,7 +261,7 @@ SUBSYSTEM_DEF(tts)
 
 #undef TTS_ARBRITRARY_DELAY
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0, pitch = 0, silicon = "")
+/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0, pitch = 0, silicon = "", blips_only = FALSE)
 	if(!tts_enabled)
 		return
 
@@ -290,7 +290,7 @@ SUBSYSTEM_DEF(tts)
 	var/file_name_blips = "tmp/tts/[identifier]_blips.ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&silicon=[silicon]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
 	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&silicon=[silicon]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips)
-	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners, pitch, silicon)
+	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners, pitch, silicon, blips_only)
 	var/list/player_queued_tts_messages = queued_tts_messages[target]
 	if(!player_queued_tts_messages)
 		player_queued_tts_messages = list()
@@ -346,7 +346,7 @@ SUBSYSTEM_DEF(tts)
 	var/silicon = ""
 
 
-/datum/tts_request/New(identifier, datum/http_request/request, datum/http_request/request_blips, message, target, local, datum/language/language, message_range, volume_offset, list/listeners, pitch)
+/datum/tts_request/New(identifier, datum/http_request/request, datum/http_request/request_blips, message, target, local, datum/language/language, message_range, volume_offset, list/listeners, pitch, silicon, blips_only = FALSE)
 	. = ..()
 	src.identifier = identifier
 	src.request = request
@@ -359,59 +359,52 @@ SUBSYSTEM_DEF(tts)
 	src.volume_offset = volume_offset
 	src.listeners = listeners
 	src.pitch = pitch
+	src.silicon = silicon
+	src.use_blips = blips_only
 	start_time = world.time
 
 /datum/tts_request/proc/start_requests()
-	if(istype(target, /client))
-		var/client/current_client = target
-		use_blips = (current_client?.prefs.read_preference(/datum/preference/choiced/sound_tts) == TTS_SOUND_BLIPS)
-	else if(istype(target, /mob))
-		use_blips = (target.client?.prefs.read_preference(/datum/preference/choiced/sound_tts) == TTS_SOUND_BLIPS)
-	if(local)
-		if(use_blips)
-			request_blips.begin_async()
-		else
-			request.begin_async()
+	if (!use_blips)
+		if(istype(target, /client))
+			var/client/current_client = target
+			use_blips = (current_client?.prefs.read_preference(/datum/preference/choiced/sound_tts) == TTS_SOUND_BLIPS)
+		else if(istype(target, /mob))
+			use_blips = (target.client?.prefs.read_preference(/datum/preference/choiced/sound_tts) == TTS_SOUND_BLIPS)
+
+	if(use_blips)
+		request_blips.begin_async()
+	else if (local)
+		request.begin_async()
 	else
 		request.begin_async()
 		request_blips.begin_async()
 
 /datum/tts_request/proc/get_primary_request()
-	if(local)
-		if(use_blips)
-			return request_blips
-		else
-			return request
+	if(use_blips)
+		return request_blips
 	else
 		return request
 
 /datum/tts_request/proc/get_primary_response()
-	if(local)
-		if(use_blips)
-			return request_blips.into_response()
-		else
-			return request.into_response()
+	if(use_blips)
+		return request_blips.into_response()
 	else
 		return request.into_response()
 
 /datum/tts_request/proc/requests_errored()
-	if(local)
-		var/datum/http_response/response
-		if(use_blips)
-			response = request_blips.into_response()
-		else
-			response = request.into_response()
-		return response.errored
+	if (use_blips)
+		return request_blips.into_response().errored
+	else if (local)
+		return request.into_response().errored
 	else
 		var/datum/http_response/response = request.into_response()
 		var/datum/http_response/response_blips = request_blips.into_response()
 		return response.errored || response_blips.errored
 
 /datum/tts_request/proc/requests_completed()
-	if(local)
-		if(use_blips)
-			return request_blips.is_complete()
-		else
-			return request.is_complete()
+	if(use_blips)
+		return request_blips.is_complete()
+	else if (local)
+		return request.is_complete()
 	else
 		return request.is_complete() && request_blips.is_complete()

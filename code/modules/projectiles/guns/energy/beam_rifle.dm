@@ -78,7 +78,7 @@
 	. = ..()
 	delay = modify_fantasy_variable("delay", delay, -bonus * 2)
 	aiming_time = modify_fantasy_variable("aiming_time", aiming_time, -bonus * 2)
-	recoil = modify_fantasy_variable("aiming_time", aiming_time, round(-bonus / 2))
+	recoil = modify_fantasy_variable("recoil", recoil, round(-bonus / 2))
 
 /obj/item/gun/energy/beam_rifle/remove_fantasy_bonuses(bonus)
 	delay = reset_fantasy_variable("delay", delay)
