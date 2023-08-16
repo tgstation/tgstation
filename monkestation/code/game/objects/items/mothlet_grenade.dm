@@ -10,7 +10,7 @@
 	ex_flame = 0
 
 /obj/projectile/bullet/shrapnel/mothlet //Projectile launched
-	name = "Soaring Mothlet"
+	name = "Mothlet"
 	desc = "WHY ARE YOU LOOKING AT IT, HIT THE DECK!!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "mothmallow_slice"
