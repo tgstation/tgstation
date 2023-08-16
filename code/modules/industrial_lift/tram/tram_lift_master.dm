@@ -128,6 +128,17 @@
 		update_tram_doors(CLOSE_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
 
+/**
+ * Moves the tram when hit by an immovable rod
+ *
+ * Tells the individual tram parts where to actually go and has an extra safety checks
+ * incase multiple inputs get through, preventing conflicting directions and the tram
+ * literally ripping itself apart. all of the actual movement is handled by SStramprocess
+ *
+ * Rod version also modifies the travel distance to ensure the tram positions properly on return.
+ *
+ * Arguments: destination platform (rod landmark)
+ */
 /datum/lift_master/tram/proc/rod_collision(obj/effect/landmark/tram/destination_platform)
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_distance = get_dist(get_turf(lift_platforms[1]), destination_platform)
