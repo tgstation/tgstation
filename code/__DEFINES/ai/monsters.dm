@@ -85,3 +85,11 @@
 #define BB_TARGET_CANNIBAL "BB_target_cannibal"
 ///the tree we will burn down
 #define BB_TARGET_TREE "BB_target_tree"
+
+// mega arachnid keys
+/// ability to throw restrain projectiles
+#define BB_ARACHNID_RESTRAIN "BB_arachnid_restrain"
+/// the found surveillance item we must destroy
+#define BB_SURVEILLANCE_TARGET "BB_surveillance_target"
+/// our acid slip ability
+#define BB_ARACHNID_SLIP "BB_arachnid_slip"

@@ -42,7 +42,7 @@
 	. = ..()
 	var/static/list/death_loot = list(/obj/effect/decal/cleanable/robot_debris)
 	AddElement(/datum/element/death_drops, death_loot)
-	AddElement(/datum/element/appearance_on_aggro, overlay_icon = icon, overlay_state = "[initial(icon_state)]_attack")
+	AddComponent(/datum/component/appearance_on_aggro, overlay_icon = icon, overlay_state = "[initial(icon_state)]_attack")
 	if(!ranged_attacker)
 		return
 	AddComponent(/datum/component/ranged_attacks, /obj/item/ammo_casing/hivebot, cooldown_time = ranged_attack_cooldown)
