@@ -84,4 +84,3 @@
 	name = "Jar of pickles"
 	item_path = /obj/item/storage/fancy/pickles_jar
 	cost_per_order = 60
-
