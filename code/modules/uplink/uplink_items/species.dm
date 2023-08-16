@@ -15,7 +15,7 @@
 	restricted_species = list(SPECIES_MOTH)
 	surplus = 0
 
-/datum/uplink_item/species_restricted/mothletgrenade
+/datum/uplink_item/species_restricted/mothletgrenade //Monkestation addition
 	name = "Mothlet Grenade"
 	desc = "A experimental greande comprised of a Co2 canister, and dozens of tiny brainwashed moths (dubbed mothlets) \
 			these little guys have been brainwashed and taught how to undo virtually all kinds of clothing and equipment \
