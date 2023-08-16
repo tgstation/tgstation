@@ -186,10 +186,6 @@
 /obj/item/stack/examine(mob/user)
 	. = ..()
 	if(is_cyborg)
-		if(singular_name)
-			. += "There are enough materials for [get_amount()] [singular_name]\s."
-		else
-			. += "There are enough materials for [get_amount()]."
 		return
 	if(singular_name)
 		if(get_amount()>1)
