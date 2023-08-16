@@ -337,12 +337,14 @@
 
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 3))
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 7))
 		return
 
-	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+	do_sparks(number = 3, cardinal_only = FALSE, source = src)
 	playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 35, TRUE)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), get_turf(src), 0, 1, 2, 3), 2.5 SECONDS)
+	balloon_alert(ninja, "stand back!")
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 0, 1, 2, 3), 2.5 SECONDS)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/simple_animal/bot/medbot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/static/list/worried_line = list(
@@ -358,17 +360,32 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	hacking_module.mod.add_charge(cell.charge)
+	hacking_module.charge_message(src, cell.charge)
 	cell.charge = 0
 	update_appearance()
 	visible_message(span_warning("[ninja] drains the energy from the [src]!"))
-	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
+	do_sparks(number = 3, cardinal_only = FALSE, source = src)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 //VENDING MACHINES//
 /obj/machinery/vending/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 2))
-		return
+	if(shoot_inventory)
+		balloon_alert(ninja, "already hacked!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	do_sparks(number = 3, cardinal_only = FALSE, source = ninja)
-	wires.on_pulse(WIRE_THROW)
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
+		balloon_alert(ninja, "not enough charge!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	do_sparks(number = 3, cardinal_only = FALSE, source = src)
 	visible_message(span_warning("[ninja] fires an arc of electricity from their gloves at [src], overloading it!"))
+	wires.on_pulse(WIRE_THROW)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/recycler/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	AI_notify_hack()
+	if(!do_after(ninja, 20 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	emag_act(ninja)
+
+	return COMPONENT_CANCEL_ATTACK_CHAIN
