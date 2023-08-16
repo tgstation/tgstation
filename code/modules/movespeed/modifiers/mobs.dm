@@ -156,3 +156,9 @@
 
 /datum/movespeed_modifier/grown_killer_tomato
 	variable = TRUE
+
+/datum/movespeed_modifier/goliath_mount
+	multiplicative_slowdown = -26
+
+/datum/movespeed_modifier/basilisk_overheat
+	multiplicative_slowdown = -18

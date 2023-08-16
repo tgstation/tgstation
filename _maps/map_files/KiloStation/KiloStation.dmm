@@ -18679,6 +18679,10 @@
 /obj/effect/spawner/random/decoration/carpet,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"glv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/mineral/random/labormineral,
+/area/space/nearstation)
 "glG" = (
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
@@ -110250,7 +110254,7 @@ aeu
 aeu
 aeu
 aeu
-aeu
+glv
 vJc
 jhN
 qmW
