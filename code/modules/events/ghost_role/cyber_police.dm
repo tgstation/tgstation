@@ -82,7 +82,7 @@
 	return SUCCESSFUL_SPAWN
 
 /datum/event_admin_setup/minimum_candidate_requirement/cyber_police
-	output_text = "There are no mobs eligible to mutate into a void sentinel!"
+	output_text = "There must be valid mobs to mutate or players in the domain!"
 
 /datum/event_admin_setup/minimum_candidate_requirement/cyber_police/count_candidates()
 	var/datum/round_event_control/cyber_police/cyber_control = event_control
