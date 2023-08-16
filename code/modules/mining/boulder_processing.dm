@@ -279,14 +279,14 @@
 		return FALSE
 	//todo:do the thing we do where we make sure the thing still exists and hasn't been deleted between the start of the recall and after.
 	random_boulder.forceMove(drop_location())
-	balloon_alert_to_viewers("[random_boulder] appears!")
+	balloon_alert_to_viewers("boulder appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	use_power(100)
 
 /obj/machinery/bouldertech/smelter
 	name = "boulder smeltery"
-	desc = "B-S for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
+	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
 	icon_state = "furnace"
 	holds_minerals = TRUE
 	processable_materials = list(
@@ -305,7 +305,7 @@
 
 /obj/machinery/bouldertech/refinery
 	name = "boulder refinery"
-	desc = "B-R for short. Accepts boulders and refines non-metallic ores into sheets. Can be upgraded with stock parts or through chemical inputs."
+	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets. Can be upgraded with stock parts or through chemical inputs."
 	icon_state = "stacker"
 	holds_minerals = TRUE
 	processable_materials = list(
