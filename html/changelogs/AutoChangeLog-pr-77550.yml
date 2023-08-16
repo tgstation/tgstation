@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - balance: "Hunter and viper spider toxins no longer deal liver damage."
+  - balance: "Tangle spider's acid injection per bite reduced from 5 to 2.5."

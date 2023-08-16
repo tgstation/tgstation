@@ -1,0 +1,5 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "items implanted on arms no longer become permanently stuck in-hand when their limb is dismembered"
+  - bugfix: "quickly sheathing and unsheathing the vorpal scythe can no longer bug out and prevent its effects from being applied"

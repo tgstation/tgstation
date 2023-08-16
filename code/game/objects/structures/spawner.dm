@@ -77,9 +77,9 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_types = list(
+		/mob/living/basic/mining/basilisk,
 		/mob/living/basic/mining/goliath/ancient,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/asteroid/basilisk,
 		/mob/living/simple_animal/hostile/asteroid/goldgrub,
 		/mob/living/simple_animal/hostile/asteroid/hivelord,
 	)
@@ -103,7 +103,7 @@
 /obj/structure/spawner/mining/basilisk
 	name = "basilisk den"
 	desc = "A den housing a nest of basilisks, bring a coat."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk)
+	mob_types = list(/mob/living/basic/mining/basilisk)
 
 /obj/structure/spawner/mining/wumborian
 	name = "wumborian fugu den"

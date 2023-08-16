@@ -26881,7 +26881,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "jOc" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk,
+/mob/living/basic/mining/basilisk,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid,
 /area/station/maintenance/fore/greater)
@@ -39290,7 +39290,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Library"
 	},
 /obj/machinery/door/firedoor,
@@ -53600,7 +53600,7 @@
 "sTa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Diner"
 	},
 /obj/machinery/door/firedoor,
@@ -53683,7 +53683,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "sTW" = (
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Theatre"
 	},
 /obj/machinery/door/firedoor,

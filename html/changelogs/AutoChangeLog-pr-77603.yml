@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Colored ammo bands, such as those on .357 and .38 speedloaders, no longer permanently disappear upon icon update."
