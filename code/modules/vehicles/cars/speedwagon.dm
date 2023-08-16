@@ -20,7 +20,7 @@
 
 /obj/vehicle/sealed/car/speedwagon/Bump(atom/bumped)
 	. = ..()
-	if(bumped == src || !bumped.density || occupant_amount() == 0)
+	if(!bumped.density || occupant_amount() == 0)
 		return
 
 	if(crash_all)
@@ -45,5 +45,7 @@
 	if(occupant_amount() == 0)
 		return
 	for(var/atom/future_statistic in range(2, src))
+		if(future_statistic == src)
+			continue
 		if(!LAZYACCESS(occupants, future_statistic))
 			Bump(future_statistic)
