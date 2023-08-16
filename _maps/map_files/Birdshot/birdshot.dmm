@@ -28047,7 +28047,7 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/stack/tile/iron{
+/obj/item/stack/tile/iron/base{
 	pixel_y = 18
 	},
 /obj/item/key/janitor{
