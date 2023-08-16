@@ -125,9 +125,11 @@
 	if(!active_item || (active_item in src))
 		return FALSE
 	if(owner)
-		owner.visible_message(span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+		owner.visible_message(
+			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 			span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-			span_hear("You hear a short mechanical noise."))
+			span_hear("You hear a short mechanical noise."),
+		)
 
 		owner.transferItemToLoc(active_item, src, TRUE)
 	else
