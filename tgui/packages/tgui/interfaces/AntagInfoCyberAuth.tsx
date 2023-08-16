@@ -29,14 +29,14 @@ export const AntagInfoCyberAuth = (props, context) => {
             <Stack.Item fontSize="20px">
               FN CYBER AUTHORITY UNIT (REF)
             </Stack.Item>
-            <Divider />
+            <Divider />a
             <Stack.Item mb={1}>
               You are a cyber authority unit. Your mission is to eliminate
-              intruders to maintain the integrity of the system.
+              organic intruders to maintain the integrity of the system.
             </Stack.Item>
             <Stack.Item mb={1}>
-              To do this, your program has been loaded with cutting edge martial
-              arts skills.
+              Bitrunning is a crime. To assist your task, your program has been
+              loaded with cutting edge martial arts skills.
             </Stack.Item>
             <Stack.Item grow>
               Ranged weaponry is forbidden. Ballistic defense is frowned upon.
