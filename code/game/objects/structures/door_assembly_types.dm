@@ -1,7 +1,7 @@
 /obj/structure/door_assembly/door_assembly_public
 	name = "public airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/public/overlays.dmi'
 	glass_type = /obj/machinery/door/airlock/public/glass
 	airlock_type = /obj/machinery/door/airlock/public
 
@@ -267,14 +267,9 @@
 	nomineral = TRUE
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
 
-/obj/structure/door_assembly/multi_tile/glass
-	name = "large glass airlock assembly"
-	base_name = "large glass airlock"
-	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
-	airlock_type = /obj/machinery/door/airlock/multi_tile/glass
-	glass_type = /obj/machinery/door/airlock/multi_tile/glass
-
+/obj/structure/door_assembly/multi_tile/door_assembly_public
+	name = "large public airlock assembly"
+	base_name = "large public airlock"
 
 /obj/structure/door_assembly/door_assembly_material/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
