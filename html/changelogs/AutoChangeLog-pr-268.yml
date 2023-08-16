@@ -1,4 +1,0 @@
-author: "Coding-Grape"
-delete-after: True
-changes:
-  - code_imp: "Removed fancy = FALSE from /obj/item/lighter/mime and /obj/item/lighter/bright"

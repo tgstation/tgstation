@@ -308,3 +308,8 @@
   - bugfix: Your plasmaman security team is no longer on fire.
   The-Black-Screen:
   - bugfix: removes vending machines that are in front of an airlock
+2023-08-16:
+  Coding-Grape:
+  - code_imp: Removed fancy = FALSE from /obj/item/lighter/mime and /obj/item/lighter/bright
+  Salted-Zen:
+  - image: Replaces bone axe and spear sprites with old ones from 1.0
