@@ -10,8 +10,10 @@
 	 * That, coupled with the rendered interpolation, may make the
 	 * icons look awfuller than they would normally already be.
 	 * The solution to this nit is translating the missing decimals.
+	 * also flooring increases the distance from 0 for negative numbers.
 	 */
-	var/translate = (body_position_pixel_y_offset - round(body_position_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
+	var/abs_pixel_y_offset = abs(body_position_pixel_y_offset)
+	var/translate = (abs_pixel_y_offset - round(abs_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
 	var/final_dir = dir
 	var/changed = FALSE
 
@@ -37,7 +39,8 @@
 		if(!lying_angle || !rotate_on_lying) //But not if the mob has been rotated.
 			//Make sure the body position y offset is also updated
 			body_position_pixel_y_offset = get_pixel_y_offset_standing(current_size)
-			var/new_translate = (body_position_pixel_y_offset - round(body_position_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
+			abs_pixel_y_offset = abs(body_position_pixel_y_offset)
+			var/new_translate = (abs_pixel_y_offset - round(abs_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
 			if(translate || new_translate)
 				ntransform.Translate(0, new_translate - translate)
 			final_pixel_y = base_pixel_y + body_position_pixel_y_offset
