@@ -328,6 +328,5 @@
 	if(!push_target)
 		return
 
-	special_target = push_target
 	lift_master.tram_travel(push_target, TRUE)
 	go_for_a_walk(push_target)
