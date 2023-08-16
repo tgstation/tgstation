@@ -328,7 +328,7 @@
 				break
 
 	// if none of those apply, we return false to avoid interrupting
-	if(!allowed)
+	if(!item_can_treat(I))
 		return FALSE
 
 	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
@@ -345,6 +345,20 @@
 
 	// lastly, treat them
 	return treat(I, user) // we allow treat to return a value so it can control if the item does its normal interaction or not
+
+/datum/wound/proc/item_can_treat(obj/item/potential_treater)
+	// check if we have a valid treatable tool
+	if(I.tool_behaviour == treatable_tool)
+		return TRUE
+	if(treatable_tool == TOOL_CAUTERY && I.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
+		return TRUE
+	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
+	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))
+		return TRUE
+	// failing THAT, we check if we have a generally allowed item
+	for(var/allowed_type in treatable_by)
+		if(istype(I, allowed_type))
+			return TRUE
 
 /// Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling]). Treatment is still is handled in [/datum/wound/proc/treat]
 /datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
