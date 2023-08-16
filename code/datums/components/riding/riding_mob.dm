@@ -123,7 +123,7 @@
 			if(SANITY_LEVEL_INSANE)
 				modified_move_cooldown *= 1.5
 				modified_move_delay *= 1.5
-	COOLDOWN_START(src, vehicle_move_cooldown = modified_move_cooldown, (last_move_diagonal? 2 : 1) * modified_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown = modified_move_cooldown, (last_move_diagonal ? 2 : 1) * modified_move_delay)
 	return ..()
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
