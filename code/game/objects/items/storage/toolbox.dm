@@ -50,6 +50,7 @@
 	icon_state = "red"
 	inhand_icon_state = "toolbox_red"
 	material_flags = NONE
+	throw_speed = 3 // red ones go faster
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
