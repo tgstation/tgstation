@@ -1,4 +1,6 @@
-/mob/living/simple_animal/hostile/regalrat
+#define REGALRAT_INTERACTION "regalrat"
+
+/mob/living/basic/regal_rat
 	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom. Not technically a king."
 	icon_state = "regalrat"
@@ -39,7 +41,7 @@
 	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/mob_cooldown/riot/riot
 
-/mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
+/mob/living/basic/regal_rat/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/waddling)
@@ -56,12 +58,12 @@
 	domain.Grant(src)
 	riot.Grant(src)
 
-/mob/living/simple_animal/hostile/regalrat/Destroy()
+/mob/living/basic/regal_rat/Destroy()
 	QDEL_NULL(domain)
 	QDEL_NULL(riot)
 	return ..()
 
-/mob/living/simple_animal/hostile/regalrat/proc/became_player_controlled()
+/mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
 		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
 		source = src,
@@ -70,14 +72,14 @@
 		header = "Sentient Rat Created",
 	)
 
-/mob/living/simple_animal/hostile/regalrat/handle_automated_action()
+/mob/living/basic/regal_rat/handle_automated_action()
 	if(prob(20))
 		riot.Trigger()
 	else if(prob(50))
 		domain.Trigger()
 	return ..()
 
-/mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
+/mob/living/basic/regal_rat/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/living_target = the_target
 		if (living_target.stat != DEAD)
@@ -85,7 +87,7 @@
 
 	return ..()
 
-/mob/living/simple_animal/hostile/regalrat/examine(mob/user)
+/mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
 
 	if(ismouse(user))
@@ -97,7 +99,7 @@
 	else if(user != src && isregalrat(user))
 		. += span_warning("Who is this foolish false king? This will not stand!")
 
-/mob/living/simple_animal/hostile/regalrat/handle_environment(datum/gas_mixture/environment)
+/mob/living/basic/regal_rat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
 	if(stat == DEAD || !environment || !environment.gases[/datum/gas/miasma])
 		return
@@ -105,9 +107,7 @@
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
-#define REGALRAT_INTERACTION "regalrat"
-
-/mob/living/simple_animal/hostile/regalrat/AttackingTarget()
+/mob/living/basic/regal_rat/AttackingTarget()
 	if (DOING_INTERACTION(src, REGALRAT_INTERACTION) || QDELETED(target))
 		return
 	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
@@ -123,8 +123,6 @@
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 	return ..()
 
-#undef REGALRAT_INTERACTION
-
 /**
  * Conditionally "eat" cheese object and heal, if injured.
  *
@@ -133,7 +131,7 @@
  * The "eating" is only conditional on the mob being injured in the first
  * place.
  */
-/mob/living/simple_animal/hostile/regalrat/proc/cheese_heal(obj/item/target, amount, message)
+/mob/living/basic/regal_rat/proc/cheese_heal(obj/item/target, amount, message)
 	if(health < maxHealth)
 		to_chat(src, message)
 		heal_bodypart_damage(amount)
@@ -148,7 +146,7 @@
  * This allows the rat king to traverse the station when there is a lack of vents or
  * accessible doors, something which is common in certain rat king spawn points.
  */
-/mob/living/simple_animal/hostile/regalrat/proc/pry_door(target)
+/mob/living/basic/regal_rat/proc/pry_door(target)
 	var/obj/machinery/door/airlock/prying_door = target
 	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
 		return FALSE
@@ -171,13 +169,35 @@
 		return FALSE
 	opening_airlock = FALSE
 
-/mob/living/simple_animal/hostile/regalrat/controlled
+/mob/living/basic/regal_rat/controlled
 	poll_ghosts = TRUE
+	/// The prefix to our name, the domain of which we are inherited.
+	var/static/list/kingdoms = list(
+		"Cheese",
+		"Garbage",
+		"Maintenance",
+		"Miasma",
+		"Plague",
+		"Rat",
+		"Trash",
+		"Vermin",
+	)
+	/// The suffix to our name, the title of which we are entitled to.
+	var/static/list/titles = list(
+		"Bojar",
+		"Emperor",
+		"King",
+		"Lord",
+		"Master",
+		"Overlord",
+		"Prince",
+		"Shogun",
+		"Supreme",
+		"Tsar",
+	)
 
-/mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
+/mob/living/basic/regal_rat/controlled/Initialize(mapload)
 	. = ..()
-	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
-	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
-	name = "[kingdom] [title]"
+	name = "[pick(kingdoms)] [pick(titles)]"
 
-
+#undef REGALRAT_INTERACTION
