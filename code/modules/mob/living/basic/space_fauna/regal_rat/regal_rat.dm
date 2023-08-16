@@ -199,6 +199,8 @@
 		balloon_alert(src, "one of your soldiers!")
 		return FALSE
 
+	return TRUE
+
 /// Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
 	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
