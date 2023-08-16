@@ -83,13 +83,6 @@
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
-/mob/living/basic/regal_rat/handle_automated_action()
-	if(prob(20))
-		riot.Trigger()
-	else if(prob(50))
-		domain.Trigger()
-	return ..()
-
 /// Triggers an alert to all ghosts that the rat has become player controlled.
 /mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
