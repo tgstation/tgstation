@@ -5662,6 +5662,7 @@
 #include "monkestation\code\modules\pools\_pool.dm"
 #include "monkestation\code\modules\pools\pool_liquid_group.dm"
 #include "monkestation\code\modules\pools\pool_attachments\pool_pump.dm"
+#include "monkestation\code\modules\possession\_item_topic.dm"
 #include "monkestation\code\modules\possession\_mob_holder.dm"
 #include "monkestation\code\modules\possession\possessed_hud.dm"
 #include "monkestation\code\modules\power\lighting\floor_light.dm"

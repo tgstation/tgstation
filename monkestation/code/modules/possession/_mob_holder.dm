@@ -18,6 +18,7 @@
 	set_dir_on_move = FALSE
 	gender = NEUTER
 	advanced_simple = TRUE
+	can_be_held = TRUE
 	/// how much hp we regen per process
 	var/health_regeneration = 1
 	/// the item we are currently
@@ -38,7 +39,7 @@
 	///the held id card
 	var/obj/item/id
 
-/mob/living/simple_animal/possession_holder/Initialize(mapload, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = 0, _r_x_shift = 0, _l_x_shift = 0)
+/mob/living/simple_animal/possession_holder/New(loc, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = 0, _r_x_shift = 0, _l_x_shift = 0)
 	. = ..()
 	if(!_stored_item)
 		_stored_item = new /obj/item/toy/plush/cirno_plush/ballin(src)
@@ -285,3 +286,16 @@
 /mob/living/simple_animal/possession_holder/regenerate_icons()
 	update_id_inv()
 	update_held_items()
+
+/mob/living/simple_animal/possession_holder/mob_pickup(mob/living/L)
+	stored_item.forceMove(get_turf(src))
+	src.forceMove(stored_item)
+
+	RegisterSignal(stored_item, COMSIG_ITEM_DROPPED, PROC_REF(return_control))
+
+/mob/living/simple_animal/possession_holder/proc/return_control()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(stored_item, COMSIG_ITEM_DROPPED)
+	src.forceMove(get_turf(stored_item))
+	stored_item.forceMove(src)
