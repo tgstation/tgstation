@@ -67,6 +67,14 @@
 		/obj/item/gun/energy/disabler = 1,
 	),src)
 
+/obj/item/storage/belt/holster/energy/smoothbore
+	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. Seems it was meant to fit two smoothbores."
+
+/obj/item/storage/belt/holster/energy/smoothbore/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/gun/energy/disabler/smoothbore = 2,
+	),src)
+
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."

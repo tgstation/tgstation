@@ -1,0 +1,1694 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/effect/spawner/random/structure/musician/piano/random_piano{
+	pixel_x = 6
+	},
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"ak" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt5";
+	icon_state = "basalt5";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"as" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt12";
+	icon_state = "basalt12";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"aH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"bk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt12";
+	icon_state = "basalt12";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"bC" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/iron{
+	base_icon_state = "basalt3";
+	icon_state = "basalt3";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"cG" = (
+/obj/item/gps/computer,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"cR" = (
+/obj/structure/table/wood/fancy/black,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/effect/turf_decal/siding/brown,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"ds" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"dX" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/structure/chair/stool/bar/directional/east{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"eM" = (
+/obj/structure/ore_box,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"eR" = (
+/obj/structure/table/reinforced/rglass,
+/obj/structure/cable,
+/obj/item/food/pie/cream,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"eV" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/effect/turf_decal/siding/brown{
+	dir = 10
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"fb" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 9
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"fg" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"fm" = (
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt5";
+	icon_state = "basalt5";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"fs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt6";
+	icon_state = "basalt6";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"gc" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"gz" = (
+/obj/structure/table/wood/fancy/black,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/item/storage/dice,
+/obj/item/toy/cards/deck{
+	pixel_y = 4
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"gS" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"hm" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"hE" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt1";
+	icon_state = "basalt1";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"hN" = (
+/obj/structure/table/reinforced/rglass,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/pod,
+/area/station/service/bar)
+"hS" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Service Theater - Backstage"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt12";
+	icon_state = "basalt12";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"hZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt2";
+	icon_state = "basalt2";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"il" = (
+/obj/effect/turf_decal/siding/brown/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 6
+	},
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"jh" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Service Bar - Backroom"
+	},
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"jk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"jN" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/turf/open/floor/iron{
+	base_icon_state = "basalt7";
+	icon_state = "basalt7";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"kc" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"kF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/barsign/all_access/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt12";
+	icon_state = "basalt12";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"le" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Service Bar - Southeast"
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt2";
+	icon_state = "basalt2";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"ll" = (
+/turf/open/floor/iron{
+	base_icon_state = "basalt3";
+	icon_state = "basalt3";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"lo" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/station/service/bar)
+"lq" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt7";
+	icon_state = "basalt7";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"lw" = (
+/obj/effect/turf_decal/mining,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/station/commons/lounge)
+"lF" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"lW" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Service Bar"
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"mh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/status_display/evac/directional/south,
+/obj/effect/landmark/start/clown,
+/turf/open/floor/iron{
+	base_icon_state = "basalt2";
+	icon_state = "basalt2";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"mo" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt6";
+	icon_state = "basalt6";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"mH" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 10
+	},
+/obj/machinery/light/directional/south,
+/obj/structure/table/reinforced/rglass,
+/obj/item/holosign_creator/robot_seat/bar,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"nh" = (
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"nq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt9";
+	icon_state = "basalt9";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"nF" = (
+/turf/closed/wall,
+/area/station/service/bar/backroom)
+"nQ" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 6
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"pe" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/barsign/all_access/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"qd" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar/directional/west{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"qe" = (
+/obj/effect/turf_decal/siding/brown/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/brown/corner,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"qB" = (
+/obj/machinery/jukebox{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/brown/end{
+	dir = 1
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"qS" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8;
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/brown/end{
+	dir = 8
+	},
+/turf/open/floor/pod,
+/area/station/service/bar)
+"qV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt7";
+	icon_state = "basalt7";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"rp" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron{
+	base_icon_state = "basalt12";
+	icon_state = "basalt12";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"rt" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 5
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"rR" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/station/service/bar)
+"sf" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/station/service/bar/backroom)
+"sK" = (
+/obj/effect/turf_decal/siding/brown,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"tl" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar/directional/east{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"tn" = (
+/obj/machinery/computer/slot_machine{
+	pixel_x = 2
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"tN" = (
+/obj/machinery/light/directional/south,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt1";
+	icon_state = "basalt1";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"us" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"uy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Service Bar South";
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"vu" = (
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/light/directional/north,
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/turf/open/floor/pod,
+/area/station/service/bar)
+"vL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"vY" = (
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"wC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt5";
+	icon_state = "basalt5";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"wJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/mime,
+/turf/open/floor/iron{
+	base_icon_state = "basalt12";
+	icon_state = "basalt12";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"wK" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/iron{
+	base_icon_state = "basalt8";
+	icon_state = "basalt8";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"wT" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 6
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"wY" = (
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"xc" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"yi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"zf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"zn" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/bar,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/rglass/fifty,
+/obj/item/vending_refill/cigarette,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/uranium,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"zt" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt8";
+	icon_state = "basalt8";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"Ae" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Am" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Bar Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/service/bar/backroom)
+"An" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/light/directional/south,
+/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"AI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"AP" = (
+/obj/effect/turf_decal/mining,
+/turf/closed/wall/mineral/titanium/survival,
+/area/station/commons/lounge)
+"AQ" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"Bg" = (
+/obj/machinery/smartfridge/survival_pod/preloaded,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Bq" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 9
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"BU" = (
+/turf/open/floor/iron{
+	base_icon_state = "basalt7";
+	icon_state = "basalt7";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"BV" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 10
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"Cc" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"Ci" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar/directional/west{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"CQ" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"CU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atm,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"CW" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"Db" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 6
+	},
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"DX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt8";
+	icon_state = "basalt8";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"Ea" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Ec" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/brown,
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 4
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"EC" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"EG" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/effect/turf_decal/siding/brown{
+	dir = 6
+	},
+/obj/machinery/vending/cigarette,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"EK" = (
+/turf/template_noop,
+/area/template_noop)
+"ER" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt6";
+	icon_state = "basalt6";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"ET" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/station/commons/lounge)
+"Fk" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"Fr" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4;
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/effect/turf_decal/siding/brown/end{
+	dir = 4
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Ft" = (
+/obj/effect/turf_decal/mining/survival,
+/turf/closed/wall/mineral/titanium/survival,
+/area/station/service/bar/backroom)
+"Gt" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
+"Gz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt6";
+	icon_state = "basalt6";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"HD" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"HL" = (
+/turf/open/floor/iron{
+	base_icon_state = "basalt2";
+	icon_state = "basalt2";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"HS" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/station/commons/lounge)
+"In" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"It" = (
+/obj/structure/table/reinforced/rglass,
+/obj/structure/desk_bell{
+	pixel_x = -7
+	},
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Jn" = (
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron{
+	base_icon_state = "basalt8";
+	icon_state = "basalt8";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"Kh" = (
+/obj/effect/turf_decal/mining,
+/turf/closed/wall/mineral/titanium/survival,
+/area/station/maintenance/department/crew_quarters/bar)
+"KA" = (
+/obj/structure/chair/stool/bar/directional/west{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"KQ" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/survival,
+/area/station/service/bar/backroom)
+"KR" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar/directional/east{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"KT" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/effect/turf_decal/siding/brown,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"KU" = (
+/obj/machinery/computer/slot_machine{
+	pixel_x = -2
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 5
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"KX" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/station/commons/lounge)
+"Lw" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/brown,
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"LO" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 5
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"MM" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/obj/structure/rack{
+	pixel_x = -4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/item/instrument/eguitar,
+/obj/item/instrument/banjo,
+/obj/item/instrument/violin,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"MP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron{
+	base_icon_state = "basalt5";
+	icon_state = "basalt5";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"MW" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/brown,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"ND" = (
+/obj/structure/rack,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/item/instrument/piano_synth,
+/obj/item/instrument/trombone,
+/obj/item/instrument/trumpet,
+/obj/item/instrument/guitar,
+/obj/item/instrument/accordion,
+/obj/machinery/light/directional/north,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"NG" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"NY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron{
+	base_icon_state = "basalt3";
+	icon_state = "basalt3";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"OA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"QH" = (
+/obj/structure/table/wood/fancy/black,
+/obj/machinery/light/directional/north,
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = -7
+	},
+/obj/item/toy/cards/deck/cas,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"Rd" = (
+/obj/structure/fans,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"RS" = (
+/obj/effect/turf_decal/siding/brown/end{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Service Bar North";
+	dir = 9
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"SB" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt2";
+	icon_state = "basalt2";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"SG" = (
+/obj/effect/turf_decal/siding/brown/end,
+/obj/machinery/door/airlock{
+	name = "Bar"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"Tg" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/brown/corner,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Ti" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 10
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"TB" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/station/maintenance/starboard/lesser)
+"Uo" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/effect/turf_decal/siding/brown,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"Ur" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"Vp" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/brown,
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_y = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"VB" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Bar Interior"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/effect/turf_decal/siding/brown/end{
+	dir = 4
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"VG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt1";
+	icon_state = "basalt1";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"Ww" = (
+/obj/structure/statue/goliath,
+/turf/open/floor/iron{
+	base_icon_state = "basalt2";
+	icon_state = "basalt2";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"WC" = (
+/obj/structure/table/reinforced,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/reagentgrinder{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"WT" = (
+/obj/effect/turf_decal/siding/brown,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Xk" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 9
+	},
+/obj/structure/cable,
+/turf/open/floor/pod,
+/area/station/service/bar)
+"Xv" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"XH" = (
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"XK" = (
+/obj/effect/turf_decal/siding/brown/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 10
+	},
+/obj/structure/displaycase{
+	alert = 0;
+	desc = "A display case containing an expensive forgery, probably.";
+	pixel_y = -4;
+	req_access = list("mining");
+	start_showpiece_type = /obj/item/fakeartefact
+	},
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"Yk" = (
+/obj/machinery/door/window/survival_pod,
+/obj/effect/turf_decal/siding/brown,
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/pod,
+/area/station/commons/lounge)
+"Yy" = (
+/obj/machinery/light/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"YP" = (
+/turf/open/floor/iron{
+	base_icon_state = "basalt5";
+	icon_state = "basalt5";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+"Zn" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/pod,
+/area/station/service/bar/backroom)
+"ZX" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/iron{
+	base_icon_state = "basalt0";
+	icon_state = "basalt0";
+	name = "false ash tile"
+	},
+/area/station/commons/lounge)
+
+(1,1,1) = {"
+EK
+EK
+EK
+wK
+MP
+ET
+HD
+Ti
+bk
+le
+fb
+CW
+"}
+(2,1,1) = {"
+EK
+EK
+EK
+gS
+tN
+ET
+QH
+cR
+OA
+NY
+gz
+An
+"}
+(3,1,1) = {"
+EK
+EK
+EK
+wJ
+mh
+ET
+ds
+nQ
+qV
+In
+rt
+AQ
+"}
+(4,1,1) = {"
+EK
+EK
+EK
+CU
+hS
+KX
+jN
+xc
+DX
+zf
+SB
+EK
+"}
+(5,1,1) = {"
+ZX
+ll
+wY
+wC
+yi
+zt
+hE
+kc
+ER
+BU
+EK
+EK
+"}
+(6,1,1) = {"
+lw
+qB
+KR
+tl
+dX
+XK
+aH
+Ww
+OA
+wY
+EK
+EK
+"}
+(7,1,1) = {"
+rR
+vu
+vY
+nh
+It
+MW
+fg
+Yy
+nq
+aH
+AI
+EK
+"}
+(8,1,1) = {"
+WC
+Xk
+hm
+lF
+eR
+Lw
+pe
+HS
+aj
+eV
+kF
+EK
+"}
+(9,1,1) = {"
+Rd
+Ae
+qS
+WT
+vY
+Vp
+aH
+HS
+KA
+Uo
+aH
+EK
+"}
+(10,1,1) = {"
+Bg
+Ae
+Fr
+sK
+vY
+Ec
+fs
+HS
+uy
+Yk
+Gz
+EK
+"}
+(11,1,1) = {"
+cG
+Tg
+Ea
+gc
+vY
+Vp
+hZ
+AP
+ND
+KT
+ak
+EK
+"}
+(12,1,1) = {"
+lo
+VB
+vY
+us
+hN
+Ec
+VG
+HS
+MM
+EG
+XH
+EK
+"}
+(13,1,1) = {"
+lw
+RS
+qd
+Ci
+Ci
+il
+wC
+EC
+mo
+wY
+HL
+EK
+"}
+(14,1,1) = {"
+bC
+YP
+Jn
+wY
+BU
+wY
+jk
+lq
+NG
+ll
+eM
+EK
+"}
+(15,1,1) = {"
+sf
+KQ
+sf
+sf
+KQ
+sf
+tn
+BV
+OA
+wY
+rp
+EK
+"}
+(16,1,1) = {"
+sf
+Bq
+zn
+Xv
+mH
+Ft
+KU
+wT
+OA
+lW
+Kh
+EK
+"}
+(17,1,1) = {"
+Am
+Zn
+Ur
+CQ
+qe
+SG
+vL
+Cc
+as
+fm
+TB
+EK
+"}
+(18,1,1) = {"
+nF
+LO
+Fk
+jh
+Db
+TB
+Gt
+TB
+wY
+TB
+TB
+EK
+"}

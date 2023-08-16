@@ -406,9 +406,9 @@
 /obj/machinery/roulette/proc/handle_color_light(color)
 	switch(color)
 		if("green")
-			set_light(2,2, LIGHT_COLOR_GREEN)
+			set_light(l_outer_range = 2, l_power = 2, l_color = LIGHT_COLOR_GREEN)
 		if("red")
-			set_light(2,2, COLOR_SOFT_RED)
+			set_light(l_outer_range = 2, l_power = 2, l_color = COLOR_SOFT_RED)
 
 /obj/machinery/roulette/welder_act(mob/living/user, obj/item/I)
 	. = ..()

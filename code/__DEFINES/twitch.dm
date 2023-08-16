@@ -1,0 +1,3 @@
+#define TWITCH_AFFECTS_STREAMER (1 << 0)
+#define TWITCH_AFFECTS_ALL (1 << 1)
+#define TWITCH_AFFECTS_RANDOM (1 << 2)

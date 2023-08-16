@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		l_range = ROUND_UP(clamp(sm.internal_energy / 500, 4, 10)),
+		l_outer_range = ROUND_UP(clamp(sm.internal_energy / 500, 4, 10)),
 		l_power = ROUND_UP(clamp(sm.internal_energy / 1000, 1, 5)),
 		l_color = sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
 		l_on = !!sm.internal_energy,

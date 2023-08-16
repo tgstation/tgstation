@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(meteor_eyeballs)
 /obj/structure/meateor_fluff/eyeball/Initialize(mapload)
 	. = ..()
 	GLOB.meteor_eyeballs += src
-	set_light(l_range = 4, l_color = COLOR_VERY_SOFT_YELLOW)
+	set_light(l_outer_range = 4, l_color = COLOR_VERY_SOFT_YELLOW)
 	blink()
 
 /// Play a blinking animation and queue it again

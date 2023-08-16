@@ -91,6 +91,7 @@
 #define MASSDRIVER_CHAPEL "chapelgun"
 #define MASSDRIVER_DISPOSALS "trash"
 #define MASSDRIVER_SHACK "shack"
+#define MASSDRIVER_CARGO "cargo"
 
 //orion game states
 #define ORION_STATUS_START 0

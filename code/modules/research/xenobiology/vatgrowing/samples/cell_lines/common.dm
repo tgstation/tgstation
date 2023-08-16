@@ -44,7 +44,7 @@
 
 	virus_suspectibility = 1
 	growth_rate = VAT_GROWTH_RATE
-	resulting_atoms = list(/mob/living/simple_animal/chicken = 1)
+	resulting_atoms = list(/mob/living/basic/chicken = 1)
 
 /datum/micro_organism/cell_line/cow
 	desc = "Bovine stem cells"
@@ -427,7 +427,7 @@
 		/datum/reagent/consumable/nutriment/protein,
 		/datum/reagent/consumable/nutriment/vitamin,
 		/datum/reagent/consumable/nutriment/peptides,
-		/datum/reagent/consumable/liquidelectricity/enriched,
+		/datum/reagent/consumable/liquidelectricity,
 		/datum/reagent/growthserum,
 		/datum/reagent/yuck)
 

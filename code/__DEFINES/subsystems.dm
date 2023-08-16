@@ -159,6 +159,7 @@
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
+#define INIT_ORDER_POLLUTION 32
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
@@ -179,6 +180,8 @@
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
+#define INIT_ORDER_HOTSPOTS -95 ///only called on oshan so just call it near the end.
+#define INIT_ORDER_TWITCH -96
 #define INIT_ORDER_STATPANELS -97
 #define INIT_ORDER_BAN_CACHE -98
 #define INIT_ORDER_INIT_PROFILER -99 //Near the end, logs the costs of initialize
@@ -187,6 +190,7 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 #define FIRE_PRIORITY_PING 10
+#define FIRE_PRIORITY_TWITCH 10
 #define FIRE_PRIORITY_IDLE_NPC 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10
@@ -206,6 +210,7 @@
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
 #define FIRE_PRIORITY_SPACEDRIFT 30
+#define FIRE_PRIORITY_HOTSPOT 30
 #define FIRE_PRIOTITY_LIQUIDS 30
 #define FIRE_PRIORITY_SMOOTHING 35
 #define FIRE_PRIORITY_OBJ 40

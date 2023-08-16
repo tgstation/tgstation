@@ -232,6 +232,9 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Ethereal Tunic"
 	item_path = /obj/item/clothing/under/ethereal_tunic
 
+/datum/store_item/under/miscellaneous/tragic
+	name = "Tragic Mime Suit"
+	item_path = /obj/item/clothing/under/costume/tragic
 
 /*
 *	FORMAL UNDERSUITS

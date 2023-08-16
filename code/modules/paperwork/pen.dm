@@ -255,7 +255,7 @@
 	bare_wound_bonus = 10
 	item_flags = NO_BLOOD_ON_ITEM
 	light_system = MOVABLE_LIGHT
-	light_range = 1.5
+	light_outer_range = 1.5
 	light_power = 0.75
 	light_color = COLOR_SOFT_RED
 	light_on = FALSE

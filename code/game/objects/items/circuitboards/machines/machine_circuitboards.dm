@@ -158,6 +158,48 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/modular_shield_generator
+	name = "Modular Shield Generator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield_generator
+	req_components = list(
+		/datum/stock_part/manipulator = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1,
+		/obj/item/stack/sheet/plasteel = 3,)
+
+/obj/item/circuitboard/machine/modular_shield_node
+	name = "Modular Shield Node"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/node
+	req_components = list(
+		/obj/item/stack/cable_coil = 3, //monke edit 15 to 3
+		/obj/item/stack/sheet/plasteel = 2,)
+
+/obj/item/circuitboard/machine/modular_shield_well
+	name = "Modular Shield Well"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/well
+	req_components = list(
+		/datum/stock_part/capacitor = 3,
+		/obj/item/stack/sheet/plasteel = 2,)
+
+/obj/item/circuitboard/machine/modular_shield_relay
+	name = "Modular Shield Relay"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/relay
+	req_components = list(
+		/datum/stock_part/micro_laser = 3,
+		/obj/item/stack/sheet/plasteel = 2,)
+
+/obj/item/circuitboard/machine/modular_shield_charger
+	name = "Modular Shield Charger"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/charger
+	req_components = list(
+		/datum/stock_part/manipulator = 3,
+		/obj/item/stack/sheet/plasteel = 2,)
+
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -594,7 +636,11 @@
 		/obj/machinery/vending/security = "SecTech",
 		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
 		/obj/machinery/vending/tool = "YouTool",
-		/obj/machinery/vending/custom = "Custom Vendor")
+		/obj/machinery/vending/custom = "Custom Vendor",
+		/obj/machinery/vending/imported = "NT Sustenance Supplier",
+		/obj/machinery/vending/imported/yangyu = "Fudobenda",
+		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
+		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths

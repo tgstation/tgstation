@@ -8,7 +8,7 @@
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	mob_biotypes = MOB_ORGANIC|MOB_EPIC
 	obj_damage = 400
-	light_range = 3
+	light_outer_range = 3
 	faction = list(FACTION_MINING, FACTION_BOSS)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	robust_searching = TRUE

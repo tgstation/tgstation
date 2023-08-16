@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/ixworth
+/mob/living/basic/chicken/ixworth
 	icon_suffix = "ixworth"
 
 	breed_name = "Ixworth"
@@ -10,4 +10,4 @@
 	name = "Ixworth Egg"
 	icon_state = "ixworth"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/ixworth
+	layer_hen_type = /mob/living/basic/chicken/ixworth

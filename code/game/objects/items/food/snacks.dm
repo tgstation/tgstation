@@ -208,7 +208,7 @@
 	trash_type = /obj/item/trash/energybar
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/liquidelectricity/enriched = 3,
+		/datum/reagent/consumable/liquidelectricity = 3,
 	)
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC

@@ -95,8 +95,8 @@
 		cone.transform = cone.transform.Translate(-32, -32)
 		set_direction(movable_parent.dir)
 	if(!isnull(_range))
-		movable_parent.set_light_range(_range)
-	set_range(parent, movable_parent.light_range)
+		movable_parent.set_light_range(_range, _range)
+	set_range(parent, movable_parent.light_inner_range, movable_parent.light_outer_range)
 	if(!isnull(_power))
 		movable_parent.set_light_power(_power)
 	set_power(parent, movable_parent.light_power)
@@ -338,9 +338,9 @@
 
 
 ///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
-/datum/component/overlay_lighting/proc/set_range(atom/source, old_range)
+/datum/component/overlay_lighting/proc/set_range(atom/source, old_inner_range, old_outer_range)
 	SIGNAL_HANDLER
-	var/new_range = source.light_range
+	var/new_range = source.light_outer_range
 	if(range == new_range)
 		return
 	if(range == 0)

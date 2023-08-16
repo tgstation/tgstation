@@ -3,7 +3,7 @@
 	description = "Keep yourself occupied in permabrig."
 	department_head = list("The Security Team")
 	faction = FACTION_STATION
-	total_positions = 0
+	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the security team"
 	exp_granted_type = EXP_TYPE_CREW
@@ -77,3 +77,33 @@
 		var/obj/item/bodypart/tatted_limb = pick_n_take(limbs_to_tat)
 		var/list/tattoo = pick_n_take(SSpersistence.prison_tattoos_to_use)
 		tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
+
+
+//monkestation prisoner stuff
+
+/datum/job/prisoner/get_latejoin_spawn_point()
+	var/turf/open/picked_turf = get_random_open_turf_in_area()
+	return picked_turf
+
+/datum/job/prisoner/after_latejoin_spawn(mob/living/spawning)
+	. = ..()
+	var/obj/structure/closet/supplypod/washer_pod/washer_pod = new(null)
+	washer_pod.explosionSize = list(0,0,0,0)
+	washer_pod.bluespace = TRUE
+
+	var/turf/granter_turf = get_turf(spawning)
+	spawning.forceMove(washer_pod)
+	new /obj/effect/pod_landingzone(granter_turf, washer_pod)
+
+
+/// Iterates over all turfs in the target area and returns the first non-dense one
+/datum/job/prisoner/proc/get_random_open_turf_in_area()
+	var/list/turfs = get_area_turfs(/area/station/security/prison)
+	var/turf/open/target_turf = null
+	var/sanity = 0
+	while(!target_turf && sanity < 100)
+		sanity++
+		var/turf/turf = pick(turfs)
+		if(!turf.density)
+			target_turf = turf
+	return target_turf

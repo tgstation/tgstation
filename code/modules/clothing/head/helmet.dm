@@ -17,6 +17,8 @@
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
+	var/can_flashlight = FALSE //if a flashlight can be mounted. if it has a flashlight and this is false, it is permanently attached.
+
 /datum/armor/head_helmet
 	melee = 35
 	bullet = 30

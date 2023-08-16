@@ -33,12 +33,15 @@
 	filters += FILTER_STAMINACRIT
 
 	addtimer(CALLBACK(src, PROC_REF(exit_stamina_stun)), STAMINA_STUN_TIME)
+	stamina.pause(STAMINA_STUN_TIME + 2 SECONDS)
 
 /mob/living/carbon/exit_stamina_stun()
 	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 	REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	filters -= FILTER_STAMINACRIT
+	stamina.adjust_grace_period(0.5 SECONDS)
+	stamina.current = (stamina.maximum * STAMINA_STUN_THRESHOLD_MODIFIER) + 10
 
 /mob/living/carbon/adjust_disgust(amount)
 	disgust = clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)

@@ -214,6 +214,47 @@
 	log_combat(user, target_mob, "attacked", src.name, "(ISTATE: [user.log_istate()]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
+
+/**
+ * Called from multi_hit component
+ *
+ * Arguments:
+ * * mob/living/target_mob - The mob being hit by this item
+ * * mob/living/user - The mob hitting with this item
+ * * params - Click params of this attack
+ */
+/obj/item/proc/multi_attack(mob/living/target_mob, mob/living/user, params, direction_traveled)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
+	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(signal_return & COMPONENT_SKIP_ATTACK)
+		return
+
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
+
+	if(item_flags & NOBLUDGEON)
+		return
+
+	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		return
+
+	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+	else if(hitsound)
+		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
+
+	target_mob.lastattacker = user.real_name
+	target_mob.lastattackerckey = user.ckey
+
+	if(force && target_mob == user && user.client)
+		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
+
+	target_mob.attacked_by(src, user)
+
+	log_combat(user, target_mob, "attacked", src.name, "(ISTATE: [user.log_istate()]) (DAMTYPE: [uppertext(damtype)])")
+	add_fingerprint(user)
+
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, params)
 	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SECONDARY, victim, user, params)

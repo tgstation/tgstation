@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(liquids)
 
 	if(length(unvalidated_oceans))
 		for(var/turf/open/floor/plating/ocean/unvalidated_turf in unvalidated_oceans)
+			if(MC_TICK_CHECK)
+				return
 			unvalidated_turf.assume_self()
 
 	if(!length(temperature_queue))
@@ -59,7 +61,7 @@ SUBSYSTEM_DEF(liquids)
 
 				LG.process_cached_edges()
 				LG.process_group()
-				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES)
+				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES && LG.evaporates)
 					for(var/tur in LG.members)
 						var/turf/listed_turf = tur
 						evaporation_queue |= listed_turf
@@ -100,16 +102,22 @@ SUBSYSTEM_DEF(liquids)
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_FIRE)
 		fire_counter++
+		for(var/g in active_groups)
+			if(MC_TICK_CHECK)
+				return
+			var/datum/liquid_group/LG = g
+			if(LG.burning_members.len)
+				for(var/turf/burning_turf in LG.burning_members)
+					if(MC_TICK_CHECK)
+						return
+					LG.process_spread(burning_turf)
+
 		if(fire_counter > REQUIRED_FIRE_PROCESSES)
 			for(var/g in active_groups)
 				if(MC_TICK_CHECK)
 					return
 				var/datum/liquid_group/LG = g
 				if(LG.burning_members.len)
-					for(var/turf/burning_turf in LG.burning_members)
-						if(MC_TICK_CHECK)
-							return
-						LG.process_spread(burning_turf)
 					LG.process_fire()
 			fire_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_OCEAN
@@ -122,6 +130,7 @@ SUBSYSTEM_DEF(liquids)
 		if(ocean_counter >= REQUIRED_OCEAN_PROCESSES)
 			for(var/turf/open/floor/plating/ocean/active_ocean in currentrun_active_ocean_turfs)
 				if(MC_TICK_CHECK)
+					run_type = SSLIQUIDS_RUN_TYPE_TURFS /// we have far more important things that to be hung on this, i'd rather liquids spread over worrying about ocean turfs
 					return
 				active_ocean.process_turf()
 			ocean_counter = 0
@@ -134,12 +143,16 @@ SUBSYSTEM_DEF(liquids)
 				if(MC_TICK_CHECK)
 					return
 				var/datum/liquid_group/LG = g
+				LG.build_turf_reagent()
+				if(!LG.exposure)
+					continue
 				for(var/turf/member in LG.members)
 					if(MC_TICK_CHECK)
-						return
+						break
 					LG.process_member(member)
 			member_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
+
 
 /client/proc/toggle_liquid_debug()
 	set category = "Debug"

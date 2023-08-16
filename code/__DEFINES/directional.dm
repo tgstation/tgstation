@@ -33,3 +33,21 @@
 	dir = WEST; \
 	pixel_x = -offset; \
 }
+
+/// When you need to prescribe very specific offsets, use this over MAPPING_DIRECTIONAL_HELPERS
+#define MAPPING_DIRECTIONAL_HELPERS_ROBUST(path, n_offset, s_offset, e_offset, w_offset) ##path/directional/north {\
+	dir = NORTH; \
+	pixel_y = n_offset; \
+} \
+##path/directional/south {\
+	dir = SOUTH; \
+	pixel_y = s_offset; \
+} \
+##path/directional/east {\
+	dir = EAST; \
+	pixel_x = e_offset; \
+} \
+##path/directional/west {\
+	dir = WEST; \
+	pixel_x = w_offset; \
+}

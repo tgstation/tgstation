@@ -118,3 +118,25 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/kitsuneblack
 	name = "Black Kitsune Mask"
 	item_path = /obj/item/clothing/mask/kitsuneblack
+
+
+/*
+*	DONATOR
+*/
+
+/datum/loadout_item/mask/donator
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/donator/knight_mask
+	name = "Knight Mask"
+	restricted_roles = list(JOB_MIME)
+	item_path = /obj/item/clothing/mask/knightmask
+
+/datum/loadout_item/mask/donator/hornet_mask
+	name = "Hornet Mask"
+	item_path = /obj/item/clothing/mask/hornetmask
+
+/datum/loadout_item/mask/donator/grimm_mask
+	name = "Grimm Mask"
+	item_path = /obj/item/clothing/mask/grimmmask

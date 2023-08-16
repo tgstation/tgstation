@@ -242,6 +242,8 @@
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return null
+	if(H.mob_biotypes & MOB_ROBOTIC)
+		return null
 	if((H == oldpatient) && (world.time < last_found + 200))
 		return null
 	if(!assess_patient(H))

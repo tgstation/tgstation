@@ -7,14 +7,15 @@
 	plantname = "Berry Bush"
 	product = /obj/item/food/grown/berries
 	lifespan = 20
-	maturation = 5
+	maturation = 25
 	production = 5
 	yield = 2
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "berry-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/glow_berry, /datum/hydroponics/plant_mutation/poison_berry)
+	harvest_age = 100
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/berries
@@ -36,7 +37,7 @@
 	species = "poisonberry"
 	plantname = "Poison-Berry Bush"
 	product = /obj/item/food/grown/berries/poison
-	mutatelist = list(/obj/item/seeds/berry/death)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/death_berry)
 	reagents_add = list(/datum/reagent/toxin/cyanide = 0.15, /datum/reagent/toxin/staminatoxin = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 10 // Mildly poisonous berries are common in reality
 
@@ -62,7 +63,7 @@
 	product = /obj/item/food/grown/berries/death
 	lifespan = 30
 	potency = 50
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/toxin/coniine = 0.08, /datum/reagent/toxin/staminatoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 30
 
@@ -88,7 +89,7 @@
 	product = /obj/item/food/grown/berries/glow
 	lifespan = 30
 	endurance = 25
-	mutatelist = null
+	possible_mutations = list()
 	genes = list(/datum/plant_gene/trait/glow/white, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/uranium = 0.25, /datum/reagent/iodine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
@@ -115,7 +116,7 @@
 	product = /obj/item/food/grown/grapes
 	lifespan = 50
 	endurance = 25
-	maturation = 3
+	maturation = 30
 	production = 5
 	yield = 4
 	growthstages = 2
@@ -123,7 +124,7 @@
 	icon_grow = "grape-grow"
 	icon_dead = "grape-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/grape/green)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/green_grape)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1)
 
 /obj/item/food/grown/grapes
@@ -149,7 +150,7 @@
 	plantname = "Green-Grape Vine"
 	product = /obj/item/food/grown/grapes/green
 	reagents_add = list( /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/medicine/c2/aiuri = 0.2)
-	mutatelist = null
+	possible_mutations = list()
 
 /obj/item/food/grown/grapes/green
 	seed = /obj/item/seeds/grape/green
@@ -168,7 +169,7 @@
 	plantname = "Töchtaüse Bush"
 	product = /obj/item/food/grown/toechtauese
 	lifespan = 20
-	maturation = 5
+	maturation = 25
 	production = 5
 	yield = 2
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'

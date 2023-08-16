@@ -8,7 +8,9 @@
 	armor_type = /datum/armor/machinery_computer
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// How bright we are when turned on.
-	var/brightness_on = 1
+	light_inner_range = 0.1
+	light_outer_range = 2
+	light_power = 0.8
 	/// Icon_state of the keyboard overlay.
 	var/icon_keyboard = "generic_key"
 	/// Should we render an unique icon for the keyboard when off?
@@ -57,9 +59,9 @@
 /obj/machinery/computer/power_change()
 	. = ..()
 	if(machine_stat & NOPOWER)
-		set_light(0)
+		set_light(l_on = FALSE)
 	else
-		set_light(brightness_on)
+		set_light(l_on = TRUE)
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

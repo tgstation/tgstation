@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/silkie_white
+/mob/living/basic/chicken/silkie_white
 	icon_suffix = "silkie_white"
 
 	breed_name = "White Silkie"
@@ -11,4 +11,4 @@
 	name = "White Selkie Egg"
 	icon_state = "silkie_white"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/silkie_white
+	layer_hen_type = /mob/living/basic/chicken/silkie_white

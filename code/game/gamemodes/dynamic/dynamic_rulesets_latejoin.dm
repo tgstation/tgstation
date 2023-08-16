@@ -77,6 +77,8 @@
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	repeatable = TRUE
 
+	minimum_players = 8
+
 //////////////////////////////////////////////
 //                                          //
 //       REVOLUTIONARY PROVOCATEUR          //
@@ -121,6 +123,9 @@
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
+
+	minimum_players = 30
+
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
 	var/datum/team/revolution/revolution
@@ -207,6 +212,8 @@
 	cost = 6
 	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
+
+	minimum_players = 25
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()
 	var/mob/picked_mob = pick(candidates)

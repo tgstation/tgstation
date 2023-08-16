@@ -1,6 +1,6 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
-import { SFC } from 'inferno';
+import { Inferno } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, FitText, Stack } from '../components';
 import { Window } from '../layouts';
@@ -23,7 +23,7 @@ type PuzzgridData = {
   wrong_group_select_cooldown: BooleanLike;
 };
 
-const PuzzgridButton: SFC<{
+const PuzzgridButton: Inferno.SFC<{
   // In the future, this would be the TypeScript props of the button
   [key: string]: unknown;
 }> = (props) => {

@@ -1,5 +1,5 @@
 
-/mob/living/simple_animal/chicken/onagadori
+/mob/living/basic/chicken/onagadori
 	icon_suffix = "onagadori"
 
 	breed_name = "Onagadori"
@@ -12,4 +12,4 @@
 	name = "Onagadori Egg"
 	icon_state = "onagadori"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/onagadori
+	layer_hen_type = /mob/living/basic/chicken/onagadori

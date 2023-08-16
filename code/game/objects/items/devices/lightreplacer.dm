@@ -247,7 +247,8 @@
 	var/obj/item/light/old_light = new target.light_type()
 	target.status = old_light.status
 	target.switchcount = old_light.switchcount
-	target.brightness = old_light.brightness
+	target.bulb_inner_range = old_light.bulb_inner_range
+	target.bulb_outer_range = old_light.bulb_outer_range
 	if(obj_flags & EMAGGED)
 		target.create_reagents(LIGHT_REAGENT_CAPACITY, SEALED_CONTAINER | TRANSPARENT)
 		target.reagents.add_reagent(/datum/reagent/toxin/plasma, 10)

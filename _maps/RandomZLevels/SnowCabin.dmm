@@ -4277,7 +4277,7 @@
 "Ml" = (
 /mob/living/simple_animal/hostile/bear/russian{
 	desc = "He'll hold the line against you!";
-	light_range = 3;
+	light_outer_range = 3;
 	melee_damage_upper = 25;
 	name = "Artyom";
 	speak = list("Blyat!","Rawr!","GRR!","Growl!");

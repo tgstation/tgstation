@@ -47,7 +47,7 @@
 	hud_icons = list(ID_HUD)
 
 /datum/atom_hud/data/human/security/advanced
-	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, NANITE_HUD)
+	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, NANITE_HUD, PERMIT_HUD)
 
 /datum/atom_hud/data/human/fan_hud
 	hud_icons = list(FAN_HUD)
@@ -73,6 +73,9 @@
 
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
+
+/datum/atom_hud/data/human/permit
+	hud_icons = list(PERMIT_HUD)
 
 /datum/atom_hud/ai_detector/show_to(mob/new_viewer)
 	..()
@@ -270,6 +273,13 @@ Security HUDs! Basic mode shows only the job.
 	holder.icon_state = sechud_icon_state
 	sec_hud_set_security_status()
 
+	var/image/permit_holder = hud_list[PERMIT_HUD]
+	permit_holder.pixel_y = I.Height() - world.icon_size
+	var/permit_icon_state = wear_id?.get_gun_permit_iconstate()
+	if(!permit_icon_state)
+		permit_icon_state = "hudfan_no"
+	permit_holder.icon_state = permit_icon_state
+
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
@@ -341,7 +351,7 @@ Diagnostic HUDs!
 	holder.icon_state = null
 	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
 		holder.icon_state = "nanite_ping"
-		
+
 //For Diag health and cell bars!
 /proc/RoundDiagBar(value)
 	switch(value * 100)

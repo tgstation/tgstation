@@ -1,11 +1,13 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { Component, findDOMFromVNode, render } from 'inferno';
+import type { InfernoNode } from 'inferno';
+import type { PropertiesHyphen } from 'csstype';
 
 type PopperProps = {
   popperContent: InfernoNode;
   options?: ArgumentsOf<typeof createPopper>[2];
-  additionalStyles?: CSSProperties;
+  additionalStyles?: PropertiesHyphen;
 };
 
 export class Popper extends Component<PopperProps> {
@@ -39,11 +41,11 @@ export class Popper extends Component<PopperProps> {
       // This is usually bad as refs are usually better, but refs did
       // not work in this case, as they weren't propagating correctly.
       // A previous attempt was made as a render prop that passed an ID,
-      // but this made consuming use too unwieldly.
+      // but this made consuming use too unweildy.
       // This code is copied from `findDOMNode` in inferno-extras.
       // Because this component is written in TypeScript, we will know
       // immediately if this internal variable is removed.
-      const domNode = findDOMfromVNode(this.$LI, true);
+      const domNode = findDOMFromVNode(this.$LI, true);
       if (!domNode) {
         return;
       }
@@ -62,9 +64,7 @@ export class Popper extends Component<PopperProps> {
 
   componentWillUnmount() {
     this.popperInstance?.destroy();
-    render(null, this.renderedContent, () => {
-      this.renderedContent.remove();
-    });
+    this.renderedContent.remove();
   }
 
   renderPopperContent(callback: () => void) {

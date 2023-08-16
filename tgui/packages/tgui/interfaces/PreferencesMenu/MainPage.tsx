@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { sendAct, useBackend, useLocalState } from '../../backend';
-import { Autofocus, Box, Button, Flex, LabeledList, Popper, Stack, TrackOutsideClicks } from '../../components';
+import { Box, Button, Flex, LabeledList, Popper, Stack, TrackOutsideClicks, FitText, Input, Icon } from '../../components';
 import { createSetPreference, PreferencesMenuData, RandomSetting } from './data';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { RandomizationButton } from './RandomizationButton';
@@ -11,19 +11,18 @@ import features from './preferences/features';
 import { FeatureChoicedServerData, FeatureValueInput } from './preferences/features/base';
 import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
+import { createSearch } from 'common/string';
 
-const CLOTHING_CELL_SIZE = 48;
-const CLOTHING_SIDEBAR_ROWS = 9;
+const CLOTHING_CELL_SIZE = 64;
+const CLOTHING_SIDEBAR_ROWS = 10;
 
-const CLOTHING_SELECTION_CELL_SIZE = 48;
-const CLOTHING_SELECTION_WIDTH = 5.4;
+const CLOTHING_SELECTION_CELL_SIZE = 64;
+const CLOTHING_SELECTION_WIDTH = 6.3;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 const CharacterControls = (props: {
   handleRotate: () => void;
   handleOpenSpecies: () => void;
-  handleLoadout: () => void;
-  handleStore: () => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
@@ -58,30 +57,6 @@ const CharacterControls = (props: {
           />
         </Stack.Item>
       )}
-      {props.handleLoadout && (
-        // SKYRAT EDIT ADDITION
-        <Stack.Item>
-          <Button
-            onClick={props.handleLoadout}
-            fontSize="22px"
-            icon="suitcase"
-            tooltip="Show Loadout Menu"
-            tooltipPosition="top"
-          />
-        </Stack.Item>
-      )}
-      {props.handleStore && (
-        // SKYRAT EDIT ADDITION
-        <Stack.Item>
-          <Button
-            onClick={props.handleStore}
-            fontSize="22px"
-            icon="suitcase"
-            tooltip="Show Store Menu"
-            tooltipPosition="top"
-          />
-        </Stack.Item>
-      )}
     </Stack>
   );
 };
@@ -95,33 +70,163 @@ const ChoicedSelection = (
     supplementalValue?: unknown;
     onClose: () => void;
     onSelect: (value: string) => void;
+    searchText: string;
+    setSearchText: (value: string) => void;
   },
   context
 ) => {
   const { act } = useBackend<PreferencesMenuData>(context);
 
-  const { catalog, supplementalFeature, supplementalValue } = props;
+  const {
+    catalog,
+    supplementalFeature,
+    supplementalValue,
+    searchText,
+    setSearchText,
+  } = props;
 
   if (!catalog.icons) {
     return <Box color="red">Provided catalog had no icons!</Box>;
   }
 
+  let search = createSearch(searchText, (name: string) => {
+    return name;
+  });
+
+  const use_small_supplemental =
+    supplementalFeature &&
+    (features[supplementalFeature].small_supplemental === true ||
+      features[supplementalFeature].small_supplemental === undefined);
   return (
     <Box
+      className="theme-generic"
       style={{
-        background: 'white',
-        padding: '5px',
-
         height: `${
           CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER
         }px`,
         width: `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_WIDTH}px`,
       }}>
-      <Stack vertical fill>
-        <Stack.Item>
-          <Stack fill>
-            {supplementalFeature && (
+      <Box
+        className="PopupWindow"
+        style={{ 'padding': '5px' }}
+        width="100%"
+        height="100%">
+        <Stack vertical fill>
+          <Stack.Item>
+            <Stack fill>
+              {supplementalFeature && use_small_supplemental && (
+                <Stack.Item>
+                  <FeatureValueInput
+                    act={act}
+                    feature={features[supplementalFeature]}
+                    featureId={supplementalFeature}
+                    shrink
+                    value={supplementalValue}
+                  />
+                </Stack.Item>
+              )}
+
+              <Stack.Item grow>
+                <Box
+                  style={{
+                    'border-bottom': '1px solid #888',
+                    'font-weight': 'bold',
+                    'font-size': '14px',
+                    'text-align': 'center',
+                  }}>
+                  Select {props.name}
+                </Box>
+              </Stack.Item>
+
               <Stack.Item>
+                <Button color="red" onClick={props.onClose}>
+                  X
+                </Button>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+
+          {Object.keys(catalog.icons).length > 5 && (
+            <Stack.Item>
+              <Box>
+                <Icon mr={1} name="search" />
+                <Input
+                  autoFocus
+                  width={`${
+                    CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_WIDTH - 55
+                  }px`}
+                  placeholder="Search options"
+                  value={searchText}
+                  onInput={(_, value) => setSearchText(value)}
+                />
+              </Box>
+            </Stack.Item>
+          )}
+
+          <Stack.Item
+            overflowX="hidden"
+            overflowY="auto"
+            grow
+            className="section-background">
+            <Flex wrap>
+              {Object.entries(catalog.icons)
+                .filter(([n, _]) => searchText?.length < 1 || search(n))
+                .map(([name, image], index) => {
+                  return (
+                    <Flex.Item
+                      key={index}
+                      basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
+                      style={{
+                        padding: '5px',
+                      }}>
+                      <Button
+                        onClick={() => {
+                          props.onSelect(name);
+                        }}
+                        selected={name === props.selected}
+                        style={{
+                          height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                          width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        }}>
+                        <Box
+                          className={classes([
+                            'preferences32x32',
+                            image,
+                            'centered-image',
+                          ])}
+                          style={{
+                            transform:
+                              'translateX(-50%) translateY(-50%) scale(1.4)',
+                          }}
+                        />
+                      </Button>
+                      <Box textAlign="center">
+                        <FitText
+                          maxWidth={CLOTHING_SELECTION_CELL_SIZE}
+                          maxFontSize={12}>
+                          {name}
+                        </FitText>
+                      </Box>
+                    </Flex.Item>
+                  );
+                })}
+            </Flex>
+          </Stack.Item>
+          {supplementalFeature && !use_small_supplemental && (
+            <>
+              <Stack.Item mt={0.25}>
+                <Box
+                  pb={0.25}
+                  style={{
+                    'border-bottom': '1px solid rgba(255, 255, 255, 0.1)',
+                    'font-weight': 'bold',
+                    'font-size': '14px',
+                    'text-align': 'center',
+                  }}>
+                  Select {features[supplementalFeature].name}
+                </Box>
+              </Stack.Item>
+              <Stack.Item shrink mt={0.5}>
                 <FeatureValueInput
                   act={act}
                   feature={features[supplementalFeature]}
@@ -130,65 +235,10 @@ const ChoicedSelection = (
                   value={supplementalValue}
                 />
               </Stack.Item>
-            )}
-
-            <Stack.Item grow>
-              <Box
-                style={{
-                  'border-bottom': '1px solid #888',
-                  'font-weight': 'bold',
-                  'font-size': '14px',
-                  'text-align': 'center',
-                }}>
-                Select {props.name.toLowerCase()}
-              </Box>
-            </Stack.Item>
-
-            <Stack.Item>
-              <Button color="red" onClick={props.onClose}>
-                X
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-
-        <Stack.Item overflowX="hidden" overflowY="scroll">
-          <Autofocus>
-            <Flex wrap>
-              {Object.entries(catalog.icons).map(([name, image], index) => {
-                return (
-                  <Flex.Item
-                    key={index}
-                    basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
-                    style={{
-                      padding: '5px',
-                    }}>
-                    <Button
-                      onClick={() => {
-                        props.onSelect(name);
-                      }}
-                      selected={name === props.selected}
-                      tooltip={name}
-                      tooltipPosition="right"
-                      style={{
-                        height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                        width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                      }}>
-                      <Box
-                        className={classes([
-                          'preferences32x32',
-                          image,
-                          'centered-image',
-                        ])}
-                      />
-                    </Button>
-                  </Flex.Item>
-                );
-              })}
-            </Flex>
-          </Autofocus>
-        </Stack.Item>
-      </Stack>
+            </>
+          )}
+        </Stack>
+      </Box>
     </Box>
   );
 };
@@ -277,6 +327,15 @@ const MainFeature = (
   } = props;
 
   const supplementalFeature = catalog.supplemental_feature;
+  let [searchText, setSearchText] = useLocalState(
+    context,
+    catalog.name + '_choiced_search',
+    ''
+  );
+  const handleCloseInternal = () => {
+    handleClose();
+    setSearchText('');
+  };
 
   return (
     <Popper
@@ -285,7 +344,7 @@ const MainFeature = (
       }}
       popperContent={
         isOpen && (
-          <TrackOutsideClicks onOutsideClick={props.handleClose}>
+          <TrackOutsideClicks onOutsideClick={handleCloseInternal}>
             <ChoicedSelection
               name={catalog.name}
               catalog={catalog}
@@ -297,8 +356,10 @@ const MainFeature = (
                   supplementalFeature
                 ]
               }
-              onClose={handleClose}
+              onClose={handleCloseInternal}
               onSelect={handleSelect}
+              searchText={searchText}
+              setSearchText={setSearchText}
             />
           </TrackOutsideClicks>
         )
@@ -306,7 +367,7 @@ const MainFeature = (
       <Button
         onClick={() => {
           if (isOpen) {
-            handleClose();
+            handleCloseInternal();
           } else {
             handleOpen();
           }
@@ -551,12 +612,6 @@ export const MainPage = (
                       handleOpenSpecies={props.openSpecies}
                       handleRotate={() => {
                         act('rotate');
-                      }}
-                      handleLoadout={() => {
-                        act('open_loadout');
-                      }}
-                      handleStore={() => {
-                        act('open_store');
                       }}
                       setGender={createSetPreference(act, 'gender')}
                       showGender={

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/mime
+/mob/living/basic/chicken/mime
 	icon_suffix = "mime"
 
 	breed_name = "Mime"
@@ -10,7 +10,7 @@
 	name = "Mime Egg"
 	icon_state = "mime-1"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/mime
+	layer_hen_type = /mob/living/basic/chicken/mime
 
 /obj/item/food/egg/mime/Initialize(mapload)
 	. = ..()

@@ -97,3 +97,13 @@
 	var/obj/item/card/id/id_card = GetID()
 
 	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID
+
+/// Returns the gun permit icon if the ID's access contain weapon permit
+/obj/item/proc/get_gun_permit_iconstate()
+	var/obj/item/card/id/id_card = GetID()
+
+	if(!id_card)
+		return "hudfan_no"
+	if(ACCESS_WEAPONS in id_card.GetAccess())
+		return "hud_permit"
+	return "hudfan_no"

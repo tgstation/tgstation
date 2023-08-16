@@ -15,7 +15,7 @@
 	L.Shake(pixel_shift)
 	intensity++
 
-/datum/reagent/shakium/overdose_start(mob/living/M)
+/datum/reagent/shakeium/overdose_start(mob/living/M)
 	. = ..()
 	to_chat(M, span_warning("I feel like your vibrating to much, my body can't handle this."))
 

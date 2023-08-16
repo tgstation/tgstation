@@ -1,6 +1,6 @@
 #define DEFAULT_CHICKEN_ABILITY_COOLDOWN 30 SECONDS
 
-/mob/living/simple_animal
+/mob/living/basic
 	///the child type of the parent, basically spawns in the baby version instead of the adult version. Used if mutations fail
 	var/child_type
 	///if they lay eggs the egg type
@@ -19,7 +19,7 @@
 	///All Consumed reagents
 	var/list/datum/reagent/consumed_reagents = new/list()
 
-/mob/living/simple_animal/chicken
+/mob/living/basic/chicken
 
 	faction = list("chicken")
 	ai_controller = /datum/ai_controller/chicken
@@ -30,7 +30,7 @@
 	//Global amount of chickens
 	var/static/chicken_count = 0
 	///Needed cause i can't iterate a new spawn with the ref to a mob
-	var/chicken_path = /mob/living/simple_animal/chicken
+	var/chicken_path = /mob/living/basic/chicken
 	///Breed of the chicken needed for naming
 	var/breed_name = "White"
 	///Do we wanna call the male rooster something different?
@@ -108,7 +108,7 @@
 	///the amount the chicken is grown
 	var/amount_grown = 0
 	///the type of chicken that laid this egg
-	var/mob/living/simple_animal/chicken/layer_hen_type = /mob/living/simple_animal/chicken
+	var/mob/living/basic/chicken/layer_hen_type = /mob/living/basic/chicken
 	///happiness of the chicken
 	var/happiness = 0
 	///list of consumed food

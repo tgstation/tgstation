@@ -94,10 +94,16 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	/// Whether a user will face atoms on entering them with a mouse. Despite being a mob variable, it is here for performance reasons
+	var/face_mouse = FALSE
+
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
 	var/explosion_block = 0
+
+	///can we grab this object?
+	var/cant_grab = FALSE
 
 /mutable_appearance/emissive_blocker
 
@@ -223,15 +229,22 @@
 		vis_contents.Cut()
 
 /atom/movable/proc/update_emissive_block()
-	if(!blocks_emissive)
-		return
-	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+	// This one is incredible.
+	// `if (x) else { /* code */ }` is surprisingly fast, and it's faster than a switch, which is seemingly not a jump table.
+	// From what I can tell, a switch case checks every single branch individually, although sane, is slow in a hot proc like this.
+	// So, we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
+	// If it fails, then we can check over every value it can be (here, EMISSIVE_BLOCK_UNIQUE is the only one that matters).
+	// This saves several hundred milliseconds of init time.
+	if (blocks_emissive)
+		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+			if(!em_block && !QDELETED(src))
+				render_target = ref(src)
+				em_block = new(src, render_target)
+			return em_block
+		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
+	// EMISSIVE_BLOCK_GENERIC == 0
+	else
 		return fast_emissive_blocker(src)
-	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
-		if(!em_block && !QDELETED(src))
-			render_target = ref(src)
-			em_block = new(src, render_target)
-		return em_block
 
 /// Generates a space underlay for a turf
 /// This provides proper lighting support alongside just looking nice
@@ -462,6 +475,9 @@
 	if(!(pulled_atom.can_be_pulled(src, state, force)))
 		return FALSE
 
+	if(cant_grab)
+		return FALSE
+
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)
 		if(state == 0)
@@ -583,7 +599,7 @@
 	if(!direction)
 		direction = get_dir(src, newloc)
 
-	if(set_dir_on_move && dir != direction && update_dir)
+	if(set_dir_on_move && dir != direction && update_dir && !face_mouse)
 		setDir(direction)
 
 	var/is_multi_tile_object = is_multi_tile_object(src)
@@ -709,7 +725,7 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			if(moving_diagonally == SECOND_DIAG_STEP)
-				if(!. && set_dir_on_move && update_dir)
+				if(!. && set_dir_on_move && update_dir && !face_mouse)
 					setDir(first_step_dir)
 				else if(!inertia_moving)
 					newtonian_move(direct)
@@ -750,7 +766,7 @@
 
 	last_move = direct
 
-	if(set_dir_on_move && dir != direct && update_dir)
+	if(set_dir_on_move && dir != direct && update_dir && !face_mouse)
 		setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		. = FALSE
@@ -1582,6 +1598,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_DISPLACEMENT_LARGE, "Edit Large Displacement")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
 
@@ -1594,6 +1611,20 @@
 	if(href_list[VV_HK_EDIT_PARTICLES] && check_rights(R_VAREDIT))
 		var/client/C = usr.client
 		C?.open_particle_editor(src)
+
+	if(href_list[VV_HK_EDIT_DISPLACEMENT_LARGE])
+		if(!check_rights(R_VAREDIT))
+			return
+		switch(alert("Should this be a pre-filled displacement (Note: If you choose a blank one directional displacement may prove more difficult)?",,"Yes","No","Cancel"))
+			if("Yes")
+				var/choice = input(usr, "Choose a displacement to add", "Choose a Displacement") as null|anything in subtypesof(/obj/effect/distortion/large)
+				if(!choice)
+					return
+				apply_displacement_icon(choice)
+			if("No")
+				apply_displacement_icon(/obj/effect/distortion/large)
+			else
+				return
 
 	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
 		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) != "Allow")

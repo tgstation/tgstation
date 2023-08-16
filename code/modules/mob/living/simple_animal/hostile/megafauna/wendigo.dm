@@ -57,13 +57,13 @@ Difficulty: Hard
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves
-	var/stomp_range = 1
+	var/stomp_range = 0
 	/// Stores directions the mob is moving, then calls that a move has fully ended when these directions are removed in moved
 	var/stored_move_dirs = 0
 	/// If the wendigo is allowed to move
 	var/can_move = TRUE
 	/// Time before the wendigo can scream again
-	var/scream_cooldown_time = 10 SECONDS
+	var/scream_cooldown_time = 5 SECONDS
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
 
@@ -270,7 +270,7 @@ Difficulty: Hard
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
 	exit.id = "wendigo arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
-	exit.set_light(20, 1, COLOR_SOFT_RED)
+	exit.set_light(l_outer_range = 20, l_power = 1, l_color = COLOR_SOFT_RED)
 	return ..()
 
 /obj/projectile/colossus/wendigo_shockwave

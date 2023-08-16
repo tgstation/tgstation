@@ -16,7 +16,7 @@
 "e" = (
 /obj/item/greentext{
 	light_color = "#64C864";
-	light_range = 1
+	light_outer_range = 1
 	},
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)

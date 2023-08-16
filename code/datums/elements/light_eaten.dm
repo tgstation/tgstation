@@ -43,9 +43,9 @@
 	return NONE
 
 /// Prevents the light range of the target atom from exceeding 0 while the light power is greater than 0.
-/datum/element/light_eaten/proc/block_light_range(atom/eaten_light, new_range)
+/datum/element/light_eaten/proc/block_light_range(atom/eaten_light, new_inner_range, new_outer_range)
 	SIGNAL_HANDLER
-	if(new_range <= 0)
+	if(new_outer_range <= 0)
 		return NONE
 	if(eaten_light.light_power <= 0)
 		return NONE

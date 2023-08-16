@@ -87,6 +87,7 @@
 		new_baseturfs.len--
 		if(new_baseturfs.len)
 			baseturfs = baseturfs_string_list(baseturfs + new_baseturfs, src)
+
 	else
 		change_type = new_baseturfs
 	return ChangeTurf(change_type, null, flags)

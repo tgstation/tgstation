@@ -1,9 +1,10 @@
 import { BooleanLike } from 'common/react';
 import { useLocalState, useSharedState } from '../../backend';
 import { Box, Button, Input, Section, Tabs, NoticeBox, Stack } from '../../components';
+import type { InfernoNode } from 'inferno';
 
 type GenericUplinkProps = {
-  currency?: string | JSX.Element;
+  currency?: string | InfernoNode;
   categories: string[];
   items: Item[];
 
@@ -91,8 +92,8 @@ export type Item<ItemData = {}> = {
   id: string | number;
   name: string;
   category: string;
-  cost: JSX.Element | string;
-  desc: JSX.Element | string;
+  cost: InfernoNode | string;
+  desc: InfernoNode | string;
   disabled: BooleanLike;
   extraData?: ItemData;
 };

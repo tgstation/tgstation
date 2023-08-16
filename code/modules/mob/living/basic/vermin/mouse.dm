@@ -36,6 +36,8 @@
 	var/contributes_to_ratcap = TRUE
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
+	/// responsible for disease stuff
+	var/list/ratdisease = list()
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE)
 	. = ..()
@@ -53,6 +55,8 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
+	var/datum/disease/advance/R = new /datum/disease/advance/random(rand(1, 6), 9, 1)
+	ratdisease += R
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
 
@@ -105,6 +109,7 @@
 
 // On death, remove the mouse from the ratcap, and turn it into an item if applicable
 /mob/living/basic/mouse/death(gibbed)
+	var/list/data = list("viruses" = ratdisease)
 	SSmobs.cheeserats -= src
 	// Rats with a mind will not turn into a lizard snack on death
 	if(mind)
@@ -117,12 +122,14 @@
 		var/obj/item/food/deadmouse/mouse = new(loc)
 		mouse.name = name
 		mouse.icon_state = icon_dead
+		mouse.reagents.add_reagent(/datum/reagent/blood, 2, data)
+		mouse.ratdisease = src.ratdisease
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
-/mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag)
 	. = ..()
 	if(!.)
 		return
@@ -296,6 +303,8 @@
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/deadmouse/moldy
+	///responsible for holding diseases for dead rat
+	var/list/ratdisease = list()
 
 /obj/item/food/deadmouse/Initialize(mapload)
 	. = ..()
@@ -379,8 +388,7 @@
 /datum/ai_planning_subtree/flee_target/mouse
 
 /datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/weakref/hunting_weakref = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
-	var/atom/hunted_cheese = hunting_weakref?.resolve()
+	var/atom/hunted_cheese = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
 	if (!isnull(hunted_cheese))
 		return // We see some cheese, which is more important than our life
 	return ..()

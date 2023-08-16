@@ -26,7 +26,7 @@
 /datum/ai_controller/chicken/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	var/mob/living/simple_animal/chicken/living_pawn = new_pawn
+	var/mob/living/basic/chicken/living_pawn = new_pawn
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_paw))
@@ -135,7 +135,7 @@
 /datum/ai_controller/chicken/proc/on_hitby(datum/source, atom/movable/movable_hitter, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	if(istype(movable_hitter, /obj/item))
-		var/mob/living/simple_animal/chicken/living_pawn = pawn
+		var/mob/living/basic/chicken/living_pawn = pawn
 		var/obj/item/hitby_item = movable_hitter
 		var/mob/thrown_by = hitby_item.thrownby?.resolve()
 		var/mob/living/carbon/human/human_target = thrown_by
@@ -154,7 +154,7 @@
 //When idle just kinda fuck around.
 /datum/idle_behavior/chicken/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/chicken/living_pawn = controller.pawn
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	var/list/blackboard = controller.blackboard
 
 	if((!blackboard[BB_CHICKEN_READY_LAY]&& SPT_PROB(10, seconds_per_tick) && living_pawn.eggs_left > 0) && living_pawn.egg_type && living_pawn.gender == FEMALE && controller.behavior_cooldowns[/datum/ai_behavior/find_and_lay] < world.time)

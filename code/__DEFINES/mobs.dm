@@ -913,3 +913,12 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NO_OBSERVED_ACTIONS (1<<1)
 /// Flag which stops you from attacking while observed
 #define NO_OBSERVED_ATTACKS (1<<2)
+
+
+//Reagent Metabolization flags, defines the type of reagents that affect this mob
+#define PROCESS_ORGANIC 1		//Only processes reagents with "ORGANIC" or "ORGANIC | SYNTHETIC"
+#define PROCESS_SYNTHETIC 2		//Only processes reagents with "SYNTHETIC" or "ORGANIC | SYNTHETIC"
+
+// Reagent type flags, defines the types of mobs this reagent will affect
+#define ORGANIC 1
+#define SYNTHETIC 2

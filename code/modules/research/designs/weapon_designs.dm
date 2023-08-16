@@ -91,6 +91,19 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
+/datum/design/shotgun_slug
+	name = "12g Slug"
+	id = "slug_shell"
+	desc = "A 12g slug shell"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/item/ammo_casing/shotgun
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
 /datum/design/shotgun_dart/sec
 	id = "sec_dart"
 	desc = "Dart shotgun shells. Fires a single projectile (a dart). Can be filled with chemicals, \
@@ -120,7 +133,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9
-	category = list("Ammo")
+	category = list(
+					RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/mag_autorifle/ap_mag
@@ -129,6 +144,9 @@
 	id = "mag_autorifle_ap"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
+	category = list(
+					RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/mag_autorifle/ic_mag
@@ -137,6 +155,9 @@
 	id = "mag_autorifle_ic"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/glass = 1000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
+	category = list(
+					RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/pin_testing

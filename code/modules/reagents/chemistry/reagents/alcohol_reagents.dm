@@ -50,6 +50,10 @@
 	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
 	return ..()
 
+/datum/reagent/consumable/ethanol/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	myseed.process_trait_gain(/datum/plant_gene/trait/brewing, ((chems.get_reagent_amount(src.type) * 0.25) + (boozepwr * 0.1)))
+
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.get_drunk_amount() < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
@@ -117,9 +121,8 @@
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.05))
-		mytray.adjustNutri(round(chems.get_reagent_amount(src.type) * 0.25))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 0.7))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.05))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 0.7))
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -945,8 +948,7 @@
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_metabolize(mob/living/drinker)
 	to_chat(drinker, span_notice("You feel gentle warmth spread through your body!"))
 	light_holder = new(drinker)
-	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
-
+	light_holder.set_light(l_outer_range = 3, l_power = 0.7, l_color = "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(QDELETED(light_holder))
 		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
@@ -994,6 +996,7 @@
 	overdose_threshold = 40
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 	var/datum/brain_trauma/special/beepsky/beepsky_hallucination
 
 /datum/glass_style/drinking_glass/beepsky_smash
@@ -1308,6 +1311,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tasting iron"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/demonsblood
 	required_drink_type = /datum/reagent/consumable/ethanol/demonsblood
@@ -1351,6 +1355,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "bitter iron"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/devilskiss
 	required_drink_type = /datum/reagent/consumable/ethanol/devilskiss
@@ -1886,6 +1891,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	taste_description = "bravado in the face of disaster"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/hearty_punch
 	required_drink_type = /datum/reagent/consumable/ethanol/hearty_punch
@@ -1911,6 +1917,7 @@
 	boozepwr = 300 //I warned you
 	taste_description = "a wall of bricks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/bacchus_blessing
 	required_drink_type = /datum/reagent/consumable/ethanol/bacchus_blessing
@@ -1992,6 +1999,7 @@
 	taste_description = "a numbing sensation"
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/neurotoxin
 	required_drink_type = /datum/reagent/consumable/ethanol/neurotoxin
@@ -2044,6 +2052,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "giving peace a chance"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/hippies_delight
 	required_drink_type = /datum/reagent/consumable/ethanol/hippies_delight
@@ -2116,6 +2125,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "bloody"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/narsour
 	required_drink_type = /datum/reagent/consumable/ethanol/narsour
@@ -2217,6 +2227,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "THE LAW"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/quintuple_sec
 	required_drink_type = /datum/reagent/consumable/ethanol/quintuple_sec
@@ -2277,6 +2288,7 @@
 	ph = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
+	bypass_restriction = TRUE
 
 /datum/glass_style/shot_glass/bastion_bourbon
 	required_drink_type = /datum/reagent/consumable/ethanol/bastion_bourbon
@@ -2384,6 +2396,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "a bitter SPIKE with a sour aftertaste"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/crevice_spike
 	required_drink_type = /datum/reagent/consumable/ethanol/crevice_spike
@@ -2695,6 +2708,7 @@
 	quality = DRINK_GOOD
 	taste_description = "bubbling possibility"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/blank_paper
 	required_drink_type = /datum/reagent/consumable/ethanol/blank_paper
@@ -3051,6 +3065,7 @@
 	boozepwr = 70
 	quality = DRINK_FANTASTIC
 	taste_description = "alternate realities"
+	bypass_restriction = TRUE
 	var/stored_teleports = 0
 
 /datum/glass_style/drinking_glass/blazaam
@@ -3094,6 +3109,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "fiery, with an aftertaste of burnt flesh"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	bypass_restriction = TRUE
 
 /datum/glass_style/drinking_glass/mauna_loa
 	required_drink_type = /datum/reagent/consumable/ethanol/mauna_loa

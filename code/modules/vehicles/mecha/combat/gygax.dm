@@ -6,19 +6,20 @@
 	allow_diagonal_movement = TRUE
 	movedelay = 3
 	max_integrity = 250
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_gygax
 	max_temperature = 25000
 	leg_overload_coeff = 80
 	force = 25
 	destruction_sleep_duration = 40
 	exit_delay = 40
+	encumbrance_gap = 1.4
+	internal_damage_threshold = 18
 	wreckage = /obj/structure/mecha_wreckage/gygax
 	mech_type = EXOSUIT_MODULE_GYGAX
 	max_equip_by_category = list(
 		MECHA_UTILITY = 1,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 2,
+		MECHA_ARMOR = 3,
 	)
 	step_energy_drain = 3
 

@@ -6,7 +6,7 @@
 	weight = 4
 	min_players = 15
 	max_occurrences = 3
-	earliest_start = 25 MINUTES
+	earliest_start = 60 MINUTES //monke edit: 25 to 60
 	category = EVENT_CATEGORY_SPACE
 	description = "A regular meteor wave."
 	map_flags = EVENT_SPACE_ONLY
@@ -62,7 +62,7 @@
 	weight = 5
 	min_players = 20
 	max_occurrences = 3
-	earliest_start = 35 MINUTES
+	earliest_start = 75 MINUTES //monke edit: 35 to 75
 	description = "A meteor wave with higher chance of big meteors."
 
 /datum/round_event/meteor_wave/threatening
@@ -74,7 +74,7 @@
 	weight = 7
 	min_players = 25
 	max_occurrences = 3
-	earliest_start = 45 MINUTES
+	earliest_start = 90 MINUTES //monke edit: 45 to 90
 	description = "A meteor wave that might summon a tunguska class meteor."
 
 /datum/round_event/meteor_wave/catastrophic

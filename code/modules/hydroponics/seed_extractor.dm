@@ -134,7 +134,7 @@
 					break
 				//add seed to machine. second argument is null which means just force move into the machine
 				add_seed(seed)
-		to_chat(user, span_notice("You extract some seeds."))
+				to_chat(user, span_notice("You extract some seeds."))
 		return TRUE
 
 	else if(istype(attacking_item, /obj/item/seeds))

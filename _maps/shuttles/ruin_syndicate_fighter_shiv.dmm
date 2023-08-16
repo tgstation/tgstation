@@ -87,6 +87,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/syndicate1)
 "YY" = (

@@ -1,5 +1,6 @@
 /datum/species/oozeling
 	name = "\improper Oozeling"
+	plural_form = "Oozelings"
 	id = SPECIES_OOZELING
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
@@ -13,6 +14,7 @@
 		TRAIT_NOFIRE,
 		//TRAIT_ALWAYS_CLEAN,
 		TRAIT_EASYDISMEMBER,
+		TRAIT_NOBLOOD,
 		)
 
 	hair_color = "mutcolor"
@@ -21,9 +23,12 @@
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimeooze
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	burnmod = 0.6 // = 3/5x generic burn damage
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
+	inherent_factions = list(FACTION_SLIME) //an oozeling wont be eaten by their brethren
 	species_language_holder = /datum/language_holder/oozeling
+	ass_image = 'icons/ass/assslime.png'
 	//swimming_component = /datum/component/swimming/dissolve
 	toxic_food = NONE
 	disliked_food = NONE
@@ -38,8 +43,8 @@
 	)
 
 /datum/species/oozeling/get_species_description()
-	return "Hailing from a planet that was lost long ago, the moths travel \
-		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
+	return "A species of sentient semi-solids. \
+		They require nutriment in order to maintain their body mass."
 
 /datum/species/oozeling/random_name(gender, unique, lastname, attempts)
 	. = "[pick(GLOB.oozeling_first_names)]"
@@ -100,12 +105,13 @@
 	if(!atmos_sealed)
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
-			if(environment.gases[/datum/gas/water_vapor] >= 1)
+			environment.assert_gas(/datum/gas/water_vapor)
+			if(environment.gases[/datum/gas/water_vapor][MOLES] >= 1)
 				H.blood_volume -= 15
 				if(prob(50))
 					to_chat(H, "<span class='danger'>Your ooze melts away rapidly in the water vapor!</span>")
 			environment.assert_gas(/datum/gas/plasma)
-			if(H.blood_volume <= 672 && environment.gases[/datum/gas/plasma] >= 1)
+			if(H.blood_volume <= 672 && environment.gases[/datum/gas/plasma][MOLES] >= 1)
 				H.blood_volume += 15
 	if(H.blood_volume < BLOOD_VOLUME_OKAY && prob(5))
 		to_chat(H, "<span class='danger'>You feel drained!</span>")
@@ -195,3 +201,55 @@
 		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()
+
+/datum/species/oozeling/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Plasma Respiration",
+			SPECIES_PERK_DESC = "[plural_form] can breathe plasma, and restore blood by doing so.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "burn",
+			SPECIES_PERK_NAME = "incombustible",
+			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = initial(exotic_blood.name),
+			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Anaerobic Lineage",
+			SPECIES_PERK_DESC = "[plural_form] don't require much oxygen to live."
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "skull",
+			SPECIES_PERK_NAME = "Self-Consumption",
+			SPECIES_PERK_DESC = "Once hungry enough, [plural_form] will begin to consume their own blood and limbs.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = "Liquid Being",
+			SPECIES_PERK_DESC = "[plural_form] will melt away when in contact with water.",
+		),
+		list(
+            SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+            SPECIES_PERK_ICON = "briefcase-medical",
+            SPECIES_PERK_NAME = "Oozeling Biology",
+            SPECIES_PERK_DESC = "[plural_form] take specialized medical knowledge to be \
+                treated. Do not expect speedy revival, if you are lucky enough to get \
+                one at all.",
+        ),
+	)
+
+	return to_add

@@ -125,13 +125,13 @@
 
 	//Fancy hitscan lighting effects!
 	var/hitscan_light_intensity = 1.5
-	var/hitscan_light_range = 0.75
+	var/hitscan_light_outer_range = 0.75
 	var/hitscan_light_color_override
 	var/muzzle_flash_intensity = 3
 	var/muzzle_flash_range = 1.5
 	var/muzzle_flash_color_override
 	var/impact_light_intensity = 3
-	var/impact_light_range = 2
+	var/impact_light_outer_range = 2
 	var/impact_light_color_override
 
 	//Homing
@@ -199,6 +199,10 @@
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
+	/// If this projectile has been parried before
+	var/parried = FALSE
+	///how long we paralyze for as this is a disorient
+	var/paralyze_timer = 0
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -206,6 +210,7 @@
 	if(embedding)
 		updateEmbedding()
 	AddElement(/datum/element/connect_loc, projectile_connections)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_enter))
 
 /obj/projectile/proc/Range()
 	range--
@@ -375,6 +380,42 @@
 	if(!can_hit_target(A, A == original, TRUE, TRUE))
 		return
 	Impact(A)
+
+/// Signal proc for when a projectile enters a turf.
+/obj/projectile/proc/on_enter(datum/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
+
+	if(isturf(loc))
+		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
+
+/// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
+/obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(parried)
+		return FALSE
+
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRYING, src) & ALLOW_PARRY)
+		on_parry(user, modifiers)
+		return TRUE
+
+	return FALSE
+
+
+/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 7 degrees and increasing the bullet's stats.
+/obj/projectile/proc/on_parry(mob/user, list/modifiers)
+	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
+		return
+
+	parried = TRUE
+	set_angle(dir2angle(user.dir) + rand(-3, 3))
+	firer = user
+	speed *= 0.8 // Go 20% faster when parried
+	damage *= 1.15 // And do 15% more damage
+	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
+
 
 /**
  * Called when the projectile hits something
@@ -740,6 +781,7 @@
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
+	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
@@ -1029,7 +1071,7 @@
 	if(tracer_type)
 		var/tempref = REF(src)
 		for(var/datum/point/p in beam_segments)
-			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_outer_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
 	if(muzzle_type && duration > 0)
 		var/datum/point/p = beam_segments[1]
 		var/atom/movable/thing = new muzzle_type
@@ -1038,7 +1080,7 @@
 		matrix.Turn(original_angle)
 		thing.transform = matrix
 		thing.color = color
-		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
+		thing.set_light(l_outer_range = muzzle_flash_range, l_power = muzzle_flash_intensity, l_color = muzzle_flash_color_override? muzzle_flash_color_override : color)
 		QDEL_IN(thing, duration)
 	if(impacting && impact_type && duration > 0)
 		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
@@ -1048,7 +1090,7 @@
 		matrix.Turn(Angle)
 		thing.transform = matrix
 		thing.color = color
-		thing.set_light(impact_light_range, impact_light_intensity, impact_light_color_override? impact_light_color_override : color)
+		thing.set_light(l_outer_range = impact_light_outer_range, l_power = impact_light_intensity, l_color = impact_light_color_override? impact_light_color_override : color)
 		QDEL_IN(thing, duration)
 	if(cleanup)
 		cleanup_beam_segments()

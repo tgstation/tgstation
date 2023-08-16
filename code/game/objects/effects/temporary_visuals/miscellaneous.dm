@@ -243,7 +243,7 @@
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
-	light_range = LIGHT_RANGE_FIRE
+	light_outer_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
 
@@ -460,7 +460,7 @@
 		setDir(teleporting_atom.dir)
 		if(warp_color)
 			color = list(warp_color, warp_color, warp_color, list(0,0,0))
-			set_light(1.4, 1, warp_color)
+			set_light(l_outer_range = 1.4, l_power = 1, l_color = warp_color)
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/matrix/skew = transform
 		skew = skew.Turn(180)

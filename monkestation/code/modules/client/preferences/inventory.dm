@@ -10,8 +10,7 @@
 		return
 	while(query_gear.NextRow())
 		var/key = query_gear.item[1]
-		var/value = text2num(query_gear.item[2])
-		inventory[key] = value
+		inventory += text2path(key)
 	qdel(query_gear)
 
 
@@ -29,9 +28,13 @@
 	metacoins = text2num(mc_count)
 
 
-/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE, donator_multipler = TRUE)
+/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE, donator_multipler = TRUE, respects_roundcap = FALSE)
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
+
+	if(!max_round_coins && respects_roundcap)
+		to_chat(parent, "You've hit the Monkecoin limit for this shift, please try again next shift.")
+		return
 
 	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET metacoins = metacoins + '[amount]' WHERE ckey = '[ckey]'")
 	query_inc_metacoins.warn_execute()
@@ -44,6 +47,11 @@
 				amount *= 1.75
 			if(ACCESS_NUKIE_RANK)
 				amount *= 2
+
+	if(respects_roundcap)
+		if(max_round_coins <= amount)
+			amount = max_round_coins
+		max_round_coins -= amount
 
 	amount = round(amount, 1)
 	metacoins += amount

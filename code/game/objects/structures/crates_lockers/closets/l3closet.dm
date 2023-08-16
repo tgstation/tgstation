@@ -20,6 +20,8 @@
 	new /obj/item/clothing/head/bio_hood/virology(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/extrapolator(src)
+	new /obj/item/extrapolator(src)
 
 
 /obj/structure/closet/l3closet/security

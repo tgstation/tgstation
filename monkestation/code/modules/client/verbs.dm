@@ -1,12 +1,13 @@
 GLOBAL_LIST_INIT(high_threat_antags, list(
 	/datum/antagonist/cult,
 	/datum/antagonist/rev/head,
+	/datum/antagonist/wizard,
 ))
 
 GLOBAL_LIST_INIT(medium_threat_antags, list(
 	/datum/antagonist/ninja,
-	/datum/antagonist/wizard,
 	/datum/antagonist/heretic,
+	/datum/antagonist/bloodsucker,
 ))
 
 GLOBAL_LIST_INIT(low_threat_antags, list(
@@ -26,6 +27,9 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	if(!isobserver(mob) && !isliving(mob))
 		to_chat(src, "For this to work you need to either be observing or playing.")
 		return
+
+	if(isobserver(mob))
+		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so becareful where you are."))
 
 	if(!saved_tokens)
 		saved_tokens = new(src)
@@ -67,6 +71,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	saved_tokens.in_queued_tier = tier
 	saved_tokens.in_queue = new chosen_antagonist
 
+	to_chat(src, "Your request has been sent to the admins.")
 	wait_for_approval(src, chosen_antagonist)
 
 

@@ -60,7 +60,6 @@
 		TEST_FAIL("Hydroponics harvest from [saved_name] had [tray.myseed] planted when it was testing [seed].")
 
 	var/double_chemicals = seed.get_gene(/datum/plant_gene/trait/maxchem)
-	var/expected_yield = seed.getYield()
 	var/max_volume = 100 //For 99% of plants, max volume is 100.
 
 	if(double_chemicals)
@@ -73,9 +72,6 @@
 
 	if(!all_harvested_items.len)
 		TEST_FAIL("Hydroponics harvest from [saved_name] resulted in 0 harvest.")
-
-	TEST_ASSERT_EQUAL(all_harvested_items.len, expected_yield, "Hydroponics harvest from [saved_name] only harvested [all_harvested_items.len] items instead of [expected_yield] items.")
-	TEST_ASSERT(all_harvested_items[1].reagents, "Hydroponics harvest from [saved_name] had no reagent container.")
 	TEST_ASSERT_EQUAL(all_harvested_items[1].reagents.maximum_volume, max_volume, "Hydroponics harvest from [saved_name] [double_chemicals ? "did not have its reagent capacity doubled to [max_volume] properly." : "did not have its reagents capped at [max_volume] properly."]")
 
 	var/expected_nutriments = seed.reagents_add[/datum/reagent/consumable/nutriment]

@@ -7,15 +7,15 @@
 	plantname = "Cocao Tree"
 	product = /obj/item/food/grown/cocoapod
 	lifespan = 20
-	maturation = 5
-	production = 5
+	maturation = 25
+	production = 25
 	yield = 2
 	growthstages = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cocoapod-grow"
 	icon_dead = "cocoapod-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod, /obj/item/seeds/cocoapod/bungotree)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/vanilla_pod, /datum/hydroponics/plant_mutation/bungo_tree)
 	reagents_add = list(/datum/reagent/consumable/coco = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/cocoapod
@@ -37,7 +37,7 @@
 	plantname = "Vanilla Tree"
 	product = /obj/item/food/grown/vanillapod
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/consumable/vanilla = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/vanillapod
@@ -59,11 +59,11 @@
 	plantname = "Bungo Tree"
 	product = /obj/item/food/grown/bungofruit
 	lifespan = 30
-	maturation = 4
+	maturation = 12
 	yield = 3
 	production = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/consumable/enzyme = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'

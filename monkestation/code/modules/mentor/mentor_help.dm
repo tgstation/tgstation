@@ -22,9 +22,13 @@
 
 	for(var/client/X in GLOB.mentors | GLOB.admins)
 		X << 'sound/items/bikehorn.ogg'
-		to_chat(X, mentor_msg)
+		to_chat(X,
+		type = MESSAGE_TYPE_MENTORCHAT,
+		html = mentor_msg)
 
-	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
+	to_chat(src,
+		type = MESSAGE_TYPE_MENTORCHAT,
+		html = "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
 
 
 	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
@@ -111,7 +115,7 @@
 /proc/format_mhelp_embed(message, ckey)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Mentor Help"
-	embed.description = "<byond://[world.internet_address]:[world.port]>"
+	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
 	embed.author = key_name(ckey)
 	var/round_state
 	var/admin_text

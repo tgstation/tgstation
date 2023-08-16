@@ -62,7 +62,7 @@
 	icon = 'icons/obj/carp_rift.dmi'
 	icon_state = "carp_rift_carpspawn"
 	light_color = LIGHT_COLOR_PURPLE
-	light_range = 10
+	light_outer_range = 10
 	anchored = TRUE
 	density = FALSE
 	plane = MASSIVE_OBJ_PLANE

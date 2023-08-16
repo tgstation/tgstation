@@ -328,6 +328,11 @@
 	result += objectives_text
 
 	if(uplink_handler)
+		var/completed_objectives_text = "Completed Uplink Objectives: "
+		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
+			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
+				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [DISPLAY_PROGRESSION(objective.progression_reward)] Reputation)"
+		result += completed_objectives_text
 		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
 	var/special_role_text = lowertext(name)
@@ -373,6 +378,6 @@
 #undef FLAVOR_FACTION_SYNDICATE
 #undef FLAVOR_FACTION_NANOTRASEN
 
-/datum/antagonist/tratior/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/traitor/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
 	hosts_mind.make_traitor()

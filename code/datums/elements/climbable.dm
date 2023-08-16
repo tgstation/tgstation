@@ -148,3 +148,10 @@
 		return
 	if(bumpee.force_moving?.allow_climbing)
 		do_climb(source, bumpee)
+	if(bumpee.m_intent == MOVE_INTENT_SPRINT)
+		INVOKE_ASYNC(src, PROC_REF(attempt_sprint_climb), source, bumpee)
+
+///Tries to climb onto the target if the forced movement of the mob allows it
+/datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)
+	if(do_after(bumpee, climb_time * 1.2, source))
+		do_climb(source, bumpee)

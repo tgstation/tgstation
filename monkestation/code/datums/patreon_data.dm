@@ -13,6 +13,9 @@
 
 /datum/patreon_data/New(client/created_client)
 	. = ..()
+	if(!created_client)
+		return
+
 	if(!SSdbcore.IsConnected())
 		owned_rank = NUKIE_RANK ///this is a testing variable
 		return
@@ -57,6 +60,8 @@
 			access_rank =  ACCESS_NUKIE_RANK
 
 /datum/patreon_data/proc/has_access(rank)
+	if(!access_rank)
+		assign_access_rank()
 	if(rank <= access_rank)
 		return TRUE
 	return FALSE

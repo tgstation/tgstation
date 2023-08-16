@@ -469,7 +469,7 @@
 	ethereal_heart.owner.forceMove(src) //put that ethereal in
 	add_atom_colour(ethereal_heart.ethereal_color, FIXED_COLOUR_PRIORITY)
 	crystal_heal_timer = addtimer(CALLBACK(src, PROC_REF(heal_ethereal)), CRYSTALIZE_HEAL_TIME, TIMER_STOPPABLE)
-	set_light(4, 10, ethereal_heart.ethereal_color)
+	set_light(l_outer_range = 4, l_power = 10, l_color = ethereal_heart.ethereal_color)
 	update_icon()
 	flick("ethereal_crystal_forming", src)
 	addtimer(CALLBACK(src, PROC_REF(start_crystalization)), 1 SECONDS)

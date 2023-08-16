@@ -91,6 +91,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
+	/client/proc/spawn_pollution,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -105,6 +106,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/adjust_players_antag_tokens,
 	/client/proc/adjust_players_metacoins,
 	/client/proc/admin_change_sec_level,
+	/client/proc/change_ocean,
 	/client/proc/cinematic,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_gib_self,
@@ -114,9 +116,12 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
 	/client/proc/forceEvent,
+	/client/proc/generate_bulk_code,
+	/client/proc/generate_code,
 	/client/proc/mass_add_metacoins,
 	/client/proc/mass_zombie_cure,
 	/client/proc/mass_zombie_infection,
+	/client/proc/move_hotspots,
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
 	/client/proc/remove_liquid,
@@ -128,7 +133,9 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/spawn_liquid,
+	/client/proc/spawn_pollution,
 	/client/proc/summon_ert,
+	/client/proc/summon_twitch_event,
 	/client/proc/toggle_nuke,
 	/client/proc/toggle_random_events,
 	))

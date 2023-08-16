@@ -8,6 +8,7 @@
 	shuttle_id = "snowdin_mining";
 	name = "mining elevator"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator2)
 "b" = (
@@ -19,6 +20,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Elevator Access"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator2)
 "d" = (

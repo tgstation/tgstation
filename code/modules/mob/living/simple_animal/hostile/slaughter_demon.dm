@@ -122,7 +122,7 @@
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
 
-/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/attack_target, proximity_flag)
 	if((istate & ISTATE_SECONDARY))
 		bodyslam(attack_target)
 		return

@@ -1,8 +1,9 @@
-/mob/living/simple_animal/chicken/sword
+/mob/living/basic/chicken/sword
 	icon_suffix = "sword"
 
 	maxHealth = 300
-	harm_intent_damage = 4 //weak damage but strong health
+	melee_damage_lower = 2 //weak damage but strong health
+	melee_damage_upper = 4
 	obj_damage = 5
 	ai_controller = /datum/ai_controller/chicken/retaliate
 
@@ -17,7 +18,7 @@
 	name = "Gallant Egg"
 	icon_state = "sword"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/sword
+	layer_hen_type = /mob/living/basic/chicken/sword
 
 /obj/item/food/egg/sword/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	. = ..()

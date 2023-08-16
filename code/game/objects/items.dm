@@ -564,6 +564,8 @@
 			return
 
 	. = FALSE
+	if(cant_grab)
+		return FALSE
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
@@ -600,6 +602,8 @@
 			return
 
 	. = FALSE
+	if(cant_grab)
+		return FALSE
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))

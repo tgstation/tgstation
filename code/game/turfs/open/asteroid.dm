@@ -140,9 +140,9 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
 		if("basalt1", "basalt2", "basalt3")
-			B.set_light(2, 0.6, LIGHT_COLOR_LAVA) //more light
+			B.set_light(l_outer_range = 2, l_power = 0.6, l_color = LIGHT_COLOR_LAVA) //more light
 		if("basalt5", "basalt9")
-			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
+			B.set_light(l_outer_range = 1.4, l_power = 0.6, l_color = LIGHT_COLOR_LAVA) //barely anything!
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 

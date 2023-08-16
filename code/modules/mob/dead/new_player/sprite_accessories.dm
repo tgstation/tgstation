@@ -16,7 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
+/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, add_blank, roundstart = FALSE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
 	if(!istype(male))
@@ -25,6 +25,11 @@
 		female = list()
 
 	for(var/path in subtypesof(prototype))
+		if(roundstart)
+			var/datum/sprite_accessory/P = path
+			if(initial(P.locked))
+				continue
+
 		var/datum/sprite_accessory/D = new path()
 
 		if(D.icon_state)
@@ -2090,6 +2095,10 @@
 	color_src = null
 	em_block = TRUE
 
+/datum/sprite_accessory/moth_wings/none
+	name = "None"
+	icon_state = "none"
+
 /datum/sprite_accessory/moth_wings/plain
 	name = "Plain"
 	icon_state = "plain"
@@ -2129,7 +2138,6 @@
 /datum/sprite_accessory/moth_wings/burnt_off
 	name = "Burnt Off"
 	icon_state = "burnt_off"
-	locked = TRUE
 
 /datum/sprite_accessory/moth_wings/firewatch
 	name = "Firewatch"
@@ -2190,6 +2198,10 @@
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/species/moth/moth_antennae.dmi'
 	color_src = null
+
+/datum/sprite_accessory/moth_antennae/none
+	name = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/moth_antennae/plain
 	name = "Plain"

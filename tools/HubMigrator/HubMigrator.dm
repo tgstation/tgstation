@@ -7,6 +7,7 @@
 #define MEDAL_THANKSALOT "The Best Driver"
 #define MEDAL_HELBITALJANKEN "Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT "Getting an Upgrade"
+#define MEDAL_SINGULARITY_BUSTER "The Lord Dethroned" //Singularity Nullified
 
 
 //Boss medals
@@ -59,6 +60,7 @@
 		MEDAL_CLOWNCARKING,
 		MEDAL_THANKSALOT,
 		MEDAL_HELBITALJANKEN,
+		MEDAL_SINGULARITY_BUSTER,
 		MEDAL_MATERIALCRAFT,
 		BOSS_MEDAL_ANY,
 		BOSS_MEDAL_MINER,

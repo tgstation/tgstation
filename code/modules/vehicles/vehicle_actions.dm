@@ -51,6 +51,19 @@
 		remove_action_type_from_mob(actiontype, i)
 
 /**
+ * ## remove_passenger_action_type
+ *
+ * Removes this action from any passenger in the mech.
+ * args:
+ * * actiontype: typepath of the action you want to remove.
+ */
+/obj/vehicle/proc/remove_passenger_action_type(actiontype)
+	autogrant_actions_passenger -= actiontype
+	for(var/i in occupants)
+		remove_action_type_from_mob(actiontype, i)
+		grant_passenger_actions(i) // refresh
+
+/**
  * ## initialize_controller_action_type
  *
  * Gives any passenger that enters the vehicle this action... IF they have the correct vehicle control flag.

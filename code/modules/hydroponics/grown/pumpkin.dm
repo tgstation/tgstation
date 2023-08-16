@@ -14,7 +14,7 @@
 	icon_grow = "pumpkin-grow"
 	icon_dead = "pumpkin-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/blumpkin)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
 /obj/item/food/grown/pumpkin
@@ -46,7 +46,7 @@
 	species = "blumpkin"
 	plantname = "Blumpkin Vines"
 	product = /obj/item/food/grown/pumpkin/blumpkin
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/ammonia = 0.2, /datum/reagent/chlorine = 0.1, /datum/reagent/consumable/nutriment = 0.2)
 	rarity = 20
 

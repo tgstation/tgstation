@@ -27,6 +27,8 @@ import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 
 import './styles/themes/chicken_book.scss';
+import './styles/themes/generic-yellow.scss';
+import './styles/themes/generic.scss';
 
 import { StoreProvider, configureStore } from './store';
 

@@ -17,8 +17,5 @@
 
 	// We need to regenerate everything for height
 	regenerate_icons()
-	// Toggle passtable
-	if(HAS_TRAIT(src, TRAIT_DWARF))
-		passtable_on(src, TRAIT_DWARF)
-	else
-		passtable_off(src, TRAIT_DWARF)
+	// No more passtable for you, bub
+

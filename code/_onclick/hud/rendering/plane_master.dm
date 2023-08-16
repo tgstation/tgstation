@@ -495,6 +495,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
 
+/atom/movable/screen/plane_master/additive_lighting
+	name = "additive lighting plane master"
+	plane = LIGHTING_PLANE_ADDITIVE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	blend_mode_override = BLEND_ADD
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	critical = PLANE_CRITICAL_DISPLAY
+
 /// This will not work through multiz, because of a byond bug with BLEND_MULTIPLY
 /// Bug report is up, waiting on a fix
 /atom/movable/screen/plane_master/o_light_visual

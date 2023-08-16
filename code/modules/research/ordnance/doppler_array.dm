@@ -19,7 +19,7 @@
 
 	// Lighting system to better communicate the directions.
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_range = 4
+	light_outer_range = 4
 	light_power = 1
 	light_color = COLOR_RED
 

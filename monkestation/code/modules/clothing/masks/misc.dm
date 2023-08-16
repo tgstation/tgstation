@@ -60,3 +60,79 @@
 								'monkestation/sound/voice/laugh/misc/big_laugh2.ogg',
 								'monkestation/sound/voice/laugh/misc/big_laugh3.ogg',
 								'monkestation/sound/voice/laugh/misc/big_laugh4.ogg')
+
+/obj/item/clothing/mask/breath/sec_bandana
+	desc = "An incredibly dense synthetic thread bandana that can be used as an internals mask."
+	name = "sec bandana"
+	worn_icon = 'monkestation/icons/mob/mask.dmi'
+	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	icon_state = "sec_bandana_default"
+	var/obj/item/clothing/suit/armor/secduster/suit
+	actions_types = null
+
+/obj/item/clothing/mask/breath/sec_bandana/equipped(mob/user, slot)
+	..()
+	if(slot != ITEM_SLOT_MASK)
+		if(suit)
+			suit.RemoveMask()
+		else
+			qdel(src)
+
+/obj/item/clothing/mask/breath/sec_bandana/AltClick(mob/user)
+	suit.RemoveMask()
+	return
+
+/obj/item/clothing/mask/breath/sec_bandana/medical
+	icon_state = "sec_bandana_medical"
+
+/obj/item/clothing/mask/breath/sec_bandana/engineering
+	icon_state = "sec_bandana_engi"
+
+/obj/item/clothing/mask/breath/sec_bandana/cargo
+	icon_state = "sec_bandana_medical"
+
+/obj/item/clothing/mask/breath/sec_bandana/science
+	icon_state = "sec_bandana_science"
+
+/obj/item/clothing/mask/knightmask
+	name = "Knight Mask"
+	desc = "A stark white mask with gaping eyes, adorned with pinsir like horns."
+	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon_state = "knight_mask"
+	worn_icon_state = "knight_mask"
+	w_class = WEIGHT_CLASS_TINY
+	flags_cover = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/clothing/mask/hornetmask
+	name = "Hornet Mask"
+	desc = "A stark white mask with gaping eyes, adorned with curved horns."
+	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon_state = "hornet_mask"
+	worn_icon_state = "hornet_mask"
+	worn_y_offset = 16
+	w_class = WEIGHT_CLASS_TINY
+	flags_cover = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/clothing/mask/grimmmask
+	name = "Grimm Mask"
+	desc = "A black mask with a stark white faceplate."
+	icon = 'monkestation/icons/obj/clothing/masks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
+	icon_state = "grimm_mask"
+	worn_icon_state = "grimm_mask"
+	w_class = WEIGHT_CLASS_TINY
+	flags_cover = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
+	slot_flags = ITEM_SLOT_MASK

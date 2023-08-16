@@ -532,3 +532,5 @@ DISALLOW_TITLE_MUSIC
 
 ## Put the name of your custom currency here
 METACURRENCY_NAME Metacoin
+
+TWITCH_KEY mrhouse

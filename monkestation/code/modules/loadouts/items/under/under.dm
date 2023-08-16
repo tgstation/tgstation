@@ -256,6 +256,9 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Ethereal Tunic"
 	item_path = /obj/item/clothing/under/ethereal_tunic
 
+/datum/loadout_item/under/miscellaneous/tragic
+	name = "Tragic Mime Suit"
+	item_path = /obj/item/clothing/under/costume/tragic
 
 /*
 *	FORMAL UNDERSUITS

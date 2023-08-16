@@ -86,13 +86,48 @@
 	target.update_body_parts()
 
 /datum/preference/choiced/facial_hair_gradient
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient"
+	main_feature_name = "Facial hair Gradient"
 	relevant_species_trait = FACEHAIR
+	should_generate_icons = TRUE
 
 /datum/preference/choiced/facial_hair_gradient/init_possible_values()
-	return assoc_to_keys_features(GLOB.facial_hair_gradients_list)
+	var/list/values = possible_values_for_sprite_accessory_list(GLOB.facial_hair_gradients_list)
+
+	var/icon/head_icon = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
+	head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+
+
+	var/datum/sprite_accessory/hair_accessory = GLOB.facial_hairstyles_list["Beard (Very Long)"]
+	var/icon/hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = SOUTH)
+	hair_icon.Blend("#080501", ICON_MULTIPLY)
+
+	for (var/name in values)
+		var/datum/sprite_accessory/accessory = GLOB.facial_hair_gradients_list[name]
+		if (accessory == null)
+			if(accessory.icon_state == null || accessory.icon_state == "none")
+				values[name] = icon('icons/mob/landmarks.dmi', "x")
+			continue
+
+		var/icon/final_icon = new(head_icon)
+		var/icon/base_hair_icon = new(hair_icon)
+		var/icon/gradient_hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = SOUTH)
+
+		var/icon/gradient_icon = values[name]
+		gradient_icon.Blend(gradient_hair_icon, ICON_ADD)
+		gradient_icon.Blend("#42250a", ICON_MULTIPLY)
+		base_hair_icon.Blend(gradient_icon, ICON_OVERLAY)
+
+		final_icon.Blend(base_hair_icon, ICON_OVERLAY)
+
+		final_icon.Crop(10, 19, 22, 31)
+		final_icon.Scale(32, 32)
+
+		values[name] = final_icon
+
+	return values
 
 /datum/preference/choiced/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)
@@ -149,13 +184,59 @@
 	return data
 
 /datum/preference/choiced/hair_gradient
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient"
+	main_feature_name = "Hairstyle Gradient"
+	should_generate_icons = TRUE
 	relevant_species_trait = HAIR
 
 /datum/preference/choiced/hair_gradient/init_possible_values()
-	return assoc_to_keys_features(GLOB.hair_gradients_list)
+	var/list/values = possible_values_for_sprite_accessory_list(GLOB.hair_gradients_list)
+
+	var/list/body_parts = list(
+		BODY_ZONE_HEAD,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_PRECISE_L_HAND,
+		BODY_ZONE_PRECISE_R_HAND,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_R_LEG,
+	)
+	var/icon/body_icon = icon('icons/effects/effects.dmi', "nothing")
+	for (var/body_part in body_parts)
+		var/gender = body_part == BODY_ZONE_CHEST || body_part == BODY_ZONE_HEAD ? "_m" : ""
+		body_icon.Blend(icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_[body_part][gender]", dir = NORTH), ICON_OVERLAY)
+	body_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+	var/icon/jumpsuit_icon = icon('icons/mob/clothing/under/civilian.dmi', "barman", dir = NORTH)
+	jumpsuit_icon.Blend("#b3b3b3", ICON_MULTIPLY)
+	body_icon.Blend(jumpsuit_icon, ICON_OVERLAY)
+
+	var/datum/sprite_accessory/hair_accessory = GLOB.hairstyles_list["Very Long Hair 2"]
+	var/icon/hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = NORTH)
+	hair_icon.Blend("#080501", ICON_MULTIPLY)
+
+	for (var/name in values)
+		var/datum/sprite_accessory/accessory = GLOB.hair_gradients_list[name]
+		if (accessory == null)
+			if(accessory.icon_state == null || accessory.icon_state == "none")
+				values[name] = icon('icons/mob/landmarks.dmi', "x")
+			continue
+
+		var/icon/final_icon = new(body_icon)
+		var/icon/base_hair_icon = new(hair_icon)
+		var/icon/gradient_hair_icon = icon(hair_accessory.icon, hair_accessory.icon_state, dir = NORTH)
+
+		var/icon/gradient_icon = values[name]
+		gradient_icon.Blend(gradient_hair_icon, ICON_ADD)
+		gradient_icon.Blend("#42250a", ICON_MULTIPLY)
+		base_hair_icon.Blend(gradient_icon, ICON_OVERLAY)
+
+		final_icon.Blend(base_hair_icon, ICON_OVERLAY)
+		values[name] = final_icon
+
+	return values
 
 /datum/preference/choiced/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)

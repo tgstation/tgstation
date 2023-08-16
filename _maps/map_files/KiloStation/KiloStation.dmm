@@ -4897,6 +4897,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/machinery/autolathe,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/robotics/lab)
 "bLN" = (
@@ -4991,6 +4992,12 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
+	},
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter";
+	desc = "It's Walter!"
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
@@ -8461,10 +8468,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "cXg" = (
-/obj/structure/reagent_dispensers/watertank/high,
 /obj/structure/railing,
-/obj/item/reagent_containers/cup/watering_can,
 /obj/effect/turf_decal/bot,
+/obj/structure/table,
+/obj/machinery/splicer,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cXh" = (
@@ -9098,6 +9105,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "dij" = (
@@ -9334,7 +9342,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/robotics/lab)
 "dlS" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
 "dmf" = (
@@ -9371,7 +9379,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "dmC" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "dmD" = (
@@ -16183,6 +16191,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/burnt_floor,
+/mob/living/carbon/human/species/monkey/dukeman,
 /turf/open/floor/plating,
 /area/station/security/prison)
 "fxY" = (
@@ -17088,6 +17097,9 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/cup/watering_can,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics)
 "fLd" = (
@@ -18825,7 +18837,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "gos" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "gou" = (
@@ -20722,7 +20734,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gTD" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "gTN" = (
@@ -22231,14 +22243,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "hsJ" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 4
-	},
-/obj/structure/flora/bush/grassy/style_random,
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/leavy/style_random,
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "hsL" = (
 /obj/effect/turf_decal/stripes/line{
@@ -28774,6 +28779,12 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/toy/figure/botanist,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/item/botanical_lexicon,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jrs" = (
@@ -32800,6 +32811,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "kOw" = (
@@ -33217,8 +33229,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/spawner/random/structure/crate,
-/mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
+/mob/living/basic/chicken{
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -36431,14 +36442,6 @@
 "lYg" = (
 /turf/closed/wall,
 /area/station/science/robotics/lab)
-"lYv" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 1
-	},
-/obj/structure/flora/bush/leavy/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/floor/grass,
-/area/station/hallway/primary/fore)
 "lYE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37067,13 +37070,11 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 4
 	},
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/flora/bush/grassy/style_random,
 /obj/structure/window/reinforced/spawner{
 	dir = 1
 	},
-/obj/structure/flora/bush/flowers_yw/style_random,
-/turf/open/floor/grass,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "mjh" = (
 /turf/closed/wall/r_wall/rust,
@@ -38206,7 +38207,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "mCT" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "mCV" = (
@@ -39563,10 +39564,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "nax" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/lavendergrass/style_random,
-/turf/open/floor/grass,
+/obj/machinery/computer/cryopod{
+	pixel_y = -32;
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "naC" = (
 /obj/machinery/firealarm/directional/west,
@@ -40705,6 +40707,9 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/food/spaghetti/security{
+	pixel_y = 15
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hos)
 "nvE" = (
@@ -41079,11 +41084,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "nCA" = (
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/structure/flora/bush/reed/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/light/directional/south,
-/turf/open/floor/grass,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "nCI" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -41315,8 +41317,7 @@
 /area/station/cargo/storage)
 "nFN" = (
 /obj/machinery/igniter/incinerator_ordmix,
-/mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
+/mob/living/basic/chicken{
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -44343,11 +44344,8 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 1
 	},
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/grassy/style_random,
-/mob/living/simple_animal/butterfly,
-/turf/open/floor/grass,
+/obj/machinery/cryopod,
+/turf/open/floor/iron/grimy,
 /area/station/hallway/primary/fore)
 "oLG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44542,7 +44540,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "oQl" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -49157,7 +49155,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
 "qpI" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "qpJ" = (
@@ -50137,6 +50135,7 @@
 	name = "Core Modules";
 	req_access = list("captain")
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "qHV" = (
@@ -53506,8 +53505,6 @@
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
 "rLs" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/cup/watering_can,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -53515,6 +53512,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rLy" = (
@@ -56267,6 +56265,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/ai_module/core/full/crewsimov,
+/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "sHk" = (
@@ -56368,6 +56368,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "sIF" = (
@@ -65479,7 +65480,7 @@
 	name = "core camera";
 	network = list("aicore")
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "vFv" = (
@@ -66999,6 +67000,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "wbT" = (
@@ -68833,7 +68835,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/service/chapel/office)
 "wFB" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "wFG" = (
@@ -68946,6 +68948,7 @@
 	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/bot,
+/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wGD" = (
@@ -73509,7 +73512,7 @@
 /area/station/hallway/primary/central/fore)
 "yfS" = (
 /obj/machinery/light/small/directional/west,
-/mob/living/simple_animal/chicken,
+/mob/living/basic/chicken,
 /turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "ygj" = (
@@ -96901,7 +96904,7 @@ qlC
 tbn
 lLp
 aWI
-lYv
+oLs
 nCA
 cXZ
 kxU

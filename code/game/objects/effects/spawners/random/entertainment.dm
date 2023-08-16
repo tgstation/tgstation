@@ -45,6 +45,13 @@
 		/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1,
 	)
 
+//monkestation edit start
+/obj/effect/spawner/random/entertainment/gambling/Initialize(mapload)
+	if(prob(0.2)) //one in 500
+		loot = list(/obj/item/dice/d20/fate/one_use = 1)
+	. = ..()
+//monkestation edit end
+
 /obj/effect/spawner/random/entertainment/coin
 	name = "coin spawner"
 	icon_state = "coin"

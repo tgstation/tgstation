@@ -3,7 +3,8 @@
 	typepath = /datum/round_event/ghost_role/space_dragon
 	weight = 7
 	max_occurrences = 1
-	min_players = 20
+	min_players = 30 //monke edit: 20 to 30
+	earliest_start = 60 MINUTES //monke edit: 20 to 60
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a space dragon, which will try to take over the station."

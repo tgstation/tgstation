@@ -22,7 +22,7 @@
 	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
 	light_system = MOVABLE_LIGHT
-	light_range = 5
+	light_outer_range = 5
 	light_on = FALSE
 	var/list/trophies = list()
 	var/charged = TRUE
@@ -101,17 +101,21 @@
 			if(!QDELETED(C))
 				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
 			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
+			var/backstabbed = FALSE
+			var/combined_damage = detonation_damage
 			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = BOMB)
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-				if(!QDELETED(C))
-					C.total_damage += detonation_damage + backstab_bonus //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
-				L.apply_damage(detonation_damage + backstab_bonus, BRUTE, blocked = def_check)
+				backstabbed = TRUE
+				combined_damage += backstab_bonus
 				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
-			else
-				if(!QDELETED(C))
-					C.total_damage += detonation_damage
-				L.apply_damage(detonation_damage, BRUTE, blocked = def_check)
+
+			if(!QDELETED(C))
+				C.total_damage += combined_damage
+
+
+			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
+			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
 /obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN

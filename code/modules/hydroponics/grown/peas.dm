@@ -6,7 +6,7 @@
 	species = "peas"
 	plantname = "Pea Vines"
 	product = /obj/item/food/grown/peas
-	maturation = 3
+	maturation = 30
 	potency = 25
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'

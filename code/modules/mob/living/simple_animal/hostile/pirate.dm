@@ -43,7 +43,7 @@
 	attack_sound = 'sound/weapons/blade1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee)
-	light_range = 2
+	light_outer_range = 2
 	light_power = 2.5
 	light_color = COLOR_SOFT_RED
 	footstep_type = FOOTSTEP_MOB_SHOE

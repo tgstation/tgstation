@@ -126,6 +126,7 @@
 			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
+			bounty_value = clamp(bounty_value, 0, 100000)
 			return TRUE
 		if("bountyText")
 			bounty_text = (params["bountytext"])

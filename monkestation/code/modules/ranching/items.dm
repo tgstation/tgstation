@@ -27,9 +27,9 @@
 
 
 /obj/item/chicken_scanner/attack(mob/living/M, mob/living/carbon/human/user)
-	if(!istype(M, /mob/living/simple_animal/chicken))
+	if(!istype(M, /mob/living/basic/chicken))
 		return
-	var/mob/living/simple_animal/chicken/scanned_chicken = M
+	var/mob/living/basic/chicken/scanned_chicken = M
 	user.visible_message("<span class='notice'>[user] analyzes [scanned_chicken]'s possible mutations.</span>")
 
 	chicken_scan(user, scanned_chicken)
@@ -39,7 +39,7 @@
 	scan_mode = !scan_mode
 	to_chat(user, "<span class='info'>Switched to Stat Mode</span>")
 
-/obj/item/chicken_scanner/proc/chicken_scan(mob/living/carbon/human/user, mob/living/simple_animal/chicken/scanned_chicken)
+/obj/item/chicken_scanner/proc/chicken_scan(mob/living/carbon/human/user, mob/living/basic/chicken/scanned_chicken)
 	if(scan_mode)
 		for(var/mutation in scanned_chicken.mutation_list)
 			var/datum/mutation/ranching/chicken/held_mutation = new mutation
@@ -79,7 +79,7 @@
 				var/gas_string = gases.Join(" , ")
 				combined_msg += "\t<span class='info'>Required Environmental Gases: [gas_string]</span>"
 			if(held_mutation.required_rooster)
-				var/mob/living/simple_animal/chicken/rooster_type = held_mutation.required_rooster
+				var/mob/living/basic/chicken/rooster_type = held_mutation.required_rooster
 				var/rooster_name = ""
 				if(rooster_type.breed_name_male)
 					rooster_name = initial(rooster_type.breed_name_male)
@@ -313,7 +313,7 @@
 		if(contained_egg.datum_flags & DF_ISPROCESSING)
 			continue
 		if(!contained_egg.layer_hen_type)
-			contained_egg.layer_hen_type = /mob/living/simple_animal/chicken
+			contained_egg.layer_hen_type = /mob/living/basic/chicken
 		START_PROCESSING(SSobj, contained_egg)
 		flop_animation(contained_egg)
 		contained_egg.desc = "You can hear pecking from the inside of this seems it may hatch soon."
@@ -366,9 +366,9 @@
 		to_chat(user, "<span class='notice'>[src] cannot be used unless bolted to the ground.</span>")
 		return
 
-	if(user.pulling && istype(user.pulling, /mob/living/simple_animal/chicken))
+	if(user.pulling && istype(user.pulling, /mob/living/basic/chicken))
 		var/mob/living/L = user.pulling
-		var/mob/living/simple_animal/chicken/C = L
+		var/mob/living/basic/chicken/C = L
 		if(C.buckled ||C.has_buckled_mobs())
 			to_chat(user, "<span class='warning'>[C] is attached to something!</span>")
 			return
@@ -398,7 +398,7 @@
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 
-	var/mob/living/simple_animal/chicken/mob_occupant = occupant
+	var/mob/living/basic/chicken/mob_occupant = occupant
 
 	if(!(mob_occupant.chicken_path in grinded_types))
 		grinded_types |= mob_occupant.type
@@ -414,7 +414,7 @@
 	. = ..()
 	var/list/input_list = list()
 	for(var/listed_item in grinded_types)
-		var/mob/living/simple_animal/chicken/listed_chicken = new listed_item (src.loc)
+		var/mob/living/basic/chicken/listed_chicken = new listed_item (src.loc)
 		input_list += listed_chicken.egg_type
 		qdel(listed_chicken)
 

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/phoenix
+/mob/living/basic/chicken/phoenix
 	icon_suffix = "spicy"
 
 	breed_name = "Phoenix"
@@ -7,19 +7,19 @@
 
 	book_desc = "These chickens have evolved to break the cycle of life and death and will always come back from the dead assuming their egg survives."
 
-/mob/living/simple_animal/chicken/phoenix/death()
+/mob/living/basic/chicken/phoenix/death()
 	new /obj/effect/decal/cleanable/ash(loc)
 	var/obj/item/food/egg/phoenix/rebirth = new /obj/item/food/egg/phoenix(loc)
 	rebirth.layer_hen_type = src.type
 	START_PROCESSING(SSobj, rebirth)
-	del_on_death = TRUE
 	..()
+	qdel(src)
 
 /obj/item/food/egg/phoenix
 	name = "Burning Egg"
 	icon_state = "phoenix"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/phoenix
+	layer_hen_type = /mob/living/basic/chicken/phoenix
 
 /obj/item/food/egg/phoenix/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	eater.apply_status_effect(/datum/status_effect/ranching/phoenix)

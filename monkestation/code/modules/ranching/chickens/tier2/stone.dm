@@ -1,5 +1,5 @@
 #define MINIMUM_BREAK_FORCE 10
-/mob/living/simple_animal/chicken/stone
+/mob/living/basic/chicken/stone
 	icon_suffix = "stone"
 
 	breed_name = "Stone"
@@ -11,7 +11,7 @@
 	name = "Rocky Egg"
 	icon_state = "stone"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/stone
+	layer_hen_type = /mob/living/basic/chicken/stone
 
 /obj/item/food/egg/stone/attackby(obj/item/attacked_item, mob/user, params)
 	. = ..()
@@ -23,7 +23,7 @@
 		visible_message("<span class='notice'>[src] is cracked open revealing [production_type.name] inside!</span>")
 
 		new production_type.type(src.loc, 1)
-		for(var/mob/living/simple_animal/chicken/viewer_chicken in view(3, src))
+		for(var/mob/living/basic/chicken/viewer_chicken in view(3, src))
 			visible_message("<span class='notice'>[viewer_chicken] becomes upset from seeing an egg broken near them!</span>")
 			viewer_chicken.happiness -= 10
 		qdel(src)

@@ -273,7 +273,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
 	light_system = MOVABLE_LIGHT
-	light_range = 7
+	light_outer_range = 7
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -532,6 +532,7 @@
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
+	process_flags = ORGANIC | SYNTHETIC
 	color = "#976230"
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)

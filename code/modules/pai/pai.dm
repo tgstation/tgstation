@@ -15,7 +15,7 @@
 	light_color = COLOR_PAI_GREEN
 	light_flags = LIGHT_ATTACHED
 	light_on = FALSE
-	light_range = 3
+	light_outer_range = 3
 	light_system = MOVABLE_LIGHT
 	maxHealth = 500
 	mob_size = MOB_SIZE_TINY

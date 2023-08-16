@@ -19,14 +19,13 @@
 
 	set_victim(dismembered_part.owner)
 	var/self_msg
-
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
-		occur_text = "is split open, causing [victim.p_their()] internal organs to spill out!"
+		occur_text = "is split open, causing [victim.p_their()] internal [dismembered_part.bodytype & BODYTYPE_ROBOTIC? "components": "organs"] to spill out!"
 		self_msg = "is split open, causing your internal organs to spill out!"
 	else if(outright)
 		switch(wounding_type)
 			if(WOUND_BLUNT)
-				occur_text = "is outright smashed to a gross pulp, severing it completely!"
+				occur_text = "is outright smashed to a [dismembered_part.bodytype & BODYTYPE_ROBOTIC? "misshapen heap of scrap": "gross pulp"], severing it completely!"
 			if(WOUND_SLASH)
 				occur_text = "is outright slashed off, severing it completely!"
 			if(WOUND_PIERCE)
@@ -36,11 +35,11 @@
 	else
 		switch(wounding_type)
 			if(WOUND_BLUNT)
-				occur_text = "is shattered through the last bone holding it together, severing it completely!"
+				occur_text = "is shattered through the last [dismembered_part.bodytype & BODYTYPE_ROBOTIC? "bit of wires": "bone"] holding it together, severing it completely!"
 			if(WOUND_SLASH)
-				occur_text = "is slashed through the last tissue holding it together, severing it completely!"
+				occur_text = "is slashed through the last [dismembered_part.bodytype & BODYTYPE_ROBOTIC? "bit of wires": "tissue"] holding it together, severing it completely!"
 			if(WOUND_PIERCE)
-				occur_text = "is pierced through the last tissue holding it together, severing it completely!"
+				occur_text = "is pierced through the last [dismembered_part.bodytype & BODYTYPE_ROBOTIC? "bit of wires": "tissue"] holding it together, severing it completely!"
 			if(WOUND_BURN)
 				occur_text = "is completely incinerated, falling to dust!"
 

@@ -87,6 +87,10 @@
 	safety = !safety
 	icon_state = "[sprite_name][!safety]"
 	to_chat(user, "[safety ? "You remove the straw and put it on the side of the cool canister" : "You insert the straw, readying it for use"].")
+	if(safety)
+		reagents.flags = AMOUNT_VISIBLE
+	else
+		reagents.flags = OPENCONTAINER
 
 /obj/item/extinguisher/proc/refill()
 	if(!chem)
@@ -137,6 +141,15 @@
 	balloon_alert(user, "safety [safety ? "on" : "off"]")
 	return
 
+/obj/item/extinguisher/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	if(istype(I, /obj/item/reagent_containers))
+		if(safety)
+			to_chat(user, "<span class='warning'>You need to take off the safety before you can refill the [src]!</span>")
+			return
+	else
+		..()
+
 /obj/item/extinguisher/attack(mob/M, mob/living/user)
 	if(!(user.istate & ISTATE_HARM) && !safety) //If we're on help intent and going to spray people, don't bash them.
 		return FALSE
@@ -158,12 +171,12 @@
 		. += span_notice("Alt-click to empty it.")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
-	if(istype(target, tanktype) && target.Adjacent(user))
+	if(istype(target, /obj/structure/reagent_dispensers) && target.Adjacent(user))
 		if(reagents.total_volume == reagents.maximum_volume)
 			balloon_alert(user, "already full!")
 			return TRUE
-		var/obj/structure/reagent_dispensers/W = target //will it work?
-		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
+		var/obj/structure/reagent_dispensers/watertank/W = target //will it work?
+		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
 			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)

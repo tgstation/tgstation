@@ -217,8 +217,6 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
-		if(C && C.prefs)
-			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
 		C?.playtitlemusic(40)
 		if(speed_round)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
@@ -282,7 +280,21 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
-
+	for(var/client/C in GLOB.clients)
+		if(C && C.prefs)
+			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
+			C.prefs.adjust_metacoins(C.ckey, C.reward_this_person, "Special Bonus")
+		if(length(C.applied_challenges))
+			if(isliving(C.mob))
+				var/mob/living/client_mob = C.mob
+				if(client_mob.stat != DEAD)
+					var/total_payout = 0
+					for(var/datum/challenge/listed_challenge as anything in C.applied_challenges)
+						if(listed_challenge.failed)
+							continue
+						total_payout += listed_challenge.challenge_payout
+					if(total_payout)
+						C.prefs.adjust_metacoins(C.ckey, total_payout, "Challenge rewards.")
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
@@ -292,7 +304,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 /datum/controller/subsystem/ticker/proc/format_roundend_embed(message)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Round End"
-	embed.description = "Join Server! <byond://[world.internet_address]:[world.port]>"
+	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
 	embed.author = "Round Controller"
 	if(GLOB.round_end_images.len)
 		embed.image = pick(GLOB.round_end_images)

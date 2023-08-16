@@ -450,7 +450,6 @@
 		damaged_clothes_icon = icon(icon, icon_state, , 1)
 		damaged_clothes_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
 		damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
-		damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
 		damaged_clothes_icons[index] = damaged_clothes_icon
 	. += damaged_clothes_icon
 

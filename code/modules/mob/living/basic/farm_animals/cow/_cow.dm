@@ -45,7 +45,7 @@
 	udder_component()
 	setup_eating()
 	. = ..()
-	ai_controller.blackboard[BB_BASIC_FOODS] = food_types
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_types)
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/udder_component()
@@ -86,5 +86,5 @@
 /mob/living/basic/cow/proc/set_tip_react_blackboard(mob/living/carbon/tipper)
 	if(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, TIPPED_OVER) || !ai_controller)
 		return
-	ai_controller.blackboard[BB_BASIC_MOB_TIP_REACTING] = TRUE
-	ai_controller.blackboard[BB_BASIC_MOB_TIPPER] = tipper
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_TIP_REACTING, TRUE)
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_TIPPER, tipper)

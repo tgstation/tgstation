@@ -172,7 +172,7 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	light_system = MOVABLE_LIGHT
-	light_range = 2
+	light_outer_range = 2
 	duration = 8
 	var/target
 
@@ -185,7 +185,7 @@
 	name = "death bolt"
 	icon_state = "chronobolt"
 	damage = 25
-	armour_penetration = 100
+	armour_penetration = 50
 	speed = 2
 	eyeblur = 0
 	damage_type = BRUTE
@@ -232,7 +232,7 @@
 	var/observer_desc = "Anomalous crystals have descriptions that only observers can see. But this one hasn't been changed from the default."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "anomaly_crystal"
-	light_range = 8
+	light_outer_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = NO_POWER_USE
 	anchored = FALSE

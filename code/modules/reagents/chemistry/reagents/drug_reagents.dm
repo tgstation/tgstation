@@ -17,6 +17,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 10) //4 per 2 seconds
 
+/datum/reagent/drug/space_drugs/generate_infusion_values(datum/reagents/chems)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["endurance_change"] = (amount * (rand(1, 3) * 0.1))
+		generated_values["damage"] = (amount * (rand(3, 7) * 0.1))
+
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_drugginess(30 SECONDS * REM * seconds_per_tick)
 	if(isturf(affected_mob.loc) && !isspaceturf(affected_mob.loc) && !HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && SPT_PROB(5, seconds_per_tick))
@@ -77,11 +85,8 @@
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src.type)))
-		mytray.adjustPests(-rand(1,2))
-
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
-	mytray.adjust_pestlevel(-rand(1, 2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(0.5, seconds_per_tick))
@@ -164,7 +169,7 @@
 	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
 	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)
 
-/datum/reagent/drug/methamphetamine/feed_interaction(mob/living/simple_animal/chicken/target, volume)
+/datum/reagent/drug/methamphetamine/feed_interaction(mob/living/basic/chicken/target, volume)
 	.=..()
 	target.adjust_happiness(0.5*volume)
 
@@ -469,6 +474,16 @@
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 12)
+
+/datum/reagent/drug/mushroomhallucinogen/generate_infusion_values(datum/reagents/chems)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		var/list/generated_values = list()
+		var/amount = chems.get_reagent_amount(src.type)
+		generated_values["damage"] = (amount * rand(4, 9) * 0.1)
+		generated_values["endurance_change"] = (amount * rand(3, 7) * 0.1)
+		generated_values["lifespan_change"] = (amount * rand(2, 5) * 0.1)
+		return generated_values
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, seconds_per_tick, times_fired)
 	psychonaut.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)

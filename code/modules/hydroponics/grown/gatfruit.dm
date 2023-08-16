@@ -10,7 +10,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
-	maturation = 40
+	maturation = 1
 	production = 10
 	yield = 2
 	potency = 60

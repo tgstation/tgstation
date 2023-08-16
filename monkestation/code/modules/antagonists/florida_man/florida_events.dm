@@ -36,7 +36,6 @@
 
 	floridan.dna.update_dna_identity()
 	var/datum/mind/Mind = new /datum/mind(selected.key)
-	Mind.assigned_role = "Florida Man"
 	Mind.special_role = "Florida Man"
 	Mind.active = 1
 	Mind.transfer_to(floridan)

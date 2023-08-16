@@ -21,7 +21,7 @@
 	potency = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/orange)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/orange)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/citrus/lime
@@ -47,7 +47,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/lime, /obj/item/seeds/orange_3d)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/lime, /datum/hydroponics/plant_mutation/dimension_orange)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/citrus/orange
@@ -74,7 +74,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/firelemon)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/fire_lemon)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/citrus/lemon

@@ -672,7 +672,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNSTABLE_ASS		"unstable_ass"
 #define TRAIT_STABLE_ASS		"stable_ass"
 #define TRAIT_KLEPTOMANIAC		"kleptomaniac"
-#define TRAIT_ANIME	"anime"
+#define TRAIT_ANIME				"anime"
+#define TRAIT_CAT				"cat"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -945,6 +946,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ORBITING_TRAIT "orbiting"
 /// From the item_scaling element
 #define ITEM_SCALING_TRAIT "item_scaling"
+#define MECH_TRAIT "mech_trait"
 /// Trait given by choking
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
@@ -1088,3 +1090,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define FOOD_JOB_BOTANIST "food_job_botanist"
 ///Trait for rocks to randomly drop ore
 #define FOOD_JOB_MINER "food_job_miner"
+#define GLUED_ITEM_TRAIT "glued-item"
+#define TRAIT_BELT_SATCHEL "belt_satchel"
+
+/// One can breath under water, you get me?
+#define TRAIT_WATER_BREATHING "water_breathing"
+
+/// Do IPC's dream of doomsday? The answer is yes
+#define TRAIT_ROBOT_CAN_BLEED "robots_can_bleed"

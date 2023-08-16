@@ -21,6 +21,8 @@
 		if(istext(loadout))
 			loadout = _text2path(loadout)
 		save_loadout[loadout] = entry
+
+	alt_job_titles = save_data["alt_job_titles"]
 	loadout_list = sanitize_loadout_list(save_loadout)
 
 	if(needs_update >= 0)
@@ -36,10 +38,13 @@
 /datum/preferences/proc/save_character_monkestation(list/save_data)
 	save_data["loadout_list"] = loadout_list
 	save_data["modular_version"] = MODULAR_SAVEFILE_VERSION_MAX
+	save_data["alt_job_titles"] = alt_job_titles
 
 /datum/preferences/proc/save_preferences_monkestation()
 	savefile.set_entry("channel_volume", channel_volume)
 	savefile.set_entry("saved_tokens", saved_tokens)
+	if(token_month)
+		savefile.set_entry("token_month", token_month)
 
 /datum/preferences/proc/load_preferences_monkestation()
 	channel_volume = savefile.get_entry("channel_volume", channel_volume)
@@ -47,3 +52,6 @@
 
 	saved_tokens = savefile.get_entry("saved_tokens", saved_tokens)
 	saved_tokens = SANITIZE_LIST(saved_tokens)
+
+	token_month = savefile.get_entry("token_month", token_month)
+

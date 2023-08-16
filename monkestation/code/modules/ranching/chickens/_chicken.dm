@@ -1,4 +1,4 @@
-/mob/living/simple_animal/proc/pass_stats(atom/child)
+/mob/living/basic/proc/pass_stats(atom/child)
 	return
 /mob/living/simple_animal/chick
 	name = "\improper chick"
@@ -40,7 +40,7 @@
 	///How close to being an adult is this chicken
 	var/amount_grown = 0
 	///What type of chicken is this?
-	var/grown_type = /mob/living/simple_animal/chicken
+	var/grown_type = /mob/living/basic/chicken
 	///Glass chicken exclusive:what reagent were the eggs filled with?
 	var/list/glass_egg_reagent = list()
 	///Stone Chicken Exclusive: what ore type is in the eggs?
@@ -53,11 +53,11 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/chick/proc/assign_chick_icon(mob/living/simple_animal/chicken/chicken_type)
+/mob/living/simple_animal/chick/proc/assign_chick_icon(mob/living/basic/chicken/chicken_type)
 	if(!chicken_type) // do we have a grown type?
 		return
 
-	var/mob/living/simple_animal/chicken/hatched_type = new chicken_type(src)
+	var/mob/living/basic/chicken/hatched_type = new chicken_type(src)
 	icon_state = "chick_[hatched_type.icon_suffix]"
 	held_state = "chick_[hatched_type.icon_suffix]"
 	icon_living = "chick_[hatched_type.icon_suffix]"
@@ -73,14 +73,14 @@
 		if(amount_grown >= 100)
 			if(!grown_type)
 				return
-			var/mob/living/simple_animal/chicken/new_chicken = new grown_type(src.loc)
+			var/mob/living/basic/chicken/new_chicken = new grown_type(src.loc)
 			new_chicken.Friends = src.friends
 			new_chicken.age += rand(1,10) //add a bit of age to each chicken causing staggered deaths
-			if(istype(new_chicken, /mob/living/simple_animal/chicken/glass))
+			if(istype(new_chicken, /mob/living/basic/chicken/glass))
 				for(var/list_item in glass_egg_reagent)
 					new_chicken.glass_egg_reagents.Add(list_item)
 
-			if(istype(new_chicken, /mob/living/simple_animal/chicken/stone))
+			if(istype(new_chicken, /mob/living/basic/chicken/stone))
 				if(production_type)
 					new_chicken.production_type = production_type
 			qdel(src)
@@ -97,7 +97,7 @@
 	..()
 	amount_grown = 0
 
-/mob/living/simple_animal/chicken
+/mob/living/basic/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
 	gender = FEMALE
@@ -111,11 +111,7 @@
 	icon_dead = "dead_state"
 	held_state = "chicken_white"
 
-	speak_chance = 2
-	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
-	emote_hear = list("clucks.")
-	emote_see = list("pecks at the ground.","flaps its wings viciously.")
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -125,10 +121,9 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	footstep_type = FOOTSTEP_MOB_CLAW
 
 	density = FALSE
-	turns_per_move = 3
+	speed = 1.1
 	butcher_results = list(/obj/item/food/meat/slab/chicken = 2)
 	worn_slot_flags = ITEM_SLOT_HEAD
 	can_be_held = TRUE
@@ -139,10 +134,11 @@
 	egg_type = /obj/item/food/egg
 	mutation_list = list(/datum/mutation/ranching/chicken/spicy, /datum/mutation/ranching/chicken/brown)
 
-/mob/living/simple_animal/chicken/Initialize(mapload)
+/mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
+
 	AddComponent(/datum/component/mutation, mutation_list, TRUE)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	if(prob(40))
@@ -165,7 +161,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/mob/living/simple_animal/chicken/proc/assign_chicken_icon()
+/mob/living/basic/chicken/proc/assign_chicken_icon()
 	if(!icon_suffix) // should never be the case but if so default to the first set of icons
 		return
 	var/starting_prefix = "chicken"
@@ -176,23 +172,23 @@
 	icon_living = "[starting_prefix]_[icon_suffix]"
 	icon_dead = "dead_[icon_suffix]"
 
-/mob/living/simple_animal/chicken/update_overlays()
+/mob/living/basic/chicken/update_overlays()
 	. = ..()
 	if(is_marked)
 		.+= mutable_appearance('monkestation/icons/effects/ranching.dmi', "marked", FLOAT_LAYER, plane = src.plane)
 
-/mob/living/simple_animal/chicken/proc/add_visual(method)
+/mob/living/basic/chicken/proc/add_visual(method)
 	if(applied_visual)
 		return
 	applied_visual = mutable_appearance('monkestation/icons/effects/ranching_text.dmi', "chicken_[method]", FLOAT_LAYER, plane = src.plane)
 	add_overlay(applied_visual)
 	addtimer(CALLBACK(src, PROC_REF(remove_visual)), 3 SECONDS)
 
-/mob/living/simple_animal/chicken/proc/remove_visual()
+/mob/living/basic/chicken/proc/remove_visual()
 	cut_overlay(applied_visual)
 	applied_visual = null
 
-/mob/living/simple_animal/chicken/pass_stats(atom/child)
+/mob/living/basic/chicken/pass_stats(atom/child)
 	var/obj/item/food/egg/layed_egg = child
 
 	layed_egg.Friends = src.Friends
@@ -216,11 +212,11 @@
 			flop_animation(layed_egg)
 			layed_egg.desc = "You can hear pecking from the inside of this seems it may hatch soon."
 
-/mob/living/simple_animal/chicken/death(gibbed)
+/mob/living/basic/chicken/death(gibbed)
 	Friends = null
 	..()
 
-/mob/living/simple_animal/chicken/Destroy()
+/mob/living/basic/chicken/Destroy()
 	Friends = null
 	consumed_food = null
 	consumed_reagents = null
@@ -231,12 +227,12 @@
 	disliked_foods = null
 	return ..()
 
-/mob/living/simple_animal/chicken/AltClick(mob/user)
+/mob/living/basic/chicken/AltClick(mob/user)
 	. = ..()
 	is_marked = !is_marked
 	update_appearance()
 
-/mob/living/simple_animal/chicken/attack_hand(mob/living/carbon/human/user)
+/mob/living/basic/chicken/attack_hand(mob/living/carbon/human/user)
 	..()
 	if(stat == DEAD)
 		return
@@ -246,7 +242,7 @@
 	else if(!(user.istate & ISTATE_HARM) && !likes_pets)
 		adjust_happiness(-1, user)
 
-/mob/living/simple_animal/chicken/attackby(obj/item/given_item, mob/user, params)
+/mob/living/basic/chicken/attackby(obj/item/given_item, mob/user, params)
 	if(istype(given_item, /obj/item/food)) //feedin' dem chickens
 		if(!stat && current_feed_amount <= 3 )
 			feed_food(given_item, user)
@@ -260,12 +256,12 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/proc/set_friendship(new_friend, amount = 1)
+/mob/living/basic/chicken/proc/set_friendship(new_friend, amount = 1)
 	if(!Friends[new_friend])
 		Friends[new_friend] = 0
 	Friends[new_friend] += amount
 
-/mob/living/simple_animal/chicken/proc/feed_food(obj/item/given_item, mob/user)
+/mob/living/basic/chicken/proc/feed_food(obj/item/given_item, mob/user)
 	handle_happiness_changes(given_item, user)
 	if(user)
 		var/feedmsg = "[user] feeds [given_item] to [name]! [pick(feedMessages)]"
@@ -276,7 +272,7 @@
 	current_feed_amount ++
 	total_times_eaten ++
 
-/mob/living/simple_animal/chicken/proc/eat_feed(obj/effect/chicken_feed/eaten_feed)
+/mob/living/basic/chicken/proc/eat_feed(obj/effect/chicken_feed/eaten_feed)
 	if(eaten_feed.held_reagents.len)
 		for(var/datum/reagent/listed_reagent in eaten_feed.held_reagents)
 			listed_reagent.feed_interaction(src, listed_reagent.volume)
@@ -303,7 +299,7 @@
 	eggs_left += rand(1, 3)
 	qdel(eaten_feed)
 
-/mob/living/simple_animal/chicken/proc/handle_happiness_changes(obj/given_item, mob/user)
+/mob/living/basic/chicken/proc/handle_happiness_changes(obj/given_item, mob/user)
 	for(var/datum/reagent/reagent in given_item.reagents.reagent_list)
 		if(reagent in happy_chems && max_happiness_per_generation >= (happy_chems[reagent.type] * reagent.volume))
 			var/liked_value = happy_chems[reagent.type]
@@ -334,7 +330,7 @@
 		var/disliked_value = disliked_foods[placeholder_food_item.type]
 		adjust_happiness(-disliked_value, user)
 
-/mob/living/simple_animal/chicken/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
+/mob/living/basic/chicken/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
 	. = ..()
 	if(speaker != src && !radio_freq && !stat)
 		if (speaker in Friends)
@@ -342,7 +338,7 @@
 			speech_buffer += speaker
 			speech_buffer += lowertext(html_decode(message))
 
-/mob/living/simple_animal/chicken/proc/handle_speech()
+/mob/living/basic/chicken/proc/handle_speech()
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = speech_buffer[2] // What did they say?
@@ -362,7 +358,6 @@
 
 			else if (findtext(phrase, "stay"))
 				if(ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] == who)
-					AIStatus = AI_STATUS_ON
 					ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] = null
 					SSmove_manager.stop_looping(src)
 
@@ -370,7 +365,7 @@
 				if (Friends[who] >= CHICKEN_FRIENDSHIP_ATTACK)
 					for (var/mob/living/target in view(7,src)-list(src,who))
 						if (findtext(phrase, lowertext(target.name)))
-							if (istype(target, /mob/living/simple_animal/chicken))
+							if (istype(target, /mob/living/basic/chicken))
 								return
 							else if((!Friends[target] || Friends[target] < 1))
 								if(ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER])
@@ -379,7 +374,7 @@
 						break
 		speech_buffer = list()
 
-/mob/living/simple_animal/chicken/Life()
+/mob/living/basic/chicken/Life()
 	. =..()
 	if(!.)
 		return
@@ -452,11 +447,11 @@
 	else
 		birthed.grown_type = layer_hen_type //if no possible mutations default to layer hen type
 
-	if(birthed.grown_type == /mob/living/simple_animal/chicken/glass)
+	if(birthed.grown_type == /mob/living/basic/chicken/glass)
 		for(var/list_item in src.reagents.reagent_list)
 			birthed.glass_egg_reagent.Add(list_item)
 
-	if(birthed.grown_type == /mob/living/simple_animal/chicken/stone)
+	if(birthed.grown_type == /mob/living/basic/chicken/stone)
 		birthed.production_type = src.production_type
 
 	birthed.assign_chick_icon(birthed.grown_type)
@@ -471,17 +466,14 @@
 			visible_message("[src] absorbs the nearby [temp.name] into itself.")
 			qdel(temp)
 
-/mob/living/simple_animal/chicken/turkey
+/mob/living/basic/chicken/turkey
 	name = "\improper turkey"
 	desc = "it's that time again."
 	breed_name = null
 	icon_state = "turkey_plain"
 	icon_living = "turkey_plain"
 	icon_dead = "turkey_plain_dead"
-	speak = list("Gobble!","GOBBLE GOBBLE GOBBLE!","Cluck.")
 	speak_emote = list("clucks","gobbles")
-	emote_hear = list("gobbles.")
-	emote_see = list("pecks at the ground.","flaps its wings viciously.")
 	density = FALSE
 	health = 15
 	maxHealth = 15
@@ -494,17 +486,17 @@
 	mutation_list = list()
 
 
-/mob/living/simple_animal/chicken/turkey/LateInitialize() //reset this as regular chickens override
+/mob/living/basic/chicken/turkey/LateInitialize() //reset this as regular chickens override
 	. = ..()
 	icon_state = "turkey_plain"
 	icon_living = "turkey_plain"
 	icon_dead = "turkey_plain_dead"
 
-/mob/living/simple_animal/chicken/hen/LateInitialize()
+/mob/living/basic/chicken/hen/LateInitialize()
 	.=..()
 	gender = FEMALE
 
-/mob/living/simple_animal/chicken/proc/adjust_happiness(amount, atom/source, natural_cause = FALSE)
+/mob/living/basic/chicken/proc/adjust_happiness(amount, atom/source, natural_cause = FALSE)
 	happiness += amount
 	if(amount > 0)
 		max_happiness_per_generation -= amount

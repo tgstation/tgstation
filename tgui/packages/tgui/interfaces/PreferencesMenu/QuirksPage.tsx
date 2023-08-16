@@ -1,4 +1,4 @@
-import { StatelessComponent } from 'inferno';
+import type { Inferno } from 'inferno';
 import { Box, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
 import { useBackend, useLocalState } from '../../backend';
@@ -112,7 +112,7 @@ const QuirkList = (props: {
   );
 };
 
-const StatDisplay: StatelessComponent<{}> = (props) => {
+const StatDisplay: Inferno.StatelessComponent<{}> = (props) => {
   return (
     <Box
       backgroundColor="#eee"

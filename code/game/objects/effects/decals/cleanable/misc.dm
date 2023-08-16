@@ -94,7 +94,7 @@
 	desc = "Jeez. I hope that's not for lunch."
 	icon_state = "greenglow"
 	light_power = 3
-	light_range = 2
+	light_outer_range = 2
 	light_color = LIGHT_COLOR_GREEN
 	beauty = -300
 

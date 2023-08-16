@@ -12,7 +12,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
-	mutatelist = list(/obj/item/seeds/corn/snapcorn)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/snap_corn)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/corn
@@ -61,7 +61,7 @@
 	species = "snapcorn"
 	plantname = "Snapcorn Stalks"
 	product = /obj/item/grown/snapcorn
-	mutatelist = null
+	possible_mutations = list()
 	rarity = 10
 
 /obj/item/grown/snapcorn

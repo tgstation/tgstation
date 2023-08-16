@@ -11,7 +11,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/bluespace_banana, /datum/hydroponics/plant_mutation/mime_banana)
 	reagents_add = list(/datum/reagent/consumable/banana = 0.1, /datum/reagent/potassium = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	graft_gene = /datum/plant_gene/trait/slip
 
@@ -99,7 +99,7 @@
 	plantname = "Mimana Tree"
 	product = /obj/item/food/grown/banana/mime
 	growthstages = 4
-	mutatelist = null
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/consumable/nothing = 0.1, /datum/reagent/toxin/mutetoxin = 0.1, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
@@ -127,7 +127,7 @@
 	icon_grow = "banana-grow"
 	plantname = "Bluespace Banana Tree"
 	product = /obj/item/food/grown/banana/bluespace
-	mutatelist = null
+	possible_mutations = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02, /datum/reagent/liquid_dark_matter = 0.2)
 	rarity = 30

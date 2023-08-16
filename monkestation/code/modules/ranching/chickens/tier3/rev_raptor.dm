@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/rev_raptor
+/mob/living/basic/chicken/rev_raptor
 	icon_suffix = "rev_raptor"
 
 	breed_name = "Revolutionary Raptor"
@@ -8,7 +8,8 @@
 	ai_controller = /datum/ai_controller/chicken/hostile
 	health = 150
 	maxHealth = 100
-	harm_intent_damage = 6
+	melee_damage_upper = 6
+	melee_damage_lower = 2
 	obj_damage = 10
 
 	unique_ability = CHICKEN_REV
@@ -20,4 +21,4 @@
 	name = "Revolutionary Egg"
 	icon_state = "rev_raptor"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/rev_raptor
+	layer_hen_type = /mob/living/basic/chicken/rev_raptor

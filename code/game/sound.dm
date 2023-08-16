@@ -25,8 +25,14 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_MOB_SOUNDS,
 ))
 
+
 /proc/guess_mixer_channel(soundin)
-	var/sound_text_string = "[soundin]"
+	var/sound_text_string
+	if(istype(soundin, /sound))
+		var/sound/bleh = soundin
+		sound_text_string = "[bleh.file]"
+	else
+		sound_text_string = "[soundin]"
 	if(findtext(sound_text_string, "effects/"))
 		return CHANNEL_SOUND_EFFECTS
 	if(findtext(sound_text_string, "machines/"))

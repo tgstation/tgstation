@@ -36,6 +36,7 @@
 		CRASH("[type] tried to create an item, but failed. It's item type is [item_type].")
 
 	cast_on.put_in_hands(created, del_on_fail = TRUE)
+	post_created(cast_on, created) //monkestation edit: im just gonna call this here
 	return ..()
 
 /// Instantiates the item we're conjuring and returns it.

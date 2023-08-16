@@ -5,12 +5,12 @@
 	base_icon_state = "durand"
 	movedelay = 4
 	max_integrity = 400
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_durand
 	max_temperature = 30000
 	force = 40
 	destruction_sleep_duration = 40
 	exit_delay = 40
+	encumbrance_gap = 2
 	wreckage = /obj/structure/mecha_wreckage/durand
 	mech_type = EXOSUIT_MODULE_DURAND
 	max_equip_by_category = list(
@@ -163,7 +163,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	max_integrity = 10000
 	anchored = TRUE
 	light_system = MOVABLE_LIGHT
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_power = 5
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 	light_on = FALSE

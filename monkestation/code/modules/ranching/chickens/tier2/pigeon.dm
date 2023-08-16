@@ -1,4 +1,4 @@
-/mob/living/simple_animal/chicken/pigeon
+/mob/living/basic/chicken/pigeon
 	icon_suffix = "pigeon"
 
 	breed_name_male = "Pigeon"
@@ -10,11 +10,11 @@
 
 	book_desc = "Message from Nano-Transen: These pigeons are totally real, and not spying devices that will listen in on your conversations for the purpose of union-busting."
 
-/mob/living/simple_animal/chicken/pigeon/Initialize(mapload)
+/mob/living/basic/chicken/pigeon/Initialize(mapload)
 	. = ..()
 	egg_radio = new /obj/item/radio/pigeon/egg_radio(src)
 
-/mob/living/simple_animal/chicken/pigeon/Destroy()
+/mob/living/basic/chicken/pigeon/Destroy()
 	. = ..()
 	egg_radio = null
 
@@ -31,7 +31,7 @@
 	name = "Pigeon Egg"
 	icon_state = "pigeon"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/pigeon
+	layer_hen_type = /mob/living/basic/chicken/pigeon
 
 	///the radio inside the egg
 	var/obj/item/radio/pigeon/egg_radio = null

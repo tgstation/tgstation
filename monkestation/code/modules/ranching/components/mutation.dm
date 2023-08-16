@@ -18,7 +18,7 @@
 /datum/component/mutation/proc/trigger_mutation(atom/source, turf/source_turf, passes_minimum_checks)
 	SIGNAL_HANDLER
 
-	var/mob/living/simple_animal/parent_animal = parent
+	var/mob/living/basic/parent_animal = parent
 	if(produces_eggs)
 		var/obj/item/food/egg/layed_egg
 		if(!passes_minimum_checks)
@@ -51,8 +51,8 @@
 
 /datum/component/mutation/proc/finished_gestate(passes_minimum_checks)
 	var/turf/open/source_turf = get_turf(parent)
-	var/mob/living/simple_animal/parent_animal = parent
+	var/mob/living/basic/parent_animal = parent
 	if(!passes_minimum_checks)
-		var/mob/living/simple_animal/child = new parent_animal.child_type(source_turf)
+		var/mob/living/basic/child = new parent_animal.child_type(source_turf)
 
 		parent_animal.pass_stats(child)

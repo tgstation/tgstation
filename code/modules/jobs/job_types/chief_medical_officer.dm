@@ -60,6 +60,7 @@
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/extrapolator = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
@@ -72,6 +73,7 @@
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	implants = list(/obj/item/implant/mindshield)
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = list(

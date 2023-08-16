@@ -62,7 +62,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "k" = (
-/obj/machinery/computer/arcade/battle,
+/obj/machinery/computer/operating,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "l" = (
@@ -96,6 +96,11 @@
 /area/ruin/powered/golem_ship)
 "r" = (
 /obj/machinery/computer/shuttle,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"s" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/table/optable,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "t" = (
@@ -133,7 +138,9 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "y" = (
-/obj/machinery/computer/arcade/orion_trail,
+/obj/machinery/computer/arcade/orion_trail{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (
@@ -155,6 +162,7 @@
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
+/obj/item/stock_parts/manipulator,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "B" = (
@@ -201,6 +209,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
+"J" = (
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "K" = (
 /obj/machinery/door/airlock/titanium,
 /obj/structure/fans/tiny,
@@ -230,6 +242,15 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"R" = (
+/obj/item/borg/upgrade/modkit/trigger_guard,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"S" = (
+/obj/structure/table/wood,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "T" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/titanium,
@@ -248,6 +269,12 @@
 /obj/machinery/door/airlock/titanium,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"Z" = (
+/obj/machinery/computer/arcade/battle{
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -329,14 +356,14 @@ a
 a
 a
 b
-L
+s
 l
 j
 l
 l
 j
 l
-l
+Z
 b
 a
 a
@@ -347,7 +374,7 @@ b
 b
 b
 b
-l
+S
 l
 b
 l
@@ -455,7 +482,7 @@ b
 c
 I
 b
-l
+J
 l
 O
 l
@@ -473,7 +500,7 @@ b
 d
 f
 j
-l
+R
 l
 l
 l

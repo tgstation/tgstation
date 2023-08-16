@@ -10,7 +10,7 @@
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_range = 8
+	light_outer_range = 8
 	light_power = 2
 	light_on = FALSE
 	///list of headlight colors we use to pick through when we have party mode due to emag

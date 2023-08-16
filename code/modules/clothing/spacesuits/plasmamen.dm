@@ -53,7 +53,7 @@
 	armor_type = /datum/armor/space_plasmaman
 	resistance_flags = FIRE_PROOF
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_range = 4
+	light_outer_range = 4
 	light_on = FALSE
 	var/helmet_on = FALSE
 	var/smile = FALSE

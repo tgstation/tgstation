@@ -78,10 +78,10 @@
 	icon_state = "[base_state][density ? null : "open"]"
 
 	if(hasPower() && unres_sides)
-		set_light(l_range = 2, l_power = 1)
+		set_light(l_outer_range = 2, l_power = 1)
 		return
 
-	set_light(l_range = 0)
+	set_light(l_outer_range = 0)
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()

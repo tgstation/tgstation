@@ -88,24 +88,25 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	force = 5
-	throwforce = 30
+	throwforce = 15 //monkestation edit: from 30 to 15
+	throw_speed = 1 //monkestation edit
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
-		force_multiplier = 5, \
+		force_multiplier = 4, \
 		icon_wielded = "[base_icon_state]1", \
 		attacksound = SFX_SPARKS, \
-	)
+	) //monkestation edit: changed force_multiplier from 5 to 4
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
-	target.Stun(1.5 SECONDS)
+	target.electrocute_act(65, src, flags = SHOCK_NOGLOVES | SHOCK_ILLUSION) //monkestation edit: replaces Stun(1.5 SECONDS) with this
 	target.Knockdown(10 SECONDS)
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)

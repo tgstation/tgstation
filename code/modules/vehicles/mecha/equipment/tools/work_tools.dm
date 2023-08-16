@@ -10,6 +10,7 @@
 	energy_drain = 10
 	tool_behaviour = TOOL_RETRACTOR
 	range = MECHA_MELEE
+	movedelay = 0.2
 	toolspeed = 0.8
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_RIPLEY
@@ -136,6 +137,7 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them! This time for real!"
 	killer_clamp = TRUE
+	movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake//harmless fake for pranks
 	desc = "They won't know what clamped them!"
@@ -151,6 +153,7 @@
 	energy_drain = 0
 	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED
+	movedelay = 0.2
 	mech_flags = EXOSUIT_MODULE_WORKING
 	///Minimum amount of reagent needed to activate.
 	var/required_amount = 80
@@ -227,6 +230,7 @@
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MECHA_MELEE|MECHA_RANGED
+	movedelay = 0.4
 	item_flags = NO_MAT_REDEMPTION
 	///determines what we'll so when clicking on a turf
 	var/mode = MODE_DECONSTRUCT

@@ -65,7 +65,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	network = list("rd","ordnance")
 	use_power = NO_POWER_USE //Test site is an unpowered area
 	invuln = TRUE
-	light_range = 10
+	light_outer_range = 10
 	start_active = TRUE
 
 /obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/old_assembly)

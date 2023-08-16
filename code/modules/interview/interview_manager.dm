@@ -18,7 +18,19 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	/// Ckeys which are currently in the cooldown system, they will be unable to create new interviews
 	var/list/cooldown_ckeys = list()
 
+
+/datum/interview_manager/New()
+	. = ..()
+	var/json_file = file("data/approved_keys.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	approved_ckeys = json
+
 /datum/interview_manager/Destroy(force, ...)
+	SSpersistence.save_keys(approved_ckeys)
 	QDEL_LIST(open_interviews)
 	QDEL_LIST(interview_queue)
 	QDEL_LIST(closed_interviews)

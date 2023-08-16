@@ -32,7 +32,7 @@
 	if(!length(shoveables))
 		return
 	var/mob/living/shove_me = pick(shoveables)
-	target.UnarmedAttack(shove_me, proximity_flag = TRUE, modifiers = list("right" = TRUE))
+	target.UnarmedAttack(shove_me, proximity_flag = TRUE)
 
 /datum/smite/ghost_control/proc/ghost_sit(mob/living/target)
 	if(HAS_TRAIT(target, TRAIT_IMMOBILIZED))

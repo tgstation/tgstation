@@ -71,13 +71,16 @@
 	if(!players)
 		players = GLOB.player_list
 
-	var/sound/sound_to_play = sound(sound)
+	//MONKESTATION EDIT START
+	//var/play/sound_to_play = sound(sound) MONKESTATION EDIT ORIGINAL
 	for(var/mob/target in players)
 		if(!isnewplayer(target) && target.can_hear())
-			sound_to_play.volume = target.client?.prefs.channel_volume["[CHANNEL_VOX]"]
+			//sound_to_play.volume = target.client?.prefs.channel_volume["[CHANNEL_VOX]"] MONKESTATION EDIT ORIGINAL
 			to_chat(target, announcement)
 			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-				SEND_SOUND(target, sound_to_play)
+				//SEND_SOUND(target, sound_to_play) MONKESTATION EDIT ORIGINAL
+				SEND_SOUND(target, sound(sound, volume = target.client?.prefs.channel_volume["[CHANNEL_VOX]"]))
+	//MONKESTATION EDIT END
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)

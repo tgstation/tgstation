@@ -1,8 +1,9 @@
-/mob/living/simple_animal/chicken/wiznerd //No matter what you say Zanden this is staying as wiznerd
+/mob/living/basic/chicken/wiznerd //No matter what you say Zanden this is staying as wiznerd
 	icon_suffix = "wiznerd"
 
 	maxHealth = 150
-	harm_intent_damage = 7
+	melee_damage_upper = 7
+	melee_damage_lower
 	obj_damage = 5
 	ai_controller = /datum/ai_controller/chicken/retaliate
 
@@ -19,7 +20,7 @@
 	name = "Bewitching Egg"
 	icon_state = "wiznerd"
 
-	layer_hen_type = /mob/living/simple_animal/chicken/wiznerd
+	layer_hen_type = /mob/living/basic/chicken/wiznerd
 
 /obj/item/ammo_casing/magic/magic_missle_weak
 	projectile_type = /obj/projectile/magic/magic_missle_weak

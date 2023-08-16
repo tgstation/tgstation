@@ -17,11 +17,11 @@
 	spell_type = /datum/action/cooldown/spell/rod_form
 	category = "Offensive"
 
-/datum/spellbook_entry/disintegrate
+/*/datum/spellbook_entry/disintegrate //monkestation edit: replaced with a pointed version with a different effect
 	name = "Smite"
 	desc = "Charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	spell_type = /datum/action/cooldown/spell/touch/smite
-	category = "Offensive"
+	category = "Offensive"*/
 
 /datum/spellbook_entry/blind
 	name = "Blind"
@@ -76,6 +76,7 @@
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	spell_type = /datum/action/cooldown/spell/pointed/barnyardcurse
 	category = "Offensive"
+	cost = 1 //monkestation edit
 
 /datum/spellbook_entry/splattercasting
 	name = "Splattercasting"
@@ -110,11 +111,11 @@
 	item_path = /obj/item/gun/magic/staff/change
 	category = "Offensive"
 
-/datum/spellbook_entry/item/mjolnir
+/*/datum/spellbook_entry/item/mjolnir //monkestation edit: replaced with the spell summon mjollnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
 	item_path = /obj/item/mjollnir
-	category = "Offensive"
+	category = "Offensive"*/
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"

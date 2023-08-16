@@ -229,6 +229,7 @@
 /obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_starboard"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "qU" = (
@@ -625,6 +626,7 @@
 	port_direction = 8;
 	preferred_direction = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "Ns" = (

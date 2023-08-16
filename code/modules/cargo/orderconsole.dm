@@ -236,6 +236,7 @@
 		return
 
 	var/amount = params["amount"]
+	amount = clamp(amount, 0, 100)
 	for(var/count in 1 to amount)
 		var/obj/item/coupon/applied_coupon
 		for(var/obj/item/coupon/coupon_check in loaded_coupons)
@@ -326,15 +327,63 @@
 				requisition_paper.add_raw_text(requisition_text)
 				requisition_paper.update_appearance()
 
-			if(SSshuttle.supply.getDockedId() == docking_home)
-				SSshuttle.supply.export_categories = get_export_categories()
-				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
-				say("The supply shuttle is departing.")
-				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
+			if(!length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+				if(SSshuttle.supply.getDockedId() == docking_home)
+					SSshuttle.supply.export_categories = get_export_categories()
+					SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
+					say("The supply shuttle is departing.")
+					usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
+				else
+					usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
+					say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
+					SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			else
-				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
-				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
+				if(!length(GLOB.cargo_launch_points))
+					stack_trace("Erm, we are attempting to launch cargo crates on a map with no cargo landing points")
+					return
+				var/list/goodies_by_buyer = list()
+				for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
+
+					var/price = order.pack.get_cost()
+					if(order.applied_coupon)
+						price *= (1 - order.applied_coupon.discount_pct_off)
+
+					var/datum/bank_account/paying_for_this
+					if(!order.department_destination && order.charge_on_purchase)
+						if(order.paying_account) //Someone paid out of pocket
+							var/list/current_buyer_orders = goodies_by_buyer[order.paying_account] // so we can access the length a few lines down
+							if(!order.pack.goody)
+								price *= 1.1 //TODO make this customizable by the quartermaster
+							else if(LAZYLEN(current_buyer_orders) == 5)
+								price += 700
+								paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing 700 credit S&H fee.")
+						else
+							paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
+						if(paying_for_this)
+							if(!paying_for_this.adjust_money(-price, "Cargo: [order.pack.name]"))
+								if(order.paying_account)
+									paying_for_this.bank_card_talk("Cargo order #[order.id] rejected due to lack of funds. Credits required: [price]")
+								continue
+
+					if(order.paying_account)
+						paying_for_this = order.paying_account
+						if(order.pack.goody)
+							LAZYADD(goodies_by_buyer[order.paying_account], order)
+						var/reciever_message = "Cargo order #[order.id] has been launched towards cargo."
+						if(order.charge_on_purchase)
+							reciever_message += " [price] credits have been charged to your bank account"
+						paying_for_this.bank_card_talk(reciever_message)
+						SSeconomy.track_purchase(paying_for_this, price, order.pack.name)
+						var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+						cargo.adjust_money(price - order.pack.get_cost()) //Cargo gets the handling fee
+
+					sleep(3 SECONDS)
+					var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
+					var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
+					var/obj/structure/closet/crate/new_atom = order.generate(spawning_turf)
+					SSshuttle.shopping_list -= order
+					var/distance = get_dist(spawning_turf, picked_point)
+					new_atom.throw_at(picked_point, distance + 4, 2)
 
 			. = TRUE
 		if("loan")

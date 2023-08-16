@@ -25,7 +25,7 @@
 	item_flags &= ~EXAMINE_SKIP
 
 /obj/item/clothing/head/wig/update_icon_state()
-	var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair_style = GLOB.roundstart_hairstyles_list[hairstyle]
 	if(hair_style)
 		icon = hair_style.icon
 		icon_state = hair_style.icon_state
@@ -37,7 +37,7 @@
 	if(isinhands)
 		return
 
-	var/datum/sprite_accessory/hair = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair = GLOB.roundstart_hairstyles_list[hairstyle]
 	if(!hair)
 		return
 
@@ -49,7 +49,7 @@
 	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
-	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
+	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.roundstart_hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
 	if(!user.can_perform_action(src))
 		return
@@ -88,7 +88,7 @@
 		update_appearance()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
-	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
+	hairstyle = pick(GLOB.roundstart_hairstyles_list - "Bald") //Don't want invisible wig
 	add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
 	. = ..()
 
@@ -100,7 +100,7 @@
 	custom_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
-	hairstyle = pick(GLOB.hairstyles_list - "Bald")
+	hairstyle = pick(GLOB.roundstart_hairstyles_list - "Bald")
 	. = ..()
 
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)

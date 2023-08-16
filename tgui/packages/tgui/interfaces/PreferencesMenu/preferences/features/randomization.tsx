@@ -54,7 +54,7 @@ export const random_hardcore: FeatureToggle = {
 };
 
 export const random_name: Feature<RandomSetting> = {
-  name: 'Random name',
+  name: 'Random Name',
   component: (props, context) => {
     return (
       <RandomizationButton

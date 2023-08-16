@@ -5,6 +5,7 @@ import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from '../c
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { flow } from 'common/fp';
+import type { InfernoNode } from 'inferno';
 
 type Recipe = {
   ref: unknown | null;
@@ -169,7 +170,7 @@ const Multipliers = (props: MultiplierProps, context) => {
 
   const multipliers = [5, 10, 25];
 
-  const finalResult: JSX.Element[] = [];
+  const finalResult: InfernoNode[] = [];
 
   for (const multiplier of multipliers) {
     if (maxM >= multiplier) {

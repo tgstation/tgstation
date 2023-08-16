@@ -2,7 +2,15 @@
 
 /obj/projectile/bullet/n762
 	name = "7.62x38mmR bullet"
-	damage = 60
+	damage = 30
+	ricochets_max = 1
+	ricochet_chance = 50
+	ricochet_auto_aim_angle = 10
+	ricochet_auto_aim_range = 3
+	wound_bonus = -20
+	bare_wound_bonus = 10
+	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+	embed_falloff_tile = -4
 
 // .50AE (Desert Eagle)
 

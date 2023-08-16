@@ -24,7 +24,7 @@
 	if(!buyers_preferences.has_coins(item_cost))
 		to_chat(buyer, span_warning("You don't have the funds to buy the [name]"))
 		return FALSE
-	buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost,donator_multipler = FALSE)
+	buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
 
 	if(!one_time_buy)
 		finalize_purchase(buyer)
@@ -41,7 +41,7 @@
 	if(!buyer?.prefs)
 		return FALSE
 	if(!buyer.prefs.inventory[item_path])
-		buyer.prefs.inventory[item_path] = 1
+		buyer.prefs.inventory += item_path
 		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
 			INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
 			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
@@ -51,11 +51,10 @@
 			return FALSE
 		qdel(query_add_gear_purchase)
 	else
-		buyer.prefs.inventory[item_path] += 1
-		var/amount = buyer.prefs.inventory[item_path]
+		buyer.prefs.inventory += item_path
 		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
-			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = amount))
+			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
 		if(!query_add_gear_purchase.Execute())
 			to_chat(buyer, fail_message)
 			qdel(query_add_gear_purchase)

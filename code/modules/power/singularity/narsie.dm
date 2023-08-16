@@ -18,8 +18,8 @@
 	plane = MASSIVE_OBJ_PLANE
 	light_color = COLOR_RED
 	light_power = 0.7
-	light_range = 15
-	light_range = 6
+	light_outer_range = 15
+	light_outer_range = 6
 	move_resist = INFINITY
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 	pixel_x = -236

@@ -236,7 +236,7 @@
 	icon_state = "uranium"
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 	max_integrity = 300
-	light_range = 2
+	light_outer_range = 2
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"

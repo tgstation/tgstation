@@ -9,8 +9,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("telepathically cries")
-	speed = 2
-	move_to_delay = 2
+	speed = 3
+	move_to_delay = 3
 	projectiletype = /obj/projectile/temp/basilisk/ice
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
@@ -53,7 +53,7 @@
 	speed = 1
 	pixel_speed_multiplier = 0.25
 	range = 200
-	temperature = -75
+	temperature = -50
 	slowdown = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()

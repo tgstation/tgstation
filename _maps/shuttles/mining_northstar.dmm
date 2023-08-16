@@ -10,13 +10,20 @@
 	port_direction = 8;
 	shuttle_id = "mining"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "c" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/sign/warning/xeno_mining/directional/north,
-/obj/machinery/light/small/red/directional/north,
+/obj/machinery/light/directional/north,
+/obj/item/clothing/mask/gas,
+/obj/item/wrench,
+/obj/item/crowbar/red,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "d" = (
@@ -102,7 +109,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown,
-/obj/machinery/light/small/red/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/mining)
 "j" = (
@@ -124,10 +131,9 @@
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 5
 	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
+/obj/machinery/smartfridge/survival_pod/preloaded{
+	pixel_y = 29
 	},
-/obj/machinery/light/small/red/directional/north,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "m" = (
@@ -156,15 +162,18 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/brown/end,
-/obj/machinery/light/small/red/directional/south,
+/obj/machinery/light/directional/south,
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_y = -28
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "F" = (
 /obj/structure/table/reinforced,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
 /obj/item/wrench,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/crowbar/red,
-/obj/item/clothing/mask/gas,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "G" = (

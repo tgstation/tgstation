@@ -366,7 +366,7 @@
 /datum/reagent/medicine/c2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustToxic(-round(chems.get_reagent_amount(src.type) * 2))
+		mytray.adjust_toxic(-round(chems.get_reagent_amount(src.type) * 2))
 
 #define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
@@ -466,6 +466,10 @@
 	if(!iscarbon(exposed_mob))
 		return
 	var/mob/living/carbon/carbies = exposed_mob
+	if(ishuman(carbies))
+		var/mob/living/carbon/human/humans = carbies
+		if(istype(humans.dna.species, /datum/species/ipc))
+			return
 	if(carbies.stat == DEAD)
 		show_message = 0
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
