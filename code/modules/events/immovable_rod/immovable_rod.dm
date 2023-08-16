@@ -182,6 +182,7 @@
 		SSexplosions.highturf += clong
 		return ..()
 
+	// If we Bump into the tram front or back, push the tram. Otherwise smash the object as usual.
 	if(isobj(clong))
 		if(istramwall(clong) && !special_target)
 			switch(dir)
@@ -299,7 +300,8 @@
 	SSmove_manager.move_towards(src, destination_turf)
 
 /**
- * Rod will push the tram if it's travelling parallel east/west.
+ * Rod will push the tram to a landmark if it hits the tram from the front/back
+ * while flying parallel.
  *
  * Arguments:
  * * clong - the object the rod hits (in this case, the tram)
