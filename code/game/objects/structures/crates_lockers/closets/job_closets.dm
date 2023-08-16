@@ -11,7 +11,6 @@
 		/obj/item/clothing/head/hats/tophat = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
-		/obj/item/clothing/under/rank/civilian/bartender = 2,
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/head/soft/black = 2,
 		/obj/item/clothing/shoes/sneakers/black = 2,
