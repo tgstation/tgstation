@@ -169,7 +169,15 @@
 		if(istype(head, /obj/item/clothing/mask))
 			used_head_icon = 'icons/mob/clothing/mask.dmi'
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = 2, default_icon_file = used_head_icon)
-		head_overlay.pixel_y += head_y_shift
+
+		var/used_list_index = dir
+		if(dir == WEST)
+			used_list_index = 4
+		if(dir == EAST)
+			used_list_index = 3
+
+		head_overlay.pixel_y += head_y_shift[used_list_index]
+		head_overlay.pixel_x += head_x_shift[used_list_index]
 
 		possession_overlays[2] = head_overlay
 

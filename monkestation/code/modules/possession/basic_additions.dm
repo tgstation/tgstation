@@ -7,24 +7,32 @@
 
 	/// OFFSET SECTION - This is controllable by admins if they want
 	///the shifted y offset of the left hand
-	var/l_y_shift = 0
+	var/list/l_y_shift
 	///the shifted y offset of the right hand
-	var/r_y_shift = 0
+	var/list/r_y_shift
 	///the shifted x offset of the right hand
-	var/r_x_shift = 0
+	var/list/r_x_shift
 	///the shifted x offset of the left hand
-	var/l_x_shift = 0
+	var/list/l_x_shift
 	/// base amount of pixels this offsets upwards for each set of additional arms past 2
 	var/base_vertical_shift = 0
 	///the shifted y offset of the head
-	var/head_y_shift = 0
+	var/list/head_y_shift
 	/// the shifted x offset of the head
-	var/head_x_shift = 0
+	var/list/head_x_shift
 
 /mob/living/basic/proc/create_overlay_index()
 	var/list/overlays[1]
 	possession_overlays = overlays
 	return
+
+/mob/living/basic/proc/populate_shift_list() // we can add manual offsets as we create them overtime
+	l_y_shift = list(0, 0, 0, 0)
+	r_y_shift = list(0, 0, 0, 0)
+	r_x_shift = list(0, 0, 0, 0)
+	l_x_shift = list(0, 0, 0, 0)
+	head_y_shift = list(0, 0, 0, 0)
+	head_x_shift = list(0, 0, 0, 0)
 
 /mob/living/basic/regenerate_icons()
 	update_held_items()
@@ -47,15 +55,21 @@
 							observers = null
 							break
 
+		var/used_list_index = dir
+		if(dir == WEST)
+			used_list_index = 4
+		if(dir == EAST)
+			used_list_index = 3
+
 		var/icon_file = I.lefthand_file
-		var/x_offset = l_x_shift
-		var/y_offset = l_y_shift
+		var/x_offset = l_x_shift[used_list_index]
+		var/y_offset = l_y_shift[used_list_index]
 		var/vertical_offset = 0
 		vertical_offset = CEILING(get_held_index_of_item(I) / 2, 1) - 1
 		if(get_held_index_of_item(I) % 2 == 0)
 			icon_file = I.righthand_file
-			y_offset = r_y_shift
-			x_offset = r_x_shift
+			y_offset = r_y_shift[used_list_index]
+			x_offset = r_x_shift[used_list_index]
 
 		var/mutable_appearance/hand_overlay = I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 		hand_overlay.pixel_y += y_offset  + (vertical_offset * base_vertical_shift)
