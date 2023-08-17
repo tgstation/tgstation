@@ -508,6 +508,7 @@ Moving interrupts
 /obj/structure/carving_block/proc/set_completion(value)
 	if(!current_target)
 		return
+
 	if(!target_appearance_with_filters)
 		target_appearance_with_filters = new(current_target.appearance)
 		// KEEP_APART in case carving block gets KEEP_TOGETHER from somewhere like material texture filters.
@@ -572,53 +573,12 @@ Moving interrupts
 /obj/structure/statue/custom/proc/set_visuals(atom/movable/target)
 	var/icon/statue_icon = icon('icons/blanks/32x32.dmi', "nothing")
 
-	//if(ishuman(target))
-	//	statue_icon = get_flat_existing_human_icon(target)
-	//else
 	for(var/direction in GLOB.cardinals)
 		var/icon/flat_icon = getFlatIcon(target, defdir=direction, no_anim = TRUE)
 		statue_icon.Insert(flat_icon, dir=direction)
 		statue_icon.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
 
 	icon = statue_icon
-
-	//var/finalpath = "[GLOB.picture_log_directory]/[number].png"
-
-/**
-	if(content_ma)
-		QDEL_NULL(content_ma)
-	content_ma = new
-	content_ma.appearance = model_appearance
-	content_ma.pixel_x = 0
-	content_ma.pixel_y = 0
-	content_ma.alpha = 255
-
-	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
-
-	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
-	var/list/overlays_to_remove = list()
-	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
-		var/mutable_appearance/real = new()
-		real.appearance = special_overlay
-		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		overlays_to_remove += real
-	content_ma.overlays -= overlays_to_remove
-
-	var/list/underlays_to_remove = list()
-	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
-		var/mutable_appearance/real = new()
-		real.appearance = special_underlay
-		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			continue
-		underlays_to_remove += realsd
-	content_ma.underlays -= underlays_to_remove
-
-	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
-	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
-	update_content_planes()
-	update_appearance()
-**/
 
 /obj/structure/statue/custom/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
