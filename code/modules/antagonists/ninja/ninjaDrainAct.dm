@@ -337,6 +337,7 @@
 
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	to_chat(src, span_boldwarning("Your circutry suddenly begins heating up!"))
 	if(!do_after(ninja, 2 SECONDS, target = src))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
