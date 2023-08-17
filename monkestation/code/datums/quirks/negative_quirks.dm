@@ -113,3 +113,92 @@
 	if(picked_lockers)
 		return pick(picked_lockers)
 	return FALSE
+
+/datum/quirk/kleptomaniac
+	name = "Kleptomaniac"
+	desc = "The station's just full of free stuff!  Nobody would notice if you just... took it, right?"
+	mob_trait = TRAIT_KLEPTOMANIAC
+	value = -2
+	icon = "bag-shopping"
+
+/datum/quirk/kleptomaniac/add()
+	var/datum/brain_trauma/mild/kleptomania/T = new()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/kleptomaniac/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.cure_trauma_type(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/unstable_ass
+	name = "Unstable Rear"
+	desc = "For reasons unknown, your posterior is unstable and will fall off more often."
+	value = -1
+	icon = "diamond-exclamation"
+	//All effects are handled directly in butts.dm
+
+//IPC PUNISHMENT SYSTEM//
+/datum/quirk/frail/add()
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
+	if(isipc(quirk_holder))
+		human_quirk_holder.physiology.brute_mod *= 1.3
+		human_quirk_holder.physiology.burn_mod *= 1.3
+
+/datum/quirk/frail/post_add()
+	if(isipc(quirk_holder))
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
+
+/datum/quirk/light_drinker/add()
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
+	if(isipc(quirk_holder))
+		human_quirk_holder.physiology.brute_mod *= 1.1
+		human_quirk_holder.physiology.burn_mod *= 1.1
+
+/datum/quirk/light_drinker/post_add()
+	if(isipc(quirk_holder))
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels very slightly weaker."))
+
+/datum/quirk/prosthetic_limb/add()
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
+	if(isipc(quirk_holder))
+		human_quirk_holder.physiology.brute_mod *= 1.15
+		human_quirk_holder.physiology.burn_mod *= 1.15
+
+/datum/quirk/prosthetic_limb/post_add()
+	if(isipc(quirk_holder))
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels slightly weaker."))
+
+/datum/quirk/quadruple_amputee/add() //monkestation addition
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
+	if(isipc(quirk_holder))
+		human_quirk_holder.physiology.brute_mod *= 1.3
+		human_quirk_holder.physiology.burn_mod *= 1.3
+
+/datum/quirk/quadruple_amputee/post_add()
+	if(isipc(quirk_holder)) //monkestation addition
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
+
+/datum/quirk/item_quirk/allergic/add() //monkestation addition
+	if(!iscarbon(quirk_holder))
+		return
+
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
+	if(isipc(quirk_holder))
+		human_quirk_holder.physiology.brute_mod *= 1.3
+		human_quirk_holder.physiology.burn_mod *= 1.3
+
+/datum/quirk/item_quirk/allergic/post_add()
+	if(isipc(quirk_holder)) //monkestation addition
+		to_chat(quirk_holder, span_boldnotice("Your chassis feels frail."))
