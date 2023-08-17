@@ -29,8 +29,8 @@
 	if(!destroy_objects)
 	return
 	for(var/dir in GLOB.cardinals)
-	var/turf/source = get_turf(owner)
-	var/turf/next_turf = get_step(charger, dir)
+		var/turf/source = get_turf(owner)
+		var/turf/next_turf = get_step(charger, dir)
 	if(!istype(next_turf) || !HAS_TRAIT(source, TRAIT_RUSTY))
 		continue
 	if(isclosedturf(next_turf) && HAS_TRAIT(next_turf, TRAIT_RUSTY))
