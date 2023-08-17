@@ -88,7 +88,6 @@
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
-		"receiver",
 		"recorder",
 		"rglass",
 		"roll",
@@ -164,7 +163,6 @@
 	display_name = "Mechanical Exosuits"
 	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
 	design_ids = list(
-		"mech_hydraulic_clamp",
 		"mech_recharger",
 		"mecha_tracking",
 		"mechacontrol",
@@ -178,6 +176,10 @@
 		"ripley_right_leg",
 		"ripley_torso",
 		"ripleyupgrade",
+		"mech_hydraulic_clamp",
+		"mech_radio",
+		"mech_air_tank",
+		"mech_thrusters",
 	)
 
 /datum/techweb_node/mod_basic
@@ -267,6 +269,7 @@
 		"circular_saw",
 		"cybernetic_ears",
 		"cybernetic_eyes",
+		"cybernetic_eyes_moth",
 		"cybernetic_heart",
 		"cybernetic_liver",
 		"cybernetic_lungs",
@@ -443,6 +446,17 @@
 		/datum/experiment/scanning/random/cytology/easy = 1000,
 		/datum/experiment/scanning/points/slime/hard = 5000,
 		/datum/experiment/autopsy/xenomorph = 5000,
+	)
+
+/datum/techweb_node/morphological_theory
+	id = "morphological_theory"
+	display_name = "Anomalous Morphology"
+	description = "Use poorly understood energies to change your body."
+	prereq_ids = list("adv_biotech", "anomaly_research")
+	design_ids = list("polymorph_belt")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(
+		/datum/experiment/scanning/people/novel_organs = 5000,
 	)
 
 /datum/techweb_node/bio_process
@@ -766,16 +780,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = 3000)
-
-/datum/techweb_node/regulated_bluespace
-	id = "regulated_bluespace"
-	display_name = "Regulated Bluespace Research"
-	description = "Bluespace technology using stable and balanced procedures. Required by galactic convention for public use."
-	prereq_ids = list("base")
-	design_ids = list(
-		"spaceship_navigation_beacon",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/unregulated_bluespace
 	id = "unregulated_bluespace"
@@ -1218,6 +1222,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud
@@ -1298,6 +1303,7 @@
 	design_ids = list(
 		"cybernetic_ears_u",
 		"cybernetic_eyes_improved",
+		"cybernetic_eyes_improved_moth",
 		"cybernetic_heart_tier2",
 		"cybernetic_liver_tier2",
 		"cybernetic_lungs_tier2",
@@ -1320,6 +1326,8 @@
 		"cybernetic_ears_xray",
 		"ci-gloweyes",
 		"ci-welding",
+		"ci-gloweyes-moth",
+		"ci-welding-moth",
 		"cybernetic_heart_tier3",
 		"cybernetic_liver_tier3",
 		"cybernetic_lungs_tier3",
@@ -1380,6 +1388,8 @@
 		"ci-thermals",
 		"ci-thrusters",
 		"ci-xray",
+		"ci-thermals-moth",
+		"ci-xray-moth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1897,7 +1907,6 @@
 	prereq_ids = list("adv_mecha")
 	design_ids = list(
 		"mech_rcd",
-		"mech_thrusters",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

@@ -128,6 +128,10 @@
 	var/dwarf_mob = FALSE
 	var/mob/living/carbon/human/stored_mob
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/content_barfer)
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/random/Initialize(mapload)
 	. = ..()
 	if(prob(5))
@@ -149,18 +153,20 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message(span_warning("The skulls on [src] wail in anger as they flee from their dying host!"))
-	var/turf/T = get_turf(src)
-	if(T)
-		if(stored_mob)
-			stored_mob.forceMove(get_turf(src))
-			stored_mob = null
-		else if(from_spawner)
-			new /obj/effect/mob_spawn/corpse/human/charredskeleton(T)
+	if (!isnull(stored_mob))
+		stored_mob = null
+		return ..()
+
+	// We didn't contain a real body so spawn a random one
+	var/turf/our_turf = get_turf(src)
+	if(our_turf)
+		if(from_spawner)
+			new /obj/effect/mob_spawn/corpse/human/charredskeleton(our_turf)
 		else if(dwarf_mob)
-			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(T)
+			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(our_turf)
 		else
-			new /obj/effect/mob_spawn/corpse/human/legioninfested(T)
-	..(gibbed)
+			new /obj/effect/mob_spawn/corpse/human/legioninfested(our_turf)
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
 	from_spawner = TRUE

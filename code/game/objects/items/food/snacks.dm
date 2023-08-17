@@ -519,3 +519,153 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	qdel(sample)
 
 	. = ..()
+
+/obj/item/food/hot_shots
+	name = "\improper Hot Shots"
+	desc = "The ultimate baseball snack. Once you start, it's hard to stop!"
+	icon_state = "hot_shots"
+	trash_type = /obj/item/trash/hot_shots
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("popcorn" = 1, "caramel" = 1, "peanuts" = 1)
+	foodtypes = JUNKFOOD | SUGAR | NUTS
+	junkiness = 25
+	w_class = WEIGHT_CLASS_SMALL
+	grind_results = list(/datum/reagent/consumable/cornoil = 3, /datum/reagent/consumable/caramel = 2)
+
+/obj/item/food/sticko
+	name = "\improper Sticko Classic"
+	desc = "A classic treat for all ages, it's Sticko, the original chocolate-coated biscuit stick! This one's the original (and as some would say, best) flavour: biscuit and milk chocolate."
+	icon_state = "sticko_classic"
+	trash_type = /obj/item/trash/sticko
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/coco = 1,
+	)
+	tastes = list("biscuit" = 1, "chocolate" = 1)
+	junkiness = 25
+	foodtypes = JUNKFOOD | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/sticko/matcha
+	name = "\improper Sticko Matcha"
+	desc = "A classic treat for all ages, it's Sticko, the original chocolate-coated biscuit stick! This one's got matcha flavoured white chocolate as its coating, to evoke feelings of tradition."
+	icon_state = "sticko_matcha"
+	trash_type = /obj/item/trash/sticko/matcha
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/consumable/coco = 1,
+		/datum/reagent/consumable/caramel = 1,
+	)
+	tastes = list("biscuit" = 1, "matcha" = 1)
+
+/obj/item/food/sticko/nutty
+	name = "\improper Sticko Nutty"
+	desc = "A classic treat for all ages, it's Sticko, the original chocolate-coated biscuit stick! This one's got peanut-butter flavoured chocolate as its coating, for a nutty twist."
+	icon_state = "sticko_nutty"
+	trash_type = /obj/item/trash/sticko/nutty
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/coco = 1,
+	)
+	tastes = list("biscuit" = 1, "peanut butter" = 1)
+	foodtypes = JUNKFOOD | GRAIN | NUTS
+
+/obj/item/food/sticko/pineapple
+	name = "\improper Sticko Pineapple"
+	desc = "A classic treat for all ages, it's Sticko, the original chocolate-coated biscuit stick! This one's got pineapple flavoured white chocolate as its coating, for those ananas fan-as."
+	icon_state = "sticko_pineapple"
+	trash_type = /obj/item/trash/sticko/pineapple
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/consumable/coco = 1,
+		/datum/reagent/consumable/peanut_butter = 1,
+	)
+	tastes = list("biscuit" = 1, "pineapple" = 1)
+	foodtypes = JUNKFOOD | GRAIN | PINEAPPLE
+
+/obj/item/food/sticko/yuyake
+	name = "\improper Sticko Yūyake"
+	desc = "A classic treat for all ages, it's Sticko, the original chocolate-coated biscuit stick! This one's got Yūyake flavoured white chocolate as its coating, for a refreshing melony treat."
+	icon_state = "sticko_yuyake"
+	trash_type = /obj/item/trash/sticko/yuyake
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/consumable/coco = 1,
+		/datum/reagent/consumable/banana = 1,
+	)
+	tastes = list("biscuit" = 1, "melon" = 1)
+
+/obj/item/food/sticko/random
+	name = "\improper Sticko Mystery"
+	desc = "A classic treat for all ages, it's Sticko, the original chocolate-coated biscuit stick! This one's got an obscuring paper sheath, to hide the true flavour..."
+
+/obj/item/food/sticko/random/Initialize(mapload)
+	var/random_flavour = pick(subtypesof(/obj/item/food/sticko) - /obj/item/food/sticko/random)
+	var/obj/item/food/sample = new random_flavour(loc)
+	name = sample.name
+	desc = sample.desc
+	food_reagents = sample.food_reagents
+	tastes = sample.tastes
+
+	qdel(sample)
+
+	. = ..()
+
+/obj/item/food/shok_roks
+	name = "\improper Shok-Roks - Stormcloud Candy flavour"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Stormcloud Candy- like cotton candy, but electric!"
+	icon_state = "shok_roks_candy"
+	trash_type = /obj/item/trash/shok_roks
+	food_reagents = list(
+		/datum/reagent/consumable/liquidelectricity/enriched = 2,
+		/datum/reagent/consumable/sugar = 3
+	)
+	tastes = list("sugar" = 1, "lightning" = 1)
+
+/obj/item/food/shok_roks/citrus
+	name = "\improper Shok-Roks - Cirrus Citrus flavour"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Cirrus Citrus- all the citrus flavour, none of the real citrus extract."
+	icon_state = "shok_roks_citrus"
+	trash_type = /obj/item/trash/shok_roks/citrus
+	tastes = list("citrus" = 1, "lightning" = 1)
+
+/obj/item/food/shok_roks/berry
+	name = "\improper Shok-Roks - Berry Storm flavour"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Berry Storm- filled with non-descript sour berry flavour!"
+	icon_state = "shok_roks_berry"
+	trash_type = /obj/item/trash/shok_roks/berry
+	tastes = list("sour berry" = 1, "lightning" = 1)
+
+/obj/item/food/shok_roks/tropical
+	name = "\improper Shok-Roks - Tropical Thunder flavour"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Tropical Thunder- all the tropical fruits! ALL OF THEM!"
+	icon_state = "shok_roks_tropical"
+	trash_type = /obj/item/trash/shok_roks/tropical
+	tastes = list("tropical fruits" = 1, "lightning" = 1)
+
+/obj/item/food/shok_roks/lanternfruit
+	name = "\improper Shok-Roks - Lightning Lanternfruit flavour"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Lightning Lanternfruit- the only Sprout-native fruit in any Shok-Rok flavour."
+	icon_state = "shok_roks_lanternfruit"
+	trash_type = /obj/item/trash/shok_roks/lanternfruit
+	tastes = list("sour pear" = 1, "lightning" = 1)
+
+/obj/item/food/shok_roks/random
+	name = "\improper Shok-Roks - Hidden Hurricane flavour"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, any of which could be in this bag!"
+
+/obj/item/food/shok_roks/random/Initialize(mapload)
+	var/random_flavour = pick(subtypesof(/obj/item/food/shok_roks) - /obj/item/food/shok_roks/random)
+	var/obj/item/food/sample = new random_flavour(loc)
+	name = sample.name
+	desc = sample.desc
+	food_reagents = sample.food_reagents
+	tastes = sample.tastes
+
+	qdel(sample)
+
+	. = ..()

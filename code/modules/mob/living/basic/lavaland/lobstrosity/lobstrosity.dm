@@ -6,7 +6,6 @@
 	icon_state = "arctic_lobstrosity"
 	icon_living = "arctic_lobstrosity"
 	icon_dead = "arctic_lobstrosity_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	friendly_verb_continuous = "chitters at"
 	friendly_verb_simple = "chitters at"
 	speak_emote = list("chitters")

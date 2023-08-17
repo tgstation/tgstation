@@ -191,7 +191,7 @@
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
-			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
+			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES) && !ismonkey(human_owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
@@ -201,10 +201,19 @@
 				return FALSE
 
 	else
-		// If the spell requires wizard equipment and we're not a human (can't wear robes or hats), that's just a given
-		if(spell_requirements & (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_HUMAN))
+		// If you strictly need to be a human, well, goodbye.
+		if(spell_requirements & SPELL_REQUIRES_HUMAN)
 			if(feedback)
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
+			return FALSE
+
+		// Otherwise, we can check for contents if they have wizardly apparel. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
+		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
+			for(var/atom/movable/item in owner.contents)
+				var/obj/item/clothing/clothem = item
+				if(istype(clothem) && clothem.clothing_flags & CASTING_CLOTHES)
+					return TRUE
+			to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 			return FALSE
 
 		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))
