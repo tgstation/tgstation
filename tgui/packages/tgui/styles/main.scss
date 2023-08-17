@@ -77,6 +77,9 @@
 @include meta.load-css('./interfaces/Fabricator.scss');
 @include meta.load-css('./interfaces/Emojipedia.scss');
 @include meta.load-css('./interfaces/NtosNotepad.scss');
+// MONKESTATION ADDITION START
+@include meta.load-css('./interfaces/ClockworkSlab.scss');
+// MONKESTATION ADDITION END
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

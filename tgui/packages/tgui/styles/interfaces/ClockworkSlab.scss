@@ -1,0 +1,30 @@
+.ClockSlab__left {
+  position: absolute;
+  top: 80px;
+  bottom: 0px;
+  left: 6px;
+  right: 0;
+  width: 40%;
+  height: calc(100% - 100px);
+}
+
+.ClockSlab__right {
+  position: absolute;
+  top: 80px;
+  bottom: 0px;
+  left: calc(12px + 40%);
+  right: 0;
+  width: 57%;
+  height: calc(100% - 100px);
+}
+
+.ClockSlab__stats {
+  height: 35%;
+  width: 100%;
+}
+
+.ClockSlab__current {
+  margin-top: 10px;
+  height: calc(65% - 10px);
+  width: 100%;
+}

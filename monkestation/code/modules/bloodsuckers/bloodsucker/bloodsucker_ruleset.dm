@@ -10,7 +10,7 @@
 	antag_datum = /datum/antagonist/bloodsucker
 	protected_roles = list(
 		// Command
-		JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY,
+		JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_RESEARCH_DIRECTOR, JOB_CHIEF_ENGINEER, JOB_CHIEF_MEDICAL_OFFICER,
 		// Security
 		JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE,
 		// Curator
@@ -20,9 +20,9 @@
 	required_candidates = 1
 	weight = 3
 	cost = 14
-	minimum_players = 13
+	minimum_players = 20
 	scaling_cost = 9
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(101,101,60,30,30,25,20,20,14,14)
 	antag_cap = list("denominator" = 24)
 
 /datum/dynamic_ruleset/roundstart/bloodsucker/pre_execute(population)
@@ -70,7 +70,7 @@
 	weight = 3
 	cost = 14
 	minimum_players = 20
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(101,101,60,30,30,25,20,20,14,14)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/midround/bloodsucker/trim_candidates()
@@ -118,7 +118,8 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	minimum_players = 20
+	requirements = list(101,101,60,20,20,20,20,20,14,14)
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/latejoin/bloodsucker/execute()

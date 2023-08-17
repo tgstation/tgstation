@@ -19295,16 +19295,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"ggu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/vending/mechcomp,
-/obj/machinery/vending/mechcomp,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "ggD" = (
 /obj/structure/chair{
 	dir = 4
@@ -233845,7 +233835,7 @@ uJn
 kYL
 gLu
 dth
-ggu
+bTF
 wRd
 gka
 swe
