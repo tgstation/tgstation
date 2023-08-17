@@ -422,7 +422,7 @@
 
 //TRAM CONTROLS//
 /obj/machinery/computer/tram_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running	//If we have a tram malfunction in progress, we extend it. Otherwise, we create one and lengthen its duration.
+	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
 	if(malfunction_event)
 		balloon_alert(ninja, "tram is already malfunctioning!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -433,7 +433,7 @@
 
 	AI_notify_hack()
 
-	if(!do_after(ninja, 15 SECONDS, target = src)) //Shorter due to how incredibly easy it is for someone to (even unintentionally) interrupt.
+	if(!do_after(ninja, 15 SECONDS, target = src)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
