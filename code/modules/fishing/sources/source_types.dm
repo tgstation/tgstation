@@ -153,7 +153,7 @@
 		FISHING_MINIGAME_RULE_LUBED,
 		FISHING_MINIGAME_RULE_LIMIT_LOSS,
 		FISHING_MINIGAME_RULE_WEIGHTED_BAIT,
-		FISHING_MINIGAME_RULE_STEALTH,
+		FISHING_MINIGAME_RULE_FLIP,
 	)
 	for(var/iteration in 1 to rand(1, 3))
 		challenge.special_effects |= pick_n_take(additional_effects)

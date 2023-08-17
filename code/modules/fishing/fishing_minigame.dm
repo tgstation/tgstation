@@ -267,7 +267,7 @@
 				if("antigrav_end")
 					sound = sound('sound/effects/empulse.ogg')
 					sound.frequency = -1
-				if("stealth")
+				if("flip")
 					sound = sound('sound/effects/space_wind.ogg')
 			SEND_SOUND(user, sound)
 

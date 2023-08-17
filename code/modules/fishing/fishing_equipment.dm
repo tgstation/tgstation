@@ -183,7 +183,7 @@
 /obj/item/fishing_hook/active_effects_debug
 	name = "effects debug hook"
 	desc = "Contains the 'Stealth' and 'Anti-gravity' negative effects. Not suitable for children under the age of 3."
-	fishing_hook_traits = list(FISHING_MINIGAME_RULE_STEALTH, FISHING_MINIGAME_RULE_ANTIGRAV)
+	fishing_hook_traits = list(FISHING_MINIGAME_RULE_FLIP, FISHING_MINIGAME_RULE_ANTIGRAV)
 
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"

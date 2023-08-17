@@ -72,7 +72,6 @@
 
 /obj/item/fishing_rod/examine(mob/user)
 	. = ..()
-	. += "<b>Right-Click</b> in your active hand to access its slots UI"
 	var/list/equipped_stuff = list()
 	if(line)
 		equipped_stuff += "[icon2html(line, user)] <b>[line.name]</b>"
@@ -84,6 +83,7 @@
 		. += span_notice("\a [icon2html(bait, user)] <b>[bait]</b> is being used as bait.")
 	else
 		. += span_warning("It doesn't have any bait attached. Fishing will be more tedious!")
+	. += "<b>Right-Click</b> in your active hand to access its slots UI"
 
 /**
  * Catch weight modifier for the given fish_type (or FISHING_DUD)
@@ -532,6 +532,7 @@
 		COMSIG_FISHING_ROD_CAUGHT_FISH = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
 	)
 	AddComponent(/datum/component/experiment_handler, \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
 		allowed_experiments = list(/datum/experiment/scanning/fish), \
 		config_flags = EXPERIMENT_CONFIG_SILENT_FAIL|EXPERIMENT_CONFIG_IMMEDIATE_ACTION, \
 		experiment_signals = fishing_signals, \
@@ -540,6 +541,10 @@
 	var/obj/item/food/bait/doughball/synthetic/infinite_supply_of_bait = new(src)
 	bait = infinite_supply_of_bait
 	update_icon()
+
+/obj/item/fishing_rod/tech/examine(mob/user)
+	. = ..()
+	. += "<b>Alt-Click</b> to access the Experiment Configuration UI"
 
 /obj/item/fishing_rod/tech/consume_bait(atom/movable/reward)
 	return

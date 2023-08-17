@@ -20,7 +20,6 @@ type Fish = {
   height: number;
   velocity: number;
   target: number | null;
-  opacity: number;
 };
 
 type FishAI = 'dumb' | 'zippy' | 'slow';
@@ -56,13 +55,13 @@ type SpecialRule =
   | 'no_escape'
   | 'lubed'
   | 'antigrav'
-  | 'stealth';
+  | 'flip';
 
 enum ActiveEffect {
   HasNoEffect,
   onCooldown,
   AntiGrav,
-  Stealth,
+  Flip,
 }
 
 class FishingMinigame extends Component<
@@ -88,7 +87,7 @@ class FishingMinigame extends Component<
   effect: ActiveEffect = ActiveEffect.onCooldown;
   effect_duration: number = 0;
   can_antigrav: boolean = false;
-  can_stealth: boolean = false;
+  can_flip: boolean = false;
 
   baseLongJumpChancePerSecond: number = 0.0075;
   baseShortJumpChancePerSecond: number = 0.255;
@@ -113,8 +112,8 @@ class FishingMinigame extends Component<
     this.accel_up_coeff = props.special_rules.includes('lubed') ? 1.4 : 1;
 
     this.can_antigrav = props.special_rules.includes('antigrav');
-    this.can_stealth = props.special_rules.includes('stealth');
-    if (!this.can_antigrav && !this.can_stealth) {
+    this.can_flip = props.special_rules.includes('flip');
+    if (!this.can_antigrav && !this.can_flip) {
       this.effect = ActiveEffect.HasNoEffect;
     }
     // Give the player a moment to prepare for active minigame effects
@@ -151,7 +150,6 @@ class FishingMinigame extends Component<
         height: fishHeight,
         velocity: this.idleVelocity,
         target: null,
-        opacity: 1,
       },
     };
 
@@ -217,8 +215,8 @@ class FishingMinigame extends Component<
       if (this.can_antigrav) {
         possibleEffects.push(ActiveEffect.AntiGrav);
       }
-      if (this.can_stealth) {
-        possibleEffects.push(ActiveEffect.Stealth);
+      if (this.can_flip) {
+        possibleEffects.push(ActiveEffect.Flip);
       }
       new_effect = randomPick(possibleEffects);
     }
@@ -226,22 +224,22 @@ class FishingMinigame extends Component<
     const difficulty_mult = 1 + this.props.difficulty / 100;
     switch (new_effect) {
       case ActiveEffect.AntiGrav:
-        this.effect_duration = randomNumber(5, 7) * 1000 * difficulty_mult;
+        this.effect_duration = randomNumber(6, 9) * 1000 * difficulty_mult;
         sound = 'antigrav';
         break;
-      case ActiveEffect.Stealth:
-        this.effect_duration = randomNumber(4, 5) * 1000 * difficulty_mult;
-        sound = 'stealth';
+      case ActiveEffect.Flip:
+        this.effect_duration = randomNumber(5, 6) * 1000 * difficulty_mult;
+        sound = 'flip';
         break;
       case ActiveEffect.onCooldown:
         switch (this.effect) {
           case ActiveEffect.AntiGrav:
-            this.effect_duration = randomNumber(7, 11) * 1000;
+            this.effect_duration = randomNumber(10, 13) * 1000;
             sound = 'antigrav_end';
             break;
-          case ActiveEffect.Stealth:
+          case ActiveEffect.Flip:
             this.effect_duration = randomNumber(8, 12) * 1000;
-            sound = 'stealth';
+            sound = 'flip';
             break;
         }
     }
@@ -356,18 +354,6 @@ class FishingMinigame extends Component<
     // Bottom bound
     if (nextFishState.position + nextFishState.height > this.area_height) {
       nextFishState.position = this.area_height - nextFishState.height;
-    }
-
-    if (this.effect === ActiveEffect.AntiGrav && nextFishState.opacity > 0) {
-      nextFishState.opacity = Math.max(
-        nextFishState.opacity - 0.7 * seconds,
-        0
-      );
-    } else if (nextFishState.opacity < 1) {
-      nextFishState.opacity = Math.min(
-        nextFishState.opacity + 0.7 * seconds,
-        1
-      );
     }
 
     const newState: FishingMinigameState = {
@@ -534,6 +520,12 @@ class FishingMinigame extends Component<
     const { completion, fish, bait } = this.state;
     const posToStyle = (value: number) => (value / this.area_height) * 100;
     const background_image = resolveAsset(this.props.background);
+	const bait_position = this.effect === ActiveEffect.Flip ?
+	  Math.abs(bait.position - (area_height - bait.height) :
+	  bait.position;
+	const fish_position = this.effect === ActiveEffect.Flip ?
+	  Math.abs(fish.position - (area_height - fish.height) :
+	  fish.position;
     return (
       <div class="fishing">
         <KeyListener
@@ -548,16 +540,16 @@ class FishingMinigame extends Component<
               class="bait"
               style={{
                 height: `${posToStyle(bait.height)}%`,
-                top: `${posToStyle(bait.position)}%`,
+                top: `${posToStyle(bait_position)}%`,
               }}
             />
             <div
               class="fish"
               style={{
-                top: `${posToStyle(fish.position)}%`,
+                top: `${posToStyle(fish_position)}%`,
                 height: `${posToStyle(fish.height)}%`,
               }}>
-              <Icon name={this.props.fish_icon} opacity={fish.opacity} />
+              <Icon name={this.props.fish_icon} />
             </div>
           </div>
         </div>

@@ -37,8 +37,8 @@
 #define FISHING_MINIGAME_RULE_NO_EXP "no_exp"
 ///If enabled, the minigame will screw around and occasionally flip the velocity of the bait
 #define FISHING_MINIGAME_RULE_ANTIGRAV "antigrav"
-///If enabled, the fish icon will occasionally fade in and out.
-#define FISHING_MINIGAME_RULE_STEALTH "stealth"
+///When activated, The position of both fish and bait will be shown flipped for the duration of the effect.
+#define FISHING_MINIGAME_RULE_FLIP "flip"
 
 ///These are fishing traits not handled by minigame itself but fish traits.
 
