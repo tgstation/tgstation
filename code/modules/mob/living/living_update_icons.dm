@@ -15,8 +15,9 @@
 	var/abs_pixel_y_offset = 0
 	var/translate = 0
 	if(current_size != RESIZE_DEFAULT_SIZE)
-		abs_pixel_y_offset = abs(get_pixel_y_offset_standing(current_size))
-		translate = (abs_pixel_y_offset - round(abs_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
+		var/standing_offset = get_pixel_y_offset_standing(current_size)
+		abs_pixel_y_offset = abs(standing_offset)
+		translate = (abs_pixel_y_offset - round(abs_pixel_y_offset)) * SIGN(standing_offset)
 	var/final_dir = dir
 	var/changed = FALSE
 
