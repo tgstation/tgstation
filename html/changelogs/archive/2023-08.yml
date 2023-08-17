@@ -645,3 +645,6 @@
   - bugfix: multiple balloon alerts when the plumbing RCD is low on ammo
   - code_imp: organized all plumbing designs into static lists for memory savings
   - refactor: removed unused vars for further memory savings
+2023-08-17:
+  NaakaKo:
+  - bugfix: removes bodybag welding tooltip
