@@ -49,7 +49,7 @@
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
-	var/datum/action/cooldown/sneak/spider/sneak_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web = new(src)
 	sneak_web.Grant(src)
 
 /**
