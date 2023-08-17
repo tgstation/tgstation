@@ -5,7 +5,7 @@
 	icon_state = "ore_redemption"
 	anchored = TRUE
 	density = TRUE
-	idle_power_usage = 100 /// fuck if I know set this later
+	idle_power_usage = 100 // fuck if I know set this later
 
 	/// What is the efficiency of minerals produced by the machine?
 	var/refining_efficiency = 1
@@ -121,6 +121,10 @@
 			return TRUE
 		return FALSE
 
+/**
+ * Accepts a boulder into the machinery, then converts it into minerals.
+ * @param chosen_boulder The boulder to being breaking down into minerals.
+ */
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
 	if(isnull(chosen_boulder))
 		return FALSE
@@ -138,6 +142,7 @@
 	//here we loop through the boulder's ores
 	var/list/remaining_ores = list()
 	var/tripped = FALSE
+	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100%.
 	//If a material is in the boulder's custom_materials, but not in the processable_materials list, we add it to the remaining_ores list to add back to a leftover boulder.
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 		if(!is_type_in_list(possible_mat, processable_materials))
@@ -152,10 +157,10 @@
 	if(!tripped)
 		remove_boulder(chosen_boulder)
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
-	use_power(100) //Standardize this, hopefully
+	use_power(100)
+	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
 	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
 	balloon_alert_to_viewers("Boulder processed!")
-	// playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE) //Maybe look for an industrial sound here instead?
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -216,156 +221,8 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
 
-/obj/machinery/bouldertech/brm
-	name = "boulder retrieval matrix"
-	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
-	icon_state = "brm"
-	circuit = /obj/item/circuitboard/machine/brm
-	usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
-	// Are we trying to actively collect boulders automatically?
-	var/toggled_on = FALSE
-
-/obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	collect_boulder()
-
-/obj/machinery/bouldertech/brm/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	START_PROCESSING(SSmachines, src)
-	icon_state = "brm-toggled"
-	update_appearance(UPDATE_ICON_STATE)
-
-/obj/machinery/bouldertech/brm/process()
-	boulders_held = 0
-	balloon_alert_to_viewers("Bzzap!")
-	if(SSore_generation.available_boulders.len < 1)
-		say("No boulders to collect. Entering idle mode.")
-		STOP_PROCESSING(SSmachines, src)
-		icon_state = "brm"
-		update_appearance(UPDATE_ICON_STATE)
-		return
-	for(var/i in 1 to boulders_processing_max)
-		if(!collect_boulder())
-			i-- //Retry
-	for(var/ground_rocks in loc.contents)
-		if(istype(ground_rocks, /obj/item/boulder))
-
-			boulders_held++
-			if(boulders_held > boulders_held_max)
-				STOP_PROCESSING(SSmachines, src)
-				icon_state = "brm"
-				update_appearance(UPDATE_ICON_STATE)
-				return
-
-/**
- * So, this should be probably handed in a more elegant way going forward, like a small TGUI prompt to select which boulder you want to pull from.
- * However, in the attempt to make this really, REALLY basic but functional until I can actually sit down and get this done we're going to just grab a random entry from the global list and work with it.
- */
-/obj/machinery/bouldertech/brm/proc/collect_boulder()
-	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
-	if(random_boulder.processed_by)
-		return FALSE
-	if(!random_boulder)
-		return FALSE
-	random_boulder.processed_by = src
-	random_boulder.Shake(duration = 1.5 SECONDS)
-	SSore_generation.available_boulders -= random_boulder
-	//todo: Maybe add some kind of teleporation raster effect thing? filters? I can probably make something happen here...
-	sleep(1.5 SECONDS)
-	flick("brm-flash", src)
-	if(QDELETED(random_boulder))
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
-		balloon_alert_to_viewers("Target lost!")
-		return FALSE
-	//todo:do the thing we do where we make sure the thing still exists and hasn't been deleted between the start of the recall and after.
-	random_boulder.forceMove(drop_location())
-	balloon_alert_to_viewers("boulder appears!")
-	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	use_power(100)
-
-/obj/machinery/bouldertech/smelter
-	name = "boulder smeltery"
-	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
-	icon_state = "furnace"
-	holds_minerals = TRUE
-	processable_materials = list(
-		/datum/material/iron,
-		/datum/material/titanium,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/uranium,
-		/datum/material/mythril,
-		/datum/material/adamantine,
-		/datum/material/runite,
-	)
-	circuit = /obj/item/circuitboard/machine/smelter
-	usage_sound = 'sound/machines/mining/smelter.ogg'
-
-
-/obj/machinery/bouldertech/refinery
-	name = "boulder refinery"
-	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets. Can be upgraded with stock parts or through chemical inputs."
-	icon_state = "stacker"
-	holds_minerals = TRUE
-	processable_materials = list(
-		/datum/material/glass,
-		/datum/material/plasma,
-		/datum/material/diamond,
-		/datum/material/bluespace,
-		/datum/material/bananium,
-		/datum/material/plastic,
-	)
-	circuit = /obj/item/circuitboard/machine/refinery
-	usage_sound = 'sound/machines/mining/refinery.ogg'
-
-	/// Reagents that we can use to wash the boulders
-	var/list/allowed_reagents = list(/datum/reagent/water, /datum/reagent/lube)
-	/// Internal beaker for storing washing fluid
-	var/obj/item/reagent_containers/cup/beaker/large/washing_input
-
-/obj/machinery/bouldertech/refinery/Initialize(mapload)
-	. = ..()
-
-	washing_input = new()
-	create_reagents(100, TRANSPARENT)
-	AddComponent(/datum/component/plumbing/selective, anchored, custom_receiver = washing_input.reagents, allowed_reagents = src.allowed_reagents)
-
-/// Try and draw reagents and produce waste
-/obj/machinery/bouldertech/refinery/proc/process_reagents(volume = MACHINE_REAGENT_TRANSFER)
-	if(volume > washing_input.reagents.total_volume) //not enough washing fluid
-		return null
-
-	if(reagents.maximum_volume < reagents.total_volume + volume) //we dont have enough space for waste!
-		return null
-
-	. = list() //keep track of which reagents we use and how much. list(type = volume)
-
-	// Pull washing fluids from the washing input and remove it, but record they've been used
-	for(var/datum/reagent/reagent as anything in washing_input.reagents.reagent_list)
-		var/volume_to_draw = min(reagent.volume, volume)
-
-		volume -= volume_to_draw
-		.[reagent.type] = volume_to_draw
-		washing_input.reagents.remove_reagent(reagent.type, volume_to_draw)
-
-	generate_waste(.)
-
-/// Generate waste reagents, depending on boulders and washing fluid
-/obj/machinery/bouldertech/refinery/proc/generate_waste(list/used_reagents)
-	reagents.add_reagent(/datum/reagent/consumable/bbqsauce, MACHINE_REAGENT_TRANSFER) // probably use the reagents to determine how much waste you make?
-
-/obj/machinery/bouldertech/refinery/RefreshParts()
-	. = ..()
-	var/manipulator_stack = 0
-	var/matter_bin_stack = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		manipulator_stack += ((servo.tier - 1))
-	boulders_processing_max = clamp(manipulator_stack, 1, 6)
-	for(var/datum/stock_part/matter_bin/bin in component_parts)
-		matter_bin_stack += ((bin.tier))
-	boulders_held_max = matter_bin_stack
-
+/obj/machinery/bouldertech/proc/check_for_boosts()
+	return
 
 ///Beacon to launch a new mining setup when activated. For testing and speed!
 /obj/item/boulder_beacon

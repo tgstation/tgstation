@@ -596,7 +596,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/is_transition_turf()
 	return
 
-/turf/acid_act(acidpwr, acid_volume)
+/turf/acid_acta(acidpwr, acid_volume)
 	. = ..()
 	if((acidpwr <= 0) || (acid_volume <= 0))
 		return FALSE

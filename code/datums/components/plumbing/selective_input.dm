@@ -8,7 +8,6 @@
 
 /datum/component/plumbing/selective/Initialize(start, ducting_layer, turn_connects, datum/reagents/custom_receiver, extend_pipe_to_edge, allowed_reagents)
 	. = ..()
-
 	src.allowed_reagents = allowed_reagents
 
 /datum/component/plumbing/selective/send_request(dir)

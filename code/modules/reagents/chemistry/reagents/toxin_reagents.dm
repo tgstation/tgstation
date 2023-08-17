@@ -1264,3 +1264,38 @@
 /datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 	return ..()
+
+/datum/reagent/toxin/acid/industrial_waste
+	name = "Industrial Waste"
+	description = "Industrial Waste produced as a side effect of efficient boulder refining. Highly toxic, corrosive, and hard to get rid of."
+	color = "#1eff00"
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
+	toxpwr = 2
+	acidpwr = 30.0
+	ph = 0.0
+
+/datum/reagent/toxin/acid/industrial_waste/on_transfer(atom/A, methods, trans_volume)
+	. = ..()
+	if(!trans_volume)
+		return
+	if(istype(A, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/container = A
+		if(container.has_material_type(/datum/material/plastic))
+			return
+		spew_waste(A, trans_volume, 1)
+	if(istype(A, /obj/machinery/plumbing/disposer) || istype(A, /obj/machinery/plumbing/output))
+		spew_waste(A, trans_volume, 2)
+
+/datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if(isfloorturf(exposed_turf))
+		spew_waste(exposed_turf, reac_volume, 2) //lets see if this becomes funny
+
+/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(atom/spew_source, trans_volume, spew_range = 1)
+	var/datum/reagents/waste_holder = new(trans_volume)
+	waste_holder.add_reagent(/datum/reagent/toxin/acid/industrial_waste, trans_volume)
+	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
+	smoke.set_up(spew_range, holder = src, location = get_turf(spew_source), carry = waste_holder)
+	smoke.start(log = TRUE)
+	QDEL_NULL(waste_holder)
