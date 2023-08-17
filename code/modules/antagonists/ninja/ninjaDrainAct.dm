@@ -204,7 +204,7 @@
 /obj/machinery/door/airlock/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 		hacking_module.door_hack_counter++
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
@@ -356,7 +356,7 @@
 		MEDIBOT_VOICED_OH_FUCK,
 	)
 	speak(pick(death_cry))
-	. = ..()
+	return ..()
 
 //ENERGY WEAPONS//
 /obj/item/gun/energy/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -445,7 +445,7 @@
 
 //WINDOOR//
 /obj/machinery/door/window/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -454,3 +454,7 @@
 	if(is_operational && !(obj_flags & EMAGGED))
 		emag_act(ninja)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+//FIRELOCKS//
+/obj/machinery/door/firedoor/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	crack_open()
