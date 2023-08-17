@@ -13,20 +13,39 @@
 		StartCooldown()
 		return TRUE
 
-/datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc)
-	var/wreck = 0
+/datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc, atom/target)
 	var/turf/victim = get_turf(owner)
 	if(!actively_moving)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
+	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	victim.rust_heretic_act()
 	get_step(victim, EAST).rust_heretic_act()
 	get_step(victim, WEST).rust_heretic_act()
 	get_step(victim, NORTH).rust_heretic_act()
 	get_step(victim, SOUTH).rust_heretic_act()
-	if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
-		INVOKE_ASYNC(owner, PROC_REF(DestroySurroundings), source)
-		wreck += 1
 
-/datum/action/cooldown/mob_cooldown/charge/on_moved(atom/source)
-	playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
+/datum/action/cooldown/mob_cooldown/charge/rust/DestroySurroundings(atom/movable/charger)
+    if(!destroy_objects)
+        return
+    for(var/dir in GLOB.cardinals)
+        var/turf/source = get_turf(owner)
+        var/turf/next_turf = get_step(charger, dir)
+        if(!istype(next_turf) || !HAS_TRAIT(source, TRAIT_RUSTY))
+            continue
+        if(isclosedturf(next_turf) && HAS_TRAIT(next_turf, TRAIT_RUSTY))
+            SSexplosions.medturf += next_turf
+            continue
+
+/datum/action/cooldown/mob_cooldown/charge/rust/on_bump(atom/movable/source, atom/target)
+	SIGNAL_HANDLER
+	if(owner == target)
+		return
+	if(destroy_objects)
+		if(isturf(target))
+			INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
+		if(isobj(target) && target.density)
+			SSexplosions.med_mov_atom += target
+
+	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
+	hit_target(source, target, charge_damage)
