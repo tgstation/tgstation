@@ -2916,6 +2916,7 @@
 #include "code\modules\artsci\artifact_triggers.dm"
 #include "code\modules\artsci\artifact_items\artifact_cell.dm"
 #include "code\modules\artsci\artifact_items\artifact_melee.dm"
+#include "code\modules\artsci\artifact_items\artifact_gun.dm"
 #include "code\modules\artsci\artifact_objects\artifact_bomb.dm"
 #include "code\modules\artsci\artifact_objects\artifact_bonk.dm"
 #include "code\modules\artsci\artifact_objects\artifact_forcegen.dm"
