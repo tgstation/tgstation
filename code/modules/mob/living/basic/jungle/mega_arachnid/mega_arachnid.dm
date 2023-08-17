@@ -36,7 +36,7 @@
 
 /mob/living/basic/mega_arachnid/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/seethrough_mob)
+  AddComponent(/datum/component/seethrough_mob)
 	var/datum/action/cooldown/spell/pointed/projectile/flesh_restraints/restrain = new(src)
 	var/datum/action/cooldown/mob_cooldown/secrete_acid/acid_spray = new(src)
 	acid_spray.Grant(src)
