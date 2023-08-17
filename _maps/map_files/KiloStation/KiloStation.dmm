@@ -23866,12 +23866,6 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
 "hRs" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/bed/dogbed/renault,
-/mob/living/basic/pet/fox/renault,
 /obj/machinery/firealarm/directional/south,
 /turf/closed/wall,
 /area/station/maintenance/fore)
@@ -56252,7 +56246,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/fox/renault,
+/mob/living/basic/pet/fox/renault,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "sHh" = (
