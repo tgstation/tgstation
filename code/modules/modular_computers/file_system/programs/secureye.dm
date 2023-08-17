@@ -19,7 +19,7 @@
 
 	var/list/network = list("ss13")
 	///List of weakrefs of all users watching the program.
-	var/list/datum/weakref/concurrent_users = list()
+	var/list/concurrent_users = list()
 
 	/// Weakref to the active camera
 	var/datum/weakref/camera_ref
@@ -74,23 +74,18 @@
 	return ..()
 
 /datum/computer_file/program/secureye/ui_interact(mob/user, datum/tgui/ui)
-	// Update UI
-	ui = SStgui.try_update_ui(user, src, ui)
-
 	// Update the camera, showing static if necessary and updating data if the location has moved.
 	update_active_camera_screen()
 
-	if(!ui)
-		var/user_ref = REF(user)
-		var/is_living = isliving(user)
-		// Ghosts shouldn't count towards concurrent users, which produces
-		// an audible terminal_on click.
-		if(is_living)
-			concurrent_users += user_ref
-		// Register map objects
-		cam_screen.display_to(user)
-		user.client.register_map_obj(cam_background)
-		return ..()
+	var/user_ref = REF(user)
+	var/is_living = isliving(user)
+	// Ghosts shouldn't count towards concurrent users, which produces
+	// an audible terminal_on click.
+	if(is_living)
+		concurrent_users += user_ref
+	// Register map objects
+	cam_screen.display_to(user)
+	user.client.register_map_obj(cam_background)
 
 /datum/computer_file/program/secureye/ui_status(mob/user)
 	. = ..()
