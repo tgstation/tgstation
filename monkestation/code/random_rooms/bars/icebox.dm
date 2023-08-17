@@ -14,11 +14,13 @@
 	name = "Abductor Icebox Bar"
 	room_id = "icebox_bar_abductor"
 	mappath = "monkestation/_maps/RandomBars/Icebox/icebox_bar_abductor.dmm"
+	weight = 16
 
 /datum/map_template/random_room/random_bar/icebox_arcade
 	name = "Arcade Icebox Bar"
 	room_id = "icebox_bar_arcade"
 	mappath = "monkestation/_maps/RandomBars/Icebox/icebox_bar_arcade.dmm"
+	weight = 16
 
 /datum/map_template/random_room/random_bar/icebox_base/Magbar
 	name = "Magbar"
@@ -34,6 +36,7 @@
 	name = "Maid Cafe"
 	room_id = "icebox_maid"
 	mappath = "monkestation/_maps/RandomBars/Icebox/MaidCafe.dmm"
+	weight = 16
 
 /datum/map_template/random_room/random_bar/icebox_base/clockwork
 	name = "Clockwork Bar"
@@ -54,11 +57,13 @@
 	name = "Drunk Ops Bar"
 	room_id = "icebox_drunkops"
 	mappath = "monkestation/_maps/RandomBars/Icebox/Drunkopsbar.dmm"
+	weight = 0
 
 /datum/map_template/random_room/random_bar/icebox_base/junglebar
 	name = "Jungle Bar"
 	room_id = "icebox_junglebar"
 	mappath = "monkestation/_maps/RandomBars/Icebox/junglebar.dmm"
+	weight = 16
 
 /datum/map_template/random_room/random_bar/icebox_base/mimebar
 	name = "Mime Bar"

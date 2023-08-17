@@ -30,8 +30,8 @@
 	weight = 5
 	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
 	scaling_cost = 9
-	minimum_players = 8
-	requirements = list(101,8,8,8,8,8,8,8,8,8)
+	minimum_players = 10
+	requirements = list(20,16,10,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 38)
 
 	var/autotraitor_cooldown = (15 MINUTES)
@@ -64,7 +64,8 @@
 	required_candidates = 1
 	weight = 3
 	cost = 18
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	minimum_players = 25
+	requirements = list(90,80,80,70,60,40,30,20,10,10)
 	antag_cap = 1
 	flags = HIGH_IMPACT_RULESET
 
@@ -192,7 +193,7 @@
 	cost = 16
 	scaling_cost = 10
 
-	minimum_players = 25
+	minimum_players = 20
 
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	antag_cap = list("denominator" = 29)
@@ -244,13 +245,13 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 3
+	weight = 4
 	cost = 10
 
-	minimum_players = 25
+	minimum_players = 20
 
 	scaling_cost = 9
-	requirements = list(101,101,60,30,30,25,20,15,10,10)
+	requirements = list(101,101,50,20,20,10,10,10,10,10)
 	antag_cap = list("denominator" = 24)
 
 
@@ -629,10 +630,9 @@
 	antag_datum = null
 	restricted_roles = list()
 	required_candidates = 0
-	maximum_players = 4
 	weight = 3
 	cost = 0
-	requirements = list(101,101,101,101,101,101,101,101,101,101) //
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	flags = LONE_RULESET
 
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()

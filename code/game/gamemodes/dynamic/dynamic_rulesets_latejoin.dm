@@ -74,10 +74,10 @@
 	required_candidates = 1
 	weight = 11
 	cost = 5
-	requirements = list(5,5,5,5,5,5,5,5,5,5)
+	requirements = list(30,20,10,5,5,5,5,5,5,5)
 	repeatable = TRUE
 
-	minimum_players = 8
+	minimum_players = 10
 
 //////////////////////////////////////////////
 //                                          //
@@ -124,7 +124,7 @@
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 
-	minimum_players = 30
+	minimum_players = 100 //MONKESTATION EDIT Originally 30, changed to 100 so it's disabled for now
 
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
