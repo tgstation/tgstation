@@ -1963,12 +1963,12 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "aPY" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
-	dir = 8
-	},
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -67067,7 +67067,7 @@
 /area/station/hallway/primary/port)
 "xgW" = (
 /obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad2";
+	id = "flamedra";
 	name = "Incinerator Conveyor";
 	pixel_x = -13;
 	pixel_y = -4
