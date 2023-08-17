@@ -67,7 +67,7 @@
 	// Currently, hard checks for carbons.
 	// If someone wants to add support for simplemobs
 	// adminbussed to have hands, go for it
-	if(!iscarbon(owner) && !istype(owner, /mob/living/simple_animal/possession_holder))
+	if(!iscarbon(owner) && !istype(owner, /mob/living/basic/possession_holder))
 		return FALSE
 	var/mob/living/carbon_owner = owner
 	if(!(carbon_owner.mobility_flags & MOBILITY_USE))

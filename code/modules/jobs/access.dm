@@ -35,8 +35,8 @@
 		if(check_access(human_accessor.wear_id) && !istype(human_accessor.wear_id, /obj/item/card/id/fake_card))
 			return TRUE
 	//monkestation edit start
-	else if(istype(accessor, /mob/living/simple_animal/possession_holder))
-		var/mob/living/simple_animal/possession_holder/animal = accessor
+	else if(istype(accessor, /mob/living/basic/possession_holder))
+		var/mob/living/basic/possession_holder/animal = accessor
 		if(check_access(animal.id))
 			return TRUE
 	//monkestation edit end

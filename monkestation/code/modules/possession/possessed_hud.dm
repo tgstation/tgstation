@@ -164,7 +164,7 @@
 /datum/hud/human/hidden_inventory_update(mob/viewer)
 	if(!mymob)
 		return
-	var/mob/living/simple_animal/possession_holder/H = mymob
+	var/mob/living/basic/possession_holder/H = mymob
 
 	var/mob/screenmob = viewer || H
 

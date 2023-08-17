@@ -100,6 +100,7 @@
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
+	create_overlay_index() //monkestation edit
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)

@@ -927,12 +927,12 @@
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
-
+/* overrided in the monkestation/modules/possession folder
 /obj/item/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
-
+*/
 /obj/item/burn()
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
