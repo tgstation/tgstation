@@ -53,7 +53,9 @@
 	. = TRUE
 	if(!canmove || !(user in return_drivers()))
 		return
-	vehicle_move(direction)
+	if (!vehicle_move(direction))
+		return
+	SEND_SIGNAL(user, COMSIG_MOB_DROVE_MECH, src)
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))

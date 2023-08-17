@@ -26881,7 +26881,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "jOc" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk,
+/mob/living/basic/mining/basilisk,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid,
 /area/station/maintenance/fore/greater)
