@@ -28,7 +28,7 @@
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_premium_price = PAYCHECK_COMMAND * 10
+	custom_premium_price = PAYCHECK_COMMAND * 2
 	max_matter = 160
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
