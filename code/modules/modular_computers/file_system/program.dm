@@ -173,9 +173,9 @@
  * Use this proc to kill the program.
  * Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
  * Args:
- * - reload_ui - Whether we reload the UI on computer's shutdown.
+ * - user - If there's a user, this is the person killing the program.
  **/
-/datum/computer_file/program/proc/kill_program()
+/datum/computer_file/program/proc/kill_program(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(src == computer.active_program)

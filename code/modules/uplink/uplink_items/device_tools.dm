@@ -83,11 +83,10 @@
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	cost = 8
 
-/datum/uplink_item/device_tools/camera_bug
-	name = "Camera Bug"
-	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
-			Bugging cameras allows you to disable them remotely."
-	item = /obj/item/camera_bug
+/datum/uplink_item/device_tools/camera_app
+	name = "Camera Bug Program"
+	desc = "Enables you to view all cameras on the main network through a tablet program."
+	item = /obj/item/computer_disk/syndicate/camera_app
 	cost = 1
 	surplus = 90
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

@@ -14,18 +14,39 @@
 	tgui_id = "NtosSecurEye"
 	program_icon = "eye"
 
+	///Boolean on whether or not the app will make noise when flipping around the channels.
+	var/silent_spying = FALSE
+
 	var/list/network = list("ss13")
+	///List of weakrefs of all users watching the program.
+	var/list/datum/weakref/concurrent_users = list()
+
 	/// Weakref to the active camera
 	var/datum/weakref/camera_ref
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
-	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/cam_screen
+	/// All the plane masters that need to be applied.
 	var/atom/movable/screen/background/cam_background
 
-/datum/computer_file/program/secureye/New()
+///Syndicate subtype that has no access restrictions and is available on Syndinet
+/datum/computer_file/program/secureye/syndicate
+	filename = "illegalcameras"
+	filedesc = "Camera Bug"
+	extended_desc = "This program allows for illegal access to security camera networks."
+	transfer_access = list()
+
+	silent_spying = TRUE
+
+	available_on_ntnet = FALSE
+	requires_ntnet = FALSE
+
+	available_on_syndinet = TRUE
+	usage_flags = PROGRAM_ALL
+
+/datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
@@ -44,6 +65,12 @@
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
 	QDEL_NULL(cam_background)
+	last_camera_turf = null
+	return ..()
+
+/datum/computer_file/program/secureye/kill_program(mob/user)
+	if(user)
+		ui_close(user)
 	return ..()
 
 /datum/computer_file/program/secureye/ui_interact(mob/user, datum/tgui/ui)
@@ -105,7 +132,8 @@
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		camera_ref = WEAKREF(selected_camera)
-		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+		if(!silent_spying)
+			playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 
 		if(!selected_camera)
 			return TRUE
@@ -125,7 +153,9 @@
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
 		camera_ref = null
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+		last_camera_turf = null
+		if(!silent_spying)
+			playsound(computer, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
