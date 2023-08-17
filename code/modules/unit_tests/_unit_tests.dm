@@ -175,6 +175,7 @@
 #include "missing_icons.dm"
 #include "mob_faction.dm"
 #include "mob_spawn.dm"
+#include "modify_fantasy_variable.dm"
 #include "modsuit.dm"
 #include "modular_map_loader.dm"
 #include "monkey_business.dm"
