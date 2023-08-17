@@ -136,6 +136,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
 
+#define blocksminingmobspawn(A) (ismining(A) || istype(A, /obj/effect/spawner/random/lavaland_mob))
+
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 

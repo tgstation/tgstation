@@ -158,10 +158,10 @@
 				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, turf))
 					can_spawn = FALSE
 					break
-			//if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			else if(isminingpath(picked_mob))
-				for(var/mob/living/mob_blocker in range(12, turf))
-					if(ismining(mob_blocker))
+			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's anything which blocks mob spawns within 12 tiles
+			else
+				for(var/atom/mob_blocker in range(12, turf))
+					if(blocksminingmobspawn(mob_blocker))
 						can_spawn = FALSE
 						break
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
@@ -180,5 +180,4 @@
 		CHECK_TICK
 
 	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
-	to_chat(world, span_boldannounce("[message]"))
 	log_world(message)

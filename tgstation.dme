@@ -1924,6 +1924,7 @@
 #include "code\game\objects\effects\spawners\random\entertainment.dm"
 #include "code\game\objects\effects\spawners\random\exotic.dm"
 #include "code\game\objects\effects\spawners\random\food_or_drink.dm"
+#include "code\game\objects\effects\spawners\random\lavaland_mobs.dm"
 #include "code\game\objects\effects\spawners\random\maintenance.dm"
 #include "code\game\objects\effects\spawners\random\medical.dm"
 #include "code\game\objects\effects\spawners\random\mod.dm"
