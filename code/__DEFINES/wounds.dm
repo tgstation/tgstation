@@ -73,7 +73,8 @@ GLOBAL_LIST_INIT(global_wound_types, list(
 		"[BIO_FLESH]" = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
 	),
 	WOUND_BURN = list(
-		"[BIO_FLESH]" = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate),
+		"[BIO_FLESH]" = list(/datum/wound/burn/flesh/critical, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/moderate),
+		"[BIO_ROBOTIC]" = list(/datum/wound/burn/robotic/critical, /datum/wound/burn/robotic/severe, /datum/wound/burn/robotic/moderate)
 	)
 ))
 
@@ -88,9 +89,9 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 	/datum/wound/pierce/critical,
 	/datum/wound/pierce/severe,
 	/datum/wound/pierce/moderate,
-	/datum/wound/burn/critical,
-	/datum/wound/burn/severe,
-	/datum/wound/burn/moderate,
+	/datum/wound/burn/flesh/critical,
+	/datum/wound/burn/flesh/severe,
+	/datum/wound/burn/flesh/moderate,
 ))
 
 

@@ -30,6 +30,8 @@
 	var/occur_text = ""
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
+	/// The volume of [sound_effect]
+	var/sound_volume = 70
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
@@ -175,7 +177,7 @@
 
 		victim.visible_message(msg, span_userdanger("Your [limb.plaintext_zone] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
-			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
+			playsound(L.owner, sound_effect, sound_volume + (20 * severity), TRUE)
 
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
@@ -310,25 +312,7 @@
 		if(I.force && tendee.combat_mode)
 			return FALSE
 
-	var/allowed = FALSE
-
-	// check if we have a valid treatable tool
-	if(I.tool_behaviour == treatable_tool)
-		allowed = TRUE
-	else if(treatable_tool == TOOL_CAUTERY && I.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
-		allowed = TRUE
-	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
-	else if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))
-		allowed = TRUE
-	// failing THAT, we check if we have a generally allowed item
-	else
-		for(var/allowed_type in treatable_by)
-			if(istype(I, allowed_type))
-				allowed = TRUE
-				break
-
-	// if none of those apply, we return false to avoid interrupting
-	if(!item_can_treat(I))
+	if(!item_can_treat(I, user))
 		return FALSE
 
 	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
@@ -346,18 +330,18 @@
 	// lastly, treat them
 	return treat(I, user) // we allow treat to return a value so it can control if the item does its normal interaction or not
 
-/datum/wound/proc/item_can_treat(obj/item/potential_treater)
+/datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
 	// check if we have a valid treatable tool
-	if(I.tool_behaviour == treatable_tool)
+	if(potential_treater.tool_behaviour == treatable_tool)
 		return TRUE
-	if(treatable_tool == TOOL_CAUTERY && I.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
+	if(treatable_tool == TOOL_CAUTERY && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
-	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))
+	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(potential_treater, user))
 		return TRUE
 	// failing THAT, we check if we have a generally allowed item
 	for(var/allowed_type in treatable_by)
-		if(istype(I, allowed_type))
+		if(istype(potential_treater, allowed_type))
 			return TRUE
 
 /// Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling]). Treatment is still is handled in [/datum/wound/proc/treat]
@@ -459,8 +443,6 @@
 	return get_desc_intensity(desc)
 
 /datum/wound/proc/modify_desc_before_span(desc)
-	SHOULD_BE_PURE(TRUE)
-
 	return desc
 
 /datum/wound/proc/get_gauze_condition()

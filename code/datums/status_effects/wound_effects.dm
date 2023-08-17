@@ -230,9 +230,15 @@
 /datum/status_effect/wound/pierce/critical
 	id = "rupture"
 // burns
-/datum/status_effect/wound/burn/moderate
+/datum/status_effect/wound/burn/robotic/moderate
+	id = "overheated"
+/datum/status_effect/wound/burn/robotic/severe
+	id = "warpedmetal"
+/datum/status_effect/wound/burn/robotic/critical
+	id = "demagnetizedmetal"
+/datum/status_effect/wound/burn/flesh/moderate
 	id = "seconddeg"
-/datum/status_effect/wound/burn/severe
+/datum/status_effect/wound/burn/flesh/severe
 	id = "thirddeg"
-/datum/status_effect/wound/burn/critical
+/datum/status_effect/wound/burn/flesh/critical
 	id = "fourthdeg"
