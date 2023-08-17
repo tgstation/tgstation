@@ -8,7 +8,7 @@
 	/**
 	 * pixel x/y/w/z all discard values after the decimal separator.
 	 * That, coupled with the rendered interpolation, may make the
-	 * icons look awfuller than they would normally already be.
+	 * icons look awfuller than they already are, or not, whatever.
 	 * The solution to this nit is translating the missing decimals.
 	 * also flooring increases the distance from 0 for negative numbers.
 	 */
