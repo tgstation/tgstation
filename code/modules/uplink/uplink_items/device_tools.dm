@@ -90,6 +90,7 @@
 	cost = 1
 	surplus = 90
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
