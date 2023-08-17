@@ -81,7 +81,7 @@
 	name = "Choppy Long"
 	icon_state = "hair_choppylong"
 
-/datum/sprite_accessory/hair/choppylong
+/datum/sprite_accessory/hair/mullet
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
-	name = "Macintosh Mullet"
-	icon_state = "hair_macintoshmullet"
+	name = "Mullet"
+	icon_state = "hair_mullet"
