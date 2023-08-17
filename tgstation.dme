@@ -5665,6 +5665,7 @@
 #include "monkestation\code\modules\possession\_item_topic.dm"
 #include "monkestation\code\modules\possession\_mob_holder.dm"
 #include "monkestation\code\modules\possession\basic_additions.dm"
+#include "monkestation\code\modules\possession\basic_hud_modifications.dm"
 #include "monkestation\code\modules\possession\item_overrides.dm"
 #include "monkestation\code\modules\possession\possessed_hud.dm"
 #include "monkestation\code\modules\power\lighting\floor_light.dm"

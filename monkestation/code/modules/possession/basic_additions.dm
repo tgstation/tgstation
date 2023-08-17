@@ -1,4 +1,5 @@
 /mob/living/basic
+	hud_type = /datum/hud/living/basic
 	///rendered overlays
 	var/list/possession_overlays[1]
 	/// do we have hands created?

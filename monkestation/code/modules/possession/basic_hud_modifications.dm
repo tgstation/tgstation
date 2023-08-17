@@ -1,7 +1,7 @@
 //(re)builds the hand ui slots, throwing away old ones
 //not really worth jugglying existing ones so we just scrap+rebuild
 //9/10 this is only called once per mob and only for 2 hands
-/datum/hud/living/build_hand_slots()
+/datum/hud/living/basic/build_hand_slots()
 	for(var/h in hand_slots)
 		var/atom/movable/screen/inventory/hand/H = hand_slots[h]
 		if(H)
