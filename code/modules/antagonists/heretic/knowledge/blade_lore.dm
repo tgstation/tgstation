@@ -306,9 +306,7 @@
 		The second blow will be slightly weaker."
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
-	next_knowledge = list(
-			/datum/heretic_knowledge/spell/furious_steel,
-			)
+	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0
