@@ -86,7 +86,8 @@
 /turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "aw" = (
-/turf/open/floor/plating/icemoon,
+/obj/machinery/bookbinder,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ay" = (
 /obj/machinery/door/puzzle/keycard/library,
@@ -182,7 +183,7 @@
 /area/ruin/unpowered/buried_library)
 "aY" = (
 /obj/structure/table_frame/wood,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/snowed/icemoon,
 /area/ruin/unpowered/buried_library)
 "aZ" = (
 /obj/structure/fluff/paper/stack,
@@ -213,6 +214,7 @@
 /obj/structure/fluff/paper{
 	dir = 5
 	},
+/obj/effect/spawner/random/bureaucracy/paper,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -281,11 +283,11 @@
 /obj/item/flashlight/lantern/jade{
 	on = 1
 	},
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/snowed/icemoon,
 /area/ruin/unpowered/buried_library)
 "bA" = (
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/snowed/icemoon,
 /area/ruin/unpowered/buried_library)
 "bB" = (
 /obj/structure/fluff/paper/stack,
@@ -305,6 +307,7 @@
 	dir = 10
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/bureaucracy/paper,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -318,10 +321,23 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
+"bO" = (
+/obj/item/pen{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/unexplored)
 "bP" = (
 /obj/item/paper/crumpled/bloody/fluff/stations/lavaland/library/warning,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/buried_library)
+"cd" = (
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/carpet/black{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
@@ -357,8 +373,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "oi" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/snowed/icemoon,
 /area/ruin/unpowered/buried_library)
 "or" = (
 /obj/effect/decal/cleanable/dirt,
@@ -375,12 +390,25 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
+"pR" = (
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/buried_library)
+"qw" = (
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/cult,
+/area/ruin/unpowered/buried_library)
 "Aq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
+/area/ruin/unpowered/buried_library)
+"Be" = (
+/obj/structure/fluff/paper,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "DL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -395,6 +423,12 @@
 	dir = 1
 	},
 /mob/living/basic/pet/fox,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/buried_library)
+"EE" = (
+/obj/effect/spawner/random/bureaucracy/paper,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -420,10 +454,26 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
+"Ra" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/buried_library)
 "TP" = (
 /obj/item/feather,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
+/area/ruin/unpowered/buried_library)
+"Wb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff/paper,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "Xd" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -448,7 +498,7 @@ aa
 aa
 aa
 aa
-ad
+bO
 ad
 ad
 ad
@@ -498,7 +548,7 @@ ak
 aU
 ak
 ak
-an
+pR
 au
 ae
 af
@@ -518,7 +568,7 @@ aa
 ak
 ak
 aq
-an
+pR
 an
 ae
 bb
@@ -541,7 +591,7 @@ aa
 aa
 ak
 ak
-an
+aw
 aC
 ae
 DL
@@ -566,7 +616,7 @@ aa
 ad
 ac
 an
-ae
+EE
 an
 aM
 aO
@@ -598,7 +648,7 @@ aR
 GM
 oi
 gv
-bw
+Ra
 ah
 aZ
 ah
@@ -649,7 +699,7 @@ bz
 aD
 bB
 ak
-ae
+EE
 GM
 ae
 GM
@@ -672,7 +722,7 @@ aD
 aD
 aN
 an
-aw
+oi
 ak
 gv
 bK
@@ -690,16 +740,16 @@ al
 al
 al
 al
-ae
+EE
 ah
 aR
-aD
+cd
 an
 aD
 aD
 by
 GM
-aw
+oi
 gv
 ae
 bm
@@ -743,12 +793,12 @@ ay
 bw
 ah
 gv
-ae
+EE
 GM
 ae
 af
 an
-bi
+Be
 ah
 ak
 ah
@@ -777,7 +827,7 @@ ak
 ah
 ak
 bn
-pk
+Wb
 ac
 ad
 aa
@@ -788,7 +838,7 @@ ad
 al
 al
 ai
-ar
+qw
 al
 bc
 ah
