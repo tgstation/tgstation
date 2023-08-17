@@ -22,7 +22,6 @@
 
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	var/mob/fool = parent
 
 	src.target_alpha = target_alpha
 	src.animation_time = animation_time
