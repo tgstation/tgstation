@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
 			spawning.equip_to_slot_or_del(stored,ITEM_SLOT_SUITSTORE)
 	if(head)
-		if(spawning.head)
+		if(spawning.head && !isplasmaman(spawning))
 			qdel(spawning.head)
 		spawning.equip_to_slot_or_del(new head(spawning),ITEM_SLOT_HEAD)
 	//monkestation edit end
@@ -222,9 +222,11 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer
 	head = /obj/item/clothing/head/helmet/hat/cowboy //monkestation edit: cowboy sec
 	suit = /obj/item/clothing/suit/armor/secduster //monkestation edit: cowboy sec
-	suit_store = /obj/item/gun/energy/disabler
+	suit_store = /obj/item/gun/ballistic/automatic/pistol/paco/no_mag //monkestation edit: Paco sec
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
+		/obj/item/ammo_box/magazine/m35/rubber = 2, //monkestation edit: Paco sec
+		/obj/item/ammo_box/magazine/m35 = 1, //monkestation edit: Paco sec
 		)
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt

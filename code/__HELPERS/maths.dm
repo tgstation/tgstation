@@ -80,6 +80,41 @@
 			line += locate(current_x_step, current_y_step, starting_z)
 	return line
 
+/**
+ * Get a list of turfs in a perimeter given the `center_atom` and `radius`.
+ * Automatically rounds down decimals and does not accept values less than positive 1 as they dont play well with it.
+ * Is efficient on large circles but ugly on small ones
+ * Uses [Jesko`s method to the midpoint circle Algorithm](https://en.wikipedia.org/wiki/Midpoint_circle_algorithm).
+ */
+/proc/get_perimeter(atom/center, radius)
+	if(radius < 1)
+		return
+	var/rounded_radius = round(radius)
+	var/x = center.x
+	var/y = center.y
+	var/z = center.z
+	var/t1 = rounded_radius/16
+	var/dx = rounded_radius
+	var/dy = 0
+	var/t2
+	var/list/perimeter = list()
+	while(dx >= dy)
+		perimeter += locate(x + dx, y + dy, z)
+		perimeter += locate(x - dx, y + dy, z)
+		perimeter += locate(x + dx, y - dy, z)
+		perimeter += locate(x - dx, y - dy, z)
+		perimeter += locate(x + dy, y + dx, z)
+		perimeter += locate(x - dy, y + dx, z)
+		perimeter += locate(x + dy, y - dx, z)
+		perimeter += locate(x - dy, y - dx, z)
+		dy += 1
+		t1 += dy
+		t2 = t1 - dx
+		if(t2 > 0)
+			t1 = t2
+			dx -= 1
+	return perimeter
+
 ///Format a power value in W, kW, MW, or GW.
 /proc/display_power(powerused)
 	if(powerused < 1000) //Less than a kW

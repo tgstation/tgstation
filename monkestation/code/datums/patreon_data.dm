@@ -60,6 +60,8 @@
 			access_rank =  ACCESS_NUKIE_RANK
 
 /datum/patreon_data/proc/has_access(rank)
+	if(!access_rank)
+		assign_access_rank()
 	if(rank <= access_rank)
 		return TRUE
 	return FALSE

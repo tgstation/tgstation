@@ -765,7 +765,12 @@
 /datum/antagonist/heretic/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
 	var/datum/antagonist/heretic/new_heretic = new()
-	hosts_mind.add_antag_datum(new_heretic)
+	if(isobserver(spender))
+		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
+		newmob.equipOutfit(/datum/outfit/job/assistant)
+		newmob.mind.add_antag_datum(new_heretic)
+	else
+		hosts_mind.add_antag_datum(new_heretic)
 
 	if(!new_heretic.has_living_heart())
 		var/datum/heretic_knowledge/living_heart/heart_knowledge = new_heretic.get_knowledge(/datum/heretic_knowledge/living_heart)
