@@ -257,22 +257,17 @@
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	return ..() && user.can_speak(allow_mimes = TRUE)
 
-/datum/emote/living/laugh/get_sound(mob/living/user)
-	if(!ishuman(user))
+// MonkeStation Edit Start
+/datum/emote/living/laugh/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
 		return
-	var/mob/living/carbon/human/human_user = user
 
-	// MonkeStation Edit Start
 	// Alternative Laugh Hook
-	if(human_user.alternative_laughs.len)
-		return pick(human_user.alternative_laughs)
-	// MonkeStation Edit End
+	if(user.alternative_laughs.len)
+		return pick(user.alternative_laughs)
 
-	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_TRAIT(human_user, TRAIT_MIMING))
-		if(human_user.gender == FEMALE)
-			return 'sound/voice/human/womanlaugh.ogg'
-		else
-			return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
+	return user.dna.species.get_laugh_sound(user)
+// MonkeStation Edit End
 
 /datum/emote/living/look
 	key = "look"
