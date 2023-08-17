@@ -68,9 +68,6 @@
 		new_transform.Scale(0.65, 1)
 	other_visual.transform = new_transform
 
-/obj/item/mod/control
-
-
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
 	mod_link = new(src, starting_frequency, CALLBACK(src, PROC_REF(get_wearer)), CALLBACK(src, PROC_REF(can_call)), CALLBACK(src, PROC_REF(make_link_visual)), CALLBACK(src, PROC_REF(get_link_visual)), CALLBACK(src, PROC_REF(delete_link_visual)))
@@ -97,7 +94,7 @@
 				mod_link.frequency = tool_frequency
 
 /obj/item/mod/control/proc/can_call()
-	return wearer.stat < DEAD
+	return wearer && wearer.stat < DEAD
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -193,7 +190,7 @@
 
 /obj/item/clothing/neck/link_scryer/update_name(updates)
 	. = ..()
-	name = "[initial(name)][label ? " [label]" : ""]"
+	name = "[initial(name)][label ? " - [label]" : ""]"
 
 /obj/item/clothing/neck/link_scryer/Exited(atom/movable/gone, direction)
 	. = ..()
