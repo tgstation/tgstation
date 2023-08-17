@@ -148,6 +148,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
 	remove_verb(src, /mob/living/verb/pulled)
 	add_cell_sample()
 
