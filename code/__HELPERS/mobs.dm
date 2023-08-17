@@ -89,6 +89,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	if(!GLOB.pod_hair_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
+//Monkestation Addition Start
 	if(!GLOB.ipc_screens_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_screens, GLOB.ipc_screens_list)
 	if(!GLOB.ipc_antennas_list.len)
@@ -103,6 +104,11 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list)
 	if(!GLOB.anime_top_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list)
+	if(!GLOB.arachnid_appendages_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list)
+	if(!GLOB.arachnid_chelicerae_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list)
+//Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
 	return(list(
@@ -122,15 +128,17 @@
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"moth_antennae" = pick(GLOB.moth_antennae_list),
 		"moth_markings" = pick(GLOB.moth_markings_list),
-		"ipc_screen" = pick(GLOB.ipc_screens_list),
-		"ipc_antenna" = pick(GLOB.ipc_antennas_list),
-		"ipc_chassis" = pick(GLOB.ipc_chassis_list),
-		"tail_monkey" = "Chimp",
+		"ipc_screen" = pick(GLOB.ipc_screens_list), //Monkestation Addition
+		"ipc_antenna" = pick(GLOB.ipc_antennas_list), //Monkestation Addition
+		"ipc_chassis" = pick(GLOB.ipc_chassis_list), //Monkestation Addition
+		"tail_monkey" = "Chimp", //Monkestation Addition
 		"pod_hair" = pick(GLOB.pod_hair_list),
-		"anime_top" = pick(GLOB.anime_top_list),
-		"anime_middle" = pick(GLOB.anime_middle_list),
-		"anime_bottom" = pick(GLOB.anime_bottom_list),
-		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
+		"anime_top" = pick(GLOB.anime_top_list), //Monkestation Addition
+		"anime_middle" = pick(GLOB.anime_middle_list), //Monkestation Addition
+		"anime_bottom" = pick(GLOB.anime_bottom_list), //Monkestation Addition
+		"arachnid_appendages" = pick(GLOB.arachnid_appendages_list), //Monkestation Addition
+		"arachnid_chelicerae" = pick(GLOB.arachnid_chelicerae_list), //Monkestation Addition
+		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]", //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)
