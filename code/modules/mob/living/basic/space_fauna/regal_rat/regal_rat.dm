@@ -190,7 +190,7 @@
 		return TRUE // it might be possible to attack this? we'll find out soon enough
 
 	var/mob/living/living_target = the_target
-	if (living_target.stat == DEAD)
+	if (HAS_TRAIT(living_target, TRAIT_FAKEDEATH) || living_target.stat == DEAD)
 		balloon_alert(src, "already dead!")
 		return FALSE
 
@@ -208,7 +208,7 @@
 	visible_message(
 		span_warning("[src] starts licking [target] passionately!"),
 		span_notice("You start licking [target]..."),
-		span_warning("You hear a disgusting slurping sound...")
+		span_warning("You hear a disgusting slurping sound..."),
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
