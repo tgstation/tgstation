@@ -710,8 +710,8 @@
 "anT" = (
 /obj/structure/chair/sofa/corp/right{
 	desc = "Looks like someone threw it out. Covered in donut crumbs.";
-	name = "couch";
-	dir = 1
+	dir = 1;
+	name = "couch"
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -4584,6 +4584,7 @@
 	dir = 1
 	},
 /obj/machinery/modular_computer/preset/id,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "bFr" = (
@@ -5154,8 +5155,8 @@
 "bRq" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/harebell{
-	pixel_y = 10;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /obj/item/food/grown/harebell{
 	pixel_x = 8;
@@ -7353,8 +7354,8 @@
 /obj/structure/table/wood,
 /obj/structure/cable,
 /obj/item/storage/backpack/satchel/leather/withwallet{
-	pixel_y = 4;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 4
 	},
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
@@ -8898,8 +8899,8 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
-	pixel_y = 9;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 9
 	},
 /obj/item/stack/sheet/mineral/plasma{
 	pixel_y = 3
@@ -10974,8 +10975,8 @@
 /area/station/commons/dorms)
 "edr" = (
 /obj/item/flashlight/flare/candle{
-	pixel_y = 10;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 10
 	},
 /obj/machinery/light_switch/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -17460,8 +17461,8 @@
 	name = "Xenobio Pen 8 Blast Door"
 	},
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #8"
+	name = "Containment Pen #8";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -20887,8 +20888,8 @@
 	name = "Xenobio Pen 1 Blast Door"
 	},
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #1"
+	name = "Containment Pen #1";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -21308,8 +21309,8 @@
 /area/station/engineering/supermatter/room)
 "hVn" = (
 /obj/machinery/door/window/right/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #8"
+	name = "Containment Pen #8";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -24330,8 +24331,8 @@
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/cup/soda_cans/monkey_energy{
-	pixel_y = 7;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 7
 	},
 /turf/open/floor/iron/white/smooth_half,
 /area/station/commons/fitness)
@@ -31144,12 +31145,12 @@
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/food/grown/poppy{
-	pixel_y = 3;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/item/food/grown/poppy{
-	pixel_y = 7;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 7
 	},
 /obj/item/flashlight/flare/candle{
 	pixel_x = 12;
@@ -34628,8 +34629,8 @@
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/food/grown/poppy{
-	pixel_y = 7;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 7
 	},
 /obj/item/food/grown/poppy{
 	pixel_y = 2
@@ -35504,8 +35505,8 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/machinery/button/door/directional/west{
-	name = "Privacy Shutters";
-	id = "lawyer_shutters"
+	id = "lawyer_shutters";
+	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -42643,8 +42644,8 @@
 /area/station/science/lab)
 "psU" = (
 /obj/machinery/door/window/right/directional/east{
-	req_access = list("xenobiology");
-	name = "Containment Pen #1"
+	name = "Containment Pen #1";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -47460,12 +47461,12 @@
 	dir = 4
 	},
 /obj/item/book/manual/wiki/surgery{
-	pixel_y = -1;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -1
 	},
 /obj/item/book/manual/wiki/medicine{
-	pixel_y = 3;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
@@ -48366,8 +48367,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/door/window/left/directional/east{
-	req_access = list("xenobiology");
-	name = "Maximum Security Test Chamber"
+	name = "Maximum Security Test Chamber";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -48507,7 +48508,6 @@
 /turf/open/floor/plating/airless,
 /area/station/solars/starboard/aft)
 "rxP" = (
-/obj/item/radio/intercom/directional/north,
 /obj/machinery/computer/security,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -57217,8 +57217,8 @@
 /obj/structure/lattice,
 /obj/structure/chair/sofa/corp/left{
 	desc = "Looks like someone threw it out. Covered in donut crumbs.";
-	name = "couch";
-	dir = 4
+	dir = 4;
+	name = "couch"
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -57904,8 +57904,8 @@
 	name = "Xenobio Pen 2 Blast Door"
 	},
 /obj/machinery/door/window/right/directional/south{
-	req_access = list("xenobiology");
-	name = "Containment Pen #2"
+	name = "Containment Pen #2";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -58944,9 +58944,9 @@
 /area/station/science/xenobiology)
 "veo" = (
 /obj/structure/weightmachine/weightlifter{
+	color = "#f5a183";
 	desc = "A rusty old bench press machine, who dumped this out here?";
-	name = "rusty bench press";
-	color = "#f5a183"
+	name = "rusty bench press"
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
@@ -60710,9 +60710,9 @@
 /obj/machinery/button/door/directional/south{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control";
-	req_access = list("qm");
+	pixel_x = 8;
 	pixel_y = -26;
-	pixel_x = 8
+	req_access = list("qm")
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -61284,9 +61284,9 @@
 "vRi" = (
 /obj/structure/lattice,
 /obj/structure/chair/sofa/corp/corner{
+	desc = "Looks like someone threw it out. Covered in donut crumbs.";
 	dir = 1;
-	name = "couch";
-	desc = "Looks like someone threw it out. Covered in donut crumbs."
+	name = "couch"
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -64584,8 +64584,8 @@
 "xaj" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/gloves{
-	pixel_y = 9;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 9
 	},
 /obj/item/assembly/igniter{
 	pixel_y = -3
