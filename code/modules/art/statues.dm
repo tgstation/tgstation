@@ -431,6 +431,8 @@ Moving interrupts
 
 	/// The thing it will look like - Unmodified resulting statue appearance
 	var/atom/movable/current_target
+	/// The icon that we apply filters too
+	var/icon/finished_statue
 	/// Currently chosen preset statue type
 	var/current_preset_type
 	//Table of required materials for each non-abstract statue type
@@ -438,13 +440,13 @@ Moving interrupts
 	/// statue completion from 0 to 1.0
 	var/completion = 0
 	/// Greyscaled target with cutout filter
-	var/mutable_appearance/target_appearance_with_filters
+	var/mutable_appearance/statue_overlay
 	/// HSV color filters parameters
 	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
 
 /obj/structure/carving_block/Destroy()
 	current_target = null
-	target_appearance_with_filters = null
+	//target_appearance_with_filters = null
 	return ..()
 
 /obj/structure/carving_block/proc/set_target(atom/movable/target, mob/living/user)
@@ -457,15 +459,13 @@ Moving interrupts
 /obj/structure/carving_block/proc/reset_target()
 	current_target = null
 	current_preset_type = null
-	target_appearance_with_filters = null
+	//target_appearance_with_filters = null
 
 /obj/structure/carving_block/update_overlays()
 	. = ..()
-	if(!target_appearance_with_filters)
+	if(!statue_overlay)
 		return
-	//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
-	var/mutable_appearance/clone = new(target_appearance_with_filters)
-	. += clone
+	. += statue_overlay
 
 /obj/structure/carving_block/proc/is_viable_target(mob/living/user, atom/movable/target)
 	//Only things on turfs
@@ -501,12 +501,16 @@ Moving interrupts
 	if(!current_target)
 		return
 
-	if(!target_appearance_with_filters)
-		target_appearance_with_filters = new(current_target.appearance)
-		// KEEP_APART in case carving block gets KEEP_TOGETHER from somewhere like material texture filters.
-		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER | KEEP_APART
-		//Doesn't use filter helpers because MAs aren't atoms
-		target_appearance_with_filters.filters = filter(type="color", color=greyscale_with_value_bump, space=FILTER_COLOR_HSV)
+	if(!finished_statue)
+		finished_statue = icon('icons/blanks/32x32.dmi', "nothing")
+
+		for(var/direction in GLOB.cardinals)
+			var/icon/flat_icon = getFlatIcon(current_target, defdir=direction, no_anim = TRUE)
+			finished_statue.Insert(flat_icon, dir=direction)
+			finished_statue.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
+
+		statue_overlay = new(finished_statue)
+		statue_overlay.filters = filter(type="color", color=greyscale_with_value_bump, space=FILTER_COLOR_HSV)
 
 	completion = value
 	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
@@ -514,12 +518,12 @@ Moving interrupts
 		if(0)
 			//delete uncovered and reset filters
 			remove_filter("partial_uncover")
-			target_appearance_with_filters = null
+			finished_statue = null
 		else
 			var/mask_offset = min(world.icon_size, round(completion * world.icon_size))
 			remove_filter("partial_uncover")
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
-			target_appearance_with_filters.filters = filter(type="alpha", icon=white,y=-mask_offset, flags=MASK_INVERSE)
+			statue_overlay.filters = filter(type="alpha", icon=white, y=-mask_offset, flags=MASK_INVERSE)
 	update_appearance()
 
 /// Returns a list of preset statues carvable from this block depending on the custom materials
@@ -550,15 +554,10 @@ Moving interrupts
 	name = "custom statue"
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
-	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER | LONG_GLIDE //Added keep together in case targets has weird layering
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-	/// primary statue overlay
-	var/mutable_appearance/content_ma
-	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
-
 /obj/structure/statue/custom/Destroy()
-	content_ma = null
+	//content_ma = null
 	return ..()
 
 /obj/structure/statue/custom/proc/set_visuals(atom/movable/target)
@@ -570,25 +569,5 @@ Moving interrupts
 		statue_icon.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
 
 	icon = statue_icon
-
-/obj/structure/statue/custom/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	update_content_planes()
-	update_appearance()
-
-/obj/structure/statue/custom/proc/update_content_planes()
-	if(!content_ma)
-		return
-	var/turf/our_turf = get_turf(src)
-	// MA's stored in the overlays list are not actually mutable, they've been flattened
-	// This proc unflattens them, updates them, and then reapplies
-	var/list/created = update_appearance_planes(list(content_ma), GET_TURF_PLANE_OFFSET(our_turf))
-	content_ma = created[1]
-
-/obj/structure/statue/custom/update_overlays()
-	. = ..()
-	if(content_ma)
-		. += content_ma
 
 #undef SCULPT_SOUND_INCREMENT
