@@ -205,7 +205,7 @@
 			/mob/living/basic/pet/dog/corgi,
 			/mob/living/basic/pet/dog/pug,
 			/mob/living/basic/pet/dog/bullterrier,
-			/mob/living/simple_animal/hostile/lizard,
+			/mob/living/basic/lizard,
 			/mob/living/simple_animal/hostile/ant
 		)
 
