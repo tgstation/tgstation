@@ -26,7 +26,7 @@
 	for(var/i in 1 to rand(0, max_ammo*2))
 		rotate()
 
-/obj/item/ammo_box/magazine/internal/cylinder/ammo_list(drop_list = FALSE)
+/obj/item/ammo_box/magazine/internal/cylinder/ammo_list()
 	var/list/no_nulls_ammo = stored_ammo.Copy()
 	list_clear_nulls(no_nulls_ammo)
 	return no_nulls_ammo
