@@ -132,7 +132,7 @@
 "cZ" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
-/obj/item/storage/toolbox/ammobox/a762,
+/obj/item/ammo_box/magazine/m7mm,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "da" = (
