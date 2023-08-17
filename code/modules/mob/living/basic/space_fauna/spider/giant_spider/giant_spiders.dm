@@ -263,17 +263,17 @@
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	web_speed = 0.7
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/tarantula/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
 	web_solid.Grant(src)
 
-	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
 	passage_web.Grant(src)
 
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
@@ -543,10 +543,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
 
