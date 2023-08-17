@@ -226,7 +226,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	if(action != "toggle")
 		return
@@ -314,7 +314,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/ui_act(action, list/params)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	if(action == "toggle")
 		if(active)
