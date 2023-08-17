@@ -344,8 +344,8 @@ Doesn't work on other aliens/AI.*/
 	new choice_path(owner.loc)
 	return TRUE
 
-/datum/action/cooldown/sneak/alien
-	name = "Sneak"
+/datum/action/cooldown/mob_cooldown/sneak/alien
+	name = "Alien Sentinel Sneak"
 	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
