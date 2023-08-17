@@ -14,6 +14,9 @@
 "nk" = (
 /turf/open/space/basic,
 /area/space)
+"zk" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
 "ME" = (
 /obj/machinery/elevator_control_panel/directional/north{
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
@@ -26,22 +29,25 @@
 "QC" = (
 /turf/template_noop,
 /area/template_noop)
+"Ue" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 
 (1,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -55,20 +61,20 @@ QC
 QC
 "}
 (2,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -82,20 +88,20 @@ QC
 QC
 "}
 (3,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -109,19 +115,19 @@ QC
 QC
 "}
 (4,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -136,19 +142,19 @@ QC
 QC
 "}
 (5,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -163,19 +169,19 @@ QC
 QC
 "}
 (6,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -190,19 +196,19 @@ QC
 QC
 "}
 (7,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -217,17 +223,17 @@ QC
 QC
 "}
 (8,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
 nk
 nk
 nk
@@ -244,8 +250,8 @@ QC
 QC
 "}
 (9,1,1) = {"
-nk
-nk
+zk
+zk
 nk
 nk
 nk
@@ -271,7 +277,7 @@ QC
 QC
 "}
 (10,1,1) = {"
-nk
+zk
 nk
 nk
 nk
@@ -298,7 +304,7 @@ nk
 nk
 "}
 (11,1,1) = {"
-nk
+zk
 nk
 nk
 nk
@@ -325,7 +331,7 @@ nk
 nk
 "}
 (12,1,1) = {"
-nk
+zk
 nk
 nk
 nk
@@ -352,7 +358,7 @@ nk
 nk
 "}
 (13,1,1) = {"
-nk
+zk
 nk
 nk
 nk
@@ -487,7 +493,7 @@ nk
 nk
 "}
 (18,1,1) = {"
-nk
+zk
 nk
 nk
 nk
@@ -514,7 +520,7 @@ nk
 nk
 "}
 (19,1,1) = {"
-nk
+zk
 nk
 nk
 nk
@@ -541,7 +547,7 @@ nk
 nk
 "}
 (20,1,1) = {"
-nk
+zk
 nk
 nk
 nk
@@ -568,8 +574,8 @@ nk
 nk
 "}
 (21,1,1) = {"
-nk
-nk
+Ue
+Ue
 nk
 nk
 nk
@@ -595,13 +601,13 @@ QC
 QC
 "}
 (22,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -622,13 +628,13 @@ QC
 QC
 "}
 (23,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
 nk
 nk
 nk
@@ -649,13 +655,13 @@ QC
 QC
 "}
 (24,1,1) = {"
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -676,6 +682,13 @@ QC
 QC
 "}
 (25,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -691,18 +704,18 @@ nk
 nk
 nk
 nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
 "}
 (26,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -718,18 +731,18 @@ nk
 nk
 nk
 nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
 "}
 (27,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -745,18 +758,18 @@ nk
 nk
 nk
 nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
 "}
 (28,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -772,18 +785,18 @@ nk
 nk
 nk
 nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
 "}
 (29,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -799,18 +812,18 @@ nk
 nk
 nk
 nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
 "}
 (30,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
 nk
 nk
 nk
@@ -825,15 +838,8 @@ nk
 nk
 nk
 nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-nk
+zk
+zk
+zk
+zk
 "}
