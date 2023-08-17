@@ -214,6 +214,7 @@ GLOBAL_VAR(restart_counter)
 	var/list/input = params2list(T)
 	if(input[1] == "TWITCH-API")
 		SStwitch.handle_topic(input)
+
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
 		if(I in input)
