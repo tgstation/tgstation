@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
-/obj/item/clothing/under/rank/civilian/bartender/purple
+/obj/item/clothing/under/rank/civilian/purple_bartender
 	desc = "It looks like it has lots of flair!"
 	name = "purple bartender's uniform"
 	icon_state = "purplebartender"

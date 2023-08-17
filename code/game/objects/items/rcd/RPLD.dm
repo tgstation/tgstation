@@ -16,10 +16,6 @@
 
 	///type of the plumbing machine
 	var/obj/machinery/blueprint = null
-	///index, used in the attack self to get the type. stored here since it doesnt change
-	var/list/choices = list()
-	///All info for construction
-	var/list/machinery_data = list("cost" = list())
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
 	var/list/plumbing_design_types
 	///Current selected layer
@@ -34,46 +30,52 @@
 		"Fourth Layer" = 4,
 		"Fifth Layer" = 5,
 	)
+	///Design types for general plumbing constructor
+	var/static/list/general_design_types = list(
+		//category 1 Synthesizers i.e devices which creates , reacts & destroys chemicals
+		"Synthesizers" = list(
+			/obj/machinery/plumbing/synthesizer = 15,
+			/obj/machinery/plumbing/reaction_chamber/chem = 15,
+			/obj/machinery/plumbing/grinder_chemical = 30,
+			/obj/machinery/plumbing/growing_vat = 20,
+			/obj/machinery/plumbing/fermenter = 30,
+			/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
+			/obj/machinery/plumbing/disposer = 10,
+			/obj/machinery/plumbing/buffer = 10, //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
+		),
+
+		//category 2 distributors i.e devices which inject , move around , remove chemicals from the network
+		"Distributors" = list(
+			/obj/machinery/duct = 1,
+			/obj/machinery/plumbing/layer_manifold = 5,
+			/obj/machinery/plumbing/input = 5,
+			/obj/machinery/plumbing/filter = 5,
+			/obj/machinery/plumbing/splitter = 5,
+			/obj/machinery/plumbing/sender = 20,
+			/obj/machinery/plumbing/output = 5,
+		),
+
+		//category 3 Storage i.e devices which stores & makes the processed chemicals ready for consumption
+		"Storage" = list(
+			/obj/machinery/plumbing/tank = 20,
+			/obj/machinery/plumbing/acclimator = 10,
+			/obj/machinery/plumbing/bottler = 50,
+			/obj/machinery/plumbing/pill_press = 20,
+			/obj/machinery/iv_drip/plumbing = 20
+		),
+	)
 
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
 
-	//design types supported for this plumbing rcd
-	set_plumbing_designs()
+	plumbing_design_types = general_design_types
 
-	//set cost of each machine & initial blueprint
-	for(var/obj/machinery/plumbing/plumbing_type as anything in plumbing_design_types)
-		machinery_data["cost"][plumbing_type] = plumbing_design_types[plumbing_type]
-	blueprint =  plumbing_design_types[1]
-
-/obj/item/construction/plumbing/proc/set_plumbing_designs()
-	plumbing_design_types = list(
-		//category 1 Synthesizers i.e devices which creates , reacts & destroys chemicals
-		/obj/machinery/plumbing/synthesizer = 15,
-		/obj/machinery/plumbing/reaction_chamber/chem = 15,
-		/obj/machinery/plumbing/grinder_chemical = 30,
-		/obj/machinery/plumbing/growing_vat = 20,
-		/obj/machinery/plumbing/fermenter = 30,
-		/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
-		/obj/machinery/plumbing/disposer = 10,
-		/obj/machinery/plumbing/buffer = 10, //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
-
-		//category 2 distributors i.e devices which inject , move around , remove chemicals from the network
-		/obj/machinery/duct = 1,
-		/obj/machinery/plumbing/layer_manifold = 5,
-		/obj/machinery/plumbing/input = 5,
-		/obj/machinery/plumbing/filter = 5,
-		/obj/machinery/plumbing/splitter = 5,
-		/obj/machinery/plumbing/sender = 20,
-		/obj/machinery/plumbing/output = 5,
-
-		//category 3 Storage i.e devices which stores & makes the processed chemicals ready for consumption
-		/obj/machinery/plumbing/tank = 20,
-		/obj/machinery/plumbing/acclimator = 10,
-		/obj/machinery/plumbing/bottler = 50,
-		/obj/machinery/plumbing/pill_press = 20,
-		/obj/machinery/iv_drip/plumbing = 20
-	)
+	/**
+	 * plumbing_design_types[1] = "Synthesizers"
+	 * plumbing_design_types["Synthesizers"] = <list of designs under synthesizers>
+	 * <list of designs under synthesizers>[1] = <first design in this list>
+	 */
+	blueprint = plumbing_design_types[plumbing_design_types[1]][1]
 
 /obj/item/construction/plumbing/equipped(mob/user, slot, initial)
 	. = ..()
@@ -113,48 +115,37 @@
 /obj/item/construction/plumbing/ui_static_data(mob/user)
 	return list("paint_colors" = GLOB.pipe_paint_colors)
 
-///find which category this design belongs to
-/obj/item/construction/plumbing/proc/get_category(obj/machinery/recipe)
-	if(ispath(recipe, /obj/machinery/plumbing))
-		var/obj/machinery/plumbing/plumbing_design = recipe
-		return initial(plumbing_design.category)
-	else if(ispath(recipe , /obj/machinery/duct))
-		return "Distribution"
-	else
-		return "Storage"
-
 /obj/item/construction/plumbing/ui_data(mob/user)
 	var/list/data = ..()
 
 	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
 	data["selected_color"] = current_color
 	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"
-	data["selected_category"] = get_category(blueprint)
 	data["selected_recipe"] = initial(blueprint.name)
 
-	var/list/category_list = list()
-	var/category_name = ""
-	var/obj/machinery/recipe = null
+	var/category_list = list()
+	for(var/category_name in plumbing_design_types)
+		var/list/designs = plumbing_design_types[category_name]
 
-	for(var/i in 1 to plumbing_design_types.len)
-		recipe = plumbing_design_types[i]
+		//Create category
+		var/list/item_list = list()
+		item_list["cat_name"] = category_name //used by RapidPipeDispenser.js
+		item_list["recipes"] = list() //used by RapidPipeDispenser.js
+		category_list[category_name] = item_list
 
-		category_name = get_category(recipe) //get category of design
-		if(!category_list[category_name])
-			var/list/item_list = list()
-			item_list["cat_name"] = category_name //used by RapidPipeDispenser.js
-			item_list["recipes"] = list() //used by RapidPipeDispenser.js
-			category_list[category_name] = item_list
+		//Add designs to category
+		for(var/obj/machinery/recipe as anything in designs)
+			category_list[category_name]["recipes"] += list(list(
+				"icon" = initial(recipe.icon_state),
+				"name" = initial(recipe.name),
+			))
 
-		//add item to category
-		category_list[category_name]["recipes"] += list(list(
-			"index" = i,
-			"icon" = initial(recipe.icon_state),
-			"name" = initial(recipe.name),
-		))
+			//Set selected category
+			if(blueprint == recipe)
+				data["selected_category"] = category_name
 
 	data["categories"] = list()
-	for(category_name in category_list)
+	for(var/category_name in category_list)
 		data["categories"] += list(category_list[category_name])
 
 	return data
@@ -176,9 +167,15 @@
 			if(layer != null) //validate if this value exists in the list
 				current_layer = layer
 		if("recipe")
-			var/design = plumbing_design_types[text2num(params["id"])]
-			if(design != null) //validate if design is valid
-				blueprint = design
+			var/category = params["category"]
+			if(!plumbing_design_types[category])
+				return FALSE
+
+			var/design = plumbing_design_types[category][text2num(params["id"]) + 1]
+			if(!design)
+				return FALSE
+			blueprint = design
+
 			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
 
 	return TRUE
@@ -186,23 +183,31 @@
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
 /obj/item/construction/plumbing/proc/create_machine(atom/destination, mob/user)
-	if(!machinery_data || !isopenturf(destination))
+	if(!isopenturf(destination))
+		return FALSE
+
+	var/cost = 0
+	for(var/category in plumbing_design_types)
+		cost = plumbing_design_types[category][blueprint]
+		if(cost)
+			break
+	if(!cost)
 		return FALSE
 
 	//resource & placement sanity check before & after delay
 	var/is_allowed = TRUE
-	if(!checkResource(machinery_data["cost"][blueprint], user) || !(is_allowed = canPlace(destination)))
+	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
 			balloon_alert(user, "turf is blocked!")
-			return FALSE
-	if(!do_after(user, machinery_data["cost"][blueprint], target = destination)) //"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
 		return FALSE
-	if(!checkResource(machinery_data["cost"][blueprint], user) || !(is_allowed = canPlace(destination)))
+	if(!do_after(user, cost, target = destination)) //"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
+		return FALSE
+	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
 			balloon_alert(user, "turf is blocked!")
-			return FALSE
+		return FALSE
 
-	if(!useResource(machinery_data["cost"][blueprint], user))
+	if(!useResource(cost, user))
 		return FALSE
 	activate()
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -249,16 +254,24 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(target.type in plumbing_design_types)
-		var/obj/machinery/machine_target = target
-		if(machine_target.anchored)
-			balloon_alert(user, "anchor first!")
+
+	for(var/category_name in plumbing_design_types)
+		var/list/designs = plumbing_design_types[category_name]
+
+		for(var/obj/machinery/recipe as anything in designs)
+			if(target.type != recipe)
+				continue
+
+			var/obj/machinery/machine_target = target
+			if(machine_target.anchored)
+				balloon_alert(user, "unanchor first!")
+				return
+			if(do_after(user, 20, target = target))
+				machine_target.deconstruct() //Let's not substract matter
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return
-		if(do_after(user, 20, target = target))
-			machine_target.deconstruct() //Let's not substract matter
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
-	else
-		create_machine(target, user)
+
+	create_machine(target, user)
 
 /obj/item/construction/plumbing/AltClick(mob/user)
 	ui_interact(user)
@@ -289,55 +302,75 @@
 	inhand_icon_state = "plumberer_sci"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	///Design types for research plumbing constructor
+	var/list/static/research_design_types = list(
+		//Category 1 Synthesizers
+		"Synthesizers" = list(
+			/obj/machinery/plumbing/reaction_chamber = 15,
+			/obj/machinery/plumbing/grinder_chemical = 30,
+			/obj/machinery/plumbing/disposer = 10,
+			/obj/machinery/plumbing/growing_vat = 20,
+		),
 
-/obj/item/construction/plumbing/research/set_plumbing_designs()
-	plumbing_design_types = list(
-		//category 1 synthesizers
-		/obj/machinery/plumbing/reaction_chamber = 15,
-		/obj/machinery/plumbing/grinder_chemical = 30,
-		/obj/machinery/plumbing/disposer = 10,
-		/obj/machinery/plumbing/growing_vat = 20,
+		//Category 2 Distributors
+		"Distributors" = list(
+			/obj/machinery/duct = 1,
+			/obj/machinery/plumbing/input = 5,
+			/obj/machinery/plumbing/filter = 5,
+			/obj/machinery/plumbing/splitter = 5,
+			/obj/machinery/plumbing/output = 5,
+		),
 
-		//category 2 Distributors
-		/obj/machinery/duct = 1,
-		/obj/machinery/plumbing/input = 5,
-		/obj/machinery/plumbing/filter = 5,
-		/obj/machinery/plumbing/splitter = 5,
-		/obj/machinery/plumbing/output = 5,
-
-		//category 3 storage
-		/obj/machinery/plumbing/tank = 20,
-		/obj/machinery/plumbing/acclimator = 10,
+		//Category 3 storage
+		"Storage" = list(
+			/obj/machinery/plumbing/tank = 20,
+			/obj/machinery/plumbing/acclimator = 10,
+		),
 	)
+
+/obj/item/construction/plumbing/research/Initialize(mapload)
+	. = ..()
+
+	plumbing_design_types = research_design_types
 
 /obj/item/construction/plumbing/service
 	name = "service plumbing constructor"
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
 	icon_state = "plumberer_service"
+	///Design types for plumbing service constructor
+	var/static/list/service_design_types = list(
+		//Category 1 synthesizers
+		"Synthesizers" = list(
+			/obj/machinery/plumbing/synthesizer/soda = 15,
+			/obj/machinery/plumbing/synthesizer/beer = 15,
+			/obj/machinery/plumbing/reaction_chamber = 15,
+			/obj/machinery/plumbing/buffer = 10,
+			/obj/machinery/plumbing/fermenter = 30,
+			/obj/machinery/plumbing/grinder_chemical = 30,
+			/obj/machinery/plumbing/disposer = 10,
+		),
 
-/obj/item/construction/plumbing/service/set_plumbing_designs()
-	plumbing_design_types = list(
-		//category 1 synthesizers
-		/obj/machinery/plumbing/synthesizer/soda = 15,
-		/obj/machinery/plumbing/synthesizer/beer = 15,
-		/obj/machinery/plumbing/reaction_chamber = 15,
-		/obj/machinery/plumbing/buffer = 10,
-		/obj/machinery/plumbing/fermenter = 30,
-		/obj/machinery/plumbing/grinder_chemical = 30,
-		/obj/machinery/plumbing/disposer = 10,
-
-
-		//category 2 distributors
-		/obj/machinery/duct = 1,
-		/obj/machinery/plumbing/layer_manifold = 5,
-		/obj/machinery/plumbing/input = 5,
-		/obj/machinery/plumbing/filter = 5,
-		/obj/machinery/plumbing/splitter = 5,
-		/obj/machinery/plumbing/output/tap = 5,
-		/obj/machinery/plumbing/sender = 20,
+		//Category 2 distributors
+		"Distributors" = list(
+			/obj/machinery/duct = 1,
+			/obj/machinery/plumbing/layer_manifold = 5,
+			/obj/machinery/plumbing/input = 5,
+			/obj/machinery/plumbing/filter = 5,
+			/obj/machinery/plumbing/splitter = 5,
+			/obj/machinery/plumbing/output/tap = 5,
+			/obj/machinery/plumbing/sender = 20,
+		),
 
 		//category 3 storage
-		/obj/machinery/plumbing/bottler = 50,
-		/obj/machinery/plumbing/tank = 20,
-		/obj/machinery/plumbing/acclimator = 10,
+		"Storage" = list(
+			/obj/machinery/plumbing/bottler = 50,
+			/obj/machinery/plumbing/tank = 20,
+			/obj/machinery/plumbing/acclimator = 10,
+		),
 	)
+
+/obj/item/construction/plumbing/service/Initialize(mapload)
+	. = ..()
+
+	plumbing_design_types = service_design_types
+

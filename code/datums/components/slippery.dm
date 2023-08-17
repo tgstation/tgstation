@@ -73,6 +73,7 @@
 	knockdown_time = source.reset_fantasy_variable("knockdown_time", knockdown_time)
 	paralyze_time = source.reset_fantasy_variable("paralyze_time", paralyze_time)
 	var/previous_lube_flags = LAZYACCESS(source.fantasy_modifications, "lube_flags")
+	LAZYREMOVE(source.fantasy_modifications, "lube_flags")
 	if(!isnull(previous_lube_flags))
 		lube_flags = previous_lube_flags
 
