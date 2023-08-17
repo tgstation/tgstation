@@ -12,8 +12,11 @@
 	 * The solution to this nit is translating the missing decimals.
 	 * also flooring increases the distance from 0 for negative numbers.
 	 */
-	var/abs_pixel_y_offset = abs(body_position_pixel_y_offset)
-	var/translate = (abs_pixel_y_offset - round(abs_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
+	var/abs_pixel_y_offset = 0
+	var/translate = 0
+	if(current_size != RESIZE_DEFAULT_SIZE)
+		abs_pixel_y_offset = abs(get_pixel_y_offset_standing(current_size))
+		translate = (abs_pixel_y_offset - round(abs_pixel_y_offset)) * SIGN(body_position_pixel_y_offset)
 	var/final_dir = dir
 	var/changed = FALSE
 
@@ -21,10 +24,11 @@
 		changed = TRUE
 		ntransform.TurnTo(lying_prev, lying_angle)
 		if(lying_angle && lying_prev == 0)
-			ntransform.Translate(0, -translate)
+			if(translate)
+				ntransform.Translate(0, -translate)
 			if(dir & (EAST|WEST)) //Standing to lying and facing east or west
 				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-		else if(!lying_angle && lying_prev != 0)
+		else if(translate && !lying_angle && lying_prev != 0)
 			ntransform.Translate(0, translate)
 
 	if(resize != RESIZE_DEFAULT_SIZE)
