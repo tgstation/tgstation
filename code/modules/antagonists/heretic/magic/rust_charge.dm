@@ -27,7 +27,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/rust/DestroySurroundings(atom/movable/charger)
     if(!destroy_objects)
-        return
+		return
     for(var/dir in GLOB.cardinals)
         var/turf/source = get_turf(owner)
         var/turf/next_turf = get_step(charger, dir)
