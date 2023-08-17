@@ -61,7 +61,7 @@
 	route = PATH_SIDE
 
 /datum/heretic_knowledge/rifle_ammo
-	name = "Lionhunter Rifle Ammunition"
+	name = "Lionhunter Rifle Ammunition (free)"
 	desc = "Allows you to transmute 3 ballistic ammo casings (used or unused) of any caliber, \
 		including shotgun shot, with any animal hide to create an extra clip of ammunition for the Lionhunter Rifle."
 	gain_text = "The weapon came with three rough iron balls, intended to be used as ammunition. \
@@ -72,7 +72,7 @@
 		/obj/item/ammo_casing = 3,
 	)
 	result_atoms = list(/obj/item/ammo_box/a762/lionhunter)
-	cost = 1
+	cost = 0
 	route = PATH_SIDE
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
 	var/static/list/caliber_blacklist = list(
