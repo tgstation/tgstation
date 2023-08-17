@@ -5752,7 +5752,6 @@
 #include "monkestation\code\modules\mob\living\carbon\human\worn_overlays.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\monkey\dukeman.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\abductors.dm"
-#include "monkestation\code\modules\mob\living\carbon\human\species_type\abominations.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\android.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\arachnid.dm"
 #include "monkestation\code\modules\mob\living\carbon\human\species_type\dullahan.dm"

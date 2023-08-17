@@ -47,6 +47,9 @@
 /datum/species/arachnid/get_scream_sound(mob/living/carbon/human/human)
 	return 'monkestation/sound/voice/screams/arachnid/arachnid_scream.ogg'
 
+/datum/species/arachnid/get_laugh_sound(mob/living/carbon/human/human)
+	return 'monkestation/sound/voice/laugh/arachnid/arachnid_laugh.ogg'
+
 /datum/species/arachnid/get_species_description()
 	return "Arachnids are a species of humanoid spiders recently employed by Nanotrasen."
 
