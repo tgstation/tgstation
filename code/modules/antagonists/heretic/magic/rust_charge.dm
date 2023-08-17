@@ -20,10 +20,8 @@
 	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	victim.rust_heretic_act()
-	get_step(victim, EAST).rust_heretic_act()
-	get_step(victim, WEST).rust_heretic_act()
-	get_step(victim, NORTH).rust_heretic_act()
-	get_step(victim, SOUTH).rust_heretic_act()
+	for(var/dir in GLOB.cardinals)
+		get_step(victim, dir).rust_heretic_act()
 
 /datum/action/cooldown/mob_cooldown/charge/rust/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
