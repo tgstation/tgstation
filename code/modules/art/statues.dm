@@ -430,7 +430,7 @@ Moving interrupts
 	material_modifier = 0.5 //50% effectiveness of materials
 
 	/// The thing it will look like - Unmodified resulting statue appearance
-	var/current_target
+	var/atom/movable/current_target
 	/// Currently chosen preset statue type
 	var/current_preset_type
 	//Table of required materials for each non-abstract statue type
@@ -450,13 +450,17 @@ Moving interrupts
 /obj/structure/carving_block/proc/set_target(atom/movable/target, mob/living/user)
 	if(!is_viable_target(user, target))
 		return
-	if(istype(target,/obj/structure/statue/custom))
+/**
+	if(istype(target, /obj/structure/statue/custom))
 		var/obj/structure/statue/custom/original = target
 		current_target = original.content_ma
 	else
 		current_target = target.appearance
-	var/mutable_appearance/ma = current_target
-	user.balloon_alert(user, "sculpt target is [ma.name]")
+**/
+
+	current_target = target
+	//var/mutable_appearance/ma = current_target
+	user.balloon_alert(user, "sculpt target is [target.name]")
 
 /obj/structure/carving_block/proc/reset_target()
 	current_target = null
@@ -492,20 +496,25 @@ Moving interrupts
 		var/obj/structure/statue/custom/new_statue = new(get_turf(src))
 		new_statue.set_visuals(current_target)
 		new_statue.set_custom_materials(custom_materials)
-		var/mutable_appearance/ma = current_target
-		new_statue.name = "statue of [ma.name]"
-		new_statue.desc = "A carved statue depicting [ma.name]."
+
+		//fcopy(new_statue.icon, "statue_test_hur_dur2.dmi")
+
+		// so we don't end up with "statue of statue of statue of statue of statue of chair"
+		var/is_statue_original = istype(current_target, /obj/structure/statue/custom)
+		new_statue.name = is_statue_original ? current_target.name : "statue of [current_target.name]"
+		new_statue.desc = is_statue_original ? current_target.desc : "A carved statue depicting [current_target.name]."
 		qdel(src)
 
 /obj/structure/carving_block/proc/set_completion(value)
 	if(!current_target)
 		return
 	if(!target_appearance_with_filters)
-		target_appearance_with_filters = new(current_target)
+		target_appearance_with_filters = new(current_target.appearance)
 		// KEEP_APART in case carving block gets KEEP_TOGETHER from somewhere like material texture filters.
 		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER | KEEP_APART
 		//Doesn't use filter helpers because MAs aren't atoms
-		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
+		target_appearance_with_filters.filters = filter(type="color", color=greyscale_with_value_bump, space=FILTER_COLOR_HSV)
+
 	completion = value
 	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
 	switch(value)
@@ -514,10 +523,10 @@ Moving interrupts
 			remove_filter("partial_uncover")
 			target_appearance_with_filters = null
 		else
-			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
+			var/mask_offset = min(world.icon_size, round(completion * world.icon_size))
 			remove_filter("partial_uncover")
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
-			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
+			target_appearance_with_filters.filters = filter(type="alpha", icon=white,y=-mask_offset, flags=MASK_INVERSE)
 	update_appearance()
 
 
@@ -539,11 +548,11 @@ Moving interrupts
 /obj/structure/carving_block/proc/build_statue_cost_table()
 	. = list()
 	for(var/statue_type in subtypesof(/obj/structure/statue) - /obj/structure/statue/custom)
-		var/obj/structure/statue/S = new statue_type()
-		if(!S.icon_state || S.abstract_type == S.type || !S.custom_materials)
+		var/obj/structure/statue/statue_target = new statue_type()
+		if(!statue_target.icon_state || statue_target.abstract_type == statue_target.type || !statue_target.custom_materials)
 			continue
-		.[S.type] = S.custom_materials
-		qdel(S)
+		.[statue_target.type] = statue_target.custom_materials
+		qdel(statue_target)
 
 /obj/structure/statue/custom
 	name = "custom statue"
@@ -551,6 +560,7 @@ Moving interrupts
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER | LONG_GLIDE //Added keep together in case targets has weird layering
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
 	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
@@ -559,7 +569,22 @@ Moving interrupts
 	content_ma = null
 	return ..()
 
-/obj/structure/statue/custom/proc/set_visuals(model_appearance)
+/obj/structure/statue/custom/proc/set_visuals(atom/movable/target)
+	var/icon/statue_icon = icon('icons/blanks/32x32.dmi', "nothing")
+
+	//if(ishuman(target))
+	//	statue_icon = get_flat_existing_human_icon(target)
+	//else
+	for(var/direction in GLOB.cardinals)
+		var/icon/flat_icon = getFlatIcon(target, defdir=direction, no_anim = TRUE)
+		statue_icon.Insert(flat_icon, dir=direction)
+		statue_icon.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
+
+	icon = statue_icon
+
+	//var/finalpath = "[GLOB.picture_log_directory]/[number].png"
+
+/**
 	if(content_ma)
 		QDEL_NULL(content_ma)
 	content_ma = new
@@ -586,13 +611,14 @@ Moving interrupts
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
 			continue
-		underlays_to_remove += real
+		underlays_to_remove += realsd
 	content_ma.underlays -= underlays_to_remove
 
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	update_content_planes()
 	update_appearance()
+**/
 
 /obj/structure/statue/custom/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
