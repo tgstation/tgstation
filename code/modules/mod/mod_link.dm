@@ -466,10 +466,10 @@
 	owner.clear_alert("[REF(caller)]_modlink")
 
 /atom/movable/screen/alert/modlink_call/Destroy()
-	var/mob/living/user = user_ref.resolve()
-	var/datum/mod_link/caller = caller_ref.resolve()
+	var/mob/living/user = user_ref?.resolve()
+	var/datum/mod_link/caller = caller_ref?.resolve()
 	if(!user || !caller)
-		return
+		return ..()
 	caller.holder.balloon_alert(user, end_message)
 	return ..()
 
