@@ -34,8 +34,16 @@
 	var/material_amt = 4
 
 /obj/structure/door_assembly/multi_tile
+	name = "large airlock assembly"
+	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	base_name = "large airlock"
+	glass_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	airlock_type = /obj/machinery/door/airlock/multi_tile/public/glass
 	dir = EAST
 	multi_tile = TRUE
+	glass = TRUE
+	nomineral = TRUE
 
 /obj/structure/door_assembly/Initialize(mapload)
 	. = ..()

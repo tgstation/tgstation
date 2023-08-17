@@ -50502,7 +50502,7 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "mDO" = (
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Laundromat"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -62061,7 +62061,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Laundromat"
 	},
 /turf/open/floor/iron,
