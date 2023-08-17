@@ -144,15 +144,21 @@
 	return ..()
 
 /obj/machinery/netpod/close_machine(mob/user, density_to_set = TRUE)
-	if(!state_open || panel_open || !is_operational)
+	if(!state_open || panel_open || !is_operational || !iscarbon(user))
 		return
+
 	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
 	..()
+
+	if(!iscarbon(occupant))
+		open_machine()
+		return
+
 	enter_matrix()
 
 /obj/machinery/netpod/default_pry_open(obj/item/crowbar, mob/living/pryer)
-	if(isnull(occupant))
+	if(isnull(occupant) || !iscarbon(occupant))
 		if(!state_open)
 			open_machine()
 		else

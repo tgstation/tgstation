@@ -12,8 +12,11 @@
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual_domain
+	achievement_type = null
 	can_be_cybercop = FALSE
+	crusher_achievement_type = null
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 	health = 1400
+	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 	maxHealth = 1400
+	score_achievement_type = null

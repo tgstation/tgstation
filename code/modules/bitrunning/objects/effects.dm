@@ -7,7 +7,6 @@
 /// In case you want to gate the crate behind a special condition.
 /obj/effect/bitrunning/loot_signal
 	name = "Mysterious aura"
-
 	/// The amount required to spawn a crate
 	var/points_goal = 10
 	/// A special condition limits this from spawning a crate

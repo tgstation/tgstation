@@ -6,7 +6,7 @@
 	extra_loot = list(/obj/item/stack/pipe_cleaner_coil/random/five = 1)
 	help_text = "Not long ago, this place was thriving with activity. The workers \
 	seemed to have left in a hurry, and now productivity is in the bin. Something \
-	must have caused it, but what?"
+	must have trashed the place, but what?"
 	key = "pipedream"
 	map_name = "pipedream"
 	map_height = 48

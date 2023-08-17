@@ -103,7 +103,7 @@
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(pilot, TYPE_PROC_REF(/mob/living, emote), "scream")
 
-	pilot.apply_damage(damage, damage_type, def_zone, blocked, forced)
+	pilot.apply_damage(damage, damage_type, def_zone, blocked, forced, wound_bonus = CANT_WOUND)
 
 	if(pilot.stat > SOFT_CRIT) // KO!
 		full_avatar_disconnect(forced = TRUE)

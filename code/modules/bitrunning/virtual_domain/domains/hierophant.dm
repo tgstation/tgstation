@@ -15,8 +15,11 @@
 	name = "\improper Hierophant's Arena"
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual_domain
+	achievement_type = null
 	can_be_cybercop = FALSE
+	crusher_achievement_type = null
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
+	health = 1600
 	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	health = 1400
-	maxHealth = 1400
+	maxHealth = 1600
+	score_achievement_type = null
