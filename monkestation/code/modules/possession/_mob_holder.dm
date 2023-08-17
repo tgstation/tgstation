@@ -19,6 +19,7 @@
 	gender = NEUTER
 	advanced_simple = TRUE
 	can_be_held = TRUE
+	uses_directional_offsets = FALSE
 	/// how much hp we regen per process
 	var/health_regeneration = 1
 	/// the item we are currently
@@ -72,6 +73,11 @@
 
 /mob/living/basic/possession_holder/face_atom(atom/atom_to_face)
 	return
+
+/mob/living/basic/possession_holder/setDir(newdir)
+	. = ..()
+	dir = NORTH
+
 
 /mob/living/basic/possession_holder/can_equip(obj/item/I, slot, disable_warning, bypass_equip_delay_self)
 	switch(slot)

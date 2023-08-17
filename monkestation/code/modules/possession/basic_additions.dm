@@ -6,6 +6,7 @@
 	var/dexterous = FALSE
 
 	/// OFFSET SECTION - This is controllable by admins if they want
+	var/uses_directional_offsets = TRUE
 	///the shifted y offset of the left hand
 	var/list/l_y_shift
 	///the shifted y offset of the right hand
@@ -60,6 +61,8 @@
 			used_list_index = 4
 		if(dir == EAST)
 			used_list_index = 3
+		if(!uses_directional_offsets)
+			used_list_index = 1
 
 		var/icon_file = I.lefthand_file
 		var/x_offset = l_x_shift[used_list_index]
@@ -229,5 +232,9 @@
 			H.update_appearance()
 
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
+	. = ..()
+	update_held_items()
+
+/mob/living/basic/setDir(newdir)
 	. = ..()
 	update_held_items()
