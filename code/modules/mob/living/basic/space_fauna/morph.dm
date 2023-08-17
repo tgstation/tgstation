@@ -8,7 +8,7 @@
 	icon_state = "morph"
 	icon_living = "morph"
 	icon_dead = "morph_dead"
-	combat_mode = TRUE
+	istate = ISTATE_HARM | ISTATE_BLOCKING
 
 	mob_biotypes = MOB_BEAST
 	pass_flags = PASSTABLE

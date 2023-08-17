@@ -177,7 +177,7 @@
 		INVOKE_ASYNC(src, PROC_REF(pry_door), target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(!combat_mode)
+	if(!(istate &ISTATE_HARM))
 		INVOKE_ASYNC(src, PROC_REF(poison_target), target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 

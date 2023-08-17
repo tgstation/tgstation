@@ -546,7 +546,7 @@
 /// Handles the signal for the rat king looking inside the disposal
 /obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
-	if(king.combat_mode)
+	if(king.istate ISTATE_HARM)
 		return
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)

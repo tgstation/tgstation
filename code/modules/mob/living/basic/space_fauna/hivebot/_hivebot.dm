@@ -25,7 +25,7 @@
 	bubble_icon = "machine"
 
 	faction = list(FACTION_HIVEBOT)
-	combat_mode = TRUE
+	istate = ISTATE_HARM | ISTATE_BLOCKING
 	speech_span = SPAN_ROBOT
 	death_message = "blows apart!"
 

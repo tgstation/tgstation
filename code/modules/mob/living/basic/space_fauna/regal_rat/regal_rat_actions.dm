@@ -16,7 +16,6 @@
 
 /datum/action/cooldown/mob_cooldown/domain/proc/domain()
 	var/turf/location = get_turf(owner)
-	location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
 	switch (rand(1,10))
 		if (8)
 			new /obj/effect/decal/cleanable/vomit(location)
