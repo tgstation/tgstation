@@ -45,6 +45,7 @@
 	living_owner.face_atom(target)
 	living_owner.Stun(overwatch_duration, ignore_canstun = TRUE)
 	target.apply_status_effect(/datum/status_effect/overwatch, overwatch_duration, owner, projectile_type, projectile_sound)
+	owner.visible_message(span_warning("[owner]'s eye locks on to [target]!"))
 	StartCooldown()
 	return TRUE
 
