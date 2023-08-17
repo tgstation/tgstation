@@ -1455,6 +1455,8 @@
 
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()
+	if(speedies > 0 && HAS_TRAIT(src, TRAIT_SETTLER)) //if our movespeed mod is in the negatives, we don't modify it since that's a benefit
+		speedies *= 0.2
 	if(!speedies)
 		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
 	else
