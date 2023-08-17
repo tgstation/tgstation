@@ -1,4 +1,4 @@
-// Rust charge, added so i could put the lion hunter rifle earlier up the tree
+// Rust charge, added so i could put the lion hunter rifle earlier up the tree. must be started on rust, only destroys rusted stuff
 /datum/action/cooldown/mob_cooldown/charge/rust
 	name = "rust charge"
 	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
