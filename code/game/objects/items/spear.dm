@@ -208,6 +208,10 @@
  * Bone Spear
  */
 /obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+	icon = 'monkestation/icons/obj/items_and_weapons.dmi' //Monkestation Edit
+	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/weapons/melee_righthand.dmi' //End Of Monke Edit
 	icon_state = "bone_spear0"
 	base_icon_state = "bone_spear0"
 	icon_prefix = "bone_spear"
