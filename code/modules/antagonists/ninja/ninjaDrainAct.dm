@@ -325,12 +325,11 @@
 
 //CAMERAS//
 /obj/machinery/camera/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!status)
-		balloon_alert(ninja, "camera offline!")
-		return
-
 	if(isEmpProof(TRUE))
-		balloon_alert(ninja, "camera is shielded!") //This wouldn't do anything otherwise so it's nice to have feedback
+		balloon_alert(ninja, "camera is shielded!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
 		return
 
 	emp_act(EMP_HEAVY)
@@ -338,8 +337,11 @@
 
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!do_after(ninja, 1.5 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 7))
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(number = 3, cardinal_only = FALSE, source = src)
 	playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 35, TRUE)
@@ -378,8 +380,10 @@
 		balloon_alert(ninja, "already hacked!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	if(!do_after(ninja, 1 SECONDS, target = src))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
-		balloon_alert(ninja, "not enough charge!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(number = 3, cardinal_only = FALSE, source = src)
@@ -394,10 +398,10 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	AI_notify_hack()
-	if(!do_after(ninja, 25 SECONDS, target = src))
+	if(!do_after(ninja, 30 SECONDS, target = src))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	do_sparks(3, cardinal_only = FALSE, source = hacking_module.mod)
+	do_sparks(3, cardinal_only = FALSE, source = src)
 	emag_act(ninja)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -408,26 +412,33 @@
 		balloon_alert(ninja, "already hacked!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!do_after(ninja, 5 SECONDS, target = src))
+	if(!do_after(ninja, 2 SECONDS, target = src))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	do_sparks(3, cardinal_only = FALSE, source = hacking_module.mod)
-	balloon_alert(ninja, "system overloaded!")
+	do_sparks(3, cardinal_only = FALSE, source = src)
 	emag_act(ninja)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 //TRAM CONTROLS//
 /obj/machinery/computer/tram_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(obj_flags & EMAGGED)
-		balloon_alert(ninja, "already hacked!")
+	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running	//If we have a tram malfunction in progress, we extend it. Otherwise, we create one and lengthen its duration.
+	if(malfunction_event)
+		balloon_alert(ninja, "tram is already malfunctioning!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(specific_lift_id != MAIN_STATION_TRAM)
+		balloon_alert(ninja, "cannot hack this tram!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	AI_notify_hack()
-	if(!do_after(ninja, 30 SECONDS, target = src)) //Long hack duration, in a frequently travelled area. Completing this is, more than anything, an insult to the crew.
+
+	if(!do_after(ninja, 15 SECONDS, target = src)) //Shorter due to how incredibly easy it is for someone to (even unintentionally) interrupt.
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	emag_act(ninja)
+	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
+	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
+	malfunction_event.end_when *= 3
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
