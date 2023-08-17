@@ -430,7 +430,7 @@
 /turf/open/floor/wood,
 /area/centcom/wizard_station)
 "SD" = (
-/obj/structure/bookcase/random/reference,
+/obj/structure/bookcase/random/reference/wizard,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Tl" = (
