@@ -22,6 +22,8 @@
 	var/dire_warning = FALSE
 	/// Overrides the default colour you glow while channeling the rune, optional
 	var/glow_colour
+	/// Whether this finale is able to be picked upon ritual finale completion or not
+	var/unique = FALSE
 
 /**
  * Returns an entry for a radial menu for this choice.
@@ -399,6 +401,34 @@
 			mode.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
 			priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
 
+/**
+ * Gives the wizard a Wabbajack, and sets the entire crew against them. Flings the station to a different realm, dooming everyone.
+ * All crew are given the bad Happiness OD mood event, wrecking their sanity and spilling their marbles on the floor.
+ * Hallucination events? Who knows! It's chaos! It's madness! Relish in the blood of your enemies! Tear them limb from limb!
+ */
+/datum/grand_finale/cheese
+	dire_warning = TRUE
+	unique = TRUE
+
+/datum/grand_finale/cheese/trigger(mob/living/invoker)
+	message_admins("[key_name(invoker)] has thrown the station into daedric chaos")
+	SEND_SOUND(world, sound('sound/magic/timeparadox2.ogg'))
+
+	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
+		if (!crewmate.mind)
+			continue
+		if (crewmate == invoker || IS_HUMAN_INVADER(crewmate))
+			continue
+		to_chat(crewmate, span_notice("That damn [invoker] done gone ahead and thrown us into the \
+			Shivering Isles! This cannot stand!")) //come up with something better dumbass
+		crewmate.add_mood_event("happiness_drug", /datum/mood_event/happiness_drug_bad_od) //you're in a dimension of madness, have fun
+		create_vendetta(crewmate.mind, invoker.mind)
+
+	var/obj/item/gun/magic/staff/chaos/true_wabbajack/the_wabbajack = new
+	invoker.put_in_active_hand(the_wabbajack)
+	to_chat(invoker, span_mind_control("Every single rational thought and instinct is screaming at you to destroy [the_wabbajack] as you pick it up..."))
+
 #undef DOOM_SINGULARITY
 #undef DOOM_TESLA
 #undef DOOM_METEORS
+

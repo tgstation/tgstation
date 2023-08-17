@@ -44,6 +44,8 @@
 	) //Hard cheeses contain about 25% protein
 	w_class = WEIGHT_CLASS_NORMAL
 	rat_heal = 35
+	///Whether this cheese wheel is about to be whisked away to a hellish realm or not
+	var/touched_by_madness = FALSE
 
 /obj/item/food/cheese/wheel/Initialize(mapload)
 	. = ..()
@@ -54,6 +56,18 @@
 
 /obj/item/food/cheese/wheel/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+
+/**
+ * Whiffs away cheese that was touched by the chaos entity byond the realm. In layman's terms, deletes the cheese and throws sparks.
+ * Used in wizard grand rituals' optional cheesy alternative.
+ */
+/obj/item/food/cheese/wheel/proc/consume_cheese()
+	visible_message(span_revenwarning("...before being consumed in a vortex of chaos!"))
+	var/datum/effect_system/spark_spread/cheese_sparks = new
+	cheese_sparks.set_up(number = 1, cardinals_only = TRUE, location = get_turf(src))
+	cheese_sparks.attach(src)
+	cheese_sparks.start()
+	qdel(src)
 
 /obj/item/food/cheese/royal
 	name = "royal cheese"

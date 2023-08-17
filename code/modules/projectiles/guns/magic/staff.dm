@@ -129,9 +129,9 @@
 	no_den_usage = 1
 	school = SCHOOL_FORBIDDEN //this staff is evil. okay? it just is. look at this projectile type list. this is wrong.
 
-	/// Static list of all projectiles we can fire from our staff.
+	/// List of all projectiles we can fire from our staff.
 	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like
-	var/static/list/allowed_projectile_types = list(
+	var/list/allowed_projectile_types = list(
 		/obj/projectile/magic/animate,
 		/obj/projectile/magic/antimagic,
 		/obj/projectile/magic/arcane_barrage,
@@ -170,6 +170,34 @@
 	user.dropItemToGround(src, TRUE)
 	process_fire(user, user, FALSE)
 	return FALSE
+
+/**
+ * Staff of chaos given to the wizard upon completing a cheesy grand ritual. Is completely evil and if something
+ * breaks, it's completely intended. Fuck off.
+ * Also can be used by everyone, because why not.
+ */
+/obj/item/gun/magic/staff/chaos/true_wabbajack
+	name = "\proper Wabbajack"
+	desc = "If there is some deity out there, they've definitely skipped their psych appointment before creating this."
+	/* make new sprites? */
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //fuck you
+	max_charges = 999999 //fuck you
+	recharge_rate = 1
+	allow_intruder_use = TRUE
+	allowed_projectile_types = list()
+
+/obj/item/gun/magic/staff/chaos/true_wabbajack/Initialize(mapload)
+	. = ..()
+	allowed_projectile_types += subtypesof(/obj/projectile/magic)
+	allowed_projectile_types += subtypesof(/obj/projectile/temp)
+	allowed_projectile_types += subtypesof(/obj/projectile/bullet/rocket)
+	allowed_projectile_types += list(
+		/obj/projectile/curse_hand,
+		/obj/projectile/meteor,
+		/obj/projectile/beam/mindflayer,
+		/obj/projectile/plasma,
+		/obj/projectile/bullet/gyro,
+	) //this list can be expanded!
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"

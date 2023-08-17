@@ -1,4 +1,11 @@
 /**
+ * Total cheese goal to sacrifice to [REDACTED] during wizard grand rituals.
+ * The easiest way for a wizard to procure cheese is with Summon Cheese spell, which summons 9 per cast.
+ * The wizard needs to complete 7 rituals, so let's give them some breathing room with cheese offerings.
+ * 7 * 9 = 63, so the wizard can potentially miss two casts worth of cheese if they summon cheese on each rune.
+*/
+#define CHEESE_SACRIFICE_GOAL 50
+/**
  * The Grand Ritual is the Wizard's alternate victory condition
  * and also a tool to make funny distractions and progress the round state.
  *
@@ -30,6 +37,10 @@
 	var/drew_finale = FALSE
 	/// True while you are drawing a rune, prevents action spamming
 	var/drawing_rune = FALSE
+	/// Number of cheese sacrificed on previously drawn runes
+	var/total_cheese_sacrificed = 0
+	/// Whether we have sacrificed enough cheese or not
+	var/total_cheese_goal_met = FALSE
 	/// Weakref to a rune drawn in the current area, if there is one
 	var/datum/weakref/rune
 
@@ -189,12 +200,23 @@
 	if (drew_finale)
 		return new /obj/effect/grand_rune(target_turf, times_completed)
 	drew_finale = TRUE
+	if (total_cheese_sacrificed >= CHEESE_SACRIFICE_GOAL)
+		return new /obj/effect/grand_rune/finale/cheesy (target_turf, times_completed)
 	return new /obj/effect/grand_rune/finale(target_turf, times_completed)
 
 /// Called when you finish invoking a rune you drew, get ready for another one.
-/datum/action/cooldown/grand_ritual/proc/on_rune_complete(atom/source)
+/datum/action/cooldown/grand_ritual/proc/on_rune_complete(atom/source, cheese_sacrificed)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_GRAND_RUNE_COMPLETE)
+	total_cheese_sacrificed += cheese_sacrificed
+	if(total_cheese_sacrificed >= CHEESE_SACRIFICE_GOAL)
+		if(!total_cheese_goal_met)
+			to_chat(owner, span_revenbignotice("YES! CHEESE! CHEESE FOR EVERYONE! SUCH A GRAND FEAST! YOU SHALL HAVE YOUR PRIZE, MY CHAMPION!!"))
+		else
+			total_cheese_goal_met = TRUE
+			to_chat(owner, span_revennotice("You hear maddening laughter as you are hit with an overwhelming odor of fine cheddar..."))
+	else
+		to_chat(owner, span_revendanger("You please me, mortal. Do continue to send cheese, my feast still needs <b>[CHEESE_SACRIFICE_GOAL - total_cheese_sacrificed]</b> more to be magnificent..."))
 	rune = null
 	times_completed++
 	set_new_area()
@@ -203,8 +225,12 @@
 			to_chat(owner, span_warning("Your collected power is growing, \
 				but further rituals will alert your enemies to your position."))
 		if (GRAND_RITUAL_IMMINENT_FINALE_POTENCY)
-			to_chat(owner, span_warning("You are overflowing with power! \
-				Your next Grand Ritual will allow you to choose a powerful effect, and grant you victory."))
+			var/message = "You are overflowing with power! \
+				Your next Grand Ritual will allow you to choose a powerful effect, and grant you victory."
+			if(total_cheese_sacrificed >= CHEESE_SACRIFICE_GOAL)
+				message = "You are overflowing with chaotic energies! \
+					Your next Grand Ritual will cast a powerful curse upon the station, and grant you victory."
+			to_chat(owner, span_warning(message))
 		if (GRAND_RITUAL_FINALE_COUNT)
 			SEND_SIGNAL(src, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
 
@@ -283,3 +309,5 @@
 /obj/effect/temp_visual/wizard_rune/failed
 	icon_state = "wizard_rune_fail"
 	duration = 0.5 SECONDS
+
+#undef CHEESE_SACRIFICE_GOAL
