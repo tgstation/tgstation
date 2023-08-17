@@ -195,7 +195,7 @@
 			/mob/living/basic/mouse,
 			/mob/living/basic/mouse/rat,
 			/mob/living/simple_animal/parrot,
-			/mob/living/simple_animal/butterfly,
+			/mob/living/basic/butterfly,
 			/mob/living/simple_animal/crab,
 			/mob/living/simple_animal/crab/evil,
 			/mob/living/simple_animal/pet/penguin/baby,
