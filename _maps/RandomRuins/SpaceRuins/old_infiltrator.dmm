@@ -215,10 +215,6 @@
 	pixel_y = -4;
 	pixel_x = -7
 	},
-/obj/item/camera_bug{
-	pixel_x = -5;
-	pixel_y = 9
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "nR" = (
