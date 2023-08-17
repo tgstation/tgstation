@@ -54,7 +54,7 @@
 	name = "Empath"
 	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
 	icon = "smile-beam"
-	value = 8
+	value = 2 //monkestation change 8->2
 	mob_trait = TRAIT_EMPATH
 	gain_text = span_notice("You feel in tune with those around you.")
 	lose_text = span_danger("You feel isolated from others.")
@@ -122,9 +122,9 @@
 
 /datum/quirk/freerunning
 	name = "Freerunning"
-	desc = "You're great at quick moves! You can climb tables more quickly and take no damage from short falls."
+	desc = "You're great at quick moves! You can climb tables more quickly, can sprint longer distances, and take no damage from short falls." //monkestation change added ", can sprint longer distances,"
 	icon = "running"
-	value = 8
+	value = 6 //monkestation change 8->6
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = span_notice("You feel lithe on your feet!")
 	lose_text = span_danger("You feel clumsy again.")
@@ -243,7 +243,7 @@
 	name = "Self-Aware"
 	desc = "You know your body well, and can accurately assess the extent of your wounds."
 	icon = "bone"
-	value = 8
+	value = 6 //monkestation change 8->6
 	mob_trait = TRAIT_SELF_AWARE
 	medical_record_text = "Patient demonstrates an uncanny knack for self-diagnosis."
 	mail_goodies = list(/obj/item/clothing/neck/stethoscope, /obj/item/skillchip/entrails_reader)
@@ -252,7 +252,7 @@
 	name = "Skittish"
 	desc = "You're easy to startle, and hide frequently. Run into a closed locker to jump into it, as long as you have access. You can walk to avoid this."
 	icon = "trash"
-	value = 8
+	value = 2 //monkestation change 8->2
 	mob_trait = TRAIT_SKITTISH
 	medical_record_text = "Patient demonstrates a high aversion to danger and has described hiding in containers out of fear."
 	mail_goodies = list(/obj/structure/closet/cardboard)
@@ -309,25 +309,6 @@
 	lose_text = span_danger("Your arms ache a bit.")
 	medical_record_text = "Patient displays mastery over throwing balls."
 	mail_goodies = list(/obj/item/toy/beach_ball/baseball, /obj/item/toy/basketball, /obj/item/toy/dodgeball)
-
-/datum/quirk/voracious
-	name = "Voracious"
-	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine. Also allows you to have an additional food buff."
-	icon = "drumstick-bite"
-	value = 4
-	mob_trait = TRAIT_VORACIOUS
-	gain_text = span_notice("You feel HONGRY.")
-	lose_text = span_danger("You no longer feel HONGRY.")
-	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/dinner)
-
-
-/datum/quirk/voracious/add()
-	var/mob/living/carbon/human/holder = quirk_holder
-	holder.max_food_buffs ++
-
-/datum/quirk/voracious/remove()
-	var/mob/living/carbon/human/holder = quirk_holder
-	holder.max_food_buffs --
 
 /datum/quirk/item_quirk/signer
 	name = "Signer"
