@@ -1,5 +1,0 @@
-author: "BlueMemesauce"
-delete-after: True
-changes:
-  - rscadd: "Add policy for sentient mobs that were revived by lazarus injector (depends on config)\nadd; Sentient mobs that were revived by malfunctioning lazarus injector now get enslaved to whoever revived them."
-  - bugfix: "Servant golems get their master's real name (Won't be serving \"Unknown\" if their master is wearing a mask)"
