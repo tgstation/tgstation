@@ -338,7 +338,7 @@
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	to_chat(src, span_boldwarning("Your circutry suddenly begins heating up!"))
-	if(!do_after(ninja, 2 SECONDS, target = src))
+	if(!do_after(ninja, 1.5 SECONDS, target = src))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 7))
@@ -434,7 +434,7 @@
 
 	AI_notify_hack()
 
-	if(!do_after(ninja, 15 SECONDS, target = src)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
+	if(!do_after(ninja, 20 SECONDS, target = src)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
