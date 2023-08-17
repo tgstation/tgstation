@@ -29,7 +29,6 @@
 	var/unstable_generation = FALSE
 	
 /datum/component/artifact/generator/setup()
-	. = ..()
 	if(prob(65))
 		power_gen = rand(1 KW, MAX_POSSIBLE_GEN / 2)
 	else

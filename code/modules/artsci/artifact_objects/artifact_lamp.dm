@@ -10,7 +10,6 @@
 	deactivation_message = "stops shining."
 
 /datum/component/artifact/lamp/setup()
-	. = ..()
 	var/power
 	var/color = pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 	var/range

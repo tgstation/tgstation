@@ -48,7 +48,6 @@
 	var/active_woundbonus = 0
 
 /datum/component/artifact/melee/setup() //RNG incarnate
-	. = ..()
 	var/obj/item/melee/artifact/weapon = holder
 	weapon.special_cooldown_time = rand(3,8) SECONDS
 	active_force = rand(-10,30)

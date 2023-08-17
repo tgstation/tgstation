@@ -32,7 +32,6 @@
 	COOLDOWN_DECLARE(cooldown)
 
 /datum/component/artifact/forcegen/setup()
-	. = ..()
 	shield_iconstate = pick("shieldsparkles","empdisable","shield2","shield-old","shield-red","shield-green","shield-yellow")
 	activation_sound = pick('sound/mecha/mech_shield_drop.ogg')
 	deactivation_sound = pick('sound/mecha/mech_shield_raise.ogg','sound/magic/forcewall.ogg')

@@ -19,7 +19,6 @@
 	var/do_alert = FALSE //do we send an announcement on activation
 
 /datum/component/artifact/bomb/setup()
-	. = ..()
 	if(prob(20))
 		dud = TRUE
 
@@ -78,7 +77,7 @@
 	var/light
 
 /datum/component/artifact/bomb/explosive/New()
-	..()
+	. = ..()
 	devast = rand(1,3)
 	heavy = rand(2,4)
 	light = rand(3,10)

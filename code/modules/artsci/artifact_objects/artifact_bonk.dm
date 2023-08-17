@@ -13,7 +13,6 @@
 	COOLDOWN_DECLARE(bonk_cooldown)
 
 /datum/component/artifact/bonk/setup()
-	. = ..()
 	hit_power = rand(0,35)
 	potency += hit_power
 

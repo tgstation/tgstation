@@ -15,7 +15,6 @@
 	COOLDOWN_DECLARE(cooldown)
 
 /datum/component/artifact/repulsor/setup()
-	. = ..()
 	attract = prob(40)
 	range = rand(1,3)
 	cooldown_time = rand(10,40) SECONDS

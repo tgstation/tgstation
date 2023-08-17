@@ -86,12 +86,13 @@
 
 	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE, INNATE_TRAIT)
 	setup()
-//Seperate from initialize, for artifact inheritance funnies
-/datum/component/artifact/proc/setup()
-	potency = clamp(potency, 1, 100) //just incase
+	potency = clamp(potency, 0, 100)
 	for(var/datum/artifact_trigger/trigger in triggers)
 		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
 		trigger.range = trigger.amount + (trigger.hint_range * 2)
+
+/datum/component/artifact/proc/setup()
+	return
 
 /datum/component/artifact/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(Artifact_Destroyed))

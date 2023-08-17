@@ -14,7 +14,6 @@
 	COOLDOWN_DECLARE(activation_cooldown)
 
 /datum/component/artifact/injector/setup()
-	. = ..()
 	holder.create_reagents(200, NO_REACT | SEALED_CONTAINER)
 	reagent_amount = rand(10,25)
 	max_reagents = rand(1,2)

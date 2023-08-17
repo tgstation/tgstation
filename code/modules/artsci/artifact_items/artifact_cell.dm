@@ -16,7 +16,6 @@
 	valid_triggers = list(/datum/artifact_trigger/heat, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation)
 
 /datum/component/artifact/cell/setup()
-	. = ..()
 	var/obj/item/stock_parts/cell/artifact/cell = holder
 	cell.corrupted = prob(10) //trolled
 	cell.maxcharge = rand(5000,80000) //2x of bluespace

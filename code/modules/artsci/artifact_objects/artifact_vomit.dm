@@ -14,7 +14,6 @@
 	COOLDOWN_DECLARE(cooldown)
 
 /datum/component/artifact/vomit/setup()
-	. = ..()
 	switch(rand(1,100))
 		if(1 to 84)
 			range = rand(2,3)
