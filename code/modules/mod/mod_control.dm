@@ -145,6 +145,7 @@
 	for(var/obj/item/mod/module/module as anything in theme.inbuilt_modules)
 		module = new module(src)
 		install(module)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mod/control/Destroy()
 	STOP_PROCESSING(SSobj, src)
