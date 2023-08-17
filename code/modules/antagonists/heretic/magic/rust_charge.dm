@@ -7,7 +7,8 @@
 	cooldown_time = 45 SECONDS
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
-	if(HAS_TRAIT(get_step(owner, 0), TRAIT_RUSTY))
+	var/turf/open/start_turf = get_turf(owner)
+	if(istype(start_turf) && HAS_TRAIT(start_turf, TRAIT_RUSTY))
 		StartCooldown(135 SECONDS, 135 SECONDS)
 		charge_sequence(owner, target_atom, charge_delay, charge_past)
 		StartCooldown()
