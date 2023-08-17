@@ -43,6 +43,7 @@
 
 /obj/item/book/granter/action/spell/on_reading_start(mob/living/user)
 	to_chat(user, span_notice("You start reading about casting [action_name]..."))
+	return TRUE
 
 /obj/item/book/granter/action/spell/on_reading_finished(mob/living/user)
 	to_chat(user, span_notice("You feel like you've experienced enough to cast [action_name]!"))

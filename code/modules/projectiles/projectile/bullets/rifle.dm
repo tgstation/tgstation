@@ -16,22 +16,22 @@
 	armour_penetration = 100
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
-// 7.62 (Nagant Rifle)
+// .310 Strilka (Sakhno Rifle)
 
-/obj/projectile/bullet/a762
-	name = "7.62 bullet"
+/obj/projectile/bullet/strilka310
+	name = ".310 Strilka bullet"
 	damage = 60
 	armour_penetration = 10
 	wound_bonus = -45
 	wound_falloff_tile = 0
 
-/obj/projectile/bullet/a762/surplus
-	name = "7.62 surplus bullet"
+/obj/projectile/bullet/strilka310/surplus
+	name = ".310 Strilka surplus bullet"
 	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
 	armour_penetration = 0
 
-/obj/projectile/bullet/a762/enchanted
-	name = "enchanted 7.62 bullet"
+/obj/projectile/bullet/strilka310/enchanted
+	name = "enchanted .310 bullet"
 	damage = 20
 	stamina = 80
 
@@ -46,3 +46,4 @@
 	bare_wound_bonus = 80
 	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 	wound_falloff_tile = -5
+	shrapnel_type = /obj/item/ammo_casing/harpoon
