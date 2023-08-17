@@ -180,7 +180,7 @@
 	if(istype(mush, /obj/item/food/grown/mushroom))
 		recover(mush)
 		return
-	if(mush.force || user.combat_mode)
+	if(mush.force || (user.istate & ISTATE_HARM))
 		bruised = TRUE
 	return ..()
 

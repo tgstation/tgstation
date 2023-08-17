@@ -146,7 +146,7 @@
 	dispense_list_override = list(/mob/living/simple_animal/parrot/natural = 3,
 								  /mob/living/simple_animal/sloth = 3,
 								  /mob/living/simple_animal/pet/cat = 3,
-								  /mob/living/simple_animal/pet/fox = 3,
+								  /mob/living/basic/pet/fox = 3,
 								  /mob/living/simple_animal/pet/gondola = 1,
 								  /mob/living/simple_animal/pet/penguin/emperor = 2,
 								  /mob/living/simple_animal/crab = 2,
