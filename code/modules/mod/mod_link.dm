@@ -69,8 +69,7 @@
 	other_visual.transform = new_transform
 
 /obj/item/mod/control
-	var/datum/mod_link/mod_link
-	var/starting_frequency
+
 
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
@@ -88,7 +87,7 @@
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
 	else if(tool_frequency && mod_link.frequency)
-		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODLink Frequency", list("Copy", "Imprint"))
+		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
 			return
 		switch(response)
@@ -98,7 +97,7 @@
 				mod_link.frequency = tool_frequency
 
 /obj/item/mod/control/proc/can_call()
-	return active && !activating && wearer.stat < DEAD
+	return wearer.stat < DEAD
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -131,13 +130,14 @@
 	on_user_set_dir_generic(mod_link, newdir)
 
 /obj/item/clothing/neck/link_scryer
-	name = "\improper MODLink scryer"
+	name = "\improper MODlink scryer"
 	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device. Essentially a video necklace."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
 	var/obj/item/stock_parts/cell/cell
 	var/datum/mod_link/mod_link
 	var/starting_frequency = "NT"
+	var/label
 
 /obj/item/clothing/neck/link_scryer/Initialize(mapload)
 	. = ..()
@@ -152,17 +152,35 @@
 
 /obj/item/clothing/neck/link_scryer/examine(mob/user)
 	. = ..()
-	. += span_notice("The battery charge reads [cell.percent()]%.")
-	. += span_notice("The MODLink ID reads [mod_link.id] and frequency reads [mod_link.frequency].")
+	if(cell)
+		. += span_notice("The battery charge reads [cell.percent()]%. <b>Right-click</b> with an empty hand to remove it.")
+	else
+		. += span_notice("It is missing a battery, one can be installed by clicking with a power cell on it.")
+	. += span_notice("The MODlink ID is [mod_link.id], frequency is [mod_link.frequency]. <b>Right-click</b> with multitool to copy/imprint frequency.")
+	. += span_notice("Use in hand to set name.")
+
+/obj/item/clothing/neck/link_scryer/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_NECK)
+		mod_link?.end_call()
 
 /obj/item/clothing/neck/link_scryer/dropped(mob/living/user)
 	. = ..()
-	mod_link.end_call()
+	mod_link?.end_call()
+
+/obj/item/clothing/neck/link_scryer/attack_self(mob/user, modifiers)
+	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
+	if(!new_label)
+		balloon_alert(user, "invalid name!")
+		return
+	label = new_label
+	balloon_alert(user, "name set")
+	update_name()
 
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
 		return
-	cell.use(min(30 * seconds_per_tick, cell.charge))
+	cell.use(min(20 * seconds_per_tick, cell.charge))
 
 /obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, params)
 	. = ..()
@@ -172,6 +190,10 @@
 		return
 	cell = attacked_by
 	balloon_alert(user, "installed [cell.name]")
+
+/obj/item/clothing/neck/link_scryer/update_name(updates)
+	. = ..()
+	name = "[initial(name)][label ? " [label]" : ""]"
 
 /obj/item/clothing/neck/link_scryer/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -197,7 +219,7 @@
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
 	else if(tool_frequency && mod_link.frequency)
-		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODLink Frequency", list("Copy", "Imprint"))
+		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
@@ -233,7 +255,8 @@
 
 /obj/item/clothing/neck/link_scryer/proc/delete_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
-	user.update_worn_neck()
+	if(!QDELETED(user))
+		user.update_worn_neck()
 	return delete_link_visual_generic(mod_link)
 
 /obj/item/clothing/neck/link_scryer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
@@ -336,9 +359,10 @@
 		return
 	link_target.playsound_local(get_turf(called.holder), 'sound/weapons/ring.ogg', 15, vary = TRUE)
 	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
-	alert.desc = "[holder] ([id]) is calling you! Click this to respond to the call."
+	alert.desc = "[holder] ([id]) is calling you! Left-click this to accept the call. Right-click to deny it."
 	alert.caller_ref = WEAKREF(src)
 	alert.receiver_ref = WEAKREF(called)
+	alert.user_ref = WEAKREF(user)
 
 /datum/mod_link/proc/end_call()
 	QDEL_NULL(link_call)
@@ -365,9 +389,11 @@
 
 /datum/mod_link_call/Destroy()
 	var/mob/living/caller_mob = caller.get_user_callback.Invoke()
-	REMOVE_TRAIT(caller_mob, TRAIT_IN_CALL, REF(src))
+	if(!QDELETED(caller_mob))
+		REMOVE_TRAIT(caller_mob, TRAIT_IN_CALL, REF(src))
 	var/mob/living/receiver_mob = receiver.get_user_callback.Invoke()
-	REMOVE_TRAIT(receiver_mob, TRAIT_IN_CALL, REF(src))
+	if(!QDELETED(receiver_mob))
+		REMOVE_TRAIT(receiver_mob, TRAIT_IN_CALL, REF(src))
 	STOP_PROCESSING(SSprocessing, src)
 	clear_visuals()
 	caller.link_call = null
@@ -408,18 +434,20 @@
 	if(!length(callers))
 		calling_link.holder.balloon_alert(user, "no targets on freq [calling_link.frequency]!")
 		return
-	var/chosen_link = tgui_input_list(user, "Choose ID to call from [calling_link.frequency] frequency", "MODLink", callers)
+	var/chosen_link = tgui_input_list(user, "Choose ID to call from [calling_link.frequency] frequency", "MODlink", callers)
 	if(!chosen_link)
 		return
 	calling_link.call_link(GLOB.mod_link_ids[callers[chosen_link]], user)
 
 /atom/movable/screen/alert/modlink_call
-	name = "MODLink Call Incoming"
-	desc = "Someone is calling you! Click this to respond to the call."
+	name = "MODlink Call Incoming"
+	desc = "Someone is calling you! Left-click this to accept the call. Right-click to deny it."
 	icon_state = "called"
 	timeout = 10 SECONDS
+	var/end_message = "call timed out!"
 	var/datum/weakref/caller_ref
 	var/datum/weakref/receiver_ref
+	var/datum/weakref/user_ref
 
 /atom/movable/screen/alert/modlink_call/Click(location, control, params)
 	. = ..()
@@ -431,4 +459,21 @@
 		return
 	if(caller.link_call || receiver.link_call)
 		return
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		end_message = "call denied!"
+		owner.clear_alert("[REF(caller)]_modlink")
+		return
+	end_message = "call accepted"
 	new /datum/mod_link_call(caller, receiver)
+	owner.clear_alert("[REF(caller)]_modlink")
+
+/atom/movable/screen/alert/modlink_call/Destroy()
+	var/mob/living/user = user_ref.resolve()
+	var/datum/mod_link/caller = caller_ref.resolve()
+	if(!user || !caller)
+		return
+	caller.holder.balloon_alert(user, end_message)
+	return ..()
+
+/atom/movable/screen/alert/modlink_call/alert_tim

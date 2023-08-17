@@ -66820,16 +66820,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/fore)
 "rwV" = (
-/obj/structure/rack,
-/obj/item/mod/core/standard{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/mod/core/standard,
-/obj/item/mod/core/standard{
-	pixel_x = -4;
-	pixel_y = 4
-	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
 "rwY" = (

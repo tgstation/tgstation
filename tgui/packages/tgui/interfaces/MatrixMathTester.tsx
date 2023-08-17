@@ -7,7 +7,7 @@ const MatrixMathTesterInput = (
   props: { value: number; varName: string },
   context
 ) => {
-  const { act } = useBackend<unknown>(context);
+  const { act } = useBackend(context);
   return (
     <NumberInput
       value={props.value}

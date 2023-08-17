@@ -103,5 +103,5 @@
 	name = "Flip"
 
 /datum/action/item_action/call_link
-	name = "Call MODLink"
+	name = "Call MODlink"
 

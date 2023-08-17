@@ -1549,7 +1549,7 @@
 	)
 
 /datum/design/modlink_scryer
-	name = "MODLink Scryer"
+	name = "MODlink Scryer"
 	desc = "A neck-worn piece of gear that can call with another MODlink-compatible device."
 	id = "modlink_scryer"
 	build_type = MECHFAB
