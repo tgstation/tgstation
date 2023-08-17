@@ -161,7 +161,7 @@
 			I.screen_loc = null
 			H.client.screen -= I
 
-/datum/hud/human/hidden_inventory_update(mob/viewer)
+/datum/hud/possessed/hidden_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/basic/possession_holder/H = mymob
