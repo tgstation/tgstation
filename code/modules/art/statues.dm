@@ -450,16 +450,8 @@ Moving interrupts
 /obj/structure/carving_block/proc/set_target(atom/movable/target, mob/living/user)
 	if(!is_viable_target(user, target))
 		return
-/**
-	if(istype(target, /obj/structure/statue/custom))
-		var/obj/structure/statue/custom/original = target
-		current_target = original.content_ma
-	else
-		current_target = target.appearance
-**/
 
 	current_target = target
-	//var/mutable_appearance/ma = current_target
 	user.balloon_alert(user, "sculpt target is [target.name]")
 
 /obj/structure/carving_block/proc/reset_target()
@@ -529,7 +521,6 @@ Moving interrupts
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha", icon=white,y=-mask_offset, flags=MASK_INVERSE)
 	update_appearance()
-
 
 /// Returns a list of preset statues carvable from this block depending on the custom materials
 /obj/structure/carving_block/proc/get_possible_statues()
