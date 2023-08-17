@@ -259,6 +259,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/machinery/mining_weather_monitor/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/mine/production)
 "cb" = (
@@ -1799,6 +1800,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/mining_weather_monitor/directional/west,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "kV" = (
@@ -2501,6 +2503,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/machinery/mining_weather_monitor/directional/south,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "nA" = (
@@ -3496,8 +3499,8 @@
 /turf/open/floor/carpet/neon/simple/red/nodots,
 /area/mine/cafeteria)
 "tZ" = (
-/obj/machinery/vending/sustenance,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/sustenance/labor_camp,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
@@ -3712,6 +3715,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
+/obj/machinery/mining_weather_monitor/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "vp" = (
@@ -7016,6 +7020,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/mining_weather_monitor/directional/south,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},

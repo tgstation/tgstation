@@ -73,3 +73,10 @@
 	name = "glass of mushroom tea"
 	desc = "Oddly savoury for a drink."
 	icon_state = "mushroom_tea_glass"
+
+/datum/glass_style/drinking_glass/t_letter
+	required_drink_type = /datum/reagent/consumable/t_letter
+	name = "glass of T"
+	desc = "The 20th."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "tletter"

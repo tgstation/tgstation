@@ -1,19 +1,24 @@
-// 7.62 (Nagant Rifle)
+// .310 Strilka (Sakhno Rifle)
 
-/obj/item/ammo_casing/a762
-	name = "7.62 bullet casing"
-	desc = "A 7.62 bullet casing."
-	icon_state = "762-casing"
-	caliber = CALIBER_A762
-	projectile_type = /obj/projectile/bullet/a762
+/obj/item/ammo_casing/strilka310
+	name = ".310 Strilka bullet casing"
+	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder."
+	icon_state = "310-casing"
+	caliber = CALIBER_STRILKA310
+	projectile_type = /obj/projectile/bullet/strilka310
 
-/obj/item/ammo_casing/a762/surplus
-	name = "7.62 surplus bullet casing"
-	desc = "A surplus 7.62 bullet casing."
-	projectile_type = /obj/projectile/bullet/a762/surplus
+/obj/item/ammo_casing/strilka310/Initialize(mapload)
+	. = ..()
 
-/obj/item/ammo_casing/a762/enchanted
-	projectile_type = /obj/projectile/bullet/a762/enchanted
+	AddElement(/datum/element/caseless)
+
+/obj/item/ammo_casing/strilka310/surplus
+	name = ".310 Strilka surplus bullet casing"
+	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder. Damp red powder at that."
+	projectile_type = /obj/projectile/bullet/strilka310/surplus
+
+/obj/item/ammo_casing/strilka310/enchanted
+	projectile_type = /obj/projectile/bullet/strilka310/enchanted
 
 // .223 (M-90gl Carbine)
 

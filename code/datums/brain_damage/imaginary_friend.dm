@@ -194,7 +194,7 @@
 	return ..()
 
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
-	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
+	if (safe_read_pref(client, /datum/preference/toggle/enable_runechat) && (safe_read_pref(client, /datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
@@ -252,7 +252,7 @@
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/user as anything in (group + src)) // Add ourselves back in
-		if(user.client && (!user.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
+		if((safe_read_pref(user.client, /datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(user.client)
 
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
@@ -269,9 +269,9 @@
 	for(var/mob/dead_player in GLOB.dead_mob_list)
 		if(dead_player.z != z || get_dist(src, dead_player) > 7)
 			if(eavesdrop_range)
-				if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER))
+				if(!(get_chat_toggles(dead_player.client) & CHAT_GHOSTWHISPER))
 					continue
-			else if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTEARS))
+			else if(!(get_chat_toggles(dead_player.client) & CHAT_GHOSTEARS))
 				continue
 		var/link = FOLLOW_LINK(dead_player, owner)
 		to_chat(dead_player, "[link] [dead_rendered]")
@@ -311,12 +311,12 @@
 		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
-			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+			if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("[FOLLOW_LINK(ghost, user)] [dchatmsg]")
 
 	for(var/mob/person in friend.owner.imaginary_group)
 		to_chat(person, message)
-		if(person.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+		if(safe_read_pref(person.client, /datum/preference/toggle/enable_runechat))
 			person.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 	return TRUE
 

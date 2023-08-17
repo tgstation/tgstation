@@ -100,6 +100,10 @@
 	/// The voice that this movable makes when speaking
 	var/voice
 
+	/// The style of speech this movable makes when speaking.
+	/// Valid values are TTS_VOICE_STYLE_* in the tts.dm defines.
+	var/voice_style = TTS_VOICE_STYLE_SPEECH
+
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
 

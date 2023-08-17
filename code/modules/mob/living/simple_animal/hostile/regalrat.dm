@@ -285,7 +285,7 @@
 		to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
 		return
 	new /mob/living/basic/mouse(owner.loc)
-	owner.visible_message(span_warning("[owner] commands a rat to their side!"))
+	owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
 
 /// Makes a passed mob into our minion
 /datum/action/cooldown/riot/proc/make_minion(mob/living/new_minion, minion_desc, list/command_list = mouse_commands)

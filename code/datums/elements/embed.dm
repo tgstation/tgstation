@@ -131,8 +131,10 @@
 /**
  * checkEmbedProjectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
  *
- * If we hit a valid target, we create the shrapnel_type object and immediately call tryEmbed() on it, targeting what we impacted. That will lead
- * it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
+ * If we hit a valid target, we create the shrapnel_type object and then forcefully try to embed it on its
+ * behalf. DO NOT EVER add an embed element to the payload and let it do the rest.
+ * That's awful, and it'll limit us to drop-deletable shrapnels in the worry of stuff like
+ * arrows and harpoons being embeddable even when not let loose by their weapons.
  */
 /datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
 	SIGNAL_HANDLER
@@ -144,14 +146,13 @@
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	if(istype(payload, /obj/item/shrapnel/bullet))
 		payload.name = P.name
-	payload.embedding = P.embedding
-	payload.updateEmbedding()
+	SEND_SIGNAL(P, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload)
 	var/mob/living/carbon/C = hit
 	var/obj/item/bodypart/limb = C.get_bodypart(hit_zone)
 	if(!limb)
 		limb = C.get_bodypart()
 
-	payload.tryEmbed(limb) // at this point we've created our shrapnel baby and set them up to embed in the target, we can now die in peace as they handle their embed try on their own
+	tryForceEmbed(payload, limb)
 	Detach(P)
 
 /**

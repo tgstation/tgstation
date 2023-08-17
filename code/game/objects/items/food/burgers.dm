@@ -634,3 +634,16 @@
 	icon_state = "custburg"
 	tastes = list("bun")
 	foodtypes = GRAIN
+
+/obj/item/food/burger/sloppy_moe
+	name = "sloppy moe"
+	desc = "Ground meat mixed with onions and barbeque sauce, sloppily plopped onto a burger bun. Delicious, but guaranteed to get your hands dirty."
+	icon_state = "sloppy_moe"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("juicy meat" = 4, "BBQ sauce" = 3, "onions" = 2, "bun" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+	venue_value = FOOD_PRICE_NORMAL

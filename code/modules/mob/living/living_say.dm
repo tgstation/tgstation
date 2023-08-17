@@ -354,14 +354,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
 			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing
-				if(player_mob.client && !player_mob.client?.prefs)
-					stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
-					continue
-
 				if(is_speaker_whispering)
-					if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+					if(!(get_chat_toggles(player_mob.client) & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 						continue
-				else if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				else if(!(get_chat_toggles(player_mob.client) & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
 			listening |= player_mob
 
@@ -399,7 +395,20 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(length(tts_filter) > 0)
 			filter += tts_filter.Join(",")
 
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = message_range, pitch = pitch, silicon = tts_silicon_voice_effect)
+		INVOKE_ASYNC( \
+			SStts, \
+			TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), \
+			src, \
+			html_decode(tts_message_to_use), \
+			message_language, \
+			voice, \
+			filter.Join(","), \
+			listened, \
+			message_range = message_range, \
+			pitch = pitch, \
+			silicon = tts_silicon_voice_effect, \
+			blips_only = voice_style == TTS_VOICE_STYLE_BLIPS, \
+		)
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)

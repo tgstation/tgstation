@@ -9,7 +9,7 @@
 	wreckage = /obj/structure/mecha_wreckage/odysseus
 	mech_type = EXOSUIT_MODULE_ODYSSEUS
 	step_energy_drain = 6
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
 	pivot_step = TRUE
 
 /obj/vehicle/sealed/mecha/odysseus/moved_inside(mob/living/carbon/human/H)

@@ -67,7 +67,7 @@
 
 /obj/item/extinguisher/crafted
 	name = "Improvised cooling spray"
-	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
+	desc = "Spraycan turned coolant dispenser. Can be sprayed on containers to cool them. Refill using water."
 	icon_state = "coolant0"
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"

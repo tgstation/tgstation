@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	attack_verb_simple = "punch"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
-	healable = FALSE //don't brusepack the guardian
+	mob_biotypes = MOB_BEAST
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //how much damage from each damage type we transfer to the owner
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	light_range = 3
 	light_on = FALSE
 	hud_type = /datum/hud/guardian
-	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	faction = list()
 
 	/// The guardian's color, used for their sprite, chat, and some effects made by it.
