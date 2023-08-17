@@ -394,4 +394,4 @@
 	var/mob/living/carbon/human/human_quirkholder = quirk_holder
 	human_quirkholder.set_mob_height(HUMAN_HEIGHT_MEDIUM)
 	human_quirkholder.remove_movespeed_modifier(/datum/movespeed_modifier/settler)
-	human_quirkholder.physiology.hunger_mod /= 0.5
+	human_quirkholder.physiology.hunger_mod *= 2
