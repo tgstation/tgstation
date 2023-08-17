@@ -8,6 +8,11 @@
 	density = TRUE
 	ARTIFACT_SETUP(/obj/structure/artifact, /datum/component/artifact, SSobj)
 
+/obj/effect/artifact_spawner
+	name = "Random Artifact Spawner"
+	icon = 'icons/obj/artifacts.dmi'
+	icon_state = "wiznerd-1"
+
 /obj/effect/artifact_spawner/Initialize(mapload)
 	. = ..()
 	spawn_artifact(loc)

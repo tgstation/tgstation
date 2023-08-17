@@ -212,49 +212,49 @@
 	SIGNAL_HANDLER
 	if(istype(I,/obj/item/weldingtool))
 		if(I.use(1))
-			Stimulate(STIMULUS_HEAT,800)
 			holder.visible_message(span_warning("[user] burns the artifact with the [I]!"))
+			Stimulate(STIMULUS_HEAT,800)
 			playsound(user,pick(I.usesound),50, TRUE)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I, /obj/item/bodypart/arm))
 		var/obj/item/bodypart/arm/arm = I
+		holder.visible_message(span_notice("[user] presses the [arm] against the artifact.")) //pressing stuff against stuff isnt very severe so
 		if(arm.bodytype & BODYTYPE_ROBOTIC)
 			Stimulate(STIMULUS_SILICON_TOUCH)
 		else
 			Stimulate(STIMULUS_CARBON_TOUCH)
-		holder.visible_message(span_notice("[user] presses the [arm] against the artifact.")) //pressing stuff against stuff isnt very severe so
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I,/obj/item/assembly/igniter))
+		holder.visible_message(span_warning("[user] zaps the artifact with the [I]!"))
 		Stimulate(STIMULUS_HEAT, I.heat)
 		Stimulate(STIMULUS_SHOCK, 700)
-		holder.visible_message(span_warning("[user] zaps the artifact with the [I]!"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I, /obj/item/lighter))
 		var/obj/item/lighter/lighter = I
 		if(lighter.lit)
-			Stimulate(STIMULUS_HEAT, lighter.heat*0.4)
 			holder.visible_message(span_warning("[user] burns the artifact with the [I]!"))
+			Stimulate(STIMULUS_HEAT, lighter.heat)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(I.tool_behaviour == TOOL_MULTITOOL)
-		Stimulate(STIMULUS_SHOCK, 1000)
 		holder.visible_message(span_warning("[user] shocks the artifact with the [I]!"))
+		Stimulate(STIMULUS_SHOCK, 1000)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I,/obj/item/shockpaddles))
 		var/obj/item/shockpaddles/paddles = I
 		if(paddles.defib.deductcharge(2000))
-			Stimulate(STIMULUS_SHOCK, 2000)
 			playsound(user,'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+			Stimulate(STIMULUS_SHOCK, 2000)
 			holder.visible_message(span_warning("[user] shocks the artifact with the [I]."))
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(I,/obj/item/disk/data) || istype(I,/obj/item/circuitboard))
-		holder.visible_message(span_notice("[user] touches the artifact with the [I]"))
 		Stimulate(STIMULUS_DATA)
+		holder.visible_message(span_notice("[user] touches the artifact with the [I]"))
 
 	if(I.force)
 		Stimulate(STIMULUS_FORCE,I.force)

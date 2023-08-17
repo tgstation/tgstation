@@ -169,3 +169,54 @@
 
 	var/incorrect = total_guesses - correct
 	return round((CARGO_CRATE_VALUE/4) * art.potency * (max((ARTIFACT_COMMON - art.weight) * 0.01, 0.01) * max(correct - incorrect, 0.01)))
+
+/obj/item/analysis_bin
+	name = "analysis bin"
+	desc = "A bin made out of material to resist adhesion, for artifact analysis forms."
+	icon = 'icons/obj/service/bureaucracy.dmi'
+	icon_state = "analysisbin1"
+	base_icon_state = "analysisbin"
+	inhand_icon_state = "sheet-metal"
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	var/forms = 15
+	var/form_type =  /obj/item/sticker/analysis_form
+
+/obj/item/analysis_bin/Initialize(mapload)
+	. = ..()
+	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	AddElement(/datum/element/drag_pickup)
+
+/obj/item/analysis_bin/update_icon_state()
+	icon_state = "[base_icon_state][forms > 0]"
+	return ..()
+
+/obj/item/analysis_bin/attack_hand(mob/user, list/modifiers)
+	if(isliving(user))
+		var/mob/living/living_mob = user
+		if(!(living_mob.mobility_flags & MOBILITY_PICKUP))
+			return
+	if(forms)
+		forms--
+		var/obj/item/form = new form_type
+		form.add_fingerprint(user)
+		form.forceMove(user.loc)
+		user.put_in_hands(form)
+		balloon_alert(user, span_warning("took form"))
+		update_appearance()
+	else
+		balloon_alert(user, span_warning("empty"))
+	add_fingerprint(user)
+	return ..()
+
+/obj/item/analysis_bin/attackby(obj/item/item, mob/user, params)
+	if(istype(item, form_type))
+		if(!user.transferItemToLoc(item, src))
+			return
+		qdel(item)
+		balloon_alert(user, span_warning("form returned"))
+		forms++
+		update_appearance()
+	else
+		return ..()

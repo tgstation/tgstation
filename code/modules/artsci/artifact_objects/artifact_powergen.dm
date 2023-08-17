@@ -35,7 +35,7 @@
 	else
 		power_gen = rand(1 KW, MAX_POSSIBLE_GEN)
 	unstable_generation = prob(40)
-	potency += power_gen / 1.5 KW
+	potency = power_gen / (6 KW) // 100 potency at 600kw generation
 
 /datum/component/artifact/generator/effect_touched(mob/living/user)
 	var/obj/machinery/power/generator_artifact/powerholder = holder
