@@ -492,8 +492,8 @@
 			return TRUE
 	return FALSE
 
-/// Returns whether the given mob is convertable to the blood cult
-/proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult)
+/// Returns whether the given mob is convertable to the blood cult, monkestation edit: or clock cult
+/proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult, for_clock_cult) //monkestation edit: adds for_clock_cult
 	if(!istype(target))
 		return FALSE
 	if(isnull(target.mind) || !GET_CLIENT(target))
@@ -505,12 +505,16 @@
 	if(specific_cult?.is_sacrifice_target(target.mind))
 		return FALSE
 	var/mob/living/master = target.mind.enslaved_to?.resolve()
-	if(master && !IS_CULTIST(master))
+	if(master && (for_clock_cult ? !IS_CLOCK(master) : !IS_CULTIST(master))) //monkestation edit: master is now checked based off of for_clock_cult
 		return FALSE
 	if(IS_HERETIC_OR_MONSTER(target))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target))
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || isbot(target)) //monkestation edit: moved isdrone() as well as issilicon() to the next check down
 		return FALSE //can't convert machines, shielded, or braindead
+	if((isdrone(target) || issilicon(target)) && !for_clock_cult) //monkestation edit: clock cult converts them into cogscarabs and clock borgs
+		return FALSE //monkestation edit
+	if(for_clock_cult ? IS_CULTIST(target) : IS_CLOCK(target)) //monkestation edit
+		return FALSE //monkestation edit
 	return TRUE
 
 /// Sets a blood target for the cult.
@@ -596,4 +600,9 @@
 	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.cult_team = get_team()
 	new_cultist.give_equipment = TRUE
-	hosts_mind.add_antag_datum(new_cultist)
+	if(isobserver(spender))
+		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
+		newmob.equipOutfit(/datum/outfit/job/assistant)
+		newmob.mind.add_antag_datum(new_cultist)
+	else
+		hosts_mind.add_antag_datum(new_cultist)

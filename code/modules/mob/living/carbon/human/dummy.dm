@@ -97,14 +97,16 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["spines"] = "None"
 	target.dna.features["tail_cat"] = "None"
 	target.dna.features["tail_lizard"] = "Smooth"
-	target.dna.features["tail_monkey"] = "Chimp"
+	target.dna.features["tail_monkey"] = "Chimp" //Monkestation Addition
 	target.dna.features["pod_hair"] = "Ivy"
-	target.dna.features["ipc_screen"] = "BSOD"
-	target.dna.features["ipc_chassis"] = "Bishop Cyberkinetics"
-	target.dna.features["ipc_antenna"] = "None"
-	target.dna.features["anime_top"] = "None"
-	target.dna.features["anime_middle"] = "None"
-	target.dna.features["anime_bottom"] = "None"
+	target.dna.features["ipc_screen"] = "BSOD" //Monkestation Addition
+	target.dna.features["ipc_chassis"] = "Bishop Cyberkinetics" //Monkestation Addition
+	target.dna.features["ipc_antenna"] = "None" //Monkestation Addition
+	target.dna.features["anime_top"] = "None" //Monkestation Addition
+	target.dna.features["anime_middle"] = "None" //Monkestation Addition
+	target.dna.features["anime_bottom"] = "None" //Monkestation Addition
+	target.dna.features["arachnid_appendages"] = "Long" //Monkestation Addition
+	target.dna.features["arachnid_chelicerae"] = "Basic" //Monkestation Addition
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent

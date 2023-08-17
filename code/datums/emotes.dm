@@ -201,6 +201,14 @@
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
+
+	// Monkestation Edit start
+	else if((ismoth(user) || isflyperson(user) || istype(user, /mob/living/basic/mothroach)) && message_insect)
+		. = message_insect
+	else if(isipc(user) && message_ipc)
+		. = message_ipc
+	// MonkeStation Edit End
+	
 	else if(isanimal_or_basicmob(user) && message_animal_or_basic)
 		. = message_animal_or_basic
 
