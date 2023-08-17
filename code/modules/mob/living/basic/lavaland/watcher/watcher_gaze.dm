@@ -11,7 +11,7 @@
 	cooldown_time = 30 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = FALSE
-	shared_cooldown = null
+	shared_cooldown = NONE
 	/// At what range do we check for vision?
 	var/effect_radius = 7
 	/// How long does it take to play our various animation stages
