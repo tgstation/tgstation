@@ -59,9 +59,10 @@
 
 /mob/living/basic/possession_holder/death(gibbed)
 	. = ..()
-	stored_item.forceMove(get_turf(src))
-	stored_item = null
-	visible_message("You can feel the soul leaving the [stored_item], it returns back to its original self.")
+	if(stored_item)
+		stored_item.forceMove(get_turf(src))
+		stored_item = null
+		visible_message("You can feel the soul leaving the [stored_item], it returns back to its original self.")
 	qdel(src)
 
 /mob/living/basic/possession_holder/Life(seconds_per_tick, times_fired)
