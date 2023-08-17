@@ -99,3 +99,11 @@
 #define BB_SURVEILLANCE_TARGET "BB_surveillance_target"
 /// our acid slip ability
 #define BB_ARACHNID_SLIP "BB_arachnid_slip"
+
+#define BB_STORM_APPROACHING "BB_storm_approaching"
+#define BB_CURRENTLY_UNDERGROUND "BB_currently_underground"
+#define BB_TARGET_MINERAL_WALL "BB_target_mineral_wall"
+#define BB_MINERAL_FILL "BB_mineral_fill"
+#define BB_SPIT_ABILITY "BB_spit_ability"
+#define BB_BURROW_ABILITY "BB_burrow_ability"
+#define MAX_GRUB_FILL 30
