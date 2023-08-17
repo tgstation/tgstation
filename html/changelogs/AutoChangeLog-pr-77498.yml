@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "fixes kinesis not actually immobilizing or blocking hands of grabbed mobs"
