@@ -1,0 +1,6 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - rscdel: "Removed tiny mob sprite abilities for large mobs"
+  - rscadd: "Add a Self Seethrough ability, given to most large mobs and all mobs affected by a fugu gland"
+  - bugfix: "Space Dragon's overlay will no longer vanish at times"
