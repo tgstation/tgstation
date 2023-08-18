@@ -137,7 +137,7 @@
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	L.spill_organs(no_organs)
+	L.spill_organs(no_organs = TRUE)
 	L.death() //make sure they die
 	return TRUE
 
