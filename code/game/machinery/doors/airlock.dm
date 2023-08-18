@@ -2391,7 +2391,6 @@
 	multi_tile = TRUE
 	opacity = FALSE
 	glass = TRUE
-	bound_width = 64 // 2x1
 
 /obj/structure/fluff/airlock_filler
 	name = "airlock fluff"
