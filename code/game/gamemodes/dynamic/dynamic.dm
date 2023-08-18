@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	if (SSticker.totalPlayersReady < low_pop_player_threshold)
 		threat_level = min(threat_level, LERP(low_pop_maximum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold))
 
-	peaceful_percentage = clamp(round(threat_level/max_threat_level, 0.5), 0.5, 99.5)
+	peaceful_percentage = (threat_level/max_threat_level)*100
 
 /// Generates the midround and roundstart budgets
 /datum/game_mode/dynamic/proc/generate_budgets()
@@ -832,19 +832,24 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	if (!isnull(threat_log))
 		log_threat(-cost, threat_log, reason)
 
+#define MAXIMUM_DYN_DISTANCE 5
+
 /**
  * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
  * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
  * threat and then rounded to the nearest interval.
+ * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
  */
-/datum/game_mode/dynamic/proc/lorentz_to_amount(centre, scale, max_threat = 100, interval = 1)
-	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, rand()-0.5, scale)
-	/**
-	 * Given an x variable value of -/+5, a location of -/+ 0.5, a scale of 0.5 to 4, and a graphing calculator,
-	 * the threat will never go beyond the upper and lower 3% of the max threat, which is why
-	 * we're leaving the remaining 3% to the random number generator.
-	 */
-	return round(lorentz_result * max_threat + rand(-3, 3) * max_threat/100, interval)
+/datum/game_mode/dynamic/proc/lorentz_to_amount(centre = 0, scale = 1.8, max_threat = 100, interval = 1)
+	var/location = rand(-MAXIMUM_DYN_DISTANCE, MAXIMUM_DYN_DISTANCE) * rand()
+	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, location, scale)
+	var/std_threat = lorentz_result * max_threat
+	///Without these, the amount won't come close to hitting 0% or 100% of the max threat.
+	var/lower_deviation = max(std_threat * (location-centre)/MAXIMUM_DYN_DISTANCE, 0)
+	var/upper_deviation = max((max_threat - std_threat) * (centre-location)/MAXIMUM_DYN_DISTANCE, 0)
+	return clamp(round(std_threat + upper_deviation - lower_deviation, interval), 0, 100)
+
+#undef MAXIMUM_DYN_DISTANCE
 
 #undef FAKE_REPORT_CHANCE
 #undef FAKE_GREENSHIFT_FORM_CHANCE
