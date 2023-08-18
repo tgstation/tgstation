@@ -1,0 +1,4 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - admin: "The Add Mob Ability menu now prefixes the typepath of the ability with the ability's name, so you can much more quickly see what the ability is."
