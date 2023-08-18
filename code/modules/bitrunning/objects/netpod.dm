@@ -461,7 +461,7 @@
 /// Resolves a path to an outfit.
 /obj/machinery/netpod/proc/resolve_outfit(text)
 	var/path = text2path(text)
-	if(ispath(path, /datum/outfit) && locate(path) in subtypesof(/datum/outfit))
+	if(ispath(path, /datum/outfit))
 		return path
 
 /// Closes the machine without shoving in an occupant
