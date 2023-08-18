@@ -7,7 +7,6 @@
 	greyscale_colors = "#67A364#a92323"
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
@@ -36,7 +35,6 @@
 	greyscale_colors = "#374f7e#a52f29#a52f29"
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
@@ -51,7 +49,6 @@
 	greyscale_colors = "#EA3232#0000CC"
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
@@ -65,7 +62,6 @@
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
@@ -81,7 +77,6 @@
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
@@ -97,7 +92,6 @@
 	inserted_item = /obj/item/pen/fountain
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
@@ -164,6 +158,7 @@
 	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
 	starting_programs = list(
 		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
 	)
 
@@ -172,6 +167,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#EEDC43#00E5DA#727272"
 	starting_programs = list(
+		/datum/computer_file/program/supermatter_monitor,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
 	)
