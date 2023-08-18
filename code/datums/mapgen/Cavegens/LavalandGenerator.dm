@@ -4,10 +4,11 @@
 
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 2,
+		/obj/effect/spawner/random/lavaland_mob/goliath = 50,
+		/obj/effect/spawner/random/lavaland_mob/legion = 30,
+		/obj/effect/spawner/random/lavaland_mob/watcher = 40,
 		/mob/living/basic/mining/bileworm = 20,
-		/obj/effect/spawner/random/goliath = 50,
 		/mob/living/basic/mining/lobstrosity/lava = 20,
-		/obj/effect/spawner/random/watcher = 40,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon = 20,
 		/mob/living/basic/mining/goldgrub = 10,
 		/obj/structure/spawner/lavaland = 2,
