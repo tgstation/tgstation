@@ -12,12 +12,13 @@
 		return COMPONENT_INCOMPATIBLE
 	src.weather_type = weather_type
 	src.weather_key = weather_key
+
+/datum/component/ai_listen_to_weather/RegisterWithParent()
 	RegisterSignal(SSdcs, COMSIG_WEATHER_START(weather_type), PROC_REF(storm_start))
 	RegisterSignal(SSdcs, COMSIG_WEATHER_END(weather_type), PROC_REF(storm_end))
 
-/datum/component/ai_listen_to_weather/Destroy()
+/datum/component/ai_listen_to_weather/UnregisterFromParent()
 	UnregisterSignal(SSdcs, list(COMSIG_WEATHER_START(weather_type), COMSIG_WEATHER_END(weather_type)))
-	return ..()
 
 /datum/component/ai_listen_to_weather/proc/storm_start()
 	SIGNAL_HANDLER
