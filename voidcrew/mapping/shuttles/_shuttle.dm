@@ -1,6 +1,6 @@
 /datum/map_template/shuttle/voidcrew
 	name = "ships"
-	prefix = "_maps/voidcrew/"
+	prefix = "_maps/voidcrew/ships/"
 	port_id = "ship"
 
 	///The prefix signifying the ship's faction

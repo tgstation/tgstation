@@ -201,8 +201,12 @@
 	open_machine()
 
 /obj/machinery/nanite_chamber/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(linked_techweb && !QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		linked_techweb.connected_machines -= src //disconnect old one
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		if(linked_techweb)
+			if(linked_techweb == tool.buffer)
+				say("Already linked!")
+				return
+			unsync_research_servers()
 
 		linked_techweb = tool.buffer
 		linked_techweb.connected_machines += src //connect new one

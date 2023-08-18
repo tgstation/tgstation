@@ -8,6 +8,8 @@
 	var/value = 100
 	///origin of the research
 	var/origin_type = "debug"
+	///if it ws merged with different origins to apply a bonus
+	var/mixed = FALSE
 
 /obj/item/research_notes/Initialize(mapload, value, origin_type)
 	. = ..()
@@ -44,6 +46,17 @@
 	else
 		name = "fragmentary data of [origin_type]"
 		icon_state = "scrap"
+
+///proc when you slap research notes into another one, it applies a bonus if they are of different origin (only applied once)
+/obj/item/research_notes/proc/merge(obj/item/research_notes/new_paper)
+	var/bonus = min(value , new_paper.value)
+	value = value + new_paper.value
+	if(origin_type != new_paper.origin_type && !mixed)
+		value += bonus * 0.3
+		origin_type = "[origin_type] and [new_paper.origin_type]"
+		mixed = TRUE
+	change_vol()
+	qdel(new_paper)
 
 //research notes for ruins
 /obj/item/research_notes/loot

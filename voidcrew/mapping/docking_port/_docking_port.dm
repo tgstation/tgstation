@@ -3,7 +3,7 @@
  */
 /obj/docking_port/mobile/voidcrew
 	launch_status = UNLAUNCHED
-	callTime = 25 SECONDS
+	callTime = 0
 
 	/// Makes sure we dont run linking logic more than once
 	VAR_PRIVATE/cached_z_level
@@ -155,7 +155,7 @@
 	message_admins("\[SHUTTLE]: [current_ship?.name] has been turned into a ruin!")
 	log_admin("\[SHUTTLE]: [current_ship?.name] has been turned into a ruin!")
 
-	qdel(src, force = TRUE)
+	qdel(current_ship)
 
 /obj/docking_port/mobile/voidcrew/proc/recalculate_shuttle_areas()
 	for(var/area/area as anything in shuttle_areas)

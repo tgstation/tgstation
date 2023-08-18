@@ -1,0 +1,279 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"b" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/pet/cat,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"d" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"f" = (
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"g" = (
+/obj/structure/dresser,
+/obj/item/book/codex_gigas,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"l" = (
+/obj/structure/table/wood,
+/obj/item/slimepotion/lovepotion,
+/obj/item/slimepotion/slime/sentience,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"m" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"o" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"p" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"s" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"t" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"w" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"x" = (
+/obj/structure/sacrificealtar,
+/obj/item/staff/broom,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"y" = (
+/obj/effect/spawner/trap,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"A" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/effect/spawner/trap,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"B" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"E" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"G" = (
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/clothing/head/wizard/marisa,
+/obj/item/clothing/shoes/sandal/magic,
+/obj/structure/rack,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"H" = (
+/obj/item/bedsheet/black,
+/obj/structure/bed,
+/mob/living/simple_animal/hostile/dark_wizard,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"L" = (
+/obj/structure/flora/junglebush,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"M" = (
+/obj/item/clothing/suit/chaplainsuit/armor/witchhunter,
+/obj/item/clothing/head/helmet/chaplain/witchunter_hat,
+/obj/item/claymore/weak,
+/obj/item/bodypart/head,
+/obj/effect/decal/cleanable/blood/gibs/bubblegum,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"N" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/curtain/bounty,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"O" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"P" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Q" = (
+/obj/structure/flora/junglebush,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"R" = (
+/obj/structure/flora/junglebush,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"S" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"T" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"U" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"V" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"W" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"Z" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+T
+y
+f
+f
+U
+E
+s
+t
+f
+a
+"}
+(2,1,1) = {"
+U
+f
+f
+w
+f
+f
+f
+f
+L
+f
+"}
+(3,1,1) = {"
+f
+L
+W
+W
+N
+W
+W
+W
+f
+z
+"}
+(4,1,1) = {"
+a
+f
+W
+d
+m
+p
+l
+W
+f
+Z
+"}
+(5,1,1) = {"
+f
+f
+W
+g
+p
+O
+V
+P
+V
+B
+"}
+(6,1,1) = {"
+f
+w
+W
+b
+V
+p
+p
+P
+p
+V
+"}
+(7,1,1) = {"
+n
+f
+W
+H
+V
+G
+x
+W
+a
+f
+"}
+(8,1,1) = {"
+E
+f
+W
+W
+N
+W
+W
+W
+f
+S
+"}
+(9,1,1) = {"
+A
+f
+f
+M
+o
+a
+f
+f
+f
+n
+"}
+(10,1,1) = {"
+t
+t
+U
+Q
+R
+f
+L
+f
+E
+y
+"}

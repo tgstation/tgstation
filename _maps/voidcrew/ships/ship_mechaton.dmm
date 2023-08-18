@@ -1,0 +1,1732 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"bf" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"bi" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"bE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"bH" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics Lab"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"cE" = (
+/turf/closed/wall/r_wall,
+/area/shuttle/voidcrew/mechaton/robotics)
+"de" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"ec" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall,
+/area/shuttle/voidcrew/mechaton/engineering)
+"eo" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/concourse)
+"ev" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"ey" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"eC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/ore_box,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"fb" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"fr" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"fU" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"fV" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"ge" = (
+/obj/machinery/computer/robotics,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"gi" = (
+/obj/structure/cable,
+/obj/structure/table/optable,
+/obj/item/bedsheet/purple,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"gJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"hm" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"ic" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"ip" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"iB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"iK" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics Lab"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"iM" = (
+/obj/machinery/ore_silo,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"iV" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/command{
+	name = "Bridge"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/bridge)
+"iZ" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"ks" = (
+/obj/machinery/photocopier,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/mechaton/bridge)
+"kI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=cargoone";
+	location = "halltwo"
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"kO" = (
+/obj/machinery/vending/coffee,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/mechaton/bridge)
+"lj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"lp" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"lK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=hallthree";
+	location = "cargotwo"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"mu" = (
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"mW" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/research/glass{
+	name = "Cargo Bay"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"ns" = (
+/obj/structure/window/reinforced/spawner{
+	dir = 8
+	},
+/obj/structure/closet/crate/rcd,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"nR" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"nY" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research/glass{
+	name = "Cargo Bay"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"oW" = (
+/obj/structure/window/reinforced/spawner{
+	dir = 8
+	},
+/obj/machinery/power/smes/engineering{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"pe" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "rechargeshutters";
+	name = "Recharging Bay Control";
+	pixel_x = 26;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"ps" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"pH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"pI" = (
+/obj/machinery/atmospherics/components/tank/plasma{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"pN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"pR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"qn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/lethalshot,
+/obj/item/gun/ballistic/shotgun/riot,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"rt" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"rQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/streak,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=halltwo";
+	location = "enginetwo"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"sb" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "rechargeshutters";
+	name = "Recharging Bay Control";
+	pixel_x = -26;
+	pixel_y = -7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"sj" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"sT" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"ts" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/robotics)
+"uM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"uX" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "factoryblasts";
+	name = "Cargo Bay Blast Door"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"vc" = (
+/obj/machinery/computer/helm{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"vd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"vq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"vv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rechargeshutters";
+	name = "Recharging Bay"
+	},
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"vP" = (
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics Lab"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"ws" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/conveyor{
+	id = "exosuitconveyor"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"wJ" = (
+/obj/machinery/button/door{
+	id = "factoryblasts";
+	name = "Cargo Bay Blast Doors";
+	pixel_x = 26
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"wX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "bridgeshutters";
+	name = "Bridge Shutters"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/bridge)
+"xe" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/engineering)
+"xQ" = (
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=engineone";
+	location = "hallone"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"xZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"yN" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"yP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"zA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"zC" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/holopad,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=bridgetwo";
+	location = "bridgeone"
+	},
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"zE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"zO" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/research/glass{
+	name = "Cargo Bay"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"An" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"AB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"AP" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/closet/crate/internals,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/tank/internals/plasmaman/full,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/suit/hazardvest,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"Ba" = (
+/obj/structure/cable,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Bb" = (
+/obj/effect/decal/cleanable/oil/streak,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Bg" = (
+/obj/structure/window/reinforced/spawner{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Bo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rechargeshutters";
+	name = "Recharging Bay"
+	},
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Bt" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"BK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"BV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Co" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"CL" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/obj/item/storage/box/donkpockets/donkpocketpizza,
+/obj/item/storage/box/donkpockets/donkpocketpizza,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"CW" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Dc" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Dk" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4
+	},
+/obj/item/storage/belt,
+/obj/item/storage/belt,
+/obj/item/multitool,
+/obj/item/multitool,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Dn" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Dt" = (
+/obj/machinery/autolathe,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"Dx" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Dy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"DK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Ej" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/mechaton/bridge)
+"El" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics Lab"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"EF" = (
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"EI" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Fl" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/cow{
+	name = "Bessie"
+	},
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"FC" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"FP" = (
+/turf/closed/wall/r_wall,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Gg" = (
+/obj/machinery/mineral/ore_redemption{
+	dir = 1;
+	output_dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"GO" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"GP" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "factoryblasts";
+	name = "Cargo Bay Blast Door"
+	},
+/obj/docking_port/mobile/voidcrew/mechaton{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"Hr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Hx" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"HO" = (
+/obj/structure/table/reinforced,
+/obj/machinery/airalarm/directional/north,
+/obj/item/bot_assembly/medbot{
+	pixel_y = 4
+	},
+/obj/item/bot_assembly/firebot{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/bot_assembly/cleanbot{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"HR" = (
+/turf/template_noop,
+/area/template_noop)
+"HX" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/closet/wardrobe/robotics_black,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Im" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"IT" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=hallfour";
+	location = "bridgetwo"
+	},
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"IX" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Jg" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/crab{
+	name = "Walter"
+	},
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Jm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Js" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Jw" = (
+/obj/structure/sign/poster/official/safety_eye_protection{
+	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"KB" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/pen,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"KC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"KD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=bridgeone";
+	location = "hallthree"
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Lp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/mining)
+"Md" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"My" = (
+/obj/structure/railing,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/concourse)
+"MW" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Na" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Nr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=robotwo";
+	location = "roboone"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"NL" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Oh" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Ok" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/fire{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/storage/medkit/advanced{
+	pixel_y = -2
+	},
+/obj/item/megaphone/command,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Ov" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rechargeshutters";
+	name = "Recharging Bay"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"OT" = (
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Pn" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/closet/crate/freezer,
+/obj/item/storage/cans/sixbeer,
+/obj/item/storage/cans/sixbeer,
+/obj/item/reagent_containers/blood/a_minus,
+/obj/item/reagent_containers/blood/a_plus,
+/obj/item/reagent_containers/blood/b_minus,
+/obj/item/reagent_containers/blood/b_plus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_plus,
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"PK" = (
+/turf/closed/wall/r_wall,
+/area/shuttle/voidcrew/mechaton/mining)
+"PW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "engine fuel pump"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Ql" = (
+/obj/effect/turf_decal/bot_white,
+/obj/structure/closet/crate,
+/obj/item/pickaxe/emergency,
+/obj/item/flashlight,
+/obj/item/clothing/glasses/meson,
+/obj/item/storage/bag/ore,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/flashlight,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"Qm" = (
+/obj/item/toy/figure/roboticist{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/glass/bottle/tequila{
+	pixel_x = -8
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Qo" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Qs" = (
+/obj/machinery/light,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"Rp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=cargotwo";
+	location = "cargoone"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"Rq" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"RB" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"RD" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Se" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner{
+	dir = 1
+	},
+/obj/machinery/computer/cryopod{
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/neon/simple/purple,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Sz" = (
+/turf/closed/wall/r_wall,
+/area/shuttle/voidcrew/mechaton/engineering)
+"SS" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Td" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"To" = (
+/obj/structure/cable,
+/obj/item/areaeditor/shuttle,
+/obj/machinery/button/door{
+	id = "bridgeshutters";
+	name = "Bridge Shutters Control";
+	pixel_x = 26
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/soap,
+/obj/item/healthanalyzer,
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Tq" = (
+/obj/machinery/conveyor_switch{
+	id = "exosuitconveyor";
+	pixel_x = 12
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=hallone";
+	location = "robotwo"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"Us" = (
+/turf/closed/wall/r_wall,
+/area/shuttle/voidcrew/mechaton/bridge)
+"Vc" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Vg" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=enginetwo";
+	location = "engineone"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Vj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Vp" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Vz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/noslip,
+/area/shuttle/voidcrew/mechaton/concourse)
+"VG" = (
+/obj/machinery/mecha_part_fabricator,
+/obj/machinery/conveyor{
+	id = "exosuitconveyor"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"VJ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/concourse)
+"VM" = (
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"Wf" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/science,
+/obj/item/mecha_parts/mecha_equipment/drill,
+/obj/item/circuitboard/computer/rdconsole,
+/obj/item/circuitboard/computer/powermonitor,
+/obj/item/circuitboard/machine/circuit_imprinter/department/science,
+/obj/item/circuitboard/mecha/ripley/main,
+/obj/item/circuitboard/mecha/ripley/peripherals,
+/obj/item/stack/rods/ten,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/mining)
+"Wu" = (
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"YO" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/cell_charger,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"YV" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Zd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/mechaton/engineering)
+"Zm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=roboone";
+	location = "hallfour"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+"ZP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/conveyor{
+	id = "exosuitconveyor"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/robotics)
+"ZW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/window/reinforced/spawner{
+	dir = 4
+	},
+/obj/machinery/mech_bay_recharge_port{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/mechaton/concourse)
+
+(1,1,1) = {"
+HR
+HR
+HR
+HR
+OT
+OT
+ae
+ae
+OT
+OT
+HR
+HR
+HR
+HR
+"}
+(2,1,1) = {"
+HR
+HR
+Sz
+Sz
+oW
+Bg
+nR
+yN
+ns
+oW
+Sz
+HR
+HR
+HR
+"}
+(3,1,1) = {"
+HR
+HR
+Sz
+Dx
+Qo
+ic
+lj
+lj
+RB
+hm
+Sz
+VJ
+eo
+HR
+"}
+(4,1,1) = {"
+HR
+Sz
+Sz
+mu
+rQ
+KC
+An
+PW
+Vg
+pI
+GO
+Qm
+RD
+HR
+"}
+(5,1,1) = {"
+HR
+ps
+ec
+fU
+Zd
+sj
+FC
+bi
+Vp
+sT
+Sz
+RD
+My
+HR
+"}
+(6,1,1) = {"
+HR
+Sz
+Sz
+Sz
+xe
+Sz
+Sz
+Sz
+Sz
+YV
+Sz
+de
+FP
+HR
+"}
+(7,1,1) = {"
+HR
+FP
+kI
+fb
+ip
+IX
+uM
+Wu
+zA
+Co
+MW
+xQ
+FP
+HR
+"}
+(8,1,1) = {"
+HR
+FP
+AB
+AB
+AB
+lp
+gJ
+Co
+bf
+bf
+bf
+Vj
+FP
+HR
+"}
+(9,1,1) = {"
+PK
+PK
+mW
+nY
+PK
+FP
+Ov
+vv
+FP
+cE
+vP
+El
+cE
+cE
+"}
+(10,1,1) = {"
+uX
+ev
+pH
+Qs
+PK
+sb
+vq
+yP
+fV
+cE
+EF
+rt
+SS
+cE
+"}
+(11,1,1) = {"
+uX
+Ql
+Rp
+CL
+PK
+ey
+Na
+Jm
+ey
+cE
+YO
+Tq
+EI
+ts
+"}
+(12,1,1) = {"
+uX
+eC
+vd
+Dt
+Lp
+ZW
+vq
+yP
+ZW
+ts
+VG
+ZP
+Oh
+ts
+"}
+(13,1,1) = {"
+GP
+Pn
+Im
+iM
+PK
+pR
+vq
+yP
+Vc
+cE
+VG
+ws
+fr
+cE
+"}
+(14,1,1) = {"
+uX
+Wf
+Im
+Gg
+PK
+ey
+iB
+yP
+DK
+cE
+ge
+Td
+Js
+cE
+"}
+(15,1,1) = {"
+uX
+ev
+Im
+Bt
+Lp
+ZW
+iB
+yP
+ZW
+ts
+Dk
+Bb
+CW
+ts
+"}
+(16,1,1) = {"
+uX
+AP
+lK
+Md
+PK
+pN
+iB
+BV
+BK
+cE
+HO
+Nr
+gi
+ts
+"}
+(17,1,1) = {"
+uX
+wJ
+Im
+Qs
+PK
+NL
+iB
+Vz
+pe
+cE
+Jw
+Dn
+Ba
+cE
+"}
+(18,1,1) = {"
+PK
+PK
+zO
+nY
+PK
+FP
+Bo
+vv
+FP
+cE
+iK
+bH
+cE
+cE
+"}
+(19,1,1) = {"
+HR
+FP
+gJ
+xZ
+IX
+IX
+ip
+Vj
+Vj
+IX
+IX
+gJ
+FP
+HR
+"}
+(20,1,1) = {"
+HR
+FP
+KD
+gJ
+gJ
+IX
+bE
+VM
+Dy
+gJ
+gJ
+Zm
+FP
+HR
+"}
+(21,1,1) = {"
+HR
+FP
+Us
+wX
+iV
+wX
+Us
+Us
+wX
+iV
+wX
+Us
+FP
+HR
+"}
+(22,1,1) = {"
+HR
+HR
+Us
+Ej
+Hr
+zE
+Se
+HX
+zE
+Hr
+kO
+Us
+HR
+HR
+"}
+(23,1,1) = {"
+HR
+HR
+Us
+To
+zC
+Fl
+Rq
+Hx
+Jg
+IT
+ks
+Us
+HR
+HR
+"}
+(24,1,1) = {"
+HR
+HR
+Us
+Us
+Dc
+KB
+qn
+vc
+Ok
+iZ
+Us
+Us
+HR
+HR
+"}
+(25,1,1) = {"
+HR
+HR
+HR
+wX
+wX
+wX
+wX
+wX
+wX
+wX
+wX
+HR
+HR
+HR
+"}

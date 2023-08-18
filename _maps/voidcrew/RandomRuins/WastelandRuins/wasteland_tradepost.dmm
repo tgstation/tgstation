@@ -1,0 +1,649 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/aimodule/harmless,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"bY" = (
+/obj/structure/closet/crate/engineering,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"ch" = (
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"cL" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"em" = (
+/obj/structure/chair/plastic,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"en" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"fC" = (
+/obj/structure/rack,
+/obj/item/stack/wrapping_paper,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"gy" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"gA" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"im" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/clothing/mafia_outfit,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"iy" = (
+/obj/structure/cable,
+/obj/structure/statue/sandstone/assistant,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"kf" = (
+/obj/structure/ore_box,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"kF" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"kU" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/laser/retro,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"kW" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"mj" = (
+/obj/structure/fluff/oldturret,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"mK" = (
+/obj/structure/marker_beacon,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"np" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"nw" = (
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"nO" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/window/fulltile,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"nV" = (
+/turf/closed/wall,
+/area/ruin/unpowered)
+"pc" = (
+/obj/structure/marker_beacon,
+/turf/open/floor/plating,
+/area/overmap_encounter/planetoid/wasteland)
+"pl" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"rJ" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"sT" = (
+/obj/structure/rack,
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"sW" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"tl" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/window/fulltile,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"tm" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp/green,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"tp" = (
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"tU" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"uc" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"un" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"wA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"wB" = (
+/obj/effect/decal/cleanable/garbage,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"wM" = (
+/obj/item/bot_assembly/medbot,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"xr" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/overmap_encounter/planetoid/wasteland)
+"yd" = (
+/obj/structure/statue/sandstone/assistant,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"ze" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"zq" = (
+/obj/machinery/modular_computer/console/preset/civilian,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"zY" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"Ag" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"AK" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"Ba" = (
+/obj/structure/door_assembly/door_assembly_highsecurity,
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"BE" = (
+/obj/structure/door_assembly/door_assembly_hatch,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Cf" = (
+/obj/structure/rack,
+/obj/item/stack/wrapping_paper,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Cl" = (
+/obj/mecha/working/ripley/cargo,
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/turf/open/floor/plating,
+/area/overmap_encounter/planetoid/wasteland)
+"CC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"De" = (
+/turf/template_noop,
+/area/template_noop)
+"Ga" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Gg" = (
+/obj/structure/chair/plastic,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Ha" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/bag/money/vault,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"Hm" = (
+/obj/effect/decal/fakelattice,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"HZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"IN" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"IU" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"IZ" = (
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Lm" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"Ln" = (
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"LG" = (
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/turf/open/floor/plating,
+/area/overmap_encounter/planetoid/wasteland)
+"Ma" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"MR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Nl" = (
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"OC" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"OY" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"OZ" = (
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"Pa" = (
+/turf/open/floor/plating,
+/area/overmap_encounter/planetoid/wasteland)
+"PS" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/garbage,
+/obj/item/circuitboard/machine/thermomachine,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Qt" = (
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"QD" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/decal/cleanable/garbage,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Rn" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"RB" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"RE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Sn" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"SE" = (
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"Tk" = (
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"Tl" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"TB" = (
+/obj/structure/closet/crate/miningcar,
+/obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"Ue" = (
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"Vn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/overmap_encounter/planetoid/wasteland)
+"VU" = (
+/mob/living/simple_animal/pet/cat/kitten,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Xc" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Ya" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Zq" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/storage/pill_bottle/zoom,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+Ue
+Ue
+Ue
+nV
+nV
+nV
+mj
+Ya
+Ya
+Ya
+Ya
+Ya
+De
+De
+De
+"}
+(2,1,1) = {"
+Ue
+fC
+ch
+im
+Ga
+nV
+IZ
+Ya
+pc
+Vn
+Qt
+Qt
+Qt
+mK
+De
+"}
+(3,1,1) = {"
+Ue
+sT
+wB
+QD
+Sn
+tl
+wM
+Ya
+Lm
+HZ
+kW
+kW
+Vn
+Lm
+De
+"}
+(4,1,1) = {"
+Ue
+sW
+Ga
+Cf
+CC
+tl
+Ya
+Ya
+un
+Lm
+rJ
+rJ
+Lm
+Lm
+De
+"}
+(5,1,1) = {"
+nV
+PS
+Tl
+aj
+SE
+Ue
+Ya
+Ya
+Lm
+Lm
+bY
+tp
+Lm
+Lm
+De
+"}
+(6,1,1) = {"
+nV
+Ma
+Sn
+MR
+Tk
+Ue
+np
+Ya
+Qt
+Lm
+zY
+wA
+un
+HZ
+De
+"}
+(7,1,1) = {"
+Ue
+Gg
+VU
+MR
+Sn
+nV
+iy
+Ya
+Qt
+uc
+tp
+tp
+uc
+Qt
+De
+"}
+(8,1,1) = {"
+Ue
+em
+nw
+cL
+ze
+BE
+Hm
+Hm
+Qt
+Lm
+kU
+wA
+Lm
+Qt
+De
+"}
+(9,1,1) = {"
+Ue
+tm
+OZ
+MR
+kF
+nV
+yd
+Ya
+Qt
+Lm
+zq
+OC
+Lm
+Qt
+De
+"}
+(10,1,1) = {"
+Ue
+Ue
+Ba
+nV
+nV
+nV
+IU
+Ya
+HZ
+Lm
+IN
+IN
+Lm
+HZ
+De
+"}
+(11,1,1) = {"
+Ue
+gy
+Sn
+RE
+en
+nV
+Ya
+Ya
+mK
+Qt
+Qt
+HZ
+Pa
+pc
+De
+"}
+(12,1,1) = {"
+Ue
+MR
+Ln
+RB
+Sn
+nO
+Ya
+Ya
+Ya
+Hm
+Ya
+Ya
+Hm
+De
+De
+"}
+(13,1,1) = {"
+nV
+pl
+Ha
+Zq
+MR
+nO
+gA
+Ya
+Ya
+tU
+AK
+xr
+TB
+Ya
+De
+"}
+(14,1,1) = {"
+nV
+Xc
+MR
+OY
+Tk
+Ue
+Ya
+Nl
+Ya
+Cl
+Rn
+kf
+LG
+Ag
+De
+"}
+(15,1,1) = {"
+nV
+nV
+nV
+Ue
+Ue
+Ue
+mj
+Ya
+Ya
+Ya
+Ya
+De
+De
+De
+De
+"}

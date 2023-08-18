@@ -1,4 +1,5 @@
 /area/shuttle/voidcrew
+	requires_power = TRUE
 	var/obj/docking_port/mobile/voidcrew/shuttle_port
 
 /area/shuttle/voidcrew/connect_to_shuttle(mapload, obj/docking_port/mobile/voidcrew/port, obj/docking_port/stationary/dock)

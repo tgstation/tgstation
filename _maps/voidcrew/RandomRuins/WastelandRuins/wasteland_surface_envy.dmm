@@ -1,0 +1,328 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/mirror{
+	broken = 1;
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28
+	},
+/obj/item/clothing/suit/hooded/bloated_human,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/mirror{
+	broken = 1;
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = 28
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"g" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/mirror{
+	broken = 1;
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"h" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"i" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"j" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/mirror{
+	broken = 1;
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_y = 28
+	},
+/obj/item/kitchen/knife/envy,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"l" = (
+/obj/structure/mirror{
+	broken = 1;
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = 28
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"m" = (
+/obj/structure/mirror{
+	broken = 1;
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"n" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/mirror{
+	broken = 1;
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"p" = (
+/obj/machinery/door/airlock/cult/unruned/glass/friendly{
+	name = "airlock"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"F" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/mirror/magic/lesser{
+	pixel_x = 28
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"O" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+"}
+(2,1,1) = {"
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+"}
+(3,1,1) = {"
+O
+O
+O
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+O
+O
+"}
+(4,1,1) = {"
+O
+O
+d
+d
+d
+e
+g
+g
+g
+m
+m
+m
+m
+m
+o
+m
+j
+d
+O
+O
+"}
+(5,1,1) = {"
+O
+d
+d
+d
+d
+d
+h
+h
+i
+i
+i
+i
+i
+h
+i
+i
+i
+d
+O
+O
+"}
+(6,1,1) = {"
+O
+d
+d
+d
+d
+d
+d
+k
+i
+i
+i
+i
+i
+i
+i
+i
+i
+p
+O
+O
+"}
+(7,1,1) = {"
+O
+d
+d
+d
+d
+d
+i
+i
+i
+j
+i
+n
+i
+i
+i
+i
+i
+d
+O
+O
+"}
+(8,1,1) = {"
+O
+O
+d
+d
+d
+f
+F
+l
+l
+l
+l
+l
+l
+l
+l
+l
+j
+d
+O
+O
+"}
+(9,1,1) = {"
+O
+O
+O
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+O
+O
+"}
+(10,1,1) = {"
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+"}

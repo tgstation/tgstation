@@ -1,0 +1,910 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aq" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"aO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair/stool/bar,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"aZ" = (
+/obj/structure/chair/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"cI" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"da" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/a357,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"er" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"eV" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"fN" = (
+/obj/structure/table/wood/poker,
+/obj/item/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gd" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/maintenance,
+/obj/item/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gy" = (
+/obj/structure/chair/stool,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gC" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gF" = (
+/turf/template_noop,
+/area/template_noop)
+"hr" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"hL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/asteroid/hermit/ranged/hunter{
+	faction = list("saloon");
+	name = "Whitesands Bartender"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"ih" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	list_reagents = list(/datum/reagent/consumable/ethanol/quintuple_sec = 20)
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"iL" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"iQ" = (
+/obj/item/ammo_casing/shotgun/buckshot,
+/obj/item/ammo_casing/shotgun/buckshot{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"js" = (
+/obj/structure/sign/poster/official/high_class_martini,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"jx" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ki" = (
+/obj/structure/table/wood,
+/obj/item/stack/spacecash/c500{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ko" = (
+/obj/structure/table/wood/poker,
+/obj/item/reagent_containers/food/drinks/beer,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"kD" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"kO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"kS" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	list_reagents = list(/datum/reagent/consumable/ethanol/fetching_fizz= 30)
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"mr" = (
+/obj/structure/chair/stool/bar,
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 8;
+	faction = list("saloon")
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"mx" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"nE" = (
+/obj/structure/chair/stool/bar,
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 1;
+	faction = list("saloon")
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"nZ" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/syndicate,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"oA" = (
+/obj/structure/closet/cabinet,
+/obj/item/gun/ballistic/shotgun/riot,
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/belt/bandolier,
+/obj/item/ammo_casing/shotgun/dragonsbreath,
+/obj/item/ammo_casing/shotgun/dragonsbreath,
+/obj/item/ammo_casing/shotgun/dragonsbreath,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"oB" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"oL" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"qB" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"rv" = (
+/obj/structure/table/wood,
+/obj/machinery/light,
+/obj/item/clothing/mask/cigarette/cigar/havana{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	list_reagents = list(/datum/reagent/consumable/ethanol/sugar_rush = 30);
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"tq" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/sarsaparilla,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"tQ" = (
+/obj/machinery/chem_dispenser/drinks,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"xr" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"xB" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"yb" = (
+/obj/structure/musician/piano,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"yc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"yh" = (
+/obj/structure/sign/poster/official/no_erp,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"yt" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"yV" = (
+/obj/machinery/light,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"yZ" = (
+/obj/structure/closet/cabinet,
+/obj/item/storage/bag/money,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"zh" = (
+/obj/structure/table/wood,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	list_reagents = list(/datum/reagent/consumable/ethanol/quintuple_sec = 20)
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"AW" = (
+/obj/structure/sign/poster/official/cohiba_robusto_ad,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"Bp" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Bw" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"CB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/head/collectable/tophat{
+	pixel_y = 7
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"DO" = (
+/obj/item/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"DT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ed" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/shotgun/buckshot,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Eq" = (
+/obj/structure/table/wood/poker,
+/obj/item/reagent_containers/food/drinks/bottle/grappa,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"FC" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"FN" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"GG" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Hb" = (
+/obj/structure/sign/poster/contraband/smoke,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"HX" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ig" = (
+/obj/item/clothing/head/cowboy{
+	pixel_x = -17
+	},
+/obj/effect/decal/remains/human,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/a357{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/gun/ballistic/derringer{
+	pixel_y = -13
+	},
+/turf/template_noop,
+/area/whitesands/surface/outdoors)
+"Io" = (
+/obj/structure/table/wood,
+/obj/item/candle/infinite,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ir" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Used to mix booze. You can see a Coondimaster label lazily covered up.";
+	name = "Hoochmaster 2000"
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"IR" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ji" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard,
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Jq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Jx" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Ld" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/decal/cleanable/blood/old,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"Lj" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"LA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ml" = (
+/obj/structure/chair/stool/bar,
+/obj/machinery/light,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"MX" = (
+/obj/structure/table/wood,
+/obj/item/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Nn" = (
+/obj/structure/table/wood,
+/obj/item/candle/infinite,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	list_reagents = list(/datum/reagent/consumable/ethanol/sugar_rush = 30);
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ov" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 8;
+	faction = list("saloon")
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Pi" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"Px" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"PX" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"Qs" = (
+/obj/item/clothing/head/cowboy{
+	pixel_x = 13
+	},
+/obj/effect/decal/remains/human,
+/obj/item/clothing/mask/gas/mime,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/ammo_casing/a357{
+	dir = 10;
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/gun/ballistic/derringer{
+	pixel_y = -14
+	},
+/turf/template_noop,
+/area/whitesands/surface/outdoors)
+"QQ" = (
+/obj/machinery/vending/classicbeats,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"RB" = (
+/obj/structure/sign/poster/official/twelve_gauge,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"RC" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"RY" = (
+/obj/machinery/chem_dispenser/drinks/beer,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Td" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"UO" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/sarsaparilla,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"UT" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"VF" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"VM" = (
+/obj/machinery/light,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"Wd" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Xa" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Xb" = (
+/obj/item/chair/stool/bar,
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 1;
+	faction = list("saloon")
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"XF" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"XS" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"Yj" = (
+/obj/structure/closet/cabinet,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bottle/morphine,
+/obj/item/gun/ballistic/automatic/aks74u,
+/obj/item/ammo_box/magazine/aks74u,
+/obj/item/ammo_box/magazine/aks74u,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Yo" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"YJ" = (
+/obj/item/chair/stool/bar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"YM" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	list_reagents = list(/datum/reagent/consumable/ethanol/manly_dorf = 30)
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ZG" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+VF
+Yo
+VF
+yt
+VF
+VF
+yt
+yt
+Xa
+FC
+XS
+VF
+VF
+gF
+gF
+gF
+gF
+"}
+(2,1,1) = {"
+yh
+XF
+Px
+Nn
+VF
+yb
+QQ
+Wd
+xr
+hr
+xr
+xr
+yt
+gF
+gF
+Ig
+gF
+"}
+(3,1,1) = {"
+yt
+oL
+cI
+rv
+VF
+gy
+xr
+xB
+da
+Eq
+jx
+YJ
+FC
+gF
+gF
+gF
+gF
+"}
+(4,1,1) = {"
+Yo
+xB
+Px
+xB
+er
+xr
+Jq
+Ed
+DO
+Pi
+HX
+xB
+Ji
+gF
+gF
+gF
+gF
+"}
+(5,1,1) = {"
+Jx
+yZ
+oL
+xr
+VF
+gC
+xr
+YJ
+oL
+Px
+Ov
+kD
+Bw
+gF
+gF
+gF
+gF
+"}
+(6,1,1) = {"
+VF
+Px
+Px
+VF
+VF
+kS
+zh
+tq
+GG
+Px
+GG
+Px
+yt
+gF
+gF
+gF
+gF
+"}
+(7,1,1) = {"
+VF
+oA
+Px
+xr
+yt
+mx
+iQ
+ih
+nE
+GG
+ZG
+Ml
+VF
+gF
+gF
+gF
+gF
+"}
+(8,1,1) = {"
+RB
+Ir
+Px
+Px
+js
+tQ
+eV
+oB
+gC
+Ed
+GG
+Px
+er
+gF
+gF
+gF
+gF
+"}
+(9,1,1) = {"
+AW
+ki
+Px
+VM
+Hb
+RY
+hL
+RC
+Xb
+aq
+Px
+aq
+er
+gF
+gF
+gF
+gF
+"}
+(10,1,1) = {"
+VF
+IR
+DT
+DT
+Ld
+eV
+DT
+YM
+YJ
+xr
+LA
+Px
+er
+gF
+gF
+gF
+gF
+"}
+(11,1,1) = {"
+VF
+Px
+CB
+Px
+VF
+Wd
+oL
+MX
+xB
+Lj
+UO
+yV
+VF
+gF
+gF
+gF
+gF
+"}
+(12,1,1) = {"
+VF
+VF
+VF
+VF
+VF
+kS
+tq
+RC
+xr
+YJ
+gC
+xr
+VF
+gF
+gF
+gF
+gF
+"}
+(13,1,1) = {"
+UT
+XF
+Px
+Io
+yc
+gC
+mr
+gC
+Jq
+xB
+Px
+Px
+FC
+gF
+gF
+gF
+gF
+"}
+(14,1,1) = {"
+VF
+Px
+aZ
+iL
+yc
+xr
+Px
+xB
+Px
+jx
+fN
+xr
+qB
+gF
+gF
+gF
+gF
+"}
+(15,1,1) = {"
+Yo
+Td
+Px
+Td
+er
+xr
+xr
+PX
+xr
+ko
+nZ
+gC
+Bp
+gF
+gF
+Qs
+gF
+"}
+(16,1,1) = {"
+VF
+Yj
+Px
+Px
+VF
+aO
+kO
+LA
+gd
+xr
+YJ
+FN
+VF
+gF
+gF
+gF
+gF
+"}
+(17,1,1) = {"
+VF
+VF
+VF
+VF
+VF
+yt
+VF
+XS
+FC
+FC
+XS
+VF
+VF
+gF
+gF
+gF
+gF
+"}

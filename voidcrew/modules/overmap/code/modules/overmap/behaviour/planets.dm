@@ -1,5 +1,3 @@
-// voidcrew TODO: all of the commented out code in here has to do with planet generation
-
 /datum/overmap/planet
 	///Name of the planet
 	var/name = "Planet"
@@ -15,132 +13,109 @@
 	var/spawn_rate = 20
 	///The list of ruins that can spawn here
 	var/ruin_type
-	///The area the ruin needs
-	var/area/planet_area
-
 	///The map generator to use
 	var/datum/map_generator/mapgen
+	///The area type to use on the planet
+	var/area/target_area
 	///The surface turf
-	var/turf/surface = /turf/open/space
-	///Z traits of the planet
-	var/list/planet_ztraits
-
-
-	// Area vars
-	///Name of the area
-	var/area_name = "\improper Planetoid"
-	///Flags this area should have
-	var/area_flags = (CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED)
-	///Ambience that should play on this planet
-	var/ambientsounds = AMBIENCE_MINING
-	///Sound environment of the planet
-	var/sound_environment = SOUND_ENVIRONMENT_CAVE
-
+	var/turf/surface = /turf/open/space/basic
+	///Weather controller for planet specific weather
+	var/datum/weather/weather_controller_type
+	///A planet template that contains a list of biomes to use
+	var/datum/planet/planet_template
 
 /datum/overmap/planet/lava
 	name = "strange lava planet"
 	desc = "A very weak energy signal originating from a planet with lots of seismic and volcanic activity."
 	color = COLOR_ORANGE
 
-	/*
-	planet_ztraits = list(
-		ZTRAIT_ASHSTORM = TRUE,
-		ZTRAIT_LAVA_RUINS = TRUE,
-		ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface,
-	)
-
 	ruin_type = ZTRAIT_LAVA_RUINS
-	planet_area = /area/lavaland/surface
-	surface = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
-	mapgen = /datum/map_generator/cave_generator/lavaland
-
-	area_name = "\improper Volcanic Planetoid"
-	sound_environment = SOUND_AREA_LAVALAND
-	*/
+	mapgen = /datum/map_generator/planet_generator/lava
+	target_area = /area/overmap_encounter/planetoid/lava
+	surface = /turf/open/misc/asteroid/basalt/lava_land_surface
+	weather_controller_type = /datum/weather/ash_storm
+	planet_template = /datum/planet/lava
 
 /datum/overmap/planet/ice
 	name = "strange ice planet"
 	desc = "A very weak energy signal originating from a planet with traces of water and extremely low temperatures."
 	color = COLOR_BLUE_LIGHT
 
-	/*
-
-	planet_ztraits = list(
-		//VOID TODO weather type
-		ZTRAIT_ICE_RUINS = TRUE,
-		ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/snow/icemoon,
-	)
-
-	planet_area = /area/icemoon/surface
 	ruin_type = ZTRAIT_ICE_RUINS
-	mapgen = /datum/map_generator/cave_generator/icemoon
-	surface = /turf/open/floor/plating/asteroid/snow/icemoon
+	mapgen = /datum/map_generator/planet_generator/snow
+	target_area = /area/overmap_encounter/planetoid/ice
+	surface = /turf/open/misc/asteroid/snow/icemoon
+	weather_controller_type = /datum/weather/snow_storm
+	planet_template = /datum/planet/snow
 
-	area_name = "\improper Frozen Planetoid"
-	sound_environment = SOUND_AREA_ICEMOON
-	ambientsounds = AMBIENCE_SPOOKY
-	*/
+/datum/overmap/planet/beach
+	name = "strange beach planet"
+	desc = "A very weak energy signal originating from a planet with many traces of fish."
+	color = COLOR_NAVY
 
-/datum/overmap/planet/sand
-	name = "strange sand planet"
-	desc = "A very weak energy signal originating from a planet with many traces of silica."
-	color = COLOR_GRAY
-
-	/*
-	planet_ztraits = list(
-		//VOID TODO Weather type
-		ZTRAIT_SAND_RUINS = TRUE,
-		ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/whitesands,
-	)
-
-	planet_area = /area/planet/whitesands
-	ruin_type = ZTRAIT_SAND_RUINS
-	mapgen = /datum/map_generator/cave_generator/whitesands
-	surface = /turf/open/floor/plating/asteroid/whitesands
-
-	area_name = "\improper Sandy Planetoid"
-	sound_environment = SOUND_ENVIRONMENT_QUARRY
-	*/
+	ruin_type = ZTRAIT_BEACH_RUINS
+	mapgen = /datum/map_generator/planet_generator/beach
+	target_area = /area/overmap_encounter/planetoid/beach
+	surface = /turf/open/misc/asteroid/sand/beach/lit
+	planet_template = /datum/planet/beach
 
 /datum/overmap/planet/jungle
 	name = "strange jungle planet"
 	desc = "A very weak energy signal originating from a planet teeming with life."
 	color = COLOR_LIME
 
-	/*
-	planet_ztraits = list(
-		//VOID TODO WEATHER
-		ZTRAIT_JUNGLE_RUINS = TRUE,
-		ZTRAIT_BASETURF = /turf/open/floor/plating/dirt,
-	)
-
-	planet_area = /area/planet/jungle
 	ruin_type = ZTRAIT_JUNGLE_RUINS
-	mapgen = /datum/map_generator/jungle_generator
-	surface = /turf/open/floor/plating/dirt/jungle
+	mapgen = /datum/map_generator/planet_generator
+	target_area = /area/overmap_encounter/planetoid/jungle
+	surface = /turf/open/misc/dirt/jungle
+	planet_template = /datum/planet/jungle
 
-	area_name = "\improper Jungle Planetoid"
-	sound_environment = SOUND_ENVIRONMENT_FOREST
-	ambientsounds = AMBIENCE_AWAY
-	*/
-
-/datum/overmap/planet/rock
-	name = "strange rock planet"
+/datum/overmap/planet/wasteland
+	name = "strange apocalyptic planet"
 	desc = "A very weak energy signal originating from a abandoned industrial planet."
-	color = COLOR_BROWN
+	color = COLOR_BEIGE
 
-	/*
-	planet_ztraits = list(
-		//VOID TODO WEATHER
-		ZTRAIT_ROCK_RUINS = TRUE,
-		ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid
-	)
+	ruin_type = ZTRAIT_WASTELAND_RUINS
+	mapgen = /datum/map_generator/planet_generator/lava
+	target_area = /area/overmap_encounter/planetoid/wasteland
+	surface = /turf/open/misc/wasteland/lit
+	planet_template = /datum/planet/wasteland
 
-	planet_area = /area/planet/rock
-	ruin_type = ZTRAIT_ROCK_RUINS
-	mapgen = /datum/map_generator/cave_generator/rockplanet
-	surface = /turf/open/floor/plating/asteroid
+/datum/overmap/planet/reebe
+	name = "???"
+	desc = "Some sort of strange portal. Theres no identification of what this is."
+	color = COLOR_YELLOW
+	icon_state = "wormhole"
 
-	sound_environment = SOUND_ENVIRONMENT_HANGAR
-	ambientsounds = AMBIENCE_MAINT
-	*/
+	ruin_type = ZTRAIT_REEBE_RUINS
+	spawn_rate = -1 // disabled because reebe sucks for natural gen
+	mapgen = /datum/map_generator/cave_generator/reebe
+	target_area = /area/overmap_encounter/planetoid/reebe
+	surface = /turf/open/chasm/reebe_void
+
+/datum/overmap/planet/asteroid
+	name = "large asteroid"
+	desc = "A large asteroid with significant traces of minerals."
+	color = COLOR_GRAY
+	icon_state = "asteroid"
+
+	//spawn_rate = 30
+	spawn_rate = -1
+	mapgen = /datum/map_generator/cave_generator/asteroid
+
+/datum/overmap/planet/space // not a planet but freak off!!
+	name = "weak energy signal"
+	desc = "A very weak energy signal emenating from space."
+	color = null
+	icon_state = "strange_event"
+
+	ruin_type = ZTRAIT_SPACE_RUINS
+
+/datum/overmap/planet/empty // not a planet but freak off!!
+	name = "Empty Space"
+	desc = "A ship appears to be docked here."
+	color = null
+	icon_state = "object"
+	spawn_rate = -1
+
+

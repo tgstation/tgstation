@@ -1,0 +1,1320 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aq" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"bA" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/closed/wall/mineral/titanium/exterior,
+/area/ruin/powered)
+"bV" = (
+/obj/structure/rack,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"cA" = (
+/obj/item/hatchet/wooden,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"cO" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/power/shuttle_engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"dE" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"dO" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"eb" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"ej" = (
+/obj/structure/flora/stump,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"ev" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"ey" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"eM" = (
+/obj/effect/mob_spawn/human/corpse/assistant{
+	outfit = /datum/outfit/job/botanist
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"gd" = (
+/obj/structure/flora/stump,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"hs" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"iO" = (
+/obj/effect/turf_decal/industrial/warning/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"iS" = (
+/obj/machinery/light/dim,
+/obj/item/chainsaw/doomslayer{
+	force_on = 35;
+	name = "THE GREAT TREEFELLER"
+	},
+/obj/item/clothing/suit/space/hardsuit/solgov{
+	name = "Lumberjack Powersuit"
+	},
+/obj/structure/safe/floor,
+/obj/item/grenade/frag,
+/obj/item/grenade/frag,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"jz" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"jC" = (
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"kt" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"kA" = (
+/obj/effect/mob_spawn/human/corpse/assistant{
+	outfit = /datum/outfit/job/botanist
+	},
+/obj/effect/gibspawner/human,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"lb" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"lz" = (
+/obj/structure/railing,
+/obj/effect/mob_spawn/human/corpse/solgov/officer,
+/obj/item/organ/internal/heart,
+/obj/item/organ/internal/liver,
+/obj/item/organ/stomach,
+/obj/item/organ/lungs,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood,
+/obj/item/megaphone/command,
+/obj/effect/gibspawner/human,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"lD" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"mA" = (
+/obj/structure/flora/stump,
+/obj/structure/flora/junglebush/b,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"mE" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"nc" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"nM" = (
+/mob/living/basic/tree{
+	health = 100;
+	icon = 'icons/obj/flora/jungletrees.dmi';
+	icon_dead = "tree5";
+	icon_gib = "tree5";
+	icon_living = "tree5";
+	icon_state = "tree5";
+	maxHealth = 100;
+	melee_damage_lower = 6;
+	melee_damage_upper = 8;
+	name = "tree";
+	pixel_x = -45;
+	pixel_y = -15
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"nX" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"ps" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/closed/wall/mineral/titanium/exterior,
+/area/ruin/powered)
+"rd" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"sm" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"un" = (
+/obj/item/rack_parts,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"uu" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"uy" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"uI" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 8;
+	name = "Broken Computer"
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"vs" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"vF" = (
+/obj/structure/railing,
+/obj/item/clothing/glasses/sunglasses,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"wD" = (
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"wP" = (
+/turf/closed/wall/mineral/titanium/exterior,
+/area/ruin/powered)
+"wZ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"xu" = (
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"xT" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"yj" = (
+/obj/effect/turf_decal/industrial/warning{
+	dir = 1
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"yF" = (
+/obj/structure/railing,
+/obj/effect/mob_spawn/human/corpse/solgov/officer,
+/obj/effect/decal/cleanable/blood,
+/obj/item/organ/internal/heart,
+/obj/item/organ/internal/liver,
+/obj/item/organ/stomach,
+/obj/item/organ/lungs,
+/obj/effect/gibspawner/human,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"yY" = (
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"zu" = (
+/obj/structure/railing,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"zv" = (
+/obj/structure/sign/poster/official/work_for_a_future,
+/turf/closed/wall,
+/area/ruin/powered)
+"AC" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"AR" = (
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Bg" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"BH" = (
+/obj/item/crowbar/red/caravan,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Cc" = (
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"CS" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"De" = (
+/obj/machinery/button/door{
+	id = "onceler";
+	name = "Deliveries Shuttle Shutters";
+	pixel_y = -25
+	},
+/obj/effect/turf_decal/industrial/warning/corner,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Df" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Ds" = (
+/obj/effect/turf_decal/industrial/warning,
+/obj/effect/gibspawner/human,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"EU" = (
+/mob/living/basic/tree{
+	health = 100;
+	icon = 'icons/obj/flora/jungletrees.dmi';
+	icon_dead = "tree9";
+	icon_gib = "tree9";
+	icon_living = "tree9";
+	icon_state = "tree9";
+	maxHealth = 100;
+	melee_damage_lower = 6;
+	melee_damage_upper = 8;
+	name = "tree";
+	pixel_x = -50;
+	pixel_y = -10
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"EW" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Fo" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"FW" = (
+/obj/structure/statue/diamond/captain{
+	anchored = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Gf" = (
+/obj/structure/girder,
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"GE" = (
+/obj/structure/rack,
+/obj/item/hatchet/wooden,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"GN" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/human/corpse/assistant,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Hw" = (
+/obj/machinery/door/airlock/titanium/glass,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"HO" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"HZ" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Ie" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Ij" = (
+/obj/effect/turf_decal/industrial/warning/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"JT" = (
+/obj/structure/railing,
+/mob/living/basic/tree{
+	health = 100;
+	icon = 'icons/obj/flora/jungletrees.dmi';
+	icon_dead = "tree5";
+	icon_gib = "tree5";
+	icon_living = "tree5";
+	icon_state = "tree5";
+	maxHealth = 100;
+	melee_damage_lower = 6;
+	melee_damage_upper = 8;
+	name = "tree";
+	pixel_x = -45;
+	pixel_y = -15
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Kc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"Ll" = (
+/mob/living/basic/tree{
+	health = 100;
+	icon = 'icons/obj/flora/jungletreesmall.dmi';
+	icon_dead = "tree2";
+	icon_gib = "tree2";
+	icon_living = "tree2";
+	icon_state = "tree2";
+	maxHealth = 100;
+	melee_damage_lower = 6;
+	melee_damage_upper = 8;
+	name = "tree";
+	pixel_x = -30
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Mf" = (
+/obj/structure/sign/poster/official/build,
+/turf/closed/wall,
+/area/ruin/powered)
+"Mz" = (
+/obj/structure/rack,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/storage/medkit/ancient,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"MA" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"MD" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"MT" = (
+/obj/structure/flora/junglebush/b,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"MX" = (
+/obj/structure/flora/grass/jungle,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Nc" = (
+/obj/machinery/door/airlock/titanium/glass{
+	icon_state = "open";
+	state_open = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"Nj" = (
+/obj/structure/rack,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Nr" = (
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/item/slimepotion/slime/sentience,
+/obj/item/stack/sheet/mineral/wood/fifty,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/obj/item/grown/log/tree,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"Nu" = (
+/obj/structure/flora/rock/jungle,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Oh" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Pb" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"PR" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor2-old"
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Qp" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/structure/girder,
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Qv" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Ra" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"RE" = (
+/obj/structure/flora/stump,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"RJ" = (
+/obj/item/hatchet/wooden,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"RK" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"RM" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/human/corpse/assistant,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"RV" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/industrial/warning/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"SD" = (
+/obj/effect/turf_decal/industrial/warning{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"SE" = (
+/mob/living/basic/tree{
+	health = 100;
+	icon = 'icons/obj/flora/jungletreesmall.dmi';
+	icon_dead = "tree2";
+	icon_gib = "tree2";
+	icon_living = "tree2";
+	icon_state = "tree2";
+	maxHealth = 100;
+	melee_damage_lower = 6;
+	melee_damage_upper = 8;
+	name = "tree";
+	pixel_x = -30
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"SJ" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Ta" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "onceler"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"TB" = (
+/obj/item/megaphone/command,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Uy" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"UD" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"UJ" = (
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Ve" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor2-old"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"VH" = (
+/obj/effect/turf_decal/industrial/warning,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"VR" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/fireaxe,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"VT" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Yo" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/mineral/wood/fifty,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"YM" = (
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Zh" = (
+/mob/living/basic/tree{
+	health = 100;
+	icon = 'icons/obj/flora/jungletrees.dmi';
+	icon_dead = "tree9";
+	icon_gib = "tree9";
+	icon_living = "tree9";
+	icon_state = "tree9";
+	maxHealth = 100;
+	melee_damage_lower = 6;
+	melee_damage_upper = 8;
+	name = "tree";
+	pixel_x = -50;
+	pixel_y = -10
+	},
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"ZU" = (
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/ruin/powered)
+
+(1,1,1) = {"
+Cc
+Cc
+Cc
+Cc
+Cc
+ej
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+"}
+(2,1,1) = {"
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Bg
+Cc
+Cc
+jz
+ej
+kt
+Cc
+gd
+Cc
+Cc
+aq
+jz
+Cc
+Cc
+"}
+(3,1,1) = {"
+Cc
+Cc
+jz
+Cc
+gd
+UJ
+Cc
+ej
+UJ
+ej
+gd
+cA
+UJ
+SE
+Cc
+ej
+Uy
+Cc
+Cc
+Cc
+"}
+(4,1,1) = {"
+Cc
+Cc
+Cc
+Cc
+UJ
+Df
+UJ
+dO
+UJ
+UJ
+UJ
+gd
+UJ
+Df
+UJ
+UJ
+mE
+Cc
+ej
+Cc
+"}
+(5,1,1) = {"
+Cc
+Cc
+Cc
+gd
+uy
+UJ
+UJ
+Cc
+UJ
+UJ
+eb
+UJ
+Cc
+UJ
+Ie
+UJ
+EW
+Cc
+Cc
+Cc
+"}
+(6,1,1) = {"
+Cc
+ej
+UJ
+UJ
+Cc
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Mf
+Pb
+Pb
+Pb
+Pb
+MD
+Bg
+Cc
+Cc
+"}
+(7,1,1) = {"
+Cc
+kA
+UJ
+eb
+UJ
+Pb
+wD
+zu
+yY
+Ve
+AR
+UD
+Ll
+AR
+AR
+Pb
+MD
+Cc
+Df
+Cc
+"}
+(8,1,1) = {"
+Cc
+jz
+Cc
+UJ
+UJ
+Pb
+lb
+zu
+un
+AR
+AR
+GN
+AR
+AR
+AR
+Gf
+MD
+gd
+UJ
+Cc
+"}
+(9,1,1) = {"
+Cc
+Cc
+cA
+Df
+gd
+Pb
+wD
+JT
+ZU
+AR
+AR
+CS
+CS
+CS
+SJ
+Gf
+MX
+UJ
+UJ
+Cc
+"}
+(10,1,1) = {"
+Cc
+Cc
+gd
+gd
+UJ
+Pb
+FW
+Fo
+Nj
+AR
+AR
+jC
+AR
+RK
+AR
+Qp
+ev
+MA
+eb
+Cc
+"}
+(11,1,1) = {"
+Cc
+Cc
+UJ
+UJ
+UJ
+zv
+wD
+yF
+GE
+AR
+AR
+AR
+AR
+AR
+AR
+Pb
+UJ
+RM
+Cc
+UJ
+"}
+(12,1,1) = {"
+Cc
+ej
+jz
+gd
+UJ
+Pb
+TB
+vF
+bV
+AR
+AR
+RK
+AR
+AR
+AR
+Pb
+UJ
+uy
+gd
+UJ
+"}
+(13,1,1) = {"
+Cc
+Cc
+Cc
+UJ
+UJ
+Pb
+wD
+zu
+Yo
+hs
+CS
+CS
+nc
+AR
+YM
+Pb
+eb
+UJ
+UJ
+UJ
+"}
+(14,1,1) = {"
+Cc
+Cc
+gd
+UJ
+UJ
+Pb
+VR
+zu
+AR
+SJ
+AR
+AR
+AR
+AR
+AR
+Pb
+EU
+UJ
+Cc
+Ie
+"}
+(15,1,1) = {"
+Cc
+jz
+nM
+Cc
+gd
+Pb
+wD
+zu
+ZU
+dE
+AR
+rd
+AR
+AR
+De
+Pb
+iO
+Ie
+HO
+UJ
+"}
+(16,1,1) = {"
+Cc
+ej
+UJ
+Qv
+UJ
+Pb
+wD
+zu
+bV
+AR
+HZ
+Nc
+Hw
+cO
+VH
+Ta
+SD
+UJ
+UJ
+UJ
+"}
+(17,1,1) = {"
+Cc
+Cc
+Cc
+UJ
+UJ
+Pb
+wD
+uu
+un
+AR
+ps
+BH
+xu
+wP
+VH
+Ta
+SD
+HO
+HO
+HO
+"}
+(18,1,1) = {"
+Cc
+Cc
+Cc
+UJ
+PR
+Pb
+VT
+lz
+Yo
+AR
+wP
+Nr
+iS
+wP
+Ds
+Ta
+yj
+HO
+UJ
+HO
+"}
+(19,1,1) = {"
+Cc
+Cc
+jz
+sm
+gd
+zv
+wD
+zu
+un
+AR
+nX
+Kc
+ey
+nX
+VH
+Ta
+SD
+UJ
+HO
+UJ
+"}
+(20,1,1) = {"
+Cc
+AC
+UJ
+UJ
+UJ
+Pb
+FW
+zu
+Yo
+Ra
+bA
+uI
+uI
+wP
+VH
+Ta
+SD
+HO
+HO
+HO
+"}
+(21,1,1) = {"
+Cc
+Cc
+UJ
+Df
+UJ
+Pb
+lb
+zu
+un
+AR
+wP
+nX
+nX
+wP
+VH
+Ta
+yj
+HO
+HO
+UJ
+"}
+(22,1,1) = {"
+Cc
+UJ
+UJ
+eM
+UJ
+Pb
+wD
+zu
+Mz
+AR
+AR
+Ll
+lD
+AR
+RV
+Pb
+Ij
+HO
+UJ
+HO
+"}
+(23,1,1) = {"
+Cc
+ej
+Cc
+vs
+UJ
+Pb
+wD
+zu
+AR
+AR
+AR
+wZ
+AR
+AR
+AR
+Pb
+UJ
+UJ
+UJ
+Cc
+"}
+(24,1,1) = {"
+Cc
+Cc
+UJ
+EW
+UJ
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Mf
+Pb
+Pb
+Pb
+Pb
+UJ
+UJ
+dO
+Cc
+"}
+(25,1,1) = {"
+Cc
+jz
+UJ
+Nu
+gd
+UJ
+UJ
+UJ
+Cc
+gd
+UJ
+UJ
+UJ
+UJ
+UJ
+UJ
+UJ
+UJ
+Cc
+Cc
+"}
+(26,1,1) = {"
+Cc
+Cc
+Cc
+xT
+Oh
+Oh
+RE
+RJ
+Df
+UJ
+gd
+UJ
+UJ
+Df
+UJ
+gd
+UJ
+Cc
+jz
+Cc
+"}
+(27,1,1) = {"
+Cc
+Cc
+Cc
+Cc
+ej
+Cc
+UJ
+UJ
+UJ
+Cc
+Cc
+Cc
+Cc
+gd
+Cc
+Cc
+MT
+Cc
+Cc
+Cc
+"}
+(28,1,1) = {"
+Cc
+Cc
+ej
+Cc
+Cc
+Cc
+ej
+jz
+Cc
+Zh
+Cc
+jz
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+"}
+(29,1,1) = {"
+Cc
+Cc
+Cc
+jz
+Cc
+Cc
+Cc
+Cc
+AC
+ej
+Cc
+Cc
+Cc
+mA
+Cc
+jz
+Cc
+ej
+Cc
+Cc
+"}
+(30,1,1) = {"
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+MT
+Cc
+Cc
+Cc
+Cc
+Cc
+Cc
+jz
+Cc
+Cc
+Cc
+"}

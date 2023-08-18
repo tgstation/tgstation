@@ -19,6 +19,9 @@
 	if(.)
 		stored_research.connected_machines += src //connect new one
 		say("Linked to Server!")
+		var/obj/machinery/rnd/production/production = src
+		if(istype(production))
+			production.update_designs()
 		return TRUE
 
 /**

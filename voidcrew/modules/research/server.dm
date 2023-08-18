@@ -2,6 +2,7 @@
 
 /obj/machinery/rnd/server/ship
 	desc = "A computer system that hosts a source R&D server drive, allowing research to be loaded and saved onto a disk, and shared within a vessel."
+	circuit = /obj/item/circuitboard/machine/rdserver/ship
 	///Installed source code files that hosts our research.
 	var/obj/item/computer_disk/ship_disk/source_code_hdd
 
@@ -12,6 +13,8 @@
 
 /obj/machinery/rnd/server/ship/Destroy()
 	UnregisterSignal(src, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
+	if(stored_research)
+		stored_research.techweb_servers -= src
 	if(source_code_hdd)
 		for(var/atom/everything_connected as anything in source_code_hdd.stored_research.connected_machines)
 			everything_connected.unsync_research_servers()
@@ -30,6 +33,7 @@
 			return
 		source_code_hdd = attacking_item
 		stored_research = source_code_hdd.stored_research
+		stored_research.techweb_servers |= src
 		balloon_alert(user, "disk uploaded!")
 		return
 	return ..()

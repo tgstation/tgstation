@@ -1,0 +1,1600 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/structure/table,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"aD" = (
+/obj/item/borg/upgrade/modkit/cooldown,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"aL" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"bE" = (
+/turf/closed/indestructible/reinforced{
+	base_icon_state = "rusty_reinforced_wall";
+	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi';
+	icon_state = "rusty_reinforced_wall-0"
+	},
+/area/ruin/powered)
+"bO" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"ce" = (
+/obj/machinery/door/poddoor/crusher/automatic,
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"ch" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"cA" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/plasticflaps,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"cJ" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"cO" = (
+/obj/item/borg/upgrade/modkit/damage,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"db" = (
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"ed" = (
+/obj/machinery/door/poddoor/crusher/automatic,
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"eo" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"ey" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"he" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic/preopen,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"hv" = (
+/obj/structure/railing,
+/obj/structure/rack,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"hy" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"iG" = (
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"jA" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"jE" = (
+/obj/machinery/conveyor/auto,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"ka" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"kI" = (
+/obj/item/borg/upgrade/modkit/range,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"kL" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/closet/syndicate/resources{
+	name = "Resource storage"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"kW" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"lW" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/dust/lit,
+/area/ruin/powered)
+"mg" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"mE" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"ns" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"nU" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"oq" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"pb" = (
+/obj/item/borg/upgrade/modkit/aoe,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"pk" = (
+/obj/machinery/conveyor_switch{
+	id = "rockplanet_ore_process"
+	},
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"pm" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"pv" = (
+/obj/machinery/light/small/broken,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"pJ" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"pO" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"pR" = (
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"qb" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"qj" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"qk" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"rx" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/powered)
+"rz" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"rH" = (
+/obj/structure/closet/malf/suits,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"sY" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"te" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"tq" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"uy" = (
+/obj/structure/railing,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"uB" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"vV" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"wi" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"wy" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"wB" = (
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"wE" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"wW" = (
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"wZ" = (
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"xf" = (
+/obj/item/borg/upgrade/modkit/tracer,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"xx" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"xz" = (
+/obj/structure/railing,
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"xD" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access_txt = "1"
+	},
+/obj/item/gun/ballistic/revolver/c38/detective,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"xO" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/recycler/deathtrap{
+	color = "red"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"yy" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"zd" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"zK" = (
+/mob/living/simple_animal/bot/secbot/ed209/rockplanet,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Af" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"AP" = (
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"Bi" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Cj" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"DL" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Ff" = (
+/obj/item/pickaxe/drill/diamonddrill{
+	pixel_y = 3
+	},
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill{
+	pixel_y = -3
+	},
+/obj/structure/rack,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Fs" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"FH" = (
+/obj/machinery/mineral/unloading_machine,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Gd" = (
+/obj/machinery/recycler/deathtrap{
+	color = "red"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Gv" = (
+/obj/machinery/door/airlock/mining,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"GO" = (
+/turf/closed/indestructible/fakedoor,
+/area/ruin/powered)
+"Hr" = (
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"HI" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"HP" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"HR" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/railing/corner,
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"Is" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"JS" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"JY" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Ka" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"Kq" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"KZ" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Lc" = (
+/obj/machinery/door/poddoor/crusher/automatic/preopen,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"Lp" = (
+/turf/open/misc/dust/lit,
+/area/ruin/powered)
+"LN" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic/preopen,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"LR" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/auto,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"MX" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Nf" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic/preopen,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"NV" = (
+/obj/machinery/conveyor/auto{
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"NZ" = (
+/obj/machinery/light/small,
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"OA" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Pd" = (
+/obj/item/pickaxe/mini,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"PX" = (
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Ql" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Sg" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"Ta" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Vf" = (
+/obj/effect/spawner/random/maintenance,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"VL" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"VR" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"WV" = (
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/obj/machinery/door/poddoor/crusher/automatic,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Yk" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Yo" = (
+/obj/structure/mopbucket,
+/obj/item/mop,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Yq" = (
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"Zp" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	id = "rockplanet_ore_process"
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Zt" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/lattice/lava,
+/turf/open/lava/smooth{
+	smoothing_flags = 0;
+	smoothing_groups = null
+	},
+/area/ruin/powered)
+"ZL" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+
+(1,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+Yq
+pR
+Lp
+Lp
+pR
+pR
+pR
+xx
+pR
+pR
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(2,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+Lp
+pR
+lW
+pR
+pR
+pR
+pR
+pR
+Lp
+pR
+lW
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(3,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+pR
+lW
+Lp
+rx
+ns
+db
+wB
+ns
+rx
+Lp
+Lp
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(4,1,1) = {"
+Yq
+Yq
+Yq
+rx
+rx
+rx
+rx
+rx
+wB
+qk
+FH
+wB
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+Yq
+Yq
+Yq
+"}
+(5,1,1) = {"
+Yq
+Yq
+Yq
+rx
+qk
+wW
+wW
+rx
+rx
+Ta
+Ta
+rx
+rx
+ed
+Hr
+Hr
+aL
+Hr
+Hr
+Hr
+Hr
+qk
+rx
+rx
+rx
+Yq
+"}
+(6,1,1) = {"
+Yq
+Yq
+Yq
+rx
+qk
+rx
+oq
+wW
+wW
+PX
+jE
+jE
+LR
+mE
+yy
+yy
+Af
+Hr
+Hr
+Hr
+Hr
+Hr
+qk
+Pd
+rx
+Yq
+"}
+(7,1,1) = {"
+rx
+rx
+rx
+rx
+cA
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+Gv
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+Ta
+rx
+rx
+Yq
+"}
+(8,1,1) = {"
+rx
+xO
+wZ
+wW
+qk
+rx
+xD
+hv
+wB
+wB
+wB
+wB
+db
+wB
+wB
+wB
+rx
+Hr
+Hr
+Hr
+Hr
+Hr
+Hr
+qk
+rx
+Yq
+"}
+(9,1,1) = {"
+rx
+pm
+bO
+wW
+ka
+rx
+rx
+rx
+zK
+am
+wB
+db
+wB
+rH
+Cj
+NZ
+rx
+OA
+rx
+rx
+rx
+rx
+rx
+cA
+rx
+Yq
+"}
+(10,1,1) = {"
+rx
+ch
+Hr
+qk
+ey
+HP
+uB
+rx
+ZL
+jA
+uB
+rx
+rx
+rx
+rx
+rx
+rx
+oq
+rx
+mg
+uy
+wW
+wW
+wW
+rx
+Yq
+"}
+(11,1,1) = {"
+rx
+qk
+wW
+wW
+qk
+sY
+wB
+Gv
+wB
+wE
+wB
+rx
+wW
+wW
+wW
+wW
+rx
+VL
+rx
+rx
+rx
+aL
+rx
+rx
+rx
+Yq
+"}
+(12,1,1) = {"
+rx
+qk
+qk
+qk
+wW
+sY
+pv
+rx
+wB
+db
+wB
+rx
+Ta
+rx
+rx
+oq
+wW
+oq
+wW
+WV
+rx
+qk
+rx
+Yq
+Yq
+Yq
+"}
+(13,1,1) = {"
+rx
+qk
+qk
+wW
+iG
+rx
+rx
+rx
+rx
+Gv
+rx
+rx
+qk
+AP
+rx
+rx
+rx
+rx
+rx
+LN
+rx
+qk
+rx
+Yq
+Yq
+Yq
+"}
+(14,1,1) = {"
+rx
+Gd
+ka
+DL
+qk
+rx
+he
+Zp
+Zp
+Zp
+Fs
+Zp
+Zp
+AP
+Nf
+wy
+wy
+pJ
+rx
+VL
+rx
+vV
+rx
+Yq
+Yq
+Yq
+"}
+(15,1,1) = {"
+rx
+ch
+Hr
+qk
+wW
+rx
+pJ
+AP
+AP
+AP
+AP
+AP
+AP
+AP
+pO
+AP
+AP
+pJ
+rx
+LN
+rx
+qk
+rx
+rx
+rx
+rx
+"}
+(16,1,1) = {"
+rx
+qk
+qk
+qk
+qk
+rx
+wy
+wy
+wy
+rz
+wy
+wy
+wy
+wy
+pO
+AP
+Yk
+pJ
+rx
+VL
+rx
+Hr
+Hr
+Hr
+qk
+rx
+"}
+(17,1,1) = {"
+rx
+Hr
+Hr
+qk
+iG
+rx
+AP
+AP
+AP
+pO
+AP
+AP
+AP
+AP
+AP
+AP
+AP
+pJ
+rx
+LN
+rx
+rx
+rx
+rx
+ce
+rx
+"}
+(18,1,1) = {"
+rx
+rx
+rx
+Ta
+rx
+rx
+zd
+Nf
+wy
+pO
+AP
+Is
+Zt
+hy
+AP
+pJ
+Zp
+JY
+rx
+OA
+Gv
+Yo
+Bi
+rx
+qk
+rx
+"}
+(19,1,1) = {"
+Yq
+Yq
+rx
+Ql
+Hr
+nU
+Hr
+pO
+AP
+AP
+AP
+Sg
+pk
+xz
+AP
+pJ
+AP
+AP
+rx
+VL
+rx
+rx
+rx
+rx
+qk
+rx
+"}
+(20,1,1) = {"
+Yq
+Yq
+rx
+Ql
+oq
+rx
+AP
+pO
+AP
+HR
+HI
+kW
+Ka
+te
+AP
+pJ
+AP
+AP
+rx
+oq
+wW
+wW
+wW
+WV
+qk
+rx
+"}
+(21,1,1) = {"
+Yq
+Yq
+rx
+Ql
+oq
+rx
+wy
+pO
+AP
+Lc
+AP
+AP
+AP
+AP
+AP
+pJ
+AP
+AP
+rx
+rx
+rx
+rx
+rx
+VL
+wW
+rx
+"}
+(22,1,1) = {"
+Yq
+Yq
+rx
+Ql
+oq
+rx
+pO
+AP
+AP
+Sg
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+KZ
+rx
+Yq
+Yq
+rx
+rx
+rx
+rx
+"}
+(23,1,1) = {"
+Yq
+Yq
+rx
+NV
+VR
+rx
+pO
+AP
+AP
+wi
+AP
+AP
+AP
+AP
+AP
+AP
+AP
+AP
+pO
+rx
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(24,1,1) = {"
+Yq
+Yq
+rx
+rx
+bE
+bE
+JY
+Zp
+Zp
+tq
+qb
+qj
+AP
+oq
+wy
+wy
+wy
+wy
+pO
+rx
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(25,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+GO
+bE
+MX
+bE
+bE
+bE
+rx
+rx
+rx
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(26,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+bE
+Ff
+wB
+kI
+db
+Cj
+JS
+wB
+bE
+MX
+bE
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(27,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+bE
+eo
+pb
+kI
+aD
+wB
+wB
+wB
+bE
+MX
+bE
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(28,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+bE
+bE
+aD
+cO
+cJ
+Vf
+Kq
+kL
+bE
+MX
+bE
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(29,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+Yq
+bE
+xf
+wB
+Hr
+Hr
+Hr
+Hr
+Hr
+Hr
+bE
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}
+(30,1,1) = {"
+Yq
+Yq
+Yq
+Yq
+Yq
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+Yq
+"}

@@ -50,6 +50,7 @@
 
 	if(!ui)
 		current_ship.cam_screen.display_to(user)
+		user.client.register_map_obj(current_ship.cam_screen)
 		user.client.register_map_obj(current_ship.cam_background)
 
 		ui = new(user, src, "HelmComputer", name)
@@ -58,7 +59,7 @@
 /obj/machinery/computer/helm/ui_close(mob/user)
 	. = ..()
 	current_ship.cam_screen.hide_from(user)
-
+/*
 /obj/machinery/computer/helm/ui_act(action, list/params)
 	. = ..()
 
@@ -81,11 +82,50 @@
 			current_ship.apply_thrust(x = -1, y = 1)
 		if ("reset")
 			current_ship.reset_thrust()
-
+*/
 /obj/machinery/computer/helm/ui_data(mob/user)
 	var/list/data = list()
 
 	data["thrust"] = current_ship.calculate_thrust()
+	data["integrity"] = current_ship.integrity
+	data["calibrating"] = calibrating
+	data["otherInfo"] = list()
+	for (var/obj/structure/overmap/object as anything in current_ship.close_overmap_objects)
+		var/list/other_data = list(
+			name = object.name,
+			integrity = object.integrity,
+			ref = REF(object)
+		)
+		data["otherInfo"] += list(other_data)
+	var/turf/T = get_turf(current_ship)
+	data["x"] = T.x
+	data["y"] = T.y
+	data["state"] = current_ship.state
+	data["docked"] = isturf(current_ship.loc) ? FALSE : TRUE
+	data["heading"] = dir2text(current_ship.get_heading()) || "None"
+	data["speed"] = current_ship.get_speed()
+	data["eta"] = current_ship.get_eta()
+	data["est_thrust"] = current_ship.est_thrust
+	data["engineInfo"] = list()
+	for(var/obj/machinery/power/shuttle_engine/ship/E in current_ship.shuttle.engine_list)
+		var/list/engine_data
+		if(!E.thruster_active)
+			engine_data = list(
+				name = E.name,
+				fuel = 0,
+				maxFuel = 100,
+				enabled = E.enabled,
+				ref = REF(E)
+			)
+		else
+			engine_data = list(
+				name = E.name,
+				fuel = E.return_fuel(),
+				maxFuel = E.return_fuel_cap(),
+				enabled = E.enabled,
+				ref = REF(E)
+			)
+		data["engineInfo"] += list(engine_data)
 
 	return data
 
@@ -93,6 +133,15 @@
 	var/list/data = list()
 
 	data["mapRef"] = current_ship.map_name
+	data["isViewer"] = viewer
+	data["mapRef"] = current_ship.map_name
+	data["shipInfo"] = list(
+		name = current_ship.display_name,
+		class = current_ship.source_template?.name,
+		mass = current_ship.mass,
+		//sensor_range = current_ship.sensor_range
+	)
+	data["canFly"] = TRUE
 
 	return data
 
@@ -144,7 +193,7 @@
 
 /obj/machinery/computer/helm/proc/do_jump()
 	current_ship?.ship_announce("Bluespace Jump Initiated.")
-	current_ship.shuttle.intoTheSunset()
+	current_ship.destroy_ship(TRUE)
 
 /obj/machinery/computer/helm/connect_to_shuttle(mapload, obj/docking_port/mobile/voidcrew/port, obj/docking_port/stationary/dock)
 	if(!istype(port))
@@ -168,7 +217,15 @@
 	current_ship = port?.current_ship
 	return !!current_ship
 
-/*
+/**
+ * This proc manually rechecks that the helm computer is connected to a proper ship
+ */
+/obj/machinery/computer/helm/proc/reload_ship()
+	var/obj/docking_port/mobile/voidcrew/port = SSshuttle.get_containing_shuttle(src)
+	if(port?.current_ship)
+		current_ship = port.current_ship
+	return TRUE
+
 /obj/machinery/computer/helm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -178,12 +235,10 @@
 	switch(action) // Universal topics
 		if("rename_ship")
 			var/new_name = params["newName"]
+			var/old_name = current_ship.name
 			if(!new_name)
 				return
 			new_name = trim(new_name)
-			var/prefix = current_ship.prefix
-			if (!(findtext(new_name, "KOS") || findtext(new_name, prefix)))
-				new_name = "[prefix] [new_name]"
 			if (!length(new_name) || new_name == current_ship.name)
 				return
 			if(!reject_bad_text(new_name, MAX_CHARTER_LEN))
@@ -191,8 +246,11 @@
 				return
 			if(!current_ship.set_ship_name(new_name))
 				say("Error: [COOLDOWN_TIMELEFT(current_ship, rename_cooldown)/10] seconds until ship designation can be changed..")
+			else
+				log_shuttle("[usr] changed shuttle [old_name] to [new_name]")
 			update_static_data(usr, ui)
 			return
+			/*
 		if("toggle_kos")
 			current_ship.set_ship_faction("KOS")
 			update_static_data(usr, ui)
@@ -201,6 +259,7 @@
 			current_ship.set_ship_faction("return")
 			update_static_data(usr, ui)
 			return
+			*/
 		if("reload_ship")
 			reload_ship()
 			update_static_data(usr, ui)
@@ -213,9 +272,6 @@
 		if(OVERMAP_SHIP_FLYING)
 			switch(action)
 				if("act_overmap")
-					if(SSshuttle.jump_mode == BS_JUMP_INITIATED)
-						to_chat(usr, span_warning("You've already escaped. Never going back to that place again!"))
-						return
 					var/obj/structure/overmap/to_act = locate(params["ship_to_act"])
 					say(current_ship.overmap_object_act(usr, to_act))
 					return
@@ -225,11 +281,11 @@
 					current_ship.refresh_engines()
 					return
 				if("change_heading")
-					current_ship.current_autopilot_target = null
+					//current_ship.current_autopilot_target = null
 					current_ship.burn_engines(text2num(params["dir"]))
 					return
 				if("stop")
-					current_ship.current_autopilot_target = null
+					//current_ship.current_autopilot_target = null
 					current_ship.burn_engines()
 					return
 				if("bluespace_jump")
@@ -251,7 +307,8 @@
 					return
 				say(current_ship.undock())
 				return
-*/
+
+
 
 #undef JUMP_STATE_OFF
 #undef JUMP_STATE_CHARGING

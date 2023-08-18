@@ -1,0 +1,383 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"d" = (
+/obj/item/ammo_casing/spent,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/barricade/wooden,
+/obj/machinery/door/airlock/centcom{
+	aiControlDisabled = 1;
+	name = "Assault Pod";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"f" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/wasteland{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"h" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/unpowered)
+"i" = (
+/obj/item/ammo_casing/c10mm{
+	pixel_x = -1
+	},
+/obj/item/ammo_casing/c10mm{
+	pixel_x = 7;
+	pixel_y = -7
+	},
+/obj/item/ammo_casing/c10mm{
+	pixel_x = -2;
+	pixel_y = -10
+	},
+/obj/item/ammo_casing/c10mm{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/ammo_casing/c10mm{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"j" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"k" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/closed/mineral/random/high_chance/wasteland,
+/area/overmap_encounter/planetoid/wasteland)
+"l" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"o" = (
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/ammo_casing/spent{
+	dir = 1;
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"p" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"r" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"t" = (
+/obj/machinery/door/airlock/centcom{
+	aiControlDisabled = 1;
+	name = "Assault Pod";
+	req_access_txt = "150"
+	},
+/obj/item/ammo_casing/spent,
+/turf/closed/mineral/random/high_chance/wasteland,
+/area/overmap_encounter/planetoid/wasteland)
+"u" = (
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/canned/beans{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"v" = (
+/obj/item/ammo_casing/spent,
+/turf/closed/mineral/random/high_chance/wasteland,
+/area/overmap_encounter/planetoid/wasteland)
+"w" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"A" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor7"
+	},
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"B" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"D" = (
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"E" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"F" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/blood,
+/obj/item/clothing/under/syndicate/intern{
+	pixel_x = 1;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"H" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"J" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"K" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/wasteland,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"L" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"O" = (
+/turf/template_noop,
+/area/template_noop)
+"P" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/gun/ballistic/automatic/ebr,
+/obj/item/ammo_box/magazine/ebr,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/unpowered)
+"R" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Assault Pod";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"S" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"T" = (
+/obj/effect/decal/cleanable/blood/gibs/limb{
+	icon_state = "gibarm";
+	pixel_x = -14;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = -2
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"V" = (
+/turf/closed/mineral/random/high_chance/wasteland,
+/area/overmap_encounter/planetoid/wasteland)
+"X" = (
+/obj/item/ammo_casing/spent{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/wasteland{
+	dir = 8
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Y" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Z" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/wasteland{
+	dir = 4
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+
+(1,1,1) = {"
+O
+O
+O
+V
+v
+v
+v
+t
+d
+h
+B
+"}
+(2,1,1) = {"
+O
+O
+z
+S
+h
+V
+k
+p
+u
+h
+h
+"}
+(3,1,1) = {"
+O
+O
+z
+X
+h
+c
+F
+f
+r
+P
+h
+"}
+(4,1,1) = {"
+O
+O
+z
+B
+R
+p
+L
+h
+D
+p
+e
+"}
+(5,1,1) = {"
+O
+O
+B
+o
+h
+H
+p
+q
+w
+J
+h
+"}
+(6,1,1) = {"
+O
+O
+B
+z
+h
+h
+H
+p
+l
+h
+h
+"}
+(7,1,1) = {"
+O
+B
+B
+B
+B
+h
+h
+T
+h
+h
+E
+"}
+(8,1,1) = {"
+O
+B
+B
+B
+B
+z
+i
+E
+j
+Y
+O
+"}
+(9,1,1) = {"
+O
+Z
+B
+B
+B
+z
+Y
+A
+K
+B
+O
+"}
+(10,1,1) = {"
+O
+O
+O
+O
+O
+B
+B
+B
+B
+O
+O
+"}
+(11,1,1) = {"
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+O
+"}

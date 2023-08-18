@@ -1040,18 +1040,23 @@ SUBSYSTEM_DEF(shuttle)
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 					break
 
-		if("load")
-			if(S && !shuttle_loading)
-				. = TRUE
-				shuttle_loading = TRUE
-				// If successful, returns the mobile docking port
-				var/obj/docking_port/mobile/mdp = action_load(S)
-				if(mdp)
-					user.forceMove(get_turf(mdp))
-					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
-					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
-					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
-				shuttle_loading = FALSE
+		if("load") //VOID EDIT [
+			if(istype(S, /datum/map_template/shuttle/voidcrew))
+				var/obj/structure/overmap/ship/spawned = SSshuttle.create_ship(S.type)
+				user.client?.admin_follow(spawned.shuttle)
+			else
+				if(S && !shuttle_loading)
+					. = TRUE
+					shuttle_loading = TRUE
+					// If successful, returns the mobile docking port
+					var/obj/docking_port/mobile/mdp = action_load(S)
+					if(mdp)
+						user.forceMove(get_turf(mdp))
+						message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
+						log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
+						SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
+					shuttle_loading = FALSE
+				//]
 
 		if("preview")
 			//if(preview_shuttle && (loading_template != preview_template))

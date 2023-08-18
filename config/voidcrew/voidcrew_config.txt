@@ -1,0 +1,7 @@
+## allows to initiate a transfer vote
+
+ALLOW_VOTE_TRANSFER
+
+## free ships
+
+FREE_SHIPS

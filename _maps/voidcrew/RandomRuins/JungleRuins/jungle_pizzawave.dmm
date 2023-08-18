@@ -1,0 +1,452 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/jungle,
+/area/ruin/powered)
+"b" = (
+/obj/machinery/jukebox,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"c" = (
+/obj/structure/table/wood,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"d" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/medical/memeorgans,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"e" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"f" = (
+/mob/living/simple_animal/hostile/lizard/space,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"g" = (
+/obj/structure/table/wood/fancy/purple,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"h" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"i" = (
+/turf/open/floor/grass,
+/area/ruin/powered)
+"j" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"k" = (
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"l" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"m" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/colocup/lean,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"n" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/flashlight/glowstick/pink,
+/obj/item/flashlight/glowstick,
+/obj/item/flashlight/glowstick/blue,
+/obj/item/flashlight/glowstick/cyan,
+/obj/item/flashlight/glowstick/orange,
+/obj/item/flashlight/glowstick/red,
+/obj/item/flashlight/glowstick/yellow,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"p" = (
+/obj/structure/statue/sandstone/venus{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"s" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"t" = (
+/obj/structure/musician/piano,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"u" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/storage/pill_bottle/zoom,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"v" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"w" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"x" = (
+/obj/structure/sink/puddle,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"z" = (
+/turf/template_noop,
+/area/template_noop)
+"A" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"B" = (
+/obj/structure/table/wood,
+/obj/item/pizzabox/meat,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"D" = (
+/mob/living/simple_animal/pet/gondola,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"E" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"F" = (
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"G" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"H" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"I" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/clothing/glasses/sunglasses/big,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"K" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"L" = (
+/obj/structure/bed/pod,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"M" = (
+/obj/structure/statue/sandstone/venus,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"N" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"O" = (
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"P" = (
+/obj/effect/decal/cleanable/greenglow,
+/turf/closed/wall,
+/area/ruin/powered)
+"Q" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/statuebust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"R" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall,
+/area/ruin/powered)
+"S" = (
+/mob/living/simple_animal/hostile/lightgeist,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"T" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/grass,
+/area/ruin/powered)
+"U" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/clothing/suit/jacket/det_suit,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+
+(1,1,1) = {"
+z
+z
+z
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+z
+z
+"}
+(2,1,1) = {"
+z
+z
+a
+a
+a
+a
+a
+i
+i
+i
+l
+a
+a
+a
+z
+"}
+(3,1,1) = {"
+z
+a
+a
+a
+a
+i
+H
+i
+i
+s
+i
+H
+a
+a
+z
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+e
+i
+k
+i
+D
+i
+x
+i
+B
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+H
+i
+i
+i
+N
+d
+i
+v
+i
+k
+c
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+i
+P
+P
+R
+P
+P
+P
+P
+P
+i
+e
+T
+a
+"}
+(7,1,1) = {"
+a
+i
+l
+P
+M
+h
+U
+u
+O
+t
+P
+i
+i
+G
+a
+"}
+(8,1,1) = {"
+a
+i
+i
+w
+I
+h
+O
+S
+O
+h
+K
+H
+k
+m
+a
+"}
+(9,1,1) = {"
+a
+k
+e
+w
+Q
+O
+f
+h
+O
+O
+F
+i
+i
+a
+a
+"}
+(10,1,1) = {"
+a
+j
+i
+P
+p
+O
+g
+n
+O
+b
+P
+j
+L
+a
+a
+"}
+(11,1,1) = {"
+a
+i
+i
+P
+P
+P
+P
+P
+P
+P
+P
+i
+a
+a
+z
+"}
+(12,1,1) = {"
+a
+a
+i
+i
+k
+i
+i
+i
+i
+i
+H
+A
+a
+a
+z
+"}
+(13,1,1) = {"
+z
+a
+a
+a
+j
+l
+e
+i
+k
+E
+i
+a
+a
+a
+z
+"}
+(14,1,1) = {"
+z
+a
+a
+a
+a
+a
+a
+H
+i
+i
+a
+a
+a
+z
+z
+"}
+(15,1,1) = {"
+z
+z
+z
+a
+a
+a
+a
+a
+a
+a
+a
+z
+z
+z
+z
+"}

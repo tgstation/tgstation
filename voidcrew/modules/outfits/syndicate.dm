@@ -14,6 +14,7 @@
 	r_pocket = /obj/item/melee/baton/telescopic
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
+	id_trim = /datum/id_trim/syndicom/captain
 
 //medical
 /datum/outfit/job/cmo/syndicate
@@ -92,14 +93,17 @@
 /datum/outfit/job/assistant/syndicate
 	name = "Assistant (Syndicate)"
 
-	uniform = /obj/item/clothing/under/syndicate/camo
 	glasses = /obj/item/clothing/glasses/night
 	belt = /obj/item/storage/belt/military
 	back = /obj/item/storage/backpack/duffelbag/syndie
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	suit_store = /obj/item/gun/ballistic/automatic/pistol
+	shoes = /obj/item/clothing/shoes/combat
 
 	l_pocket = /obj/item/ammo_box/magazine/m10mm
 	r_pocket = /obj/item/knife/combat/survival
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
+
+/datum/outfit/job/assistant/syndicate/give_jumpsuit(mob/living/carbon/human/target)
+	uniform = /obj/item/clothing/under/syndicate/camo

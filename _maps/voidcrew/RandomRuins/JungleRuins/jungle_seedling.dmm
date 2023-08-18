@@ -1,0 +1,390 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"au" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"cO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"ez" = (
+/obj/item/reagent_containers/food/snacks/grown/tomato/blood,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"fj" = (
+/obj/structure/fence,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"hJ" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"iB" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"iJ" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"lk" = (
+/obj/structure/flora/ausbushes,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"mh" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ms" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"mt" = (
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"my" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"nr" = (
+/obj/structure/fence,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"oI" = (
+/obj/structure/fence/corner{
+	dir = 5
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"pl" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"pN" = (
+/obj/effect/decal/cleanable/leaper_sludge,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"rN" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"rZ" = (
+/obj/item/organ/eyes/night_vision/mushroom,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"tz" = (
+/obj/structure/fence/door/opened,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"uX" = (
+/obj/structure/flora/ausbushes/palebush,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"uY" = (
+/obj/structure/flora/ausbushes/genericbush,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"vy" = (
+/obj/structure/flora/ausbushes/pointybush,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"vB" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"vY" = (
+/obj/structure/fence,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"wa" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"wW" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"xV" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"yj" = (
+/obj/structure/fence/corner,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"zG" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"BS" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Cy" = (
+/obj/structure/flora/ausbushes/leafybush,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Ij" = (
+/obj/item/organ/ears/penguin,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Io" = (
+/obj/item/seeds/cocoapod/bungotree,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ID" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"JL" = (
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Lt" = (
+/mob/living/simple_animal/hostile/jungle/seedling{
+	health = 300;
+	maxHealth = 300
+	},
+/obj/item/ship_in_a_bottle,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"OK" = (
+/obj/effect/decal/cleanable/insectguts,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"Pg" = (
+/obj/structure/flora/ausbushes/reedbush,
+/obj/item/organ/internal/heart/cursed,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Py" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"Qe" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"QF" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"QV" = (
+/obj/item/organ/internal/liver/plasmaman,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Rg" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"RO" = (
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"SA" = (
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"SH" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"SI" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ST" = (
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"TD" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Uv" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Vf" = (
+/obj/structure/flora/ausbushes/reedbush,
+/obj/item/organ/tongue/lizard,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Vu" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"VB" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"WR" = (
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"ZE" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+ZE
+ZE
+ZE
+ZE
+mt
+pl
+mt
+mt
+mt
+ZE
+ZE
+"}
+(2,1,1) = {"
+ZE
+ZE
+lk
+cO
+rN
+RO
+OK
+vB
+zG
+ZE
+ZE
+"}
+(3,1,1) = {"
+ZE
+mt
+WR
+SA
+vY
+nr
+SA
+SA
+TD
+mt
+ZE
+"}
+(4,1,1) = {"
+pl
+mt
+ID
+mh
+ez
+Ij
+Py
+uX
+iB
+lk
+ZE
+"}
+(5,1,1) = {"
+mt
+SI
+SH
+hJ
+Vf
+JL
+wW
+ST
+iB
+wa
+mt
+"}
+(6,1,1) = {"
+pN
+uY
+SH
+Uv
+BS
+Qe
+JL
+Pg
+SH
+Rg
+my
+"}
+(7,1,1) = {"
+cO
+Vu
+SH
+au
+JL
+Lt
+JL
+JL
+tz
+RO
+cO
+"}
+(8,1,1) = {"
+mt
+wa
+SH
+QF
+rZ
+JL
+JL
+iJ
+iB
+RO
+pN
+"}
+(9,1,1) = {"
+ZE
+mt
+SH
+RO
+SI
+ms
+QV
+xV
+iB
+vy
+pl
+"}
+(10,1,1) = {"
+ZE
+lk
+oI
+SA
+SA
+SA
+vY
+fj
+yj
+mt
+mt
+"}
+(11,1,1) = {"
+ZE
+ZE
+mt
+mt
+ST
+VB
+Io
+lk
+Cy
+cO
+ZE
+"}

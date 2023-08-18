@@ -1,0 +1,3810 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/item/trash/semki,
+/obj/item/trash/boritos,
+/obj/item/circuitboard/machine/nanite_programmer,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/trashcart,
+/obj/structure/cable,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"ag" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "foreshutter";
+	name = "Window Shutters"
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/voidcrew/metis/bridge)
+"av" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"aC" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"aT" = (
+/obj/item/trash/can/food/peaches/maint,
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"aX" = (
+/obj/structure/sign/poster/official/science,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"bn" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"bF" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"bH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"bS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"cd" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposaloutlet,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"cf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"cv" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"cC" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"cG" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"cV" = (
+/obj/item/shard,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"cW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"dg" = (
+/obj/machinery/nanite_chamber,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"di" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"dm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"dt" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"dD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/electric_shock,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"dG" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"dM" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/voidcrew/metis/bridge)
+"dQ" = (
+/obj/item/shard,
+/obj/machinery/mecha_part_fabricator,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"dT" = (
+/obj/machinery/light,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"dX" = (
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"ej" = (
+/obj/machinery/computer/helm,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/voidcrew/metis/bridge)
+"em" = (
+/obj/structure/sign/poster/official/anniversary_vintage_reprint,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/robotics)
+"eo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"ep" = (
+/obj/machinery/smartfridge/extract/preloaded,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"es" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"ew" = (
+/obj/structure/closet/crate/secure/science,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"ez" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"eA" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"eB" = (
+/obj/structure/sign/departments/nanites,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/nanites)
+"eE" = (
+/turf/open/floor/circuit/green,
+/area/shuttle/voidcrew/metis/ai_core)
+"eI" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"eN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"eO" = (
+/obj/structure/sign/warning/deathsposal,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"eT" = (
+/obj/effect/decal/cleanable/xenoblood,
+/mob/living/simple_animal/hostile/hivebot/strong,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"eU" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	dir = 4;
+	pixel_x = 27;
+	set_dir_on_move = 0
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/voidcrew/metis/bridge)
+"eV" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"fa" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"fb" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "engine fuel pump"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"fc" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"fn" = (
+/obj/machinery/airalarm/directional/east,
+/obj/structure/displaycase/labcage,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"fo" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"fC" = (
+/obj/structure/table/wood,
+/obj/machinery/fax{
+	name = "Metis Ship Fax Machine";
+	fax_name = "Metis Fax"
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"fH" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"fP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"fQ" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"ga" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"gE" = (
+/obj/machinery/monkey_recycler,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"gH" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"gP" = (
+/obj/machinery/light/small,
+/obj/structure/frame/machine,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"gW" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"gY" = (
+/obj/machinery/vending/wardrobe/robo_wardrobe,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"gZ" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"hb" = (
+/obj/machinery/power/smes/engineering{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"hl" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"hp" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/robotics)
+"hr" = (
+/obj/structure/filingcabinet/chestdrawer/wheeled,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"hs" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/voidcrew/metis/bridge)
+"hu" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"hx" = (
+/obj/effect/gibspawner/generic,
+/obj/item/circuitboard/computer/nanite_chamber_control,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"hD" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/holosign/barrier,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/robotics)
+"hH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/jukebox/disco{
+	req_access = null
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"hI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"hP" = (
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"hR" = (
+/obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"hX" = (
+/obj/item/circuitboard/machine/protolathe/department/science,
+/obj/item/kirbyplants/random,
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"ib" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/disposal/bin,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"ih" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"it" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/assembly/flash/handheld,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"iu" = (
+/obj/item/circuitboard/machine/bepis,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"iQ" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/science/robotics)
+"iS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"ja" = (
+/obj/item/radio/intercom{
+	pixel_y = 26
+	},
+/obj/machinery/door/window/brigdoor/right/directional/south{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/machinery/camera/directional/north,
+/turf/open/floor/circuit/green,
+/area/shuttle/voidcrew/metis/ai_core)
+"jc" = (
+/obj/structure/closet/crate/radiation,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"jn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"jq" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/statue/gold/rd,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"jy" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"jH" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"jI" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"jS" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/bodypart/arm/right/robot,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"kj" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/broken,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"kn" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"kz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"kC" = (
+/obj/item/kirbyplants/random,
+/obj/item/toy/figure/rd,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"kD" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/maintenance)
+"kN" = (
+/obj/item/gun/energy/laser,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/bridge)
+"kZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door{
+	id = "slimelock";
+	name = "Lockdown Shutters";
+	pixel_x = 7;
+	pixel_y = -25
+	},
+/obj/machinery/button/door{
+	id = "slimekill";
+	name = "Coldroom Release Shutter Control";
+	pixel_x = -7;
+	pixel_y = -25
+	},
+/obj/item/stack/tile/mineral/titanium/tiled/white,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"la" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science)
+"lb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"lk" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/ai_core)
+"ll" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/disks_nanite,
+/obj/item/nanite_remote,
+/obj/item/nanite_scanner,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"lu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"lx" = (
+/obj/structure/falsewall/titanium,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/bridge)
+"lz" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen/fountain/captain,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"lJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"lK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"lS" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"mc" = (
+/obj/machinery/holopad,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"ml" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"ms" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"mD" = (
+/obj/item/chair,
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"mJ" = (
+/obj/machinery/power/smes/engineering{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"mL" = (
+/obj/machinery/suit_storage_unit/rd,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"mM" = (
+/obj/item/kirbyplants/dead,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"mN" = (
+/obj/effect/gibspawner/human,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"mT" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"nm" = (
+/obj/structure/cable,
+/turf/open/floor/circuit/green,
+/area/shuttle/voidcrew/metis/ai_core)
+"nn" = (
+/obj/structure/frame/computer,
+/obj/item/shard,
+/obj/machinery/camera/autoname/directional/east,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/voidcrew/metis/bridge)
+"nr" = (
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"nC" = (
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"nF" = (
+/obj/machinery/computer/nanite_chamber_control{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"nI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"nM" = (
+/obj/item/cigbutt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"nR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"nT" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/closet/l3closet/scientist,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"oc" = (
+/obj/machinery/door/airlock/science,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"om" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"op" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"ow" = (
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"oB" = (
+/obj/machinery/camera/autoname/directional/south,
+/mob/living/simple_animal/hostile/hivebot/mechanic,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"oJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"oK" = (
+/obj/structure/sign/poster/official/fruit_bowl,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/bridge)
+"oT" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"oU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"oV" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"px" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "foreshutter"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"pA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/bridge)
+"pF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "slimelock";
+	name = "Lockdown Shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"pL" = (
+/obj/machinery/light,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"pV" = (
+/obj/machinery/modular_computer/console/preset/research{
+	dir = 8
+	},
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"pZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/autolathe,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"qe" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"qo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"qu" = (
+/obj/effect/mob_spawn/corpse/human/scientist,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"qL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"qP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"qR" = (
+/obj/effect/decal/cleanable/generic,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"ra" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"rb" = (
+/mob/living/basic/cockroach/glockroach,
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"rg" = (
+/obj/machinery/computer/robotics{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"rh" = (
+/obj/machinery/door/airlock/science/glass,
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"rp" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"rt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/ai_core)
+"rv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"ry" = (
+/obj/structure/table_frame,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/item/toy/plush/slimeplushie,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"rJ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/bridge)
+"rT" = (
+/obj/structure/festivus,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"rY" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"sb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"sd" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/ai_core)
+"sj" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "foreshutter"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/bridge)
+"sk" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/item/bodypart/leg/right/robot,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"sn" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"so" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"sp" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/airalarm/directional/west,
+/obj/item/bodypart/arm/left/robot,
+/obj/item/bodypart/leg/left/robot,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"sr" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "foreshutter"
+	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/bridge)
+"sy" = (
+/obj/structure/ore_box,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"sE" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"sG" = (
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"sO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"sQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"sV" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"to" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"tt" = (
+/obj/structure/sign/poster/contraband/borg_fancy_2,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/robotics)
+"tv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"tw" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/item/clothing/suit/costume/xenos,
+/obj/item/clothing/head/costume/xenos,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"uk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"us" = (
+/obj/structure/frame/machine,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"ut" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"uE" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/science/nanites)
+"uI" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"uP" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"uY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/circuit/green,
+/area/shuttle/voidcrew/metis/ai_core)
+"vh" = (
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"vo" = (
+/turf/template_noop,
+/area/template_noop)
+"vs" = (
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"vt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"vE" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/machinery/light/broken,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"vK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"vS" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"vW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"vZ" = (
+/obj/machinery/door/airlock/science/glass,
+/obj/structure/barricade/wooden/crude/snow,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"wa" = (
+/obj/structure/frame/machine,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"wl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"wq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"wy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"wz" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/camera/directional/north,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"wD" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 26
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"wK" = (
+/obj/structure/table/glass,
+/obj/item/paper{
+	name = "List of Friends";
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"wR" = (
+/obj/structure/table,
+/obj/item/food/cubancarp,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"wY" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science)
+"xg" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"xs" = (
+/obj/item/shard,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"xu" = (
+/obj/item/shard,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"xv" = (
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"xy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"xB" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/item/wrench,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"xL" = (
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/rnd/server/ship,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"yc" = (
+/obj/machinery/door/airlock/maintenance/external,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"yh" = (
+/obj/structure/closet/crate,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"yk" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"ym" = (
+/obj/machinery/door/airlock/command/glass,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters{
+	id = "rdshutter"
+	},
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"yr" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"yD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"yG" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/atmospherics/components/tank/plasma{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"yH" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"yM" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"zb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/bridge)
+"zg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/obj/docking_port/mobile/voidcrew/metis,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"zw" = (
+/obj/item/reagent_containers/cup/glass/flask/gold,
+/obj/item/areaeditor/shuttle,
+/obj/structure/table/wood,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"zx" = (
+/obj/machinery/door/airlock/vault,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"zG" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/maintenance)
+"zJ" = (
+/obj/structure/sign/departments/xenobio,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"zV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"zY" = (
+/obj/structure/holosign/barrier,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Ag" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Ai" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/circuit/telecomms{
+	name = "coldroom"
+	},
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Aj" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/bridge)
+"Al" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"At" = (
+/obj/item/wirerod,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"AD" = (
+/obj/machinery/recharge_station,
+/obj/item/robot_suit,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"AG" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"AI" = (
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/suit/hooded/flashsuit,
+/obj/item/clothing/head/collectable/petehat,
+/obj/item/fakeartefact,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"AQ" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/disposalpipe/broken{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Bf" = (
+/obj/structure/cable,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Bg" = (
+/obj/structure/sign/poster/official/random,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Bi" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"Bp" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"By" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"BD" = (
+/obj/structure/sign/poster/official/random,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"BM" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "rdshutter"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"Ce" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/mop,
+/obj/item/reagent_containers/cup/bucket,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"Cm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Cn" = (
+/obj/structure/cable,
+/obj/machinery/porta_turret/ai,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"Co" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Cr" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/nanites)
+"Ct" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"Cz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/maintenance)
+"CK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/relic,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"CP" = (
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"CR" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"CT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/door/directional/south{
+	id = "rdshutter";
+	name = "Lockdown Shutters"
+	},
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"CZ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Dd" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science)
+"De" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Dg" = (
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Dq" = (
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Dt" = (
+/obj/structure/girder/displaced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Dx" = (
+/obj/item/gun/energy/laser,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"DM" = (
+/obj/structure/sink/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"DO" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"DQ" = (
+/obj/item/banner/science/mundane,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"DS" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "rdshutter"
+	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"DT" = (
+/mob/living/simple_animal/hostile/hivebot/range,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"DV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Ec" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Ef" = (
+/obj/effect/decal/cleanable/generic,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Eg" = (
+/obj/machinery/door/airlock/science/glass,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"Ej" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Er" = (
+/mob/living/carbon/human/species/monkey,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"EG" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"EL" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/scientist,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"EN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"ET" = (
+/obj/structure/table,
+/obj/item/food/soup/electron,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Fk" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/closet/l3closet/scientist,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Fm" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Fo" = (
+/obj/effect/decal/cleanable/oil/streak,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"Fr" = (
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Fs" = (
+/obj/effect/mob_spawn/corpse/human/scientist,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Fy" = (
+/obj/structure/sign/warning/xeno_mining,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"FE" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"FF" = (
+/obj/machinery/door/airlock/titanium,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/dorms)
+"FQ" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/item/circuitboard/computer/aiupload,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"FX" = (
+/obj/item/stack/cable_coil,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/belt/utility/full,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Gh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/statue/silver/secborg,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"Gj" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"Gw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Gx" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"GF" = (
+/obj/structure/holosign/barrier,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"He" = (
+/obj/structure/chair/wood,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"Hg" = (
+/obj/effect/decal/cleanable/xenoblood,
+/obj/item/bodypart/head/robot,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Hj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Ho" = (
+/obj/structure/barricade/wooden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Hy" = (
+/obj/structure/sign/departments/science,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science)
+"Hz" = (
+/obj/item/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"HA" = (
+/mob/living/simple_animal/slime,
+/turf/open/floor/circuit/telecomms{
+	name = "coldroom"
+	},
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"HG" = (
+/obj/structure/bookcase/manuals/research_and_development,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"HH" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/bridge)
+"HI" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"HM" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"HQ" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"HS" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/reagent_containers/dropper{
+	pixel_y = -4
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"HV" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"HW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Ic" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/healthanalyzer,
+/obj/machinery/camera/autoname{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Ig" = (
+/obj/machinery/door/airlock/titanium/glass{
+	name = "Bridge"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/bridge)
+"In" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"Iq" = (
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Iz" = (
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"IB" = (
+/obj/structure/table,
+/obj/item/food/burger/xeno,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"IE" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"IS" = (
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 2
+	},
+/obj/effect/decal/cleanable/generic,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"IY" = (
+/obj/item/clothing/mask/gas/welding,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Jg" = (
+/obj/structure/holosign/barrier,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Jj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/broken{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "slimelock";
+	name = "Lockdown Shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Jn" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/ai_core)
+"Jq" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Js" = (
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/obj/machinery/camera/autoname{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"Jz" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/nanites)
+"JD" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"JM" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"JO" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"JR" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"JT" = (
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"Kj" = (
+/obj/structure/door_assembly/door_assembly_science,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Kv" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/ghost_role/drone,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"Ky" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"Kz" = (
+/obj/effect/decal/cleanable/blood,
+/mob/living/carbon/human/species/monkey,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"KB" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/east,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"KF" = (
+/obj/machinery/shower/directional/south,
+/obj/structure/curtain,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"KK" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/rd,
+/obj/structure/curtain/cloth,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"KO" = (
+/obj/structure/holosign/barrier,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"KS" = (
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Le" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Lo" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/template_noop)
+"LG" = (
+/obj/machinery/holopad,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"LH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"LK" = (
+/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"LO" = (
+/obj/item/flashlight/glowstick/pink,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"LP" = (
+/obj/machinery/door/airlock/science,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "slimelock";
+	name = "Lockdown Shutters"
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"LX" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/engineering)
+"Mc" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/slime_scanner,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"My" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "slimelock";
+	name = "Lockdown Shutters"
+	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"ME" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/wardrobe/science_wardrobe,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"MH" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"MK" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"MR" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/bridge)
+"Nm" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Np" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakers,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"NA" = (
+/obj/item/chair,
+/obj/effect/decal/cleanable/greenglow,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"ND" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"NP" = (
+/obj/item/book/manual/wiki/robotics_cyborgs,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"NW" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/cosmos,
+/obj/structure/curtain/cloth,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"NZ" = (
+/obj/machinery/computer/rdconsole{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"Ob" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/item/radio/intercom/command/directional/north,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"Oc" = (
+/obj/structure/sign/warning/cold_temp,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Oo" = (
+/obj/structure/sign/poster/official/ion_rifle,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/maintenance)
+"Ou" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Ox" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"OE" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science)
+"OM" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/light/built{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"ON" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"OS" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Pj" = (
+/obj/structure/showcase/cyborg/old,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"Pk" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/maintenance)
+"Ps" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Pt" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/airalarm/directional/north,
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Pw" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"PJ" = (
+/mob/living/carbon/human/species/monkey,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/broken{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"PY" = (
+/mob/living/simple_animal/hostile/alien/sentinel{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Qg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Qn" = (
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Qo" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Qu" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Qy" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"QB" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science)
+"QM" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"QS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"QT" = (
+/obj/structure/cable,
+/obj/machinery/camera/autoname/directional/east,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"QW" = (
+/obj/item/shard,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"QY" = (
+/mob/living/carbon/human/species/monkey,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Ri" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Rj" = (
+/mob/living/simple_animal/hostile/hivebot/strong,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Rk" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Rx" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"RQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"RS" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/engineering)
+"RU" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "slimelock";
+	name = "Lockdown Shutters"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/left/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Sa" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"Sd" = (
+/obj/structure/table,
+/obj/item/clothing/mask/facehugger/toy,
+/obj/item/pai_card,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"Sg" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/belt/utility/full,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Sh" = (
+/obj/structure/sign/poster/contraband/lamarr,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"Sj" = (
+/mob/living/simple_animal/slime,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Sp" = (
+/obj/structure/mecha_wreckage/durand,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Sv" = (
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"SA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"SN" = (
+/mob/living/simple_animal/pet/cat/original{
+	mob_size = 1.1
+	},
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking creature bed. You can even strap your pet in, in case the gravity turns off.";
+	name = "creature bed"
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"SZ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/bridge)
+"Td" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"Tg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Ti" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
+	dir = 1
+	},
+/turf/open/floor/circuit/telecomms{
+	name = "coldroom"
+	},
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Tk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"Tr" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"TE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/crowbar/red,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"TH" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/purple,
+/obj/structure/curtain/cloth,
+/obj/item/transfer_valve{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"TQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"TV" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"TY" = (
+/obj/structure/sign/poster/official/random,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/voidcrew/metis/ai_core)
+"TZ" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Uk" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Uo" = (
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Us" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Ut" = (
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"Uu" = (
+/obj/item/cigbutt{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/cigbutt{
+	pixel_x = 5
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Uv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "slimelock";
+	name = "Lockdown Shutters"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/left/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"UA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"UD" = (
+/obj/structure/grille/broken,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "foreshutter"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/bridge)
+"UH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/carpet/purple,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"UL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/item/assembly/flash/handheld,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"Vb" = (
+/obj/item/mmi/posibrain,
+/obj/machinery/turretid{
+	pixel_y = -24
+	},
+/turf/open/floor/circuit/green,
+/area/shuttle/voidcrew/metis/ai_core)
+"Vj" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/pipedispenser/disposal,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"Vx" = (
+/obj/machinery/door/airlock/science,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"Vz" = (
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"VA" = (
+/obj/machinery/computer/security/research,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/bridge)
+"VE" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"VI" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"VJ" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/science/robotics)
+"VS" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/structure/disposalpipe/broken{
+	dir = 4
+	},
+/obj/structure/disposaloutlet,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"VU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"VW" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"VY" = (
+/obj/machinery/computer/mecha,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/bridge)
+"Wi" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Wo" = (
+/obj/structure/table/reinforced,
+/obj/item/mmi/posibrain,
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Wq" = (
+/obj/effect/decal/cleanable/blood/gibs/body{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Ww" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "slimelock";
+	name = "Lockdown Shutters"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"WA" = (
+/obj/structure/sign/poster/official/anniversary_vintage_reprint,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"WF" = (
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"WG" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"WQ" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/power/smes/engineering{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"WS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/circuit/telecomms{
+	name = "coldroom"
+	},
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Xc" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/cable_coil,
+/obj/item/storage/belt/utility/full,
+/obj/item/clothing/mask/gas/welding,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Xl" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/dorms)
+"Xn" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/bodypart/chest/robot,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Xr" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Xt" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Xw" = (
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"XB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/dorms)
+"XF" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"XH" = (
+/obj/machinery/flasher{
+	pixel_y = 23
+	},
+/obj/item/circuitboard/machine/nanite_program_hub,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"XI" = (
+/obj/structure/sign/poster/official/no_erp,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/ai_core)
+"XN" = (
+/obj/item/aicard,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"XW" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"XY" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"XZ" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/figure/roboticist,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science)
+"Ye" = (
+/obj/structure/frame/computer,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/nanites)
+"Yf" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/fore)
+"Yi" = (
+/obj/structure/closet/crate,
+/obj/item/resonator,
+/obj/item/resonator,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+"Yk" = (
+/mob/living/simple_animal/hostile/hivebot,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"Ym" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Yo" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/toy/plush/moth,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"Yw" = (
+/obj/structure/sign/poster/official/random,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/metis/eepsoffice)
+"Yz" = (
+/obj/structure/showcase/cyborg/old,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/ai_core)
+"YB" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled,
+/area/shuttle/voidcrew/metis/science/robotics)
+"YC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"YG" = (
+/obj/machinery/processor/slime,
+/obj/machinery/camera/autoname/directional/east,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"YP" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/engineering)
+"YU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Zq" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"Zr" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"ZH" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/hallway/aft)
+"ZJ" = (
+/obj/item/radio/intercom{
+	pixel_y = 27
+	},
+/obj/machinery/button/flasher{
+	pixel_y = -24
+	},
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	dir = 8
+	},
+/obj/item/stack/sheet/rglass,
+/obj/item/stack/cable_coil,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/floor,
+/obj/item/circuitboard/aicore,
+/obj/effect/mob_spawn/corpse/human/scientist,
+/obj/machinery/door/firedoor/heavy,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/south{
+	pixel_y = -32
+	},
+/obj/machinery/camera/autoname{
+	dir = 9
+	},
+/turf/open/floor/circuit/green,
+/area/shuttle/voidcrew/metis/ai_core)
+"ZM" = (
+/obj/machinery/airalarm/directional/east,
+/obj/item/kirbyplants/random,
+/obj/item/toy/figure/scientist,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/voidcrew/metis/science/xenobiology)
+"ZT" = (
+/obj/structure/closet/crate/internals,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/three,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/storage/medkit,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/metis/maintenance)
+
+(1,1,1) = {"
+vo
+vo
+vo
+vo
+vo
+cC
+VI
+VI
+VI
+VI
+VI
+fH
+VI
+VI
+fH
+VI
+VI
+fH
+VI
+VI
+VI
+VI
+VI
+VI
+vo
+vo
+"}
+(2,1,1) = {"
+vo
+vo
+vo
+vo
+cC
+HI
+fH
+HQ
+Ej
+HS
+Np
+VI
+VS
+Yo
+VI
+cd
+Xw
+VI
+HM
+Sj
+My
+Ai
+WS
+VI
+vo
+vo
+"}
+(3,1,1) = {"
+vo
+vo
+vo
+cC
+HI
+qe
+VI
+wz
+Er
+eN
+DM
+VI
+xv
+Hj
+VI
+AQ
+Kz
+VI
+fc
+OS
+My
+Ai
+HA
+VI
+vo
+vo
+"}
+(4,1,1) = {"
+vo
+vo
+cC
+Bg
+mD
+lS
+VI
+RQ
+RQ
+RQ
+bn
+VI
+RU
+pF
+ow
+Uv
+Jj
+VI
+RU
+pF
+Ww
+Ai
+Ti
+VI
+vo
+vo
+"}
+(5,1,1) = {"
+vo
+cC
+HI
+gZ
+IB
+qo
+VI
+Dq
+Fk
+RQ
+IE
+ON
+xs
+yr
+Dg
+vt
+nR
+ON
+JO
+cV
+fH
+Oc
+vZ
+fH
+LX
+vo
+"}
+(6,1,1) = {"
+vo
+cC
+cG
+oV
+EN
+qu
+yM
+LH
+nT
+Ho
+IE
+eN
+Wq
+nR
+Ym
+Ou
+QY
+Ym
+xu
+kZ
+VI
+ml
+WF
+FX
+RS
+LX
+"}
+(7,1,1) = {"
+vo
+px
+MK
+Uu
+UA
+Tr
+VI
+lu
+nT
+RQ
+nR
+ga
+YC
+tv
+Ym
+LG
+tv
+hx
+YC
+bS
+dD
+EG
+WF
+WF
+Sg
+LX
+"}
+(8,1,1) = {"
+vo
+px
+yk
+EN
+mN
+wR
+VI
+LP
+fH
+xy
+NA
+PJ
+WG
+xy
+Fm
+Ec
+Ps
+Ps
+Ec
+Ec
+Qn
+Ox
+HV
+ra
+YP
+LX
+"}
+(9,1,1) = {"
+vo
+px
+EN
+hP
+Rx
+Hz
+VI
+hR
+VI
+jy
+Mc
+ep
+gE
+YG
+fP
+Uo
+ry
+wK
+ZM
+ib
+VI
+mJ
+QS
+ra
+ra
+LX
+"}
+(10,1,1) = {"
+vo
+px
+di
+EN
+gW
+HI
+zJ
+LP
+Fy
+VI
+VI
+VI
+VI
+VI
+VI
+VI
+hl
+VI
+VI
+eO
+fH
+RS
+mT
+uP
+uP
+LX
+"}
+(11,1,1) = {"
+vo
+px
+dm
+dt
+nM
+rh
+Tg
+Al
+Qu
+Jq
+oJ
+CZ
+Xt
+GF
+rv
+Iz
+TE
+wq
+uI
+De
+QM
+RS
+gH
+LX
+LX
+LX
+"}
+(12,1,1) = {"
+vo
+cC
+ET
+kj
+BD
+cC
+rv
+to
+to
+Jg
+KB
+Qo
+sO
+sO
+sO
+eA
+to
+kz
+kn
+PY
+Zr
+LX
+Bf
+fb
+aC
+vh
+"}
+(13,1,1) = {"
+vo
+cC
+EN
+kC
+cC
+rT
+zY
+Tg
+Xl
+Xl
+Xl
+Xl
+TY
+lk
+lk
+lk
+lk
+lk
+lk
+hI
+uI
+ms
+Us
+iu
+yG
+Lo
+"}
+(14,1,1) = {"
+rJ
+Aj
+rJ
+rJ
+rJ
+Yf
+Wi
+DO
+Xl
+Js
+ND
+Sd
+lk
+nr
+Cn
+SA
+nr
+fo
+lk
+ZH
+QM
+LX
+xB
+rb
+WQ
+Fr
+"}
+(15,1,1) = {"
+sj
+ag
+dM
+pA
+oK
+rY
+qP
+HW
+Xl
+wD
+ih
+Ky
+lk
+nm
+eE
+eE
+nm
+eE
+sd
+lb
+KO
+LX
+Pt
+WF
+Vj
+Lo
+"}
+(16,1,1) = {"
+sj
+VA
+MR
+kN
+sj
+Qu
+Wi
+Rk
+Xl
+JD
+eo
+SN
+lk
+ZJ
+lk
+Yz
+UL
+eE
+lk
+wl
+oB
+LX
+xg
+Iq
+hb
+Fr
+"}
+(17,1,1) = {"
+sj
+ej
+hs
+zb
+Ig
+eA
+to
+to
+FF
+op
+op
+aT
+XI
+Vb
+lk
+XH
+EL
+uY
+zx
+Dt
+vW
+RS
+LX
+LX
+LX
+vo
+"}
+(18,1,1) = {"
+sj
+VY
+SZ
+HH
+UD
+QW
+Wi
+DQ
+Xl
+ih
+XB
+dX
+lk
+ja
+lk
+Pj
+XN
+eE
+rt
+IS
+qR
+Qy
+jI
+jI
+Qy
+vo
+"}
+(19,1,1) = {"
+sr
+nn
+eU
+HH
+rJ
+LO
+At
+vE
+Xl
+JM
+ih
+dT
+lk
+nm
+eE
+eE
+nm
+eE
+lk
+IY
+jH
+Qy
+Zq
+Zq
+Qy
+vo
+"}
+(20,1,1) = {"
+rJ
+Aj
+Aj
+lx
+Aj
+cW
+ez
+wy
+Xl
+KK
+NW
+TH
+lk
+nr
+Cn
+QT
+nr
+fo
+lk
+Cm
+QM
+Qy
+om
+CP
+Nm
+Qy
+"}
+(21,1,1) = {"
+vo
+Ct
+JR
+zw
+JR
+dG
+Wi
+iS
+Xl
+Xl
+Xl
+Xl
+Jn
+lk
+lk
+lk
+lk
+sd
+lk
+Gw
+De
+yc
+TZ
+Zq
+nC
+zg
+"}
+(22,1,1) = {"
+vo
+JR
+eV
+Sa
+JR
+Yw
+Qu
+to
+to
+lK
+YU
+kn
+vS
+DT
+VW
+Ef
+av
+bH
+av
+eT
+uI
+Qy
+hu
+tw
+cv
+Qy
+"}
+(23,1,1) = {"
+vo
+Ct
+Ob
+uk
+UH
+Ct
+Qu
+DV
+Qu
+vs
+KS
+Uk
+cf
+TV
+Ri
+oT
+OM
+CR
+uI
+fQ
+Ag
+Qy
+Qy
+Qy
+Qy
+vo
+"}
+(24,1,1) = {"
+vo
+DS
+He
+lz
+pL
+JR
+wY
+Eg
+Hy
+wY
+QB
+Dd
+Dd
+iQ
+Le
+hD
+tt
+hp
+hp
+Kj
+VJ
+iQ
+vo
+vo
+vo
+vo
+"}
+(25,1,1) = {"
+vo
+Sh
+mL
+fC
+CT
+Ct
+AG
+Bi
+us
+LK
+NZ
+Ut
+XY
+hp
+dQ
+YB
+pZ
+Xc
+sp
+Co
+hX
+hp
+vo
+vo
+vo
+vo
+"}
+(26,1,1) = {"
+vo
+BM
+hr
+lJ
+yD
+BM
+Dx
+fa
+sE
+eI
+XF
+CK
+sG
+hp
+sk
+ut
+NP
+Xn
+es
+Yk
+Sv
+hp
+vo
+vo
+vo
+vo
+"}
+(27,1,1) = {"
+vo
+WA
+jq
+mc
+zV
+ym
+la
+la
+la
+la
+OE
+la
+la
+oc
+bF
+it
+Fs
+Hg
+Xr
+Qg
+Sp
+hp
+vo
+vo
+vo
+vo
+"}
+(28,1,1) = {"
+vo
+BM
+mM
+By
+FQ
+BM
+eI
+Gj
+MH
+eI
+Tk
+FE
+eI
+em
+sQ
+sQ
+sV
+Rj
+oU
+jS
+Gx
+hp
+vo
+vo
+vo
+vo
+"}
+(29,1,1) = {"
+vo
+aX
+fn
+rg
+pV
+Ct
+Bp
+jn
+HG
+ME
+xL
+vK
+XZ
+hp
+AD
+Vz
+Wo
+Ic
+sQ
+so
+gY
+hp
+vo
+vo
+vo
+vo
+"}
+(30,1,1) = {"
+vo
+Ct
+Ct
+Ct
+Ct
+JR
+wY
+wY
+wY
+uE
+uE
+Vx
+eB
+uE
+Jz
+Jz
+zG
+kD
+Oo
+yH
+Pk
+hp
+vo
+vo
+vo
+vo
+"}
+(31,1,1) = {"
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+Jz
+KF
+In
+Fo
+sb
+TQ
+dg
+kD
+ZT
+Td
+VU
+Cz
+Pw
+vo
+vo
+vo
+vo
+"}
+(32,1,1) = {"
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+Jz
+Jz
+uE
+Ye
+qL
+Kv
+nF
+kD
+AI
+yh
+sy
+kD
+vo
+vo
+vo
+vo
+vo
+"}
+(33,1,1) = {"
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+Cr
+wa
+JT
+nI
+gP
+kD
+Yi
+ab
+ew
+kD
+vo
+vo
+vo
+vo
+vo
+"}
+(34,1,1) = {"
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+Jz
+Jz
+uE
+VE
+XW
+kD
+rp
+Gh
+jc
+kD
+vo
+vo
+vo
+vo
+vo
+"}
+(35,1,1) = {"
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+Jz
+uE
+ll
+kD
+Ce
+sn
+hH
+kD
+vo
+vo
+vo
+vo
+vo
+"}
+(36,1,1) = {"
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+vo
+Jz
+Jz
+kD
+kD
+kD
+kD
+kD
+vo
+vo
+vo
+vo
+vo
+"}

@@ -65,13 +65,19 @@
 ///Returns how much fuel we have left
 /obj/machinery/power/shuttle_engine/ship/fueled/return_fuel()
 	if(fuel_type)
-		connected_heater.air_contents.assert_gas(fuel_type)
-		return connected_heater?.air_contents.gases[fuel_type][MOLES] || 0
+		if(connected_heater)
+			connected_heater.air_contents.assert_gas(fuel_type)
+			return connected_heater?.air_contents.gases[fuel_type][MOLES] || 0
+		else
+			return 0
 	return connected_heater?.air_contents.total_moles() || 0
 
 ///Returns how much fuel we can hold
 /obj/machinery/power/shuttle_engine/ship/fueled/return_fuel_cap()
-	return connected_heater.maximum_moles
+	if(connected_heater)
+		return connected_heater.maximum_moles
+	else
+		return 0
 
 ///Consumes the needed fuel
 /obj/machinery/power/shuttle_engine/ship/fueled/proc/consume_fuel(amount)

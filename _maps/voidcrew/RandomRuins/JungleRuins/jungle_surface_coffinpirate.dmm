@@ -1,0 +1,443 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/table/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"g" = (
+/obj/structure/mineral_door/wood,
+/obj/item/grown/bananapeel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"h" = (
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"j" = (
+/obj/structure/table/wood,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"k" = (
+/obj/item/food/grown/banana,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"l" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"q" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"r" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"s" = (
+/obj/structure/sink/puddle,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"u" = (
+/obj/structure/closet/crate/coffin,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"v" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"w" = (
+/obj/structure/closet/crate/coffin,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cultivator/rake,
+/obj/item/shovel,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"x" = (
+/obj/item/grown/bananapeel,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"y" = (
+/obj/structure/flora/junglebush/b,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"z" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/costume/pirate{
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/costume/pirate{
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/eyepatch{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"E" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"F" = (
+/obj/item/food/grown/banana,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"G" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"H" = (
+/obj/structure/closet/crate/coffin,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/beer{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/beer{
+	pixel_x = -6
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"I" = (
+/obj/structure/table/wood,
+/obj/item/melee/energy/sword/pirate{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/flashlight/lamp/bananalamp{
+	pixel_x = 3;
+	pixel_y = 9
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"J" = (
+/obj/structure/closet/crate/coffin{
+	desc = "It's a burial receptacle for some fruit.";
+	name = "fridge"
+	},
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/bungofruit,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"K" = (
+/obj/structure/closet/crate/coffin,
+/obj/item/food/monkeycube,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"L" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"M" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"R" = (
+/obj/structure/bed/dogbed{
+	name = "Palmo's bed"
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"S" = (
+/obj/structure/table/wood,
+/obj/item/paper{
+	info = "Forgot I had this paper on me, so I might as well use it as a diary. Today is the 23rd of July, or atleast that's what I made up in my head, and I am currently fulfilling my dream career of carving coffins. Yep, I'm living my best life here. I tamed a monkey a while back, named him Palmo, little guy's been a dear friend since. Until activity picks up on this planet I'm just gonna live a nice and quiet life, and then sell my masterfully crafted coffins to all those in need of them. Also, I found some peculiar fruit earlier, tastes pretty good but I think I probably ingested a few of the seeds. Shouldn't be TOO bad for me. Either way, I'm going to go to bed. Hopefully I find some more paper to use so I can keep writing.";
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"T" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"U" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/human/corpse/pirate,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"V" = (
+/mob/living/carbon/human/species/monkey,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Y" = (
+/obj/structure/closet/crate/coffin,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/seeds/banana,
+/obj/item/seeds/banana,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Z" = (
+/obj/structure/flora/junglebush,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+
+(1,1,1) = {"
+a
+a
+E
+E
+E
+E
+E
+y
+a
+a
+M
+h
+h
+M
+a
+"}
+(2,1,1) = {"
+a
+E
+v
+l
+l
+l
+l
+T
+y
+h
+h
+h
+Z
+M
+a
+"}
+(3,1,1) = {"
+a
+E
+l
+l
+U
+I
+l
+l
+M
+h
+M
+h
+h
+h
+a
+"}
+(4,1,1) = {"
+a
+E
+l
+z
+b
+b
+R
+l
+M
+h
+M
+h
+h
+M
+h
+"}
+(5,1,1) = {"
+a
+K
+l
+H
+b
+A
+u
+l
+M
+h
+h
+a
+a
+h
+M
+"}
+(6,1,1) = {"
+a
+l
+l
+l
+L
+l
+l
+l
+l
+h
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+l
+u
+x
+b
+A
+b
+w
+l
+M
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+l
+e
+b
+b
+b
+x
+A
+l
+Z
+h
+h
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+l
+S
+f
+V
+A
+b
+A
+g
+h
+h
+s
+h
+h
+a
+"}
+(10,1,1) = {"
+a
+l
+j
+x
+A
+b
+b
+Y
+l
+M
+T
+h
+E
+G
+h
+"}
+(11,1,1) = {"
+a
+l
+l
+b
+b
+k
+n
+l
+l
+h
+G
+E
+G
+E
+T
+"}
+(12,1,1) = {"
+a
+a
+l
+l
+J
+u
+l
+l
+a
+M
+G
+F
+G
+q
+h
+"}
+(13,1,1) = {"
+a
+a
+a
+l
+l
+l
+l
+a
+a
+M
+M
+G
+E
+h
+r
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
+h
+h
+h
+a
+"}

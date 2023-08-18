@@ -21,6 +21,6 @@
 	. = ..()
 	if(.)
 		linked_techweb.connected_machines += src //connect new one
-		experiment_handler.link_techweb(linked_techweb)
+		experiment_handler.link_techweb(linked_techweb, TRUE)
 		say("Linked to Server!")
 		return TRUE

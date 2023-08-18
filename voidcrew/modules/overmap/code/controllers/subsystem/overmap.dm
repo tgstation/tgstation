@@ -25,8 +25,19 @@ SUBSYSTEM_DEF(overmap)
 	/// List of all events
 	var/list/events = list()
 
+	var/size = OVERMAP_SIZE
+	//List of all mapzones
+	var/list/map_zones = list()
 	///List of all simulated ships
 	var/list/simulated_ships = list()
+	/// Timer ID of the timer used for telling which stage of an endround "jump" the ships are in
+	var/jump_timer
+	/// Current state of the jump
+	var/jump_mode = BS_JUMP_IDLE
+	/// Time taken for bluespace jump to begin after it is requested (in deciseconds)
+	var/jump_request_time = 6000
+	/// Time taken for a bluespace jump to complete after it initiates (in deciseconds)
+	var/jump_completion_time = 1200
 
 	var/datum/map_template/shuttle/voidcrew/initial_ship_template
 	var/obj/structure/overmap/ship/initial_ship
@@ -39,6 +50,50 @@ SUBSYSTEM_DEF(overmap)
 	spawn_initial_ship()
 
 	return SS_INIT_SUCCESS
+/*
+ * Bluespace jump procs
+ */
+
+/**
+ * ## request_jump
+ *
+ * Requests a bluespace jump, which, after jump_request_time deciseconds, will initiate a bluespace jump.
+ *
+ * Arguments:
+ * * modifiers - (Optional) Modifies the length of the jump request time (defaults to 1)
+ */
+/datum/controller/subsystem/overmap/proc/request_jump(modifier = 1)
+	jump_mode = BS_JUMP_CALLED
+	jump_timer = addtimer(CALLBACK(src, PROC_REF(initiate_jump)), jump_request_time * modifier, TIMER_STOPPABLE)
+	priority_announce("Preparing for jump. ETD: [jump_request_time * modifier / 600] minutes.", null, null, "Priority")
+
+/**
+ * ##cancel_jump
+ *
+ * Cancels a currently requested bluespace jump.
+ * Can only be done after the jump has been requested, but before the jump has actually begun.
+ */
+/datum/controller/subsystem/overmap/proc/cancel_jump()
+	if(jump_mode != BS_JUMP_CALLED)
+		return
+	deltimer(jump_timer)
+	jump_mode = BS_JUMP_IDLE
+	priority_announce("Bluespace jump cancelled.", null, null, "Priority")
+
+/**
+ * ##initiate_jump
+ *
+ * Initiates a bluespace jump, ending the round after a delay of jump_completion_time deciseconds.
+ * This cannot be interrupted by conventional means.
+ */
+/datum/controller/subsystem/overmap/proc/initiate_jump()
+	jump_mode = BS_JUMP_INITIATED
+	for(var/obj/docking_port/mobile/voidcrew/mobile_port as anything in SSshuttle.mobile_docking_ports)
+		mobile_port.hyperspace_sound(HYPERSPACE_WARMUP, mobile_port.shuttle_areas)
+		mobile_port.on_emergency_launch()
+
+	priority_announce("Jump initiated. ETA: [jump_completion_time / 600] minutes.", null, null, "Priority")
+	jump_timer = addtimer(VARSET_CALLBACK(src, jump_mode, BS_JUMP_COMPLETED), jump_completion_time)
 
 /datum/controller/subsystem/overmap/proc/create_map()
 	// creates the overmap area and sets it up
@@ -148,6 +203,12 @@ SUBSYSTEM_DEF(overmap)
 			new event_type(turf_to_spawn)
 
 /datum/controller/subsystem/overmap/proc/setup_planets()
+	var/list/planets = list()
+	for(var/datum/overmap/planet/planet_type as anything in subtypesof(/datum/overmap/planet))
+		if(initial(planet_type.spawn_rate) > 0)
+			planets += planet_type
+
+
 	var/list/orbits = list()
 	for (var/i in 2 to LAZYLEN(radius_tiles))
 		orbits += "[i]"
@@ -161,7 +222,8 @@ SUBSYSTEM_DEF(overmap)
 		if (!turf_for_planet || !istype(turf_for_planet))
 			orbits -= "[selected_orbit]" // this one is full
 			continue
-		var/planet_type = pick(subtypesof(/datum/overmap/planet))
+
+		var/planet_type = pick(planets)
 		var/obj/structure/overmap/planet/planet_to_spawn = new
 		planet_to_spawn.planet = planet_type
 		planet_to_spawn.forceMove(turf_for_planet)
@@ -234,3 +296,142 @@ SUBSYSTEM_DEF(overmap)
 
 	initial_ship = null
 	message_admins("Overmap Starter Ship was deleted. You may want to investigate or spawn a new one!")
+
+
+
+	/**
+  * Reserves a square dynamic encounter area, and spawns a ruin in it if one is supplied.
+  * * on_planet - If the encounter should be on a generated planet. Required, as it will be otherwise inaccessible.
+  * * target - The ruin to spawn, if any
+  * * ruin_type - The ruin to spawn. Don't pass this argument if you want it to randomly select based on planet type.
+  */
+
+  /**
+ * ##get_ruin_list
+ *
+ * Returns the SSmapping list of ruins, according to the given desired ruin type
+ *
+ * Arguments:
+ * * ruin_type - a string, depicting the desired ruin type
+ */
+/datum/controller/subsystem/overmap/proc/get_ruin_list(ruin_type)
+	switch(ruin_type) // temporary because SSmapping needs a refactor to make this any better
+		if (ZTRAIT_LAVA_RUINS)
+			return SSmapping.lava_ruins_templates
+		if (ZTRAIT_ICE_RUINS)
+			return SSmapping.ice_ruins_templates
+		if (ZTRAIT_JUNGLE_RUINS)
+			return SSmapping.jungle_ruins_templates
+		if (ZTRAIT_REEBE_RUINS)
+			return SSmapping.yellow_ruins_templates
+		if (ZTRAIT_SPACE_RUINS)
+			return SSmapping.space_ruins_templates
+		if (ZTRAIT_BEACH_RUINS)
+			return SSmapping.beach_ruins_templates
+		if (ZTRAIT_WASTELAND_RUINS)
+			return SSmapping.wasteland_ruins_templates
+
+/datum/controller/subsystem/overmap/proc/spawn_dynamic_encounter(datum/overmap/planet/planet_type, ruin = TRUE, ignore_cooldown = FALSE, datum/map_template/ruin/ruin_type)
+	log_shuttle("SSOVERMAP: SPAWNING DYNAMIC ENCOUNTER STARTED")
+	var/list/ruin_list
+	var/datum/map_generator/mapgen
+	var/area/target_area
+	var/datum/weather/weather_controller_type
+	var/datum/planet/planet_template
+	if(!isnull(planet_type))
+		planet_type = new planet_type
+		ruin_list = get_ruin_list(planet_type.ruin_type)
+		if(!isnull(planet_type.mapgen))
+			mapgen = new planet_type.mapgen
+		target_area = planet_type.target_area
+		weather_controller_type = planet_type.weather_controller_type
+		if(!(isnull(planet_type.planet_template)))
+			planet_template = new planet_type.planet_template
+		qdel(planet_type)
+
+	if(ruin && ruin_list && !ruin_type)
+		ruin_type = ruin_list[pick(ruin_list)]
+		if(ispath(ruin_type))
+			ruin_type = new ruin_type
+
+	var/encounter_name = "Dynamic Overmap Encounter"
+	var/datum/map_zone/mapzone = find_free_mapzone()
+	var/datum/space_level/zlevel
+	if(isnull(mapzone))
+		mapzone = create_map_zone(encounter_name)
+		zlevel = SSmapping.add_new_zlevel(encounter_name, list(ZTRAIT_MINING = TRUE))
+		mapzone.add_space_level(zlevel)
+	else
+		if(mapzone.z_levels[1])
+			zlevel = mapzone.z_levels[1]
+		else
+			zlevel = SSmapping.add_new_zlevel(encounter_name, list(ZTRAIT_MINING = TRUE))
+			mapzone.add_space_level(zlevel)
+
+	mapzone.taken = TRUE
+
+	zlevel.fill_in(area_override = target_area)
+
+	if(ruin_type)
+		var/turf/ruin_turf = locate(rand(
+			zlevel.low_x+6,
+			zlevel.high_x-ruin_type.width-6),
+			zlevel.high_y-ruin_type.height-6,
+			zlevel.z_value
+			)
+		ruin_type.load(ruin_turf)
+
+	if (!isnull(mapgen) && istype(mapgen, /datum/map_generator/planet_generator) && !isnull(planet_template))
+		mapgen.generate_terrain(zlevel.get_block(), planet_template)
+	else
+		if (!isnull(mapgen))
+			mapgen.generate_terrain(zlevel.get_block())
+	if(weather_controller_type)
+		new weather_controller_type(mapzone)
+
+
+	// locates the first dock in the bottom left, accounting for padding and the border
+	var/turf/primary_docking_turf = locate(
+		zlevel.low_x+RESERVE_DOCK_DEFAULT_PADDING+1,
+		zlevel.low_y+RESERVE_DOCK_DEFAULT_PADDING+1,
+		zlevel.z_value
+		)
+	// now we need to offset to account for the first dock
+	var/turf/secondary_docking_turf = locate(
+		primary_docking_turf.x+RESERVE_DOCK_MAX_SIZE_LONG+RESERVE_DOCK_DEFAULT_PADDING,
+		primary_docking_turf.y,
+		primary_docking_turf.z
+		)
+
+	//This check exists because docking ports don't like to be deleted.
+	var/obj/docking_port/stationary/primary_dock = new(primary_docking_turf)
+	primary_dock.dir = NORTH
+	primary_dock.name = "\improper Uncharted Space"
+	primary_dock.height = RESERVE_DOCK_MAX_SIZE_SHORT
+	primary_dock.width = RESERVE_DOCK_MAX_SIZE_LONG
+	primary_dock.dheight = 0
+	primary_dock.dwidth = 0
+
+	var/obj/docking_port/stationary/secondary_dock = new(secondary_docking_turf)
+	secondary_dock.dir = NORTH
+	secondary_dock.name = "\improper Uncharted Space"
+	secondary_dock.height = RESERVE_DOCK_MAX_SIZE_SHORT
+	secondary_dock.width = RESERVE_DOCK_MAX_SIZE_LONG
+	secondary_dock.dheight = 0
+	secondary_dock.dwidth = 0
+
+	return list(mapzone, primary_dock, secondary_dock)
+
+
+/datum/controller/subsystem/overmap/proc/create_map_zone(new_name)
+	return new /datum/map_zone(new_name)
+
+/datum/controller/subsystem/overmap/proc/find_free_mapzone()
+	. = null
+	for(var/datum/map_zone/mapzone as anything in map_zones)
+		if(!mapzone.taken)
+			return(mapzone)
+
+
+
+

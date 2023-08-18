@@ -1,0 +1,275 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/table/wood,
+/obj/item/borg/upgrade/ai,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"e" = (
+/obj/structure/table/wood,
+/obj/item/mmi/posibrain,
+/obj/item/mmi/posibrain,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"f" = (
+/obj/structure/table/wood,
+/obj/item/circuitboard/computer/borgupload,
+/obj/item/circuitboard/computer/aiupload,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"g" = (
+/obj/structure/table/wood,
+/obj/item/borg/upgrade/transform/clown{
+	desc = "Allows you to to turn a cyborg into a... something.";
+	name = "borg module picker (Unknown)"
+	},
+/obj/item/borg/upgrade/transform{
+	desc = "Allows you to to turn a cyborg into a... something.";
+	name = "borg module picker (Unknown)";
+	new_module = /obj/item/robot_module/syndicate_medical
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"h" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"k" = (
+/turf/open/floor/wood,
+/area/ruin/powered)
+"n" = (
+/obj/effect/decal/remains/robot,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"p" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"q" = (
+/obj/item/bodypart/head/robot,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"r" = (
+/obj/structure/table/wood,
+/obj/item/aiModule/core/full/damaged{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/core/full/hulkamania{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/reset/purge,
+/obj/item/aiModule/core/full/paladin_devotion{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/reset,
+/obj/item/aiModule/core/full/tyrant{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/core/full/maintain{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/core/full/reporter{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/core/full/cybersun{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/core/full/corp{
+	name = "Unknown AI Core Module"
+	},
+/obj/item/aiModule/core/full/asimov{
+	name = "Unknown AI Core Module"
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"u" = (
+/obj/item/stock_parts/cell/hyper,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"w" = (
+/obj/item/wallframe/camera,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"x" = (
+/obj/item/stack/cable_coil,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"y" = (
+/obj/structure/table/wood,
+/obj/item/circuitboard/machine/cyborgrecharger,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"z" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/powered)
+"D" = (
+/obj/item/assembly/flash/handheld,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"F" = (
+/obj/item/robot_suit/prebuilt,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"G" = (
+/obj/item/assembly/flash,
+/obj/item/stock_parts/cell/hyper,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"H" = (
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"J" = (
+/obj/structure/ai_core/latejoin_inactive,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"L" = (
+/obj/item/bodypart/leg/right/robot,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"M" = (
+/obj/item/bodypart/chest/robot,
+/obj/item/wallframe/camera,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"N" = (
+/obj/item/robot_suit,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Q" = (
+/obj/item/paper{
+	info = "Welcome to your Space Ikea Brand Full AI Kit! There are all the amenities needed to create a functional AI for your installation in this easy to use kit! Note: Warranty void if exposed to: High Humidity, High Temperatures, Grass, Mud, The Jungle. Thank you for shopping Space Ikea!"
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"R" = (
+/obj/item/bodypart/arm/left/robot,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"S" = (
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"U" = (
+/turf/template_noop,
+/area/template_noop)
+"V" = (
+/obj/item/aiModule/core/freeformcore,
+/obj/item/stack/cable_coil,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Y" = (
+/obj/item/bodypart/arm/right/robot,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Z" = (
+/obj/item/bodypart/leg/left/robot,
+/turf/open/floor/wood,
+/area/ruin/powered)
+
+(1,1,1) = {"
+U
+z
+h
+h
+h
+z
+U
+"}
+(2,1,1) = {"
+U
+z
+k
+w
+Q
+z
+U
+"}
+(3,1,1) = {"
+U
+z
+n
+G
+R
+z
+U
+"}
+(4,1,1) = {"
+z
+z
+p
+H
+D
+z
+z
+"}
+(5,1,1) = {"
+z
+e
+q
+w
+S
+r
+z
+"}
+(6,1,1) = {"
+z
+f
+u
+J
+V
+y
+z
+"}
+(7,1,1) = {"
+z
+g
+w
+L
+n
+b
+z
+"}
+(8,1,1) = {"
+z
+z
+x
+M
+D
+z
+z
+"}
+(9,1,1) = {"
+U
+z
+D
+N
+Y
+z
+U
+"}
+(10,1,1) = {"
+U
+z
+F
+x
+Z
+z
+U
+"}
+(11,1,1) = {"
+U
+z
+z
+z
+z
+z
+U
+"}

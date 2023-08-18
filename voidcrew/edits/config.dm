@@ -9,3 +9,9 @@
 
 /datum/config_entry/flag/allow_random_events
 	default = FALSE
+
+/datum/config_entry/flag/allow_vote_transfer
+	default = TRUE
+
+/datum/config_entry/flag/free_ships
+	default = TRUE

@@ -1,0 +1,1918 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_bridge"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"aH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"aS" = (
+/obj/structure/marker_beacon,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"bl" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"bC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/door/airlock/medical/glass,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"cb" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"cg" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered)
+"ct" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"cD" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/corner/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/brown,
+/obj/effect/turf_decal/corner/brown{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"cZ" = (
+/obj/structure/bed,
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/green,
+/obj/item/bedsheet/cult,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"dh" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"dj" = (
+/obj/machinery/computer/crew,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"ej" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"ex" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"eE" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/blue,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"eK" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"eX" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
+	},
+/obj/machinery/advanced_airlock_controller{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"eZ" = (
+/obj/structure/healingfountain,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"fg" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high/plus,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue,
+/obj/machinery/airalarm/directional/south{
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"fE" = (
+/obj/effect/turf_decal/corner/blue,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"hm" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/cult/friendly,
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"hs" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north{
+	pixel_y = 24
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"hw" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"hD" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"ig" = (
+/obj/structure/constructshell,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = -2
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"in" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"iK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"jU" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"kj" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/cult/friendly,
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"kr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"kE" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Crew Quarters"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"kF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"li" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"lu" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = -2
+	},
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"lF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"lG" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"lZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/door/airlock/cult/friendly,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"mq" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/trash/plate{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/trash/plate{
+	pixel_y = 12
+	},
+/obj/item/trash/plate{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/kitchen/fork{
+	pixel_x = 12;
+	pixel_y = 3
+	},
+/obj/item/kitchen/fork{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"mx" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/brown{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"my" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/brown{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"nv" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/unpowered)
+"nX" = (
+/obj/machinery/door/airlock/mining,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"ou" = (
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"oA" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"oG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/cult/friendly,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"qg" = (
+/mob/living/simple_animal/hostile/construct/artificer/hostile{
+	loot = list(/obj/item/ectoplasm, /obj/item/necromantic_stone)
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"qi" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/construct/wraith/hostile{
+	loot = list(/obj/item/ectoplasm, /obj/item/rod_of_asclepius)
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"qS" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/corner/brown,
+/obj/effect/turf_decal/corner/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 1
+	},
+/obj/item/electronics/apc,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"rf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"rB" = (
+/obj/machinery/light/broken,
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"rH" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"sA" = (
+/obj/docking_port/mobile{
+	callTime = 250;
+	can_move_docking_ports = 1;
+	dir = 2;
+	dwidth = 11;
+	height = 17;
+	launch_status = 0;
+	name = "Salvage Ship";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 33
+	},
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"sN" = (
+/obj/machinery/processor,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/green{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"sX" = (
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"sY" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"tc" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"tX" = (
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/north{
+	pixel_y = 24
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"ua" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"ul" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"uo" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/cult/friendly,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"uU" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_y = 6
+	},
+/obj/item/kitchen/knife{
+	pixel_x = 16
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = 8
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/box/donkpockets,
+/obj/effect/turf_decal/corner/green,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"va" = (
+/obj/effect/turf_decal/corner/green{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"vJ" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 5
+	},
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered)
+"vO" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"vT" = (
+/obj/structure/table,
+/obj/item/gps{
+	gpstag = "NTREC1";
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/megaphone{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/corner/blue,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"wh" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"wn" = (
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/green,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"wt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/door/airlock/cult/friendly,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"ww" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = -2
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"wB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/radio/intercom/wideband{
+	pixel_x = -24;
+	pixel_y = 28
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"wG" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"wH" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"wM" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered)
+"xb" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xo" = (
+/obj/item/ectoplasm,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xt" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xD" = (
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered)
+"xI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xT" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/item/gun/energy/laser/retro,
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xY" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"yb" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"yq" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered)
+"zd" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"zF" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"zP" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Ao" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/corner/green,
+/obj/effect/turf_decal/corner/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Aw" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/brown{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Ax" = (
+/obj/structure/cable,
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/cult/friendly,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Ba" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Bf" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Bz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/machinery/advanced_airlock_controller{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"BC" = (
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/brown,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"BV" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"BW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/effect/turf_decal/corner/brown,
+/obj/effect/turf_decal/corner/brown{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"BX" = (
+/obj/structure/table,
+/obj/item/radio/off{
+	pixel_x = 6;
+	pixel_y = 14
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/button/door{
+	id = "whiteship_windows";
+	name = "Windows Blast Door Control";
+	pixel_x = -22;
+	pixel_y = -6
+	},
+/obj/machinery/button/door{
+	id = "whiteship_bridge";
+	name = "Bridge Blast Door Control";
+	pixel_x = -22;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/obj/item/areaeditor/shuttle,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Cm" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Dc" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Dj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/cult/friendly,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Dr" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"Ez" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"EQ" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Fa" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/brute,
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Fe" = (
+/obj/effect/turf_decal/corner/brown{
+	dir = 1
+	},
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Fn" = (
+/obj/structure/marker_beacon,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"FI" = (
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Gz" = (
+/obj/effect/rune/narsie,
+/mob/living/simple_animal/hostile/construct/juggernaut/hostile{
+	loot = list(/obj/item/ectoplasm, /obj/item/nullrod/armblade/tentacle)
+	},
+/obj/structure/sacrificealtar,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = -2
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mob_spawn/human/corpse/damaged,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"GW" = (
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Hl" = (
+/obj/effect/turf_decal/corner/brown,
+/obj/machinery/airalarm/directional/south{
+	pixel_y = -24
+	},
+/obj/structure/rack,
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Hm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Ht" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/blue,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Hx" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"HD" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"HE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/structure/marker_beacon,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"HW" = (
+/obj/structure/table,
+/obj/item/healthanalyzer,
+/obj/item/storage/medkit/o2,
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/item/defibrillator/loaded,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"If" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered)
+"II" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/brown,
+/obj/item/flashlight/glowstick/red{
+	on = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"IO" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"IU" = (
+/obj/machinery/suit_storage_unit/atmos,
+/obj/effect/turf_decal/corner/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/brown,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Jh" = (
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Jq" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = -2
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Ju" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"JE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"JX" = (
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Ka" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/cult/friendly,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"KH" = (
+/obj/item/chainsaw,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"KV" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Lq" = (
+/obj/effect/decal/cleanable/blood/innards,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Lz" = (
+/obj/structure/bed,
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/green,
+/obj/effect/turf_decal/corner/green{
+	dir = 8
+	},
+/obj/item/bedsheet/cult,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"LK" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/corner/green,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Mn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Nr" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Nt" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"On" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/corner/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/brown{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"OB" = (
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"PT" = (
+/obj/structure/marker_beacon,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"PU" = (
+/obj/item/pickaxe/rusted,
+/obj/effect/gibspawner/human/bodypartless,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"QK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/cult/friendly,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Rc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/effect/turf_decal/corner/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Rq" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Ru" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = -2
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"RA" = (
+/obj/structure/marker_beacon,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Sm" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/corner/green{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Sq" = (
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"SC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Tn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"TR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Us" = (
+/obj/structure/flora/rock,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"UA" = (
+/obj/structure/sign/warning/longtermwaste{
+	name = "long term ...  warning sign"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"UE" = (
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Vz" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"VV" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"VX" = (
+/obj/effect/turf_decal/corner/blue{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Wh" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Wm" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Xh" = (
+/obj/structure/table,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/shovel/spade,
+/obj/item/cultivator,
+/obj/item/plant_analyzer,
+/obj/item/reagent_containers/glass/bucket,
+/obj/effect/turf_decal/corner/green,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Xs" = (
+/obj/effect/turf_decal/corner/blue{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"XI" = (
+/turf/closed/mineral/random/asteroid/rockplanet,
+/area/overmap_encounter/planetoid/wasteland)
+"XN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"XV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/holopad/emergency/command{
+	pixel_y = 16
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Yn" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Yp" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/unpowered)
+"Zg" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
+	dir = 9
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/unpowered)
+"Zm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/machinery/light/broken,
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+Bf
+Ju
+Ju
+RA
+jU
+Ju
+Ju
+Nt
+Dj
+Ax
+UA
+Ju
+Us
+Ju
+RA
+Bf
+Bf
+Bf
+"}
+(2,1,1) = {"
+Nt
+Nt
+xD
+xD
+xD
+Nt
+Yn
+EQ
+HE
+KH
+EQ
+Ju
+Nt
+Nt
+Nt
+Nt
+Nt
+Nt
+"}
+(3,1,1) = {"
+xD
+qg
+dh
+wH
+lF
+Nt
+Bf
+EQ
+xo
+xb
+EQ
+Ju
+Dr
+yb
+rH
+Sm
+Ao
+xD
+"}
+(4,1,1) = {"
+xD
+Jh
+dh
+ig
+dh
+xD
+Bf
+EQ
+SC
+xb
+EQ
+Ju
+xD
+OB
+Hm
+XN
+Xh
+xD
+"}
+(5,1,1) = {"
+cg
+JE
+Jh
+Jq
+TR
+vJ
+Bf
+Nt
+Mn
+Ba
+Nt
+Ju
+xD
+sY
+VV
+vO
+oA
+EQ
+"}
+(6,1,1) = {"
+wM
+ww
+Jh
+Lq
+xb
+If
+xD
+nv
+IO
+Rq
+nv
+EQ
+xD
+hs
+mq
+tc
+uU
+EQ
+"}
+(7,1,1) = {"
+HD
+eZ
+Gz
+BV
+Hx
+Ka
+ua
+kj
+zF
+Jh
+kE
+Jh
+lZ
+Rc
+cb
+KV
+sN
+EQ
+"}
+(8,1,1) = {"
+zd
+Jh
+Jh
+lu
+Jh
+Zg
+EQ
+xD
+iK
+XN
+nv
+EQ
+xD
+xt
+Yp
+bl
+LK
+EQ
+"}
+(9,1,1) = {"
+Nt
+dh
+Jh
+dh
+Ru
+Nt
+Bf
+xD
+IO
+Jh
+Nt
+Ju
+Nt
+wH
+kr
+xb
+va
+EQ
+"}
+(10,1,1) = {"
+xD
+wH
+KV
+bl
+Sq
+xD
+Bf
+EQ
+Wm
+Rq
+EQ
+Ju
+Nt
+cZ
+wn
+ej
+Lz
+Nt
+"}
+(11,1,1) = {"
+xD
+Nt
+xD
+Nt
+Nt
+xD
+Bf
+EQ
+xI
+hD
+EQ
+Ju
+Nt
+xD
+xD
+Nt
+Nt
+Nt
+"}
+(12,1,1) = {"
+Ju
+Ju
+Ju
+RA
+Ju
+FI
+Bf
+xD
+IO
+KV
+EQ
+Bf
+Bf
+Bf
+RA
+Ju
+Ju
+Ju
+"}
+(13,1,1) = {"
+xD
+xD
+Nt
+Nt
+xD
+xD
+Bf
+xD
+zP
+Ba
+EQ
+Bf
+Nt
+Nt
+Nt
+xD
+xD
+xD
+"}
+(14,1,1) = {"
+xD
+IU
+II
+mx
+qS
+Nt
+Bf
+Nt
+Wm
+dh
+Nt
+Bf
+xD
+lG
+fE
+Xs
+Fa
+EQ
+"}
+(15,1,1) = {"
+nv
+EQ
+xb
+On
+Hl
+Nt
+EQ
+nv
+IO
+xb
+nv
+xD
+xD
+tX
+rB
+xD
+EQ
+nv
+"}
+(16,1,1) = {"
+sA
+Bz
+hw
+ul
+BW
+nX
+Jh
+oG
+Mn
+dh
+bC
+Jh
+wt
+kF
+Wh
+Dc
+eX
+uo
+"}
+(17,1,1) = {"
+nv
+EQ
+Tn
+rf
+Aw
+xD
+EQ
+nv
+Vz
+dh
+xD
+EQ
+nv
+Cm
+Zm
+Nt
+EQ
+nv
+"}
+(18,1,1) = {"
+Nt
+BC
+my
+Fe
+cD
+Nt
+Bf
+Nt
+ex
+Nr
+yq
+li
+Nt
+eE
+wh
+VX
+HW
+EQ
+"}
+(19,1,1) = {"
+Nt
+Nt
+EQ
+EQ
+Nt
+Nt
+Bf
+xD
+IO
+Rq
+Nt
+eK
+Nt
+Nt
+EQ
+EQ
+Nt
+Nt
+"}
+(20,1,1) = {"
+Ju
+Ju
+Ju
+Ju
+RA
+Bf
+Bf
+xD
+Mn
+Jh
+Nt
+xY
+aS
+li
+Ju
+Ju
+Ju
+XI
+"}
+(21,1,1) = {"
+XI
+Ju
+Us
+Ju
+Ju
+Ju
+xD
+xD
+QK
+hm
+nv
+xD
+Us
+eK
+FI
+XI
+XI
+XI
+"}
+(22,1,1) = {"
+XI
+Bf
+Bf
+jU
+Ju
+Nt
+xD
+BX
+aH
+in
+fg
+xD
+xD
+eK
+XI
+XI
+XI
+XI
+"}
+(23,1,1) = {"
+XI
+XI
+Bf
+PT
+Ju
+as
+sX
+wB
+qi
+XV
+Ez
+UE
+as
+Fn
+PU
+Ju
+RA
+Ju
+"}
+(24,1,1) = {"
+XI
+XI
+Bf
+ou
+Bf
+as
+dj
+wG
+KV
+Rq
+Ht
+ct
+xD
+Bf
+jU
+XI
+XI
+Ju
+"}
+(25,1,1) = {"
+XI
+XI
+XI
+Bf
+Bf
+as
+as
+JX
+vT
+xT
+GW
+xD
+xD
+Bf
+XI
+XI
+XI
+XI
+"}
+(26,1,1) = {"
+XI
+XI
+XI
+XI
+Bf
+Bf
+as
+as
+as
+as
+xD
+xD
+Bf
+Bf
+Bf
+Ju
+XI
+XI
+"}

@@ -1,0 +1,191 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/neck/tie/lesbian,
+/obj/item/clothing/under/dress/sailor,
+/obj/item/clothing/under/dress/skirt,
+/obj/item/clothing/under/dress/striped,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/lipstick/random,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/dresser,
+/obj/structure/mirror{
+	pixel_x = -25;
+	pixel_y = -2
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"o" = (
+/turf/open/floor/carpet/purple,
+/area/ruin/unpowered)
+"r" = (
+/obj/structure/bed,
+/obj/item/bedsheet/rainbow,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"w" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"z" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"A" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/neck/tie/lesbian,
+/obj/item/clothing/under/dress/skirt/red,
+/obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/item/clothing/under/dress/skirt/plaid/blue,
+/obj/item/toy/plush/hornet/gay,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"C" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"I" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"K" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"T" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/soda_cans/starkist{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/slime_cookie/pink{
+	pixel_x = -6
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"U" = (
+/obj/structure/bed{
+	pixel_y = 14
+	},
+/obj/item/bedsheet/rainbow{
+	pixel_y = 14
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"X" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+I
+I
+I
+I
+I
+I
+I
+a
+"}
+(3,1,1) = {"
+a
+I
+w
+A
+b
+e
+z
+I
+a
+"}
+(4,1,1) = {"
+a
+I
+w
+w
+X
+X
+w
+I
+a
+"}
+(5,1,1) = {"
+a
+I
+X
+w
+w
+X
+o
+K
+a
+"}
+(6,1,1) = {"
+a
+I
+w
+w
+w
+w
+w
+I
+a
+"}
+(7,1,1) = {"
+a
+I
+r
+U
+t
+T
+C
+I
+a
+"}
+(8,1,1) = {"
+a
+I
+I
+I
+I
+I
+I
+I
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

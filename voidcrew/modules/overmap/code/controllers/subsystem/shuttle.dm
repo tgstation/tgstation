@@ -25,6 +25,7 @@
 
 	SEND_SIGNAL(loaded, COMSIG_VOIDCREW_SHIP_LOADED)
 
+	ship_to_spawn.calculate_mass()
 	// assign landmarks as needed
 	var/turf/safe_turf = get_safe_random_station_turf(loaded.shuttle_areas)
 	new /obj/effect/landmark/blobstart(safe_turf) // Stationloving component
@@ -35,21 +36,27 @@
 /client/add_admin_verbs()
 	. = ..()
 	add_verb(src, list(
-		PROC_REF(respawn_ship),
-		PROC_REF(spawn_specific_ship),
+		/client/proc/respawn_ship,
+		/client/proc/spawn_specific_ship,
+		/client/proc/initiate_jump,
+		/client/proc/cancel_jump,
+		/client/proc/team_panel,
 	))
 
 /client/remove_admin_verbs()
 	. = ..()
 	remove_verb(src, list(
-		PROC_REF(respawn_ship),
-		PROC_REF(spawn_specific_ship),
+		/client/proc/respawn_ship,
+		/client/proc/spawn_specific_ship,
+		/client/proc/initiate_jump,
+		/client/proc/cancel_jump,
+		/client/proc/team_panel,
 	))
 
 #define RESPAWN_FORCE "Force Respawn"
 /client/proc/respawn_ship()
 	set name = "Respawn Initial Ship"
-	set category = "Overmap"
+	set category = "Overmap.Spawn"
 	if(SSovermap.initial_ship)
 		var/resp = tgui_alert(usr, "Initial ship already exists. This can delete players and their progress", "Shits Fucked", list(RESPAWN_FORCE, "Cancel"))
 		if(resp != RESPAWN_FORCE)
@@ -60,7 +67,7 @@
 
 /client/proc/spawn_specific_ship()
 	set name = "Spawn Specific Ship"
-	set category = "Overmap"
+	set category = "Overmap.Spawn"
 	var/static/list/choices
 	if(!choices)
 		choices = list()
@@ -73,3 +80,48 @@
 
 	var/obj/structure/overmap/ship/spawned = SSshuttle.create_ship(choices[ship_to_spawn])
 	mob.client?.admin_follow(spawned.shuttle)
+
+/client/proc/initiate_jump()
+	set name = "Initiate Jump"
+	set category = "Overmap.Jump"
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/confirm = tgui_alert(src, "Are you sure you want to initiate a bluespace jump?", "Bluespace Jump", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+
+	if(SSovermap.jump_mode > BS_JUMP_IDLE)
+		return
+
+	SSovermap.request_jump()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Call Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] admin-initiated a bluespace jump.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-initiated a bluespace jump.</span>")
+
+/client/proc/cancel_jump()
+	set name = "Cancel Jump"
+	set category = "Overmap.Jump"
+	if(!check_rights(0))
+		return
+
+	var/confirm = tgui_alert(src, "Are you sure you want to cancel the bluespace jump?", "Bluespace Jump", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+
+	if(SSovermap.jump_mode != BS_JUMP_CALLED)
+		return
+
+	SSovermap.cancel_jump()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Cancel Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] admin-cancelled a bluespace jump.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-cancelled a bluespace jump.</span>")
+
+/client/proc/team_panel()
+	set name = "Team Panel"
+	set category = "Overmap.Team"
+	if(!check_rights(R_ADMIN))
+		return
+	src.holder.check_teams()
+
+

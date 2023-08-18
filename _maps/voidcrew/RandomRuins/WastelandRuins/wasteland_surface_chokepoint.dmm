@@ -1,0 +1,432 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "sec"
+	},
+/obj/item/gun/ballistic/automatic/pistol/commander,
+/obj/item/ammo_box/magazine/co9mm,
+/obj/item/ammo_box/magazine/co9mm,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/sign/poster/official/here_for_your_safety,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"f" = (
+/obj/item/banner/security/mundane,
+/turf/open/misc/dust/lit,
+/area/whitesands/surface/outdoors)
+"g" = (
+/obj/structure/bed,
+/obj/item/bedsheet/hos,
+/mob/living/simple_animal/hostile/nanotrasen/ranged{
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 999, "min_n2" = 0, "max_n2" = 0);
+	damage_coeff = list("brute" = 1, "fire" = 1, "toxin" = 1, "clone" = 1, "stamina" = 0, "oxygen" = 0);
+	name = "\improper NanoTrasen Stranded Security Officer"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"h" = (
+/mob/living/simple_animal/hostile/nanotrasen/ranged{
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 999, "min_n2" = 0, "max_n2" = 0);
+	damage_coeff = list("brute" = 1, "fire" = 1, "toxin" = 1, "clone" = 1, "stamina" = 0, "oxygen" = 0);
+	dir = 4;
+	name = "\improper NanoTrasen Stranded Security Officer"
+	},
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"j" = (
+/obj/item/banner/security,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"k" = (
+/obj/effect/mob_spawn/human/corpse/whitesands/survivor,
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/dust/lit,
+/area/whitesands/surface/outdoors)
+"m" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/sign/poster/official/ion_rifle,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"p" = (
+/obj/structure/sign/poster/official/safety_report,
+/turf/closed/wall,
+/area/ruin/unpowered)
+"r" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/helmet/knight/blue,
+/obj/item/clothing/suit/armor/riot/knight/blue,
+/obj/item/spear,
+/obj/item/shield/buckler,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"u" = (
+/turf/open/misc/dust/lit,
+/area/whitesands/surface/outdoors)
+"v" = (
+/mob/living/simple_animal/hostile/nanotrasen/ranged{
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 999, "min_n2" = 0, "max_n2" = 0);
+	damage_coeff = list("brute" = 1, "fire" = 1, "toxin" = 1, "clone" = 1, "stamina" = 0, "oxygen" = 0);
+	dir = 8;
+	name = "\improper NanoTrasen Stranded Security Officer"
+	},
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"x" = (
+/obj/structure/sign/poster/official/space_cops,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"y" = (
+/turf/closed/wall,
+/area/ruin/unpowered)
+"B" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"C" = (
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"E" = (
+/obj/item/banner/security/mundane,
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"H" = (
+/obj/structure/sign/poster/official/report_crimes,
+/turf/closed/wall,
+/area/ruin/unpowered)
+"I" = (
+/obj/structure/sign/poster/official/twelve_gauge,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"J" = (
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"K" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"L" = (
+/obj/structure/sign/poster/official/love_ian,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"M" = (
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"N" = (
+/obj/structure/sign/poster/official/work_for_a_future,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"P" = (
+/obj/structure/sign/poster/official/do_not_question,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"Q" = (
+/obj/structure/table/wood,
+/obj/item/holosign_creator/security,
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"S" = (
+/obj/effect/mob_spawn/human/corpse/whitesands/survivor,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor3"
+	},
+/turf/open/misc/dust/lit,
+/area/whitesands/surface/outdoors)
+"T" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/clothing/mask/gas/sechailer/swat{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"U" = (
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"W" = (
+/obj/structure/sign/poster/official/obey,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"X" = (
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"Y" = (
+/obj/structure/sign/poster/official/nanotrasen_logo,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+u
+u
+S
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+u
+u
+u
+U
+U
+U
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+f
+U
+k
+U
+U
+E
+K
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+K
+K
+U
+K
+K
+X
+n
+H
+y
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+K
+U
+U
+v
+U
+e
+r
+d
+I
+a
+a
+"}
+(7,1,1) = {"
+a
+U
+K
+Q
+U
+U
+U
+y
+w
+B
+Y
+a
+a
+"}
+(8,1,1) = {"
+a
+U
+U
+v
+U
+U
+U
+M
+m
+R
+N
+X
+a
+"}
+(9,1,1) = {"
+a
+a
+K
+U
+U
+U
+U
+W
+F
+w
+T
+p
+a
+"}
+(10,1,1) = {"
+a
+a
+J
+U
+U
+U
+h
+x
+j
+C
+g
+P
+a
+"}
+(11,1,1) = {"
+a
+a
+K
+K
+U
+K
+K
+X
+X
+L
+y
+y
+a
+"}
+(12,1,1) = {"
+a
+a
+E
+u
+U
+U
+u
+f
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+u
+u
+u
+U
+U
+u
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

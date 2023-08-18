@@ -233,3 +233,22 @@
 	design_ids -= list(
 		"bluespace_pod"
 	)
+
+/datum/techweb_node/adv_surgery/New()
+	. = ..()
+	design_ids += list(
+		"surgery_adv_dissection",
+	)
+
+/datum/techweb_node/exp_surgery/New()
+	. = ..()
+	design_ids += list(
+		"surgery_exp_dissection",
+	)
+
+/datum/techweb_node/alien_surgery/New()
+	. = ..()
+	design_ids += list(
+		"surgery_ext_dissection",
+	)
+

@@ -1,0 +1,415 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/item/card/id/solgov,
+/obj/effect/mob_spawn/human/corpse/solgov/infantry,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"d" = (
+/obj/effect/turf_decal/industrial/warning{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/random/five,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"g" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/item/stack/sheet/metal,
+/obj/effect/mob_spawn/human/corpse/solgov/officer,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"l" = (
+/obj/item/kitchen/knife/letter_opener,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"p" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/industrial/warning{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"r" = (
+/obj/item/clothing/suit/armor/vest/solgov,
+/obj/effect/mob_spawn/human/corpse,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/frame/computer,
+/obj/item/circuitboard/computer/shuttle/helm,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"v" = (
+/obj/machinery/door/airlock/solgov/glass,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"w" = (
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"D" = (
+/obj/structure/table/reinforced,
+/obj/item/desk_flag/solgov,
+/obj/item/pen/fountain/solgov,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"E" = (
+/obj/item/stack/rods,
+/obj/effect/turf_decal/industrial/warning{
+	dir = 5
+	},
+/obj/item/clothing/head/helmet/solgov,
+/obj/item/gun/energy/laser/terra,
+/obj/item/clothing/under/solgov/elite,
+/obj/effect/gibspawner/human,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"G" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"H" = (
+/obj/item/stack/rods,
+/obj/effect/turf_decal/industrial/warning,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"K" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"N" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"O" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"P" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/industrial/warning{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"Q" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"S" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/industrial/warning{
+	dir = 8
+	},
+/obj/item/clothing/under/solgov,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"T" = (
+/obj/item/stack/sheet/metal,
+/obj/item/stack/cable_coil/random/five,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"U" = (
+/obj/machinery/power/shuttle/engine/electric{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"X" = (
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Y" = (
+/obj/item/stack/sheet/metal,
+/obj/effect/mob_spawn/human/corpse/solgov/infantry,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Z" = (
+/obj/machinery/power/smes/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+K
+K
+K
+Q
+a
+a
+a
+Q
+Q
+Q
+Q
+Q
+a
+a
+Q
+Q
+a
+a
+Q
+Q
+Q
+"}
+(3,1,1) = {"
+a
+X
+T
+l
+K
+Y
+S
+p
+Z
+f
+G
+G
+G
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+"}
+(4,1,1) = {"
+a
+X
+t
+g
+v
+d
+w
+H
+r
+K
+G
+G
+G
+G
+G
+G
+G
+G
+Q
+Q
+Q
+Q
+Q
+G
+G
+G
+G
+G
+"}
+(5,1,1) = {"
+a
+a
+D
+N
+K
+E
+P
+c
+Z
+U
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+"}
+(6,1,1) = {"
+a
+K
+X
+K
+K
+O
+K
+K
+K
+K
+Q
+Q
+Q
+Q
+Q
+Q
+G
+G
+G
+G
+G
+G
+G
+G
+Q
+Q
+Q
+Q
+"}
+(7,1,1) = {"
+a
+a
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Q
+a
+a
+a
+a
+Q
+Q
+Q
+a
+a
+Q
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
