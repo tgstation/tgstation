@@ -90,7 +90,7 @@
 
 /datum/chemical_reaction/medicine/salglu_solution
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
-	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/water/salt = 2, /datum/reagent/consumable/sugar = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
 
 /datum/chemical_reaction/medicine/mine_salve

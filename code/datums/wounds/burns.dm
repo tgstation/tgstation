@@ -34,37 +34,15 @@
 
 /datum/wound/burn/handle_process(seconds_per_tick, times_fired)
 	. = ..()
-	if(freeze)
-		if(SPT_PROB(0.5 * (2 * freeze / FREEZE_MAXIMUM_VALUE), seconds_per_tick))
-			victim.visible_message(span_blue("Frozen bits of flesh from [victim]'s [limb.plaintext_zone] flake off from his injuries!"), \
-			span_blue("You feel a rare spike of pain from [src] as it reminds you of its frigid existence, and see some flesh falling off in frosted flakes. Ew!"), vision_distance = COMBAT_MESSAGE_RANGE)
-			victim.adjustBruteLoss(0.5 * (4 * freeze / FREEZE_MAXIMUM_VALUE) * seconds_per_tick)
-			victim.adjustBurnLoss(0.5 * (4 * freeze / FREEZE_MAXIMUM_VALUE) * seconds_per_tick)
-
-		// Infestation rate is increased by 1% per second while the wound is frozen. However, other effects are frozen, and the wound itself is less susceptible.
-		infestation_rate += min((initial(infestation_rate) * 0.01) * seconds_per_tick, initial(infestation_rate) * 2)
-		freeze -= max(1 * seconds_per_tick, 0)
-		// Don't think your flesh would appreciate the frost
-		flesh_healing -= max(1 * seconds_per_tick * (freeze / FREEZE_MAXIMUM_VALUE), 0)
-		return
-
 	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
 		victim.adjustToxLoss(0.25 * seconds_per_tick)
 		if(SPT_PROB(0.5, seconds_per_tick))
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 
-	if(victim.reagents)
 	for(var/datum/reagent/reagent in victim.reagents.reagent_list)
 		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
-		reagent.on_burn_wound_processing()
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
-			sanitization += 0.9
-		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine))
-			sanitization += 0.9
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
-			sanitization += 0.3
-			flesh_healing += 0.5
+			reagent.on_burn_wound_processing()
 
 	if(limb.current_gauze)
 		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * seconds_per_tick)
@@ -269,17 +247,6 @@
 		return
 	if(sanitization > 0)
 		infestation = max(infestation - (0.1 * WOUND_BURN_SANITIZATION_RATE * seconds_per_tick), 0)
-
-// Actual effects handled in processing
-/datum/wound/burn/on_freezing(seconds_per_tick, times_fired)
-	..()
-	switch(freeze)
-		if(0)
-			to_chat(victim, span_blue("It gets harder to feel [src] as the flesh nearby loses heat rapidly from the cold."))
-		if(40)
-			to_chat(victim, span_blue("[src] is almost completely numb, you can scarcely feel any sensation, let alone pain, from the site of injury..."))
-		if(80)
-			to_chat(victim, span_blue("You can't feel [src] at all! For a moment you think it's healed, but you take a look and just see a mess of frozen and charred flesh. That's not going to be easy to fix..."))
 
 /datum/wound/burn/on_synthflesh(reac_volume)
 	flesh_healing += reac_volume * 0.5 // 20u patch will heal 10 flesh standard

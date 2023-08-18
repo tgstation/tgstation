@@ -197,15 +197,8 @@
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
 	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
-	// Frozen wounds reduce the damage multiplier!
 	for(var/datum/wound/iter_wound as anything in wounds)
-		// We take the actual changed value, the 1.x, and then multiply *that* by how frozen the wound is. The more, the less extra damage is taken.
-		// If there's no actual changed value then we just leave it be.
-		var/remainder = iter_wound.damage_multiplier_penalty - 1
-		var/final_mult = iter_wound.damage_multiplier_penalty
-		if(remainder > 0)
-			final_mult = iter_wound.damage_multiplier_penalty - (remainder * (iter_wound.freeze / MAX_FREEZE))
-		dam_mul *= final_mult
+		dam_mul *= iter_wound.damage_multiplier_penalty
 
 	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
 		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("The [current_gauze.name] on your [parse_zone(body_zone)] falls away."))

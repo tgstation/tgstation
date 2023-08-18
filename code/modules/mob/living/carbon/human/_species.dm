@@ -1560,8 +1560,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
 		else
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
-			for(var/datum/wound/iter_wound as anything in humi.all_wounds)
-				iter_wound.handle_freezing(bodytemp)
 
 	// We are not to hot or cold, remove status and moods
 	// Optimization here, we check these things based off the old temperature to avoid unneeded work

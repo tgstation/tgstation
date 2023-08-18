@@ -81,8 +81,6 @@
 	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
 	var/cryo_progress
-	/// Freezing wounds will remove or reduce their effects, but make them harder to heal afterwards. Useful in a pinch, bad otherwise. This tracks if the wound is frozen and if so for how long.
-	var/freeze = 0 SECONDS
 
 	/// What kind of scars this wound will create description wise once healed
 	var/scar_keyword = "generic"
@@ -374,17 +372,6 @@
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
 /datum/wound/proc/on_stasis(seconds_per_tick, times_fired)
-	return
-
-/**
- * Being completely frozen up will affect your wounds! They'll start freezing up, reducing their effects but crippling recovery.
- * To be more exact, the 'freezing' value accumulates based on body temperature as long as it's below the last freezing stage.
- * This value will adjust the wound's effects gradually, acting as both a timer and potency, up to a certain value at which it's capped.
- * Splashing ice on oneself will also increase the freezing value.
- */
-/datum/wound/proc/on_freezing(seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
-	freeze = max(freeze + (1 * seconds_per_tick), FREEZE_MAXIMUM_VALUE)
 	return
 
 /// Sets our blood flow

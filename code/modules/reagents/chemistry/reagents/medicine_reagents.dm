@@ -261,7 +261,7 @@
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 
-/datum/reagent/medicine/spaceacillin/on_burn_wound_processing(/datum/wound/burn/burn_wound)
+/datum/reagent/medicine/spaceacillin/on_burn_wound_processing(datum/wound/burn/burn_wound)
 	burn_wound.sanitization += 0.9
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
@@ -375,7 +375,7 @@
 	. = ..()
 	metabolizer.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
-/datum/reagent/medicine/mine_salve/on_burn_wound_processing(/datum/wound/burn/burn_wound)
+/datum/reagent/medicine/mine_salve/on_burn_wound_processing(datum/wound/burn/burn_wound)
 	burn_wound.sanitization += 0.3
 	burn_wound.flesh_healing += 0.5
 

@@ -441,6 +441,45 @@
 
 	new/obj/effect/decal/cleanable/food/salt(exposed_turf)
 
+/datum/reagent/consumable/salt/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/i in carbies.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_salt(reac_volume, carbies)
+
+// Salt can help with wounds by soaking up fluid, but undiluted salt will also cause irritation from the loose crystals.
+// A saltwater mixture would be best, but we're making improvised chems here, not real ones.
+/datum/wound/proc/on_salt(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/on_salt(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.06 * reac_volume, initial_flow * 0.6) // 20u of a salt shacker * 0.1 = -1.6~ blood flow, but is always clamped to, at best, third blood loss from that wound.
+	// Crystal irritation worsening recovery.
+	gauzed_clot_rate *= 0.65
+	to_chat(carbies, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin but soaking up most of the blood."))
+
+/datum/wound/slash/on_salt(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.1 * reac_volume, initial_flow * 0.5) // 20u of a salt shacker * 0.1 = -2~ blood flow, but is always clamped to, at best, halve blood loss from that wound.
+	// Crystal irritation worsening recovery.
+	clot_rate *= 0.75
+	to_chat(carbies, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin but soaking up most of the blood."))
+
+/datum/wound/burn/on_salt(reac_volume)
+// Salt disinfects wounds...
+	sanitization += 0.5 // todo make this reac volumey
+// by killing off bacteria...
+	infestation *= 0.5
+// but some bacteria are resistant
+	infestation_rate *= 1.5
+// and aided by it instead.
+	flesh_healing *= 0.9
+	to_chat(victim, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin! After a few moments, it feels marginally better."))
+	return
+
+
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
@@ -618,25 +657,24 @@
 
 /datum/wound/pierce/on_flour(reac_volume, mob/living/carbon/carbies)
 	adjust_blood_flow(-0.015 * reac_volume) // 30u of a flour sack * 0.015 = -0.45~ blood flow, prettay good
-	to_chat(carbies, span_notice("The flour seeps into [src], painfully drying it up and absorbing some of the blood."))
+	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying it up and absorbing some of the blood."))
 	// When some nerd adds infection for wounds, make this increase the infection
 	return
 
 /datum/wound/slash/on_flour(reac_volume, mob/living/carbon/carbies)
 	adjust_blood_flow(-0.04 * reac_volume) // 30u of a flour sack * 0.04 = -1.25~ blood flow, pretty good!
-	to_chat(carbies, span_notice("The flour seeps into [src], painfully drying some it up and absorbing a little blood."))
+	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying some of it up and absorbing a little blood."))
 	// When some nerd adds infection for wounds, make this increase the infection
 	return
 
-/datum/wound/burn/on_flour(reac_volume)
-	to_chat(carbies, span_notice("The flour seeps into [src], spiking you with intense pain! That probably wasn't a good idea..."))
-	return
 
-/datum/reagent/consumable/flour/on_burn_wound_processing(/datum/wound/burn/burn_wound)
-	burn_wound.sanitization -= 0.3
-	if(prob(5))
-		burn_wound.victim.to_chat("Your flour-covered [burn_wound] stings heavily.[burn_wound.infestation ? " At least the oozing pus is sticking to it?" : ""]")
-		burn_wound.limb.receive_damage(burn = 0.5, wound_bonus = CANT_WOUND)
+// Don't pour flour onto burn wounds, it increases infection risk! Very unwise. Backed up by REAL info from REAL professionals.
+// https://www.reuters.com/article/uk-factcheck-flour-burn-idUSKCN26F2N3
+/datum/wound/burn/on_flour(reac_volume)
+	to_chat(victim, span_notice("The flour seeps into [lowertext(src)], spiking you with intense pain! That probably wasn't a good idea..."))
+	sanitization -= min(0, 1)
+	infestation += 0.2
+	return
 
 /datum/reagent/consumable/flour/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -720,25 +758,21 @@
 
 /datum/wound/pierce/on_starch(reac_volume, mob/living/carbon/carbies)
 	adjust_blood_flow(-0.03 * reac_volume)
-	to_chat(carbies, span_notice("The slimey starch seeps into [src], painfully drying it up and absorbing some of the blood."))
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], painfully drying some of it up and absorbing a little blood."))
 	// When some nerd adds infection for wounds, make this increase the infection
 	return
 
 /datum/wound/slash/on_starch(reac_volume, mob/living/carbon/carbies)
 	adjust_blood_flow(-0.06 * reac_volume)
-	to_chat(carbies, span_notice("The slimey starch seeps into [src], painfully drying some it up and absorbing a little blood."))
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], painfully drying it up and absorbing some of the blood."))
 	// When some nerd adds infection for wounds, make this increase the infection
 	return
 
 /datum/wound/burn/on_starch(reac_volume, mob/living/carbon/carbies)
-	to_chat(carbies, span_notice("The slimey starch seeps into [src], spiking you with intense pain! That probably wasn't a good idea..."))
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], spiking you with intense pain! That probably wasn't a good idea..."))
+	sanitization -= min(0, 0.5)
+	infestation += 0.1
 	return
-
-/datum/reagent/consumable/corn_starch/on_burn_wound_processing(/datum/wound/burn/burn_wound)
-	burn_wound.sanitization -= 0.1
-	if(prob(5))
-		burn_wound.victim.to_chat("Your starch-covered [burn_wound] stings heavily.[burn_wound.infestation ? " At least the oozing pus is sticking to it?" : ""]")
-		burn_wound.limb.receive_damage(burn = 0.5, wound_bonus = CANT_WOUND)
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"

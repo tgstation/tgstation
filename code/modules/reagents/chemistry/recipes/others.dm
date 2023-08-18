@@ -770,6 +770,11 @@
 	required_catalysts = list(/datum/reagent/water/holywater = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_PLANT | REACTION_TAG_OTHER
 
+/datum/chemical_reaction/saltwater
+	results = list(/datum/reagent/water/salt = 2)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/consumable/salt = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRINK | REACTION_TAG_ORGAN
+
 /datum/chemical_reaction/exotic_stabilizer
 	results = list(/datum/reagent/exotic_stabilizer = 2)
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)

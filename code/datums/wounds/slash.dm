@@ -207,16 +207,6 @@
 	. = ..()
 	adjust_blood_flow(-0.075 * reac_volume) // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
 
-/datum/wound/slash/on_freezing(seconds_per_tick, times_fired)
-	..()
-	switch(freeze)
-		if(0)
-			to_chat(victim, span_blue("It gets harder to feel [src] as the flesh nearby loses heat rapidly from the cold."))
-		if(40)
-			to_chat(victim, span_blue("[src] is almost completely numb, you can scarcely feel any sensation, let alone pain, from the site of injury..."))
-		if(80)
-			to_chat(victim, span_blue("You can't feel [src] at all! For a moment you think it's healed, but you take a look and just see a mess of frozen and charred flesh. That's not going to be easy to fix..."))
-
 /// If someone's putting a laser gun up to our cut to cauterize it
 /datum/wound/slash/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
