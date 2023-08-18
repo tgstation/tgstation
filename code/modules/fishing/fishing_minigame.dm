@@ -263,13 +263,14 @@
 			var/sound/sound
 			switch(params["sound"])
 				if("antigrav")
-					sound = sound('sound/effects/empulse.ogg')
+					sound = sound('sound/effects/arcade_jump.ogg', volume = 50)
 				if("antigrav_end")
-					sound = sound('sound/effects/empulse.ogg')
+					sound = sound('sound/effects/empulse.ogg', volume = 50)
 					sound.frequency = -1
 				if("flip")
-					sound = sound('sound/effects/space_wind.ogg')
-			SEND_SOUND(user, sound)
+					sound = sound('sound/effects/boing.ogg')
+			if(sound)
+				SEND_SOUND(user, sound)
 
 /// The visual that appears over the fishing spot
 /obj/effect/fishing_lure

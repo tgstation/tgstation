@@ -12,6 +12,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/diff_traits_inheritability = 50
 	/// fishes of types within this list are granted to have this trait, no matter the probability
 	var/list/guaranteed_inheritance_types
+	/// Depending on the value, fish with trait will be reported as more or less difficult in the catalog.
+	var/added_difficulty = 0
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -334,6 +336,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 45
 	guaranteed_inheritance_types = list(/obj/item/fish/clownfish/lube)
 	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's reccomended not to step on it."
+	added_difficulty = 5
 
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)
 	fish.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
@@ -366,7 +369,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Anti-Gravity"
 	inheritability = 75
 	diff_traits_inheritability = 25
-	catalog_description = "This fish will invert the gravity of the bait at random, and may fall upward outside after being fished."
+	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
+	added_difficulty = 15
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	return list(FISHING_MINIGAME_RULE_ANTIGRAV)
