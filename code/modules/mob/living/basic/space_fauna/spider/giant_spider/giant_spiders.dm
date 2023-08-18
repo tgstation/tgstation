@@ -49,7 +49,7 @@
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
-	var/datum/action/cooldown/sneak/spider/sneak_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web = new(src)
 	sneak_web.Grant(src)
 
 /**
@@ -78,7 +78,7 @@
 	. = ..()
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
-	var/datum/action/cooldown/web_effigy/shed = new(src)
+	var/datum/action/cooldown/mob_cooldown/web_effigy/shed = new(src)
 	shed.Grant(src)
 
 /**
@@ -135,7 +135,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	var/datum/action/command_spiders/communication_spiders/spiders_communication = new(src)
+	var/datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders/spiders_communication = new(src)
 	spiders_communication.Grant(src)
 
 /**
@@ -161,7 +161,7 @@
 	speed = 4
 	player_speed_modifier = -3.1
 	web_speed = 0.25
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
@@ -208,21 +208,21 @@
 	web_speed = 0.25
 	speed = 4
 	player_speed_modifier = -3.1
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in contruction to protect their brethren, but has very low amount of health and deals low damage."
 
 /mob/living/basic/spider/giant/tangle/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
 	web_solid.Grant(src)
 
-	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
 	passage_web.Grant(src)
 
-	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
@@ -270,17 +270,17 @@
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	web_speed = 0.7
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/tarantula/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
 	web_solid.Grant(src)
 
-	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
 	passage_web.Grant(src)
 
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
@@ -353,36 +353,36 @@
 	player_speed_modifier = -3.1
 	gold_core_spawnable = NO_SPAWN
 	web_speed = 0.5
-	web_type = /datum/action/cooldown/lay_web/sealer
+	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Royal spider variant specializing in reproduction and leadership, deals low damage."
 
 /mob/living/basic/spider/giant/midwife/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
 	web_solid.Grant(src)
 
-	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
 	passage_web.Grant(src)
 
-	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
-	var/datum/action/cooldown/wrap/wrapping = new(src)
+	var/datum/action/cooldown/mob_cooldown/wrap/wrapping = new(src)
 	wrapping.Grant(src)
 
-	var/datum/action/lay_eggs/make_eggs = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_eggs/make_eggs = new(src)
 	make_eggs.Grant(src)
 
-	var/datum/action/lay_eggs/enriched/make_better_eggs = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_eggs/enriched/make_better_eggs = new(src)
 	make_better_eggs.Grant(src)
 
-	var/datum/action/set_spider_directive/give_orders = new(src)
+	var/datum/action/cooldown/mob_cooldown/set_spider_directive/give_orders = new(src)
 	give_orders.Grant(src)
 
-	var/datum/action/command_spiders/not_hivemind_talk = new(src)
+	var/datum/action/cooldown/mob_cooldown/command_spiders/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
@@ -514,10 +514,10 @@
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
-	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
 /// Prevent you from healing other flesh spiders, or healing when on fire
@@ -552,10 +552,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
 	spikes_web.Grant(src)
 
-	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
 	web_sticky.Grant(src)
 
 
