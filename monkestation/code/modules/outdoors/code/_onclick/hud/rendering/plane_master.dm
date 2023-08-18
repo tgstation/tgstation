@@ -8,6 +8,9 @@
 	allows_offsetting = FALSE
 	critical = PLANE_CRITICAL_DISPLAY
 
+/atom/movable/screen/plane_master/weather_overlay/check_outside_bounds()
+	return FALSE
+
 //Contains the weather effect itself
 /atom/movable/screen/plane_master/weather_effect
 	name = "weather effect plane master"
@@ -26,6 +29,9 @@
 /atom/movable/screen/plane_master/weather_effect/Destroy()
 	. = ..()
 	SSoutdoor_effects.weather_planes_need_vis -= src
+
+/atom/movable/screen/plane_master/weather_effect/check_outside_bounds()
+	return FALSE
 
 //Contains all sunlight overlays
 /atom/movable/screen/plane_master/sunlight

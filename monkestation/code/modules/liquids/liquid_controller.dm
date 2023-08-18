@@ -131,7 +131,6 @@ SUBSYSTEM_DEF(liquids)
 		if(ocean_counter >= REQUIRED_OCEAN_PROCESSES)
 			for(var/turf/open/floor/plating/ocean/active_ocean in currentrun_active_ocean_turfs)
 				if(MC_TICK_CHECK)
-					run_type = SSLIQUIDS_RUN_TYPE_TURFS /// we have far more important things that to be hung on this, i'd rather liquids spread over worrying about ocean turfs
 					return
 				active_ocean.process_turf()
 			ocean_counter = 0

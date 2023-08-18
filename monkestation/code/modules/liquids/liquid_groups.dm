@@ -219,6 +219,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(!(member in members))
 		return
+	if(!turf_reagents)
+		return
 	turf_reagents.expose(member, TOUCH, liquid = TRUE)
 
 /datum/liquid_group/proc/build_turf_reagent()
@@ -717,11 +719,15 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 ///EXPOSURE AND SPREADING
 /datum/liquid_group/proc/expose_members_turf(obj/effect/abstract/liquid_turf/member)
+	if(!turf_reagents)
+		return
 	var/turf/members_turf = member.my_turf
 	for(var/atom/movable/target_atom in members_turf)
 		turf_reagents.expose(target_atom, TOUCH, liquid = TRUE)
 
 /datum/liquid_group/proc/expose_atom(atom/target, modifier = 0, method)
+	if(!turf_reagents)
+		return
 	turf_reagents.expose(target, method, liquid = TRUE)
 
 /datum/liquid_group/proc/spread_liquid(turf/new_turf, turf/source_turf)
