@@ -43,7 +43,7 @@
 	/// Slight cooldown to prevent double-dipping if we use both abilities at once
 	COOLDOWN_DECLARE(ability_animation_cooldown)
 	/// Our base tentacles ability
-	var/datum/action/cooldown/goliath_tentacles/tentacles
+	var/datum/action/cooldown/mob_cooldown/goliath_tentacles/tentacles
 	/// Things we want to eat off the floor (or a plate, we're not picky)
 	var/static/list/goliath_foods = list(/obj/item/food/grown/ash_flora, /obj/item/food/bait/worm)
 
@@ -66,10 +66,10 @@
 
 	tentacles = new (src)
 	tentacles.Grant(src)
-	var/datum/action/cooldown/tentacle_burst/melee_tentacles = new (src)
+	var/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles = new (src)
 	melee_tentacles.Grant(src)
 	AddComponent(/datum/component/revenge_ability, melee_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], max_range = 1, target_self = TRUE)
-	var/datum/action/cooldown/tentacle_grasp/ranged_tentacles = new (src)
+	var/datum/action/cooldown/mob_cooldown/tentacle_grasp/ranged_tentacles = new (src)
 	ranged_tentacles.Grant(src)
 	AddComponent(/datum/component/revenge_ability, ranged_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], min_range = 2, max_range = 9)
 
@@ -139,7 +139,7 @@
 	SIGNAL_HANDLER
 	if (stat == DEAD || ability.IsAvailable())
 		return // We died or the action failed for some reason like being out of range
-	if (istype(ability, /datum/action/cooldown/goliath_tentacles))
+	if (istype(ability, /datum/action/cooldown/mob_cooldown/goliath_tentacles))
 		if (ability.cooldown_time <= 2 SECONDS)
 			return
 		icon_state = icon_living
