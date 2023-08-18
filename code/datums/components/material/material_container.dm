@@ -576,32 +576,35 @@
  * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_SHEETS_RETRIVED and is used mostly for silo logging
  */
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null, atom/context = parent)
+	//do we support sheets of this material
 	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(!can_hold_material(material))
 		return 0
+
+	//requested amount greater than available amount or just an invalid value
+	sheet_amt = min(round(materials[material] / SHEET_MATERIAL_AMOUNT), sheet_amt)
 	if(sheet_amt <= 0)
 		return 0
-
+	//auto drop location
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
-	if(materials[material] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
-		sheet_amt = round(materials[material] / SHEET_MATERIAL_AMOUNT)
-	var/count = 0
-	while(sheet_amt > MAX_STACK_SIZE)
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, MAX_STACK_SIZE, null, list((material) = SHEET_MATERIAL_AMOUNT))
-		count += MAX_STACK_SIZE
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
-		sheet_amt -= MAX_STACK_SIZE
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets, context)
-	if(sheet_amt >= 1)
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, sheet_amt, null, list((material) = SHEET_MATERIAL_AMOUNT))
-		count += sheet_amt
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets, context)
-	return count
 
+	//eject sheets based on available amount after each iteration
+	var/count = 0
+	while(sheet_amt > 0)
+		//create sheets in null space so it doesn't merge & delete itself
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(null, min(sheet_amt, MAX_STACK_SIZE), null, list((material) = SHEET_MATERIAL_AMOUNT))
+		count += new_sheets.amount
+		//use material & deduct work needed
+		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
+		sheet_amt -= new_sheets.amount
+		//send signal
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets, context)
+		//now move to target so it gets merged
+		new_sheets.forceMove(target)
+	return count
 
 /**
  * Proc to get all the materials and dump them as sheets
@@ -613,8 +616,7 @@
 /datum/component/material_container/proc/retrieve_all(target = null, atom/context = parent)
 	var/result = 0
 	for(var/MAT in materials)
-		var/amount = materials[MAT]
-		result += retrieve_sheets(amount2sheet(amount), MAT, target, context)
+		result += retrieve_sheets(amount2sheet(materials[MAT]), MAT, target, context)
 	return result
 //============================================================================================
 
