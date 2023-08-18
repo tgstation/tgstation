@@ -88,6 +88,7 @@ class FishingMinigame extends Component<
   effect_duration: number = 0;
   can_antigrav: boolean = false;
   can_flip: boolean = false;
+  used_background: string = "fishing_background_default";
 
   baseLongJumpChancePerSecond: number = 0.0075;
   baseShortJumpChancePerSecond: number = 0.255;
@@ -120,6 +121,7 @@ class FishingMinigame extends Component<
     else {
       this.effect_duration = randomNumber(5, 9) * 1000;
     }
+	this.used_background = props.background;
 
     switch (props.fish_ai) {
       case 'dumb':
@@ -225,13 +227,16 @@ class FishingMinigame extends Component<
     switch (new_effect) {
       case ActiveEffect.AntiGrav:
         this.effect_duration = randomNumber(6, 9) * 1000 * difficulty_mult;
+		this.used_background = 'fishing_background_antigrav';
         sound = 'antigrav';
         break;
       case ActiveEffect.Flip:
         this.effect_duration = randomNumber(5, 6) * 1000 * difficulty_mult;
         sound = 'flip';
+		this.used_background = 'fishing_background_flipped';
         break;
       case ActiveEffect.onCooldown:
+	    this.used_background = this.props.background;
         switch (this.effect) {
           case ActiveEffect.AntiGrav:
             this.effect_duration = randomNumber(10, 13) * 1000;
@@ -519,7 +524,7 @@ class FishingMinigame extends Component<
   render() {
     const { completion, fish, bait } = this.state;
     const posToStyle = (value: number) => (value / this.area_height) * 100;
-    const background_image = resolveAsset(this.props.background);
+    const background_image = resolveAsset(this.used_background);
 	const bait_position = this.effect === ActiveEffect.Flip ?
 	  Math.abs(bait.position - (area_height - bait.height) :
 	  bait.position;

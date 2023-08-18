@@ -17,5 +17,7 @@
 /datum/asset/simple/fishing_minigame
 	assets = list(
 		"fishing_background_default" = 'icons/ui_icons/fishing/default.png',
-		"fishing_background_lavaland" = 'icons/ui_icons/fishing/lavaland.png'
+		"fishing_background_lavaland" = 'icons/ui_icons/fishing/lavaland.png',
+		"fishing_background_antigrav" = 'icons/ui_icons/fishing/antigravity.png',
+		"fishing_background_flipped" = 'icons/ui_icons/fishing/flipped.png'
 	)
