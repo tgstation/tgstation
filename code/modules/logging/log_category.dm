@@ -21,6 +21,7 @@
 	var/secret = FALSE
 
 	/// Whether the readable version of the log message is formatted internally instead of by rustg
+	/// IF YOU CHANGE THIS VERIFY LOGS ARE STILL PARSED CORRECTLY
 	var/internal_formatting = FALSE
 
 	/// List of log entries for this category

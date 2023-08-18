@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
  * Returns a bitfield containing flags both present in `flags` arg and the `processing_move_loop_flags` move_packet variable.
  * Has no use outside of procs called within the movement proc chain.
  */
-#define CHECK_MOVE_LOOP_FLAGS(movable, flags) (movable.move_packet ? (movable.move_packet.processing_move_loop_flags & flags) : NONE)
+#define CHECK_MOVE_LOOP_FLAGS(movable, flags) (movable.move_packet ? (movable.move_packet.processing_move_loop_flags & (flags)) : NONE)
 
 //Index defines for movement bucket data packets
 #define MOVEMENT_BUCKET_TIME 1

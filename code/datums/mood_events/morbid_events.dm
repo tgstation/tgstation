@@ -17,6 +17,11 @@ Intended to push a creepy, mad scientist/doctor vibe, or someone who is downrigh
 	mood_change = 2
 	timeout = 2 MINUTES
 
+/datum/mood_event/morbid_abominable_surgery_success
+	description = "Picasso himself would struggle to match with a brush what I can do with a knife."
+	mood_change = 2
+	timeout = 2 MINUTES
+
 /datum/mood_event/morbid_revival_success
 	description = "IT LIVES! AH HA HA HA HA!!"
 	mood_change = 6
@@ -26,6 +31,11 @@ Intended to push a creepy, mad scientist/doctor vibe, or someone who is downrigh
 	description = "The dead have no need for possessions. I, on the other hand, am very much alive and very much in need."
 	mood_change = 2
 	timeout = 2 MINUTES
+
+/datum/mood_event/morbid_hauntium
+	description = "I feel a better connection with the spirits, I love this!"
+	mood_change = 3
+	timeout = 6 MINUTES
 
 // Negative Events - We helped someone stay alive.
 

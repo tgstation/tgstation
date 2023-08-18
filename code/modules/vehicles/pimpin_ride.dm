@@ -126,7 +126,7 @@
 /obj/item/janicart_upgrade
 	name = "base upgrade"
 	desc = "An abstract upgrade for mobile janicarts."
-	icon = 'icons/obj/janicart_upgrade.dmi'
+	icon = 'icons/obj/service/janicart_upgrade.dmi'
 	icon_state = "janicart_upgrade"
 	greyscale_config = /datum/greyscale_config/janicart_upgrade
 	/// The greyscale config for the on-cart installed upgrade overlay

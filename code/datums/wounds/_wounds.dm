@@ -100,6 +100,11 @@
 	victim = null
 	return ..()
 
+// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
+#define TRAIT_WOUND_SCANNED "wound_scanned"
+// I dunno lol
+#define ANALYZER_TRAIT "analyzer_trait"
+
 /**
  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
  *
@@ -415,8 +420,16 @@
  * * mob/user: The user examining the wound's owner, if that matters
  */
 /datum/wound/proc/get_examine_description(mob/user)
-	. = "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
+	. = get_wound_description(user)
+	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		. += span_notice("\nThere is a holo-image next to the wound that seems to contain indications for treatment.")
+
+	return .
+
+/datum/wound/proc/get_wound_description(mob/user)
+	. = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
+	return .
 
 /datum/wound/proc/get_scanner_description(mob/user)
 	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"

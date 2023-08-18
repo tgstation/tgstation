@@ -7,7 +7,7 @@
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
-	armor_type = /datum/armor/under_plasmaman
+	armor_type = /datum/armor/clothing_under/plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
@@ -15,11 +15,10 @@
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
-/datum/armor/under_plasmaman
+/datum/armor/clothing_under/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95
-	wound = 5
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
@@ -115,6 +114,10 @@
 	desc = "<i>'HONK!'</i>"
 	icon_state = "clown_envirosuit"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/plasmaman/clown/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"

@@ -12,7 +12,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
 		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded)
 			return TRUE //make sure we have a valid vent to spawn from.
@@ -75,7 +75,7 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/mob/living/basic/giant_spider/maintenance,
+		/mob/living/basic/spider/maintenance,
 		/mob/living/basic/mouse,
 	)
 	return pick(mob_list)
@@ -83,15 +83,15 @@
 /**
  * Finds a valid vent to spawn mobs from.
  *
- * Randomly selects a vent that is on-station and unwelded. If no vents are found, the event
+ * Randomly selects a vent that is on-station, unwelded, and hosted by a passable turf. If no vents are found, the event
  * is immediately killed.
  */
 
 /datum/round_event/vent_clog/proc/get_vent()
 	var/list/vent_list = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
-		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded)
+		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && !vent_turf.is_blocked_turf_ignore_climbable())
 			vent_list += vent
 
 	if(!length(vent_list))
@@ -139,20 +139,27 @@
  */
 
 /datum/round_event/vent_clog/proc/produce_mob()
-	if(vent.welded)
+	var/turf/vent_loc = get_turf(vent)
+	if (isnull(vent_loc))
+		CRASH("[vent] has no loc, aborting mobspawn")
+
+	if(vent.welded || vent_loc.is_blocked_turf_ignore_climbable()) // vents under tables can still spawn stuff
 		return
 
-	var/list/potential_locations = list()
+	var/mob/new_mob = new spawned_mob(vent_loc) // we spawn it early so we can actually use is_blocked_turf
+	living_mobs += WEAKREF(new_mob)
+	vent.visible_message(span_warning("[new_mob] crawls out of [vent]!"))
 
-	for(var/turf/nearby_turf in view(1, get_turf(vent)))
-		if(!nearby_turf.density)
+	var/list/potential_locations = list(vent_loc) // already confirmed to be accessable via the 2nd if check of the proc
+
+	// exists to prevent mobs from trying to move onto turfs they physically cannot
+	for(var/turf/nearby_turf in oview(1, get_turf(vent))) // oview, since we always add our loc to the list
+		if(!nearby_turf.is_blocked_turf(source_atom = new_mob))
 			potential_locations += nearby_turf
 
 	var/turf/spawn_location = pick(potential_locations)
+	new_mob.Move(spawn_location)
 
-	var/mob/new_mob = new spawned_mob(spawn_location)
-	living_mobs += WEAKREF(new_mob)
-	vent.visible_message(span_warning("[new_mob] crawls out of [vent]!"))
 	var/filth_to_spawn = pick(filth_spawn_types)
 	new filth_to_spawn(spawn_location)
 	playsound(spawn_location, 'sound/effects/splat.ogg', 30, TRUE)
@@ -213,10 +220,10 @@
 
 /datum/round_event/vent_clog/major/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/basic/mouse/rat,
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/bee,
 		/mob/living/basic/cockroach/hauberoach,
+		/mob/living/basic/spider/giant,
+		/mob/living/basic/mouse/rat,
 	)
 	return pick(mob_list)
 
@@ -248,8 +255,8 @@
 
 /datum/round_event/vent_clog/critical/get_mob()
 	var/static/list/mob_list = list(
+		/mob/living/basic/bee/toxin,
 		/mob/living/basic/carp,
-		/mob/living/simple_animal/hostile/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
 	)
 	return pick(mob_list)
@@ -280,12 +287,12 @@
 
 /datum/round_event/vent_clog/strange/get_mob()
 	var/static/list/mob_list = list(
+		/mob/living/basic/bear,
+		/mob/living/basic/cockroach/glockroach/mobroach,
 		/mob/living/basic/lightgeist,
 		/mob/living/basic/mothroach,
-		/mob/living/basic/cockroach/glockroach/mobroach,
+		/mob/living/basic/mushroom,
 		/mob/living/basic/viscerator,
-		/mob/living/simple_animal/hostile/bear,
-		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,
 	)

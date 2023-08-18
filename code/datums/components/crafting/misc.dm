@@ -34,3 +34,13 @@
 	)
 	tool_paths = list(/obj/item/stamp/head/captain)
 	category = CAT_MISC
+
+/datum/crafting_recipe/cardboard_id
+	name = "Cardboard ID Card"
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	result = /obj/item/card/cardboard
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/cardboard = 1,
+	)
+	category = CAT_MISC

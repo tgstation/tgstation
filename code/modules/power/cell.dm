@@ -10,7 +10,7 @@
 /obj/item/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargeable electrochemical power cell."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -116,10 +116,10 @@
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
 	if(grown_battery)
-		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
+		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
-	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+	. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
 
 /obj/item/stock_parts/cell/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, charge))
@@ -390,7 +390,7 @@
 /obj/item/stock_parts/cell/infinite/abductor
 	name = "void core"
 	desc = "An alien power cell that produces energy seemingly out of nowhere."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "cell"
 	maxcharge = 50000
 	ratingdesc = FALSE
@@ -402,7 +402,7 @@
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"
 	desc = "A rechargeable starch based power cell."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	charge = 100
 	maxcharge = 300
@@ -461,9 +461,10 @@
 
 /obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()
-	var/area/A = get_area(src)
-	if(!A.lightswitch || !A.light_power)
-		charge = 0 //For naturally depowered areas, we start with no power
+	var/area/area = get_area(src)
+	if(area)
+		if(!area.lightswitch || !area.light_power)
+			charge = 0 //For naturally depowered areas, we start with no power
 
 /obj/item/stock_parts/cell/crystal_cell
 	name = "crystal power cell"

@@ -232,6 +232,8 @@
 			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
 		if(RCD_FLOODLIGHT)
 			return list("mode" = RCD_FLOODLIGHT, "delay" = 30, "cost" = 35)
+		if(RCD_GIRDER)
+			return list("mode" = RCD_GIRDER, "delay" = 1.3 SECONDS, "cost" = 8)
 		if(RCD_FURNISHING)
 			var/cost = 0
 			var/delay = 0
@@ -364,6 +366,11 @@
 			new_floodlight.desc = "A bare metal frame that looks like a floodlight. Requires a light tube to complete."
 			new_floodlight.icon_state = "floodlight_c3"
 			new_floodlight.state = FLOODLIGHT_NEEDS_LIGHTS
+			return TRUE
+		if(RCD_GIRDER)
+			if(locate(/obj/structure/girder) in src)
+				return FALSE
+			new /obj/structure/girder(src)
 			return TRUE
 		if(RCD_FURNISHING)
 			if(locate(the_rcd.furnish_type) in src)

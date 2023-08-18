@@ -27,11 +27,16 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
-		list("Quadruple Amputee", "Paraplegic"),
+		list("Prosthetic Organ", "Tin Man", "Body Purist"),
+		list("Quadruple Amputee", "Paraplegic", "Hemiplegic"),
 		list("Quadruple Amputee", "Frail"),
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
+		list("Bilingual", "Foreigner"),
+		list("Spacer", "Paraplegic", "Settler"),
+		list("Photophobia", "Nyctophobia"),
+		list("Settler", "Freerunning"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()

@@ -60,6 +60,8 @@
 		return TRUE
 
 /datum/http_request/proc/into_response()
+	RETURN_TYPE(/datum/http_response)
+
 	var/datum/http_response/R = new()
 
 	try

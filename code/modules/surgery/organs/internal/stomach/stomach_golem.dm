@@ -3,7 +3,7 @@
 	icon_state = "stomach-p"
 	desc = "A rocklike organ which grinds and processes nutrition from minerals."
 	color = COLOR_GOLEM_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ROCK_EATER)
 	hunger_modifier = 10 // golems burn fuel quickly
 	/// How slow are you when the "hungry" icon appears?
@@ -74,7 +74,7 @@
 	return TRUE
 
 /datum/status_effect/golem_statued/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] are as still as a statue!")
+	return span_warning("[owner.p_They()] are as still as a statue!")
 
 /datum/status_effect/golem_statued/on_remove()
 	owner.visible_message(span_notice("[owner] slowly stirs back into motion!"), span_notice("You have gathered enough strength to move your body once more."))

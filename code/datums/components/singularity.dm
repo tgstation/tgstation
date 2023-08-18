@@ -386,9 +386,8 @@
 		return
 	var/mob/living/carbon/carbon_target = target
 	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
-	var/has_no_blood = HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)
 	if(head)
-		if(has_no_blood)
+		if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD))
 			to_chat(carbon_target, span_notice("You get a headache."))
 			return
 		head.adjustBleedStacks(5)

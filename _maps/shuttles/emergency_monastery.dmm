@@ -2443,7 +2443,7 @@
 /area/shuttle/escape)
 "Ju" = (
 /obj/structure/rack{
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/fluff/general.dmi';
 	icon_state = "minibar";
 	name = "skeletal minibar"
 	},
@@ -2802,7 +2802,8 @@
 "NV" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/requests_console/directional/west{
-	department = "Chapel"
+	department = "Chapel";
+	name = "Monastery Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/structure/closet,

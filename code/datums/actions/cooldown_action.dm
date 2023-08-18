@@ -66,10 +66,10 @@
 /datum/action/cooldown/create_button()
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
-	button.maptext_x = 6
+	button.maptext_x = 4
 	button.maptext_y = 2
-	button.maptext_width = 24
-	button.maptext_height = 12
+	button.maptext_width = 32
+	button.maptext_height = 16
 	return button
 
 /datum/action/cooldown/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
@@ -79,9 +79,9 @@
 		button.maptext = ""
 	else
 		if (cooldown_rounding > 0)
-			button.maptext = MAPTEXT("<b>[round(time_left/10, cooldown_rounding)]</b>")
+			button.maptext = MAPTEXT_TINY_UNICODE("[round(time_left/10, cooldown_rounding)]")
 		else
-			button.maptext = MAPTEXT("<b>[round(time_left/10)]</b>")
+			button.maptext = MAPTEXT_TINY_UNICODE("[round(time_left/10)]")
 
 	if(!IsAvailable() || !is_action_active(button))
 		return
@@ -238,7 +238,7 @@
 
 /// For signal calling
 /datum/action/cooldown/proc/PreActivate(atom/target)
-	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src, target) & COMPONENT_BLOCK_ABILITY_START)
 		return
 	// Note, that PreActivate handles no cooldowns at all by default.
 	// Be sure to call StartCooldown() in Activate() where necessary.

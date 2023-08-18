@@ -4,9 +4,6 @@
 	desc = "Tastes just like the chef's soup."
 	icon_state = "growing_vat"
 	buffer = 300
-	///category for plumbing RCD
-	category = "Synthesizers"
-
 
 	///List of all microbiological samples in this soup.
 	var/datum/biological_sample/biological_sample
@@ -124,13 +121,14 @@
 	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
 	update_appearance()
 
-/obj/machinery/plumbing/growing_vat/emag_act(mob/user)
+/obj/machinery/plumbing/growing_vat/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	to_chat(user, span_warning("You overload [src]'s resampling circuit."))
+	balloon_alert(user, "resampling circuit overloaded")
 	flick("growing_vat_emagged", src)
+	return TRUE
 
 /obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
 	SIGNAL_HANDLER

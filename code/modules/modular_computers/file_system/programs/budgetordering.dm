@@ -118,9 +118,11 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
+	var/list/amount_by_name = list()
 	var/cart_list = list()
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(cart_list[order.pack.name])
+			amount_by_name[order.pack.name] += 1
 			cart_list[order.pack.name][1]["amount"]++
 			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
 			if(order.department_destination)
@@ -145,15 +147,23 @@
 		data["cart"] += cart_list[item_id]
 
 	data["requests"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.request_list)
+	for(var/datum/supply_order/order in SSshuttle.request_list)
+		var/datum/supply_pack/pack = order.pack
+		amount_by_name[pack.name] += 1
 		data["requests"] += list(list(
-			"object" = SO.pack.name,
-			"cost" = SO.pack.get_cost(),
-			"orderer" = SO.orderer,
-			"reason" = SO.reason,
-			"id" = SO.id
+			"object" = pack.name,
+			"cost" = pack.get_cost(),
+			"orderer" = order.orderer,
+			"reason" = order.reason,
+			"id" = order.id
 		))
+	data["amount_by_name"] = amount_by_name
 
+	return data
+
+/datum/computer_file/program/budgetorders/ui_static_data(mob/user)
+	var/list/data = list()
+	data["max_order"] = CARGO_MAX_ORDER
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
@@ -233,15 +243,20 @@
 					return
 
 			if(pack.goody && !self_paid)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
+				return
+
+			if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
+				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				computer.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 				return
 
 			if(!requestonly && !self_paid && ishuman(usr) && !account)
 				var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
-			var/turf/T = get_turf(src)
+			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
 			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))

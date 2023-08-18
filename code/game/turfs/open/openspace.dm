@@ -23,7 +23,9 @@
 // I am so sorry
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(on_atom_created))
+	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
+		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_created))
 	var/area/our_area = loc
 	if(istype(our_area, /area/space))
 		force_no_gravity = TRUE
@@ -34,7 +36,7 @@
 	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
-	UnregisterSignal(src, COMSIG_ATOM_INITIALIZED_ON)
+	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	return ..()
 
 /**
@@ -54,15 +56,13 @@
 	if(movable.set_currently_z_moving(CURRENTLY_Z_FALLING))
 		zFall(movable, falling_from_move = TRUE)
 /**
- * Drops movables spawned on this turf only after they are successfully initialized.
- * so flying mobs, qdeleted movables and things that were moved somewhere else during
- * Initialize() won't fall by accident.
+ * Drops movables spawned on this turf after they are successfully initialized.
+ * so that spawned movables that should fall to gravity, will fall.
  */
 /turf/open/openspace/proc/on_atom_created(datum/source, atom/created_atom)
 	SIGNAL_HANDLER
 	if(ismovable(created_atom))
-		//Drop it only when it's finished initializing, not before.
-		addtimer(CALLBACK(src, PROC_REF(zfall_if_on_turf), created_atom), 0 SECONDS)
+		zfall_if_on_turf(created_atom)
 
 /turf/open/openspace/proc/zfall_if_on_turf(atom/movable/movable)
 	if(QDELETED(movable) || movable.loc != src)

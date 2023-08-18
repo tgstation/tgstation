@@ -27,12 +27,15 @@
 		return
 	..()
 
-/obj/machinery/computer/apc_control/emag_act(mob/user)
+/obj/machinery/computer/apc_control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	usr.log_message("emagged [src].", LOG_ATTACK, color="red")
+	if (user)
+		user.log_message("emagged [src].", LOG_ATTACK, color="red")
+		balloon_alert(user, "access controller shorted")
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)
@@ -91,22 +94,21 @@
 	for(var/entry in logs)
 		data["logs"] += list(list("entry" = entry))
 
-	for(var/apc in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(check_apc(apc))
-			var/obj/machinery/power/apc/A = apc
-			var/has_cell = (A.cell) ? TRUE : FALSE
+			var/has_cell = (apc.cell) ? TRUE : FALSE
 			data["apcs"] += list(list(
-					"name" = A.area.name,
-					"operating" = A.operating,
-					"charge" = (has_cell) ? A.cell.percent() : "NOCELL",
-					"load" = display_power(A.lastused_total),
-					"charging" = A.charging,
-					"chargeMode" = A.chargemode,
-					"eqp" = A.equipment,
-					"lgt" = A.lighting,
-					"env" = A.environ,
-					"responds" = A.aidisabled || A.panel_open,
-					"ref" = REF(A)
+					"name" = apc.area.name,
+					"operating" = apc.operating,
+					"charge" = (has_cell) ? apc.cell.percent() : "NOCELL",
+					"load" = display_power(apc.lastused_total),
+					"charging" = apc.charging,
+					"chargeMode" = apc.chargemode,
+					"eqp" = apc.equipment,
+					"lgt" = apc.lighting,
+					"env" = apc.environ,
+					"responds" = apc.aidisabled || apc.panel_open,
+					"ref" = REF(apc)
 				)
 			)
 	return data
@@ -155,7 +157,7 @@
 		if("access-apc")
 			var/ref = params["ref"]
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
-			var/obj/machinery/power/apc/APC = locate(ref) in GLOB.apcs_list
+			var/obj/machinery/power/apc/APC = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			connect_apc(APC, usr)
 		if("check-logs")
 			log_activity("Checked Logs")
@@ -165,7 +167,7 @@
 			var/ref = params["ref"]
 			var/type = params["type"]
 			var/value = params["value"]
-			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
+			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			if(!target)
 				return
 
@@ -194,7 +196,7 @@
 			usr.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
 		if("breaker")
 			var/ref = params["ref"]
-			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
+			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			target.toggle_breaker(usr)
 			var/setTo = target.operating ? "On" : "Off"
 			log_activity("Turned APC [target.area.name]'s breaker [setTo]")

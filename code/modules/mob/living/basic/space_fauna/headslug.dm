@@ -52,7 +52,7 @@
 		return
 
 	var/mob/living/carbon/victim = target
-	if(victim.stat == DEAD)
+	if(victim.stat != DEAD)
 		return
 	if(HAS_TRAIT(victim, TRAIT_XENO_HOST))
 		target.balloon_alert(src, "already pregnant!") // Maybe the worst balloon alert in the codebase

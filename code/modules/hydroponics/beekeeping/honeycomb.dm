@@ -1,7 +1,7 @@
 /obj/item/food/honeycomb
 	name = "honeycomb"
 	desc = "A hexagonal mesh of honeycomb."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "honeycomb"
 	max_volume = 10
 	food_reagents = list(/datum/reagent/consumable/honey = 5)

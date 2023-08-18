@@ -64,7 +64,6 @@
 
 /datum/armor/clothing_under/centcom_military
 	melee = 10
-	bio = 10
 	fire = 50
 	acid = 40
 	wound = 10

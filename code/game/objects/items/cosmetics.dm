@@ -153,11 +153,9 @@
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/skinhead, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
-		skinhead.facial_hairstyle = "Shaved"
+		skinhead.set_facial_hairstyle("Shaved", update = TRUE)
 	else
-		skinhead.hairstyle = "Skinhead"
-
-	skinhead.update_body_parts()
+		skinhead.set_hairstyle("Skinhead", update = TRUE)
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
 /obj/item/razor/attack(mob/target_mob, mob/living/user, params)
@@ -193,8 +191,7 @@
 				user.visible_message(span_notice("[user] tries to change [human_target]'s facial hairstyle using [src]."), span_notice("You try to change [human_target]'s facial hairstyle using [src]."))
 				if(new_style && do_after(user, 6 SECONDS, target = human_target))
 					user.visible_message(span_notice("[user] successfully changes [human_target]'s facial hairstyle using [src]."), span_notice("You successfully change [human_target]'s facial hairstyle using [src]."))
-					human_target.facial_hairstyle = new_style
-					human_target.update_body_parts(update_limb_data = TRUE)
+					human_target.set_facial_hairstyle(new_style, update = TRUE)
 					return
 			else
 				return
@@ -247,8 +244,7 @@
 			user.visible_message(span_notice("[user] tries to change [human_target]'s hairstyle using [src]."), span_notice("You try to change [human_target]'s hairstyle using [src]."))
 			if(new_style && do_after(user, 6 SECONDS, target = human_target))
 				user.visible_message(span_notice("[user] successfully changes [human_target]'s hairstyle using [src]."), span_notice("You successfully change [human_target]'s hairstyle using [src]."))
-				human_target.hairstyle = new_style
-				human_target.update_body_parts(update_limb_data = TRUE)
+				human_target.set_hairstyle(new_style, update = TRUE)
 				return
 		else
 			if(!get_location_accessible(human_target, location))

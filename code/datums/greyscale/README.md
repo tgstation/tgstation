@@ -107,7 +107,7 @@ As an example:
 ```c
 /datum/greyscale_config/canister
 	name = "Canister" //Required for debugging, will runtime without one!
-	icon_file = 'icons/obj/atmospherics/canisters/default.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/canisters/default.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_default.json'
 ```
 And that's all you need to make it usable by other code:
