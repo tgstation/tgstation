@@ -122,7 +122,7 @@
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
 
-			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
+			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
 				devour(L)
 		else
 			devour(L)
@@ -137,7 +137,8 @@
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	L.gib()
+	L.spill_organs(no_organs)
+	L.death() //make sure they die
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
