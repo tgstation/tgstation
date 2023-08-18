@@ -194,6 +194,7 @@ handles linking back and forth.
 	if(on_hold()) //silo on hold
 		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
 		return 0
+	return TRUE
 
 /**
  * Use materials from either the silo(if connected) or from the local storage. If silo then this action
@@ -207,7 +208,7 @@ handles linking back and forth.
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
  */
 /datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design")
-	if(_can_use_resource())
+	if(!_can_use_resource())
 		return 0
 
 	var/amount_consumed = mat_container.use_materials(mats, coefficient, multiplier)
@@ -222,7 +223,7 @@ handles linking back and forth.
 
 /// Ejects the given material ref and logs it, or says out loud the problem.
 /datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null)
-	if(_can_use_resource())
+	if(!_can_use_resource())
 		return 0
 
 	var/atom/movable/movable_parent = parent
