@@ -832,6 +832,8 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	if (!isnull(threat_log))
 		log_threat(-cost, threat_log, reason)
 
+#define MAXIMUM_DYN_DISTANCE 5
+
 /**
  * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
  * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
@@ -839,14 +841,15 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
  */
 /datum/game_mode/dynamic/proc/lorentz_to_amount(centre, scale, max_threat = 100, interval = 1)
-	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, rand(-5, 5) * rand(), scale)
-	/**
-	 * No matter what, it's impossible to achieving a 100% or 0% of a distribution without going infinity.
-	 * Also, given the default centre of 0, a location of -/+ 5 and a scale of 1.8, the distribution
-	 * will never exceed the 5% - 95% range. Which is why we're leaving the remaining percent to the RNG.
-	 */
-	var/rng_deviation = (max_threat - LORENTZ_CUMULATIVE_DISTRIBUTION(centre, -5, scale) * max_threat) * rand() * pick(1, -1)
-	return round(lorentz_result * max_threat + rng_deviation, interval)
+	var/location = rand(-MAXIMUM_DYN_DISTANCE, MAXIMUM_DYN_DISTANCE) * rand()
+	var/lorentz_result = LORENTZ_CUMULATIVE_DISTRIBUTION(centre, location, scale)
+	var/std_threat = lorentz_result * max_threat
+	///Without these, the amount won't come close to hitting 0% or 100% of the max threat.
+	var/lower_deviation = max(std_threat * (-centre+location)/MAXIMUM_DYN_DISTANCE, 0)
+	var/upper_deviation = max((max_threat - std_threat) * (centre+location)/MAXIMUM_DYN_DISTANCE, 0)
+	return clamp(round(std_threat + upper_deviation - lower_deviation, interval), 0, 100)
+
+#undef MAXIMUM_DYN_DISTANCE
 
 #undef FAKE_REPORT_CHANCE
 #undef FAKE_GREENSHIFT_FORM_CHANCE
