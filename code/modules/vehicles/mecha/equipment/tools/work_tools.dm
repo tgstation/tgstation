@@ -207,10 +207,7 @@
 		"reagents_required" = required_amount,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return TRUE
+/obj/item/mecha_parts/mecha_equipment/extinguisher/handle_ui_act(action, list/params)
 	switch(action)
 		if("activate")
 			spray_extinguisher(usr)
@@ -261,10 +258,7 @@
 		else
 			return "Someone didnt set this"
 
-/obj/item/mecha_parts/mecha_equipment/rcd/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/rcd/handle_ui_act(action, list/params)
 	if(action == "change_mode")
 		mode++
 		if(mode > MODE_AIRLOCK)
