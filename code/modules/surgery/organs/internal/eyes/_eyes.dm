@@ -53,7 +53,7 @@
 	var/native_fov = FOV_90_DEGREES
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
-	// If we don't do this before everything else, heterochromia will be reset and we will get the wrong eye_color_right for mobs who had it
+	// If we don't do this before everything else, heterochromia will be reset leading to eye_color_right no longer being accurate
 	if(ishuman(eye_recipient))
 		var/mob/living/carbon/human/human_recipient = eye_recipient
 		old_eye_color_left = human_recipient.eye_color_left
