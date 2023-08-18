@@ -1,8 +1,6 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT 524288 //Restricts client uploads to the server to 0.5MB
-#define UPLOAD_LIMIT_ADMIN 5242880  //Restricts admin client uploads to the server to 5MB
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
@@ -204,11 +202,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if (holder)
-		if(filelength > UPLOAD_LIMIT_ADMIN)
-			to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT_ADMIN/1024]KiB.</font>")
+		if(filelength >  CONFIG_GET(number/upload_limit_admin))
+			to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [(CONFIG_GET(number/upload_limit_admin))/1024]KiB.</font>")
 			return FALSE
-	else if(filelength > UPLOAD_LIMIT)
-		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
+	else if(filelength > CONFIG_GET(number/upload_limit))
+		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [(CONFIG_GET(number/upload_limit))/1024]KiB.</font>")
 		return FALSE
 	return TRUE
 
@@ -911,8 +909,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_verb(src, /client/proc/export_preferences)
 
 
-#undef UPLOAD_LIMIT
-
 //checks if a client is afk
 //3000 frames = 5 minutes
 /client/proc/is_afk(duration = CONFIG_GET(number/inactivity_period))
@@ -1238,4 +1234,3 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 #undef LIMITER_SIZE
 #undef MINUTE_COUNT
 #undef SECOND_COUNT
-#undef UPLOAD_LIMIT_ADMIN
