@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/data_key in raw_data)
 		if(character_slot_regex.Find(data_key))
 			var/slot_id = text2num(replacetext(data_key, "character", ""))
-			if(slot_id <= max_save_slots)
+			if(slot_id > max_save_slots)
 				if(PREFERENCE_IMPORT_ERROR_NOT_ENOUGH_CHARACTER_SLOTS in last_import_error_map)
 					var/new_value = max(
 						last_import_error_map[PREFERENCE_IMPORT_ERROR_NOT_ENOUGH_CHARACTER_SLOTS],
