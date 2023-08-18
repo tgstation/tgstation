@@ -41,7 +41,6 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/consume_ores,
 	)
 
-
 ///consume food!
 /datum/ai_planning_subtree/find_and_hunt_target/consume_ores
 	target_key = BB_ORE_TARGET
@@ -63,8 +62,6 @@
 		return FALSE
 
 	var/obj/item/pet_target = source.ai_controller.blackboard[BB_CURRENT_PET_TARGET]
-
-
 	if(target == pet_target) //we are currently fetching this ore for master, dont eat it!
 		return FALSE
 
