@@ -238,3 +238,23 @@
 /mob/living/basic/setDir(newdir)
 	. = ..()
 	update_held_items()
+
+#define VV_HK_OFFSET_EDITOR "offset_editor"
+/mob/living/basic/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "-------------") //monkestation edit
+	VV_DROPDOWN_OPTION(VV_HK_OFFSET_EDITOR, "Edit Offsets") //monkestation edit
+
+/mob/living/basic/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_OFFSET_EDITOR] && check_rights(R_FUN))
+		if(!usr.client)
+			return
+		if(!usr.client.offset_editor)
+			usr.client.offset_editor = new
+		usr.client.offset_editor.open_ui(usr, src)
+#undef VV_HK_OFFSET_EDITOR
