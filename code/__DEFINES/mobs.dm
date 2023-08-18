@@ -142,7 +142,11 @@
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 // Health/damage defines
+/// Maximum living health.
 #define MAX_LIVING_HEALTH 100
+/// Maximum living stamina damage. Doesn't change stamcrit threshold; that's still decided by HEALTH_THRESHOLD_CRIT. Just affects how much stamina loss you can have at a single instant.
+#define MAX_LIVING_STAMLOSS 120
+
 
 //for determining which type of heartbeat sound is playing
 ///Heartbeat is beating fast for hard crit
