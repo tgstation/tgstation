@@ -590,6 +590,8 @@
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
+		if(!target)
+			return 0
 
 	//eject sheets based on available amount after each iteration
 	var/count = 0
