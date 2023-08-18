@@ -1,0 +1,4 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - bugfix: "formal closet will no longer spawn with two 'error' icon suits inside of it"
