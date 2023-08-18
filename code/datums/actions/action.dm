@@ -139,7 +139,6 @@
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
 /datum/action/proc/Trigger(trigger_flags)
-	SHOULD_NOT_SLEEP(TRUE)
 	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)

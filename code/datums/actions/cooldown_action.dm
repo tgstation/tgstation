@@ -249,6 +249,7 @@
 
 /// To be implemented by subtypes (if not generic)
 /datum/action/cooldown/proc/Activate(atom/target)
+	SHOULD_NOT_SLEEP(TRUE)
 	var/total_delay = 0
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		if(LAZYLEN(ability.initialized_actions) > 0)
