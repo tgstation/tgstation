@@ -11,8 +11,8 @@
  * Returns FALSE if the player doesn't match with any role bans. Possible errors states also return FALSE.
  *
  * Args:
- * 	player_key - Either key or ckey of the player you want to check for role bans.
- * 	roles - Accepts either a single role string, or a list of role strings.
+ * * player_key - Either key or ckey of the player you want to check for role bans.
+ * * roles - Accepts either a single role string, or a list of role strings.
  */
 /proc/is_banned_from(player_key, list/roles)
 	if(!player_key)
