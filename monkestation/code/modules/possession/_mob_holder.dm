@@ -29,7 +29,7 @@
 	///the held head item
 	var/obj/item/head
 
-/mob/living/basic/possession_holder/New(loc, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = 0, _r_x_shift = 0, _l_x_shift = 0, _head_y_shift = 0, _head_x_shift = 0)
+/mob/living/basic/possession_holder/New(loc, obj/item/_stored_item, _l_y_shift = 0, _r_y_shift = list(0, 0, 0, 0), _r_x_shift = list(0, 0, 0, 0), _l_x_shift = list(0, 0, 0, 0), _head_y_shift = list(0, 0, 0, 0), _head_x_shift = list(0, 0, 0, 0))
 	. = ..()
 	if(!_stored_item)
 		_stored_item = new /obj/item/toy/plush/cirno_plush/ballin(src)
