@@ -25,10 +25,6 @@
 	requires_power = FALSE
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
-/area/virtual_domain/safehouse/bottom_left
-	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
-	icon_state = "bit_gen_safe"
-
 /// Custom subtypes
 
 /area/lavaland/surface/outdoors/virtual_domain

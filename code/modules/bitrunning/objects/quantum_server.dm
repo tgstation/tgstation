@@ -1,5 +1,6 @@
 #define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
 #define REDACTED "???"
+#define MAX_DISTANCE 4 // How far crates can spawn from the server
 
 /obj/machinery/quantum_server
 	name = "quantum server"
@@ -536,16 +537,24 @@
 			qdel(spawner)
 
 	var/turf/goal_turfs = list()
-	for(var/obj/thing in generated_safehouse.created_atoms)
-		if(istype(thing, /obj/effect/bitrunning/exit_spawn)) // so there's a place to put the hololadder
+	var/turf/crate_turfs = list()
+	for(var/thing in GLOB.landmarks_list)
+		if(istype(thing, /obj/effect/landmark/bitrunning/hololadder_spawn))
 			exit_turfs += get_turf(thing)
+			qdel(thing)
 			continue
 
-		if(istype(thing, /obj/effect/bitrunning/goal_turf)) // so there's a place to put the loot
+		if(istype(thing, /obj/effect/landmark/bitrunning/cache_goal_turf))
 			var/turf/tile = get_turf(thing)
 			goal_turfs += tile
 			RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_goal_turf_entered))
 			RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_goal_turf_examined))
+			qdel(thing)
+			continue
+
+		if(istype(thing, /obj/effect/landmark/bitrunning/cache_spawn))
+			crate_turfs += get_turf(thing)
+			qdel(thing)
 			continue
 
 	if(!length(exit_turfs))
@@ -553,17 +562,18 @@
 	if(!length(goal_turfs))
 		CRASH("Failed to find send turfs on generated domain.")
 
+	if(length(crate_turfs))
+		new /obj/structure/closet/crate/secure/bitrunning/encrypted(pick(crate_turfs))
+
 	return TRUE
 
 /// Loads the safehouse
 /obj/machinery/quantum_server/proc/initialize_safehouse()
-	var/datum/turf_reservation/res = generated_domain.reservations[1]
-
 	var/turf/safehouse_load_turf = list()
-	for(var/turf/open/space/space_tile in res.reserved_turfs) // must be a template tile, therefore empty space
-		if(istype(get_area(space_tile), /area/virtual_domain/safehouse/bottom_left))
-			safehouse_load_turf += space_tile
-			break
+	for(var/obj/effect/landmark/bitrunning/safehouse_spawn/spawner in GLOB.landmarks_list)
+		safehouse_load_turf += get_turf(spawner)
+		qdel(spawner)
+		break
 
 	if(!length(safehouse_load_turf))
 		CRASH("Failed to find safehouse load landmark on map.")
@@ -576,9 +586,10 @@
 
 /// Locates any turfs with crate out landmarks
 /obj/machinery/quantum_server/proc/locate_receive_turfs()
-	for(var/turf/open/floor/tile in oview(4, src))
-		if(locate(/obj/effect/bitrunning/reward_spawn) in tile)
-			receive_turfs += tile
+	for(var/obj/effect/landmark/bitrunning/station_reward_spawn/spawner in GLOB.landmarks_list)
+		if(IN_GIVEN_RANGE(src, spawner, MAX_DISTANCE))
+			receive_turfs += get_turf(spawner)
+			qdel(spawner)
 
 	return length(receive_turfs) > 0
 
@@ -737,3 +748,4 @@
 
 #undef ONLY_TURF
 #undef REDACTED
+#undef MAX_DISTANCE

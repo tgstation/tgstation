@@ -9,12 +9,12 @@
 #define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2
 
 /obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
-	name = "base class loot crate"
+	name = "base class cache"
 	desc = "Talk to a coder."
 
 /// The virtual domain - side of the bitrunning crate. Deliver to the send location.
 /obj/structure/closet/crate/secure/bitrunning/encrypted
-	name = "encrypted loot crate"
+	name = "encrypted cache"
 	desc = "Needs decrypted at the safehouse to be opened."
 	locked = TRUE
 
@@ -23,8 +23,8 @@
 
 /// The bitrunner den - side of the bitrunning crate. Appears in the receive location.
 /obj/structure/closet/crate/secure/bitrunning/decrypted
-	name = "decrypted loot crate"
-	desc = "Materialized from the virtual domain. The reward of a successful bitrunner."
+	name = "decrypted cache"
+	desc = "Compiled from the virtual domain. The reward of a successful bitrunner."
 	locked = FALSE
 
 /obj/structure/closet/crate/secure/bitrunning/decrypted/Initialize(

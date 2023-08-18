@@ -4,7 +4,7 @@
 
 1. Create a new map inside the `_maps\safe_houses` folder using the TGM format.
 2. Create a new dm file inside `modules\bitrunning\virtual_domain\safe_houses` folder..
-4. Place exit and goal effects (obj/effect/bitrunning/..). Generally, 3 exits and 2 goals are ok.
+4. Place exit and goal landmarks (obj/effect/landmark/bitrunning/..). Generally, 3 exits and 2 goals are ok.
 5. Ideally, leave 3 spaces for gear. This has usually been xy [1x1] [1x2] [1x3]
 
 ## Notes

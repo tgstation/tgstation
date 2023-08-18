@@ -20,7 +20,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
 "i" = (
@@ -96,11 +96,11 @@
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
 "T" = (
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/misc/asteroid,
 /area/virtual_domain/safehouse)
 "U" = (

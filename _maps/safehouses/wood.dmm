@@ -7,7 +7,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
 "o" = (
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/carpet/green,
 /area/virtual_domain/safehouse)
 "p" = (
@@ -16,7 +16,7 @@
 /area/virtual_domain/safehouse)
 "s" = (
 /obj/machinery/light/small/directional/east,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/carpet/green,
 /area/virtual_domain/safehouse)
 "v" = (
@@ -27,7 +27,7 @@
 /area/virtual_domain/safehouse)
 "x" = (
 /obj/structure/railing,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/carpet/green,
 /area/virtual_domain/safehouse)
 "z" = (
@@ -38,7 +38,7 @@
 /turf/closed/wall/mineral/wood,
 /area/virtual_domain/safehouse)
 "T" = (
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/indestructible/hotelwood,
 /area/virtual_domain/safehouse)
 "X" = (

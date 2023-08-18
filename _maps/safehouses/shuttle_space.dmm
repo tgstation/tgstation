@@ -25,7 +25,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "n" = (
@@ -62,7 +62,7 @@
 "r" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "z" = (
@@ -87,13 +87,13 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "D" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/south,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "E" = (
@@ -169,7 +169,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/generic,
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 

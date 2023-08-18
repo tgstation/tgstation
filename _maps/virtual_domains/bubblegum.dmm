@@ -60,8 +60,9 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "T" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "W" = (
 /obj/structure/marker_beacon/cerulean,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,

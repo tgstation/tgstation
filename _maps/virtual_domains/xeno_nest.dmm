@@ -93,8 +93,15 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "v" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
+"x" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "z" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -167,7 +174,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "K" = (
 /obj/structure/alien/weeds,
-/obj/structure/closet/crate/secure/bitrunning/encrypted,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "L" = (
@@ -1155,7 +1162,7 @@ E
 (23,1,1) = {"
 E
 G
-e
+K
 W
 V
 e
@@ -1447,7 +1454,7 @@ a
 a
 E
 z
-I
+x
 o
 e
 I
@@ -1939,7 +1946,7 @@ a
 E
 z
 W
-e
+K
 e
 I
 I

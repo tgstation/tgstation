@@ -450,8 +450,9 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors/virtual_domain)
 "og" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "oo" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{

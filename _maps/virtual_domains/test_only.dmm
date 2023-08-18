@@ -11,8 +11,9 @@
 /turf/open/floor,
 /area/virtual_domain/powered)
 "U" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 
 (1,1,1) = {"
 I

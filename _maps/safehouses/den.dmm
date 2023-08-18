@@ -10,7 +10,7 @@
 "c" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/eighties,
 /area/virtual_domain/safehouse)
 "e" = (
@@ -34,14 +34,14 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
 	},
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/eighties,
 /area/virtual_domain/safehouse)
 "n" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/eighties,
 /area/virtual_domain/safehouse)
 "p" = (
@@ -57,14 +57,14 @@
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/dark,
 /obj/structure/sign/poster/contraband/hacking_guide/directional/east,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/eighties,
 /area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
 	},
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/pod/light,
 /area/virtual_domain/safehouse)
 "C" = (
@@ -85,7 +85,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/generic,
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/pod/light,
 /area/virtual_domain/safehouse)
 "G" = (
@@ -100,7 +100,7 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 5
 	},
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/pod/light,
 /area/virtual_domain/safehouse)
 "J" = (

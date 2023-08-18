@@ -155,6 +155,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"dz" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "dU" = (
 /obj/structure/cable,
 /obj/structure/fans/tiny,
@@ -328,8 +332,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "kJ" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "li" = (
 /obj/structure/transit_tube/station/dispenser/reverse{
 	dir = 4
@@ -867,7 +872,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Io" = (
-/obj/structure/closet/crate/secure/bitrunning/encrypted,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "IC" = (
@@ -1181,6 +1186,10 @@
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /obj/item/clothing/suit/space/syndicate/black/engie,
 /turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"Yi" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Yj" = (
 /obj/structure/closet/crate/secure/gear{
@@ -2573,7 +2582,7 @@ qx
 qx
 ru
 Za
-Zb
+Yi
 Zb
 SX
 ru
@@ -3384,7 +3393,7 @@ qx
 qx
 ru
 Kz
-Kz
+dz
 sq
 Kz
 CK

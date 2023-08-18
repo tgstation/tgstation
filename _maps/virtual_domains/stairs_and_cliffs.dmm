@@ -9,8 +9,9 @@
 /turf/closed/indestructible/rock/snow/ice,
 /area/icemoon/underground/explored/virtual_domain)
 "c" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "d" = (
 /obj/structure/railing/corner/end{
 	dir = 4

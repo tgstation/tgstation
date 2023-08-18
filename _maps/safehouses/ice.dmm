@@ -18,7 +18,7 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 9
 	},
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/vault,
 /area/virtual_domain/safehouse)
 "g" = (
@@ -35,7 +35,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 1
 	},
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
 "n" = (
@@ -55,7 +55,7 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 5
 	},
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/vault,
 /area/virtual_domain/safehouse)
 "p" = (
@@ -64,7 +64,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/vault,
 /area/virtual_domain/safehouse)
 "u" = (
@@ -77,7 +77,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 5
 	},
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
 "x" = (
@@ -102,7 +102,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/vault,
 /area/virtual_domain/safehouse)
 "B" = (
@@ -138,7 +138,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 9
 	},
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
 "I" = (
@@ -190,6 +190,9 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "Z" = (

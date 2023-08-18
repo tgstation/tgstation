@@ -51,8 +51,9 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "L" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "P" = (
 /obj/structure/marker_beacon/fuchsia,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,

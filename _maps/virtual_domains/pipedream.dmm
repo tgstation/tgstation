@@ -328,6 +328,11 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
+"ki" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron,
+/area/virtual_domain/powered)
 "kn" = (
 /obj/machinery/light/small/red/dim{
 	dir = 1
@@ -564,6 +569,7 @@
 "rc" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "rz" = (
@@ -797,10 +803,10 @@
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "xk" = (
-/obj/structure/closet/crate/secure/bitrunning/encrypted,
 /obj/machinery/light/dim{
 	dir = 4
 	},
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "xl" = (
@@ -1452,8 +1458,9 @@
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "Qo" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "Qr" = (
 /turf/closed/indestructible/fakedoor/maintenance{
 	name = "maintenance access"
@@ -2314,7 +2321,7 @@ yQ
 yQ
 RJ
 eg
-xT
+ki
 gj
 kU
 kU

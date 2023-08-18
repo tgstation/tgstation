@@ -419,10 +419,6 @@
 /obj/structure/curtain,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
-"qU" = (
-/obj/effect/bitrunning/loot_signal,
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors/virtual_domain)
 "qW" = (
 /obj/item/melee/skateboard/hoverboard,
 /mob/living/basic/chicken{
@@ -966,8 +962,9 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/virtual_domain/powered)
 "FM" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "FQ" = (
 /obj/structure/table/reinforced,
 /obj/item/secateurs,
@@ -1205,7 +1202,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/virtual_domain/powered)
 "NX" = (
-/obj/effect/bitrunning/loot_signal,
+/obj/effect/landmark/bitrunning/loot_signal,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/powered)
 "OE" = (
@@ -1586,7 +1583,7 @@ Al
 Al
 Al
 Al
-qU
+Al
 iz
 "}
 (3,1,1) = {"
@@ -1629,7 +1626,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (4,1,1) = {"
@@ -1672,7 +1669,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (5,1,1) = {"
@@ -1715,7 +1712,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (6,1,1) = {"
@@ -1758,7 +1755,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (7,1,1) = {"
@@ -1801,7 +1798,7 @@ ml
 ml
 FM
 gl
-qU
+Al
 iz
 "}
 (8,1,1) = {"
@@ -1844,7 +1841,7 @@ ml
 ml
 ml
 gl
-qU
+Al
 iz
 "}
 (9,1,1) = {"
@@ -1887,7 +1884,7 @@ ml
 ml
 ml
 gl
-qU
+Al
 iz
 "}
 (10,1,1) = {"
@@ -1930,7 +1927,7 @@ ml
 ml
 ml
 gl
-qU
+Al
 iz
 "}
 (11,1,1) = {"
@@ -1973,7 +1970,7 @@ ml
 ml
 ml
 gl
-qU
+Al
 iz
 "}
 (12,1,1) = {"
@@ -2016,7 +2013,7 @@ ml
 ml
 ml
 gl
-qU
+Al
 iz
 "}
 (13,1,1) = {"
@@ -2059,7 +2056,7 @@ ml
 ml
 ml
 gl
-qU
+Al
 iz
 "}
 (14,1,1) = {"
@@ -2102,7 +2099,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (15,1,1) = {"
@@ -2145,7 +2142,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (16,1,1) = {"
@@ -2188,7 +2185,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (17,1,1) = {"
@@ -2231,7 +2228,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (18,1,1) = {"
@@ -2274,7 +2271,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (19,1,1) = {"
@@ -2317,7 +2314,7 @@ gl
 gl
 gl
 gl
-qU
+Al
 iz
 "}
 (20,1,1) = {"
@@ -2360,7 +2357,7 @@ gl
 gl
 Al
 gl
-qU
+Al
 iz
 "}
 (21,1,1) = {"
@@ -2403,7 +2400,7 @@ Al
 Al
 Al
 Al
-qU
+Al
 iz
 "}
 (22,1,1) = {"

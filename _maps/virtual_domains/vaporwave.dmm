@@ -145,8 +145,9 @@
 	},
 /area/ruin/space/has_grav/powered/virtual_domain)
 "B" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "C" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/template_noop,

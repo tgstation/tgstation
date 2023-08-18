@@ -1,11 +1,10 @@
-/obj/effect/bitrunning
+/obj/effect/landmark/bitrunning
 	name = "Generic bitrunning effect"
 	icon = 'icons/effects/bitrunning.dmi'
-	icon_state = "bit_crate"
-	invisibility = INVISIBILITY_ABSTRACT
+	icon_state = "crate"
 
 /// In case you want to gate the crate behind a special condition.
-/obj/effect/bitrunning/loot_signal
+/obj/effect/landmark/bitrunning/loot_signal
 	name = "Mysterious aura"
 	/// The amount required to spawn a crate
 	var/points_goal = 10
@@ -14,12 +13,13 @@
 	/// Finished the special condition
 	var/revealed = FALSE
 
-/obj/effect/bitrunning/loot_signal/Initialize(mapload)
+/obj/effect/landmark/bitrunning/loot_signal/Initialize(mapload)
 	. = ..()
+
 	RegisterSignal(src, COMSIG_BITRUNNER_GOAL_POINT, PROC_REF(on_add_point))
 
 /// Listens for points to be added which will eventually spawn a crate.
-/obj/effect/bitrunning/loot_signal/proc/on_add_point(datum/source, points_to_add)
+/obj/effect/landmark/bitrunning/loot_signal/proc/on_add_point(datum/source, points_to_add)
 	SIGNAL_HANDLER
 
 	if(revealed)
@@ -33,25 +33,38 @@
 	reveal()
 
 /// Spawns the crate with some effects
-/obj/effect/bitrunning/loot_signal/proc/reveal()
+/obj/effect/landmark/bitrunning/loot_signal/proc/reveal()
 	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+
 	var/turf/tile = get_turf(src)
 	var/obj/structure/closet/crate/secure/bitrunning/encrypted/loot = new(tile)
 	var/datum/effect_system/spark_spread/quantum/sparks = new(tile)
 	sparks.set_up(5, 1, get_turf(loot))
 	sparks.start()
+
 	qdel(src)
 
-/// Place this so that the rewards spawn in the right place.
-/obj/effect/bitrunning/reward_spawn
+/// Where the crates get ported to station
+/obj/effect/landmark/bitrunning/station_reward_spawn
 	name = "Bitrunning rewards spawn"
+	icon_state = "station"
 
-/// Place this where you want hololadders to spawn. These are retries
-/obj/effect/bitrunning/exit_spawn
+/// Where the exit hololadder spawns
+/obj/effect/landmark/bitrunning/hololadder_spawn
 	name = "Bitrunning hololadder spawn"
-	icon_state = "bit_exit"
+	icon_state = "hololadder"
 
-/// Place this where you want crates to end up
-/obj/effect/bitrunning/goal_turf
+/// Where the crates need to be taken
+/obj/effect/landmark/bitrunning/cache_goal_turf
 	name = "Bitrunning goal turf"
-	icon_state = "bit_goal"
+	icon_state = "goal"
+
+/// Where you want the crate to spawn
+/obj/effect/landmark/bitrunning/cache_spawn
+	name = "Bitrunning crate spawn"
+	icon_state = "spawn"
+
+/// Where the safehouse will spawn
+/obj/effect/landmark/bitrunning/safehouse_spawn
+	name = "Bitrunning safehouse spawn"
+	icon_state = "safehouse"

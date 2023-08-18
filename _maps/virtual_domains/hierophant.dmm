@@ -37,8 +37,9 @@
 /turf/open/indestructible/hierophant/two,
 /area/lavaland/surface/outdoors/virtual_domain)
 "H" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "K" = (
 /turf/open/indestructible/hierophant/two,
 /area/lavaland/surface/outdoors/virtual_domain)

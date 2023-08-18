@@ -19,7 +19,7 @@
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "m" = (
-/obj/structure/closet/crate/secure/bitrunning/encrypted/gondola,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "n" = (
@@ -89,8 +89,9 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "O" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "Q" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
@@ -667,13 +668,13 @@ C
 C
 Q
 Q
-C
+m
 z
 C
 C
 C
 C
-C
+m
 C
 C
 s
@@ -1245,7 +1246,7 @@ C
 C
 C
 C
-C
+m
 C
 C
 C
@@ -1341,7 +1342,7 @@ C
 C
 C
 C
-C
+m
 C
 g
 F
@@ -1349,7 +1350,7 @@ s
 C
 C
 C
-C
+m
 C
 C
 C

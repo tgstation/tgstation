@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/effect/bitrunning/exit_spawn,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -24,7 +24,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -55,7 +55,7 @@
 	dir = 4
 	},
 /obj/structure/railing,
-/obj/effect/bitrunning/goal_turf,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},

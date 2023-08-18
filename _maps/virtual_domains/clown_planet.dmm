@@ -361,8 +361,9 @@
 /turf/open/floor/noslip,
 /area/virtual_domain/powered)
 "xt" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
-/area/virtual_domain/safehouse/bottom_left)
+/area/virtual_domain/safehouse)
 "yd" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
