@@ -352,7 +352,7 @@
 		/obj/item/clothing/neck/bowtie = 2,
 		/obj/item/clothing/under/costume/buttondown/slacks/service = 2,
 		/obj/item/clothing/under/costume/buttondown/skirt/service = 2,
-		/obj/item/clothing/under/rank/civilian/bartender/purple = 2,
+		/obj/item/clothing/under/rank/civilian/purple_bartender = 2,
 		/obj/item/clothing/suit/toggle/lawyer/greyscale = 1,
 		/obj/item/clothing/suit/armor/vest/alt = 1,
 		/obj/item/clothing/shoes/sneakers/black = 2,

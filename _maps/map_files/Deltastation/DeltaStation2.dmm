@@ -2482,8 +2482,14 @@
 /area/station/engineering/atmos)
 "aEE" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
-/obj/item/reagent_containers/cup/glass/flask/det,
+/obj/item/flashlight/lamp{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/cup/glass/flask/det{
+	pixel_y = 10;
+	pixel_x = -12
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aEJ" = (
@@ -4351,8 +4357,14 @@
 /area/station/commons/fitness/recreation)
 "bdC" = (
 /obj/structure/table,
-/obj/item/storage/box/bodybags,
-/obj/item/clothing/gloves/latex,
+/obj/item/storage/box/bodybags{
+	pixel_y = 18;
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_y = 4;
+	pixel_x = 3
+	},
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 1
 	},
@@ -9870,10 +9882,17 @@
 /area/station/service/hydroponics)
 "csy" = (
 /obj/structure/table/wood,
-/obj/item/pen,
-/obj/item/paper_bin/carbon,
-/obj/item/pen,
-/obj/item/toy/figure/detective,
+/obj/item/pen{
+	pixel_x = 16
+	},
+/obj/item/paper_bin/carbon{
+	pixel_y = 5;
+	pixel_x = -1
+	},
+/obj/item/pen{
+	pixel_y = 8;
+	pixel_x = -1
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "csz" = (
@@ -13437,6 +13456,13 @@
 /obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/port/fore)
+"dnH" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/grimy,
+/area/station/security/detectives_office)
 "dnM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -20887,11 +20913,11 @@
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
 "ffQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/siding/dark_red{
-	dir = 8
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "ffY" = (
 /obj/item/kirbyplants/random,
@@ -28552,8 +28578,12 @@
 /area/station/science/xenobiology)
 "gZz" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/hand_labeler,
+/obj/item/folder/red{
+	pixel_y = 5
+	},
+/obj/item/hand_labeler{
+	pixel_y = -11
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "gZU" = (
@@ -34141,10 +34171,16 @@
 "ixR" = (
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/taperecorder,
-/obj/item/restraints/handcuffs,
+/obj/item/taperecorder{
+	pixel_y = 5;
+	pixel_x = 6
+	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/toy/figure/detective{
+	pixel_y = 3;
+	pixel_x = -10
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "ixZ" = (
@@ -36361,9 +36397,12 @@
 /obj/structure/rack,
 /obj/item/storage/briefcase{
 	pixel_x = -3;
-	pixel_y = 3
+	pixel_y = 1
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase{
+	pixel_y = -3;
+	pixel_x = 5
+	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -42520,11 +42559,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "kBb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral/full,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/detectives_office)
 "kBz" = (
@@ -61958,8 +61995,14 @@
 /area/station/science/xenobiology)
 "pDS" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/camera/detective,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/item/camera/detective{
+	pixel_y = 6;
+	pixel_x = -6
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
@@ -68673,9 +68716,16 @@
 /area/station/hallway/primary/central/aft)
 "rku" = (
 /obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/folder/red,
-/obj/item/pen,
+/obj/item/clipboard{
+	pixel_y = 3
+	},
+/obj/item/folder/red{
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_y = 3;
+	pixel_x = -6
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
@@ -77156,13 +77206,20 @@
 /area/station/service/bar/backroom)
 "trf" = (
 /obj/structure/table/wood,
+/obj/item/restraints/handcuffs{
+	pixel_y = 6
+	},
 /obj/item/clothing/mask/cigarette/cigar/cohiba{
-	pixel_x = 3
+	pixel_x = 7;
+	pixel_y = -7
 	},
 /obj/item/clothing/mask/cigarette/cigar/havana{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_y = -7;
+	pixel_x = -1
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "trw" = (
@@ -143475,7 +143532,7 @@ oIU
 kJb
 qud
 kdY
-xEJ
+ffQ
 kBb
 dCk
 rTO
@@ -143732,8 +143789,8 @@ oIU
 pDS
 dbd
 qgQ
+dnH
 uja
-ffQ
 oIU
 rTO
 ljd

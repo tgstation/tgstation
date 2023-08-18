@@ -93,7 +93,7 @@
 	var/datum/worn_feature_offset/worn_face_offset
 
 /obj/item/bodypart/head/Destroy()
-	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
+	QDEL_NULL(brainmob) //order is sensitive, see warning in Exited() below
 	QDEL_NULL(brain)
 	QDEL_NULL(eyes)
 	QDEL_NULL(ears)
@@ -106,21 +106,21 @@
 	QDEL_NULL(worn_face_offset)
 	return ..()
 
-/obj/item/bodypart/head/handle_atom_del(atom/head_atom)
-	if(head_atom == brain)
+/obj/item/bodypart/head/Exited(atom/movable/gone, direction)
+	if(gone == brain)
 		brain = null
 		update_icon_dropped()
 		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
 			message_admins("Brainmob: ([ADMIN_LOOKUPFLW(brainmob)]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
 			brainmob.log_message(", brainmob, was left stranded in [src] without a brain", LOG_GAME)
-	if(head_atom == brainmob)
+	if(gone == brainmob)
 		brainmob = null
-	if(head_atom == eyes)
+	if(gone == eyes)
 		eyes = null
 		update_icon_dropped()
-	if(head_atom == ears)
+	if(gone == ears)
 		ears = null
-	if(head_atom == tongue)
+	if(gone == tongue)
 		tongue = null
 	return ..()
 
