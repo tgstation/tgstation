@@ -294,7 +294,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(!total_reagent_volume && !reagents.total_volume)
 		remove_all()
 		qdel(src)
-	build_turf_reagent()
 
 /datum/liquid_group/proc/remove_specific(obj/effect/abstract/liquid_turf/remover, amount, datum/reagent/reagent_type)
 	reagents.remove_reagent(reagent_type.type, amount)
@@ -302,7 +301,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		check_liquid_removal(remover, amount)
 	updated_total = TRUE
 	total_reagent_volume = reagents.total_volume
-	build_turf_reagent()
 
 /datum/liquid_group/proc/transfer_to_atom(obj/effect/abstract/liquid_turf/remover, amount, atom/transfer_target, transfer_method = INGEST)
 	reagents.trans_to(transfer_target, amount, methods = transfer_method)
@@ -310,7 +308,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		check_liquid_removal(remover, amount)
 	updated_total = TRUE
 	total_reagent_volume = reagents.total_volume
-	build_turf_reagent()
 
 /datum/liquid_group/proc/move_liquid_group(obj/effect/abstract/liquid_turf/member)
 	remove_from_group(member.my_turf)
@@ -319,7 +316,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	for(var/datum/reagent/reagent_type in reagents.reagent_list)
 		member.liquid_group.reagents.add_reagent(reagent_type, remove_amount, no_react = TRUE)
 		remove_specific(amount = remove_amount, reagent_type = reagent_type)
-	build_turf_reagent()
 
 /datum/liquid_group/proc/add_reagents(obj/effect/abstract/liquid_turf/member, reagent_list, chem_temp)
 	reagents.add_reagent_list(reagent_list)
@@ -330,7 +326,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	handle_temperature(amount, chem_temp)
 	handle_visual_changes()
 	process_group()
-	build_turf_reagent()
 
 /datum/liquid_group/proc/add_reagent(obj/effect/abstract/liquid_turf/member, datum/reagent/reagent, amount, temperature)
 	reagents.add_reagent(reagent, amount, temperature, no_react = TRUE)
@@ -338,7 +333,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	handle_temperature(amount, temperature)
 	handle_visual_changes()
 	process_group()
-	build_turf_reagent()
 
 /datum/liquid_group/proc/transfer_reagents_to_secondary_group(obj/effect/abstract/liquid_turf/member, obj/effect/abstract/liquid_turf/transfer)
 	var/total_removed = length(members) + 1 / total_reagent_volume
@@ -354,7 +348,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	check_liquid_removal(member, total_removed)
 	handle_visual_changes()
 	process_group()
-	build_turf_reagent()
 
 /datum/liquid_group/proc/trans_to_seperate_group(datum/reagents/secondary_reagent, amount, obj/effect/abstract/liquid_turf/remover, merge = FALSE)
 	reagents.trans_to(secondary_reagent, amount)
@@ -374,7 +367,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		reagents_per_turf = 0
 	process_turf_disperse()
 	process_group()
-	build_turf_reagent()
 
 /datum/liquid_group/proc/handle_temperature(previous_reagents, temp)
 	var/baseline_temperature = ((total_reagent_volume * group_temperature) + (previous_reagents * temp)) / (total_reagent_volume + previous_reagents)

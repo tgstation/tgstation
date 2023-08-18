@@ -59,6 +59,7 @@ SUBSYSTEM_DEF(liquids)
 					return
 				var/datum/liquid_group/LG = g
 
+				LG.build_turf_reagent()
 				LG.process_cached_edges()
 				LG.process_group()
 				if(populate_evaporation && LG.expected_turf_height < LIQUID_STATE_ANKLES && LG.evaporates)
