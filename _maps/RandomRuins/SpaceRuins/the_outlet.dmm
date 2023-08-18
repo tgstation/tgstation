@@ -2006,7 +2006,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Wz" = (
-/obj/machinery/door/airlock/multi_tile/glass,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "WC" = (

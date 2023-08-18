@@ -17256,6 +17256,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_y = 27;
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "guR" = (
@@ -27929,19 +27933,23 @@
 "kbN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/mousetraps{
-	pixel_x = -3;
-	pixel_y = 8
+	pixel_x = -5;
+	pixel_y = 14
 	},
 /obj/structure/table,
 /obj/item/storage/box/mousetraps{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/clothing/gloves/color/orange{
-	pixel_x = 4;
-	pixel_y = -2
+	pixel_x = 12;
+	pixel_y = 15
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -1;
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "kbR" = (
@@ -50611,6 +50619,8 @@
 "sjB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/l3closet/janitor,
+/obj/machinery/light/small/directional/east,
+/obj/item/clothing/gloves/color/orange,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "sjM" = (
@@ -58057,9 +58067,14 @@
 /area/station/science/xenobiology)
 "uND" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/restraints/legcuffs/beartrap,
-/obj/item/restraints/legcuffs/beartrap,
 /obj/structure/cable,
+/obj/item/restraints/legcuffs/beartrap{
+	pixel_x = -5
+	},
+/obj/item/restraints/legcuffs/beartrap{
+	pixel_y = -5;
+	pixel_x = 2
+	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/service/janitor)
@@ -59890,27 +59905,21 @@
 "vtI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/lights/mixed{
-	pixel_x = 6;
-	pixel_y = 8
+	pixel_x = -4;
+	pixel_y = 18
 	},
 /obj/item/storage/box/lights/mixed{
 	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/spray/cleaner,
-/obj/item/grenade/chem_grenade/cleaner{
-	pixel_x = -7;
 	pixel_y = 12
 	},
-/obj/item/grenade/chem_grenade/cleaner{
-	pixel_x = -7;
-	pixel_y = 12
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_y = 3;
+	pixel_x = 3
 	},
 /obj/item/grenade/chem_grenade/cleaner{
 	pixel_x = -7;
 	pixel_y = 12
 	},
-/obj/machinery/light/small/directional/north,
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/service/janitor)
@@ -63825,7 +63834,6 @@
 "wOy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sink/directional/west,
-/obj/item/reagent_containers/cup/bucket,
 /obj/item/mop,
 /turf/open/floor/iron,
 /area/station/service/janitor)

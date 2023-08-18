@@ -11,7 +11,6 @@
 	gender = MALE // Female ones are the bipedal elites
 	speed = 30
 	basic_mob_flags = IMMUNE_TO_FISTS
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 300
 	health = 300
 	friendly_verb_continuous = "wails at"
@@ -44,13 +43,12 @@
 	/// Slight cooldown to prevent double-dipping if we use both abilities at once
 	COOLDOWN_DECLARE(ability_animation_cooldown)
 	/// Our base tentacles ability
-	var/datum/action/cooldown/goliath_tentacles/tentacles
+	var/datum/action/cooldown/mob_cooldown/goliath_tentacles/tentacles
 	/// Things we want to eat off the floor (or a plate, we're not picky)
 	var/static/list/goliath_foods = list(/obj/item/food/grown/ash_flora, /obj/item/food/bait/worm)
 
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
@@ -68,10 +66,10 @@
 
 	tentacles = new (src)
 	tentacles.Grant(src)
-	var/datum/action/cooldown/tentacle_burst/melee_tentacles = new (src)
+	var/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles = new (src)
 	melee_tentacles.Grant(src)
 	AddComponent(/datum/component/revenge_ability, melee_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], max_range = 1, target_self = TRUE)
-	var/datum/action/cooldown/tentacle_grasp/ranged_tentacles = new (src)
+	var/datum/action/cooldown/mob_cooldown/tentacle_grasp/ranged_tentacles = new (src)
 	ranged_tentacles.Grant(src)
 	AddComponent(/datum/component/revenge_ability, ranged_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], min_range = 2, max_range = 9)
 
@@ -141,7 +139,7 @@
 	SIGNAL_HANDLER
 	if (stat == DEAD || ability.IsAvailable())
 		return // We died or the action failed for some reason like being out of range
-	if (istype(ability, /datum/action/cooldown/goliath_tentacles))
+	if (istype(ability, /datum/action/cooldown/mob_cooldown/goliath_tentacles))
 		if (ability.cooldown_time <= 2 SECONDS)
 			return
 		icon_state = icon_living
@@ -167,16 +165,6 @@
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
 	faction = new_friend.faction.Copy()
-
-/// Goliath which sometimes replaces itself with a rare variant
-/mob/living/basic/mining/goliath/random
-
-/mob/living/basic/mining/goliath/random/Initialize(mapload)
-	. = ..()
-	if(!prob(1))
-		return
-	new /mob/living/basic/mining/goliath/ancient/immortal(loc)
-	return INITIALIZE_HINT_QDEL
 
 /// Legacy Goliath mob with different sprites, largely the same behaviour
 /mob/living/basic/mining/goliath/ancient
@@ -234,3 +222,15 @@
 	desc = "This rough saddle will give you a serviceable seat upon a goliath! Provided you can get one to stand still."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
+
+/// For map generation, has a chance to instantiate as a special subtype
+/obj/effect/spawner/random/goliath
+	name = "random goliath"
+	desc = "Chance to spawn a rare shiny version."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
+	icon_state = "goliath"
+	pixel_x = -12
+	loot = list(
+		/mob/living/basic/mining/goliath = 99,
+		/mob/living/basic/mining/goliath/ancient/immortal = 1,
+	)

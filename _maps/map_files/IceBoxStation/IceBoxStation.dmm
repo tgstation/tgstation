@@ -9058,7 +9058,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "cKp" = (
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Hydroponics"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
@@ -27569,7 +27569,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "The Girly Boar"
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -71197,7 +71197,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "The Girly Boar"
 	},
 /turf/open/floor/iron/dark/textured_half,

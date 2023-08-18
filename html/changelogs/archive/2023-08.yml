@@ -770,3 +770,123 @@
   - refactor: removed unused vars for further memory savings
   YehnBeep:
   - bugfix: fixed a disconnected APC in Delta's tech storage.
+2023-08-17:
+  BlueMemesauce:
+  - rscadd: 'Add policy for sentient mobs that were revived by lazarus injector (depends
+      on config)
+
+      add; Sentient mobs that were revived by malfunctioning lazarus injector now
+      get enslaved to whoever revived them.'
+  - bugfix: Servant golems get their master's real name (Won't be serving "Unknown"
+      if their master is wearing a mask)
+  DaydreamIQ:
+  - balance: Ascending as an Ash Heretic now reduces the cooldown of Nightwatchers
+      Rebirth to ten seconds, additionally Ash ascension has Bomb immunity added to
+      the resistances it offers (no stun immunity though)
+  DeerJesus:
+  - bugfix: Makes the ectoplasm anomaly not randomly move so deadchat can actually
+      control it
+  - balance: metal bat damage changed from 12 -> 20
+  FernandoJ8:
+  - bugfix: dismemberment moodlets are replaced by a lesser mood debuff when you recover
+      the limb in question.
+  - balance: dismemberment moodlets can now stack for each limb you lose, and are
+      cleared separately. Their descriptions have been updated to reflect this.
+  - bugfix: items implanted on arms no longer become permanently stuck in-hand when
+      their limb is dismembered
+  - bugfix: quickly sheathing and unsheathing the vorpal scythe can no longer bug
+      out and prevent its effects from being applied
+  FlufflesTheDog:
+  - bugfix: Spaceacillin will once again provide antiviral effects for the deceased
+  Hatterhat:
+  - bugfix: Colored ammo bands, such as those on .357 and .38 speedloaders, no longer
+      permanently disappear upon icon update.
+  Helg2:
+  - bugfix: Skeletons now heal burn damage with milk once again.
+  IndieanaJones:
+  - balance: Hunter and viper spider toxins no longer deal liver damage.
+  - balance: Tangle spider's acid injection per bite reduced from 5 to 2.5.
+  Jacquerel:
+  - bugfix: Gravitational Anomalies will now correctly clean up after themselves,
+      instead of leaving an area of the station permanently heavy or with no gravity
+      at all.
+  - bugfix: Goliaths will try to attack mechs with their tentacles.
+  LT3:
+  - bugfix: Base large airlock subtype no longer spawns a normal sized airlock
+  - image: Added mapping icons for large airlocks
+  - code_imp: Repathed all public airlocks to consistent naming
+  LemonInTheDark:
+  - balance: De-escalates terry powergaming by reducing the strength of sec
+  Melbert:
+  - balance: Red toolboxes go faster
+  MidoriWroth:
+  - rscadd: Added 28 new food recipes!
+  Mothblocks:
+  - rscadd: You can now set your voice to just blips.
+  Vincent983:
+  - qol: the chemistry heater can now be unwrenched.
+  Y0SH1M4S73R:
+  - bugfix: Head Revolutionaries no longer count towards a revolution's defeat if
+      they have become simplemobs, basic mobs, or xenomorphs.
+  iwishforducks:
+  - spellcheck: fixed the rat king text saying that they're summoning rats
+  mc-oofert:
+  - bugfix: fixed border-only firedoors being able to be walked through while closed
+  san7890:
+  - bugfix: Beam rifles will no longer inappropriately retain any bonuses they may
+      gain from wizardry.
+  - bugfix: Inappropriate stack traces over bonuses being applied to components that
+      gain bonuses innately (like Mythril stacks) should cease.
+  vinylspiders:
+  - bugfix: fixes a harddel in particle holders
+2023-08-18:
+  DeerJesus:
+  - bugfix: replaced injector with working passive vent in birdshot incinerator
+  - bugfix: conveyor lever in birdshot incinerator
+  - bugfix: fixes all the martian drinks having 20 boozepower
+  EuSouAFazer:
+  - bugfix: Moved the RD's plant to its proper place in Northstar
+  Fikou:
+  - spellcheck: fixes the name of the incline bench press
+  - balance: you cant speed up the big slappy with slime potion
+  Ghommie:
+  - bugfix: Fixed some jank with the dynamic threat curve.
+  Hatterhat:
+  - spellcheck: Fixed a lack of plurality when ejecting multiple casings from a revolver.
+  IndieanaJones:
+  - rscdel: Removed tiny mob sprite abilities for large mobs
+  - rscadd: Add a Self Seethrough ability, given to most large mobs and all mobs affected
+      by a fugu gland
+  - bugfix: Space Dragon's overlay will no longer vanish at times
+  - qol: Xenomorph Sentinel and Ambusher Spider's sneak ability now has a transition
+      to a lower alpha as opposed to being immediate.
+  - qol: The sneak ability now uses balloon alerts as opposed to chat alerts.
+  - bugfix: Fixed the Xenomorph Sentinel's Sneak ability icon being an error.
+  Jacquerel:
+  - admin: Adds Spider, Goliath, and Meteor Heart actions to the "Grant Mob Action"
+      menu.
+  - admin: Four players can ride the speedwagon
+  - bugfix: Turning into a space dragon with the polymorphic inverter will no longer
+      leave you existing in two places
+  - balance: You can no longer use the belt to transform into monkeys or xenomorphs,
+      for technical reasons.
+  - admin: The Add Mob Ability menu now prefixes the typepath of the ability with
+      the ability's name, so you can much more quickly see what the ability is.
+  Mothblocks:
+  - rscadd: Engineers now have an RCD round start.
+  - balance: RCD construction/deconstruction effects can now be attacked in order
+      to cancel them. You can get the anti-disruption upgrade disk to prevent this.
+  - balance: RCD construction/deconstruction is now slower if you already have another
+      effect up. This does not effect reconstruction.
+  - balance: Both of the above effects do not effect the CE's roundstart RCD, nor
+      any other RCDs such as combat RCDs.
+  mc-oofert:
+  - rscadd: cybernetic moth eyes and their variants
+  - bugfix: luminescent eyes no longer make you look like a cyclops in the dark
+  necromanceranne:
+  - rscadd: Settler quirk! Conqueror the great outdoors....in space. Just make sure
+      nobody asks you to get anything from the top shelf.
+  vinylspiders:
+  - image: bowtie sprite has been tweaked slightly to look a little bit more bowtie-ish
+  - bugfix: formal closet will no longer spawn with two 'error' icon suits inside
+      of it
