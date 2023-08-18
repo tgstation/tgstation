@@ -1,5 +1,3 @@
-#define MAX_GRUB_FILL 30
-
 /datum/ai_controller/basic_controller/goldgrub
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
@@ -8,7 +6,6 @@
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
 		BB_CURRENTLY_UNDERGROUND = FALSE,
-		BB_MINERAL_FILL = 0,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -32,7 +29,6 @@
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
 		BB_CURRENTLY_UNDERGROUND = FALSE,
-		BB_MINERAL_FILL = 0,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -76,11 +72,6 @@
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores
 	always_reset_target = TRUE
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores/target_caught(mob/living/hunter, obj/item/target)
-	. = ..()
-	var/mineral_fill = hunter.ai_controller.blackboard[BB_MINERAL_FILL]
-	hunter.ai_controller.set_blackboard_key(BB_MINERAL_FILL, mineral_fill++)
 
 ///find our child's egg and pull it!
 /datum/ai_planning_subtree/find_and_hunt_target/baby_egg
@@ -144,12 +135,6 @@
 /datum/ai_planning_subtree/grub_mine
 
 /datum/ai_planning_subtree/grub_mine/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/grub_fill = controller.blackboard[BB_MINERAL_FILL]
-
-	///i already ate too much minerals, im full!
-	if(grub_fill > MAX_GRUB_FILL)
-		return
-
 	var/turf/target_wall = controller.blackboard[BB_TARGET_MINERAL_WALL]
 
 	if(QDELETED(target_wall))
@@ -226,5 +211,3 @@
 		return
 	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_SPIT_ABILITY)
 	return SUBTREE_RETURN_FINISH_PLANNING
-
-#undef MAX_GRUB_FILL
