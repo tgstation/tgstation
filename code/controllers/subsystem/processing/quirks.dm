@@ -18,28 +18,36 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
 	var/static/list/quirk_blacklist = list(
-		list("Blind", "Nearsighted"),
-		list("Jolly", "Depression", "Apathetic", "Hypersensitive"),
-		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
-		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
-		list("Alcohol Tolerance", "Light Drinker"),
-		list("Clown Enjoyer", "Mime Fan", "Pride Pin"),
-		list("Bad Touch", "Friendly"),
-		list("Extrovert", "Introvert"),
-		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
-		list("Prosthetic Organ", "Tin Man", "Body Purist"),
-		list("Quadruple Amputee", "Paraplegic", "Hemiplegic"),
-		list("Quadruple Amputee", "Frail"),
-		list("Social Anxiety", "Mute"),
-		list("Mute", "Soft-Spoken"),
-		list("Stormtrooper Aim", "Big Hands"),
-		list("Bilingual", "Foreigner"),
-		list("Spacer", "Paraplegic"),
-		list("Photophobia", "Nyctophobia"),
+		list(/datum/quirk/item_quirk/blindness, /datum/quirk/item_quirk/nearsighted),
+		list(/datum/quirk/jolly, /datum/quirk/depression, /datum/quirk/apathetic, /datum/quirk/hypersensitive),
+		list(/datum/quirk/no_taste, /datum/quirk/vegetarian, /datum/quirk/deviant_tastes, /datum/quirk/gamer),
+		list(/datum/quirk/pineapple_liker, /datum/quirk/pineapple_hater, /datum/quirk/gamer),
+		list(/datum/quirk/alcohol_tolerance, /datum/quirk/light_drinker),
+		list(/datum/quirk/item_quirk/clown_enjoyer, /datum/quirk/item_quirk/mime_fan, /datum/quirk/item_quirk/pride_pin),
+		list(/datum/quirk/bad_touch, /datum/quirk/friendly),
+		list(/datum/quirk/extrovert, /datum/quirk/introvert),
+		list(/datum/quirk/prosthetic_limb, /datum/quirk/quadruple_amputee, /datum/quirk/body_purist),
+		list(/datum/quirk/prosthetic_organ, /datum/quirk/tin_man, /datum/quirk/body_purist),
+		list(/datum/quirk/quadruple_amputee, /datum/quirk/paraplegic, /datum/quirk/hemiplegic),
+		list(/datum/quirk/quadruple_amputee, /datum/quirk/frail),
+		list(/datum/quirk/social_anxiety, /datum/quirk/mute),
+		list(/datum/quirk/mute, /datum/quirk/softspoken),
+		list(/datum/quirk/poor_aim, /datum/quirk/bighands),
+		list(/datum/quirk/bilingual, /datum/quirk/foreigner),
+		list(/datum/quirk/spacer_born, /datum/quirk/paraplegic),
+		list(/datum/quirk/photophobia, /datum/quirk/nyctophobia),
 	)
+
+	var/static/list/quirk_string_blacklist = list()
 
 /datum/controller/subsystem/processing/quirks/Initialize()
 	get_quirks()
+	quirk_string_blacklist.Cut()
+	for(var/blacklist in quirk_blacklist)
+		var/list/string_list = list()
+		for(var/datum/quirk/typepath in blacklist)
+			string_list += initial(typepath.name)
+		quirk_string_blacklist += string_list
 	return SS_INIT_SUCCESS
 
 /// Returns the list of possible quirks
