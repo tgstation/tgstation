@@ -1,0 +1,4 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - bugfix: "Base iron floor tiles now will be able to stack with other base iron floor tiles after being reskined to the base subtype."
