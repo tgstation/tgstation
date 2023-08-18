@@ -28,7 +28,7 @@
 	parent_mob_ref = WEAKREF(original)
 	setDir(original.dir)
 	maxHealth = hp
-	updatehealth()
+	updatehealth() // re-cap health to new value
 	melee_damage_lower = damage
 	melee_damage_upper = damage
 	multiply_chance = replicate
@@ -46,17 +46,18 @@
 
 /mob/living/simple_animal/hostile/illusion/AttackingTarget()
 	. = ..()
-	if(!. || !isliving(target))
+	if(!. || !isliving(target) || !prob(multiply_chance))
+		return
+	var/mob/living/hitting_target = target
+	if(hitting_target.stat == DEAD)
 		return
 	var/mob/living/parent_mob = parent_mob_ref?.resolve()
-	if(!isnull(parent_mob) && prob(multiply_chance))
-		var/mob/living/hitting_target = target
-		if(hitting_target.stat == DEAD)
-			return
-		var/mob/living/simple_animal/hostile/illusion/new_clone = new(loc)
-		new_clone.faction = faction.Copy()
-		new_clone.Copy_Parent(parent_mob, 8 SECONDS, health / 2, melee_damage_upper, multiply_chance / 2)
-		new_clone.GiveTarget(target)
+	if(isnull(parent_mob))
+		return
+	var/mob/living/simple_animal/hostile/illusion/new_clone = new(loc)
+	new_clone.Copy_Parent(parent_mob, 8 SECONDS, health / 2, melee_damage_upper, multiply_chance / 2)
+	new_clone.faction = faction.Copy()
+	new_clone.GiveTarget(target)
 
 ///////Actual Types/////////
 
