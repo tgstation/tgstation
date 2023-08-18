@@ -76,7 +76,7 @@
 
 /mob/living/basic/possession_holder/setDir(newdir)
 	. = ..()
-	dir = NORTH
+	dir = SOUTH
 
 
 /mob/living/basic/possession_holder/can_equip(obj/item/I, slot, disable_warning, bypass_equip_delay_self)
