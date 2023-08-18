@@ -2,6 +2,8 @@
 	projectile_type = /obj/projectile/magic/artifact
 
 /obj/item/ammo_casing/magic/artifact/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
+	if(!loaded_projectile)
+		return
 	var/datum/component/artifact/gun/gun = fired_from.GetComponent(/datum/component/artifact/gun)
 	loaded_projectile.damage = gun.damage
 	loaded_projectile.icon_state = gun.projectile_icon
@@ -10,6 +12,7 @@
 	loaded_projectile.ricochet_chance = gun.ricochet_chance
 	loaded_projectile.ricochet_auto_aim_range = gun.ricochet_auto_aim_range
 	loaded_projectile.wound_bonus = gun.wound_bonus
+	loaded_projectile.sharpness = gun.sharpness
 	return ..()
 
 /obj/projectile/magic/artifact
@@ -17,6 +20,8 @@
 	antimagic_flags = null
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
+	hitsound_wall = SFX_RICOCHET
+	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
 
 /obj/item/gun/magic/artifact
@@ -54,6 +59,7 @@
 	var/ricochet_chance = 0
 	var/ricochet_auto_aim_range = 0
 	var/wound_bonus = CANT_WOUND
+	var/sharpness = NONE
 
 /datum/component/artifact/gun/setup()
 	var/obj/item/gun/magic/artifact/our_wand = holder
@@ -62,14 +68,16 @@
 	casing.click_cooldown_override = rand(3,10)
 	if(prob(30))
 		casing.pellets = rand(1,3)
-	casing.variance = prob(65) ? rand(0,20) : rand(0,360)
+	casing.spread = prob(65) ? rand(0.0,0.2) : rand(0.3,1.0)
 	
-	damage = rand(-10,25)
+	damage = rand(-5,25)
 	projectile_icon = pick("energy","scatterlaser", "toxin", "energy", "spell", "pulse1", "bluespace", "gauss","gaussweak","gaussstrong", "redtrac", "omnilaser", "heavylaser", "laser", "infernoshot", "cryoshot", "arcane_barrage")
 	dam_type = pick(BRUTE,BURN,TOX,STAMINA,BRAIN)
 	if(prob(30)) //bouncy
 		ricochets_max = rand(1,40)
-		ricochet_chance = rand(0,600) // will bounce off anything and everything, whether they like it or not
+		ricochet_chance = rand(80,600) // will bounce off anything and everything, whether they like it or not
 		ricochet_auto_aim_range = rand(0,4)
 	if(prob(50))
 		wound_bonus = rand(CANT_WOUND,15)
+	if(prob(40))
+		sharpness = pick(SHARP_POINTY,SHARP_EDGED)
