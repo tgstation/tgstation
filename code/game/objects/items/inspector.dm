@@ -37,16 +37,10 @@
 		cell = new cell(src)
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/Destroy()
-	if(isatom(cell))
-		QDEL_NULL(cell)
-	return ..()
-
-// Clean up the cell on destroy
-/obj/item/inspector/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/inspector/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/inspector/get_cell()

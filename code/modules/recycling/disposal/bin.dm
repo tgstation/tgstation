@@ -88,8 +88,9 @@
 		trunk = null
 	return ..()
 
-/obj/machinery/disposal/handle_atom_del(atom/A)
-	if(A == stored && !QDELETED(src))
+/obj/machinery/disposal/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == stored && !QDELETED(src))
 		stored = null
 		deconstruct(FALSE)
 
@@ -279,11 +280,13 @@
 	var/turf/T = loc
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
-			stored.forceMove(T)
-			src.transfer_fingerprints_to(stored)
-			stored.set_anchored(FALSE)
-			stored.set_density(TRUE)
-			stored.update_appearance()
+			var/obj/structure/disposalconstruct/construct = stored
+			stored = null
+			construct.forceMove(T)
+			transfer_fingerprints_to(construct)
+			construct.set_anchored(FALSE)
+			construct.set_density(TRUE)
+			construct.update_appearance()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
 	..()

@@ -509,3 +509,142 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/stuffed_eggplant
+	name = "stuffed eggplant"
+	desc = "A cooked half of an eggplant, with the insides scooped out and mixed with meat, cheese, and veggies."
+	icon_state = "stuffed_eggplant"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment/protein = 4,
+	)
+	tastes = list("cooked eggplant" = 5, "cheese" = 4, "ground meat" = 3, "veggies" = 2)
+	foodtypes = VEGETABLES | MEAT | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/moussaka
+	name = "moussaka"
+	desc = "A layered Mediterranean dish made of eggplants, potatoes, mixed veggies, and meat with a topping of bechamel sauce. Sliceable"
+	icon_state = "moussaka"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 32,
+		/datum/reagent/consumable/nutriment/vitamin = 12,
+		/datum/reagent/consumable/nutriment/protein = 20,
+	)
+	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+
+/obj/item/food/moussaka/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/moussaka_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/moussaka_slice
+	name = "moussaka slice"
+	desc = "A layered Mediterranean dish made of eggplants, potatoes, mixed veggies, and meat with a topping of bechamel sauce. Delish!"
+	icon_state = "moussaka_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/nutriment/protein = 5,
+	)
+	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
+	foodtypes = MEAT | DAIRY | VEGETABLES
+
+/obj/item/food/candied_pineapple
+	name = "candied pineapple"
+	desc = "A chunk of pineapple coated in sugar and dried into a chewy treat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	icon_state = "candied_pineapple_1"
+	base_icon_state = "candied_pineapple"
+	tastes = list("sugar" = 2, "chewy pineapple" = 4)
+	foodtypes = FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/candied_pineapple/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 3)]"
+
+/obj/item/food/raw_pita_bread
+	name = "raw pita bread"
+	desc = "a sticky disk of raw pita bread."
+	icon = 'icons/obj/food/food_ingredients.dmi'
+	icon_state = "raw_pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	tastes = list("dough" = 2)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/raw_pita_bread/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/raw_pita_bread/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
+
+/obj/item/food/pita_bread
+	name = "pita bread"
+	desc = "a multi-purposed flatbread of Mediterranean origins."
+	icon = 'icons/obj/food/food_ingredients.dmi'
+	icon_state = "pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	tastes = list("pita bread" = 2)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/tzatziki_sauce
+	name = "tzatziki sauce"
+	desc = "A garlic-based sauce or dip widely used in Mediterranean and Middle Eastern cuisine. Delicious on its own when dipped with pita bread or vegetables."
+	icon_state = "tzatziki_sauce"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	tastes = list("garlic" = 4, "cucumber" = 2, "olive oil" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/tzatziki_and_pita_bread
+	name = "tzatziki and pita bread"
+	desc = "Tzatziki sauce, now with pita bread for dipping. Very healthy and delicious all in one."
+	icon_state = "tzatziki_and_pita_bread"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+	)
+	tastes = list("pita bread" = 4, "tzatziki sauce" = 2, "olive oil" = 2)
+	foodtypes = VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/grilled_beef_gyro
+	name = "grilled beef gyro"
+	desc = "A traditional Greek dish of meat wrapped in pita bread with tomato, cabbage, onion, and tzatziki sauce."
+	icon_state = "grilled_beef_gyro"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	tastes = list("pita bread" = 4, "tender meat" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
+	foodtypes = VEGETABLES | GRAIN | MEAT
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/vegetarian_gyro
+	name = "vegetarian gyro"
+	desc = "A traditional Greek gyro with cucumbers substituted for meat. Still full of intense flavor and very nourishing."
+	icon_state = "vegetarian_gyro"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 12,
+	)
+	tastes = list("pita bread" = 4, "cucumber" = 2, "tzatziki sauce" = 2, "mixed veggies" = 2)
+	foodtypes = VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_TINY

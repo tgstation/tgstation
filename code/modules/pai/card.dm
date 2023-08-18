@@ -57,12 +57,13 @@
 	if(pai && !pai.holoform)
 		pai.emp_act(severity)
 
-/obj/item/pai_card/handle_atom_del(atom/thing)
-	if(thing == pai) //double check /mob/living/silicon/pai/Destroy() if you change these.
-		pai = null
-		emotion_icon = initial(emotion_icon)
-		update_appearance()
-	return ..()
+/obj/item/pai_card/proc/on_pai_del(atom/source)
+	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
+	pai = null
+	emotion_icon = initial(emotion_icon)
+	update_appearance()
 
 /obj/item/pai_card/Initialize(mapload)
 	. = ..()
@@ -269,6 +270,7 @@
 	if(pai)
 		return FALSE
 	pai = downloaded
+	RegisterSignal(pai, COMSIG_QDELETING, PROC_REF(on_pai_del))
 	emotion_icon = "null"
 	update_appearance()
 	playsound(src, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)

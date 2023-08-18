@@ -1,0 +1,4 @@
+author: "DeerJesus"
+delete-after: True
+changes:
+  - bugfix: "you can actually tell what hand a reagent dartgun is in now"
