@@ -33,8 +33,8 @@
 
 ///Syndicate subtype that has no access restrictions and is available on Syndinet
 /datum/computer_file/program/secureye/syndicate
-	filename = "illegalcameras"
-	filedesc = "Camera Bug"
+	filename = "syndeye"
+	filedesc = "SyndEye"
 	extended_desc = "This program allows for illegal access to security camera networks."
 	transfer_access = list()
 
