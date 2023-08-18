@@ -677,6 +677,9 @@
 "ans" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/siding/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "anv" = (
@@ -996,8 +999,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "auC" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/white,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
 /area/station/science/cytology)
 "auG" = (
 /obj/structure/chair{
@@ -40964,6 +40967,9 @@
 /area/station/commons/storage/tools)
 "oRd" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "oRm" = (
@@ -63885,6 +63891,7 @@
 "wkJ" = (
 /obj/structure/cable,
 /obj/machinery/holopad,
+/obj/effect/turf_decal/siding/corner,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "wla" = (
@@ -65878,6 +65885,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
+"wQL" = (
+/obj/effect/turf_decal/siding,
+/turf/open/floor/iron/white,
+/area/station/science/cytology)
 "wQP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -115141,7 +115152,7 @@ xau
 rsL
 xSe
 miz
-xlL
+wQL
 auC
 wJL
 ppQ
