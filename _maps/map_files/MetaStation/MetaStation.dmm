@@ -3780,6 +3780,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "bqX" = (
@@ -11620,6 +11623,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "epv" = (
@@ -19127,6 +19133,9 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "hjF" = (
@@ -25024,6 +25033,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "jjn" = (
@@ -25549,6 +25561,9 @@
 "jsi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
@@ -37713,6 +37728,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/purple/corner,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "nHK" = (
@@ -42061,11 +42077,8 @@
 /area/station/command/bridge)
 "ppC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 8
-	},
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/white,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
 /area/station/science/cytology)
 "ppG" = (
 /obj/structure/table/glass,
@@ -51975,6 +51988,7 @@
 /area/station/maintenance/port)
 "sRa" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/siding/purple,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "sRf" = (
@@ -53686,6 +53700,9 @@
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)

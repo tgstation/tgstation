@@ -40401,6 +40401,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "nti" = (
@@ -47509,16 +47512,13 @@
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "pZM" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Science - Cytology West";
 	network = list("ss13","rd","xeno")
 	},
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/white,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
 /area/station/science/xenobiology)
 "pZW" = (
 /turf/closed/wall,
@@ -51668,10 +51668,21 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "rzt" = (
+/obj/structure/rack,
+/obj/item/storage/box/gloves{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/wrench,
+/obj/item/knife/kitchen,
+/obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/machinery/hydroponics/constructable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "rzO" = (
@@ -53487,6 +53498,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"sjT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "skb" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -54617,6 +54636,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sEV" = (
@@ -67148,21 +67170,8 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
 "wXi" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
-	},
-/obj/structure/rack,
-/obj/item/storage/box/gloves{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/storage/box/masks{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/wrench,
-/obj/item/knife/kitchen,
-/turf/open/floor/iron/white,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
 /area/station/science/xenobiology)
 "wXx" = (
 /obj/effect/turf_decal/stripes/line{
@@ -67563,6 +67572,9 @@
 "xfL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "xfN" = (
@@ -180951,7 +180963,7 @@ qVr
 gYw
 cHY
 aLR
-xfL
+sjT
 xfL
 nsK
 sEx
