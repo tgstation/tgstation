@@ -31,9 +31,8 @@ handles linking back and forth.
 
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
-	var/turf/T = get_turf(parent)
 	var/connect_to_silo = FALSE
-	if(force_connect || (mapload && is_station_level(T.z)))
+	if(force_connect || (mapload && is_station_level(get_turf(parent))))
 		connect_to_silo = TRUE
 		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 
