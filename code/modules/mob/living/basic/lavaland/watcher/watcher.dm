@@ -105,16 +105,3 @@
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1)
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	crusher_drop_chance = 100
-
-/// For map generation, has a chance to instantiate as a special subtype
-/obj/effect/spawner/random/watcher
-	name = "random watcher"
-	desc = "Chance to spawn a rare shiny version."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
-	icon_state = "watcher"
-	pixel_x = -12
-	loot = list(
-		/mob/living/basic/mining/watcher = 80,
-		/mob/living/basic/mining/watcher/magmawing = 15,
-		/mob/living/basic/mining/watcher/icewing = 5,
-	)
