@@ -1,0 +1,8 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - qol: "CTF assault class' (with shotgun and rocket gloves)  description now mentions that it has low armor and increased moving speed."
+  - balance: "Decreased CTF recharge start delay for shields from 20 seconds to 12 seconds."
+  - balance: "Marksmans rifle now has 1.7 scope."
+  - bugfix: "When toggling instagib mode for CTF and pressing a cross now will just cancel instead of proceeding."
+  - bugfix: "When clicking on other CTF teams spawners and after you already chose your team no more will ask you to join some other team to make them even."
