@@ -1,0 +1,4 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - bugfix: "you can now toggle repair droids and plasma engines on mechas again"
