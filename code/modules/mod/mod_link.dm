@@ -70,7 +70,15 @@
 
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
-	mod_link = new(src, starting_frequency, CALLBACK(src, PROC_REF(get_wearer)), CALLBACK(src, PROC_REF(can_call)), CALLBACK(src, PROC_REF(make_link_visual)), CALLBACK(src, PROC_REF(get_link_visual)), CALLBACK(src, PROC_REF(delete_link_visual)))
+	mod_link = new(
+		src,
+		starting_frequency,
+		CALLBACK(src, PROC_REF(get_wearer)),
+		CALLBACK(src, PROC_REF(can_call)),
+		CALLBACK(src, PROC_REF(make_link_visual)),
+		CALLBACK(src, PROC_REF(get_link_visual)),
+		CALLBACK(src, PROC_REF(delete_link_visual))
+	)
 
 /obj/item/mod/control/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
 	if(!multitool_check_buffer(user, tool))
@@ -138,7 +146,15 @@
 
 /obj/item/clothing/neck/link_scryer/Initialize(mapload)
 	. = ..()
-	mod_link = new(src, starting_frequency, CALLBACK(src, PROC_REF(get_user)), CALLBACK(src, PROC_REF(can_call)), CALLBACK(src, PROC_REF(make_link_visual)), CALLBACK(src, PROC_REF(get_link_visual)), CALLBACK(src, PROC_REF(delete_link_visual)))
+	mod_link = new(
+		src,
+		starting_frequency,
+		CALLBACK(src, PROC_REF(get_user)),
+		CALLBACK(src, PROC_REF(can_call)),
+		CALLBACK(src, PROC_REF(make_link_visual)),
+		CALLBACK(src, PROC_REF(get_link_visual)),
+		CALLBACK(src, PROC_REF(delete_link_visual))
+	)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/neck/link_scryer/Destroy()
@@ -298,7 +314,15 @@
 	var/datum/callback/get_visual_callback
 	var/datum/callback/delete_visual_callback
 
-/datum/mod_link/New(atom/holder, frequency, datum/callback/get_user_callback, datum/callback/can_call_callback, datum/callback/make_visual_callback, datum/callback/get_visual_callback, datum/callback/delete_visual_callback)
+/datum/mod_link/New(
+	atom/holder,
+	frequency,
+	datum/callback/get_user_callback,
+	datum/callback/can_call_callback,
+	datum/callback/make_visual_callback,
+	datum/callback/get_visual_callback,
+	datum/callback/delete_visual_callback
+)
 	var/attempts = 0
 	var/digits_to_make = 3
 	do
