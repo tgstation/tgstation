@@ -156,6 +156,7 @@
 	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
 	starting_programs = list(
 		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/alarm_monitor,
 	)
 
 /obj/item/modular_computer/pda/atmos
