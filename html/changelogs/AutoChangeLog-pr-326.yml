@@ -1,0 +1,7 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - rscadd: "Engineers now have an RCD round start."
+  - balance: "RCD construction/deconstruction effects can now be attacked in order to cancel them. You can get the anti-disruption upgrade disk to prevent this."
+  - balance: "RCD construction/deconstruction is now slower if you already have another effect up. This does not effect reconstruction."
+  - balance: "Both of the above effects do not effect the CE's roundstart RCD, nor any other RCDs such as combat RCDs."
