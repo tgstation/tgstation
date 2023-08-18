@@ -180,8 +180,6 @@
 		/mob/living/simple_animal/hostile/pirate/melee/space,
 		/mob/living/simple_animal/hostile/pirate/ranged,
 		/mob/living/simple_animal/hostile/pirate/ranged/space,
-		/mob/living/simple_animal/hostile/regalrat,
-		/mob/living/simple_animal/hostile/regalrat/controlled,
 		/mob/living/simple_animal/hostile/retaliate,
 		/mob/living/simple_animal/hostile/retaliate/clown,
 		/mob/living/simple_animal/hostile/retaliate/clown/banana,
