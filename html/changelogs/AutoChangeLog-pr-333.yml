@@ -1,0 +1,6 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - qol: "Xenomorph Sentinel and Ambusher Spider's sneak ability now has a transition to a lower alpha as opposed to being immediate."
+  - qol: "The sneak ability now uses balloon alerts as opposed to chat alerts."
+  - bugfix: "Fixed the Xenomorph Sentinel's Sneak ability icon being an error."
