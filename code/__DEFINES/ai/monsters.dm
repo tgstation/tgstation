@@ -106,4 +106,5 @@
 #define BB_MINERAL_FILL "BB_mineral_fill"
 #define BB_SPIT_ABILITY "BB_spit_ability"
 #define BB_BURROW_ABILITY "BB_burrow_ability"
-#define MAX_GRUB_FILL 30
+#define BB_ORE_TARGET "BB_ore_target"
+#define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"

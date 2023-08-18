@@ -61,7 +61,6 @@
 		/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
 		/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead,
 		/mob/living/simple_animal/hostile/asteroid/elite/pandora,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub,
 		/mob/living/simple_animal/hostile/asteroid/gutlunch,
 		/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch,
 		/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
