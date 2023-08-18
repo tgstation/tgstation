@@ -187,13 +187,13 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/_can_use_resource()
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
-		return 0
+		return FALSE
 	if (!mat_container) //no silolink & local storage not supported
 		movable_parent.say("No access to material storage, please contact the quartermaster.")
-		return 0
+		return FALSE
 	if(on_hold()) //silo on hold
 		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
+		return FALSE
 	return TRUE
 
 /**
