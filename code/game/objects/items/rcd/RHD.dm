@@ -286,6 +286,14 @@
 	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
 
+/obj/item/rcd_upgrade/anti_interrupt
+	desc = "It contains the upgrades necessary to prevent interruption of RCD construction and deconstruction."
+	upgrade = RCD_UPGRADE_ANTI_INTERRUPT
+
+/obj/item/rcd_upgrade/cooling
+	desc = "It contains the upgrades necessary to allow more frequent use of the RCD."
+	upgrade = RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+
 /obj/item/rcd_upgrade/silo_link
 	desc = "It contains direct silo connection RCD upgrade."
 	upgrade = RCD_UPGRADE_SILO_LINK
