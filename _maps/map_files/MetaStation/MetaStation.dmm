@@ -1007,10 +1007,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -23013,9 +23010,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "ixv" = (
@@ -26673,11 +26667,13 @@
 /turf/closed/wall/r_wall,
 /area/station/tcommsat/server)
 "jGt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/turf/open/floor/plating,
-/area/station/medical/virology)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "jGv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -33586,12 +33582,11 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard/lesser)
 "miy" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
+/area/station/medical/virology)
 "miW" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Command Hallway - Starboard"
@@ -37993,11 +37988,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "nGd" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/turf/open/floor/iron/white/smooth_large,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/green/fourcorners,
+/turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "nGp" = (
 /obj/structure/table,
@@ -38275,14 +38270,10 @@
 /turf/open/space/basic,
 /area/space)
 "nMf" = (
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/green/fourcorners,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/plating,
 /area/station/medical/virology)
 "nMj" = (
 /obj/structure/window/fulltile,
@@ -43293,10 +43284,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine)
-"pDU" = (
-/obj/effect/turf_decal/trimline/blue/filled/corner,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "pDX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43748,9 +43735,13 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pLz" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "pMd" = (
@@ -48911,12 +48902,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/range)
 "rDJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
+/area/station/medical/pharmacy)
 "rDM" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light/directional/east,
@@ -53027,10 +53015,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"sZH" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/turf/open/floor/iron/white,
-/area/station/medical/pharmacy)
 "sZI" = (
 /obj/structure/table,
 /obj/item/hfr_box/corner,
@@ -61963,7 +61947,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -61971,6 +61954,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/south,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "waH" = (
@@ -66924,11 +66908,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "xQC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xQI" = (
@@ -82985,7 +82965,7 @@ hLB
 rge
 ndp
 rge
-pLz
+miy
 gAB
 rKQ
 aaa
@@ -84004,7 +83984,7 @@ jUb
 aaa
 aaa
 rKQ
-nMf
+pLz
 rKQ
 aaa
 aaa
@@ -84261,8 +84241,8 @@ jUb
 aaa
 aaa
 rKQ
+pLz
 nMf
-jGt
 aaa
 aaa
 xjH
@@ -86317,7 +86297,7 @@ fLe
 jUb
 gll
 azE
-rDJ
+nGd
 bxq
 lpN
 sWZ
@@ -88117,7 +88097,7 @@ nwl
 vun
 lyx
 tFr
-nGd
+ieH
 vDc
 rdk
 pFg
@@ -89386,7 +89366,7 @@ qNi
 jxc
 gNT
 oah
-miy
+nKE
 tMK
 xgn
 xfx
@@ -91185,7 +91165,7 @@ cxt
 oNP
 gDh
 tFr
-pDU
+xQC
 ije
 lgw
 pFS
@@ -91466,7 +91446,7 @@ bqX
 bqX
 kiz
 nmQ
-xQC
+jGt
 aec
 aec
 aec
@@ -94013,7 +93993,7 @@ hGF
 inQ
 gtb
 gtb
-sZH
+rDJ
 fJW
 xWE
 kzj
