@@ -30,10 +30,10 @@
 	if(spawner)
 		return spawner
 
-	for(var/obj/effect/landmark/bitrunning/loot_signal/spawner in GLOB.landmarks_list)
-		if(IN_GIVEN_RANGE(get_turf(parent), spawner, max_point_range))
-			our_spawner = WEAKREF(spawner)
-			return spawner
+	for(var/obj/effect/landmark/bitrunning/loot_signal/found in GLOB.landmarks_list)
+		if(IN_GIVEN_RANGE(get_turf(parent), found, max_point_range))
+			our_spawner = WEAKREF(found)
+			return found
 
 /// Once the specified signal is received, whisper to the spawner to add points.
 /datum/component/bitrunning_points/proc/on_event(datum/source)
