@@ -431,7 +431,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
 	visible_message(span_hierophant_warning("\"[pick(kill_phrases)]\""))
-	visible_message(span_hierophant_warning("[src] annihilates [L]!"),span_userdanger("You annihilate [L], restoring your health!"))
+	visible_message(span_hierophant_warning("[src] annihilates [L]'s organs!"),span_userdanger("You annihilate [L]'s organs, restoring your health!"))
 	adjustHealth(-L.maxHealth*0.5)
 	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	var/mob/living/carbon/carbonTarget = L
