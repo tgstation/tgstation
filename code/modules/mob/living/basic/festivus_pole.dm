@@ -42,6 +42,7 @@
 
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
 	var/static/list/death_loot = list(/obj/item/stack/rods)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
