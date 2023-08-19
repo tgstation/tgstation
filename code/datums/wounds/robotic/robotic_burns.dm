@@ -4,23 +4,6 @@
 /datum/wound/burn/robotic
 	required_limb_biostate = BIO_ROBOTIC
 
-	var/wound_resist_decrement
-	var/woundability_applied = FALSE
-
-/datum/wound/burn/robotic/wound_injury(datum/wound/old_wound = null, attack_direction = null)
-	if (!woundability_applied)
-		limb.wound_resistance -= wound_resist_decrement
-		woundability_applied = TRUE
-
-	return ..()
-
-/datum/wound/burn/robotic/remove_wound(ignore_limb, replaced)
-	if (woundability_applied && limb && !ignore_limb)
-		limb.wound_resistance += wound_resist_decrement
-		woundability_applied = FALSE
-
-	return ..()
-
 /datum/wound/burn/robotic/overheat
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
 
@@ -169,6 +152,7 @@
 	if (heat_shock && abs(temp_delta) > heat_shock_minimum_delta)
 		if (victim)
 			victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock!"))
+			playsound(victim, 'sound/items/welder.ogg', 25)
 		limb.receive_damage(brute = (abs(temp_delta) * heat_shock_delta_to_damage_ratio), wound_bonus = CANT_WOUND)
 
 	return check_temperature()
@@ -198,27 +182,26 @@
 
 /datum/wound/burn/robotic/overheat/moderate
 	name = "Transient Overheating"
-	desc = "External metals have exceeded lower-bound thermal limits, and as such, have lost some structural integrity. \
-			Temperatures have still not exceeded critical levels, so the damage is temporary, assuming the limb is isolated from high temperatures."
+	desc = "External metals have exceeded lower-bound thermal limits, and as such, have lost some structural integrity, increasing damage taken, as well as the chance to \
+			sustain unrelated wounds."
 	occur_text = "lets out a slight groan as it turns a dull shade of thermal red"
 	examine_desc = "is glowing a dull thermal red and giving off heat"
 	treat_text = "Reduction of body temperature to expedite the passive heat dissipation - or, if thermal shock is to be risked, application of a fire extinguisher."
 	severity = WOUND_SEVERITY_MODERATE
 
-	wound_resist_decrement = 10 // 1.05x damage taken
-	damage_mulitplier_penalty = 1.1
+	damage_mulitplier_penalty = 1.1 //1.1x damage taken
 
 	a_or_from = "from"
 
 	// easy to get
 	threshold_minimum = 35
-	threshold_penalty = 60
+	threshold_penalty = 50
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/moderate
 
 	sound_volume = 20
 
-	outgoing_bodytemp_coeff = 0.01
+	outgoing_bodytemp_coeff = 0.001
 
 	base_reagent_temp_coefficient = 0.1
 
@@ -239,13 +222,12 @@
 
 	a_or_from = "from"
 
-	threshold_minimum = 110
+	threshold_minimum = 95
 	threshold_penalty = 70
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
 
-	wound_resist_decrement = 0.5 // very very woundable
-	damage_mulitplier_penalty = 1.5 // 1.5x damage taken
+	damage_mulitplier_penalty = 1.3 // 1.3x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 400)
 	starting_temperature_max = (BODYTEMP_NORMAL + 500)
@@ -255,7 +237,7 @@
 	cooling_threshold = (BODYTEMP_NORMAL + 300)
 	heating_threshold = (BODYTEMP_NORMAL + 600)
 
-	outgoing_bodytemp_coeff = 0.0025
+	outgoing_bodytemp_coeff = 0.003
 	bodytemp_coeff = 0.01
 
 	base_reagent_temp_coefficient = 0.07
@@ -281,12 +263,11 @@
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 
 	threshold_minimum = 170
-	threshold_penalty = 70
+	threshold_penalty = 100
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/critical
 
-	damage_mulitplier_penalty = 2.0 //2.0x damage taken
-	wound_resist_decrement = 0.2 // WOUNDS!!!
+	damage_mulitplier_penalty = 1.6 //1.6x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 700)
 	starting_temperature_max = (BODYTEMP_NORMAL + 900)
@@ -296,7 +277,7 @@
 	cooling_threshold = (BODYTEMP_NORMAL + 600)
 	heating_threshold = INFINITY
 
-	outgoing_bodytemp_coeff = 0.005 // burn... BURN...
+	outgoing_bodytemp_coeff = 0.006 // burn... BURN...
 	bodytemp_coeff = 0.008
 
 	base_reagent_temp_coefficient = 0.04

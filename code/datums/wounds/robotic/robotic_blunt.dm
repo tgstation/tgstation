@@ -252,6 +252,13 @@
 
 	gellable = TRUE
 
+/datum/wound/blunt/robotic/severe/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
+	var/turf/limb_turf = get_turf(L)
+	if (limb_turf)
+		var/obj/effect/decal/cleanable/oil/our_oil = new /obj/effect/decal/cleanable/oil(limb_turf)
+
+	return ..()
+
 /datum/wound/blunt/robotic/item_can_treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_WELDER || potential_treater.tool_behaviour == TOOL_CAUTERY)
 		if (ready_to_ghetto_weld)
@@ -290,13 +297,12 @@
 	var/chance = 5
 
 	if (user == victim)
-		chance *= 0.05
-
-	var/has_robo_powers = HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES)
+		chance *= 0.25
+		delay_mult *= 2
 
 	var/delay_mult = 1
-	if (has_robo_powers)
-		chance *= 15
+	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		chance *= 15 // almost guaranteed if its not self surgery
 		delay_mult *= 0.5
 	if (HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
 		chance *= 8
@@ -304,10 +310,13 @@
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		chance *= 5
 
+	var/confused = (chance < 50) // generate chance beforehand, so we can use this var
+
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	var/your_or_other = (user == victim ? "your" : "[user]'s")
 	if (user)
 		user.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone] internals..."))
+	if (confused)
 		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! Perhaps a roboticist, an engineer, or a diagnostic HUD would help?"))
 
 	if (!securing_item.use_tool(target = victim, user = user, delay = (10 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
@@ -322,7 +331,7 @@
 	else
 		if (user)
 			user.visible_message(span_warning("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
-		limb.receive_damage(brute = 1, damage_source = securing_item)
+		limb.receive_damage(brute = 2, damage_source = securing_item)
 
 	return TRUE
 
@@ -483,6 +492,16 @@
 	ready_to_secure_internals = FALSE
 	ready_to_ghetto_weld = FALSE
 
+/datum/wound/blunt/robotic/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
+	var/turf/limb_turf = get_turf(L)
+	if (limb_turf)
+		new /obj/effect/decal/cleanable/oil(limb_turf)
+	var/turf/next_turf = get_step(limb_turf, REVERSE_DIR(attack_direction))
+	if (next_turf)
+		new /obj/effect/decal/cleanable/oil(next_turf)
+
+	return ..()
+
 /datum/wound/blunt/robotic/critical/item_can_treat(obj/item/potential_treater)
 	if (istype(potential_treater, /obj/item/construction/rcd))
 		return TRUE
@@ -520,7 +539,7 @@
 		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [lowertext(name)]!"))
 		return TRUE
 
-	if(user.grab_state > GRAB_AGGRESSIVE)
+	if(user.grab_state >= GRAB_AGGRESSIVE)
 		return TRUE
 
 	user.visible_message(span_danger("[user] begins softly pressing against [victim]'s collapsed [limb.plaintext_zone]..."), span_notice("You begin softly pressing against [victim]'s collapsed [limb.plaintext_zone]..."), ignored_mobs=victim)
@@ -534,12 +553,10 @@
 /datum/wound/blunt/robotic/critical/proc/mold_metal(mob/living/carbon/human/user)
 	var/chance = 40
 
-	var/has_robo_powers = HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES)
-
-	if (has_robo_powers)
+	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		chance *= 3
 	if (HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
-		chance *= 1.5
+		chance *= 3
 
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	if ((user != victim && user.combat_mode))
@@ -596,7 +613,7 @@
 
 	var/chance = 100
 	if (victim == user)
-		chance *= 0.5
+		chance *= 0.75
 
 	var/has_robo_powers = HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES)
 
@@ -627,21 +644,19 @@
 	if (user)
 		user.visible_message(span_notice("[user] starts plunging at the dents on [their_or_other] [limb.plaintext_zone]..."))
 
+	if (!treating_plunger.use_tool(target = victim, user = user, delay = 8 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
+
 	var/chance = 50
 	if (victim == user)
 		chance *= 0.5
 
-	var/has_robo_powers = HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES)
-
-	if (has_robo_powers)
+	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		chance *= 1.25
 	if (HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
 		chance *= 1.1
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		chance *= 1.25
-
-	if (!treating_plunger.use_tool(target = victim, user = user, delay = 8 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return TRUE
 
 	if (prob(chance))
 		if (user)
@@ -762,10 +777,6 @@
 			if (user)
 				if (user == victim)
 					chance_mult *= 0.25 // less likely for it to work if you hit yourself, so people can go up to people and go "please punch me"
-				/*else if (attacking_item && user.combat_mode)
-					chance_mult *= 0 // "sure bro", i say as i start beating the shit out of them with murderous intent
-					*/
-				// no way to do the above, lots of things require combat mode to hit people
 			if (prob(percussive_maintenance_repair_chance * chance_mult))
 				handle_percussive_maintenance_success(attacking_item)
 			else
@@ -872,24 +883,6 @@
 			break
 
 	return picked_organs
-
-/*/datum/wound/blunt/robotic/proc/exposed_organ_attacked(wounding_type, wounding_dmg)
-	if (!base_exposed_organs_attacked_chance)
-		return FALSE
-
-	var/base_chance = base_exposed_organs_attacked_chance
-
-	switch (wounding_type)
-		if (WOUND_BLUNT)
-			base_chance *= BLUNT_ATTACK_EXPOSED_ORGAN_CHANCE_MULT
-		if (WOUND_SLASH)
-			base_chance *= SLASH_ATTACK_EXPOSED_ORGAN_CHANCE_MULT
-		if (WOUND_PIERCE)
-			base_chance *= PIERCE_ATTACK_EXPOSED_ORGAN_CHANCE_MULT
-		if (WOUND_BURN)
-			base_chance *= BURN_ATTACK_EXPOSED_ORGAN_CHANCE_MULT
-
-	return prob(base_chance)*/
 
 /datum/wound/blunt/robotic/proc/daze(daze_amount, shake_duration_mult, shake_intensity_mult)
 	shake_camera(victim, duration = (daze_amount * shake_duration_mult), strength = (daze_amount * shake_intensity_mult))
