@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - refactor: "Regal Rats have been refactored into basic mobs. They should be a bit smarter and retain their docility (until attacked, in which case you should prepare to get rekt by summoned rats), and properly flee when they can instead of just sit there as you beat them to death. The framework for them interacting with stuff (i.e. opening doors while slobbering on food) is a bit more unified too, now. They also have cooler names too!"

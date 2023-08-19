@@ -1,4 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - spellcheck: "Fixed a lack of plurality when ejecting multiple casings from a revolver."

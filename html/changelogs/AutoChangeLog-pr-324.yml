@@ -1,5 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - bugfix: "replaced injector with working passive vent in birdshot incinerator"
-  - bugfix: "conveyor lever in birdshot incinerator"

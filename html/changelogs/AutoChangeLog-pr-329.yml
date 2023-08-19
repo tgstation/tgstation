@@ -1,5 +1,0 @@
-author: "NaakaKo"
-delete-after: True
-changes:
-  - bugfix: "Turning into a space dragon with the polymorphic inverter will no longer leave you existing in two places"
-  - balance: "You can no longer use the belt to transform into monkeys or xenomorphs, for technical reasons."
