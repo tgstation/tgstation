@@ -1752,6 +1752,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"hU" = (
+/turf/open/floor/circuit/green,
+/area/station/bitrunning/den)
 "ii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2181,7 +2184,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "FW" = (
-/obj/effect/bitrunning/reward_spawn,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/circuit/green,
 /area/station/bitrunning/den)
 "Ht" = (
@@ -3194,7 +3197,7 @@ aa
 aa
 uI
 FW
-FW
+hU
 jR
 Oq
 uI
@@ -3286,7 +3289,7 @@ aa
 aa
 uI
 FW
-FW
+hU
 jR
 Oq
 uI
