@@ -209,6 +209,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return FALSE
 	else if(filelength > client_max_file_size)
 		to_chat(src, span_warning("Error: AllowUpload(): File Upload too large. Upload Limit: [client_max_file_size/1024]KiB."))
+		return FALSE
+	return TRUE
+
 
 	///////////
 	//CONNECT//
