@@ -73,8 +73,6 @@
 	var/using_special = FALSE
 	/// Determines whether or not Space Dragon is currently tearing through a wall.
 	var/tearing_wall = FALSE
-	/// The ability to make your sprite smaller
-	var/datum/action/small_sprite/space_dragon/small_sprite
 	/// The color of the space dragon.
 	var/chosen_color
 	/// Minimum devastation damage dealt coefficient based on max health
@@ -84,12 +82,10 @@
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
-	small_sprite = new
-	small_sprite.Grant(src)
-	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, PROC_REF(add_dragon_overlay))
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
 	. = ..()
@@ -104,13 +100,26 @@
 /mob/living/simple_animal/hostile/space_dragon/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	tiredness = max(tiredness - (0.5 * seconds_per_tick), 0)
-	for(var/mob/living/consumed_mob in src)
-		if(consumed_mob.stat == DEAD)
-			continue
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-		visible_message(span_danger("[src] vomits up [consumed_mob]!"))
-		consumed_mob.forceMove(loc)
-		consumed_mob.Paralyze(50)
+
+/mob/living/simple_animal/hostile/space_dragon/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if (isliving(arrived))
+		RegisterSignal(arrived, COMSIG_MOB_STATCHANGE, PROC_REF(eaten_stat_changed))
+
+/mob/living/simple_animal/hostile/space_dragon/Exited(atom/movable/gone, direction)
+	. = ..()
+	if (isliving(gone))
+		UnregisterSignal(gone, COMSIG_MOB_STATCHANGE)
+
+/// Release consumed mobs if they transition from dead to alive
+/mob/living/simple_animal/hostile/space_dragon/proc/eaten_stat_changed(mob/living/eaten)
+	SIGNAL_HANDLER
+	if (eaten.stat == DEAD)
+		return
+	playsound(src, 'sound/effects/splat.ogg', vol = 50, vary = TRUE)
+	visible_message(span_danger("[src] vomits up [eaten]!"))
+	eaten.forceMove(loc)
+	eaten.Paralyze(5 SECONDS)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
 	if(using_special)
@@ -169,15 +178,10 @@
 /mob/living/simple_animal/hostile/space_dragon/death(gibbed)
 	. = ..()
 	add_dragon_overlay()
-	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
 
 /mob/living/simple_animal/hostile/space_dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
-	var/was_dead = stat == DEAD
 	. = ..()
 	add_dragon_overlay()
-
-	if (was_dead)
-		RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, PROC_REF(add_dragon_overlay))
 
 /**
  * Allows space dragon to choose its own name.
@@ -221,8 +225,6 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/add_dragon_overlay()
 	cut_overlays()
-	if(!small_sprite.small)
-		return
 	if(stat == DEAD)
 		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_dead")
 		overlay.appearance_flags = RESET_COLOR

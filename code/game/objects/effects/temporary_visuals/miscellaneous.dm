@@ -490,11 +490,12 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	obj_flags = CAN_BE_HIT
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	var/status = 0
 	var/delay = 0
 
-/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status, rcd_upgrades)
 	. = ..()
 	status = rcd_status
 	delay = rcd_delay
@@ -504,6 +505,26 @@
 		icon_state = "rcd_end_reverse"
 	else
 		update_appearance()
+
+	if (rcd_upgrades & RCD_UPGRADE_ANTI_INTERRUPT)
+		color = list(
+			1.0, 0.5, 0.5, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.0, 0.0, 0.0, 1.0,
+			0.0, 0.0, 0.0, 0.0,
+		)
+
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
+
+/obj/effect/constructing_effect/update_name(updates)
+	. = ..()
+
+	if (status == RCD_DECONSTRUCT)
+		name = "deconstruction effect"
+	else
+		name = "construction effect"
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
@@ -529,6 +550,18 @@
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/constructing_effect/proc/attacked(mob/user)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	end()
+
+/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
+	attacked(user)
+
+/obj/effect/constructing_effect/attack_hand(mob/living/user, list/modifiers)
+	attacked(user)
 
 /obj/effect/temp_visual/electricity
 	icon_state = "electricity3"

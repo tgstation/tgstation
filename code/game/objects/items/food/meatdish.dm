@@ -963,3 +963,86 @@
 	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/sweet_and_sour_meatballs
+	name = "sweet and sour meatballs"
+	desc = "Golden meatballs glazed in a sticky savory sauce, served with pineapple and pepper chunks."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "sweet_and_sour_meatballs"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment = 8,
+	)
+	tastes = list("meat" = 5, "savory sauce" = 4, "tangy pineapple" = 3, "pepper" = 2)
+	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
+
+/obj/item/food/kebab/pineapple_skewer
+	name = "pineapple skewer"
+	desc = "Chunks of glazed meat skewered on a rod with pineapple slices. Surprisingly not bad!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "pineapple_skewer"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+	)
+	tastes = list("juicy meat" = 4, "pineapple" = 3)
+	foodtypes = MEAT | FRUIT | PINEAPPLE
+
+/obj/item/food/futomaki_sushi_roll
+	name = "futomaki sushi roll"
+	desc = "A roll of futomaki sushi, made of boiled egg, fish, and cucumber. Sliceable"
+	icon_state = "futomaki_sushi_roll"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)
+	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/futomaki_sushi_roll/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/futomaki_sushi_slice, 4, screentip_verb = "Chop")
+
+/obj/item/food/futomaki_sushi_slice
+	name = "futomaki sushi slice"
+	desc = "A slice of futomaki sushi, made of boiled egg, fish, and cucumber."
+	icon_state = "futomaki_sushi_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("boiled rice" = 4, "fish" = 5, "egg" = 3, "dried seaweed" = 2, "cucumber" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/philadelphia_sushi_roll
+	name = "Philadelphia sushi roll"
+	desc = "A roll of Philadelphia sushi, made of cheese, fish, and cucumber. Sliceable"
+	icon_state = "philadelphia_sushi_roll"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+	)
+	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
+	foodtypes = VEGETABLES | SEAFOOD | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/philadelphia_sushi_roll/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/philadelphia_sushi_slice, 4, screentip_verb = "Chop")
+
+/obj/item/food/philadelphia_sushi_slice
+	name = "Philadelphia sushi slice"
+	desc = "A roll of Philadelphia sushi, made of cheese, fish, and cucumber."
+	icon_state = "philadelphia_sushi_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("boiled rice" = 4, "fish" = 5, "creamy cheese" = 3, "dried seaweed" = 2, "cucumber" = 2)
+	foodtypes = VEGETABLES | SEAFOOD | DAIRY
+	w_class = WEIGHT_CLASS_SMALL

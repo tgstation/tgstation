@@ -122,5 +122,5 @@
 
 /datum/ai_behavior/hunt_target/simple_click
 
-/datum/ai_behavior/hunt_target/simple_click/target_caught(mob/living/hunter, obj/structure/cable/hunted)
+/datum/ai_behavior/hunt_target/simple_click/target_caught(mob/living/hunter, atom/hunted)
 	hunter.ai_controller_click(hunted, combat_mode = TRUE)

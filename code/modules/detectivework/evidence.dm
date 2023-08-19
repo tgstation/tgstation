@@ -20,7 +20,8 @@
 	if(evidencebagEquip(I, user))
 		return 1
 
-/obj/item/evidencebag/handle_atom_del(atom/A)
+/obj/item/evidencebag/Exited(atom/movable/gone, direction)
+	. = ..()
 	cut_overlays()
 	w_class = initial(w_class)
 	icon_state = initial(icon_state)

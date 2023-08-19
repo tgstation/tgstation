@@ -51,6 +51,6 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/carrot
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/carrot
+	hunting_behavior = /datum/ai_behavior/hunt_target/simple_click/carrot
 	hunt_targets = list(/obj/item/food/grown/carrot)
 	hunt_range = 6
