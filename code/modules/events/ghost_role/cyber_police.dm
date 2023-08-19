@@ -1,11 +1,12 @@
 /datum/round_event_control/cyber_police
 	name = "Spawn Cyber Police"
+	category = EVENT_CATEGORY_INVASION
+	description = "Compiles a binary marshal to ensure data integrity in the virtual domain."
+	dynamic_should_hijack = FALSE
+	max_occurrences = 5
+	min_players = 1
 	typepath = /datum/round_event/ghost_role/cyber_police
 	weight = 10
-	max_occurrences = 5
-	category = EVENT_CATEGORY_INVASION
-	dynamic_should_hijack = TRUE
-	description = "Compiles a binary marshal to ensure data integrity in the virtual domain."
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/cyber_police)
 	/// Mob candidates that can be converted into a sentinel.
 	var/list/mutation_candidates = list()
@@ -72,7 +73,7 @@
 	player_mind.special_role = ROLE_CYBER_POLICE
 	player_mind.add_antag_datum(/datum/antagonist/cyber_police)
 
-	SEND_SIGNAL(server, COMSIG_BITRUNNER_COP_SPAWNED, new_agent)
+	SEND_SIGNAL(server, COMSIG_BITRUNNER_SPAWN_GLITCH, new_agent)
 
 	playsound(new_agent, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(new_agent)] has been made into Cyber Police by an event.")

@@ -1,7 +1,7 @@
 #define BASE_DISCONNECT_DAMAGE 40
 
 /obj/machinery/netpod
-	name = "net pod"
+	name = "netpod"
 
 	base_icon_state = "netpod"
 	circuit = /obj/item/circuitboard/machine/netpod

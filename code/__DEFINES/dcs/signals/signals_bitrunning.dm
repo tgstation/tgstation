@@ -25,11 +25,13 @@
 /// from /obj/machinery/quantum_server/shutdown() : (mob/living)
 #define COMSIG_BITRUNNER_SHUTDOWN_ALERT "bitrunner_shutdown"
 
+// Notifies the bitrunners
 /// from /datum/antagonist/cyber_police/proc/notify() :
 #define COMSIG_BITRUNNER_THREAT_CREATED "bitrunner_threat"
 
-/// from midround and event spawns: (mob/living)
-#define COMSIG_BITRUNNER_COP_SPAWNED "bitrunner_cop_spawned"
+// Informs the server to up the threat count
+/// from event spawns: (mob/living)
+#define COMSIG_BITRUNNER_SPAWN_GLITCH "bitrunner_spawn_glitch"
 
 /// from /obj/machinery/quantum_server/refreshParts(): (servo rating)
 #define COMSIG_BITRUNNER_SERVER_UPGRADED "bitrunner_server_upgraded"

@@ -68,7 +68,7 @@
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(src, COMSIG_BITRUNNER_CLIENT_CONNECTED, PROC_REF(on_client_connected))
 	RegisterSignal(src, COMSIG_BITRUNNER_CLIENT_DISCONNECTED, PROC_REF(on_client_disconnected))
-	RegisterSignal(src, COMSIG_BITRUNNER_COP_SPAWNED, PROC_REF(on_threat_created))
+	RegisterSignal(src, COMSIG_BITRUNNER_SPAWN_GLITCH, PROC_REF(on_threat_created))
 
 	// This further gets sorted in the client by cost so it's random and grouped
 	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
@@ -227,6 +227,7 @@
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
+	SSbitrunning.add_server(src)
 
 	return TRUE
 
@@ -465,7 +466,7 @@
 		if(QDELETED(creature) || creature.mind)
 			mutation_candidates.Remove(creature)
 
-	return mutation_candidates
+	return shuffle(mutation_candidates)
 
 /// Grades the player's run based on several factors
 /obj/machinery/quantum_server/proc/grade_completion(difficulty, threats, points, randomized, completion_time)
@@ -517,9 +518,9 @@
 	for(var/thing in generated_domain.created_atoms_list)
 		if(isliving(thing)) // so we can mutate them
 			var/mob/living/creature = thing
+
 			if(creature.can_be_cybercop)
 				mutation_candidates += creature
-
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
@@ -541,7 +542,7 @@
 	for(var/thing in GLOB.landmarks_list)
 		if(istype(thing, /obj/effect/landmark/bitrunning/hololadder_spawn))
 			exit_turfs += get_turf(thing)
-			qdel(thing)
+			qdel(thing) // i'm worried about multiple servers getting confused so lets clean em up
 			continue
 
 		if(istype(thing, /obj/effect/landmark/bitrunning/cache_goal_turf))
@@ -563,6 +564,7 @@
 		CRASH("Failed to find send turfs on generated domain.")
 
 	if(length(crate_turfs))
+		shuffle_inplace(crate_turfs)
 		new /obj/structure/closet/crate/secure/bitrunning/encrypted(pick(crate_turfs))
 
 	return TRUE
@@ -688,13 +690,13 @@
 	examine_text += span_info("Beneath your gaze, the floor pulses subtly with streams of encoded data.")
 	examine_text += span_info("It seems to be part of the location designated for retrieving encrypted payloads.")
 
-/// Handles when cybercops are summoned into the area
+/// Handles when cybercops are summoned into the area or ghosts click a ghost role spawner
 /obj/machinery/quantum_server/proc/on_threat_created(datum/source, mob/living/threat)
 	SIGNAL_HANDLER
 
 	domain_threats += 1
 	spawned_threats += threat
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED) // notify players
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
@@ -738,6 +740,7 @@
 	generated_safehouse = null
 	mutation_candidates.Cut()
 	spawned_threats.Cut()
+	SSbitrunning.remove_server(src)
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/crate)

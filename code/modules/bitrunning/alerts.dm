@@ -9,7 +9,7 @@
 
 /atom/movable/screen/alert/bitrunning/netpod_damaged
 	name = "Integrity Compromised"
-	desc = "The net pod is damaged. Find an exit."
+	desc = "The netpod is damaged. Find an exit."
 
 /atom/movable/screen/alert/bitrunning/qserver_shutting_down
 	name = "Domain Rebooting"

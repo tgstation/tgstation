@@ -1521,7 +1521,7 @@
 	)
 
 /obj/item/circuitboard/machine/netpod
-	name = "Net pod"
+	name = "Netpod"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/netpod
 	req_components = list(
