@@ -269,15 +269,7 @@
 					P.play_tool_sound(src)
 					var/obj/machinery/new_machine = new circuit.build_path(loc)
 					if(istype(new_machine))
-						// Machines will init with a set of default components. Move to nullspace so we don't trigger handle_atom_del, then qdel.
-						// Finally, replace with this frame's parts.
-						if(new_machine.circuit)
-							// Move to nullspace and delete.
-							new_machine.circuit.moveToNullspace()
-							QDEL_NULL(new_machine.circuit)
-						for(var/obj/old_part in new_machine.component_parts)
-							old_part.moveToNullspace()
-							qdel(old_part)
+						new_machine.clear_components()
 
 						// Set anchor state
 						new_machine.set_anchored(anchored)

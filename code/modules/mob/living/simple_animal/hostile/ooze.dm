@@ -39,6 +39,7 @@
 	create_reagents(300)
 	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/content_barfer)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!eat_atom(I, TRUE))
@@ -202,12 +203,7 @@
 ///Register for owner death
 /datum/action/consume/New(Target)
 	. = ..()
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
-	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(handle_mob_deletion))
-
-/datum/action/consume/proc/handle_mob_deletion()
-	SIGNAL_HANDLER
-	stop_consuming() //Shit out the vored mob before u go go
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(stop_consuming))
 
 ///Try to consume the pulled mob
 /datum/action/consume/Trigger(trigger_flags)
@@ -235,14 +231,17 @@
 /datum/action/consume/proc/start_consuming(mob/living/target)
 	vored_mob = target
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
-	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(handle_mob_deletion))
+	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
 
 ///Stop consuming the mob; dump them on the floor
 /datum/action/consume/proc/stop_consuming()
+	SIGNAL_HANDLER
 	STOP_PROCESSING(SSprocessing, src)
+	if (isnull(vored_mob))
+		return
 	vored_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
@@ -260,10 +259,9 @@
 	if(vored_mob.getBruteLoss() >= 200)
 		stop_consuming()
 
-///On owner death dump the current vored mob
-/datum/action/consume/proc/on_owner_death()
-	SIGNAL_HANDLER
+/datum/action/consume/Remove(mob/remove_from)
 	stop_consuming()
+	return ..()
 
 
 ///* Gelatinious Grapes code below *\\\\

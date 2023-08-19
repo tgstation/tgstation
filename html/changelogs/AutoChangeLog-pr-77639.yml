@@ -1,0 +1,8 @@
+author: "Fikou, Armhulen, Sheets (+rep for Mothblocks and Potato)"
+delete-after: True
+changes:
+  - bugfix: "RD MODsuit outfit (admin only) no longer has a beret that blocks the activation of the suit"
+  - bugfix: "The beret used by death squad officers no longer is blocked from being put on a hat stabilizer module"
+  - admin: "Admins can now Shear matrices of objects in Modify Transform"
+  - admin: "Admins now have access to Test Matrices in the VV dropdown, an all-in-one tool for editing transforms."
+  - rscadd: "MODLink system, available through scryers (from RnD and Charlie Station) and through MODsuits. Lets you call people with holographs!"
