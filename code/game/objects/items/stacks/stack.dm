@@ -458,7 +458,7 @@
 			return FALSE
 
 	if(recipe.on_tram)
-		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
+		if(!locate(/obj/structure/transport/linear/tram) in dest_turf)
 			builder.balloon_alert(builder, "must be made on a tram!")
 			return FALSE
 

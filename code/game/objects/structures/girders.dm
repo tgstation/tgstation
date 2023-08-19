@@ -63,7 +63,7 @@
 			balloon_alert(user, "need floor!")
 			return
 		if(state == GIRDER_TRAM)
-			if(!locate(/obj/structure/industrial_lift/tram) in src.loc.contents)
+			if(!locate(/obj/structure/transport/linear/tram) in src.loc.contents)
 				balloon_alert(user, "need tram floors!")
 				return
 
@@ -202,22 +202,17 @@
 				if(sheets.get_amount() < amount)
 					balloon_alert(user, "need [amount] sheets!")
 					return
+				var/tram_wall_type = text2path("/obj/structure/tram/alt/[M]")
+				if(!tram_wall_type)
+					balloon_alert(user, "need different material!")
+					return
 				balloon_alert(user, "adding plating...")
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
-					sheets.use(amount)
 					var/obj/structure/tram/tram_wall
-					var/tram_wall_type = text2path("/obj/structure/tram/[M]")
-					if(tram_wall_type)
-						tram_wall = new tram_wall_type(loc)
-					else
-						var/obj/structure/tram/material/mat_tram_wall = new(loc)
-						var/list/material_list = list()
-						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
-						if(material_list)
-							mat_tram_wall.set_custom_materials(material_list)
-						tram_wall = mat_tram_wall
+					tram_wall = new tram_wall_type(loc)
+					sheets.use(amount)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -392,11 +387,11 @@
 	max_integrity = 350
 
 /obj/structure/girder/tram
-	name = "tram girder"
+	name = "tram frame"
 	state = GIRDER_TRAM
 
 /obj/structure/girder/tram/corner
-	name = "tram corner girder"
+	name = "tram frame corner"
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 
