@@ -1,0 +1,4 @@
+author: "spookydonut"
+delete-after: True
+changes:
+  - bugfix: "Incompatible quirks in existing savefiles shouldn't be possible anymore."
