@@ -188,7 +188,7 @@
 	name = "Martian fried noodles"
 	reqs = list(
 		/obj/item/food/spaghetti/boilednoodles = 1,
-		/obj/item/food/peanuts/salted = 1,
+		/obj/item/food/grown/peanut = 2,
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/egg = 1,

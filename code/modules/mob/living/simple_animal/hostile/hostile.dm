@@ -479,20 +479,11 @@
 		else
 			targeted_zone = ran_zone()
 		casing.fire_casing(targeted_atom, src, null, null, null, targeted_zone, 0,  src)
-	else if(projectiletype)
-		var/obj/projectile/P = new projectiletype(startloc)
-		playsound(src, projectilesound, 100, TRUE)
-		P.starting = startloc
-		P.firer = src
-		P.fired_from = src
-		P.yo = targeted_atom.y - startloc.y
-		P.xo = targeted_atom.x - startloc.x
+		return
+	if(projectiletype)
+		fire_projectile(projectiletype, targeted_atom, projectilesound)
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
 			newtonian_move(get_dir(targeted_atom, target_from))
-		P.original = targeted_atom
-		P.preparePixelProjectile(targeted_atom, src)
-		P.fire()
-		return P
 
 
 /mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)

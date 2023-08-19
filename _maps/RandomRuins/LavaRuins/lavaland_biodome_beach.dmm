@@ -524,18 +524,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "qK" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "cabinet";
-	name = "bartender's closet";
-	req_access = list("bar")
-	},
-/obj/item/clothing/shoes/sandal{
-	desc = "A very fashionable pair of flip-flops.";
-	name = "flip-flops"
-	},
-/obj/item/clothing/neck/beads,
-/obj/item/clothing/glasses/sunglasses/reagent,
-/obj/item/clothing/suit/costume/hawaiian,
+/obj/structure/closet/secure_closet/bar/lavaland_bartender_clothes,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -960,34 +949,7 @@
 /turf/open/floor/iron/stairs/left,
 /area/ruin/powered/beach)
 "HW" = (
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/vending_refill/cigarette,
-/obj/item/vending_refill/boozeomat,
-/obj/structure/closet/secure_closet{
-	icon_state = "cabinet";
-	name = "booze storage";
-	req_access = list("bar")
-	},
-/obj/item/storage/backpack/duffelbag,
-/obj/item/etherealballdeployer,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/bottle/beer/light,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
-/obj/item/reagent_containers/cup/glass/colocup,
+/obj/structure/closet/secure_closet/bar/lavaland_bartender_booze,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Il" = (
@@ -1223,10 +1185,7 @@
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/suit/costume/ianshirt,
-/obj/item/clothing/shoes/sandal{
-	desc = "A very fashionable pair of flip-flops.";
-	name = "flip-flops"
-	},
+/obj/item/clothing/shoes/sandal/beach,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/neck/beads,
 /turf/open/floor/wood,

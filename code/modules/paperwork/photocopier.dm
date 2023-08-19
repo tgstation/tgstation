@@ -96,22 +96,19 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/setup_components()
 	AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
-/obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == object_copy)
+/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == object_copy)
 		object_copy = null
-	if(deleting_atom == ass)
-		ass = null
-	if(deleting_atom == toner_cartridge)
+	if(gone == toner_cartridge)
 		toner_cartridge = null
-	if(deleting_atom in paper_stack)
-		paper_stack -= deleting_atom
-	return ..()
+	if(gone in paper_stack)
+		paper_stack -= gone
 
 /obj/machinery/photocopier/Destroy()
 	// object_copy can be a traitor objective, don't qdel
 	if(object_copy)
 		object_copy.forceMove(drop_location())
-		object_copy = null
 
 	QDEL_NULL(toner_cartridge)
 	QDEL_LIST(paper_stack)
@@ -622,10 +619,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			object_copy.forceMove(drop_location())
 			visible_message(span_warning("[object_copy] is shoved out of the way by [ass]!"))
 			object_copy = null
-
-/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
-	check_ass() // There was potentially a person sitting on the copier, check if they're still there.
-	return ..()
 
 /**
  * Checks the living mob `ass` exists and its location is the same as the photocopier.
