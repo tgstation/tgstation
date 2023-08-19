@@ -1271,6 +1271,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
+	VV_DROPDOWN_OPTION(VV_HK_TEST_MATRIXES, "Test Matrices")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 	VV_DROPDOWN_OPTION(VV_HK_ARMOR_MOD, "Modify Armor")
 	if(greyscale_colors)
@@ -1354,7 +1355,7 @@
 		ai_controller = new result(src)
 
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
-		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate","Shear")
 		var/matrix/M = transform
 		if(!result)
 			return
@@ -1371,6 +1372,12 @@
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Translate(x,y)
+			if("Shear")
+				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				if(isnull(x) || isnull(y))
+					return
+				transform = M.Shear(x,y)
 			if("Rotate")
 				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 				if(isnull(angle))
@@ -1413,12 +1420,13 @@
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
-		var/client/C = usr.client
-		C?.open_filter_editor(src)
+		usr.client?.open_filter_editor(src)
 
 	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
-		var/client/C = usr.client
-		C?.open_color_matrix_editor(src)
+		usr.client?.open_color_matrix_editor(src)
+
+	if(href_list[VV_HK_TEST_MATRIXES] && check_rights(R_VAREDIT))
+		usr.client?.open_matrix_tester(src)
 
 /atom/vv_get_header()
 	. = ..()
@@ -1605,7 +1613,7 @@
 /atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Check if the multitool has an item in it's data buffer
+///Check if an item supports a data buffer (is a multitool)
 /atom/proc/multitool_check_buffer(user, obj/item/multitool, silent = FALSE)
 	if(!istype(multitool, /obj/item/multitool))
 		if(user && !silent)
@@ -2098,16 +2106,18 @@
 	// Now we're gonna do a scanline effect
 	// Gonna take this atom and give it a render target, then use it as a source for a filter
 	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
-	var/static/atom/movable/scanline
-	if(!scanline)
-		scanline = new(null)
-		scanline.icon = 'icons/effects/effects.dmi'
-		scanline.icon_state = "scanline"
-		// * so it doesn't render
-		scanline.render_target = "*HoloScanline"
+	var/atom/movable/scanline = new(null)
+	scanline.icon = 'icons/effects/effects.dmi'
+	scanline.icon_state = "scanline"
+	scanline.appearance_flags |= RESET_TRANSFORM
+	// * so it doesn't render
+	var/static/uid_scan = 0
+	scanline.render_target = "*HoloScanline [uid_scan]"
+	uid_scan++
 	// Now we add it as a filter, and overlay the appearance so the render source is always around
 	add_filter("HOLO: Scanline", 2, alpha_mask_filter(render_source = scanline.render_target))
 	add_overlay(scanline)
+	qdel(scanline)
 	// Annd let's make the sucker emissive, so it glows in the dark
 	if(!render_target)
 		var/static/uid = 0

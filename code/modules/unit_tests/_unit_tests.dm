@@ -124,6 +124,7 @@
 #include "dcs_check_list_arguments.dm"
 #include "dcs_get_id_from_elements.dm"
 #include "designs.dm"
+#include "dismemberment.dm"
 #include "door_access.dm"
 #include "dragon_expiration.dm"
 #include "drink_icons.dm"

@@ -1546,7 +1546,7 @@
 			if(security_level != AIRLOCK_SECURITY_NONE)
 				to_chat(user, span_notice("[src]'s reinforcement needs to be removed first."))
 				return FALSE
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 32)
 	return FALSE
 
 /obj/machinery/door/airlock/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -2391,7 +2391,6 @@
 	multi_tile = TRUE
 	opacity = FALSE
 	glass = TRUE
-	bound_width = 64 // 2x1
 
 /obj/structure/fluff/airlock_filler
 	name = "airlock fluff"
