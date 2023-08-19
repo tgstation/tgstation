@@ -1519,4 +1519,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		bound_height = world.icon_size
 	else
 		bound_width = world.icon_size
+<<<<<<< HEAD
 		bound_height = size * world.icon_size
+=======
+		bound_height = size * world.icon_size
+>>>>>>> bb4792cc0dc (Fix invisible box on rotated multi-tile airlocks (#77736))
