@@ -453,6 +453,9 @@ Difficulty: Hard
 	. = ..()
 	if(istype(the_target, /mob/living/simple_animal/hostile/asteroid/hivelordbrood)) //ignore temporary targets in favor of more permanent targets
 		return FALSE
+	if (!.)
+		return FALSE
+	return !HAS_TRAIT(the_target, TRAIT_GUTTED)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
@@ -481,6 +484,8 @@ Difficulty: Hard
 					burst_range = 3
 					INVOKE_ASYNC(src, PROC_REF(burst), get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
 				OpenFire()
+				if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
+					devour(L)
 			else
 				devour(L)
 		else

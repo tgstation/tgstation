@@ -151,6 +151,12 @@
 	REMOVE_TRAIT(L, TRAIT_GUTTED, src)
 	UnregisterSignal(L, COMSIG_MOB_STATCHANGE)
 
+/mob/living/simple_animal/hostile/megafauna/CanAttack(atom/the_target)
+    . = ..()
+    if (!.)
+        return FALSE
+    return !HAS_TRAIT(the_target, TRAIT_GUTTED)
+
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
