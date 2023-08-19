@@ -87,3 +87,12 @@
 	set_machine_stat(machine_stat & ~EMAGGED)
 	update_appearance()
 	return TRUE
+
+/obj/machinery/icts/proc/detailed_destination_list(specific_transport_id)
+	. = list()
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+		var/list/this_destination = list()
+		this_destination["name"] = destination.name
+		this_destination["dest_icons"] = destination.tgui_icons
+		this_destination["id"] = destination.platform_code
+		. += list(this_destination)
