@@ -12549,6 +12549,11 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/security/office)
+"dlt" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
+/turf/open/openspace,
+/area/station/tram)
 "dlL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -16202,7 +16207,7 @@
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
-/obj/structure/transport/linear/tram/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /turf/open/openspace,
 /area/station/tram)
 "eFd" = (
@@ -19206,10 +19211,10 @@
 "fNs" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram,
 /obj/machinery/lightbar/tram/exterior/directional/east{
 	pixel_y = 16
 	},
+/obj/structure/tram,
 /turf/open/openspace,
 /area/station/tram)
 "fNx" = (
@@ -20076,10 +20081,10 @@
 /area/station/ai_monitored/security/armory)
 "ggG" = (
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram/split,
 /obj/machinery/icts/destination_sign{
 	pixel_x = -8
 	},
+/obj/structure/tram/split,
 /turf/open/openspace,
 /area/station/tram)
 "ggH" = (
@@ -20768,10 +20773,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "gsq" = (
-/obj/structure/transport/linear/tram/structure/thermoplastic,
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 4
 	},
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "gsu" = (
@@ -23784,10 +23789,10 @@
 	dir = 1
 	},
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram,
 /obj/machinery/lightbar/tram/exterior/directional/east{
 	pixel_y = -16
 	},
+/obj/structure/tram,
 /turf/open/openspace,
 /area/station/tram)
 "hCv" = (
@@ -24354,10 +24359,10 @@
 	dir = 1
 	},
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram,
 /obj/machinery/lightbar/tram/exterior/directional/west{
 	pixel_y = -16
 	},
+/obj/structure/tram,
 /turf/open/openspace,
 /area/station/tram)
 "hNo" = (
@@ -30195,13 +30200,6 @@
 /obj/structure/table/optable,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
-"jSk" = (
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/transport/linear/tram/structure/thermoplastic,
-/turf/open/openspace,
-/area/station/tram)
 "jSJ" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -30276,7 +30274,7 @@
 /area/station/science/research)
 "jUi" = (
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram/solid,
+/obj/structure/tram/solid,
 /turf/open/openspace,
 /area/station/tram)
 "jUz" = (
@@ -31318,7 +31316,7 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure/thermoplastic/light,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "kkx" = (
@@ -34446,7 +34444,7 @@
 /area/station/security/checkpoint/escape)
 "lpc" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/transport/linear/tram/structure/thermoplastic/light,
+/obj/structure/transport/linear/tram/structure/thermoplastic,
 /turf/open/openspace,
 /area/station/tram)
 "lpg" = (
@@ -35150,10 +35148,10 @@
 "lBm" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram,
 /obj/machinery/lightbar/tram/exterior/directional/west{
 	pixel_y = 16
 	},
+/obj/structure/tram,
 /turf/open/openspace,
 /area/station/tram)
 "lBF" = (
@@ -35695,10 +35693,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/violet/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"lLk" = (
-/obj/structure/transport/linear/tram/structure/thermoplastic/light,
-/turf/open/floor/noslip/tram_plate,
-/area/station/tram)
 "lLq" = (
 /obj/structure/bed{
 	dir = 8
@@ -36376,7 +36370,7 @@
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
 	},
-/obj/structure/transport/linear/tram/structure/thermoplastic,
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "lVu" = (
@@ -37741,10 +37735,10 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/transport/linear/tram/structure/thermoplastic,
 /obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
 /turf/open/openspace,
 /area/station/tram)
 "mvy" = (
@@ -50242,10 +50236,10 @@
 /area/station/security/brig)
 "ray" = (
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram/solid,
 /obj/structure/plaque/static_plaque/tram{
 	pixel_y = -1
 	},
+/obj/structure/tram/solid,
 /turf/open/openspace,
 /area/station/tram)
 "raD" = (
@@ -51255,8 +51249,8 @@
 /area/station/hallway/secondary/construction/engineering)
 "rrg" = (
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram/solid,
 /obj/machinery/icts/controller,
+/obj/structure/tram/solid,
 /turf/open/openspace,
 /area/station/tram)
 "rrk" = (
@@ -51621,6 +51615,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
+"rAa" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram/structure/thermoplastic/light,
+/turf/open/openspace,
+/area/station/tram)
 "rAf" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engineering - Atmospherics N2 Chamber";
@@ -55611,7 +55612,7 @@
 /area/station/security/execution/transfer)
 "sXj" = (
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram,
+/obj/structure/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/tram)
 "sXm" = (
@@ -56778,7 +56779,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "tsf" = (
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram/split,
+/obj/structure/tram/split,
 /turf/open/openspace,
 /area/station/tram)
 "tsg" = (
@@ -58344,10 +58345,10 @@
 /area/station/engineering/atmos)
 "tUk" = (
 /obj/structure/transport/linear/tram/structure,
-/obj/structure/window/reinforced/tram/split,
 /obj/machinery/icts/destination_sign{
 	pixel_x = 8
 	},
+/obj/structure/tram/split,
 /turf/open/openspace,
 /area/station/tram)
 "tUy" = (
@@ -69939,11 +69940,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"yeH" = (
-/obj/structure/fluff/tram_rail,
-/obj/structure/transport/linear/tram/structure/thermoplastic,
-/turf/open/openspace,
-/area/station/tram)
 "yeN" = (
 /obj/structure/closet/secure_closet/medical3,
 /obj/item/clothing/glasses/hud/health,
@@ -166881,7 +166877,7 @@ aEk
 mYI
 fhc
 rrg
-yeH
+dlt
 gsq
 mvn
 jUi
@@ -167139,7 +167135,7 @@ mYI
 ykP
 eNw
 lpc
-lLk
+juu
 kkw
 eNw
 ykP
@@ -167396,7 +167392,7 @@ kjY
 ykP
 rlO
 lpc
-lLk
+juu
 kkw
 rlO
 ykP
@@ -168424,7 +168420,7 @@ cHj
 ykP
 eNw
 lpc
-lLk
+juu
 kkw
 eNw
 ykP
@@ -168681,7 +168677,7 @@ mpa
 ykP
 rlO
 lpc
-lLk
+juu
 kkw
 rlO
 ykP
@@ -168939,7 +168935,7 @@ aiH
 jUi
 eEQ
 lVr
-jSk
+rAa
 ray
 dhI
 lej

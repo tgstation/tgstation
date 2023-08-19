@@ -820,7 +820,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 /obj/structure/transport/linear/tram
 	name = "tram"
 	desc = "A tram for tramversing the station."
-	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
+	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "subfloor"
 	base_icon_state = "subfloor"
 	layer = TRAM_STRUCTURE_LAYER

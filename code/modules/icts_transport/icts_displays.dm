@@ -1,7 +1,7 @@
 /obj/machinery/icts/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
-	icon = 'icons/obj/machines/tram/tram_display.dmi'
+	icon = 'icons/obj/tram/tram_display.dmi'
 	icon_state = "desto_off"
 	base_icon_state = "desto_"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
@@ -24,12 +24,11 @@
 	var/malfunctioning = FALSE
 
 /obj/machinery/icts/destination_sign/indicator
-	icon = 'icons/obj/machines/tram_sign.dmi'
+	icon = 'icons/obj/tram/tram_indicator.dmi'
 	icon_state = "indicator_off"
 	base_icon_state = "indicator_"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
-	light_mask = "indicator_off_e"
 	circuit = /obj/item/circuitboard/machine/destination_sign/indicator
 
 /obj/machinery/icts/destination_sign/Initialize(mapload)

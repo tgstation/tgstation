@@ -2,7 +2,7 @@
 /obj/machinery/icts/crossing_signal
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
-	icon = 'icons/obj/machines/tram/crossing_signal.dmi'
+	icon = 'icons/obj/tram/crossing_signal.dmi'
 	icon_state = "crossing-signal"
 	base_icon_state = "crossing-"
 	plane = GAME_PLANE_UPPER
@@ -76,7 +76,7 @@
 /obj/machinery/static_signal
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
-	icon = 'icons/obj/machines/tram/crossing_signal.dmi'
+	icon = 'icons/obj/tram/crossing_signal.dmi'
 	icon_state = "crossing-signal"
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
@@ -405,7 +405,7 @@
 
 /obj/machinery/icts/guideway_sensor
 	name = "guideway sensor"
-	icon = 'icons/obj/machines/tram/tram_sensor.dmi'
+	icon = 'icons/obj/tram/tram_sensor.dmi'
 	icon_state = "sensor-base"
 	layer = TRAM_RAIL_LAYER
 	use_power = 0

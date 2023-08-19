@@ -3778,7 +3778,6 @@
 #include "code\modules\industrial_lift\elevator\elevator_music_zone.dm"
 #include "code\modules\industrial_lift\elevator\elevator_panel.dm"
 #include "code\modules\industrial_lift\tram\tram_landmark.dm"
-#include "code\modules\industrial_lift\tram\tram_walls.dm"
 #include "code\modules\instruments\items.dm"
 #include "code\modules\instruments\piano_synth.dm"
 #include "code\modules\instruments\stationary.dm"

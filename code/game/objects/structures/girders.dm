@@ -129,7 +129,7 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(2)
-					var/obj/structure/tramwall/tram_wall = new(loc)
+					var/obj/structure/tram/tram_wall = new(loc)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -207,12 +207,12 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
-					var/obj/structure/tramwall/tram_wall
-					var/tram_wall_type = text2path("/obj/structure/tramwall/[M]")
+					var/obj/structure/tram/tram_wall
+					var/tram_wall_type = text2path("/obj/structure/tram/[M]")
 					if(tram_wall_type)
 						tram_wall = new tram_wall_type(loc)
 					else
-						var/obj/structure/tramwall/material/mat_tram_wall = new(loc)
+						var/obj/structure/tram/material/mat_tram_wall = new(loc)
 						var/list/material_list = list()
 						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
 						if(material_list)
@@ -394,6 +394,9 @@
 /obj/structure/girder/tram
 	name = "tram girder"
 	state = GIRDER_TRAM
+
+/obj/structure/girder/tram/corner
+	name = "tram corner girder"
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 

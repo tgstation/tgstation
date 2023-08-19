@@ -269,7 +269,7 @@
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
-	icon = 'icons/obj/fluff/tram_rails.dmi'
+	icon = 'icons/obj/tram/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE
