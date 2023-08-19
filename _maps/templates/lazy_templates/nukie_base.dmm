@@ -647,7 +647,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating,
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Disembarkents"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -3556,7 +3556,7 @@
 /area/centcom/syndicate_mothership/control)
 "Qh" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south{
-	name = "Frosted Window";
+	name = "Frosted Window"
 	},
 /obj/item/soap/syndie,
 /obj/structure/sign/poster/contraband/got_wood/directional/east,

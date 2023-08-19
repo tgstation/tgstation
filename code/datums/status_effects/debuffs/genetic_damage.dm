@@ -31,17 +31,17 @@
 	. = ..()
 	src.total_damage += total_damage
 
-/datum/status_effect/genetic_damage/tick(seconds_per_tick, times_fired)
-	if(ismonkey(owner) && total_damage >= GORILLA_MUTATION_MINIMUM_DAMAGE && SPT_PROB(GORILLA_MUTATION_CHANCE_PER_SECOND, seconds_per_tick))
+/datum/status_effect/genetic_damage/tick(seconds_between_ticks)
+	if(ismonkey(owner) && total_damage >= GORILLA_MUTATION_MINIMUM_DAMAGE && SPT_PROB(GORILLA_MUTATION_CHANCE_PER_SECOND, seconds_between_ticks))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.gorillize()
 		qdel(src)
 		return
 
 	if(total_damage >= minimum_before_tox_damage)
-		owner.adjustToxLoss(toxin_damage_per_second * seconds_per_tick)
+		owner.adjustToxLoss(toxin_damage_per_second * seconds_between_ticks)
 
-	total_damage -= remove_per_second * seconds_per_tick
+	total_damage -= remove_per_second * seconds_between_ticks
 	if(total_damage <= 0)
 		qdel(src)
 		return

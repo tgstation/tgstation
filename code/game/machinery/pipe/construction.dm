@@ -154,7 +154,7 @@ Buildable meters
 	do_a_flip()
 
 /obj/item/pipe/proc/do_a_flip()
-	setDir(turn(dir, -180))
+	setDir(REVERSE_DIR(dir))
 
 /obj/item/pipe/trinary/flippable/do_a_flip()
 	setDir(turn(dir, flipped ? 45 : -45))

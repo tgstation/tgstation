@@ -9,7 +9,7 @@
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
-	payday_modifier = 0.75
+	payday_modifier = 1.0
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
@@ -134,8 +134,10 @@
 		ethereal.set_facial_haircolor(dead_color, override = TRUE, update = FALSE)
 		ethereal.set_haircolor(dead_color, override = TRUE, update = TRUE)
 
-/datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
+/datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity, protection)
 	SIGNAL_HANDLER
+	if(protection & EMP_PROTECT_SELF)
+		return
 	EMPeffect = TRUE
 	spec_updatehealth(H)
 	to_chat(H, span_notice("You feel the light of your body leave you."))

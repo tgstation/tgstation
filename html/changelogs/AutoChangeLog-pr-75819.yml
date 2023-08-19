@@ -1,7 +1,0 @@
-author: "Kubisopplay"
-delete-after: True
-changes:
-  - balance: "Flashing borgs requires two consecutive flashes to fully immobilize"
-  - balance: "Flashed borgs can speak"
-  - balance: "Remote lockdown on cyborgs lasts 180 seconds"
-  - balance: "Cyborg stun arm works like normal baton, and costs less energy"

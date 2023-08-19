@@ -5,6 +5,7 @@
 		return defaults + list(
 			"cost" = defaults["cost"] / RCD_MEMORY_COST_BUFF,
 			"delay" = defaults["delay"] / RCD_MEMORY_SPEED_BUFF,
+			RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN = TRUE,
 		)
 	else
 		return defaults
@@ -37,15 +38,11 @@
  * Has special internal uses for e.g. by the material container
  *
  * Arguments:
- * - [target][obj/item]: the stack to splot
+ * - [target][obj/item/stack]: the stack to split
  * - [amount]: amount to split by
  */
-/datum/component/material_container/proc/fast_split_stack(obj/item/stack/target, amount)
+/proc/fast_split_stack(obj/item/stack/target, amount)
 	if(!target.use(amount, TRUE, FALSE))
 		return null
 
 	. = new target.type(target.drop_location(), amount, FALSE, target.mats_per_unit)
-	target.loc.atom_storage?.refresh_views()
-
-	target.is_zero_amount(delete_if_zero = TRUE)
-

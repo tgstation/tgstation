@@ -1,9 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - balance: "Syndicate duffelbags can fit 2 extra bulky items, down from three."
-  - balance: "Reduced syndicate duffelbag's unzipped slowdown from '1' to '0.3', and set its zipping-up sped to 0.5, same as unzipping."
-  - rscadd: "Added the following items to the Syndicate Duffelbag bulky exception list: Greentext, mech removal tool, gibtonite, skub, golem shells, mech ammo. Roughly sorted the list by item category."
-  - bugfix: "Fixed the syndie surgery duffelbag having more items than it can hold by removing the redundant surgical drill (Upgraded cauteries can turn into one anyways)"
-  - qol: "Any storage item with a can_hold description can be examined twice to see what it can hold now."
-  - bugfix: "The parent crayon's name is 'crayon' to prevent any weirdness with things that show the parent type's name."

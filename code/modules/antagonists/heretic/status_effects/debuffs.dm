@@ -22,7 +22,7 @@
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
 
-/datum/status_effect/void_chill/tick()
+/datum/status_effect/void_chill/tick(seconds_between_ticks)
 	owner.adjust_bodytemperature(cooling_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT)
 
 /datum/status_effect/void_chill/major
@@ -48,7 +48,7 @@
 	to_chat(owner, span_boldwarning("You feel filled with a rage that is not your own!"))
 	return TRUE
 
-/datum/status_effect/amok/tick()
+/datum/status_effect/amok/tick(seconds_between_ticks)
 	var/prev_combat_mode = owner.combat_mode
 	owner.set_combat_mode(TRUE)
 
@@ -102,7 +102,7 @@
 	to_chat(owner, span_userdanger("Your body starts to break apart!"))
 	return TRUE
 
-/datum/status_effect/corrosion_curse/tick()
+/datum/status_effect/corrosion_curse/tick(seconds_between_ticks)
 	. = ..()
 	if(!ishuman(owner))
 		return

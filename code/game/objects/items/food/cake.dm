@@ -629,3 +629,28 @@
 	icon_state = "weddingcake_slice"
 	tastes = list("cake" = 3, "frosting" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/cake/pineapple_cream_cake
+	name = "pineapple cream cake"
+	desc = "A vibrant cake with a layer of thick cream and pineapple on top."
+	icon_state = "pineapple_cream_cake"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 30,
+		/datum/reagent/consumable/sugar = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 15,
+	)
+	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE
+	slice_type = /obj/item/food/cakeslice/pineapple_cream_cake
+
+/obj/item/food/cakeslice/pineapple_cream_cake
+	name = "pineapple cream cake slice"
+	desc = "A vibrant cake with a layer of thick cream and pineapple on top."
+	icon_state = "pineapple_cream_cake_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/sugar = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE
