@@ -286,7 +286,6 @@
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/machinery/netpod/netpod = allocate(/obj/machinery/netpod, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	var/obj/structure/closet/crate/secure/bitrunning/encrypted/crate = allocate(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 
 	labrat.mind_initialize()
 	labrat.mock_client = new()
