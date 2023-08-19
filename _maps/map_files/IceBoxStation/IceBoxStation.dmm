@@ -3657,16 +3657,16 @@
 	pixel_y = 3
 	},
 /obj/item/pen{
-	pixel_y = 1;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 1
 	},
 /obj/item/paper_bin/carbon{
 	pixel_x = 5;
 	pixel_y = 18
 	},
 /obj/item/stamp/head/hop{
-	pixel_y = 5;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 5
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -8217,8 +8217,8 @@
 /obj/structure/table/wood,
 /obj/machinery/recharger,
 /obj/item/coin/plasma{
-	pixel_y = 13;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 13
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -10999,8 +10999,8 @@
 /area/mine/eva/lower)
 "doT" = (
 /obj/item/assembly/timer{
-	pixel_y = 15;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 15
 	},
 /obj/structure/table,
 /turf/open/floor/wood,
@@ -22235,12 +22235,12 @@
 	},
 /obj/item/assembly/timer,
 /obj/item/assembly/signaler{
-	pixel_y = -7;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -7
 	},
 /obj/item/assembly/signaler{
-	pixel_y = -12;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = -12
 	},
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron,
@@ -32418,8 +32418,8 @@
 "kpp" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/cigar{
-	pixel_y = 10;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 10
 	},
 /obj/item/storage/box/matches,
 /turf/open/floor/carpet,
@@ -36009,6 +36009,14 @@
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/clothing/shoes/magboots{
+	pixel_x = -11;
+	pixel_y = 1
+	},
+/obj/item/clothing/shoes/magboots{
+	pixel_x = -9;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "lup" = (
@@ -43185,8 +43193,8 @@
 "nKe" = (
 /obj/structure/table,
 /obj/item/hand_tele{
-	pixel_y = 13;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 13
 	},
 /turf/open/floor/iron,
 /area/station/command/teleporter)
@@ -46710,8 +46718,8 @@
 "oPt" = (
 /obj/structure/table,
 /obj/item/papercutter{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
