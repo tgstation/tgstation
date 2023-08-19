@@ -37,7 +37,6 @@
 			continue
 
 /datum/action/cooldown/mob_cooldown/charge/rust/on_bump(atom/movable/source, atom/target)
-	SIGNAL_HANDLER
 	if(owner == target)
 		return
 	if(destroy_objects)
