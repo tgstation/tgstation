@@ -59,12 +59,13 @@
 /// Called if we have had no target for long enough
 /datum/component/ai_target_timer/proc/finalise_losing_target()
 	deltimer(reset_clock_timer)
-	time_on_target = 0
-	store_current_time()
 	STOP_PROCESSING(SSdcs, src)
 	if (!isnull(last_target))
 		UnregisterSignal(last_target, COMSIG_QDELETING)
 	last_target = null
+	time_on_target = 0
+	if (!QDELETED(parent))
+		store_current_time()
 
 /// Store the current time on our timer in our blackboard key
 /datum/component/ai_target_timer/proc/store_current_time()
