@@ -1,16 +1,9 @@
 ## Skyraptor Station - A furry, roleplay-oriented TG-SS13 fork
 
-<<<<<<< HEAD
 [![Build Status](https://github.com/Bird-Lounge/Skyraptor-SS13/workflows/CI%20Suite/badge.svg)](https://github.com/Bird-Lounge/Skyraptor-SS13/actions?query=workflow%3A%22CI+Suite%22)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/Bird-Lounge/Skyraptor-SS13.svg)](https://isitmaintained.com/project/Bird-Lounge/Skyraptor-SS13 "Percentage of issues still open")
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/Bird-Lounge/Skyraptor-SS13.svg)](https://isitmaintained.com/project/Bird-Lounge/Skyraptor-SS13 "Average time to resolve an issue")
-![Coverage](https://img.shields.io/badge/coverage---3%25-red.svg)
-=======
-[![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open")
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
 ![Coverage](https://img.shields.io/badge/coverage---4%25-red.svg)
->>>>>>> 3957b77e9d7 (Fixes Badges Being Broken in the README (#77718))
 
 [![resentment](.github/images/badges/built-with-resentment.svg)](.github/images/comics/131-bug-free.png) [![technical debt](.github/images/badges/contains-technical-debt.svg)](.github/images/comics/106-tech-debt-modified.png) [![forinfinityandbyond](.github/images/badges/made-in-byond.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
