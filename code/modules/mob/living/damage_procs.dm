@@ -224,8 +224,8 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(!forced && !(mob_biotypes & required_biotype))
-		return
+	if(!forced && required_biotype && !(mob_biotypes & required_biotype))
+		return FALSE
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
@@ -234,8 +234,8 @@
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(!forced && !(mob_biotypes & required_biotype))
-		return
+	if(!forced && required_biotype && !(mob_biotypes & required_biotype))
+		return FALSE
 	toxloss = amount
 	if(updating_health)
 		updatehealth()
@@ -266,6 +266,8 @@
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
 		return FALSE
+	if(!forced && required_biotype && !(mob_biotypes & required_biotype))
+		return FALSE
 	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
@@ -273,6 +275,8 @@
 
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
+		return FALSE
+	if(!forced && required_biotype && !(mob_biotypes & required_biotype))
 		return FALSE
 	cloneloss = amount
 	if(updating_health)
@@ -294,8 +298,8 @@
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(required_biotype && !(mob_biotypes & required_biotype))
-		return
+	if(!forced && required_biotype && !(mob_biotypes & required_biotype))
+		return FALSE
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	if(updating_stamina)
 		updatehealth()
@@ -303,6 +307,8 @@
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
+		return FALSE
+	if(!forced && required_biotype && !(mob_biotypes & required_biotype))
 		return FALSE
 	staminaloss = amount
 	if(updating_stamina)

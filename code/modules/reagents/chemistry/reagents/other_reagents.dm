@@ -420,19 +420,19 @@
 	if(IS_CULTIST(affected_mob))
 		affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 		affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, 0)
-		affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, 0)
+		affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, FALSE)
+		affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE)
+		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
+		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
+		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
 	else  // Will deal about 90 damage when 50 units are thrown
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
-		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, 0)
-		affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, 0)
-		affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, 0)
-		affected_mob.adjustBruteLoss(1 * REM * seconds_per_tick, 0)
+		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE)
+		affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, FALSE)
+		affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, FALSE)
+		affected_mob.adjustBruteLoss(1 * REM * seconds_per_tick, FALSE)
 	..()
 
 /datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
@@ -445,8 +445,8 @@
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_fire_stacks(min(affected_mob.fire_stacks + (1.5 * seconds_per_tick), 5))
 	affected_mob.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
-	affected_mob.adjustToxLoss(0.5*seconds_per_tick, 0)
-	affected_mob.adjustFireLoss(0.5*seconds_per_tick, 0) //Hence the other damages... ain't I a bastard?
+	affected_mob.adjustToxLoss(0.5*seconds_per_tick, FALSE)
+	affected_mob.adjustFireLoss(0.5*seconds_per_tick, FALSE) //Hence the other damages... ain't I a bastard?
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
 	holder.remove_reagent(type, 0.5*seconds_per_tick)
 
@@ -979,7 +979,7 @@
 	mytray.adjust_weedlevel(-rand(1, 4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, 0)
+	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, forced = FALSE, required_biotype = affected_biotype)
 	. = TRUE
 	..()
 
@@ -1094,7 +1094,7 @@
 	var/tox_damage = 0.5
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM)
+	affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM, required_biotype = affected_biotype)
 	..()
 
 /datum/reagent/uranium/expose_turf(turf/exposed_turf, reac_volume)
@@ -1253,9 +1253,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustBruteLoss(1.665*seconds_per_tick)
-	affected_mob.adjustFireLoss(1.665*seconds_per_tick)
-	affected_mob.adjustToxLoss(1.665*seconds_per_tick)
+	affected_mob.adjustBruteLoss(1.665*seconds_per_tick, required_bodytype = affected_bodytype)
+	affected_mob.adjustFireLoss(1.665*seconds_per_tick, required_bodytype = affected_bodytype)
+	affected_mob.adjustToxLoss(1.665*seconds_per_tick, required_biotype = affected_biotype)
 	..()
 
 /datum/reagent/space_cleaner/ez_clean/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)

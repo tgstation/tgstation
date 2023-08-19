@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/affected_bodytype = BODYTYPE_ORGANIC
 	/// The affected biotype, if the reagent damages/heals toxin damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
-	var/affected_biotype = MOB_ORGANIC
+	var/affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_UNDEAD
 	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_respiration_type = ALL
