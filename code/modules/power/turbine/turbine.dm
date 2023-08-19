@@ -421,7 +421,7 @@
 	//log rotor to link later to computer
 	balloon_alert(user, "all parts linked")
 	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
+	multitool.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 
 	//success
