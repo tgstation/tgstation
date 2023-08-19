@@ -25,7 +25,7 @@
 	var/examine_desc = "is badly hurt"
 
 	/// Simple description, shortened for clarity if defined. Otherwise just takes the normal desc in the analyzer proc.
-	var/s_desc = ""
+	var/s_desc
 	/// Simple analyzer's wound description, which focuses less on the clinical aspect of the wound and more on easily readable treatment instructions.
 	var/s_treat_text = "Go to medbay idiot"
 	/// Improvised remedies indicated by the first aid analyzer only.
@@ -443,7 +443,7 @@
 	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
 
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [desc]\n<i>Treatment Guide: [s_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
+	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [s_desc ? s_desc : desc]\n<i>Treatment Guide: [s_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
 
 /datum/wound/proc/severity_text(simple = FALSE)
 	switch(severity)

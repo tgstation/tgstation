@@ -326,8 +326,8 @@
 // There's a designated burn process, but I felt this would be better for consistency with the rest of the reagent's procs
 /datum/wound/burn/tea_life_process()
 	// Sanitizes and heals, but with a limit
-	sanitization = (sanitization > 0.2) ? sanitization : sanitization + 0.05
 	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.02
+	infestation_rate = max(infestation_rate - 0.005, 0)
 	return TRUE
 
 /datum/reagent/consumable/lemonade
