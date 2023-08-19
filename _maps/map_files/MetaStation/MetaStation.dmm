@@ -8368,18 +8368,7 @@
 	name = "Robotics Privacy Control";
 	req_access = list("robotics")
 	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
-/obj/structure/closet/crate/science{
-	name = "MOD core crate"
-	},
+/obj/structure/closet/crate/mod,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

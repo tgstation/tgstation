@@ -26202,24 +26202,13 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "ixu" = (
-/obj/structure/closet/crate/science{
-	name = "MOD core crate"
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
 /obj/structure/noticeboard/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Science - Robotics";
 	network = list("ss13","rd")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "ixC" = (
