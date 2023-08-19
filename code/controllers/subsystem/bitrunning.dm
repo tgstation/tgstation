@@ -8,8 +8,12 @@ SUBSYSTEM_DEF(bitrunning)
 	flags = SS_BACKGROUND
 	wait = 1 MINUTES
 	runlevels = RUNLEVEL_GAME
+	/// Cooldown before we can spawn again
+	COOLDOWN_DECLARE(glitch_cooldown)
 	/// The servers currently processing domains
 	var/list/datum/weakref/active_servers = list()
+	/// Amount of time in between spawning
+	var/glitch_frequency = 10 MINUTES
 	/// Antags that can be spawned from the servers
 	var/static/list/possible_antags = list(
 		ROLE_CYBER_POLICE,
@@ -19,7 +23,7 @@ SUBSYSTEM_DEF(bitrunning)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/bitrunning/fire()
-	if(!length(active_servers) || prob(95))
+	if(!length(active_servers) || !COOLDOWN_FINISHED(glitch_cooldown) || prob(95))
 		return
 
 	var/list/mutation_candidates = get_mutation_candidates()
@@ -46,7 +50,9 @@ SUBSYSTEM_DEF(bitrunning)
 	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")
 	antag_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
+
 	SEND_SIGNAL(server, COMSIG_BITRUNNER_SPAWN_GLITCH, antag_mob)
+	COOLDOWN_START(src, glitch_cooldown, glitch_frequency)
 
 /// Adds a server once it starts processing a domain
 /datum/controller/subsystem/bitrunning/proc/add_server(obj/machinery/quantum_server/server)
