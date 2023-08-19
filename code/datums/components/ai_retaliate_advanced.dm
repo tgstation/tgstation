@@ -1,6 +1,7 @@
 /**
  * Attached to a mob with an AI controller, passes things which have damaged it to a blackboard.
  * The AI controller is responsible for doing anything with that information.
+ * Differs from the element as it passes new entries through a callback.
  */
 /datum/component/ai_retaliate_advanced
 	/// Callback to a mob for custom behaviour

@@ -17115,7 +17115,7 @@
 /area/station/maintenance/floor1/starboard/fore)
 "eur" = (
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
-/obj/machinery/door/airlock/multi_tile/glass{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Xenoflora"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18904,11 +18904,11 @@
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
 "eVs" = (
-/obj/item/kirbyplants/random/dead/research_director,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/machinery/computer/security/telescreen/rd{
 	pixel_x = -30
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "eVN" = (
@@ -46431,13 +46431,13 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/starboard)
 "mfY" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Command - Research Director's Quarters #1"
 	},
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /obj/machinery/newscaster/directional/west,
+/obj/item/kirbyplants/random/dead/research_director,
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/rd)
 "mge" = (
@@ -91280,7 +91280,9 @@
 /obj/item/knife/plastic{
 	pixel_x = 16
 	},
-/obj/item/food/donkpocket/warm/berry,
+/obj/item/food/donkpocket/warm/berry{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/kitchen,
 /area/station/command/heads_quarters/rd)
 "xRk" = (
