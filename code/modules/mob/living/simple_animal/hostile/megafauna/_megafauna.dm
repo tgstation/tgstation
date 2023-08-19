@@ -125,7 +125,7 @@
 
 /// Devours a target and restores health to the megafauna
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
-	if(!L)
+	if(!L || HAS_TRAIT(L, TRAIT_GUTTED))
 		return FALSE
 	visible_message(
 		span_danger("[src] devours [L]'s organs!"),
@@ -135,9 +135,21 @@
 	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	var/mob/living/carbon/carbonTarget = L
 	if(istype(carbonTarget))
-		carbonTarget.spill_organs(no_organs = TRUE)
+		qdel(L.get_organ_slot(ORGAN_SLOT_LUNGS))
+		qdel(L.get_organ_slot(ORGAN_SLOT_HEART))
+		qdel(L.get_organ_slot(ORGAN_SLOT_LIVER))
+	L.adjustBruteLoss(500)
 	L.death() //make sure they die
+	RegisterSignal(L, COMSIG_MOB_STATCHANGE, PROC_REF(on_gutted_statchange))
+	ADD_TRAIT(L, TRAIT_GUTTED, src)
+	LoseTarget()
 	return TRUE
+
+/// When the mob's stat changes after being gutted by a megafauna (they're revived, etc)
+/mob/living/simple_animal/hostile/megafauna/proc/on_gutted_statchange(mob/living/L, new_stat)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(L, TRAIT_GUTTED, src)
+	UnregisterSignal(L, COMSIG_MOB_STATCHANGE)
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)

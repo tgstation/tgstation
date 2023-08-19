@@ -431,14 +431,23 @@ Difficulty: Hard
 		..(force_grant = stored_nearby)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
+	if(!L || HAS_TRAIT(L, TRAIT_GUTTED))
+		return FALSE
 	visible_message(span_hierophant_warning("\"[pick(kill_phrases)]\""))
 	visible_message(span_hierophant_warning("[src] annihilates [L]'s organs!"),span_userdanger("You annihilate [L]'s organs, restoring your health!"))
 	adjustHealth(-L.maxHealth*0.5)
 	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	var/mob/living/carbon/carbonTarget = L
 	if(istype(carbonTarget))
-		carbonTarget.spill_organs(no_organs = TRUE)
+		qdel(L.get_organ_slot(ORGAN_SLOT_LUNGS))
+		qdel(L.get_organ_slot(ORGAN_SLOT_HEART))
+		qdel(L.get_organ_slot(ORGAN_SLOT_LIVER))
+	L.adjustFireLoss(500)
 	L.death()
+	RegisterSignal(L, COMSIG_MOB_STATCHANGE, PROC_REF(on_gutted_statchange))
+	ADD_TRAIT(L, TRAIT_GUTTED, src)
+	LoseTarget()
+	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
 	. = ..()
