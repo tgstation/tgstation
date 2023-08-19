@@ -20,6 +20,8 @@
 	advanced_simple = TRUE
 	can_be_held = TRUE
 	uses_directional_offsets = FALSE
+	melee_damage_lower = 3
+	melee_damage_upper = 3
 	/// how much hp we regen per process
 	var/health_regeneration = 1
 	/// the item we are currently

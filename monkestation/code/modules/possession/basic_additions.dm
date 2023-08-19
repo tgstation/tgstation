@@ -102,6 +102,10 @@
 	hud_used.build_hand_slots()
 	if(number > 0)
 		dexterous = TRUE
+		advanced_simple = TRUE
+	else
+		dexterous = FALSE
+		advanced_simple = FALSE
 
 //general disarm proc
 /mob/living/proc/disarm(mob/living/carbon/target)
