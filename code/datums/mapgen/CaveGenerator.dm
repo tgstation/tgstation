@@ -158,12 +158,15 @@
 				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, turf))
 					can_spawn = FALSE
 					break
-			//if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			else if(isminingpath(picked_mob))
-				for(var/mob/living/mob_blocker in range(12, turf))
+			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
+			else
+				var/list/things_in_range = range(12, turf)
+				for(var/mob/living/mob_blocker in things_in_range)
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break
+				// Also block spawns if there's a random lavaland mob spawner nearby
+				can_spawn = can_spawn && !(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
 				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, turf))

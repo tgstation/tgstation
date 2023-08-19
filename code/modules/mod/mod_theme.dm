@@ -954,6 +954,7 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
+	resistance_flags = FIRE_PROOF
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
