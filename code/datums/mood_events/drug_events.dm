@@ -126,3 +126,4 @@
 	description = "I feel my soul degrading!"
 	mood_change = -8
 	timeout = 8 MINUTES
+
