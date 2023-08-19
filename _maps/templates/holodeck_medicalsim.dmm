@@ -177,9 +177,7 @@
 /area/template_noop)
 "pe" = (
 /obj/structure/window/spawner/directional/south,
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -444,9 +442,7 @@
 /area/template_noop)
 "LW" = (
 /obj/structure/window/spawner/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -464,9 +460,7 @@
 /area/template_noop)
 "PJ" = (
 /obj/structure/window/spawner/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "plant-08"
-	},
+/obj/item/kirbyplants/organic/plant8,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},

@@ -252,7 +252,7 @@
 		if(PLATE_BOLTS_LOOSENED)
 			switch(tool_used.tool_behaviour)
 				if(TOOL_WELDER)
-					if(!tool_used.tool_start_check(user, amount=0))
+					if(!tool_used.tool_start_check(user, amount=3))
 						return
 					balloon_alert(user, "slicing...")
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
@@ -287,7 +287,7 @@
 					return TRUE
 
 				if(TOOL_WELDER)
-					if(!tool_used.tool_start_check(user, amount=0))
+					if(!tool_used.tool_start_check(user, amount=3))
 						return
 					balloon_alert(user, "welding back on...")
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))

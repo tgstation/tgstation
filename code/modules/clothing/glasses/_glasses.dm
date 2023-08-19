@@ -305,7 +305,7 @@
 		return
 	if(!I.tool_start_check(user, amount=1))
 		return
-	if(I.use_tool(src, user, 10, volume=30, amount=1))
+	if(I.use_tool(src, user, 10, volume=30))
 		user.visible_message(span_notice("[user] welds [src] back together."),\
 					span_notice("You weld [src] back together."))
 		repair()
@@ -396,6 +396,29 @@
 	icon_state = "gigagar_red"
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
+
+///Syndicate item that upgrades the flash protection of your eyes.
+/obj/item/syndicate_contacts
+	name = "suspicious contact lens case"
+	desc = "A sinister red case that contains two shiny black contact lenses."
+	w_class = WEIGHT_CLASS_TINY
+	icon = 'icons/obj/device.dmi'
+	icon_state = "contacts"
+
+/obj/item/syndicate_contacts/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
+		to_chat(user, span_warning("You have no eyes to apply the contacts to!"))
+		return
+	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+
+	to_chat(user, span_notice("You begin applying the contact lenses to your eyes..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	to_chat(user, span_notice("The contacts seamlessly merge with your iris."))
+	eyes.flash_protect += FLASH_PROTECTION_WELDER
+	to_chat(user, span_warning("\The [src] disintegrates into nothing."))
+	qdel(src)
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -499,26 +522,10 @@
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
-/obj/item/clothing/glasses/thermal/syndi //These are now a traitor item, concealed as mesons. -Pete
+/obj/item/clothing/glasses/thermal/syndi
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
-
-	var/datum/action/item_action/chameleon/change/chameleon_action
-
-/obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/glasses
-	chameleon_action.chameleon_name = "Glasses"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	actions_types = list(/datum/action/item_action/chameleon/change/glasses/no_preset)
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"
@@ -624,14 +631,14 @@
 	. = ..()
 	if(ishuman(user))
 		if(xray)
-			vision_flags -= SEE_MOBS|SEE_OBJS
+			vision_flags &= ~SEE_MOBS|SEE_OBJS
 			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		else
-			vision_flags += SEE_MOBS|SEE_OBJS
+			vision_flags |= SEE_MOBS|SEE_OBJS
 			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
-		var/mob/living/carbon/human/H = user
-		H.update_sight()
+		var/mob/living/carbon/human/human_user = user
+		human_user.update_sight()
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
@@ -679,6 +686,33 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/nightmare
 	forced_glass_color = TRUE
+	lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
+	/// Hallucination datum currently being used for seeing mares
+	var/datum/hallucination/stored_hallucination
+
+/obj/item/clothing/glasses/nightmare_vision/Destroy()
+	QDEL_NULL(stored_hallucination)
+	return ..()
+
+/obj/item/clothing/glasses/nightmare_vision/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_EYES))
+		return
+	//5% chance to get mare vision
+	if(prob(5))
+		stored_hallucination = 	user.cause_hallucination( \
+			/datum/hallucination/delusion/preset/mare, \
+			src.name, \
+			duration = 0, \
+			affects_us = TRUE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+			play_wabbajack = FALSE, \
+		)
+
+/obj/item/clothing/glasses/nightmare_vision/dropped(mob/living/user)
+	. = ..()
+	QDEL_NULL(stored_hallucination)
 
 /obj/item/clothing/glasses/osi
 	name = "O.S.I. Sunglasses"

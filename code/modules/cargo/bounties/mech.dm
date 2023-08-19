@@ -13,12 +13,12 @@
 /datum/bounty/item/mech/ripleymk2
 	name = "APLU MK-II \"Ripley\""
 	reward = CARGO_CRATE_VALUE * 26
-	wanted_types = list(/obj/vehicle/sealed/mecha/working/ripley/mk2 = TRUE)
+	wanted_types = list(/obj/vehicle/sealed/mecha/ripley/mk2 = TRUE)
 
 /datum/bounty/item/mech/clarke
 	name = "Clarke"
 	reward = CARGO_CRATE_VALUE * 32
-	wanted_types = list(/obj/vehicle/sealed/mecha/working/clarke = TRUE)
+	wanted_types = list(/obj/vehicle/sealed/mecha/clarke = TRUE)
 
 /datum/bounty/item/mech/odysseus
 	name = "Odysseus"

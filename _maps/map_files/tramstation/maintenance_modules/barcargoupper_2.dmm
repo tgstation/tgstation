@@ -154,10 +154,6 @@
 /obj/structure/flora/bush/grassy,
 /turf/open/floor/grass,
 /area/station/asteroid)
-"oi" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/department/cargo)
 "pU" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
 /obj/effect/decal/cleanable/dirt,
@@ -1980,7 +1976,7 @@ se
 Fz
 nK
 AS
-oi
+Fz
 CC
 CW
 CW

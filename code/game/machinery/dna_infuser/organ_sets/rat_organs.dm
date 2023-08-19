@@ -42,57 +42,17 @@
 	icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
-	/// Multiplier of [physiology.hunger_mod].
-	var/hunger_mod = 10
+	hunger_modifier = 10
 
 /obj/item/organ/internal/stomach/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 	AddElement(/datum/element/noticable_organ, "mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
 
-/obj/item/organ/internal/stomach/rat/on_insert(mob/living/carbon/receiver)
-	. = ..()
-	if(!ishuman(receiver))
-		return
-	var/mob/living/carbon/human/human_holder = receiver
-	if(!human_holder.can_mutate())
-		return
-	var/datum/species/species = human_holder.dna.species
-	//mmm, cheese. doesn't especially like anything else
-	species.liked_food = DAIRY
-	//but a rat can eat anything without issue
-	species.disliked_food = NONE
-	species.toxic_food = NONE
-	if(human_holder.physiology)
-		human_holder.physiology.hunger_mod *= hunger_mod
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
-
-/obj/item/organ/internal/stomach/rat/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
-	SIGNAL_HANDLER
-	new_species.liked_food = DAIRY
-	new_species.disliked_food = NONE
-	new_species.toxic_food = NONE
-
-/obj/item/organ/internal/stomach/rat/on_remove(mob/living/carbon/stomach_owner)
-	. = ..()
-	if(!ishuman(stomach_owner))
-		return
-	var/mob/living/carbon/human/human_holder = stomach_owner
-	if(!human_holder.can_mutate())
-		return
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food = initial(species.liked_food)
-	species.disliked_food = initial(species.disliked_food)
-	species.toxic_food = initial(species.toxic_food)
-	if(human_holder.physiology)
-		human_holder.physiology.hunger_mod /= hunger_mod
-	UnregisterSignal(stomach_owner, COMSIG_SPECIES_GAIN)
-
 /// makes you smaller, walk over tables, and take 1.5x damage
 /obj/item/organ/internal/heart/rat
 	name = "mutated rat-heart"
 	desc = "Rat DNA infused into what was once a normal heart."
-
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -130,13 +90,15 @@
 /obj/item/organ/internal/tongue/rat
 	name = "mutated rat-tongue"
 	desc = "Rat DNA infused into what was once a normal tongue."
-	say_mod = "squeaks"
-	modifies_speech = TRUE
-
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "tongue"
+	say_mod = "squeaks"
+	modifies_speech = TRUE
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+	liked_foodtypes = DAIRY //mmm, cheese. doesn't especially like anything else
+	disliked_foodtypes = NONE //but a rat can eat anything without issue
+	toxic_foodtypes = NONE
 
 /obj/item/organ/internal/tongue/rat/Initialize(mapload)
 	. = ..()

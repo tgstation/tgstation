@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "fryer_off"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
@@ -153,11 +153,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == frying)
-		reset_frying()
-
-/obj/machinery/deepfryer/handle_atom_del(atom/deleting_atom)
-	. = ..()
-	if(deleting_atom == frying)
 		reset_frying()
 
 /obj/machinery/deepfryer/proc/reset_frying()

@@ -50,24 +50,9 @@
 	if(has_floor_variance && prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,12)]"
 
-/// Drops itemstack when dug and changes icon
-/turf/open/misc/asteroid/proc/getDug()
-	dug = TRUE
-	broken = TRUE
-	new dig_result(src, 5)
-	if (prob(worm_chance))
-		new /obj/item/food/bait/worm(src)
-	update_appearance()
-
-/// If the user can dig the turf
-/turf/open/misc/asteroid/proc/can_dig(mob/user)
-	if(!dug)
-		return TRUE
-	if(user)
-		to_chat(user, span_warning("Looks like someone has dug here already!"))
-
 /turf/open/misc/asteroid/burn_tile()
 	return
+
 /turf/open/misc/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
@@ -77,12 +62,12 @@
 /turf/open/misc/asteroid/ex_act(severity, target)
 	return FALSE
 
-/turf/open/misc/asteroid/attackby(obj/item/W, mob/user, params)
+/turf/open/misc/asteroid/attackby(obj/item/attack_item, mob/user, params)
 	. = ..()
 	if(.)
 		return TRUE
 
-	if(W.tool_behaviour == TOOL_SHOVEL || W.tool_behaviour == TOOL_MINING)
+	if(attack_item.tool_behaviour == TOOL_SHOVEL || attack_item.tool_behaviour == TOOL_MINING)
 		if(!can_dig(user))
 			return TRUE
 
@@ -91,16 +76,42 @@
 
 		balloon_alert(user, "digging...")
 
-		if(W.use_tool(src, user, 40, volume=50))
+		if(attack_item.use_tool(src, user, 4 SECONDS, volume = 50))
 			if(!can_dig(user))
 				return TRUE
 			getDug()
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attack_item.type)
 			return TRUE
-	else if(istype(W, /obj/item/storage/bag/ore))
-		for(var/obj/item/stack/ore/O in src)
-			SEND_SIGNAL(W, COMSIG_ATOM_ATTACKBY, O)
+	else if(istype(attack_item, /obj/item/storage/bag/ore))
+		for(var/obj/item/stack/ore/dropped_ore in src)
+			SEND_SIGNAL(attack_item, COMSIG_ATOM_ATTACKBY, dropped_ore)
 
+/// Drops itemstack when dug and changes icon
+/turf/open/misc/asteroid/proc/getDug()
+	if(dug || broken)
+		return
+	dug = TRUE
+	broken = TRUE
+	new dig_result(src, 5)
+	if(prob(worm_chance))
+		new /obj/item/food/bait/worm(src)
+	update_appearance()
+
+/// If the user can dig the turf
+/turf/open/misc/asteroid/proc/can_dig(mob/user)
+	if(!dug && !broken)
+		return TRUE
+	if(user)
+		balloon_alert(user, "already excavated!")
+
+///Refills the previously dug tile
+/turf/open/misc/asteroid/proc/refill_dug()
+	dug = FALSE
+	broken = FALSE
+	icon_state = base_icon_state
+	if(has_floor_variance && prob(floor_variance))
+		icon_state = "[base_icon_state][rand(0,12)]"
+	update_appearance()
 
 /turf/open/floor/plating/lavaland_baseturf
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -113,7 +124,6 @@
 
 /turf/open/misc/asteroid/dug/broken_states()
 	return list("asteroid_dug")
-
 
 /turf/open/misc/asteroid/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -140,6 +150,11 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/Destroy()
 	GLOB.dug_up_basalt -= src
 	return ..()
+
+/turf/open/misc/asteroid/basalt/refill_dug()
+	. = ..()
+	GLOB.dug_up_basalt -= src
+	set_basalt_light(src)
 
 /turf/open/misc/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth

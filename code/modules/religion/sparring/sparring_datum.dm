@@ -149,7 +149,7 @@
 	flubbed_match()
 
 ///someone used a gun
-/datum/sparring_match/proc/gun_violation(datum/offender)
+/datum/sparring_match/proc/gun_violation(mob/offender, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
 	SIGNAL_HANDLER
 	violation(offender, "using guns")
 

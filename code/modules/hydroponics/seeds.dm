@@ -3,7 +3,7 @@
 // ********************************************************
 
 /obj/item/seeds
-	icon = 'icons/obj/hydroponics/seeds.dmi'
+	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "seed" // Unknown plant seed - these shouldn't exist in-game.
 	worn_icon_state = "seed"
 	w_class = WEIGHT_CLASS_TINY
@@ -17,7 +17,7 @@
 	/// Used to update icons. Should match the name in the sprites unless all icon_* are overridden.
 	var/species = ""
 	///the file that stores the sprites of the growing plant from this seed.
-	var/growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	var/growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	/// Used to override grow icon (default is `"[species]-grow"`). You can use one grow icon for multiple closely related plants with it.
 	var/icon_grow
 	/// Used to override dead icon (default is `"[species]-dead"`). You can use one dead icon for multiple closely related plants with it.

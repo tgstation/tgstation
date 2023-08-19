@@ -88,7 +88,7 @@
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, span_warning("The [src.name] needs to be wrenched to the floor!"))
 		if(ENGINE_WRENCHED)
-			if(!tool.tool_start_check(user, amount=0))
+			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5)))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
@@ -101,7 +101,7 @@
 				alter_engine_power(engine_power)
 
 		if(ENGINE_WELDED)
-			if(!tool.tool_start_check(user, amount=0))
+			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5)))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
@@ -162,7 +162,7 @@
 
 /obj/machinery/power/shuttle_engine/large
 	name = "engine"
-	icon = 'icons/obj/2x2.dmi'
+	icon = 'icons/obj/fluff/2x2.dmi'
 	icon_state = "large_engine"
 	desc = "A very large bluespace engine used to propel very large ships."
 	circuit = null
@@ -173,7 +173,7 @@
 
 /obj/machinery/power/shuttle_engine/huge
 	name = "engine"
-	icon = 'icons/obj/3x3.dmi'
+	icon = 'icons/obj/fluff/3x3.dmi'
 	icon_state = "huge_engine"
 	desc = "An extremely large bluespace engine used to propel extremely large ships."
 	circuit = null

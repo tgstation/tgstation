@@ -5,7 +5,7 @@
  */
 /obj/item/compact_remote
 	name = "compact remote"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_small_simple"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"

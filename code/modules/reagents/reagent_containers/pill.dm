@@ -7,7 +7,7 @@
 	worn_icon_state = "nothing"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	possible_transfer_amounts = list()
+	has_variable_transfer_amount = FALSE
 	volume = 50
 	grind_results = list()
 	var/apply_type = INGEST
@@ -22,6 +22,8 @@
 		icon_state = "pill[rand(1,20)]"
 	if(reagents.total_volume && rename_with_volume)
 		name += " ([reagents.total_volume]u)"
+	if(apply_type == INGEST)
+		AddComponent(/datum/component/germ_sensitive, mapload)
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
@@ -48,7 +50,8 @@
 /obj/item/reagent_containers/pill/proc/on_consumption(mob/M, mob/user)
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
-
+	if(apply_type == INGEST)
+		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = M, feeder = user)
 	if(reagents.total_volume)
 		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
 	qdel(src)
@@ -302,3 +305,61 @@
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/gravitum
+	name = "gravitum pill"
+	desc = "Used in weight loss. In a way."
+	icon_state = "pill8"
+	list_reagents = list(/datum/reagent/gravitum = 5)
+	rename_with_volume = TRUE
+
+// Pill styles for chem master
+
+/obj/item/reagent_containers/pill/style
+	icon_state = "pill0"
+/obj/item/reagent_containers/pill/style/purplered
+	icon_state = "pill1"
+/obj/item/reagent_containers/pill/style/greenwhite
+	icon_state = "pill2"
+/obj/item/reagent_containers/pill/style/teal
+	icon_state = "pill3"
+/obj/item/reagent_containers/pill/style/red
+	icon_state = "pill4"
+/obj/item/reagent_containers/pill/style/redwhite
+	icon_state = "pill5"
+/obj/item/reagent_containers/pill/style/tealbrown
+	icon_state = "pill6"
+/obj/item/reagent_containers/pill/style/yellowflat
+	icon_state = "pill7"
+/obj/item/reagent_containers/pill/style/tealflat
+	icon_state = "pill8"
+/obj/item/reagent_containers/pill/style/whiteflat
+	icon_state = "pill9"
+/obj/item/reagent_containers/pill/style/purpleflat
+	icon_state = "pill10"
+/obj/item/reagent_containers/pill/style/limelat
+	icon_state = "pill11"
+/obj/item/reagent_containers/pill/style/redflat
+	icon_state = "pill12"
+/obj/item/reagent_containers/pill/style/greenpurpleflat
+	icon_state = "pill13"
+/obj/item/reagent_containers/pill/style/yellowpurpleflat
+	icon_state = "pill14"
+/obj/item/reagent_containers/pill/style/redyellowflat
+	icon_state = "pill15"
+/obj/item/reagent_containers/pill/style/bluetealflat
+	icon_state = "pill16"
+/obj/item/reagent_containers/pill/style/greenlimeflat
+	icon_state = "pill17"
+/obj/item/reagent_containers/pill/style/white
+	icon_state = "pill18"
+/obj/item/reagent_containers/pill/style/whitered
+	icon_state = "pill19"
+/obj/item/reagent_containers/pill/style/purpleyellow
+	icon_state = "pill20"
+/obj/item/reagent_containers/pill/style/blackwhite
+	icon_state = "pill21"
+/obj/item/reagent_containers/pill/style/limewhite
+	icon_state = "pill22"
+/obj/item/reagent_containers/pill/style/happy
+	icon_state = "pill_happy"

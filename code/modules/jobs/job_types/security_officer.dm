@@ -38,7 +38,7 @@
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
 	rpg_title = "Guard"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
@@ -161,16 +161,18 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		partners += partner.real_name
 
 	if (partners.len)
-		for (var/obj/item/modular_computer/pda as anything in GLOB.TabletMessengers)
-			if (pda.saved_identification in partners)
-				targets += pda
+		for(var/messenger_ref in GLOB.pda_messengers)
+			var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+			if(!(messenger.computer?.saved_identification in partners))
+				continue
+			targets += messenger
 
 	if (!targets.len)
 		return
 
-	var/datum/signal/subspace/messaging/tablet_msg/signal = new(announcement_system, list(
-		"name" = "Security Department Update",
-		"job" = "Automated Announcement System",
+	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
+		"fakename" = "Security Department Update",
+		"fakejob" = "Automated Announcement System",
 		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",
 		"targets" = targets,
 		"automated" = TRUE,
@@ -235,7 +237,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 /obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
-	wires = new/datum/wires/radio(src)
+	set_wires(new/datum/wires/radio(src))
 	secure_radio_connections = list()
 	recalculateChannels()
 

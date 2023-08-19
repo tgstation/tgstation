@@ -223,7 +223,7 @@
 		return
 
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
-	spell_feedback()
+	spell_feedback(caster)
 	remove_hand(caster)
 
 /**
@@ -240,7 +240,7 @@
 		// Continue will remove the hand here and stop
 		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
-			spell_feedback()
+			spell_feedback(caster)
 			remove_hand(caster)
 
 		// Call normal will call the normal cast proc

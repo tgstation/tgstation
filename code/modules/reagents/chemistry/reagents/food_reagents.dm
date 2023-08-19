@@ -33,6 +33,8 @@
 	if(!(methods & INGEST) || !quality || HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
 		return
 	switch(quality)
+		if (DRINK_REVOLTING)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_revolting)
 		if (DRINK_NICE)
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_nice)
 		if (DRINK_GOOD)
@@ -55,7 +57,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
 	var/brute_heal = 1
 	var/burn_heal = 0
@@ -438,8 +440,7 @@
 	. = ..()
 	if(!istype(exposed_turf) || (reac_volume < 1))
 		return
-
-	new/obj/effect/decal/cleanable/food/salt(exposed_turf)
+	exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/salt)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -609,10 +610,9 @@
 	if(isspaceturf(exposed_turf))
 		return
 
-	var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(exposed_turf)
-	reagentdecal = locate() in exposed_turf //Might have merged with flour already there.
-	if(reagentdecal)
-		reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
+	var/obj/effect/decal/cleanable/food/flour/flour_decal = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/flour)
+	if(flour_decal)
+		flour_decal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -785,33 +785,24 @@
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
 	ph = 11.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	//Lazy list of mobs affected by the luminosity of this reagent.
-	var/list/mobs_affected
+	self_consuming = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
-/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob)
+/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	add_reagent_light(exposed_mob)
+	if(!exposed_mob.reagents) // they won't process the reagent, but still benefit from its effects for a duration.
+		var/amount = round(reac_volume * clamp(1 - touch_protection, 0, 1))
+		var/duration = (amount / metabolization_rate) * SSmobs.wait
+		if(duration > 1 SECONDS)
+			exposed_mob.adjust_timed_status_effect(duration, /datum/status_effect/tinlux_light)
 
-/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
-	remove_reagent_light(M)
+/datum/reagent/consumable/tinlux/on_mob_add(mob/living/living_mob)
+	. = ..()
+	living_mob.apply_status_effect(/datum/status_effect/tinlux_light) //infinite duration
 
-/datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
-	SIGNAL_HANDLER
-	remove_reagent_light(source)
-
-/datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
-	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion))
-
-/datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
-	UnregisterSignal(living_holder, COMSIG_QDELETING)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = LAZYACCESS(mobs_affected, living_holder)
-	LAZYREMOVE(mobs_affected, living_holder)
-	if(mob_light_obj)
-		qdel(mob_light_obj)
-
+/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/living_mob)
+	. = ..()
+	living_mob.remove_status_effect(/datum/status_effect/tinlux_light)
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"
@@ -1108,3 +1099,50 @@
 		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
 		affected_mob.inflate_gib()
 	return ..()
+
+/datum/reagent/consumable/worcestershire
+	name = "Worcestershire Sauce"
+	description = "That's \"Woostershire\" sauce, by the way."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#572b26"
+	taste_description = "sweet fish"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/worcestershire
+
+/datum/reagent/consumable/red_bay
+	name = "Red Bay Seasoning"
+	description = "A secret blend of herbs and spices that goes well with anything- according to Martians, at least."
+	color = "#8E4C00"
+	taste_description = "spice"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/red_bay
+
+/datum/reagent/consumable/curry_powder
+	name = "Curry Powder"
+	description = "One of humanity's most common spices. Typically used to make curry."
+	color = "#F6C800"
+	taste_description = "dry curry"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/curry_powder
+
+/datum/reagent/consumable/dashi_concentrate
+	name = "Dashi Concentrate"
+	description = "A concentrated form of dashi. Simmer with water in a 1:8 ratio to produce a tasty dashi broth."
+	color = "#372926"
+	taste_description = "extreme umami"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/dashi_concentrate
+
+/datum/reagent/consumable/martian_batter
+	name = "Martian Batter"
+	description = "A thick batter made with dashi and flour, used for making dishes such as okonomiyaki and takoyaki."
+	color = "#D49D26"
+	taste_description = "umami dough"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/grounding_solution
+	name = "Grounding Solution"
+	description = "A food-safe ionic solution designed to neutralise the enigmatic \"liquid electricity\" that is common to food from Sprout, forming harmless salt on contact."
+	color = "#efeff0"
+	taste_description = "metallic salt"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -94,11 +94,12 @@ DEFINE_BITFIELD(foodtypes, list(
 	"Rocks", \
 )
 
-#define DRINK_NICE 1
-#define DRINK_GOOD 2
-#define DRINK_VERYGOOD 3
-#define DRINK_FANTASTIC 4
-#define FOOD_AMAZING 5
+#define DRINK_REVOLTING 1
+#define DRINK_NICE 2
+#define DRINK_GOOD 3
+#define DRINK_VERYGOOD 4
+#define DRINK_FANTASTIC 5
+#define FOOD_AMAZING 6
 
 /// Food is "in a container", not in a code sense, but in a literal sense (canned foods)
 #define FOOD_IN_CONTAINER (1<<0)
@@ -171,8 +172,16 @@ DEFINE_BITFIELD(food_flags, list(
 #define ICE_CREAM_CHOCOLATE "chocolate"
 #define ICE_CREAM_STRAWBERRY "strawberry"
 #define ICE_CREAM_BLUE "blue"
+#define ICE_CREAM_LEMON "lemon sorbet"
+#define ICE_CREAM_CARAMEL "caramel"
+#define ICE_CREAM_BANANA "banana"
+#define ICE_CREAM_ORANGE_CREAM "orangesicle"
+#define ICE_CREAM_PEACH "peach"
+#define ICE_CREAM_CHERRY_CHOCOLATE "cherry chocolate chip"
+#define ICE_CREAM_KORTA_VANILLA "korta vanilla"
 #define ICE_CREAM_MOB "mob"
 #define ICE_CREAM_CUSTOM "custom"
+#define ICE_CREAM_KORTA_CUSTOM "korta custom"
 #define ICE_CREAM_BLAND "bland"
 
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
@@ -192,3 +201,6 @@ DEFINE_BITFIELD(food_flags, list(
 // Venues for the barbots.
 #define VENUE_RESTAURANT "Restaurant Venue"
 #define VENUE_BAR "Bar Venue"
+
+/// How much milk is needed to make butter on a reagent grinder
+#define MILK_TO_BUTTER_COEFF 25

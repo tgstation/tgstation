@@ -1,7 +1,7 @@
 /obj/item/plate
 	name = "plate"
 	desc = "Holds food, powerful. Good for morale when you're not eating your spaghetti off of a desk."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "plate"
 	w_class = WEIGHT_CLASS_BULKY //No backpack.
 	///How many things fit on this plate?
@@ -98,7 +98,7 @@
 
 /obj/item/plate_shard
 	name = "ceramic shard"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "plate_shard1"
 	base_icon_state = "plate_shard"
 	w_class = WEIGHT_CLASS_TINY

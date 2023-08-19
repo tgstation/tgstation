@@ -1,124 +1,61 @@
-//Hoods for winter coats and chaplain hoodie etc
-
+/// Subtype with support for hoods
+/// You no longer actually need to extend this and can just add the component yourself without a lot of this boilerplate code
 /obj/item/clothing/suit/hooded
-	actions_types = list(/datum/action/item_action/toggle_hood)
-	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
-	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
+	/// Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
 	var/alternative_mode = FALSE
-	///Whether the hood is flipped up
-	var/hood_up = FALSE
 	/// What should be added to the end of the icon state when the hood is up? Set to "" for the suit sprite to not change at all
 	var/hood_up_affix = "_t"
-	/// Are we zipped? Mostly relevant for wintercoats, leaving this here to simplify logic and so someone else can extend it if they ever wish to.
-	var/zipped = FALSE
+	/// Icon state added as a worn overlay while the hood is down, leave as "" for no overlay
+	var/hood_down_overlay_suffix = ""
+	/// Reference to hood object, if it exists
+	var/obj/item/clothing/head/hooded/hood
 
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
-	if(!alternative_mode)
-		MakeHood()
-
+	if (!hoodtype)
+		return
+	AddComponent(\
+		/datum/component/toggle_attached_clothing,\
+		deployable_type = hoodtype,\
+		equipped_slot = ITEM_SLOT_HEAD,\
+		action_name = "Toggle Hood",\
+		destroy_on_removal = alternative_mode,\
+		parent_icon_state_suffix = hood_up_affix,\
+		down_overlay_state_suffix = hood_down_overlay_suffix, \
+		pre_creation_check = CALLBACK(src, PROC_REF(can_create_hood)),\
+		on_created = CALLBACK(src, PROC_REF(on_hood_created)),\
+		on_deployed = CALLBACK(src, PROC_REF(on_hood_up)),\
+		on_removed = CALLBACK(src, PROC_REF(on_hood_down)),\
+	)
 
 /obj/item/clothing/suit/hooded/Destroy()
-	. = ..()
-	QDEL_NULL(hood)
-
-/obj/item/clothing/suit/hooded/proc/MakeHood()
-	if(!hood)
-		var/obj/item/clothing/head/hooded/W = new hoodtype(src)
-		W.suit = src
-		hood = W
-
-/obj/item/clothing/suit/hooded/ui_action_click()
-	ToggleHood()
-
-/obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
-		return TRUE
-
-/obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(!(slot & ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK))
-		RemoveHood()
+	hood = null
 	return ..()
 
-/obj/item/clothing/suit/hooded/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
-	if(visuals_only)
-		MakeHood()
-	ToggleHood()
+/// Override to only create the hood conditionally
+/obj/item/clothing/suit/hooded/proc/can_create_hood()
+	return TRUE
 
-/obj/item/clothing/suit/hooded/proc/RemoveHood()
-	icon_state = "[initial(icon_state)]"
-	worn_icon_state = icon_state
-	zipped = FALSE
-	hood_up = FALSE
+/// Called when the hood is instantiated
+/obj/item/clothing/suit/hooded/proc/on_hood_created(obj/item/clothing/head/hooded/hood)
+	SHOULD_CALL_PARENT(TRUE)
+	src.hood = hood
+	RegisterSignal(hood, COMSIG_QDELETING, PROC_REF(on_hood_deleted))
 
-	if(hood)
-		if(ishuman(hood.loc))
-			var/mob/living/carbon/human/H = hood.loc
-			H.transferItemToLoc(hood, src, TRUE)
-			H.update_worn_oversuit()
-		else
-			hood.forceMove(src)
+/// Called when hood is deleted
+/obj/item/clothing/suit/hooded/proc/on_hood_deleted()
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+	hood = null
 
-		if(alternative_mode)
-			QDEL_NULL(hood)
+/// Called when the hood is worn
+/obj/item/clothing/suit/hooded/proc/on_hood_up(obj/item/clothing/head/hooded/hood)
+	return
 
-	update_item_action_buttons()
-
-/obj/item/clothing/suit/hooded/dropped()
-	..()
-	RemoveHood()
-
-/obj/item/clothing/suit/hooded/proc/ToggleHood()
-	if(!hood_up)
-		if(!ishuman(loc))
-			return
-		var/mob/living/carbon/human/H = loc
-		if(H.is_holding(src))
-			to_chat(H, span_warning("You must be wearing [src] to put up the hood!"))
-			return
-		if(H.head)
-			to_chat(H, span_warning("You're already wearing something on your head!"))
-			return
-		else
-			if(alternative_mode)
-				MakeHood()
-			if(!H.equip_to_slot_if_possible(hood,ITEM_SLOT_HEAD,0,0,1))
-				if(alternative_mode)
-					RemoveHood()
-				return
-			hood_up = TRUE
-			icon_state = "[initial(icon_state)][hood_up_affix]"
-			worn_icon_state = icon_state
-			zipped = TRUE // Just to maintain the same behavior, and so we avoid any bugs that otherwise relied on this behavior of zipping the jacket when bringing up the hood
-			H.update_worn_oversuit()
-			H.update_mob_action_buttons()
-	else
-		RemoveHood()
-
-/obj/item/clothing/head/hooded
-	var/obj/item/clothing/suit/hooded/suit
-
-
-/obj/item/clothing/head/hooded/Destroy()
-	suit = null
-	return ..()
-
-/obj/item/clothing/head/hooded/dropped()
-	..()
-	if(suit)
-		suit.RemoveHood()
-
-/obj/item/clothing/head/hooded/equipped(mob/user, slot)
-	..()
-	if(!(slot & ITEM_SLOT_HEAD))
-		if(suit)
-			suit.RemoveHood()
-		else
-			qdel(src)
-
-// Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
-// Pretty much just a holder for `/datum/component/toggle_icon`.
+/// Called when the hood is hidden
+/obj/item/clothing/suit/hooded/proc/on_hood_down(obj/item/clothing/head/hooded/hood)
+	return
 
 /obj/item/clothing/suit/toggle
 	/// The noun that is displayed to the user on toggle. EX: "Toggles the suit's [buttons]".

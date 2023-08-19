@@ -74,12 +74,14 @@
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
 // Defines related to the custom materials used on objects.
-///The amount of materials you get from a sheet of mineral like iron/diamond/glass etc. 2000 Units.
-#define SHEET_MATERIAL_AMOUNT 2000
-///The amount of materials you get from half a sheet. Used in standard object quantities. 1000 units.
+///The amount of materials you get from a sheet of mineral like iron/diamond/glass etc. 100 Units.
+#define SHEET_MATERIAL_AMOUNT 100
+///The amount of materials you get from half a sheet. Used in standard object quantities. 50 units.
 #define HALF_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT/2)
-///The amount of materials used in the smallest of objects, like pens and screwdrivers. 100 units.
-#define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT/10)
+///The amount of materials used in the smallest of objects, like pens and screwdrivers. 10 units.
+#define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT/5)
+///The amount of material that goes into a coin, which determines the value of the coin.
+#define COIN_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT * 0.4)
 
 //The maximum size of a stack object.
 #define MAX_STACK_SIZE 50
@@ -96,6 +98,7 @@
 #define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
 #define CAT_SEAFOOD "Seafood"
+#define CAT_MARTIAN "Martian Food"
 #define CAT_MISCFOOD "Misc. Food"
 #define CAT_MEXICAN "Mexican Food"
 #define CAT_MOTH "Mothic Food"
@@ -118,6 +121,7 @@ GLOBAL_LIST_INIT(crafting_category_food, list(
 	CAT_LIZARD,
 	CAT_MEAT,
 	CAT_SEAFOOD,
+	CAT_MARTIAN,
 	CAT_MISCFOOD,
 	CAT_MEXICAN,
 	CAT_MOTH,
@@ -186,12 +190,15 @@ GLOBAL_LIST_INIT(crafting_category, list(
 #define RCD_FLOODLIGHT 8
 #define RCD_WALLFRAME 9
 #define RCD_REFLECTOR 10
+#define RCD_GIRDER 11
 
 
 #define RCD_UPGRADE_FRAMES (1<<0)
 #define RCD_UPGRADE_SIMPLE_CIRCUITS (1<<1)
 #define RCD_UPGRADE_SILO_LINK (1<<2)
 #define RCD_UPGRADE_FURNISHING (1<<3)
+#define RCD_UPGRADE_ANTI_INTERRUPT (1<<4)
+#define RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN (1<<5)
 
 #define RPD_UPGRADE_UNWRENCH (1<<0)
 
@@ -208,6 +215,9 @@ GLOBAL_LIST_INIT(crafting_category, list(
 
 /// How much less resources the RCD uses when reconstructing
 #define RCD_MEMORY_COST_BUFF 8
+
+/// If set to TRUE in rcd_vals, will bypass the cooldown on slowing down frequent use
+#define RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN "bypass_frequent_use_cooldown"
 
 // Defines for the construction component
 #define FORWARD 1

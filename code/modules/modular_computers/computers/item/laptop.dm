@@ -119,7 +119,8 @@
 	screen_on = !screen_on
 	update_appearance()
 
-
+/obj/item/modular_computer/laptop/get_messenger_ending()
+	return "Sent from my UNIX Laptop"
 
 // Laptop frame, starts empty and closed.
 /obj/item/modular_computer/laptop/buildable

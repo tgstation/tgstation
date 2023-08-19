@@ -13,8 +13,8 @@
 	else
 		return ..()
 
-/obj/machinery/door/unpowered/emag_act()
-	return
+/obj/machinery/door/unpowered/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 /obj/machinery/door/unpowered/shuttle
 	icon = 'icons/turf/shuttle.dmi'

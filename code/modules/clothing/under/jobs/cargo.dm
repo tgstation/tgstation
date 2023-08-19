@@ -41,11 +41,10 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	inhand_icon_state = null
-	armor_type = /datum/armor/cargo_miner
+	armor_type = /datum/armor/clothing_under/cargo_miner
 	resistance_flags = NONE
 
-/datum/armor/cargo_miner
-	bio = 10
+/datum/armor/clothing_under/cargo_miner
 	fire = 80
 	wound = 10
 

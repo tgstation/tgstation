@@ -233,7 +233,7 @@ Difficulty: Extremely Hard
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
 	desc = "When used by anything holding it, this crystal gives them a second chance at life if they die."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "demonic_crystal"
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)
@@ -378,7 +378,7 @@ Difficulty: Extremely Hard
 /obj/item/ice_energy_crystal
 	name = "ice energy crystal"
 	desc = "Remnants of the demonic frost miners ice energy."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "ice_crystal"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -386,7 +386,7 @@ Difficulty: Extremely Hard
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE

@@ -22,7 +22,7 @@
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		connect_techweb(SSresearch.science_tech)
-	wires = new /datum/wires/rnd(src)
+	set_wires(new /datum/wires/rnd(src))
 
 /obj/machinery/rnd/Destroy()
 	if(stored_research)

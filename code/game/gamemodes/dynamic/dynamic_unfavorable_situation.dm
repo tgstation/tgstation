@@ -60,6 +60,7 @@
 /// Filter the below list by which events can actually run on this map
 /datum/game_mode/dynamic/proc/generate_unfavourable_events()
 	var/static/list/unfavorable_random_events = list(
+		/datum/round_event_control/earthquake,
 		/datum/round_event_control/immovable_rod,
 		/datum/round_event_control/meteor_wave,
 		/datum/round_event_control/portal_storm_syndicate,

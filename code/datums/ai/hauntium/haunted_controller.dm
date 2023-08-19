@@ -28,7 +28,7 @@
 	var/haunt_equipper = TRUE
 	if(isliving(equipper))
 		var/mob/living/possibly_cool = equipper
-		if(possibly_cool.mob_biotypes & MOB_UNDEAD)
+		if(possibly_cool.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(possibly_cool, TRAIT_MORBID))
 			haunt_equipper = FALSE
 	if(haunt_equipper)
 		//You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~

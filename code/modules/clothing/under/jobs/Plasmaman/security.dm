@@ -3,11 +3,11 @@
 	desc = "A plasmaman containment suit designed for security officers, offering a limited amount of extra protection."
 	icon_state = "security_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/rank_security/plasmaman
+	armor_type = /datum/armor/clothing_under/rank_security/plasmaman
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/datum/armor/rank_security/plasmaman
+/datum/armor/clothing_under/rank_security/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95

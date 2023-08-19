@@ -1,7 +1,4 @@
-
-/////////////////////////////////////////
-/////////////////HUDs////////////////////
-/////////////////////////////////////////
+// HUDs
 
 /datum/design/health_hud
 	name = "Health Scanner HUD"
@@ -90,9 +87,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/////////////////////////////////////////
-//////////////////Misc///////////////////
-/////////////////////////////////////////
+// Misc
 
 /datum/design/welding_goggles
 	name = "Welding Goggles"
@@ -501,9 +496,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_SCIENCE
 
-/////////////////////////////////////////
-////////////Janitor Designs//////////////
-/////////////////////////////////////////
+// Janitor Designs
 
 /datum/design/advmop
 	name = "Advanced Mop"
@@ -627,9 +620,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 
-/////////////////////////////////////////
-/////////////Hydroponics/////////////////
-/////////////////////////////////////////
+// Hydroponics
 
 /datum/design/adv_watering_can
 	name = "Advanced Watering Can"
@@ -642,9 +633,7 @@
 	build_path = /obj/item/reagent_containers/cup/watering_can/advanced
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/////////////////////////////////////////
-/////////////Holobarriers////////////////
-/////////////////////////////////////////
+// Holobarriers
 
 /datum/design/holosign
 	name = "Holographic Sign Projector"
@@ -718,9 +707,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/////////////////////////////////////////
-////////////////Armour///////////////////
-/////////////////////////////////////////
+// Armour
 
 /datum/design/reactive_armour
 	name = "Reactive Armour Shell"
@@ -758,9 +745,7 @@
 	build_path = /obj/item/clothing/head/helmet/knight/greyscale
 	category = list(RND_CATEGORY_IMPORTED)
 
-/////////////////////////////////////////
-/////////////Security////////////////////
-/////////////////////////////////////////
+// Security
 
 /datum/design/seclite
 	name = "Seclite"
@@ -868,9 +853,7 @@
 	)
 	departmental_flags = ALL
 
-/////////////////////////////////////////
-/////////////////Tape////////////////////
-/////////////////////////////////////////
+// Tape
 
 /datum/design/super_sticky_tape
 	name = "Super Sticky Tape"
@@ -905,9 +888,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/////////////////////////////////////////
-////////////Tackle Gloves////////////////
-/////////////////////////////////////////
+// Tackle Gloves
 
 /datum/design/tackle_dolphin
 	name = "Dolphin Gloves"
@@ -931,11 +912,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-
-
-/////////////////////////////////////////
-/////////Restaurant Equipment////////////
-/////////////////////////////////////////
+// Restaurant Equipment
 
 /datum/design/holosign/restaurant
 	name = "Restaurant Seating Projector"
@@ -973,12 +950,11 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/////////////////////////////////////////
-/////////Fishing Equipment///////////////
-/////////////////////////////////////////
+// Fishing Equipment
 
 /datum/design/fishing_rod_tech
 	name = "Advanced Fishing Rod"
+	desc = "A fishing rod with an embedded generator dispensing an infinite supply of fishing baits."
 	id = "fishing_rod_tech"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic =SHEET_MATERIAL_AMOUNT)
@@ -988,9 +964,31 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/////////////////////////////////////////
-/////////Coffeemaker Stuff///////////////
-/////////////////////////////////////////
+/datum/design/stabilized_hook
+	name = "Gyro-Stabilized Hook"
+	desc = "An advanced fishing hook that gives the user a tighter control on the fish when reeling in."
+	id = "stabilized_hook"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/fishing_hook/stabilized
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/fish_analyzer
+	name = "Fish Analyzer"
+	desc = "An analyzer used to monitor fish's status and traits with."
+	id = "fish_analyzer"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
+	build_path = /obj/item/fish_analyzer
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+// Coffeemaker Stuff
 
 /datum/design/coffeepot
 	name = "Coffeepot"
@@ -1035,3 +1033,33 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/radio_navigation_beacon
+	name = "Compact Radio Navigation Gigabeacon"
+	id = "gigabeacon"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/folded_navigation_gigabeacon
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
+
+// Experimental designs
+
+/datum/design/polymorph_belt
+	name = "Polymorphic Field Inverter"
+	id = "polymorph_belt"
+	desc = "This device can scan and store DNA from other life forms, and use it to transform its wearer. It requires a Bioscrambler Anomaly Core in order to function."
+	build_type = PROTOLATHE | AWAY_LATHE
+	build_path = /obj/item/polymorph_belt
+	materials = list(
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT,
+	)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

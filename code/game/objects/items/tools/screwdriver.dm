@@ -62,7 +62,7 @@
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "screwdriver_a"
 	inhand_icon_state = "screwdriver_nuke"
 	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
@@ -103,7 +103,8 @@
 
 /obj/item/screwdriver/power/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
@@ -122,8 +123,9 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_WRENCH : TOOL_SCREWDRIVER)
-	balloon_alert(user, "attached [active ? "bolt bit" : "screw bit"]")
-	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	if(user)
+		balloon_alert(user, "attached [active ? "bolt bit" : "screw bit"]")
+	playsound(src, 'sound/items/change_drill.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/screwdriver/power/examine()

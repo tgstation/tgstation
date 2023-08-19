@@ -71,7 +71,7 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	if(format)
 		output += "\[[timestamp]\] [uppertext(category)]: [message]"
 	else
-		output += "[message]"
+		output += "[uppertext(category)]: [message]"
 
 	if(flags & ENTRY_USE_DATA_W_READABLE)
 #if DM_VERSION >= 515

@@ -107,6 +107,9 @@
 	/// Pulls out model paths for DMM
 	var/static/regex/model_path = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
 
+	/// If we are currently loading this map
+	var/loading = FALSE
+
 	#ifdef TESTING
 	var/turfsSkipped = 0
 	#endif
@@ -249,9 +252,13 @@
 
 #define MAPLOADING_CHECK_TICK \
 	if(TICK_CHECK) { \
-		SSatoms.map_loader_stop(); \
-		stoplag(); \
-		SSatoms.map_loader_begin(); \
+		if(loading) { \
+			SSatoms.map_loader_stop(REF(src)); \
+			stoplag(); \
+			SSatoms.map_loader_begin(REF(src)); \
+		} else { \
+			stoplag(); \
+		} \
 	}
 
 // Do not call except via load() above.
@@ -259,7 +266,8 @@
 	PRIVATE_PROC(TRUE)
 	// Tell ss atoms that we're doing maploading
 	// We'll have to account for this in the following tick_checks so it doesn't overflow
-	SSatoms.map_loader_begin()
+	loading = TRUE
+	SSatoms.map_loader_begin(REF(src))
 
 	// Loading used to be done in this proc
 	// We make the assumption that if the inner procs runtime, we WANT to do cleanup on them, but we should stil tell our parents we failed
@@ -272,7 +280,8 @@
 			sucessful = _dmm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
 
 	// And we are done lads, call it off
-	SSatoms.map_loader_stop()
+	SSatoms.map_loader_stop(REF(src))
+	loading = FALSE
 
 	if(new_z)
 		for(var/z_index in bounds[MAP_MINZ] to bounds[MAP_MAXZ])
@@ -321,7 +330,7 @@
 	var/relative_y = first_column.ycrd
 	var/highest_y = relative_y + y_relative_to_absolute
 
-	if(!cropMap && highest_y > world.maxx)
+	if(!cropMap && highest_y > world.maxy)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
 			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - 1)
@@ -334,7 +343,7 @@
 	var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
 	// How many lines to skip because they'd be above the y cuttoff line
 	var/y_starting_skip = relative_y - y_skip_above
-	highest_y += y_starting_skip
+	highest_y -= y_starting_skip
 
 
 	// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
@@ -409,7 +418,7 @@
 
 			var/list/cache = modelCache[gset.gridLines[i]]
 			if(!cache)
-				SSatoms.map_loader_stop()
+				SSatoms.map_loader_stop(REF(src))
 				CRASH("Undefined model key in DMM: [gset.gridLines[i]]")
 			build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, placeOnTop, new_z)
 
@@ -542,7 +551,7 @@
 					continue
 				var/list/cache = modelCache[model_key]
 				if(!cache)
-					SSatoms.map_loader_stop()
+					SSatoms.map_loader_stop(REF(src))
 					CRASH("Undefined model key in DMM: [model_key]")
 				build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop, new_z)
 
@@ -956,6 +965,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 /datum/parsed_map/Destroy()
 	..()
+	SSatoms.map_loader_stop(REF(src)) // Just in case, I don't want to double up here
 	if(turf_blacklist)
 		turf_blacklist.Cut()
 	parsed_bounds.Cut()

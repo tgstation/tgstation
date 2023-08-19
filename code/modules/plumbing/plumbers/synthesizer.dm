@@ -4,11 +4,8 @@
 	desc = "Produces a single chemical at a given volume. Must be plumbed. Most effective when working in unison with other chemical synthesizers, heaters and filters."
 
 	icon_state = "synthesizer"
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-
-	///category for plumbing RCD
-	category="Synthesizers"
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1

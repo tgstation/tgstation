@@ -138,9 +138,6 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
-## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
-CHECK_RANDOMIZER
-
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
 ## Rating to warn at: (0.9 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
@@ -296,6 +293,9 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ## Notify the irc channel when a new player makes their first connection
 ##	Requres database
 #IRC_FIRST_CONNECTION_ALERT
+
+## Discord ID of a role that should be pinged when a new player makes their first connection
+#NEW_PLAYER_ALERT_ROLE_ID 1138188190604341308
 
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
@@ -469,6 +469,12 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
 
+## Threshold (in deciseconds) for real time between ticks before we start dumping profiles
+DRIFT_DUMP_THRESHOLD 40
+
+## How long to wait (in deciseconds) after a profile dump before logging another tickdrift sourced one
+DRIFT_PROFILE_DELAY 150
+
 ## Uncomment to enable global ban DB using the provided URL. The API should expect to receive a ckey at the end of the URL.
 ## More API details can be found here: https://centcom.melonmesa.com
 #CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search
@@ -567,6 +573,10 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 
 ## The maximum number of concurrent tts http requests that can be made by the server at once.
 #TTS_MAX_CONCURRENT_REQUESTS 4
+
+## Add voices to the TTS voice blacklist.
+#TTS_VOICE_BLACKLIST Sans Undertale
+#TTS_VOICE_BLACKLIST Papyrus Undertale
 
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
