@@ -219,6 +219,10 @@
 	status_effect_type = /datum/status_effect/wound/blunt/moderate
 	scar_keyword = "bluntmoderate"
 
+	s_desc = "Patient's bone has been dislocated, causing limping or reduced dexterity."
+	s_treat_text = "<b>Bandaging</b> the wound will reduce its impact until treated with a bonesetter. Most commonly, it is treated by aggressively grabbing someone and helpfully wrenching the limb in place, though there's room for malfeasance when doing this."
+	homemade_treat_text = "Besides bandaging and wrenching, <b>bone setters</b> can be printed in lathes and utilized on oneself at the cost of great pain. As a last resort, <b>crushing</b> the patient with a <b>firelock</b> has sometimes been noted to fix their dislocated limb."
+
 /datum/wound/blunt/moderate/Destroy()
 	if(victim)
 		UnregisterSignal(victim, COMSIG_LIVING_DOORCRUSHED)
@@ -341,6 +345,11 @@
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
+	s_desc = "Patient's bone has cracked in the middle, drastically reducing limb functionality."
+	s_treat_text = "<b>Bandaging</b> the wound will reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
+	homemade_treat_text = "<b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is quite difficult for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
+
+
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/critical
 	name = "Compound Fracture"
@@ -365,6 +374,10 @@
 	internal_bleeding_chance = 60
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
+
+	s_desc = "Patient's bones have effectively shattered completely, causing total immobilization of the limb."
+	s_treat_text = "<b>Bandaging</b> the wound will slightly reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
+	homemade_treat_text = "Although this is extremely difficult and slow to function, <b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is nigh-impossible for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
 
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")

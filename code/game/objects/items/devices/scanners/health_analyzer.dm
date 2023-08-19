@@ -494,7 +494,7 @@
 #define AID_EMOTION_SAD "sad"
 
 /// Displays wounds with extended information on their status vs medscanners
-/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/simple/scanner)
+/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/simple/scanner, simple_scan = FALSE)
 	if(!istype(patient) || user.incapacitated())
 		return
 
@@ -505,7 +505,7 @@
 		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
 		for(var/limb_wound in wounded_part.wounds)
 			var/datum/wound/current_wound = limb_wound
-			render_list += "<div class='ml-2'>[current_wound.get_scanner_description()]</div>\n"
+			render_list += "<div class='ml-2'>[simple_scan ? current_wound.get_simple_scanner_description() : current_wound.get_scanner_description()]</div>\n"
 			ADD_TRAIT(current_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
 			if(!advised)
 				to_chat(user, span_notice("You notice how bright holo-images appear over your [(length(wounded_part.wounds) || length(patient.get_wounded_bodyparts()) ) > 1 ? "various wounds" : "wound"]. They seem to be filled with helpful information, this should make treatment easier!"))
@@ -513,7 +513,7 @@
 		render_list += "</span>"
 
 	if(render_list == "")
-		if(istype(scanner))
+		if(simple_scan == TRUE)
 			// Only emit the cheerful scanner message if this scan came from a scanner
 			playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
 			to_chat(user, span_notice("\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!"))
@@ -579,7 +579,7 @@
 		show_emotion(AI_EMOTION_SAD)
 		return
 
-	woundscan(user, patient, src)
+	woundscan(user, patient, src, simple_scan = TRUE)
 	flick(icon_state + "_pinprick", src)
 
 /obj/item/healthanalyzer/simple/update_overlays()

@@ -269,6 +269,10 @@
 	flesh_damage = 5
 	scar_keyword = "burnmoderate"
 
+	s_desc = "Patient's skin is burned, weakening the limb and multiplying percieved damage!"
+	s_treat_text = "Ointment will speed up recovery, as will regenerative mesh. Risk of infection is negligible."
+	homemade_treat_text = "Healthy tea will speed up recovery. Salt, or preferably a salt-water mixture, will sanitize the wound, but the former will cause skin irritation, increasing the risk of infection."
+
 /datum/wound/burn/severe
 	name = "Third Degree Burns"
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
@@ -284,6 +288,10 @@
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
+
+	s_desc = "Patient's skin is badly burned, significantly weakening the limb and compounding further damage!!"
+	s_treat_text = "<b>Bandages will speed up recovery</b>, as will <b>ointment or regenerative mesh</b>. <b>Spaceacilin, sterilizine, and 'Miner's Salve'</b> will help with infection."
+	homemade_treat_text = "<b>Healthy tea</b> will speed up recovery. <b>Salt</b>, or preferably a <b>salt-water</b> mixture, will sanitize the wound, but the former especially will cause skin irritation and dehydration, speeding up infection. <b>Space Cleaner</b> can be used as disinfectant in a pinch."
 
 /datum/wound/burn/critical
 	name = "Catastrophic Burns"
@@ -302,9 +310,15 @@
 	flesh_damage = 20
 	scar_keyword = "burncritical"
 
+	s_desc = "Patient's skin is destroyed and tissue charred, leaving the limb with almost <b>no integrity<b> and a drastic chance of <b>infection<b>!!!"
+	s_treat_text = "Immediately <b>bandage</b> the wound and treat it with <b>ointment or regenerative mesh</b>. <b>Spaceacilin, sterilizine, or 'Miner's Salve'</b> will stave off infection. Seek professional care <b>immediately</b>, before sepsis sets in and the wound becomes untreatable."
+	homemade_treat_text = "<b>Healthy tea</b> will help with recovery. A <b>salt-water mixture</b>, topically applied, might help stave off infection in the short term, but pure table salt is NOT recommended. <b>Space Cleaner</b> can be used as disinfectant in a pinch."
+
 ///special severe wound caused by sparring interference or other god related punishments.
 /datum/wound/burn/severe/brand
 	name = "Holy Brand"
 	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
 	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
 	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."
+
+	s_desc = "Patient's skin has had strange markings burned onto it, significantly weakening the limb and compounding further damage!!"

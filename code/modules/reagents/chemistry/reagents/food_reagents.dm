@@ -451,7 +451,7 @@
 		var/datum/wound/iter_wound = i
 		iter_wound.on_salt(reac_volume, carbies)
 
-// Salt can help with wounds by soaking up fluid, but undiluted salt will also cause irritation from the loose crystals.
+// Salt can help with wounds by soaking up fluid, but undiluted salt will also cause irritation from the loose crystals, and it might soak up the body's water as well!
 // A saltwater mixture would be best, but we're making improvised chems here, not real ones.
 /datum/wound/proc/on_salt(reac_volume, mob/living/carbon/carbies)
 	return
@@ -469,14 +469,11 @@
 	to_chat(carbies, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin but soaking up most of the blood."))
 
 /datum/wound/burn/on_salt(reac_volume)
-// Salt disinfects wounds...
-	sanitization += 0.5 // todo make this reac volumey
-// by killing off bacteria...
-	infestation *= 0.5
-// but some bacteria are resistant
-	infestation_rate *= 1.5
-// and aided by it instead.
-	flesh_healing *= 0.9
+	// Slightly sanitizes and disinfects, but also increases infestation rate (some bacteria are aided by salt), and decreases flesh healing (can damage the skin from moisture absorption)
+	sanitization += VALUE_PER(0.4, 30) * reac_volume
+	infestation -= max(VALUE_PER(0.3, 30) * reac_volume, 0)
+	infestation_rate += VALUE_PER(0.12, 30) * reac_volume
+	flesh_healing -= max(VALUE_PER(5, 30) * reac_volume, 0)
 	to_chat(victim, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin! After a few moments, it feels marginally better."))
 	return
 

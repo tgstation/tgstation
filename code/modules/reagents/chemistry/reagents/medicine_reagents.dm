@@ -259,10 +259,7 @@
 	color = "#E1F2E6"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	ph = 8.1
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
-
-/datum/reagent/medicine/spaceacillin/on_burn_wound_processing(datum/wound/burn/burn_wound)
-	burn_wound.sanitization += 0.9
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/spaceacillin/on_mob_add(mob/living/L)
 	. = ..()

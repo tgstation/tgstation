@@ -321,18 +321,11 @@
 	adjust_blood_flow(-0.1 * reac_volume, initial_flow * 0.5)
 	to_chat(carbies, span_notice("The salt water splashes over [lowertext(src)], soaking up the blood."))
 
-// MAKE WOUND ANALYZER GIVE SIMPLE INFO
-// FIX SALT AND SALTWATER NO REAC VOLUME
-
-// This value per these many units. Not necessary but a lot more readable I think.
-#define VALUE_PER(value, per) value / per
-
 /datum/wound/burn/on_saltwater(reac_volume)
 	// Similar but better stats from normal salt.
 	sanitization += VALUE_PER(0.6, 30) * reac_volume
-	infestation -= max(VALUE_PER(0.5, 30) * reac_volume)
+	infestation -= max(VALUE_PER(0.5, 30) * reac_volume, 0)
 	infestation_rate += VALUE_PER(0.07, 30) * reac_volume
-	flesh_healing -= max(VALUE_PER(10, 30) * reac_volume, 0)
 	to_chat(victim, span_notice("The salt water splashes over [lowertext(src)], soaking up the... miscellaneous fluids. It feels somewhat better afterwards."))
 	return
 

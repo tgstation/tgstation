@@ -299,8 +299,10 @@
 	var/to_chatted = FALSE
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
-		if(SPT_PROB(10, seconds_per_tick))
+		if(SPT_PROB(2, seconds_per_tick))
 			iter_wound.tea_life_process(affected_mob, to_chatted)
+			if(!to_chatted)
+				to_chat(carbies, span_notice("A calm, relaxed feeling suffuses you. Your wounds feel a little healthier."))
 			to_chatted = TRUE
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	..()
@@ -308,29 +310,24 @@
 
 // Different handling, different name
 // Second param is so that the carbies isn't spammed with messages
-/datum/wound/proc/tea_life_process(mob/living/carbon/carbies, to_chatted)
+/datum/wound/proc/tea_life_process(mob/living/carbon/carbies)
 	return
 
-/datum/wound/pierce/tea_life_process(mob/living/carbon/carbies, to_chatted)
-	adjust_blood_flow(-0.08) // A tad strong, but 10% chance to trigger
-	if(to_chatted)
-		to_chat(carbies, span_notice("A calm, relaxed feeling suffuses you, looks like that tea did some good for you after all. Your [src] feels a little healthier."))
+/datum/wound/pierce/tea_life_process(mob/living/carbon/carbies)
+	adjust_blood_flow(-0.4) // A tad strong, but 2% chance to trigger
+	// When some nerd adds infection for wounds, make this increase the infection
 	return
 
-/datum/wound/slash/tea_life_process(mob/living/carbon/carbies, to_chatted)
-	adjust_blood_flow(-0.15) // A bit strong, but 10% chance to trigger
-	if(to_chatted)
-		to_chat(carbies, span_notice("A calm, relaxed feeling suffuses you, looks like that tea did some good for you after all. Your [src] feels a little healthier."))
+/datum/wound/slash/tea_life_process(mob/living/carbon/carbies)
+	adjust_blood_flow(-0.75) // A bit strong, but 2% chance to trigger
 	// When some nerd adds infection for wounds, make this increase the infection
 	return
 
 // There's a designated burn process, but I felt this would be better for consistency with the rest of the reagent's procs
-/datum/wound/burn/tea_life_process(mob/living/carbon/carbies, to_chatted)
+/datum/wound/burn/tea_life_process(mob/living/carbon/carbies)
 	// Sanitizes and heals, but with a limit
-	sanitization = (sanitization > 0.2) ? sanitization : sanitization + 0.1
-	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.1
-	if(to_chatted)
-		to_chat(carbies, span_notice("A calm, relaxed feeling suffuses you, looks like that tea did some good for you after all. Your [src] feels a little healthier."))
+	sanitization = (sanitization > 0.2) ? sanitization : sanitization + 0.2
+	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.2
 	return
 
 /datum/reagent/consumable/lemonade

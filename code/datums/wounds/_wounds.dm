@@ -24,6 +24,14 @@
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
+	/// Simple description, shortened for clarity if defined. Otherwise just takes the normal desc in the analyzer proc.
+	var/s_desc = ""
+	/// Simple analyzer's wound description, which focuses less on the clinical aspect of the wound and more on easily readable treatment instructions.
+	var/s_treat_text = "Go to medbay idiot"
+	/// Improvised remedies indicated by the first aid analyzer only.
+	var/homemade_treat_text = "Remember to drink lots of water!"
+
+
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
 	/// The visible message when this happens
@@ -432,15 +440,18 @@
 	return .
 
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
+	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
 
-/datum/wound/proc/severity_text()
+/datum/wound/proc/get_simple_scanner_description(mob/user)
+	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [desc]\n<i>Treatment Guide: [s_treat_text]</i>\n<i>Homemade Remedies:[homemade_treat_text]</i>"
+
+/datum/wound/proc/severity_text(simple = FALSE)
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate"
+			return "Moderate" + (simple ? "!" : "")
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe"
+			return "Severe" + (simple ? "!!" : "")
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical"
+			return "Critical" + (simple ? "!!!" : "")
