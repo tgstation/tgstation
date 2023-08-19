@@ -3,7 +3,7 @@
 
 /datum/unit_test/emoting/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
-	human.key = "EmoteTestCkey"
+	human.key = "EmoteTestKey"
 	RegisterSignal(human, COMSIG_MOB_EMOTE, PROC_REF(on_emote_used))
 
 	human.say("*shrug")
