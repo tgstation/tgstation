@@ -307,8 +307,8 @@
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	var/your_or_other = (user == victim ? "your" : "[user]'s")
 	if (user)
-		user.visible_message(span_notice("[user] begins the delicate operation of securing [their_or_other] [limb.plaintext_zone]'s internals..."))
-		to_chat(user, span_warning("You are confused by the layout of [your_or_other]'s [limb.plaintext_zone]! Perhaps a roboticist, an engineer, or a diagnostic HUD would help?"))
+		user.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone] internals..."))
+		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! Perhaps a roboticist, an engineer, or a diagnostic HUD would help?"))
 
 	if (!securing_item.use_tool(target = victim, user = user, delay = (10 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
@@ -544,8 +544,7 @@
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	if ((user != victim && user.combat_mode))
 		user.visible_message(span_danger("[user] molds [their_or_other] [limb.plaintext_zone] into a really silly shape! What a goofball!"))
-		var/datum/wound/burn/robotic/moderate/warped_metal = new /datum/wound/burn/robotic/moderate
-		warped_metal.apply_wound(src, wound_source = user)
+		limb.receive_damage(brute = 40, wound_bonus = CANT_WOUND, damage_source = user)
 	else if (prob(chance))
 		user.visible_message(span_green("[user] carefully molds [their_or_other] [limb.plaintext_zone] into the proper shape!"))
 		to_chat(victim, span_green("Your [limb.plaintext_zone] has been molded into the proper shape! Your next step is to use a screwdriver/wrench to secure your internals."))
@@ -557,9 +556,9 @@
 	if (!(HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS)))
 		to_chat(user, span_warning("You burn your hand on [victim]'s [limb.plaintext_zone]!"))
 		var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		affecting?.receive_damage(burn = 5)
+		affecting?.receive_damage(burn = 10)
 
-/datum/wound/blunt/robotic/critical/proc/heat_metal(obj/item/welder, mob/user)
+/datum/wound/blunt/robotic/critical/proc/heat_metal(obj/item/welder, mob/living/user)
 	if (!welder.tool_use_check())
 		return TRUE
 
@@ -570,8 +569,16 @@
 	if (!welder.use_tool(target = victim, user = user, delay = 10 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
-	var/datum/wound/burn/robotic/moderate/heated_metal = new /datum/wound/burn/robotic/moderate
-	heated_metal.apply_wound(src, wound_source = welder)
+	var/datum/wound/burn/robotic/overheat/wound_path
+	if (user != victim && user.combat_mode)
+		wound_path = /datum/wound/burn/robotic/overheat/severe
+		user.visible_message(span_warning("[user] heats [victim]'s [limb.plaintext_zone] aggressively, overheating it beyond the necessary point!"))
+		limb.receive_damage(burn = 10, damage_source = welder)
+	else
+		wound_path = /datum/wound/burn/robotic/overheat/moderate
+
+	var/datum/wound/burn/robotic/overheat/moderate/overheat_wound = new wound_path
+	overheat_wound.apply_wound(src, wound_source = welder)
 
 	to_chat(victim, span_green("Your [limb.plaintext_zone] is now heated, allowing it to be molded! Your next step is to have someone physically reset the superstructure with their hands."))
 	return TRUE
@@ -648,10 +655,13 @@
 	return TRUE
 
 /datum/wound/blunt/robotic/proc/limb_malleable()
+	return (!isnull(get_overheat_wound()))
+
+/datum/wound/blunt/robotic/proc/get_overheat_wound()
 	for (var/datum/wound/found_wound as anything in limb.wounds)
-		if (found_wound.type == /datum/wound/burn/robotic/moderate) // meh solution but whateva
-			return TRUE
-	return FALSE
+		if (istype(found_wound, /datum/wound/burn/robotic/overheat)) // meh solution but whateva
+			return found_wound
+	return null
 
 /datum/wound/blunt/robotic/critical/handle_percussive_maintenance_success(attacking_item)
 	victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] gets smashed into a proper shape!"), \

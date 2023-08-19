@@ -109,7 +109,7 @@
 		if(initial(possible_wound.threshold_minimum) < injury_roll)
 			var/datum/wound/new_wound
 			if(replaced_wound)
-				new_wound = replaced_wound.replace_wound(possible_wound, attack_direction = attack_direction)
+				new_wound = replaced_wound.replace_wound(new possible_wound, attack_direction = attack_direction)
 			else
 				new_wound = new possible_wound
 				new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
@@ -124,7 +124,7 @@
 	for(var/datum/wound/existing_wound as anything in wounds)
 		if(existing_wound.wound_type == initial(potential_wound.wound_type))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
-				existing_wound.replace_wound(potential_wound, smited)
+				existing_wound.replace_wound(new potential_wound, smited)
 			return
 
 	var/datum/wound/new_wound = new potential_wound

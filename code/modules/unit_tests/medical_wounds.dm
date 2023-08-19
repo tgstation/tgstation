@@ -13,7 +13,7 @@
 	var/list/iter_test_wound_list
 
 	for(iter_test_wound_list in list(list(/datum/wound/blunt/bone/moderate, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/critical),\
-										list(/datum/wound/slash/moderate, /datum/wound/slash/severe, /datum/wound/slash/critical),\
+										list(/datum/wound/slash/flesh/moderate, /datum/wound/slash/flesh/severe, /datum/wound/slash/flesh/critical),\
 										list(/datum/wound/pierce/moderate, /datum/wound/pierce/severe, /datum/wound/pierce/critical),\
 										list(/datum/wound/burn/flesh/moderate, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/critical)))
 
@@ -53,7 +53,7 @@
 	tested_part.biological_state &= ~BIO_FLESH // take away the base limb's flesh (ouchie!) ((not actually ouchie, this just affects their wounds and dismemberment handling))
 
 	for(iter_test_wound_list in list(list(/datum/wound/blunt/bone/moderate, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/critical),\
-										list(/datum/wound/slash/moderate, /datum/wound/slash/severe, /datum/wound/slash/critical),\
+										list(/datum/wound/slash/flesh/moderate, /datum/wound/slash/flesh/severe, /datum/wound/slash/flesh/critical),\
 										list(/datum/wound/pierce/moderate, /datum/wound/pierce/severe, /datum/wound/pierce/critical),\
 										list(/datum/wound/burn/flesh/moderate, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/critical)))
 

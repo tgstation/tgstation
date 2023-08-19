@@ -67,14 +67,16 @@ GLOBAL_LIST_INIT(global_wound_types, list(
 		"[BIO_ROBOTIC]" = list(/datum/wound/blunt/robotic/critical, /datum/wound/blunt/robotic/severe, /datum/wound/blunt/robotic/moderate) // cyborg limbs
 	),
 	WOUND_SLASH = list(
-		"[BIO_FLESH]" = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate)
+		"[BIO_FLESH]" = list(/datum/wound/slash/flesh/critical, /datum/wound/slash/flesh/severe, /datum/wound/slash/flesh/moderate),
+		//"[BIO_ROBOTIC]" = list(/datum/wound/slash/robotic/critical, /datum/wound/slash/robotic/severe, /datum/wound/slash/robotic/moderate)
 	),
 	WOUND_PIERCE = list(
 		"[BIO_FLESH]" = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
+		//"[BIO_ROBOTIC]" = list(/datum/wound/slash/robotic/critical, /datum/wound/slash/robotic/severe, /datum/wound/slash/robotic/moderate)
 	),
 	WOUND_BURN = list(
 		"[BIO_FLESH]" = list(/datum/wound/burn/flesh/critical, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/moderate),
-		"[BIO_ROBOTIC]" = list(/datum/wound/burn/robotic/critical, /datum/wound/burn/robotic/severe, /datum/wound/burn/robotic/moderate)
+		"[BIO_ROBOTIC]" = list(/datum/wound/burn/robotic/overheat/critical, /datum/wound/burn/robotic/overheat/severe, /datum/wound/burn/robotic/overheat/moderate)
 	)
 ))
 
@@ -83,9 +85,9 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 	/datum/wound/blunt/bone/critical,
 	/datum/wound/blunt/bone/severe,
 	/datum/wound/blunt/bone/moderate,
-	/datum/wound/slash/critical,
-	/datum/wound/slash/severe,
-	/datum/wound/slash/moderate,
+	/datum/wound/slash/flesh/critical,
+	/datum/wound/slash/flesh/severe,
+	/datum/wound/slash/flesh/moderate,
 	/datum/wound/pierce/critical,
 	/datum/wound/pierce/severe,
 	/datum/wound/pierce/moderate,

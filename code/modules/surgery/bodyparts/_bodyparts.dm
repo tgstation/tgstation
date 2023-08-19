@@ -256,7 +256,7 @@
 
 	if(locate(/datum/wound/blunt) in wounds)
 		. += span_warning("The bones in this limb appear badly cracked.")
-	if(locate(/datum/wound/slash) in wounds)
+	if(locate(/datum/wound/slash/flesh) in wounds)
 		. += span_warning("The flesh on this limb appears badly lacerated.")
 	if(locate(/datum/wound/pierce) in wounds)
 		. += span_warning("The flesh on this limb appears badly perforated.")
