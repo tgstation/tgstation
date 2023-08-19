@@ -87,6 +87,7 @@
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
+	user.client.give_award(/datum/award/score/achievements_score, user, 1)
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
