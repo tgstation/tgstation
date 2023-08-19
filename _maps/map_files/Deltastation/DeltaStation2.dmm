@@ -10147,7 +10147,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/south,
-/obj/effect/bitrunning/reward_spawn,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "cwe" = (
@@ -39272,7 +39272,7 @@
 	},
 /obj/effect/decal/cleanable/oil/streak,
 /obj/machinery/camera/directional/south,
-/obj/effect/bitrunning/reward_spawn,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "jLa" = (

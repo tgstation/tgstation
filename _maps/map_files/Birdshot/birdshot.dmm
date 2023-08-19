@@ -20928,7 +20928,7 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/oil,
-/obj/effect/bitrunning/reward_spawn,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "hHy" = (
@@ -63938,7 +63938,7 @@
 /obj/effect/turf_decal/box/corners,
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/bitrunning/reward_spawn,
+/obj/effect/landmark/bitrunning/station_reward_spawn,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/bitrunning/den)
 "wiT" = (
