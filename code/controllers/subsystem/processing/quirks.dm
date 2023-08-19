@@ -4,36 +4,37 @@
 
 // Shifted to glob so they are generated at world start instead of risking players doing preference stuff before the subsystem inits
 GLOBAL_LIST_INIT_TYPED(quirk_blacklist, /list/datum/quirk, list(
-		list(/datum/quirk/item_quirk/blindness, /datum/quirk/item_quirk/nearsighted),
-		list(/datum/quirk/jolly, /datum/quirk/depression, /datum/quirk/apathetic, /datum/quirk/hypersensitive),
-		list(/datum/quirk/no_taste, /datum/quirk/vegetarian, /datum/quirk/deviant_tastes, /datum/quirk/gamer),
-		list(/datum/quirk/pineapple_liker, /datum/quirk/pineapple_hater, /datum/quirk/gamer),
-		list(/datum/quirk/alcohol_tolerance, /datum/quirk/light_drinker),
-		list(/datum/quirk/item_quirk/clown_enjoyer, /datum/quirk/item_quirk/mime_fan, /datum/quirk/item_quirk/pride_pin),
-		list(/datum/quirk/bad_touch, /datum/quirk/friendly),
-		list(/datum/quirk/extrovert, /datum/quirk/introvert),
-		list(/datum/quirk/prosthetic_limb, /datum/quirk/quadruple_amputee, /datum/quirk/body_purist),
-		list(/datum/quirk/prosthetic_organ, /datum/quirk/tin_man, /datum/quirk/body_purist),
-		list(/datum/quirk/quadruple_amputee, /datum/quirk/paraplegic, /datum/quirk/hemiplegic),
-		list(/datum/quirk/quadruple_amputee, /datum/quirk/frail),
-		list(/datum/quirk/social_anxiety, /datum/quirk/mute),
-		list(/datum/quirk/mute, /datum/quirk/softspoken),
-		list(/datum/quirk/poor_aim, /datum/quirk/bighands),
-		list(/datum/quirk/bilingual, /datum/quirk/foreigner),
-		list(/datum/quirk/spacer_born, /datum/quirk/paraplegic, /datum/quirk/item_quirk/settler),
-		list(/datum/quirk/photophobia, /datum/quirk/nyctophobia),
-		list(/datum/quirk/item_quirk/settler, /datum/quirk/freerunning),
-	))
+	list(/datum/quirk/item_quirk/blindness, /datum/quirk/item_quirk/nearsighted),
+	list(/datum/quirk/jolly, /datum/quirk/depression, /datum/quirk/apathetic, /datum/quirk/hypersensitive),
+	list(/datum/quirk/no_taste, /datum/quirk/vegetarian, /datum/quirk/deviant_tastes, /datum/quirk/gamer),
+	list(/datum/quirk/pineapple_liker, /datum/quirk/pineapple_hater, /datum/quirk/gamer),
+	list(/datum/quirk/alcohol_tolerance, /datum/quirk/light_drinker),
+	list(/datum/quirk/item_quirk/clown_enjoyer, /datum/quirk/item_quirk/mime_fan, /datum/quirk/item_quirk/pride_pin),
+	list(/datum/quirk/bad_touch, /datum/quirk/friendly),
+	list(/datum/quirk/extrovert, /datum/quirk/introvert),
+	list(/datum/quirk/prosthetic_limb, /datum/quirk/quadruple_amputee, /datum/quirk/body_purist),
+	list(/datum/quirk/prosthetic_organ, /datum/quirk/tin_man, /datum/quirk/body_purist),
+	list(/datum/quirk/quadruple_amputee, /datum/quirk/paraplegic, /datum/quirk/hemiplegic),
+	list(/datum/quirk/quadruple_amputee, /datum/quirk/frail),
+	list(/datum/quirk/social_anxiety, /datum/quirk/mute),
+	list(/datum/quirk/mute, /datum/quirk/softspoken),
+	list(/datum/quirk/poor_aim, /datum/quirk/bighands),
+	list(/datum/quirk/bilingual, /datum/quirk/foreigner),
+	list(/datum/quirk/spacer_born, /datum/quirk/paraplegic, /datum/quirk/item_quirk/settler),
+	list(/datum/quirk/photophobia, /datum/quirk/nyctophobia),
+	list(/datum/quirk/item_quirk/settler, /datum/quirk/freerunning),
+))
 
 GLOBAL_LIST_INIT(quirk_string_blacklist, generate_quirk_string_blacklist())
 
 /proc/generate_quirk_string_blacklist()
-	. = list()
+	var/list/string_blacklist = list()
 	for(var/blacklist in GLOB.quirk_blacklist)
 		var/list/string_list = list()
 		for(var/datum/quirk/typepath as anything in blacklist)
 			string_list += initial(typepath.name)
-		. += list(string_list)
+		string_blacklist += list(string_list)
+	return string_blacklist
 
 //Used to process and handle roundstart quirks
 // - Quirk strings are used for faster checking in code
