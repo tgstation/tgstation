@@ -525,11 +525,11 @@
 
 /obj/item/food/moussaka
 	name = "moussaka"
-	desc = "A layered Mediterranean dish made of eggplants, potatoes, mixed veggies, and meat with a topping of bechamel sauce. Sliceable"
+	desc = "A layered Mediterranean dish made of eggplants, mixed veggies, and meat with a topping of bechamel sauce. Sliceable"
 	icon_state = "moussaka"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 32,
-		/datum/reagent/consumable/nutriment/vitamin = 12,
+		/datum/reagent/consumable/nutriment = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
 		/datum/reagent/consumable/nutriment/protein = 20,
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
@@ -540,11 +540,11 @@
 
 /obj/item/food/moussaka_slice
 	name = "moussaka slice"
-	desc = "A layered Mediterranean dish made of eggplants, potatoes, mixed veggies, and meat with a topping of bechamel sauce. Delish!"
+	desc = "A layered Mediterranean dish made of eggplants, mixed veggies, and meat with a topping of bechamel sauce. Delish!"
 	icon_state = "moussaka_slice"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 8,
-		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 5,
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
