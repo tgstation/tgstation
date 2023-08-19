@@ -283,7 +283,7 @@
 
 /datum/reagent/water/salt
 	name = "Saltwater"
-	description = "Water, but salty. Smells like... Centcomm shuttle docking?"
+	description = "Water, but salty. Smells like... Central command shuttle docking?"
 	color = "#aaaaaa9d" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	cooling_temperature = 3
