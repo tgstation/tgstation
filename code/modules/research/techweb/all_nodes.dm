@@ -1648,7 +1648,7 @@
 		"mod_clamp",
 		"mod_drill",
 		"mod_orebag",
-		"modlink_scryer"
+		"modlink_scryer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
