@@ -67,7 +67,8 @@ SUBSYSTEM_DEF(minor_mapping)
 	for(var/turf/open/floor/plating/T in all_turfs)
 		if(T.is_blocked_turf())
 			continue
-		if(locate(/obj/structure/cable) in T)
+		var/cable = locate(/obj/structure/cable) in T
+		if(cable && !istype(cable, /obj/structure/cable/multilayer/multiz))
 			exposed_wires += T
 
 	return shuffle(exposed_wires)
