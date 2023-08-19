@@ -92,6 +92,12 @@
 ///the tree we will burn down
 #define BB_TARGET_TREE "BB_target_tree"
 
+// Regal Rats
+/// The rat's ability to corrupt an area.
+#define BB_DOMAIN_ABILITY "BB_domain_ability"
+/// The rat's ability to raise a horde of soldiers.
+#define BB_RAISE_HORDE_ABILITY "BB_raise_horde_ability"
+
 // mega arachnid keys
 /// ability to throw restrain projectiles
 #define BB_ARACHNID_RESTRAIN "BB_arachnid_restrain"
@@ -99,3 +105,4 @@
 #define BB_SURVEILLANCE_TARGET "BB_surveillance_target"
 /// our acid slip ability
 #define BB_ARACHNID_SLIP "BB_arachnid_slip"
+

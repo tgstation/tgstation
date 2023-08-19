@@ -1,0 +1,4 @@
+author: "iwishforducks"
+delete-after: True
+changes:
+  - bugfix: "Some RCD constructs took more material than manual construction. The RCD cost should be consistent in comparison to manual construction now."

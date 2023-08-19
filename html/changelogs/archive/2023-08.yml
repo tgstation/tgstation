@@ -839,3 +839,97 @@
       gain bonuses innately (like Mythril stacks) should cease.
   vinylspiders:
   - bugfix: fixes a harddel in particle holders
+2023-08-18:
+  DeerJesus:
+  - bugfix: replaced injector with working passive vent in birdshot incinerator
+  - bugfix: conveyor lever in birdshot incinerator
+  - bugfix: fixes all the martian drinks having 20 boozepower
+  EuSouAFazer:
+  - bugfix: Moved the RD's plant to its proper place in Northstar
+  Fikou:
+  - spellcheck: fixes the name of the incline bench press
+  - balance: you cant speed up the big slappy with slime potion
+  Ghommie:
+  - bugfix: Fixed some jank with the dynamic threat curve.
+  Hatterhat:
+  - spellcheck: Fixed a lack of plurality when ejecting multiple casings from a revolver.
+  IndieanaJones:
+  - rscdel: Removed tiny mob sprite abilities for large mobs
+  - rscadd: Add a Self Seethrough ability, given to most large mobs and all mobs affected
+      by a fugu gland
+  - bugfix: Space Dragon's overlay will no longer vanish at times
+  - qol: Xenomorph Sentinel and Ambusher Spider's sneak ability now has a transition
+      to a lower alpha as opposed to being immediate.
+  - qol: The sneak ability now uses balloon alerts as opposed to chat alerts.
+  - bugfix: Fixed the Xenomorph Sentinel's Sneak ability icon being an error.
+  Jacquerel:
+  - admin: Adds Spider, Goliath, and Meteor Heart actions to the "Grant Mob Action"
+      menu.
+  - admin: Four players can ride the speedwagon
+  - bugfix: Turning into a space dragon with the polymorphic inverter will no longer
+      leave you existing in two places
+  - balance: You can no longer use the belt to transform into monkeys or xenomorphs,
+      for technical reasons.
+  - admin: The Add Mob Ability menu now prefixes the typepath of the ability with
+      the ability's name, so you can much more quickly see what the ability is.
+  Mothblocks:
+  - rscadd: Engineers now have an RCD round start.
+  - balance: RCD construction/deconstruction effects can now be attacked in order
+      to cancel them. You can get the anti-disruption upgrade disk to prevent this.
+  - balance: RCD construction/deconstruction is now slower if you already have another
+      effect up. This does not effect reconstruction.
+  - balance: Both of the above effects do not effect the CE's roundstart RCD, nor
+      any other RCDs such as combat RCDs.
+  mc-oofert:
+  - rscadd: cybernetic moth eyes and their variants
+  - bugfix: luminescent eyes no longer make you look like a cyclops in the dark
+  necromanceranne:
+  - rscadd: Settler quirk! Conqueror the great outdoors....in space. Just make sure
+      nobody asks you to get anything from the top shelf.
+  vinylspiders:
+  - image: bowtie sprite has been tweaked slightly to look a little bit more bowtie-ish
+  - bugfix: formal closet will no longer spawn with two 'error' icon suits inside
+      of it
+2023-08-19:
+  DeerJesus:
+  - bugfix: you can actually tell what hand a reagent dartgun is in now
+  EuSouAFazer:
+  - qol: Delta's Detective Office looks better now.
+  - bugfix: No more stacked items in Meta's custodial closet
+  Ghommie:
+  - bugfix: Fixed dynamic.
+  Helg2:
+  - bugfix: fixed lavaland beach bartender closets looking off.
+  - qol: CTF assault class' (with shotgun and rocket gloves)  description now mentions
+      that it has low armor and increased moving speed.
+  - balance: Decreased CTF recharge start delay for shields from 20 seconds to 12
+      seconds.
+  - balance: Marksmans rifle now has 1.7 scope.
+  - bugfix: When toggling instagib mode for CTF and pressing a cross now will just
+      cancel instead of proceeding.
+  - bugfix: When clicking on other CTF teams spawners and after you already chose
+      your team no more will ask you to join some other team to make them even.
+  - bugfix: Base iron floor tiles now will be able to stack with other base iron floor
+      tiles after being reskined to the base subtype.
+  - bugfix: '[Waystation] Windoor for secret documents now can be accessed with away
+      station secoff''s id.'
+  - bugfix: '[Waystation] Deleted a window on the same place as windoor so it won''t
+      block your path to secret documents.'
+  Jacquerel:
+  - bugfix: the goliath and watcher mating season has ended and population has returned
+      to normal levels
+  carshalash:
+  - qol: Martian fried noodles now requires 2 grown peanuts instead of salted peanut
+      packet.
+  mc-oofert:
+  - bugfix: you can now toggle repair droids and plasma engines on mechas again
+  - bugfix: you can no longer destroy syndicate modsuits by just being on fire
+  necromanceranne:
+  - bugfix: Makes sure settlers are SHORTEST.
+  san7890:
+  - refactor: Regal Rats have been refactored into basic mobs. They should be a bit
+      smarter and retain their docility (until attacked, in which case you should
+      prepare to get rekt by summoned rats), and properly flee when they can instead
+      of just sit there as you beat them to death. The framework for them interacting
+      with stuff (i.e. opening doors while slobbering on food) is a bit more unified
+      too, now. They also have cooler names too!

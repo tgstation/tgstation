@@ -281,18 +281,18 @@
 	QDEL_NULL(boots)
 	return ..()
 
-/obj/item/mod/construction/shell/handle_atom_del(atom/deleted_atom)
-	if(deleted_atom == core)
+/obj/item/mod/construction/shell/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == core)
 		core = null
-	if(deleted_atom == helmet)
+	if(gone == helmet)
 		helmet = null
-	if(deleted_atom == chestplate)
+	if(gone == chestplate)
 		chestplate = null
-	if(deleted_atom == gauntlets)
+	if(gone == gauntlets)
 		gauntlets = null
-	if(deleted_atom == boots)
+	if(gone == boots)
 		boots = null
-	return ..()
 
 #undef START_STEP
 #undef CORE_STEP
