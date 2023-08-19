@@ -108,7 +108,6 @@
 	stored_paper = 20
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
