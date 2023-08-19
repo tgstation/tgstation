@@ -979,7 +979,7 @@
 	mytray.adjust_weedlevel(-rand(1, 4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, forced = FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, required_biotype = affected_biotype)
 	. = TRUE
 	..()
 
