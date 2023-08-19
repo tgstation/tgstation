@@ -20,6 +20,7 @@ export const Mule = (props, context) => {
     id,
     allow_possession,
     possession_enabled,
+    pai_inserted,
     destinations = [],
   } = data;
   const locked = data.locked && !data.siliconUser;
@@ -74,13 +75,22 @@ export const Mule = (props, context) => {
           <Section
             title="Controls"
             buttons={
-              !!load && (
-                <Button
-                  icon="eject"
-                  content="Unload"
-                  onClick={() => act('unload')}
-                />
-              )
+              <>
+                {!!load && (
+                  <Button
+                    icon="eject"
+                    content="Unload"
+                    onClick={() => act('unload')}
+                  />
+                )}
+                {!!pai_inserted && (
+                  <Button
+                    icon="eject"
+                    content="Eject PAI"
+                    onClick={() => act('eject_pai')}
+                  />
+                )}
+              </>
             }>
             <LabeledList>
               <LabeledList.Item label="ID">

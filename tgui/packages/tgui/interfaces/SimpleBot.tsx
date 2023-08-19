@@ -20,6 +20,7 @@ type Settings = {
   allow_possession: number;
   possession_enabled: number;
   has_personality: number;
+  pai_inserted: boolean;
 };
 
 type Controls = {
@@ -57,10 +58,12 @@ export const SimpleBot = (props, context) => {
 const TabDisplay = (props, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
   const { can_hack, has_access, locked } = data;
+  const { allow_possession } = data.settings;
 
   return (
     <>
       {!!can_hack && <HackButton />}
+      {!!allow_possession && <PaiButton />}
       <Button
         color="transparent"
         icon="fa-poll-h"
@@ -101,6 +104,33 @@ const HackButton = (props, context) => {
       {emagged ? 'Malfunctional' : 'Safety Lock'}
     </Button>
   );
+};
+
+/** Creates a button indicating PAI status and offers the eject action */
+const PaiButton = (props, context) => {
+  const { act, data } = useBackend<SimpleBotContext>(context);
+  const { pai_inserted } = data.settings;
+
+  if (!pai_inserted) {
+    return (
+      <Button
+        color="transparent"
+        icon="robot"
+        tooltip={multiline`Insert an active PAI card to control this device.`}>
+        No PAI Inserted
+      </Button>
+    );
+  } else {
+    return (
+      <Button
+        disabled={!pai_inserted}
+        icon="eject"
+        onClick={() => act('eject_pai')}
+        tooltip={multiline`Ejects the current PAI.`}>
+        Eject PAI
+      </Button>
+    );
+  }
 };
 
 /** Displays the bot's standard settings: Power, patrol, etc. */

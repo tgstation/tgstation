@@ -31,7 +31,7 @@
 /obj/structure/fluff/empty_terrarium
 	name = "empty terrarium"
 	desc = "An ancient machine that seems to be used for storing plant matter. Its hatch is ajar."
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "terrarium_open"
 	density = TRUE
 /**
@@ -57,7 +57,7 @@
 /obj/structure/fluff/empty_cryostasis_sleeper
 	name = "empty cryostasis sleeper"
 	desc = "Although comfortable, this sleeper won't function as anything but a bed ever again."
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "cryostasis_sleeper_open"
 
 /**
@@ -140,7 +140,7 @@
 
 /obj/structure/fluff/divine
 	name = "Miracle"
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "error"
 	anchored = TRUE
 	density = TRUE
@@ -269,7 +269,7 @@
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
-	icon = 'icons/obj/tram_rails.dmi'
+	icon = 'icons/obj/fluff/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE

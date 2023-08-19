@@ -55,7 +55,7 @@
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /obj/structure/tubes,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "n" = (

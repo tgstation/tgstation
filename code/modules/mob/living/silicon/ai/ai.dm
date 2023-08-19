@@ -284,7 +284,7 @@
 
 /// Apply an emote to all AI status displays on the station
 /mob/living/silicon/ai/proc/apply_emote_display(emote)
-	for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
+	for(var/obj/machinery/status_display/ai/ai_display as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/status_display/ai))
 		ai_display.emotion = emote
 		ai_display.update()
 
@@ -489,14 +489,14 @@
 			src << browse(last_tablet_note_seen, "window=show_tablet")
 	//Carn: holopad requests
 	if(href_list["jump_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad)
 		if(Holopad)
 			cam_prev = get_turf(eyeobj)
 			eyeobj.setLoc(Holopad)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
 	if(href_list["project_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type(/obj/machinery/holopad)
 		if(Holopad)
 			lastloc = get_turf(eyeobj)
 			Holopad.attack_ai_secondary(src) //may as well recycle
@@ -720,7 +720,7 @@
 			"carp" = 'icons/mob/simple/carp.dmi',
 			"chicken" = 'icons/mob/simple/animal.dmi',
 			"corgi" = 'icons/mob/simple/pets.dmi',
-			"cow" = 'icons/mob/simple/animal.dmi',
+			"cow" = 'icons/mob/simple/cows.dmi',
 			"crab" = 'icons/mob/simple/animal.dmi',
 			"fox" = 'icons/mob/simple/pets.dmi',
 			"goat" = 'icons/mob/simple/animal.dmi',
@@ -728,7 +728,7 @@
 			"cat2" = 'icons/mob/simple/pets.dmi',
 			"poly" = 'icons/mob/simple/animal.dmi',
 			"pug" = 'icons/mob/simple/pets.dmi',
-			"spider" = 'icons/mob/simple/animal.dmi'
+			"spider" = 'icons/mob/simple/arachnoid.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -923,7 +923,7 @@
 	if(oldname != real_name)
 		if(eyeobj)
 			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.saved_identification = real_name
+			modularInterface.imprint_id(name = real_name)
 
 		// Notify Cyborgs
 		for(var/mob/living/silicon/robot/Slave in connected_robots)
@@ -990,11 +990,6 @@
 
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
-
-/mob/living/silicon/ai/death(gibbed)
-	if(!isnull(deployed_shell))
-		disconnect_shell() // farewell my sweet prince; for a shell is nothing without an AI to control it
-	return ..()
 
 /mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()

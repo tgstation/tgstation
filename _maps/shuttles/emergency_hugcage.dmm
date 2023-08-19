@@ -111,7 +111,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "hH" = (
-/mob/living/simple_animal/pet/penguin/baby,
+/mob/living/basic/pet/penguin/baby/permanent,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "iI" = (

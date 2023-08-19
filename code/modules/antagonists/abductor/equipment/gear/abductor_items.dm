@@ -1,5 +1,5 @@
 /obj/item/abductor
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
@@ -299,7 +299,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	icon_state = "wonderprodStun"
@@ -504,7 +504,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/radio/headset/abductor
 	name = "alien headset"
 	desc = "An advanced alien headset designed to monitor communications of human space stations. Why does it have a microphone? No one knows."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "abductor_headset"
 	keyslot2 = /obj/item/encryptionkey/heads/captain
 
@@ -520,7 +520,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"
 	desc = "A beacon designed to instantly tele-construct abductor machinery."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "beacon"
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/spawned_machine
@@ -555,38 +555,38 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/scalpel/alien
 	name = "alien scalpel"
 	desc = "It's a gleaming sharp knife made out of silvery-green metal."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	toolspeed = 0.25
 
 /obj/item/hemostat/alien
 	name = "alien hemostat"
 	desc = "You've never seen this before."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	toolspeed = 0.25
 
 /obj/item/retractor/alien
 	name = "alien retractor"
 	desc = "You're not sure if you want the veil pulled back."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	toolspeed = 0.25
 
 /obj/item/circular_saw/alien
 	name = "alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	toolspeed = 0.25
 
 /obj/item/surgicaldrill/alien
 	name = "alien drill"
 	desc = "Maybe alien surgeons have finally found a use for the drill."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	toolspeed = 0.25
 
 /obj/item/cautery/alien
 	name = "alien cautery"
 	desc = "Why would bloodless aliens have a tool to stop bleeding? \
 		Unless..."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	toolspeed = 0.25
 
 /obj/item/clothing/head/helmet/abductor
@@ -689,24 +689,24 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/abductor/alien_omnitool/proc/set_toolset(mob/user)
 	if(active_toolset == TOOLSET_MEDICAL)
 		tool_list = list(
-			"Crowbar" = image(icon = 'icons/obj/abductor.dmi', icon_state = "crowbar"),
-			"Multitool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "multitool"),
-			"Screwdriver" = image(icon = 'icons/obj/abductor.dmi', icon_state = "screwdriver_a"),
-			"Wirecutters" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cutters"),
-			"Wrench" = image(icon = 'icons/obj/abductor.dmi', icon_state = "wrench"),
-			"Welding Tool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "welder"),
+			"Crowbar" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "crowbar"),
+			"Multitool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "multitool"),
+			"Screwdriver" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "screwdriver_a"),
+			"Wirecutters" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cutters"),
+			"Wrench" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "wrench"),
+			"Welding Tool" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "welder"),
 		)
 		active_toolset = TOOLSET_HACKING
 		if(user)
 			balloon_alert(user, "hacking toolset selected")
 	else
 		tool_list = list(
-			"Retractor" = image(icon = 'icons/obj/abductor.dmi', icon_state = "retractor"),
-			"Hemostat" = image(icon = 'icons/obj/abductor.dmi', icon_state = "hemostat"),
-			"Cautery" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cautery"),
-			"Drill" = image(icon = 'icons/obj/abductor.dmi', icon_state = "drill"),
-			"Scalpel" = image(icon = 'icons/obj/abductor.dmi', icon_state = "scalpel"),
-			"Saw" = image(icon = 'icons/obj/abductor.dmi', icon_state = "saw"),
+			"Retractor" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "retractor"),
+			"Hemostat" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "hemostat"),
+			"Cautery" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "cautery"),
+			"Drill" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "drill"),
+			"Scalpel" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "scalpel"),
+			"Saw" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "saw"),
 			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
 			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
 		)

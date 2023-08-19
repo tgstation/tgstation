@@ -30,7 +30,7 @@
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
-	var/obj/machinery/buffer // simple machine buffer for device linkage
+	var/datum/buffer // simple machine buffer for device linkage
 	var/mode = 0
 
 /obj/item/multitool/examine(mob/user)
@@ -41,6 +41,17 @@
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
+/obj/item/multitool/proc/set_buffer(datum/buffer)
+	if(buffer)
+		UnregisterSignal(buffer, COMSIG_QDELETING)
+	if(QDELETED(buffer))
+		return
+	src.buffer = buffer
+	RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
+
+/obj/item/multitool/proc/on_buffer_del(datum/source)
+	SIGNAL_HANDLER
+	buffer = null
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
@@ -128,7 +139,7 @@
 /obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "multitool"
 	belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)

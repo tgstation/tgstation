@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade
 	name = "borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
@@ -895,7 +895,7 @@
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade1"
 
 /obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)

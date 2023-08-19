@@ -290,7 +290,7 @@
 
 /datum/grand_finale/all_access/trigger(mob/living/carbon/human/invoker)
 	message_admins("[key_name(invoker)] removed all door access requirements")
-	for(var/obj/machinery/door/target_door as anything in GLOB.airlocks)
+	for(var/obj/machinery/door/target_door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door))
 		if(is_station_level(target_door.z))
 			target_door.unlock()
 			target_door.req_access = list()

@@ -14,11 +14,6 @@
 /obj/machinery/mechpad/Initialize(mapload)
 	. = ..()
 	display_name = "Orbital Pad - [get_area_name(src)]"
-	GLOB.mechpad_list += src
-
-/obj/machinery/mechpad/Destroy()
-	GLOB.mechpad_list -= src
-	return ..()
 
 /obj/machinery/mechpad/examine(mob/user)
 	. = ..()
@@ -41,7 +36,7 @@
 	if(!multitool_check_buffer(user, tool))
 		return
 	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
+	multitool.set_buffer(src)
 	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
 	return TRUE
 

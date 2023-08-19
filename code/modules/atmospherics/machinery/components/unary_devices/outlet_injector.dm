@@ -22,11 +22,13 @@
 		id_tag = assign_random_name()
 	. = ..()
 
-	var/static/list/tool_screentips = list(
-		TOOL_MULTITOOL = list(
-			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
-		)
-	)
+	var/static/list/tool_screentips
+	if(!tool_screentips)
+		tool_screentips = string_assoc_nested_list(list(
+			TOOL_MULTITOOL = list(
+				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+			)
+		))
 	AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	register_context()
 
@@ -46,12 +48,12 @@
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
 		sensor.inlet_id = id_tag
-		multi_tool.buffer = null
+		multi_tool.set_buffer(null)
 		balloon_alert(user, "input linked to sensor")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.buffer = src
+	multi_tool.set_buffer(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)

@@ -109,3 +109,8 @@
 #define COMSIG_MOVABLE_MESSAGE_GET_NAME_PART "movable_message_get_name_part"
 	///The index of the name part
 	#define NAME_PART_INDEX 1
+
+/// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
+#define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
+/// From base of area/Exited(): (area/left, direction)
+#define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"

@@ -228,7 +228,7 @@
 ///Returns death message for mob examine text
 /mob/living/carbon/human/proc/generate_death_examine_text()
 	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
-	var/t_He = p_they(TRUE)
+	var/t_He = p_They()
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable

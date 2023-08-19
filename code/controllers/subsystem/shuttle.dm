@@ -789,9 +789,9 @@ SUBSYSTEM_DEF(shuttle)
 	hidden_shuttle_turf_images -= remove_images
 	hidden_shuttle_turf_images += add_images
 
-	for(var/V in GLOB.navigation_computers)
-		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
-		C.update_hidden_docking_ports(remove_images, add_images)
+	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/docking_computer \
+		as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/camera_advanced/shuttle_docker))
+		docking_computer.update_hidden_docking_ports(remove_images, add_images)
 
 	QDEL_LIST(remove_images)
 
@@ -922,6 +922,8 @@ SUBSYSTEM_DEF(shuttle)
 	if(preview_shuttle)
 		preview_shuttle.jumpToNullSpace()
 	preview_shuttle = null
+	if(preview_reservation)
+		QDEL_NULL(preview_reservation)
 
 /datum/controller/subsystem/shuttle/ui_state(mob/user)
 	return GLOB.admin_state

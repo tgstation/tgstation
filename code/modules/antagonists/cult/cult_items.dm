@@ -1,7 +1,7 @@
 /obj/item/tome
 	name = "arcane tome"
 	desc = "An old, dusty tome with frayed edges and a sinister-looking cover."
-	icon = 'icons/obj/cult/items.dmi'
+	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
@@ -326,7 +326,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_helmet"
 	inhand_icon_state = null
 	armor_type = /datum/armor/cult_hoodie_hardened
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
@@ -347,7 +347,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
-	icon = 'icons/obj/cult/items.dmi'
+	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state = "cult_sharpener"
 	uses = 1
 	increment = 5
@@ -469,11 +469,10 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon = 'icons/obj/drinks/bottles.dmi'
-	icon_state = "holyflask"
+	icon_state = "unholyflask"
 	inhand_icon_state = "holyflask"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	color = "#333333"
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
 ///how many times can the shuttle be cursed?
@@ -484,7 +483,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/shuttle_curse
 	name = "cursed orb"
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the emergency escape shuttle. "
-	icon = 'icons/obj/cult/items.dmi'
+	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state = "shuttlecurse"
 	///how many times has the shuttle been cursed so far?
 	var/static/totalcurses = 0
@@ -559,7 +558,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/cult_shift
 	name = "veil shifter"
 	desc = "This relic instantly teleports you, and anything you're pulling, forward by a moderate distance."
-	icon = 'icons/obj/cult/items.dmi'
+	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state ="shifter"
 	///How many uses does the item have before becoming inert
 	var/uses = 4
@@ -788,32 +787,12 @@ Striking a noncultist, however, will tear their flesh."}
 		halberd.throw_at(owner, 10, 2, owner)
 
 
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood
+/obj/item/gun/magic/wand/arcane_barrage/blood
 	name = "blood bolt barrage"
 	desc = "Blood for blood."
 	color = "#ff0000"
-	guns_left = 24
-	mag_type = /obj/item/ammo_box/magazine/internal/blood
+	ammo_type =  /obj/item/ammo_casing/magic/arcane_barrage/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
-
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user, akimbo_usage)
-	if(akimbo_usage)
-		return FALSE //no akimbo wielding magic lol.
-	. = ..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"Did you truly think that you could channel MY blood without my approval? Amusing, but futile.\""))
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			if(C.active_hand_index == 1)
-				C.apply_damage(20, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 20, sharpness = SHARP_EDGED) //oof ouch
-			else
-				C.apply_damage(20, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 20, sharpness = SHARP_EDGED)
-		qdel(src)
-		return FALSE
-
-/obj/item/ammo_box/magazine/internal/blood
-	caliber = CALIBER_A762
-	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
 
 /obj/item/ammo_casing/magic/arcane_barrage/blood
 	projectile_type = /obj/projectile/magic/arcane_barrage/blood
@@ -827,23 +806,28 @@ Striking a noncultist, however, will tear their flesh."}
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
 /obj/projectile/magic/arcane_barrage/blood/Bump(atom/target)
-	var/turf/T = get_turf(target)
-	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
-	var/mob/mob_target = target
+	. = ..()
+	var/turf/our_turf = get_turf(target)
+	playsound(our_turf , 'sound/effects/splat.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/cult/sparks(our_turf)
 
-	if(ismob(mob_target) && IS_CULTIST(mob_target))
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.stat != DEAD)
-				H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
-		if(isshade(target) || isconstruct(target))
-			var/mob/living/simple_animal/M = target
-			if(M.health+5 < M.maxHealth)
-				M.adjustHealth(-5)
-		new /obj/effect/temp_visual/cult/sparks(T)
-		qdel(src)
-	else
-		..()
+/obj/projectile/magic/arcane_barrage/blood/prehit_pierce(atom/target)
+	. = ..()
+	if(!ismob(target))
+		return PROJECTILE_PIERCE_NONE
+
+	var/mob/living/our_target = target
+	if(!IS_CULTIST(our_target))
+		return PROJECTILE_PIERCE_NONE
+
+	if(iscarbon(our_target) && our_target.stat != DEAD)
+		var/mob/living/carbon/carbon_cultist = our_target
+		carbon_cultist.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
+	if(isshade(our_target) || isconstruct(our_target))
+		var/mob/living/simple_animal/undead_abomination = our_target
+		if(undead_abomination.health+5 < undead_abomination.maxHealth)
+			undead_abomination.adjustHealth(-5)
+	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/item/blood_beam
 	name = "\improper magical aura"

@@ -1,7 +1,7 @@
 /obj/item/papercutter
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
@@ -223,7 +223,7 @@
 /obj/item/hatchet/cutterblade
 	name = "paper cutter blade"
 	desc = "The blade of a paper cutter. Most likely removed for polishing or sharpening."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "cutterblade"
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'

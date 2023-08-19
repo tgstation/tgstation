@@ -1,7 +1,7 @@
 /obj/machinery/abductor/experiment
 	name = "experimentation machine"
 	desc = "A large man-sized tube sporting a complex array of surgical machinery."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE

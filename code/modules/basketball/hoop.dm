@@ -12,7 +12,7 @@
 /obj/structure/hoop
 	name = "basketball hoop"
 	desc = "Boom, shakalaka!"
-	icon = 'icons/obj/toys/basketball_hoop.dmi'
+	icon = 'icons/obj/fluff/basketball_hoop.dmi'
 	icon_state = "hoop"
 	anchored = TRUE
 	density = TRUE

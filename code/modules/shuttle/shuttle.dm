@@ -70,7 +70,7 @@
 /obj/docking_port/has_gravity(turf/current_turf)
 	return TRUE
 
-/obj/docking_port/take_damage()
+/obj/docking_port/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	return
 
 /obj/docking_port/singularity_pull()
@@ -820,7 +820,7 @@
 	return ripple_turfs
 
 /obj/docking_port/mobile/proc/check_poddoors()
-	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
+	for(var/obj/machinery/door/poddoor/shuttledock/pod as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor/shuttledock))
 		pod.check()
 
 /obj/docking_port/mobile/proc/dock_id(id)

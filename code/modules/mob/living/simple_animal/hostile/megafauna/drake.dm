@@ -73,7 +73,6 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	small_sprite_type = /datum/action/small_sprite/megafauna/drake
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -289,7 +288,7 @@
 	color = COLOR_DARK_ORANGE
 
 /obj/effect/temp_visual/lava_safe
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
 	light_range = 2

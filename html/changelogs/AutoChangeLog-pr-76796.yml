@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Ling Augmented Eyesight now no longer causes you to lose the effects of your Meson glasses"
-  - bugfix: "Ling Augmented Eyesight now more consistently tracks the flash protection / vulnerability it confers."

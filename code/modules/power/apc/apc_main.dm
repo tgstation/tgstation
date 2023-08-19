@@ -8,7 +8,7 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "apc0"
 	use_power = NO_POWER_USE
 	req_access = null
@@ -213,11 +213,7 @@
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
-	GLOB.apcs_list += src
-
 /obj/machinery/power/apc/Destroy()
-	GLOB.apcs_list -= src
-
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 	disconnect_from_area()
@@ -264,14 +260,14 @@
 	area.apc = null
 	area = null
 
-/obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == cell)
+/obj/machinery/power/apc/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()
 		if(!QDELING(src))
 			SStgui.update_uis(src)
-	return ..()
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()

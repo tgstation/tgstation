@@ -1,7 +1,7 @@
 /obj/item/organ/internal/heart/gland
 	name = "fleshy mass"
 	desc = "A nausea-inducing hunk of twisting flesh and metal."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "gland"
 	organ_flags = ORGAN_ROBOTIC // weird?
 	beating = TRUE

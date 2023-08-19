@@ -3,15 +3,17 @@
 	/// A bitflag with the types of magic resistance on the object
 	var/antimagic_flags
 	/// The amount of times the object can protect the user from magic
+	/// Set to INFINITY to have, well, infinite charges.
 	var/charges
 	/// The inventory slot the object must be located at in order to activate
 	var/inventory_flags
-	/// The proc that is triggered when an object has been drained a antimagic charge
+	/// The callback invoked when we have been drained a antimagic charge
 	var/datum/callback/drain_antimagic
-	/// The proc that is triggered when the object is depleted of charges
+	/// The callback invoked when twe have been depleted of all charges
 	var/datum/callback/expiration
-	/// If we have already sent a notification message to the mob picking up an antimagic item
-	var/casting_restriction_alert = FALSE
+	/// Whether we should, on equipping, alert the caster that this item can block any of their spells
+	/// This changes between true and false on equip and drop, don't set it outright to something
+	var/alert_caster_on_equip = TRUE
 
 /**
  * Adds magic resistances to an object
@@ -36,17 +38,14 @@
 		charges = INFINITY,
 		inventory_flags = ~ITEM_SLOT_BACKPACK, // items in a backpack won't activate, anywhere else is fine
 		datum/callback/drain_antimagic,
-		datum/callback/expiration
+		datum/callback/expiration,
 	)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	else if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, PROC_REF(block_receiving_magic), override = TRUE)
-		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, PROC_REF(restrict_casting_magic), override = TRUE)
-		if(!HAS_TRAIT(parent, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
-			to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells but are unable to cast magic."))
+		register_antimagic_signals(parent)
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -61,92 +60,66 @@
 	QDEL_NULL(expiration)
 	return ..()
 
-/datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
+/datum/component/anti_magic/proc/register_antimagic_signals(datum/on_what)
+	RegisterSignal(on_what, COMSIG_MOB_RECEIVE_MAGIC, PROC_REF(block_receiving_magic), override = TRUE)
+	RegisterSignal(on_what, COMSIG_MOB_RESTRICT_MAGIC, PROC_REF(restrict_casting_magic), override = TRUE)
+
+/datum/component/anti_magic/proc/unregister_antimagic_signals(datum/on_what)
+	UnregisterSignal(on_what, list(COMSIG_MOB_RECEIVE_MAGIC, COMSIG_MOB_RESTRICT_MAGIC))
+
+/datum/component/anti_magic/proc/on_equip(atom/movable/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
 	if(!(inventory_flags & slot)) //Check that the slot is valid for antimagic
-		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
-		UnregisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC)
-		return
-	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, PROC_REF(block_receiving_magic), override = TRUE)
-	RegisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC, PROC_REF(restrict_casting_magic), override = TRUE)
-
-	if(!casting_restriction_alert)
-		// Check to see if we have any spells that are blocked due to antimagic
-		for(var/datum/action/cooldown/spell/magic_spell in equipper.actions)
-			if(!(magic_spell.spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC))
-				continue
-
-			if(antimagic_flags & magic_spell.antimagic_flags)
-				to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
-				casting_restriction_alert = TRUE
-				break
-
-/datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
-	UnregisterSignal(user, COMSIG_MOB_RESTRICT_MAGIC)
-	casting_restriction_alert = FALSE
-
-/datum/component/anti_magic/proc/block_receiving_magic(mob/living/carbon/user, casted_magic_flags, charge_cost, list/protection_was_used)
-	SIGNAL_HANDLER
-
-	// if any protection sources exist in our list then we already blocked the magic
-	if(!istype(user) || protection_was_used.len)
+		unregister_antimagic_signals(equipper)
 		return
 
-	// disclaimer - All anti_magic sources will be drained a charge_cost
-	if(casted_magic_flags & antimagic_flags)
-		var/mutable_appearance/antimagic_effect
-		var/antimagic_color
-		// im a programmer not shakesphere to the future grammar nazis that come after me for this
-		var/visible_subject = ismob(parent) ? "[user.p_they()]" : "[parent]"
-		var/self_subject = ismob(parent) ? "you" : "[parent]"
+	register_antimagic_signals(equipper)
+	if(!alert_caster_on_equip)
+		return
 
-		if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE)
-			user.visible_message(
-				span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"),
-				span_userdanger("An intense magical aura pulses around [self_subject] as it dissipates into the air!"),
-			)
-			antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
-			antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
-			playsound(user, 'sound/magic/magic_block.ogg', 50, TRUE)
-		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_HOLY)
-			user.visible_message(
-				span_warning("[user] starts to glow as [visible_subject] emits a halo of light!"),
-				span_userdanger("A feeling of warmth washes over [self_subject] as rays of light surround your body and protect you!"),
-			)
-			antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
-			antimagic_color = LIGHT_COLOR_HOLY_MAGIC
-			playsound(user, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
-		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_MIND)
-			user.visible_message(
-				span_warning("[user] forehead shines as [visible_subject] repulses magic from their mind!"),
-				span_userdanger("A feeling of cold splashes on [self_subject] as your forehead reflects magic usering your mind!"),
-			)
-			antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
-			antimagic_color = LIGHT_COLOR_DARK_BLUE
-			playsound(user, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
+	// Check to see if we have any spells that are blocked due to antimagic
+	for(var/datum/action/cooldown/spell/magic_spell in equipper.actions)
+		if(!(magic_spell.spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC))
+			continue
 
-		user.mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
-		user.add_overlay(antimagic_effect)
-		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 50)
+		if(!(antimagic_flags & magic_spell.antimagic_flags))
+			continue
 
-		if(ismob(parent))
-			return COMPONENT_MAGIC_BLOCKED
+		to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
+		alert_caster_on_equip = FALSE
+		break
 
-		var/has_limited_charges = !(charges == INFINITY)
-		var/charge_was_drained = charge_cost > 0
-		if(has_limited_charges && charge_was_drained)
-			protection_was_used += parent
-			drain_antimagic?.Invoke(user, parent)
-			charges -= charge_cost
-			if(charges <= 0)
-				expiration?.Invoke(user, parent)
-				qdel(src)
-		return COMPONENT_MAGIC_BLOCKED
-	return NONE
+/datum/component/anti_magic/proc/on_drop(atom/movable/source, mob/user)
+	SIGNAL_HANDLER
+
+	// Reset alert
+	if(source.loc != user)
+		alert_caster_on_equip = TRUE
+	unregister_antimagic_signals(user)
+
+/datum/component/anti_magic/proc/block_receiving_magic(mob/living/carbon/source, casted_magic_flags, charge_cost, list/antimagic_sources)
+	SIGNAL_HANDLER
+
+	// We do not block this type of magic, good day
+	if(!(casted_magic_flags & antimagic_flags))
+		return NONE
+
+	// We have already blocked this spell
+	if(parent in antimagic_sources)
+		return NONE
+
+	// Block success! Add this parent to the list of antimagic sources
+	antimagic_sources += parent
+
+	if((charges != INFINITY) && charge_cost > 0)
+		drain_antimagic?.Invoke(source, parent)
+		charges -= charge_cost
+		if(charges <= 0)
+			expiration?.Invoke(source, parent)
+			qdel(src) // no more antimagic
+
+	return COMPONENT_MAGIC_BLOCKED
 
 /// cannot cast magic with the same type of antimagic present
 /datum/component/anti_magic/proc/restrict_casting_magic(mob/user, magic_flags)

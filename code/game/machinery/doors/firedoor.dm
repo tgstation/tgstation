@@ -436,14 +436,15 @@
 		if(place == my_area)
 			place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 
-/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/emag_type)
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	if(istype(emag_type, /obj/item/card/emag/doorjack)) //Skip doorjack-specific code
-		var/obj/item/card/emag/doorjack/digital_crowbar = emag_type
+		return FALSE
+	if(istype(emag_card, /obj/item/card/emag/doorjack)) //Skip doorjack-specific code
+		var/obj/item/card/emag/doorjack/digital_crowbar = emag_card
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
 	INVOKE_ASYNC(src, PROC_REF(open))
+	return TRUE
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
@@ -697,6 +698,11 @@
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
 	adjust_lights_starting_offset()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
+	)
+
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
 	light_xoffset = 0
@@ -883,9 +889,9 @@
 
 /obj/structure/firelock_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
 	else if((constructionStep == CONSTRUCTION_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
 /obj/structure/firelock_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

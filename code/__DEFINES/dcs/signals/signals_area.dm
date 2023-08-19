@@ -12,6 +12,8 @@
 #define COMSIG_ENTER_AREA "enter_area"
 ///from base of area/Exited(): (area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
+///from base of /datum/controller/subsystem/atoms/proc/InitAtom(): (atom/new_atom)
+#define COMSIG_AREA_INITIALIZED_IN "area_initialized_in"
 
 // Alarm listener datum signals
 ///Sent when an alarm is fired and an alarm listener has tracked onto it (alarm, area/source_area)
@@ -30,3 +32,8 @@
 // Area fire signals
 /// Sent when an area's fire var changes: (fire_value)
 #define COMSIG_AREA_FIRE_CHANGED "area_fire_set"
+
+/// Called when some weather starts in this area
+#define COMSIG_WEATHER_BEGAN_IN_AREA(event_type) "weather_began_in_area_[event_type]"
+/// Called when some weather ends in this area
+#define COMSIG_WEATHER_ENDED_IN_AREA(event_type) "weather_ended_in_area_[event_type]"

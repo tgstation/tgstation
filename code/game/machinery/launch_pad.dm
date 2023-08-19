@@ -77,7 +77,7 @@
 				if(!multitool_check_buffer(user, I))
 					return
 				var/obj/item/multitool/M = I
-				M.buffer = src
+				M.set_buffer(src)
 				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
 				return 1
 
@@ -349,7 +349,7 @@
 /obj/item/launchpad_remote
 	name = "folder"
 	desc = "A folder."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE

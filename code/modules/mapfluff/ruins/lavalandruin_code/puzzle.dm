@@ -197,7 +197,7 @@
 /obj/structure/puzzle_element
 	name = "mysterious pillar"
 	desc = "puzzling..."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "puzzle_pillar"
 	anchored = FALSE
 	density = TRUE
@@ -317,7 +317,7 @@
 /obj/item/prisoncube
 	name = "Prison Cube"
 	desc = "Dusty cube with humanoid imprint on it."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "prison_cube"
 
 /obj/item/prisoncube/afterattack(atom/target, mob/user, proximity_flag, click_parameters)

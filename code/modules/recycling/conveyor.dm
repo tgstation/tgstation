@@ -9,7 +9,7 @@
 GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "conveyor_map"
 	base_icon_state = "conveyor"
 	name = "conveyor belt"
@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
 		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
-		COMSIG_ATOM_INITIALIZED_ON = PROC_REF(conveyable_enter)
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_move_direction()
@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		if(QDELETED(valid))
 			continue
 		neighbors["[direction]"] = TRUE
-		valid.neighbors["[DIRFLIP(direction)]"] = TRUE
+		valid.neighbors["[REVERSE_DIR(direction)]"] = TRUE
 		RegisterSignal(valid, COMSIG_MOVABLE_MOVED, PROC_REF(nearby_belt_changed), override=TRUE)
 		RegisterSignal(valid, COMSIG_QDELETING, PROC_REF(nearby_belt_changed), override=TRUE)
 		valid.RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(nearby_belt_changed), override=TRUE)
@@ -315,7 +315,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "switch-off"
 	base_icon_state = "switch"
 	processing_flags = START_PROCESSING_MANUALLY
@@ -464,7 +464,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/conveyor_switch_construct
 	name = "conveyor switch assembly"
 	desc = "A conveyor control switch assembly."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "switch-off"
 	w_class = WEIGHT_CLASS_BULKY
 	// ID of the switch-in-the-making, to link conveyor belts to it.
@@ -499,7 +499,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/stack/conveyor
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "conveyor_construct"
 	max_amount = 30
 	singular_name = "conveyor belt"

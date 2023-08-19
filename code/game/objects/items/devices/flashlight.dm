@@ -133,15 +133,15 @@
 					user.visible_message(span_warning("[user] directs [src] to [M]'s eyes."), ignored_mobs = user)
 					render_list += span_info("You direct [src] to [M]'s eyes:\n")
 
-					if(M.stat == DEAD || M.is_blind())
-						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils don't react to the light!</span>\n"//mob is dead
+					if(M.stat == DEAD || M.is_blind() || M.get_eye_protection() > FLASH_PROTECTION_WELDER)
+						render_list += "<span class='danger ml-1'>[M.p_Their()] pupils don't react to the light!</span>\n"//mob is dead
 					else if(brain.damage > 20)
-						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils contract unevenly!</span>\n"//mob has sustained damage to their brain
+						render_list += "<span class='danger ml-1'>[M.p_Their()] pupils contract unevenly!</span>\n"//mob has sustained damage to their brain
 					else
-						render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pupils narrow.</span>\n"//they're okay :D
+						render_list += "<span class='notice ml-1'>[M.p_Their()] pupils narrow.</span>\n"//they're okay :D
 
 					if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray))
-						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils give an eerie glow!</span>\n"//mob has X-ray vision
+						render_list += "<span class='danger ml-1'>[M.p_Their()] pupils give an eerie glow!</span>\n"//mob has X-ray vision
 
 				//display our packaged information in an examine block for easy reading
 				to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
@@ -219,9 +219,9 @@
 						render_list += "<span class='notice ml-1'>Your lips appear healthy.</span>\n"//you're okay!
 				else
 					if(hypoxia_status)
-						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] lips appear blue!</span>\n"//they have suffocation damage
+						render_list += "<span class='danger ml-1'>[M.p_Their()] lips appear blue!</span>\n"//they have suffocation damage
 					else
-						render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] lips appear healthy.</span>\n"//they're okay!
+						render_list += "<span class='notice ml-1'>[M.p_Their()] lips appear healthy.</span>\n"//they're okay!
 
 				//assess blood level
 				if(M == user)

@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/charge_apc
 	name = "Charge APCs"
-	button_icon = 'icons/obj/power.dmi'
+	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "apc0"
 	desc = "Give off charge to an APC."
 	cooldown_time = 5 SECONDS

@@ -208,9 +208,9 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
-	..()
-	if(A == beaker)
+/obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
@@ -240,7 +240,7 @@
 	if(on && is_operational)
 		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 	else
-		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-off", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()

@@ -1,36 +1,35 @@
-/// Index for all cables, so that powernets don't have to look through the entire world all the time
+/// List of all cables, so that powernets don't have to look through the entire world all the time
 GLOBAL_LIST_EMPTY(cable_list)
-/// list of all /obj/effect/portal
+
+/// List of all portals
 GLOBAL_LIST_EMPTY(portals)
-/// list of all airlocks
-GLOBAL_LIST_EMPTY(airlocks)
-/// list of all curtains
+
+/// List of all curtains for button tracking
 GLOBAL_LIST_EMPTY(curtains)
-/// list of all mechs. Used by hostile mobs target tracking.
+
+/// List of all mechs for hostile mob target tracking
 GLOBAL_LIST_EMPTY(mechas_list)
-/// list of all communication consoles and AIs, for automatic shuttle calls when there are none.
+
+/// List of all atoms that can call the shuttle, for automatic shuttle calls when there are none.
 GLOBAL_LIST_EMPTY(shuttle_caller_list)
-/// list of ALL machines
-GLOBAL_LIST_EMPTY(machines)
-/// list of all /obj/machinery/computer/camera_advanced/shuttle_docker
-GLOBAL_LIST_EMPTY(navigation_computers)
-/// important to keep track of for managing nukeops war declarations.
+
+/// List of all nukie shuttle boards, for forcing launch delay if they declare war
 GLOBAL_LIST_EMPTY(syndicate_shuttle_boards)
-/// list of all bot nagivation beacons, used for patrolling.
+
+/// List of all nav beacons indexed by stringified z level
 GLOBAL_LIST_EMPTY(navbeacons)
-/// list of all tracking beacons used by teleporters
+
+/// List of all active teleport beacons
 GLOBAL_LIST_EMPTY(teleportbeacons)
-/// list of all MULEbot delivery beacons.
+
+/// List of all active delivery beacons
 GLOBAL_LIST_EMPTY(deliverybeacons)
-/// list of all tags associated with delivery beacons.
+
+/// List of all active delivery beacon locations
 GLOBAL_LIST_EMPTY(deliverybeacontags)
-GLOBAL_LIST_EMPTY(nuke_list)
-/// list of all machines or programs that can display station alerts
-GLOBAL_LIST_EMPTY(alarmdisplay)
-/// list of all singularities on the station
+
+/// List of all singularity components that exist
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
-/// list of all /obj/machinery/mechpad
-GLOBAL_LIST_EMPTY(mechpad_list)
 
 /// list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
 GLOBAL_LIST(chemical_reactions_list)
@@ -64,8 +63,6 @@ GLOBAL_LIST_EMPTY(cooking_recipes_atoms)
 GLOBAL_LIST_EMPTY(rcd_list)
 /// list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(intercoms_list)
-/// list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
-GLOBAL_LIST_EMPTY(apcs_list)
 /// list of all current implants that are tracked to work out what sort of trek everyone is on. Sadly not on lavaworld not implemented...
 GLOBAL_LIST_EMPTY(tracked_implants)
 /// list of implants the prisoner console can track and send inject commands too
@@ -83,23 +80,22 @@ GLOBAL_LIST_EMPTY(stairs)
 GLOBAL_LIST_EMPTY(janitor_devices)
 GLOBAL_LIST_EMPTY(trophy_cases)
 GLOBAL_LIST_EMPTY(experiment_handlers)
+
 ///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.
 GLOBAL_LIST_INIT(editable_sign_types, populate_editable_sign_types())
 
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)
 
-GLOBAL_LIST_EMPTY(ai_status_displays)
-
 /// List of all instances of /obj/effect/mob_spawn/ghost_role in the game world
 GLOBAL_LIST_EMPTY(mob_spawners)
+
 /// List of all mobs with the "ghost_direct_control" component
 GLOBAL_LIST_EMPTY(joinable_mobs)
-/// List of all station alert consoles, /obj/machinery/computer/station_alert
-GLOBAL_LIST_EMPTY(alert_consoles)
 
 /// List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas)
+
 /// List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
 

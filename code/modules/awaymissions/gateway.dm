@@ -394,7 +394,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	/// Handles the background of the portal, ensures the effect well, works properly
 	var/atom/movable/screen/background/cam_background
 
-/atom/movable/screen/map_view/gateway_port/Initialize(mapload)
+/atom/movable/screen/map_view/gateway_port/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	cam_background = new
 	cam_background.del_on_map_removal = FALSE

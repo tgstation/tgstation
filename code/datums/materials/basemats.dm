@@ -18,7 +18,6 @@
 	desc = "Glass forged by melting sand."
 	color = "#88cdf1"
 	greyscale_colors = "#88cdf196"
-	starlight_color = COLOR_STARLIGHT
 	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	integrity_modifier = 0.1
@@ -333,10 +332,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(isitem(source))
 		source.AddComponent(/datum/component/fantasy)
+		ADD_TRAIT(source, TRAIT_INNATELY_FANTASTICAL_ITEM, REF(src)) // DO THIS LAST OR WE WILL NEVER GET OUR BONUSES!!!
 
 /datum/material/mythril/on_removed_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(isitem(source))
+		REMOVE_TRAIT(source, TRAIT_INNATELY_FANTASTICAL_ITEM, REF(src)) // DO THIS FIRST OR WE WILL NEVER GET OUR BONUSES DELETED!!!
 		qdel(source.GetComponent(/datum/component/fantasy))
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)

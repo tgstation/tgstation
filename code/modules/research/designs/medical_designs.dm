@@ -339,32 +339,6 @@
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
 
-/datum/design/cyberimp_welding
-	name = "Welding Shield Eyes"
-	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
-	id = "ci-welding"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 40
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*4)
-	build_path = /obj/item/organ/internal/eyes/robotic/shield
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
-/datum/design/cyberimp_gloweyes
-	name = "Luminescent Eyes"
-	desc = "A pair of cybernetic eyes that can emit multicolored light"
-	id = "ci-gloweyes"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 40
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/organ/internal/eyes/robotic/glow
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/cyberimp_breather
 	name = "Breathing Tube Implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
@@ -480,6 +454,11 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cyberimp_xray/moth
+	name = "Moth X-ray Eyes"
+	id = "ci-xray-moth"
+	build_path = /obj/item/organ/internal/eyes/robotic/xray/moth
+
 /datum/design/cyberimp_thermals
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
@@ -499,6 +478,11 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cyberimp_thermals/moth
+	name = "Moth Thermal Eyes"
+	id = "ci-thermals-moth"
+	build_path = /obj/item/organ/internal/eyes/robotic/thermals/moth
 
 /datum/design/cyberimp_antidrop
 	name = "Anti-Drop Implant"
@@ -836,10 +820,48 @@
 	id = "cybernetic_ears_u"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
 	build_path = /obj/item/organ/internal/ears/cybernetic/upgraded
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_2
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_ears_whisper
+	name = "Whisper-sensitive Cybernetic Ears"
+	desc = "A pair of whisper-sensitive cybernetic ears."
+	id = "cybernetic_ears_whisper"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/internal/ears/cybernetic/whisper
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_ears_xray
+	name = "Wall-penetrating Cybernetic Ears"
+	desc = "A pair of wall-penetrating cybernetic ears."
+	id = "cybernetic_ears_xray"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/internal/ears/cybernetic/xray
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -856,6 +878,11 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cybernetic_eyes/moth
+	name = "Basic Cybernetic Moth Eyes"
+	id = "cybernetic_eyes_moth"
+	build_path = /obj/item/organ/internal/eyes/robotic/basic/moth
+
 /datum/design/cybernetic_eyes/improved
 	name = "Cybernetic Eyes"
 	desc = "A pair of cybernetic eyes."
@@ -865,6 +892,47 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_2
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_eyes/improved/moth
+	name = "Cybernetic Moth Eyes"
+	id = "cybernetic_eyes_improved_moth"
+	build_path = /obj/item/organ/internal/eyes/robotic/moth
+
+/datum/design/cyberimp_welding
+	name = "Welding Shield Eyes"
+	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
+	id = "ci-welding"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*4)
+	build_path = /obj/item/organ/internal/eyes/robotic/shield
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cyberimp_welding/moth
+	name = "Welding Shield Moth Eyes"
+	id = "ci-welding-moth"
+	build_path = /obj/item/organ/internal/eyes/robotic/shield/moth
+
+/datum/design/cyberimp_gloweyes
+	name = "Luminescent Eyes"
+	desc = "A pair of cybernetic eyes that can emit multicolored light"
+	id = "ci-gloweyes"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/organ/internal/eyes/robotic/glow
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cyberimp_gloweyes/moth
+	name = "Luminescent Moth Eyes"
+	id = "ci-gloweyes-moth"
+	build_path = /obj/item/organ/internal/eyes/robotic/glow/moth
 
 /////////////////////
 ///Surgery Designs///

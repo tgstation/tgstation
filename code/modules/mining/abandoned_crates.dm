@@ -100,11 +100,13 @@
 			return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
 	if(locked)
-		boom(user)
-		return
-	return ..()
+		boom(user) // no feedback since it just explodes, thats its own feedback
+		return TRUE
+	return
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(!locked)
@@ -241,7 +243,7 @@
 			new /obj/item/ammo_box/foambox(src)
 		if(98)
 			for(var/i in 1 to 3)
-				new /mob/living/simple_animal/hostile/bee/toxin(src)
+				new /mob/living/basic/bee/toxin(src)
 		if(99)
 			new /obj/item/implanter/sad_trombone(src)
 		if(100)

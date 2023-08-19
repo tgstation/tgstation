@@ -7,7 +7,7 @@
 /obj/item/nuke_core
 	name = "plutonium core"
 	desc = "Extremely radioactive. Wear goggles."
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "plutonium_core"
 	inhand_icon_state = "plutoniumcore"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -43,7 +43,7 @@
 /obj/item/nuke_core_container
 	name = "nuke core container"
 	desc = "Solid container for radioactive objects."
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "core_container_empty"
 	inhand_icon_state = "tile"
 	lefthand_file = 'icons/mob/inhands/items/tiles_lefthand.dmi'
@@ -86,7 +86,7 @@
 /obj/item/screwdriver/nuke
 	name = "screwdriver"
 	desc = "A screwdriver with an ultra thin tip that's carefully designed to boost screwing speed."
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "screwdriver_nuke"
 	inhand_icon_state = "screwdriver_nuke"
 	toolspeed = 0.5
@@ -129,7 +129,7 @@
 /obj/item/computer_disk/hdd_theft
 	name = "r&d server hard disk drive"
 	desc = "For some reason, people really seem to want to steal this. The source code on this drive is probably used for something awful!"
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "something_awful"
 	max_capacity = 512
 	w_class = WEIGHT_CLASS_NORMAL
@@ -260,7 +260,7 @@
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
 	desc = "A scalpel with a fragile tip of condensed hyper-noblium gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "supermatter_scalpel"
 	toolspeed = 0.5
 	damtype = BURN
@@ -274,7 +274,7 @@
 /obj/item/hemostat/supermatter
 	name = "supermatter extraction tongs"
 	desc = "A pair of tongs made from condensed hyper-noblium gas, searingly cold to the touch, that can safely grip a supermatter sliver."
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "supermatter_tongs"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'

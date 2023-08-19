@@ -36,6 +36,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad
 	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
@@ -102,13 +103,12 @@ Possible to do for anyone motivated enough:
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
 
-	AddElement( \
-		/datum/element/contextual_screentip_mob_typechecks, \
-		list(/mob/living/silicon = list( \
-				SCREENTIP_CONTEXT_ALT_LMB = "Disconnect all active calls" \
-			) \
-		) \
+	var/static/list/hovering_mob_typechecks = list(
+		/mob/living/silicon = list(
+			SCREENTIP_CONTEXT_ALT_LMB = "Disconnect all active calls",
+		)
 	)
+	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"

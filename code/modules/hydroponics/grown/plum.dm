@@ -9,7 +9,7 @@
 	lifespan = 55
 	endurance = 35
 	yield = 5
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	icon_grow = "plum-grow"
 	icon_dead = "plum-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/one_bite)

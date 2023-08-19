@@ -26,8 +26,8 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
-	brute_reduction = 5
-	burn_reduction = 4
+	brute_modifier = 0.8
+	burn_modifier = 0.8
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -56,8 +56,8 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
-	brute_reduction = 5
-	burn_reduction = 4
+	brute_modifier = 0.8
+	burn_modifier = 0.8
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -86,8 +86,8 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
-	brute_reduction = 5
-	burn_reduction = 4
+	brute_modifier = 0.8
+	burn_modifier = 0.8
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -125,8 +125,8 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
-	brute_reduction = 5
-	burn_reduction = 4
+	brute_modifier = 0.8
+	burn_modifier = 0.8
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -163,8 +163,8 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
-	brute_reduction = 5
-	burn_reduction = 4
+	brute_modifier = 0.8
+	burn_modifier = 0.8
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -283,8 +283,8 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 
-	brute_reduction = 5
-	burn_reduction = 4
+	brute_modifier = 0.8
+	burn_modifier = 0.8
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -386,8 +386,8 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
+	burn_modifier = 1
+	brute_modifier = 1
 	max_damage = 20
 
 /obj/item/bodypart/arm/right/robot/surplus
@@ -395,8 +395,8 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
+	burn_modifier = 1
+	brute_modifier = 1
 	max_damage = 20
 
 /obj/item/bodypart/leg/left/robot/surplus
@@ -404,8 +404,8 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
+	brute_modifier = 1
+	burn_modifier = 1
 	max_damage = 20
 
 /obj/item/bodypart/leg/right/robot/surplus
@@ -413,8 +413,8 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
+	brute_modifier = 1
+	burn_modifier = 1
 	max_damage = 20
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG

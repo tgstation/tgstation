@@ -76,7 +76,7 @@
 	plane = RENDER_PLANE_GAME
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 
-/atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload)
+/atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
 
@@ -91,7 +91,7 @@
 	plane = RENDER_PLANE_TRANSPARENT
 	appearance_flags = PLANE_MASTER
 
-/atom/movable/screen/plane_master/rendering_plate/transparent/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/rendering_plate/transparent/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	// Don't display us if we're below everything else yeah?
 	AddComponent(/datum/component/plane_hide_highest_offset)
@@ -110,7 +110,7 @@
 	if(!.)
 		return
 	remove_filter("AO")
-	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 ///Contains all lighting objects
@@ -140,7 +140,7 @@
  * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
  * This is then used to alpha mask the lighting plane.
  */
-/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload)
+/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
@@ -225,7 +225,7 @@
 	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
 
-/atom/movable/screen/plane_master/rendering_plate/emissive_slate/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/rendering_plate/emissive_slate/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_filter("em_block_masking", 2, color_matrix_filter(GLOB.em_mask_matrix))
 	if(offset != 0)
@@ -323,7 +323,7 @@
 	if(get_relay_to(target_plane))
 		return
 	render_relay_planes += target_plane
-	var/client/display_lad = home?.our_hud?.mymob?.client
+	var/client/display_lad = home?.our_hud?.mymob?.canon_client
 	var/atom/movable/render_plane_relay/relay = generate_relay_to(target_plane, show_to = display_lad, blend_override = blend_override, relay_layer = relay_layer)
 	relay.color = relay_color
 
@@ -373,7 +373,7 @@
 	relays -= existing_relay
 	if(!length(relays) && !initial(render_target))
 		render_target = null
-	var/client/lad = home?.our_hud?.mymob?.client
+	var/client/lad = home?.our_hud?.mymob?.canon_client
 	if(lad)
 		lad.screen -= existing_relay
 
