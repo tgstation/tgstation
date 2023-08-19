@@ -443,7 +443,7 @@
 	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
 
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [desc]\n<i>Treatment Guide: [s_treat_text]</i>\n<i>Homemade Remedies:[homemade_treat_text]</i>"
+	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [desc]\n<i>Treatment Guide: [s_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
 
 /datum/wound/proc/severity_text(simple = FALSE)
 	switch(severity)
