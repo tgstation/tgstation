@@ -9,6 +9,8 @@
 /datum/component/cult_ritual_item
 	/// Whether we are currently being used to draw a rune.
 	var/drawing_a_rune = FALSE
+	///Boolean on whether we can draw more complex runes.
+	var/can_draw_complex_runes = FALSE
 	/// The message displayed when the parent is examined, if supplied.
 	var/examine_message
 	/// A list of turfs that we scribe runes at double speed on.
@@ -49,6 +51,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_purge_holywater))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(try_hit_object))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_clear_rune))
+	RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(on_sharpen))
 
 	if(examine_message)
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -60,7 +63,8 @@
 		COMSIG_ITEM_ATTACK_ATOM,
 		COMSIG_ITEM_ATTACK_EFFECT,
 		COMSIG_ATOM_EXAMINE,
-		))
+		COMSIG_ITEM_SHARPEN_ACT,
+	))
 
 /*
  * Signal proc for [COMSIG_ATOM_EXAMINE].
@@ -74,6 +78,21 @@
 		return
 
 	examine_text += examine_message
+	if(!can_draw_complex_runes)
+		examine_text += span_cultitalic("You can draw more advanced runes by sharpening it.")
+
+/**
+ * on_sharpen
+ *
+ * Called when a cult ritual item is sharpened.
+ * Allows it to draw more complex runes.
+ */
+/datum/component/cult_ritual_item/proc/on_sharpen(obj/item/item, amount, max_amount)
+	SIGNAL_HANDLER
+
+	if(can_draw_complex_runes)
+		return COMPONENT_BLOCK_SHARPEN_ALREADY
+	can_draw_complex_runes = TRUE
 
 /*
  * Signal proc for [COMSIG_ITEM_ATTACK_SELF].
@@ -259,13 +278,16 @@
 		stack_trace("[type] - [cultist] attempted to scribe a rune, but the global rune list is empty!")
 		return FALSE
 
-	entered_rune_name = tgui_input_list(cultist, "Choose a rite to scribe", "Sigils of Power", GLOB.rune_types)
+	var/list/drawable_runes = GLOB.rune_types
+	if(can_draw_complex_runes)
+		drawable_runes += GLOB.advanced_runes
+	entered_rune_name = tgui_input_list(cultist, "Choose a rite to scribe", "Sigils of Power", drawable_runes)
 	if(isnull(entered_rune_name))
 		return FALSE
 	if(!can_scribe_rune(tool, cultist))
 		return FALSE
 
-	rune_to_scribe = GLOB.rune_types[entered_rune_name]
+	rune_to_scribe = GLOB.rune_types[entered_rune_name] || GLOB.advanced_runes[entered_rune_name]
 	if(!ispath(rune_to_scribe))
 		stack_trace("[type] - [cultist] attempted to scribe a rune, but did not find a path from the global rune list!")
 		return FALSE

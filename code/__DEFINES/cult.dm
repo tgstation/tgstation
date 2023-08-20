@@ -48,3 +48,8 @@ GLOBAL_DATUM(cult_narsie, /obj/narsie)
 #define CULT_VICTORY 1
 #define CULT_LOSS 0
 #define CULT_NARSIE_KILLED -1
+
+///Whether any ritual drawing knife can draw this.
+#define CAN_BE_SCRIBED_DEFAULT 1
+///Whether you need an advanced ritual drawing knife to draw this.
+#define CAN_BE_SCRIBED_ADVANCED 2

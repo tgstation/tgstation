@@ -3,6 +3,8 @@
 GLOBAL_LIST(sacrificed)
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
+///List of 'advanced' runes.
+GLOBAL_LIST_EMPTY(advanced_runes)
 /// Assoc list of every rune that can be drawn by ritual daggers. [rune_name] = [typepath]
 GLOBAL_LIST_INIT(rune_types, generate_cult_rune_types())
 
@@ -12,9 +14,11 @@ GLOBAL_LIST_INIT(rune_types, generate_cult_rune_types())
 
 	var/list/runes = list()
 	for(var/obj/effect/rune/rune as anything in subtypesof(/obj/effect/rune))
-		if(!initial(rune.can_be_scribed))
-			continue
-		runes[initial(rune.cultist_name)] = rune // Uses the cultist name for displaying purposes
+		switch(initial(rune.scribe_level))
+			if(CAN_BE_SCRIBED_DEFAULT)
+				runes[initial(rune.cultist_name)] = rune // Uses the cultist name for displaying purposes
+			if(CAN_BE_SCRIBED_ADVANCED)
+				GLOB.advanced_runes[initial(rune.cultist_name)] = rune
 
 	return runes
 
@@ -53,8 +57,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/rune_in_use = FALSE
 	/// Used when you want to keep track of who erased the rune
 	var/log_when_erased = FALSE
-	/// Whether this rune can be scribed or if it's admin only / special spawned / whatever
-	var/can_be_scribed = TRUE
+	/// If this can be scribed normally or requires an upgrade. FALSE means it's admin only / special spawned / whatever.
+	/// CAN_BE_SCRIBED_DEFAULT | CAN_BE_SCRIBED_ADVANCED
+	var/scribe_level = CAN_BE_SCRIBED_DEFAULT
 	/// How long the rune takes to erase
 	var/erase_time = 1.5 SECONDS
 	/// How long the rune takes to create
@@ -190,7 +195,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
 	invocation = "Ra'sha yoka!"
 	invoke_damage = 30
-	can_be_scribed = FALSE
+	scribe_level = FALSE
 
 /obj/effect/rune/malformed/Initialize(mapload, set_keyword)
 	. = ..()
@@ -203,7 +208,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 //Rite of Offering: Converts or sacrifices a target.
 /obj/effect/rune/convert
-	cultist_name = "Offer"
+	cultist_name = "Convert"
 	cultist_desc = "offers a noncultist above it to Nar'Sie, either converting them or sacrificing them."
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
@@ -680,6 +685,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "4"
 	color = RUNE_COLOR_DARKRED
+	scribe_level = CAN_BE_SCRIBED_ADVANCED
 	///The barrier summoned by the rune when invoked. Tracked as a variable to prevent refreshing the barrier's integrity.
 	var/obj/structure/emergency_shield/cult/barrier/barrier //barrier is the path and variable name.... i am not a clever man
 
@@ -773,6 +779,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "4"
 	color = RUNE_COLOR_BURNTORANGE
 	light_color = LIGHT_COLOR_LAVA
+	scribe_level = CAN_BE_SCRIBED_ADVANCED
 	req_cultists = 3
 	invoke_damage = 10
 	construct_invoke = FALSE
@@ -831,6 +838,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invoke_damage = 10
 	construct_invoke = FALSE
 	color = RUNE_COLOR_DARKRED
+	scribe_level = CAN_BE_SCRIBED_ADVANCED
 	var/mob/living/affecting = null
 	var/ghost_limit = 3
 	var/ghosts = 0
@@ -965,6 +973,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_x = -32
 	pixel_y = -32
 	color = RUNE_COLOR_DARKRED
+	scribe_level = CAN_BE_SCRIBED_ADVANCED
 	req_cultists = 3
 	scribe_delay = 100
 
