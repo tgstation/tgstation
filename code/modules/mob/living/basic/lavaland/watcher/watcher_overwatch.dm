@@ -11,7 +11,7 @@
 	cooldown_time = 20 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
-	shared_cooldown = null
+	shared_cooldown = NONE
 	/// Furthest range we can activate ability at
 	var/max_range = 7
 	/// Type of projectile to fire
@@ -45,6 +45,7 @@
 	living_owner.face_atom(target)
 	living_owner.Stun(overwatch_duration, ignore_canstun = TRUE)
 	target.apply_status_effect(/datum/status_effect/overwatch, overwatch_duration, owner, projectile_type, projectile_sound)
+	owner.visible_message(span_warning("[owner]'s eye locks on to [target]!"))
 	StartCooldown()
 	return TRUE
 

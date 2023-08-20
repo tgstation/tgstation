@@ -192,7 +192,7 @@
 
 /// Evolves this rat into a regal rat
 /mob/living/basic/mouse/proc/evolve_into_regal_rat()
-	var/mob/living/simple_animal/hostile/regalrat/controlled/regalrat = new(loc)
+	var/mob/living/basic/regal_rat/controlled/regalrat = new(loc)
 	mind?.transfer_to(regalrat)
 	INVOKE_ASYNC(regalrat, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)

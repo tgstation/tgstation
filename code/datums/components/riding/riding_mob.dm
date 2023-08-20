@@ -103,7 +103,27 @@
 	var/turf/next = get_step(living_parent, direction)
 	step(living_parent, direction)
 	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
-	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
+	var/modified_move_cooldown = vehicle_move_cooldown
+	var/modified_move_delay = vehicle_move_delay
+	if(ishuman(user) && HAS_TRAIT(user, TRAIT_SETTLER))
+		var/mob/living/carbon/human/settler_rider = user
+		switch(settler_rider.mob_mood.sanity_level)
+			if(SANITY_LEVEL_GREAT)
+				modified_move_cooldown *= 0.5
+				modified_move_delay *= 0.5
+			if(SANITY_LEVEL_NEUTRAL)
+				modified_move_cooldown *= 0.8
+				modified_move_delay *= 0.8
+			if(SANITY_LEVEL_DISTURBED)
+				modified_move_cooldown *= 1
+				modified_move_delay *= 1
+			if(SANITY_LEVEL_CRAZY)
+				modified_move_cooldown *= 1.2
+				modified_move_delay *= 1.2
+			if(SANITY_LEVEL_INSANE)
+				modified_move_cooldown *= 1.5
+				modified_move_delay *= 1.5
+	COOLDOWN_START(src, vehicle_move_cooldown = modified_move_cooldown, (last_move_diagonal ? 2 : 1) * modified_move_delay)
 	return ..()
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
