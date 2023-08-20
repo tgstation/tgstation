@@ -117,20 +117,57 @@
 //text trimming (both directions) helper macro
 #define TRIM_TEXT(text) (trim_reduced(text))
 
-/// Shortcut function to parse a map and apply it to the world.
-///
-/// - `dmm_file`: A .dmm file to load (Required).
-/// - `x_offset`, `y_offset`, `z_offset`: Positions representign where to load the map (Optional).
-/// - `cropMap`: When true, the map will be cropped to fit the existing world dimensions (Optional).
-/// - `measureOnly`: When true, no changes will be made to the world (Optional).
-/// - `no_changeturf`: When true, [/turf/proc/AfterChange] won't be called on loaded turfs
-/// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
-/// - `placeOnTop`: Whether to use [/turf/proc/PlaceOnTop] rather than [/turf/proc/ChangeTurf] (Optional).
-/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num, new_z)
-	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
-	if(parsed.bounds && !measureOnly)
-		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z = new_z)
-	return parsed
+/**
+ * Helper and recommened way to load a map file
+ * - dmm_file: The path to the map file
+ * - x_offset: The x offset to load the map at
+ * - y_offset: The y offset to load the map at
+ * - z_offset: The z offset to load the map at
+ * - crop_map_to_world: If true, the map will be cropped to the world bounds
+ * - measure_only: If true, the map will not be loaded, but the bounds will be calculated
+ * - no_changeturf: If true, the map will not call /turf/AfterChange
+ * - x_lower: The minimum x coordinate to load
+ * - x_upper: The maximum x coordinate to load
+ * - y_lower: The minimum y coordinate to load
+ * - y_upper: The maximum y coordinate to load
+ * - place_on_top: Whether to use /turf/proc/PlaceOnTop rather than /turf/proc/ChangeTurf
+ * - new_z: If true, a new z level will be created for the map
+ */
+/proc/load_map(
+	dmm_file,
+	x_offset = 0,
+	y_offset = 0,
+	z_offset = 0,
+	crop_map_to_world = FALSE,
+	measure_only = FALSE,
+	no_changeturf = FALSE,
+	x_lower = -INFINITY,
+	x_upper = INFINITY,
+	y_lower = -INFINITY,
+	y_upper = INFINITY,
+	place_on_top = FALSE,
+	new_z = 0,
+)
+	var/static/parsed_maps = list()
+	if(!(dmm_file in parsed_maps))
+		parsed_maps[dmm_file] = new /datum/parsed_map(dmm_file)
+
+	var/datum/parsed_map/parsed_map = parsed_maps[dmm_file]
+	if(!measure_only && !isnull(parsed_map.bounds))
+		parsed_map.load(
+			x_offset,
+			y_offset,
+			z_offset,
+			crop_map_to_world,
+			no_changeturf,
+			x_lower,
+			x_upper,
+			y_lower,
+			y_upper,
+			place_on_top,
+			new_z,
+		)
+	return parsed_map
 
 /// Parse a map, possibly cropping it.
 /datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
@@ -244,10 +281,34 @@
 	src.line_len = line_len
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
-/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, whitelist = FALSE, new_z)
+/datum/parsed_map/proc/load(
+	x_offset,
+	y_offset,
+	z_offset,
+	crop_map_to_world,
+	no_changeturf,
+	x_lower,
+	x_upper,
+	y_lower,
+	y_upper,
+	place_on_top,
+	new_z,
+)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+	. = _load_impl(
+		x_offset,
+		y_offset,
+		z_offset,
+		crop_map_to_world,
+		no_changeturf,
+		x_lower,
+		x_upper,
+		y_lower,
+		y_upper,
+		place_on_top,
+		new_z,
+	)
 	Master.StopLoadingMap()
 
 #define MAPLOADING_CHECK_TICK \
@@ -262,7 +323,19 @@
 	}
 
 // Do not call except via load() above.
-/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, new_z = FALSE)
+/datum/parsed_map/proc/_load_impl(
+	x_offset,
+	y_offset,
+	z_offset,
+	crop_map_to_world,
+	no_changeturf,
+	x_lower,
+	x_upper,
+	y_lower,
+	y_upper,
+	place_on_top,
+	new_z,
+)
 	PRIVATE_PROC(TRUE)
 	// Tell ss atoms that we're doing maploading
 	// We'll have to account for this in the following tick_checks so it doesn't overflow
@@ -275,9 +348,34 @@
 	var/sucessful = FALSE
 	switch(map_format)
 		if(MAP_TGM)
-			sucessful = _tgm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+			sucessful = _tgm_load(
+				x_offset,
+				y_offset,
+				z_offset,
+				crop_map_to_world,
+				no_changeturf,
+				x_lower,
+				x_upper,
+				y_lower,
+				y_upper,
+				place_on_top,
+				new_z,
+			)
+
 		else
-			sucessful = _dmm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+			sucessful = _dmm_load(
+				x_offset,
+				y_offset,
+				z_offset,
+				crop_map_to_world,
+				no_changeturf,
+				x_lower,
+				x_upper,
+				y_lower,
+				y_upper,
+				place_on_top,
+				new_z,
+			)
 
 	// And we are done lads, call it off
 	SSatoms.map_loader_stop(REF(src))
@@ -309,7 +407,19 @@
 // In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
 // In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
 // You can think of dmm as storing maps in rows, whereas tgm stores them in columns
-/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+/datum/parsed_map/proc/_tgm_load(
+	x_offset,
+	y_offset,
+	z_offset,
+	crop_map_to_world,
+	no_changeturf,
+	x_lower,
+	x_upper,
+	y_lower,
+	y_upper,
+	place_on_top,
+	new_z,
+)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -330,7 +440,7 @@
 	var/relative_y = first_column.ycrd
 	var/highest_y = relative_y + y_relative_to_absolute
 
-	if(!cropMap && highest_y > world.maxy)
+	if(!crop_map_to_world && highest_y > world.maxy)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
 			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - 1)
@@ -353,7 +463,7 @@
 
 	// X setup
 	var/x_delta_with = x_upper
-	if(cropMap)
+	if(crop_map_to_world)
 		// Take our smaller crop threshold yes?
 		x_delta_with = min(x_delta_with, world.maxx)
 
@@ -367,7 +477,7 @@
 		// If our relative x is greater then X upper, well then we've gotta limit our expansion
 		var/delta = max(final_x - x_delta_with, 0)
 		final_x -= delta
-	if(final_x > world.maxx && !cropMap)
+	if(final_x > world.maxx && !crop_map_to_world)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
 			world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
@@ -380,7 +490,7 @@
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
 	var/highest_z = last_column.zcrd + z_offset - 1 // Lets not just make a new z level each time we increment maxz
 	var/z_threshold = world.maxz
-	if(highest_z > z_threshold && cropMap)
+	if(highest_z > z_threshold && crop_map_to_world)
 		for(var/i in z_threshold + 1 to highest_z) //create a new z_level if needed
 			world.incrementMaxZ()
 		if(!no_changeturf)
@@ -420,7 +530,7 @@
 			if(!cache)
 				SSatoms.map_loader_stop(REF(src))
 				CRASH("Undefined model key in DMM: [gset.gridLines[i]]")
-			build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, placeOnTop, new_z)
+			build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z)
 
 			// only bother with bounds that actually exist
 			if(!first_found)
@@ -444,7 +554,19 @@
 /// Stanrdard loading, not used in production
 /// Doesn't take advantage of any tgm optimizations, which makes it slower but also more general
 /// Use this if for some reason your map format is messy
-/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+/datum/parsed_map/proc/_dmm_load(
+	x_offset,
+	y_offset,
+	z_offset,
+	crop_map_to_world,
+	no_changeturf,
+	x_lower,
+	x_upper,
+	y_lower,
+	y_upper,
+	place_on_top,
+	new_z,
+)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -461,7 +583,7 @@
 		var/true_xcrd = relative_x + x_relative_to_absolute
 		var/ycrd = relative_y + y_relative_to_absolute
 		var/zcrd = gset.zcrd + z_offset - 1
-		if(!cropMap && ycrd > world.maxy)
+		if(!crop_map_to_world && ycrd > world.maxy)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
 				world.increaseMaxY(ycrd, max_zs_to_load = z_offset - 1)
@@ -471,7 +593,7 @@
 		var/zexpansion = zcrd > world.maxz
 		var/no_afterchange = no_changeturf
 		if(zexpansion)
-			if(cropMap)
+			if(crop_map_to_world)
 				continue
 			else
 				while (zcrd > world.maxz) //create a new z_level if needed
@@ -508,7 +630,7 @@
 		var/x_step_count = ROUND_UP(x_target / key_len)
 		var/final_x = relative_x + (x_step_count - 1)
 		var/x_delta_with = x_upper
-		if(cropMap)
+		if(crop_map_to_world)
 			// Take our smaller crop threshold yes?
 			x_delta_with = min(x_delta_with, world.maxx)
 		if(final_x > x_delta_with)
@@ -517,7 +639,7 @@
 			x_step_count -= delta
 			final_x -= delta
 			x_target = x_step_count * key_len
-		if(final_x > world.maxx && !cropMap)
+		if(final_x > world.maxx && !crop_map_to_world)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
 				world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
@@ -553,7 +675,7 @@
 				if(!cache)
 					SSatoms.map_loader_stop(REF(src))
 					CRASH("Undefined model key in DMM: [model_key]")
-				build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop, new_z)
+				build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z)
 
 				// only bother with bounds that actually exist
 				if(!first_found)
