@@ -447,8 +447,7 @@
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	for(var/i in carbies.all_wounds)
-		var/datum/wound/iter_wound = i
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
 		iter_wound.on_salt(reac_volume, carbies)
 
 // Salt can help with wounds by soaking up fluid, but undiluted salt will also cause irritation from the loose crystals, and it might soak up the body's water as well!
@@ -645,8 +644,7 @@
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	for(var/i in carbies.all_wounds)
-		var/datum/wound/iter_wound = i
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
 		iter_wound.on_flour(reac_volume, carbies)
 
 /datum/wound/proc/on_flour(reac_volume, mob/living/carbon/carbies)
@@ -742,8 +740,7 @@
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	for(var/i in carbies.all_wounds)
-		var/datum/wound/iter_wound = i
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
 		iter_wound.on_starch(reac_volume, carbies)
 
 /datum/wound/proc/on_starch(reac_volume, mob/living/carbon/carbies)

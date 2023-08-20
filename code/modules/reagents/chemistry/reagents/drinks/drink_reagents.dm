@@ -297,8 +297,7 @@
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
 	var/to_chatted = FALSE
-	for(var/i in affected_mob.all_wounds)
-		var/datum/wound/iter_wound = i
+	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		if(SPT_PROB(10, seconds_per_tick))
 			var/helped = iter_wound.tea_life_process()
 			if(!to_chatted && helped)
