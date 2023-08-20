@@ -58,6 +58,11 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -WError -NWTG0001
+      - name: IM TRYING TO FIGURE OUT WHY CI IS BREAKING
+        run: |
+          sudo apt-get install -y gcc-multilib g++-multilib
+          rm libbyond_sleeping_procs.so
+          g++ -nostdlib -m32 -shared -fPIC -o libbyond_sleeping_procs.so main.cpp
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
