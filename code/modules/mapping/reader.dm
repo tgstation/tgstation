@@ -126,8 +126,9 @@
     newfriend.gridSets = gridSets.Copy()
     newfriend.modelCache = modelCache.Copy()
     newfriend.parsed_bounds = parsed_bounds.Copy()
+    // Copy parsed bounds to reset to initial values
     newfriend.bounds = parsed_bounds.Copy()
-    newfriend.turf_blacklist = turf_blacklist.Copy()
+    newfriend.turf_blacklist = turf_blacklist?.Copy()
     return newfriend
 
 //text trimming (both directions) helper macro
