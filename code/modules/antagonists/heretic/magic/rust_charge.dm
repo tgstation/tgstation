@@ -13,7 +13,7 @@
 	StartCooldown(135 SECONDS, 135 SECONDS)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
-
+	return TRUE
 /datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc, atom/target)
 	var/turf/victim = get_turf(owner)
 	if(!actively_moving)
