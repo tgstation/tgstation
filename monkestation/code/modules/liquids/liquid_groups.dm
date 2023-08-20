@@ -320,7 +320,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		remove_specific(amount = remove_amount, reagent_type = reagent_type)
 
 /datum/liquid_group/proc/add_reagents(obj/effect/abstract/liquid_turf/member, reagent_list, chem_temp)
-	reagents.add_reagent_list(reagent_list)
+	reagents.add_reagent_list(reagent_list, _no_react = TRUE)
 
 	var/amount = 0
 	for(var/list_item in reagent_list)
