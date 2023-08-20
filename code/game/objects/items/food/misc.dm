@@ -589,7 +589,7 @@
 
 /obj/item/food/pita_bread
 	name = "pita bread"
-	desc = "a multi-purposed flatbread of Mediterranean origins."
+	desc = "a multi-purposed sweet flatbread of Mediterranean origins."
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "pita_bread"
 	food_reagents = list(
