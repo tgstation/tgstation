@@ -310,6 +310,7 @@ SUBSYSTEM_DEF(mapping)
 		qdel(T, TRUE)
 
 /datum/controller/subsystem/mapping/proc/get_reservation_from_turf(turf/T)
+	RETURN_TYPE(/datum/turf_reservation)
 	return used_turfs[T]
 
 /* Nuke threats, for making the blue tiles on the station go RED
