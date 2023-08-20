@@ -104,19 +104,19 @@
  * otherwise it will give a tgui input list to find targets to track.
  * Args:
  *  tracker - The person trying to track, used for feedback messages. This is not the same as tracking_holder
- *  tracked - (Optional) The person being tracked, to skip the input list.
+ *  tracked_mob_name - (Optional) The person being tracked, to skip the input list.
  */
-/datum/trackable/proc/set_tracked_mob(mob/living/tracker, mob/living/tracked)
+/datum/trackable/proc/set_tracked_mob(mob/living/tracker, tracked_mob_name)
 	if(!tracker || tracker.stat == DEAD)
 		return
 
-	if(tracked)
+	if(tracked_mob_name)
 		trackable_mobs()
-		tracked_mob = isnull(humans[tracked]) ? others[tracked] : humans[tracked]
+		tracked_mob = isnull(humans[tracked_mob_name]) ? others[tracked_mob_name] : humans[tracked_mob_name]
 		if(isnull(tracked_mob))
 			to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 			return
-		to_chat(tracker, span_notice("Now tracking [tracked] on camera."))
+		to_chat(tracker, span_notice("Now tracking [tracked_mob_name] on camera."))
 	else
 		var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", trackable_mobs())
 		if(!target_name || isnull(target_name))

@@ -191,7 +191,7 @@
 		H.clear_holo(src)
 	else
 		current = null
-	if(ai_tracking_tool.tracking)
+	if(ai_tracking_tool && ai_tracking_tool.tracking)
 		ai_tracking_tool.set_tracking(FALSE)
 	unset_machine()
 
