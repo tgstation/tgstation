@@ -20,7 +20,7 @@
 	. = ..()
 	if(wall_trim)
 		if(istype(attacking_item, /obj/item/airlock_painter/decal))
-			var/obj/item/airlock_painter/new_painter = attacking_item
+			var/obj/item/airlock_painter/decal/new_painter = attacking_item
 			if(user.istate & ISTATE_SECONDARY)
 				if(new_painter.stored_custom_color)
 					change_trim_color(new_painter.stored_custom_color)
