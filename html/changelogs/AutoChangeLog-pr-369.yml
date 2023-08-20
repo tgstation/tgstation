@@ -1,0 +1,6 @@
+author: "NaakaKo"
+delete-after: True
+changes:
+  - balance: "the lion hunters rifle has been pegged down the knowledge tree. to make sure the tree is kept happy, the rust path and blade path can access rust charge"
+  - rscadd: "rust charge"
+  - balance: "the lion hunter ammo knowledge is free"
