@@ -44,7 +44,7 @@
 				STOP_PROCESSING(SSmachines, src)
 				icon_state = "brm"
 				update_appearance(UPDATE_ICON_STATE)
-				playsound(src, 'sound/machines/mining/automatic_teleport.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(src, 'sound/machines/mining/auto_teleport.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				return
 
 /obj/machinery/bouldertech/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
