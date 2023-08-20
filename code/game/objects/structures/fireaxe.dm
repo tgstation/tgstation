@@ -161,16 +161,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(open)
 		if(broken)
 			. += "glass4_raised"
-		else
-			switch(hp_percent)
-				if(-INFINITY to 40)
-					. += "glass3_raised"
-				if(40 to 60)
-					. += "glass2_raised"
-				if(60 to 80)
-					. += "glass1_raised"
-				if(80 to INFINITY)
-					. += "glass_raised"
+			return
+
+		switch(hp_percent)
+			if(-INFINITY to 40)
+				. += "glass3_raised"
+			if(40 to 60)
+				. += "glass2_raised"
+			if(60 to 80)
+				. += "glass1_raised"
+			if(80 to INFINITY)
+				. += "glass_raised"
 		return
 
 	if(broken)
