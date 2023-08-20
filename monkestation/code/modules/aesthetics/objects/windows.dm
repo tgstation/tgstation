@@ -48,7 +48,7 @@
 	icon_state = "grille-0"
 	layer = ABOVE_OBJ_LAYER - 0.01
 	base_icon_state = "grille"
-	canSmoothWith =  SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_GRILLE + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_GRILLE + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WALLS
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_GRILLE
 
