@@ -11,14 +11,8 @@
 	key_third_person = "blinks"
 	message = "blinks."
 
-/datum/emote/living/carbon/blink/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/carbon/blink/run_emote(mob/living/carbon/human, params, type_override, intentional)
 	. = ..()
-
-	var/mob/living/carbon/human = user
-
-	if (!istype(human))
-		// No neck to snap. Sad!
-		return
 
 	// Don't blink. Not even for a second.
 	for(var/obj/structure/statue/peanut in view(8, human))
