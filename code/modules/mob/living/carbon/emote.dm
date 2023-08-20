@@ -16,17 +16,16 @@
 
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
 
-
 	if(!head)
-		// dullahans are stupid
+		// This implies you have no neck to snap. You're making Peanut sad!
+		return
+
+	if(prob(99.9))
+		// Peanut has spared you--for the moment.
 		return
 
 	// Don't blink. Not even for a second.
-	for(var/obj/structure/statue/peanut in view(8, human))
-		if (prob(99))
-			// Not feeling it right now...
-			continue
-
+	for(var/obj/structure/statue/peanut in view(8, get_turf(human)))
 		// Security guards go here to die.
 		if(do_teleport(peanut, human, channel = TELEPORT_CHANNEL_MAGIC))
 			human.log_message("blinked and had their neck snapped by [peanut]!")
@@ -38,6 +37,8 @@
 			head.receive_damage(brute=200)
 
 			new /obj/effect/gibspawner/human/bodypartless(get_turf(human))
+
+			break
 
 /datum/emote/living/carbon/blink/blink_r
 	key = "blink_r"
