@@ -11,7 +11,6 @@
 		/mob/living/basic/mining/goldgrub = 10,
 		/mob/living/basic/mining/lobstrosity/lava = 20,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon = 20,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30,
 		/obj/structure/spawner/lavaland = 2,
 		/obj/structure/spawner/lavaland/goliath = 3,
 		/obj/structure/spawner/lavaland/legion = 3,
