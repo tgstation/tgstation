@@ -136,6 +136,8 @@
 /mob/living/basic/mining/goldgrub/proc/consume_ore(obj/item/target_ore)
 	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	target_ore.forceMove(src)
+	if(!can_lay_eggs)
+		return
 	if(!istype(target_ore, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
 	var/obj/item/food/egg/green/grub_egg/egg = new(get_turf(src))
