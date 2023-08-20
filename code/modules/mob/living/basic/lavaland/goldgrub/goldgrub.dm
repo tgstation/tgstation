@@ -51,13 +51,17 @@
 		generate_loot()
 	var/datum/action/cooldown/mob_cooldown/spit_ore/spit = new(src)
 	var/datum/action/cooldown/mob_cooldown/burrow/burrow = new(src)
-	AddComponent(/datum/component/appearance_on_aggro, overlay_icon = icon, overlay_state = "[icon_state]_alert")
-	AddElement(/datum/element/wall_smasher)
-	AddComponent(/datum/component/ai_listen_to_weather)
 	spit.Grant(src)
 	burrow.Grant(src)
 	ai_controller.set_blackboard_key(BB_SPIT_ABILITY, spit)
 	ai_controller.set_blackboard_key(BB_BURROW_ABILITY, burrow)
+	AddElement(/datum/element/wall_smasher)
+	AddComponent(/datum/component/ai_listen_to_weather)
+	AddComponent(\
+		/datum/component/appearance_on_aggro,\
+		overlay_icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi',\
+		overlay_state = "goldgrub_alert",\
+	)
 
 /mob/living/basic/mining/goldgrub/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -132,7 +136,7 @@
 /mob/living/basic/mining/goldgrub/proc/consume_ore(obj/item/target_ore)
 	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	target_ore.forceMove(src)
-	if(!istype(target_ore, /obj/item/stack/ore/bluespace_crystal) || prob(80))
+	if(!istype(target_ore, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
 	var/obj/item/food/egg/green/grub_egg/egg = new(get_turf(src))
 	egg.add_growth_component()
@@ -167,7 +171,7 @@
 	)
 
 /mob/living/basic/mining/goldgrub/baby/proc/ready_to_grow()
-	return (stat == CONSCIOUS)
+	return (stat == CONSCIOUS && !burrowed)
 
 /obj/item/food/egg/green/grub_egg
 	name = "grub egg"
