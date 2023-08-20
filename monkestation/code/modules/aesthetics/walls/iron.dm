@@ -39,7 +39,7 @@
 		add_overlay(managed_wall_trim)
 	if(paint_color)
 		cut_overlay(managed_wall_paint)
-		managed_wall_trim = list()
+		managed_wall_paint = list()
 		var/image/new_trim = image("icon" = icon, "icon_state" = icon_state, "layer" = src.layer)
 		new_trim.color = trim_color
 		managed_wall_paint += paint_color
