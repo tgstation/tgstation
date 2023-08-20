@@ -4,13 +4,19 @@
 	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
 	icon_state = "brm"
 	circuit = /obj/item/circuitboard/machine/brm
-	usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
+	usage_sound = 'sound/machines/mining/manual_teleport.ogg'
 	// Are we trying to actively collect boulders automatically?
 	var/toggled_on = FALSE
+	// Cooldown used for left click teleportation.
+	COOLDOWN_DECLARE(manual_teleport_cooldown)
 
 /obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
+	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
+		return
 	collect_boulder()
+	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	COOLDOWN_START(src, manual_teleport_cooldown, 1.5 SECONDS)
 
 /obj/machinery/bouldertech/brm/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -38,7 +44,15 @@
 				STOP_PROCESSING(SSmachines, src)
 				icon_state = "brm"
 				update_appearance(UPDATE_ICON_STATE)
+				playsound(src, 'sound/machines/mining/automatic_teleport.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				return
+
+/obj/machinery/bouldertech/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_LMB] = "Teleport single boulder"
+	context[SCREENTIP_CONTEXT_RMB] = "Toggle automatic boulder retrieval"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * So, this should be probably handed in a more elegant way going forward, like a small TGUI prompt to select which boulder you want to pull from.
