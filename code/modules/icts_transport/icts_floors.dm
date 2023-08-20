@@ -102,3 +102,159 @@
 /turf/open/floor/glass/reinforced/tram
 	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
+
+/obj/structure/thermoplastic
+	name = "tram"
+	desc = "A lightweight thermoplastic flooring."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "tram_dark"
+	density = FALSE
+	anchored = TRUE
+	armor_type = /datum/armor/structure_lattice
+	max_integrity = 50
+	layer = TRAM_FLOOR_LAYER
+	plane = FLOOR_PLANE
+	obj_flags = BLOCK_Z_OUT_DOWN
+	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
+	var/secured = TRUE
+	var/floor_tile = /obj/item/stack/thermoplastic
+	/// Determines if you can deconstruct this with a RCD
+	var/rcd_proof = FALSE
+
+/obj/structure/thermoplastic/blue
+	icon_state = "tram_blue"
+
+/obj/structure/thermoplastic/light
+	icon_state = "tram_light"
+
+/obj/structure/thermoplastic/examine(mob/user)
+	. = ..()
+
+	if(secured)
+		. += span_notice("It is secured with a set of <b>screws.</b>")
+	else
+		. += span_notice("You can <b>crowbar</b> to remove the tile.")
+		. += span_notice("It can be re-secured using a <b>screwdriver.</b>")
+
+/obj/structure/thermoplastic/attackby_secondary(obj/item/tool, mob/user, params)
+	if(secured)
+		if(tool.tool_behaviour == TOOL_SCREWDRIVER)
+			user.visible_message(span_notice("[user] begins to unscrew the tile..."),
+									span_notice("You begin to unscrew the tile..."))
+			if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+				secured = FALSE
+				to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the tile."))
+		else if (tool.tool_behaviour)
+			to_chat(user, span_warning("The security screws need to be removed first!"))
+
+	else
+		if(tool.tool_behaviour == TOOL_SCREWDRIVER)
+			user.visible_message(span_notice("[user] begins to fasten the tile..."),
+									span_notice("You begin to fasten the tile..."))
+			if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+				secured = TRUE
+				to_chat(user, span_notice("The tile is securely screwed in place."))
+
+		else if(tool.tool_behaviour == TOOL_CROWBAR)
+			user.visible_message(span_notice("[user] wedges \the [tool] into the tile's gap in the edge and starts prying..."),
+									span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+			if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+				to_chat(user, span_notice("The panel pops out of the frame."))
+				spawn_tile()
+				qdel(src)
+
+	if (tool.tool_behaviour)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return ..()
+
+/obj/structure/thermoplastic/welder_act(mob/living/user, obj/item/tool)
+	if(atom_integrity >= max_integrity)
+		to_chat(user, span_warning("[src] is already in good condition!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!tool.tool_start_check(user, amount = 0))
+		return FALSE
+	to_chat(user, span_notice("You begin repairing [src]..."))
+	var/integrity_to_repair = max_integrity - atom_integrity
+	if(tool.use_tool(src, user, integrity_to_repair, volume = 50))
+		atom_integrity = max_integrity
+		to_chat(user, span_notice("You repair [src]."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/thermoplastic/proc/has_tile()
+	return floor_tile
+
+/obj/structure/thermoplastic/proc/spawn_tile()
+	if(!has_tile())
+		return null
+	return new floor_tile(src)
+
+/obj/item/stack/thermoplastic
+	name = "thermoplastic tram tile"
+	singular_name = "thermoplastic tram tile"
+	desc = "A high-traction floor tile. It sparkles in the light."
+	icon = 'icons/obj/tiles.dmi'
+	lefthand_file = 'icons/mob/inhands/items/tiles_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/tiles_righthand.dmi'
+	icon_state = "tile_textured_white_large"
+	inhand_icon_state = "tile-tile_textured_white_large"
+	color = COLOR_TRAM_BLUE
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 1
+	throwforce = 1
+	throw_speed = 3
+	throw_range = 7
+	max_amount = 60
+	novariants = TRUE
+	/// What type of turf does this tile produce.
+	var/struct_type = /obj/structure/thermoplastic
+	merge_type = /obj/item/stack/thermoplastic
+	/// What dir will the tile have?
+	var/struct_dir = SOUTH
+	/// Cached associative lazy list to hold the radial options for tile reskinning. See tile_reskinning.dm for more information. Pattern: list[type] -> image
+	var/list/tile_reskin_types
+
+/obj/item/stack/thermoplastic/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+	. = ..()
+	AddElement(/datum/element/openspace_item_click_handler)
+	pixel_x = rand(-3, 3)
+	pixel_y = rand(-3, 3) //randomize a little
+	//if(tile_reskin_types)
+	//	tile_reskin_types = tile_reskin_list(tile_reskin_types)
+
+/obj/item/stack/thermoplastic/examine(mob/user)
+	. = ..()
+	if(tile_reskin_types)
+		. += span_notice("Use while in your hand to change what type of [src] you want.")
+	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
+		var/verb
+		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
+			if(1 to 3)
+				verb = "superb"
+			if(4 to 6)
+				verb = "great"
+			if(7 to 9)
+				verb = "good"
+			if(10 to 12)
+				verb = "fairly decent"
+			if(13 to 15)
+				verb = "mediocre"
+		if(!verb)
+			return
+		. += span_notice("Those could work as a [verb] throwing weapon.")
+
+/// Ugh I hate we have to do it like this, tram modules mask their x/y so you can't act directly on them
+/obj/item/stack/thermoplastic/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		to_chat(world, span_danger("Checking for tram on [target] with [src]!"))
+		if(!check_for_tram(target))
+			to_chat(world, span_danger("No tram on [target]!"))
+			return
+		to_chat(world, span_danger("Found a tram on [target]!"))
+		target.attackby(src, user, click_parameters)
+
+/obj/item/stack/thermoplastic/proc/check_for_tram(turf/target)
+	if(locate(/obj/structure/transport/linear/tram) in src.loc.contents)
+		return TRUE
+
+	return FALSE

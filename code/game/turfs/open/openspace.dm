@@ -122,6 +122,8 @@
 		build_with_rods(C, user)
 	else if(istype(C, /obj/item/stack/tile/iron))
 		build_with_floor_tiles(C, user)
+	else if(istype(C, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(C, user)
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())

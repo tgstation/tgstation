@@ -824,13 +824,12 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	icon_state = "subfloor"
 	base_icon_state = "subfloor"
 	layer = TRAM_STRUCTURE_LAYER
-	base_icon_state = null
 	smoothing_flags = NONE
-	smoothing_groups = null
-	canSmoothWith = null
-	//kind of a centerpiece of the station, so pretty tough to destroy
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
+	smoothing_groups = NONE
+	canSmoothWith = NONE
+	//the modular structure is pain to work with, damage is done to the floor on top
+	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	obj_flags = BLOCK_Z_IN_UP
 	transport_id = ICTS_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE
@@ -861,17 +860,6 @@ GLOBAL_LIST_EMPTY(icts_transports)
 
 /obj/structure/transport/linear/tram/structure/southeast
 	icon_state = "spoiler-subfloor-se"
-
-/obj/structure/transport/linear/tram/structure/thermoplastic
-	desc = "A lightweight thermoplastic flooring. These prevent you falling through the structure of the tram, don't you know how gravity works?"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "tram_dark"
-
-/obj/structure/transport/linear/tram/structure/thermoplastic/blue
-	icon_state = "tram_blue"
-
-/obj/structure/transport/linear/tram/structure/thermoplastic/light
-	icon_state = "tram_light"
 
 /obj/structure/transport/linear/tram/add_item_on_transport(datum/source, atom/movable/item)
 	. = ..()
@@ -947,19 +935,3 @@ GLOBAL_LIST_EMPTY(icts_transports)
 		passenger.throw_at()
 		var/datum/callback/land_slam = new(passenger, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 		passenger.throw_at(throw_target, 400, 2, force = MOVE_FORCE_OVERPOWERING, callback = land_slam)
-
-/obj/structure/thermoplastic
-	name = "tram"
-	desc = "A lightweight thermoplastic flooring. These prevent you falling through the structure of the tram."
-	icon = 'icons/turf/snow.dmi'
-	icon_state = "snowplating"
-	density = FALSE
-	anchored = TRUE
-	armor_type = /datum/armor/structure_lattice
-	max_integrity = 50
-	layer = TRAM_FLOOR_LAYER
-	plane = FLOOR_PLANE
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
-	smoothing_groups = SMOOTH_GROUP_CATWALK
-	canSmoothWith = SMOOTH_GROUP_CATWALK
-	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
