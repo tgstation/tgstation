@@ -49,7 +49,7 @@
 	layer = ABOVE_OBJ_LAYER - 0.01
 	base_icon_state = "grille"
 	canSmoothWith =  SMOOTH_GROUP_WALLS + SMOOTH_GROUP_GRILLE
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_GRILLE
 
 /obj/structure/grille/update_overlays(updates=ALL)
