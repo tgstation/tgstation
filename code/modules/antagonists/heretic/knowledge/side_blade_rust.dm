@@ -71,7 +71,7 @@
 		/obj/item/stack/sheet/animalhide = 1,
 		/obj/item/ammo_casing = 3,
 	)
-	result_atoms = list(/obj/item/ammo_box/a762/lionhunter)
+	result_atoms = list(/obj/item/ammo_box/strilka310/lionhunter)
 	cost = 1
 	route = PATH_SIDE
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.

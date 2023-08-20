@@ -1,3 +1,4 @@
-#comment New path for large glass airlock. 
+#comment Repathing for new multi-tile airlocks.
 
-/obj/machinery/door/airlock/glass_large : /obj/machinery/door/airlock/multi_tile/glass{@OLD}
+/obj/machinery/door/airlock/multi_tile/glass : /obj/machinery/door/airlock/multi_tile/public/glass{@OLD}
+/obj/machinery/door/airlock/glass_large : /obj/machinery/door/airlock/multi_tile/public/glass{@OLD}

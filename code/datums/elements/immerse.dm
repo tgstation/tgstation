@@ -88,6 +88,8 @@
 	RegisterSignal(source, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_atom_exited))
 	attached_turfs_and_movables += source
 	for(var/atom/movable/movable as anything in source)
+		if(!(movable.flags_1 & INITIALIZED_1))
+			continue
 		on_init_or_entered(source, movable)
 
 ///Stops the element from affecting on the turf and its contents. Called on Detach() or when TRAIT_IMMERSE_STOPPED is added.
@@ -206,6 +208,7 @@
 	vis_overlay.overlay_appearance = overlay_appearance
 
 	generated_visual_overlays["[is_below_water][width]x[height]"] = vis_overlay
+	return vis_overlay
 
 ///This proc removes the vis_overlay, the keep together trait and some signals from the movable.
 /datum/element/immerse/proc/remove_immerse_overlay(atom/movable/movable)

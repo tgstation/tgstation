@@ -34,8 +34,16 @@
 	var/material_amt = 4
 
 /obj/structure/door_assembly/multi_tile
+	name = "large airlock assembly"
+	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	base_name = "large airlock"
+	glass_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	airlock_type = /obj/machinery/door/airlock/multi_tile/public/glass
 	dir = EAST
 	multi_tile = TRUE
+	glass = TRUE
+	nomineral = TRUE
 
 /obj/structure/door_assembly/Initialize(mapload)
 	. = ..()
@@ -375,7 +383,7 @@
 
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
