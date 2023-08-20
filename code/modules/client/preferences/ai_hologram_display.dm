@@ -6,14 +6,13 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ai_hologram_display/init_possible_values()
-	var/list/values = list()
+	return assoc_to_keys(GLOB.ai_hologram_icons) + "Random"
 
-	values["Random"] = icon('icons/mob/silicon/ai.dmi', "questionmark")
-
-	for(var/hologram in GLOB.ai_hologram_icons - "Random")
-		values[hologram] = icon(GLOB.ai_hologram_icons[hologram], GLOB.ai_hologram_icon_state[hologram])
-
-	return values
+/datum/preference/choiced/ai_hologram_display/icon_for(value)
+	if (value == "Random")
+		return icon('icons/mob/silicon/ai.dmi', "questionmark")
+	else
+		return icon(GLOB.ai_hologram_icons[value], GLOB.ai_hologram_icon_state[value])
 
 /datum/preference/choiced/ai_hologram_display/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
