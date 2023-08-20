@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Reactive stealth armor decoys are half as healthy, as originally intended"
