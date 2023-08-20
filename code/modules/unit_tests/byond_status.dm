@@ -7,4 +7,4 @@
 
 	var/status = byond_status()
 	if (!("Sleeping procs") in status)
-		log_test("Invalid byond_status: [status]")
+		TEST_FAIL("Invalid byond_status: [status]")
