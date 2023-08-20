@@ -286,7 +286,7 @@
 		balloon_alert(user, "adding [card_reader]...")
 		if(do_after(user, 2 SECONDS, target = src))
 			qdel(card_reader)
-			make_final_result(/obj/structure/displaycase/forsale)
+			make_final_result(display_type = /obj/structure/displaycase/forsale)
 		return
 
 	if(istype(attacking_item, /obj/item/stack/sheet/glass))
@@ -297,7 +297,7 @@
 		balloon_alert(user, "adding glass...")
 		if(do_after(user, 2 SECONDS, target = src))
 			glass_sheets.use(10)
-			make_final_result(/obj/structure/displaycase/noalert)
+			make_final_result(display_type = /obj/structure/displaycase/noalert)
 		return
 	return ..()
 
