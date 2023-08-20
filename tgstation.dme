@@ -2720,6 +2720,7 @@
 #include "code\modules\antagonists\cult\rune_spawn_action.dm"
 #include "code\modules\antagonists\cult\runes.dm"
 #include "code\modules\antagonists\cyber_police\cyber_police.dm"
+#include "code\modules\antagonists\cyber_police\outfit.dm"
 #include "code\modules\antagonists\disease\disease_abilities.dm"
 #include "code\modules\antagonists\disease\disease_datum.dm"
 #include "code\modules\antagonists\disease\disease_disease.dm"

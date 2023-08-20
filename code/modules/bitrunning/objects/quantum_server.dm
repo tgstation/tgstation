@@ -41,11 +41,11 @@
 	var/points = 0
 	/// Keeps track of the number of times someone has built a hololadder
 	var/retries_spent = 0
-	/// Scanner tier
+	/// Changes how much info is available on the domain
 	var/scanner_tier = 1
-	/// Length of time it takes for the server to cool down after resetting. Here to give miners downtime so their faces don't get stuck like that
+	/// Length of time it takes for the server to cool down after resetting. Here to give runners downtime so their faces don't get stuck like that
 	var/server_cooldown_time = 3 MINUTES
-	/// Bonus applied for each servo upgrade
+	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
