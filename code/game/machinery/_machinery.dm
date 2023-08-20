@@ -810,7 +810,6 @@
 			new datum_part.physical_object_type(loc)
 		else
 			var/obj/item/obj_part = part
-			component_parts -= part
 			obj_part.forceMove(loc)
 			if(istype(obj_part, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/board = obj_part
@@ -883,8 +882,6 @@
 		circuit = null
 	if((gone in component_parts) && !QDELETED(src))
 		component_parts -= gone
-		// It would be unusual for a component_part to be qdel'd ordinarily.
-		deconstruct(FALSE)
 
 /**
  * This should be called before mass qdeling components to make space for replacements.
