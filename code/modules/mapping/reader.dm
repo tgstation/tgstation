@@ -114,6 +114,22 @@
 	var/turfsSkipped = 0
 	#endif
 
+/datum/parsed_map/proc/copy()
+    // Avoids duped work just in case
+    build_cache()
+    var/datum/parsed_map/newfriend = new()
+    newfriend.original_path = original_path
+    newfriend.map_format = map_format
+    newfriend.key_len = key_len
+    newfriend.line_len = ine_len
+    newfriend.grid_models = grid_models.Copy()
+    newfriend.gridSets = gridSets.Copy()
+    newfriend.modelCache = modelCache.Copy()
+    newfriend.parsed_bounds = parsed_bounds.Copy()
+    newfriend.bounds = parsed_bounds.Copy()
+    newfriend.turf_blacklist = turf_blacklist.Copy()
+    return newfriend
+
 //text trimming (both directions) helper macro
 #define TRIM_TEXT(text) (trim_reduced(text))
 
@@ -149,11 +165,11 @@
 	place_on_top = FALSE,
 	new_z = FALSE,
 )
-	var/static/parsed_maps = list()
-	if(!(dmm_file in parsed_maps))
-		parsed_maps[dmm_file] = new /datum/parsed_map(dmm_file)
+	if(!(dmm_file in GLOB.cached_maps))
+		GLOB.cached_maps[dmm_file] = new /datum/parsed_map(dmm_file)
 
-	var/datum/parsed_map/parsed_map = parsed_maps[dmm_file]
+	var/datum/parsed_map/parsed_map = GLOB.cached_maps[dmm_file]
+	parsed_map = parsed_map.copy()
 	if(!measure_only && !isnull(parsed_map.bounds))
 		parsed_map.load(
 			x_offset,
