@@ -82,6 +82,19 @@
 	mood_change = -10
 	timeout = 8 MINUTES
 
+/datum/mood_event/dismembered/add_effects(obj/item/bodypart/limb)
+	if(limb)
+		description = "AHH! I WAS USING THAT [full_capitalize(limb.plaintext_zone)]"
+
+/datum/mood_event/reattachment
+	description = "Ouch! My limb feels like I fell asleep on it."
+	mood_change = -3
+	timeout = 2 MINUTES
+
+/datum/mood_event/reattachment/add_effects(obj/item/bodypart/limb)
+	if(limb)
+		description = "Ouch! My [limb.plaintext_zone] feels like I fell asleep on it."
+
 /datum/mood_event/tased
 	description = "There's no \"z\" in \"taser\". It's in the zap."
 	mood_change = -3

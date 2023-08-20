@@ -15,6 +15,8 @@
 		"ai_name" = ai_assistant?.name,
 		"has_pai" = ispAI(ai_assistant),
 		"is_ai" = ai_assistant && ai_assistant == user,
+		"link_id" = mod_link.id,
+		"link_call" = mod_link.get_other()?.id,
 		// Wires
 		"open" = open,
 		"seconds_electrified" = seconds_electrified,
@@ -76,10 +78,6 @@
 	. = ..()
 	if(.)
 		return
-	if(locked && (!allowed(usr) || !ispAI(usr))) // pAIs automatically fail out of allowed()
-		balloon_alert(usr, "insufficient access!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return
 	if(malfunctioning && prob(75))
 		balloon_alert(usr, "button malfunctions!")
 		return
@@ -87,6 +85,11 @@
 		if("lock")
 			locked = !locked
 			balloon_alert(usr, "[locked ? "locked" : "unlocked"]!")
+		if("call")
+			if(!mod_link.link_call)
+				call_link(usr, mod_link)
+			else
+				mod_link.end_call()
 		if("activate")
 			toggle_activate(usr)
 		if("select")

@@ -282,6 +282,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TOXIMMUNE "toxin_immune"
 /// Mob is immune to oxygen damage, does not need to breathe
 #define TRAIT_NOBREATH "no_breath"
+/// Mob is currently disguised as something else (like a morph being another mob or an object). Holds a reference to the thing that applied the trait.
+#define TRAIT_DISGUISED "disguised"
 /// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
@@ -307,6 +309,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
 /// The user can do things like use magic staffs without penalty
 #define TRAIT_MAGICALLY_GIFTED "magically_gifted"
+/// This object innately spawns with fantasy variables already applied (the magical component is given to it on initialize), and thus we never want to give it the component again.
+#define TRAIT_INNATELY_FANTASTICAL_ITEM "innately_fantastical_item"
 #define TRAIT_DEPRESSION "depression"
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
@@ -569,6 +573,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
+/// Whether or not the user is in a MODlink call, prevents making more calls
+#define TRAIT_IN_CALL "in_call"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -612,7 +619,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
-#define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
@@ -640,6 +647,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Cannot be grabbed by goliath tentacles
 #define TRAIT_TENTACLE_IMMUNE "tentacle_immune"
+/// Currently under the effect of overwatch
+#define TRAIT_OVERWATCHED "watcher_overwatched"
+/// Cannot be targetted by watcher overwatch
+#define TRAIT_OVERWATCH_IMMUNE "overwatch_immune"
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
@@ -752,7 +763,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CUSTOM_TAP_SOUND "no_tap_sound"
 /// Makes the feedback message when someone else is putting this item on you more noticeable
 #define TRAIT_DANGEROUS_OBJECT "dangerous_object"
-// determines whether or not objects are haunted and teleport/attack randomly
+/// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
 
 //quirk traits
@@ -787,6 +798,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SMOKER "smoker"
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
+#define TRAIT_SETTLER "settler"
 
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
@@ -1003,6 +1015,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
+
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
 #define STATUE_MUTE "statue"
@@ -1085,6 +1098,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
 #define BRAIN_UNAIDED "brain-unaided"
+/// Trait applied to a mob when it gets a required "operational datum" (components/elements). Sends out the source as the type of the element.
+#define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
 /// Trait applied by MODsuits.
 #define MOD_TRAIT "mod"
 /// Trait applied by element
@@ -1117,6 +1132,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HALLUCINATION_TRAIT "hallucination_trait"
 /// Trait given by simple/basic mob death
 #define BASIC_MOB_DEATH_TRAIT "basic_mob_death"
+/// Trait given by your current speed
+#define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
 
