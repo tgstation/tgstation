@@ -1131,3 +1131,19 @@
 
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
+
+/// Fire a projectile from this atom at another atom
+/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer)
+	if (!isnull(sound))
+		playsound(src, sound, vol = 100, vary = TRUE)
+
+	var/turf/startloc = get_turf(src)
+	var/obj/projectile/bullet = new projectile_type(startloc)
+	bullet.starting = startloc
+	bullet.firer = firer || src
+	bullet.fired_from = src
+	bullet.yo = target.y - startloc.y
+	bullet.xo = target.x - startloc.x
+	bullet.original = target
+	bullet.preparePixelProjectile(target, src)
+	bullet.fire()

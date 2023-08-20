@@ -8,8 +8,6 @@
 	icon_state = "buffer"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // It looks short enough.
 	buffer = 200
-	///category for plumbing RCD
-	category="Synthesizers"
 
 	var/datum/buffer_net/buffer_net
 	var/activation_volume = 100

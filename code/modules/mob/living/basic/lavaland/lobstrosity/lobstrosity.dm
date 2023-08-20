@@ -6,7 +6,6 @@
 	icon_state = "arctic_lobstrosity"
 	icon_living = "arctic_lobstrosity"
 	icon_dead = "arctic_lobstrosity_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	friendly_verb_continuous = "chitters at"
 	friendly_verb_simple = "chitters at"
 	speak_emote = list("chitters")
@@ -64,6 +63,7 @@
 
 /// Charge a long way, knock down for longer, and perform an instant melee attack
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster
+	name = "Lobster Rush"
 	charge_distance = 8
 	knockdown_duration = 2.5 SECONDS
 

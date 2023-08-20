@@ -14,7 +14,7 @@
 /datum/component/basic_mob_attack_telegraph/Initialize(
 	telegraph_icon = 'icons/mob/telegraphing/telegraph.dmi',
 	telegraph_state = ATTACK_EFFECT_BITE,
-	telegraph_duration = 0.3 SECONDS,
+	telegraph_duration = 0.4 SECONDS,
 	datum/callback/on_began_forecast,
 )
 	. = ..()
@@ -40,7 +40,7 @@
 /// When we attempt to attack, check if it is allowed
 /datum/component/basic_mob_attack_telegraph/proc/on_attack(mob/living/basic/source, atom/target)
 	SIGNAL_HANDLER
-	if (!isliving(target))
+	if (!(isliving(target) || ismecha(target))) // Curse you CLARKE
 		return
 	if (HAS_TRAIT_FROM(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src)))
 		REMOVE_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
@@ -51,7 +51,7 @@
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /// Perform an attack after a delay
-/datum/component/basic_mob_attack_telegraph/proc/delayed_attack(mob/living/basic/source, mob/living/target)
+/datum/component/basic_mob_attack_telegraph/proc/delayed_attack(mob/living/basic/source, atom/target)
 	current_target = target
 	target.add_overlay(target_overlay)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(forget_target))
@@ -69,7 +69,7 @@
 	source.melee_attack(target)
 
 /// The guy we're trying to attack moved, is he still in range?
-/datum/component/basic_mob_attack_telegraph/proc/target_moved(mob/living/target)
+/datum/component/basic_mob_attack_telegraph/proc/target_moved(atom/target)
 	SIGNAL_HANDLER
 	if (in_range(parent, target))
 		return
