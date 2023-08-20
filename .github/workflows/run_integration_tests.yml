@@ -58,14 +58,15 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -WError -NWTG0001
-      - name: IM TRYING TO FIGURE OUT WHY CI IS BREAKING
-        run: |
-          sudo apt-get install -y gcc-multilib g++-multilib
-          rm libbyond_sleeping_procs.so
-          g++ -nostdlib -m32 -shared -fPIC -o libbyond_sleeping_procs.so main.cpp
-          cp libbyond_sleeping_procs.so ~/.byond/bin/libbyond_sleeping_procs.so
+      # - name: IM TRYING TO FIGURE OUT WHY CI IS BREAKING
+      #   run: |
+      #     sudo apt-get install -y gcc-multilib g++-multilib
+      #     rm libbyond_sleeping_procs.so
+      #     g++ -nostdlib -m32 -shared -fPIC -o libbyond_sleeping_procs.so main.cpp
+      #     cp libbyond_sleeping_procs.so ~/.byond/bin/libbyond_sleeping_procs.so
       - name: Run Tests
         run: |
+          cp libbyond_sleeping_procs.so ~/.byond/bin/libbyond_sleeping_procs.so
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
       - name: Upload screenshot tests
