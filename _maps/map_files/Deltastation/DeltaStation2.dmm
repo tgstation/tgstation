@@ -13210,6 +13210,7 @@
 	pixel_y = 1
 	},
 /obj/item/book/manual/wiki/atmospherics,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "djV" = (
@@ -20815,7 +20816,6 @@
 "fff" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/visible{
 	dir = 4
@@ -59109,6 +59109,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/rack,
 /obj/item/holosign_creator/atmos,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "oSE" = (
@@ -76458,7 +76459,6 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "tgI" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 9
