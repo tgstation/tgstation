@@ -23,12 +23,12 @@
 					var/turf/closed/wall/wall_atom = src
 					var/turf/closed/wall/turf_atom = T
 					if(turf_atom.trim_color != wall_atom.trim_color)
-						var/image/adapater = image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], "layer" = src.layer + 0.02, dir = get_dir(src, T))
+						var/image/adapater = image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], "layer" = src.layer + 0.03, dir = get_dir(src, T))
 						adapater.color = wall_atom.trim_color
 						overlays_adapters += adapater
 
 				else
-					var/image/adapater = image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], "layer" = src.layer + 0.02, dir = get_dir(src, T))
+					var/image/adapater = image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], "layer" = src.layer + 0.03, dir = get_dir(src, T))
 					if(iswallturf(src))
 						var/turf/closed/wall/wall_atom = src
 						adapater.color = wall_atom.trim_color
@@ -41,7 +41,7 @@
 		for(var/atom/A in T)
 			for(var/type in smooth_adapters)
 				if(istype(A, type))
-					var/image/adapater = image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], "layer" = src.layer + 0.02, dir = get_dir(src, A))
+					var/image/adapater = image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], "layer" = src.layer + 0.03, dir = get_dir(src, A))
 					if(iswallturf(src))
 						var/turf/closed/wall/wall_atom = src
 						adapater.color = wall_atom.trim_color
