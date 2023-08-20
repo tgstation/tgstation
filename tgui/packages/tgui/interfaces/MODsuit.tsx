@@ -388,6 +388,7 @@ const SuitStatusSection = (props, context) => {
             icon={'wifi'}
             color={link_call ? 'good' : 'default'}
             disabled={!link_freq}
+            tooltip={link_freq ? '' : 'Set a frequency with a multitool!'}
             content={
               link_freq
                 ? link_call
