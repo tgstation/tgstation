@@ -84,8 +84,11 @@
 		old_area.turfs_to_uncontain += cordon_turf
 		cordon_area.contained_turfs += cordon_turf
 		cordon_area.contents += cordon_turf
+		// Its no longer unused, but its also not "used"
+		cordon_turf.turf_flags &= ~UNUSED_RESERVATION_TURF
 		cordon_turf.ChangeTurf(/turf/cordon, /turf/cordon)
 		SSmapping.unused_turfs["[cordon_turf.z]"] -= cordon_turf
+		// still gets linked to us though
 		SSmapping.used_turfs[cordon_turf] = src
 
 	//swap the area with the pre-cordoning area
@@ -173,8 +176,8 @@
 		reserved_turfs |= T
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
+		T.turf_flags = (T.turf_flags | RESERVATION_TURF) & ~UNUSED_RESERVATION_TURF
 		T.ChangeTurf(turf_type, turf_type)
-		T.turf_flags |= RESERVATION_TURF
 
 	bottom_left_turfs += BL
 	top_right_turfs += TR

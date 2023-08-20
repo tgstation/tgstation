@@ -140,6 +140,7 @@
  * - x_offset: The x offset to load the map at
  * - y_offset: The y offset to load the map at
  * - z_offset: The z offset to load the map at
+ * - only_load_this_z: If set, only this z level from the given map will be loaded
  * - crow_map: If true, the map will be cropped to the world bounds
  * - measure_only: If true, the map will not be loaded, but the bounds will be calculated
  * - no_changeturf: If true, the map will not call /turf/AfterChange
@@ -172,20 +173,7 @@
 	var/datum/parsed_map/parsed_map = GLOB.cached_maps[dmm_file]
 	parsed_map = parsed_map.copy()
 	if(!measure_only && !isnull(parsed_map.bounds))
-		parsed_map.load(
-			x_offset,
-			y_offset,
-			z_offset,
-			only_load_this_z,
-			crow_map,
-			no_changeturf,
-			x_lower,
-			x_upper,
-			y_lower,
-			y_upper,
-			place_on_top,
-			new_z,
-		)
+		parsed_map.load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 	return parsed_map
 
 /// Parse a map, possibly cropping it.
@@ -300,36 +288,10 @@
 	src.line_len = line_len
 
 /// Load the parsed map into the world. You probably want [/proc/load_map]. Keep the signature the same.
-/datum/parsed_map/proc/load(
-	x_offset = 0,
-	y_offset = 0,
-	z_offset = 0,
-	only_load_this_z = 0,
-	crow_map = FALSE,
-	no_changeturf = FALSE,
-	x_lower = -INFINITY,
-	x_upper = INFINITY,
-	y_lower = -INFINITY,
-	y_upper = INFINITY,
-	place_on_top = FALSE,
-	new_z = FALSE,
-)
+/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, only_load_this_z = 0, crow_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(
-		x_offset,
-		y_offset,
-		z_offset,
-		only_load_this_z,
-		crow_map,
-		no_changeturf,
-		x_lower,
-		x_upper,
-		y_lower,
-		y_upper,
-		place_on_top,
-		new_z,
-	)
+	. = _load_impl(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 	Master.StopLoadingMap()
 
 #define MAPLOADING_CHECK_TICK \
@@ -344,20 +306,7 @@
 	}
 
 // Do not call except via load() above.
-/datum/parsed_map/proc/_load_impl(
-	x_offset,
-	y_offset,
-	z_offset,
-	only_load_this_z,
-	crow_map,
-	no_changeturf,
-	x_lower,
-	x_upper,
-	y_lower,
-	y_upper,
-	place_on_top,
-	new_z,
-)
+/datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 	PRIVATE_PROC(TRUE)
 	// Tell ss atoms that we're doing maploading
 	// We'll have to account for this in the following tick_checks so it doesn't overflow
@@ -370,36 +319,9 @@
 	var/sucessful = FALSE
 	switch(map_format)
 		if(MAP_TGM)
-			sucessful = _tgm_load(
-				x_offset,
-				y_offset,
-				z_offset,
-				only_load_this_z,
-				crow_map,
-				no_changeturf,
-				x_lower,
-				x_upper,
-				y_lower,
-				y_upper,
-				place_on_top,
-				new_z,
-			)
-
+			sucessful = _tgm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 		else
-			sucessful = _dmm_load(
-				x_offset,
-				y_offset,
-				z_offset,
-				only_load_this_z,
-				crow_map,
-				no_changeturf,
-				x_lower,
-				x_upper,
-				y_lower,
-				y_upper,
-				place_on_top,
-				new_z,
-			)
+			sucessful = _dmm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 
 	// And we are done lads, call it off
 	SSatoms.map_loader_stop(REF(src))
@@ -431,20 +353,7 @@
 // In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
 // In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
 // You can think of dmm as storing maps in rows, whereas tgm stores them in columns
-/datum/parsed_map/proc/_tgm_load(
-	x_offset,
-	y_offset,
-	z_offset,
-	only_load_this_z,
-	crow_map,
-	no_changeturf,
-	x_lower,
-	x_upper,
-	y_lower,
-	y_upper,
-	place_on_top,
-	new_z,
-)
+/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -582,20 +491,7 @@
 /// Stanrdard loading, not used in production
 /// Doesn't take advantage of any tgm optimizations, which makes it slower but also more general
 /// Use this if for some reason your map format is messy
-/datum/parsed_map/proc/_dmm_load(
-	x_offset,
-	y_offset,
-	z_offset,
-	only_load_this_z,
-	crow_map,
-	no_changeturf,
-	x_lower,
-	x_upper,
-	y_lower,
-	y_upper,
-	place_on_top,
-	new_z,
-)
+/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
