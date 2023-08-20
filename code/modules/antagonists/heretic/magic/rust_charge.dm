@@ -8,8 +8,10 @@
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
 	var/turf/open/start_turf = get_turf(owner)
-	if(istype(start_turf) && HAS_TRAIT(start_turf, TRAIT_RUSTY))
-		StartCooldown(135 SECONDS, 135 SECONDS)
+	if(!istype(start_turf) || !HAS_TRAIT(start_turf, TRAIT_RUSTY))
+		return FALSE
+	StartCooldown(135 SECONDS, 135 SECONDS)
+	...
 		charge_sequence(owner, target_atom, charge_delay, charge_past)
 		StartCooldown()
 		return TRUE
