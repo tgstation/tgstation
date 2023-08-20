@@ -350,9 +350,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// A preference that is a choice of one option among a fixed set.
 /// Used for preferences such as clothing.
 /datum/preference/choiced
-	/// If this is TRUE, icons will be generated.
-	/// This is necessary for if your `init_possible_values()` override
-	/// returns an assoc list of names to atoms/icons.
+	/// If this is TRUE, an icon will be generated for every value.
+	/// If you implement this, you must implement `icon_for(value)` for every possible value.
 	var/should_generate_icons = FALSE
 
 	var/list/cached_values
@@ -379,33 +378,30 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return cached_values
 
 /// Returns a list of every possible value, serialized.
-/// Return value can be in the form of:
-/// - A flat list of serialized values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of serialized values to atoms/icons.
 /datum/preference/choiced/proc/get_choices_serialized()
 	// Override `init_values()` instead.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/list/serialized_choices = list()
-	var/choices = get_choices()
 
-	if (should_generate_icons)
-		for (var/choice in choices)
-			serialized_choices[serialize(choice)] = choices[choice]
-	else
-		for (var/choice in choices)
-			serialized_choices += serialize(choice)
+	for (var/choice in get_choices())
+		serialized_choices += serialize(choice)
 
 	return serialized_choices
 
 /// Returns a list of every possible value.
 /// This must be overriden by `/datum/preference/choiced` subtypes.
-/// Return value can be in the form of:
-/// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of raw values to atoms/icons, in which case
-/// icons will be generated.
+/// If `should_generate_icons` is TRUE, then you will also need to implement `icon_for(value)`
+/// for every possible value.
 /datum/preference/choiced/proc/init_possible_values()
 	CRASH("`init_possible_values()` was not implemented for [type]!")
+
+/// When `should_generate_icons` is TRUE, this proc is called for every value.
+/// It can return either an icon or a typepath to an atom to create.
+/datum/preference/choiced/proc/icon_for(value)
+	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_NOT_SLEEP(TRUE)
+	CRASH("`icon_for()` was not implemented for [type], even though should_generate_icons = TRUE!")
 
 /datum/preference/choiced/is_valid(value)
 	return value in get_choices()
@@ -456,6 +452,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/color/is_valid(value)
 	return findtext(value, GLOB.is_color)
 
+<<<<<<< HEAD
 /// SKYRAPTOR ADDITION BEGIN - tricolor prefs, ported from Skyrat-TG
 /datum/preference/tri_color
 	abstract_type = /datum/preference/tri_color
@@ -524,6 +521,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return possible_values
 
+=======
+>>>>>>> 380ce9c300e (Separate init_possible_values() from icon generation (#77660))
 /// A numeric preference with a minimum and maximum value
 /datum/preference/numeric
 	/// The minimum value
