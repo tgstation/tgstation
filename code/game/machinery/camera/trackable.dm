@@ -2,8 +2,6 @@
 #define CAMERA_TICK_LIMIT 10
 
 /datum/trackable
-	///Boolean on whether this has been initialized and the lists have been populated.
-	var/initialized = FALSE
 	///Boolean on whether or not we are currently trying to track something.
 	var/tracking = FALSE
 	///Reference to the atom that owns us, used for tracking.
@@ -15,13 +13,13 @@
 	var/cameraticks = 0
 
 	///List of all names that can be tracked.
-	var/list/names = list()
+	VAR_PRIVATE/list/names = list()
 	///List of all namecounts for mobs with the exact same name, just in-case.
-	var/list/namecounts = list()
+	VAR_PRIVATE/list/namecounts = list()
 	///List of all humans trackable by cameras.
-	var/static/list/humans = list()
+	VAR_PRIVATE/static/list/humans = list()
 	///List of all non-humans trackable by cameras, split so humans take priority.
-	var/static/list/others = list()
+	VAR_PRIVATE/static/list/others = list()
 
 /datum/trackable/New(mob/source)
 	. = ..()
@@ -58,8 +56,6 @@
 ///Generates a list of trackable people by name, returning a list of Humans + Non-Humans that can be tracked.
 /datum/trackable/proc/trackable_mobs()
 	RETURN_TYPE(/list)
-
-	initialized = TRUE
 
 	names.Cut()
 	namecounts.Cut()
@@ -115,11 +111,10 @@
 		return
 
 	if(tracked)
-		if(!initialized)
-			trackable_mobs()
+		trackable_mobs()
 		tracked_mob = isnull(humans[tracked]) ? others[tracked] : humans[tracked]
 		if(isnull(tracked_mob))
-			to_chat(tracker, span_notice("Can't find mob to track."))
+			to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 			return
 		to_chat(tracker, span_notice("Now tracking [tracked] on camera."))
 	else

@@ -524,25 +524,7 @@
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
-		var/string = href_list["track"]
-		ai_tracking_tool.trackable_mobs()
-		var/list/trackeable = list()
-		trackeable += ai_tracking_tool.humans + ai_tracking_tool.others
-		var/list/target = list()
-		for(var/I in trackeable)
-			var/datum/weakref/to_resolve = trackeable[I]
-			var/mob/to_track = to_resolve.resolve()
-			if(!to_track || to_track.name != string)
-				continue
-			target += to_track
-		if(name == string)
-			target += src
-		if(length(target))
-			cam_prev = get_turf(eyeobj)
-			var/atom/selected_target = pick(target)
-			ai_tracking_tool.set_tracked_mob(src, selected_target.name)
-		else
-			to_chat(src, "Target is not on or near any active cameras on the station.")
+		ai_tracking_tool.set_tracked_mob(src, href_list["track"])
 		return
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
