@@ -43,7 +43,7 @@
 
 /obj/item/multitool/proc/set_buffer(datum/buffer)
 	if(src.buffer)
-		UnregisterSignal(buffer, COMSIG_QDELETING)
+		UnregisterSignal(src.buffer, COMSIG_QDELETING)
 	if(QDELETED(buffer))
 		return
 	src.buffer = buffer
