@@ -677,6 +677,9 @@
 "ans" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
+/obj/effect/turf_decal/siding/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "anv" = (
@@ -995,6 +998,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
+"auC" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/sandy_dirt,
+/area/station/science/cytology)
 "auG" = (
 /obj/structure/chair{
 	dir = 1
@@ -1963,12 +1970,12 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "aPY" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
-	dir = 8
-	},
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -25018,19 +25025,8 @@
 /turf/open/floor/iron/textured_half,
 /area/station/hallway/primary/aft)
 "jif" = (
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
-/obj/structure/closet/crate/science{
-	name = "MOD core crate"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/augments)
 "jig" = (
@@ -28047,7 +28043,7 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/stack/tile/iron{
+/obj/item/stack/tile/iron/base{
 	pixel_y = 18
 	},
 /obj/item/key/janitor{
@@ -35904,6 +35900,10 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/security/processing)
+"mXd" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "mXo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
 	dir = 1
@@ -38642,6 +38642,10 @@
 /obj/structure/table/glass,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
+/obj/item/food/pizzaslice/moldy/bacteria{
+	pixel_x = -4;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "nXt" = (
@@ -38665,9 +38669,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/radio/intercom/directional/north,
+/obj/item/kirbyplants/fern,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "nXP" = (
@@ -40003,6 +40007,9 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
+/obj/machinery/plumbing/input{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "oyA" = (
@@ -40949,6 +40956,9 @@
 /area/station/commons/storage/tools)
 "oRd" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "oRm" = (
@@ -43583,6 +43593,7 @@
 "pKL" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm/directional/west,
+/obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "pKR" = (
@@ -47987,6 +47998,9 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
+/obj/machinery/plumbing/growing_vat{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "rdo" = (
@@ -49277,6 +49291,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/closet/crate/trashcart/filled,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "rzG" = (
@@ -63865,6 +63880,7 @@
 "wkJ" = (
 /obj/structure/cable,
 /obj/machinery/holopad,
+/obj/effect/turf_decal/siding/corner,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "wla" = (
@@ -65858,6 +65874,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
+"wQL" = (
+/obj/effect/turf_decal/siding,
+/turf/open/floor/iron/white,
+/area/station/science/cytology)
 "wQP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67067,7 +67087,7 @@
 /area/station/hallway/primary/port)
 "xgW" = (
 /obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad2";
+	id = "flamedra";
 	name = "Incinerator Conveyor";
 	pixel_x = -13;
 	pixel_y = -4
@@ -114859,7 +114879,7 @@ kNI
 xXT
 oOv
 vwd
-ikc
+mXd
 xau
 rsL
 qhh
@@ -115121,8 +115141,8 @@ xau
 rsL
 xSe
 miz
-xlL
-xlL
+wQL
+auC
 wJL
 ppQ
 tTp

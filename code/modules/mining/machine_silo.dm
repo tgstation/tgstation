@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	. = ..()
 	if (istype(I))
 		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
-		I.buffer = src
+		I.set_buffer(src)
 		return TRUE
 
 /**

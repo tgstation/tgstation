@@ -138,11 +138,11 @@
 
 	return ..()
 
-/obj/item/gun/energy/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/gun/energy/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		update_appearance()
-	return ..()
 
 /obj/item/gun/energy/process(seconds_per_tick)
 	if(selfcharge && cell && cell.percent() < 100)

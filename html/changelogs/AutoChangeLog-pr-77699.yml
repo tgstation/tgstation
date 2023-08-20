@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "ripley MK2 upgrade now properly transfers servos"
+  - spellcheck: "inserting parts into mechas now properly says \"installed\" instead of \"intalled\""

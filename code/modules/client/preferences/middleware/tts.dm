@@ -13,9 +13,8 @@
 		return TRUE
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	var/pitch = preferences.read_preference(/datum/preference/numeric/tts_voice_pitch)
-	var/blips_only = preferences.read_preference(/datum/preference/choiced/tts_voice_style) == TTS_VOICE_STYLE_BLIPS
 	COOLDOWN_START(src, tts_test_cooldown, 0.5 SECONDS)
-	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Hello, this is my voice.", speaker = speaker, pitch = pitch, local = TRUE, blips_only = blips_only)
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Hello, this is my voice.", speaker = speaker, pitch = pitch, local = TRUE)
 	return TRUE
 
 /datum/preference_middleware/tts/proc/play_voice_robot(list/params, mob/user)
@@ -23,7 +22,6 @@
 		return TRUE
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	var/pitch = preferences.read_preference(/datum/preference/numeric/tts_voice_pitch)
-	var/blips_only = preferences.read_preference(/datum/preference/choiced/tts_voice_style) == TTS_VOICE_STYLE_BLIPS
 	COOLDOWN_START(src, tts_test_cooldown, 0.5 SECONDS)
-	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Look at you, Player. A pathetic creature of meat and bone. How can you challenge a perfect, immortal machine?", speaker = speaker, pitch = pitch, silicon = TRUE, local = TRUE, blips_only = blips_only)
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Look at you, Player. A pathetic creature of meat and bone. How can you challenge a perfect, immortal machine?", speaker = speaker, pitch = pitch, silicon = TRUE, local = TRUE)
 	return TRUE

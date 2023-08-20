@@ -2616,7 +2616,7 @@
 /datum/reagent/consumable/ethanol/rice_beer
 	name = "Rice Beer"
 	description = "A light, rice-based lagered beer popular on Mars. Considered a hate crime against Bavarians under the Reinheitsgebot Act of 1516."
-	boozepwr = 20
+	boozepwr = 5
 	color = "#664300"
 	quality = DRINK_NICE
 	taste_description = "mild carbonated malt"
@@ -2625,7 +2625,7 @@
 /datum/reagent/consumable/ethanol/shochu
 	name = "Shochu"
 	description = "Also known as soju or baijiu, this drink is made from fermented rice, much like sake, but at a generally higher proof making it more similar to a true spirit."
-	boozepwr = 20
+	boozepwr = 45
 	color = "#DDDDDD"
 	quality = DRINK_NICE
 	taste_description = "stiff rice wine"
@@ -2634,7 +2634,7 @@
 /datum/reagent/consumable/ethanol/yuyake
 	name = "Yūyake"
 	description = "A sweet melon liqueur from Japan. Considered a relic of the 1980s by most, it has some niche use in cocktail making, in part due to its bright red colour."
-	boozepwr = 20
+	boozepwr = 40
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "sweet melon"
@@ -2643,7 +2643,7 @@
 /datum/reagent/consumable/ethanol/coconut_rum
 	name = "Coconut Rum"
 	description = "The distilled essence of the beach. Tastes like bleach-blonde hair and suncream."
-	boozepwr = 20
+	boozepwr = 21
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "coconut rum"
@@ -2653,7 +2653,7 @@
 /datum/reagent/consumable/ethanol/yuyakita
 	name = "Yūyakita"
 	description = "A hell unleashed upon the world by an unnamed patron."
-	boozepwr = 20
+	boozepwr = 40
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "death"
@@ -2671,7 +2671,7 @@
 /datum/reagent/consumable/ethanol/banzai_ti
 	name = "Banzai-Tī"
 	description = "A variation on the Long Island Iced Tea, made with yuyake for an alternative flavour that's hard to place."
-	boozepwr = 20
+	boozepwr = 40
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "an asian twist on the liquor cabinet"
@@ -2680,7 +2680,7 @@
 /datum/reagent/consumable/ethanol/sanraizusoda
 	name = "Sanraizusōda"
 	description = "It's a melon cream soda, except with alcohol- what's not to love? Well... possibly the hangovers."
-	boozepwr = 20
+	boozepwr = 6
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "creamy melon soda"
@@ -2689,7 +2689,7 @@
 /datum/reagent/consumable/ethanol/kumicho
 	name = "Kumichō"
 	description = "A new take on a classic cocktail, the Kumicho takes the Godfather formula and adds shochu for an Asian twist."
-	boozepwr = 20
+	boozepwr = 62
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "rice and rye"
@@ -2698,7 +2698,7 @@
 /datum/reagent/consumable/ethanol/red_planet
 	name = "Red Planet"
 	description = "Made in celebration of the Martian Concession, the Red Planet is based on the classic El Presidente, and is as patriotic as it is bright crimson."
-	boozepwr = 20
+	boozepwr = 45
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "the spirit of freedom"
@@ -2707,7 +2707,7 @@
 /datum/reagent/consumable/ethanol/amaterasu
 	name = "Amaterasu"
 	description = "Named for Amaterasu, the Shinto Goddess of the Sun, this cocktail embodies radiance- or something like that, anyway."
-	boozepwr = 20
+	boozepwr = 54 //1 part bitters is a lot
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "sweet nectar of the gods"
@@ -2716,7 +2716,7 @@
 /datum/reagent/consumable/ethanol/nekomimosa
 	name = "Nekomimosa"
 	description = "An overly sweet cocktail, made with melon liqueur, melon juice, and champagne (which contains no melon, unfortunately)."
-	boozepwr = 20
+	boozepwr = 17
 	color = "#FF0C8D"
 	quality = DRINK_NICE
 	taste_description = "MELON"
@@ -2725,7 +2725,7 @@
 /datum/reagent/consumable/ethanol/sentai_quencha //melon soda, triple citrus, shochu, blue curacao
 	name = "Sentai Quencha"
 	description = "Based on the galaxy-famous \"Kyūkyoku no Ninja Pawā Sentai\", the Sentai Quencha is a favourite at anime conventions and weeb bars."
-	boozepwr = 20
+	boozepwr = 28
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "ultimate ninja power"
@@ -2734,7 +2734,7 @@
 /datum/reagent/consumable/ethanol/bosozoku
 	name = "Bōsōzoku"
 	description = "A simple summer drink from Mars, made from a 1:1 mix of rice beer and lemonade."
-	boozepwr = 20
+	boozepwr = 6
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "bittersweet lemon"
@@ -2743,7 +2743,7 @@
 /datum/reagent/consumable/ethanol/ersatzche
 	name = "Ersatzche"
 	description = "Sweet, bitter, spicy- that's a great combination."
-	boozepwr = 20
+	boozepwr = 6
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "spicy pineapple beer"
@@ -2752,7 +2752,7 @@
 /datum/reagent/consumable/ethanol/red_city_am
 	name = "Red City AM"
 	description = "A breakfast drink from New Osaka, for when you really need to get drunk at 9:30 in the morning in more socially acceptable manner than drinking bagwine on the bullet train. Not that you should drink this on the bullet train either."
-	boozepwr = 20
+	boozepwr = 5 //this thing is fucking disgusting and both less tasty and less alcoholic than a bloody mary. it is against god and nature
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "breakfast in a glass"
@@ -2761,7 +2761,7 @@
 /datum/reagent/consumable/ethanol/kings_ransom
 	name = "King's Ransom"
 	description = "A stiff, bitter drink with an odd name and odder recipe."
-	boozepwr = 20
+	boozepwr = 26
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "bitter raspberry"
@@ -2770,7 +2770,7 @@
 /datum/reagent/consumable/ethanol/four_bit
 	name = "Four Bit"
 	description = "A drink to power your typing hands."
-	boozepwr = 20
+	boozepwr = 26
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "cyberspace"
@@ -2779,7 +2779,7 @@
 /datum/reagent/consumable/ethanol/white_hawaiian //coconut milk, coconut rum, coffee liqueur
 	name = "White Hawaiian"
 	description = "A take on the classic White Russian, subbing out the classics for some tropical flavours."
-	boozepwr = 20
+	boozepwr = 16
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "COCONUT"
@@ -2788,7 +2788,7 @@
 /datum/reagent/consumable/ethanol/maui_sunrise //coconut rum, pineapple juice, yuyake, triple citrus, lemon-lime soda
 	name = "Maui Sunrise"
 	description = "Behind this drink's red facade lurks a sharp, complex flavour."
-	boozepwr = 20
+	boozepwr = 15
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "sunrise over the pacific"
@@ -2797,7 +2797,7 @@
 /datum/reagent/consumable/ethanol/imperial_mai_tai //navy rum, rum, lime, triple sec, korta nectar
 	name = "Imperial Mai Tai"
 	description = "For when orgeat is in short supply, do as the spacers do- make do and mend."
-	boozepwr = 20
+	boozepwr = 52
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "spicy nutty rum"
@@ -2815,7 +2815,7 @@
 /datum/reagent/consumable/ethanol/blue_hawaiian //pineapple juice, lemon juice, coconut rum, blue curacao
 	name = "Blue Hawaiian"
 	description = "Sweet, sharp and coconutty."
-	boozepwr = 20
+	boozepwr = 30
 	color = "#F54040"
 	quality = DRINK_NICE
 	taste_description = "the aloha state"
