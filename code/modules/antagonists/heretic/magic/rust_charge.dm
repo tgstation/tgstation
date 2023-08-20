@@ -1,4 +1,4 @@
-// Rust charge, added so i could put the lion hunter rifle earlier up the tree
+// Rust charge, a charge action that can only be started on rust (and only destroys rust tiles)
 /datum/action/cooldown/mob_cooldown/charge/rust
 	name = "Rust Charge"
 	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
