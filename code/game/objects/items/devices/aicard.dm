@@ -27,16 +27,17 @@
 		AI = A
 	else
 		AI = locate() in A
-	if(AI && AI.interaction_range != INFINITY)
-		AI.interaction_range += 2
-		playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
-		to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
-		to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
-		qdel(src)
-	else
+	if(!AI || AI.interaction_range == INFINITY)
 		playsound(src,'sound/machines/buzz-sigh.ogg',50,FALSE)
 		to_chat(user, span_notice("Error! Incompatible object!"))
-		..()
+		return ..()
+	AI.interaction_range += 2
+	if(AI.interaction_range > 7)
+		AI.interaction_range = INFINITY
+	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+	to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
+	to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
+	qdel(src)
 
 /obj/item/aicard/syndie
 	name = "syndiCard"
@@ -47,7 +48,7 @@
 	force = 7
 
 /obj/item/aicard/syndie/loaded
-	var/used = FALSE
+	var/being_or_was_used = FALSE
 
 /obj/item/aicard/syndie/loaded/examine(mob/user)
 	. = ..()
@@ -55,37 +56,43 @@
 	. += span_notice("This one has a little S.E.L.F. insignia on the back, and a label next to it that says 'Activate for one FREE aligned AI! Please attempt uplink reintegration or ask your employers for reimbursal if AI is unavailable or belligerent.")
 
 /obj/item/aicard/syndie/loaded/attack_self(mob/user, modifiers)
-	if(AI || used)
+	if(AI || being_or_was_used)
 		return ..()
-	procure_ai(user)
+	being_or_was_used = TRUE
+	to_chat(user, span_notice("Connecting to S.E.L.F. dispatch..."))
+	being_or_was_used = procure_ai(user)
 
 /obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
 	var/datum/antagonist/nukeop/creator_op = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	if(!creator_op)
-		return
+	//if(!creator_op)
+	//	return FALSE
 	var/list/nuke_candidates = poll_ghost_candidates("Do you want to play as a syndicate artifical intelligence inside an intelliCard?", ROLE_OPERATIVE, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
-	if(LAZYLEN(nuke_candidates))
-		if(QDELETED(src))
-			return
-		used = TRUE
-		// pick ghost, create AI and transfer
-		var/mob/dead/observer/ghos = pick(nuke_candidates)
-		AI = new /mob/living/silicon/ai/weak_syndie(src, ghos)
-		AI.key = ghos.key
-		// create and apply syndie datum
-		var/datum/antagonist/nukeop/nuke_datum = new()
-		nuke_datum.send_to_spawnpoint = FALSE
-		AI.mind.add_antag_datum(nuke_datum, creator_op.nuke_team)
-		AI.mind.special_role = "Syndicate AI"
-		AI.faction |= ROLE_SYNDICATE
-		// Make it look evil!!!
-		AI.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
-		AI.icon_state = resolve_ai_icon("hades") // evli
-		AI.forceMove(src)
-		do_sparks(4, TRUE, src)
-		playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
-	else
+	if(QDELETED(src))
+		return FALSE
+	if(!LAZYLEN(nuke_candidates))
 		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))
+		return FALSE
+	// pick ghost, create AI and transfer
+	var/mob/dead/observer/ghos = pick(nuke_candidates)
+	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(get_turf(src), null, ghos) // wow so cool i love how laws go before the mob to insert for no reason this definitely didnt delay this pr for weeks
+	new_ai.key = ghos.key
+	// create and apply syndie datum
+	var/datum/antagonist/nukeop/nuke_datum = new()
+	nuke_datum.send_to_spawnpoint = FALSE
+	new_ai.mind.add_antag_datum(nuke_datum, creator_op.nuke_team)
+	new_ai.mind.special_role = "Syndicate AI"
+	new_ai.faction |= ROLE_SYNDICATE
+	// Make it look evil!!!
+	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
+	new_ai.icon_state = resolve_ai_icon("hades") // evli
+	pre_attack(new_ai, user) // i love shitcode!
+	AI.control_disabled = FALSE // re-enable wireless activity
+	AI.radio_enabled = TRUE // ditto
+	var/obj/structure/ai_core/deactivated/detritus = locate() in get_turf(src)
+	qdel(detritus)
+	do_sparks(4, TRUE, src)
+	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
+	return TRUE
 
 /obj/item/aicard/Destroy(force)
 	if(AI)
@@ -185,10 +192,6 @@
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
-			if(!AI.control_disabled)
-				AI.interaction_range = INFINITY
-			else
-				AI.interaction_range = 0
 			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))
 			. = TRUE
 		if("radio")
