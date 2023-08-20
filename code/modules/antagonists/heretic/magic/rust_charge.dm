@@ -11,10 +11,8 @@
 	if(!istype(start_turf) || !HAS_TRAIT(start_turf, TRAIT_RUSTY))
 		return FALSE
 	StartCooldown(135 SECONDS, 135 SECONDS)
-	...
-		charge_sequence(owner, target_atom, charge_delay, charge_past)
-		StartCooldown()
-		return TRUE
+	charge_sequence(owner, target_atom, charge_delay, charge_past)
+	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/charge/rust/on_move(atom/source, atom/new_loc, atom/target)
 	var/turf/victim = get_turf(owner)
