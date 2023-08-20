@@ -283,7 +283,7 @@
 
 /datum/reagent/water/salt
 	name = "Saltwater"
-	description = "Water, but salty. Smells like... Central command shuttle docking?"
+	description = "Water, but salty. Smells like... the station infirmary?"
 	color = "#aaaaaa9d" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	cooling_temperature = 3
@@ -305,8 +305,7 @@
 	var/mob/living/carbon/carbies = exposed_mob
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	for(var/i in carbies.all_wounds)
-		var/datum/wound/iter_wound = i
+	for(var/datum/wound/iterable_wound as anything in carbies.all_wounds)
 		iter_wound.on_saltwater(reac_volume, carbies)
 
 // Mixed salt with water! All the help of salt with none of the irritation. Plus increased volume.

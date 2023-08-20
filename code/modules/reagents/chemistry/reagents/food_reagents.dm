@@ -475,7 +475,6 @@
 	infestation_rate += VALUE_PER(0.12, 30) * reac_volume
 	flesh_healing -= max(VALUE_PER(5, 30) * reac_volume, 0)
 	to_chat(victim, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin! After a few moments, it feels marginally better."))
-	return
 
 
 /datum/reagent/consumable/blackpepper
@@ -657,14 +656,11 @@
 	adjust_blood_flow(-0.015 * reac_volume) // 30u of a flour sack * 0.015 = -0.45~ blood flow, prettay good
 	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying it up and absorbing some of the blood."))
 	// When some nerd adds infection for wounds, make this increase the infection
-	return
 
 /datum/wound/slash/on_flour(reac_volume, mob/living/carbon/carbies)
 	adjust_blood_flow(-0.04 * reac_volume) // 30u of a flour sack * 0.04 = -1.25~ blood flow, pretty good!
 	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying some of it up and absorbing a little blood."))
 	// When some nerd adds infection for wounds, make this increase the infection
-	return
-
 
 // Don't pour flour onto burn wounds, it increases infection risk! Very unwise. Backed up by REAL info from REAL professionals.
 // https://www.reuters.com/article/uk-factcheck-flour-burn-idUSKCN26F2N3
