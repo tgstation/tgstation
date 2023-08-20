@@ -6,6 +6,7 @@
 	canSmoothWith = null
 	rcd_memory = null
 	material_flags = MATERIAL_EFFECTS
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/mineral/gold
 	name = "gold wall"
