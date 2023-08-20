@@ -215,4 +215,5 @@
 	if(QDELETED(spit_ability) || !spit_ability.IsAvailable())
 		return
 	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_SPIT_ABILITY)
+	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
