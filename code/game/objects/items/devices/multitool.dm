@@ -42,7 +42,7 @@
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
 /obj/item/multitool/proc/set_buffer(datum/buffer)
-	if(buffer)
+	if(src.buffer)
 		UnregisterSignal(buffer, COMSIG_QDELETING)
 	if(QDELETED(buffer))
 		return
