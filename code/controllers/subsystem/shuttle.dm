@@ -601,12 +601,18 @@ SUBSYSTEM_DEF(shuttle)
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
 
-	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, null, /datum/turf_reservation/transit, transit_path)
+	var/datum/turf_reservation/proposal = SSmapping.request_turf_block_reservation(
+		transit_width,
+		transit_height,
+		1,
+		reservation_type = /datum/turf_reservation/transit,
+		turf_type_override = transit_path,
+	)
 
 	if(!istype(proposal))
 		return FALSE
 
-	var/turf/bottomleft = locate(proposal.bottom_left_coords[1], proposal.bottom_left_coords[2], proposal.bottom_left_coords[3])
+	var/turf/bottomleft = proposal.bottom_left_turfs[1]
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
 	/*  0------2
@@ -877,10 +883,15 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/load_template(datum/map_template/shuttle/loading_template)
 	. = FALSE
 	// Load shuttle template to a fresh block reservation.
-	preview_reservation = SSmapping.RequestBlockReservation(loading_template.width, loading_template.height, type = /datum/turf_reservation/transit)
+	preview_reservation = SSmapping.request_turf_block_reservation(
+		loading_template.width,
+		loading_template.height,
+		1,
+		reservation_type = /datum/turf_reservation/transit,
+	)
 	if(!preview_reservation)
 		CRASH("failed to reserve an area for shuttle template loading")
-	var/turf/bottom_left = TURF_FROM_COORDS_LIST(preview_reservation.bottom_left_coords)
+	var/turf/bottom_left = preview_reservation.bottom_left_turfs[1]
 	loading_template.load(bottom_left, centered = FALSE, register = FALSE)
 
 	var/affected = loading_template.get_affected_turfs(bottom_left, centered=FALSE)

@@ -138,6 +138,7 @@
 	x_offset = 0,
 	y_offset = 0,
 	z_offset = 0,
+	only_load_this_z = 0,
 	crop_map_to_world = FALSE,
 	measure_only = FALSE,
 	no_changeturf = FALSE,
@@ -146,7 +147,7 @@
 	y_lower = -INFINITY,
 	y_upper = INFINITY,
 	place_on_top = FALSE,
-	new_z = 0,
+	new_z = FALSE,
 )
 	var/static/parsed_maps = list()
 	if(!(dmm_file in parsed_maps))
@@ -158,6 +159,7 @@
 			x_offset,
 			y_offset,
 			z_offset,
+			only_load_this_z,
 			crop_map_to_world,
 			no_changeturf,
 			x_lower,
@@ -280,19 +282,20 @@
 	src.key_len = key_len
 	src.line_len = line_len
 
-/// Load the parsed map into the world. See [/proc/load_map] for arguments.
+/// Load the parsed map into the world. You probably want [/proc/load_map]. Keep the signature the same.
 /datum/parsed_map/proc/load(
-	x_offset,
-	y_offset,
-	z_offset,
-	crop_map_to_world,
-	no_changeturf,
-	x_lower,
-	x_upper,
-	y_lower,
-	y_upper,
-	place_on_top,
-	new_z,
+	x_offset = 0,
+	y_offset = 0,
+	z_offset = 0,
+	only_load_this_z = 0,
+	crop_map_to_world = FALSE,
+	no_changeturf = FALSE,
+	x_lower = -INFINITY,
+	x_upper = INFINITY,
+	y_lower = -INFINITY,
+	y_upper = INFINITY,
+	place_on_top = FALSE,
+	new_z = FALSE,
 )
 	//How I wish for RAII
 	Master.StartLoadingMap()
@@ -300,6 +303,7 @@
 		x_offset,
 		y_offset,
 		z_offset,
+		only_load_this_z,
 		crop_map_to_world,
 		no_changeturf,
 		x_lower,
@@ -327,6 +331,7 @@
 	x_offset,
 	y_offset,
 	z_offset,
+	only_load_this_z,
 	crop_map_to_world,
 	no_changeturf,
 	x_lower,
@@ -352,6 +357,7 @@
 				x_offset,
 				y_offset,
 				z_offset,
+				only_load_this_z,
 				crop_map_to_world,
 				no_changeturf,
 				x_lower,
@@ -367,6 +373,7 @@
 				x_offset,
 				y_offset,
 				z_offset,
+				only_load_this_z,
 				crop_map_to_world,
 				no_changeturf,
 				x_lower,
@@ -411,6 +418,7 @@
 	x_offset,
 	y_offset,
 	z_offset,
+	only_load_this_z,
 	crop_map_to_world,
 	no_changeturf,
 	x_lower,
@@ -488,7 +496,7 @@
 	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
 
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
-	var/highest_z = last_column.zcrd + z_offset - 1 // Lets not just make a new z level each time we increment maxz
+	var/highest_z = only_load_this_z ? 1 : last_column.zcrd + z_offset - 1 // Lets not just make a new z level each time we increment maxz
 	var/z_threshold = world.maxz
 	if(highest_z > z_threshold && crop_map_to_world)
 		for(var/i in z_threshold + 1 to highest_z) //create a new z_level if needed
@@ -497,13 +505,16 @@
 			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
 	for(var/datum/grid_set/gset as anything in gridSets)
+		if(only_load_this_z && gset.zcrd != only_load_this_z)
+			continue
+
 		var/true_xcrd = gset.xcrd + x_relative_to_absolute
 
 		// any cutoff of x means we just shouldn't iterate this gridset
 		if(final_x < true_xcrd || lowest_x > gset.xcrd)
 			continue
 
-		var/zcrd = gset.zcrd + z_offset - 1
+		var/zcrd = only_load_this_z ? z_offset : gset.zcrd + z_offset - 1
 		// If we're using changeturf, we disable it if we load into a z level we JUST created
 		var/no_afterchange = no_changeturf || zcrd > z_threshold
 
@@ -558,6 +569,7 @@
 	x_offset,
 	y_offset,
 	z_offset,
+	only_load_this_z,
 	crop_map_to_world,
 	no_changeturf,
 	x_lower,
@@ -578,11 +590,14 @@
 	var/x_relative_to_absolute = x_offset - 1
 	var/line_len = src.line_len
 	for(var/datum/grid_set/gset as anything in gridSets)
+		if(only_load_this_z && gset.zcrd != only_load_this_z)
+			continue
+
 		var/relative_x = gset.xcrd
 		var/relative_y = gset.ycrd
 		var/true_xcrd = relative_x + x_relative_to_absolute
 		var/ycrd = relative_y + y_relative_to_absolute
-		var/zcrd = gset.zcrd + z_offset - 1
+		var/zcrd = only_load_this_z ? z_offset : gset.zcrd + z_offset - 1
 		if(!crop_map_to_world && ycrd > world.maxy)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
