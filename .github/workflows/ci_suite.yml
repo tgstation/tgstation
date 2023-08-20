@@ -19,4 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: ldd ./libbyond_sleeping_procs.so
+      - run: g++ -nostdlib -m32 -shared -fPIC -o libbyond_sleeping_procs_ci.so main.cpp
+      - uses: actions/upload-artifact@v3
+        with:
+          name: libbyond_sleeping_procs_ci
+          path: libbyond_sleeping_procs_ci.so
