@@ -6,5 +6,5 @@
 		return
 
 	var/status = byond_status()
-	if (!("Sleeping procs") in status)
+	if (!("Sleeping procs" in status))
 		TEST_FAIL("Invalid byond_status: [status]")
