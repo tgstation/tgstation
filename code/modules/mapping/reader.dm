@@ -115,21 +115,21 @@
 	#endif
 
 /datum/parsed_map/proc/copy()
-    // Avoids duped work just in case
-    build_cache()
-    var/datum/parsed_map/newfriend = new()
-    newfriend.original_path = original_path
-    newfriend.map_format = map_format
-    newfriend.key_len = key_len
-    newfriend.line_len = line_len
-    newfriend.grid_models = grid_models.Copy()
-    newfriend.gridSets = gridSets.Copy()
-    newfriend.modelCache = modelCache.Copy()
-    newfriend.parsed_bounds = parsed_bounds.Copy()
-    // Copy parsed bounds to reset to initial values
-    newfriend.bounds = parsed_bounds.Copy()
-    newfriend.turf_blacklist = turf_blacklist?.Copy()
-    return newfriend
+	// Avoids duped work just in case
+	build_cache()
+	var/datum/parsed_map/newfriend = new()
+	newfriend.original_path = original_path
+	newfriend.map_format = map_format
+	newfriend.key_len = key_len
+	newfriend.line_len = line_len
+	newfriend.grid_models = grid_models.Copy()
+	newfriend.gridSets = gridSets.Copy()
+	newfriend.modelCache = modelCache.Copy()
+	newfriend.parsed_bounds = parsed_bounds.Copy()
+	// Copy parsed bounds to reset to initial values
+	newfriend.bounds = parsed_bounds.Copy()
+	newfriend.turf_blacklist = turf_blacklist?.Copy()
+	return newfriend
 
 //text trimming (both directions) helper macro
 #define TRIM_TEXT(text) (trim_reduced(text))
