@@ -933,3 +933,39 @@
       of just sit there as you beat them to death. The framework for them interacting
       with stuff (i.e. opening doors while slobbering on food) is a bit more unified
       too, now. They also have cooler names too!
+2023-08-20:
+  EuSouAFazer:
+  - qol: Made the cytology lab in many maps much more convenient.
+  Fikou, Armhulen, Sheets (+rep for Mothblocks and Potato):
+  - bugfix: RD MODsuit outfit (admin only) no longer has a beret that blocks the activation
+      of the suit
+  - bugfix: The beret used by death squad officers no longer is blocked from being
+      put on a hat stabilizer module
+  - admin: Admins can now Shear matrices of objects in Modify Transform
+  - admin: Admins now have access to Test Matrices in the VV dropdown, an all-in-one
+      tool for editing transforms.
+  - rscadd: MODLink system, available through scryers (from RnD and Charlie Station)
+      and through MODsuits. Lets you call people with holographs!
+  Jacquerel:
+  - qol: Added some textual feedback to new watcher abilities
+  - balance: Watchers will not attack for a short period following their gaze attack
+  - bugfix: Watchers won't interrupt one ability to use the other one
+  LT3:
+  - bugfix: Rotated multi-tile airlocks display correctly and won't create an invisible
+      box next to itself
+  Melbert:
+  - bugfix: Reactive stealth armor decoys are half as healthy, as originally intended
+  Striders13:
+  - admin: admins can now upload files to the server up to 5mb (used to be 2.5mb)
+  - config: file upload restriction is now config
+  iwishforducks:
+  - bugfix: Some RCD constructs took more material than manual construction. The RCD
+      cost should be consistent in comparison to manual construction now.
+  mc-oofert:
+  - bugfix: ripley MK2 upgrade now properly transfers servos
+  - spellcheck: inserting parts into mechas now properly says "installed" instead
+      of "intalled"
+  spookydonut:
+  - bugfix: Incompatible quirks in existing savefiles shouldn't be possible anymore.
+  zeroisthebiggay:
+  - bugfix: healing holoparas will no longer kill slime people

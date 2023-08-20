@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Rotated multi-tile airlocks display correctly and won't create an invisible box next to itself"
