@@ -516,7 +516,7 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "WV" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk,
+/mob/living/basic/mining/basilisk,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "Xl" = (

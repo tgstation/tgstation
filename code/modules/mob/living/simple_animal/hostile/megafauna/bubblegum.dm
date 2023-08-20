@@ -67,7 +67,6 @@ Difficulty: Hard
 	score_achievement_type = /datum/award/score/bubblegum_score
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
-	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
