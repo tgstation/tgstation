@@ -121,7 +121,7 @@
     newfriend.original_path = original_path
     newfriend.map_format = map_format
     newfriend.key_len = key_len
-    newfriend.line_len = ine_len
+    newfriend.line_len = line_len
     newfriend.grid_models = grid_models.Copy()
     newfriend.gridSets = gridSets.Copy()
     newfriend.modelCache = modelCache.Copy()
