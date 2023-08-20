@@ -322,6 +322,7 @@
 
 	var/obj/item/paper/certificate = new()
 	certificate.add_raw_text(get_completion_certificate())
+	certificate.name = "certificate of domain completion"
 	certificate.update_appearance()
 
 	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_crate = new(dest_turf, generated_domain, bonus)

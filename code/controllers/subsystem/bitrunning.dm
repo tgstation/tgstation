@@ -26,45 +26,14 @@ SUBSYSTEM_DEF(bitrunning)
 	if(!length(active_servers) || !COOLDOWN_FINISHED(src, glitch_cooldown) || prob(95))
 		return
 
-	var/list/mutation_candidates = get_mutation_candidates()
-	if(!length(mutation_candidates))
-		return
-
-	var/chosen = pick(mutation_candidates)
-	if(isnull(chosen) || !length(chosen["candidates"]))
-		return
-
-	var/obj/machinery/quantum_server/server = chosen["server"]
-
-	var/mob/living/mutation_target = pick(chosen["candidates"])
-
-	var/chosen_role = pick(shuffle(possible_antags))
-
-	var/datum/mind/ghost_mind = get_ghost_mind(chosen_role)
-
-	var/mob/living/antag_mob
-	switch(chosen_role)
-		if(ROLE_CYBER_POLICE)
-			antag_mob = spawn_cybercop(mutation_target, ghost_mind)
-
-	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")
-	antag_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
-
-	SEND_SIGNAL(server, COMSIG_BITRUNNER_SPAWN_GLITCH, antag_mob)
-	COOLDOWN_START(src, glitch_cooldown, glitch_frequency)
+	if(initialize_glitch())
+		COOLDOWN_START(src, glitch_cooldown, glitch_frequency)
 
 /// Adds a server once it starts processing a domain
 /datum/controller/subsystem/bitrunning/proc/add_server(obj/machinery/quantum_server/server)
 	var/datum/weakref/server_ref = WEAKREF(server)
 	if(!locate(server_ref) in active_servers)
 		active_servers.Add(server_ref)
-
-/// Removes a server once it stops processing a domain
-/datum/controller/subsystem/bitrunning/proc/remove_server(obj/machinery/quantum_server/server)
-	var/datum/weakref/server_ref = WEAKREF(server)
-	if(locate(server_ref) in active_servers)
-		active_servers.Remove(server_ref)
 
 /// Polls for a ghost that wants to run it
 /datum/controller/subsystem/bitrunning/proc/get_ghost_mind(role_name)
@@ -105,14 +74,48 @@ SUBSYSTEM_DEF(bitrunning)
 
 	return shuffle(mutation_candidates)
 
+/// Procedurally chains the spawn events together to create a glitch
+/datum/controller/subsystem/bitrunning/proc/initialize_glitch(forced_role)
+	var/list/mutation_candidates = get_mutation_candidates()
+	if(!length(mutation_candidates))
+		return
+
+	var/chosen = pick(mutation_candidates)
+	if(isnull(chosen) || !length(chosen["candidates"]))
+		return
+
+	var/obj/machinery/quantum_server/server = chosen["server"]
+
+	var/mob/living/mutation_target = pick(chosen["candidates"])
+
+	var/chosen_role = forced_role || pick(possible_antags)
+
+	var/datum/mind/ghost_mind = get_ghost_mind(chosen_role)
+
+	var/mob/living/antag_mob
+	switch(chosen_role)
+		if(ROLE_CYBER_POLICE)
+			antag_mob = spawn_cybercop(mutation_target, ghost_mind)
+
+	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")
+	antag_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
+
+	SEND_SIGNAL(server, COMSIG_BITRUNNER_SPAWN_GLITCH, antag_mob)
+
+	return antag_mob
+
+/// Removes a server once it stops processing a domain
+/datum/controller/subsystem/bitrunning/proc/remove_server(obj/machinery/quantum_server/server)
+	var/datum/weakref/server_ref = WEAKREF(server)
+	if(locate(server_ref) in active_servers)
+		active_servers.Remove(server_ref)
+
 /// Spawns a cybercop on the mutation target
 /datum/controller/subsystem/bitrunning/proc/spawn_cybercop(mob/living/mutation_target, datum/mind/player_mind)
 	var/mob/living/carbon/human/new_agent = new(mutation_target.loc)
 	mutation_target.gib()
 	mutation_target = null
-
-	new_agent.equipOutfit(/datum/outfit/cyber_police)
-	new_agent.fully_replace_character_name(new_agent.name, pick(GLOB.cyberauth_names))
 
 	player_mind.transfer_to(new_agent)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/cyber_police))
