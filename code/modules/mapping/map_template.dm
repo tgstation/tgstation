@@ -188,7 +188,7 @@
 		T.x,
 		T.y,
 		T.z,
-		crop_map_to_world = TRUE,
+		crow_map = TRUE,
 		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
 		place_on_top = should_place_on_top,
 	))

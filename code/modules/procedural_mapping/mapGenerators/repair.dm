@@ -34,7 +34,7 @@
 			1,
 			z_offset,
 			no_changeturf = FALSE,
-			crop_map_to_world = TRUE,
+			crow_map = TRUE,
 			x_lower = mother1.x_low,
 			y_lower = mother1.y_low,
 			x_upper = mother1.x_high,

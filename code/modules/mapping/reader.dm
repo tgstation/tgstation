@@ -139,7 +139,7 @@
  * - x_offset: The x offset to load the map at
  * - y_offset: The y offset to load the map at
  * - z_offset: The z offset to load the map at
- * - crop_map_to_world: If true, the map will be cropped to the world bounds
+ * - crow_map: If true, the map will be cropped to the world bounds
  * - measure_only: If true, the map will not be loaded, but the bounds will be calculated
  * - no_changeturf: If true, the map will not call /turf/AfterChange
  * - x_lower: The minimum x coordinate to load
@@ -155,7 +155,7 @@
 	y_offset = 0,
 	z_offset = 0,
 	only_load_this_z = 0,
-	crop_map_to_world = FALSE,
+	crow_map = FALSE,
 	measure_only = FALSE,
 	no_changeturf = FALSE,
 	x_lower = -INFINITY,
@@ -176,7 +176,7 @@
 			y_offset,
 			z_offset,
 			only_load_this_z,
-			crop_map_to_world,
+			crow_map,
 			no_changeturf,
 			x_lower,
 			x_upper,
@@ -304,7 +304,7 @@
 	y_offset = 0,
 	z_offset = 0,
 	only_load_this_z = 0,
-	crop_map_to_world = FALSE,
+	crow_map = FALSE,
 	no_changeturf = FALSE,
 	x_lower = -INFINITY,
 	x_upper = INFINITY,
@@ -320,7 +320,7 @@
 		y_offset,
 		z_offset,
 		only_load_this_z,
-		crop_map_to_world,
+		crow_map,
 		no_changeturf,
 		x_lower,
 		x_upper,
@@ -348,7 +348,7 @@
 	y_offset,
 	z_offset,
 	only_load_this_z,
-	crop_map_to_world,
+	crow_map,
 	no_changeturf,
 	x_lower,
 	x_upper,
@@ -374,7 +374,7 @@
 				y_offset,
 				z_offset,
 				only_load_this_z,
-				crop_map_to_world,
+				crow_map,
 				no_changeturf,
 				x_lower,
 				x_upper,
@@ -390,7 +390,7 @@
 				y_offset,
 				z_offset,
 				only_load_this_z,
-				crop_map_to_world,
+				crow_map,
 				no_changeturf,
 				x_lower,
 				x_upper,
@@ -435,7 +435,7 @@
 	y_offset,
 	z_offset,
 	only_load_this_z,
-	crop_map_to_world,
+	crow_map,
 	no_changeturf,
 	x_lower,
 	x_upper,
@@ -464,7 +464,7 @@
 	var/relative_y = first_column.ycrd
 	var/highest_y = relative_y + y_relative_to_absolute
 
-	if(!crop_map_to_world && highest_y > world.maxy)
+	if(!crow_map && highest_y > world.maxy)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
 			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - 1)
@@ -487,7 +487,7 @@
 
 	// X setup
 	var/x_delta_with = x_upper
-	if(crop_map_to_world)
+	if(crow_map)
 		// Take our smaller crop threshold yes?
 		x_delta_with = min(x_delta_with, world.maxx)
 
@@ -501,7 +501,7 @@
 		// If our relative x is greater then X upper, well then we've gotta limit our expansion
 		var/delta = max(final_x - x_delta_with, 0)
 		final_x -= delta
-	if(final_x > world.maxx && !crop_map_to_world)
+	if(final_x > world.maxx && !crow_map)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
 			world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
@@ -514,7 +514,7 @@
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
 	var/highest_z = only_load_this_z ? 1 : last_column.zcrd + z_offset - 1 // Lets not just make a new z level each time we increment maxz
 	var/z_threshold = world.maxz
-	if(highest_z > z_threshold && crop_map_to_world)
+	if(highest_z > z_threshold && crow_map)
 		for(var/i in z_threshold + 1 to highest_z) //create a new z_level if needed
 			world.incrementMaxZ()
 		if(!no_changeturf)
@@ -586,7 +586,7 @@
 	y_offset,
 	z_offset,
 	only_load_this_z,
-	crop_map_to_world,
+	crow_map,
 	no_changeturf,
 	x_lower,
 	x_upper,
@@ -614,7 +614,7 @@
 		var/true_xcrd = relative_x + x_relative_to_absolute
 		var/ycrd = relative_y + y_relative_to_absolute
 		var/zcrd = only_load_this_z ? z_offset : gset.zcrd + z_offset - 1
-		if(!crop_map_to_world && ycrd > world.maxy)
+		if(!crow_map && ycrd > world.maxy)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
 				world.increaseMaxY(ycrd, max_zs_to_load = z_offset - 1)
@@ -624,7 +624,7 @@
 		var/zexpansion = zcrd > world.maxz
 		var/no_afterchange = no_changeturf
 		if(zexpansion)
-			if(crop_map_to_world)
+			if(crow_map)
 				continue
 			else
 				while (zcrd > world.maxz) //create a new z_level if needed
@@ -661,7 +661,7 @@
 		var/x_step_count = ROUND_UP(x_target / key_len)
 		var/final_x = relative_x + (x_step_count - 1)
 		var/x_delta_with = x_upper
-		if(crop_map_to_world)
+		if(crow_map)
 			// Take our smaller crop threshold yes?
 			x_delta_with = min(x_delta_with, world.maxx)
 		if(final_x > x_delta_with)
@@ -670,7 +670,7 @@
 			x_step_count -= delta
 			final_x -= delta
 			x_target = x_step_count * key_len
-		if(final_x > world.maxx && !crop_map_to_world)
+		if(final_x > world.maxx && !crow_map)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
 				world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
