@@ -159,7 +159,15 @@
 	finish_action(controller, FALSE)
 
 /datum/ai_behavior/find_mineral_wall/proc/check_if_mineable(mob/living/source, turf/target_wall)
-	for(var/direction in GLOB.cardinals)
+	var/direction_to_turf = get_dir(target_wall, source)
+	if(!ISDIAGONALDIR(direction_to_turf))
+		return TRUE
+	var/list/directions_to_check = list()
+	for(var/direction_check in GLOB.cardinals)
+		if(direction_check & direction_to_turf)
+			directions_to_check += direction_check
+
+	for(var/direction in directions_to_check)
 		var/turf/test_turf = get_step(target_wall, direction)
 		if(isnull(test_turf))
 			continue
