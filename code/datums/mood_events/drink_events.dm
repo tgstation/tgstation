@@ -52,3 +52,17 @@
 	description = "What a tasty can of Wellcheers! The salty grape taste is a great pick-me-up."
 	mood_change = 3
 	timeout = 7 MINUTES
+
+/datum/mood_event/sundown_sleep
+	description = "I had a very pleasant dream about the sky and the stars."
+	mood_change = 2
+	timeout = 14 MINUTES
+
+/datum/mood_event/sundown_nosleep
+	description = "I'm not sleeping in SunDown! What am I doing!? I need to sleep!!"
+	mood_change = -5
+	timeout = 10 MINUTES
+
+/datum/mood_event/no_sunup
+	description = "I don't have any SunUp in me! How am I meant to regulate my circadian rhythm and obtain natural electrolytes!?"
+	mood_change = -3

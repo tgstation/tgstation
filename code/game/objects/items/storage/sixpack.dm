@@ -20,9 +20,6 @@
 /obj/item/storage/cans/Initialize(mapload)
 	. = ..()
 	update_appearance()
-
-/obj/item/storage/cans/Initialize(mapload)
-	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 12
 	atom_storage.max_slots = 6
@@ -40,6 +37,14 @@
 /obj/item/storage/cans/sixsoda/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/cup/soda_cans/cola(src)
+
+/obj/item/storage/cans/sixsoda/sunup
+	name = "SunUp can ring"
+	desc = "Holds six sunUp soda cans. Enhance your day!"
+
+/obj/item/storage/cans/sixsoda/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/cup/soda_cans/sunup(src)
 
 /obj/item/storage/cans/sixbeer
 	name = "beer bottle ring"

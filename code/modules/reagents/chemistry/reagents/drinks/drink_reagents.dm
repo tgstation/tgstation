@@ -608,7 +608,7 @@
 
 /datum/reagent/consumable/wellcheers
 	name = "Wellcheers"
-	description = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	description = "A strange purple drank, smelling of saltwater. Somewhere in the distance, you hear seagulls."
 	color = "#762399" // rgb: 118, 35, 153
 	taste_description = "grapes and the fresh open sea"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -622,6 +622,82 @@
 			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
 		if (MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
 			affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, 0)
+	return ..()
+
+#define TRAIT_MEGA_EEPY "mega_eepy"
+
+/datum/reagent/consumable/sunup
+	name = "SunUp"
+	description = "A refreshing beverage found only on some NT stations that somehow alters itself depending on the time, waking you up if it's the day, and making you drowsy during the dark. Commonly used by and prescribed to crewmen that can't mantain a stable circadian rhytm."
+	color = "#14d3c9"
+	taste_description = "the warm embrace of the sun"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	// Slow to metabolize
+	metabolization_rate = 0.3 * REAGENTS_METABOLISM
+	var/night_shift = FALSE
+
+/datum/reagent/consumable/sunup/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NIGHT_SHIFT_UPDATED, PROC_REF(update_reagent))
+	update_reagent_info(SSnightshift.nightshift_active)
+
+/datum/reagent/consumable/sunup/proc/update_reagent(datum/dcs, nightshift_active)
+	update_reagent_info(nightshift_active)
+	update_reagent_effects()
+
+/datum/reagent/consumable/sunup/proc/update_reagent_info(nightshift_active)
+	if(nightshift_active)
+		color = "#4210ca"
+		name = "SunDown"
+		taste_description = "the stars and the skies"
+	else
+		color = initial(color)
+		name = initial(name)
+	night_shift = nightshift_active
+
+/datum/reagent/consumable/sunup/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	update_reagent_effects()
+
+/datum/reagent/consumable/sunup/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	update_reagent_effects(its_over = TRUE)
+	REMOVE_TRAIT(affected_mob, TRAIT_MEGA_EEPY, type) // one way or the other it's gone
+	. = ..()
+
+/datum/reagent/consumable/sunup/proc/update_reagent_effects(its_over = FALSE)
+	var/mob/living/carbon/the_dranker = holder?.my_atom
+	if(!istype(the_dranker))
+		return
+	if(night_shift)
+		// We make em slow and sleepy
+		if(!its_over)
+			the_dranker.add_movespeed_modifier(/datum/movespeed_modifier/reagent/sundown)
+			the_dranker.add_actionspeed_modifier(/datum/actionspeed_modifier/sundown)
+			ADD_TRAIT(the_dranker, TRAIT_MEGA_EEPY, type)
+		// And we remove their speedy
+		the_dranker.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/sunup)
+	else
+		// We make them speedy
+		if(!its_over)
+			the_dranker.add_movespeed_modifier(/datum/movespeed_modifier/reagent/sunup)
+			the_dranker.add_actionspeed_modifier(/datum/actionspeed_modifier/sunup)
+		// And we remove their slow and eepy
+		REMOVE_TRAIT(the_dranker, TRAIT_MEGA_EEPY, type)
+		the_dranker.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/sundown)
+
+/datum/reagent/consumable/sunup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(night_shift)
+		affected_mob.adjust_drowsiness(6 SECONDS * REM * seconds_per_tick)
+		if(SPT_PROB(7.5, seconds_per_tick) && !affected_mob.IsSleeping())
+			to_chat(affected_mob, span_sundown(pick("It's getting late, you should probably get some rest...", "It's night time, it's nap time...", "You feel very sleepy...")))
+	else
+		affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
+		affected_mob.adjust_dizzy(-6 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustAllImmobility(-12 * REM * seconds_per_tick)
+		if(SPT_PROB(1.5, seconds_per_tick))
+			to_chat(affected_mob, span_sunup(pick("What a beautiful day!", "You're burning with energy!", "You feel like you're going to get everything done today.", "I love the sun!", "I love SunUp!")))
+			affected_mob.adjust_fire_stacks(0.1 * REM * seconds_per_tick) // Doesn't ignite them... but risks it! Don't smoke and sun kids.
+			affected_mob.adjust_jitter_up_to(18 SECONDS * REM * seconds_per_tick, 18 SECONDS)
 	return ..()
 
 /datum/reagent/consumable/monkey_energy

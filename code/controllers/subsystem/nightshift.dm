@@ -45,6 +45,7 @@ SUBSYSTEM_DEF(nightshift)
 		update_nightshift(night_time, announcing)
 
 /datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE, resumed = FALSE, forced = FALSE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NIGHT_SHIFT_UPDATED, nightshift_active)
 	if(!resumed)
 		currentrun = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 		nightshift_active = active

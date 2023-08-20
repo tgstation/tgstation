@@ -1202,6 +1202,65 @@
 	else
 		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
 
+/datum/quirk/item_quirk/junkie/sunup_enthusiast
+	name = "SunUp Enthusiast"
+	desc = "You have a 'healthy obsession' with SunUp, a NT-backed drink that stimulates you during the 'day', and acts as a somnolent during the company-designated 'night shift'. You can't live without it!"
+	icon = FA_ICON_SUN
+	value = -1
+	gain_text = span_danger("You could really go for a can of SunUp. Or two.")
+	lose_text = span_notice("You realize all the hype around SunUp is completely vapid.")
+	medical_record_text = "Patient was prescribed 'SunUp' several years ago by a company doctor and seems to hold a healthy and corporate-supported interest in it. No further action necessary."
+	reagent_type = /datum/reagent/consumable/sunup
+	drug_container_type = /obj/item/reagent_containers/cup/soda_cans/sunup
+	hardcore_value = 2
+	drug_flavour_text = "Make sure you get some SunUp from a drinks vendor if you run out!"
+	mail_goodies = list(
+		/obj/item/reagent_containers/cup/soda_cans/sunup,
+	)
+
+/datum/quirk/item_quirk/junkie/sunup_enthusiast/post_add()
+	. = ..()
+	RegisterSignal(quirk_holder, COMSIG_CARBON_ON_METABOLIZING, PROC_REF(check_if_sunup))
+
+/datum/quirk/item_quirk/junkie/sunup_enthusiast/remove()
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_ON_METABOLIZING)
+
+/datum/quirk/item_quirk/junkie/sunup_enthusiast/proc/check_if_sunup(mob/living/enthusiast, list/cached_reagents)
+	SIGNAL_HANDLER
+
+	var/mob/living/carbon/carbon_enthusiast = enthusiast
+
+	if(!istype(carbon_enthusiast))
+		return
+
+	// We seek our SunUp
+	var/target_sighted = FALSE
+	for(var/datum/reagent/sunup_candidate as anything in cached_reagents)
+		if(istype(sunup_candidate, reagent_type))
+			target_sighted = TRUE
+			break
+
+	// We have not located it. Punish the betrayer.
+	if(!target_sighted)
+		carbon_enthusiast.add_mood_event("sunup_traitor", /datum/mood_event/no_sunup)
+		return
+
+	// We have located it and thus they are pardoned.
+	carbon_enthusiast.clear_mood_event("sunup_traitor")
+
+	// Night check. Gotta nap!
+	if(SSnightshift.nightshift_active)
+		// Napping. We'll let them go, for now.
+		if(carbon_enthusiast?.IsSleeping())
+			carbon_enthusiast.clear_mood_event("sundown_traitor")
+		// Not napping - punish them. Unsanctioned behaviour.
+		else
+			carbon_enthusiast.add_mood_event("sundown_traitor", /datum/mood_event/sundown_nosleep)
+		return
+
+	// Curfew is over, and so is any punishment for wrongdoing.
+	carbon_enthusiast.clear_mood_event("sundown_traitor")
+
 /datum/quirk/item_quirk/chronic_illness
 	name = "Chronic Illness"
 	desc = "You have a chronic illness that requires constant medication to keep under control."

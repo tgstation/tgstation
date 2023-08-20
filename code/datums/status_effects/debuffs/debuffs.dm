@@ -3,6 +3,8 @@
 /// The sleep healing multipler for organ passive healing (since organs heal slowly)
 #define HEALING_SLEEP_ORGAN_MULTIPLIER 5
 
+#define TRAIT_MEGA_EEPY "mega_eepy"
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -139,6 +141,9 @@
 		tick_interval = -1
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_insomniac))
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_sleepy))
+	if(HAS_TRAIT(owner, TRAIT_MEGA_EEPY)) // Eepy people always sleep heal well
+		to_chat(owner, span_sundown("As you fall asleep you begin to dream about the sky and the stars. You feel content."))
+		owner.add_mood_event("sundown", /datum/mood_event/sundown_sleep)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
@@ -163,6 +168,10 @@
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = HEALING_SLEEP_DEFAULT
+
+		if(HAS_TRAIT(owner, TRAIT_MEGA_EEPY)) // Eepy people always sleep heal well
+			health_ratio = 1
+			healing = healing * 2
 
 		// having high spirits helps us recover
 		if(owner.mob_mood)

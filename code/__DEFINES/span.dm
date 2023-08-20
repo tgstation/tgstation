@@ -108,6 +108,8 @@
 #define span_small(str) ("<span class='small'>" + str + "</span>")
 #define span_smallnotice(str) ("<span class='smallnotice'>" + str + "</span>")
 #define span_smallnoticeital(str) ("<span class='smallnoticeital'>" + str + "</span>")
+#define span_sunup(str) ("<span class='sunup'>" + str + "</span>")
+#define span_sundown(str) ("<span class='sundown'>" + str + "</span>")
 #define span_spiderbroodmother(str) ("<span class='spiderbroodmother'>" + str + "</span>")
 #define span_spiderscout(str) ("<span class='spiderscout'>" + str + "</span>")
 #define span_suicide(str) ("<span class='suicide'>" + str + "</span>")

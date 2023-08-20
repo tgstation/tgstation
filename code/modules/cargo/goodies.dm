@@ -271,3 +271,15 @@
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
+
+/datum/supply_pack/goody/sunup
+	name = "SunUp Soda Can"
+	desc = "Thirsty? Ran out of your prescription batch? Quench your thirst with SunUp! The Company approves!"
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/reagent_containers/cup/soda_cans/sunup)
+
+/datum/supply_pack/goody/sunup_batch
+	name = "Six-Pack SunUp Can Ring"
+	desc = "Crack a starry one with the boys with this six-for-five goodie pack! Please recycle after consumption, we're tired of detecting dead space carp stuck in these things near your station."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/storage/cans/sixsoda/sunup)

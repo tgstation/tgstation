@@ -43,6 +43,8 @@
 #define COMSIG_GLOB_RANDOM_EVENT "!random_event"
 	/// Do not allow this random event to continue.
 	#define CANCEL_RANDOM_EVENT (1<<0)
+/// Night shift change!
+#define COMSIG_GLOB_NIGHT_SHIFT_UPDATED	"!night_shift"
 /// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
 #define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
 /// a trapdoor remote has sent out a signal to link with a trapdoor

@@ -749,6 +749,7 @@
 	var/list/cached_reagents = reagent_list
 	if(owner)
 		expose_temperature(owner.bodytemperature, 0.25)
+		SEND_SIGNAL(owner, COMSIG_CARBON_ON_METABOLIZING, cached_reagents)
 
 	var/need_mob_update = FALSE
 	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)

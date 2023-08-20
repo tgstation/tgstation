@@ -262,10 +262,30 @@
 
 /obj/item/reagent_containers/cup/soda_cans/wellcheers
 	name = "Wellcheers Juice"
-	desc = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	desc = "A strange purple drank, smelling of saltwater. Somewhere in the distance, you hear seagulls."
 	icon_state = "wellcheers"
 	list_reagents = list(/datum/reagent/consumable/wellcheers = 30)
 	drink_type = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/cup/soda_cans/sunup
+	name = "SunUp"
+	desc = "A refreshing beverage found on some Nanotrasen space stations. Stimulates the drinker during the day and acts as a somnolent during the night. Either better than coffee, an overblown fad, or a corporate addiction scheme depending on who you ask."
+	icon_state = "wellcheers"
+	list_reagents = list(/datum/reagent/consumable/sunup = 30)
+	drink_type = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/cup/soda_cans/sunup/Initialize(mapload, vol)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NIGHT_SHIFT_UPDATED, PROC_REF(shift_the_tides))
+	shift_the_tides(SSnightshift.nightshift_active)
+
+/obj/item/reagent_containers/cup/soda_cans/sunup/proc/shift_the_tides(nightshift_active)
+	if(nightshift_active)
+		icon_state = "shamblerseldritch"
+		name = "SunDown"
+	else
+		icon_state = initial(icon_state)
+		name = initial(name)
 
 /obj/item/reagent_containers/cup/soda_cans/grey_bull
 	name = "Grey Bull"
