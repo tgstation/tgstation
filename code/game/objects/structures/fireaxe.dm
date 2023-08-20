@@ -156,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	. = ..()
 	if(held_item)
 		. += item_overlay
-	var/hp_percent = atom_integrity/max_integrity * 100
+	var/hp_percent = (atom_integrity/max_integrity) * 100
 
 	if(open)
 		if(broken)
