@@ -269,15 +269,18 @@
 	//if(controller_status & EMERGENCY_STOP)
 	//	estop()
 	if(!travel_remaining)
-		cycle_doors(OPEN_DOORS)
-		idle_platform = destination_platform
-		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
-		tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
-		travel_trip_length = 0
-		current_speed = 0
-		current_load = 0
+		normal_stop()
 		return PROCESS_KILL
+		/*
+		if(controller_status & POWER_FAULT)
+			low_power_stop()
+			return PROCESS_KILL
+
+		else
+			normal_stop()
+			return PROCESS_KILL
+		*/
+
 	else if(world.time >= scheduled_move)
 		var/start_time = TICK_USAGE
 		travel_remaining--
@@ -310,6 +313,27 @@
 			recovery_activate_count = max(recovery_activate_count - 1, 0)
 
 		scheduled_move = world.time + speed_limiter
+
+/datum/transport_controller/linear/tram/proc/normal_stop()
+	cycle_doors(OPEN_DOORS)
+	idle_platform = destination_platform
+	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
+	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
+	travel_trip_length = 0
+	current_speed = 0
+	current_load = 0
+
+/datum/transport_controller/linear/tram/proc/low_power_stop()
+	var/throw_direction = travel_direction
+	idle_platform = null
+	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
+	travel_remaining = 0
+	travel_trip_length = 0
+	current_speed = 0
+	current_load = 0
+	for(var/obj/structure/transport/linear/tram/module in transport_modules)
+		module.estop_throw(throw_direction)
 
 /**
  * Handles unlocking the tram controls for use after moving
@@ -455,13 +479,20 @@
 	collision_lethality = initial(collision_lethality)
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 
+/datum/transport_controller/linear/tram/proc/unplanned_power_loss()
+	if(!travel_remaining)
+		return
+
+	travel_remaining -= (DEFAULT_TRAM_LENGTH * 0.5)
+	set_status_code(EMERGENCY_STOP, TRUE)
+
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
  */
 /obj/machinery/icts/controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something."
-	icon = 'icons/obj/machines/tram/tram_controllers.dmi'
+	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "controller-panel"
 	anchored = TRUE
 	density = FALSE
@@ -500,6 +531,7 @@
 	if(!find_controller())
 		stack_trace("Tram cabinet failed to find controller datum!")
 
+	SSicts_transport.hello(src)
 	update_appearance()
 
 /obj/machinery/icts/controller/atom_break()
@@ -663,3 +695,29 @@
 	)
 
 	return data
+
+/obj/machinery/icts/controller/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["destinations"] = detailed_destination_list(controller_datum?.specific_transport_id)
+
+	return data
+
+/obj/machinery/icts/controller/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+
+	switch(action)
+		if("dispatch")
+			var/obj/effect/landmark/icts/nav_beacon/tram/destination_platform
+			for (var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.nav_beacons[controller_datum.specific_transport_id])
+				if(destination.name == params["tripDestination"])
+					destination_platform = destination
+					break
+
+			if(!destination_platform)
+				return FALSE
+
+			SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code)
+			update_appearance()
