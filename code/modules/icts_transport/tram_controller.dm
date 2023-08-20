@@ -461,7 +461,7 @@
 /obj/machinery/icts/controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something."
-	icon = 'icons/obj/machines/tram/tram_controllers.dmi'
+	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "controller-panel"
 	anchored = TRUE
 	density = FALSE
