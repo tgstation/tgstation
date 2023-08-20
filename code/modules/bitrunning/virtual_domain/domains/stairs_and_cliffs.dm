@@ -1,5 +1,5 @@
 /datum/lazy_template/virtual_domain/stairs_and_cliffs
-	name = "Stairs and Cliffs"
+	name = "Glacier Grind"
 	cost = BITRUNNER_COST_LOW
 	desc = "A treacherous climb few calves can survive. Great cardio though."
 	help_text = "Ever heard of 'Snakes and Ladders'? It's like that, but with \
@@ -25,9 +25,7 @@
 
 /datum/outfit/job/virtual_domain_iceclimber
 	name = "Ice Climber"
+
 	uniform = /obj/item/clothing/under/color/grey
-	suit = /obj/item/clothing/suit/hooded/wintercoat
 	backpack = /obj/item/storage/backpack/duffelbag
 	shoes = /obj/item/clothing/shoes/winterboots
-	l_pocket = /obj/item/flashlight
-	r_pocket = /obj/item/flashlight/flare

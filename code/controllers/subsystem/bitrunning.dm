@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(bitrunning)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/bitrunning/fire()
-	if(!length(active_servers) || !COOLDOWN_FINISHED(src, glitch_cooldown) || prob(95))
+	if(!length(active_servers) || !COOLDOWN_FINISHED(src, glitch_cooldown) || prob(98))
 		return
 
 	if(initialize_glitch())

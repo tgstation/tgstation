@@ -16,6 +16,13 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 	has_gravity = STANDARD_GRAVITY
 
+/area/virtual_domain/powered
+	name = "Virtual Domain Ruins"
+	icon_state = "bit_ruin"
+	requires_power = FALSE
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+
 /// Safehouse
 
 /area/virtual_domain/safehouse
@@ -43,7 +50,3 @@
 	icon_state = "bit_space"
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 
-/area/virtual_domain/powered
-	name = "Virtual Domain Ruins"
-	icon_state = "bit_ruin"
-	requires_power = FALSE

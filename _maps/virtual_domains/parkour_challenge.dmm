@@ -52,7 +52,8 @@
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "Bitrunner Gate 3"
 	},
-/turf/open/floor/iron/vaporwave,
+/obj/structure/lattice/catwalk,
+/turf/open/chasm,
 /area/virtual_domain/powered)
 "gb" = (
 /obj/effect/turf_decal/siding/white{
@@ -161,14 +162,6 @@
 "sR" = (
 /turf/open/floor/iron/vaporwave,
 /area/virtual_domain/powered)
-"ue" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "Bitrunner Gate 1"
-	},
-/obj/structure/lattice/catwalk,
-/turf/closed/indestructible/binary,
-/area/virtual_domain/powered)
 "vT" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 9
@@ -199,10 +192,10 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "CM" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "Bitrunner Gate 2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/chasm,
 /area/virtual_domain/powered)
 "Es" = (
@@ -323,10 +316,10 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Ui" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "Bitrunner Gate 1"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/chasm,
 /area/virtual_domain/powered)
 "Ve" = (
@@ -1232,7 +1225,7 @@ xB
 xB
 Es
 Ui
-ue
+Ui
 Es
 xB
 xB
