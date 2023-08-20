@@ -41,8 +41,8 @@
 		cut_overlay(managed_wall_paint)
 		managed_wall_paint = list()
 		var/image/new_trim = image("icon" = icon, "icon_state" = icon_state, "layer" = src.layer + 0.1)
-		new_trim.color = trim_color
-		managed_wall_paint += paint_color
+		new_trim.color = paint_color
+		managed_wall_paint += new_trim
 		add_overlay(managed_wall_paint)
 
 /turf/closed/wall/smooth_icon()
