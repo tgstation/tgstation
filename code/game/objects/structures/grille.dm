@@ -362,6 +362,10 @@
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
+	icon = 'icons/obj/structures.dmi'
+	canSmoothWith =  null
+	smoothing_flags = null
+	smoothing_groups = null
 	icon_state = "brokengrille"
 	density = FALSE
 	broken = TRUE
