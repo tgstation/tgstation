@@ -63,6 +63,7 @@ jobs:
           sudo apt-get install -y gcc-multilib g++-multilib
           rm libbyond_sleeping_procs.so
           g++ -nostdlib -m32 -shared -fPIC -o libbyond_sleeping_procs.so main.cpp
+          cp libbyond_sleeping_procs.so ~/.byond/bin/libbyond_sleeping_procs.so
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
