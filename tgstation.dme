@@ -5468,6 +5468,8 @@
 #include "code\modules\wiremod\components\id\getter.dm"
 #include "code\modules\wiremod\components\id\info_reader.dm"
 #include "code\modules\wiremod\components\list\assoc_list_pick.dm"
+#include "code\modules\wiremod\components\list\assoc_list_remove.dm"
+#include "code\modules\wiremod\components\list\assoc_list_set.dm"
 #include "code\modules\wiremod\components\list\assoc_literal.dm"
 #include "code\modules\wiremod\components\list\concat.dm"
 #include "code\modules\wiremod\components\list\filter.dm"

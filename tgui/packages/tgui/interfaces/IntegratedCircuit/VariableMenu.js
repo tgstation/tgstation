@@ -70,7 +70,7 @@ export class VariableMenu extends Component {
                             {val.name}
                           </Box>
                         </Stack.Item>
-                        <Stack.Item minWidth="80px">
+                        <Stack.Item>
                           <Button textAlign="center" fluid color={val.color}>
                             {val.datatype}
                           </Button>

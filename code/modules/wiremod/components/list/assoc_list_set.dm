@@ -3,7 +3,7 @@
  *
  * Sets a string value on an assoc list.
  */
-/obj/item/circuit_component/variable/assoc_list/listadd
+/obj/item/circuit_component/variable/assoc_list/list_set
 	display_name = "Associative List Set"
 	desc = "Sets a string key on an associative list to a specific value."
 	category = "List"
@@ -19,21 +19,21 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-/obj/item/circuit_component/variable/assoc_list/listadd/get_ui_notices()
+/obj/item/circuit_component/variable/assoc_list/list_set/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Max List Size: [max_list_size]", "orange", "sitemap")
 
-/obj/item/circuit_component/variable/assoc_list/listadd/populate_ports()
+/obj/item/circuit_component/variable/assoc_list/list_set/populate_ports()
 	key = add_input_port("Key", PORT_TYPE_STRING)
 	value = add_input_port("Value", PORT_TYPE_ANY)
 	failed = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/variable/assoc_list/listadd/pre_input_received(datum/port/input/port)
+/obj/item/circuit_component/variable/assoc_list/list_set/pre_input_received(datum/port/input/port)
 	. = ..()
 	if(current_variable)
 		value.set_datatype(current_variable.datatype_handler.get_datatype(2))
 
-/obj/item/circuit_component/variable/assoc_list/listadd/input_received(datum/port/input/port, list/return_values)
+/obj/item/circuit_component/variable/assoc_list/list_set/input_received(datum/port/input/port, list/return_values)
 	if(!current_variable)
 		return
 	var/list/info = current_variable.value
