@@ -161,7 +161,7 @@
 	. = ..()
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = null,\
+		growth_time = 5 MINUTES,\
 		growth_path = /mob/living/basic/mining/goldgrub,\
 		growth_probability = 100,\
 		lower_growth_value = 0.5,\

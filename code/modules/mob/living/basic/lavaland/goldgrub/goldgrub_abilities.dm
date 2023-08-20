@@ -34,9 +34,9 @@
 	if (!.)
 		return FALSE
 	var/turf/location = get_turf(owner)
-	if(!isasteroidturf(location))
+	if(!isasteroidturf(location) && !ismineralturf(location))
 		if(feedback)
-			owner.balloon_alert(owner, "available only on mining floor!")
+			owner.balloon_alert(owner, "available only on mining floor or wall!")
 		return FALSE
 	return TRUE
 
@@ -61,6 +61,9 @@
 	holder = null
 	grub_owner.burrowed = FALSE
 	owner.visible_message(span_danger("[owner] emerges from the ground!"))
-	playsound(get_turf(owner), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
+	if(ismineralturf(current_loc))
+		var/turf/closed/mineral/mineral_turf = current_loc
+		mineral_turf.gets_drilled(owner)
+	playsound(current_loc, 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	StartCooldown()
 	return TRUE
