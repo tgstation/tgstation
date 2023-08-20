@@ -608,25 +608,11 @@
 
 	// Show it to ghosts
 	var/ghost_message = span_game_say("[span_name("[sender]")] [rigged ? "(as [span_name(fake_name)]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
-	var/list/message_listeners = list(
-		"dead players list" = GLOB.dead_player_list,
-		"observing players list" = GLOB.current_observers_list,
-	)
-	for(var/listener_key in message_listeners)
-		var/list/to_process = message_listeners[listener_key]
-		var/did_scream_about_null_client = FALSE
-
-		for(var/mob/player_mob as anything in to_process)
-			if(isnull(player_mob.client))
-				if(!did_scream_about_null_client)
-					stack_trace("[listener_key] contained a mob with a null client.")
-					did_scream_about_null_client = TRUE
-				to_process -= player_mob
-				continue
-
-			if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-				continue
-			to_chat(player_mob, "[FOLLOW_LINK(player_mob, sender)] [ghost_message]")
+	var/list/message_listeners = GLOB.dead_player_list + GLOB.current_observers_list
+	for(var/mob/listener as anything in message_listeners)
+		if(!(get_chat_toggles(listener) & CHAT_GHOSTPDA))
+			continue
+		to_chat(listener, "[FOLLOW_LINK(listener, sender)] [ghost_message]")
 
 	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: \"[message]\""))
 
