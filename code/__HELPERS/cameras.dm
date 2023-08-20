@@ -22,6 +22,13 @@
 				L.Swap(j, j + 1)
 	return L
 
+/**
+ * get_camera_list
+ *
+ * Builds a list of all available cameras that can be seen to networks_available
+ * Args:
+ *  networks_available - List of networks that we use to see which cameras are visible to it.
+ */
 /proc/get_camera_list(list/networks_available)
 	var/list/all_camera_list = list()
 	for (var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
