@@ -64,13 +64,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(isobserver(user))
 		. += get_power_info()
 
-/obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
+/obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
 
 	if(avail())
 		king.apply_damage(10)
 		playsound(king, 'sound/effects/sparks2.ogg', 100, TRUE)
 	deconstruct()
+
+	return COMPONENT_RAT_INTERACTED
 
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)

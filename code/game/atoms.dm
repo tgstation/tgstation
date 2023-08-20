@@ -204,81 +204,6 @@
 			return
 
 /**
- * The primary method that objects are setup in SS13 with
- *
- * we don't use New as we have better control over when this is called and we can choose
- * to delay calls or hook other logic in and so forth
- *
- * During roundstart map parsing, atoms are queued for intialization in the base atom/New(),
- * After the map has loaded, then Initalize is called on all atoms one by one. NB: this
- * is also true for loading map templates as well, so they don't Initalize until all objects
- * in the map file are parsed and present in the world
- *
- * If you're creating an object at any point after SSInit has run then this proc will be
- * immediately be called from New.
- *
- * mapload: This parameter is true if the atom being loaded is either being intialized during
- * the Atom subsystem intialization, or if the atom is being loaded from the map template.
- * If the item is being created at runtime any time after the Atom subsystem is intialized then
- * it's false.
- *
- * The mapload argument occupies the same position as loc when Initialize() is called by New().
- * loc will no longer be needed after it passed New(), and thus it is being overwritten
- * with mapload at the end of atom/New() before this proc (atom/Initialize()) is called.
- *
- * You must always call the parent of this proc, otherwise failures will occur as the item
- * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
- * the item being completely unclickable)
- *
- * You must not sleep in this proc, or any subprocs
- *
- * Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
- * there are no other arguments
- *
- * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
- *
- * Note: the following functions don't call the base for optimization and must copypasta handling:
- * * [/turf/proc/Initialize]
- * * [/turf/open/space/proc/Initialize]
- */
-/atom/proc/Initialize(mapload, ...)
-	SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(flags_1 & INITIALIZED_1)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
-
-	SET_PLANE_IMPLICIT(src, plane)
-
-	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
-		update_greyscale()
-
-	//atom color stuff
-	if(color)
-		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-
-	if (light_system == STATIC_LIGHT && light_power && light_range)
-		update_light()
-
-	SETUP_SMOOTHING()
-
-	if(uses_integrity)
-		atom_integrity = max_integrity
-	TEST_ONLY_ASSERT((!armor || istype(armor)), "[type] has an armor that contains an invalid value at intialize")
-
-	// apply materials properly from the default custom_materials value
-	// This MUST come after atom_integrity is set above, as if old materials get removed,
-	// atom_integrity is checked against max_integrity and can BREAK the atom.
-	// The integrity to max_integrity ratio is still preserved.
-	set_custom_materials(custom_materials)
-
-	if(ispath(ai_controller))
-		ai_controller = new ai_controller(src)
-
-	return INITIALIZE_HINT_NORMAL
-
-/**
  * Late Intialization, for code that should run after all atoms have run Intialization
  *
  * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
@@ -1119,14 +1044,6 @@
 	return null
 
 /**
- * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
- *
- * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
- */
-/atom/proc/handle_atom_del(atom/deleting_atom)
-	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
-
-/**
  * the vision impairment to give to the mob whose perspective is set to that atom
  *
  * (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -1354,6 +1271,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
+	VV_DROPDOWN_OPTION(VV_HK_TEST_MATRIXES, "Test Matrices")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 	VV_DROPDOWN_OPTION(VV_HK_ARMOR_MOD, "Modify Armor")
 	if(greyscale_colors)
@@ -1437,7 +1355,7 @@
 		ai_controller = new result(src)
 
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
-		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate","Shear")
 		var/matrix/M = transform
 		if(!result)
 			return
@@ -1454,6 +1372,12 @@
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Translate(x,y)
+			if("Shear")
+				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				if(isnull(x) || isnull(y))
+					return
+				transform = M.Shear(x,y)
 			if("Rotate")
 				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 				if(isnull(angle))
@@ -1496,12 +1420,13 @@
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
-		var/client/C = usr.client
-		C?.open_filter_editor(src)
+		usr.client?.open_filter_editor(src)
 
 	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
-		var/client/C = usr.client
-		C?.open_color_matrix_editor(src)
+		usr.client?.open_color_matrix_editor(src)
+
+	if(href_list[VV_HK_TEST_MATRIXES] && check_rights(R_VAREDIT))
+		usr.client?.open_matrix_tester(src)
 
 /atom/vv_get_header()
 	. = ..()
@@ -1688,7 +1613,7 @@
 /atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Check if the multitool has an item in it's data buffer
+///Check if an item supports a data buffer (is a multitool)
 /atom/proc/multitool_check_buffer(user, obj/item/multitool, silent = FALSE)
 	if(!istype(multitool, /obj/item/multitool))
 		if(user && !silent)
@@ -2181,16 +2106,18 @@
 	// Now we're gonna do a scanline effect
 	// Gonna take this atom and give it a render target, then use it as a source for a filter
 	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
-	var/static/atom/movable/scanline
-	if(!scanline)
-		scanline = new(null)
-		scanline.icon = 'icons/effects/effects.dmi'
-		scanline.icon_state = "scanline"
-		// * so it doesn't render
-		scanline.render_target = "*HoloScanline"
+	var/atom/movable/scanline = new(null)
+	scanline.icon = 'icons/effects/effects.dmi'
+	scanline.icon_state = "scanline"
+	scanline.appearance_flags |= RESET_TRANSFORM
+	// * so it doesn't render
+	var/static/uid_scan = 0
+	scanline.render_target = "*HoloScanline [uid_scan]"
+	uid_scan++
 	// Now we add it as a filter, and overlay the appearance so the render source is always around
 	add_filter("HOLO: Scanline", 2, alpha_mask_filter(render_source = scanline.render_target))
 	add_overlay(scanline)
+	qdel(scanline)
 	// Annd let's make the sucker emissive, so it glows in the dark
 	if(!render_target)
 		var/static/uid = 0

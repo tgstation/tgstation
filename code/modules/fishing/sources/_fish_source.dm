@@ -44,6 +44,17 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 /datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
 	. = fishing_difficulty
 
+	// Difficulty modifier added by having the Settler quirk
+	if(HAS_TRAIT(fisherman, TRAIT_SETTLER))
+		. += SETTLER_DIFFICULTY_MOD
+
+	// Difficulty modifier added by the fisher's skill level
+	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
+		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
+
+	// Difficulty modifier added by the rod
+	. += rod.difficulty_modifier
+
 	if(!ispath(result,/obj/item/fish))
 		// In the future non-fish rewards can have variable difficulty calculated here
 		return
@@ -52,7 +63,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	var/obj/item/fish/caught_fish = result
 	// Baseline fish difficulty
 	. += initial(caught_fish.fishing_difficulty_modifier)
-	. += rod.difficulty_modifier
+
 
 	if(rod.bait)
 		var/obj/item/bait = rod.bait
@@ -66,9 +77,6 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 		for(var/bait_identifer in disliked_bait)
 			if(is_matching_bait(bait, bait_identifer))
 				. += DISLIKED_BAIT_DIFFICULTY_MOD
-
-	if(!challenge || !(FISHING_MINIGAME_RULE_NO_EXP in challenge.special_effects))
-		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Matching/not matching fish traits and equipment
 	var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]

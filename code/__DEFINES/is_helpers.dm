@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
-#define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
+#define isregalrat(A) (istype(A, /mob/living/basic/regal_rat))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
@@ -237,6 +237,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isprojectile(A) (istype(A, /obj/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
+
+#define isammobox(A) (istype(A, /obj/item/ammo_box))
 
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 

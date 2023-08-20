@@ -197,6 +197,18 @@
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
 
+/obj/item/storage/toolbox/fishing/small
+	name = "compact fishing toolbox"
+	desc = "Contains everything you need for your fishing trip. Except for the bait."
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 5
+	throwforce = 5
+
+/obj/item/storage/toolbox/fishing/small/PopulateContents()
+	new /obj/item/fishing_rod(src)
+	new /obj/item/fishing_hook(src)
+	new /obj/item/fishing_line(src)
+
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"
 
