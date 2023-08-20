@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - qol: "Added some textual feedback to new watcher abilities"
-  - balance: "Watchers will not attack for a short period following their gaze attack"
-  - bugfix: "Watchers won't interrupt one ability to use the other one"
