@@ -38,6 +38,8 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/fetch
 	)
+	///are we underground
+	var/burrowed = FALSE
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
 	. = ..()
@@ -45,7 +47,8 @@
 		make_tameable()
 	if(can_lay_eggs)
 		make_egg_layer()
-	generate_loot()
+	if(mapload)
+		generate_loot()
 	var/datum/action/cooldown/mob_cooldown/spit_ore/spit = new(src)
 	var/datum/action/cooldown/mob_cooldown/burrow/burrow = new(src)
 	AddComponent(/datum/component/appearance_on_aggro, overlay_icon = icon, overlay_state = "[icon_state]_alert")
@@ -74,11 +77,12 @@
 		visible_message(span_danger("The [bullet.name] is repelled by [src]'s girth!"))
 		return BULLET_ACT_BLOCK
 
-/mob/living/basic/mining/goldgrub/proc/barf_contents()
-	visible_message(span_danger("[src] spits out its consumed ores!"))
+/mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	for(var/obj/item/ore as anything in src)
 		ore.forceMove(loc)
+	if(!gibbed)
+		visible_message(span_danger("[src] spits out its consumed ores!"))
 
 /mob/living/basic/mining/goldgrub/proc/generate_loot()
 	var/loot_amount = rand(1,3)
@@ -88,13 +92,12 @@
 		/obj/item/stack/ore/uranium = 3,
 		/obj/item/stack/ore/diamond = 1,
 	)
-	var/list/death_loot = list()
 	for(var/i in 1 to loot_amount)
-		death_loot += pick_weight(weight_lootdrops)
-	AddElement(/datum/element/death_drops, death_loot)
+		var/picked_loot = pick_weight(weight_lootdrops)
+		new picked_loot(src)
 
 /mob/living/basic/mining/goldgrub/death(gibbed)
-	barf_contents()
+	barf_contents(gibbed)
 	return ..()
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
@@ -123,33 +126,31 @@
 		egg_laid_callback = CALLBACK(src, PROC_REF(lay_grub_egg)),\
 	)
 
-/mob/living/basic/mining/goldgrub/proc/lay_grub_egg(obj/item/grub_egg)
-	if(prob(1))
-		return
-	grub_egg.AddComponent(\
-		/datum/component/fertile_egg,\
-		embryo_type = /mob/living/basic/mining/goldgrub/baby,\
-		minimum_growth_rate = 1,\
-		maximum_growth_rate = 2,\
-		total_growth_required = 100,\
-		current_growth = 0,\
-		location_allowlist = typecacheof(list(/turf)),\
-	)
+/mob/living/basic/mining/goldgrub/proc/lay_grub_egg(obj/item/food/egg/green/grub_egg/egg)
+	egg.add_growth_component()
 
 /mob/living/basic/mining/goldgrub/proc/consume_ore(obj/item/target_ore)
-	playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	target_ore.forceMove(src)
+	if(!istype(target_ore, /obj/item/stack/ore/bluespace_crystal) || prob(80))
+		return
+	var/obj/item/food/egg/green/grub_egg/egg = new(get_turf(src))
+	egg.add_growth_component()
 
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	name = "goldgrub baby"
 	icon_state = "grub_baby"
 	icon_living = "grub_baby"
 	icon_dead = "grub_baby_dead"
+	pixel_x = 0
+	base_pixel_x = 0
 	speed = 3
 	maxHealth = 25
 	health = 25
 	gold_core_spawnable = NO_SPAWN
 	can_tame = FALSE
+	can_lay_eggs = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/babygrub
 
 /mob/living/basic/mining/goldgrub/baby/Initialize(mapload)
@@ -171,3 +172,14 @@
 /obj/item/food/egg/green/grub_egg
 	name = "grub egg"
 	desc = "Covered in disgusting fluid."
+
+/obj/item/food/egg/green/grub_egg/proc/add_growth_component()
+	AddComponent(\
+		/datum/component/fertile_egg,\
+		embryo_type = /mob/living/basic/mining/goldgrub/baby,\
+		minimum_growth_rate = 1,\
+		maximum_growth_rate = 2,\
+		total_growth_required = 100,\
+		current_growth = 0,\
+		location_allowlist = typecacheof(list(/turf)),\
+	)

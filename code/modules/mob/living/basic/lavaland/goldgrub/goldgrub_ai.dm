@@ -58,7 +58,7 @@
 	if(is_type_in_list(target, forbidden_ore))
 		return FALSE
 
-	if(target in source.contents)
+	if(target in source)
 		return FALSE
 
 	var/obj/item/pet_target = source.ai_controller.blackboard[BB_CURRENT_PET_TARGET]
@@ -149,9 +149,7 @@
 
 	var/mob/living_pawn = controller.pawn
 
-	for(var/turf/closed/potential_wall in oview(9, living_pawn))
-		if(!istype(potential_wall, /turf/closed/mineral))
-			continue
+	for(var/turf/closed/mineral/potential_wall in oview(9, living_pawn))
 		if(!check_if_mineable(living_pawn, potential_wall)) //check if its surrounded by walls
 			continue
 		controller.set_blackboard_key(found_wall_key, potential_wall) //closest wall first!
