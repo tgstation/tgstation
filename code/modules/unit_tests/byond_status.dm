@@ -6,4 +6,4 @@
 		return
 
 	var/status = byond_status()
-	TEST_ASSERT(findtext("Sleeping procs", status), "Invalid byond_status: [status]")
+	TEST_ASSERT(findtext(status, "Sleeping procs"), "Invalid byond_status: [status]")
