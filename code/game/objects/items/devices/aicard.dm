@@ -69,8 +69,8 @@
 
 /obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
 	var/datum/antagonist/nukeop/creator_op = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	//if(!creator_op)
-	//	return FALSE
+	if(!creator_op)
+		return FALSE
 	var/list/nuke_candidates = poll_ghost_candidates("Do you want to play as a syndicate artifical intelligence inside an intelliCard?", ROLE_OPERATIVE, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
 	if(QDELETED(src))
 		return FALSE
