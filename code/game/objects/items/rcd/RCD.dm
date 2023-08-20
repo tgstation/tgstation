@@ -28,7 +28,7 @@
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_premium_price = PAYCHECK_COMMAND * 10
+	custom_premium_price = PAYCHECK_COMMAND * 2
 	max_matter = 160
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
@@ -160,6 +160,9 @@
 	var/obj/item/electronics/airlock/airlock_electronics
 
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
+
+	var/current_active_effects = 0
+	var/frequent_use_debuff_multiplier = 3
 
 GLOBAL_VAR_INIT(icon_holographic_wall, init_holographic_wall())
 GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
@@ -336,22 +339,38 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+
 	var/delay = rcd_results["delay"] * delay_mod
-	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
+
+	if (
+		!(upgrade & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN) \
+			&& !rcd_results[RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN] \
+			&& current_active_effects > 0
+	)
+		delay *= frequent_use_debuff_multiplier
+
+	current_active_effects += 1
+	rcd_create_effect(A, user, delay, rcd_results)
+	current_active_effects -= 1
+
+/obj/item/construction/rcd/proc/rcd_create_effect(atom/target, mob/user, delay, list/rcd_results)
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode, upgrade)
 
 	//resource & structure placement sanity checks before & after delay along with beam effects
-	if(!checkResource(rcd_results["cost"], user) || !can_place(A, rcd_results, user))
+	if(!checkResource(rcd_results["cost"], user) || !can_place(target, rcd_results, user))
 		qdel(rcd_effect)
 		return FALSE
 	var/beam
 	if(ranged)
-		beam = user.Beam(A,icon_state="rped_upgrade", time = delay)
-	if(!do_after(user, delay, target = A))
+		beam = user.Beam(target,icon_state="rped_upgrade", time = delay)
+	if(!do_after(user, delay, target = target))
 		qdel(rcd_effect)
 		if(!isnull(beam))
 			qdel(beam)
 		return FALSE
-	if(!checkResource(rcd_results["cost"], user) || !can_place(A, rcd_results, user))
+	if (QDELETED(rcd_effect))
+		return FALSE
+	if(!checkResource(rcd_results["cost"], user) || !can_place(target, rcd_results, user))
 		qdel(rcd_effect)
 		return FALSE
 
@@ -359,7 +378,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		qdel(rcd_effect)
 		return FALSE
 	activate()
-	if(!A.rcd_act(user, src, rcd_results["mode"]))
+	if(!target.rcd_act(user, src, rcd_results["mode"]))
 		qdel(rcd_effect)
 		return FALSE
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -612,7 +631,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	matter = 160
 
 /obj/item/construction/rcd/loaded/upgraded
-	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
@@ -621,7 +640,20 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
-	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+
+/obj/item/construction/rcd/ce
+	name = "professional RCD"
+	desc = "A higher-end model of the rapid construction device, prefitted with improved cooling and disruption prevention. Provided to the chief engineer."
+	upgrade = RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	matter = 160
+	color = list(
+		0.3, 0.3, 0.7, 0.0,
+		1.0, 1.0, 0.2, 0.0,
+		-0.2, 0.0, 1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0,
+		0.0, 0.0, 0.0, 0.0,
+	)
 
 #undef CONSTRUCTION_MODE
 #undef WINDOW_TYPE
@@ -656,7 +688,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
-	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 
 
 // Ranged RCD
@@ -670,4 +702,4 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	icon_state = "arcd"
 	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
-	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN

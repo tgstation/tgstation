@@ -812,9 +812,6 @@
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/cargo)
 "Bs" = (
-/obj/machinery/computer/shuttle/white_ship/bridge{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/south,
 /obj/machinery/button/door/directional/south{
@@ -827,6 +824,7 @@
 	name = "Bridge Blast Door Control";
 	pixel_x = 6
 	},
+/obj/structure/table/greyscale,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/abandoned/bridge)
 "Bt" = (
@@ -948,10 +946,10 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
 "FK" = (
-/obj/machinery/computer/shuttle/white_ship/pod/recall{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/abandoned/bridge)
 "FL" = (
@@ -1393,14 +1391,11 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/cargo)
 "Uu" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
+/obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/abandoned/bridge)
 "UK" = (
-/obj/structure/table/greyscale,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/turretid{
 	icon_state = "control_kill";

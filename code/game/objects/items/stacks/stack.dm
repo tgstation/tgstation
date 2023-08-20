@@ -153,7 +153,7 @@
 
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is electronically synthesized in your chassis and can't be ground up!"))
+		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
 		return
 	return TRUE
 
@@ -186,10 +186,6 @@
 /obj/item/stack/examine(mob/user)
 	. = ..()
 	if(is_cyborg)
-		if(singular_name)
-			. += "There is enough energy for [get_amount()] [singular_name]\s."
-		else
-			. += "There is enough energy for [get_amount()]."
 		return
 	if(singular_name)
 		if(get_amount()>1)

@@ -1,6 +1,0 @@
-author: "CoiledLamb"
-delete-after: True
-changes:
-  - rscadd: "Added wellcheers, a contraband soda with various side effects."
-  - image: "resprites all cans in the drinks icon file"
-  - image: "resprites the canholder sprite in storage.dmi"

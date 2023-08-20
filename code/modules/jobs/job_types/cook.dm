@@ -63,7 +63,7 @@
 	jobtype = /datum/job/cook
 
 	id_trim = /datum/id_trim/job/cook/chef
-	uniform = /obj/item/clothing/under/rank/civilian/chef
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
 	backpack_contents = list(
 		/obj/item/choice_beacon/ingredient = 1,

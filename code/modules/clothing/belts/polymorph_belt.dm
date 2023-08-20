@@ -57,7 +57,7 @@
 		return
 	if (!isliving(target_mob))
 		return
-	if (ishuman(target_mob) && !ismonkey(target_mob))
+	if (!isanimal_or_basicmob(target_mob))
 		balloon_alert(user, "target too complex!")
 		return TRUE
 	if (!(target_mob.mob_biotypes & MOB_ORGANIC))

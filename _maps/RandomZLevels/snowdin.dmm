@@ -2578,8 +2578,8 @@
 /area/awaymission/snowdin/post/hydro)
 "hZ" = (
 /obj/item/gun/ballistic/rifle/boltaction,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
@@ -5179,7 +5179,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "pc" = (
 /obj/structure/spider/stickyweb,
-/mob/living/basic/giant_spider/hunter/ice,
+/mob/living/basic/spider/giant/hunter/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "pd" = (
@@ -10357,7 +10357,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "Mo" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk,
+/mob/living/basic/mining/basilisk,
 /turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -10922,7 +10922,7 @@
 	dir = 5
 	},
 /obj/structure/spider/stickyweb,
-/mob/living/basic/giant_spider/hunter/ice,
+/mob/living/basic/spider/giant/hunter/ice,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "Ps" = (
@@ -11198,7 +11198,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/research)
 "QM" = (
-/mob/living/basic/giant_spider/nurse/ice,
+/mob/living/basic/spider/giant/nurse/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "QN" = (
@@ -11218,7 +11218,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "QP" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk,
+/mob/living/basic/mining/basilisk,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "QQ" = (
@@ -11443,7 +11443,7 @@
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/cave)
 "Si" = (
-/mob/living/basic/giant_spider/hunter/ice,
+/mob/living/basic/spider/giant/hunter/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Sj" = (
@@ -12006,7 +12006,7 @@
 	},
 /area/awaymission/snowdin/outside)
 "Vo" = (
-/mob/living/basic/giant_spider/ice,
+/mob/living/basic/spider/giant/ice,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Vp" = (
