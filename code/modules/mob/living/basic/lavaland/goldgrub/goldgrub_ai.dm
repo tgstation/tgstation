@@ -161,6 +161,8 @@
 /datum/ai_behavior/find_mineral_wall/proc/check_if_mineable(mob/living/source, turf/target_wall)
 	for(var/direction in GLOB.cardinals)
 		var/turf/test_turf = get_step(target_wall, direction)
+		if(isnull(test_turf))
+			continue
 		if(!test_turf.is_blocked_turf(ignore_atoms = list(source)))
 			return TRUE
 	return FALSE
