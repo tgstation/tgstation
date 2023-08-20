@@ -33,12 +33,10 @@
 		return
 	for(var/dir in GLOB.cardinals)
 		var/turf/source = get_turf(owner)
-		var/turf/next_turf = get_step(charger, dir)
-		if(!istype(next_turf) || !HAS_TRAIT(source, TRAIT_RUSTY))
+		var/turf/closed/next_turf = get_step(charger, dir)
+		if(!istype(source) || !istype(next_turf) || !HAS_TRAIT(source, TRAIT_RUSTY) || !HAS_TRAIT(next_turf, TRAIT_RUSTY))
 			continue
-		if(isclosedturf(next_turf) && HAS_TRAIT(next_turf, TRAIT_RUSTY))
-			SSexplosions.medturf += next_turf
-			continue
+		SSexplosions.medturf += next_turf
 
 /datum/action/cooldown/mob_cooldown/charge/rust/on_bump(atom/movable/source, atom/target)
 	if(owner == target)
