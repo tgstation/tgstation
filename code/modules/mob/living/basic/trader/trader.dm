@@ -11,7 +11,6 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	basic_mob_flags = DEL_ON_DEATH
-	habitable_atmos = list("min_oxy" = 3, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 15, "min_co2" = 0, "max_co2" = 15, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 2.5
 	combat_mode = TRUE
 	move_resist = MOVE_FORCE_STRONG
@@ -31,30 +30,21 @@
 	var/species_path = /datum/species/human
 	///The loot we drop when we die
 	var/loot = list(/obj/effect/mob_spawn/corpse/human/generic_assistant)
+	///Casing used to shoot during retaliation
+	var/ranged_attack_casing =/obj/item/ammo_casing/shotgun/buckshot
+	///Sound to make while doing a retalitory attack
+	var/ranged_attack_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	///Weapon path, for visuals
+	var/held_weapon_visual = /obj/item/gun/ballistic/shotgun
 
 /mob/living/basic/trader/Initialize(mapload)
 	. = ..()
-	apply_dynamic_human_appearance(src, species_path = species_path, mob_spawn_path = spawner_path)
+	apply_dynamic_human_appearance(src, species_path = species_path, mob_spawn_path = spawner_path, r_hand = held_weapon_visual)
 	AddElement(/datum/element/ai_retaliate)
-	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/shotgun/buckshot, projectile_sound = 'sound/weapons/gun/pistol/shot.ogg', cooldown_time = 3 SECONDS)
+	AddComponent(/datum/component/ranged_attacks, casing_type = ranged_attack_casing, projectile_sound = ranged_attack_sound, cooldown_time = 3 SECONDS)
 	if(LAZYLEN(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
-
-/datum/ai_controller/basic_controller/trader
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /mob/living/basic/trader/mrbones
 	name = "Mr. Bones"
@@ -69,6 +59,9 @@
 	species_path = /datum/species/skeleton
 	spawner_path = /obj/effect/mob_spawn/corpse/human/skeleton/mrbones
 	loot = list(/obj/effect/decal/remains/human)
+	ranged_attack_casing = /obj/item/ammo_casing/energy/bolt/halloween
+	ranged_attack_sound = 'sound/hallucinations/growl1.ogg'
+	held_weapon_visual = /obj/item/cane
 
 /obj/effect/mob_spawn/corpse/human/skeleton/mrbones
 	mob_species = /datum/species/skeleton
