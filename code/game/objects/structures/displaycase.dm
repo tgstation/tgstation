@@ -270,6 +270,7 @@
 		new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
 		if(electronics)
 			electronics.forceMove(drop_location())
+			electronics = null
 		qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
