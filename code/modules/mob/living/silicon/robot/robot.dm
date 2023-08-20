@@ -689,6 +689,7 @@
 	src.set_stat(CONSCIOUS)
 	notify_ai(AI_NOTIFICATION_NEW_BORG)
 	toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
+	update_stat()
 	return TRUE
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
