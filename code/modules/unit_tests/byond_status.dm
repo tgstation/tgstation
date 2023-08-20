@@ -2,7 +2,7 @@
 /datum/unit_test/byond_status
 
 /datum/unit_test/byond_status/Run()
-	if (system_type != UNIX)
+	if (world.system_type != UNIX)
 		return
 
 	var/status = byond_status()
