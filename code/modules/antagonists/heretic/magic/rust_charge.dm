@@ -24,7 +24,9 @@
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	victim.rust_heretic_act()
 	for(var/dir in GLOB.cardinals)
-		get_step(victim, dir).rust_heretic_act()
+		var/turf/nearby_turf = get_step(victim, dir)
+		if(istype(nearby_turf))
+			nearby_turf.rust_heretic_act()
 
 /datum/action/cooldown/mob_cooldown/charge/rust/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
