@@ -49,7 +49,7 @@
 
 	AddComponent(/datum/component/carbon_sprint)
 	AddComponent(/datum/component/personal_crafting)
-	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
 
 	appearance = stored_item.appearance
 	desc = stored_item.desc

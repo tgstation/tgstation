@@ -103,9 +103,11 @@
 	if(number > 0)
 		dexterous = TRUE
 		advanced_simple = TRUE
+		add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
 	else
 		dexterous = FALSE
 		advanced_simple = FALSE
+		remove_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
 
 //general disarm proc
 /mob/living/proc/disarm(mob/living/carbon/target)
