@@ -42,6 +42,7 @@
 
 	available_on_ntnet = FALSE
 	requires_ntnet = FALSE
+	unique_copy = TRUE
 
 	available_on_syndinet = TRUE
 	usage_flags = PROGRAM_ALL
