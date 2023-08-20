@@ -21,7 +21,7 @@
 
 	var/mob/living/carbon/human/player = owner.current
 
-	player.equipOutfit(/datum/outfit/cyber_police/full)
+	player.equipOutfit(/datum/outfit/cyber_police)
 	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
 
 	var/datum/martial_art/the_sleeping_carp/carp = new()
