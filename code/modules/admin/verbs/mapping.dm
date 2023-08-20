@@ -55,6 +55,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
 	/client/proc/check_for_obstructed_atmospherics,
+	/client/proc/modify_lights,
+	/client/proc/visualize_lights,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -124,7 +126,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			if(!(locate(/obj/structure/grille) in T))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
+					if (W.dir == REVERSE_DIR(C1.dir) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
 						window_check = 1
 						break
 				if(!window_check)
@@ -488,3 +490,27 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		var/datum/browser/popup = new(usr, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
 		popup.set_content(results.Join())
 		popup.open()
+
+/client/proc/modify_lights()
+	set name = "Toggle Light Debug"
+	set category = "Mapping"
+	if(!check_rights(R_DEBUG))
+		return
+	if(GLOB.light_debug_enabled)
+		undebug_sources()
+		return
+
+	for(var/obj/machinery/light/fix_up as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
+		// Only fix lights that started out fixed
+		if(initial(fix_up.status) == LIGHT_OK)
+			fix_up.fix()
+		CHECK_TICK
+	debug_sources()
+
+/client/proc/visualize_lights()
+	set name = "Visualize Lighting Corners"
+	set category = "Mapping"
+	if(!check_rights(R_DEBUG))
+		return
+
+	display_corners()

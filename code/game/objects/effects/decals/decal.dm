@@ -3,8 +3,6 @@
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	///Boolean on whether this decal can be placed inside of groundless turfs/walls. If FALSE, will runtime and delete if it happens.
-	var/turf_loc_check = TRUE
 
 /obj/effect/decal/Initialize(mapload)
 	. = ..()
@@ -66,9 +64,10 @@
 
 	// If the tile uses holiday colors, apply them here
 	if(use_holiday_colors)
-		var/current_holiday_color = request_holiday_colors(src, pattern)
-		if(current_holiday_color)
-			color = current_holiday_color
+
+		var/custom_color = request_station_colors(src, pattern) || request_holiday_colors(src, pattern)
+		if(custom_color)
+			color = custom_color
 			alpha = DECAL_ALPHA
 
 	var/turf/T = loc

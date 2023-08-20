@@ -28,7 +28,7 @@
 /datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	// Interrupt attack chain to use tentacles, unless the target is already tentacled
-	if (isliving(target) && !target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled))
+	if (ismecha(target) || (isliving(target) && !target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled)))
 		var/datum/action/cooldown/using_action = controller.blackboard[BB_GOLIATH_TENTACLES]
 		if (using_action?.IsAvailable())
 			finish_action(controller, succeeded = FALSE)
@@ -40,7 +40,7 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (!isliving(target) || target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled))
+	if (!(isliving(target) || ismecha(target)) || (isliving(target) && target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled)))
 		return // Target can be an item or already grabbed, we don't want to tentacle those
 	return ..()
 
@@ -93,7 +93,7 @@
 
 /// If we got nothing better to do, dig a little hole
 /datum/ai_behavior/goliath_dig
-	action_cooldown = 1 MINUTES
+	action_cooldown = 3 MINUTES
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/goliath_dig/setup(datum/ai_controller/controller, target_key)
@@ -107,6 +107,8 @@
 	. = ..()
 	var/turf/target_turf = controller.blackboard[target_key]
 	var/mob/living/basic/basic_mob = controller.pawn
+	if(!basic_mob.CanReach(target_turf))
+		return
 	basic_mob.melee_attack(target_turf)
 	finish_action(controller, succeeded = TRUE)
 

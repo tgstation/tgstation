@@ -16,7 +16,8 @@
 	. = ..()
 	open = round(rand(0, 1))
 	update_appearance()
-
+	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
+		AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_TOILET)
 
 /obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -120,8 +121,9 @@
 			return
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
+		return
 
-	else if(is_reagent_container(I) && !user.combat_mode)
+	if(is_reagent_container(I) && !user.combat_mode)
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
@@ -740,6 +742,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	var/open = TRUE
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
+
+/obj/structure/curtain/Initialize(mapload)
+	// see-through curtains should let emissives shine through
+	if(!opaque_closed)
+		blocks_emissive = EMISSIVE_BLOCK_NONE
+	return ..()
 
 /obj/structure/curtain/proc/toggle()
 	open = !open

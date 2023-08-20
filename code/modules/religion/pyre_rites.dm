@@ -9,7 +9,7 @@
 /datum/religion_rites/fireproof
 	name = "Unmelting Protection"
 	desc = "Grants fire immunity to any piece of clothing."
-	ritual_length = 15 SECONDS
+	ritual_length = 12 SECONDS
 	ritual_invocations = list("And so to support the holder of the Ever-Burning candle...",
 	"... allow this unworthy apparel to serve you ...",
 	"... make it strong enough to burn a thousand time and more ...")
@@ -44,7 +44,7 @@
 /datum/religion_rites/burning_sacrifice
 	name = "Burning Offering"
 	desc = "Sacrifice a buckled burning corpse for favor, the more burn damage the corpse has the more favor you will receive."
-	ritual_length = 20 SECONDS
+	ritual_length = 15 SECONDS
 	ritual_invocations = list("Burning body ...",
 	"... cleansed by the flame ...",
 	"... we were all created from fire ...",

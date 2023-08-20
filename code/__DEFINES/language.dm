@@ -31,11 +31,13 @@
 #define LANGUAGE_MALF "malf"
 #define LANGUAGE_PIRATE "pirate"
 #define LANGUAGE_MASTER "master"
+#define LANGUAGE_PAI "pai"
 #define LANGUAGE_SOFTWARE "software"
 #define LANGUAGE_STONER "stoner"
 #define LANGUAGE_VOICECHANGE "voicechange"
 #define LANGUAGE_RADIOKEY "radiokey"
 #define LANGUAGE_BABEL "babel"
+#define LANGUAGE_EMP "emp"
 
 // Language flags. Used in granting and removing languages.
 /// This language can be spoken.

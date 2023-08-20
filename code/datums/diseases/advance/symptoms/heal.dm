@@ -11,7 +11,6 @@
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
 
-
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	. = ..()
 	if(!.)
@@ -181,17 +180,18 @@
 */
 /datum/symptom/heal/chem
 	name = "Toxolysis"
+	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
 	stealth = 0
 	resistance = -2
 	stage_speed = 2
 	transmittable = -2
 	level = 7
-	var/food_conversion = FALSE
-	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
+	required_organ = ORGAN_SLOT_HEART
 	threshold_descs = list(
 		"Resistance 7" = "Increases chem removal speed.",
 		"Stage Speed 6" = "Consumed chemicals nourish the host.",
 	)
+	var/food_conversion = FALSE
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
 	. = ..()
@@ -222,19 +222,20 @@
 */
 /datum/symptom/heal/metabolism
 	name = "Metabolic Boost"
+	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
+		but also causing increased hunger."
 	stealth = -1
 	resistance = -2
 	stage_speed = 2
 	transmittable = 1
 	level = 7
-	var/triple_metabolism = FALSE
-	var/reduced_hunger = FALSE
-	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
-		but also causing increased hunger."
+	required_organ = ORGAN_SLOT_STOMACH
 	threshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
 		"Stage Speed 10" = "Chemical metabolization is tripled instead of doubled.",
 	)
+	var/triple_metabolism = FALSE
+	var/reduced_hunger = FALSE
 
 /datum/symptom/heal/metabolism/Start(datum/disease/advance/A)
 	. = ..()
@@ -245,17 +246,16 @@
 	if(A.totalStealth() >= 3)
 		reduced_hunger = TRUE
 
-/datum/symptom/heal/metabolism/Heal(mob/living/carbon/C, datum/disease/advance/A, actual_power)
-	if(!istype(C))
-		return
+/datum/symptom/heal/metabolism/Heal(mob/living/carbon/infected_mob, datum/disease/advance/A, actual_power)
 	var/metabolic_boost = triple_metabolism ? 2 : 1
-	C.reagents.metabolize(C, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	C.overeatduration = max(C.overeatduration - 4 SECONDS, 0)
+	infected_mob.reagents.metabolize(infected_mob, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
+	infected_mob.overeatduration = max(infected_mob.overeatduration - 4 SECONDS, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
-	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
+	infected_mob.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
-		to_chat(C, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
-	return 1
+		to_chat(infected_mob, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
+	return TRUE
+
 /*Nocturnal Regeneration
  * Increases stealth
  * Slightly reduces resistance
@@ -312,6 +312,7 @@
 	if(M.getBruteLoss() || M.getFireLoss())
 		return TRUE
 	return FALSE
+
 /*Regen Coma
  * No effect on stealth
  * Increases resistance
@@ -427,11 +428,12 @@
 	transmittable = 1
 	level = 6
 	passive_message = span_notice("Your skin feels oddly dry...")
-	var/absorption_coeff = 1
+	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
+	var/absorption_coeff = 1
 
 /datum/symptom/heal/water/Start(datum/disease/advance/A)
 	. = ..()
@@ -442,17 +444,18 @@
 	if(A.totalResistance() >= 5)
 		absorption_coeff = 0.25
 
-/datum/symptom/heal/water/CanHeal(datum/disease/advance/A)
+/datum/symptom/heal/water/CanHeal(datum/disease/advance/advanced_disease)
 	. = 0
-	var/mob/living/M = A.affected_mob
-	if(M.fire_stacks < 0)
-		M.adjust_fire_stacks(min(absorption_coeff, -M.fire_stacks))
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+
+	if(infected_mob.fire_stacks < 0)
+		infected_mob.adjust_fire_stacks(min(absorption_coeff, -infected_mob.fire_stacks))
 		. += power
-	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
-		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
+	if(infected_mob.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
+		infected_mob.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
 		. += power * 0.75
-	else if(M.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
-		M.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
+	else if(infected_mob.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
+		infected_mob.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
 		. += power * 0.5
 
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -472,9 +475,10 @@
 
 	return 1
 
-/datum/symptom/heal/water/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss())
+/datum/symptom/heal/water/passive_message_condition(mob/living/carbon/infected_mob)
+	if(infected_mob.getBruteLoss() || infected_mob.getFireLoss())
 		return TRUE
+
 	return FALSE
 
 /// Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
@@ -499,11 +503,12 @@
 	transmittable = -2
 	level = 8
 	passive_message = span_notice("You feel an odd attraction to plasma.")
-	var/temp_rate = 1
+	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
+	var/temp_rate = 1
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	. = ..()
@@ -535,7 +540,7 @@
 
 // Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/advanced_disease)
-	var/mob/living/diseased_mob = advanced_disease.affected_mob
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
 	var/datum/gas_mixture/environment
 	var/list/gases
 
@@ -545,24 +550,23 @@
 	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
 	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
 	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
-	if(iscarbon(diseased_mob))
-		var/mob/living/carbon/breather = diseased_mob
-		var/obj/item/tank/internals/internals_tank = breather.internal
-		if(internals_tank)
-			var/datum/gas_mixture/tank_contents = internals_tank.return_air()
-			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
-				if(tank_contents.gases[/datum/gas/plasma])
-					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
-					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
-	// Check environment
-	if(diseased_mob.loc)
-		environment = diseased_mob.loc.return_air()
-	if(environment)
-		gases = environment.gases
-		if(gases[/datum/gas/plasma])
-			. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+	var/obj/item/tank/internals/internals_tank = infected_mob.internal
+	if(internals_tank)
+		var/datum/gas_mixture/tank_contents = internals_tank.return_air()
+		if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
+			if(tank_contents.gases[/datum/gas/plasma])
+				// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
+				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
+	else // Check environment
+		if(infected_mob.loc)
+			environment = infected_mob.loc.return_air()
+		if(environment)
+			gases = environment.gases
+			if(gases[/datum/gas/plasma])
+				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+
 	// Check for reagents in bloodstream
-	if(diseased_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+	if(infected_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -650,3 +654,6 @@
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
+
+/datum/symptom/heal/radiation/can_generate_randomly()
+	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) //because people can never really suffer enough

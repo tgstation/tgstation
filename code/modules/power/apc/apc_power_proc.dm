@@ -7,11 +7,11 @@
 	if(terminal)
 		terminal.connect_to_network()
 
-/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer)
+/obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.cable_layer = cable_layer
+	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(dir)
 	terminal.master = src
 

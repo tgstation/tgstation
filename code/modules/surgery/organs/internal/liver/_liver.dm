@@ -147,7 +147,7 @@
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
 			// a 15u syringe is a nice baseline to scale lethality by
-			liver_damage += ((amount/15) * toxin.toxpwr) / liver_resistance
+			liver_damage += ((amount/15) * toxin.toxpwr * toxin.liver_damage_multiplier) / liver_resistance
 
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
@@ -229,7 +229,7 @@
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			examine_list += span_notice("[owner]'s eyes are completely yellow, and [owner.p_they()] [owner.p_are()] visibly suffering.")
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
-			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they(TRUE)] [owner.p_do()]n't look like [owner.p_they()] will be alive for much longer.")
+			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_They()] [owner.p_do()]n't look like [owner.p_they()] will be alive for much longer.")
 
 /obj/item/organ/internal/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantliver

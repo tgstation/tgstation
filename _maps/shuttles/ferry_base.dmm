@@ -28,6 +28,7 @@
 /obj/machinery/computer/shuttle/ferry/request{
 	dir = 8
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "j" = (
@@ -59,6 +60,13 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"U" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 
@@ -129,7 +137,7 @@ e
 c
 j
 l
-q
+U
 c
 "}
 (11,1,1) = {"

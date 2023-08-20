@@ -116,6 +116,15 @@
 /obj/projectile/beam/disabler/weak
 	damage = 15
 
+/obj/projectile/beam/disabler/smoothbore
+	name = "unfocused disabler beam"
+	weak_against_armour = TRUE
+
+/obj/projectile/beam/disabler/smoothbore/prime
+	name = "focused disabler beam"
+	weak_against_armour = FALSE
+	damage = 35 //slight increase in damage just for the hell of it
+
 /obj/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"

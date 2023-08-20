@@ -110,7 +110,7 @@
 		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
-			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+			if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
 	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
 		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
@@ -289,24 +289,27 @@
 *
 * Returns TRUE if it was able to run the emote, FALSE otherwise.
 */
-/mob/proc/manual_emote(text) //Just override the song and dance
-	. = TRUE
-	if(stat != CONSCIOUS)
-		return
-
+/atom/proc/manual_emote(text)
 	if(!text)
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
 	log_message(text, LOG_EMOTE)
-
-	var/ghost_text = "<b>[src]</b> [text]"
-
-	var/origin_turf = get_turf(src)
-	if(client)
-		for(var/mob/ghost as anything in GLOB.dead_mob_list)
-			if(!ghost.client || isnewplayer(ghost))
-				continue
-			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(origin_turf, null)))
-				ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
-
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
+	return TRUE
+
+/mob/manual_emote(text)
+	if (stat != CONSCIOUS)
+		return FALSE
+	. = ..()
+	if (!.)
+		return FALSE
+	if (!client)
+		return TRUE
+	var/ghost_text = "<b>[src]</b> [text]"
+	var/origin_turf = get_turf(src)
+	for(var/mob/ghost as anything in GLOB.dead_mob_list)
+		if(!ghost.client || isnewplayer(ghost))
+			continue
+		if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(origin_turf, null)))
+			ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
+	return TRUE

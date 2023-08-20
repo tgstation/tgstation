@@ -51,6 +51,8 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// called post /obj/item initialize (obj/item/created_item)
+#define COMSIG_GLOB_ATOM_AFTER_POST_INIT "!atom_after_post_init"
 /// an obj/machinery is created! (obj/machinery/created_machine)
 #define COMSIG_GLOB_NEW_MACHINE "!new_machine"
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
@@ -72,6 +74,9 @@
 /// global signal sent when a nuclear device is disarmed (/obj/machinery/nuclearbomb/nuke/disarmed_nuke)
 #define COMSIG_GLOB_NUKE_DEVICE_DISARMED "!nuclear_device_disarmed"
 
+/// global signal sent when a nuclear device is detonating (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
+#define COMSIG_GLOB_NUKE_DEVICE_DETONATING "!nuclear_device_detonating"
+
 /// Global signal sent when a light mechanism is completed (try_id)
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
 
@@ -81,3 +86,6 @@
 
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
+
+/// Global signal when light debugging is canceled
+#define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"

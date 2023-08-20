@@ -50,6 +50,13 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	icon_state = "shadowshroom"
 	myseed = /obj/item/seeds/glowshroom/shadowshroom
 
+/// Mapping object, a glowshroom that doesn't spread or die
+/obj/structure/glowshroom/single
+
+/obj/structure/glowshroom/single/Initialize(mapload, obj/item/seeds/newseed)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
 /obj/structure/glowshroom/single/Spread()
 	return
 

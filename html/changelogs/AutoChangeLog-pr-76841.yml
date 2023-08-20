@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - qol: "laser muskets' inhand sprites will show now whether or not they are charged"
-  - image: "new inhand sprites for the laser muskets"

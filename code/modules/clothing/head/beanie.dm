@@ -14,7 +14,7 @@
 	custom_price = PAYCHECK_CREW * 1.2
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	greyscale_config = /datum/greyscale_config/beanie
-	greyscale_config_worn = /datum/greyscale_config/beanie_worn
+	greyscale_config_worn = /datum/greyscale_config/beanie/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/beanie/black

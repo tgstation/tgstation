@@ -417,7 +417,7 @@
 
 /obj/machinery/door/window/unrestricted_side(mob/opener)
 	if(get_turf(opener) == loc)
-		return turn(dir,180) & unres_sides
+		return REVERSE_DIR(dir) & unres_sides
 	return ..()
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
@@ -441,7 +441,7 @@
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 32)
 	return FALSE
 
 /obj/machinery/door/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

@@ -306,6 +306,13 @@
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/gravitum
+	name = "gravitum pill"
+	desc = "Used in weight loss. In a way."
+	icon_state = "pill8"
+	list_reagents = list(/datum/reagent/gravitum = 5)
+	rename_with_volume = TRUE
+
 // Pill styles for chem master
 
 /obj/item/reagent_containers/pill/style

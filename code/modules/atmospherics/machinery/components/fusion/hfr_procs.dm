@@ -38,7 +38,7 @@
 			corners |= object
 			continue
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
@@ -53,7 +53,7 @@
 		if(object.panel_open)
 			. = FALSE
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
