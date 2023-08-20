@@ -57,7 +57,7 @@
 		return
 
 	// otherwise deal brute damage
-	owner.adjustBruteLoss(rand(2,4) * seconds_between_ticks)
+	owner.apply_damage(rand(2,4) * seconds_between_ticks, damagetype = BRUTE)
 
 	if(SPT_PROB(10, seconds_between_ticks))
 		var/feedback_text = pick(list(
@@ -70,8 +70,11 @@
 /datum/status_effect/slimed/update_particles()
 	if(particle_effect)
 		return
+
 	// taste the rainbow
-	particle_effect = new(owner, rainbow ? /particles/slime/rainbow : /particles/slime)
+	var/particle_type = rainbow ? /particles/slime/rainbow : /particles/slime
+	particle_effect = new(owner, particle_type)
+
 	if(!rainbow)
 		particle_effect.particles.color = "[slime_color]a0"
 
