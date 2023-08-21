@@ -1,4 +1,4 @@
-GLOBAL_REAL_VAR(starlight_color) = pick(COLOR_TEAL, COLOR_GREEN, COLOR_SILVER, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE) //monkestation addition
+GLOBAL_REAL_VAR(starlight_color) = pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE) //monkestation addition
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
@@ -23,7 +23,7 @@ GLOBAL_REAL_VAR(starlight_color) = pick(COLOR_TEAL, COLOR_GREEN, COLOR_SILVER, C
 	layer = SPACE_LAYER
 	light_power = 0.75
 	light_inner_range = 0.1
-	light_outer_range = 1.0
+	light_outer_range = 4
 	light_falloff_curve = 5
 	space_lit = TRUE
 	bullet_bounce_sound = null
