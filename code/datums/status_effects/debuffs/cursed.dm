@@ -9,12 +9,20 @@
 	var/curse_count = 0
 	/// Raw probability we have to deal damage this tick.
 	var/damage_chance = 10
+	/// The hand we are branded to.
+	var/obj/item/bodypart/branded_hand = null
 
 /datum/status_effect/grouped/cursed/on_apply()
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_USE, PROC_REF(check_curses))
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_LOST, PROC_REF(update_curse_count))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON, PROC_REF(clear_curses))
 	update_curse_count()
+	return ..()
+
+/datum/status_effect/grouped/cursed/Destroy()
+	UnregisterSignal(owner, list(COMSIG_CURSED_SLOT_MACHINE_USE, COMSIG_CURSED_SLOT_MACHINE_LOST))
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON)
+	branded_hand = null
 	return ..()
 
 /// Checks the number of curses we have and returns information back to the slot machine.
@@ -43,12 +51,14 @@
 
 	var/list/messages = list()
 	switch(curse_count)
-		if(1)
+		if(1) // basically your first is a "freebie" that will still require urgent medical attention and will leave you smoking forever but could be worse tbh
 			if(ishuman(owner))
 				var/mob/living/carbon/human/human_owner = owner
 				playsound(human_owner, SFX_SEAR, 50, TRUE)
 				var/obj/item/bodypart/affecting = human_owner.get_active_hand()
-				affecting.receive_damage(burn = 20) // did you get the message?
+				branded_hand = affecting
+				affecting.force_wound_upwards(/datum/wound/burn/severe/cursed_brand, wound_source = "curse of the slot machine")
+				affecting.receive_damage(burn = 20)
 
 			messages += span_boldwarning("Your hand burns, and you quickly let go of the lever! You feel a little sick as the nerves deaden in your hand...")
 			messages += span_boldwarning("Some smoke appears to be coming out of your hand now, but it's not too bad...")
@@ -91,6 +101,10 @@
 /datum/status_effect/grouped/cursed/proc/clear_curses()
 	SIGNAL_HANDLER
 
+	if(!isnull(branded_hand))
+		var/datum/wound/brand = branded_hand.get_wound_type(/datum/wound/burn/severe/cursed_brand)
+		brand.remove_wound()
+
 	owner.visible_message(
 		span_notice("The smoke slowly clears from [owner.name]..."),
 		span_notice("Your skin finally settles down and your throat no longer feels as dry... The brand disappearing confirms that the curse has been lifted."),
@@ -109,7 +123,7 @@
 	particle_effect = new(owner, particle_path)
 
 /datum/status_effect/grouped/cursed/tick(seconds_between_ticks)
-	if(curse_count == 1)
+	if(curse_count <= 1)
 		return // you get one "freebie" (single damage) to nudge you into thinking this is a bad idea before the house begins to win.
 
 	// the house won.
