@@ -44,7 +44,7 @@
 
 /datum/action/cooldown/mob_cooldown/burrow/Activate()
 	var/mob/living/basic/mining/goldgrub/grub_owner = owner
-	var/obj/effect/dummy/phased_mob/holder = null
+	var/obj/effect/dummy/phased_mob/grub_burrow/holder = null
 	var/turf/current_loc = get_turf(owner)
 
 	if(!do_after(owner, 3 SECONDS, target = current_loc))
@@ -58,7 +58,7 @@
 	if(!grub_owner.burrowed)
 		owner.visible_message(span_danger("[owner] buries into the ground, vanishing from sight!"))
 		playsound(get_turf(owner), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob(current_loc, owner)
+		holder = new /obj/effect/dummy/phased_mob/grub_burrow(current_loc, owner)
 		grub_owner.burrowed = TRUE
 		return TRUE
 
@@ -75,3 +75,15 @@
 	playsound(current_loc, 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	StartCooldown()
 	return TRUE
+
+/obj/effect/dummy/phased_mob/grub_burrow
+
+/obj/effect/dummy/phased_mob/grub_burrow/phased_check(mob/living/user, direction)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(!ismineralturf(.) && !isasteroidturf(.))
+		to_chat(user, span_warning("You cannot dig through this floor!"))
+		return null

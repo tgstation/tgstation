@@ -474,6 +474,7 @@
 		return ..()
 	return charger.summoner == user
 
+/datum/component/riding/creature/goldgrub
 
 /datum/component/riding/creature/goldgrub/handle_specials()
 	. = ..()
