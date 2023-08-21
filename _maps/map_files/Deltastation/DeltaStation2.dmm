@@ -58375,9 +58375,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "oIL" = (
-/obj/item/computer_disk/atmos,
-/obj/item/computer_disk/atmos,
-/obj/item/computer_disk/atmos,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/item/computer_disk/engineering,
