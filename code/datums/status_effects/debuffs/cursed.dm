@@ -27,8 +27,39 @@
 		return SLOT_MACHINE_USE_CANCEL // slot machine will handle the killing and all of that jazz
 
 	linked_alert.update_description()
-
 	update_particles()
+
+	addtimer(CALLBACK(src, PROC_REF(send_cursed_message)), 0.5 SECONDS)
+
+/// Makes a nice lorey message about the curse level we're at. I think it's nice
+/datum/status_effect/grouped/cursed/proc/send_cursed_message()
+	var/list/messages = list()
+	switch(curse_count)
+		if(1)
+			messages += span_boldwarning("Your hand burns, and you quickly let go of the lever! You feel a little sick as the nerves deaden in your hand...")
+			messages += span_boldwarning("Some smoke appears to be coming out of your hand now, but it's not too bad...")
+			//add damage to indexed hand
+
+		if(2)
+			messages += span_boldwarning("The machine didn't burn you this time, it must be some arcane work of the brand recognizing a source...")
+			messages += span_boldwarning("Blisters and boils start to appear over your skin. Is it too late to stop now?")
+
+		if(3)
+			owner.emote("cough")
+			messages += span_boldwarning("Your throat becomes to feel like it's slowly caking up with sand and dust. You eject the contents of the back of your throat onto your good hand.")
+			messages += span_boldwarning("It is sand. Crimson red.")
+
+		if(4)
+			messages += span_boldwarning("A migraine swells over your head as your thoughts become hazy. Your hand desperately inches closer towards the slot machine for one final pull...")
+			messages += span_boldwarning("The ultimate test of mind over matter. You can jerk your own muscle back in order to prevent a terrible fate, but your life already is worth so little now.")
+			messages += span_boldwarning("This is what they want, is it not? To witness your failure against itself? The compulsion carries you forward as a sinking feeling of dread fills your stomach.")
+			messages += span_boldwarning("Paradoxically, where there is hopelessness, there is elation. Elation at the fact that there's still enough power in you for one more pull.")
+			messages += span_boldwarning("Your legs quiver on the thought of running away from this wretched machination, but your own arm remains complacent in the thought of seeing spinning wheels.")
+			messages += span_boldwarning("The toll has already been exacted. There is no longer death on 'your' terms. Is your dignity worth more than your life?")
+
+	for(var/message in messages)
+		owner.to_chat(message)
+		sleep(1 SECONDS) // yes yes a bit fast but it can be a lot of text and i want the whole thing to send before the cooldown on the slot machine might expire
 
 /// Cleans ourselves up and removes our curses. Meant to be done in a "positive" way, when the curse is broken. Directly use qdel otherwise.
 /datum/status_effect/grouped/cursed/proc/clear_curses()
@@ -36,7 +67,7 @@
 
 	owner.visible_message(
 		span_notice("The smoke slowly clears from [owner.name]..."),
-		span_notice("Your skin finally settles down and your throat no longer feels as dry... The curse has been lifted."),
+		span_notice("Your skin finally settles down and your throat no longer feels as dry... The brand disappearing confirms that the curse has been lifted."),
 	)
 	qdel(src)
 
@@ -55,7 +86,7 @@
 		return // what
 
 	if(curse_count == 1)
-		return // you get one freebie before the house begins to win.
+		return // you get one "freebie" (single damage) to nudge you into thinking this is a bad idea before the house begins to win.
 
 	// the house won.
 	var/effective_percentile_chance = damage_chance * (curse_count == 2 ? 1 : curse_count) // 10 to 40 percent depending on how cursed we are

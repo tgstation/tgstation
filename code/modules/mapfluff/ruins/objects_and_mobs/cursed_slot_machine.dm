@@ -16,6 +16,8 @@
 	var/damage_on_roll = 20
 	/// machine's reward when you hit jackpot
 	var/prize = /obj/structure/cursed_money
+	/// Cooldown between pulls of the cursed slot machine.
+	COOLDOWN_DECLARE(spin_cooldown)
 
 /obj/structure/cursed_slot_machine/Initialize(mapload)
 	. = ..()
@@ -25,14 +27,15 @@
 /obj/structure/cursed_slot_machine/interact(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	if(obj_flags & IN_USE)
+	if(obj_flags & IN_USE || !COOLDOWN_FINISHED(src, spin_cooldown))
+		to_chat(user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
 		return
 	obj_flags |= IN_USE
 
 	var/signal_value = SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_USE)
 
 	if(signal_value & SLOT_MACHINE_USE_CANCEL)
-		to_chat(user, span_userdanger("No... just one more try..."))
+		user.to_chat(span_userdanger("Why couldn't I get one more try?!"))
 		user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		user.gib()
 		return
@@ -46,6 +49,7 @@
 	update_appearance()
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(determine_victor), user), 5 SECONDS)
+	COOLDOWN_START(src, spin_cooldown, 10 SECONDS)
 
 /obj/structure/cursed_slot_machine/update_overlays()
 	. = ..()
@@ -58,8 +62,6 @@
 	update_appearance()
 	obj_flags &= ~IN_USE
 	if(!prob(win_prob))
-		if(user)
-			to_chat(user, span_boldwarning("Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?"))
 		return
 
 	playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
