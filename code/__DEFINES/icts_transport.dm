@@ -24,6 +24,16 @@
 #define BIRDSHOT_LINE_1 "bird_1"
 #define BIRDSHOT_LINE_2 "bird_2"
 
+/// ICTS Elevator IDs
+#define ELEVATOR_1 "elev_1"
+#define ELEVATOR_2 "elev_2"
+#define ELEVATOR_3 "elev_3"
+#define ELEVATOR_4 "elev_4"
+#define ELEVATOR_5 "elev_5"
+#define ELEVATOR_6 "elev_6"
+#define ELEVATOR_7 "elev_7"
+#define ELEVATOR_8 "elev_8"
+
 #define PLATFORM_ACTIVE 1
 
 // Flags for the ICTS Tram VOBC (vehicle on-board computer)

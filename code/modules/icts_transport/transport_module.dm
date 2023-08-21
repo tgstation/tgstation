@@ -837,11 +837,10 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 
-	//the following are only used to give to the transport_controller datum when it's first created
-
 	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the transport_controller
 	var/speed_limiter = 0.5
 
+	/// Do we want this transport to link with nearby modules to make a multi-tile platform
 	create_modular_set = TRUE
 
 /datum/armor/structure_tram

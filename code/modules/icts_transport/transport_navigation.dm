@@ -1,3 +1,6 @@
+/**
+ * transport_controller landmarks. used to map specific destinations on the map.
+ */
 /obj/effect/landmark/icts/nav_beacon/tram
 	name = "tram destination" //the tram buttons will mention this.
 	icon_state = "tram"
@@ -18,7 +21,20 @@
 	LAZYREMOVEASSOC(SSicts_transport.nav_beacons, specific_transport_id, src)
 	return ..()
 
+/**
+ * transport_controller landmarks. used to map in specific_transport_id to trams and elevators. when the transport_controller encounters one on a tile
+ * it sets its specific_transport_id to that landmark. allows you to have multiple trams and multiple objects linking to their specific tram
+ */
+/obj/effect/landmark/icts/transport_id
+	name = "transport init landmark"
+	icon_state = "lift_id"
+	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
+	var/specific_transport_id
+
 //tramstation
+
+/obj/effect/landmark/icts/transport_id/tramstation/line_1
+	specific_transport_id = TRAMSTATION_LINE_1
 
 /obj/effect/landmark/icts/nav_beacon/tram/tramstation/west
 	name = "West Wing"
@@ -36,6 +52,12 @@
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
 
 //birdshot
+
+/obj/effect/landmark/icts/transport_id/birdshot/line_1
+	specific_transport_id = BIRDSHOT_LINE_1
+
+/obj/effect/landmark/icts/transport_id/birdshot/line_2
+	specific_transport_id = BIRDSHOT_LINE_2
 
 /obj/effect/landmark/icts/nav_beacon/tram/birdshot/sec_wing
 	name = "Security Wing"
@@ -57,24 +79,34 @@
 	platform_code = BRIDSHOT_MAINTENANCE_RIGHT
 	tgui_icons = list("Starboard Platform" = "plane-arrival")
 
-/**
- * lift_id landmarks. used to map in specific_transport_id to trams. when the trams transport_controller encounters one on a trams tile
- * it sets its specific_transport_id to that landmark. allows you to have multiple trams and multiple controls linking to their specific tram
- */
-/obj/effect/landmark/icts/transport_id
-	name = "transport init landmark"
-	icon_state = "lift_id"
-	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
-	var/specific_transport_id
-
-/obj/effect/landmark/icts/transport_id/birdshot/line_1
-	specific_transport_id = BIRDSHOT_LINE_1
-
-/obj/effect/landmark/icts/transport_id/birdshot/line_2
-	specific_transport_id = BIRDSHOT_LINE_2
+//ruins
 
 /obj/effect/landmark/icts/transport_id/hilbert/line_1
 	specific_transport_id = HILBERT_LINE_1
 
-/obj/effect/landmark/icts/transport_id/tramstation/line_1
-	specific_transport_id = TRAMSTATION_LINE_1
+//elevators
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_1
+	specific_transport_id = ELEVATOR_1
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_2
+	specific_transport_id = ELEVATOR_2
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_3
+	specific_transport_id = ELEVATOR_3
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_4
+	specific_transport_id = ELEVATOR_4
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_5
+	specific_transport_id = ELEVATOR_5
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_6
+	specific_transport_id = ELEVATOR_6
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_7
+	specific_transport_id = ELEVATOR_7
+
+/obj/effect/landmark/icts/transport_id/elevators/elev_8
+	specific_transport_id = ELEVATOR_8
+

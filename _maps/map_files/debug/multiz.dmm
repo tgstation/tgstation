@@ -1428,7 +1428,7 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "yX" = (
-/obj/effect/landmark/lift_id{
+/obj/effect/landmark/icts/transport_id{
 	specific_lift_id = "test_vator"
 	},
 /obj/machinery/light/floor,

@@ -32377,7 +32377,7 @@
 /obj/structure/transport/linear{
 	radial_travel = 0
 	},
-/obj/effect/landmark/lift_id{
+/obj/effect/landmark/icts/transport_id{
 	specific_lift_id = "publicElevator"
 	},
 /obj/machinery/light/floor,
