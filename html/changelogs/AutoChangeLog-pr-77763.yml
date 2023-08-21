@@ -1,0 +1,7 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Watchers have less health"
+  - balance: "You can't be overwatched by several watchers at a time"
+  - balance: "Watchers won't overwatch you instantly upon seeing you"
+  - balance: "Goliaths won't launch tentacles at you instantly upon seeing you"
