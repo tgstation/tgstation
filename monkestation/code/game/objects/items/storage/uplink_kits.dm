@@ -18,5 +18,3 @@
 		/obj/item/clothing/gloves/combat/maid = 1,
 		/obj/item/clothing/accessory/maidapron/syndicate = 1,)
 	generate_items_inside(items_inside,src)\
-
-
