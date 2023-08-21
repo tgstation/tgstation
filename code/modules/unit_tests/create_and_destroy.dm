@@ -39,6 +39,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/machinery/atm,
 		/datum/hotspot,
 		/obj/machinery/ocean_elevator,
+		/atom/movable/outdoor_effect,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)

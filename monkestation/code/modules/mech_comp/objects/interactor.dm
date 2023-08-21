@@ -125,12 +125,16 @@
 			if(!right_clicks)
 				listed_atom.attack_hand(dummy_human)
 			else
+				dummy_human.istate |= ISTATE_SECONDARY
 				listed_atom.attack_hand_secondary(dummy_human)
+				dummy_human.istate &= ~ISTATE_SECONDARY
 		else
 			if(!right_clicks)
 				held_item.melee_attack_chain(dummy_human, listed_atom)
 			else
-				held_item.melee_attack_chain(dummy_human, listed_atom, "button=right;right=1")
+				dummy_human.istate |= ISTATE_SECONDARY
+				held_item.melee_attack_chain(dummy_human, listed_atom)
+				dummy_human.istate &= ~ISTATE_SECONDARY
 
 	for(var/atom/movable/listed_atom in src)
 		if(listed_atom == dummy_human)

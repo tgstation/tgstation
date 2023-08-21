@@ -169,6 +169,10 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_WATER S_OBJ(73) ///obj/effect/abstract/liquid_turf
 
+#define SMOOTH_GROUP_WINDOW_SILL S_OBJ(74)
+
+#define SMOOTH_GROUP_GRILLE S_OBJ(75)
+
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
 #define SETUP_SMOOTHING(...) \
