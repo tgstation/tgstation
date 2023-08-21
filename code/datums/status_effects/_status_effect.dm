@@ -205,3 +205,8 @@
 /atom/movable/screen/alert/status_effect/Destroy()
 	attached_effect = null //Don't keep a ref now
 	return ..()
+
+/// Based on what's going on with our status effect and the amount of curses we have, update our description.
+/// Only for subtypes
+/atom/movable/screen/alert/status_effect/proc/update_description()
+	SHOULD_CALL_PARENT(FALSE)

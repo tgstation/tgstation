@@ -28,9 +28,10 @@
 	if(obj_flags & IN_USE)
 		return
 	obj_flags |= IN_USE
-	user.adjustCloneLoss(damage_on_roll)
 
-	if(user.stat != CONSCIOUS)
+	var/signal_value = SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_USE)
+
+	if(signal_value & SLOT_MACHINE_USE_CANCEL)
 		to_chat(user, span_userdanger("No... just one more try..."))
 		user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		user.gib()
@@ -64,10 +65,10 @@
 	playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
 	new prize(get_turf(src))
 	if(user)
-		to_chat(user, span_boldwarning("You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place."))
+		to_chat(user, span_boldwarning("You've hit the jackpot!!! Laughter echoes around you as your reward appears in the machine's place."))
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CURSED_SLOT_MACHINE_WON)
 	qdel(src)
-
 
 /// Prize given out by the cursed slot machine that will give the user one Die of Fate and then delete itself.
 /obj/structure/cursed_money
