@@ -32,7 +32,7 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 1
 	show_in_report = TRUE
-	report_message = "Our broadcast license for the common channel frequency in this sector has failed to be renewed. The frequency has therefore been disabled from your telecomms network in order to avoid any legal issues, although it has been kept for the intercom systems."
+	report_message = "Our broadcast license for the common channel frequency in this sector has failed to be renewed. The frequency has been disabled from your telecomms network in order to avoid any legal issues, although it has been kept in the intercom system."
 	trait_to_give = STATION_TRAIT_COMMON_DISABLED
 
 /datum/station_trait/common_disabled/on_round_start()
