@@ -1,6 +1,6 @@
 /obj/item/seeds/coconut
 	name = "coconut tree"
-	desc = "A coconut tree"
+	desc = "A coconut tree."
 	seed_offset = -12
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_seed"

@@ -1,6 +1,6 @@
 /obj/item/food/grown/coconut
-	name = "Coconut"
-	desc = "a fruit with a hardshell, filled with sweet coconut milk"
+	name = "coconut"
+	desc = "A fruit with a hardshell, filled with sweet coconut milk."
 
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut"
@@ -23,7 +23,7 @@
 	seed = /obj/item/seeds/coconut/gun
 
 /obj/item/gun/energy/laser/coconut_gun
-	name = "\improper coconut gun"
+	name = "coconut gun"
 	desc = "A gun that shoots coconuts, 'nuff said."
 
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
