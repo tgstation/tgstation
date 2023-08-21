@@ -83,9 +83,10 @@
 		return
 
 	var/list/datum/wound/possible_wounds = list()
-	for (var/wound_type as anything in GLOB.global_wound_types[woundtype])
-		if (biological_state & text2num(wound_type)) // must be stored as a string, sadly, due to how indexes and shit work
-			possible_wounds += GLOB.global_wound_types[woundtype][wound_type]
+	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
+		if (pregen_data.can_be_applied_to(src, woundtype))
+			possible_wounds += type
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -100,11 +101,11 @@
 	for(var/datum/wound/possible_wound as anything in possible_wounds)
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)
-			if(existing_wound.type in possible_wounds)
+			if(existing_wound.wound_series == initial(possible_wound.wound_series))
 				if(existing_wound.severity >= initial(possible_wound.severity))
 					return
 				else
-					replaced_wound = existing_wound
+					replaced_wound = existing_wound // if we find something we keep iterating untilw e're done or we find we're outclassed by something in our series
 
 		if(initial(possible_wound.threshold_minimum) < injury_roll)
 			var/datum/wound/new_wound
@@ -122,7 +123,7 @@
 
 	var/datum/wound/potential_wound = specific_woundtype
 	for(var/datum/wound/existing_wound as anything in wounds)
-		if(existing_wound.wound_type == initial(potential_wound.wound_type))
+		if (existing_wound.wound_series == initial(potential_wound.wound_series))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
 				existing_wound.replace_wound(new potential_wound, smited)
 			return

@@ -15,8 +15,8 @@
 	a_or_from = "from"
 	wound_type = WOUND_BURN
 	processes = TRUE
-	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
-	required_limb_biostate = BIO_FLESH
+
+	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
 
 	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
 
@@ -263,6 +263,11 @@
 /datum/wound/burn/flesh/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
 
+/datum/wound_pregen_data/flesh_burn
+	abstract = TRUE
+
+	required_limb_biostate = BIO_FLESH
+
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/flesh/moderate
 	name = "Second Degree Burns"
@@ -277,6 +282,11 @@
 	status_effect_type = /datum/status_effect/wound/burn/flesh/moderate
 	flesh_damage = 5
 	scar_keyword = "burnmoderate"
+
+/datum/wound_pregen_data/flesh_burn/second_degree
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/moderate
 
 /datum/wound/burn/flesh/severe
 	name = "Third Degree Burns"
@@ -293,6 +303,11 @@
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
+
+/datum/wound_pregen_data/flesh_burn/third_degree
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/severe
 
 /datum/wound/burn/flesh/critical
 	name = "Catastrophic Burns"
@@ -311,9 +326,19 @@
 	flesh_damage = 20
 	scar_keyword = "burncritical"
 
+/datum/wound_pregen_data/flesh_burn/fourth_degree
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/critical
+
 ///special severe wound caused by sparring interference or other god related punishments.
 /datum/wound/burn/flesh/severe/brand
 	name = "Holy Brand"
 	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
 	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
 	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."
+
+/datum/wound_pregen_data/flesh_burn/holy
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/flesh/severe/brand

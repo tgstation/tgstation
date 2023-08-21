@@ -23,7 +23,7 @@
 	/// Whether this scar can actually be covered up by clothing
 	var/coverable = TRUE
 	/// Obviously, scars that describe damaged flesh wouldn't apply to a skeleton (in some cases like bone wounds, there can be different descriptions for skeletons and fleshy humanoids)
-	var/biology = BIO_FLESH_BONE
+	var/biology = BIO_STANDARD
 	/// If we're a persistent scar or may become one, we go in this character slot
 	var/persistent_character_slot = 0
 
@@ -59,7 +59,7 @@
 		if(victim)
 			LAZYADD(victim.all_scars, src)
 
-	biology = limb?.biological_state || BIO_FLESH_BONE
+	biology = limb?.biological_state || BIO_STANDARD
 
 	if((biology & BIO_BONE) && !(biology & BIO_FLESH))
 		description = pick_list(BONE_SCAR_FILE, W.scar_keyword) || "general disfigurement"
@@ -86,7 +86,7 @@
 		LAZYADD(victim.all_scars, src)
 
 /// Used to "load" a persistent scar
-/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_FLESH_BONE, char_slot)
+/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_STANDARD, char_slot)
 	if(!IS_ORGANIC_LIMB(BP))
 		qdel(src)
 		return
@@ -168,4 +168,4 @@
 /// Used to format a scar to save in preferences for persistent scars
 /datum/scar/proc/format_amputated(body_zone)
 	description = pick_list(FLESH_SCAR_FILE, "dismember")
-	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_FLESH_BONE]|[persistent_character_slot]"
+	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_STANDARD]|[persistent_character_slot]"

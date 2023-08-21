@@ -403,7 +403,7 @@
 	shock_damage *= siemens_coeff
 	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE) && (!(flags & SHOCK_IGNORE_IMMUNITY)))
 		return FALSE
 	if(shock_damage < 1)
 		return FALSE

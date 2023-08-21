@@ -182,7 +182,7 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
-	biological_state = BIO_ROBOTIC
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -304,7 +304,7 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
-	biological_state = BIO_ROBOTIC
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -402,6 +402,8 @@
 	brute_modifier = 1
 	max_damage = 20
 
+	biological_state = BIO_METAL
+
 /obj/item/bodypart/arm/right/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -410,6 +412,8 @@
 	burn_modifier = 1
 	brute_modifier = 1
 	max_damage = 20
+
+	biological_state = BIO_METAL
 
 /obj/item/bodypart/leg/left/robot/surplus
 	name = "surplus prosthetic left leg"
@@ -420,6 +424,8 @@
 	burn_modifier = 1
 	max_damage = 20
 
+	biological_state = BIO_METAL
+
 /obj/item/bodypart/leg/right/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -428,6 +434,8 @@
 	brute_modifier = 1
 	burn_modifier = 1
 	max_damage = 20
+
+	biological_state = BIO_METAL
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

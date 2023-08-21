@@ -4,7 +4,7 @@
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
 	color = "#878687"
 	greyscale_colors = "#878687"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE, MAT_CATEGORY_CONDUCTIVE=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 
@@ -53,7 +53,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Silver"
 	color = list(255/255, 284/255, 302/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#e3f1f8"
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE, MAT_CATEGORY_CONDUCTIVE=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.075
@@ -69,7 +69,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
 	greyscale_colors = "#dbdd4c"
 	strength_modifier = 1.2
-	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE, MAT_CATEGORY_CONDUCTIVE=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.15
@@ -377,7 +377,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#f2d5d796"
 	alpha = 150
 	starlight_color = COLOR_MODERATE_BLUE
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE, MAT_CATEGORY_CONDUCTIVE=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
 	value_per_unit = 700 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.35
@@ -444,7 +444,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Mir'ntrath barhah Nar'sie."
 	color = "#3C3434"
 	greyscale_colors = "#3C3434"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE, MAT_CATEGORY_CONDUCTIVE=TRUE)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
@@ -461,7 +461,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Clock Cult? Never heard of it."
 	color = "#92661A"
 	greyscale_colors = "#92661A"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE, MAT_CATEGORY_CONDUCTIVE=TRUE)
 	sheet_type = /obj/item/stack/sheet/bronze
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)

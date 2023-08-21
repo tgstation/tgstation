@@ -407,7 +407,7 @@
 
 	var/still_bleeding = FALSE
 	for(var/datum/wound/bleeding_thing as anything in throat.wounds)
-		if(bleeding_thing.wound_type == WOUND_SLASH && bleeding_thing.severity > WOUND_SEVERITY_MODERATE)
+		if((bleeding_thing.get_required_biostate() & BIO_BLOODED) && bleeding_thing.wound_type == WOUND_SLASH && bleeding_thing.severity > WOUND_SEVERITY_MODERATE)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)

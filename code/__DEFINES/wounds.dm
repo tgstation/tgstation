@@ -48,7 +48,6 @@
 
 // ~biology defines
 // What kind of biology a limb has, and what wounds it can suffer
-/// golems and androids, cannot suffer any wounds
 #define BIO_INORGANIC NONE
 /// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
 #define BIO_BONE (1<<0)
@@ -56,9 +55,39 @@
 #define BIO_FLESH (1<<1)
 /// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_BONE and BIO_FLESH
 #define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
-#define BIO_ROBOTIC (1<<2)
+#define BIO_METAL (1<<2)
+#define BIO_WIRED (1<<3)
+#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
+/// Does this limb have blood? Can suffer bleeding wounds
+#define BIO_BLOODED (1<<4)
+#define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
 
-// ~wound global lists
+#define BIO_EXTERIOR (1<<0)
+#define BIO_INTERIOR (1<<1)
+#define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
+
+GLOBAL_LIST_INIT(bio_state_states, list(
+	"[BIO_BONE]" = BIO_EXTERIOR,
+	"[BIO_WIRED]" = BIO_INTERIOR,
+	"[BIO_METAL]" = BIO_EXTERIOR_AND_INTERIOR,
+	"[BIO_FLESH]" = BIO_INTERIOR,
+	"[BIO_BLOODED]" = BIO_INTERIOR,
+))
+
+#define WOUND_SERIES_FLESH_SLASH_BLEED 1
+#define WOUND_SERIES_BONE_BLUNT_BASIC 2
+#define WOUND_SERIES_FLESH_BURN_BASIC 3
+#define WOUND_SERIES_FLESH_PUNCTURE_BLEED 4
+
+#define WOUND_SERIES_METAL_SLASH_BLEED 5
+#define WOUND_SERIES_METAL_BLUNT_BASIC 6
+#define WOUND_SERIES_METAL_BURN_OVERHEAT 7
+#define WOUND_SERIES_METAL_PUNCTURE_BLEED 8
+
+#define WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE 9
+#define WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE 10
+
+/*// ~wound global lists
 // list in order of highest severity to lowest
 GLOBAL_LIST_INIT(global_wound_types, list(
 	WOUND_BLUNT = list(
@@ -71,14 +100,14 @@ GLOBAL_LIST_INIT(global_wound_types, list(
 		//"[BIO_ROBOTIC]" = list(/datum/wound/slash/robotic/critical, /datum/wound/slash/robotic/severe, /datum/wound/slash/robotic/moderate)
 	),
 	WOUND_PIERCE = list(
-		"[BIO_FLESH]" = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
+		"[BIO_FLESH]" = list(/datum/wound/pierce/bleed/critical, /datum/wound/pierce/bleed/severe, /datum/wound/pierce/bleed/moderate),
 		//"[BIO_ROBOTIC]" = list(/datum/wound/slash/robotic/critical, /datum/wound/slash/robotic/severe, /datum/wound/slash/robotic/moderate)
 	),
 	WOUND_BURN = list(
 		"[BIO_FLESH]" = list(/datum/wound/burn/flesh/critical, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/moderate),
 		"[BIO_ROBOTIC]" = list(/datum/wound/burn/robotic/overheat/critical, /datum/wound/burn/robotic/overheat/severe, /datum/wound/burn/robotic/overheat/moderate)
 	)
-))
+))*/
 
 // every single type of wound that can be rolled naturally, in case you need to pull a random one
 GLOBAL_LIST_INIT(global_all_wound_types, list(
@@ -88,9 +117,9 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 	/datum/wound/slash/flesh/critical,
 	/datum/wound/slash/flesh/severe,
 	/datum/wound/slash/flesh/moderate,
-	/datum/wound/pierce/critical,
-	/datum/wound/pierce/severe,
-	/datum/wound/pierce/moderate,
+	/datum/wound/pierce/bleed/critical,
+	/datum/wound/pierce/bleed/severe,
+	/datum/wound/pierce/bleed/moderate,
 	/datum/wound/burn/flesh/critical,
 	/datum/wound/burn/flesh/severe,
 	/datum/wound/burn/flesh/moderate,
@@ -115,6 +144,8 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define WOUND_BURN_SANITIZATION_RATE 0.075
 /// how much blood you can lose per tick per slash max.
 #define WOUND_SLASH_MAX_BLOODFLOW 4.5
+/// ^ but for robotic wounds
+#define WOUND_SLASH_ROBOTIC_MAX_BLOODFLOW WOUND_SLASH_MAX_BLOODFLOW * 10
 /// further slash attacks on a bodypart with a slash wound have their blood_flow further increased by damage * this (10 damage slash adds .25 flow)
 #define WOUND_SLASH_DAMAGE_FLOW_COEFF 0.025
 /// if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)
@@ -134,9 +165,9 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 
 // ~wound flag defines
 /// If this wound requires having the BIO_FLESH biological_state on the limb
-#define FLESH_WOUND (1<<0)
+//#define FLESH_WOUND (1<<0)
 /// If this wound requires having the BIO_BONE biological_state on the limb
-#define BONE_WOUND (1<<1)
+//#define BONE_WOUND (1<<1)
 /// If having this wound counts as mangled flesh for dismemberment
 #define MANGLES_FLESH (1<<2)
 /// If having this wound counts as mangled bone for dismemberment

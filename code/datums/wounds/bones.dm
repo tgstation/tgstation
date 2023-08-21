@@ -4,9 +4,13 @@
 */
 // TODO: well, a lot really, but i'd kill to get overlays and a bonebreaking effect like Blitz: The League, similar to electric shock skeletons
 
+/datum/wound_pregen_data/bone
+	abstract = TRUE
+	required_limb_biostate = BIO_BONE
+
 /datum/wound/blunt/bone
 	name = "Blunt (Bone) Wound"
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE)
 
 	/// Have we been bone gel'd?
 	var/gelled
@@ -27,7 +31,7 @@
 	/// If this is a chest wound and this is set, we have this chance to cough up blood when hit in the chest
 	var/internal_bleeding_chance = 0
 
-	required_limb_biostate = BIO_BONE
+	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
 
 /*
 	Overwriting of base procs
@@ -186,16 +190,21 @@
 	examine_desc = "is awkwardly janked out of place"
 	occur_text = "janks violently and becomes unseated"
 	severity = WOUND_SEVERITY_MODERATE
-	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
 	limp_chance = 50
 	threshold_minimum = 35
 	threshold_penalty = 15
 	treatable_tool = TOOL_BONESET
-	wound_flags = (BONE_WOUND)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "bluntmoderate"
+
+/datum/wound_pregen_data/bone/dislocate
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/bone/moderate
+
+	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 /datum/wound/blunt/bone/moderate/Destroy()
 	if(victim)
@@ -316,8 +325,13 @@
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
+
+/datum/wound_pregen_data/bone/hairline
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/bone/severe
 
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/bone/critical
@@ -341,8 +355,13 @@
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
+
+/datum/wound_pregen_data/bone/compound
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/bone/critical
 
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/blunt/bone/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")

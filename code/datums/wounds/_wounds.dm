@@ -37,9 +37,9 @@
 	var/severity = WOUND_SEVERITY_MODERATE
 	/// The list of wounds it belongs in, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN
 	var/wound_type
+	/// The series of wounds this is in. Ex. WOUND_SERIES_BLEED_SLASH = avulsions, abrasions...
+	var/wound_series
 
-	/// What body zones can we affect
-	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
 	/// The bodypart we're parented to
@@ -92,11 +92,7 @@
 	var/wound_source
 
 	/// What flags apply to this wound
-	var/wound_flags = (FLESH_WOUND | BONE_WOUND | ACCEPTS_GAUZE)
-
-	/// What biological_state flags a limb must have to receive this wound
-	var/required_limb_biostate = NONE
-	var/requires_all_biostates = FALSE
+	var/wound_flags = (ACCEPTS_GAUZE)
 
 /datum/wound/Destroy()
 	if(attached_surgery)
@@ -124,22 +120,21 @@
  * * wound_source: The source of the wound, such as a weapon.
  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED) || (L.owner.status_flags & GODMODE))
+	/*if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED) || (L.owner.status_flags & GODMODE))
 		qdel(src)
 		return
 
 	// Checks for biological state, to ensure only valid wounds are applied on the limb
 	if (!(L.biological_state & required_limb_biostate))
 		qdel(src)
-		return
+		return*/
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
-	for(var/i in L.wounds)
-		var/datum/wound/preexisting_wound = i
-		if((preexisting_wound.type == type) && (preexisting_wound != old_wound))
-			qdel(src)
-			return
+
+	if (!can_be_applied_to(L, old_wound))
+		qdel(src)
+		return FALSE
 
 	if(isitem(wound_source))
 		var/obj/item/wound_item = wound_source
@@ -182,6 +177,23 @@
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
 		second_wind()
+
+	return TRUE
+
+/datum/wound/proc/can_be_applied_to(obj/item/bodypart/L, datum/wound/old_wound)
+	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
+
+	return pregen_data.can_be_applied_to(L, wound_type, old_wound)
+
+/datum/wound/proc/get_viable_zones()
+	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
+
+	return pregen_data.viable_zones
+
+/datum/wound/proc/get_required_biostate()
+	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
+
+	return pregen_data.required_limb_biostate
 
 // Updates descriptive texts for the wound, in case it can get altered for whatever reason
 /datum/wound/proc/update_descriptions()
@@ -364,7 +376,7 @@
 	return (!QDELETED(src) && limb)
 
 /// When our parent bodypart is hurt.
-/datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction)
+/datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)
 	return
 
 /// Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh
@@ -437,11 +449,11 @@
 	else
 		desc = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 
-	desc = modify_desc_before_span(desc)
+	desc = modify_desc_before_span(desc, user)
 
 	return get_desc_intensity(desc)
 
-/datum/wound/proc/modify_desc_before_span(desc)
+/datum/wound/proc/modify_desc_before_span(desc, mob/user)
 	return desc
 
 /datum/wound/proc/get_gauze_condition()

@@ -1,19 +1,9 @@
-
-/*
-	Slashing wounds
-*/
-
-/datum/wound/slash
-	name = "Slashing (Cut) Wound"
-	sound_effect = 'sound/weapons/slice.ogg'
-	wound_type = WOUND_SLASH
-
-/datum/wound_pregen_data/flesh_slash
+/datum/wound_pregen_data/robotic_bleed_slash
 	abstract = TRUE
 
-	required_limb_biostate = BIO_FLESH
+	required_limb_biostate = (BIO_METAL|BIO_BLOODED)
 
-/datum/wound/slash/flesh
+/datum/wound/slash/robotic/bleed
 	name = "Slashing (Cut) Flesh Wound"
 	processes = TRUE
 	wound_type = WOUND_SLASH
@@ -23,8 +13,7 @@
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE)
 
-	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
-
+	var/max_flow = WOUND_SLASH_ROBOTIC_MAX_BLOODFLOW
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
 	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed of the wound
@@ -41,7 +30,9 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/slash/flesh/wound_injury(datum/wound/slash/flesh/old_wound = null, attack_direction = null)
+	wound_series = WOUND_SERIES_METAL_SLASH_BLEED
+
+/datum/wound/slash/robotic/bleed/wound_injury(datum/wound/slash/flesh/old_wound = null, attack_direction = null)
 	if(old_wound)
 		set_blood_flow(max(old_wound.blood_flow, initial_flow))
 		if(old_wound.severity > severity && old_wound.highest_scar)
@@ -57,24 +48,24 @@
 		set_highest_scar(new_scar)
 		new_scar.generate(limb, src, add_to_scars=FALSE)
 
-/datum/wound/slash/flesh/proc/set_highest_scar(datum/scar/new_scar)
+/datum/wound/slash/robotic/bleed/proc/set_highest_scar(datum/scar/new_scar)
 	if(highest_scar)
 		UnregisterSignal(highest_scar, COMSIG_QDELETING)
 	if(new_scar)
 		RegisterSignal(new_scar, COMSIG_QDELETING, PROC_REF(clear_highest_scar))
 	highest_scar = new_scar
 
-/datum/wound/slash/flesh/proc/clear_highest_scar(datum/source)
+/datum/wound/slash/robotic/bleed/proc/clear_highest_scar(datum/source)
 	SIGNAL_HANDLER
 	set_highest_scar(null)
 
-/datum/wound/slash/flesh/remove_wound(ignore_limb, replaced)
+/datum/wound/slash/robotic/bleed/remove_wound(ignore_limb, replaced)
 	if(!replaced && highest_scar)
 		already_scarred = TRUE
 		highest_scar.lazy_attach(limb)
 	return ..()
 
-/datum/wound/slash/flesh/get_wound_description(mob/user)
+/datum/wound/slash/robotic/bleed/get_wound_description(mob/user)
 	if(!limb.current_gauze)
 		return ..()
 
@@ -93,11 +84,11 @@
 
 	return "<B>[msg.Join()]</B>"
 
-/datum/wound/slash/flesh/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+/datum/wound/slash/robotic/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat != DEAD && wound_bonus != CANT_WOUND && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		adjust_blood_flow(WOUND_SLASH_DAMAGE_FLOW_COEFF * wounding_dmg)
 
-/datum/wound/slash/flesh/drag_bleed_amount()
+/datum/wound/slash/robotic/bleed/drag_bleed_amount()
 	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
 	// compare with being at 100 brute damage before, where you bled (brute/100 * 2), = 2 blood per tile
 	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before! the share here is .3 blood of course.
@@ -108,7 +99,7 @@
 
 	return bleed_amt
 
-/datum/wound/slash/flesh/get_bleed_rate_of_change()
+/datum/wound/slash/robotic/bleed/get_bleed_rate_of_change()
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
 	if(no_bleeding)
 		return BLOOD_FLOW_STEADY
@@ -119,10 +110,10 @@
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
 
-/datum/wound/slash/flesh/handle_process(seconds_per_tick, times_fired)
+/datum/wound/slash/robotic/bleed/handle_process(seconds_per_tick, times_fired)
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
 	if(!no_bleeding)
-		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
+		set_blood_flow(min(blood_flow, max_flow))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 			adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
@@ -147,7 +138,7 @@
 			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [no_bleeding ? "healed up" : "stopped bleeding"]!"))
 			qdel(src)
 
-/datum/wound/slash/flesh/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/slash/robotic/bleed/on_stasis(seconds_per_tick, times_fired)
 	if(blood_flow >= minimum_flow)
 		return
 	if(demotes_to)
@@ -157,13 +148,13 @@
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
-/datum/wound/slash/flesh/check_grab_treatments(obj/item/I, mob/user)
+/datum/wound/slash/robotic/bleed/check_grab_treatments(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
 		return TRUE
 	if(I.get_temperature()) // if we're using something hot but not a cautery, we need to be aggro grabbing them first, so we don't try treating someone we're eswording
 		return TRUE
 
-/datum/wound/slash/flesh/treat(obj/item/I, mob/user)
+/datum/wound/slash/robotic/bleed/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
 		return las_cauterize(I, user)
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
@@ -171,7 +162,7 @@
 	else if(istype(I, /obj/item/stack/medical/suture))
 		return suture(I, user)
 
-/datum/wound/slash/flesh/try_handling(mob/living/carbon/human/user)
+/datum/wound/slash/robotic/bleed/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || !isfelinid(user) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
@@ -188,7 +179,7 @@
 	return TRUE
 
 /// if a felinid is licking this cut to reduce bleeding
-/datum/wound/slash/flesh/proc/lick_wounds(mob/living/carbon/human/user)
+/datum/wound/slash/robotic/bleed/proc/lick_wounds(mob/living/carbon/human/user)
 	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
 	for(var/i in victim.diseases)
 		var/datum/disease/iter_disease = i
@@ -210,16 +201,16 @@
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [victim]'s cuts."))
 
-/datum/wound/slash/flesh/on_xadone(power)
+/datum/wound/slash/robotic/bleed/on_xadone(power)
 	. = ..()
 	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
-/datum/wound/slash/flesh/on_synthflesh(power)
+/datum/wound/slash/robotic/bleed/on_synthflesh(power)
 	. = ..()
 	adjust_blood_flow(-0.075 * power) // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
 
 /// If someone's putting a laser gun up to our cut to cauterize it
-/datum/wound/slash/flesh/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
+/datum/wound/slash/robotic/bleed/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
 	user.visible_message(span_warning("[user] begins aiming [lasgun] directly at [victim]'s [limb.plaintext_zone]..."), span_userdanger("You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
 	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
@@ -235,7 +226,7 @@
 	return TRUE
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
-/datum/wound/slash/flesh/proc/tool_cauterize(obj/item/I, mob/user)
+/datum/wound/slash/robotic/bleed/proc/tool_cauterize(obj/item/I, mob/user)
 	var/improv_penalty_mult = (I.tool_behaviour == TOOL_CAUTERY ? 1 : 1.25) // 25% longer and less effective if you don't use a real cautery
 	var/self_penalty_mult = (user == victim ? 1.5 : 1) // 50% longer and less effective if you do it to yourself
 
@@ -265,7 +256,7 @@
 	return FALSE
 
 /// If someone is using a suture to close this cut
-/datum/wound/slash/flesh/proc/suture(obj/item/stack/medical/suture/I, mob/user)
+/datum/wound/slash/robotic/bleed/proc/suture(obj/item/stack/medical/suture/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.4 : 1)
 	var/treatment_delay = base_treat_time * self_penalty_mult
 
@@ -291,104 +282,85 @@
 		return TRUE
 	return TRUE
 
-/datum/wound/slash/flesh/moderate
-	name = "Rough Abrasion"
-	desc = "Patient's skin has been badly scraped, generating moderate blood loss."
-	treat_text = "Application of clean bandages or first-aid grade sutures, followed by food and rest."
-	examine_desc = "has an open cut"
-	occur_text = "is cut open, slowly leaking blood"
+/datum/wound/slash/robotic/bleed/moderate
+	name = "Abrased Tubing"
+	desc = "Internal fluid distrubution tubing has sustained a abrasion, causing momentary fluid loss."
+	treat_text = "Internal repair systems will repair this - however, clean bandages may assist, as may sutures."
+	examine_desc = "seems to be leaking fluid"
+	occur_text = "starts leaking some fluid"
 	sound_effect = 'sound/effects/wounds/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
+	max_flow = 10
 	initial_flow = 2
 	minimum_flow = 0.5
 	clot_rate = 0.05
-	threshold_minimum = 20
-	threshold_penalty = 10
-	status_effect_type = /datum/status_effect/wound/slash/flesh/moderate
+	threshold_minimum = 55 // hard to get since youre metal
+	threshold_penalty = 15
+	status_effect_type = /datum/status_effect/wound/slash/robotic/moderate
 	scar_keyword = "slashmoderate"
 
-/datum/wound/slash/flesh/moderate/update_descriptions()
+	a_or_from = "from"
+
+/datum/wound/slash/robotic/bleed/moderate/update_descriptions()
 	if(no_bleeding)
 		occur_text = "is cut open"
 
-/datum/wound_pregen_data/flesh_slash/abrasion
+/datum/wound_pregen_data/robotic_bleed_slash/abrasion
 	abstract = FALSE
 
-	wound_path_to_generate = /datum/wound/slash/flesh/moderate
+	wound_path_to_generate = /datum/wound/slash/robotic/bleed/moderate
 
-/datum/wound/slash/flesh/severe
-	name = "Open Laceration"
-	desc = "Patient's skin is ripped clean open, allowing significant blood loss."
+/datum/wound/slash/robotic/bleed/severe
+	name = "Internal Laceration"
+	desc = "Fluid pumping systems have sustained major damage, causing significant fluid loss."
 	treat_text = "Speedy application of first-aid grade sutures and clean bandages, followed by vitals monitoring to ensure recovery."
-	examine_desc = "has a severe cut"
-	occur_text = "is ripped open, veins spurting blood"
+	examine_desc = "is leaking a unnerving amount of liquid"
+	occur_text = "lets out a sudden splurt as fluid begins escaping"
 	sound_effect = 'sound/effects/wounds/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
+	max_flow = 10
 	initial_flow = 3.25
 	minimum_flow = 2.75
 	clot_rate = 0.03
-	threshold_minimum = 50
-	threshold_penalty = 25
-	demotes_to = /datum/wound/slash/flesh/moderate
-	status_effect_type = /datum/status_effect/wound/slash/flesh/severe
+	threshold_minimum = 80
+	threshold_penalty = 35
+	demotes_to = /datum/wound/slash/robotic/bleed/moderate
+	status_effect_type = /datum/status_effect/wound/slash/robotic/severe
 	scar_keyword = "slashsevere"
 
-/datum/wound_pregen_data/flesh_slash/laceration
+	a_or_from = "a"
+
+/datum/wound_pregen_data/robotic_bleed_slash/laceration
 	abstract = FALSE
 
-	wound_path_to_generate = /datum/wound/slash/flesh/severe
+	wound_path_to_generate = /datum/wound/slash/robotic/bleed/severe
 
-/datum/wound/slash/flesh/severe/update_descriptions()
+/datum/wound/slash/robotic/bleed/severe/update_descriptions()
 	if(no_bleeding)
 		occur_text = "is ripped open"
 
-/datum/wound/slash/flesh/critical
-	name = "Weeping Avulsion"
-	desc = "Patient's skin is completely torn open, along with significant loss of tissue. Extreme blood loss will lead to quick death without intervention."
+/datum/wound/slash/robotic/bleed/critical
+	name = "Shattered Pumping Matrix"
+	desc = "Subject pumping matrix has sustained extreme damage, beyond internal repair capabilities. Extreme fluid loss will follow."
 	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
-	examine_desc = "is carved down to the bone, spraying blood wildly"
-	examine_desc = "is carved down to the bone"
-	occur_text = "is torn open, spraying blood wildly"
-	occur_text = "is torn open"
+	examine_desc = "is hemmoraging fluid, showing no signs of stopping"
+	occur_text = "is torn open, a wave of fluids flying out"
 	sound_effect = 'sound/effects/wounds/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
+	max_flow = 30
 	initial_flow = 4
 	minimum_flow = 3.85
 	clot_rate = -0.015 // critical cuts actively get worse instead of better
-	threshold_minimum = 80
-	threshold_penalty = 40
-	demotes_to = /datum/wound/slash/flesh/severe
-	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
+	threshold_minimum = 140
+	threshold_penalty = 60
+	demotes_to = /datum/wound/slash/robotic/bleed/severe
+	status_effect_type = /datum/status_effect/wound/slash/robotic/critical
 	scar_keyword = "slashcritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
 
-/datum/wound_pregen_data/flesh_slash/avulsion
+	a_or_from = "a"
+
+/datum/wound_pregen_data/robotic_bleed_slash/avulsion
 	abstract = FALSE
 
-	wound_path_to_generate = /datum/wound/slash/flesh/critical
-
-/datum/wound/slash/flesh/moderate/many_cuts
-	name = "Numerous Small Slashes"
-	desc = "Patient's skin has numerous small slashes and cuts, generating moderate blood loss."
-	examine_desc = "has a ton of small cuts"
-	occur_text = "is cut numerous times, leaving many small slashes."
-
-/datum/wound_pregen_data/flesh_slash/cuts
-	abstract = FALSE
-
-	wound_path_to_generate = /datum/wound/slash/flesh/moderate/many_cuts
-
-// Subtype for cleave (heretic spell)
-/datum/wound/slash/flesh/critical/cleave
-	name = "Burning Avulsion"
-	examine_desc = "is ruptured, spraying blood wildly"
-	clot_rate = 0.01
-
-/datum/wound/slash/flesh/critical/cleave/update_descriptions()
-	if(no_bleeding)
-		occur_text = "is ruptured"
-
-/datum/wound_pregen_data/flesh_slash/cleave
-	abstract = FALSE
-
-	wound_path_to_generate = /datum/wound/slash/flesh/critical
+	wound_path_to_generate = /datum/wound/slash/robotic/bleed/critical

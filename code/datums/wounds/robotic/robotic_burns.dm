@@ -1,8 +1,10 @@
 #define ROBOTIC_BURN_T1_STARTING_TEMP_MIN (BODYTEMP_NORMAL + 200)  // kelvin
 #define ROBOTIC_BURN_T1_STARTING_TEMP_MAX (ROBOTIC_BURN_T1_STARTING_TEMP_MIN + 50)
 
-/datum/wound/burn/robotic
-	required_limb_biostate = BIO_ROBOTIC
+/datum/wound_pregen_data/burnt_metal
+	abstract = TRUE
+
+	required_limb_biostate = BIO_METAL
 
 /datum/wound/burn/robotic/overheat
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
@@ -38,6 +40,8 @@
 
 	//var/obj/effect/dummy/lighting_obj/glow
 	var/obj/effect/dummy/lighting_obj/moblight/mob_glow
+
+	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT
 
 	processes = TRUE
 
@@ -85,7 +89,7 @@
 	return ..()
 
 /datum/wound/burn/robotic/overheat/proc/get_random_starting_temperature()
-	return rand(starting_temperature_min, starting_temperature_max)
+	return LERP(starting_temperature_min, starting_temperature_max, rand())
 
 /datum/wound/burn/robotic/overheat/proc/generate_initial_glow(obj/item/bodypart/limb)
 	RETURN_TYPE(/obj/effect/dummy/lighting_obj)
@@ -194,7 +198,7 @@
 	a_or_from = "from"
 
 	// easy to get
-	threshold_minimum = 35
+	threshold_minimum = 30
 	threshold_penalty = 50
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/moderate
@@ -211,6 +215,11 @@
 	light_power = 0.1
 	light_range = 0.5
 
+/datum/wound_pregen_data/burnt_metal/transient_overheat
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/robotic/overheat/moderate
+
 /datum/wound/burn/robotic/overheat/severe
 	name = "Thermal Overload"
 	desc = "Exterior plating has surpassed critical thermal levels, causing significant failure in structural integrity and overheating of internal systems."
@@ -222,7 +231,7 @@
 
 	a_or_from = "from"
 
-	threshold_minimum = 95
+	threshold_minimum = 90
 	threshold_penalty = 70
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
@@ -249,6 +258,11 @@
 	light_power = 0.8
 	light_range = 0.5
 
+/datum/wound_pregen_data/burnt_metal/transient_overheat
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/burn/robotic/overheat/moderate
+
 /datum/wound/burn/robotic/overheat/critical
 	name = "Runaway Exothermy"
 	desc = "Carapace is beyond melting point, causing catastrophic structural integrity failure as well as massively heating up the subject."
@@ -262,7 +276,7 @@
 
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 
-	threshold_minimum = 170
+	threshold_minimum = 160
 	threshold_penalty = 100
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/critical
@@ -284,45 +298,18 @@
 
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 
+	wound_flags = (MANGLES_FLESH)
+
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3
 	light_range = 1.5
 
-/datum/wound/burn/robotic/severe
-	name = "Warped Metal"
-	desc = "Carapace has suffered significant heating strain and has lost molecular integrity, resulting in significantly worsened resistance factors."
-	occur_text = "sizzles, the externals briefly glowing a radiant orange"
-	examine_desc = "appears discolored and polychromatic, a few plates of metal curled into the air"
-	treat_text = "Removal and replacement of the damaged metal with a welder."
-	severity = WOUND_SEVERITY_SEVERE
+/datum/wound_pregen_data/burnt_metal/severe
+	abstract = FALSE
 
-	a_or_from = "from"
+	wound_path_to_generate = /datum/wound/burn/robotic/overheat/severe
 
-	threshold_minimum = 140
-	threshold_penalty = 70
+/datum/wound_pregen_data/burnt_metal/critical
+	abstract = FALSE
 
-	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
-
-	damage_mulitplier_penalty = 1.3
-
-/datum/wound/burn/robotic/critical // placeholder
-	name = "Demagnetized Alloys"
-	desc = "Internal and external metals have been heated past the Curie point, reducing integrity massively."
-	occur_text = "turns a smoldering white as it melts rapidly"
-	examine_desc = "is unrecognizably burnt, the surface giving off a beautiful sheen characteristic of heated metal"
-	treat_text = "Removal and replacement of the damaged metal with a welder."
-	severity = WOUND_SEVERITY_SEVERE
-
-	a_or_from = "from"
-
-	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
-
-	threshold_minimum = 190
-	threshold_penalty = 70
-
-	status_effect_type = /datum/status_effect/wound/burn/robotic/critical
-
-	damage_mulitplier_penalty = 1.95
-
-	damage_mulitplier_penalty = 1.8
-
+	wound_path_to_generate = /datum/wound/burn/robotic/overheat/critical

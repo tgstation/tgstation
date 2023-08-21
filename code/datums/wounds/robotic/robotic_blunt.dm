@@ -45,11 +45,15 @@
 #define PIERCE_ATTACK_EXPOSED_ORGAN_CHANCE_MULT 1.2
 #define BURN_ATTACK_EXPOSED_ORGAN_CHANCE_MULT 0.2
 
+/datum/wound_pregen_data/blunt_metal
+	abstract = TRUE
+
+	required_limb_biostate = BIO_METAL
+
 /datum/wound/blunt/robotic
 	name = "Robotic Blunt (Screws and bolts) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
 
-	required_limb_biostate = BIO_ROBOTIC
 
 	var/daze_dizzy_minimum_score = 5
 	var/daze_dizzy_mult = 1
@@ -127,6 +131,8 @@
 	var/percussive_maintenance_repair_chance = 25
 	var/percussive_maintenance_damage_threshold = 7
 
+	wound_series = WOUND_SERIES_METAL_BLUNT_BASIC
+
 /datum/wound/blunt/robotic/moderate
 	name = "Loosened Screws"
 	desc = "Various semi-external fastening instruments have loosened, causing components to jostle, inhibiting limb control."
@@ -162,6 +168,11 @@
 	head_movement_daze_chance = 60
 
 	a_or_from = "from"
+
+/datum/wound_pregen_data/blunt_metal/loose_screws
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/robotic/moderate
 
 /datum/wound/blunt/robotic/proc/uses_percussive_maintenance()
 	return FALSE
@@ -252,10 +263,15 @@
 
 	gellable = TRUE
 
+/datum/wound_pregen_data/blunt_metal/fastenings
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/robotic/severe
+
 /datum/wound/blunt/robotic/severe/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
 	var/turf/limb_turf = get_turf(L)
 	if (limb_turf)
-		var/obj/effect/decal/cleanable/oil/our_oil = new /obj/effect/decal/cleanable/oil(limb_turf)
+		new /obj/effect/decal/cleanable/oil(limb_turf)
 
 	return ..()
 
@@ -295,12 +311,12 @@
 		return TRUE
 
 	var/chance = 5
+	var/delay_mult = 1
 
 	if (user == victim)
 		chance *= 0.25
 		delay_mult *= 2
 
-	var/delay_mult = 1
 	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		chance *= 15 // almost guaranteed if its not self surgery
 		delay_mult *= 0.5
@@ -491,6 +507,11 @@
 	var/superstructure_remedied = FALSE
 	ready_to_secure_internals = FALSE
 	ready_to_ghetto_weld = FALSE
+
+/datum/wound_pregen_data/blunt_metal/superstructure
+	abstract = FALSE
+
+	wound_path_to_generate = /datum/wound/blunt/robotic/critical
 
 /datum/wound/blunt/robotic/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
 	var/turf/limb_turf = get_turf(L)
@@ -798,25 +819,36 @@
 	var/obj/item/stack/gauze = limb.current_gauze
 	if (gauze)
 		overall_mult *= gauze.splint_factor
+	if (!victim.has_gravity(get_turf(victim)))
+		overall_mult *= 0.5
+	else if (victim.body_position == LYING_DOWN || (!forced && victim.m_intent == MOVE_INTENT_WALK))
+		overall_mult *= 0.25
+
+	overall_mult *= get_buckled_movement_consequence_mult(victim.buckled)
 
 	if (can_daze())
 		var/daze_chance = head_movement_daze_chance
 		daze_chance *= overall_mult
-		if (!victim.has_gravity(get_turf(victim)))
-			daze_chance *= 0.5
-		else if (victim.body_position == LYING_DOWN || (!forced && victim.m_intent == MOVE_INTENT_WALK))
-			daze_chance *= 0.25
 
 		if (prob(daze_chance))
-			var/daze_mult = rand(1, 1.2)
+			var/daze_mult = LERP(1, 1.2, rand())
 			daze(daze_movement_base_score * daze_mult, daze_movement_shake_duration_mult, daze_movement_shake_intensity_mult)
 
 	if (limb.body_zone == BODY_ZONE_CHEST)
-		if (prob(chest_movement_nausea_chance))
-			shake_organs_for_nausea(chest_movement_base_nausea_score * overall_mult, max_nausea_duration)
+		if (prob(chest_movement_nausea_chance * overall_mult))
+			shake_organs_for_nausea(chest_movement_base_nausea_score, max_nausea_duration)
 
-		if (prob(chest_movement_organ_damage_chance))
-			attack_random_organs(get_chest_movement_organ_damage() * overall_mult, chest_movement_organ_damage_individual_max)
+		if (prob(chest_movement_organ_damage_chance * overall_mult))
+			attack_random_organs(get_chest_movement_organ_damage(), chest_movement_organ_damage_individual_max)
+
+/datum/wound/blunt/robotic/proc/get_buckled_movement_consequence_mult(atom/movable/buckled_to)
+	if (!buckled_to)
+		return 1
+
+	if (istype(buckled_to, /obj/structure/bed/roller))
+		return 0.05
+	else
+		return 0.5
 
 /datum/wound/blunt/robotic/proc/shake_organs_for_nausea(score, max)
 	victim.adjust_disgust(score, max)

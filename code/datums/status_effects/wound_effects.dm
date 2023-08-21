@@ -214,13 +214,22 @@
 /datum/status_effect/wound/blunt/robotic/critical
 	id = "unsecure"
 
-/datum
 // slash
-/datum/status_effect/wound/slash/moderate
+/datum/status_effect/wound/slash/robotic/moderate
+	id = "robo_abrasion"
+
+/datum/status_effect/wound/slash/robotic/severe
+	id = "robo_laceration"
+
+
+/datum/status_effect/wound/slash/robotic/critical
+	id = "robo_avulsion"
+
+/datum/status_effect/wound/slash/flesh/moderate
 	id = "abrasion"
-/datum/status_effect/wound/slash/severe
+/datum/status_effect/wound/slash/flesh/severe
 	id = "laceration"
-/datum/status_effect/wound/slash/critical
+/datum/status_effect/wound/slash/flesh/critical
 	id = "avulsion"
 // pierce
 /datum/status_effect/wound/pierce/moderate
