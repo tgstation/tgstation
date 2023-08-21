@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	/// only used on maps with trams, so only enabled by such.
 	can_fire = FALSE
 
-	///associative list of the form: list(lift_id = list(all lift_master datums attached to lifts of that type))
+	///associative list of the form: list(lift_id = list(all transport_controller datums attached to lifts of that type))
 	var/list/transports_by_type = list()
 	var/list/nav_beacons = list()
 	var/list/crossing_signals = list()

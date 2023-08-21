@@ -26,7 +26,7 @@
 	/// Were we instantiated at mapload? Used to determine when we should link / throw errors
 	var/maploaded = FALSE
 
-	/// A weakref to the lift_master datum we control
+	/// A weakref to the transport_controller datum we control
 	var/datum/weakref/lift_weakref
 	/// What specific_transport_id do we link with?
 	var/linked_elevator_id

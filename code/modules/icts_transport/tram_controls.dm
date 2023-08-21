@@ -137,7 +137,7 @@
 				desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 				desto.update_appearance()
 
-/obj/machinery/computer/icts_controls/proc/update_operating() // Pass the operating status from the controls to the lift_master
+/obj/machinery/computer/icts_controls/proc/update_operating() // Pass the operating status from the controls to the transport_controller
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
 	if(icts_controller)
 		if(machine_stat & NOPOWER)

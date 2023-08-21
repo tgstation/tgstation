@@ -19,7 +19,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 /obj/item/assembly/control/elevator
 	name = "elevator controller"
 	desc = "A small device used to call elevators to the current floor."
-	/// A weakref to the lift_master datum we control
+	/// A weakref to the transport_controller datum we control
 	var/datum/weakref/lift_weakref
 	COOLDOWN_DECLARE(elevator_cooldown)
 

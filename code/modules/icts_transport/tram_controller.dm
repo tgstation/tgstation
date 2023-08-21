@@ -156,7 +156,7 @@
  */
 /datum/transport_controller/linear/tram/proc/check_starting_landmark()
 	if(!idle_platform)
-		CRASH("a tram lift_master was initialized without any tram landmark to give it direction!")
+		CRASH("a tram transport_controller was initialized without any tram landmark to give it direction!")
 
 	SSicts_transport.can_fire = TRUE
 
@@ -302,7 +302,7 @@
 			recovery_activate_count++
 
 			if(recovery_activate_count >= SSicts_transport.max_exceeding_moves)
-				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking more than [SSicts_transport.max_time] milliseconds per movement, halving its movement speed. if this continues to be a problem you can call reset_lift_contents() on the trams lift_master_datum to reset it to its original state and clear added objects")
+				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking more than [SSicts_transport.max_time] milliseconds per movement, halving its movement speed. if this continues to be a problem you can call reset_lift_contents() on the trams transport_controller_datum to reset it to its original state and clear added objects")
 				speed_limiter = base_speed_limiter * 2 //halves its speed
 				recovery_mode = TRUE
 				recovery_activate_count = 0

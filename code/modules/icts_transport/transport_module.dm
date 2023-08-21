@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 
 	set_movement_registrations()
 
-	//since lift_master datums find all connected platforms when an industrial lift first creates it and then
+	//since transport_controller datums find all connected platforms when an industrial lift first creates it and then
 	//sets those platforms' transport_controller_datum to itself, this check will only evaluate to true once per tram platform
 	if(!transport_controller_datum && transport_controller_type)
 		transport_controller_datum = new transport_controller_type(src)
@@ -837,9 +837,9 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 
-	//the following are only used to give to the lift_master datum when it's first created
+	//the following are only used to give to the transport_controller datum when it's first created
 
-	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the lift_master
+	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the transport_controller
 	var/speed_limiter = 0.5
 
 	create_modular_set = TRUE

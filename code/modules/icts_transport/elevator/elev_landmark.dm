@@ -1,5 +1,5 @@
 /**
- * lift_id landmarks. used to map in specific_transport_id to trams. when the trams lift_master encounters one on a trams tile
+ * lift_id landmarks. used to map in specific_transport_id to trams. when the trams transport_controller encounters one on a trams tile
  * it sets its specific_transport_id to that landmark. allows you to have multiple trams and multiple controls linking to their specific tram
  */
 /obj/effect/landmark/lift_id

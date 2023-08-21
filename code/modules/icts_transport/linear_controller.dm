@@ -12,7 +12,7 @@
 		/obj/machinery/field,
 	)
 
-	///whether the lift handled by this lift_master datum is multitile as opposed to nxm platforms per z level
+	///whether the lift handled by this transport_controller datum is multitile as opposed to nxm platforms per z level
 	var/modular_set = FALSE
 
 	///taken from our lift platforms. if true we go through each z level of platforms and attempt to make the lowest left corner platform
@@ -25,7 +25,7 @@
 	///transport_id taken from our base lift platform, used to put us into SSicts_transport.transports_by_type
 	var/transport_id = BASIC_LIFT_ID
 
-	///overridable ID string to link control units to this specific lift_master datum. created by placing a lift id landmark object
+	///overridable ID string to link control units to this specific transport_controller datum. created by placing a lift id landmark object
 	///somewhere on the tram, if its anywhere on the tram we'll find it in init and set this to whatever it specifies
 	var/specific_transport_id
 
@@ -119,7 +119,7 @@
 /datum/transport_controller/linear/proc/set_info_from_id_landmark(obj/effect/landmark/icts/transport_id/landmark)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!istype(landmark, /obj/effect/landmark/icts/transport_id))//lift_master subtypes can want differnet id's than the base type wants
+	if(!istype(landmark, /obj/effect/landmark/icts/transport_id))//transport_controller subtypes can want differnet id's than the base type wants
 		return
 
 	if(landmark.specific_transport_id)
