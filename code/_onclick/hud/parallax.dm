@@ -395,3 +395,5 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move
 */ //monkestation removal end
+
+#undef PARALLAX_ICON_SIZE
