@@ -9,34 +9,39 @@
 	var/max_curse_count = 5
 	/// The amount of times we have been "applied" to the target.
 	var/curse_count = 0
-	/// Probability we have to deal damage this tick.
+	/// Raw probability we have to deal damage this tick.
 	var/damage_chance = 10
 
 /datum/status_effect/grouped/cursed/on_apply()
+	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_USE, PROC_REF(check_curses))
+	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_LOST, PROC_REF(update_curse_count))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON, PROC_REF(clear_curses))
-	RegisterSignals(owner, updatable_signals, PROC_REF(update_curse_count))
 	update_curse_count()
 	return ..()
 
-/// The master proc of this status effect. Tracks the number of curses the target has and applies the appropriate debuffs.
+/// Checks the number of curses we have and returns information back to the slot machine.
+/datum/status_effect/grouped/cursed/proc/check_curses()
+	SIGNAL_HANDLER
+	if(curse_count < max_curse_count)
+		return
+
+	return SLOT_MACHINE_USE_CANCEL
+
+/// Handles the debuffs of this status effect and incrementing the number of curses we have.
 /datum/status_effect/grouped/cursed/proc/update_curse_count()
 	SIGNAL_HANDLER
 	curse_count++
-	if(curse_count >= max_curse_count)
-		qdel(src)
-		return SLOT_MACHINE_USE_CANCEL // slot machine will handle the killing and all of that jazz
 
 	if(!isnull(linked_alert))
 		linked_alert.update_description()
 
-	addtimer(CALLBACK(src, PROC_REF(handle_after_effects)), 5.5 SECONDS)
+	update_particles()
+	handle_after_effects()
 
 /// Makes a nice lorey message about the curse level we're at. I think it's nice
 /datum/status_effect/grouped/cursed/proc/handle_after_effects()
 	if(QDELETED(src))
 		return
-
-	update_particles()
 
 	var/list/messages = list()
 	switch(curse_count)
@@ -99,36 +104,31 @@
 	particle_effect = new(owner, particle_path)
 
 /datum/status_effect/grouped/cursed/tick(seconds_between_ticks)
-	if(curse_count >= max_curse_count)
-		return // what
-
 	if(curse_count == 1)
 		return // you get one "freebie" (single damage) to nudge you into thinking this is a bad idea before the house begins to win.
 
 	// the house won.
-	var/effective_percentile_chance = ((curse_count == 2 ? 1 : curse_count) * damage_chance * rand(0.15, 0.30)) // potential lowest is 1.5% chance of firing, highest is 12% chance of firing.
+	var/ticked_coefficient = rand(0.15, 0.40)
+	var/effective_percentile_chance = ((curse_count == 2 ? 1 : curse_count) * damage_chance * ticked_coefficient)
 
 	if(SPT_PROB(effective_percentile_chance, seconds_between_ticks))
 		owner.apply_damages(
-			brute = curse_count,
-			burn = curse_count,
-			tox = curse_count,
-			oxy = curse_count,
-			stamina = curse_count,
-			brain = curse_count, // something about the dopamine reward system and the basal ganglia
+			brute = (curse_count * ticked_coefficient),
+			burn = (curse_count * ticked_coefficient),
+			oxy = (curse_count * ticked_coefficient),
 		)
 
 /atom/movable/screen/alert/status_effect/cursed
 	name = "Cursed!"
-	desc = "Your greed is catching up to you..."
+	desc = "The brand on your hand reminds you of your greed, yet you seem to be okay otherwise."
 
 /atom/movable/screen/alert/status_effect/update_description()
 	var/datum/status_effect/grouped/cursed/linked_effect = attached_effect
 	var/curses = linked_effect.curse_count
 	switch(curses)
-		if(1 to 2)
-			desc = initial(desc)
+		if(2)
+			desc = "Your greed is catching up to you..."
 		if(3)
 			desc = "You really don't feel good right now... But why stop now?"
-		if(4)
+		if(4 to INFINITY)
 			desc = "Real winners quit before they reach the ultimate prize."

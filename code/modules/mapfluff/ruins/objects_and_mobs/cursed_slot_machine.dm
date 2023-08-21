@@ -72,6 +72,8 @@
 	obj_flags &= ~IN_USE
 	COOLDOWN_START(src, spin_cooldown, cooldown_length)
 	if(!prob(win_prob))
+		SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_LOST)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		balloon_alert_to_viewers("you lost!")
 		return
 

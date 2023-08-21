@@ -467,5 +467,9 @@
 #define COMSIG_CURSED_SLOT_MACHINE_USE "cursed_slot_machine_use"
 	#define SLOT_MACHINE_USE_CANCEL (1<<0) // we've used up the number of times we may use this slot machine. womp womp.
 
+/// from /obj/structure/cursed_slot_machine/determine_victor() when someone loses.
+#define COMSIG_CURSED_SLOT_MACHINE_LOST "cursed_slot_machine_lost"
+
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
 #define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"
+
