@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(icts_transports)
-
 /obj/structure/transport/linear
 	name = "linear transport module"
 	desc = "A lightweight lift platform. It moves."
@@ -20,7 +18,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
-	///ID used to determine what lift types we can merge with
+	///ID used to determine what transport types we can merge with
 	var/transport_id = BASIC_LIFT_ID
 
 	///if true, the elevator works through floors
@@ -76,26 +74,24 @@ GLOBAL_LIST_EMPTY(icts_transports)
 
 /obj/structure/transport/linear/Initialize(mapload)
 	. = ..()
-	GLOB.icts_transports.Add(src)
-
 	// Yes if it's VV'd it won't be accurate but it probably shouldn't ever be
 	if(radial_travel)
 		AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Transport")
 
 	set_movement_registrations()
 
-	//since transport_controller datums find all connected platforms when an industrial lift first creates it and then
+	//since transport_controller datums find all connected platforms when a transport structure first creates it and then
 	//sets those platforms' transport_controller_datum to itself, this check will only evaluate to true once per tram platform
 	if(!transport_controller_datum && transport_controller_type)
 		transport_controller_datum = new transport_controller_type(src)
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/transport/linear/LateInitialize()
-	//after everything is initialized the lift master can order everything
+	. = ..()
+	//after everything is initialized the transport controller can order everything
 	transport_controller_datum.order_platforms_by_z_level()
 
 /obj/structure/transport/linear/Destroy()
-	GLOB.icts_transports.Remove(src)
 	transport_controller_datum = null
 	return ..()
 
