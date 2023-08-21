@@ -9,7 +9,7 @@
 GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_detritus())
 
 /proc/init_chasm_detritus()
-	//as the name suggests, init_subtypes_w_path_keys doesn't init the prototype, so we've to.
+	//as the name suggests, init_subtypes_w_path_keys doesn't init the prototype, so here we go.
 	var/list/glob_list = list()
 	glob_list[/datum/chasm_detritus] = new /datum/chasm_detritus
 	return init_subtypes_w_path_keys(/datum/chasm_detritus, glob_list)

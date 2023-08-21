@@ -30,7 +30,6 @@
 	var/radial_state = "fish_tank"
 	///The icon state of the overlay shown on the machine when active.
 	var/overlay_state = "portal_aquarium"
-
 /datum/fish_source/portal/beach
 	fish_table = list(
 		FISHING_DUD = 10,

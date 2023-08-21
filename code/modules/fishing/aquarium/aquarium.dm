@@ -155,7 +155,7 @@
 		var/list/fishes = get_fishes()
 		for(var/obj/item/fish/fish as anything in fishes)
 			fish.feed(item.reagents)
-		balloon_alert(user, "You feed the fish")
+		balloon_alert(user, "fed the fish")
 		return TRUE
 	return ..()
 

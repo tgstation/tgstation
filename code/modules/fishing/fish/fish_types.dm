@@ -341,7 +341,6 @@
 	icon_state = "sludgefish_purple"
 	dedicated_in_aquarium_icon_state = "sludgefish_purple_small"
 	random_case_rarity = FISH_RARITY_NOPE
-	random_case_rarity = FISH_RARITY_VERY_RARE
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
 /obj/item/fish/slimefish

@@ -29,7 +29,7 @@ Charged extracts:
 	return
 
 /obj/item/slimecross/charged/grey
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 	effect_desc = "Produces a slime reviver potion, which revives dead slimes."
 
 /obj/item/slimecross/charged/grey/do_effect(mob/user)
@@ -38,7 +38,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/orange
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 	effect_desc = "Instantly makes a large burst of flame for a moment."
 
 /obj/item/slimecross/charged/orange/do_effect(mob/user)
@@ -49,7 +49,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/purple
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 	effect_desc = "Creates a packet of omnizine."
 
 /obj/item/slimecross/charged/purple/do_effect(mob/user)
@@ -58,7 +58,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/blue
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 	effect_desc = "Creates a potion that neuters the mutation chance of a slime, which passes on to new generations."
 
 /obj/item/slimecross/charged/blue/do_effect(mob/user)
@@ -67,7 +67,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/metal
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
@@ -77,7 +77,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/yellow
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
@@ -86,7 +86,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/darkpurple
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 	effect_desc = "Creates several sheets of plasma."
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
@@ -95,7 +95,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/darkblue
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 	effect_desc = "Produces a pressure proofing potion."
 
 /obj/item/slimecross/charged/darkblue/do_effect(mob/user)
@@ -104,7 +104,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/silver
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 	effect_desc = "Creates a slime cake and some drinks."
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
@@ -116,7 +116,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/bluespace
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 	effect_desc = "Makes a bluespace polycrystal."
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
@@ -125,7 +125,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/sepia
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 	effect_desc = "Creates a camera obscura."
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
@@ -134,7 +134,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/cerulean
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 	effect_desc = "Creates an extract enhancer, giving whatever it's used on five more uses."
 
 /obj/item/slimecross/charged/cerulean/do_effect(mob/user)
@@ -143,7 +143,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/pyrite
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 	effect_desc = "Creates bananium. Oh no."
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
@@ -152,7 +152,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/red
-	colour = "red"
+	colour = SLIME_TYPE_RED
 	effect_desc = "Produces a lavaproofing potion"
 
 /obj/item/slimecross/charged/red/do_effect(mob/user)
@@ -161,7 +161,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/green
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 	effect_desc = "Lets you choose what slime species you want to be."
 
 /obj/item/slimecross/charged/green/do_effect(mob/user)
@@ -183,7 +183,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/pink
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 	effect_desc = "Produces a... lovepotion... no ERP."
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
@@ -192,7 +192,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/gold
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 	effect_desc = "Slowly spawns 10 hostile monsters."
 	var/max_spawn = 10
 	var/spawned = 0
@@ -219,7 +219,7 @@ Charged extracts:
 	return ..()
 
 /obj/item/slimecross/charged/oil
-	colour = "oil"
+	colour = SLIME_TYPE_OIL
 	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
@@ -231,7 +231,7 @@ Charged extracts:
 	qdel(src)
 
 /obj/item/slimecross/charged/black
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 	effect_desc = "Randomizes the user's species."
 
 /obj/item/slimecross/charged/black/do_effect(mob/user)
@@ -252,7 +252,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/lightpink
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 	effect_desc = "Produces a pacification potion, which works on monsters and humanoids."
 
 /obj/item/slimecross/charged/lightpink/do_effect(mob/user)
@@ -261,7 +261,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/adamantine
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 	effect_desc = "Creates a completed golem shell."
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
@@ -270,7 +270,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/rainbow
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW
 	effect_desc = "Produces three living slimes of random colors."
 
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)

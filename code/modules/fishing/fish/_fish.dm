@@ -178,7 +178,7 @@
 		balloon_alert(user, "[src] is dead!")
 		return TRUE
 	feed(item.reagents)
-	balloon_alert(user, "you feed [src]")
+	balloon_alert(user, "fed [src]")
 	return TRUE
 
 /obj/item/fish/examine(mob/user)

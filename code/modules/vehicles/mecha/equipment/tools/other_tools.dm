@@ -138,10 +138,7 @@
 		"mode_label" = "Gravity Catapult",
 	)
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/handle_ui_act(action, list/params)
 	if(action == "change_mode")
 		mode++
 		if(mode > GRAVPUSH_MODE)
@@ -224,10 +221,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/repair_droid/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(action != "toggle")
 		return
 	chassis.cut_overlay(droid_overlay)
@@ -312,10 +306,7 @@
 		"fuel" = fuel.amount,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/generator/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/generator/handle_ui_act(action, list/params)
 	if(action == "toggle")
 		if(active)
 			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation enabled.")]")
