@@ -1,3 +1,6 @@
+#define AUGGED_LIMB_EMP_BRUTE_DAMAGE 3
+#define AUGGED_LIMB_EMP_BURN_DAMAGE 2
+
 /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
@@ -500,6 +503,9 @@
 			if (value & BIO_INTERIOR)
 				has_interior = TRUE
 
+			if (has_exterior && has_interior)
+				break
+
 			// if we're bone only, all cutting attacks go straight to the bone
 		if(has_exterior && !has_interior)
 			if(wounding_type == WOUND_SLASH)
@@ -510,8 +516,6 @@
 				wounding_dmg *= (easy_dismember ? 1 : 0.75)
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
-		// note that there's no handling for BIO_FLESH since we don't have any that are that right now (slimepeople maybe someday)
-		// standard humanoids
 		else if(has_exterior && has_interior)
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
@@ -1224,10 +1228,12 @@
 		return FALSE
 	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 
+	// with defines at the time of writing, this is 3 brute and 2 burn
+	// 3 + 2 = 5, with 6 limbs thats 30, on a heavy 60
+	// 60 * 0.8 = 48
 	var/time_needed = 10 SECONDS
-	var/brute_damage = 5 + 1.5 // Augments reduce brute damage by 5.
-	var/burn_damage = 4 + 2.5 // As above, but for burn it's 4.
-
+	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE 
+	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE 
 	if(severity == EMP_HEAVY)
 		time_needed *= 2
 		brute_damage *= 2

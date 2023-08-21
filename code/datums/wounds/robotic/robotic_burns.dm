@@ -22,6 +22,7 @@
 
 	var/bodytemp_coeff = 0.04
 	var/outgoing_bodytemp_coeff = 0
+	var/important_outgoing_mult = 1.2
 	var/turf_coeff = 0.02
 
 	var/incoming_damage_heat_coeff = 3
@@ -54,22 +55,11 @@
 
 	return ..()
 
-/datum/wound/burn/robotic/overheat/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
-	//if (!glow)
-		//glow = generate_initial_glow(L)
-	//glow.set_light_on(TRUE)
-
-	return ..()
-
-/datum/wound/burn/robotic/overheat/remove_wound(ignore_limb, replaced)
-	return ..()
-
 /datum/wound/burn/robotic/overheat/Destroy()
 	. = ..()
 
 	if (mob_glow)
 		QDEL_NULL(mob_glow)
-	//qdel(glow)
 
 /datum/wound/burn/robotic/overheat/set_victim(mob/living/new_victim)
 	if (victim)
@@ -101,7 +91,10 @@
 		if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick)))
 			return
 		if (outgoing_bodytemp_coeff)
-			victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * outgoing_bodytemp_coeff) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
+			var/mult = outgoing_bodytemp_coeff
+			if (!limb_unimportant())
+				mult *= important_outgoing_mult
+			victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * mult) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
 	else
 		var/turf/our_turf = get_turf(limb)
 		if (our_turf)
@@ -231,8 +224,8 @@
 
 	a_or_from = "from"
 
-	threshold_minimum = 90
-	threshold_penalty = 70
+	threshold_minimum = 80
+	threshold_penalty = 65
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
 
@@ -276,7 +269,7 @@
 
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 
-	threshold_minimum = 160
+	threshold_minimum = 140
 	threshold_penalty = 100
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/critical

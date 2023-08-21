@@ -204,7 +204,7 @@
 
 	wound_path_to_generate = /datum/wound/blunt/bone/moderate
 
-	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	required_limb_biostate = BIO_JOINTED
 
 /datum/wound/blunt/bone/moderate/Destroy()
 	if(victim)

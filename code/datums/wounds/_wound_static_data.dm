@@ -25,6 +25,8 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 	var/duplicates_allowed = FALSE
 
+	var/ignore_cannot_bleed = TRUE // a lot of bleed wounds should still be applied for purposes of mangling flesh
+
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 /datum/wound_pregen_data/New()
@@ -55,7 +57,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 				if (preexisting_wound.severity >= initial(wound_path_to_generate.severity))
 					return FALSE
 
-	if ((required_limb_biostate & BIO_BLOODED) && !limb.can_bleed())
+	if (!ignore_cannot_bleed && ((required_limb_biostate & BIO_BLOODED) && !limb.can_bleed()))
 		return FALSE
 
 	if (check_for_any)

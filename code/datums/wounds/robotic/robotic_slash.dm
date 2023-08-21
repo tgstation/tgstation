@@ -20,7 +20,10 @@
 
 	var/shock_immunity_self_damage_reduction = 75
 
-	var/time_processed = 0
+	var/limb_unimportant_damage_mult = 1
+	var/limb_unimportant_progress_mult = 1
+
+	var/intensity
 	var/processing_full_shock_threshold
 
 	var/processing_shock_power_per_second_min
@@ -32,11 +35,15 @@
 	var/processing_shock_spark_chance
 	var/process_shock_message_chance = 80
 
+	var/seconds_per_intensity_mult = 1
+
 	var/process_shock_spark_count_min
 	var/process_shock_spark_count_max
 
 	var/wirecut_repair_percent
 	var/wire_repair_percent
+
+	var/overall_effect_mult = 1
 
 	processes = TRUE
 
@@ -51,35 +58,27 @@
 	/*if (!(limb.body_zone == BODY_ZONE_CHEST || limb.body_zone == BODY_ZONE_HEAD))
 		return*/
 
-	var/base_mult = 1
-	if (IS_IN_STASIS(victim))
-		base_mult *= ELECTRICAL_DAMAGE_ON_STASIS_MULT
-	if (limb.grasped_by)
-		base_mult *= ELECTRICAL_DAMAGE_GRASPED_MULT
-	if (victim.body_position == LYING_DOWN)
-		base_mult *= ELECTRICAL_DAMAGE_LYING_DOWN_MULT
+	var/base_mult = get_base_mult()
 
-	var/seconds_per_tick_for_intensity = (seconds_per_tick * base_mult)
-	var/obj/item/stack/gauze = limb.current_gauze
-	if (gauze)
-		seconds_per_tick_for_intensity *= limb.current_gauze.splint_factor
+	var/seconds_per_tick_for_intensity = seconds_per_tick * get_progress_mult()
+	modify_seconds_for_intensity_after_mult(seconds_per_tick_for_intensity)
 
-	adjust_processed(seconds_per_tick_for_intensity SECONDS)
+	adjust_intensity(seconds_per_tick_for_intensity SECONDS)
 
-	if (victim.stat == DEAD)
+	if (!victim || victim.stat == DEAD)
 		return
 
-	var/damage_mult = base_mult * get_base_zap_damage_mult(victim)
-	var/intensity = get_intensity()
+	var/damage_mult = base_mult * get_damage_mult(victim)
+	var/intensity_mult = get_intensity_mult()
 
 	damage_mult *= seconds_per_tick
-	damage_mult *= intensity
+	damage_mult *= intensity_mult
 
 	var/picked_damage = LERP(processing_shock_power_per_second_min, processing_shock_power_per_second_max, rand())
 	processing_shock_power_this_tick += (picked_damage * damage_mult)
 	if (processing_shock_power_this_tick > 1)
-		var/stun_chance = (processing_shock_stun_chance * intensity) * base_mult
-		var/spark_chance = (processing_shock_spark_chance * intensity) * base_mult
+		var/stun_chance = (processing_shock_stun_chance * intensity_mult) * base_mult
+		var/spark_chance = (processing_shock_spark_chance * intensity_mult) * base_mult
 
 		//var/jitter_time = seconds_per_tick
 		//var/stutter_time = 0
@@ -103,14 +102,54 @@
 		)
 		processing_shock_power_this_tick = 0
 
-/datum/wound/electrical_damage/proc/adjust_processed(to_adjust)
-	time_processed = clamp((time_processed + to_adjust), 0, processing_full_shock_threshold)
+/datum/wound/electrical_damage/proc/get_progress_mult()
+	var/progress_mult = get_base_mult() * seconds_per_intensity_mult
+
+	if (limb_unimportant())
+		progress_mult *= limb_unimportant_progress_mult
+
+	return get_base_mult() * seconds_per_intensity_mult
+
+/datum/wound/electrical_damage/proc/get_damage_mult(mob/living/target)
+	SHOULD_BE_PURE(TRUE)
+	
+	var/damage_mult = get_base_mult()
+
+	if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE))
+		if (target == victim)
+			damage_mult *= shock_immunity_self_damage_reduction
+		else
+			return 0
+
+	if (limb_unimportant())
+		damage_mult *= limb_unimportant_damage_mult
+
+	return mult
+
+/datum/wound/electrical_damage/proc/get_base_mult()
+	var/base_mult
+
+	if (victim)
+		if (IS_IN_STASIS(victim))
+			base_mult *= ELECTRICAL_DAMAGE_ON_STASIS_MULT
+		if (victim.body_position == LYING_DOWN)
+			base_mult *= ELECTRICAL_DAMAGE_LYING_DOWN_MULT
+	if (limb.grasped_by)
+		base_mult *= ELECTRICAL_DAMAGE_GRASPED_MULT
+
+	return overall_effect_mult * base_mult
+
+/datum/wound/electrical_damage/proc/modify_seconds_for_intensity_after_mult(seconds_for_intensity)
+	return
+
+/datum/wound/electrical_damage/proc/adjust_intensity(to_adjust)
+	intensity = clamp((intensity + to_adjust), 0, processing_full_shock_threshold)
 
 /datum/wound/electrical_damage/wound_injury(datum/wound/electrical_damage/old_wound, attack_direction)
 	. = ..()
 
 	if (old_wound)
-		time_processed = old_wound.time_processed
+		intensity = max(intensity, old_wound.intensity)
 		processing_shock_power_this_tick = old_wound.processing_shock_power_this_tick
 
 	do_sparks(initial_sparks_amount, FALSE, victim)
@@ -121,14 +160,14 @@
 	if (limb.current_gauze)
 		return
 
-	var/intensity = get_intensity()
-	if (intensity < 0.2 || (victim.stat == DEAD))
+	var/intensity_mult = get_intensity_mult()
+	if (intensity_mult < 0.2 || (victim.stat == DEAD))
 		return
 
 	. += ", and "
 
 	var/extra
-	switch (intensity)
+	switch (intensity_mult)
 		if (0.2 to 0.4)
 			extra += "[span_deadsay("is letting out some sparks")]"
 		if (0.4 to 0.6)
@@ -143,7 +182,7 @@
 /datum/wound/electrical_damage/get_scanner_description(mob/user)
 	. = ..()
 
-	. += " Fault intensity is currently at [span_bold("[get_intensity() * 100]")]%."
+	. += " Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%."
 
 /datum/wound/electrical_damage/item_can_treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_HEMOSTAT)
@@ -200,15 +239,15 @@
 
 		if (user != victim && user.combat_mode)
 			user?.visible_message(span_danger("[user] mangles some of [their_or_other] [limb.plaintext_zone]'s wiring!"))
-			adjust_processed(change)
+			adjust_intensity(change)
 			set_wiring_status(FALSE, user)
 		else
 			var/repairs_or_replaces = (is_suture ? "repairs" : "replaces")
 			user?.visible_message(span_green("[user] [repairs_or_replaces] some of [their_or_other] [limb.plaintext_zone]'s wiring!"))
-			adjust_processed(-change)
+			adjust_intensity(-change)
 
 			if (!wiring_reset)
-				user?.electrocute_act(max(process_shock_spark_count_max * get_intensity(), 1), limb)
+				user?.electrocute_act(max(process_shock_spark_count_max * get_intensity_mult(), 1), limb)
 				set_wiring_status(TRUE, user)
 
 			suturing_item.use(1)
@@ -245,11 +284,11 @@
 
 		if (user != victim && user.combat_mode)
 			user?.visible_message(span_danger("[user] mangles some of [their_or_other] [limb.plaintext_zone]'s wiring!"))
-			adjust_processed(change)
+			adjust_intensity(change)
 			set_wiring_status(FALSE, user)
 		else
 			user?.visible_message(span_green("[user] resets some of [their_or_other] [limb.plaintext_zone]'s wiring!"))
-			adjust_processed(-change)
+			adjust_intensity(-change)
 			set_wiring_status(TRUE, user)
 
 		if (remove_if_fixed())
@@ -264,14 +303,14 @@
 	wiring_reset = reset
 
 /datum/wound/electrical_damage/proc/remove_if_fixed()
-	if (time_processed <= 0)
+	if (intensity <= 0)
 		to_chat(victim, span_green("Your [limb.plaintext_zone] has recovered from its [name]!"))
 		remove_wound()
 		return TRUE
 	return FALSE
 
-/datum/wound/electrical_damage/proc/get_intensity()
-	return (min((time_processed / processing_full_shock_threshold), 1))
+/datum/wound/electrical_damage/proc/get_intensity_mult()
+	return (min((intensity / processing_full_shock_threshold), 1))
 
 /datum/wound/electrical_damage/proc/zap(
 		mob/living/target,
@@ -328,36 +367,6 @@
 
 	return TRUE
 
-/datum/wound/electrical_damage/proc/get_base_zap_damage_mult(atom/target)
-	SHOULD_BE_PURE(TRUE)
-
-	var/mult = 1
-
-	if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE))
-		if (target == victim)
-			mult *= shock_immunity_self_damage_reduction
-		else
-			return 0
-
-	var/obj/item/stack/gauze = limb.current_gauze
-	if (gauze)
-		mult *= gauze.splint_factor
-
-	/*if (isobj(connecting_item))
-		var/obj/connecting_obj = connecting_item
-		var/total = connecting_obj.get_custom_material_amount()
-		var/conductive_ratio = 0
-		for (var/datum/material/iterated_material as anything in connecting_obj.custom_materials)
-			if (!iterated_material.categories[MAT_CATEGORY_CONDUCTIVE])
-				continue
-			var/amount = connecting_obj.custom_materials[iterated_material]
-			if (!amount)
-				continue
-			conductive_ratio += (total / connecting_obj.custom_materials[iterated_material])
-		mult *= conductive_ratio*/
-
-	return mult
-
 /datum/wound/electrical_damage/slash
 	wound_type = WOUND_SLASH
 	wound_series = WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE
@@ -378,16 +387,17 @@
 	threshold_minimum = 30
 	threshold_penalty = 20
 
+	intensity = 10 SECONDS
 	processing_full_shock_threshold = 8 MINUTES
 
-	processing_shock_power_per_second_min = 0.3
 	processing_shock_power_per_second_max = 0.4
+	processing_shock_power_per_second_min = 0.3
 
 	processing_shock_stun_chance = 0
 	processing_shock_spark_chance = 30
 
-	process_shock_spark_count_min = 1
 	process_shock_spark_count_max = 1
+	process_shock_spark_count_min = 1
 
 	wirecut_repair_percent = 0.15 //15% per wirecut
 	wire_repair_percent = 0.08 //8% per suture
@@ -418,16 +428,17 @@
 	threshold_minimum = 70
 	threshold_penalty = 50
 
-	processing_full_shock_threshold = 6 MINUTES
+	intensity = 20 SECONDS
+	processing_full_shock_threshold = 6.1 MINUTES
 
-	processing_shock_power_per_second_min = 0.4
 	processing_shock_power_per_second_max = 0.6
+	processing_shock_power_per_second_min = 0.4
 
 	processing_shock_stun_chance = 0
 	processing_shock_spark_chance = 60
 
-	process_shock_spark_count_min = 1
 	process_shock_spark_count_max = 2
+	process_shock_spark_count_min = 1
 
 	wirecut_repair_percent = 0.08 //8% per wirecut
 	wire_repair_percent = 0.06 //6% per suture
@@ -444,7 +455,7 @@
 	name = "Systemic Fault"
 	desc = "A significant portion of the power distribution network has been cut open, resulting in massive power loss and runaway electrocution."
 	occur_text = "lets out a violent \"zhwarp\" sound as angry electric arcs attack the surrounding air"
-	examine_desc = "has multipled wires sticking out, mauled, hemorraging power"
+	examine_desc = "has lots of wires mauled wires sticking out"
 	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing."
 
 	severity = WOUND_SEVERITY_CRITICAL
@@ -457,16 +468,17 @@
 	threshold_minimum = 110
 	threshold_penalty = 60
 
-	processing_full_shock_threshold = 3 MINUTES
+	intensity = 20 SECONDS
+	processing_full_shock_threshold = 3.2 MINUTES
 
-	processing_shock_power_per_second_min = 1.8
 	processing_shock_power_per_second_max = 2
+	processing_shock_power_per_second_min = 1.8
 
 	processing_shock_stun_chance = 5
 	processing_shock_spark_chance = 90
 
-	process_shock_spark_count_min = 2
 	process_shock_spark_count_max = 3
+	process_shock_spark_count_min = 2
 
 	wirecut_repair_percent = 0.06 //6% per wirecut
 	wire_repair_percent = 0.05 //5% per suture
@@ -475,12 +487,7 @@
 
 	a_or_from = "a"
 
-/datum/wound/electrical_damage/pierce
-	wound_type = WOUND_PIERCE
-	wound_series = WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE
-
 /datum/wound_pregen_data/electrical_damage/slash/critical
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/slash/critical
-

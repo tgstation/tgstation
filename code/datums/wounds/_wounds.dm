@@ -260,7 +260,7 @@
 
 
 /// Proc called to change the variable `limb` and react to the event.
-/datum/wound/proc/set_limb(new_value)
+/datum/wound/proc/set_limb(obj/item/bodypart/new_value)
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
@@ -490,3 +490,6 @@
 			return "Severe"
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
+
+/datum/wound/proc/limb_unimportant()
+	return (!(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST))

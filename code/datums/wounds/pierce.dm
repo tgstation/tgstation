@@ -163,7 +163,7 @@
 /datum/wound_pregen_data/flesh_pierce
 	abstract = TRUE
 
-	required_limb_biostate = (BIO_FLESH|BIO_BLOODED)
+	required_limb_biostate = (BIO_FLESH)
 
 /datum/wound/pierce/bleed/moderate
 	name = "Minor Skin Breakage"

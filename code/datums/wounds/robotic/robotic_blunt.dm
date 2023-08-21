@@ -716,10 +716,16 @@
 	gellable = remedied
 	ready_to_secure_internals = remedied
 
-/datum/wound/blunt/robotic/wound_injury(datum/wound/old_wound = null, attack_direction = null)
-	// hook into gaining/losing gauze so crit bone wounds can re-enable/disable depending if they're slung or not
-	RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
-	update_inefficiencies()
+/datum/wound/blunt/robotic/set_limb(obj/item/bodypart/new_limb)
+	if (limb)
+		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
+	if (new_limb)
+		RegisterSignals(new_limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
+
+	. = ..()
+
+	if (limb)
+		update_inefficiencies()
 
 /datum/wound/blunt/robotic/set_victim(new_victim)
 	if (victim)
@@ -728,12 +734,6 @@
 	if (new_victim)
 		RegisterSignal(new_victim, COMSIG_MOVABLE_MOVED, PROC_REF(victim_moved))
 		RegisterSignal(new_victim, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(victim_attacked))
-
-	return ..()
-
-/datum/wound/blunt/robotic/remove_wound(ignore_limb, replaced)
-	UnregisterSignal(limb, COMSIG_BODYPART_GAUZED)
-	UnregisterSignal(limb, COMSIG_BODYPART_GAUZE_DESTROYED)
 
 	return ..()
 
@@ -859,39 +859,6 @@
 
 /datum/wound/blunt/robotic/proc/can_daze()
 	return (limb.body_zone == BODY_ZONE_HEAD)
-
-/*/datum/wound/blunt/robotic/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction)
-	if(!victim)
-		return
-
-	var/effective_damage = wounding_dmg
-	if (wounding_type == WOUND_BLUNT)
-		effective_damage *= BLUNT_ATTACK_DAZE_MULT
-
-	var/obj/item/stack/gauze = limb.current_gauze
-	if (gauze)
-		effective_damage *= gauze.splint_factor
-
-	switch (limb.body_zone) // TODO: test if this proc is called after wound_injury, we want these to happen on wound
-		if (BODY_ZONE_HEAD)
-			// ...
-
-		if (BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-			if (wounding_dmg > drop_item_on_hit_minimum_damage)
-				try_dropping_item(effective_damage)
-
-		if (BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			if (wounding_dmg > knockdown_on_hit_minimum_damage)
-				try_falling_over(effective_damage)
-
-		if (BODY_ZONE_CHEST)
-			if ((effective_damage >= chest_attacked_nausea_minimum_score) && prob(chest_attacked_nausea_chance))
-				shake_organs_for_nausea((effective_damage * chest_attacked_nausea_mult), max_nausea_duration)
-
-	if (wounding_dmg > WOUND_MINIMUM_DAMAGE)
-		if (exposed_organ_attacked(wounding_type, wounding_dmg))
-			attack_random_organs(total_damage = wounding_dmg)
-*/
 
 /datum/wound/blunt/robotic/proc/attack_random_organs(total_damage, max_damage_per_organ)
 	var/list/obj/item/organ/picked_organs = assign_damage_to_organs(total_damage, max_damage_per_organ)
