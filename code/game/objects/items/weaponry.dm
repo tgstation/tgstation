@@ -755,25 +755,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/relative_direction = get_cardinal_dir(direction_traveled, target_mob)
 	var/atom/throw_target = get_edge_target_turf(target_mob, relative_direction)
 	. = ..()
-	var/passed = TRUE
 	if(iscarbon(target_mob))
 		var/mob/living/carbon/target = target_mob
 		target.stamina.adjust(-force * 2)
-		if(target.stamina.current > 80 && !target.incapacitated())
-			passed = FALSE
 
-	if(passed)
-		if(homerun_ready)
-			user.visible_message(span_userdanger("It's a home run!"))
-			if(!QDELETED(target_mob))
-				target_mob.throw_at(throw_target, rand(8,10), 14, user)
-			SSexplosions.medturf += throw_target
-			playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-			homerun_ready = FALSE
-			return
-		else if(!QDELETED(target_mob) && !target_mob.anchored)
-			var/whack_speed = (prob(60) ? 1 : 4)
-			target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+	if(homerun_ready)
+		user.visible_message(span_userdanger("It's a home run!"))
+		if(!QDELETED(target_mob))
+			target_mob.throw_at(throw_target, rand(8,10), 14, user)
+		SSexplosions.medturf += throw_target
+		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+		homerun_ready = FALSE
+		return
+	else if(!QDELETED(target_mob) && !target_mob.anchored)
+		var/whack_speed = (prob(60) ? 1 : 4)
+		target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/Destroy(force)
 	for(var/target in thrown_datums)
