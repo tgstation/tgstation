@@ -6,6 +6,7 @@
 #define CLOWNSHOT 6
 #define PULSE 7
 #define TIDESHOT 8
+#define ION 9
 
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
@@ -25,7 +26,8 @@
 	 /obj/item/ammo_casing/energy/lawbringer/bigshot, \
 	 /obj/item/ammo_casing/energy/lawbringer/clownshot, \
 	 /obj/item/ammo_casing/energy/lawbringer/pulse, \
-	 /obj/item/ammo_casing/energy/lawbringer/tideshot)
+	 /obj/item/ammo_casing/energy/lawbringer/tideshot, \
+	 /obj/item/ammo_casing/energy/lawbringer/ion )
 	pin = /obj/item/firing_pin/lawbringer
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -88,6 +90,10 @@
 	if(findtext(fixed_message, regex("(?:grey|tide)")))
 		selectammo(TIDESHOT)
 		say("Greytide inversion active")
+		return TRUE
+	if(findtext(fixed_message, regex("(?:ion)")))
+		selectammo(ION)
+		say("Generating ionized gas")
 		return TRUE
 	if(findtext(fixed_message, regex("(?:hot|burn|fire)"))) //hot is a part of shot
 		selectammo(HOTSHOT)
@@ -400,6 +406,13 @@
 				C.set_jitter_if_lower(40 SECONDS)
 				C.set_stutter(40 SECONDS)
 
+/obj/item/ammo_casing/energy/lawbringer/ion
+	projectile_type = /obj/projectile/ion/weak
+	fire_sound = 'sound/weapons/ionrifle.ogg'
+	select_name = "ion"
+	e_cost = 1400 //140
+	harmful = TRUE
+
 //LOCKER OVERRIDES//
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -436,7 +449,7 @@ It is able to discern your voice through voice obscuring and altering software, 
 In the event someone not authorised attepts to use the lawbringer, it will result in the handle releasing a deterring electric shock.
 <br>
 <br><h3><B>Firing Modes</B></h3>
-<br>Testing with the onboard ai has revealed 8 consistant firing modes. Speaking into the lawbringer will prompt the ai to change firing modes.
+<br>Testing with the onboard ai has revealed 8 consistant firing modes. Speaking into the lawbringer will prompt the ai to change firing modes. WARNING: AI is considerably hyperactive due to to the reinforcement system used, take care while speaking around it.  Aetherofusion is not responsible for any deaths that may occur.
 <br><B>Detain</B>
 <br>This mode fires 4 highly focused disabler shots, the high focus allows for the ai to preform predictive adjustments on the shots, causing them to reflect into targets.
 The focused beams reduce the stopping power of each individual beam.
@@ -465,6 +478,9 @@ Its activation codes are "Pulse", "Throw", and "Push".
 <br>This mode fires an anomalous disabler shot. At first thought to be simply an inferior and colorless disabler, it was discovered to rapidly immobilize the unemployed.
 The exact mechanism behind this is unknown, however what is known is that it triggers an electrical impulse that travels along the skin of the target, which would then travel into motor nerves, immobilizing all surface muscles.
 Its activation codes are "Grey", and "Tide".
+<br><B>Ion</B>
+<br>This mode fires a pocket of ionized gas, releasing on contact. This causes a small emp around the target.
+Its activation code is "Ion"
 <br>
 <br><h3><B>Transfer of ownership</B></h3>
 <br>In the event of your unfortunate demise, a peaceful(?) transfer of power, or an extreme dosage of mutagens, you may need to transfer ownership between yourself and another.
@@ -481,3 +497,4 @@ This can be done via swiping an authentication disk, (which can be set by you af
 #undef CLOWNSHOT
 #undef PULSE
 #undef TIDESHOT
+#undef ION
