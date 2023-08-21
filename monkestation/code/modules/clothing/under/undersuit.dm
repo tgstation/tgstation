@@ -46,6 +46,12 @@
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "shrine_priestess"
 
+/obj/item/clothing/under/syndicate/skirt/maid
+	name = "tactical maid outfit"
+	desc = "A 'tactical' turtleneck fashioned to the likeness of a maid outfit. Why the Syndicate has these, you'll never know."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "syndimaid"
 /obj/item/clothing/under/rank/civilian/janitor
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
