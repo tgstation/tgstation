@@ -9,17 +9,13 @@
 	desc = @"If left untreated the subject will [REDACTED]!"
 	severity = "Dangerous!"
 	cures = list(/datum/reagent/medicine/rezadone)
-	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	spread_text = "Organic meltdown"
 	process_dead = TRUE
 
-	var/strikes_left = 100
-
 /datum/disease/decloning/cure()
-	. = ..()
-	if(QDELETED(src))
-		affected_mob.remove_status_effect(/datum/status_effect/decloning)
+	affected_mob.remove_status_effect(/datum/status_effect/decloning)
+	return ..()
 
 /datum/disease/decloning/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -42,10 +38,9 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("drool")
 			if(SPT_PROB(1.5, seconds_per_tick))
-				strikes_left -= 5
+				affected_mob.apply_status_effect(/datum/status_effect/decloning)
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your skin feels strange."))
-
 		if(4)
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("itch")

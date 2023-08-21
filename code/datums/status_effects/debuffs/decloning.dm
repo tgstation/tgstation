@@ -11,15 +11,17 @@
 	var/strikes_left = 100
 
 /datum/status_effect/decloning/on_apply()
+	if(owner.has_reagent(/datum/reagent/medicine/mutadone))
+		return FALSE
 	to_chat(owner, span_userdanger("You've noticed your body has begun deforming. This can't be good."))
-	return ..()
+	return TRUE
 
 /datum/status_effect/decloning/on_remove()
 	if(!QDELETED(owner)) // bigger problems to worry about
 		owner.remove_movespeed_modifier(/datum/movespeed_modifier/decloning)
 
 /datum/status_effect/decloning/tick(seconds_between_ticks)
-	if(owner.reagents?.has_reagent(/datum/reagent/medicine/mutadone, MUTADONE_HEAL * seconds_between_ticks))
+	if(owner.has_reagent(/datum/reagent/medicine/mutadone, MUTADONE_HEAL * seconds_between_ticks))
 		var/strike_restore = MUTADONE_HEAL * seconds_between_ticks
 
 		if(strikes_left <= 50 && strikes_left + strike_restore > 50)
