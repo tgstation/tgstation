@@ -95,8 +95,6 @@
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
 
-	var/cameraFollow = null
-
 	///The mob's latest time-of-death
 	var/timeofdeath = 0
 	///The mob's latest time-of-death, as a station timestamp instead of world.time

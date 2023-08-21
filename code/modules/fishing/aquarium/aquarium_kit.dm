@@ -45,7 +45,7 @@
 	var/fluid_type
 
 /obj/item/storage/fish_case/random/get_fish_type()
-	return random_fish_type(required_fluid = fluid_type)
+	return random_fish_type(fluid_type)
 
 /obj/item/storage/fish_case/random/freshwater
 	fluid_type = AQUARIUM_FLUID_FRESHWATER

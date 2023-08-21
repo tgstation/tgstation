@@ -42636,9 +42636,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kCX" = (
-/obj/machinery/light/small/directional/north,
-/turf/closed/wall,
-/area/station/hallway/secondary/service)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "kDd" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct,
@@ -134627,8 +134630,8 @@ rbR
 euQ
 bsb
 dLJ
-bsb
 kCX
+kVP
 bpd
 pyw
 kVP
