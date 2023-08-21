@@ -49,9 +49,7 @@
 		var/datum/award/award = SSachievements.awards[award_type]
 		if(!award || !award.name) //Skip abstract achievements types
 			continue
-		if(!data[award_type])
-			data[award_type] = award.parse_value(kv[award.database_id], data)
-			original_cached_data[award_type] = data[award_type]
+		award.on_achievement_data_init(src, kv[award.database_id])
 
 ///Updates local cache with db data for the given achievement type if it wasn't loaded yet.
 /datum/achievement_data/proc/get_data(achievement_type)
@@ -81,17 +79,6 @@
 ///Getter for the status/score of an achievement
 /datum/achievement_data/proc/get_achievement_status(achievement_type)
 	return data[achievement_type]
-
-///Resets an achievement to default values.
-/datum/achievement_data/proc/reset(achievement_type)
-	if(!SSachievements.achievements_enabled)
-		return
-	var/datum/award/A = SSachievements.awards[achievement_type]
-	get_data(achievement_type)
-	if(istype(A, /datum/award/achievement))
-		data[achievement_type] = FALSE
-	else if(istype(A, /datum/award/score))
-		data[achievement_type] = 0
 
 /datum/achievement_data/ui_assets(mob/user)
 	return list(
