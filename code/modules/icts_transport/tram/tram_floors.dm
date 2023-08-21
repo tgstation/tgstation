@@ -42,9 +42,9 @@
 /turf/open/floor/noslip/attackby(obj/item/object, mob/living/user, params)
 	. = ..()
 	if(istype(object, /obj/item/stack/thermoplastic))
-		INVOKE_ASYNC(TYPE_PROC_REF(/turf/open, build_with_transport_tiles), object, user)
+		build_with_transport_tiles(object, user)
 	else if(istype(object, /obj/item/stack/sheet/mineral/titanium))
-		INVOKE_ASYNC(TYPE_PROC_REF(/turf/open, build_with_titanium), object, user)
+		build_with_titanium(object, user)
 
 /turf/open/floor/noslip/tram_plate/energized/proc/find_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[TRAM_LIFT_ID])
