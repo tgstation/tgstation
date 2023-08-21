@@ -275,10 +275,10 @@
 
 	a_or_from = "a"
 
-/datum/wound_pregen_data/electrical_damage/pierce/critical
+/datum/wound_pregen_data/electrical_damage/pierce/severe
 	abstract = FALSE
 
-	wound_path_to_generate = /datum/wound/electrical_damage/pierce/critical
+	wound_path_to_generate = /datum/wound/electrical_damage/pierce/severe
 
 /datum/wound/electrical_damage/pierce/critical
 	name = "Ruptured PSU"
