@@ -193,7 +193,7 @@
 
 	else if(istype(item, /obj/item/boxcutter))
 		var/obj/item/boxcutter/boxcutter_item = item
-		if(boxcutter_item.on)
+		if(HAS_TRAIT(boxcutter_item, TRAIT_TRANSFORM_ACTIVE))
 			if(!attempt_pre_unwrap_contents(user, time = 0.5 SECONDS))
 				return
 			unwrap_contents()

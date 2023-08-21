@@ -1,0 +1,4 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - rscadd: "wall trim and wall paints, use a decal painter with a custom color on the wall to change the trim or paint"

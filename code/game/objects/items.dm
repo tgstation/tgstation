@@ -450,13 +450,16 @@
 
 /obj/item/vv_get_dropdown()
 	. = ..()
+	VV_DROPDOWN_OPTION("", "-------------") //monkestation edit
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+	VV_DROPDOWN_OPTION(VV_HK_POSSESS_ITEM, "Create Possessed Version") //monkestation edit
 
 /obj/item/vv_do_topic(list/href_list)
 	. = ..()
 
 	if(!.)
 		return
+	monkestation_vv_do_topic(href_list) //monkestation edit
 
 	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
 
@@ -924,12 +927,12 @@
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
-
+/* overrided in the monkestation/modules/possession folder
 /obj/item/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
-
+*/
 /obj/item/burn()
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
