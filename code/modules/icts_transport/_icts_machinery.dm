@@ -3,8 +3,8 @@
 	var/configured_transport_id = TRAMSTATION_LINE_1
 	/// weakref of the transport we're associated with
 	var/datum/weakref/transport_ref
-	var/list/methods_to_fix
-	var/list/repair_signals
+	var/list/methods_to_fix = list()
+	var/list/repair_signals = list()
 	var/static/list/how_do_we_fix_it = list(
 		"try turning it off and on again" = TOOL_MULTITOOL,
 		"try forcing an unexpected reboot" = TOOL_MULTITOOL,
@@ -34,8 +34,7 @@
 
 	// Select a few methods of how to fix it
 	var/list/fix_it_keys = assoc_to_keys(how_do_we_fix_it)
-	LAZYINITLIST(methods_to_fix)
-		methods_to_fix += pick_n_take(fix_it_keys)
+	methods_to_fix += pick_n_take(fix_it_keys)
 
 	// Construct the signals
 	LAZYINITLIST(repair_signals)
