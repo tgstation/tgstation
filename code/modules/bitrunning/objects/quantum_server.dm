@@ -227,7 +227,6 @@
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
-	SSbitrunning.add_server(src)
 
 	return TRUE
 
@@ -741,7 +740,6 @@
 	generated_safehouse = null
 	mutation_candidates.Cut()
 	spawned_threats.Cut()
-	SSbitrunning.remove_server(src)
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/crate)
