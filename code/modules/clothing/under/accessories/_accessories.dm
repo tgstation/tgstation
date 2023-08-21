@@ -60,7 +60,7 @@
 
 	var/obj/item/clothing/under/attached_to = loc
 	
-	if(!isclothing(attached_to))
+	if(!istype(attached_to))
 		return
 
 	var/mob/living/carbon/human/wearer = attached_to.loc
