@@ -26,7 +26,7 @@
 
 	/// Silo link to it's materials list.
 	var/datum/component/remote_materials/silo_materials
-
+        var/points_held = 0
 
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
@@ -152,6 +152,7 @@
 			remaining_ores[possible_mat] = quantity
 			chosen_boulder.custom_materials[possible_mat] = null
 		else
+			points_held += chosen_boulder.custom_materials[possible_mat]/// put point total here into machine 
 			tripped = TRUE
 
 	if(!tripped)
