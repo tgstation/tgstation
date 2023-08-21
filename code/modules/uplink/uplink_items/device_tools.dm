@@ -84,8 +84,8 @@
 	cost = 8
 
 /datum/uplink_item/device_tools/camera_app
-	name = "Camera Bug Program"
-	desc = "Enables you to view all cameras on the main network through a tablet program."
+	name = "SyndEye Program"
+	desc = "A data disk containing a unique PC app that allows you to watch cameras and track crewmembers."
 	item = /obj/item/computer_disk/syndicate/camera_app
 	cost = 1
 	surplus = 90
