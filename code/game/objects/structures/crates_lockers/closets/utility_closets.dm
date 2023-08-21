@@ -132,6 +132,7 @@
 /obj/structure/closet/toolcloset/populate_contents_immediate()
 	. = ..()
 
+	// Since they're a traitor objective, they have to be generated immediately.
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 
