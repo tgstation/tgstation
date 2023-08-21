@@ -29,15 +29,14 @@
 	if(!isnull(linked_alert))
 		linked_alert.update_description()
 
-	update_particles()
-
-	addtimer(CALLBACK(src, PROC_REF(send_cursed_message)), 5.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(handle_after_effects)), 5.5 SECONDS)
 
 /// Makes a nice lorey message about the curse level we're at. I think it's nice
-/datum/status_effect/grouped/cursed/proc/send_cursed_message()
+/datum/status_effect/grouped/cursed/proc/handle_after_effects()
 	if(QDELETED(src))
 		return
 
+	update_particles()
 
 	var/list/messages = list()
 	switch(curse_count)
@@ -76,7 +75,7 @@
 
 	for(var/message in messages)
 		to_chat(owner, message)
-		sleep(1 SECONDS) // yes yes a bit fast but it can be a lot of text and i want the whole thing to send before the cooldown on the slot machine might expire
+		sleep(1.5 SECONDS) // yes yes a bit fast but it can be a lot of text and i want the whole thing to send before the cooldown on the slot machine might expire
 
 /// Cleans ourselves up and removes our curses. Meant to be done in a "positive" way, when the curse is broken. Directly use qdel otherwise.
 /datum/status_effect/grouped/cursed/proc/clear_curses()
@@ -106,7 +105,7 @@
 		return // you get one "freebie" (single damage) to nudge you into thinking this is a bad idea before the house begins to win.
 
 	// the house won.
-	var/effective_percentile_chance = damage_chance * (curse_count == 2 ? 1 : curse_count) // 10 to 40 percent depending on how cursed we are
+	var/effective_percentile_chance = ((curse_count == 2 ? 1 : curse_count) * damage_chance * rand(0.15, 0.30)) // potential lowest is 1.5% chance of firing, highest is 12% chance of firing.
 
 	if(SPT_PROB(effective_percentile_chance, seconds_between_ticks))
 		owner.apply_damages(
@@ -115,7 +114,7 @@
 			tox = curse_count,
 			oxy = curse_count,
 			stamina = curse_count,
-			brain = curse_count * 2, // something about the dopamine reward system and the basal ganglia
+			brain = curse_count, // something about the dopamine reward system and the basal ganglia
 		)
 
 /atom/movable/screen/alert/status_effect/cursed
