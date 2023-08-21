@@ -28,6 +28,10 @@
 	knock_down_callback = CALLBACK(src, PROC_REF(knock_down))
 	find_and_hang_on_wall(custom_drop_callback = knock_down_callback)
 
+/obj/structure/sign/Destroy()
+	. = ..()
+	knock_down_callback = NULL
+
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	switch (held_item?.tool_behaviour)
