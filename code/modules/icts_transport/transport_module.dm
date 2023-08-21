@@ -846,21 +846,16 @@
 	/// Do we want this transport to link with nearby modules to make a multi-tile platform
 	create_modular_set = TRUE
 
-/datum/armor/structure_tram
-	melee = 50
-	fire = 80
-	acid = 50
-
-/obj/structure/transport/linear/tram/structure/northwest
+/obj/structure/transport/linear/tram/corner/northwest
 	icon_state = "spoiler-subfloor-nw"
 
-/obj/structure/transport/linear/tram/structure/southwest
+/obj/structure/transport/linear/tram/corner/southwest
 	icon_state = "spoiler-subfloor-sw"
 
-/obj/structure/transport/linear/tram/structure/northeast
+/obj/structure/transport/linear/tram/corner/northeast
 	icon_state = "spoiler-subfloor-ne"
 
-/obj/structure/transport/linear/tram/structure/southeast
+/obj/structure/transport/linear/tram/corner/southeast
 	icon_state = "spoiler-subfloor-se"
 
 /obj/structure/transport/linear/tram/add_item_on_transport(datum/source, atom/movable/item)

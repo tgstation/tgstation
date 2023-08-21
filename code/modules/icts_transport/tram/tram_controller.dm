@@ -222,11 +222,6 @@
 	return TRUE
 
 /**
- * TODO: ??? don't remember what this is or why I started it. Probabaly related to above and recovering after a fault
- */
-///datum/transport_controller/linear/tram/proc/get_status()
-
-/**
  * Handles moving the tram
  *
  * Called by the subsystem, the controller tells the individual tram parts where to actually go and has extra safety checks
@@ -416,7 +411,6 @@
 
 	update_status()
 
-
 /**
  * Make tram emergency stop.
  */
@@ -483,15 +477,6 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/icts/controller/attackby(obj/item/weapon, mob/living/user, params)
-	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
-
-		if(default_deconstruction_crowbar(weapon))
-			return
-
-	return ..()
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
  */
@@ -510,6 +495,16 @@
 	set_machine_stat(machine_stat | BROKEN)
 
 	..()
+
+/obj/machinery/icts/controller/attackby(obj/item/weapon, mob/living/user, params)
+	if (!user.combat_mode)
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
+			return
+
+		if(default_deconstruction_crowbar(weapon))
+			return
+
+	return ..()
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
