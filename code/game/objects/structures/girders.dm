@@ -494,7 +494,7 @@
 				return
 			B.use(amount)
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/mineral/bronze)
+			IS_CLOCK(user) ? T.PlaceOnTop(/turf/closed/wall/clockwork) : T.PlaceOnTop(/turf/closed/wall/mineral/bronze) //monkestation edit: clock cultists make clockwork walls
 			qdel(src)
 
 	else

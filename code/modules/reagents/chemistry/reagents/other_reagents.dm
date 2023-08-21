@@ -316,6 +316,8 @@
 	. = ..()
 	if(IS_CULTIST(exposed_mob))
 		to_chat(exposed_mob, span_userdanger("A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!"))
+	if(IS_CLOCK(exposed_mob)) //monkestation edit
+		to_chat(exposed_mob, span_userdanger("Your mind burns in agony as you feel the light of the Justicar being ripped away from you by something else!")) //monkestation edit
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.blood_volume)
@@ -325,29 +327,9 @@
 
 	data["misc"] += seconds_per_tick SECONDS * REM
 	affected_mob.adjust_jitter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
-	if(IS_CULTIST(affected_mob))
-		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
-			to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				qdel(BS)
-	if(data["misc"] >= (25 SECONDS)) // 10 units
-		affected_mob.adjust_stutter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
-		affected_mob.set_dizzy_if_lower(10 SECONDS)
-		if(IS_CULTIST(affected_mob) && SPT_PROB(10, seconds_per_tick))
-			affected_mob.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
-			if(prob(10))
-				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
-				affected_mob.Unconscious(12 SECONDS)
-				to_chat(affected_mob, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
-				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data["misc"] >= (1 MINUTES)) // 24 units
-		if(IS_CULTIST(affected_mob))
-			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
-			affected_mob.Unconscious(100)
-		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
-		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
-		return
+	if(IS_CULTIST(affected_mob) || affected_mob.mind?.has_antag_datum(/datum/antagonist/clock_cultist))
+		if(handle_cultists(affected_mob, seconds_per_tick)) //only returns TRUE on deconversion
+			return
 	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * seconds_per_tick) //fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
@@ -358,6 +340,51 @@
 		for(var/obj/effect/rune/R in exposed_turf)
 			qdel(R)
 	exposed_turf.Bless()
+
+//monkestation edit start
+/datum/reagent/water/holywater/proc/handle_cultists(mob/living/carbon/affected_mob, seconds_per_tick)
+	if(IS_CULTIST(affected_mob))
+		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
+			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+				to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
+				qdel(BS)
+
+	var/list/phrase_list
+	if(IS_CULTIST(affected_mob)) //snowflakey but it works
+		var/datum/antagonist/cult/cult_datum = affected_mob.mind.has_antag_datum(/datum/antagonist/cult)
+		phrase_list = cult_datum?.cultist_deconversion_phrases
+	else if(IS_CLOCK(affected_mob))
+		var/datum/antagonist/clock_cultist/servant_datum = affected_mob.mind.has_antag_datum(/datum/antagonist/clock_cultist)
+		phrase_list = servant_datum?.servant_deconversion_phrases
+
+	if(data["misc"] >= (25 SECONDS)) // 10 units
+		affected_mob.adjust_stutter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
+		affected_mob.set_dizzy_if_lower(10 SECONDS)
+		if(SPT_PROB(10, seconds_per_tick))
+			if(phrase_list)
+				affected_mob.say(pick(phrase_list["spoken"]), forced = "holy water")
+			if(prob(10))
+				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
+				affected_mob.Unconscious(12 SECONDS)
+				var/span_type
+				if(IS_CULTIST(affected_mob))
+					span_type = "cultlarge"
+				else if(IS_CLOCK(affected_mob))
+					span_type = "big_brass"
+				if(phrase_list)
+					to_chat(affected_mob, "<span class=[span_type]>[pick(phrase_list["seizure"])].</span>")
+
+	if(data["misc"] >= (1 MINUTES)) // 24 units
+		if(IS_CULTIST(affected_mob))
+			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
+		if(IS_CLOCK(affected_mob))
+			affected_mob.mind.remove_antag_datum(/datum/antagonist/clock_cultist)
+		affected_mob.Unconscious(10 SECONDS)
+		affected_mob.remove_status_effect(/datum/status_effect/jitter)
+		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
+		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
+		return TRUE
+//monkestation edit end
 
 /datum/reagent/water/hollowwater
 	name = "Hollow Water"

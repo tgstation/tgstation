@@ -25,6 +25,9 @@ import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
+// MONKESTATION ADDITION START
+import './styles/themes/clockwork.scss';
+// MONKESTATION ADDITION END
 
 import './styles/themes/chicken_book.scss';
 import './styles/themes/generic-yellow.scss';

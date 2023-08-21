@@ -225,11 +225,14 @@
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_candidates = 1
-	minimum_players = 8
-	weight = 25
-	cost = 5
-	requirements = list(8,10,10,10,10,10,10,10,10,10)
+	weight = 35
+	cost = 3
+	requirements = list(30,20,10,3,3,3,3,3,3,3)
+	required_enemies = list(2,2,1,0,0,0,0,0,0)
+	repeatable_weight_decrease = 5 //max 7 per round
 	repeatable = TRUE
+
+	minimum_players = 15
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/trim_candidates()
 	..()
