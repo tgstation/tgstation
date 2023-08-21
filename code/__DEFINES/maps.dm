@@ -220,6 +220,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 //All
 #define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
 
+//monkestation start
 #define ZTRAIT_OSHAN "OshanTrait"
 
 ///Z level traits for Lavaland
@@ -229,3 +230,12 @@ Always compile, always use that verb, and always make sure that it works for wha
 	ZTRAIT_NOPARALLAX = TRUE, \
 	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
 	ZTRAIT_BASETURF = /turf/open/floor/plating/ocean/dark)
+
+// boolean - particle weather types that occur on the level
+#define WEATHER_MESSAGE_DELAY 30 SECONDS
+#define ZTRAIT_DAYCYCLE "Daycycle"
+#define PARTICLEWEATHER_RAIN "weather_rain"
+#define PARTICLEWEATHER_SNOW "weather_snow"
+#define PARTICLEWEATHER_DUST "weather_dust"
+#define PARTICLEWEATHER_RADS "weather_rads"
+//monkestation end

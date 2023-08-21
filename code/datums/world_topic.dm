@@ -189,7 +189,7 @@
 	return tgsadminwho()
 
 /datum/world_topic/status
-	keyword = "status"
+	keyword = "status-old" //monkestation edit
 
 /datum/world_topic/status/Run(list/input)
 	. = list()

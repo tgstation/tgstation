@@ -380,4 +380,9 @@
 
 /datum/antagonist/traitor/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
-	hosts_mind.make_traitor()
+	if(isobserver(spender))
+		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
+		newmob.equipOutfit(/datum/outfit/job/assistant)
+		newmob.mind.make_traitor()
+	else
+		hosts_mind.make_traitor()
