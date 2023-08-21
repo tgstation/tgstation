@@ -72,21 +72,6 @@
 			visible_message(span_notice("\the [src] has already been tapped!"))
 			return
 		scan_and_confirm(user)
-		return
-
-		for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
-			for(var/turf/closed/mineral/rock in oview(i))
-				if(istype(rock, /turf/open/misc/asteroid) && prob(45)) // so it's too common
-					new /obj/effect/decal/cleanable/rubble(rock)
-				if(!istype(rock, /turf/closed/mineral))
-					continue
-				rock.gets_drilled(user, FALSE)
-				if(prob(75))
-					new /obj/effect/decal/cleanable/rubble(rock)
-			sleep(0.6 SECONDS)
-
-		start_wave_defense()
-		//This vent is going to start generating ore automatically.
 
 /obj/structure/ore_vent/buckle_mob(mob/living/M, force, check_loc)
 	. = ..()
@@ -175,7 +160,7 @@
 
 /**
  * Called when the ore vent is tapped by a scanning device.
- * Gives a readout of the ores available in the vent, then asks the user if they want to start wave defense?
+ * Gives a readout of the ores available in the vent, then asks the user if they want to start wave defense.
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/user)
 	if(!discovered)
@@ -185,9 +170,22 @@
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
 
+	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
+		for(var/turf/closed/mineral/rock in oview(i))
+			if(istype(rock, /turf/open/misc/asteroid) && prob(45)) // so it's too common
+				new /obj/effect/decal/cleanable/rubble(rock)
+			if(!istype(rock, /turf/closed/mineral))
+				continue
+			rock.gets_drilled(user, FALSE)
+			if(prob(75))
+				new /obj/effect/decal/cleanable/rubble(rock)
+		sleep(0.6 SECONDS)
+
+	start_wave_defense()
+
 /obj/structure/ore_vent/proc/generate_description()
-	for(mineral_count in 1 to mineral_breakdown.len)
-		var/datum/mineral/resource = mineral_breakdown[mineral_count]
+	for(var/mineral_count in 1 to mineral_breakdown.len)
+		var/datum/material/resource = mineral_breakdown[mineral_count]
 		if(mineral_count == mineral_breakdown.len)
 			ore_string += "and " + resource.name + "."
 		else
