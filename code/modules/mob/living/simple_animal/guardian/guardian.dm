@@ -401,15 +401,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return ..()
 	if(!is_deployed())
 		return FALSE
-	var/damage_multiplier = 1
-	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
-		to_chat(summoner, span_bolddanger("Your body can't take the strain of sustaining [src] in this condition!"))
-		damage_multiplier = 1.5
-	summoner.adjustBruteLoss(amount * damage_multiplier)
+	summoner.adjustBruteLoss(amount)
 	if(amount < 0 || QDELETED(summoner))
 		return
 	to_chat(summoner, span_bolddanger("Your [name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
+	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+		to_chat(summoner, span_bolddanger("Your heart can't take the strain of sustaining [src] in this condition!"))
+		summoner.adjustOrganLoss(ORGAN_SLOT_HEART, amount * 0.5)
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
