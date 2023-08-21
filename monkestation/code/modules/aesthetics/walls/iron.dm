@@ -70,4 +70,5 @@
 
 /turf/closed/indestructible/riveted
 	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
+	smoothing_groups = SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
