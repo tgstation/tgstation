@@ -12,6 +12,7 @@
  * Plant Bag
  * Sheet Snatcher
  * Book Bag
+ * Food Bag
  *      Biowaste Bag
  *
  * -Sayu
@@ -541,6 +542,29 @@
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
 		))
+
+// -----------------------------
+//           Food bag
+// -----------------------------
+
+/obj/item/storage/bag/food
+	name = "food bag"
+	desc = "A bag for food."
+	icon = 'icons/obj/service/kitchen.dmi'
+	icon_state = "foodbag"
+	worn_icon_state = "foodbag"
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/food/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 60
+	atom_storage.max_slots = 30
+	atom_storage.set_holdable(list(
+		/obj/item/food,
+		/obj/item/reagent_containers/condiment,
+		/obj/item/trash,
+	)) //holds food, condiments, and food waste
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"

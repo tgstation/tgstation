@@ -88,6 +88,7 @@
 		/obj/item/kitchen,
 		/obj/item/knife/kitchen,
 		/obj/item/storage/bag/tray,
+		/obj/item/storage/bag/food,
 	)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)

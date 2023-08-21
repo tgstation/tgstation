@@ -395,6 +395,7 @@
 		/obj/item/storage/box/mousetraps = 2,
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/item/storage/bag/food = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
