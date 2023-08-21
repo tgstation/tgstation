@@ -513,14 +513,14 @@
 /mob/living/proc/cure_fakedeath(source)
 	remove_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	if(stat != DEAD)
-		station_timestamp_timeofdeath = null
+		tod = null
 
 /// Induces fake death on a living mob.
 /mob/living/proc/fakedeath(source, silent = FALSE)
 	if(stat != DEAD)
 		if(!silent)
 			emote("deathgasp")
-		station_timestamp_timeofdeath = station_time_timestamp()
+		tod = station_time_timestamp()
 
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 

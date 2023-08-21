@@ -326,18 +326,15 @@
 	toggle(usr)
 
 /atom/movable/screen/mov_intent/update_icon_state()
-	if(!hud || !hud.mymob || !isliving(hud.mymob))
-		return
-	var/mob/living/living_hud_owner = hud.mymob
-	switch(living_hud_owner.move_intent)
+	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
 			icon_state = "running"
 	return ..()
 
-/atom/movable/screen/mov_intent/proc/toggle(mob/living/user)
-	if(!istype(user))
+/atom/movable/screen/mov_intent/proc/toggle(mob/user)
+	if(isobserver(user))
 		return
 	user.toggle_move_intent(user)
 
