@@ -3,7 +3,7 @@
 	base_icon_state = "window_sill"
 	icon_state = "window_sill-0"
 	layer = ABOVE_OBJ_LAYER - 0.02
-	canSmoothWith = SMOOTH_GROUP_WINDOW_SILL + SMOOTH_GROUP_WALLS
+	canSmoothWith =  SMOOTH_GROUP_WINDOW_SILL + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WALLS
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
 	smoothing_groups = SMOOTH_GROUP_WINDOW_SILL
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS

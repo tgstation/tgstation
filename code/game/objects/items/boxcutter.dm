@@ -13,10 +13,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
 	force = 0
-	var/start_extended = FALSE
-	/// Whether or not the boxcutter has been readied
-	var/on = FALSE
-	var/on_sound = 'sound/items/boxcutter_activate.ogg'
 
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()
@@ -26,8 +22,8 @@
 		effectiveness = 100, \
 	)
 
-	AddComponent(/datum/component/transforming, \
-		start_transformed = start_extended, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = 10, \
 		throwforce_on = 4, \
 		throw_speed_on = throw_speed, \
@@ -43,8 +39,7 @@
 /obj/item/boxcutter/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	on = active
-	playsound(src, on_sound, 50)
+	playsound(src, 'sound/items/boxcutter_activate.ogg', 50)
 	tool_behaviour = (active ? TOOL_KNIFE : NONE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
