@@ -18,6 +18,7 @@
 
 /datum/status_effect/grouped/cursed/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_USE, PROC_REF(check_curses))
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_LOST, PROC_REF(update_curse_count))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON, PROC_REF(clear_curses))
@@ -127,6 +128,15 @@
 
 	to_chat(owner, span_userdanger("As your body crumbles, you feel the curse of the slot machine surge through your body!"))
 	damage_chance += 75 //ruh roh raggy
+
+/// If our owner dies without getting gibbed (as in of other causes), stop smoking because we've "expended all the life energy".
+/datum/status_effect/grouped/cursed/proc/on_death(mob/living/source, gibbed)
+	SIGNAL_HANDLER
+
+	if(gibbed)
+		return
+
+	QDEL_NULL(particle_effect)
 
 /datum/status_effect/grouped/cursed/update_particles()
 	var/particle_path = /particles/smoke/steam/mild
