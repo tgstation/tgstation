@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
 			spawning.equip_to_slot_or_del(stored,ITEM_SLOT_SUITSTORE)
 	if(head)
-		if(spawning.head)
+		if(spawning.head && !isplasmaman(spawning))
 			qdel(spawning.head)
 		spawning.equip_to_slot_or_del(new head(spawning),ITEM_SLOT_HEAD)
 	//monkestation edit end

@@ -672,10 +672,16 @@ em {
   font-weight: bold;
 }
 
-.spider {
+.spiderbroodmother {
   color: #8800ff;
   font-weight: bold;
   font-size: 185%;
+}
+
+.spiderscout {
+  color: #231d99;
+  font-weight: bold;
+  font-size: 120%;
 }
 
 .interface {
@@ -902,4 +908,80 @@ em {
 .tooltip {
   font-style: italic;
   border-bottom: 1px dashed #fff;
+}
+
+.brass {
+  color: #be8700;
+}
+
+.big_brass {
+  color: #be8700;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.clockyellow {
+  color: #daaa18;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.clockgray {
+  color: #42474d;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.clockred {
+  color: #6e001a;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.ratvar {
+  color: #be8700;
+  font-size: 48px;
+  font-weight: bold;
+  font-style: italic;
+  animation: ratvarcolor 5000ms infinite;
+}
+
+@keyframes ratvarcolor {
+  0% {
+    color: #0d0d0d;
+  }
+  9% {
+    color: #be8700;
+  }
+  18% {
+    color: #0d0d0d;
+  }
+  27% {
+    color: #42474d;
+  }
+  36% {
+    color: #0d0d0d;
+  }
+  45% {
+    color: #af0aaf;
+  }
+  54% {
+    color: #0d0d0d;
+  }
+  63% {
+    color: #1e8ce1;
+  }
+  72% {
+    color: #0d0d0d;
+  }
+  81% {
+    color: #daaa18;
+  }
+  90% {
+    color: #0d0d0d;
+  }
+  100% {
+    color: #6e001a;
+  }
 }

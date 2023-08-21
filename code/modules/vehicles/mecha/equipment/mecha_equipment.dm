@@ -29,6 +29,8 @@
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
 
+	///what equipment flags does this have
+	var/equipment_flags
 	var/movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
@@ -56,6 +58,8 @@
 	. = ..()
 	switch(action)
 		if("detach")
+			if(equipment_flags & NOT_ABLE_TO_REMOVE_FROM_MECHA) //monkestation edit
+				return //monkestation edit
 			detach(get_turf(src))
 			return TRUE
 		if("toggle")

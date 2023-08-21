@@ -287,6 +287,9 @@
 					O.make_laws()
 					O.log_current_laws()
 
+			var/datum/antagonist/clock_cultist/old_servant_datum = brainmob.mind?.has_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit
+			if(be_clockwork && old_servant_datum) //monkestation edit
+				old_servant_datum.silent = TRUE //monkestation edit
 			brainmob.mind?.remove_antags_for_borging()
 			O.job = JOB_CYBORG
 
@@ -317,6 +320,15 @@
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 				to_chat(O, span_warning("Error: Servo motors unresponsive."))
+
+//monkestation edit start
+			if(be_clockwork && O.mind)
+				var/datum/antagonist/clock_cultist/new_servant_datum = new
+				if(old_servant_datum)
+					new_servant_datum.silent = TRUE
+				O.mind.add_antag_datum(new_servant_datum)
+				new_servant_datum.silent = FALSE
+//monkestation edit end
 
 		else
 			to_chat(user, span_warning("The MMI must go in after everything else!"))
@@ -357,6 +369,13 @@
 
 	else if(istype(W, /obj/item/pen))
 		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
+//monkestation edit start
+	else if(istype(W, /obj/item/clockwork/clockwork_slab) && IS_CLOCK(user))
+		to_chat(user, span_brass("You adjust the internals of \the [src] to that of clockwork."))
+		be_clockwork = TRUE
+		lawsync = FALSE
+		aisync = FALSE
+//monkestation edit end
 	else
 		return ..()
 

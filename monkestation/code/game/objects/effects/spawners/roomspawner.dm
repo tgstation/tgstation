@@ -169,3 +169,8 @@
 	name = "Icebox bar spawner"
 	room_width = 18
 	room_height = 12
+
+/obj/effect/spawner/random_bar/tramstation
+	name = "Tramstation bar spawner"
+	room_width = 30
+	room_height = 25
