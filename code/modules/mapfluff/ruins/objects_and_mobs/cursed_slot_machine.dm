@@ -41,19 +41,14 @@
 
 	var/signal_value = SEND_SIGNAL(human_user, COMSIG_CURSED_SLOT_MACHINE_USE)
 
-	if(signal_value & SLOT_MACHINE_USE_CANCEL)
-		to_chat(human_user, span_userdanger("Why couldn't I get one more try?!"))
-		human_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-		human_user.gib()
+	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used for some reason (like if we're maxed out on curses but not getting gibbed)
+		say("We're sorry, but we can no longer serve you at this establishment.")
 		return
 
 	user.visible_message(
 		span_warning("[human_user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"),
 		span_warning("You feel a draining as you pull the lever, but you know it'll be worth it."),
 	)
-
-	if(status_effect_on_roll && isnull(human_user.has_status_effect(/datum/status_effect/grouped/cursed)))
-		human_user.apply_status_effect(/datum/status_effect/grouped/cursed)
 
 	icon_screen = "slots_screen_working"
 	update_appearance()
@@ -72,6 +67,9 @@
 	obj_flags &= ~IN_USE
 	COOLDOWN_START(src, spin_cooldown, cooldown_length)
 	if(!prob(win_prob))
+		if(status_effect_on_roll && isnull(human_user.has_status_effect(/datum/status_effect/grouped/cursed)))
+			human_user.apply_status_effect(/datum/status_effect/grouped/cursed)
+
 		SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_LOST)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		balloon_alert_to_viewers("you lost!")

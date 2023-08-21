@@ -3,8 +3,6 @@
 /datum/status_effect/grouped/cursed
 	id = "cursed"
 	alert_type = /atom/movable/screen/alert/status_effect/cursed
-	/// Static list of signals that will update our count.
-	var/static/list/updatable_signals = list(COMSIG_CURSED_SLOT_MACHINE_USE)
 	/// The max number of curses a target can incur with this status effect.
 	var/max_curse_count = 5
 	/// The amount of times we have been "applied" to the target.
@@ -70,13 +68,20 @@
 			messages += span_boldwarning("Of course, you might have to not speak on the nature of this machine, in case they scamper off to leave you to die.")
 			messages += span_boldwarning("Is it truly worth it to condemn someone to this fate to cure the manifestation of your own hedonistic urges? You'll have to decide quickly.")
 
-		if(4) // canonical ending, anything after this is schenanigans.
+		if(4)
 			messages += span_boldwarning("A migraine swells over your head as your thoughts become hazy. Your hand desperately inches closer towards the slot machine for one final pull...")
 			messages += span_boldwarning("The ultimate test of mind over matter. You can jerk your own muscle back in order to prevent a terrible fate, but your life already is worth so little now.")
 			messages += span_boldwarning("This is what they want, is it not? To witness your failure against itself? The compulsion carries you forward as a sinking feeling of dread fills your stomach.")
 			messages += span_boldwarning("Paradoxically, where there is hopelessness, there is elation. Elation at the fact that there's still enough power in you for one more pull.")
-			messages += span_boldwarning("Your legs quiver on the thought of running away from this wretched machination, but your own arm remains complacent in the thought of seeing spinning wheels.")
+			messages += span_boldwarning("Your legs desperate wish to jolt away on the thought of running away from this wretched machination, but your own arm remains complacent in the thought of seeing spinning wheels.")
 			messages += span_boldwarning("The toll has already been exacted. There is no longer death on 'your' terms. Is your dignity worth more than your life?")
+
+		if(max_curse_count to INFINITY)
+			to_chat(owner, span_userdanger("Why couldn't I get one more try?!"))
+			owner.investigate_log("has been gibbed by the cursed status effect after accumulating [curse_count] curses.", INVESTIGATE_DEATHS)
+			owner.gib()
+			qdel(src)
+			return
 
 	for(var/message in messages)
 		to_chat(owner, message)
