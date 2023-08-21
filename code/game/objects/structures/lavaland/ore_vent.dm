@@ -1,5 +1,7 @@
 #define MAX_ARTIFACT_ROLL_CHANCE 10
 
+#define MINERAL_TYPE_OPTIONS 4
+
 /obj/structure/ore_vent
 	name = "ore vent"
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
@@ -14,19 +16,11 @@
 	var/tapped = FALSE
 	/// Has this vent been scanned by a mining scanner? Cannot be scanned again. Adds ores to the vent's description.
 	var/discovered = FALSE
+	/// Is this type of vent exempt from the 15 vent limit? Think the free iron/glass vent or boss vents. This also causes it to not roll for random mineral breakdown.
+	var/unique_vent = FALSE
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
-	var/list/mineral_breakdown = list(
-		/datum/material/iron = 30,
-		/datum/material/glass = 30,
-		/datum/material/titanium = 10,
-		/datum/material/silver = 5,
-		/datum/material/gold = 5,
-		/datum/material/plasma = 5,
-		/datum/material/diamond = 5,
-		/datum/material/uranium = 5,
-		/datum/material/bluespace = 1,
-		/datum/material/plastic = 1,
-	)
+	var/list/mineral_breakdown = list()
+	/// A list of mobs that can be spawned by this vent during a wave defense event.
 	var/list/lavaland_mobs = list(
 		/mob/living/basic/mining/goliath,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
@@ -37,16 +31,12 @@
 	)
 	/// How many rolls on the mineral_breakdown list are made per boulder produced? EG: 3 rolls means 3 minerals per boulder, with order determining percentage.
 	var/minerals_per_boulder = 3
-
 	/// What size boulders does this vent produce?
 	var/boulder_size = BOULDER_SIZE_SMALL
-
 	/// Reference to this ore vent's NODE drone, to track wave success.
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
-
 	/// Percent chance that this vent will produce an artifact as well.
 	var/artifact_chance = 0
-
 	/// String of ores that this vent can produce.
 	var/ore_string = ""
 
@@ -62,6 +52,7 @@
 /obj/structure/ore_vent/Destroy()
 	. = ..()
 	SSore_generation.possible_vents -= src
+	node = null
 	if(tapped)
 		SSore_generation.processed_vents -= src
 
@@ -99,6 +90,14 @@
 		refined_list.Insert(refined_list.len, material)
 		refined_list[material] += ore_quantity_function(iteration)
 	return refined_list
+
+/obj/structure/ore_vent/proc/generate_mineral_breakdown()
+	for(var/i in 1 to MINERAL_TYPE_OPTIONS)
+		var/datum/material/material = pick_weight(SSore_generation.ore_vent_minerals)
+		//We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
+		SSore_generation.ore_vent_minerals[material] -= 1
+		mineral_breakdown.Insert(mineral_breakdown.len, material)
+
 
 /**
  * Returns the quantity of mineral sheets in each ore's boulder contents roll. First roll can produce the most ore, with subsequent rolls scaling lower logarithmically.
@@ -197,6 +196,7 @@
 	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
 	tapped = TRUE
 	discovered = TRUE
+	unique_vent = TRUE
 	mineral_breakdown = list(
 		/datum/material/iron = 50,
 		/datum/material/glass = 50,
@@ -218,13 +218,25 @@
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
-	boulder_size = pick(ore_vent_types)
+	generate_mineral_breakdown()
+	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_types)
+	switch(string_boulder_size)
+		if("large")
+			boulder_size = BOULDER_SIZE_LARGE
+			SSore_generation.ore_vent_types["large"] -= 1
+		if("medium")
+			boulder_size = BOULDER_SIZE_MEDIUM
+			SSore_generation.ore_vent_types["medium"] -= 1
+		if("small")
+			boulder_size = BOULDER_SIZE_SMALL
+			SSore_generation.ore_vent_types["small"] -= 1
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 
-//Make sure to finish this!!!
 /obj/structure/ore_vent/random/boss
 	name = "menacing ore vent"
 	desc = "An ore vent, brimming with underground ore. This one has an evil aura about it. Better be careful."
+	unique_vent = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //This thing will take a beating.
 	///What boss do we want to spawn?
 	var/summoned_boss = null
 
@@ -236,12 +248,27 @@
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	))
 
+/obj/structure/ore_vent/random/boss/examine(mob/user)
+	. = ..()
+	var/boss_string = ""
+	switch(summoned_boss)
+		if(/mob/living/simple_animal/hostile/megafauna/bubblegum)
+			boss_string = "A giant fleshbound beast"
+		if(/mob/living/simple_animal/hostile/megafauna/dragon)
+			boss_string = "Sharp teeth and scales"
+		if(/mob/living/simple_animal/hostile/megafauna/colossus)
+			boss_string = "A giant, armored behemoth"
+	. += span_notice("[boss_string] is etched into the side of the vent.")
+
 /obj/structure/ore_vent/random/boss/start_wave_defense()
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion)) ///Lets hope this is how this works
 	boss.say("You dare disturb my slumber?!") //to stop warnings namely
 
+/obj/structure/ore_vent/random/boss/handle_wave_conclusion()
+	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
+	. = ..()
 
 /obj/item/boulder
 	name = "boulder"
@@ -286,3 +313,4 @@
 	new /obj/item/relic(src) //var/obj/item/relic/boulder_relic
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
+#undef MINERAL_TYPE_OPTIONS

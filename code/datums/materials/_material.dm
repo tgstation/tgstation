@@ -51,6 +51,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/obj/item/shard_type
 	///What type of debris the tile will leave behind when shattered.
 	var/obj/effect/decal/debris_type
+	/// How likely this mineral is to be found in a boulder during mining.
+	var/mineral_rarity = MATERIAL_RARITY_COMMON
 
 /** Handles initializing the material.
  *

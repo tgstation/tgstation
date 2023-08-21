@@ -13,9 +13,30 @@ SUBSYSTEM_DEF(ore_generation)
 	var/list/available_boulders = list()
 	/// All the ore vents that are currently in the game, not just the ones that are producing boulders.
 	var/list/possible_vents = list()
-	///The quantity of ore vents that mapgen will attempt to spawn.
+	/// The quantity of ore vents that mapgen will attempt to spawn.
 	var/ore_vent_count = 15
-
+	/**
+	 * Associated list of minerals to be associated with our ore vents.
+	 * Should be empty by the time initialize ends. Each value by each key is the number of vents that have this ore as a possible choice.
+	 */
+	var/list/ore_vent_minerals = list(
+		/datum/material/iron = 12,
+		/datum/material/glass = 12,
+		/datum/material/plasma = 8,
+		/datum/material/titanium = 5,
+		/datum/material/silver = 5,
+		/datum/material/gold = 5,
+		/datum/material/diamond = 3,
+		/datum/material/uranium = 3,
+		/datum/material/bluespace = 3,
+		/datum/material/plastic = 1,
+	)
+ 	///Associated list of vent sizes that remain. We can't have more than 3 large vents, 5 medium vents, and 7 small vents.
+	var/list/ore_vent_sizes = list(
+		"large" = 3,
+		"medium" = 5,
+		"small" = 7,
+	)
 
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
