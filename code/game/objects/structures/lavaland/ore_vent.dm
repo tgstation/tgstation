@@ -12,6 +12,8 @@
 
 	/// Has this vent been tapped to produce boulders? Cannot be untapped.
 	var/tapped = FALSE
+	/// Has this vent been scanned by a mining scanner? Cannot be scanned again. Adds ores to the vent's description.
+	var/discovered = FALSE
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
 	var/list/mineral_breakdown = list(
 		/datum/material/iron = 30,
@@ -45,8 +47,12 @@
 	/// Percent chance that this vent will produce an artifact as well.
 	var/artifact_chance = 0
 
+	/// String of ores that this vent can produce.
+	var/ore_string = ""
+
 
 /obj/structure/ore_vent/Initialize(mapload)
+	generate_description()
 	SSore_generation.possible_vents += src
 	if(tapped)
 		SSore_generation.processed_vents += src
@@ -65,9 +71,8 @@
 		if(tapped)
 			visible_message(span_notice("\the [src] has already been tapped!"))
 			return
-		///This is where we start spitting out mobs.
-		Shake(duration = 3 SECONDS)
-		node = new /mob/living/basic/node_drone(loc)
+		scan_and_confirm(user)
+		return
 
 		for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 			for(var/turf/closed/mineral/rock in oview(i))
@@ -89,6 +94,13 @@
 		return FALSE
 	if(istype(M, /mob/living/basic/node_drone))
 		return TRUE
+
+/obj/structure/ore_vent/examine(mob/user)
+	. = ..()
+	if(discovered)
+		. += span_notice("This vent can produce [ore_string].")
+	else
+		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
 
 /**
  * Picks n types materials to pack into a boulder created by this ore vent, where n is this vent's minerals_per_boulder.
@@ -161,11 +173,32 @@
 				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER * boulder_size)
 	node.escape() //Visually show the drone is done and flies away.
 
+/**
+ * Called when the ore vent is tapped by a scanning device.
+ * Gives a readout of the ores available in the vent, then asks the user if they want to start wave defense?
+ */
+/obj/structure/ore_vent/proc/scan_and_confirm(mob/user)
+	if(!discovered)
+		if(do_after(user, 10 SECONDS))
+			discovered = TRUE
+	///This is where we start spitting out mobs.
+	Shake(duration = 3 SECONDS)
+	node = new /mob/living/basic/node_drone(loc)
+
+/obj/structure/ore_vent/proc/generate_description()
+	for(mineral_count in 1 to mineral_breakdown.len)
+		var/datum/mineral/resource = mineral_breakdown[mineral_count]
+		if(mineral_count == mineral_breakdown.len)
+			ore_string += "and " + resource.name + "."
+		else
+			ore_string += resource.name + ", "
+
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
 	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
 	tapped = TRUE
+	discovered = TRUE
 	mineral_breakdown = list(
 		/datum/material/iron = 50,
 		/datum/material/glass = 50,
