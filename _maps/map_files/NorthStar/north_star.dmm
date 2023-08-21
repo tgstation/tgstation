@@ -1457,7 +1457,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/fore)
 "asI" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
 "asL" = (
@@ -3812,7 +3812,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor3/aft)
 "aYk" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "aft_vator"
 	},
@@ -9186,7 +9186,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "cni" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "fore_vator"
 	},
@@ -16223,7 +16223,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/checkpoint/escape)
 "ehT" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
@@ -23649,7 +23649,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gmz" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/machinery/lift_indicator/directional/east{
 	linked_elevator_id = "com_vator";
 	pixel_x = 38;
@@ -51853,7 +51853,7 @@
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "nyn" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor2/fore)
@@ -53501,7 +53501,7 @@
 /turf/open/floor/carpet/purple,
 /area/station/commons/dorms/apartment1)
 "nUI" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/machinery/lift_indicator/directional/east{
 	linked_elevator_id = "aft_vator";
 	pixel_x = 38;
@@ -55574,7 +55574,7 @@
 /turf/open/floor/iron/white,
 /area/station/hallway/floor2/fore)
 "oxs" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor2/fore)
 "oxz" = (
@@ -82331,7 +82331,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "vCf" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "com_vator"
 	},
@@ -89989,7 +89989,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/aft)
 "xzL" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
 "xzP" = (

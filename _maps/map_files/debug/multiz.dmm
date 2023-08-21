@@ -144,7 +144,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "aW" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
@@ -1086,7 +1086,7 @@
 /turf/open/openspace,
 /area/station/hallway/secondary/service)
 "lT" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 6
 	},
@@ -1111,7 +1111,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "mG" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
@@ -1148,7 +1148,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "nS" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
@@ -1396,7 +1396,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "xK" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
@@ -1421,7 +1421,7 @@
 	preset_destination_names = list("2"="Bottom        Floor","3"="Middle        Floor","4"="Top        Floor");
 	linked_elevator_id = "test_vator"
 	},
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
@@ -1432,7 +1432,7 @@
 	specific_lift_id = "test_vator"
 	},
 /obj/machinery/light/floor,
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "zb" = (
@@ -1485,7 +1485,7 @@
 /area/station/hallway/secondary/service)
 "Bm" = (
 /obj/structure/sign/warning/directional/east,
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
@@ -2119,7 +2119,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "Zk" = (
-/obj/structure/industrial_lift/public,
+/obj/structure/transport/linear/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},

@@ -7295,7 +7295,7 @@
 /turf/closed/wall,
 /area/station/commons/vacant_room/office)
 "cSD" = (
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "maint_tram"
 	},
@@ -12920,7 +12920,7 @@
 	},
 /obj/structure/window/reinforced/tram/directional/east,
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "eTr" = (
@@ -16731,7 +16731,7 @@
 	},
 /obj/structure/window/reinforced/tram/directional/west,
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "glb" = (
@@ -18600,7 +18600,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /obj/machinery/door/window/tram/right/directional/north{
 	pixel_y = -25
 	},
@@ -21980,7 +21980,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /obj/machinery/door/window/tram/left/directional/north{
 	pixel_x = -32;
 	pixel_y = -25
@@ -25842,7 +25842,7 @@
 /area/station/maintenance/starboard/aft)
 "jwC" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /obj/structure/window/reinforced/tram/directional/south,
 /obj/structure/rack,
 /turf/open/floor/noslip/tram_platform,
@@ -26383,7 +26383,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "jEZ" = (
@@ -26873,7 +26873,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "jMv" = (
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /obj/effect/landmark/tram/birdshot/maint_left{
 	specific_lift_id = "maint_tram"
 	},
@@ -29914,7 +29914,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "kSr" = (
@@ -41292,7 +41292,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "oXs" = (
@@ -50934,7 +50934,7 @@
 "rZk" = (
 /obj/structure/rack,
 /obj/machinery/light/small/directional/north,
-/obj/structure/industrial_lift/tram,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "rZn" = (
