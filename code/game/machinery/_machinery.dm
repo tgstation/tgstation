@@ -196,9 +196,10 @@
 /obj/machinery/Destroy()
 	SSmachines.unregister_machine(src)
 	end_processing()
-	dump_inventory_contents()
 
 	clear_components()
+	dump_contents()
+
 	unset_static_power()
 	return ..()
 
@@ -361,6 +362,10 @@
 /obj/machinery/proc/dump_inventory_contents(list/subset = null)
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
+		//so machines like microwaves dont dump out signalers after cooking
+		if(istype(movable_atom, /obj/item/assembly/signaler))
+			continue
+
 		if(subset && !(movable_atom in subset))
 			continue
 
@@ -810,6 +815,7 @@
 			new datum_part.physical_object_type(loc)
 		else
 			var/obj/item/obj_part = part
+			component_parts -= part
 			obj_part.forceMove(loc)
 			if(istype(obj_part, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/board = obj_part
@@ -882,6 +888,8 @@
 		circuit = null
 	if((gone in component_parts) && !QDELETED(src))
 		component_parts -= gone
+		// It would be unusual for a component_part to be qdel'd ordinarily.
+		deconstruct(FALSE)
 
 /**
  * This should be called before mass qdeling components to make space for replacements.
