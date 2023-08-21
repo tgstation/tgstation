@@ -202,7 +202,7 @@
 	if(machine_stat & BROKEN || machine_stat & NOPOWER)
 		return
 
-	if(prob(0.0175))
+	if(prob(ICTS_BREAKDOWN_RATE))
 		local_fault()
 		return
 
@@ -530,7 +530,7 @@
 	if(machine_stat & BROKEN)
 		return
 
-	if(prob(0.0175))
+	if(prob(ICTS_BREAKDOWN_RATE))
 		local_fault()
 
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()

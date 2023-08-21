@@ -82,6 +82,7 @@ DEFINE_BITFIELD(request_flags, list(
 #define ICTS_LOCAL_WARNING 2
 #define ICTS_REMOTE_FAULT 3
 #define ICTS_LOCAL_FAULT 4
+#define ICTS_BREAKDOWN_RATE 0.0175
 
 /// Tram destinations/platforms
 #define TRAMSTATION_WEST 1
