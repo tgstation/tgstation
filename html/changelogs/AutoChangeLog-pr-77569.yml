@@ -1,0 +1,6 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - rscadd: "Replaced slime clone damage with a \"Covered in Slime\" status effect that deals brute damage over time and can be washed off by standing under a shower."
+  - rscadd: "Northstar and Birdshot Xenobiology have been outfitted with a new shower."
+  - code_imp: "Replaced the magic strings in slime code with macros. Also included some warnings to anyone daring to touch the macros."
