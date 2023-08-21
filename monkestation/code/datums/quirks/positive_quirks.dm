@@ -76,3 +76,35 @@
 		message = replacetext(message, "l", "w")
 	speech_args[SPEECH_MESSAGE] = message
 
+/datum/quirk/dwarfism
+	name = "Dwarfism"
+	desc = "Your cells take up less space than others', giving you a smaller appearance. You also find it easier to climb tables. Rock and Stone!"
+	value = 4
+	icon = FA_ICON_CHEVRON_CIRCLE_DOWN
+	quirk_flags = QUIRK_CHANGES_APPEARANCE
+
+/datum/quirk/dwarfism/add()
+	. = ..()
+	if (ishuman(quirk_holder))
+		var/mob/living/carbon/human/godzuki = quirk_holder
+		if(godzuki.dna)
+			godzuki.dna.add_mutation(/datum/mutation/human/dwarfism)
+
+/datum/quirk/voracious
+	name = "Voracious"
+	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine. Also allows you to have an additional food buff."
+	icon = "drumstick-bite"
+	value = 6
+	mob_trait = TRAIT_VORACIOUS
+	gain_text = span_notice("You feel HONGRY.")
+	lose_text = span_danger("You no longer feel HONGRY.")
+	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/dinner)
+
+
+/datum/quirk/voracious/add()
+	var/mob/living/carbon/human/holder = quirk_holder
+	holder.max_food_buffs ++
+
+/datum/quirk/voracious/remove()
+	var/mob/living/carbon/human/holder = quirk_holder
+	holder.max_food_buffs --

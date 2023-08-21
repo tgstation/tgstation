@@ -124,7 +124,7 @@
 	message_admins("[key_name_admin(admin)] has ninja'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has ninja'ed [key_name(new_owner)].")
 
-/datum/antagonist/ninja/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/ninja/antag_token(datum/mind/hosts_mind, mob/spender)
 	hosts_mind.current.unequip_everything()
 	new /obj/effect/holy(hosts_mind.current.loc)
 	QDEL_IN(hosts_mind.current, 20)

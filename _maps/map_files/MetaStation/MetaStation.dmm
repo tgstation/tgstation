@@ -12708,18 +12708,6 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
-"ePA" = (
-/obj/structure/sink/directional/east,
-/obj/structure/mirror/directional/west,
-/obj/machinery/light/small/directional/south,
-/obj/machinery/button/door/directional/south{
-	id = "FitnessShower";
-	name = "Lock Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4
-	},
-/turf/open/floor/iron/freezer,
-/area/station/commons/fitness/recreation)
 "ePM" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -13753,6 +13741,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"fjc" = (
+/obj/machinery/computer/cryopod{
+	dir = 4;
+	pixel_x = -32
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/freezer,
+/area/station/commons/fitness/recreation)
 "fjd" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -16049,12 +16045,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
-"gfe" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/table,
-/obj/effect/spawner/random/maintenance/two,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "gfk" = (
 /obj/structure/table/wood,
 /obj/item/phone{
@@ -17035,6 +17025,10 @@
 /obj/effect/spawner/random/decoration/showcase,
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
+"gwG" = (
+/obj/machinery/cryopod,
+/turf/open/floor/iron/freezer,
+/area/station/commons/fitness/recreation)
 "gwK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -22200,12 +22194,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
-"ipG" = (
-/obj/structure/table,
-/obj/item/poster/random_contraband,
-/obj/effect/spawner/random/maintenance,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "ipM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32208,16 +32196,6 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"lLw" = (
-/obj/machinery/shower/directional/east,
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 2;
-	icon_state = "left";
-	name = "Shower"
-	},
-/turf/open/floor/iron/freezer,
-/area/station/commons/fitness/recreation)
 "lLz" = (
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
@@ -35323,9 +35301,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "mQe" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
+/area/station/commons/fitness/recreation)
 "mQr" = (
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -35868,6 +35848,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"mZb" = (
+/turf/open/floor/iron/freezer,
+/area/station/commons/fitness/recreation)
 "mZy" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -59860,7 +59843,7 @@
 "vwp" = (
 /obj/machinery/door/airlock{
 	id_tag = "FitnessShower";
-	name = "Fitness Room Shower"
+	name = "Cryogenic Storage"
 	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
@@ -62135,12 +62118,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
-"wmf" = (
-/obj/effect/spawner/random/trash/garbage{
-	spawn_scatter_radius = 1
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "wmg" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -101383,11 +101360,11 @@ aaa
 aaa
 aaa
 aaa
-lMJ
-aaa
-ilh
-sab
-wmf
+szp
+szp
+szp
+szp
+szp
 cur
 cur
 nDF
@@ -101640,11 +101617,11 @@ aaa
 aaa
 aaa
 aaa
-lMJ
-aaa
-ilh
+szp
+gwG
+fjc
 mQe
-rXX
+szp
 cur
 jCj
 ihX
@@ -101898,10 +101875,10 @@ lMJ
 lMJ
 lMJ
 szp
+gwG
+mZb
+mQe
 szp
-ilh
-ilh
-ipG
 gKc
 cur
 vTf
@@ -102155,10 +102132,10 @@ aaa
 aaa
 aaa
 nvn
-lLw
-ePA
-ilh
-gfe
+gwG
+mZb
+mQe
+szp
 aDR
 ilh
 ilh
@@ -102414,8 +102391,8 @@ aaa
 szp
 szp
 vwp
-ilh
-ilh
+szp
+szp
 ilh
 ilh
 jFO

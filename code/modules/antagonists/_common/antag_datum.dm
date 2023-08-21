@@ -518,5 +518,5 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/forge_objectives()
 	return
 
-/datum/antagonist/proc/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/proc/antag_token(datum/mind/hosts_mind, mob/spender)
 	return

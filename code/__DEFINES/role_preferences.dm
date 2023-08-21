@@ -16,6 +16,7 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -100,6 +101,7 @@
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
 
 
+
 /// This defines the antagonists you can operate with in the settings.
 /// Keys are the antagonist, values are the number of days since the player's
 /// first connection in order to play.
@@ -115,6 +117,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+	ROLE_CLOCK_CULTIST = 14,
+	ROLE_BLOODSUCKER = 0,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
@@ -136,11 +140,14 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
 	ROLE_WIZARD_MIDROUND = 14,
+	ROLE_VAMPIRICACCIDENT = 0,
+	ROLE_MONSTERHUNTER = 0,
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
+	ROLE_BLOODSUCKERBREAKOUT = 0,
 
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,

@@ -393,19 +393,7 @@
 
 /obj/machinery/power/smes/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	input_attempt = rand(0,1)
-	inputting = input_attempt
-	output_attempt = rand(0,1)
-	outputting = output_attempt
-	output_level = rand(0, output_level_max)
-	input_level = rand(0, input_level_max)
-	charge -= 1e6/severity
-	if (charge < 0)
-		charge = 0
-	update_appearance()
-	log_smes()
+	return //monke edit: removed to prevent random singulooses/teslooses
 
 /obj/machinery/power/smes/engineering
 	charge = 2.5e6 // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone

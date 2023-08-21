@@ -250,15 +250,13 @@
 
 			needs_update = TRUE
 			growth += 3
-
-		if(self_sustaining && self_growing)
-			if(myseed.potency < 50)
-				myseed.adjust_potency(2)
-			if(myseed.yield < 5)
-				myseed.adjust_yield(1)
-			if(myseed.lifespan < 70)
-				myseed.adjust_lifespan(2)
-
+			if(self_sustaining && self_growing)
+				if(myseed.potency < 50)
+					myseed.adjust_potency(2)
+				if(myseed.yield < 5)
+					myseed.adjust_yield(1)
+				if(myseed.lifespan < 70)
+					myseed.adjust_lifespan(2)
 /**
  * Nutrients
  */
@@ -767,7 +765,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings.")
 		user.log_message("last altered a hydro tray, which spiderlings spawned from.", LOG_GAME)
 		visible_message(span_warning("The pests seem to behave oddly..."))
-		spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, src, 3, FALSE)
+		spawn_atom_to_turf(/mob/living/basic/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
 		visible_message(span_warning("The pests seem to behave oddly in [myseed.name] tray, but quickly settle down..."))
 

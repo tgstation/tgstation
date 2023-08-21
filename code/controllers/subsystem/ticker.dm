@@ -66,6 +66,11 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
+	///add bitflags to this that should be rewarded monkecoins, example: DEPARTMENT_BITFLAG_SECURITY
+	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY,)
+	///add jobs to this that should get rewarded monkecoins, example: JOB_SECURITY_OFFICER
+	var/list/jobs_to_reward = list(JOB_JANITOR,)
+
 /datum/controller/subsystem/ticker/Initialize()
 	var/list/byond_sound_formats = list(
 		"mid" = TRUE,
@@ -479,6 +484,12 @@ SUBSYSTEM_DEF(ticker)
 			livings += living
 			if(living.client && length(living.client?.active_challenges))
 				SSchallenges.apply_challenges(living.client)
+			for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
+				if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
+					living.client.reward_this_person += 150
+			for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
+				if(living.job == processing_reward_jobs)
+					living.client.reward_this_person += 150
 	if(livings.len)
 		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
 

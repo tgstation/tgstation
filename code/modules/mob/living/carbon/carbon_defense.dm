@@ -100,7 +100,7 @@
 	if(I.force)
 		var/attack_direction = get_dir(user, src)
 		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction)
-		if(I.damtype == BRUTE && IS_ORGANIC_LIMB(affecting))
+		if(I.damtype == BRUTE && (IS_ORGANIC_LIMB(affecting) || HAS_TRAIT(affecting.owner, TRAIT_ROBOT_CAN_BLEED)))
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
@@ -264,7 +264,7 @@
  * Will shove the target mob back, and drop them if they're in front of something dense
  * or another carbon.
 */
-/mob/living/carbon/proc/disarm(mob/living/carbon/target)
+/mob/living/carbon/disarm(mob/living/carbon/target)
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))

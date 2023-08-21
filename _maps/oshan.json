@@ -12,6 +12,7 @@
 	"traits": [
 		{
 			"OshanTrait": true,
+			"Daycycle": true,
 			"Linkage": null,
 			"Gravity": true,
 			"Baseturf": "/turf/open/floor/plating/ocean",

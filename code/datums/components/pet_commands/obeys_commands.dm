@@ -57,10 +57,7 @@
 
 	if (IS_DEAD_OR_INCAP(source))
 		return
-	if (!source.ai_controller)
-		return
-	var/list/friends_list = source.ai_controller.blackboard[BB_FRIENDS_LIST]
-	if (!friends_list || !friends_list[WEAKREF(user)])
+	if (!(user in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return
 	examine_list += span_notice("[source.p_they(capitalized = TRUE)] seem[source.p_s()] happy to see you!")
 
@@ -71,10 +68,7 @@
 	var/mob/living/living_parent = parent
 	if (IS_DEAD_OR_INCAP(living_parent))
 		return
-	if (!living_parent.ai_controller)
-		return
-	var/list/friends_list = living_parent.ai_controller.blackboard[BB_FRIENDS_LIST]
-	if (!friends_list || !friends_list[WEAKREF(clicker)])
+	if (!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return // Not our friend, can't boss us around
 
 	INVOKE_ASYNC(src, PROC_REF(display_radial_menu), clicker)

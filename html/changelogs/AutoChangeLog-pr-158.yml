@@ -1,4 +1,0 @@
-author: "dwasint"
-delete-after: True
-changes:
-  - refactor: "Store menu is now completely overhauled, it now shows descriptions, job requirements, has a purchase confirmation, and greys out owned items and items you cant afford"

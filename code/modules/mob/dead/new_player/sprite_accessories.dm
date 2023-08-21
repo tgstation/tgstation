@@ -2095,6 +2095,10 @@
 	color_src = null
 	em_block = TRUE
 
+/datum/sprite_accessory/moth_wings/none
+	name = "None"
+	icon_state = "none"
+
 /datum/sprite_accessory/moth_wings/plain
 	name = "Plain"
 	icon_state = "plain"
@@ -2134,7 +2138,6 @@
 /datum/sprite_accessory/moth_wings/burnt_off
 	name = "Burnt Off"
 	icon_state = "burnt_off"
-	locked = TRUE
 
 /datum/sprite_accessory/moth_wings/firewatch
 	name = "Firewatch"
@@ -2195,6 +2198,10 @@
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/species/moth/moth_antennae.dmi'
 	color_src = null
+
+/datum/sprite_accessory/moth_antennae/none
+	name = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/moth_antennae/plain
 	name = "Plain"

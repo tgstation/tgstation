@@ -54,6 +54,29 @@
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
+/obj/projectile/beam/laser/musket
+	name = "low-power laser"
+	icon_state = "laser_musket"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	damage = 30 //monke edit: damage changed from 25 to 30
+	stamina = 45 //monke edit: brought to disabler level as is on tg
+	light_color = COLOR_STRONG_VIOLET
+	weak_against_armour = TRUE
+
+/obj/projectile/beam/laser/musket/prime
+	name = "mid-power laser"
+	damage = 35 //monke edit: damage changed from 30 to 35
+	stamina = 60 //monke edit: damage changed from 45 to 60
+	weak_against_armour = FALSE
+
+/obj/projectile/beam/laser/musket/syndicate //monke edit: syndicate laser musket
+	name = "resonant laser"
+	damage = 30
+	stamina = 65
+	weak_against_armour = FALSE
+	armour_penetration = 25 //less powerful than armor piercing rounds
+	wound_bonus = 10
+
 /obj/projectile/beam/weak
 	damage = 15
 
@@ -101,6 +124,15 @@
 
 /obj/projectile/beam/disabler/weak
 	stamina = 15
+
+/obj/projectile/beam/disabler/smoothbore
+	name = "unfocused disabler beam"
+	weak_against_armour = TRUE
+
+/obj/projectile/beam/disabler/smoothbore/prime
+	name = "focused disabler beam"
+	weak_against_armour = FALSE
+	stamina = 65 //monkie edit: changed from 35 to 65(Black market/ERT item only, even rarer is the book to make it)
 
 /obj/projectile/beam/pulse
 	name = "pulse"

@@ -214,6 +214,7 @@ GLOBAL_VAR(restart_counter)
 	var/list/input = params2list(T)
 	if(input[1] == "TWITCH-API")
 		SStwitch.handle_topic(input)
+
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
 		if(I in input)
@@ -351,6 +352,9 @@ GLOBAL_VAR(restart_counter)
 
 	if(length(features))
 		new_status += ": [jointext(features, ", ")]"
+
+	new_status += "<br>Beginner Friendly: <b>Learn to play SS13!</b>"
+	new_status += "<br>Roleplay: \[<b>Medium-Rare</b>\]"
 
 	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
 	if(SSmapping.config)

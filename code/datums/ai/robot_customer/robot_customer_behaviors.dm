@@ -26,7 +26,7 @@
 
 	if(found_seat)
 		customer_pawn.say(pick(customer_data.found_seat_lines))
-		controller.blackboard[BB_CUSTOMER_MY_SEAT] = WEAKREF(found_seat)
+		controller.set_blackboard_key(BB_CUSTOMER_MY_SEAT, found_seat)
 		attending_venue.linked_seats[found_seat] = customer_pawn
 		finish_action(controller, TRUE)
 		return
@@ -34,7 +34,7 @@
 	// SPT_PROB 1.5 is about a 60% chance that the tourist will have vocalised at least once every minute.
 	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || SPT_PROB(1.5, seconds_per_tick))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
-		controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] = TRUE
+		controller.set_blackboard_key(BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE, TRUE)
 
 	finish_action(controller, FALSE)
 
@@ -46,9 +46,7 @@
 	. = ..()
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
-
-	var/datum/weakref/seat_ref = controller.blackboard[BB_CUSTOMER_MY_SEAT]
-	var/obj/structure/holosign/robot_seat/seat_marker = seat_ref?.resolve()
+	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
 	if(get_turf(seat_marker) == get_turf(customer_pawn))
 		var/obj/structure/chair/my_seat = locate(/obj/structure/chair) in get_turf(customer_pawn)
 		if(my_seat)
@@ -56,7 +54,7 @@
 
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
-	controller.blackboard[BB_CUSTOMER_CURRENT_ORDER] = attending_venue.order_food(customer_pawn, customer_data)
+	controller.set_blackboard_key(BB_CUSTOMER_CURRENT_ORDER, attending_venue.order_food(customer_pawn, customer_data))
 
 	finish_action(controller, TRUE)
 
@@ -70,7 +68,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.blackboard[BB_CUSTOMER_PATIENCE] -= seconds_per_tick * 10 // Convert seconds_per_tick to a SECONDS equivalent.
+	controller.add_blackboard_key(BB_CUSTOMER_PATIENCE, seconds_per_tick * -1 SECONDS) // Convert seconds_per_tick to a SECONDS equivalent.
 	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
 		finish_action(controller, FALSE)
 		return
@@ -81,8 +79,7 @@
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
 
-	var/datum/weakref/seat_ref = controller.blackboard[BB_CUSTOMER_MY_SEAT]
-	var/obj/structure/holosign/robot_seat/seat_marker = seat_ref?.resolve()
+	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
 	if(get_turf(seat_marker) == get_turf(controller.pawn))
 		var/obj/structure/chair/my_seat = locate(/obj/structure/chair) in get_turf(controller.pawn)
 		if(my_seat)
@@ -108,7 +105,7 @@
 	//or are being qdeleted and don't want runtime errors, so don't switch to leaving
 	if(greytider || QDELETED(src))
 		return
-	controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE
+	controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE)
 	customer_pawn.update_icon() //They might have a special leaving accesoiry (french flag)
 	if(succeeded)
 		customer_pawn.say(pick(customer_data.leave_happy_lines))

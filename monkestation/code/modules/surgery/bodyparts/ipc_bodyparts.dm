@@ -6,6 +6,7 @@
 	icon_state = "synth_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
 	body_damage_coeff = 1.1	//IPC's Head can dismember	//Monkestation Edit
@@ -28,6 +29,7 @@
 	icon_state = "synth_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
 	body_damage_coeff = 1	//IPC Chest at default	///Monkestation Edit
@@ -50,6 +52,7 @@
 	limb_id = "synth"
 	icon_state = "synth_l_arm"
 	should_draw_greyscale = FALSE
+	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
 	body_damage_coeff = 1.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
@@ -72,6 +75,7 @@
 	limb_id = "synth"
 	icon_state = "synth_r_arm"
 	should_draw_greyscale = FALSE
+	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
 	body_damage_coeff = 1.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
@@ -94,6 +98,7 @@
 	limb_id = "synth"
 	icon_state = "synth_l_leg"
 	should_draw_greyscale = FALSE
+	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
 	body_damage_coeff = 1.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
@@ -116,9 +121,10 @@
 	limb_id = "synth"
 	icon_state = "synth_r_leg"
 	should_draw_greyscale = FALSE
+	biological_state = BIO_INORGANIC
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 
-	body_damage_coeff = 0.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
+	body_damage_coeff = 1.1	//IPC's Limbs Should Dismember Easier	//Monkestation Edit
 	max_damage = 30	//Monkestation Edit
 
 	light_brute_msg = "scratched"

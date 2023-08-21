@@ -1,0 +1,331 @@
+2023-08-02:
+  BlueMemesauce:
+  - bugfix: Removed extra messaging server in North Star tcomms
+  Camriod:
+  - rscadd: Oozelings now take 3/5 burn damage
+  - rscadd: Added a plural form of Oozeling for the Oozeling description
+  - rscadd: Added a proper Oozeling description
+  - rscadd: Oozelings now don't suffer bleed from wounding
+  - rscadd: Slimes are now friendly to Oozelings
+  - rscadd: An assigned ass png for ass scanning
+  - rscadd: Oozelings now only need 4 mols of oxygen to breath
+  - rscadd: Proper listed positive and negative Oozeling perks on the species list
+  CannibalHunter:
+  - bugfix: Fixed "GrimyPoop" hud style so it can be used
+  - rscadd: Added a new UI style named "GrimyPoop"
+  ChungusGamer666:
+  - rscadd: Burning items are now actually considered to be at a minimum, 150 degrees
+      celsius by the game.
+  - qol: Thermited walls now get an examine message telling you they are, in fact,
+      thermited.
+  Fikou, Zonespace, Arcane for voicing:
+  - rscadd: The mining vendor now has a style meter. This meter gauges your style
+      points and uses them to improve your ore yield.
+  Gboster-0:
+  - qol: added mass composting by clicking the composter with a bag
+  - balance: made EZ-nutriment and robust harvest worth using again
+  - bugfix: fixed the bio cubes smashing together
+  - rscadd: Added completed optional objectives to the round-end report for every
+      traitor
+  - rscadd: Adds the Robust pasta
+  - rscadd: Adds the "Liquid justice" reagent
+  - rscadd: Added SMES units to the emitter lines of engines, late-join engineers
+      rejoice!
+  - rscdel: Removes un-necessary filters on the SM
+  - rscdel: Removes the hotwired SMES that wasnt even wired into the powergrid, and
+      was wired into itself in kilostation
+  - qol: Adds white indicators to guide players a _tiny_ bit towards where its intended
+      to place the tesla controllers and grounders
+  - bugfix: Cleans up some left-over pipes in the sinngulo/tesla maps
+  - bugfix: Cleans up some duplicate wires on all random engines that had them
+  - spellcheck: replaced "supermatter engine room" on the doors of singularity/tesla
+      setups across all maps
+  - spellcheck: fixed external airlocks having "Departure shuttle airlock" as their
+      names on kilo tesla / singulo setups
+  - spellcheck: fixed external airlocks having "Solar maintnance" as their names on
+      meta tesla / singulo setups
+  Glyphee:
+  - rscadd: Adds the Banana Crown
+  Hardly3D:
+  - rscadd: Added gun permit icon for sechud
+  - rscadd: Added mouse facing during combat mode or on harm intent
+  Kat Blu:
+  - balance: Tries to bring NTSS Independence from an 11 to a 9 on the "jesus fuckin
+      christ" scale
+  - qol: Removed security goliath
+  KittyNoodle:
+  - rscadd: Laser Muskets and Smoothbore Disablers as craftable weapons
+  - rscadd: The Syndicate Laser Musket, for when you need a reliable but still high
+      damage weapon, at the cost of two hand slots.
+  - qol: Added the recipe granters for advanced improvised guns to black market
+  - balance: SMES are now emp immune
+  - rscadd: Modular energy shields, craftable by engineering, protect your department
+      from meteors and or greytiders today
+  - balance: many of the round ending ghost roles now only happen late in the round
+      and on higher pop
+  - balance: blob and greytide virus weight have been reduced significantly.
+  - balance: meteors only happen after an hour into the round
+  - balance: less carp
+  - rscadd: morphs have made their return.
+  - bugfix: The limbgrower is no longer capable of summoning a singularity and/or
+      crashing the server
+  - rscadd: Natural ethereal blood regen.
+  - rscdel: Enriched liquid electricity
+  - qol: Upgraded cyborg chargers no longer overcharge ethereals.
+  - balance: Ethereals no longer suffer heart attacks from overcharge
+  - bugfix: Charge alerts now correctly clear themselves
+  KoboldCommando:
+  - rscadd: Birdboat the goose now has an even more puzzling metabolism, try feeding
+      him!
+  MTandi:
+  - qol: IV drip flow rate can be changed without the container or object attached
+  - bugfix: IV drip animation states fixed
+  MilkForever:
+  - rscadd: Engineering now gets three hardsuits at the start of the round in Meta,
+      IceBox and Tram. Aditionally, atmos also gets two hardsuits in Meta, Icebox,
+      Tram and Delta.
+  - image: The engineering department's hardsuit supply has been given a new coat
+      of paint and look pretty different now.
+  - sound: Lizard plushies now say "Weh"
+  - image: Satchel sprites were changed a bit to look better with jumpskirts.
+  - rscadd: The "Tragic Mime" outfit is now available in autodrobes and the monkecoin
+      shop.
+  - image: The security armor vest sprite has been modified to look like complete
+      body armor.
+  - imageadd: Most of the plasmaman uniform sprites have been updated.
+  MilkForever, SomeAngryMiner, Dingo-Dongler:
+  - image: Stock parts now use the sprites from BeeStation (excluding power cells)
+  NanoCats:
+  - rscadd: Added a silly surprise to tram!
+  - rscadd: Ranching for Tram
+  - qol: Made tram more palatable via a lot of fixes and tweaks
+  - image: changes the look of the thermal pistols
+  - image: changes the look of Central Command equipment
+  - bugfix: tramstation no longer kills 5 chickens on every map load
+  - rscadd: adds two new uniforms to the meta shop
+  - balance: Evens the odds between the lavaland base and local wildlife with PDS
+      systems
+  - rscadd: "Added LOOT\u2122 to the space hotel"
+  - rscadd: New CC medbay
+  - bugfix: Fixed new CC layout trolling traitors
+  - bugfix: Adds actual threats to the space hotel ruin so it's not just free loot
+      for any idiot with a teleporter
+  - qol: Made northstar less agonizing
+  - image: Improves the High Heel Boot sprites
+  - bugfix: fucked about with access in engie lobby
+  - rscadd: Large scale remodeling of Central Command
+  - rscadd: Refurbished NTSS Independence
+  - rscdel: Scrapped old NTSS Independence
+  QuacksQ:
+  - bugfix: Fixes roundstart active turfs from happening when singulo engine rolls
+      on Tram, Kilo and Meta.
+  Retrino:
+  - rscadd: Added some new hairs and anime stuff
+  Salted-Zen:
+  - balance: All bag types (plants, mining, xenobio, etc) are now normal sized items
+      and fit in pockets and bags
+  - balance: Mining scanners (automatic ones only) now fit into boots! Miners Rejoice!
+  - rscdel: Removed the meathook shotgun from tendrils and portals... oops how'd that
+      get in there?
+  - rscadd: adds the meathook back into tendrils, without the shotgun part. Use it
+      to reposition fauna or people!
+  - balance: Colossus, Wendigo, And Demonic Frost Miner's projectiles now all have
+      50% armor penetration instead of 100%
+  - balance: Wendigo no longer creates a 3x3 shockwave every single time he moves
+  - balance: Wendigo's scream attack (teleporting to the center and firing a pattern
+      of bolts) now has a 5 second cooldown instead of 10
+  - balance: Demonic Frost Miner's melee attack has 50% armor penetration
+  - balance: Demonic Icewing Watcher's move speed reduced as to make them less ass
+      to fight
+  - rscadd: Blood drunk now drops all four disks for PKA mods
+  - rscadd: Added meathook shotgun to tendrils and icebox portals
+  - rscadd: Added all of the missing tendril drops for icebox portals (cursed katana,
+      champ armor, power miner shard, etc)
+  - rscdel: Removed nuka cola and regular hiking boots from icebox portal drops
+  - rscdel: Removed disks from tendril drop pool
+  - rscadd: Cleaving saw can now dodge/dash with right click! No I-frames sorry.
+  SeeBeeSee:
+  - rscadd: Added secdusters, bandanas, and cowboy hats
+  - rscadd: Secduster stuff added to secdrobe
+  - rscadd: Added the Pet Delivery Beacon, a version of bluespace item beacons that
+      spawns nameable pets
+  - rscadd: Added Pet Delivery Beacon to the Monkecoin shop (under Other, default
+      price of 1000 coins)
+  - rscadd: Added new flashlight-style functionality to moth plushes
+  - image: Added new "moffplush_on" sprite for the flashlight while turned on
+  - rscadd: Added a fun quirk that lots of people enjoy!
+  - rscadd: Added a fun upgrade board that lots of borgs will eventually come to enjoy!
+      :)
+  - rscadd: Added Gigantism, a neutral quirk we had on the previous codebase.
+  - rscadd: Added Dwarfism, an expensive positive quirk that's been requested _literally_
+      since I joined the community.
+  - qol: Made the above quirks mutually exclusive
+  Wisemonster:
+  - bugfix: Fixed the announcers for the announcement system not working
+  - bugfix: Fixed the recall shuttle announcement line for Duke
+  WonderPsycho:
+  - rscadd: Brings Back Walter The Law Office's Pet Law Dog
+  - rscadd: Added many new AI modules, Crewsimov Lawset and module and modules for
+      SyndOS 3.1, and Crewsimov++, along with both Crewsimov and Crewsimov++ modules
+      being mapped into the AI Uploads of each and every map just in case any of the
+      heads need any of said modules to bring the AI back to a normal lawset to help
+      the crew of any species and not just forced to use Asimov or Asimov++ to change
+      the AI to a normal lawset that mainly focuses on serving human crew, brings
+      back the Freeform Core AI Module, made a syndicate weaponized AI Module lootdrop
+      spawner that's only on the nukie base for nukies to possibly maybe use whenever
+      they spawn (since on Monke Dynamic they are pretty rare anyways and such) along
+      with some many new zeroth law AI Modules from station sided ones like "Delta
+      Emergency" and "Code Red Emergency Zeroth Law" to very dangerous and chaotic
+      ones like "GodlySubject".
+  - rscadd: Added BZ canisters to both Ordnance storage and Atmos Desk storage.
+  - rscadd: Added two freon canisters to Ice Box's barely used storage room.
+  - rscadd: Added Ook The Brig Monke!
+  Zonespace27:
+  - rscadd: Added the coca plant, which can be used to make cocaine and crack.
+  - rscadd: Smoke crack cocaine with the new crack pipe you can make in the crafting
+      menu
+  dwasint:
+  - rscadd: bloodsuckers
+  - rscadd: monster hunters
+  - rscadd: 'cryopods are now found across all in rotation maps, use these when going
+      ssd to free up your slot
+
+      <!-- Both :cl:''s are required for the changelog to work! You can put your name
+      to the right of the first :cl: if you want to overwrite your GitHub username
+      as author ingame. -->
+
+      <!-- You can use multiple of the same prefix (they''re only used for the icon
+      ingame) and delete the unneeded ones. Despite some of the tags, changelogs should
+      generally represent how a player might be affected by the changes rather than
+      a summary of the PR''s contents. -->'
+  - bugfix: turnip and knight plushies now load
+  - refactor: Store menu is now completely overhauled, it now shows descriptions,
+      job requirements, has a purchase confirmation, and greys out owned items and
+      items you cant afford
+  - rscadd: new twitch events
+  - code_imp: restructured event handling for twitch integration
+  - rscadd: hardlight spear
+  - rscadd: super glue
+  - rscadd: admin shotguns
+  - balance: most traitor roles now have a minimum population required to roll, this
+      will prevent heretics from spawning every round
+  githubuser4141:
+  - balance: Shutters have 24 deflect, and 200 HP.
+  - rscadd: Adds a utility mesonic/NVG scanner to mechs.
+  - rscdel: Removes inherent mech access requirements from stationbound mechs. Centcom/Nukie
+      mechs are exempt, and access can still be added manually.
+  - balance: 'The Gygax and Phazon mechs can now hold 3 armour modules (prev 2) and
+      increased malfunction thresholds. Additionally, the Phazon can strafe diagonally,
+      similar to the Gygax. The Savannah-Ivanov, and a few other mechs have increased
+      thresholds too.
+
+      Re-balances exosuit repair droids and generator modules to be more effective,
+      and the generator to hold less fuel.
+
+      Exosuits can now be slowed by having a lot of equipment. In general, heavier
+      or exotic exosuits can carry more equipment without slowdown.
+
+      A few other things referenced by #57  !'
+  iamcooldan:
+  - rscadd: combat knife crate
+  - rscadd: new crates
+  jamilnielsen:
+  - rscadd: operation computer to syndicate lavaland base medical section
+  - rscadd: tongues kit missing syndicate comms modular locations as well as medical
+      record computer.
+  - rscadd: syndicate lavaland base atmos got its miners back, no more running out
+      of air if someone turned on the turbine.
+  lmenvs:
+  - rscadd: Adds new donator plush, thank you so much bidlink!
+  - bugfix: properly credits donator items
+  - rscadd: New bee sprites!
+  - rscadd: You can now butcher bees and craft bee clothing from butchering their
+      corpses (at the risk of being a horrible, horrible person)
+  - rscadd: bees now drop pollen sacs instead of corpses, same effect as eating a
+      dead bee.
+  - rscadd: Bees now spawn in maintenance, don't worry, they're friendly and harmless!
+  - rscadd: new Hollow Knight themed items in the Monkecoin shop!
+  - rscadd: TTNT789 donator plush, Turnip Boy
+  - bugfix: IPCs can now be delimbed.
+  lolc4n:
+  - rscadd: Added a new map to the pool for bar generation on icebox. (See attached
+      photos.)
+  nednaZ:
+  - rscdel: Removed possible Twitch rule-breaking content
+  - rscadd: You may now splash a fire alarm with ants for fun.
+  - code_imp: Added defines to fire alarm construction states
+  vinylspiders:
+  - qol: the rescue hook has a much greater chance at catching actual fallen player
+      bodies as opposed to generic skeletons/other npc corpses
+  - bugfix: traitor objective posters will no longer be able to spawn from general
+      random poster spawners.
+  wraith-54321:
+  - balance: Removed black gloves and handcuffs from the rare maint pool
+  - balance: Full maint pill bottles are now in the rare maint pool
+  - balance: Maint oddities now spawn around once every 12 rounds instead of once
+      every 50
+  - rscadd: Added 2 new random bars for icebox
+  - code_imp: minor fixes to random room code
+  - rscadd: Added some more twitch events, get to spending those bits!
+  - balance: Xeno shoves and neurotoxin spit are now the same as on beestation
+  - rscadd: Added Lesser Summon Apes
+  - rscadd: Added Magical Chem Sprayer
+  - balance: Replaced Mjollnir with Summon Mjollnir
+  - balance: Summon rituals are now restricted to 35 or more pop instead of 100 threat
+2023-08-04:
+  lmenvs:
+  - rscadd: Adds new plush for donator, Ruby Flamewing.  Thank you so much!
+2023-08-06:
+  KittyNoodle:
+  - balance: Freon and hydrogen can now be purchased.
+  - bugfix: Fixes a lot of "nothing" in atmos uis.
+2023-08-08:
+  MilkForever:
+  - rscadd: Security officers have been provided with a ballistic firearm, the FS
+      HG .35 Auto "Paco".
+  MomoBerri:
+  - code_imp: Fixed dynamic spawning excessive antagonists on low-pop, and increased
+      the threat cost of mid-round sleeper agents. Also gives a chance for extended
+      to roll if population is six or under.
+2023-08-13:
+  dwasint:
+  - bugfix: antag tokens can now be spent while your an observer for all tokens
+2023-08-14:
+  LemonInTheDark:
+  - bugfix: Gas, like plasma, will now properly display on multiz stations
+  necromanceranne:
+  - rscadd: You can now make a tactical turtleneck via the washing machine, as god
+      intended
+2023-08-15:
+  KittyNoodle:
+  - balance: Roundstart malf should now appear at similar rates to midround malf
+  - balance: Latejoin/Midround tot has been reigned in
+  - balance: Bloodsuckers have had their threat requirement increased and now need
+      20 living players to spawn
+  - bugfix: Dynamic should once again start with threat.
+  - bugfix: Bloodsuckers don't roll on command staff.
+  QueenReduviidae:
+  - bugfix: Your plasmaman security team is no longer on fire.
+  The-Black-Screen:
+  - bugfix: removes vending machines that are in front of an airlock
+2023-08-16:
+  Coding-Grape:
+  - code_imp: Removed fancy = FALSE from /obj/item/lighter/mime and /obj/item/lighter/bright
+  Salted-Zen:
+  - image: Replaces bone axe and spear sprites with old ones from 1.0
+2023-08-18:
+  CannibalHunter:
+  - rscadd: Added new hairstyle, Mullet.
+  KittyNoodle:
+  - rscadd: Freerunning now doubles sprint time.
+  - balance: Changes a lot of quirk costs.
+  - balance: IPCs are now punished for taking quirks that don't effect them
+  MilkForever:
+  - sound: Almost all species in the game can scream and laugh, some species get unique
+      sounds.
+  - rscadd: 'Added a new species: Arachnids.'
+  etherware-novice, BetaCentari:
+  - rscadd: Some new emotes.
+  - sound: Added Rattle.ogg which sounds like a well, rattle
+  iamcooldan:
+  - rscadd: Added additional items to the produce order console.

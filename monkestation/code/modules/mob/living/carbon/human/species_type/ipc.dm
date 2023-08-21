@@ -5,26 +5,31 @@
 	sexes = FALSE
 
 	species_traits = list(
-		NOTRANSSTING,
-		NOEYESPRITES,
 		NO_DNA_COPY,
-		NOZOMBIE,
-		MUTCOLORS,
-		REVIVESBYHEALING,
-		NOHUSK,
-		NOMOUTH,
-		MUTCOLORS,
-		NO_UNDERWEAR)
+		EYECOLOR,
+		LIPS,
+		HAIR,
+		NOEYESPRITES,
+		NOTRANSSTING,
+		NOHUSK
+	)
 
 	inherent_traits = list(
-		TRAIT_RESISTCOLD,
-		TRAIT_NOBREATH,
+		TRAIT_ROBOT_CAN_BLEED,
+		TRAIT_CAN_STRIP,
+		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_RADIMMUNE,
-		TRAIT_LIMBATTACHMENT,
+		TRAIT_VIRUSIMMUNE,
+		TRAIT_NOBREATH,
+		TRAIT_TOXIMMUNE,
 		TRAIT_NOCLONELOSS,
+		TRAIT_GENELESS,
+		TRAIT_STABLEHEART,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_EASYDISMEMBER,
-		TRAIT_XENO_IMMUNE,
-		TRAIT_GENELESS)
+	)
 
 	inherent_biotypes = MOB_ROBOTIC | MOB_HUMANOID
 	mutantbrain = /obj/item/organ/internal/brain/positron
@@ -72,11 +77,14 @@
 	var/saved_screen //for saving the screen when they die
 	var/datum/action/innate/change_screen/change_screen
 
-/datum/species/ipc/get_scream_sound(mob/living/carbon/human/ethereal)
+/datum/species/ipc/get_scream_sound(mob/living/carbon/human/human)
+	return 'monkestation/sound/voice/screams/silicon/scream_silicon.ogg'
+
+/datum/species/ipc/get_laugh_sound(mob/living/carbon/human/human)
 	return pick(
-		'sound/voice/ethereal/ethereal_scream_1.ogg',
-		'sound/voice/ethereal/ethereal_scream_2.ogg',
-		'sound/voice/ethereal/ethereal_scream_3.ogg',
+		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
+		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
+		'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
 	)
 
 /datum/species/ipc/get_species_description()
@@ -104,18 +112,11 @@
 		change_screen = new
 		change_screen.Grant(C)
 
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		H.physiology.bleed_mod *= 0.1
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	if(change_screen)
 		change_screen.Remove(C)
-
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		H.physiology.bleed_mod *= 10
 
 /datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
