@@ -35,7 +35,7 @@
 	report_message = "Our broadcast license for the common channel frequency in this sector has failed to be renewed. The frequency has therefore been disabled from your telecomms network in order to avoid any legal issues, although it has been kept for the intercom systems."
 	trait_to_give = STATION_TRAIT_COMMON_DISABLED
 
-/datum/station_trait/blackout/on_round_start()
+/datum/station_trait/common_disabled/on_round_start()
 	. = ..()
 	for(var/obj/machinery/telecomms/machine in GLOB.telecomms_list)
 		machine.freq_listening.Remove(FREQ_COMMON)
