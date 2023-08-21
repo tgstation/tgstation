@@ -84,6 +84,8 @@ SUBSYSTEM_DEF(particle_weather)
 	return weather_effect
 
 /datum/controller/subsystem/particle_weather/proc/set_particle_effect(particles/P)
+	if(!P)
+		return
 	particle_effect = P
 	weather_effect.particles = particle_effect
 
