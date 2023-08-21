@@ -38,6 +38,7 @@
 	extended_desc = "This program allows for illegal access to security camera networks."
 	transfer_access = list()
 
+	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
 	silent_spying = TRUE
 
 	available_on_ntnet = FALSE
