@@ -7,7 +7,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/decloning
 	remove_on_fullheal = TRUE
 
-	/// How many strikes our virus holder has left before they are dusted.
+	/// How many strikes our status effect holder has left before they are dusted.
 	var/strikes_left = 100
 
 /datum/status_effect/decloning/on_apply()
@@ -25,9 +25,16 @@
 		if(strikes_left <= 50 && strikes_left + strike_restore > 50)
 			to_chat(owner, span_notice("Controlling your muscles feels easier now."))
 			owner.remove_movespeed_modifier(/datum/movespeed_modifier/decloning)
+		else if(SPT_PROB(5, seconds_between_ticks))
+			to_chat(owner, span_warning("Your body is growing and shifting back into place."))
 
 		strikes_left = min(strikes_left + strike_restore, 100)
+
 		owner.reagents.remove_reagent(/datum/reagent/medicine/mutadone, MUTADONE_HEAL * seconds_between_ticks)
+
+		if(strikes_left == 100)
+			qdel(src)
+
 		return
 
 	if(!SPT_PROB(5, seconds_between_ticks))
