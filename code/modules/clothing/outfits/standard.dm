@@ -95,9 +95,7 @@
 	suit = /obj/item/clothing/suit/redtag
 	suit_store = /obj/item/gun/energy/laser/redtag
 	back = /obj/item/storage/backpack
-	backpack_contents = list(
-		/obj/item/storage/box = 1,
-)
+	box = /obj/item/storage/box
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/red
 	head = /obj/item/clothing/head/helmet/redtaghelm
@@ -217,8 +215,7 @@
 	sec_briefcase.contents += new /obj/item/grenade/c4/x4
 
 	var/obj/item/modular_computer/pda/heads/pda = H.belt
-	pda.saved_identification = H.real_name
-	pda.saved_job = "Reaper"
+	pda.imprint_id(H.real_name, "Reaper")
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name

@@ -52,7 +52,7 @@
 	backpack_contents = list(
 		/obj/item/storage/box/bodybags = 1,
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/storage/medkit/coroner/large = 1,
+		/obj/item/storage/medkit/coroner = 1,
 	)
 
 	belt = /obj/item/modular_computer/pda/coroner

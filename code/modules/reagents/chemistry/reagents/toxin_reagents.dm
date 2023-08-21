@@ -11,6 +11,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	///The amount of toxin damage this will cause when metabolized (also used to calculate liver damage)
 	var/toxpwr = 1.5
+	///The amount to multiply the liver damage this toxin does by (Handled solely in liver code)
+	var/liver_damage_multiplier = 1
 	///won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present if true
 	var/silent_toxin = FALSE
 	///The afflicted must be above this health value in order for the toxin to deal damage
@@ -1254,12 +1256,14 @@
 	name = "Spider Toxin"
 	description = "A toxic chemical produced by spiders to weaken prey."
 	health_required = 40
+	liver_damage_multiplier = 0
 
 /datum/reagent/toxin/viperspider
 	name = "Viper Spider Toxin"
 	toxpwr = 5
 	description = "An extremely toxic chemical produced by the rare viper spider. Brings their prey to the brink of death and causes hallucinations."
 	health_required = 10
+	liver_damage_multiplier = 0
 
 /datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)

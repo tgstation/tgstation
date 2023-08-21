@@ -29,15 +29,10 @@
 	if(!result)
 		return
 	// Remove default mech power cell, as we replace it with a new one.
-	var/obj/vehicle/sealed/mecha/M = new result(drop_location())
-	QDEL_NULL(M.cell)
-	QDEL_NULL(M.scanmod)
-	QDEL_NULL(M.capacitor)
-
+	var/obj/vehicle/sealed/mecha/mech = new result(drop_location(), /* built_manually = */ TRUE)
 	var/obj/item/mecha_parts/chassis/parent_chassis = parent
-	M.CheckParts(parent_chassis.contents)
-
-	SSblackbox.record_feedback("tally", "mechas_created", 1, M.name)
+	mech.CheckParts(parent_chassis.contents)
+	SSblackbox.record_feedback("tally", "mechas_created", 1, mech.name)
 	QDEL_NULL(parent)
 
 // Default proc to generate mech steps.
@@ -198,12 +193,27 @@
 			"backward_message" = "removed capacitor"
 		),
 		list(
+			"key" = /obj/item/stock_parts/servo,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b> micro-servo</b> can be added.",
+			"forward_message" = "added micro-servo",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Micro-servo is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured micro-servo",
+			"backward_message" = "removed micro-servo"
+		),
+		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added.",
+			"desc" = "Micro-servo is secured, and the <b>power cell</b> can be added.",
 			"forward_message" = "added power cell",
-			"backward_message" = "unsecured capacitor"
+			"backward_message" = "unsecured micro-servo"
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
@@ -521,6 +531,16 @@
 			"desc" = "HONK!!!!!!"
 		),
 		list(
+			"key" = /obj/item/stock_parts/servo,
+			"action" = ITEM_MOVE_INSIDE,
+			"desc" = "Humor <b>micro-servo</b> can be added!",
+			"forward_message" = "added smile"
+		),
+		list(
+			"key" = /obj/item/bikehorn,
+			"desc" = "HONK!!!!!!"
+		),
+		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"desc" = "Laughter <b>cell</b> can be added!",
@@ -656,12 +676,27 @@
 			"backward_message" = "removed capacitor"
 		),
 		list(
+			"key" = /obj/item/stock_parts/servo,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"forward_message" = "added micro-servo",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Micro-servo is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured micro-servo",
+			"backward_message" = "removed micro-servo"
+		),
+		list(
 			"key" = /obj/item/stack/ore/bluespace_crystal,
 			"amount" = 1,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Capacitor is secured, and the <b>bluespace crystal</b> can be added.",
+			"desc" = "Micro-servo is secured, and the <b>bluespace crystal</b> can be added.",
 			"forward_message" = "added bluespace crystal",
-			"backward_message" = "unsecured capacitor"
+			"backward_message" = "unsecured micro-servo"
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
@@ -692,7 +727,7 @@
 			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",,
 			"forward_message" = "secured power cell",
 			"backward_message" = "removed power cell",
-			"icon_state" = "phazon17"
+			"icon_state" = "phazon19"
 			// This is the point where a step icon is skipped, so "icon_state" had to be set manually starting from here.
 		)
 	)
@@ -727,7 +762,7 @@
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
 			"desc" = "The external armor is welded, and the <b>bluespace anomaly core</b> socket is open.",
-			"icon_state" = "phazon24",
+			"icon_state" = "phazon26",
 			"forward_message" = "inserted bluespace anomaly core",
 			"backward_message" = "cut off external armor"
 		)

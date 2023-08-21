@@ -6,7 +6,7 @@
 /obj/structure/mannequin
 	name = "mannequin"
 	desc = "Oh, so this is a dress-up game now."
-	icon = 'icons/mob/species/human/mannequin.dmi'
+	icon = 'icons/mob/human/mannequin.dmi'
 	icon_state = "mannequin_wood_male"
 	density = TRUE
 	resistance_flags = FLAMMABLE
