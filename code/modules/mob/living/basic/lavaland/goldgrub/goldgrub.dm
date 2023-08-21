@@ -41,12 +41,12 @@
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
 	. = ..()
-	if(can_tame)
-		make_tameable()
-	if(can_lay_eggs)
-		make_egg_layer()
+
 	if(mapload)
 		generate_loot()
+	else
+		can_lay_eggs = FALSE
+
 	var/datum/action/cooldown/mob_cooldown/spit_ore/spit = new(src)
 	var/datum/action/cooldown/mob_cooldown/burrow/burrow = new(src)
 	spit.Grant(src)
@@ -60,6 +60,10 @@
 		overlay_icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi',\
 		overlay_state = "goldgrub_alert",\
 	)
+	if(can_tame)
+		make_tameable()
+	if(can_lay_eggs)
+		make_egg_layer()
 
 /mob/living/basic/mining/goldgrub/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
