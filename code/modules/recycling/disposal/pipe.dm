@@ -76,10 +76,13 @@
 		expel(holdplease, get_turf(src), 0)
 	stored = null // It gets dumped out in expel()
 
-/obj/structure/disposalpipe/handle_atom_del(atom/A)
-	if(A == stored && !QDELETED(src))
-		spawn_pipe = FALSE
-		stored = null
+/obj/structure/disposalpipe/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != stored || QDELETED(src))
+		return
+	spawn_pipe = FALSE
+	stored = null
+	if(QDELETED(gone))
 		deconstruct(FALSE) //pipe has broken.
 
 // returns the direction of the next pipe object, given the entrance dir
@@ -171,12 +174,13 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(spawn_pipe)
-				if(isnull(stored)) // Don't have something? Make one now
-					stored = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
-				stored.forceMove(loc)
-				transfer_fingerprints_to(stored)
-				stored.setDir(dir)
+				var/obj/structure/disposalconstruct/construct = stored
+				if(!construct) // Don't have something? Make one now
+					construct = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 				stored = null
+				construct.forceMove(loc)
+				transfer_fingerprints_to(construct)
+				construct.setDir(dir)
 				spawn_pipe = FALSE
 		else
 			var/turf/T = get_turf(src)

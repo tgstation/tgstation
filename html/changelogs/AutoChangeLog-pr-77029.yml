@@ -1,0 +1,9 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - rscdel: "Traitor objectives to place posters and graffiti the station have been removed."
+  - rscadd: "The items associated with the poster and graffiti objectives can now be purchased from the Badassery section of the uplink. The posters come in a box of 3 for 1TC, and the spraycans are 1TC each."
+  - rscadd: "Adds a new Assault traitor objective, requiring you to the attack the target a few times without needing to kill them. Earn TC and reputation by starting barroom fights and bait players into escalation battles for fun and profit."
+  - rscadd: "Expands low-risk steal objectives to include the Chef's fake moustache, Lawyer's badge, and Mime's mask."
+  - rscadd: "Adds brand new shift start Steal & Destroy objectives for early breaking and entering. Smash your way into a sec checkpoint to grab a Space Law book, engineering to grab some insulated gloves or the psych office to kidnap their moth plush."
+  - bugfix: "Fixes an issue where the steal clown shoes objective would never be valid."
