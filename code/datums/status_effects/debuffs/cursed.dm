@@ -36,20 +36,31 @@
 	var/list/messages = list()
 	switch(curse_count)
 		if(1)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/human_owner = owner
+				playsound(human_owner, SFX_SEAR, 50, TRUE)
+				var/obj/item/bodypart/affecting = human_owner.get_active_hand()
+				affecting.receive_damage(burn = 20) // did you get the message?
+
 			messages += span_boldwarning("Your hand burns, and you quickly let go of the lever! You feel a little sick as the nerves deaden in your hand...")
 			messages += span_boldwarning("Some smoke appears to be coming out of your hand now, but it's not too bad...")
-			//add damage to indexed hand
+			messages += span_boldwarning("Fucking stupid machine.")
 
 		if(2)
 			messages += span_boldwarning("The machine didn't burn you this time, it must be some arcane work of the brand recognizing a source...")
-			messages += span_boldwarning("Blisters and boils start to appear over your skin. Is it too late to stop now?")
+			messages += span_boldwarning("Blisters and boils start to appear over your skin. Each one hissing searing hot steam out of its own pocket...")
+			messages += span_boldwarning("You understand that the machine tortures you with its simplistic allure. It can kill you at any moment, but it derives a sick satisfaction at forcing you to keep going.")
+			messages += span_boldwarning("If you could get away from here, you might be able to live with some medical supplies. Is it too late to stop now?")
 
 		if(3)
 			owner.emote("cough")
 			messages += span_boldwarning("Your throat becomes to feel like it's slowly caking up with sand and dust. You eject the contents of the back of your throat onto your good hand.")
-			messages += span_boldwarning("It is sand. Crimson red.")
+			messages += span_boldwarning("It is sand. Crimson red. You've never felt so thirsty in your life, yet you don't trust your own hand to carry the glass to your lips.")
+			messages += span_boldwarning("You get the sneaking feeling that if someone else were to win, that it might clear your curse too. Saving your life is a noble cause.")
+			messages += span_boldwarning("Of course, you might have to not speak on the nature of this machine, in case they scamper off to leave you to die.")
+			messages += span_boldwarning("Is it truly worth it to condemn someone to this fate to cure the manifestation of your own hedonistic urges? You'll have to decide quickly.")
 
-		if(4)
+		if(4) // canonical ending, anything after this is schenanigans.
 			messages += span_boldwarning("A migraine swells over your head as your thoughts become hazy. Your hand desperately inches closer towards the slot machine for one final pull...")
 			messages += span_boldwarning("The ultimate test of mind over matter. You can jerk your own muscle back in order to prevent a terrible fate, but your life already is worth so little now.")
 			messages += span_boldwarning("This is what they want, is it not? To witness your failure against itself? The compulsion carries you forward as a sinking feeling of dread fills your stomach.")

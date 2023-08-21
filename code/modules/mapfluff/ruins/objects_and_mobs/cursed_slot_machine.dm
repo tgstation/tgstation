@@ -45,6 +45,9 @@
 		span_warning("You feel a draining as you pull the lever, but you know it'll be worth it."),
 	)
 
+	if(isnull(has_status_effect(/datum/status_effect/grouped/cursed)))
+		user.apply_status_effect(/datum/status_effect/grouped/cursed)
+
 	icon_screen = "slots_screen_working"
 	update_appearance()
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
