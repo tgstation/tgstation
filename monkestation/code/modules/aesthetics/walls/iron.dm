@@ -16,18 +16,6 @@
 	paint_color = color
 	update_appearance()
 
-/turf/closed/wall/attacked_by(obj/item/attacking_item, mob/living/user)
-	. = ..()
-	if(wall_trim)
-		if(istype(attacking_item, /obj/item/airlock_painter/decal))
-			var/obj/item/airlock_painter/decal/new_painter = attacking_item
-			if(user.istate & ISTATE_SECONDARY)
-				if(new_painter.stored_custom_color)
-					change_trim_color(new_painter.stored_custom_color)
-			else
-				if(new_painter.stored_custom_color)
-					change_paint_color(new_painter.stored_custom_color)
-
 /turf/closed/wall/update_appearance()
 	. = ..()
 	if(wall_trim)
