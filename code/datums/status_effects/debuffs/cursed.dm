@@ -15,6 +15,7 @@
 	var/obj/item/bodypart/branded_hand = null
 
 /datum/status_effect/grouped/cursed/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_USE, PROC_REF(check_curses))
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_LOST, PROC_REF(update_curse_count))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON, PROC_REF(clear_curses))
@@ -67,6 +68,7 @@
 			messages += span_boldwarning("Blisters and boils start to appear over your skin. Each one hissing searing hot steam out of its own pocket...")
 			messages += span_boldwarning("You understand that the machine tortures you with its simplistic allure. It can kill you at any moment, but it derives a sick satisfaction at forcing you to keep going.")
 			messages += span_boldwarning("If you could get away from here, you might be able to live with some medical supplies. Is it too late to stop now?")
+			messages += span_boldwarning("As you shut your eyes to dwell on this conundrum, the brand surges in pain. You shudder to think what might happen if you go unconscious.")
 
 		if(3)
 			owner.emote("cough")
@@ -113,6 +115,15 @@
 	)
 	QDEL_NULL(particle_effect)
 	qdel(src)
+
+/// If our owner's stat changes, rapidly surge the damage chance.
+/datum/status_effect/grouped/cursed/proc/on_stat_changed()
+	if(owner.stat == CONSCIOUS || owner.stat == DEAD) // reset on these two states
+		damage_chance = initial(damage_chance)
+		return
+
+	to_chat(owner, span_userdanger("As your body crumbles, you feel the curse of the slot machine surge through your body!"))
+	damage_chance += 75 //ruh roh raggy
 
 /datum/status_effect/grouped/cursed/update_particles()
 	var/particle_path = /particles/smoke/steam/mild
