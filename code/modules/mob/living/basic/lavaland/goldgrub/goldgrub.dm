@@ -127,11 +127,7 @@
 		eggs_left = 0,\
 		eggs_added_from_eating = 1,\
 		max_eggs_held = 1,\
-		egg_laid_callback = CALLBACK(src, PROC_REF(lay_grub_egg)),\
 	)
-
-/mob/living/basic/mining/goldgrub/proc/lay_grub_egg(obj/item/food/egg/green/grub_egg/egg)
-	egg.add_growth_component()
 
 /mob/living/basic/mining/goldgrub/proc/consume_ore(obj/item/target_ore)
 	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
@@ -140,8 +136,7 @@
 		return
 	if(!istype(target_ore, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
-	var/obj/item/food/egg/green/grub_egg/egg = new(get_turf(src))
-	egg.add_growth_component()
+	new /obj/item/food/egg/green/grub_egg(get_turf(src))
 
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
@@ -179,7 +174,9 @@
 	name = "grub egg"
 	desc = "Covered in disgusting fluid."
 
-/obj/item/food/egg/green/grub_egg/proc/add_growth_component()
+
+/obj/item/food/egg/green/grub_egg/Initialize(mapload)
+	. = ..()
 	AddComponent(\
 		/datum/component/fertile_egg,\
 		embryo_type = /mob/living/basic/mining/goldgrub/baby,\
@@ -189,3 +186,4 @@
 		current_growth = 0,\
 		location_allowlist = typecacheof(list(/turf)),\
 	)
+
