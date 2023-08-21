@@ -92,12 +92,6 @@
 			SPECIES_PERK_DESC = "Short, haha.", //Dwarf trauma
 		)
 		,list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "",
-			SPECIES_PERK_NAME = "Kleptomania",
-			SPECIES_PERK_DESC = "You just can't help yourself. Surely they won't notice...", //Kleptomania trauma
-		),
-		,list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "",
 			SPECIES_PERK_NAME = "Small Hands",
