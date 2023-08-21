@@ -161,7 +161,7 @@
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(lure, 'sound/effects/bigsplash.ogg', 100)
-	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win, perfect_win)
+	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win)
 	qdel(src)
 
 /datum/fishing_challenge/proc/start_baiting_phase()
@@ -258,7 +258,7 @@
 
 	switch(action)
 		if("win")
-			complete(win = TRUE, perfect_win = params["perfect"])
+			complete(win = TRUE)
 		if("lose")
 			send_alert("it got away")
 			complete(win = FALSE)

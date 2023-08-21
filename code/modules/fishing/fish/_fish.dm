@@ -64,8 +64,6 @@
 
 	/// Should this fish type show in fish catalog
 	var/show_in_catalog = TRUE
-	/// Should this fish spawn in random fish cases
-	var/available_in_random_cases = TRUE
 	/// How rare this fish is in the random cases
 	var/random_case_rarity = FISH_RARITY_BASIC
 
@@ -117,15 +115,26 @@
 	 */
 	var/list/disliked_bait = list()
 
-	/// Size in centimeters. Item size class scales with it.
-	var/size = 50
+	/// Size in centimeters. Null until update_size_and_weight is called. Number of fillets and w_class scale with it.
+	var/size
 	/// Average size for this fish type in centimeters. Will be used as gaussian distribution with 20% deviation for fishing, bought fish are always standard size
 	var/average_size = 50
 
-	/// Weight in grams. number of fillets and grind results scale with it, just don't think too hard how someone could manage to fit a trout in a blender.
-	var/weight = 1000
+	/// Weight in grams. Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
+	var/weight
 	/// Average weight for this fish type in grams
 	var/average_weight = 1000
+
+	/// When outside of an aquarium, these gases that are checked (as well as pressure and temp) to assert if the environment is safe or not.
+	var/list/safe_air_limits = list(
+		/datum/gas/oxygen = list(12, 100),
+		/datum/gas/nitrogen,
+		/datum/gas/carbon_dioxide = list(0, 10),
+		/datum/gas/water_vapor,
+	)
+	/// Outside of an aquarium, the pressure needs to be within these two variables for the environment to be safe.
+	var/min_pressure = WARNING_LOW_PRESSURE
+	var/max_pressure = HAZARD_HIGH_PRESSURE
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -144,7 +153,7 @@
 
 	if(apply_qualities)
 		apply_traits() //Make sure traits are applied before size and weight.
-		update_size_and_weight(first_run = TRUE)
+		update_size_and_weight()
 		progenitors = full_capitalize(name) //default value
 
 	register_evolutions()
@@ -155,6 +164,19 @@
 	else
 		icon_state = initial(icon_state)
 	return ..()
+
+/obj/item/fish/attackby(obj/item/item, mob/living/user, params)
+	if(!istype(item, /obj/item/fish_feed))
+		return ..()
+	if(!item.reagents.total_volume)
+		balloon_alert(user, "[item] is empty!")
+		return TRUE
+	if(status == FISH_DEAD)
+		balloon_alert(user, "[src] is dead!")
+		return TRUE
+	feed(item.reagents)
+	balloon_alert(user, "you feed [src]")
+	return TRUE
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
@@ -173,8 +195,8 @@
 	update_size_and_weight(new_size, new_weight, first_run)
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
-/obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight, first_run = FALSE)
-	if(!first_run && fillet_type)
+/obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight)
+	if(size && fillet_type)
 		RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
 	size = new_size
 	switch(size)
@@ -199,7 +221,7 @@
 		num_fillets = amount
 		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
 
-	if(!first_run)
+	if(weight)
 		for(var/reagent_type in grind_results)
 			grind_results[reagent_type] /= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
 	weight = new_weight
@@ -383,18 +405,12 @@
 	var/datum/gas_mixture/mixture = loc.return_air()
 	if(!mixture)
 		return FALSE
-	var/static/list/gases_to_check = list(
-		/datum/gas/oxygen = list(12, 100),
-		/datum/gas/nitrogen,
-		/datum/gas/carbon_dioxide = list(0, 10),
-		/datum/gas/water_vapor,
-	)
-	if(!check_gases(mixture.gases, gases_to_check))
+	if(safe_air_limits && !check_gases(mixture.gases, safe_air_limits))
 		return FALSE
 	if(!ISINRANGE(mixture.temperature, required_temperature_min, required_temperature_max))
 		return FALSE
 	var/pressure = mixture.return_pressure()
-	if((pressure <= 20) || (pressure >= 550))
+	if(!ISINRANGE(pressure, min_pressure, max_pressure))
 		return FALSE
 	return TRUE
 
@@ -580,21 +596,23 @@
 		flop_animation(src)
 
 /// Returns random fish, using random_case_rarity probabilities.
-/proc/random_fish_type(case_fish_only=TRUE, required_fluid)
+/proc/random_fish_type(required_fluid)
 	var/static/probability_table
-	var/argkey = "fish_[required_fluid]_[case_fish_only]" //If this expands more extract bespoke element arg generation to some common helper.
+	var/argkey = "fish_[required_fluid]" //If this expands more extract bespoke element arg generation to some common helper.
 	if(!probability_table || !probability_table[argkey])
 		if(!probability_table)
 			probability_table = list()
 		var/chance_table = list()
 		for(var/_fish_type in subtypesof(/obj/item/fish))
 			var/obj/item/fish/fish = _fish_type
+			var/rarity = initial(fish.random_case_rarity)
+			if(!rarity)
+				continue
 			if(required_fluid)
 				var/init_fish_fluid_type = initial(fish.required_fluid_type)
 				if(!compatible_fluid_type(init_fish_fluid_type, required_fluid))
 					continue
-			if(initial(fish.available_in_random_cases) || !case_fish_only)
-				chance_table[fish] = initial(fish.random_case_rarity)
+			chance_table[fish] = initial(fish.random_case_rarity)
 		probability_table[argkey] = chance_table
 	return pick_weight(probability_table[argkey])
 

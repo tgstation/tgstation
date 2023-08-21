@@ -84,7 +84,6 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 4
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 2)
 	fish_traits = list(/datum/fish_trait/picky_eater)
 	evolution_types = list(/datum/fish_evolution/lubefish)
 	compatible_types = list(/obj/item/fish/clownfish/lube)
@@ -239,7 +238,17 @@
 	random_case_rarity = FISH_RARITY_RARE
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
-	required_temperature_max = MAX_AQUARIUM_TEMP+150
+	required_temperature_max = LAVALAND_MAX_TEMPERATURE+50
+	min_pressure = HAZARD_LOW_PRESSURE
+	safe_air_limits = list(
+		/datum/gas/oxygen = list(2, 100),
+		/datum/gas/nitrogen,
+		/datum/gas/carbon_dioxide = list(0, 20),
+		/datum/gas/water_vapor,
+		/datum/gas/plasma = list(0, 5),
+		/datum/gas/bz = list(0, 5),
+		/datum/gas/miasma = list(0, 5),
+	)
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
 
@@ -248,7 +257,7 @@
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
 	dedicated_in_aquarium_icon_state = "ice_chrab_small"
-	required_temperature_min = MIN_AQUARIUM_TEMP-150
+	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
@@ -331,7 +340,7 @@
 	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
 	icon_state = "sludgefish_purple"
 	dedicated_in_aquarium_icon_state = "sludgefish_purple_small"
-	available_in_random_cases = FALSE
+	random_case_rarity = FISH_RARITY_NOPE
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
@@ -343,7 +352,7 @@
 	dedicated_in_aquarium_icon_state = "slimefish_small"
 	sprite_width = 7
 	sprite_height = 7
-	do_flop_animation = FALSE //it already has our cute bouncy wiggle. :3
+	do_flop_animation = FALSE //it already has a cute bouncy wiggle. :3
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 4
@@ -374,6 +383,7 @@
 	fish_ai_type = FISH_AI_ZIPPY
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
+	min_pressure = HAZARD_LOW_PRESSURE
 	health = 150
 	stable_population = 3
 	grind_results = list(/datum/reagent/bone_dust = 20)
@@ -397,10 +407,10 @@
 	sprite_width = 12
 	sprite_height = 7
 	show_in_catalog = FALSE
-	available_in_random_cases = FALSE
-	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	random_case_rarity = FISH_RARITY_NOPE
 	fishing_difficulty_modifier = 5
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
+	min_pressure = HAZARD_LOW_PRESSURE
 	health = 300
 	stable_population = 2 //This means they can only crossbreed.
 	grind_results = list(/datum/reagent/bone_dust = 15, /datum/reagent/consumable/liquidgibs = 5)
@@ -418,7 +428,7 @@
 	desc = "A holographic representation of a common goldfish, slowly flickering out, removed from its holo-habitat."
 	icon_state = "goldfish"
 	show_in_catalog = FALSE
-	available_in_random_cases = FALSE
+	random_case_rarity = FISH_RARITY_NOPE
 	sprite_width = 8
 	sprite_height = 8
 	stable_population = 1
@@ -427,7 +437,7 @@
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	grind_results = null
 	fillet_type = null
-	death_text = "%SRC disappears."
+	death_text = "%SRC gently disappears."
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
 
 /obj/item/fish/holo/Initialize(mapload)
@@ -440,7 +450,8 @@
 /obj/item/fish/holo/set_status(new_status)
 	. = ..()
 	if(status == FISH_DEAD)
-		qdel(src)
+		animate(src, alpha = 0, 3 SECONDS, easing = SINE_EASING)
+		QDEL_IN(src, 3 SECONDS)
 
 /obj/item/fish/holo/crab
 	name = "holographic crab"
