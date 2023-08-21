@@ -93,8 +93,6 @@
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
 
-	var/cameraFollow = null
-
 	/// Time of death
 	var/tod = null
 

@@ -29,6 +29,8 @@
 	var/remove_on_fullheal = FALSE
 	/// If remove_on_fullheal is TRUE, what flag do we need to be removed?
 	var/heal_flag_necessary = HEAL_STATUS
+	/// A particle effect, for things like embers - Should be set on update_particles()
+	var/obj/effect/abstract/particle_holder/particle_effect
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -63,6 +65,8 @@
 			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
 
+	update_particles()
+
 	return TRUE
 
 /datum/status_effect/Destroy()
@@ -78,6 +82,8 @@
 		on_remove()
 		UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 		owner = null
+	if(particle_effect)
+		QDEL_NULL(particle_effect)
 	return ..()
 
 // Status effect process. Handles adjusting its duration and ticks.
@@ -180,6 +186,14 @@
 		return TRUE
 
 	return FALSE
+
+/**
+ * Updates the particles for the status effects
+ * Should be handled by subtypes!
+ */
+
+/datum/status_effect/proc/update_particles()
+	SHOULD_CALL_PARENT(FALSE)
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect
