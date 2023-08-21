@@ -895,7 +895,7 @@
 	sound_environment = SOUND_AREA_SPACE
 
 /area/station/solars
-	set_base_lighting(GLOB.starlight_color, new_alpha = 255)
+	set_base_lighting(new_base_lighting_color = GLOB.starlight_color, new_alpha = 255)
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"
