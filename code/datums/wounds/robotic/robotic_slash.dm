@@ -369,9 +369,11 @@
 	examine_desc = "has a few frayed wires sticking out"
 	treat_text = "Replacing of damaged wiring, though repairs via wirecutting instruments or sutures may suffice, albiet at limited efficiency."
 
-	sound_effect = 'sound/effects/wounds/blood1.ogg'
+	sound_effect = 'sound/effects/wounds/robotic_slash_T1.ogg'
 
 	severity = WOUND_SEVERITY_MODERATE
+
+	sound_volume = 30
 
 	threshold_minimum = 30
 	threshold_penalty = 20
@@ -407,9 +409,11 @@
 	examine_desc = "has multiple severed wires visible to the outside"
 	treat_text = "Containment of damaged wiring via gauze, securing of wires via a wirecutter/hemostat, then application of fresh wiring or sutures."
 
-	sound_effect = 'sound/effects/wounds/blood2.ogg'
+	sound_effect = 'sound/effects/wounds/robotic_slash_T2.ogg'
 
 	severity = WOUND_SEVERITY_SEVERE
+
+	sound_volume = 15
 
 	threshold_minimum = 70
 	threshold_penalty = 50
@@ -445,7 +449,10 @@
 
 	severity = WOUND_SEVERITY_CRITICAL
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_FLESH)
-	sound_effect = 'sound/effects/wounds/blood3.ogg'
+
+	sound_effect = 'sound/effects/wounds/robotic_slash_T3.ogg'
+
+	sound_volume = 30
 
 	threshold_minimum = 110
 	threshold_penalty = 60

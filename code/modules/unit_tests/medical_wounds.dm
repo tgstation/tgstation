@@ -76,8 +76,8 @@
 				else // we have to check that it's actually a bone wound and not the intended wound type
 					TEST_ASSERT_EQUAL(length(victim.all_wounds), 1, "Patient has more than one wound when only one is expected. Severity: [initial(iter_test_wound.severity)]")
 					var/datum/wound/actual_wound = victim.all_wounds[1]
-					var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[actual_wound.type]
-					TEST_ASSERT((pregen_data.required_limb_biostate & ~BIO_FLESH), "Limb has flesh wound despite no BIO_FLESH biological_state, expected either no wound or bone wound. Offending wound: [actual_wound]")
+					var/datum/wound_pregen_data/actual_pregen_data = GLOB.all_wound_pregen_data[actual_wound.type]
+					TEST_ASSERT((actual_pregen_data.required_limb_biostate & ~BIO_FLESH), "Limb has flesh wound despite no BIO_FLESH biological_state, expected either no wound or bone wound. Offending wound: [actual_wound]")
 					threshold_penalty = actual_wound.threshold_penalty
 			else // otherwise if it's a bone wound, check that we have it per usual
 				TEST_ASSERT(length(victim.all_wounds), "Patient has no wounds when one wound is expected. Severity: [initial(iter_test_wound.severity)]")
