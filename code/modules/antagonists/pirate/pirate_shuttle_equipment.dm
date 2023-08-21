@@ -183,7 +183,7 @@
 	. = ..()
 	if (istype(I))
 		to_chat(user, span_notice("You register [src] in [I]s buffer."))
-		I.buffer = src
+		I.set_buffer(src)
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)

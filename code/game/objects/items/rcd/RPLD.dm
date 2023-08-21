@@ -10,7 +10,7 @@
 	icon = 'icons/obj/tools.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	///it does not make sense why any of these should be installed.
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS  | RCD_UPGRADE_FURNISHING
+	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS  | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 	matter = 200
 	max_matter = 200
 
@@ -62,7 +62,7 @@
 			/obj/machinery/plumbing/bottler = 50,
 			/obj/machinery/plumbing/pill_press = 20,
 			/obj/machinery/iv_drip/plumbing = 20
-		)
+		),
 	)
 
 /obj/item/construction/plumbing/Initialize(mapload)
@@ -325,7 +325,7 @@
 		"Storage" = list(
 			/obj/machinery/plumbing/tank = 20,
 			/obj/machinery/plumbing/acclimator = 10,
-		)
+		),
 	)
 
 /obj/item/construction/plumbing/research/Initialize(mapload)
@@ -366,7 +366,7 @@
 			/obj/machinery/plumbing/bottler = 50,
 			/obj/machinery/plumbing/tank = 20,
 			/obj/machinery/plumbing/acclimator = 10,
-		)
+		),
 	)
 
 /obj/item/construction/plumbing/service/Initialize(mapload)

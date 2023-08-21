@@ -20,7 +20,7 @@
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
-	limb_owner.add_mood_event("dismembered", /datum/mood_event/dismembered)
+	limb_owner.add_mood_event("dismembered_[body_zone]", /datum/mood_event/dismembered, src)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
 	drop_limb()
 
@@ -350,6 +350,10 @@
 			continue
 		scar.victim = new_limb_owner
 		LAZYADD(new_limb_owner.all_scars, scar)
+
+	if(!special && new_limb_owner.mob_mood.has_mood_of_category("dismembered_[body_zone]"))
+		new_limb_owner.clear_mood_event("dismembered_[body_zone]")
+		new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 
 	update_bodypart_damage_state()
 	if(can_be_disabled)

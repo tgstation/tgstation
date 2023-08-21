@@ -49,9 +49,9 @@
 		QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_heater/handle_atom_del(atom/A)
+/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
 
@@ -78,8 +78,8 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		try_put_in_hand(beaker, user)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		try_put_in_hand(beaker, user)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker

@@ -128,13 +128,14 @@
 	//BEGIN: ECS SHIT
 	var/list/dc = _datum_components
 	if(dc)
-		var/all_components = dc[/datum/component]
-		if(length(all_components))
-			for(var/datum/component/component as anything in all_components)
-				qdel(component, FALSE, TRUE)
-		else
-			var/datum/component/C = all_components
-			qdel(C, FALSE, TRUE)
+		for(var/component_key in dc)
+			var/component_or_list = dc[component_key]
+			if(islist(component_or_list))
+				for(var/datum/component/component as anything in component_or_list)
+					qdel(component, FALSE, TRUE)
+			else
+				var/datum/component/C = component_or_list
+				qdel(C, FALSE, TRUE)
 		dc.Cut()
 
 	_clear_signal_refs()
