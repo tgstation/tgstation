@@ -17151,8 +17151,7 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/station/maintenance/floor1/starboard/fore)
+/area/station/bitrunning/den)
 "euu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
