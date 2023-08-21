@@ -26,10 +26,7 @@
 		"maxFrequency" = radio.freerange ? MAX_FREE_FREQ : MAX_FREQ,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/radio/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/radio/handle_ui_act(action, list/params)
 	switch(action)
 		if("toggle_microphone")
 			radio.set_broadcasting(!radio.get_broadcasting())

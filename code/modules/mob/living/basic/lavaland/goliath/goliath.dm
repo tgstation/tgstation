@@ -222,15 +222,3 @@
 	desc = "This rough saddle will give you a serviceable seat upon a goliath! Provided you can get one to stand still."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
-
-/// For map generation, has a chance to instantiate as a special subtype
-/obj/effect/spawner/random/goliath
-	name = "random goliath"
-	desc = "Chance to spawn a rare shiny version."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
-	icon_state = "goliath"
-	pixel_x = -12
-	loot = list(
-		/mob/living/basic/mining/goliath = 99,
-		/mob/living/basic/mining/goliath/ancient/immortal = 1,
-	)

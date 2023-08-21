@@ -1,5 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "[Waystation] Windoor for secret documents now can be accessed with away station secoff's id."
-  - bugfix: "[Waystation] Deleted a window on the same place as windoor so it won't block your path to secret documents."
