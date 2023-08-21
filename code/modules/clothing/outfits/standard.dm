@@ -95,9 +95,7 @@
 	suit = /obj/item/clothing/suit/redtag
 	suit_store = /obj/item/gun/energy/laser/redtag
 	back = /obj/item/storage/backpack
-	backpack_contents = list(
-		/obj/item/storage/box = 1,
-)
+	box = /obj/item/storage/box
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/red
 	head = /obj/item/clothing/head/helmet/redtaghelm

@@ -9,7 +9,7 @@
 	faction = list(FACTION_MINING)
 	max_mobs = 3
 	max_integrity = 250
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
+	mob_types = list(/mob/living/basic/mining/watcher)
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
@@ -26,7 +26,7 @@
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
 
 /obj/structure/spawner/lavaland/icewatcher
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing)
+	mob_types = list(/mob/living/basic/mining/watcher/icewing)
 
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize(mapload)

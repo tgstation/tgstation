@@ -4,8 +4,6 @@
 	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
 	icon_state = "filter"
 	density = FALSE
-	///category for plumbing RCD
-	category="Distribution"
 
 	///whitelist of chems id's that go to the left side. Empty to disable port
 	var/list/left = list()

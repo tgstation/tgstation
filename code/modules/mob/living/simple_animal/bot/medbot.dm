@@ -132,6 +132,39 @@
 	heal_threshold = 0
 	heal_amount = 5
 
+/mob/living/simple_animal/bot/medbot/nukie
+	name = "Oppenheimer"
+	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
+	skin = "bezerk"
+	health = 40
+	maxHealth = 40
+	maints_access_required = list(ACCESS_SYNDICATE)
+	radio_key = /obj/item/encryptionkey/syndicate
+	radio_channel = RADIO_CHANNEL_SYNDICATE
+	damagetype_healer = "all"
+	heal_threshold = 0
+	heal_amount = 5
+
+/mob/living/simple_animal/bot/medbot/nukie/Initialize(mapload, new_skin)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DISARMED, PROC_REF(nuke_disarm))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(nuke_arm))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DETONATING, PROC_REF(nuke_detonate))
+	internal_radio.set_frequency(FREQ_SYNDICATE)
+	internal_radio.freqlock = RADIO_FREQENCY_LOCKED
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_disarm()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_FORGIVE, MEDIBOT_VOICED_THANKS, MEDIBOT_VOICED_GOOD_PERSON))
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_arm()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_WAIT, MEDIBOT_VOICED_DONT, MEDIBOT_VOICED_IM_SCARED))
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_detonate()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_THE_END, MEDIBOT_VOICED_NOOO, MEDIBOT_VOICED_SUFFER))
+
 /mob/living/simple_animal/bot/medbot/examine(mob/user)
 	. = ..()
 	if(tipped_status == MEDBOT_PANIC_NONE)
@@ -175,7 +208,8 @@
 	access_card.add_access(para_trim.access + para_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
-	skin = new_skin
+	if(!isnull(new_skin))
+		skin = new_skin
 	update_appearance()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		linked_techweb = SSresearch.science_tech
