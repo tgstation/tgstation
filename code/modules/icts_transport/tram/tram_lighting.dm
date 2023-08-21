@@ -23,13 +23,14 @@
 		RegisterSignal(tram, COMSIG_ICTS_TRANSPORT_LIGHTS, PROC_REF(set_direction))
 		break
 
-/obj/machinery/lightbar/tram/exterior/proc/set_direction(source, controller_active, controller_status, travel_direction)
+/obj/machinery/lightbar/tram/exterior/proc/set_direction(source, controller_active, controller_status, travel_direction, estop)
 	SIGNAL_HANDLER
 
-	if(controller_status & EMERGENCY_STOP)
-		return
+	if(estop)
+		set_light_range_power_color(4, 0.4, LIGHT_COLOR_INTENSE_RED)
+		icon_state = "tram_rear"
 
-	if((travel_direction & (SOUTH|EAST)) && controller_active || (travel_direction & (NORTH|WEST)) && !controller_active)
+	else if((travel_direction & (SOUTH|EAST)) && controller_active || (travel_direction & (NORTH|WEST)) && !controller_active)
 		switch(dir)
 			if(NORTH, EAST)
 				set_light_range_power_color(4, 0.4, LIGHT_COLOR_INTENSE_RED)

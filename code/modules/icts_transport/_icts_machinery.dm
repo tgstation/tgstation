@@ -71,8 +71,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	machine.balloon_alert(user, "percussive maintenance...")
-	// A tider can fix it if they want,
-	// but only an equipped engineer should be able to handle it effortlessly.
 	if(!tool.use_tool(machine, user, 7 SECONDS, volume = 50))
 		machine.balloon_alert(user, "interrupted!")
 		return FALSE

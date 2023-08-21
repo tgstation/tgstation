@@ -25,8 +25,8 @@
 
 /obj/machinery/icts/destination_sign/indicator
 	icon = 'icons/obj/tram/tram_indicator.dmi'
-	icon_state = "indicator_off"
-	base_icon_state = "indicator_"
+	icon_state = "indi_off"
+	base_icon_state = "indi_"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
 	circuit = /obj/item/circuitboard/machine/destination_sign/indicator

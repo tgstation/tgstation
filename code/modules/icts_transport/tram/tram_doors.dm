@@ -30,7 +30,7 @@
 	if(!density)
 		return TRUE
 
-	if(forced == DEFAULT_DOOR_CHECKS && (!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED)))
+	if(forced == DEFAULT_DOOR_CHECKS && (!hasPower() || wires.is_cut(WIRE_OPEN)))
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
@@ -196,13 +196,12 @@
 /**
  * Tram doors can be opened with hands when unpowered
  */
-/obj/machinery/door/window/tram/try_safety_unlock(mob/user)
+/obj/machinery/door/airlock/tram/try_safety_unlock(mob/user)
 	if(!hasPower()  && density)
 		balloon_alert(user, "pulling emergency exit...")
-		if(do_after(user, 7 SECONDS, target = src))
+		if(do_after(user, 4 SECONDS, target = src))
 			try_to_crowbar(null, user, TRUE)
 			return TRUE
-
 
 /**
  * If you pry (bump) the doors open midtravel, open quickly so you can jump out and make a daring escape.

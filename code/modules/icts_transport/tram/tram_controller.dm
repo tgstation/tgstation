@@ -261,18 +261,13 @@
  * run a recovery procedure to head to the nearest platform and 'reset' once the issue is resolved.
  */
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
-	//if(controller_status & EMERGENCY_STOP)
-	//	estop()
 	if(!travel_remaining)
-		cycle_doors(OPEN_DOORS)
-		idle_platform = destination_platform
-		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
-		tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
-		travel_trip_length = 0
-		current_speed = 0
-		current_load = 0
+		if(!controller_operational)
+			degraded_stop()
+			return PROCESS_KILL
+		normal_stop()
 		return PROCESS_KILL
+
 	else if(world.time >= scheduled_move)
 		var/start_time = TICK_USAGE
 		travel_remaining--
@@ -306,6 +301,28 @@
 
 		scheduled_move = world.time + speed_limiter
 
+/datum/transport_controller/linear/tram/proc/normal_stop()
+	cycle_doors(OPEN_DOORS)
+	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
+	idle_platform = destination_platform
+	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
+	travel_trip_length = 0
+	current_speed = 0
+	current_load = 0
+
+/datum/transport_controller/linear/tram/proc/degraded_stop()
+	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
+	set_lights(estop = TRUE)
+	idle_platform = destination_platform
+	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
+	travel_trip_length = 0
+	current_speed = 0
+	current_load = 0
+	var/throw_direction = travel_direction
+	for(var/obj/structure/transport/linear/tram/module in transport_modules)
+		module.estop_throw(throw_direction)
+
 /**
  * Handles unlocking the tram controls for use after moving
  *
@@ -322,8 +339,8 @@
 /**
  * Send a signal to any lights associated with the tram so they can change based on the status and direction.
  */
-/datum/transport_controller/linear/tram/proc/set_lights()
-	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_LIGHTS, controller_active, controller_status, travel_direction)
+/datum/transport_controller/linear/tram/proc/set_lights(estop = FALSE)
+	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_LIGHTS, controller_active, controller_status, travel_direction, estop)
 
 /**
  * Sets the active status for the controller and sends a signal to listeners.
@@ -361,23 +378,7 @@
 			stack_trace("Transport controller received invalid status code request [code]/[value]")
 			return
 
-	validate_status()
-
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
-
-/datum/transport_controller/linear/tram/proc/validate_status()
-	if(!(controller_status & SYSTEM_FAULT))
-		if(controller_status & COMM_ERROR)
-			set_status_code(SYSTEM_FAULT, TRUE)
-			return
-
-		if(controller_status & EMERGENCY_STOP)
-			set_status_code(SYSTEM_FAULT, TRUE)
-			return
-
-	else
-		if(!(controller_status & COMM_ERROR) && !(controller_status & EMERGENCY_STOP))
-			set_status_code(SYSTEM_FAULT, FALSE)
 
 /**
  * Part of the pre-departure list, checks the status of the doors on the tram
@@ -412,20 +413,6 @@
 	update_status()
 
 /**
- * Make tram emergency stop.
- */
-/datum/transport_controller/linear/tram/proc/estop()
-	if(!travel_remaining)
-		return
-	var/throw_direction = travel_direction
-	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
-	travel_remaining = 0
-	travel_trip_length = 0
-	idle_platform = null
-	for(var/obj/structure/transport/linear/tram/module in transport_modules)
-		module.estop_throw(throw_direction)
-
-/**
  * Tram malfunction random event. Set comm error, increase tram lethality.
  */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
@@ -448,6 +435,25 @@
 	control_panel.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
+
+/datum/transport_controller/linear/tram/proc/register_collision()
+	tram_registration.collisions += 1
+
+/datum/transport_controller/linear/tram/proc/power_lost()
+	controller_operational = FALSE
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	/*
+	for(var/obj/machinery/icts/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
+		xing.set_signal_state(XING_STATE_MALF, TRUE)
+
+	for(var/obj/machinery/icts/destination_sign/desto as anything in SSicts_transport.displays)
+		desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+		desto.update_appearance()
+	*/
+
+/datum/transport_controller/linear/tram/proc/power_restored()
+	controller_operational = TRUE
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
@@ -513,38 +519,49 @@
 	. = ..()
 
 	if(!cover_open)
-		. += mutable_appearance(icon, "controller-door")
+		. += mutable_appearance(icon, "controller-closed")
+
+	else
+		var/mutable_appearance/controller_door = mutable_appearance(icon, "controller-open")
+		controller_door.pixel_w = -3
+		. += controller_door
 
 	if(machine_stat & NOPOWER)
+		. += mutable_appearance(icon, "estop")
+		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
 		return
 
 	. += mutable_appearance(icon, "power")
 	. += emissive_appearance(icon, "power", src, alpha = src.alpha)
 
 	if(!controller_datum)
-		. += mutable_appearance(icon, "fault")
-		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "fatal")
+		. += emissive_appearance(icon, "fatal", src, alpha = src.alpha)
 		return
 
 	if(controller_datum.controller_status & DOORS_OPEN)
 		. += mutable_appearance(icon, "doors")
 		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
 
-	if(controller_datum.controller_status & PRE_DEPARTURE)
-		. += mutable_appearance(icon, "departure")
-		. += emissive_appearance(icon, "departure", src, alpha = src.alpha)
+	if(controller_datum.controller_active)
+		. += mutable_appearance(icon, "active")
+		. += emissive_appearance(icon, "active", src, alpha = src.alpha)
+
+	if(controller_datum.controller_status & EMERGENCY_STOP)
+		. += mutable_appearance(icon, "estop")
+		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
 
 	else if(controller_datum.controller_status & SYSTEM_FAULT)
 		. += mutable_appearance(icon, "fault")
 		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
 
-		if(controller_datum.controller_status & EMERGENCY_STOP)
-			. += mutable_appearance(icon, "estop")
-			. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
+	else if(controller_datum.controller_status & COMM_ERROR)
+		. += mutable_appearance(icon, "comms")
+		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
 
-		else if(controller_datum.controller_status & COMM_ERROR)
-			. += mutable_appearance(icon, "comms")
-			. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
+	else
+		. += mutable_appearance(icon, "normal")
+		. += emissive_appearance(icon, "normal", src, alpha = src.alpha)
 
 /**
  * Find the controller associated with the transport module the cabinet is sitting on.
@@ -659,5 +676,14 @@
 
 	return data
 
-/datum/transport_controller/linear/tram/proc/register_collision()
-	tram_registration.collisions += 1
+/obj/machinery/icts/controller/power_change() // Change tram operating status on power loss/recovery
+	. = ..()
+
+	if(!controller_datum)
+		return
+
+	if(machine_stat & NOPOWER)
+		controller_datum.power_lost()
+
+	else
+		controller_datum.power_restored()
