@@ -37,14 +37,11 @@
 		"value" = value,
 	)
 
-/datum/award/proc/should_update_metadata(version)
-	return version < achievement_version
-
 /datum/award/proc/get_metadata_row()
 	return list(
 		"achievement_key" = database_id,
 		"achievement_version" = achievement_version,
-		"achievement_type" = TYPE_AWARD,
+		"achievement_type" = "award",
 		"achievement_name" = name,
 		"achievement_description" = desc,
 	)
@@ -86,16 +83,10 @@
 	icon = "" // This should warn contributors that do not declare an icon when contributing new achievements.
 	///How many players have earned this achievement
 	var/times_achieved = 0
-	///Set to true if someone has earned it this round, so that we know the metadata has to be updated.
-	var/times_achieved_update = FALSE
-
-/datum/award/achievement/should_update_metadata(version)
-	return ..() || times_achieved_update
 
 /datum/award/achievement/get_metadata_row()
 	. = ..()
-	.["achievement_type"] = TYPE_ACHIEVEMENT
-	.["times_achieved"] = times_achieved
+	.["achievement_type"] = "achievement"
 
 /datum/award/achievement/get_ui_data()
 	. = ..()
@@ -117,7 +108,6 @@
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 	user.client.give_award(/datum/award/score/achievements_score, user, 1)
 	times_achieved++
-	times_achieved_update = TRUE
 	if(SSachievements.most_unlocked_achievement?.times_achieved < times_achieved)
 		SSachievements.most_unlocked_achievement = src
 
@@ -137,7 +127,7 @@
 
 /datum/award/score/get_metadata_row()
 	. = ..()
-	.["achievement_type"] = TYPE_SCORE
+	.["achievement_type"] = "score"
 
 /datum/award/score/get_ui_data()
 	. = ..()

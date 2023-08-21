@@ -3,10 +3,8 @@
 /// Achievements icon set
 #define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'
 
-/// Used in the metadata DB table. It'd be wise not to edit these.
-#define TYPE_AWARD "award"
-#define TYPE_ACHIEVEMENT "achievement"
-#define TYPE_SCORE "score"
+#define ACHIEVEMENT_DEFAULT "default"
+#define ACHIEVEMENT_SCORE "score"
 
 ///the priority for which awards are orded on [/datum/achievement_data/load_all_achievements()]
 #define AWARD_PRIORITY_DEFAULT 100
