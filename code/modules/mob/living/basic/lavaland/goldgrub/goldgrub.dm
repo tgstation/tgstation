@@ -38,8 +38,6 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/fetch,
 	)
-	///are we underground
-	var/burrowed = FALSE
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
 	. = ..()
@@ -168,7 +166,7 @@
 	)
 
 /mob/living/basic/mining/goldgrub/baby/proc/ready_to_grow()
-	return (stat == CONSCIOUS && !burrowed)
+	return (stat == CONSCIOUS && !is_jaunting(src))
 
 /obj/item/food/egg/green/grub_egg
 	name = "grub egg"

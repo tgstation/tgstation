@@ -5,15 +5,14 @@
 	cooldown_time = 5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/spit_ore/IsAvailable(feedback)
-	var/mob/living/basic/mining/goldgrub/grub_owner = owner
-	if(grub_owner.burrowed)
+	if(is_jaunting(owner))
 		if(feedback)
-			grub_owner.balloon_alert(grub_owner, "currently underground!")
+			owner.balloon_alert(owner, "currently underground!")
 		return FALSE
 
-	if(!length(grub_owner.contents))
+	if(!length(owner.contents))
 		if(feedback)
-			grub_owner.balloon_alert(grub_owner, "no ores to spit!")
+			owner.balloon_alert(owner, "no ores to spit!")
 		return FALSE
 	return TRUE
 
@@ -55,17 +54,15 @@
 		to_chat(owner, span_warning("Action cancelled, as you moved while reappearing."))
 		return
 
-	if(!grub_owner.burrowed)
+	if(!is_jaunting(owner))
 		owner.visible_message(span_danger("[owner] buries into the ground, vanishing from sight!"))
 		playsound(get_turf(owner), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 		holder = new /obj/effect/dummy/phased_mob/grub_burrow(current_loc, owner)
-		grub_owner.burrowed = TRUE
 		return TRUE
 
 	holder = owner.loc
 	holder.eject_jaunter()
 	holder = null
-	grub_owner.burrowed = FALSE
 	owner.visible_message(span_danger("[owner] emerges from the ground!"))
 
 	if(ismineralturf(current_loc))

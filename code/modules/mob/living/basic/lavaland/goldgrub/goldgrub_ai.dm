@@ -5,7 +5,6 @@
 		BB_ORE_IGNORE_TYPES = list(/obj/item/stack/ore/iron, /obj/item/stack/ore/glass),
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
-		BB_CURRENTLY_UNDERGROUND = FALSE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -28,7 +27,6 @@
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/goldgrub/baby),
 		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
-		BB_CURRENTLY_UNDERGROUND = FALSE,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -98,7 +96,7 @@
 /datum/ai_planning_subtree/dig_away_from_danger
 
 /datum/ai_planning_subtree/dig_away_from_danger/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/currently_underground = controller.blackboard[BB_CURRENTLY_UNDERGROUND]
+	var/currently_underground = is_jaunting(controller.pawn)
 	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
 
 	//dont do anything until the storm passes
@@ -119,14 +117,6 @@
 
 /datum/ai_behavior/use_mob_ability/burrow
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/use_mob_ability/burrow/finish_action(datum/ai_controller/controller, success, target_key)
-	. = ..()
-	if(!success)
-		return
-	var/underground_check = controller.blackboard[BB_CURRENTLY_UNDERGROUND]
-	controller.set_blackboard_key(BB_CURRENTLY_UNDERGROUND, !underground_check)
-
 
 ///mine walls to look for food!
 /datum/ai_planning_subtree/grub_mine

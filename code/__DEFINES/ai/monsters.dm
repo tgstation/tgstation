@@ -109,8 +109,6 @@
 // goldgrub keys
 /// key that tells if a storm is coming
 #define BB_STORM_APPROACHING "BB_storm_approaching"
-/// key that tells if we are currently underground
-#define BB_CURRENTLY_UNDERGROUND "BB_currently_underground"
 /// key that tells the wall we will mine
 #define BB_TARGET_MINERAL_WALL "BB_target_mineral_wall"
 /// key that holds our spit ability
