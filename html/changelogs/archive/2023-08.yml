@@ -969,3 +969,13 @@
   - bugfix: Incompatible quirks in existing savefiles shouldn't be possible anymore.
   zeroisthebiggay:
   - bugfix: healing holoparas will no longer kill slime people
+2023-08-21:
+  Deadgebert:
+  - qol: Added two magboots to engine SMES room on icebox station
+  Ghommie:
+  - bugfix: Fixed embedding for projectiles.
+  Jackal-boop:
+  - balance: the lion hunters rifle has been pegged down the knowledge tree. to make
+      sure the tree is kept happy, the rust path and blade path can access rust charge
+  - rscadd: rust charge
+  - balance: the lion hunter ammo knowledge is free
