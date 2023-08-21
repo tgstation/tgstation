@@ -19,7 +19,7 @@
 /obj/item/ammo_box/magazine/internal/shot/com
 	name = "combat shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
-	max_ammo = 8
+	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/shot/com/compact
 	name = "compact shotgun internal magazine"
