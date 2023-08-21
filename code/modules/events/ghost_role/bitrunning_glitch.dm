@@ -42,8 +42,11 @@
 	input_text = "Select a role to spawn."
 
 /datum/event_admin_setup/listed_options/bitrunning_glitch/get_list()
-	var/datum/round_event_control/bitrunning_glitch/cyber_control = event_control
-	var/list/possible = cyber_control.possible_antags + list("Random")
+	var/datum/round_event_control/bitrunning_glitch/control = event_control
+
+	var/list/possible = control.possible_antags.Copy() // this seems pedantic but byond is complaining control was unused
+
+	possible += list("Random")
 
 	return possible
 
