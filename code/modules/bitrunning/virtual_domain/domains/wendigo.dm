@@ -14,7 +14,6 @@
 /mob/living/simple_animal/hostile/megafauna/wendigo/virtual_domain
 	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	drop_portal = FALSE
 	guaranteed_butcher_results = list(/obj/item/wendigo_skull = 1)
 	health = 1500
 	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
