@@ -1,7 +1,7 @@
 ///coordinate and control movement across linked transport_controllers. allows moving large single multitile platforms and many 1 tile platforms.
 ///also is capable of linking platforms across linked z levels
 /datum/transport_controller/linear
-	///the lift platforms we consider as part of this lift. ordered in order of lowest z level to highest z level after init.
+	///the lift platforms we consider as part of this transport. ordered in order of lowest z level to highest z level after init.
 	///(the sorting algorithm sucks btw)
 	var/list/obj/structure/transport/linear/transport_modules
 
@@ -169,41 +169,41 @@
 
 	var/z = 0
 
-	for(var/obj/structure/transport/linear/lift_to_sort as anything in platforms_in_z)
+	for(var/obj/structure/transport/linear/module_to_sort as anything in platforms_in_z)
 		if(!z)
-			if(!lift_to_sort.z)
+			if(!module_to_sort.z)
 				stack_trace("create_modular_set_for_z_level() was given a platform in nullspace or not on a turf!")
-				platforms_in_z -= lift_to_sort
+				platforms_in_z -= module_to_sort
 				continue
 
-			z = lift_to_sort.z
+			z = module_to_sort.z
 
-		if(z != lift_to_sort.z)
+		if(z != module_to_sort.z)
 			stack_trace("create_modular_set_for_z_level() was given lifts on different z levels!")
-			platforms_in_z -= lift_to_sort
+			platforms_in_z -= module_to_sort
 			continue
 
-		min_x = min(min_x, lift_to_sort.x)
-		max_x = max(max_x, lift_to_sort.x)
+		min_x = min(min_x, module_to_sort.x)
+		max_x = max(max_x, module_to_sort.x)
 
-		min_y = min(min_y, lift_to_sort.y)
-		max_y = max(max_y, lift_to_sort.y)
+		min_y = min(min_y, module_to_sort.y)
+		max_y = max(max_y, module_to_sort.y)
 
 	var/turf/lower_left_corner_loc = locate(min_x, min_y, z)
 	if(!lower_left_corner_loc)
 		CRASH("was unable to find a turf at the lower left corner of this z")
 
-	var/obj/structure/transport/linear/lower_left_corner_lift = locate() in lower_left_corner_loc
+	var/obj/structure/transport/linear/lower_left_corner_transport = locate() in lower_left_corner_loc
 
-	if(!lower_left_corner_lift)
-		CRASH("there was no lift in the lower left corner of the given lifts")
+	if(!lower_left_corner_transport)
+		CRASH("there was no transport in the lower left corner of the given transport")
 
 	platforms_in_z.Cut()
-	platforms_in_z += lower_left_corner_lift//we want to change the list given to us not create a new one. so we do this
+	platforms_in_z += lower_left_corner_transport//we want to change the list given to us not create a new one. so we do this
 
-	lower_left_corner_lift.create_modular_set(min_x, min_y, max_x, max_y, z)
+	lower_left_corner_transport.create_modular_set(min_x, min_y, max_x, max_y, z)
 
-///returns the closest lift to the specified atom, prioritizing lifts on the same z level. used for comparing distance
+///returns the closest transport to the specified atom, prioritizing transports on the same z level. used for comparing distance
 /datum/transport_controller/linear/proc/return_closest_platform_to(atom/comparison, allow_multiple_answers = FALSE)
 	if(!istype(comparison) || !comparison.z)
 		return FALSE
@@ -237,7 +237,7 @@
 
 	return winner
 
-/// Returns a lift platform on the z-level which is vertically closest to the passed target_z
+/// Returns a platform on the z-level which is vertically closest to the passed target_z
 /datum/transport_controller/linear/proc/return_closest_platform_to_z(target_z)
 	var/obj/structure/transport/linear/found_platform
 	for(var/obj/structure/transport/linear/lift as anything in transport_modules)
@@ -266,14 +266,14 @@
 
 	return found_platform
 
-/// Returns a list of all the z-levels our lift is currently on.
+/// Returns a list of all the z-levels our transport is currently on.
 /datum/transport_controller/linear/proc/get_zs_we_are_on()
 	var/list/zs_we_are_present_on = list()
 	for(var/obj/structure/transport/linear/lift as anything in transport_modules)
 		zs_we_are_present_on |= lift.z
 	return zs_we_are_present_on
 
-///returns all industrial_lifts associated with this tram on the given z level or given atoms z level
+///returns all transport modules associated with this transport on the given z level or given atoms z level
 /datum/transport_controller/linear/proc/get_platforms_on_level(atom/atom_reference_OR_z_level_number)
 	var/z = atom_reference_OR_z_level_number
 	if(isatom(atom_reference_OR_z_level_number))
@@ -291,12 +291,12 @@
 	return platforms_in_z
 
 /**
- * Moves the lift UP or DOWN, this is what users invoke with their hand.
- * This is a SAFE proc, ensuring every part of the lift moves SANELY.
+ * Moves the platform UP or DOWN, this is what users invoke with their hand.
+ * This is a SAFE proc, ensuring every part of it moves SANELY.
  *
  * Arguments:
- * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
- * user - Whomever made the lift movement.
+ * going - UP or DOWN directions, where the platform should go. Keep in mind by this point checks of whether it should go up or down have already been done.
+ * user - Whomever made the movement.
  */
 /datum/transport_controller/linear/proc/move_lift_vertically(going, mob/user)
 	//transport_modules are sorted in order of lowest z to highest z, so going upwards we need to move them in reverse order to not collide
@@ -315,17 +315,17 @@
 			transport_module.travel(going)
 
 /**
- * Moves the lift after a passed delay.
+ * Moves the platform after a passed delay.
  *
- * This is a more "user friendly" or "realistic" lift move.
+ * This is a more "user friendly" or "realistic" move.
  * It includes things like:
- * - Allowing lift "travel time"
+ * - Allowing platform "travel time"
  * - Shutting elevator safety doors
  * - Sound effects while moving
- * - Safety warnings for anyone below the lift (while it's moving downwards)
+ * - Safety warnings for anyone below the platform (while it's moving downwards)
  *
  * Arguments:
- * duration - required, how long do we wait to move the lift?
+ * duration - required, how long do we wait to move the platform?
  * door_duration - optional, how long should we wait to open the doors after arriving? If null, we won't open or close doors
  * direction - which direction are we moving the lift?
  * user - optional, who is moving the lift?
@@ -337,7 +337,7 @@
 		move_lift_vertically(direction, user)
 		return
 
-	// Get the lowest or highest lift according to which direction we're moving
+	// Get the lowest or highest platform according to which direction we're moving
 	var/obj/structure/transport/linear/prime_lift = return_closest_platform_to_z(direction == UP ? world.maxz : 0)
 
 	// If anyone changes the hydraulic sound effect I sure hope they update this variable...
@@ -345,29 +345,29 @@
 	// ...because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
 	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / lift_move_duration, 0.33, 3))
 
-	// Move the lift after a timer
+	// Move the platform after a timer
 	addtimer(CALLBACK(src, PROC_REF(move_lift_vertically), direction, user), lift_move_duration, TIMER_UNIQUE)
 	// Open doors after the set duration if supplied
 	if(isnum(door_duration))
 		addtimer(CALLBACK(src, PROC_REF(open_lift_doors_callback)), door_duration, TIMER_UNIQUE)
 
-	// Here on we only care about lifts going DOWN
+	// Here on we only care about platforms going DOWN
 	if(direction != DOWN)
 		return
 
 	// Okay we're going down, let's try to display some warnings to people below
 	var/list/turf/lift_locs = list()
 	for(var/obj/structure/transport/linear/going_to_move as anything in transport_modules)
-		// This lift has no warnings so we don't even need to worry about it
+		// This platform has no warnings so we don't even need to worry about it
 		if(!going_to_move.warns_on_down_movement)
 			continue
-		// Collect all the turfs our lift is found at
+		// Collect all the turfs our platform is found at
 		lift_locs |= going_to_move.locs
 
 	for(var/turf/moving in lift_locs)
 		// Find what's below the turf that's moving
 		var/turf/below_us = get_step_multiz(moving, DOWN)
-		// Hold up the turf below us is also in our locs list. Multi-z lift? Don't show a warning
+		// Hold up the turf below us is also in our locs list. Multi-z? Don't show a warning
 		if(below_us in lift_locs)
 			continue
 		// Display the warning for until we land
@@ -375,7 +375,7 @@
 
 /**
  * Simple wrapper for checking if we can move 1 zlevel, and if we can, do said move.
- * Locks controls, closes all doors, then moves the lift and re-opens the doors afterwards.
+ * Locks controls, closes all doors, then moves the platform and re-opens the doors afterwards.
  *
  * Arguments:
  * direction - which direction are we moving?
@@ -422,17 +422,17 @@
 	controls_lock(FALSE)
 
 /**
- * Moves the lift to the passed z-level.
+ * Moves the platform to the passed z-level.
  *
  * Checks for validity of the move: Are we moving to the same z-level, can we actually move to that z-level?
- * Does NOT check if the lift controls are currently locked.
+ * Does NOT check if the controls are currently locked.
  *
  * Moves to the passed z-level by calling move_after_delay repeatedly until the passed z-level is reached.
  * This proc sleeps as it moves.
  *
  * Arguments:
  * target_z - required, the Z we want to move to
- * loop_callback - optional, an additional callback invoked during the l oop that allows the move to cancel.
+ * loop_callback - optional, an additional callback invoked during the loop that allows the move to cancel.
  * user - optional, who started the move
  */
 /datum/transport_controller/linear/proc/move_to_zlevel(target_z, datum/callback/loop_callback, mob/user)
@@ -515,17 +515,18 @@
 			else
 				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")
 
-/// Helper used in callbacks to open all the doors our lift is on
+/// Helper used in callbacks to open all the doors our platform is on
 /datum/transport_controller/linear/proc/open_lift_doors_callback()
 	update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
 
 /**
- * Moves the lift, this is what users invoke with their hand.
+ * Moves the platform, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
 /datum/transport_controller/linear/proc/move_transport_horizontally(going)
 	if(modular_set)
+		controls_lock(TRUE)
 		for(var/obj/structure/transport/linear/module_to_move as anything in transport_modules)
 			module_to_move.travel(going)
 
@@ -546,8 +547,8 @@
 		min_x = min(min_x, transport_module.x)
 		max_x = max(max_x, transport_module.x)
 		//this assumes that all z levels have identical horizontal bounding boxes
-		//but if youre still using a non multitile tram platform at this point
-		//then its your own problem. it wont runtime it will jsut be slower than it needs to be if this assumption isnt
+		//but if youre still using a non multitile  platform at this point
+		//then its your own problem. it wont runtime it will just be slower than it needs to be if this assumption isnt
 		//the case
 
 		min_y = min(min_y, transport_module.y)
@@ -618,7 +619,7 @@
 			controller_status |= CONTROLS_LOCKED
 
 /**
- * resets the contents of all platforms to their original state in case someone put a bunch of shit onto the tram.
+ * resets the contents of all platforms to their original state in case someone put a bunch of shit onto the platform.
  * intended to be called by admins. passes all arguments to reset_contents() for each of our platforms.
  *
  * Arguments:

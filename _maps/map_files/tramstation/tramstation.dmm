@@ -17883,6 +17883,7 @@
 	dir = 4
 	},
 /obj/structure/transport/linear/public,
+/obj/effect/landmark/icts/transport_id/elevators/elev_4,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
 "foy" = (
@@ -21056,8 +21057,8 @@
 	},
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/door/window/elevator/right/directional/south{
-	elevator_linked_id = "tram_lower_center_lift";
-	elevator_mode = 1
+	elevator_mode = 1;
+	transport_linked_id = "elev_4"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -22152,6 +22153,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
+/obj/effect/landmark/icts/transport_id/elevators/elev_1,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
 "gTw" = (
@@ -34161,10 +34163,10 @@
 	dir = 1
 	},
 /obj/machinery/button/elevator/directional/north{
-	id = "tram_lower_center_lift"
+	id = "elev_4"
 	},
 /obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "tram_lower_center_lift"
+	linked_elevator_id = "elev_4"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
@@ -59701,7 +59703,7 @@
 	},
 /obj/structure/transport/linear/public,
 /obj/machinery/elevator_control_panel/directional/east{
-	linked_elevator_id = "tram_lower_center_lift";
+	linked_elevator_id = "elev_4";
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -62058,12 +62060,12 @@
 /area/station/command/heads_quarters/hop)
 "vic" = (
 /obj/machinery/lift_indicator{
-	linked_elevator_id = "tram_lower_center_lift";
+	linked_elevator_id = "elev_4";
 	pixel_x = -5;
 	pixel_y = -3
 	},
 /obj/machinery/button/elevator{
-	id = "tram_lower_center_lift";
+	id = "elev_4";
 	pixel_x = -7;
 	pixel_y = -1
 	},
@@ -65300,8 +65302,9 @@
 "wqk" = (
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/machinery/door/window/elevator/left/directional/north{
-	elevator_linked_id = "tram_lower_center_lift";
-	elevator_mode = 1
+	elevator_mode = 1;
+	id = "elev_4";
+	transport_linked_id = "elev_4"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)

@@ -1,3 +1,7 @@
+/**
+ * Base transport structure. A single tile that can form a modular set with neighbouring tiles
+ * This type holds elevators and trams
+ */
 /obj/structure/transport/linear
 	name = "linear transport module"
 	desc = "A lightweight lift platform. It moves."
@@ -36,12 +40,12 @@
 	///used so that we dont have to change the glide_size of every object every movement, which scales to cost more than you'd think
 	var/list/atom/movable/changed_gliders = list()
 
-	///master datum that controls our movement. in general /industrial_lift subtypes control moving themselves, and
+	///master datum that controls our movement. in general /transport/linear subtypes control moving themselves, and
 	/// /datum/transport_controller instances control moving the entire tram and any behavior associated with that.
 	var/datum/transport_controller/linear/transport_controller_datum
 	///what subtype of /datum/transport_controller to create for itself if no other platform on this tram has created one yet.
 	///very important for some behaviors since
-	var/transport_controller_type = /datum/transport_controller
+	var/transport_controller_type = /datum/transport_controller/linear
 
 	///how many tiles this platform extends on the x axis
 	var/width = 1
