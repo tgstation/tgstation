@@ -440,7 +440,9 @@ Difficulty: Hard
 		return FALSE
 	if (!.)
 		return FALSE
-	return !HAS_TRAIT(the_target, TRAIT_GUTTED)
+	var/mob/living/living_target = the_target
+	if(istype(living_target))
+		return !living_target.has_status_effect(/datum/status_effect/gutted)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)

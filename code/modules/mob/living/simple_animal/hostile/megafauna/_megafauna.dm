@@ -125,7 +125,7 @@
 
 /// Devours a target and restores health to the megafauna
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
-	if(!L || HAS_TRAIT(L, TRAIT_GUTTED))
+	if(!L || L.has_status_effect(/datum/status_effect/gutted))
 		return FALSE
 	celebrate_kill()
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
@@ -138,8 +138,7 @@
 		qdel(L.get_organ_slot(ORGAN_SLOT_LIVER))
 	L.adjustBruteLoss(500)
 	L.death() //make sure they die
-	L.RegisterSignal(L, COMSIG_MOB_STATCHANGE, PROC_REF(on_gutted_statchange))
-	ADD_TRAIT(L, TRAIT_GUTTED, TRAIT_GENERIC)
+	L.apply_status_effect(/datum/status_effect/gutted)
 	LoseTarget()
 	return TRUE
 
@@ -148,17 +147,16 @@
 		span_danger("[src] devours [L]'s organs!"),
 		span_userdanger("You feast on [L]'s organs, restoring your health!"))
 
-/// When the mob's stat changes after being gutted by a megafauna (they're revived, etc)
-/mob/living/proc/on_gutted_statchange(mob/living/L, new_stat)
-	SIGNAL_HANDLER
-	REMOVE_TRAIT(L, TRAIT_GUTTED, TRAIT_GENERIC)
-	UnregisterSignal(L, COMSIG_MOB_STATCHANGE)
+
 
 /mob/living/simple_animal/hostile/megafauna/CanAttack(atom/the_target)
 	. = ..()
 	if (!.)
 		return FALSE
-	return !HAS_TRAIT(the_target, TRAIT_GUTTED)
+	var/mob/living/living_target = the_target
+	if(istype(living_target))
+		return !living_target.has_status_effect(/datum/status_effect/gutted)
+
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
