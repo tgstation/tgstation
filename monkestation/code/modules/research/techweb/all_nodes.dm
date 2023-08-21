@@ -187,3 +187,14 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
 	hidden = TRUE
 	experimental = TRUE
+
+/datum/techweb_node/adv_ballistics
+	id = "adv_ballistics"
+	display_name = "Advanced Ballistics"
+	description = "The most sophisticated methods of shooting people."
+	prereq_ids = list("adv_weaponry")
+	design_ids = list(
+		"mag_autorifle_ap",
+		"mag_autorifle_ic",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

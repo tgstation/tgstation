@@ -1536,6 +1536,7 @@
 	prereq_ids = list("adv_engi", "weaponry")
 	design_ids = list(
 		"pin_loyalty",
+		"mag_autorifle", //monkestation edit: autorifles
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
@@ -1603,8 +1604,6 @@
 		"c38_hotshot",
 		"c38_iceblox",
 		"techshotshell",
-		"mag_autorifle_ap",
-		"mag_autorifle_ic",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
