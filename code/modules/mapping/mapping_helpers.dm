@@ -840,8 +840,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "Dead Body placer"
 	late = TRUE
 	icon_state = "deadbodyplacer"
+	///if TRUE, was spawned out of mapload.
 	var/admin_spawned
-	var/bodycount = 2 //number of bodies to spawn
+	///number of bodies to spawn
+	var/bodycount = 3
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	. = ..()
@@ -850,16 +852,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	admin_spawned = TRUE
 
 /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
-	var/area/a = get_area(src)
-	var/list/trays = list()
-	for (var/i in a.contents)
-		if (istype(i, /obj/structure/bodycontainer/morgue))
-			if(admin_spawned)
-				var/obj/structure/bodycontainer/morgue/early_morgue_tray = i
-				if(early_morgue_tray.connected.loc != early_morgue_tray)
-					continue
-			trays += i
-	if(!trays.len)
+	var/area/morgue_area = get_area(src)
+	var/list/tructure/bodycontainer/morgue/trays = list()
+	for(var/turf/area_turf as anything in morgue_area.get_contained_turfs())
+		var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
+		if(isnull(morgue_tray))
+			continue
+		if(admin_spawned && morgue_tray.connected.loc != morgue_tray)
+			continue
+		trays += morgue_tray
+
+	if(!length(trays))
 		if(admin_spawned)
 			message_admins("[src] spawned at [ADMIN_VERBOSEJMP(src)] failed to find a closed morgue to spawn a body!")
 		else
@@ -884,26 +887,31 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	else if(override_species)
 		usable_races += override_species
 
-	for (var/i = 1 to bodycount)
+	var/guaranteed_human_spawned = FALSE
+	for (var/i in 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
 		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
-		var/mob/living/carbon/human/new_human = new /mob/living/carbon/human(morgue_tray.loc, 1)
+		var/mob/living/carbon/human/new_human = new(morgue_tray.loc)
 
 		var/species_to_pick
-		if(LAZYLEN(usable_races))
-			if(!species_probability)
-				species_probability = 50
-				stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
-			if(prob(species_probability))
-				species_to_pick = pick(usable_races)
-				var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
-				if(new_human_species)
-					new_human.set_species(new_human_species)
-					new_human_species = new_human.dna.species
-					new_human_species.randomize_features(new_human)
-					new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
-				else
-					stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
+
+		if(guaranteed_human_spawned)
+			if(LAZYLEN(usable_races))
+				if(!isnum(species_probability))
+					species_probability = 50
+					stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
+				if(prob(species_probability))
+					species_to_pick = pick(usable_races)
+					var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
+					if(new_human_species)
+						new_human.set_species(new_human_species)
+						new_human_species = new_human.dna.species
+						new_human_species.randomize_features(new_human)
+						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
+					else
+						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
+		else
+			guaranteed_human_spawned = TRUE
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
@@ -911,12 +919,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		body_bag.forceMove(morgue_tray)
 
 		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
+		for (var/obj/item/organ/part as anything in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
 			else
-				var/obj/item/organ/O = part
-				O.organ_flags |= ORGAN_FROZEN
+				part.organ_flags |= ORGAN_FROZEN
 
 		morgue_tray.update_appearance()
 
