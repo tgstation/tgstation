@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can now feed fish with the can of fish feed without having to put the fish in a aquarium first."
+  - balance: "Some fish may survive in different, harsher atmospheres if given the amphibious trait, like chasm chrabs on lavaland."
+  - qol: "aquarium now uses balloon alerts when feeding fish."
+  - bugfix: "The wary and shiny lover no longer incorrectly remove difficulty from the minigame if conditions aren't met."
