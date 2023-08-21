@@ -36,7 +36,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/grub_spit,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/fetch
+		/datum/pet_command/point_targetting/fetch,
 	)
 	///are we underground
 	var/burrowed = FALSE
@@ -77,9 +77,9 @@
 /mob/living/basic/mining/goldgrub/bullet_act(obj/projectile/bullet)
 	if(stat == DEAD)
 		return BULLET_ACT_FORCE_PIERCE
-	else
-		visible_message(span_danger("The [bullet.name] is repelled by [src]'s girth!"))
-		return BULLET_ACT_BLOCK
+
+	visible_message(span_danger("The [bullet.name] is repelled by [src]'s girth!"))
+	return BULLET_ACT_BLOCK
 
 /mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
