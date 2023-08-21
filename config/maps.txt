@@ -14,6 +14,7 @@ Format:
 endmap
 
 map tramstation
+	votable
 endmap
 
 map metastation
@@ -42,10 +43,6 @@ endmap
 
 map foxholestation
 	maxplayers 25
-	votable
-endmap
-
-map tramstation_icts
 	votable
 endmap
 

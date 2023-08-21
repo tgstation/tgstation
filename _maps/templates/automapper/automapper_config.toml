@@ -60,22 +60,6 @@ required_map = "tramstation.dmm"
 coordinates = [84, 90, 1]
 trait_name = "Station"
 
-# ICTS Cryo
-[templates.icts_cryo]
-map_files = ["tramstation_cryo.dmm"]
-directory = "_maps/templates/automapper/tramstation/"
-required_map = "tramstation_icts.dmm"
-coordinates = [68, 102, 2]
-trait_name = "Station"
-
-# ICTS Broadcast Studio
-[templates.icts_broadcast_studio]
-map_files = ["tramstation_broadcast_studio.dmm"]
-directory = "_maps/templates/automapper/tramstation/"
-required_map = "tramstation_icts.dmm"
-coordinates = [84, 90, 1]
-trait_name = "Station"
-
 # BIRDSHOT MAP TEMPLATES
 # Birdshot Cryo
 [templates.birdshot_cryo]
