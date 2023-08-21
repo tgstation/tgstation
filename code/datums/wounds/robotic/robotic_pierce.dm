@@ -125,7 +125,7 @@
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	while (cauterizing_item.tool_start_check())
         if (!metal_set)
-            to_chat(user, span_warning("The [name] has no replacement metal for you to weld! Repairs will be less effective until you put some in!")
+            to_chat(user, span_warning("The [name] has no replacement metal for you to weld! Repairs will be less effective until you put some in!"))
 		user?.visible_message(span_notice("[user] begins repairing the [name] of [their_or_other] [limb.plaintext_zone]..."), ignored_mobs = list(user))
 		if (!cauterizing_item.use_tool(target = victim, user = user, delay = ELECTRICAL_DAMAGE_REPAIR_WELD_BASE_DELAY * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 			return TRUE
@@ -136,7 +136,7 @@
             metal_set = 0
 		else
             if (!metal_set)
-                user?.visible_message(span_notice "[user] tries their best to repair the [name] of [their_or_other] [limb.plaintext_zone] without replacement metal!")
+                user?.visible_message(span_notice("[user] tries their best to repair the [name] of [their_or_other] [limb.plaintext_zone] without replacement metal!"))
             else
 			    user?.visible_message(span_notice("[user] repairs some damage on the [name] of [their_or_other] [limb.plaintext_zone]!"))
                 adjust_set_metal(-1)
