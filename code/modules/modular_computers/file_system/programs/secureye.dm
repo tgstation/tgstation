@@ -15,7 +15,7 @@
 	program_icon = "eye"
 
 	///Boolean on whether or not the app will make noise when flipping around the channels.
-	var/silent_spying = FALSE
+	var/spying = FALSE
 
 	var/list/network = list("ss13")
 	///List of weakrefs of all users watching the program.
@@ -31,22 +31,23 @@
 	/// All the plane masters that need to be applied.
 	var/atom/movable/screen/background/cam_background
 
+	///Internal tracker used to find a specific person and keep them on cameras.
+	var/datum/trackable/internal_tracker
+
 ///Syndicate subtype that has no access restrictions and is available on Syndinet
 /datum/computer_file/program/secureye/syndicate
 	filename = "syndeye"
 	filedesc = "SyndEye"
 	extended_desc = "This program allows for illegal access to security camera networks."
 	transfer_access = list()
-
-	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
-	silent_spying = TRUE
-
 	available_on_ntnet = FALSE
+	available_on_syndinet = TRUE
 	requires_ntnet = FALSE
+	usage_flags = PROGRAM_ALL
 	unique_copy = TRUE
 
-	available_on_syndinet = TRUE
-	usage_flags = PROGRAM_ALL
+	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
+	spying = TRUE
 
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
@@ -63,10 +64,12 @@
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
+	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 
 /datum/computer_file/program/secureye/Destroy()
 	QDEL_NULL(cam_screen)
 	QDEL_NULL(cam_background)
+	QDEL_NULL(internal_tracker)
 	last_camera_turf = null
 	return ..()
 
@@ -110,6 +113,7 @@
 /datum/computer_file/program/secureye/ui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = cam_screen.assigned_map
+	data["can_spy"] = !!spying
 	var/list/cameras = get_camera_list(network)
 	data["cameras"] = list()
 	for(var/i in cameras)
@@ -124,20 +128,43 @@
 	. = ..()
 	if(.)
 		return
-	if(action == "switch_camera")
-		var/c_tag = format_text(params["name"])
-		var/list/cameras = get_camera_list(network)
-		var/obj/machinery/camera/selected_camera = cameras[c_tag]
-		camera_ref = WEAKREF(selected_camera)
-		if(!silent_spying)
-			playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	switch(action)
+		if("switch_camera")
+			var/c_tag = format_text(params["name"])
+			var/list/cameras = get_camera_list(network)
+			var/obj/machinery/camera/selected_camera = cameras[c_tag]
+			camera_ref = WEAKREF(selected_camera)
+			if(!spying)
+				playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+			if(!selected_camera)
+				return TRUE
+			if(internal_tracker && internal_tracker.tracking)
+				internal_tracker.set_tracking(FALSE)
 
-		if(!selected_camera)
+			update_active_camera_screen()
 			return TRUE
 
-		update_active_camera_screen()
+		if("start_tracking")
+			if(!internal_tracker)
+				internal_tracker = new(src)
+			internal_tracker.set_tracked_mob(usr)
+			return TRUE
 
-		return TRUE
+/datum/computer_file/program/secureye/proc/on_track_target(datum/trackable/source, mob/living/target)
+	SIGNAL_HANDLER
+	var/datum/camerachunk/target_camerachunk = GLOB.cameranet.getTurfVis(get_turf(target))
+	if(!target_camerachunk)
+		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
+	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras["[target.z]"])
+		var/found_target = locate(target) in cameras.can_see()
+		if(!found_target)
+			continue
+		var/new_camera = WEAKREF(cameras)
+		if(camera_ref == new_camera)
+			return
+		camera_ref = new_camera
+		update_active_camera_screen()
+		return
 
 /datum/computer_file/program/secureye/ui_close(mob/user)
 	. = ..()
@@ -151,7 +178,7 @@
 	if(length(concurrent_users) == 0 && is_living)
 		camera_ref = null
 		last_camera_turf = null
-		if(!silent_spying)
+		if(!spying)
 			playsound(computer, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
