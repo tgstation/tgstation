@@ -150,12 +150,12 @@
 
 	if(istype(item, /obj/item/fish_feed))
 		if(!item.reagents.total_volume)
-			balloon_alert(user, "[item] is empty!")
+			to_chat(user, span_warning("[item] is empty."))
 			return TRUE
 		var/list/fishes = get_fishes()
 		for(var/obj/item/fish/fish as anything in fishes)
 			fish.feed(item.reagents)
-		balloon_alert(user, "fed the fish")
+		to_chat(user, span_notice("You feed the fish."))
 		return TRUE
 	return ..()
 

@@ -52,37 +52,37 @@ Industrial extracts:
 		icon_state = "industrial_still"
 
 /obj/item/slimecross/industrial/grey
-	colour = SLIME_TYPE_GREY
+	colour = "grey"
 	effect_desc = "Produces monkey cubes."
 	itempath = /obj/item/food/monkeycube
 	itemamount = 5
 
 /obj/item/slimecross/industrial/orange
-	colour = SLIME_TYPE_ORANGE
+	colour = "orange"
 	effect_desc = "Produces slime zippo lighters."
 	plasmarequired = 6
 	itempath = /obj/item/lighter/slime
 
 /obj/item/slimecross/industrial/purple
-	colour = SLIME_TYPE_PURPLE
+	colour = "purple"
 	effect_desc = "Produces autoinjectors with regen jelly inside."
 	plasmarequired = 5
 	itempath = /obj/item/slimecrossbeaker/autoinjector/regenpack
 
 /obj/item/slimecross/industrial/blue
-	colour = SLIME_TYPE_BLUE
+	colour = "blue"
 	effect_desc = "Produces full fire extinguishers."
 	plasmarequired = 10
 	itempath = /obj/item/extinguisher
 
 /obj/item/slimecross/industrial/metal
-	colour = SLIME_TYPE_METAL
+	colour = "metal"
 	effect_desc = "Produces iron sheets."
 	plasmarequired = 3
 	itempath = /obj/item/stack/sheet/iron/ten
 
 /obj/item/slimecross/industrial/yellow
-	colour = SLIME_TYPE_YELLOW
+	colour = "yellow"
 	effect_desc = "Produces high capacity power cells, which are not fully charged on creation."
 	plasmarequired = 5
 	itempath = /obj/item/stock_parts/cell/high
@@ -93,13 +93,13 @@ Industrial extracts:
 		C.charge = rand(0,C.maxcharge/2)
 
 /obj/item/slimecross/industrial/darkpurple
-	colour = SLIME_TYPE_DARK_PURPLE
+	colour = "dark purple"
 	effect_desc = "Produces plasma... for plasma."
 	plasmarequired = 10
 	itempath = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/slimecross/industrial/darkblue
-	colour = SLIME_TYPE_DARK_BLUE
+	colour = "dark blue"
 	effect_desc = "Produces one-use fireproofing potions."
 	plasmarequired = 6
 	itempath = /obj/item/slimepotion/fireproof
@@ -110,7 +110,7 @@ Industrial extracts:
 		potion.uses = 1
 
 /obj/item/slimecross/industrial/silver
-	colour = SLIME_TYPE_SILVER
+	colour = "silver"
 	effect_desc = "Produces random food and drink items."
 	plasmarequired = 1
 	//Item picked below.
@@ -123,49 +123,49 @@ Industrial extracts:
 	ADD_TRAIT(spawned, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 
 /obj/item/slimecross/industrial/bluespace
-	colour = SLIME_TYPE_BLUESPACE
+	colour = "bluespace"
 	effect_desc = "Produces synthetic bluespace crystals."
 	plasmarequired = 7
 	itempath = /obj/item/stack/ore/bluespace_crystal/artificial
 
 /obj/item/slimecross/industrial/sepia
-	colour = SLIME_TYPE_SEPIA
+	colour = "sepia"
 	effect_desc = "Produces cameras."
 	plasmarequired = 2
 	itempath = /obj/item/camera
 
 /obj/item/slimecross/industrial/cerulean
-	colour = SLIME_TYPE_CERULEAN
+	colour = "cerulean"
 	effect_desc = "Produces normal slime extract enhancers."
 	plasmarequired = 5
 	itempath = /obj/item/slimepotion/enhancer
 
 /obj/item/slimecross/industrial/pyrite
-	colour = SLIME_TYPE_PYRITE
+	colour = "pyrite"
 	effect_desc = "Produces cans of spraypaint."
 	plasmarequired = 2
 	itempath = /obj/item/toy/crayon/spraycan
 
 /obj/item/slimecross/industrial/red
-	colour = SLIME_TYPE_RED
+	colour = "red"
 	effect_desc = "Produces blood orbs."
 	plasmarequired = 5
 	itempath = /obj/item/slimecrossbeaker/bloodpack
 
 /obj/item/slimecross/industrial/green
-	colour = SLIME_TYPE_GREEN
+	colour = "green"
 	effect_desc = "Produces self-use-only slime jelly autoinjectors."
 	plasmarequired = 7
 	itempath = /obj/item/slimecrossbeaker/autoinjector/slimejelly
 
 /obj/item/slimecross/industrial/pink
-	colour = SLIME_TYPE_PINK
+	colour = "pink"
 	effect_desc = "Produces synthpax and space drug autoinjectors."
 	plasmarequired = 6
 	itempath = /obj/item/slimecrossbeaker/autoinjector/peaceandlove
 
 /obj/item/slimecross/industrial/gold
-	colour = SLIME_TYPE_GOLD
+	colour = "gold"
 	effect_desc = "Produces random coins."
 	plasmarequired = 10
 
@@ -174,31 +174,31 @@ Industrial extracts:
 	..()
 
 /obj/item/slimecross/industrial/oil
-	colour = SLIME_TYPE_OIL
+	colour = "oil"
 	effect_desc = "Produces IEDs."
 	plasmarequired = 4
 	itempath = /obj/item/grenade/iedcasing/spawned
 
 /obj/item/slimecross/industrial/black //What does this have to do with black slimes? No clue! Fun, though
-	colour = SLIME_TYPE_BLACK
+	colour = "black"
 	effect_desc = "Produces slime brand regenerative cigarettes."
 	plasmarequired = 6
 	itempath = /obj/item/storage/fancy/cigarettes/cigpack_xeno
 
 /obj/item/slimecross/industrial/lightpink
-	colour = SLIME_TYPE_LIGHT_PINK
+	colour = "light pink"
 	effect_desc = "Produces heart shaped boxes that have candies in them."
 	plasmarequired = 3
 	itempath = /obj/item/storage/fancy/heart_box
 
 /obj/item/slimecross/industrial/adamantine
-	colour = SLIME_TYPE_ADAMANTINE
+	colour = "adamantine"
 	effect_desc = "Produces sheets of adamantine."
 	plasmarequired = 10
 	itempath = /obj/item/stack/sheet/mineral/adamantine
 
 /obj/item/slimecross/industrial/rainbow
-	colour = SLIME_TYPE_RAINBOW
+	colour = "rainbow"
 	effect_desc = "Produces random slime extracts."
 	plasmarequired = 5
 	//Item picked below.

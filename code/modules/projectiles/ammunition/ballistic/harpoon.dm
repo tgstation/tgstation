@@ -7,7 +7,7 @@
 
 /obj/item/ammo_casing/harpoon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/caseless, TRUE)
+	AddElement(/datum/element/caseless)
 
 /obj/item/ammo_casing/harpoon/update_icon_state()
 	. = ..()

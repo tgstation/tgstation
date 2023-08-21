@@ -2,74 +2,74 @@
 	var/list/slime_mutation_colors[4]
 	switch(colour)
 		//Tier 1
-		if(SLIME_TYPE_GREY)
-			slime_mutation_colors[1] = SLIME_TYPE_ORANGE
-			slime_mutation_colors[2] = SLIME_TYPE_METAL
-			slime_mutation_colors[3] = SLIME_TYPE_BLUE
-			slime_mutation_colors[4] = SLIME_TYPE_PURPLE
+		if("grey")
+			slime_mutation_colors[1] = "orange"
+			slime_mutation_colors[2] = "metal"
+			slime_mutation_colors[3] = "blue"
+			slime_mutation_colors[4] = "purple"
 		//Tier 2
-		if(SLIME_TYPE_PURPLE)
-			slime_mutation_colors[1] = SLIME_TYPE_DARK_PURPLE
-			slime_mutation_colors[2] = SLIME_TYPE_DARK_BLUE
-			slime_mutation_colors[3] = SLIME_TYPE_GREEN
-			slime_mutation_colors[4] = SLIME_TYPE_GREEN
-		if(SLIME_TYPE_METAL)
-			slime_mutation_colors[1] = SLIME_TYPE_SILVER
-			slime_mutation_colors[2] = SLIME_TYPE_YELLOW
-			slime_mutation_colors[3] = SLIME_TYPE_GOLD
-			slime_mutation_colors[4] = SLIME_TYPE_GOLD
-		if(SLIME_TYPE_ORANGE)
-			slime_mutation_colors[1] = SLIME_TYPE_DARK_PURPLE
-			slime_mutation_colors[2] = SLIME_TYPE_YELLOW
-			slime_mutation_colors[3] = SLIME_TYPE_RED
-			slime_mutation_colors[4] = SLIME_TYPE_RED
-		if(SLIME_TYPE_BLUE)
-			slime_mutation_colors[1] = SLIME_TYPE_DARK_BLUE
-			slime_mutation_colors[2] = SLIME_TYPE_SILVER
-			slime_mutation_colors[3] = SLIME_TYPE_PINK
-			slime_mutation_colors[4] = SLIME_TYPE_PINK
+		if("purple")
+			slime_mutation_colors[1] = "dark purple"
+			slime_mutation_colors[2] = "dark blue"
+			slime_mutation_colors[3] = "green"
+			slime_mutation_colors[4] = "green"
+		if("metal")
+			slime_mutation_colors[1] = "silver"
+			slime_mutation_colors[2] = "yellow"
+			slime_mutation_colors[3] = "gold"
+			slime_mutation_colors[4] = "gold"
+		if("orange")
+			slime_mutation_colors[1] = "dark purple"
+			slime_mutation_colors[2] = "yellow"
+			slime_mutation_colors[3] = "red"
+			slime_mutation_colors[4] = "red"
+		if("blue")
+			slime_mutation_colors[1] = "dark blue"
+			slime_mutation_colors[2] = "silver"
+			slime_mutation_colors[3] = "pink"
+			slime_mutation_colors[4] = "pink"
 		//Tier 3
-		if(SLIME_TYPE_DARK_BLUE)
-			slime_mutation_colors[1] = SLIME_TYPE_PURPLE
-			slime_mutation_colors[2] = SLIME_TYPE_BLUE
-			slime_mutation_colors[3] = SLIME_TYPE_CERULEAN
-			slime_mutation_colors[4] = SLIME_TYPE_CERULEAN
-		if(SLIME_TYPE_DARK_PURPLE)
-			slime_mutation_colors[1] = SLIME_TYPE_PURPLE
-			slime_mutation_colors[2] = SLIME_TYPE_ORANGE
-			slime_mutation_colors[3] = SLIME_TYPE_SEPIA
-			slime_mutation_colors[4] = SLIME_TYPE_SEPIA
-		if(SLIME_TYPE_YELLOW)
-			slime_mutation_colors[1] = SLIME_TYPE_METAL
-			slime_mutation_colors[2] = SLIME_TYPE_ORANGE
-			slime_mutation_colors[3] = SLIME_TYPE_BLUESPACE
-			slime_mutation_colors[4] = SLIME_TYPE_BLUESPACE
-		if(SLIME_TYPE_SILVER)
-			slime_mutation_colors[1] = SLIME_TYPE_METAL
-			slime_mutation_colors[2] = SLIME_TYPE_BLUE
-			slime_mutation_colors[3] = SLIME_TYPE_PYRITE
-			slime_mutation_colors[4] = SLIME_TYPE_PYRITE
+		if("dark blue")
+			slime_mutation_colors[1] = "purple"
+			slime_mutation_colors[2] = "blue"
+			slime_mutation_colors[3] = "cerulean"
+			slime_mutation_colors[4] = "cerulean"
+		if("dark purple")
+			slime_mutation_colors[1] = "purple"
+			slime_mutation_colors[2] = "orange"
+			slime_mutation_colors[3] = "sepia"
+			slime_mutation_colors[4] = "sepia"
+		if("yellow")
+			slime_mutation_colors[1] = "metal"
+			slime_mutation_colors[2] = "orange"
+			slime_mutation_colors[3] = "bluespace"
+			slime_mutation_colors[4] = "bluespace"
+		if("silver")
+			slime_mutation_colors[1] = "metal"
+			slime_mutation_colors[2] = "blue"
+			slime_mutation_colors[3] = "pyrite"
+			slime_mutation_colors[4] = "pyrite"
 		//Tier 4
-		if(SLIME_TYPE_PINK)
-			slime_mutation_colors[1] = SLIME_TYPE_PINK
-			slime_mutation_colors[2] = SLIME_TYPE_PINK
-			slime_mutation_colors[3] = SLIME_TYPE_LIGHT_PINK
-			slime_mutation_colors[4] = SLIME_TYPE_LIGHT_PINK
-		if(SLIME_TYPE_RED)
-			slime_mutation_colors[1] = SLIME_TYPE_RED
-			slime_mutation_colors[2] = SLIME_TYPE_RED
-			slime_mutation_colors[3] = SLIME_TYPE_OIL
-			slime_mutation_colors[4] = SLIME_TYPE_OIL
-		if(SLIME_TYPE_GOLD)
-			slime_mutation_colors[1] = SLIME_TYPE_GOLD
-			slime_mutation_colors[2] = SLIME_TYPE_GOLD
-			slime_mutation_colors[3] = SLIME_TYPE_ADAMANTINE
-			slime_mutation_colors[4] = SLIME_TYPE_ADAMANTINE
-		if(SLIME_TYPE_GREEN)
-			slime_mutation_colors[1] = SLIME_TYPE_GREEN
-			slime_mutation_colors[2] = SLIME_TYPE_GREEN
-			slime_mutation_colors[3] = SLIME_TYPE_BLACK
-			slime_mutation_colors[4] = SLIME_TYPE_BLACK
+		if("pink")
+			slime_mutation_colors[1] = "pink"
+			slime_mutation_colors[2] = "pink"
+			slime_mutation_colors[3] = "light pink"
+			slime_mutation_colors[4] = "light pink"
+		if("red")
+			slime_mutation_colors[1] = "red"
+			slime_mutation_colors[2] = "red"
+			slime_mutation_colors[3] = "oil"
+			slime_mutation_colors[4] = "oil"
+		if("gold")
+			slime_mutation_colors[1] = "gold"
+			slime_mutation_colors[2] = "gold"
+			slime_mutation_colors[3] = "adamantine"
+			slime_mutation_colors[4] = "adamantine"
+		if("green")
+			slime_mutation_colors[1] = "green"
+			slime_mutation_colors[2] = "green"
+			slime_mutation_colors[3] = "black"
+			slime_mutation_colors[4] = "black"
 		// Tier 5
 		else
 			slime_mutation_colors[1] = colour

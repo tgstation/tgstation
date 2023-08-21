@@ -78,8 +78,8 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		try_put_in_hand(beaker, user)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker

@@ -64,88 +64,88 @@ Self-sustaining extracts:
 
 /obj/item/slimecross/selfsustaining/grey
 	extract_type = /obj/item/slime_extract/grey
-	colour = SLIME_TYPE_GREY
+	colour = "grey"
 
 /obj/item/slimecross/selfsustaining/orange
 	extract_type = /obj/item/slime_extract/orange
-	colour = SLIME_TYPE_ORANGE
+	colour = "orange"
 
 /obj/item/slimecross/selfsustaining/purple
 	extract_type = /obj/item/slime_extract/purple
-	colour = SLIME_TYPE_PURPLE
+	colour = "purple"
 
 /obj/item/slimecross/selfsustaining/blue
 	extract_type = /obj/item/slime_extract/blue
-	colour = SLIME_TYPE_BLUE
+	colour = "blue"
 
 /obj/item/slimecross/selfsustaining/metal
 	extract_type = /obj/item/slime_extract/metal
-	colour = SLIME_TYPE_METAL
+	colour = "metal"
 
 /obj/item/slimecross/selfsustaining/yellow
 	extract_type = /obj/item/slime_extract/yellow
-	colour = SLIME_TYPE_YELLOW
+	colour = "yellow"
 
 /obj/item/slimecross/selfsustaining/darkpurple
 	extract_type = /obj/item/slime_extract/darkpurple
-	colour = SLIME_TYPE_DARK_PURPLE
+	colour = "dark purple"
 
 /obj/item/slimecross/selfsustaining/darkblue
 	extract_type = /obj/item/slime_extract/darkblue
-	colour = SLIME_TYPE_DARK_BLUE
+	colour = "dark blue"
 
 /obj/item/slimecross/selfsustaining/silver
 	extract_type = /obj/item/slime_extract/silver
-	colour = SLIME_TYPE_SILVER
+	colour = "silver"
 
 /obj/item/slimecross/selfsustaining/bluespace
 	extract_type = /obj/item/slime_extract/bluespace
-	colour = SLIME_TYPE_BLUESPACE
+	colour = "bluespace"
 
 /obj/item/slimecross/selfsustaining/sepia
 	extract_type = /obj/item/slime_extract/sepia
-	colour = SLIME_TYPE_SEPIA
+	colour = "sepia"
 
 /obj/item/slimecross/selfsustaining/cerulean
 	extract_type = /obj/item/slime_extract/cerulean
-	colour = SLIME_TYPE_CERULEAN
+	colour = "cerulean"
 
 /obj/item/slimecross/selfsustaining/pyrite
 	extract_type = /obj/item/slime_extract/pyrite
-	colour = SLIME_TYPE_PYRITE
+	colour = "pyrite"
 
 /obj/item/slimecross/selfsustaining/red
 	extract_type = /obj/item/slime_extract/red
-	colour = SLIME_TYPE_RED
+	colour = "red"
 
 /obj/item/slimecross/selfsustaining/green
 	extract_type = /obj/item/slime_extract/green
-	colour = SLIME_TYPE_GREEN
+	colour = "green"
 
 /obj/item/slimecross/selfsustaining/pink
 	extract_type = /obj/item/slime_extract/pink
-	colour = SLIME_TYPE_PINK
+	colour = "pink"
 
 /obj/item/slimecross/selfsustaining/gold
 	extract_type = /obj/item/slime_extract/gold
-	colour = SLIME_TYPE_GOLD
+	colour = "gold"
 
 /obj/item/slimecross/selfsustaining/oil
 	extract_type = /obj/item/slime_extract/oil
-	colour = SLIME_TYPE_OIL
+	colour = "oil"
 
 /obj/item/slimecross/selfsustaining/black
 	extract_type = /obj/item/slime_extract/black
-	colour = SLIME_TYPE_BLACK
+	colour = "black"
 
 /obj/item/slimecross/selfsustaining/lightpink
 	extract_type = /obj/item/slime_extract/lightpink
-	colour = SLIME_TYPE_LIGHT_PINK
+	colour = "light pink"
 
 /obj/item/slimecross/selfsustaining/adamantine
 	extract_type = /obj/item/slime_extract/adamantine
-	colour = SLIME_TYPE_ADAMANTINE
+	colour = "adamantine"
 
 /obj/item/slimecross/selfsustaining/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
-	colour = SLIME_TYPE_RAINBOW
+	colour = "rainbow"

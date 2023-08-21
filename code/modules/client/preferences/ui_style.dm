@@ -6,16 +6,18 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ui_style/init_possible_values()
-	return assoc_to_keys(GLOB.available_ui_styles)
+	var/list/values = list()
 
-/datum/preference/choiced/ui_style/icon_for(value)
-	var/icon/icons = GLOB.available_ui_styles[value]
+	for (var/style in GLOB.available_ui_styles)
+		var/icon/icons = GLOB.available_ui_styles[style]
 
-	var/icon/icon = icon(icons, "hand_r")
-	icon.Crop(1, 1, world.icon_size * 2, world.icon_size)
-	icon.Blend(icon(icons, "hand_l"), ICON_OVERLAY, world.icon_size)
+		var/icon/icon = icon(icons, "hand_r")
+		icon.Crop(1, 1, world.icon_size * 2, world.icon_size)
+		icon.Blend(icon(icons, "hand_l"), ICON_OVERLAY, world.icon_size)
 
-	return icon
+		values[style] = icon
+
+	return values
 
 /datum/preference/choiced/ui_style/create_default_value()
 	return GLOB.available_ui_styles[1]

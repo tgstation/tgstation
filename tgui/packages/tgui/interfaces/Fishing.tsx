@@ -35,7 +35,7 @@ type FishingMinigameProps = {
   fish_ai: FishAI;
   special_rules: SpecialRule[];
   background: string;
-  win: () => void;
+  win: (perfect: boolean) => void;
   lose: () => void;
 };
 
@@ -60,6 +60,7 @@ class FishingMinigame extends Component<
   animation_id: number;
   last_frame: number;
   reeling: ReelingState = ReelingState.Idle;
+  perfect: boolean = true;
   area_height: number = 1000;
   state: FishingMinigameState;
   currentVelocityLimit: number = 200;
@@ -375,6 +376,7 @@ class FishingMinigame extends Component<
       completion_delta = seconds * completion_gain_per_second;
     } else {
       completion_delta = seconds * completion_lost_per_second;
+      this.perfect = false;
     }
     const rawCompletion = currentState.completion + completion_delta;
     const newCompletion = clamp(rawCompletion, 0, 100);
@@ -389,7 +391,7 @@ class FishingMinigame extends Component<
       this.props.lose();
       dispatch(backendSuspendStart());
     } else if (newCompletion >= 100) {
-      this.props.win();
+      this.props.win(this.perfect);
       dispatch(backendSuspendStart());
     }
 
@@ -498,7 +500,7 @@ export const Fishing = (props, context) => {
           fish_ai={data.fish_ai}
           special_rules={data.special_effects}
           background={data.background_image}
-          win={() => act('win')}
+          win={(perfect) => act('win', { perfect: perfect })}
           lose={() => act('lose')}
         />
       </Window.Content>

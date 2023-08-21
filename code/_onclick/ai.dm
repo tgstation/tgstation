@@ -11,7 +11,7 @@
 		return
 
 	if(ismob(A))
-		ai_tracking_tool.set_tracked_mob(src, A.name)
+		ai_actual_track(A)
 	else
 		A.move_camera_by_click()
 
