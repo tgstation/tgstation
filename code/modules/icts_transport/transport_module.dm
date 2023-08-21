@@ -446,10 +446,13 @@
 				var/datum/callback/land_slam = new(victim_living, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				victim_living.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
-				//increment the hit counter signs
+				//increment the hit counters
 				if(ismob(victim_living) && victim_living.client)
-					SSpersistence.tram_hits_this_round++
-					SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
+					if(istype(transport_controller_datum, /datum/transport_controller/linear/tram))
+						SSpersistence.tram_hits_this_round++
+						var/datum/transport_controller/linear/tram/tram_controller = transport_controller_datum
+						tram_controller.tram_registration.collisions++
+						SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, travel_direction)
@@ -463,7 +466,7 @@
 ///on the banana even if youre not moving relative to it.
 /obj/structure/transport/linear/proc/group_move(list/atom/movable/movers, movement_direction)
 	if(movement_direction == NONE)
-		stack_trace("an industrial lift was told to move to somewhere it already is!")
+		stack_trace("a transport was told to move to somewhere it already is!")
 		return FALSE
 
 	var/turf/our_dest = get_step(src, movement_direction)

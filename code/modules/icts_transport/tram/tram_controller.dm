@@ -663,3 +663,6 @@
 	)
 
 	return data
+
+/datum/transport_controller/linear/tram/proc/register_collision()
+	tram_registration.collisions += 1
