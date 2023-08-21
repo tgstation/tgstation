@@ -12,6 +12,8 @@
 	var/brightness_on = TRUE
 	/// The probability the player has to win.
 	var/win_prob = 5
+	/// The maximum amount of curses we will allow a player to have before disallowing them to use the machine.
+	var/max_curse_amount = 5
 	/// clone damaged dealt each roll
 	var/damage_on_roll = 20
 	/// machine's reward when you hit jackpot
@@ -39,7 +41,7 @@
 		return
 	obj_flags |= IN_USE
 
-	var/signal_value = SEND_SIGNAL(human_user, COMSIG_CURSED_SLOT_MACHINE_USE)
+	var/signal_value = SEND_SIGNAL(human_user, COMSIG_CURSED_SLOT_MACHINE_USE, max_curse_amount)
 
 	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used for some reason (like if we're maxed out on curses but not getting gibbed)
 		say("We're sorry, but we can no longer serve you at this establishment.")
