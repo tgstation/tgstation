@@ -16,6 +16,8 @@
 	var/damage_on_roll = 20
 	/// machine's reward when you hit jackpot
 	var/prize = /obj/structure/cursed_money
+	/// Length of the cooldown between the machine being used and being able to spin the machine again. Don't trim this down too hard or the status effect story will fall flat
+	var/cooldown_length = 15 SECONDS
 	/// Cooldown between pulls of the cursed slot machine.
 	COOLDOWN_DECLARE(spin_cooldown)
 
@@ -24,35 +26,37 @@
 	update_appearance()
 	set_light(brightness_on)
 
-/obj/structure/cursed_slot_machine/interact(mob/living/carbon/human/user)
-	if(!istype(user))
+/obj/structure/cursed_slot_machine/interact(mob/user)
+	if(!ishuman(user))
 		return
+
+	var/mob/living/carbon/human/human_user = user
+
 	if(obj_flags & IN_USE || !COOLDOWN_FINISHED(src, spin_cooldown))
-		to_chat(user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
+		to_chat(human_user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
 		return
 	obj_flags |= IN_USE
 
-	var/signal_value = SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_USE)
+	var/signal_value = SEND_SIGNAL(human_user, COMSIG_CURSED_SLOT_MACHINE_USE)
 
 	if(signal_value & SLOT_MACHINE_USE_CANCEL)
-		user.to_chat(span_userdanger("Why couldn't I get one more try?!"))
-		user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-		user.gib()
+		to_chat(human_user, span_userdanger("Why couldn't I get one more try?!"))
+		human_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+		human_user.gib()
 		return
 
 	user.visible_message(
-		span_warning("[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"),
+		span_warning("[human_user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"),
 		span_warning("You feel a draining as you pull the lever, but you know it'll be worth it."),
 	)
 
-	if(isnull(has_status_effect(/datum/status_effect/grouped/cursed)))
-		user.apply_status_effect(/datum/status_effect/grouped/cursed)
+	if(isnull(human_user.has_status_effect(/datum/status_effect/grouped/cursed)))
+		human_user.apply_status_effect(/datum/status_effect/grouped/cursed)
 
 	icon_screen = "slots_screen_working"
 	update_appearance()
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
-	addtimer(CALLBACK(src, PROC_REF(determine_victor), user), 5 SECONDS)
-	COOLDOWN_START(src, spin_cooldown, 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(determine_victor), human_user), 5 SECONDS)
 
 /obj/structure/cursed_slot_machine/update_overlays()
 	. = ..()
@@ -64,6 +68,7 @@
 	icon_screen = initial(icon_screen)
 	update_appearance()
 	obj_flags &= ~IN_USE
+	COOLDOWN_START(src, spin_cooldown, cooldown_length)
 	if(!prob(win_prob))
 		return
 

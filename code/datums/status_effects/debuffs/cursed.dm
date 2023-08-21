@@ -26,13 +26,19 @@
 		qdel(src)
 		return SLOT_MACHINE_USE_CANCEL // slot machine will handle the killing and all of that jazz
 
-	linked_alert.update_description()
+	if(!isnull(linked_alert))
+		linked_alert.update_description()
+
 	update_particles()
 
-	addtimer(CALLBACK(src, PROC_REF(send_cursed_message)), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(send_cursed_message)), 5.5 SECONDS)
 
 /// Makes a nice lorey message about the curse level we're at. I think it's nice
 /datum/status_effect/grouped/cursed/proc/send_cursed_message()
+	if(QDELETED(src))
+		return
+
+
 	var/list/messages = list()
 	switch(curse_count)
 		if(1)
@@ -69,7 +75,7 @@
 			messages += span_boldwarning("The toll has already been exacted. There is no longer death on 'your' terms. Is your dignity worth more than your life?")
 
 	for(var/message in messages)
-		owner.to_chat(message)
+		to_chat(owner, message)
 		sleep(1 SECONDS) // yes yes a bit fast but it can be a lot of text and i want the whole thing to send before the cooldown on the slot machine might expire
 
 /// Cleans ourselves up and removes our curses. Meant to be done in a "positive" way, when the curse is broken. Directly use qdel otherwise.
