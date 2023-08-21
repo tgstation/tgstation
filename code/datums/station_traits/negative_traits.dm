@@ -27,6 +27,15 @@
 	report_message = "We haven't had the time to take care of the station's vending machines. Some may be tilted, and some products may be unavailable."
 	trait_to_give = STATION_TRAIT_VENDING_SHORTAGE
 
+/datum/station_trait/common_disabled
+	name = "Common radio channel disabled"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 1
+	show_in_report = TRUE
+	can_revert = FALSE //Because it removes common from all maploaded tcomms machines.
+	report_message = "Our broadcast license for the common channel frequency in this sector has failed to be renewed. The frequency has therefore been disabled from your telecomms network in order to avoid any legal issues, although it has been kept for the intercom systems."
+	trait_to_give = STATION_TRAIT_COMMON_DISABLED
+
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE

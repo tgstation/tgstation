@@ -61,7 +61,11 @@
 /obj/machinery/telecomms/receiver/preset_right/Initialize(mapload)
 	. = ..()
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_COMMON_DISABLED))
+			if(i == FREQ_COMMON)
+				continue
 		freq_listening |= i
+
 
 /obj/machinery/telecomms/receiver/preset_left/birdstation
 	name = "Receiver"
