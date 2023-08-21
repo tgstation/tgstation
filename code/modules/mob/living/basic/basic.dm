@@ -100,6 +100,8 @@
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
+	create_overlay_index() //monkestation edit
+	populate_shift_list() //monkestation edit
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -179,7 +181,12 @@
 	return result
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	melee_attack(attack_target, modifiers)
+	//monkestation edit
+	if(advanced_simple && (isitem(attack_target) || !(istate & ISTATE_HARM)))
+		attack_target.attack_hand(src, modifiers)
+	else
+		melee_attack(attack_target, modifiers)
+	//monkestation edit
 
 /mob/living/basic/vv_edit_var(vname, vval)
 	. = ..()
