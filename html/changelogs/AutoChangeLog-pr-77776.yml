@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - refactor: "AI's player-tracking eyes received an unwanted obligatory update, and should now not tell you that a player is untrackable when they clearly obviously can be."

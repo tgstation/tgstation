@@ -1,0 +1,8 @@
+author: "CoiledLamb"
+delete-after: True
+changes:
+  - bugfix: "wellcheers is now based on sanity rather than mood"
+  - image: "resprites martian cans"
+  - image: "adds inhands for martian cans and wellcheers"
+  - image: "minor tweaks to other cans"
+  - spellcheck: "updates wellcheers mood text"
