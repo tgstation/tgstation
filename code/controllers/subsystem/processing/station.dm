@@ -66,6 +66,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_SPACE_BOUND) && !SSmapping.is_planetary()) //we're in space but we can't do space ;_;
 			continue
 
+		var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+		if(filter_threshold < min_pop) //not enough players
+			continue
+
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
 	var/positive_trait_count = pick(20;0, 5;1, 1;2)

@@ -8,6 +8,8 @@
 	var/trait_processes = FALSE
 	///Chance relative to other traits of its type to be picked
 	var/weight = 10
+	///Minimum population required for the station trait to be chosen
+	var/min_pop = 0
 	///Whether this trait is always enabled; generally used for debugging
 	var/force = FALSE
 	///Does this trait show in the centcom report?
