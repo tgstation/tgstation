@@ -34,6 +34,9 @@
 	var/obj/item/reagent_containers/cup/beaker/large/washing_input
 	/// Reagent produced by boosting mineral output.
 	var/datum/reagent/waste_chem = /datum/reagent/toxin/acid/industrial_waste
+/// okay so var that holds mining points to claim
+/// add total of pts from minerals mined in parent proc
+/// then, little mini UI showing points to collect?
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
