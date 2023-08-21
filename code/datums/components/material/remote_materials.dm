@@ -222,7 +222,14 @@ handles linking back and forth.
 
 	return amount_consumed
 
-/// Ejects the given material ref and logs it, or says out loud the problem.
+/**
+ * Ejects the given material ref and logs it
+ *
+ * Arguments
+ * [material_ref][datum/material]- The material type you are trying to eject
+ * eject_amount- how many sheets to eject
+ * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
+ */
 /datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null)
 	if(!_can_use_resource())
 		return 0
