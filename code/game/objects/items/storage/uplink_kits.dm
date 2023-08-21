@@ -778,6 +778,17 @@
 	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE
 
+/obj/item/storage/box/syndie_kit/poster_box
+	name = "syndicate poster pack"
+	desc = "Contains a variety of demotivational posters to ensure minimum productivity for the crew of any Nanotrasen station."
+
+	/// Number of posters this box contains when spawning.
+	var/poster_count = 3
+
+/obj/item/storage/box/syndie_kit/poster_box/PopulateContents()
+	for(var/i in 1 to poster_count)
+		new /obj/item/poster/traitor(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
