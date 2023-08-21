@@ -66,3 +66,9 @@
 	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	///pulled from the wall
 	wall_trim = 'monkestation/icons/turf/walls/reinforced_wall_trim.dmi'
+
+
+/turf/closed/indestructible/riveted
+	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	wall_trim = 'monkestation/icons/turf/walls/reinforced_wall_trim.dmi'
