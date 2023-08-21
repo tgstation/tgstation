@@ -615,12 +615,12 @@
 
 /datum/reagent/consumable/wellcheers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
-	switch(affected_mob.mob_mood.mood_level)
-		if (MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD2)
+	switch(affected_mob.mob_mood.sanity_level)
+		if (SANITY_INSANE to SANITY_CRAZY)
 			affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, 0)
-		if (MOOD_LEVEL_SAD2 to MOOD_LEVEL_HAPPY2)
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
 			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
-		if (MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
 			affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, 0)
 	return ..()
 
