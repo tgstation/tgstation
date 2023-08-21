@@ -30,7 +30,7 @@
 
 /obj/structure/sign/Destroy()
 	. = ..()
-	knock_down_callback = NULL
+	knock_down_callback = null
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
