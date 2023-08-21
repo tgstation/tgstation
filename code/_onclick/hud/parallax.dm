@@ -323,7 +323,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/layer_1/Initialize(mapload, mob/owner)
 	. = ..()
-	src.add_atom_colour(global.starlight_color, ADMIN_COLOUR_PRIORITY)
+	src.add_atom_colour(GLOB.starlight_color, ADMIN_COLOUR_PRIORITY)
 
 /atom/movable/screen/parallax_layer/stars
 	icon_state = "stars"

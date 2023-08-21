@@ -21,7 +21,7 @@
 
 /area/space/Initialize(mapload)
 	. = ..()
-	set_base_lighting(global.starlight_color, alpha)
+	set_base_lighting(GLOB.starlight_color, alpha)
 
 /area/space/nearstation
 	icon_state = "space_near"
