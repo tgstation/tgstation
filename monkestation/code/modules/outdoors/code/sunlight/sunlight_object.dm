@@ -353,10 +353,6 @@ Sunlight System
 /obj/effect/mapping_helpers/sunlight/pseudo_roof_setter
 	var/turf/pseudo_roof
 
-/obj/effect/mapping_helpers/sunlight/pseudo_roof_setter/mountain
-	pseudo_roof = /turf/closed/indestructible/rock
-	icon_state = "roof_mountain"
-
 /obj/effect/mapping_helpers/sunlight/pseudo_roof_setter/Initialize(mapload)
 	. = ..()
 	// Disabled mapload catch - somebody might want to wangle this l8r
