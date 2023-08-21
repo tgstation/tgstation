@@ -54,7 +54,7 @@
 	set_tracking(FALSE)
 
 ///Generates a list of trackable people by name, returning a list of Humans + Non-Humans that can be tracked.
-/datum/trackable/proc/trackable_mobs()
+/datum/trackable/proc/find_trackable_mobs()
 	RETURN_TYPE(/list)
 
 	names.Cut()
@@ -111,14 +111,14 @@
 		return
 
 	if(tracked_mob_name)
-		trackable_mobs()
+		find_trackable_mobs() //this is in case the tracked mob is newly/no-longer in camera field of view.
 		tracked_mob = isnull(humans[tracked_mob_name]) ? others[tracked_mob_name] : humans[tracked_mob_name]
 		if(isnull(tracked_mob))
 			to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 			return
 		to_chat(tracker, span_notice("Now tracking [tracked_mob_name] on camera."))
 	else
-		var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", trackable_mobs())
+		var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", find_trackable_mobs())
 		if(!target_name || isnull(target_name))
 			return
 		tracked_mob = isnull(humans[target_name]) ? others[target_name] : humans[target_name]
