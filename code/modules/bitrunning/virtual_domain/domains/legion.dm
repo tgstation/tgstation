@@ -12,13 +12,11 @@
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual_domain
-	achievement_type = null
 	can_be_cybercop = FALSE
-	crusher_achievement_type = null
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 	health = 1100
 	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
 	maxHealth = 1100
-	score_achievement_type = null
+	true_spawn = FALSE
 
 // You may be thinking, well, what about those mini-legions? They're not part of the created_atoms list

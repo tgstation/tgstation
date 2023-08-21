@@ -66,8 +66,6 @@ Difficulty: Hard
 	var/scream_cooldown_time = 10 SECONDS
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
-	/// Whether to drop a portal on death or not
-	var/drop_portal = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
 	. = ..()
@@ -270,7 +268,7 @@ Difficulty: Hard
 	if(health > 0)
 		return
 
-	if(!drop_portal)
+	if(!true_spawn)
 		return ..()
 
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
