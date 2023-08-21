@@ -12,6 +12,8 @@
 	name = "Blunt (Bone) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
 
+	scar_file = BONE_SCAR_FILE
+
 	/// Have we been bone gel'd?
 	var/gelled
 	/// Have we been taped?

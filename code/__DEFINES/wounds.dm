@@ -48,22 +48,34 @@
 
 // ~biology defines
 // What kind of biology a limb has, and what wounds it can suffer
+/// Has absolutely fucking nothing, no wounds
 #define BIO_INORGANIC NONE
-/// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
+/// Has bone - allows the victim to suffer T2-T3 bone blunt wounds
 #define BIO_BONE (1<<0)
-/// nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds
+/// Has flesh - allows the victim to suffer fleshy slash pierce and burn wounds
 #define BIO_FLESH (1<<1)
-/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_BONE and BIO_FLESH
+/// Self explanatory
 #define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
+/// Has metal - allows the victim to suffer robotic blunt and burn wounds
 #define BIO_METAL (1<<2)
+/// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
 #define BIO_WIRED (1<<3)
+/// Robotic: shit like cyborg limbs, mostly
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
-/// Does this limb have blood? Can suffer bleeding wounds
+/// Has bloodflow - can suffer bleeding wounds and can bleed
 #define BIO_BLOODED (1<<4)
+/// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
 #define BIO_JOINTED (1<<5)
+/// Standard humanoid - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed
 #define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
 
+// "Where" a specific "bio" feature is within a given limb
+// Exterior is hard shit, the last line, shit lines bones
+// Interior is soft shit, targetted by slashes and pierces (usually), protects exterior
+// Yes, it makes no sense
+/// The given biostate is on the "exterior" of the limb - hard shit, protected by interior
 #define BIO_EXTERIOR (1<<0)
+/// The given biostate is on the "exterior" of the limb - soft shit, protects exterior
 #define BIO_INTERIOR (1<<1)
 #define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
 
@@ -73,6 +85,9 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 	"[BIO_FLESH]" = BIO_INTERIOR,
 	"[BIO_BONE]" = BIO_EXTERIOR,
 ))
+
+// Wound series
+// A "wound series" is just a family of wounds that logically follow eachother
 
 #define WOUND_SERIES_FLESH_SLASH_BLEED 1
 #define WOUND_SERIES_BONE_BLUNT_BASIC 2
@@ -86,28 +101,6 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 
 #define WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE 9
 #define WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE 10
-
-/*// ~wound global lists
-// list in order of highest severity to lowest
-GLOBAL_LIST_INIT(global_wound_types, list(
-	WOUND_BLUNT = list(
-		"[BIO_BONE]" = list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/moderate),
-		//"[BIO_ARTIFICIAL]" = list() // cheap prosthetics
-		"[BIO_ROBOTIC]" = list(/datum/wound/blunt/robotic/critical, /datum/wound/blunt/robotic/severe, /datum/wound/blunt/robotic/moderate) // cyborg limbs
-	),
-	WOUND_SLASH = list(
-		"[BIO_FLESH]" = list(/datum/wound/slash/flesh/critical, /datum/wound/slash/flesh/severe, /datum/wound/slash/flesh/moderate),
-		//"[BIO_ROBOTIC]" = list(/datum/wound/slash/robotic/critical, /datum/wound/slash/robotic/severe, /datum/wound/slash/robotic/moderate)
-	),
-	WOUND_PIERCE = list(
-		"[BIO_FLESH]" = list(/datum/wound/pierce/bleed/critical, /datum/wound/pierce/bleed/severe, /datum/wound/pierce/bleed/moderate),
-		//"[BIO_ROBOTIC]" = list(/datum/wound/slash/robotic/critical, /datum/wound/slash/robotic/severe, /datum/wound/slash/robotic/moderate)
-	),
-	WOUND_BURN = list(
-		"[BIO_FLESH]" = list(/datum/wound/burn/flesh/critical, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/moderate),
-		"[BIO_ROBOTIC]" = list(/datum/wound/burn/robotic/overheat/critical, /datum/wound/burn/robotic/overheat/severe, /datum/wound/burn/robotic/overheat/moderate)
-	)
-))*/
 
 // every single type of wound that can be rolled naturally, in case you need to pull a random one
 GLOBAL_LIST_INIT(global_all_wound_types, list(

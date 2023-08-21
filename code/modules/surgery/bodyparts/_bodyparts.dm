@@ -25,6 +25,9 @@
 	/// DO NOT MODIFY DIRECTLY. Use set_owner()
 	var/mob/living/carbon/owner
 
+	/// If this limb can be scarred.
+	var/scarrable = TRUE
+
 	/**
 	 * A bitfield of biological states, exclusively used to determine which wounds this limb will get,
 	 * as well as how easily it will happen.

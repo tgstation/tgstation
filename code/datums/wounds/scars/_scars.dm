@@ -23,7 +23,7 @@
 	/// Whether this scar can actually be covered up by clothing
 	var/coverable = TRUE
 	/// Obviously, scars that describe damaged flesh wouldn't apply to a skeleton (in some cases like bone wounds, there can be different descriptions for skeletons and fleshy humanoids)
-	var/biology = BIO_STANDARD
+	var/required_limb_biostate
 	/// If we're a persistent scar or may become one, we go in this character slot
 	var/persistent_character_slot = 0
 
@@ -59,12 +59,7 @@
 		if(victim)
 			LAZYADD(victim.all_scars, src)
 
-	biology = limb?.biological_state || BIO_STANDARD
-
-	if((biology & BIO_BONE) && !(biology & BIO_FLESH))
-		description = pick_list(BONE_SCAR_FILE, W.scar_keyword) || "general disfigurement"
-	else // no specific support for flesh w/o bone scars since it's not really useful
-		description = pick_list(FLESH_SCAR_FILE, W.scar_keyword) || "general disfigurement"
+	description = pick_list(W.scar_file, W.scar_keyword) || "general disfigurement"
 
 	precise_location = pick_list_replacements(SCAR_LOC_FILE, limb.body_zone)
 	switch(W.severity)
@@ -86,8 +81,8 @@
 		LAZYADD(victim.all_scars, src)
 
 /// Used to "load" a persistent scar
-/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_STANDARD, char_slot)
-	if(!IS_ORGANIC_LIMB(BP))
+/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD, char_slot)
+	if(!BP.scarrable)
 		qdel(src)
 		return
 
@@ -95,13 +90,13 @@
 	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))
 	if(limb.owner)
 		victim = limb.owner
-		if(limb.biological_state != biology)
+		if(!(limb.biological_state & required_limb_biostate) == required_limb_biostate)
 			qdel(src)
 			return
 		LAZYADD(victim.all_scars, src)
 
 	src.severity = severity
-	src.biology = biology
+	src.required_limb_biostate = required_limb_biostate
 	persistent_character_slot = char_slot
 	LAZYADD(limb.scars, src)
 
@@ -163,9 +158,9 @@
 
 /// Used to format a scar to save for either persistent scars, or for changeling disguises
 /datum/scar/proc/format()
-	return "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[biology]|[persistent_character_slot]"
+	return "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[required_limb_biostate]|[persistent_character_slot]"
 
 /// Used to format a scar to save in preferences for persistent scars
-/datum/scar/proc/format_amputated(body_zone)
-	description = pick_list(FLESH_SCAR_FILE, "dismember")
+/datum/scar/proc/format_amputated(body_zone, scar_file = FLESH_SCAR_FILE)
+	description = pick_list(scar_file, "dismember")
 	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_STANDARD]|[persistent_character_slot]"

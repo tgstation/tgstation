@@ -10,8 +10,6 @@
 ///Use this flag on TRUE if you want the basic recipes
 #define MAT_CATEGORY_BASE_RECIPES "basic recipes"
 
-#define MAT_CATEGORY_CONDUCTIVE "conductive"
-
 /// Used to make a material initialize at roundstart.
 #define MATERIAL_INIT_MAPLOAD (1<<0)
 /// Used to make a material type able to be instantiated on demand after roundstart.

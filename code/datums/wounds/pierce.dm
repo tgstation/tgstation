@@ -16,6 +16,9 @@
 
 	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
 
+	scar_file = FLESH_SCAR_FILE
+
+
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
 	/// If gauzed, what percent of the internal bleeding actually clots of the total absorption rate

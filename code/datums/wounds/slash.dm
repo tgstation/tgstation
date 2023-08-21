@@ -23,6 +23,8 @@
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE)
 
+	scar_file = FLESH_SCAR_FILE
+
 	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
 
 	/// How much blood we start losing when this wound is first applied

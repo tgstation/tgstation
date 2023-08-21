@@ -54,7 +54,6 @@
 	name = "Robotic Blunt (Screws and bolts) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
 
-
 	var/daze_dizzy_minimum_score = 5
 	var/daze_dizzy_mult = 1
 
@@ -131,6 +130,8 @@
 	var/percussive_maintenance_repair_chance = 25
 	var/percussive_maintenance_damage_threshold = 7
 
+	scar_file = ROBOTIC_BLUNT_SCAR_FILE
+
 	wound_series = WOUND_SERIES_METAL_BLUNT_BASIC
 
 /datum/wound/blunt/robotic/moderate
@@ -166,6 +167,9 @@
 	daze_movement_shake_duration_mult = 0.2
 	daze_movement_shake_intensity_mult = 0.1
 	head_movement_daze_chance = 60
+
+	scar_file = null
+	scar_keyword = null // no scarring
 
 	a_or_from = "from"
 
@@ -260,6 +264,8 @@
 
 	ready_to_secure_internals = TRUE
 	ready_to_ghetto_weld = FALSE
+
+	scar_keyword = "robotic_bluntsevere"
 
 	gellable = TRUE
 
@@ -449,6 +455,8 @@
 	limp_chance = 90
 	threshold_minimum = 120
 	threshold_penalty = 50
+
+	scar_keyword = "robotic_bluntcritical"
 
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
 

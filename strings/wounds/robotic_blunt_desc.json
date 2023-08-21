@@ -1,0 +1,21 @@
+{
+	"generic": ["general disfigurement"],
+
+	"robotic_bluntsevere": [
+		"a area of slightly crumpled metal",
+		"faded cracks on some screws",
+        "a thin line of solder"
+	],
+
+	"robotic_bluntcritical": [
+		"a malformed superstructure",
+		"heavily beaten plating",
+		"a thick line of solder"
+	],
+
+	"dismember": [
+		"is slightly misaligned",
+		"has clearly been dropped recently",
+		"has a damaged socket"
+	]
+}

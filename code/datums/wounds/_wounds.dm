@@ -24,6 +24,9 @@
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
+	/// The file we take our scar descriptions from.
+	var/scar_file
+
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
 	/// The visible message when this happens

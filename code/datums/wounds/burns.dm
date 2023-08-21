@@ -16,6 +16,8 @@
 	wound_type = WOUND_BURN
 	processes = TRUE
 
+	scar_file = FLESH_SCAR_FILE
+
 	wound_series = WOUND_SERIES_FLESH_BURN_BASIC
 
 	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
