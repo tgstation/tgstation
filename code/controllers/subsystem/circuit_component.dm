@@ -28,8 +28,6 @@ SUBSYSTEM_DEF(circuit_component)
 
 		to_call.user = null
 		to_call.InvokeAsync()
-		qdel(to_call)
-
 
 		if(MC_TICK_CHECK)
 			return
