@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(achievements)
 		achievements_by_db_id[instance.database_id] = instance
 
 	for(var/datum/award/score/score in subtypesof(/datum/award/score))
-		if(!initial(achievement.database_id)) // abstract type
+		if(!initial(score.database_id)) // abstract type
 			continue
 		var/instance = new score
 		scores[score] = instance
@@ -96,8 +96,6 @@ SUBSYSTEM_DEF(achievements)
 	var/list/to_update = list()
 	for(var/T in awards)
 		var/datum/award/A = awards[T]
-		if(!A.database_id)
-			continue
 		if(!current_metadata[A.database_id] || current_metadata[A.database_id] < A.achievement_version)
 			to_update += list(A.get_metadata_row())
 
