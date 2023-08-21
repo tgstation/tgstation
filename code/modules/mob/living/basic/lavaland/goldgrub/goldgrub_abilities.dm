@@ -42,7 +42,6 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/burrow/Activate()
-	var/mob/living/basic/mining/goldgrub/grub_owner = owner
 	var/obj/effect/dummy/phased_mob/grub_burrow/holder = null
 	var/turf/current_loc = get_turf(owner)
 
