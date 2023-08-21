@@ -24,7 +24,7 @@
 
 /obj/item/gun/energy/laser/coconut_gun
 	name = "\improper coconut gun"
-	desc = "A gun that shoots coconuts nuff said."
+	desc = "A gun that shoots coconuts, 'nuff said."
 
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_gun"
