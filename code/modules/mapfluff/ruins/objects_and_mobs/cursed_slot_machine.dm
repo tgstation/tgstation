@@ -16,6 +16,8 @@
 	var/damage_on_roll = 20
 	/// machine's reward when you hit jackpot
 	var/prize = /obj/structure/cursed_money
+	/// should we be applying the cursed status effect?
+	var/status_effect_on_roll = TRUE
 	/// Length of the cooldown between the machine being used and being able to spin the machine again. Don't trim this down too hard or the status effect story will fall flat
 	var/cooldown_length = 15 SECONDS
 	/// Cooldown between pulls of the cursed slot machine.
@@ -50,7 +52,7 @@
 		span_warning("You feel a draining as you pull the lever, but you know it'll be worth it."),
 	)
 
-	if(isnull(human_user.has_status_effect(/datum/status_effect/grouped/cursed)))
+	if(status_effect_on_roll && isnull(human_user.has_status_effect(/datum/status_effect/grouped/cursed)))
 		human_user.apply_status_effect(/datum/status_effect/grouped/cursed)
 
 	icon_screen = "slots_screen_working"
