@@ -168,6 +168,9 @@
 
 /datum/computer_file/program/secureye/ui_close(mob/user)
 	. = ..()
+	//don't track anyone while we're shutting off.
+	if(internal_tracker && internal_tracker.tracking)
+		internal_tracker.set_tracking(FALSE)
 	var/user_ref = REF(user)
 	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.
