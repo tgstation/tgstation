@@ -17,7 +17,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
 	blocks_emissive = EMISSIVE_BLOCK_NONE
@@ -825,14 +825,13 @@
 	desc = "A tram for tramversing the station."
 	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "subfloor"
-	base_icon_state = "subfloor"
+	base_icon_state = null
 	layer = TRAM_STRUCTURE_LAYER
 	smoothing_flags = NONE
-	smoothing_groups = NONE
-	canSmoothWith = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 	//the modular structure is pain to work with, damage is done to the floor on top
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	obj_flags = CAN_BE_HIT
 	transport_id = ICTS_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE

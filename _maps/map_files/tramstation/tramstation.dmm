@@ -15951,6 +15951,14 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
+"ezo" = (
+/obj/structure/transport/linear/tram,
+/obj/structure/tram/split,
+/obj/machinery/icts/destination_sign{
+	pixel_x = -8
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "ezL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -18075,7 +18083,9 @@
 "frh" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/tram/split,
-/obj/machinery/icts/destination_sign,
+/obj/machinery/icts/destination_sign{
+	pixel_x = 8
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "frp" = (
@@ -168120,7 +168130,7 @@ aEk
 rOu
 umT
 ykP
-frh
+ezo
 tQf
 egQ
 ndX
