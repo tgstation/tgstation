@@ -145,6 +145,7 @@
 /atom/movable/screen/alert/status_effect/cursed
 	name = "Cursed!"
 	desc = "The brand on your hand reminds you of your greed, yet you seem to be okay otherwise."
+	icon_state = "cursed_by_slots"
 
 /atom/movable/screen/alert/status_effect/update_description()
 	var/datum/status_effect/grouped/cursed/linked_effect = attached_effect
