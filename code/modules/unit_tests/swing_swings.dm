@@ -67,20 +67,20 @@
 	TEST_ASSERT(attacker.next_move > world.time, "Attacker should have executed a swing, but failed")
 
 	// A is hit
-	TEST_ASSERT_EQUAL(victim_A.lastattacker, attacker.real_name, "Victim A should have been hit by attacker[assertion_message]")
 	TEST_ASSERT_NOTEQUAL(victim_A.getBruteLoss(), 0, "Victim A did not sustain damage from being hit by the attacker[assertion_message]")
+	TEST_ASSERT_EQUAL(victim_A.lastattacker, attacker.real_name, "Victim A should have been hit by attacker[assertion_message]")
 
 	// B is hit
-	TEST_ASSERT_EQUAL(victim_B.lastattacker, attacker.real_name, "Victim B should have been hit by attacker[assertion_message]")
 	TEST_ASSERT_NOTEQUAL(victim_B.getBruteLoss(), 0, "Victim B did not sustain damage from being hit by the attacker[assertion_message]")
+	TEST_ASSERT_EQUAL(victim_B.lastattacker, attacker.real_name, "Victim B should have been hit by attacker[assertion_message]")
 
 	// C is hit
-	TEST_ASSERT_EQUAL(victim_C.lastattacker, attacker.real_name, "Victim C should have been hit by attacker[assertion_message]")
 	TEST_ASSERT_NOTEQUAL(victim_C.getBruteLoss(), 0, "Victim C did not sustain damage from being hit by the attacker[assertion_message]")
+	TEST_ASSERT_EQUAL(victim_C.lastattacker, attacker.real_name, "Victim C should have been hit by attacker[assertion_message]")
 
 	// D is not hit, they are adjacent to attacker
-	TEST_ASSERT_NOTEQUAL(victim_D.lastattacker, attacker.real_name, "Victim D was hit by attacker[assertion_message], when it should not have been")
 	TEST_ASSERT_EQUAL(victim_D.getBruteLoss(), 0, "Victim D sustained damage from being hit by the attacker[assertion_message], when it should not have been")
+	TEST_ASSERT_NOTEQUAL(victim_D.lastattacker, attacker.real_name, "Victim D was hit by attacker[assertion_message], when it should not have been")
 
 /datum/unit_test/check_swings/melee_three_tiles/living_clicked
 	assertion_message = " clicking on victim B"
