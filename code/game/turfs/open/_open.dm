@@ -401,4 +401,18 @@
 		return
 
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	PlaceOnTop(/obj/structure/thermoplastic, flags = CHANGETURF_INHERIT_AIR)
+	new used_tiles.tile_type(src)
+
+/// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
+/turf/open/proc/build_with_titanium(obj/item/stack/sheet/mineral/titanium/used_stack, user)
+	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
+	if(!platform)
+		to_chat(user, span_warning("There is no transport frame to attach the anchor!"))
+		return
+	if(!used_stack.use(2))
+		balloon_alert(user, "not enough titanium!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new /obj/structure/girder/tram(src)
+

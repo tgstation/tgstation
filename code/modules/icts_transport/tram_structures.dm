@@ -31,7 +31,6 @@
 	opacity = FALSE
 	anchored = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_BITMASK
 	armor_type = /datum/armor/tram_structure
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
@@ -61,7 +60,7 @@
 /datum/armor/tram_structure
 	melee = 80
 	bullet = 5
-	bomb = 45
+	bomb = 75
 	fire = 99
 	acid = 100
 

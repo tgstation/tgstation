@@ -110,22 +110,18 @@
 	icon_state = "tram_dark"
 	density = FALSE
 	anchored = TRUE
-	armor_type = /datum/armor/structure_lattice
-	max_integrity = 50
+	armor_type = /datum/armor/tram_structure
+	max_integrity = 750
 	layer = TRAM_FLOOR_LAYER
 	plane = FLOOR_PLANE
-	obj_flags = BLOCK_Z_OUT_DOWN
+	obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
 	var/secured = TRUE
 	var/floor_tile = /obj/item/stack/thermoplastic
-	/// Determines if you can deconstruct this with a RCD
-	var/rcd_proof = FALSE
-
-/obj/structure/thermoplastic/blue
-	icon_state = "tram_blue"
 
 /obj/structure/thermoplastic/light
 	icon_state = "tram_light"
+	floor_tile = /obj/item/stack/thermoplastic/light
 
 /obj/structure/thermoplastic/examine(mob/user)
 	. = ..()
@@ -160,7 +156,9 @@
 									span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
 			if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
 				to_chat(user, span_notice("The panel pops out of the frame."))
-				spawn_tile()
+				var/obj/item/stack/thermoplastic/pulled_tile = new()
+				pulled_tile.update_integrity(atom_integrity)
+				user.put_in_hands(pulled_tile)
 				qdel(src)
 
 	if (tool.tool_behaviour)
@@ -181,14 +179,6 @@
 		to_chat(user, span_notice("You repair [src]."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/thermoplastic/proc/has_tile()
-	return floor_tile
-
-/obj/structure/thermoplastic/proc/spawn_tile()
-	if(!has_tile())
-		return null
-	return new floor_tile(src)
-
 /obj/item/stack/thermoplastic
 	name = "thermoplastic tram tile"
 	singular_name = "thermoplastic tram tile"
@@ -206,17 +196,19 @@
 	throw_range = 7
 	max_amount = 60
 	novariants = TRUE
-	/// What type of turf does this tile produce.
-	var/struct_type = /obj/structure/thermoplastic
 	merge_type = /obj/item/stack/thermoplastic
-	/// What dir will the tile have?
-	var/struct_dir = SOUTH
+	var/tile_type = /obj/structure/thermoplastic
 	/// Cached associative lazy list to hold the radial options for tile reskinning. See tile_reskinning.dm for more information. Pattern: list[type] -> image
-	var/list/tile_reskin_types
+	var/list/tile_reskin_types = list(
+		/obj/item/stack/thermoplastic/light,
+	)
+
+/obj/item/stack/thermoplastic/light
+	color = COLOR_TRAM_LIGHT_BLUE
+	tile_type = /obj/structure/thermoplastic/light
 
 /obj/item/stack/thermoplastic/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	AddElement(/datum/element/openspace_item_click_handler)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
 	//if(tile_reskin_types)
@@ -242,19 +234,3 @@
 		if(!verb)
 			return
 		. += span_notice("Those could work as a [verb] throwing weapon.")
-
-/// Ugh I hate we have to do it like this, tram modules mask their x/y so you can't act directly on them
-/obj/item/stack/thermoplastic/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		to_chat(world, span_danger("Checking for tram on [target] with [src]!"))
-		if(!check_for_tram(target))
-			to_chat(world, span_danger("No tram on [target]!"))
-			return
-		to_chat(world, span_danger("Found a tram on [target]!"))
-		target.attackby(src, user, click_parameters)
-
-/obj/item/stack/thermoplastic/proc/check_for_tram(turf/target)
-	if(locate(/obj/structure/transport/linear/tram) in src.loc.contents)
-		return TRUE
-
-	return FALSE

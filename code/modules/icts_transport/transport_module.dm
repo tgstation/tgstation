@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
 	blocks_emissive = EMISSIVE_BLOCK_NONE
@@ -829,7 +829,6 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	canSmoothWith = NONE
 	//the modular structure is pain to work with, damage is done to the floor on top
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	obj_flags = BLOCK_Z_IN_UP
 	transport_id = ICTS_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE

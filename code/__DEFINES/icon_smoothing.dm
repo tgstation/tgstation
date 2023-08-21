@@ -172,7 +172,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(72)
 
-#define SMOOTH_GROUP_TRAM_STRUCTURE S_OBJ(74)
+#define SMOOTH_GROUP_TRAM_STRUCTURE S_OBJ(74) ///obj/structure/tram
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.

@@ -51,7 +51,7 @@
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=100))
 			if(state == GIRDER_TRAM)
-				var/obj/item/stack/sheet/titaniumglass/M = new (loc, 2)
+				var/obj/item/stack/sheet/mineral/titanium/M = new (user.loc, 2)
 				if(!QDELETED(M))
 					M.add_fingerprint(user)
 			else
@@ -306,7 +306,7 @@
 			if(state != GIRDER_TRAM)
 				return
 			state = GIRDER_DISASSEMBLED
-			var/obj/item/stack/sheet/titaniumglass/material = new (loc, 2)
+			var/obj/item/stack/sheet/mineral/titanium/material = new (user.loc, 2)
 			if (!QDELETED(material))
 				material.add_fingerprint(user)
 			qdel(src)
