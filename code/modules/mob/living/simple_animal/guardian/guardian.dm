@@ -401,15 +401,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return ..()
 	if(!is_deployed())
 		return FALSE
-	summoner.adjustBruteLoss(amount)
+	var/damage_multiplier = 1
+	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+		to_chat(summoner, span_bolddanger("Your body can't take the strain of sustaining [src] in this condition!"))
+		damage_multiplier = 1.5
+	summoner.adjustBruteLoss(amount * damage_multiplier)
 	if(amount < 0 || QDELETED(summoner))
 		return
 	to_chat(summoner, span_bolddanger("Your [name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
-	switch(summoner.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(summoner, span_bolddanger("Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!"))
-			summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)

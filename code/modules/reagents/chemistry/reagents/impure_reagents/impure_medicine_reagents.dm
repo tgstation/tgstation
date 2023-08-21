@@ -192,11 +192,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/peptides_failed
 	name = "Prion Peptides"
 	taste_description = "spearmint frosting"
-	description = "These inhibitory peptides cause cellular damage and cost nutrition to the patient!"
+	description = "These inhibitory peptides drain nutrition from the patient!"
 	ph = 2.1
 
 /datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
-	owner.adjustCloneLoss(0.25 * seconds_per_tick)
 	owner.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
 	. = ..()
 
