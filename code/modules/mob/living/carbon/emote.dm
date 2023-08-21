@@ -11,7 +11,35 @@
 	key_third_person = "blinks"
 	message = "blinks."
 
-/datum/emote/living/carbon/blink_r
+/datum/emote/living/carbon/blink/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+
+	var/mob/living/carbon/human = user
+
+	if (!istype(human))
+		// No neck to snap. Sad!
+		return
+
+	// Don't blink. Not even for a second.
+	for(var/obj/structure/statue/peanut in view(8, human))
+		if (prob(99))
+			// Not feeling it right now...
+			continue
+
+		// Security guards go here to die.
+		if(do_teleport(peanut, human, channel = TELEPORT_CHANNEL_MAGIC))
+			human.log_message("blinked and had their neck snapped by [peanut]!")
+			human.visible_message(span_danger("[human] blinks, and [peanut] snaps [human.p_their()] neck in a flash!"), \
+				span_userdanger("The instant you close your eyes, [peanut] snaps your neck!"))
+
+			var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+			head.receive_damage(brute=200)
+
+			playsound(peanut, 'sound/creatures/statue_horror_sting.ogg', 100, TRUE)
+
+			new /obj/effect/gibspawner/human/bodypartless(get_turf(human))
+
+/datum/emote/living/carbon/blink/blink_r
 	key = "blink_r"
 	message = "blinks rapidly."
 
