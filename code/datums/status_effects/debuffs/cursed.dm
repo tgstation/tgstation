@@ -85,6 +85,7 @@
 		span_notice("The smoke slowly clears from [owner.name]..."),
 		span_notice("Your skin finally settles down and your throat no longer feels as dry... The brand disappearing confirms that the curse has been lifted."),
 	)
+	QDEL_NULL(particle_effect)
 	qdel(src)
 
 /datum/status_effect/grouped/cursed/update_particles()

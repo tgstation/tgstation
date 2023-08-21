@@ -70,6 +70,7 @@
 	obj_flags &= ~IN_USE
 	COOLDOWN_START(src, spin_cooldown, cooldown_length)
 	if(!prob(win_prob))
+		balloon_alert_to_viewers("you lost!")
 		return
 
 	playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
