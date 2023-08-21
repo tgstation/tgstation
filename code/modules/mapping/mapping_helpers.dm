@@ -853,7 +853,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
 	var/area/morgue_area = get_area(src)
-	var/list/tructure/bodycontainer/morgue/trays = list()
+	var/list/obj/structure/bodycontainer/morgue/trays = list()
 	for(var/turf/area_turf as anything in morgue_area.get_contained_turfs())
 		var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
 		if(isnull(morgue_tray))
@@ -862,14 +862,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			continue
 		trays += morgue_tray
 
-	if(!length(trays))
+	var/numtrays = length(trays)
+	if(numtrays == 0)
 		if(admin_spawned)
 			message_admins("[src] spawned at [ADMIN_VERBOSEJMP(src)] failed to find a closed morgue to spawn a body!")
 		else
 			log_mapping("[src] at [x],[y] could not find any morgues.")
 		return
 
-	var/reuse_trays = (trays.len < bodycount) //are we going to spawn more trays than bodies?
+	var/reuse_trays = (numtrays < bodycount) //are we going to spawn more trays than bodies?
 
 	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
 	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
@@ -878,14 +879,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(use_species)
 		var/list/temp_list = get_selectable_species()
 		usable_races = temp_list.Copy()
-		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
+		LAZYREMOVE(usable_races, SPECIES_ETHEREAL) //they revive on death which is bad juju
 		LAZYREMOVE(usable_races, SPECIES_HUMAN)
-		if(!usable_races)
+		if(!LAZYLEN(usable_races))
 			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
 		if(override_species)
 			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
 	else if(override_species)
-		usable_races += override_species
+		LAZYADD(usable_races, override_species)
 
 	var/guaranteed_human_spawned = FALSE
 	for (var/i in 1 to bodycount)
@@ -895,7 +896,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 		var/species_to_pick
 
-		if(guaranteed_human_spawned)
+		if(guaranteed_human_spawned && use_species)
 			if(LAZYLEN(usable_races))
 				if(!isnum(species_probability))
 					species_probability = 50
@@ -919,7 +920,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		body_bag.forceMove(morgue_tray)
 
 		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/obj/item/organ/part as anything in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
+		for (var/obj/item/organ/internal/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
 			else
