@@ -34,6 +34,9 @@
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
 
+/// Blackboard key storing how long your targetting datum has held a particular target
+#define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
+
 ///Targetting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"

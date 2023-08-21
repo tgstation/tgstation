@@ -124,6 +124,40 @@
 	targetitem = /obj/item/clothing/shoes/clown_shoes
 	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_CLOWN)
+	exists_on_map = TRUE
+
+/obj/item/clothing/shoes/clown_shoes/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/shoes/clown_shoes)
+
+/datum/objective_item/steal/traitor/mime_mask
+	name = "the mime's mask"
+	targetitem = /obj/item/clothing/mask/gas/mime
+	excludefromjob = list(JOB_MIME, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+	item_owner = list(JOB_MIME)
+	exists_on_map = TRUE
+
+/obj/item/clothing/mask/gas/mime/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/mask/gas/mime)
+
+/datum/objective_item/steal/traitor/pka
+	name = "a protokinetic accelerator"
+	targetitem = /obj/item/gun/energy/recharge/kinetic_accelerator
+	excludefromjob = list(JOB_SHAFT_MINER, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+	item_owner = list(JOB_SHAFT_MINER)
+	exists_on_map = TRUE
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/gun/energy/recharge/kinetic_accelerator)
+
+/datum/objective_item/steal/traitor/chef_moustache
+	name = "a fancy fake moustache"
+	targetitem = /obj/item/clothing/mask/fakemoustache/italian
+	excludefromjob = list(JOB_COOK, JOB_HEAD_OF_PERSONNEL, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+	item_owner = list(JOB_COOK)
+	exists_on_map = TRUE
+
+/obj/item/clothing/mask/fakemoustache/italian/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/mask/fakemoustache/italian)
 
 /datum/objective_item/steal/traitor/det_revolver
 	name = "detective's revolver"
@@ -133,6 +167,16 @@
 
 /obj/item/gun/ballistic/revolver/c38/detective/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/revolver/c38/detective)
+
+/datum/objective_item/steal/traitor/lawyers_badge
+	name = "the lawyer's badge"
+	targetitem = /obj/item/clothing/accessory/lawyers_badge
+	excludefromjob = list(JOB_LAWYER)
+	item_owner = list(JOB_LAWYER)
+	exists_on_map = TRUE
+
+/obj/item/clothing/accessory/lawyers_badge/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/accessory/lawyers_badge)
 
 /datum/objective_item/steal/traitor/chief_engineer_belt
 	name = "the chief engineer's belt"
@@ -401,3 +445,79 @@
 
 /obj/item/blackbox/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/blackbox)
+
+
+// A number of special early-game steal objectives intended to be used with the steal-and-destroy objective.
+// They're basically items of utility or emotional value that may be found on many players or lying around the station.
+/datum/objective_item/steal/traitor/insuls
+	name = "insulated gloves"
+	targetitem = /obj/item/clothing/gloves/color/yellow
+	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
+	item_owner = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
+	exists_on_map = TRUE
+
+/obj/item/clothing/gloves/color/yellow/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/gloves/color/yellow)
+
+/datum/objective_item/steal/traitor/moth_plush
+	name = "cute moth plush toy"
+	targetitem = /obj/item/toy/plush/moth
+	excludefromjob = list(JOB_PSYCHOLOGIST, JOB_PARAMEDIC, JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER)
+	exists_on_map = TRUE
+
+/obj/item/toy/plush/moth/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/toy/plush/moth)
+
+/datum/objective_item/steal/traitor/lizard_plush
+	name = "cute lizard plush toy"
+	targetitem = /obj/item/toy/plush/lizard_plushie
+	exists_on_map = TRUE
+
+/obj/item/toy/plush/lizard_plushie/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/toy/plush/lizard_plushie)
+
+/datum/objective_item/steal/traitor/denied_stamp
+	name = "cargo's denied stamp"
+	targetitem = /obj/item/stamp/denied
+	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_SHAFT_MINER)
+	exists_on_map = TRUE
+
+/obj/item/stamp/denied/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/stamp/denied)
+
+/datum/objective_item/steal/traitor/granted_stamp
+	name = "cargo's granted stamp"
+	targetitem = /obj/item/stamp/granted
+	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_SHAFT_MINER)
+	exists_on_map = TRUE
+
+/obj/item/stamp/granted/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/stamp/granted)
+
+/datum/objective_item/steal/traitor/space_law
+	name = "a book on space law"
+	targetitem = /obj/item/book/manual/wiki/security_space_law
+	excludefromjob = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY, JOB_LAWYER, JOB_DETECTIVE)
+	exists_on_map = TRUE
+
+/obj/item/book/manual/wiki/security_space_law/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/book/manual/wiki/security_space_law)
+
+/datum/objective_item/steal/traitor/rpd
+	name = "rapid pipe dispenser"
+	targetitem = /obj/item/pipe_dispenser
+	excludefromjob = list(JOB_ATMOSPHERIC_TECHNICIAN, JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_SCIENTIST, JOB_RESEARCH_DIRECTOR, JOB_GENETICIST, JOB_ROBOTICIST)
+	item_owner = list(JOB_CHIEF_ENGINEER)
+	exists_on_map = TRUE
+
+/obj/item/pipe_dispenser/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/pipe_dispenser)
+
+/datum/objective_item/steal/traitor/donut_box
+	name = "a box of prized donuts"
+	targetitem = /obj/item/storage/fancy/donut_box
+	excludefromjob = list(JOB_CAPTAIN, JOB_CHIEF_ENGINEER, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_QUARTERMASTER, JOB_CHIEF_MEDICAL_OFFICER, JOB_RESEARCH_DIRECTOR, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_LAWYER, JOB_DETECTIVE)
+	exists_on_map = TRUE
+
+/obj/item/storage/fancy/donut_box/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/storage/fancy/donut_box)
