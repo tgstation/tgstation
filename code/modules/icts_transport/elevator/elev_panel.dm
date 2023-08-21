@@ -5,9 +5,9 @@
  * allowing users to enter a UI to move it up or down
  *
  * These can be placed in two methods:
- * - You can place the control panel on the same turf as a lift. It will move up and down with the lift
- * - You can place the control panel to the side of a lift, NOT attached to the lift. It will remain in position
- * I don't recommend using both methods on the same elevator, as it might result in some jank, but it's functional.
+ * - You can place the control panel on the same turf as an elevator. It will move up and down with the elevator
+ * - You can place the control panel to the side of an elevator, NOT attached to the elevator. It will remain in position
+ * - I don't recommend using both methods on the same elevator, as it might result in some jank, but it's functional.
  */
 /obj/machinery/elevator_control_panel
 	name = "elevator panel"
@@ -82,7 +82,7 @@
 	// and also so we can throw mapping errors to let people know if they messed up setup.
 	link_with_lift(log_error = TRUE)
 
-/// Link with associated lift objects, only log failure to find a lift in LateInit because those are mapped in
+/// Link with associated transport controllers, only log failure to find a lift in LateInit because those are mapped in
 /obj/machinery/elevator_control_panel/proc/link_with_lift(log_error = FALSE)
 	var/datum/transport_controller/linear/lift = get_associated_lift()
 	if(!lift)
@@ -242,7 +242,7 @@
 
 	// Add the Zs of all the found turfs as possible destinations
 	for(var/turf/found as anything in checked_turfs)
-		// We check all turfs we found in case of multi-z lift memes.
+		// We check all turfs we found in case of multi-z memes.
 		destinations |= found.z
 
 	// And recursively call the proc with all the turfs we found on the next level
@@ -255,7 +255,7 @@
 		ui.open()
 
 /obj/machinery/elevator_control_panel/ui_status(mob/user)
-	// We moved up a z-level, probably via the lift itself, so don't preserve the UI.
+	// We moved up a z-level, probably via the elevator itself, so don't preserve the UI.
 	if(user.z != z)
 		return UI_CLOSE
 
@@ -340,7 +340,7 @@
 			if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)
 				return TRUE // The security level might have been lowered since last update, so update UI
 
-			// Open all lift doors, it's an emergency dang it!
+			// Open all elevator doors, it's an emergency dang it!
 			lift.update_lift_doors(action = OPEN_DOORS)
 			door_reset_timerid = addtimer(CALLBACK(src, PROC_REF(reset_doors)), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 			return TRUE // We opened up all the doors, update the UI so the emergency button is replaced correctly
@@ -353,7 +353,7 @@
 			reset_doors()
 			return TRUE // We closed all the doors, update the UI so the door button is replaced correctly
 
-/// Callback for move_to_zlevel to ensure the lift can continue to move.
+/// Callback for move_to_zlevel to ensure the elevator can continue to move.
 /obj/machinery/elevator_control_panel/proc/check_panel()
 	if(QDELETED(src))
 		return FALSE
@@ -363,7 +363,7 @@
 	return TRUE
 
 /// Helper proc to go through all of our desetinations and reset all elevator doors,
-/// closing doors on z-levels the lift is away from, and opening doors on the z the lift is
+/// closing doors on z-levels the elevator is away from, and opening doors on the z the elevator is
 /obj/machinery/elevator_control_panel/proc/reset_doors()
 	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(!lift)
