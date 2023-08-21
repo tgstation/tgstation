@@ -90,6 +90,11 @@ All ShuttleMove procs go here
 	oldT.blocks_air = initial(oldT.blocks_air)
 	oldT.air_update_turf(TRUE, oldT.blocks_air)
 
+	if(outdoor_effect)
+		qdel(outdoor_effect, TRUE)
+		oldT.outdoor_effect = null
+		oldT.get_sky_and_weather_states()
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 

@@ -53,6 +53,9 @@
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
 
+	/// fake outdoors for sunlight  and weather purposes
+	var/false_outdoors = FALSE //monkestation addition
+
 	/// Size of the area in open turfs, only calculated for indoors areas.
 	var/areasize = 0
 
