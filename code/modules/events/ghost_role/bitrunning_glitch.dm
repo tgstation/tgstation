@@ -30,6 +30,7 @@
 	if(length(active_servers))
 		return TRUE
 
+/// All servers currently running, has players in it, and map has valid mobs
 /datum/round_event_control/bitrunning_glitch/proc/get_active_servers()
 	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
 		if(server.is_operational && length(server.get_valid_domain_targets()))
