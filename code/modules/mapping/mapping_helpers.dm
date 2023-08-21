@@ -844,6 +844,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/admin_spawned
 	///number of bodies to spawn
 	var/bodycount = 3
+	/// These species IDs will be barred from spawning if morgue_cadaver_disable_nonhumans is disabled (In the future, we can also dehardcode this)
+	var/list/blacklisted_from_rng_placement = list(
+		SPECIES_ETHEREAL, // they revive on death which is bad juju
+		SPECIES_HUMAN,  // already have a 50% chance of being selected
+	)
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	. = ..()
@@ -879,8 +884,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(use_species)
 		var/list/temp_list = get_selectable_species()
 		usable_races = temp_list.Copy()
-		LAZYREMOVE(usable_races, SPECIES_ETHEREAL) //they revive on death which is bad juju
-		LAZYREMOVE(usable_races, SPECIES_HUMAN)
+		LAZYREMOVE(usable_races, blacklisted_from_rng_placement)
 		if(!LAZYLEN(usable_races))
 			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
 		if(override_species)
@@ -929,7 +933,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		morgue_tray.update_appearance()
 
 	qdel(src)
-
 
 //On Ian's birthday, the hop's office is decorated.
 /obj/effect/mapping_helpers/ianbirthday
