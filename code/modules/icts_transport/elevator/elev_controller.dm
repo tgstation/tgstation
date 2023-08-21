@@ -38,7 +38,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 /obj/item/assembly/control/elevator/LateInitialize()
 	var/datum/transport_controller/linear/lift = get_lift()
 	if(!lift)
-		log_mapping("Elevator call button at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
+		log_mapping("Elevator call button at [AREACOORD(src)] found no associated elevator to link with, this may be a mapping error.")
 		return
 
 	lift_weakref = WEAKREF(lift)
@@ -169,7 +169,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		return FALSE
 	return TRUE
 
-/// Gets the lift associated with our assembly / button
+/// Gets the elevator associated with our assembly / button
 /obj/item/assembly/control/elevator/proc/get_lift()
 	for(var/datum/transport_controller/linear/possible_match as anything in SSicts_transport.transports_by_type[BASIC_LIFT_ID])
 		if(possible_match.specific_transport_id != id)
