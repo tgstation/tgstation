@@ -1,0 +1,4 @@
+author: "Ical92"
+delete-after: True
+changes:
+  - bugfix: "fixed beakers disappearing when swapped in a chem heater"

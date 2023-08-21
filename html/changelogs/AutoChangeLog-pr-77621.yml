@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "The \"Unlocked Achievements\" score will now be properly saved at the end of the round the first time it's loaded."
