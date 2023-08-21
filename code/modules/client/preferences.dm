@@ -483,7 +483,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/datum/preferences/preferences = target.prefs
 	if(isnull(preferences))
-		stack_trace("[key_name(target)] prefernce datum was null")
+		stack_trace("[key_name(target)] preference datum was null")
 		return NONE
 
 	return preferences.chat_toggles
