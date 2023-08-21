@@ -1,4 +1,4 @@
-///coordinate and control movement across linked industrial_lift's. allows moving large single multitile platforms and many 1 tile platforms.
+///coordinate and control movement across linked transport_controllers. allows moving large single multitile platforms and many 1 tile platforms.
 ///also is capable of linking platforms across linked z levels
 /datum/transport_controller/linear
 	///the lift platforms we consider as part of this lift. ordered in order of lowest z level to highest z level after init.
@@ -31,6 +31,9 @@
 
 	///bitfield of various transport states
 	var/controller_status = NONE
+
+	///if true, the platform cannot be manually moved.
+	var/controls_locked = FALSE
 
 /datum/transport_controller/linear/New(obj/structure/transport/linear/transport_module)
 	transport_id = transport_module.transport_id

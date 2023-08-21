@@ -18,6 +18,16 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	///how many times the tram can move costing less than half max_time milliseconds before we speed it back up again.
 	///is only used if the tram has been slowed down for exceeding max_time
 	var/max_cheap_moves = 5
+	var/static/list/all_radial_directions = list(
+		"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+		"NORTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHEAST),
+		"EAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = EAST),
+		"SOUTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHEAST),
+		"SOUTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH),
+		"SOUTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHWEST),
+		"WEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
+		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
+	)
 
 /datum/controller/subsystem/processing/icts_transport/proc/hello(new_unit)
 	RegisterSignal(new_unit, COMSIG_ICTS_REQUEST, PROC_REF(incoming_request))

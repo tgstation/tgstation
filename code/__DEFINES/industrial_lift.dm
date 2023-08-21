@@ -13,12 +13,12 @@
 #define DEBUG_LIFT_ID "debug"
 
 
-//specific_lift_id's
-///the specific_lift_id of the main station tram landmark for tramstation that spawns roundstart.
+//specific_transport_id's
+///the specific_transport_id of the main station tram landmark for tramstation that spawns roundstart.
 #define MAIN_STATION_TRAM "main station tram"
-///the specific_lift_id of the tram on the hilbert research station
+///the specific_transport_id of the tram on the hilbert research station
 #define HILBERT_TRAM "tram_hilbert"
-///the specific_lift_id of the trams on birdshot station
+///the specific_transport_id of the trams on birdshot station
 #define PRISON_TRAM "prison_tram"
 #define MAINTENANCE_TRAM "maint_tram"
 

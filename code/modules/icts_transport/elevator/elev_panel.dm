@@ -28,7 +28,7 @@
 
 	/// A weakref to the lift_master datum we control
 	var/datum/weakref/lift_weakref
-	/// What specific_lift_id do we link with?
+	/// What specific_transport_id do we link with?
 	var/linked_elevator_id
 
 	/// A list of all possible destinations this elevator can travel.
@@ -84,7 +84,7 @@
 
 /// Link with associated lift objects, only log failure to find a lift in LateInit because those are mapped in
 /obj/machinery/elevator_control_panel/proc/link_with_lift(log_error = FALSE)
-	var/datum/lift_master/lift = get_associated_lift()
+	var/datum/transport_controller/linear/lift = get_associated_lift()
 	if(!lift)
 		if (log_error)
 			log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
@@ -102,11 +102,11 @@
 
 	obj_flags |= EMAGGED
 
-	var/datum/lift_master/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(!lift)
 		return FALSE
 
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+	for(var/obj/structure/transport/linear/lift_platform as anything in lift.transport_modules)
 		lift_platform.violent_landing = TRUE
 		lift_platform.warns_on_down_movement = FALSE
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
@@ -125,7 +125,7 @@
 	return TRUE
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
-	var/datum/lift_master/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(!lift)
 		return
 
@@ -135,12 +135,12 @@
 		balloon_alert(user, "interrupted!")
 		return TRUE
 
-	if(QDELETED(lift) || !length(lift.lift_platforms))
+	if(QDELETED(lift) || !length(lift.transport_modules))
 		return
 
 	// If we were emagged, reset us
 	if(obj_flags & EMAGGED)
-		for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+		for(var/obj/structure/transport/linear/lift_platform as anything in lift.transport_modules)
 			lift_platform.violent_landing = initial(lift_platform.violent_landing)
 			lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
 			lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
@@ -168,8 +168,8 @@
 
 /// Find the elevator associated with our lift button.
 /obj/machinery/elevator_control_panel/proc/get_associated_lift()
-	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
-		if(possible_match.specific_lift_id != linked_elevator_id)
+	for(var/datum/transport_controller/linear/possible_match as anything in SSicts_transport.transports_by_type[BASIC_LIFT_ID])
+		if(possible_match.specific_transport_id != linked_elevator_id)
 			continue
 
 		return possible_match
@@ -177,13 +177,13 @@
 	return null
 
 /// Goes through and populates the linked_elevator_destination list with all possible destinations the lift can go.
-/obj/machinery/elevator_control_panel/proc/populate_destinations_list(datum/lift_master/linked_lift)
+/obj/machinery/elevator_control_panel/proc/populate_destinations_list(datum/transport_controller/linear/linked_lift)
 	// This list will track all the raw z-levels which we found that we can travel to
 	var/list/raw_destinations = list()
 
 	// Get a list of all the starting locs our elevator starts at
 	var/list/starting_locs = list()
-	for(var/obj/structure/industrial_lift/lift_piece as anything in linked_lift.lift_platforms)
+	for(var/obj/structure/transport/linear/lift_piece as anything in linked_lift.transport_modules)
 		starting_locs |= lift_piece.locs
 		// The raw destination list will start with all the z's we start at
 		raw_destinations |= lift_piece.z
@@ -277,12 +277,12 @@
 	data["is_emergency"] = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED
 	data["doors_open"] = !!door_reset_timerid
 
-	var/datum/lift_master/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(lift)
 		data["lift_exists"] = TRUE
 		data["currently_moving"] = lift.controls_locked == LIFT_PLATFORM_LOCKED
 		data["currently_moving_to_floor"] = last_move_target
-		data["current_floor"] = lift.lift_platforms[1].z
+		data["current_floor"] = lift.transport_modules[1].z
 
 	else
 		data["lift_exists"] = FALSE
@@ -322,16 +322,16 @@
 			if(!(num2text(desired_z) in linked_elevator_destination))
 				return TRUE // Something is inaccurate, update UI
 
-			var/datum/lift_master/lift = lift_weakref?.resolve()
+			var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 			if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
-			INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/lift_master, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)
+			INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/transport_controller/linear, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)
 			last_move_target = desired_z
 			return TRUE // Succcessfully initiated a move. Regardless of whether it actually works, update the UI
 
 		if("emergency_door")
-			var/datum/lift_master/lift = lift_weakref?.resolve()
+			var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 			if(!lift)
 				return TRUE // Something is wrong, update UI
 
@@ -365,7 +365,7 @@
 /// Helper proc to go through all of our desetinations and reset all elevator doors,
 /// closing doors on z-levels the lift is away from, and opening doors on the z the lift is
 /obj/machinery/elevator_control_panel/proc/reset_doors()
-	var/datum/lift_master/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(!lift)
 		return
 

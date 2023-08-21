@@ -24,7 +24,7 @@
 	maptext_width = 8
 	maptext_height = 16
 
-	/// What specific_lift_id do we link with?
+	/// What specific_transport_id do we link with?
 	var/linked_elevator_id
 	/// 'Floors' for display purposes are by default offset by 1 from their actual z-levels
 	var/lowest_floor_offset = 1
@@ -44,8 +44,8 @@
 /obj/machinery/lift_indicator/LateInitialize()
 	. = ..()
 
-	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
-		if(possible_match.specific_lift_id != linked_elevator_id)
+	for(var/datum/transport_controller/linear/possible_match as anything in SSicts_transport.transports_by_type[BASIC_LIFT_ID])
+		if(possible_match.specific_transport_id != linked_elevator_id)
 			continue
 
 		lift_ref = WEAKREF(possible_match)
@@ -75,7 +75,7 @@
 /obj/machinery/lift_indicator/proc/on_lift_direction(datum/source, direction)
 	SIGNAL_HANDLER
 
-	var/datum/lift_master/lift = lift_ref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_ref?.resolve()
 	if(!lift)
 		return
 
@@ -102,7 +102,7 @@
 	return FALSE
 
 /obj/machinery/lift_indicator/process()
-	var/datum/lift_master/lift = lift_ref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_ref?.resolve()
 
 	// Check for stopped states.
 	if(!lift || !is_operational)
@@ -112,14 +112,14 @@
 
 	use_power(active_power_usage)
 
-	var/obj/structure/industrial_lift/lift_part = lift.lift_platforms[1]
+	var/obj/structure/transport/linear/lift_part = lift.transport_modules[1]
 
 	if(QDELETED(lift_part))
 		set_lift_state(0, 0, force = !is_operational)
 		return PROCESS_KILL
 
 	// Update
-	set_lift_state(current_lift_direction, lift.lift_platforms[1].z - lowest_floor_offset)
+	set_lift_state(current_lift_direction, lift.transport_modules[1].z - lowest_floor_offset)
 
 	// Lift's not moving, we're done; we just had to update the floor number one last time.
 	if(!current_lift_direction)

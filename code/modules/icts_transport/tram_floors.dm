@@ -40,7 +40,7 @@
 	return list("tram_platform-scorched1","tram_platform-scorched2")
 
 /turf/open/floor/noslip/tram_plate/energized/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[TRAM_LIFT_ID])
 		if(tram.specific_transport_id != TRAMSTATION_LINE_1)
 			continue
 		return tram
@@ -52,7 +52,7 @@
 	if(!tram || !tram.controller_operational || !inbound || !outbound)
 		return FALSE
 
-	var/obj/structure/industrial_lift/tram/tram_part = tram.return_closest_platform_to(src)
+	var/obj/structure/transport/linear/tram/tram_part = tram.return_closest_platform_to(src)
 
 	if(QDELETED(tram_part))
 		return FALSE

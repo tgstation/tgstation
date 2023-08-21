@@ -168,7 +168,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(68) ///obj/effect/decal/cleanable/dirt
 
-#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(71) ///obj/structure/industrial_lift
+#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(71) ///obj/structure/transport/linear
 
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(72)
 

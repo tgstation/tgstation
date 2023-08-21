@@ -29,14 +29,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
-	var/datum/lift_master/lift = get_lift()
+	var/datum/transport_controller/linear/lift = get_lift()
 	if(!lift)
 		return
 
 	lift_weakref = WEAKREF(lift)
 
 /obj/item/assembly/control/elevator/LateInitialize()
-	var/datum/lift_master/lift = get_lift()
+	var/datum/transport_controller/linear/lift = get_lift()
 	if(!lift)
 		log_mapping("Elevator call button at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
 		return
@@ -49,17 +49,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		return FALSE
 
 	obj_flags |= EMAGGED
-	var/datum/lift_master/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(!lift)
 		return FALSE
 
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+	for(var/obj/structure/transport/linear/lift_platform as anything in lift.transport_modules)
 		lift_platform.violent_landing = TRUE
 		lift_platform.warns_on_down_movement = FALSE
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
 	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
-		if(elevator_door.transport_linked_id != lift.lift_id)
+		if(elevator_door.transport_linked_id != lift.specific_transport_id)
 			continue
 		if(elevator_door.obj_flags & EMAGGED)
 			continue
@@ -78,17 +78,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	if(!(obj_flags & EMAGGED))
 		return ..()
 
-	var/datum/lift_master/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(isnull(lift))
 		return ..()
 
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
+	for(var/obj/structure/transport/linear/lift_platform as anything in lift.transport_modules)
 		lift_platform.violent_landing = initial(lift_platform.violent_landing)
 		lift_platform.warns_on_down_movement = initial(lift_platform.warns_on_down_movement)
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
 
 	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
-		if(elevator_door.transport_linked_id != lift.lift_id)
+		if(elevator_door.transport_linked_id != lift.specific_transport_id)
 			continue
 		if(!(elevator_door.obj_flags & EMAGGED))
 			continue
@@ -116,7 +116,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 /// Returns TRUE if the move setup was a success, EVEN IF the move itself fails afterwards
 /obj/item/assembly/control/elevator/proc/call_elevator(mob/activator)
 	// We can't call an elevator that doesn't exist
-	var/datum/lift_master/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(!lift)
 		loc.balloon_alert(activator, "no elevator connected!")
 		return FALSE
@@ -127,9 +127,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		return FALSE
 
 	// If the elevator is already here, open the doors.
-	var/obj/structure/industrial_lift/prime_lift = lift.return_closest_platform_to_z(loc.z)
+	var/obj/structure/transport/linear/prime_lift = lift.return_closest_platform_to_z(loc.z)
 	if(prime_lift.z == loc.z)
-		INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/lift_master, open_lift_doors_callback))
+		INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/transport_controller/linear, open_lift_doors_callback))
 		loc.balloon_alert(activator, "elevator is here!")
 		return TRUE
 
@@ -171,8 +171,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 
 /// Gets the lift associated with our assembly / button
 /obj/item/assembly/control/elevator/proc/get_lift()
-	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
-		if(possible_match.specific_lift_id != id)
+	for(var/datum/transport_controller/linear/possible_match as anything in SSicts_transport.transports_by_type[BASIC_LIFT_ID])
+		if(possible_match.specific_transport_id != id)
 			continue
 
 		return possible_match

@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 	invisibility = INVISIBILITY_MAXIMUM // Setting this to ABSTRACT means it isn't moved by the lift
 	icon = 'icons/obj/art/musician.dmi'
 	icon_state = "piano"
-	/// What specific_lift_id do we link with?
+	/// What specific_transport_id do we link with?
 	var/linked_elevator_id = ""
 	/// Radius around this map helper in which to play the sound
 	var/range = 1

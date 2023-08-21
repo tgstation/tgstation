@@ -18,9 +18,9 @@
 	if (!.)
 		return FALSE
 
-	for(var/tram_id in GLOB.active_lifts_by_type)
-		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
-		if(tram_ref.specific_lift_id == TRAMSTATION_LINE_1)
+	for(var/tram_id in SSicts_transport.transports_by_type)
+		var/datum/transport_controller/linear/tram/tram_ref = SSicts_transport.transports_by_type[tram_id][1]
+		if(tram_ref.specific_transport_id == TRAMSTATION_LINE_1)
 			return .
 
 	return FALSE
