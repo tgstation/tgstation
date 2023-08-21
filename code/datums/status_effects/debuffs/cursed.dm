@@ -21,7 +21,6 @@
 	return ..()
 
 /datum/status_effect/grouped/cursed/Destroy()
-	UnregisterSignal(owner, list(COMSIG_CURSED_SLOT_MACHINE_USE, COMSIG_CURSED_SLOT_MACHINE_LOST))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON)
 	branded_hand = null
 	return ..()
@@ -42,7 +41,6 @@
 	if(!isnull(linked_alert))
 		linked_alert.update_description()
 
-	update_particles()
 	addtimer(CALLBACK(src, PROC_REF(handle_after_effects), 1 SECONDS)) // give it a second to let the failure sink in before we exact our toll
 
 /// Makes a nice lorey message about the curse level we're at. I think it's nice
@@ -59,7 +57,6 @@
 				var/obj/item/bodypart/affecting = human_owner.get_active_hand()
 				branded_hand = affecting
 				affecting.force_wound_upwards(/datum/wound/burn/severe/cursed_brand, wound_source = "curse of the slot machine")
-				affecting.receive_damage(burn = 20)
 
 			messages += span_boldwarning("Your hand burns, and you quickly let go of the lever! You feel a little sick as the nerves deaden in your hand...")
 			messages += span_boldwarning("Some smoke appears to be coming out of your hand now, but it's not too bad...")

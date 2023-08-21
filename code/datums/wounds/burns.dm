@@ -316,4 +316,4 @@
 	name = "Ancient Brand"
 	desc  = "Patient is suffering extreme burns with oddly ornate brand markings, creating serious risk of infection and greatly reduced limb integrity."
 	examine_desc = "appears to have ornate symbols painfully branded into their flesh, leaving severe burns."
-	occur_text = "chars rapidly into a pattern that can only be described as an agglomeration of several financial symbols, burned into the flesh."
+	occur_text = "chars rapidly into a pattern that can only be described as an agglomeration of several financial symbols, burned into the flesh"
