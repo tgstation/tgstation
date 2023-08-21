@@ -4,3 +4,4 @@
 /obj/structure/industrial_lift/public : /obj/structure/transport/linear/public{@OLD}
 /obj/structure/industrial_lift/debug : /obj/structure/transport/linear/debug{@OLD}
 /obj/structure/industrial_lift/tram : /obj/structure/transport/linear/tram{@OLD}
+/obj/effect/landmark/lift_id : /obj/effect/landmark/icts/transport_id{@OLD}
