@@ -8,7 +8,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
 	anchored = TRUE
 	density = FALSE
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	subsystem_type = /datum/controller/subsystem/processing/icts_transport
 	layer = SIGN_LAYER
 	circuit = /obj/item/circuitboard/machine/destination_sign
 

@@ -17,7 +17,8 @@
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	//subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	subsystem_type = /datum/controller/subsystem/processing/icts_transport
 	light_color = LIGHT_COLOR_BABY_BLUE
 	luminosity = 1
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.

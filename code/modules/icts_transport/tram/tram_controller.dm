@@ -412,6 +412,11 @@
 
 	update_status()
 
+/datum/transport_controller/linear/tram/proc/notify_controller(obj/machinery/icts/controller/new_controller)
+	control_panel = new_controller
+	RegisterSignal(new_controller, COMSIG_MACHINERY_POWER_LOST, PROC_REF(power_lost))
+	RegisterSignal(new_controller, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(power_restored))
+
 /**
  * Tram malfunction random event. Set comm error, increase tram lethality.
  */
@@ -442,14 +447,6 @@
 /datum/transport_controller/linear/tram/proc/power_lost()
 	controller_operational = FALSE
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
-	/*
-	for(var/obj/machinery/icts/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
-		xing.set_signal_state(XING_STATE_MALF, TRUE)
-
-	for(var/obj/machinery/icts/destination_sign/desto as anything in SSicts_transport.displays)
-		desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
-		desto.update_appearance()
-	*/
 
 /datum/transport_controller/linear/tram/proc/power_restored()
 	controller_operational = TRUE
@@ -575,7 +572,7 @@
 	if(!controller_datum)
 		return FALSE
 
-	controller_datum.control_panel = src
+	controller_datum.notify_controller(src)
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
 	return TRUE
 
@@ -675,15 +672,3 @@
 	)
 
 	return data
-
-/obj/machinery/icts/controller/power_change() // Change tram operating status on power loss/recovery
-	. = ..()
-
-	if(!controller_datum)
-		return
-
-	if(machine_stat & NOPOWER)
-		controller_datum.power_lost()
-
-	else
-		controller_datum.power_restored()
