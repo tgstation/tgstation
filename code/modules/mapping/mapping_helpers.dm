@@ -861,9 +861,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/list/obj/structure/bodycontainer/morgue/trays = list()
 	for(var/turf/area_turf as anything in morgue_area.get_contained_turfs())
 		var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
-		if(isnull(morgue_tray))
-			continue
-		if(admin_spawned && morgue_tray.connected.loc != morgue_tray)
+		if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
 			continue
 		trays += morgue_tray
 
