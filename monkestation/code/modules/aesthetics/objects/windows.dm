@@ -15,12 +15,12 @@
 
 /obj/structure/window/fulltile
 	icon = 'monkestation/icons/obj/structures/window/window.dmi'
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK +  SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/reinforced/plasma/fulltile
 	icon = 'monkestation/icons/obj/structures/window/reinforced_window.dmi'
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	base_icon_state = "reinforced_window"
 	icon_state = "reinforced_window-0"
 	glass_color_blend_to_color = "#8000ff"
@@ -29,14 +29,14 @@
 
 /obj/structure/window/reinforced/fulltile
 	icon = 'monkestation/icons/obj/structures/window/reinforced_window.dmi'
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	base_icon_state = "reinforced_window"
 	icon_state = "reinforced_window-0"
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 /obj/structure/window/plasma/fulltile
 	icon = 'monkestation/icons/obj/structures/window/window.dmi'
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	base_icon_state = "window"
 	icon_state = "window-0"
 	glass_color_blend_to_color = "#8000ff"
@@ -48,7 +48,7 @@
 	icon_state = "grille-0"
 	layer = ABOVE_OBJ_LAYER - 0.01
 	base_icon_state = "grille"
-	canSmoothWith =  SMOOTH_GROUP_GRILLE + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_GRILLE + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WALLS
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_GRILLE
 

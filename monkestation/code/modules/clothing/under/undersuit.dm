@@ -45,3 +45,11 @@
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "shrine_priestess"
+
+/obj/item/clothing/under/rank/civilian/janitor
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+
+/obj/item/clothing/under/rank/civilian/janitor/maid //heckin subtypes
+	icon = 'icons/obj/clothing/under/civilian.dmi'
+	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
