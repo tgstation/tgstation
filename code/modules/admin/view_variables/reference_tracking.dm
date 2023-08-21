@@ -22,7 +22,9 @@
 	if(usr?.client)
 		usr.client.running_find_references = type
 
+#ifdef UNIT_TESTS
 	log_reftracker("Currently sleeping procs [byond_status()]")
+#endif
 
 	log_reftracker("Beginning search for references to a [type].")
 
