@@ -1147,6 +1147,7 @@
 #include "code\datums\components\riding\riding_vehicle.dm"
 #include "code\datums\components\style\style.dm"
 #include "code\datums\components\style\style_meter.dm"
+#include "code\datums\components\trader\trader.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\adrenal_crisis.dm"
