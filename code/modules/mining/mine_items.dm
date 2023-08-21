@@ -69,7 +69,6 @@
 	new /obj/item/storage/bag/plants(src)
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
 		new /obj/item/survivalcapsule/bathroom(src)
@@ -77,6 +76,11 @@
 		new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
 
+
+/obj/structure/closet/secure_closet/miner/populate_contents_immediate()
+	. = ..()
+
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 
 /**********************Shuttle Computer**************************/
 
