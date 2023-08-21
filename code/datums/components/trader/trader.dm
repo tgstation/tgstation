@@ -1,3 +1,10 @@
+#define TRADER_BUY_ICON "TRADER_BUY_ICON"
+#define TRADER_SELL_ICON "TRADER_SELL_ICON"
+#define TRADER_TALK_ICON "TRADER_TALK_ICON"
+#define TRADER_LORE_ICON "TRADER_LORE_ICON"
+#define TRADER_DISCUSS_BUY_ICON "TRADER_DISCUSS_BUY_ICON"
+#define TRADER_DISCUSS_SELL_ICON "TRADER_DISCUSS_SELL_ICON"
+
 /**
  * # Trader NPC Component
  * Manages the barks and the stocks of the traders
@@ -31,48 +38,30 @@
 	 * This list is filled by Initialize(), if you want to change the starting wanted items, modify initial_wanteds()
 	*/
 	var/list/wanted_items = list()
-	///Associated list of defines matched with list of phrases; phrase to be said is dealt by return_trader_phrase()
-	var/list/say_phrases = list()
 
-	///The name of the currency that is used when buying or selling items
-	var/currency_name = "credits"
-	///Sound used when item sold/bought
-	var/sell_sound = 'sound/effects/cashregister.ogg'
+	var/list/radial_icons_cache = list()
 
-	var/image/buy_icon
-	var/image/sell_icon
-	var/image/talk_icon
-	var/image/lore_icon
-	var/image/discuss_buying_icon
-	var/image/discuss_selling_icon
+	///Contains information of a specific trader
+	var/datum/trader_data/trader_data
 
-
-	///The starting list of products to sell
-	var/list/initial_products
-	///The startling list of products to buy
-	var/list/initial_wanteds
-
-/datum/component/trader/Initialize(list/initial_products, list/initial_wanteds, list/say_phrases, sell_sound = 'sound/effects/cashregister.ogg', currency_name = "credits")
+/datum/component/trader/Initialize(trader_data_path)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/trader = parent
 	if (!trader.ai_controller)
 		return COMPONENT_INCOMPATIBLE
+	if (!trader_data_path)
+		CRASH("Initialised trader component with no trader data.")
 
-	src.initial_products = initial_products
-	src.initial_wanteds = initial_wanteds
-	src.say_phrases = say_phrases
+	trader_data = new trader_data_path()
 
-	src.currency_name = currency_name
-	src.sell_sound = sell_sound
-
-	buy_icon = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
-	sell_icon = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
-	talk_icon = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk")
-	lore_icon = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore")
-	discuss_selling_icon = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling")
-	discuss_buying_icon = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying")
+	radial_icons_cache[TRADER_BUY_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
+	radial_icons_cache[TRADER_SELL_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
+	radial_icons_cache[TRADER_TALK_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk")
+	radial_icons_cache[TRADER_LORE_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore")
+	radial_icons_cache[TRADER_DISCUSS_BUY_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling")
+	radial_icons_cache[TRADER_DISCUSS_SELL_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying")
 
 	restock_products()
 	renew_item_demands()
@@ -93,11 +82,11 @@
 		return
 	var/list/npc_options = list()
 	if(products.len)
-		npc_options["Buy"] = buy_icon
+		npc_options["Buy"] = radial_icons_cache[TRADER_BUY_ICON]
 	if(wanted_items.len)
-		npc_options["Sell"] = sell_icon
-	if(length(say_phrases))
-		npc_options["Talk"] = talk_icon
+		npc_options["Sell"] = radial_icons_cache[TRADER_SELL_ICON]
+	if(length(trader_data.say_phrases))
+		npc_options["Talk"] = radial_icons_cache[TRADER_TALK_ICON]
 	if(!npc_options.len)
 		return
 
@@ -133,7 +122,6 @@
 	var/mob/living/trader = parent
 	trader.say("Bought by you!")
 
-
 /**
  * Tries to call sell_item on one of the customer's held items, if fail gives a chat message
  *
@@ -150,14 +138,14 @@
 	var/mob/living/trader = parent
 
 	var/list/npc_options = list(
-		"Lore" = lore_icon,
-		"Selling?" = discuss_selling_icon,
-		"Buying?" = discuss_buying_icon,
+		"Lore" = radial_icons_cache[TRADER_LORE_ICON],
+		"Selling?" = radial_icons_cache[TRADER_DISCUSS_SELL_ICON],
+		"Buying?" = radial_icons_cache[TRADER_DISCUSS_BUY_ICON],
 	)
 	var/pick = show_radial_menu(customer, parent, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	switch(pick)
 		if("Lore")
-			trader.say("LORE")
+			trader.say(trader_data.return_trader_phrase(TRADER_LORE_PHRASE))
 		if("Buying?")
 			trader.say("I am looking for [wanted_items]")
 		if("Selling?")
@@ -165,11 +153,11 @@
 
 ///Sets quantity of all products to initial(quanity); this proc is currently called during initialize
 /datum/component/trader/proc/restock_products()
-	products = initial_products.Copy()
+	products = trader_data.initial_products.Copy()
 
 ///Sets quantity of all wanted_items to initial(quanity);  this proc is currently called during initialize
 /datum/component/trader/proc/renew_item_demands()
-	wanted_items = initial_wanteds.Copy()
+	wanted_items = trader_data.initial_wanteds.Copy()
 
 /**
  * Checks if the customer is ok to use the radial
@@ -184,3 +172,10 @@
 	if(customer.incapacitated() || !customer.Adjacent(parent))
 		return FALSE
 	return TRUE
+
+#undef TRADER_BUY_ICON
+#undef TRADER_SELL_ICON
+#undef TRADER_TALK_ICON
+#undef TRADER_LORE_ICON
+#undef TRADER_DISCUSS_BUY_ICON
+#undef TRADER_DISCUSS_SELL_ICON
