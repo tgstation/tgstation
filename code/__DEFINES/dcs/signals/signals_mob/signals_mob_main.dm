@@ -159,15 +159,6 @@
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-///from base of /atom/attackby(): (atom/target, obj/item/attacking_item, params)
-#define COMSIG_MOB_ATTACKBY "mob_attackby"
-///from base of /atom/attackby_secondary(): (atom/target, obj/item/attacking_item, params)
-#define COMSIG_MOB_ATTACKBY_SECONDARY "mob_attackby_secondary"
-///from base of /atom/tool_act(): (atom/target, obj/item/tool, tool_type, is_right_clicking)
-#define COMSIG_MOB_PRE_TOOL_ACT "mob_pre_tool_act"
-///from base of /atom/melee_attack_chain(): (atom/item, atom/target, params, is_right_clicking)
-#define COMSIG_MOB_ITEM_ATTACK_PRE_CHAIN "mob_item_attack_pre_chain"
-	#define COMPONENT_CANCEL_PRE_ATTACK_CHAIN (1<<0)
 ///from base of obj/item/afterattack(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
 ///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)

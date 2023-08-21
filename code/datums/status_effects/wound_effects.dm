@@ -215,15 +215,23 @@
 	id = "unsecure"
 
 // slash
-/datum/status_effect/wound/slash/robotic/moderate
-	id = "robo_abrasion"
+/datum/status_effect/wound/electrical_damage/slash/moderate
+	id = "electric_slash_moderate"
 
-/datum/status_effect/wound/slash/robotic/severe
-	id = "robo_laceration"
+/datum/status_effect/wound/electrical_damage/slash/severe
+	id = "electric_slash_severe"
 
+/datum/status_effect/wound/electrical_damage/slash/critical
+	id = "electric_slash_critical"
 
-/datum/status_effect/wound/slash/robotic/critical
-	id = "robo_avulsion"
+/datum/status_effect/wound/electrical_damage/pierce/moderate
+	id = "electric_pierce_moderate"
+
+/datum/status_effect/wound/electrical_damage/pierce/severe
+	id = "electric_pierce_severe"
+
+/datum/status_effect/wound/electrical_damage/pierce/critical
+	id = "electric_pierce_critical"
 
 /datum/status_effect/wound/slash/flesh/moderate
 	id = "abrasion"

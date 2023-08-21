@@ -223,6 +223,8 @@
 
 	initial_sparks_amount = 1
 
+	status_effect_type = /datum/status_effect/wound/electrical_damage/pierce/moderate
+
 	a_or_from = "a"
 
 /datum/wound_pregen_data/electrical_damage/pierce/moderate
@@ -247,7 +249,7 @@
 	threshold_penalty = 60
 
 	intensity = 1.2 MINUTES
-	processing_full_shock_threshold = 6 MINUTES
+	processing_full_shock_threshold = 4 MINUTES
 
 	processing_shock_power_per_second_max = 0.6
 	processing_shock_power_per_second_min = 0.4
@@ -272,6 +274,8 @@
 	initial_sparks_amount = 3
 
 	disable_at_intensity_mult = 1
+
+	status_effect_type = /datum/status_effect/wound/electrical_damage/pierce/moderate
 
 	a_or_from = "a"
 
@@ -299,7 +303,7 @@
 	threshold_penalty = 70
 
 	intensity = 1.4 MINUTES
-	processing_full_shock_threshold = 4 MINUTES
+	processing_full_shock_threshold = 7 MINUTES
 
 	processing_shock_power_per_second_max = 1.1
 	processing_shock_power_per_second_min = 0.9
@@ -322,6 +326,8 @@
 	limp_chance = 80
 
 	initial_sparks_amount = 8
+
+	status_effect_type = /datum/status_effect/wound/electrical_damage/pierce/moderate
 
 	a_or_from = "a"
 

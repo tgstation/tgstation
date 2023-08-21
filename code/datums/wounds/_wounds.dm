@@ -120,15 +120,6 @@
  * * wound_source: The source of the wound, such as a weapon.
  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
-	/*if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED) || (L.owner.status_flags & GODMODE))
-		qdel(src)
-		return
-
-	// Checks for biological state, to ensure only valid wounds are applied on the limb
-	if (!(L.biological_state & required_limb_biostate))
-		qdel(src)
-		return*/
-
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
 

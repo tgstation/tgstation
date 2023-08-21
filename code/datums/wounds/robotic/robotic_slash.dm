@@ -406,6 +406,8 @@
 
 	initial_sparks_amount = 1
 
+	status_effect_type = /datum/status_effect/wound/electrical_damage/slash/moderate
+
 	a_or_from = "from"
 
 /datum/wound_pregen_data/electrical_damage/slash/moderate
@@ -444,6 +446,8 @@
 	wire_repair_percent = 0.06 //6% per suture
 
 	initial_sparks_amount = 3
+
+	status_effect_type = /datum/status_effect/wound/electrical_damage/slash/severe
 
 	a_or_from = "from"
 
@@ -484,6 +488,8 @@
 	wire_repair_percent = 0.05 //5% per suture
 
 	initial_sparks_amount = 8
+
+	status_effect_type = /datum/status_effect/wound/electrical_damage/slash/critical
 
 	a_or_from = "a"
 
