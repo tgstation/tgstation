@@ -22,8 +22,8 @@
 	icon_state = "space_near"
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	static_lighting = TRUE
-	base_lighting_alpha = 0
-	base_lighting_color = COLOR_WHITE
+	base_lighting_alpha = null
+	base_lighting_color = null
 
 /area/misc/start
 	name = "start area"
