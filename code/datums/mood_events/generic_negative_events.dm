@@ -422,4 +422,4 @@
 /datum/mood_event/madness_despair
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
 	mood_change = -200
-	special_screen_obj = "mood_happiness_bad"
+	special_screen_obj = "mood_despair"

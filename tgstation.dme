@@ -2897,6 +2897,7 @@
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\mobility.dm"
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\offensive.dm"
 #include "code\modules\antagonists\wizard\equipment\spellbook_entries\summons.dm"
+#include "code\modules\antagonists\wizard\grand_ritual\fluff.dm"
 #include "code\modules\antagonists\wizard\grand_ritual\grand_ritual.dm"
 #include "code\modules\antagonists\wizard\grand_ritual\grand_ritual_finale.dm"
 #include "code\modules\antagonists\wizard\grand_ritual\grand_rune.dm"

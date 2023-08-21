@@ -374,4 +374,5 @@
 /datum/mood_event/madness_elation
 	description = "Madness truly is the greatest of blessings..."
 	mood_change = 200
-	special_screen_obj = "mood_happiness_good"
+	special_screen_obj = "dapper_beard"
+	special_screen_replace = FALSE

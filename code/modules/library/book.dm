@@ -78,6 +78,8 @@
 	if(!user.can_read(src))
 		return
 
+	if(!try_reading_effect(user))
+		return
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
 	ui_interact(user)
 
@@ -194,3 +196,8 @@
 	carved = TRUE
 	create_storage(max_slots = 1)
 	return TRUE
+
+/// Called to perform and special effect before actually accessing the book's ui contents.
+/// Return FALSE to prevent the book from opening.
+/obj/item/book/proc/try_reading_effect(mob/user)
+	return FALSE
