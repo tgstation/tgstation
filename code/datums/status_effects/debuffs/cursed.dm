@@ -1,10 +1,12 @@
+#define DEFAULT_MAX_CURSE_COUNT 5
+
 /// Status effect that gives the target miscellanous debuffs while throwing a status alert and causing them to smoke from the damage they're incurring.
 /// Purposebuilt for cursed slot machines.
 /datum/status_effect/grouped/cursed
 	id = "cursed"
 	alert_type = /atom/movable/screen/alert/status_effect/cursed
 	/// The max number of curses a target can incur with this status effect.
-	var/max_curse_count = 5
+	var/max_curse_count = DEFAULT_MAX_CURSE_COUNT
 	/// The amount of times we have been "applied" to the target.
 	var/curse_count = 0
 	/// Raw probability we have to deal damage this tick.
@@ -16,7 +18,6 @@
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_USE, PROC_REF(check_curses))
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_LOST, PROC_REF(update_curse_count))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON, PROC_REF(clear_curses))
-	update_curse_count()
 	return ..()
 
 /datum/status_effect/grouped/cursed/Destroy()
@@ -42,7 +43,7 @@
 		linked_alert.update_description()
 
 	update_particles()
-	handle_after_effects()
+	addtimer(CALLBACK(src, PROC_REF(handle_after_effects), 1 SECONDS)) // give it a second to let the failure sink in before we exact our toll
 
 /// Makes a nice lorey message about the curse level we're at. I think it's nice
 /datum/status_effect/grouped/cursed/proc/handle_after_effects()
@@ -84,9 +85,13 @@
 			messages += span_boldwarning("This is what they want, is it not? To witness your failure against itself? The compulsion carries you forward as a sinking feeling of dread fills your stomach.")
 			messages += span_boldwarning("Paradoxically, where there is hopelessness, there is elation. Elation at the fact that there's still enough power in you for one more pull.")
 			messages += span_boldwarning("Your legs desperate wish to jolt away on the thought of running away from this wretched machination, but your own arm remains complacent in the thought of seeing spinning wheels.")
-			messages += span_boldwarning("The toll has already been exacted. There is no longer death on 'your' terms. Is your dignity worth more than your life?")
+			messages += span_userdanger("The toll has already been exacted. There is no longer death on 'your' terms. Is your dignity worth more than your life?")
 
-		if(max_curse_count to INFINITY)
+		if(5 to INFINITY)
+			if(max_curse_count != DEFAULT_MAX_CURSE_COUNT) // this probably will only happen through admin schenanigans letting people stack up infinite curses or something
+				to_chat(owner, span_boldwarning("Do you <i>still</i> think you're in control?"))
+				return
+
 			to_chat(owner, span_userdanger("Why couldn't I get one more try?!"))
 			owner.investigate_log("has been gibbed by the cursed status effect after accumulating [curse_count] curses.", INVESTIGATE_DEATHS)
 			owner.gib()
@@ -151,3 +156,5 @@
 			desc = "You really don't feel good right now... But why stop now?"
 		if(4 to INFINITY)
 			desc = "Real winners quit before they reach the ultimate prize."
+
+#undef DEFAULT_MAX_CURSE_COUNT
