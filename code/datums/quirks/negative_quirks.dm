@@ -1075,12 +1075,12 @@
 	name = "Mute"
 	desc = "For some reason you are completely unable to speak."
 	icon = "volume-xmark"
-	value = -4
+	value = -6 //monkestation change 4->6
 	mob_trait = TRAIT_MUTE
 	gain_text = span_danger("You find yourself unable to speak!")
 	lose_text = span_notice("You feel a growing strength in your vocal chords.")
 	medical_record_text = "The patient is unable to use their voice in any capacity."
-	hardcore_value = 4
+	hardcore_value = 6 //monkestation change 4->6
 
 /datum/quirk/body_purist
 	name = "Body Purist"
@@ -1165,26 +1165,3 @@
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
-
-/datum/quirk/unstable_ass
-	name = "Unstable Rear"
-	desc = "For reasons unknown, your posterior is unstable and will fall off more often."
-	value = -1
-	icon = "diamond-exclamation"
-	//All effects are handled directly in butts.dm
-
-/datum/quirk/kleptomaniac
-	name = "Kleptomaniac"
-	desc = "The station's just full of free stuff!  Nobody would notice if you just... took it, right?"
-	mob_trait = TRAIT_KLEPTOMANIAC
-	value = -2
-	icon = "bag-shopping"
-
-/datum/quirk/kleptomaniac/add()
-	var/datum/brain_trauma/mild/kleptomania/T = new()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/quirk/kleptomaniac/remove()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.cure_trauma_type(/datum/brain_trauma/mild/kleptomania, TRAUMA_RESILIENCE_ABSOLUTE)

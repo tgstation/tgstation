@@ -1,4 +1,62 @@
 /**
+ * ### Spider Ambush
+ * A subtype of the giant spider which is slower, stronger and able to sneak into its surroundings to pull pray aggressively.
+ * This spider is only slightly slower than a human.
+ */
+/mob/living/basic/giant_spider/ambush
+	name = "ambush spider"
+	desc = "Furry and white, it makes you shudder to look at it. This one has sparkling pink eyes."
+	icon_state = "ambush"
+	icon_living = "ambush"
+	icon_dead = "ambush_dead"
+	gender = FEMALE
+	maxHealth = 125
+	health = 125
+	obj_damage = 45
+	melee_damage_lower = 25
+	melee_damage_upper = 30
+	speed = 5
+	player_speed_modifier = -3.1
+	menu_description = "Slow spider variant specializing in stalking and ambushing prey, above avarage health and damage with a strong grip."
+
+/mob/living/basic/giant_spider/ambush/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
+
+	var/datum/action/cooldown/sneak/spider/sneak_web = new(src)
+	sneak_web.Grant(src)
+
+/**
+ * ### Spider Guard
+ * A subtype of the giant spider which is similar on every single way,
+ * This spider is only slightly slower than a human.
+ */
+/mob/living/basic/giant_spider/guard
+	name = "guard spider"
+	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon_state = "guard"
+	icon_living = "guard"
+	icon_dead = "guard_dead"
+	gender = FEMALE
+	maxHealth = 160
+	health = 160
+	melee_damage_lower = 20
+	melee_damage_upper = 25
+	obj_damage = 45
+	speed = 5
+	player_speed_modifier = -4
+	menu_description = "Tanky and strong for the defense of the nest and other spiders."
+
+/mob/living/basic/giant_spider/guard/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
+	var/datum/action/cooldown/web_effigy/shed = new(src)
+	shed.Grant(src)
+
+/**
  * ### Spider Hunter
  * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.
  * This spider is only slightly slower than a human.
@@ -9,14 +67,49 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 50
-	health = 50
+	maxHealth = 80
+	health = 80
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	poison_per_bite = 5
 	speed = 3
 	player_speed_modifier = -3.1
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
+
+/mob/living/basic/giant_spider/hunter/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
+
+/**
+ * ### Spider Scout
+ * A subtype of the giant spider which is faster, has thermal vision, but less health and damage.
+ * This spider is only slightly faster than a human.
+ */
+/mob/living/basic/giant_spider/scout
+	name = "scout spider"
+	desc = "Furry and blueish black, it makes you shudder to look at it. This one has sparkling blue eyes."
+	icon_state = "scout"
+	icon_living = "scout"
+	icon_dead = "scout_dead"
+	maxHealth = 65
+	health = 65
+	obj_damage = 10
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	poison_per_bite = 10
+	poison_type = /datum/reagent/peaceborg/confuse
+	speed = 2.8
+	player_speed_modifier = -3.1
+	sight = SEE_SELF|SEE_MOBS
+	menu_description = "Fast spider variant specializing in scouting and alerting of prey, with the ability to travel in vents."
+
+/mob/living/basic/giant_spider/scout/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+	var/datum/action/command_spiders/communication_spiders/spiders_communication = new(src)
+	spiders_communication.Grant(src)
 
 /**
  * ### Spider Nurse
@@ -37,6 +130,8 @@
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
+	speed = 4
+	player_speed_modifier = -3.1
 	web_speed = 0.25
 	web_type = /datum/action/cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
@@ -53,6 +148,62 @@
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
 		complete_text = "%SOURCE% wraps the wounds of %TARGET%.",\
+	)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
+
+/**
+ * ### Tangle Spider
+ *
+ * A subtype of the giant spider which specializes in support skills.
+ * Tangle spiders can place down webbing in a quarter of the time that other species plus has an expanded arsenal of traps and web structures to place to benefit the nest.
+ * Note that it can heal itself.
+ */
+/mob/living/basic/giant_spider/tangle
+	name = "tangle spider"
+	desc = "Furry and brown, it makes you shudder to look at it. This one has dim brown eyes."
+	icon_state = "tangle"
+	icon_living = "tangle"
+	icon_dead = "tangle_dead"
+	gender = FEMALE
+	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/food/spidereggs = 4)
+	maxHealth = 40
+	health = 40
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	poison_per_bite = 5
+	poison_type = /datum/reagent/toxin/acid
+	obj_damage = 40
+	web_speed = 0.25
+	speed = 4
+	player_speed_modifier = -3.1
+	web_type = /datum/action/cooldown/lay_web/sealer
+	menu_description = "Support spider variant specializing in contruction to protect their brethren, but has very low amount of health and deals low damage."
+
+/mob/living/basic/giant_spider/tangle/Initialize(mapload)
+	. = ..()
+	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
+
+	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
+	passage_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
+
+	AddComponent(/datum/component/healing_touch,\
+		heal_brute = maxHealth * 0.5,\
+		heal_burn = maxHealth * 0.5,\
+		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		interaction_key = DOAFTER_SOURCE_SPIDER,\
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/giant_spider/tangle)),\
+		action_text = "%SOURCE% begins mending themselves...",\
+		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
 /**
@@ -86,7 +237,7 @@
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
 
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/tarantula_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /mob/living/basic/giant_spider/tarantula/Destroy()
 	QDEL_NULL(charge)
@@ -134,17 +285,31 @@
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
-	maxHealth = 60
-	health = 60
+	maxHealth = 250
+	health = 250
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	speed = 4
+	player_speed_modifier = -3.1
 	gold_core_spawnable = NO_SPAWN
 	web_speed = 0.5
 	web_type = /datum/action/cooldown/lay_web/sealer
-	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage."
+	menu_description = "Royal spider variant specializing in reproduction and leadership, deals low damage."
 
 /mob/living/basic/giant_spider/midwife/Initialize(mapload)
 	. = ..()
+	var/datum/action/cooldown/lay_web/solid_web/web_solid = new(src)
+	web_solid.Grant(src)
+
+	var/datum/action/cooldown/lay_web/web_passage/passage_web = new(src)
+	passage_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
+
 	var/datum/action/cooldown/wrap/wrapping = new(src)
 	wrapping.Grant(src)
 
@@ -159,6 +324,8 @@
 
 	var/datum/action/command_spiders/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 /**
  * ### Giant Ice Spider
@@ -264,7 +431,9 @@
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
 	web_speed = 0.7
-	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health and damage."
+	maxHealth = 90
+	health = 90
+	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast."
 
 /mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
 	. = ..()
@@ -289,6 +458,14 @@
 		balloon_alert(src, "on fire!")
 		return FALSE
 	return TRUE
+
+/mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
+	. = ..()
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
 
 /**
  * ### Viper Spider (Wizard)
@@ -364,6 +541,6 @@
 /mob/living/basic/giant_spider/maintenance/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/duct_spider_web)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/tiny_mob_hunter)
