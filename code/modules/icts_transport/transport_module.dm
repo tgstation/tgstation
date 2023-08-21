@@ -829,6 +829,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	canSmoothWith = NONE
 	//the modular structure is pain to work with, damage is done to the floor on top
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	obj_flags = CAN_BE_HIT
 	transport_id = ICTS_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE
