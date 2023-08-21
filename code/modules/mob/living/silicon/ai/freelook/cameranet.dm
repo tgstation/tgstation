@@ -165,6 +165,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 /datum/cameranet/proc/checkCameraVis(mob/living/target)
 	var/turf/position = get_turf(target)
+	if(!position)
+		return
 	return checkTurfVis(position)
 
 
