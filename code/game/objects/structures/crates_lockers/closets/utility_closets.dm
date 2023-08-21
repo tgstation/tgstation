@@ -124,11 +124,16 @@
 		new /obj/item/stack/cable_coil(src)
 	if(prob(20))
 		new /obj/item/multitool(src)
-	if(prob(5))
-		new /obj/item/clothing/gloves/color/yellow(src)
+
 	if(prob(40))
 		new /obj/item/clothing/head/utility/hardhat(src)
 
+
+/obj/structure/closet/toolcloset/populate_contents_immediate()
+	. = ..()
+
+	if(prob(5))
+		new /obj/item/clothing/gloves/color/yellow(src)
 
 /*
  * Radiation Closet
