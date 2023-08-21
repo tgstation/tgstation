@@ -77,11 +77,14 @@
 	var/saved_screen //for saving the screen when they die
 	var/datum/action/innate/change_screen/change_screen
 
-/datum/species/ipc/get_scream_sound(mob/living/carbon/human/ethereal)
+/datum/species/ipc/get_scream_sound(mob/living/carbon/human/human)
+	return 'monkestation/sound/voice/screams/silicon/scream_silicon.ogg'
+
+/datum/species/ipc/get_laugh_sound(mob/living/carbon/human/human)
 	return pick(
-		'sound/voice/ethereal/ethereal_scream_1.ogg',
-		'sound/voice/ethereal/ethereal_scream_2.ogg',
-		'sound/voice/ethereal/ethereal_scream_3.ogg',
+		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M0.ogg',
+		'monkestation/sound/voice/laugh/silicon/laugh_siliconE1M1.ogg',
+		'monkestation/sound/voice/laugh/silicon/laugh_siliconM2.ogg',
 	)
 
 /datum/species/ipc/get_species_description()

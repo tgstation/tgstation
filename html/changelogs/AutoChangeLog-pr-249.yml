@@ -1,0 +1,5 @@
+author: "BlackCrystalic, Koshenko"
+delete-after: True
+changes:
+  - rscadd: "day/night cycle that changes brightness and color based on station time to icebox and oshan"
+  - rscadd: "framework for particle weathers, currently un-used in maps"

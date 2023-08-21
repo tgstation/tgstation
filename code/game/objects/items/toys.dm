@@ -409,7 +409,8 @@
 
 /obj/item/toy/sword/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		throw_speed_on = throw_speed, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE, \
@@ -432,8 +433,11 @@
  */
 /obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
-	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+
+	if(user)
+		balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
+
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
 	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -464,9 +468,7 @@
 
 /obj/item/toy/sword/update_icon_state()
 	. = ..()
-	var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
-	var/active = transforming_comp?.active
-	var/last_part = active ? "_on[saber_color ? "_[saber_color]" : null]" : null
+	var/last_part = HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "_on[saber_color ? "_[saber_color]" : null]" : null
 	icon_state = "[initial(icon_state)][last_part]"
 	inhand_icon_state = "[initial(inhand_icon_state)][last_part]"
 

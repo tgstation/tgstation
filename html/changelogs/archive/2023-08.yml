@@ -287,3 +287,45 @@
   - code_imp: Fixed dynamic spawning excessive antagonists on low-pop, and increased
       the threat cost of mid-round sleeper agents. Also gives a chance for extended
       to roll if population is six or under.
+2023-08-13:
+  dwasint:
+  - bugfix: antag tokens can now be spent while your an observer for all tokens
+2023-08-14:
+  LemonInTheDark:
+  - bugfix: Gas, like plasma, will now properly display on multiz stations
+  necromanceranne:
+  - rscadd: You can now make a tactical turtleneck via the washing machine, as god
+      intended
+2023-08-15:
+  KittyNoodle:
+  - balance: Roundstart malf should now appear at similar rates to midround malf
+  - balance: Latejoin/Midround tot has been reigned in
+  - balance: Bloodsuckers have had their threat requirement increased and now need
+      20 living players to spawn
+  - bugfix: Dynamic should once again start with threat.
+  - bugfix: Bloodsuckers don't roll on command staff.
+  QueenReduviidae:
+  - bugfix: Your plasmaman security team is no longer on fire.
+  The-Black-Screen:
+  - bugfix: removes vending machines that are in front of an airlock
+2023-08-16:
+  Coding-Grape:
+  - code_imp: Removed fancy = FALSE from /obj/item/lighter/mime and /obj/item/lighter/bright
+  Salted-Zen:
+  - image: Replaces bone axe and spear sprites with old ones from 1.0
+2023-08-18:
+  CannibalHunter:
+  - rscadd: Added new hairstyle, Mullet.
+  KittyNoodle:
+  - rscadd: Freerunning now doubles sprint time.
+  - balance: Changes a lot of quirk costs.
+  - balance: IPCs are now punished for taking quirks that don't effect them
+  MilkForever:
+  - sound: Almost all species in the game can scream and laugh, some species get unique
+      sounds.
+  - rscadd: 'Added a new species: Arachnids.'
+  etherware-novice, BetaCentari:
+  - rscadd: Some new emotes.
+  - sound: Added Rattle.ogg which sounds like a well, rattle
+  iamcooldan:
+  - rscadd: Added additional items to the produce order console.

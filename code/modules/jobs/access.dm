@@ -34,6 +34,12 @@
 		var/mob/living/carbon/human/human_accessor = accessor
 		if(check_access(human_accessor.wear_id) && !istype(human_accessor.wear_id, /obj/item/card/id/fake_card))
 			return TRUE
+	//monkestation edit start
+	else if(istype(accessor, /mob/living/basic/possession_holder))
+		var/mob/living/basic/possession_holder/animal = accessor
+		if(check_access(animal.id))
+			return TRUE
+	//monkestation edit end
 	//if they have a hacky abstract animal ID with the required access, let them in i guess...
 	else if(isanimal(accessor))
 		var/mob/living/simple_animal/animal = accessor

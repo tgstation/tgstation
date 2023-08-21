@@ -15,3 +15,5 @@
 /datum/config_entry/string/roundend_webhook_pfp
 
 /datum/config_entry/string/roundend_webhook_name
+
+/datum/config_entry/string/bot_dump_url

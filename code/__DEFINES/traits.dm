@@ -310,6 +310,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESEARCH_SCANNER "research_scanner"
 /// Can weave webs into cloth
 #define TRAIT_WEB_WEAVER "web_weaver"
+/// Can navigate the web without getting stuck
+#define TRAIT_WEB_SURFER "web_surfer"
+/// A web is being spun on this turf presently
+#define TRAIT_SPINNING_WEB_TURF "spinning_web_turf"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON "surgeon"
@@ -461,9 +465,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
 /// Trait applied to mob/living to mark that spiders should not gain further enriched eggs from eating their corpse.
 #define TRAIT_SPIDER_CONSUMED "spider_consumed"
-/// Whether we're sneaking, from the alien sneak ability.
-/// Maybe worth generalizing into a general "is sneaky" / "is stealth" trait in the future.
-#define TRAIT_ALIEN_SNEAK "sneaking_alien"
+/// Whether we're sneaking, from the creature sneak ability.
+#define TRAIT_SNEAK "sneaking_creatures"
 
 /// Item still allows you to examine items while blind and actively held.
 #define TRAIT_BLIND_TOOL "blind_tool"
@@ -615,6 +618,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_APC_SHOCKING "apc_shocking"
 /// Properly wielded two handed item
 #define TRAIT_WIELDED "wielded"
+/// A transforming item that is actively extended / transformed
+#define TRAIT_TRANSFORM_ACTIVE "active_transform"
 /// Buckling yourself to objects with this trait won't immobilize you
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
 /// Prevents stripping this equipment
@@ -1027,6 +1032,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
 #define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "radiation_bypass_early_irradiated_check"
 
+/// Simple trait that just holds if we came into growth from a specific mob type. Should hold a REF(src) to the type of mob that caused the growth, not anything else.
+#define TRAIT_WAS_EVOLVED "was_evolved_from_the_mob_we_hold_a_textref_to"
 // Traits to heal for
 
 /// This mob heals from carp rifts.
@@ -1093,8 +1100,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GLUED_ITEM_TRAIT "glued-item"
 #define TRAIT_BELT_SATCHEL "belt_satchel"
 
+//monkestation edit start
 /// One can breath under water, you get me?
 #define TRAIT_WATER_BREATHING "water_breathing"
 
 /// Do IPC's dream of doomsday? The answer is yes
 #define TRAIT_ROBOT_CAN_BLEED "robots_can_bleed"
+//monkestation edit end

@@ -17846,6 +17846,12 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
+"fIE" = (
+/obj/machinery/siren/weather{
+	dir = 2
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "fIH" = (
 /obj/structure/closet/lasertag/red,
 /obj/effect/spawner/random/contraband/permabrig_gear,
@@ -19295,16 +19301,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"ggu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/vending/mechcomp,
-/obj/machinery/vending/mechcomp,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "ggD" = (
 /obj/structure/chair{
 	dir = 4
@@ -21867,6 +21863,9 @@
 "gZa" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
+	},
+/obj/machinery/siren/weather{
+	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -218890,7 +218889,7 @@ gXS
 fsv
 fMJ
 rvE
-bln
+fIE
 bln
 bln
 bln
@@ -233845,7 +233844,7 @@ uJn
 kYL
 gLu
 dth
-ggu
+bTF
 wRd
 gka
 swe
