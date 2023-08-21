@@ -116,6 +116,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	flags_1 |= HTML_USE_INITAL_ICON_1
 	if (!z)
 		CRASH("[type] called smooth_icon() without being on a z-level")
+	if(length(smooth_adapters))
+		update_adapters()
 	if(smoothing_flags & SMOOTH_CORNERS)
 		if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
 			corners_diagonal_smooth(calculate_adjacencies())
