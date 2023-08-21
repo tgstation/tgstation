@@ -1,5 +1,5 @@
 /**
- * A lift indicator aka an elevator hall lantern w/ floor number
+ * An indicator display aka an elevator hall lantern w/ floor number
  */
 /obj/machinery/lift_indicator
 	name = "elevator indicator"
@@ -28,13 +28,13 @@
 	var/linked_elevator_id
 	/// 'Floors' for display purposes are by default offset by 1 from their actual z-levels
 	var/lowest_floor_offset = 1
-	/// Weakref to the lift.
+	/// Weakref to the transport.
 	var/datum/weakref/lift_ref
-	/// The lowest floor number. Determined by lift init.
+	/// The lowest floor number. Determined by transport module init.
 	var/lowest_floor_num = 1
 	/// Positive for going up, negative going down, 0 for stopped
 	var/current_lift_direction = 0
-	/// The lift's current floor relative to its lowest floor being 1
+	/// The elevator's current floor relative to its lowest floor being 1
 	var/current_lift_floor = 1
 
 /obj/machinery/lift_indicator/Initialize(mapload)
@@ -70,7 +70,7 @@
 	. += span_notice("The elevator is at floor [current_lift_floor], [dirtext].")
 
 /**
- * Update state, and only process if lift is moving.
+ * Update state, and only process if elevator is moving.
  */
 /obj/machinery/lift_indicator/proc/on_lift_direction(datum/source, direction)
 	SIGNAL_HANDLER
@@ -106,7 +106,7 @@
 
 	// Check for stopped states.
 	if(!lift || !is_operational)
-		// Lift missing, or we lost power.
+		// elevator missing, or we lost power.
 		set_lift_state(0, 0, force = !is_operational)
 		return PROCESS_KILL
 
@@ -121,7 +121,7 @@
 	// Update
 	set_lift_state(current_lift_direction, lift.transport_modules[1].z - lowest_floor_offset)
 
-	// Lift's not moving, we're done; we just had to update the floor number one last time.
+	// elevator's not moving, we're done; we just had to update the floor number one last time.
 	if(!current_lift_direction)
 		return PROCESS_KILL
 
