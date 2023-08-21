@@ -76,7 +76,8 @@
 				if(!istype(rock, /turf/closed/mineral))
 					continue
 				rock.gets_drilled(user, FALSE)
-				new /obj/effect/decal/cleanable/rubble(rock)
+				if(prob(75))
+					new /obj/effect/decal/cleanable/rubble(rock)
 			sleep(0.6 SECONDS)
 
 		start_wave_defense()
@@ -134,8 +135,8 @@
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
-	if(node) ///Can we check if any mobs are still alive?
-		//This is where we'd send a signal to the ore vent to remove it's spawner component.
+	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
+	if(node) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
 	else
@@ -148,7 +149,8 @@
 			visible_message(span_danger("\the [src] crumbles as the mining attempt fails, and the ore vent is left damaged!"))
 		else
 			visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
-	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
+		return FALSE //Band end, try again.
+
 	for(var/potential_miner as anything in oview(5))
 		if(ishuman(potential_miner))
 			var/mob/living/carbon/human/true_miner = potential_miner
@@ -157,6 +159,7 @@
 				continue
 			if(user_id_card)
 				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER * boulder_size)
+	node.escape() //Visually show the drone is done and flies away.
 
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
@@ -205,8 +208,7 @@
 /obj/structure/ore_vent/random/boss/start_wave_defense()
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
-	/// Register that the boss's death will tap the vent and end the mining event.
-	/// Later, I guess.
+	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion)) ///Lets hope this is how this works
 	boss.say("You dare disturb my slumber?!") //to stop warnings namely
 
 

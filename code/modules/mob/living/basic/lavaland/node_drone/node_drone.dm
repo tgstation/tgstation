@@ -41,14 +41,15 @@
 	else
 		. += span_warning("This vile Nanotrasen trash is trying to destroy the environment. Attack it to free the mineral vent from its grasp.")
 
-
-/mob/living/basic/node_drone/death(gibbed)
-	. = ..(TRUE)
-	explosion(src, 0, 0, 1, 0 ,0, smoke = TRUE)
-	say("I'm dead, NOW!")
-	qdel(src)
-
-
+/**
+ * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
+ */
+/mob/living/basic/node_drone/proc/escape()
+	flick("node_drone_escape", src)
+	icon_state = "node_drone_fly"
+	update_appearance(UPDATE_ICON_STATE)
+	animate(src, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	del(src)
 
 /// The node drone AI controller
 //	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.
@@ -75,7 +76,7 @@
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
 	hunter.UnarmedAttack(hunted, TRUE)
 
-// Mouse subtree to hunt down delicious cheese.
+// Node subtree to hunt down ore vents.
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_vent
 	hunting_behavior = /datum/ai_behavior/hunt_target/latch_onto/node_drone
 	hunt_targets = list(/obj/structure/ore_vent)

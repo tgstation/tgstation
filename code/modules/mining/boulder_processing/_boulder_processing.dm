@@ -101,7 +101,7 @@
 			breakdown_boulder(boulder) //Crack that bouwlder open!
 			continue
 		else
-			if(prob(15))
+			if(prob(25))
 				var/list/quips = list("clang!", "crack!", "bang!", "clunk!", "clank!",)
 				balloon_alert_to_viewers("[pick(quips)]")
 	if(!blocker)
@@ -244,6 +244,6 @@
 		if(2)
 			new /obj/machinery/bouldertech/refinery(drop_location())
 		if(1)
-			new /obj/machinery/bouldertech/smelter(drop_location())
+			new /obj/machinery/bouldertech/refinery/smelter(drop_location())
 			qdel(src)
 	uses--

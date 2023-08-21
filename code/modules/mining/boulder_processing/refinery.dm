@@ -24,12 +24,16 @@
 	usage_sound = 'sound/machines/mining/refinery.ogg'
 
 	/// Reagents that we can use to wash the boulders
-	var/static/list/allowed_reagents = list(/datum/reagent/toxin/acid/industrial_waste = 0.1, /datum/reagent/lube = 1.2, /datum/reagent/sorium = 1.5, /datum/reagent/toxin/acid/fluacid = 2.0)
+	var/list/allowed_reagents = list(
+		/datum/reagent/toxin/acid/industrial_waste = 0.1,
+		/datum/reagent/lube = 1.2,
+		/datum/reagent/sorium = 1.5,
+		/datum/reagent/toxin/acid/nitracid = 2.0,
+	)
 	/// Internal beaker for storing washing fluid
 	var/obj/item/reagent_containers/cup/beaker/large/washing_input
 	/// Reagent produced by boosting mineral output.
 	var/datum/reagent/waste_chem = /datum/reagent/toxin/acid/industrial_waste
-	/// What is the multiplier that boosting minerals
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
@@ -96,3 +100,38 @@
 				total_waste += used_reagents[reagent_type]
 				continue
 	reagents.add_reagent(waste_chem, clamp(total_waste, 0, 100))
+
+/**
+ * Your other new favorite industrial waste magnet!
+ * Accepts boulders and produces sheets of metalic materials.
+ * Can be upgraded with stock parts or through chemical inputs.
+ * When upgraded, it can hold more boulders and process more at once.
+ *
+ * Chemical inputs can be used to boost the refinery's efficiency, but produces industrial waste, which eats through the station and is generally difficult to store.
+ */
+
+/obj/machinery/bouldertech/refinery/smelter
+	name = "boulder smeltery"
+	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
+	icon_state = "furnace"
+	holds_minerals = TRUE
+	processable_materials = list(
+		/datum/material/iron,
+		/datum/material/titanium,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/uranium,
+		/datum/material/mythril,
+		/datum/material/adamantine,
+		/datum/material/runite,
+	)
+	circuit = /obj/item/circuitboard/machine/smelter
+	usage_sound = 'sound/machines/mining/smelter.ogg'
+
+	/// Reagents that we can use to wash the boulders
+	allowed_reagents = list(
+		/datum/reagent/toxin/acid/industrial_waste = 0.1,
+		/datum/reagent/pyrosium = 1.2,
+		/datum/reagent/gunpowder = 1.5,
+		/datum/reagent/medicine/c2/penthrite = 2.0,
+	)

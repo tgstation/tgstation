@@ -128,6 +128,9 @@
 /datum/ai_behavior/hunt_target/latch_onto
 
 /datum/ai_behavior/hunt_target/latch_onto/target_caught(mob/living/hunter, obj/hunted)
-	hunted.buckle_mob(hunter, force = TRUE)
+	if(hunter.buckled)
+		return FALSE
+	if(!hunted.buckle_mob(hunter, force = TRUE))
+		return FALSE
 	hunted.visible_message(span_notice("[hunted] has been latched onto by [hunter]!"))
-	
+

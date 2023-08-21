@@ -1,3 +1,5 @@
+#define MANUAL_TELEPORT_SOUND 'sound/machines/mining/manual_teleport.ogg'
+#define AUTO_TELEPORT_SOUND 'sound/machines/mining/auto_teleport.ogg'
 
 /obj/machinery/bouldertech/brm
 	name = "boulder retrieval matrix"
@@ -15,6 +17,7 @@
 	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
 		return
 	collect_boulder()
+	usage_sound = MANUAL_TELEPORT_SOUND
 	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	COOLDOWN_START(src, manual_teleport_cooldown, 1.5 SECONDS)
 
@@ -23,6 +26,7 @@
 	START_PROCESSING(SSmachines, src)
 	icon_state = "brm-toggled"
 	update_appearance(UPDATE_ICON_STATE)
+	usage_sound = AUTO_TELEPORT_SOUND
 
 /obj/machinery/bouldertech/brm/process()
 	boulders_held = 0
@@ -32,6 +36,7 @@
 		STOP_PROCESSING(SSmachines, src)
 		icon_state = "brm"
 		update_appearance(UPDATE_ICON_STATE)
+		usage_sound = MANUAL_TELEPORT_SOUND
 		return
 	for(var/i in 1 to boulders_processing_max)
 		if(!collect_boulder())
@@ -44,7 +49,7 @@
 				STOP_PROCESSING(SSmachines, src)
 				icon_state = "brm"
 				update_appearance(UPDATE_ICON_STATE)
-				playsound(src, 'sound/machines/mining/auto_teleport.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				return
 
 /obj/machinery/bouldertech/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)

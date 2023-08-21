@@ -21,7 +21,8 @@
 		/obj/structure/geyser/plasma_oxide = 10,
 		/obj/structure/geyser/protozine = 10,
 		/obj/structure/geyser/hollowwater = 10,
-		/obj/structure/ore_vent/random = 42,
+		/obj/structure/ore_vent/random = 40,
+		/obj/structure/ore_vent/random/boss = 2,
 		)
 
 /datum/map_generator/cave_generator/icemoon/surface

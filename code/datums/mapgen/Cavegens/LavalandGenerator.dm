@@ -33,7 +33,8 @@
 		/obj/structure/geyser/plasma_oxide = 10,
 		/obj/structure/geyser/protozine = 10,
 		/obj/structure/geyser/hollowwater = 10,
-		/obj/structure/ore_vent/random = 42,
+		/obj/structure/ore_vent/random = 40,
+		/obj/structure/ore_vent/boss = 2,
 	)
 
 	initial_closed_chance = 45

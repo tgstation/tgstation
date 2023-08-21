@@ -3967,7 +3967,6 @@
 #include "code\modules\mining\boulder_processing\_boulder_processing.dm"
 #include "code\modules\mining\boulder_processing\brm.dm"
 #include "code\modules\mining\boulder_processing\refinery.dm"
-#include "code\modules\mining\boulder_processing\smelter.dm"
 #include "code\modules\mining\equipment\explorer_gear.dm"
 #include "code\modules\mining\equipment\kheiral_cuffs.dm"
 #include "code\modules\mining\equipment\kinetic_crusher.dm"
