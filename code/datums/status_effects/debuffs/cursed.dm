@@ -13,6 +13,8 @@
 	var/damage_chance = 10
 	/// The hand we are branded to.
 	var/obj/item/bodypart/branded_hand = null
+	/// The cached path of the particles we're using to smoke
+	var/smoke_path = null
 
 /datum/status_effect/grouped/cursed/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
@@ -107,7 +109,8 @@
 
 	if(!isnull(branded_hand))
 		var/datum/wound/brand = branded_hand.get_wound_type(/datum/wound/burn/severe/cursed_brand)
-		brand.remove_wound()
+		if(!isnull(brand))
+			brand.remove_wound()
 
 	owner.visible_message(
 		span_notice("The smoke slowly clears from [owner.name]..."),
@@ -133,6 +136,11 @@
 		if(4)
 			particle_path = /particles/smoke/steam/bad
 
+	if(smoke_path == particle_path)
+		return
+
+	QDEL_NULL(particle_effect)
+	smoke_path = particle_path
 	particle_effect = new(owner, particle_path)
 
 /datum/status_effect/grouped/cursed/tick(seconds_between_ticks)
