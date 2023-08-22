@@ -11,6 +11,7 @@
 	var/curse_count = 0
 	/// Raw probability we have to deal damage this tick.
 	var/damage_chance = 10
+	/// Are we currently in the process of sending a monologue?
 	/// The hand we are branded to.
 	var/obj/item/bodypart/branded_hand = null
 	/// The cached path of the particles we're using to smoke
@@ -32,10 +33,12 @@
 /// Checks the number of curses we have and returns information back to the slot machine. `max_curse_amount` is set by the slot machine itself.
 /datum/status_effect/grouped/cursed/proc/check_curses(max_curse_amount)
 	SIGNAL_HANDLER
-	if(curse_count < max_curse_amount)
-		return
+	if(curse_count >= max_curse_amount)
+		return SLOT_MACHINE_USE_CANCEL
 
-	return SLOT_MACHINE_USE_CANCEL
+	if(monologuing)
+		to_chat(owner, span_warning("Your arm is resisting your attempts to pull the lever!")) // listening to kitschy monologues to postpone your powergaming is the true curse here.
+		return SLOT_MACHINE_USE_POSTPONE
 
 /// Handles the debuffs of this status effect and incrementing the number of curses we have.
 /datum/status_effect/grouped/cursed/proc/update_curse_count()
@@ -51,6 +54,7 @@
 	if(QDELETED(src))
 		return
 
+	monologuing = TRUE
 	var/list/messages = list()
 	switch(curse_count)
 		if(1) // basically your first is a "freebie" that will still require urgent medical attention and will leave you smoking forever but could be worse tbh
@@ -102,6 +106,7 @@
 	for(var/message in messages)
 		to_chat(owner, message)
 		sleep(1.5 SECONDS) // yes yes a bit fast but it can be a lot of text and i want the whole thing to send before the cooldown on the slot machine might expire
+	monologuing = FALSE
 
 /// Cleans ourselves up and removes our curses. Meant to be done in a "positive" way, when the curse is broken. Directly use qdel otherwise.
 /datum/status_effect/grouped/cursed/proc/clear_curses()

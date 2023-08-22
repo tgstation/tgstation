@@ -43,6 +43,9 @@
 
 	var/signal_value = SEND_SIGNAL(human_user, COMSIG_CURSED_SLOT_MACHINE_USE, max_curse_amount)
 
+	if(signal_value & SLOT_MACHINE_USE_POSTPONE)
+		return
+
 	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used for some reason (like if we're maxed out on curses but not getting gibbed)
 		say("We're sorry, but we can no longer serve you at this establishment.")
 		return
