@@ -408,7 +408,7 @@
 /datum/grand_finale/cheese
 	/**we don't set name, desc and others, thus we won't appear in the radial choice of a normal finale rune */
 	dire_warning = TRUE
-	minimum_time = 90 MINUTES //i'd imagine speedrunning this would be crummy, but the wizard's average lifespan is barely reaching this point
+	minimum_time = 45 MINUTES //i'd imagine speedrunning this would be crummy, but the wizard's average lifespan is barely reaching this point
 
 /datum/grand_finale/cheese/trigger(mob/living/invoker)
 	message_admins("[key_name(invoker)] has summoned forth The Wabbajack and cursed the crew with madness!")
@@ -436,7 +436,7 @@
 				You feel your inner psyche shatter into a myriad pieces of jagged glass of colors unknown to the universe, \
 				infinitely reflecting a blinding, maddening light coming from the innermost sanctums of your destroyed mind. \n\
 				After a brief pause which felt like a millenia, one phrase rebounds ceaselessly in your head, imbued with the false hope of absolution... \n\
-				[invoker] must die."))
+				<b>[invoker] must die.</b>"))
 			var/datum/brain_trauma/mild/hallucinations/added_trauma = new()
 			added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
 			crewmate.adjustOrganLoss(ORGAN_SLOT_BRAIN, BRAIN_DAMAGE_DEATH - 25, BRAIN_DAMAGE_DEATH - 25) //you'd better hope chap didn't pick a hypertool

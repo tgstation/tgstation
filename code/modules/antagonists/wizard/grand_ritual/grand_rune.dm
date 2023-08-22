@@ -33,6 +33,8 @@
 	var/spell_colour = "#de3aff48"
 	/// How much cheese was sacrificed to the other realm, if any
 	var/cheese_sacrificed = 0
+	/// What kind of remains this rune leaves behind after completing invokation
+	var/remains_typepath = /obj/effect/decal/cleanable/grand_remains
 	/// Magic words you say to invoke the ritual
 	var/list/magic_words = list()
 	/// Things you might yell when invoking a rune
@@ -189,9 +191,6 @@
 	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
 /obj/effect/grand_rune/proc/remove_rune()
-	var/remains_typepath = /obj/effect/decal/cleanable/grand_remains
-	if(istype(src, /obj/effect/grand_rune/finale/cheesy))
-		remains_typepath = /obj/effect/decal/cleanable/grand_remains/cheese
 	new remains_typepath(get_turf(src))
 	qdel(src)
 
@@ -371,6 +370,7 @@
 	desc = "A ritual circle of maddening shapes and outlines, its mere presence an insult to reason."
 	icon_state = "wizard_rune_cheese"
 	magic_words = list("Greetings! Salutations!", "Welcome! Now go away.", "Leave. Run. Or die.")
+	remains_typepath = /obj/effect/decal/cleanable/grand_remains/cheese
 
 /obj/effect/grand_rune/finale/cheesy/Initialize(mapload, potency)
 	. = ..()

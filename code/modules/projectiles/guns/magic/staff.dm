@@ -179,7 +179,8 @@
 /obj/item/gun/magic/staff/chaos/true_wabbajack
 	name = "\proper Wabbajack"
 	desc = "If there is some deity out there, they've definitely skipped their psych appointment before creating this."
-	/* make new sprites? */
+	icon_state = "the_wabbajack"
+	inhand_icon_state = "the_wabbajack"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //fuck you
 	max_charges = 999999 //fuck you
 	recharge_rate = 1
@@ -188,8 +189,8 @@
 
 /obj/item/gun/magic/staff/chaos/true_wabbajack/Initialize(mapload)
 	. = ..()
-	allowed_projectile_types += subtypesof(/obj/projectile/magic)
-	allowed_projectile_types += subtypesof(/obj/projectile/temp)
+	allowed_projectile_types |= subtypesof(/obj/projectile/magic)
+	allowed_projectile_types |= subtypesof(/obj/projectile/temp)
 	allowed_projectile_types += subtypesof(/obj/projectile/bullet/rocket)
 	allowed_projectile_types += list(
 		/obj/projectile/curse_hand,
