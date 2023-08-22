@@ -158,6 +158,9 @@
 		else if(gelled)
 			. += ", [span_notice("with fizzing flecks of blue bone gel sparking off the bone!")]"
 
+/datum/wound/blunt/get_limb_examine_description()
+	return span_warning("The bones in this limb appear badly cracked.")
+
 /*
 	New common procs for /datum/wound/blunt/bone/
 */

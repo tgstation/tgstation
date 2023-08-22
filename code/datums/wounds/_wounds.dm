@@ -494,6 +494,7 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
 
+
 /// Returns false if our limb is the head or chest, true otherwise.
 /datum/wound/proc/limb_unimportant()
 	return (!(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST))
@@ -505,3 +506,9 @@
 /// Getter proc for our scar_file, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
 	return scar_file
+
+/// Returns what string is displayed when a limb that has sustained this wound is examined
+/// (This is examining the LIMB ITSELF, when it's not attached to someone.)
+/datum/wound/proc/get_limb_examine_description()
+	return
+

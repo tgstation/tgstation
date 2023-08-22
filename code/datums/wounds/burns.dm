@@ -270,6 +270,9 @@
 
 	required_limb_biostate = BIO_FLESH
 
+/datum/wound/burn/get_limb_examine_description()
+	return span_warning("The flesh on this limb appears badly cooked.")
+
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/flesh/moderate
 	name = "Second Degree Burns"
