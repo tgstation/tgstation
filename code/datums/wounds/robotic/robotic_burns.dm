@@ -44,10 +44,10 @@
 	/// The minimum heat difference we must have on reagent contact to cause heat shock damage.
 	var/heat_shock_minimum_delta = 5
 
-	/// The max temp differential we can have applied to our limb during this tick interval, used for preventing things like splashing a beaker to instantly kill someone.
-	var/reagent_temp_diff_allowed_this_interval = 0
-	/// The max temp differential we can have applied to our limb during a given tick interval, used for preventing things like splashing a beaker to instantly kill someone.
-	var/reagent_temp_diff_allowed_per_interval = 70
+	/// The max thermal shock we can sustain during this tick interval, used for preventing things like splashing a beaker to instantly kill someone.
+	var/heat_shock_damage_allowed_this_interval = 0
+	/// The max thermal shock we can sustain during a given tick interval, used for preventing things like splashing a beaker to instantly kill someone.
+	var/heat_shock_damage_allowed_per_interval = 40
 
 	/// The wound we demote to when we go below cooling threshold. If null, removes us.
 	var/datum/wound/burn/robotic/demotes_to
@@ -66,6 +66,8 @@
 
 	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT
 	scar_file = ROBOTIC_METAL_BURN_SCAR_FILE
+
+	wound_flags = (ACCEPTS_GAUZE) // gauze binds the metal and makes it resistant to thermal shock
 
 	processes = TRUE
 
@@ -114,7 +116,7 @@
 
 /datum/wound/burn/robotic/overheat/handle_process(seconds_per_tick, times_fired)
 
-	reagent_temp_diff_allowed_this_interval = (reagent_temp_diff_allowed_per_interval * seconds_per_tick)
+	heat_shock_damage_allowed_this_interval = (heat_shock_damage_allowed_per_interval * seconds_per_tick)
 
 	if (victim)
 		if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick)))
@@ -168,7 +170,7 @@
 
 	expose_temperature(source.chem_temp, reagent_coefficient, TRUE, TRUE) // if we are sprayed with something, we will immediately cool. or heat the fuck up :)
 
-/datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE, use_max = FALSE)
+/datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE)
 	var/temp_delta = (temperature - chassis_temperature) * coeff
 
 	if (use_max)
@@ -177,16 +179,36 @@
 		reagent_temp_diff_allowed_this_interval -= abs(temp_delta)
 		temp_delta *= sign
 
-	if(temp_delta > 0)
-		chassis_temperature = min(chassis_temperature + max(temp_delta, 1), temperature)
-	else
-		chassis_temperature = max(chassis_temperature + min(temp_delta, -1), temperature)
-
+	var/heating_temp_delta_mult = 1
 	if (heat_shock && abs(temp_delta) > heat_shock_minimum_delta)
+
+		var/gauze_mult = 1
+		var/obj/item/stack/gauze = limb.current_gauze
+		if (gauze)
+			gauze_mult *= gauze.splint_factor
+
 		if (victim)
-			victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock!"))
+			var/gauze_or_not = (!isnull(gauze) ? ", but [gauze] helps to keep it together" : "")
+			victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock[gauze_or_not]!"))
 			playsound(victim, 'sound/items/welder.ogg', 25)
-		limb.receive_damage(brute = (abs(temp_delta) * heat_shock_delta_to_damage_ratio), wound_bonus = CANT_WOUND)
+
+		var/unclamped_damage = (temp_delta * heat_shock_delta_to_damage_ratio) * gauze_mult
+		var/sign = SIGN(unclamped_damage)
+		var/damage = min(abs(unclamped_damage), heat_shock_damage_allowed_this_interval)
+		heat_shock_damage_allowed_this_interval -= damage
+		var/percent_remaining = (damage / abs(unclamped_damage))
+
+		damage *= sign
+		heating_temp_delta_mult *= percent_remaining
+		
+		limb.receive_damage(brute = damage, wound_bonus = CANT_WOUND)
+
+	var/heating_temp_delta = temp_delta * heating_temp_delta_mult
+
+	if(temp_delta > 0)
+		chassis_temperature = min(chassis_temperature + max(heating_temp_delta, 1), temperature)
+	else
+		chassis_temperature = max(chassis_temperature + min(heating_temp_delta, -1), temperature)
 
 	return check_temperature()
 
@@ -334,7 +356,7 @@
 
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 
-	wound_flags = (MANGLES_FLESH)
+	wound_flags = (MANGLES_FLESH|ACCEPTS_GAUZE)
 
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3

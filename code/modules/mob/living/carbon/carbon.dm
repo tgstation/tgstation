@@ -1259,10 +1259,11 @@
 					wound_type = path
 					break
 
-		var/datum/wound/phantom_wound = new wound_type
-		scaries.generate(scar_part, phantom_wound)
-		scaries.fake = TRUE
-		QDEL_NULL(phantom_wound)
+		if (wound_type) // can feasibly happen, if its an inorganic limb/cant be wounded/scarred
+			var/datum/wound/phantom_wound = new wound_type
+			scaries.generate(scar_part, phantom_wound)
+			scaries.fake = TRUE
+			QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
 	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
