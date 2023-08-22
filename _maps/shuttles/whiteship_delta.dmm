@@ -19,7 +19,7 @@
 	dir = 2;
 	shuttle_id = "whiteship";
 	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "NT Frigate";
 	port_direction = 8;
 	preferred_direction = 4
@@ -951,36 +951,21 @@
 	pixel_y = 12
 	},
 /obj/item/camera,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cf" = (
+/obj/item/gun/energy/laser/retro,
+/obj/item/gun/energy/laser/retro,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/gun/energy/laser/retro,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/gun/energy/laser/retro,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/obj/structure/cable,
-/mob/living/basic/spider/giant/tarantula/scrawny,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/gun/energy/laser/retro,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/obj/structure/cable,
 /mob/living/basic/spider/giant/tarantula/scrawny,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
