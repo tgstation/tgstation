@@ -33103,6 +33103,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/rec)
 "kzv" = (
@@ -44514,6 +44515,7 @@
 "ohG" = (
 /obj/effect/landmark/start/prisoner,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/holopad,
 /turf/open/floor/carpet/red,
 /area/station/security/prison/work)
 "ohS" = (
@@ -74084,6 +74086,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"xBu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/execution/transfer)
 "xBv" = (
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -170058,7 +170067,7 @@ ate
 ate
 fgJ
 cpw
-ihB
+xBu
 ihB
 ddp
 hBg
