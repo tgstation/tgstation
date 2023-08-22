@@ -610,7 +610,6 @@
 
 /datum/wound/blunt/robotic/critical/proc/mold_metal(mob/living/carbon/human/user)
 	var/chance = 40
-	var/delay_mult = 1
 
 	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		chance *= 3
