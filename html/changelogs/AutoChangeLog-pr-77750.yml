@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "pda messages are no longer hidden from dead players who are not observers"
