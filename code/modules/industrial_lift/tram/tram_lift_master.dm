@@ -264,10 +264,10 @@
 
 	switch(travel_dir)
 		if(INBOUND)
-			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, inbound_candidates, src)
+			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, inbound_candidates, source)
 			return selected
 		if(OUTBOUND)
-			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, outbound_candidates, src)
+			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, outbound_candidates, source)
 			return selected
 		else
 			return FALSE
