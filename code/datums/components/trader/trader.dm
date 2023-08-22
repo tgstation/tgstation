@@ -1,9 +1,19 @@
-#define TRADER_BUY_ICON "TRADER_BUY_ICON"
-#define TRADER_SELL_ICON "TRADER_SELL_ICON"
-#define TRADER_TALK_ICON "TRADER_TALK_ICON"
-#define TRADER_LORE_ICON "TRADER_LORE_ICON"
-#define TRADER_DISCUSS_BUY_ICON "TRADER_DISCUSS_BUY_ICON"
-#define TRADER_DISCUSS_SELL_ICON "TRADER_DISCUSS_SELL_ICON"
+#define TRADER_RADIAL_BUY "TRADER_RADIAL_BUY"
+#define TRADER_RADIAL_SELL "TRADER_RADIAL_SELL"
+#define TRADER_RADIAL_TALK "TRADER_RADIAL_TALK"
+#define TRADER_RADIAL_LORE "TRADER_RADIAL_LORE"
+#define TRADER_RADIAL_NO "TRADER_RADIAL_NO"
+#define TRADER_RADIAL_YES "TRADER_RADIAL_YES"
+#define TRADER_RADIAL_OUT_OF_STOCK "TRADER_RADIAL_OUT_OF_STOCK"
+#define TRADER_RADIAL_DISCUSS_BUY "TRADER_RADIAL_DISCUSS_BUY"
+#define TRADER_RADIAL_DISCUSS_SELL "TRADER_RADIAL_DISCUSS_SELL"
+
+//The defines below show the index the info is located in the product_info entry list
+
+#define TRADER_PRODUCT_INFO_PRICE 1
+#define TRADER_PRODUCT_INFO_QUANTITY 2
+//Only valid for wanted_items
+#define TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION 3
 
 /**
  * # Trader NPC Component
@@ -57,12 +67,15 @@
 	trader_data = new trader_data_path()
 
 	radial_icons_cache = list(
-		TRADER_BUY_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy"),
-		TRADER_SELL_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell"),
-		TRADER_TALK_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk"),
-		TRADER_LORE_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore"),
-		TRADER_DISCUSS_BUY_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
-		TRADER_DISCUSS_SELL_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
+		TRADER_RADIAL_BUY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy"),
+		TRADER_RADIAL_SELL = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell"),
+		TRADER_RADIAL_TALK = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk"),
+		TRADER_RADIAL_LORE = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore"),
+		TRADER_RADIAL_DISCUSS_BUY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
+		TRADER_RADIAL_DISCUSS_SELL = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
+		TRADER_RADIAL_YES = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+		TRADER_RADIAL_NO = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
+		TRADER_RADIAL_OUT_OF_STOCK = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_center"),
 	)
 
 	restock_products()
@@ -84,11 +97,11 @@
 		return
 	var/list/npc_options = list()
 	if(products.len)
-		npc_options["Buy"] = radial_icons_cache[TRADER_BUY_ICON]
+		npc_options["Buy"] = radial_icons_cache[TRADER_RADIAL_BUY]
 	if(wanted_items.len)
-		npc_options["Sell"] = radial_icons_cache[TRADER_SELL_ICON]
+		npc_options["Sell"] = radial_icons_cache[TRADER_RADIAL_SELL]
 	if(length(trader_data.say_phrases))
-		npc_options["Talk"] = radial_icons_cache[TRADER_TALK_ICON]
+		npc_options["Talk"] = radial_icons_cache[TRADER_RADIAL_TALK]
 	if(!npc_options.len)
 		return
 
@@ -113,53 +126,6 @@
 			try_sell(customer)
 		if("Talk")
 			discuss(customer)
-/**
- * Generates a radial of the items the NPC sells and lets the user try to buy one
- * Arguments:
- * * customer - (Mob REF) The mob trying to buy something
- */
-/datum/component/trader/proc/buy_item(mob/customer)
-	if(!LAZYLEN(products))
-		return
-	var/mob/living/trader = parent
-	trader.say("Bought by you!")
-
-/**
- * Tries to call sell_item on one of the customer's held items, if fail gives a chat message
- *
- * Gets both items in the customer's hands, and then tries to call sell_item on them, if both fail, he gives a chat message
- * Arguments:
- * * customer - (Mob REF) The mob trying to sell something
- */
-/datum/component/trader/proc/try_sell(mob/customer)
-	var/mob/living/trader = parent
-	trader.say("Sold to me!")
-
-///Talk about what items are being sold/wanted by the trader and in what quantity or lore
-/datum/component/trader/proc/discuss(mob/customer)
-	var/mob/living/trader = parent
-
-	var/list/npc_options = list(
-		"Lore" = radial_icons_cache[TRADER_LORE_ICON],
-		"Selling?" = radial_icons_cache[TRADER_DISCUSS_SELL_ICON],
-		"Buying?" = radial_icons_cache[TRADER_DISCUSS_BUY_ICON],
-	)
-	var/pick = show_radial_menu(customer, parent, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
-	switch(pick)
-		if("Lore")
-			trader.say(trader_data.return_trader_phrase(TRADER_LORE_PHRASE))
-		if("Buying?")
-			trader.say("I am looking for [wanted_items]")
-		if("Selling?")
-			trader.say("I am selling [products]")
-
-///Sets quantity of all products to initial(quanity); this proc is currently called during initialize
-/datum/component/trader/proc/restock_products()
-	products = trader_data.initial_products.Copy()
-
-///Sets quantity of all wanted_items to initial(quanity);  this proc is currently called during initialize
-/datum/component/trader/proc/renew_item_demands()
-	wanted_items = trader_data.initial_wanteds.Copy()
 
 /**
  * Checks if the customer is ok to use the radial
@@ -175,9 +141,245 @@
 		return FALSE
 	return TRUE
 
-#undef TRADER_BUY_ICON
-#undef TRADER_SELL_ICON
-#undef TRADER_TALK_ICON
-#undef TRADER_LORE_ICON
-#undef TRADER_DISCUSS_BUY_ICON
-#undef TRADER_DISCUSS_SELL_ICON
+/**
+ * Generates a radial of the items the NPC sells and lets the user try to buy one
+ * Arguments:
+ * * customer - (Mob REF) The mob trying to buy something
+ */
+/datum/component/trader/proc/buy_item(mob/customer)
+	if(!LAZYLEN(products))
+		return
+	var/mob/living/trader = parent
+	var/list/display_names = list()
+	var/list/items = list()
+	var/list/product_info
+	for(var/obj/item/thing as anything in products)
+		display_names["[initial(thing.name)]"] = thing
+
+		if(!radial_icons_cache[thing])
+			radial_icons_cache[thing] = image(icon = initial(thing.icon), icon_state = initial(thing.icon_state))
+
+		var/image/item_image = radial_icons_cache[thing]
+		product_info = products[thing]
+		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //out of stock
+			item_image.overlays += radial_icons_cache[TRADER_RADIAL_OUT_OF_STOCK]
+		items += list("[initial(thing.name)]" = item_image)
+	var/pick = show_radial_menu(customer, trader, items, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
+	if(!pick)
+		return
+	var/obj/item/item_to_buy = display_names[pick]
+	trader.face_atom(customer)
+	product_info = products[item_to_buy]
+	if(!product_info[TRADER_PRODUCT_INFO_QUANTITY])
+		trader.say("[initial(item_to_buy.name)] appears to be out of stock.")
+		return
+	trader.say("It will cost you [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?")
+	var/list/npc_options = list(
+		"Yes" = radial_icons_cache[TRADER_RADIAL_YES],
+		"No" = radial_icons_cache[TRADER_RADIAL_NO],
+	)
+	var/buyer_will_buy = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
+	if(buyer_will_buy != "Yes")
+		return
+	trader.face_atom(customer)
+	if(!spend_buyer_offhand_money(customer, product_info[TRADER_PRODUCT_INFO_PRICE]))
+		trader.say(trader_data.return_trader_phrase(NO_CASH_PHRASE))
+		return
+	item_to_buy = new item_to_buy(get_turf(customer))
+	customer.put_in_hands(item_to_buy)
+	playsound(trader, trader_data.sell_sound, 50, TRUE)
+	log_econ("[item_to_buy] has been sold to [customer] (typepath used for product info; [item_to_buy.type]) by [trader] for [product_info[TRADER_PRODUCT_INFO_PRICE]] cash.")
+	product_info[TRADER_PRODUCT_INFO_QUANTITY] -= 1
+	trader.say(trader_data.return_trader_phrase(BUY_PHRASE))
+
+///Calculates the value of money in the hand of the buyer and spends it if it's sufficient
+/datum/component/trader/proc/spend_buyer_offhand_money(mob/customer, the_cost)
+	var/value = 0
+	var/obj/item/holochip/cash = customer.is_holding_item_of_type(/obj/item/holochip)
+	if(cash)
+		value += cash.credits
+	if((value >= the_cost) && cash)
+		return cash.spend(the_cost)
+	return FALSE //Purchase unsuccessful
+
+/**
+ * Tries to call sell_item on one of the customer's held items, if fail gives a chat message
+ *
+ * Gets both items in the customer's hands, and then tries to call sell_item on them, if both fail, he gives a chat message
+ * Arguments:
+ * * customer - (Mob REF) The mob trying to sell something
+ */
+/datum/component/trader/proc/try_sell(mob/customer)
+	var/mob/living/trader = parent
+	var/sold_item = FALSE
+	for(var/obj/item/an_item in customer.held_items)
+		if(sell_item(customer, an_item))
+			sold_item = TRUE
+			break
+	if(!sold_item)
+		trader.say(trader_data.return_trader_phrase(ITEM_REJECTED_PHRASE))
+
+
+/**
+ * Checks if an item is in the list of wanted items and if it is after a Yes/No radial returns generate_cash with the value of the item for the NPC
+ * Arguments:
+ * * customer - (Mob REF) The mob trying to sell something
+ * * selling - (Item REF) The item being sold
+ */
+/datum/component/trader/proc/sell_item(mob/customer, obj/item/selling)
+	var/mob/living/trader = parent
+	var/cost
+	if(!selling)
+		return FALSE
+	var/list/product_info
+	//Keep track of the typepath; rather mundane but it's required for correctly modifying the wanted_items
+	//should a product be sellable because even if it doesn't have a entry because it's a child of a parent that is present on the list
+	var/typepath_for_product_info
+	if(selling.type in wanted_items)
+		product_info = wanted_items[selling.type]
+		typepath_for_product_info = selling.type
+	else //Assume wanted_items is setup in the correct way; read wanted_items documentation for more info
+		for(var/typepath in wanted_items)
+			if(istype(selling, typepath))
+				product_info = wanted_items[typepath]
+				typepath_for_product_info = typepath
+				break
+
+	if(!product_info) //Nothing interesting to sell
+		return FALSE
+	if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0)
+		trader.say(trader_data.return_trader_phrase(TRADER_HAS_ENOUGH_ITEM_PHRASE))
+		return FALSE
+	cost = apply_sell_price_mods(selling, product_info[TRADER_PRODUCT_INFO_PRICE])
+	if(cost <= 0)
+		trader.say(trader_data.return_trader_phrase(ITEM_IS_WORTHLESS_PHRASE))
+		return FALSE
+	trader.say(trader_data.return_trader_phrase(INTERESTED_PHRASE))
+	trader.say("You will receive [cost] [trader_data.currency_name] for the [selling].")
+	var/list/npc_options = list(
+		"Yes" = radial_icons_cache[TRADER_RADIAL_YES],
+		"No" = radial_icons_cache[TRADER_RADIAL_NO],
+	)
+	trader.face_atom(customer)
+	var/npc_result = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
+	if(npc_result != "Yes")
+		trader.say(trader_data.return_trader_phrase(ITEM_SELLING_CANCELED_PHRASE))
+		return TRUE
+	trader.say(trader_data.return_trader_phrase(ITEM_SELLING_ACCEPTED_PHRASE))
+	playsound(trader, trader_data.sell_sound, 50, TRUE)
+	log_econ("[selling] has been sold to [trader] (typepath used for product info; [typepath_for_product_info]) by [customer] for [cost] cash.")
+	exchange_sold_items(selling, cost, typepath_for_product_info)
+	generate_cash(cost, customer)
+	return TRUE
+
+/**
+ * Modifies the 'base' price of a item based on certain variables
+ *
+ * Arguments:
+ * * Reference to the item; this is the item being sold
+ * * Original cost; the original cost of the item, to be manipulated depending on the variables of the item, one example is using item.amount if it's a stack
+ */
+/datum/component/trader/proc/apply_sell_price_mods(obj/item/selling, original_cost)
+	if(isstack(selling))
+		var/obj/item/stack/stackoverflow = selling
+		original_cost *= stackoverflow.amount
+	return original_cost
+
+/**
+ * Handles modifying/deleting the items to ensure that a proper amount is converted into cash; put into it's own proc to make the children of this not override a 30+ line sell_item()
+ *
+ * Arguments:
+ * * selling - (Item REF) this is the item being sold
+ * * value_exchanged_for - (Number) the "value", useful for a scenario where you want to remove enough items equal to the value
+ * * original_typepath - (Typepath) For scenarios where a children of a parent is being sold but we want to modify the parent's product information
+ */
+/datum/component/trader/proc/exchange_sold_items(obj/item/selling, value_exchanged_for, original_typepath)
+	var/list/product_info = wanted_items[original_typepath]
+	if(isstack(selling))
+		var/obj/item/stack/the_stack = selling
+		var/actually_sold = min(the_stack.amount, product_info[TRADER_PRODUCT_INFO_QUANTITY])
+		the_stack.use(actually_sold)
+		product_info[TRADER_PRODUCT_INFO_QUANTITY] -= (actually_sold)
+	else
+		qdel(selling)
+		product_info[TRADER_PRODUCT_INFO_QUANTITY] -= 1
+
+/**
+ * Creates an item equal to the value set by the proc and puts it in the user's hands if possible
+ * Arguments:
+ * * value - A number; The amount of cash that will be on the holochip
+ * * customer - Reference to a mob; The mob we put the holochip in hands of
+ */
+/datum/component/trader/proc/generate_cash(value, mob/customer)
+	var/obj/item/holochip/chip = new /obj/item/holochip(get_turf(customer), value)
+	customer.put_in_hands(chip)
+
+///Talk about what items are being sold/wanted by the trader and in what quantity or lore
+/datum/component/trader/proc/discuss(mob/customer)
+	var/mob/living/trader = parent
+	var/list/npc_options = list(
+		"Lore" = radial_icons_cache[TRADER_RADIAL_LORE],
+		"Selling?" = radial_icons_cache[TRADER_RADIAL_DISCUSS_SELL],
+		"Buying?" = radial_icons_cache[TRADER_RADIAL_DISCUSS_BUY],
+	)
+	var/pick = show_radial_menu(customer, parent, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
+	switch(pick)
+		if("Lore")
+			trader.say(trader_data.return_trader_phrase(TRADER_LORE_PHRASE))
+		if("Buying?")
+			trader_buys_what(customer)
+		if("Selling?")
+			trader_sells_what(customer)
+
+///Displays to the customer what the trader is willing to buy and how much until a restock happens
+/datum/component/trader/proc/trader_buys_what(mob/customer)
+	var/mob/living/trader = parent
+	if(!wanted_items.len)
+		trader.say(trader_data.return_trader_phrase(TRADER_NOT_BUYING_ANYTHING))
+		return
+	var/list/product_info
+	to_chat(customer, span_green("I'm willing to buy the following; "))
+	for(var/obj/item/thing as anything in wanted_items)
+		product_info = wanted_items[thing]
+		var/tern_op_result = (product_info[TRADER_PRODUCT_INFO_QUANTITY] == INFINITY ? "as many as I can." : "[product_info[TRADER_PRODUCT_INFO_QUANTITY]]") //Coder friendly string concat
+		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Zero demand
+			to_chat(customer, span_notice("[span_red("(DOESN'T WANT MORE)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_red("[tern_op_result]")] more."))
+		else
+			to_chat(customer, span_notice("[initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_green("[tern_op_result]")]"))
+
+///Displays to the customer what the trader is selling and how much is in stock
+/datum/component/trader/proc/trader_sells_what(mob/customer)
+	var/mob/living/trader = parent
+	if(!products.len)
+		trader.say(trader_data.return_trader_phrase(TRADER_NOT_SELLING_ANYTHING))
+		return
+	var/list/product_info
+	to_chat(customer, span_green("I'm currently selling the following; "))
+	for(var/obj/item/thing as anything in products)
+		product_info = products[thing]
+		var/tern_op_result = (product_info[TRADER_PRODUCT_INFO_QUANTITY] == INFINITY ? "an infinite amount" : "[product_info[TRADER_PRODUCT_INFO_QUANTITY]]") //Coder friendly string concat
+		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Out of stock
+			to_chat(customer, span_notice("[span_red("(OUT OF STOCK)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_red("[tern_op_result]")] left in stock"))
+		else
+			to_chat(customer, span_notice("[initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_green("[tern_op_result]")] left in stock"))
+
+///Sets quantity of all products to initial(quanity); this proc is currently called during initialize
+/datum/component/trader/proc/restock_products()
+	products = trader_data.initial_products.Copy()
+
+///Sets quantity of all wanted_items to initial(quanity);  this proc is currently called during initialize
+/datum/component/trader/proc/renew_item_demands()
+	wanted_items = trader_data.initial_wanteds.Copy()
+
+#undef TRADER_RADIAL_BUY
+#undef TRADER_RADIAL_SELL
+#undef TRADER_RADIAL_TALK
+#undef TRADER_RADIAL_LORE
+#undef TRADER_RADIAL_DISCUSS_BUY
+#undef TRADER_RADIAL_DISCUSS_SELL
+#undef TRADER_RADIAL_NO
+#undef TRADER_RADIAL_YES
+#undef TRADER_RADIAL_OUT_OF_STOCK
+#undef TRADER_PRODUCT_INFO_PRICE
+#undef TRADER_PRODUCT_INFO_QUANTITY
+#undef TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION
