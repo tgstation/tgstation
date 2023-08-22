@@ -32,12 +32,15 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 1
 	show_in_report = TRUE
-	min_pop = 30
+	min_pop = 30 //only runs if there are 30 players by round start
 	report_message = "Our broadcast license for the common channel frequency in this sector has failed to be renewed. The frequency has been disabled from your telecomms network in order to avoid any legal issues, although it has been kept in the intercom system."
 	trait_to_give = STATION_TRAIT_COMMON_DISABLED
 
 /datum/station_trait/common_disabled/on_round_start()
 	. = ..()
+	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	if(filter_threshold < min_pop) //not enough players
+		return
 	for(var/obj/machinery/telecomms/machine in GLOB.telecomms_list)
 		machine.freq_listening.Remove(FREQ_COMMON)
 
