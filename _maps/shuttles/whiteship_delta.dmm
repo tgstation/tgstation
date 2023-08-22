@@ -1615,11 +1615,10 @@
 /turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "dG" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/basic/spider/giant/hunter/scrawny,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
