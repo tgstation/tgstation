@@ -1,0 +1,4 @@
+author: "Deadgebert"
+delete-after: True
+changes:
+  - bugfix: "Birdshot pharmacy airlock now requires pharmacy access"
