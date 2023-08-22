@@ -64,8 +64,7 @@
 	spawner_path = /obj/effect/mob_spawn/corpse/human/skeleton/mrbones
 	loot = list(/obj/effect/decal/remains/human)
 	ranged_attack_casing = /obj/item/ammo_casing/energy/bolt/halloween
-	ranged_attack_sound = 'sound/hallucinations/growl1.ogg'
-	held_weapon_visual = /obj/item/cane
+	held_weapon_visual = /obj/item/gun/ballistic/revolver
 
 	trader_data_path = /datum/trader_data/mr_bones
 
