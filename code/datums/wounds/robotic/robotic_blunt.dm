@@ -164,7 +164,7 @@
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/moderate
 	treatable_tool = TOOL_SCREWDRIVER
 
-	max_nausea_duration = DISGUST_LEVEL_GROSS + 5
+	max_nausea_duration = DISGUST_LEVEL_GROSS + 10
 
 	interaction_efficiency_penalty = 1.2
 	limp_slowdown = 2.5
@@ -264,7 +264,7 @@
 	daze_movement_shake_intensity_mult = 0.08
 	head_movement_daze_chance = 75
 
-	max_nausea_duration = DISGUST_LEVEL_VERYGROSS - 10
+	max_nausea_duration = DISGUST_LEVEL_VERYGROSS + 2 // just BARELY above the vomit threshold
 
 	chest_movement_nausea_chance = 0
 	chest_attacked_nausea_chance = 75
@@ -502,7 +502,7 @@
 	daze_movement_shake_intensity_mult = 0.2
 	head_movement_daze_chance = 100
 
-	max_nausea_duration = DISGUST_LEVEL_DISGUSTED - 10
+	max_nausea_duration = DISGUST_LEVEL_DISGUSTED + 5
 
 	attacked_organ_damage_individual_max = 8
 	attacked_organ_damage_chance = 100
