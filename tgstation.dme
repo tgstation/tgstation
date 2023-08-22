@@ -380,6 +380,7 @@
 #include "code\__DEFINES\MONKESTATION_DEFINES\dcs\signals\signals_atom.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\research_categories.dm"
+#include "code\__DEFINES\~monkestation\ai.dm"
 #include "code\__DEFINES\~monkestation\mobs.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_lists.dm"

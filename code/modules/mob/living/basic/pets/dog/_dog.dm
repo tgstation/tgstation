@@ -73,14 +73,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "skeletonmeat"
-	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/bone = 2000 * 4)
 	force = 3
 	throwforce = 5
 	attack_verb_continuous = list("attacks", "bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 
 /obj/item/dog_bone/pre_attack(atom/target, mob/living/user, params)
-	if (!isdog(target) || user.combat_mode)
+	if (!isdog(target) || (user.istate & ISTATE_HARM))
 		return ..()
 	var/mob/living/basic/pet/dog/dog_target = target
 	if (dog_target.stat != CONSCIOUS)
