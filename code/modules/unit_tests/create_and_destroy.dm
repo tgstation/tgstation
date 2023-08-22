@@ -7,103 +7,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
 	var/turf/spawn_at = run_loc_floor_bottom_left
-	var/list/ignore = list(
-		//Never meant to be created, errors out the ass for mobcode reasons
-		/mob/living/carbon,
-		//Nother template type, doesn't like being created with no seed
-		/obj/item/food/grown,
-		//And another
-		/obj/item/slimecross/recurring,
-		//This should be obvious
-		/obj/machinery/doomsday_device,
-		//Yet more templates
-		/obj/machinery/restaurant_portal,
-		//Template type
-		/obj/effect/mob_spawn,
-		//Template type
-		/obj/structure/holosign/robot_seat,
-		//Singleton
-		/mob/dview,
-		//Template type
-		/obj/item/bodypart,
-		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
-		/obj/merge_conflict_marker,
-		//briefcase launchpads erroring
-		/obj/machinery/launchpad/briefcase,
-		//Both are abstract types meant to scream bloody murder if spawned in raw
-		/obj/item/organ/external,
-		/obj/item/organ/external/wings,
-	)
-	//Say it with me now, type template
-	ignore += typesof(/obj/effect/mapping_helpers)
-	//This turf existing is an error in and of itself
-	ignore += typesof(/turf/baseturf_skipover)
-	ignore += typesof(/turf/baseturf_bottom)
-	//This demands a borg, so we'll let if off easy
-	ignore += typesof(/obj/item/modular_computer/pda/silicon)
-	//This one demands a computer, ditto
-	ignore += typesof(/obj/item/modular_computer/processor)
-	//Very finiky, blacklisting to make things easier
-	ignore += typesof(/obj/item/poster/wanted)
-	//This expects a seed, we can't pass it
-	ignore += typesof(/obj/item/food/grown)
-	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
-	ignore += typesof(/obj/effect/client_image_holder)
-	//Same to above. Needs a client / mob / hallucination to observe it to exist.
-	ignore += typesof(/obj/projectile/hallucination)
-	ignore += typesof(/obj/item/hallucinated)
-	//We don't have a pod
-	ignore += typesof(/obj/effect/pod_landingzone_effect)
-	ignore += typesof(/obj/effect/pod_landingzone)
-	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
-	ignore += typesof(/obj/effect/baseturf_helper)
-	//No tauma to pass in
-	ignore += typesof(/mob/camera/imaginary_friend)
-	//No pod to gondola
-	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
-	//No heart to give
-	ignore += typesof(/obj/structure/ethereal_crystal)
-	//No linked console
-	ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
-	//See above
-	ignore += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
-	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
-	ignore += typesof(/obj/effect/anomaly/grav/high)
-	//See above
-	ignore += typesof(/obj/effect/timestop)
-	//Invoke async in init, skippppp
-	ignore += typesof(/mob/living/silicon/robot/model)
-	//This lad also sleeps
-	ignore += typesof(/obj/item/hilbertshotel)
-	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
-	ignore += typesof(/obj/effect/sliding_puzzle)
-	//Stacks baseturfs, can't be tested here
-	ignore += typesof(/obj/effect/temp_visual/lava_warning)
-	//Stacks baseturfs, can't be tested here
-	ignore += typesof(/obj/effect/landmark/ctf)
-	//Our system doesn't support it without warning spam from unregister calls on things that never registered
-	ignore += typesof(/obj/docking_port)
-	//Asks for a shuttle that may not exist, let's leave it alone
-	ignore += typesof(/obj/item/pinpointer/shuttle)
-	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
-	ignore += typesof(/obj/structure/alien/resin/flower_bud)
-	//Needs a linked mecha
-	ignore += typesof(/obj/effect/skyfall_landingzone)
-	//Expects a mob to holderize, we have nothing to give
-	ignore += typesof(/obj/item/clothing/head/mob_holder)
-	//Needs cards passed into the initilazation args
-	ignore += typesof(/obj/item/toy/cards/cardhand)
-	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
-	ignore += typesof(/obj/machinery/computer/holodeck)
-	//runtimes if not paired with a landmark
-	ignore += typesof(/obj/structure/industrial_lift)
-	// Runtimes if the associated machinery does not exist, but not the base type
-	ignore += subtypesof(/obj/machinery/airlock_controller)
-	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
-	ignore += subtypesof(/atom/movable/screen/escape_menu)
-	// Can't spawn openspace above nothing, it'll get pissy at me
-	ignore += typesof(/turf/open/space/openspace)
-	ignore += typesof(/turf/open/openspace)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type
@@ -111,7 +14,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/original_baseturf_count = length(original_baseturfs)
 
 	GLOB.running_create_and_destroy = TRUE
-	for(var/type_path in typesof(/atom/movable, /turf) - ignore) //No areas please
+	for(var/type_path in typesof(/atom/movable, /turf) - uncreatables) //No areas please
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
 			//We change it back to prevent baseturfs stacking and hitting the limit

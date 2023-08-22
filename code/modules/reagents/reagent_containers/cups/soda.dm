@@ -306,7 +306,7 @@
 /obj/item/reagent_containers/cup/soda_cans/beer
 	name = "space beer"
 	desc = "Canned beer. In space."
-	icon_state = "beer"
+	icon_state = "space_beer"
 	volume = 40
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 40)
 	drink_type = GRAIN

@@ -4,6 +4,7 @@
 	name = "donut"
 	desc = "Goes great with robust coffee."
 	icon = 'icons/obj/food/donuts.dmi'
+	inhand_icon_state = "donut1"
 	bite_consumption = 5
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3)
 	tastes = list("donut" = 1)
@@ -32,6 +33,7 @@
 	is_decorated = TRUE
 	name = "[decorated_adjective] [name]"
 	icon_state = decorated_icon //delish~!
+	inhand_icon_state = "donut2"
 	reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
 	return TRUE
 

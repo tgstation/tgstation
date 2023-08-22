@@ -467,7 +467,7 @@
 //Stabilized effects start below.
 /datum/status_effect/stabilized/grey
 	id = "stabilizedgrey"
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
 	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
@@ -478,7 +478,7 @@
 
 /datum/status_effect/stabilized/orange
 	id = "stabilizedorange"
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 
 /datum/status_effect/stabilized/orange/tick(seconds_between_ticks)
 	var/body_temp_target = owner.get_body_temp_normal(apply_change = FALSE)
@@ -499,7 +499,7 @@
 
 /datum/status_effect/stabilized/purple
 	id = "stabilizedpurple"
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 	/// Whether we healed from our last tick
 	var/healed_last_tick = FALSE
 
@@ -533,7 +533,7 @@
 
 /datum/status_effect/stabilized/blue
 	id = "stabilizedblue"
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 
 /datum/status_effect/stabilized/blue/on_apply()
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
@@ -544,7 +544,7 @@
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 	var/cooldown = 30
 	var/max_cooldown = 30
 
@@ -567,7 +567,7 @@
 
 /datum/status_effect/stabilized/yellow
 	id = "stabilizedyellow"
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 	var/cooldown = 10
 	var/max_cooldown = 10
 
@@ -598,7 +598,7 @@
 
 /datum/status_effect/stabilized/darkpurple
 	id = "stabilizeddarkpurple"
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 	var/obj/item/hothands/fire
 
 /datum/status_effect/stabilized/darkpurple/on_apply()
@@ -624,7 +624,7 @@
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 
 /datum/status_effect/stabilized/darkblue/tick(seconds_between_ticks)
 	if(owner.fire_stacks > 0 && prob(80))
@@ -656,7 +656,7 @@
 
 /datum/status_effect/stabilized/silver
 	id = "stabilizedsilver"
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 
 /datum/status_effect/stabilized/silver/on_apply()
 	if(ishuman(owner))
@@ -682,7 +682,7 @@
 
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
 	var/healthcheck
 
@@ -712,7 +712,7 @@
 
 /datum/status_effect/stabilized/sepia
 	id = "stabilizedsepia"
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 	var/mod = 0
 
 /datum/status_effect/stabilized/sepia/tick(seconds_between_ticks)
@@ -730,7 +730,7 @@
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 	var/mob/living/clone
 
 /datum/status_effect/stabilized/cerulean/on_apply()
@@ -766,7 +766,7 @@
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 	var/originalcolor
 
 /datum/status_effect/stabilized/pyrite/on_apply()
@@ -782,7 +782,7 @@
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
-	colour = "red"
+	colour = SLIME_TYPE_RED
 
 /datum/status_effect/stabilized/red/on_apply()
 	. = ..()
@@ -794,7 +794,7 @@
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 	var/datum/dna/originalDNA
 	var/originalname
 
@@ -842,7 +842,7 @@
 
 /datum/status_effect/stabilized/pink
 	id = "stabilizedpink"
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 	/// List of weakrefs to mobs we have pacified
 	var/list/mobs = list()
 	/// Name of our faction
@@ -914,7 +914,7 @@
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
-	colour = "oil"
+	colour = SLIME_TYPE_OIL
 
 /datum/status_effect/stabilized/oil/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
@@ -931,7 +931,7 @@
 
 /datum/status_effect/stabilized/black
 	id = "stabilizedblack"
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 	/// How much we heal per tick (also how much we damage per tick times DRAIN_DAMAGE_MULTIPLIER).
 	var/heal_amount = 1
 	/// Weakref to the mob we're currently draining every tick.
@@ -999,7 +999,7 @@
 
 /datum/status_effect/stabilized/lightpink
 	id = "stabilizedlightpink"
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
@@ -1019,14 +1019,14 @@
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 
 /datum/status_effect/stabilized/adamantine/get_examine_text()
 	return span_warning("[owner.p_They()] [owner.p_have()] strange metallic coating on [owner.p_their()] skin.")
 
 /datum/status_effect/stabilized/gold
 	id = "stabilizedgold"
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 	var/mob/living/simple_animal/familiar
 
 /datum/status_effect/stabilized/gold/tick(seconds_between_ticks)
@@ -1066,7 +1066,7 @@
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW
 
 /datum/status_effect/stabilized/rainbow/tick(seconds_between_ticks)
 	if(owner.health <= 0)
