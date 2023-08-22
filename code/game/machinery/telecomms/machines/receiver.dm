@@ -63,7 +63,6 @@
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
 
-
 /obj/machinery/telecomms/receiver/preset_left/birdstation
 	name = "Receiver"
 	freq_listening = list()
