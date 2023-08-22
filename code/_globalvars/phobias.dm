@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
 	"insects" = typecacheof(list(
 		/mob/living/basic/cockroach,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 	)),
 ))
 
