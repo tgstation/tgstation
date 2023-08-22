@@ -677,6 +677,7 @@
 	update_health_hud()
 	update_icons() //Updates eye_light overlay
 
+
 /mob/living/silicon/robot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
@@ -1025,3 +1026,8 @@
 /mob/living/silicon/robot/set_stat(new_stat)
 	. = ..()
 	update_stat() // This is probably not needed, but hopefully should be a little sanity check for the spaghetti that borgs are built from
+
+/mob/living/silicon/robot/on_knockedout_trait_loss(datum/source)
+	. = ..()
+	set_stat(CONSCIOUS) //This is a horrible hack, but silicon code forced my hand
+	update_stat()
