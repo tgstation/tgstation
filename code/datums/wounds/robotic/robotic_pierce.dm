@@ -5,56 +5,12 @@
 	wound_type = WOUND_PIERCE
 	wound_series = WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE
 
-	limb_unimportant_damage_mult = 0.5
-	/// If [get_intensity_mult()] is at or above this, the limb gets disabled.
-	var/disable_at_intensity_mult
-
-	/// The bodyheat our victim must be at or above to start getting passive healing.
-	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 20)
-	/// The mult that heat differences between normal and current bodytemp is multiplied against. Controls passive heat healing.
-	var/heat_differential_healing_mult = 30
-
-	/// Percent chance for a heat repair to give the victim a message.
-	var/heat_heal_message_chance = 20
-
 /datum/wound_pregen_data/electrical_damage/pierce
 	abstract = TRUE
 
-/datum/wound/electrical_damage/pierce/wound_injury(datum/wound/electrical_damage/old_wound, attack_direction)
-	RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
-
-	return ..()
-
-/datum/wound/electrical_damage/pierce/set_limb(obj/item/bodypart/new_limb)
-	if (limb)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
-	if (new_limb)
-		RegisterSignals(new_limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
-
-	. = ..()
-
-	if (limb)
-		update_inefficiencies()
-
-/datum/wound/electrical_damage/pierce/set_victim(new_victim)
-	if (victim)
-		victim.remove_status_effect(/datum/status_effect/limp)
-
-	return ..()
-
-/datum/wound/electrical_damage/pierce/modify_seconds_for_intensity_after_mult(seconds_for_intensity)
-	if (!victim)
-		return seconds_for_intensity
-
-	var/healing_amount = max((victim.bodytemperature - heat_thresh_to_heal), 0) * heat_differential_healing_mult
-	if (healing_amount != 0 && prob(heat_heal_message_chance))
-		to_chat(victim, span_notice("You feel the solder within your [limb.plaintext_zone] reform and repair your [name]..."))
-
-	return seconds_for_intensity - healing_amount
-
 /datum/wound/electrical_damage/pierce/moderate
 	name = "Punctured Capacitor"
-	desc = "A major capacitor has been broken open, causing slow and intensifying electrical damage, as well as limb dysfunction."
+	desc = "A major capacitor has been broken open, causing slow but noticable electrical damage."
 	occur_text = "shoots out a short stream of sparks"
 	examine_desc = "is shuddering gently, movements a little weak"
 	treat_text = "Replacing of damaged wiring, though repairs via wirecutting instruments or sutures may suffice, albiet at limited efficiency. In case of emergency, \
@@ -72,7 +28,7 @@
 	intensity = 10 SECONDS
 	processing_full_shock_threshold = 8 MINUTES
 
-	processing_shock_power_per_second_max = 1.1
+	processing_shock_power_per_second_max = 1.2
 	processing_shock_power_per_second_min = 0.9
 
 	processing_shock_stun_chance = 0.5
@@ -105,7 +61,7 @@
 
 /datum/wound/electrical_damage/pierce/severe
 	name = "Penetrated Transformer"
-	desc = "A major transformer has been pierced, causing slow-to-progess but eventually intense electrical damage and limb dysfunction from power loss."
+	desc = "A major transformer has been pierced, causing slow-to-progess but eventually intense electrical damage."
 	occur_text = "sputters and goes limp for a moment as it ejects a stream of sparks"
 	examine_desc = "is shuddering significantly, servos briefly giving way in a rythmic pattern"
 	treat_text = "Containment of damaged wiring via gauze, securing of wires via a wirecutter/hemostat, then application of fresh wiring or sutures."
@@ -155,7 +111,7 @@
 
 /datum/wound/electrical_damage/pierce/critical
 	name = "Ruptured PSU"
-	desc = "The local PSU of this limb has suffered a core rupture, causing a progressive power failure that will slowly intensify into extreme electrical damage and massive limb dysfunction."
+	desc = "The local PSU of this limb has suffered a core rupture, causing a progressive power failure that will slowly intensify into massive electrical damage."
 	occur_text = "flashes with radiant blue, emitting a noise not unlike a jacobs ladder"
 	examine_desc = "'s PSU is visible, with a sizable hole in the center"
 	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or hemostat. \

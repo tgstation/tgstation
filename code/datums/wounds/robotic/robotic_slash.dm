@@ -29,9 +29,9 @@
 	var/shock_immunity_self_damage_reduction = 75
 
 	/// Mult for our damage if we are unimportant.
-	var/limb_unimportant_damage_mult = 1
+	var/limb_unimportant_damage_mult = 0.8
 	/// Mult for our progress if we are unimportant.
-	var/limb_unimportant_progress_mult = 1
+	var/limb_unimportant_progress_mult = 0.8
 
 	/// The overall "intensity" of this wound. Goes up to [processing_full_shock_threshold], and is used for determining our effect scaling. Measured in deciseconds.
 	var/intensity
@@ -67,6 +67,18 @@
 
 	var/overall_effect_mult = 1
 
+	/// The bodyheat our victim must be at or above to start getting passive healing.
+	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 20)
+	/// The mult that heat differences between normal and current bodytemp is multiplied against. Controls passive heat healing.
+	var/heat_differential_healing_mult = 5
+
+	/// Percent chance for a heat repair to give the victim a message.
+	var/heat_heal_message_chance = 20
+
+	/// If [get_intensity_mult()] is at or above this, the limb gets disabled.
+	var/disable_at_intensity_mult
+
+
 	scar_file = ROBOTIC_METAL_SCAR_FILE
 
 	processes = TRUE
@@ -85,7 +97,7 @@
 	var/base_mult = get_base_mult()
 
 	var/seconds_per_tick_for_intensity = seconds_per_tick * get_progress_mult()
-	modify_seconds_for_intensity_after_mult(seconds_per_tick_for_intensity)
+	seconds_per_tick_for_intensity = modify_seconds_for_intensity_after_mult(seconds_per_tick_for_intensity)
 
 	adjust_intensity(seconds_per_tick_for_intensity SECONDS)
 
@@ -167,10 +179,20 @@
 	return overall_effect_mult * base_mult
 
 /datum/wound/electrical_damage/proc/modify_seconds_for_intensity_after_mult(seconds_for_intensity)
-	return
+	if (!victim)
+		return seconds_for_intensity
+
+	var/healing_amount = max((victim.bodytemperature - heat_thresh_to_heal), 0) * heat_differential_healing_mult
+	if (healing_amount != 0 && prob(heat_heal_message_chance))
+		to_chat(victim, span_notice("You feel the solder within your [limb.plaintext_zone] reform and repair your [name]..."))
+
+	return seconds_for_intensity - healing_amount
 
 /datum/wound/electrical_damage/proc/adjust_intensity(to_adjust)
 	intensity = clamp((intensity + to_adjust), 0, processing_full_shock_threshold)
+
+	if (disable_at_intensity_mult)
+		set_disabling(get_intensity_mult() >= disable_at_intensity_mult)
 
 /datum/wound/electrical_damage/wound_injury(datum/wound/electrical_damage/old_wound, attack_direction)
 	. = ..()
@@ -212,7 +234,7 @@
 	. += " Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%."
 
 /datum/wound/electrical_damage/item_can_treat(obj/item/potential_treater, mob/user)
-	if (potential_treater.tool_behaviour == TOOL_HEMOSTAT)
+	if (potential_treater.tool_behaviour == TOOL_RETRACTOR)
 		return TRUE
 
 	if (istype(potential_treater, /obj/item/stack/cable_coil) && (limb.burn_dam <= 5))
@@ -221,7 +243,7 @@
 	return ..()
 
 /datum/wound/electrical_damage/treat(obj/item/treating_item, mob/user)
-	if (treating_item.tool_behaviour == TOOL_WIRECUTTER || treating_item.tool_behaviour == TOOL_HEMOSTAT)
+	if (treating_item.tool_behaviour == TOOL_WIRECUTTER || treating_item.tool_behaviour == TOOL_RETRACTOR)
 		return wirecut(treating_item, user)
 
 	if (istype(treating_item, /obj/item/stack/medical/suture) || istype(treating_item, /obj/item/stack/cable_coil))
@@ -238,10 +260,10 @@
 	var/change = (processing_full_shock_threshold * wire_repair_percent)
 	var/delay_mult = 1
 	if (user == victim)
-		delay_mult *= 4.5
+		delay_mult *= 2.2
 	if (is_suture)
-		delay_mult *= 3
-		change *= 0.6
+		delay_mult *= 2
+		change *= 0.8
 		var/obj/item/stack/medical/suture/suture_item = suturing_item
 		var/obj/item/stack/medical/suture/base_suture = /obj/item/stack/medical/suture
 		change += (suture_item.heal_brute - initial(base_suture.heal_brute))
@@ -257,7 +279,7 @@
 	var/replacing_or_suturing = (is_suture ? "repairing some" : "replacing")
 	if (!wiring_reset)
 		to_chat(user, span_warning("You notice the wiring within [your_or_other] [limb.plaintext_zone] is still loose... you might shock yourself!"))
-		delay_mult *= 9
+		delay_mult *= 4
 
 	while (suturing_item.tool_start_check())
 		user?.visible_message(span_warning("[user] begins [replacing_or_suturing] wiring within [their_or_other] [limb.plaintext_zone] with [suturing_item]..."), ignored_mobs = list(user))
@@ -270,8 +292,9 @@
 			set_wiring_status(FALSE, user)
 		else
 			var/repairs_or_replaces = (is_suture ? "repairs" : "replaces")
-			user?.visible_message(span_green("[user] [repairs_or_replaces] some of [their_or_other] [limb.plaintext_zone]'s wiring!"))
+			user?.visible_message(span_notice("[user] [repairs_or_replaces] some of [their_or_other] [limb.plaintext_zone]'s wiring!"))
 			adjust_intensity(-change)
+			victim.balloon_alert(user, "intensity reduced to [get_intensity_mult() * 100]%")
 
 			if (!wiring_reset)
 				user?.electrocute_act(max(process_shock_spark_count_max * get_intensity_mult(), 1), limb)
@@ -287,13 +310,13 @@
 	if (!wirecutting_tool.tool_start_check())
 		return TRUE
 
-	var/is_hemostat = (wirecutting_tool.tool_behaviour == TOOL_HEMOSTAT)
+	var/is_retractor = (wirecutting_tool.tool_behaviour == TOOL_RETRACTOR)
 
 	var/change = (processing_full_shock_threshold * wirecut_repair_percent)
 	var/delay_mult = 1
 	if (user == victim)
 		delay_mult *= 3
-	if (is_hemostat)
+	if (is_retractor)
 		delay_mult *= 2
 		change *= 0.8
 	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
@@ -316,6 +339,7 @@
 		else
 			user?.visible_message(span_green("[user] resets some of [their_or_other] [limb.plaintext_zone]'s wiring!"))
 			adjust_intensity(-change)
+			victim.balloon_alert(user, "intensity reduced to [get_intensity_mult() * 100]%")
 			set_wiring_status(TRUE, user)
 
 		if (remove_if_fixed())
@@ -400,10 +424,11 @@
 
 /datum/wound/electrical_damage/slash/moderate
 	name = "Frayed Wiring"
-	desc = "Internal wiring has suffered a slight abrasion, causing a very slow electrical fault that will intensify over time."
+	desc = "Internal wiring has suffered a slight abrasion, causing a slow electrical fault that will intensify over time."
 	occur_text = "lets out a few sparks, as a few frayed wires stick out"
 	examine_desc = "has a few frayed wires sticking out"
-	treat_text = "Replacing of damaged wiring, though repairs via wirecutting instruments or sutures may suffice, albiet at limited efficiency."
+	treat_text = "Replacing of damaged wiring, though repairs via wirecutting instruments or sutures may suffice, albiet at limited efficiency. In case of emergency, \
+				subject may be subjected to high temperatures to allow solder to reset."
 
 	sound_effect = 'sound/effects/wounds/robotic_slash_T1.ogg'
 
@@ -415,7 +440,7 @@
 	threshold_penalty = 20
 
 	intensity = 10 SECONDS
-	processing_full_shock_threshold = 3.5 MINUTES
+	processing_full_shock_threshold = 2 MINUTES
 
 	processing_shock_power_per_second_max = 0.2
 	processing_shock_power_per_second_min = 0.1
@@ -426,8 +451,8 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.20 //20% per wirecut
-	wire_repair_percent = 0.08 //8% per suture
+	wirecut_repair_percent = 0.18 //18% per wirecut
+	wire_repair_percent = 0.07 //7% per suture
 
 	wiring_reset = TRUE
 
@@ -448,7 +473,7 @@
 	desc = "A number of wires have been completely cut, resulting in electrical faults that will intensify at a worrying rate."
 	occur_text = "sends some electrical fiber in the direction of the blow, beginning to profusely spark"
 	examine_desc = "has multiple severed wires visible to the outside"
-	treat_text = "Containment of damaged wiring via gauze, securing of wires via a wirecutter/hemostat, then application of fresh wiring or sutures."
+	treat_text = "Containment of damaged wiring via gauze, securing of wires via a wirecutter/retractor, then application of fresh wiring or sutures."
 
 	sound_effect = 'sound/effects/wounds/robotic_slash_T2.ogg'
 
@@ -459,8 +484,8 @@
 	threshold_minimum = 60
 	threshold_penalty = 30
 
-	intensity = 20 SECONDS
-	processing_full_shock_threshold = 3 MINUTES
+	intensity = 10 SECONDS
+	processing_full_shock_threshold = 1.5 MINUTES
 
 	processing_shock_power_per_second_max = 0.4
 	processing_shock_power_per_second_min = 0.2
@@ -471,8 +496,8 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.18 //18% per wirecut
-	wire_repair_percent = 0.06 //6% per suture
+	wirecut_repair_percent = 0.16 //16% per wirecut
+	wire_repair_percent = 0.045 //4.5% per suture
 
 	initial_sparks_amount = 3
 
@@ -491,7 +516,8 @@
 	desc = "A significant portion of the power distribution network has been cut open, resulting in massive power loss and runaway electrocution."
 	occur_text = "lets out a violent \"zhwarp\" sound as angry electric arcs attack the surrounding air"
 	examine_desc = "has lots of wires mauled wires sticking out"
-	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or hemostat."
+	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or retractor. \
+				If the fault has become uncontrollable, extreme heat therapy is reccomended."
 
 	severity = WOUND_SEVERITY_CRITICAL
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_FLESH)
@@ -503,8 +529,8 @@
 	threshold_minimum = 100
 	threshold_penalty = 50
 
-	intensity = 30 SECONDS
-	processing_full_shock_threshold = 2 MINUTES
+	intensity = 10 SECONDS
+	processing_full_shock_threshold = 1 MINUTES
 
 	processing_shock_power_per_second_max = 1
 	processing_shock_power_per_second_min = 0.8
@@ -515,8 +541,8 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.16 //16% per wirecut
-	wire_repair_percent = 0.05 //5% per suture
+	wirecut_repair_percent = 0.14 //14% per wirecut
+	wire_repair_percent = 0.03 //3% per suture
 
 	initial_sparks_amount = 8
 

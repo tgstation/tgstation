@@ -44,6 +44,11 @@
 	/// The minimum heat difference we must have on reagent contact to cause heat shock damage.
 	var/heat_shock_minimum_delta = 5
 
+	/// The max temp differential we can have applied to our limb during this tick interval, used for preventing things like splashing a beaker to instantly kill someone.
+	var/reagent_temp_diff_allowed_this_interval = 0
+	/// The max temp differential we can have applied to our limb during a given tick interval, used for preventing things like splashing a beaker to instantly kill someone.
+	var/reagent_temp_diff_allowed_per_interval = 70
+
 	/// The wound we demote to when we go below cooling threshold. If null, removes us.
 	var/datum/wound/burn/robotic/demotes_to
 	/// The wound we promote to when we go above heating threshold.
@@ -105,6 +110,9 @@
 	return new /obj/effect/dummy/lighting_obj(limb, light_range, light_power, light_color)
 
 /datum/wound/burn/robotic/overheat/handle_process(seconds_per_tick, times_fired)
+
+	reagent_temp_diff_allowed_this_interval = (reagent_temp_diff_allowed_per_interval * seconds_per_tick)
+
 	if (victim)
 		if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick)))
 			return
@@ -155,10 +163,17 @@
 
 	var/reagent_coefficient = (source.total_volume * base_reagent_temp_coefficient) * base_mult
 
-	expose_temperature(source.chem_temp, reagent_coefficient, TRUE) // if we are sprayed with something, we will immediately cool. or heat the fuck up :)
+	expose_temperature(source.chem_temp, reagent_coefficient, TRUE, TRUE) // if we are sprayed with something, we will immediately cool. or heat the fuck up :)
 
-/datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff=0.02, heat_shock = FALSE)
+/datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE, use_max = FALSE)
 	var/temp_delta = (temperature - chassis_temperature) * coeff
+
+	if (use_max)
+		var/sign = SIGN(temp_delta)
+		temp_delta = min(abs(temp_delta), reagent_temp_diff_allowed_this_interval)
+		reagent_temp_diff_allowed_this_interval -= abs(temp_delta)
+		temp_delta *= sign
+
 	if(temp_delta > 0)
 		chassis_temperature = min(chassis_temperature + max(temp_delta, 1), temperature)
 	else
@@ -218,8 +233,8 @@
 
 	outgoing_bodytemp_coeff = 0.001
 
-	base_reagent_temp_coefficient = 0.07
-	heat_shock_delta_to_damage_ratio = 0.2
+	base_reagent_temp_coefficient = 0.05
+	heat_shock_delta_to_damage_ratio = 0.16
 
 	promotes_to = /datum/wound/burn/robotic/overheat/severe
 
@@ -263,7 +278,7 @@
 	outgoing_bodytemp_coeff = 0.003
 	bodytemp_coeff = 0.01
 
-	base_reagent_temp_coefficient = 0.04
+	base_reagent_temp_coefficient = 0.03
 	heat_shock_delta_to_damage_ratio = 0.1
 
 	demotes_to = /datum/wound/burn/robotic/overheat/moderate
@@ -311,8 +326,8 @@
 	outgoing_bodytemp_coeff = 0.006 // burn... BURN...
 	bodytemp_coeff = 0.008
 
-	base_reagent_temp_coefficient = 0.01
-	heat_shock_delta_to_damage_ratio = 0.05
+	base_reagent_temp_coefficient = 0.008
+	heat_shock_delta_to_damage_ratio = 0.07
 
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 

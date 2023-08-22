@@ -87,12 +87,12 @@
 	/// The maximum time in deciseconds daze() may cause dizziness for
 	var/daze_dizziness_maximum_duration = 20 SECONDS
 
-	/// The maximum duration our nausea will last for.
-	var/max_nausea_duration = 5 SECONDS
+	/// The maximum duration our nausea will last for. See _stomach.dm for the various levels of nausea.
+	var/max_nausea_duration
 	/// The base amount of nausea we apply to our victim on movement.
 	var/chest_movement_base_nausea_score = 0.2 SECONDS
 	/// Percent chance, every time we move, to attempt to increase nausea of the victim if we are on the chest.
-	var/chest_movement_nausea_chance = 2
+	var/chest_movement_nausea_chance = 0
 
 	/// The minimum damage the chest must sustain before we try to increase their nausea.
 	var/chest_attacked_nausea_minimum_score = 7
@@ -111,24 +111,13 @@
 	var/chest_movement_organ_damage_individual_max = 2
 
 	/// The max amount of damage any specific organ can take from being randomly damaged on attacked.
-	var/chest_attacked_organ_damage_individual_max = 10
+	var/attacked_organ_damage_individual_max = 10
 	/// The chance for the internal organs of our limb to be damaged when the limb is attacked.
-	var/chest_attacked_organ_damage_chance = 0
+	var/attacked_organ_damage_chance = 0
 	/// Score mult for overall organ damage on hit
-	var/chest_attacked_organ_damage_mult = 0.5
+	var/attacked_organ_damage_mult = 0.5
 	/// Minimum score required to damage random organs on hit
-	var/chest_attacked_organ_damage_minimum_score = 5
-
-	/// Damage arms take is multiplied by this to get the percent chance of dropping it's held item when attacked.
-	var/drop_item_on_hit_chance_mult = 0.2
-	/// Minimum damage that must be taken to drop an item
-	var/drop_item_on_hit_minimum_damage = WOUND_MINIMUM_DAMAGE
-	/// Damage legs take is multiplied by this to get the percent chance of the victim collapsing when legs are attacked.
-	var/knockdown_on_hit_chance_mult = 0.2
-	/// Minimum damage that must be taken to fall over
-	var/knockdown_on_hit_minimum_damage = WOUND_MINIMUM_DAMAGE
-	/// Time, in deciseconds, a knockdown from being hit in the legs will last.
-	var/knockdown_on_hit_time = 1 SECONDS
+	var/attacked_organ_damage_minimum_score = 5
 
 	/// Our current counter for gel + gauze regeneration
 	var/regen_time_elapsed = 0 SECONDS
@@ -156,6 +145,13 @@
 
 	wound_series = WOUND_SERIES_METAL_BLUNT_BASIC
 
+/datum/wound/blunt/robotic/set_victim(new_victim)
+	if (victim)
+		victim.remove_status_effect(/datum/status_effect/limp)
+
+	. = ..()
+	update_inefficiencies()
+
 /datum/wound/blunt/robotic/moderate
 	name = "Loosened Screws"
 	desc = "Various semi-external fastening instruments have loosened, causing components to jostle, inhibiting limb control."
@@ -168,21 +164,20 @@
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/moderate
 	treatable_tool = TOOL_SCREWDRIVER
 
-	interaction_efficiency_penalty = 1.15
-	limp_slowdown = 2
-	limp_chance = 25
+	max_nausea_duration = DISGUST_LEVEL_GROSS + 5
+
+	interaction_efficiency_penalty = 1.2
+	limp_slowdown = 2.5
+	limp_chance = 30
 	threshold_minimum = 30
 	threshold_penalty = 20
-
-	drop_item_on_hit_minimum_damage = 8
-	knockdown_on_hit_minimum_damage = 8
 
 	daze_attacked_chance = 70
 	daze_attacked_minimum_score = 8
 	daze_attacked_shake_duration_mult = 0.05
 	daze_attacked_shake_intensity_mult = 0.1
 
-	daze_dizziness_maximum_duration = 20 SECONDS
+	daze_dizziness_maximum_duration = 10 SECONDS
 	daze_dizzy_minimum_score = 5
 	daze_dizzy_mult = 2
 
@@ -238,7 +233,7 @@
 	desc = "Various fastening devices are extremely loose, and solder has disconnected at multiple points, causing significant jostling of internal components and \
 			noticable limb dysfunction."
 	treat_text = "Fastening of bolts and screws by a qualified technician (though bone gel may suffice in the absence of one), followed up by re-soldering."
-	examine_desc = "jostles with every move, with visibly broken solder"
+	examine_desc = "jostles with every move, solder visibly broken"
 	occur_text = "visibly cracks open, solder flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
 
@@ -253,33 +248,33 @@
 	threshold_minimum = 65
 	threshold_penalty = 40
 
-	drop_item_on_hit_minimum_damage = 8
-	knockdown_on_hit_minimum_damage = 8
-
 	daze_attacked_chance = 95
 	daze_attacked_minimum_score = 6
-	daze_attacked_shake_duration_mult = 0.2
-	daze_attacked_shake_intensity_mult = 0.4
+	daze_attacked_shake_duration_mult = 0.4
+	daze_attacked_shake_intensity_mult = 0.8
 
-	daze_dizziness_maximum_duration = 400
+	daze_dizziness_maximum_duration = 20 SECONDS
 	daze_dizzy_minimum_score = 3
 	daze_dizzy_mult = 10
 
-	daze_movement_shake_duration_mult = 0.2
-	daze_movement_shake_intensity_mult = 0.05
+	daze_movement_shake_duration_mult = 0.3
+	daze_movement_shake_intensity_mult = 0.08
 	head_movement_daze_chance = 75
 
-	chest_movement_nausea_chance = 8
-	chest_attacked_nausea_chance = 50
-	chest_attacked_nausea_mult = 0.4 // saw = 15, 1.5 seconds of disgust at x1
+	max_nausea_duration = DISGUST_LEVEL_VERYGROSS - 10
 
-	chest_movement_organ_damage_chance = 2
+	chest_movement_nausea_chance = 0
+	chest_attacked_nausea_chance = 75
+	chest_attacked_nausea_mult = 0.7 // saw = 15, 1.5 seconds of disgust at x1
+
+	chest_movement_organ_damage_chance = 0
 	chest_movement_organ_damage_min = 2
 	chest_movement_organ_damage_max = 7
 	chest_movement_organ_damage_individual_max = 2
 
-	chest_attacked_organ_damage_chance = 25
-	chest_attacked_organ_damage_mult = 0.5
+	attacked_organ_damage_individual_max = 3
+	attacked_organ_damage_chance = 50
+	attacked_organ_damage_mult = 0.4
 
 	a_or_from = "from"
 
@@ -337,7 +332,7 @@
 	if (!securing_item.tool_start_check())
 		return TRUE
 
-	var/chance = 5
+	var/chance = 10
 	var/delay_mult = 1
 
 	if (user == victim)
@@ -470,10 +465,12 @@
 	examine_desc = "looks caved in, with internal components visible through gaps in the metal"
 	severity = WOUND_SEVERITY_CRITICAL
 
-	damage_mulitplier_penalty = 1.2
-	interaction_efficiency_penalty = 3
+	//damage_mulitplier_penalty = 1.2
+	disabling = TRUE
+
+	interaction_efficiency_penalty = 2.8
 	limp_slowdown = 8
-	limp_chance = 90
+	limp_chance = 80
 	threshold_minimum = 125
 	threshold_penalty = 60
 
@@ -483,47 +480,44 @@
 
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
 
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE | MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
 	treatable_by = list(/obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/severe
 	treatable_tool = TOOL_WELDER
 
-	drop_item_on_hit_minimum_damage = 8
-	knockdown_on_hit_minimum_damage = 8
-
 	daze_attacked_chance = 100
 	daze_attacked_minimum_score = 1
 	daze_attacked_shake_duration_mult = 1
-	daze_attacked_shake_intensity_mult = 0.5
+	daze_attacked_shake_intensity_mult = 1.2
 
 	daze_dizziness_maximum_duration = 80 SECONDS
 	daze_dizzy_minimum_score = 1
 	daze_dizzy_mult = 15
 
+
 	daze_movement_shake_duration_mult = 1
 	daze_movement_shake_intensity_mult = 0.2
 	head_movement_daze_chance = 100
 
-	chest_attacked_organ_damage_individual_max = 20
-	/// The chance for the internal organs of our limb to be damaged when the limb is attacked.
-	chest_attacked_organ_damage_chance = 100
-	chest_attacked_organ_damage_mult = 0.5
+	max_nausea_duration = DISGUST_LEVEL_DISGUSTED - 10
 
-	max_nausea_duration = 10 SECONDS
+	attacked_organ_damage_individual_max = 8
+	attacked_organ_damage_chance = 100
+	attacked_organ_damage_mult = 0.25
 
-	chest_movement_nausea_chance = 12
+	chest_movement_nausea_chance = 4
 
 	chest_attacked_nausea_chance = 75
 	chest_attacked_nausea_mult = 0.5 // saw = 15, 1.5 seconds of disgust at x1
 	chest_attacked_nausea_minimum_score = 4
 
-	chest_movement_organ_damage_chance = 10
-	chest_movement_organ_damage_min = 4
-	chest_movement_organ_damage_max = 10
+	chest_movement_organ_damage_chance = 2
+	chest_movement_organ_damage_min = 3
+	chest_movement_organ_damage_max = 6
 	chest_movement_organ_damage_individual_max = 4
 
-	chest_attacked_organ_damage_chance = 25
-	chest_attacked_organ_damage_mult = 0.5
+	attacked_organ_damage_chance = 25
+	attacked_organ_damage_mult = 0.5
 
 	a_or_from = "a"
 
@@ -559,8 +553,6 @@
 		if (limb_malleable())
 			if (istype(potential_treater, /obj/item/plunger))
 				return TRUE
-		/*else if (potential_treater.tool_behaviour == TOOL_WELDER)
-			return TRUE*/
 	return ..()
 
 /datum/wound/blunt/robotic/critical/check_grab_treatments(obj/item/potential_treater, mob/user)
@@ -677,7 +669,7 @@
 	if (prob(chance))
 		if (user)
 			user.visible_message(span_green("[treating_rcd] lets out a small ping as it finishes replacing the superstructure of [victim]'s [limb.plaintext_zone]."))
-		to_chat(victim, span_green("[treating_rcd] has finished replacing your [limb.plaintext_zone]'s superstructure! Your next step is to secure it with bone gel."))
+		to_chat(victim, span_green("[treating_rcd] has finished replacing your [limb.plaintext_zone]'s superstructure! Your next step is to secure it with bone gel/screwdriver."))
 		set_superstructure_status(TRUE)
 
 	else
@@ -697,7 +689,7 @@
 	if (!treating_plunger.use_tool(target = victim, user = user, delay = 8 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
-	var/chance = 50
+	var/chance = 80
 	if (victim == user)
 		chance *= 0.5
 
@@ -711,7 +703,7 @@
 	if (prob(chance))
 		if (user)
 			user.visible_message(span_green("[victim]'s [limb.plaintext_zone] lets out a sharp POP as the suction of [treating_plunger] forces the superstructure into it's normal position!"))
-		to_chat(victim, span_green("Your [limb.plaintext_zone]'s structure has been reset to it's proper position! Your next step is to secure it with bone gel."))
+		to_chat(victim, span_green("Your [limb.plaintext_zone]'s structure has been reset to it's proper position! Your next step is to secure it with bone gel/screwdriver."))
 		set_superstructure_status(TRUE)
 	else
 		if (user)
@@ -790,28 +782,16 @@
 			if (prob(daze_attacked_chance))
 				daze(effective_damage, daze_attacked_shake_duration_mult, daze_attacked_shake_intensity_mult)
 
-		if (BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-			if (effective_damage > drop_item_on_hit_minimum_damage)
-				try_dropping_item(effective_damage)
-
-		if (BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			if (effective_damage > knockdown_on_hit_minimum_damage)
-				try_falling_over(effective_damage)
-
 		if (BODY_ZONE_CHEST)
-			var/nausea = FALSE
-			var/do_damage = FALSE
-			if ((effective_damage >= chest_attacked_nausea_minimum_score) && prob(chest_attacked_nausea_chance))
+			var/nausea_prob_mult = 1
+			if (victim.body_position == LYING_DOWN)
+				nausea_prob_mult *= 0.5
+			if ((effective_damage >= chest_attacked_nausea_minimum_score) && prob(chest_attacked_nausea_chance * nausea_prob_mult))
 				victim.adjust_disgust(effective_damage * chest_attacked_nausea_mult, max_nausea_duration)
-				nausea = TRUE
-			if ((effective_damage >= chest_attacked_organ_damage_minimum_score) && prob(chest_attacked_organ_damage_chance))
-				attack_random_organs((effective_damage * chest_attacked_organ_damage_mult), chest_attacked_organ_damage_individual_max)
-				do_damage = TRUE
-			if (nausea || do_damage)
-				var/from_or_nothing = (attacking_item ? " [attacking_item]'s" : "")
-				var/painfully_or_not = (do_damage ? " painfully" : "")
-				var/nausea_or_not = (nausea ? " a wave of nausea as" : "")
-				to_chat(victim, span_warning("You feel[nausea_or_not] your [limb.plaintext_zone]'s internals jostle[painfully_or_not] from the[from_or_nothing] impact!"))
+				to_chat(victim, span_warning("You feel a wave of nausea as your [limb.plaintext_zone]'s internals jostle from the impact!"))
+
+	if (!limb_unimportant() && (effective_damage >= attacked_organ_damage_minimum_score) && prob(attacked_organ_damage_chance))
+		attack_random_organs((effective_damage * attacked_organ_damage_mult), attacked_organ_damage_individual_max)
 
 	if (uses_percussive_maintenance() && (damage > 0)) // we use the threshold because generally speaking higher force attacks are trying to fuck you up
 		if (damage <= percussive_maintenance_damage_threshold && (damagetype == BRUTE && !sharpness)) // anything above it wont try to repair it
@@ -911,27 +891,6 @@
 /datum/wound/blunt/robotic/proc/daze(daze_amount, shake_duration_mult, shake_intensity_mult)
 	shake_camera(victim, duration = (daze_amount * shake_duration_mult), strength = (daze_amount * shake_intensity_mult))
 	victim.adjust_dizzy_up_to(daze_amount * daze_dizzy_mult, daze_dizziness_maximum_duration)
-
-/datum/wound/blunt/robotic/proc/try_dropping_item(score)
-	var/obj/item/held_item = victim.get_item_for_held_index(limb.held_index)
-	if (istype(held_item, /obj/item/offhand))
-		held_item = victim.get_inactive_held_item()
-	if (!held_item)
-		return
-
-	var/drop_chance = min((score * drop_item_on_hit_chance_mult), 100)
-	if (prob(drop_chance))
-		if (victim.dropItemToGround(held_item))
-			victim.visible_message(span_danger("[victim]'s [limb.plaintext_zone] shakes from the impact and drops [held_item]!"), \
-			span_warning("<b>Your [limb.plaintext_zone] shakes from the impact, causing you to drop [held_item]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
-
-/datum/wound/blunt/robotic/proc/try_falling_over(score)
-	var/fall_chance = min((score * knockdown_on_hit_chance_mult), 100)
-	if (prob(fall_chance))
-		victim.Knockdown(knockdown_on_hit_time)
-		if (victim.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-			return
-		to_chat(victim, span_warning("The blow to your [limb.plaintext_zone] sends you to the ground!"))
 
 /datum/wound/blunt/robotic/proc/update_inefficiencies(datum/source)
 	SIGNAL_HANDLER
