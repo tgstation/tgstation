@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/tram/nav/tramstation/main
 	name = MAIN_STATION_TRAM
 	specific_lift_id = TRAM_NAV_BEACONS
+	dir = WEST
 
 /obj/effect/landmark/tram/platform/tramstation/west
 	name = "West Wing"
@@ -57,12 +58,13 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 //map-agnostic landmarks
 
 /obj/effect/landmark/tram/nav/immovable_rod
-	name = "Immovable Rod Landmark"
+	name = "DESTINATION_NOT_FOUND"
 	specific_lift_id = IMMOVABLE_ROD_DESTINATIONS
 
 /obj/effect/landmark/tram/nav/hilbert/research
 	name = HILBERT_TRAM
 	specific_lift_id = TRAM_NAV_BEACONS
+	dir = WEST
 
 //birdshot
 
@@ -75,10 +77,12 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/tram/nav/birdshot/prison
 	name = PRISON_TRAM
 	specific_lift_id = TRAM_NAV_BEACONS
+	dir = NORTH
 
 /obj/effect/landmark/tram/nav/birdshot/maint
 	name = MAINTENANCE_TRAM
 	specific_lift_id = TRAM_NAV_BEACONS
+	dir = WEST
 
 /obj/effect/landmark/tram/platform/birdshot/sec_wing
 	name = "Security Wing"

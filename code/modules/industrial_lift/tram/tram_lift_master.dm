@@ -123,8 +123,8 @@
 	if(destination_platform == idle_platform)
 		return FALSE
 
-	travel_direction = get_dir(idle_platform, destination_platform)
-	travel_distance = get_dist(idle_platform, destination_platform)
+	travel_direction = get_dir(nav_beacon, destination_platform)
+	travel_distance = get_dist(nav_beacon, destination_platform)
 	travel_trip_length = travel_distance
 	idle_platform = destination_platform
 	set_travelling(TRUE)
@@ -239,38 +239,52 @@
  *            travel_dir: travel direction in tram form, INBOUND or OUTBOUND
  *            beacon_type: what list of beacons we pull from
  */
-/datum/lift_master/tram/proc/closest_nav_in_travel_dir(atom/source, travel_dir, beacon_type)
-	if(!istype(source) || !source.z)
+/datum/lift_master/tram/proc/closest_nav_in_travel_dir(atom/origin, travel_dir, beacon_type)
+	if(!istype(origin) || !origin.z)
 		return FALSE
 
 	var/list/obj/effect/landmark/tram/nav/inbound_candidates = list()
 	var/list/obj/effect/landmark/tram/nav/outbound_candidates = list()
 
-	for(var/obj/effect/landmark/tram/nav/beacon in GLOB.tram_landmarks[beacon_type])
-		if(beacon.z != source.z)
+	for(var/obj/effect/landmark/tram/nav/candidate_beacon in GLOB.tram_landmarks[beacon_type])
+		if(candidate_beacon.z != origin.z || candidate_beacon.z != nav_beacon.z)
 			continue
 
-		switch(source.dir)
+		switch(nav_beacon.dir)
 			if(EAST, WEST)
-				if(beacon.x < source.x)
-					inbound_candidates += beacon
+				if(candidate_beacon.y != nav_beacon.y)
+					continue
+				else if(candidate_beacon.x < nav_beacon.x)
+					inbound_candidates += candidate_beacon
 				else
-					outbound_candidates += beacon
+					outbound_candidates += candidate_beacon
 			if(NORTH, SOUTH)
-				if(beacon.y < source.y)
-					inbound_candidates += beacon
+				if(candidate_beacon.x != nav_beacon.x)
+					continue
+				else if(candidate_beacon.y < nav_beacon.y)
+					inbound_candidates += candidate_beacon
 				else
-					outbound_candidates += beacon
+					outbound_candidates += candidate_beacon
 
 	switch(travel_dir)
 		if(INBOUND)
-			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, inbound_candidates, source)
-			return selected
-		if(OUTBOUND)
-			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, outbound_candidates, source)
-			return selected
-		else
+			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, inbound_candidates, origin)
+			if(selected)
+				return selected
+			stack_trace("No inbound beacon candidate found for [origin]. Cancelling dispatch.")
 			return FALSE
+
+		if(OUTBOUND)
+			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, outbound_candidates, origin)
+			if(selected)
+				return selected
+			stack_trace("No outbound beacon candidate found for [origin]. Cancelling dispatch.")
+			return FALSE
+
+		else
+			stack_trace("Tram receieved invalid travel direction [travel_dir]. Cancelling dispatch.")
+
+	return FALSE
 
 /**
  * Moves the tram when hit by an immovable rod
@@ -289,7 +303,9 @@
 	else
 		rod_velocity_sign = collided_rod.dir & EAST ? OUTBOUND : INBOUND
 
-	var/obj/effect/landmark/tram/nav/push_destination = closest_nav_in_travel_dir(source = collided_rod, travel_dir = rod_velocity_sign, beacon_type = IMMOVABLE_ROD_DESTINATIONS)
+	var/obj/effect/landmark/tram/nav/push_destination = closest_nav_in_travel_dir(origin = nav_beacon, travel_dir = rod_velocity_sign, beacon_type = IMMOVABLE_ROD_DESTINATIONS)
+	if(!push_destination)
+		return
 	travel_direction = get_dir(nav_beacon, push_destination)
 	travel_distance = get_dist(nav_beacon, push_destination)
 	travel_trip_length = travel_distance
