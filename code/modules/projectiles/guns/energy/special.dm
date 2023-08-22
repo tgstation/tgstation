@@ -35,9 +35,9 @@
 
 /obj/item/gun/energy/decloner
 	name = "biological demolecularisor"
-	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
+	desc = "A gun that discharges high amounts of controlled radiation that can quickly incapacitate targets."
 	icon_state = "decloner"
-	ammo_type = list(/obj/item/ammo_casing/energy/declone)
+	ammo_type = list(/obj/item/ammo_casing/energy/radiation)
 	ammo_x_offset = 1
 
 /obj/item/gun/energy/decloner/update_overlays()
@@ -48,7 +48,7 @@
 
 /obj/item/gun/energy/decloner/unrestricted
 	pin = /obj/item/firing_pin
-	ammo_type = list(/obj/item/ammo_casing/energy/declone/weak)
+	ammo_type = list(/obj/item/ammo_casing/energy/radiation/weak)
 
 /obj/item/gun/energy/floragun
 	name = "floral somatoray"
