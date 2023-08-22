@@ -67,8 +67,6 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Return the scanner wand"
 		return screentip_change = TRUE
 
-	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
-
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
 	var/mob/living/carbon/human/paying = paying_ref?.resolve()
 	if(!paying)
