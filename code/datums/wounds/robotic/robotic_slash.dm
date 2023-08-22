@@ -471,7 +471,7 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.018 //18% per wirecut
+	wirecut_repair_percent = 0.18 //18% per wirecut
 	wire_repair_percent = 0.06 //6% per suture
 
 	initial_sparks_amount = 3
@@ -515,7 +515,7 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.016 //16% per wirecut
+	wirecut_repair_percent = 0.16 //16% per wirecut
 	wire_repair_percent = 0.05 //5% per suture
 
 	initial_sparks_amount = 8

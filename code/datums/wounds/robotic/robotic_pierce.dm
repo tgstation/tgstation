@@ -81,7 +81,7 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.015 //15% per wirecut
+	wirecut_repair_percent = 0.15 //15% per wirecut
 	wire_repair_percent = 0.06 //6% per suture
 
 	interaction_efficiency_penalty = 2
@@ -131,7 +131,7 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.012 //12% per wirecut
+	wirecut_repair_percent = 0.12 //12% per wirecut
 	wire_repair_percent = 0.04 //4% per suture
 
 	interaction_efficiency_penalty = 2.5
