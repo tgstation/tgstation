@@ -440,10 +440,16 @@
 			qdel(limb)
 			return FALSE
 		limb.update_limb(is_creating = TRUE)
-		var/datum/scar/scaries = new
-		var/datum/wound/loss/phantom_loss = new // stolen valor, really
-		phantom_loss.loss_wound_type = dismembered_by_copy?[limb.body_zone]
-		scaries.generate(limb, phantom_loss)
+		if (LAZYLEN(dismembered_by_copy))
+			var/datum/scar/scaries = new
+			var/datum/wound/loss/phantom_loss = new // stolen valor, really
+			phantom_loss.loss_wound_type = dismembered_by_copy?[limb_zone]
+			if (phantom_loss.loss_wound_type)
+				scaries.generate(limb, phantom_loss)
+				LAZYREMOVE(dismembered_by_copy, limb_zone) // in case we're using a passed list
+			else
+				qdel(scaries)
+				qdel(phantom_loss)
 
 		//Copied from /datum/species/proc/on_species_gain()
 		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
