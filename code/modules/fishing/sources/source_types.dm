@@ -69,7 +69,6 @@
 	catalog_description = "Liquid plasma vents"
 	fish_table = list(
 		FISHING_DUD = 5,
-		/obj/item/fish/chasm_crab/ice = 15,
 		/obj/item/coin/plasma = 3,
 		/obj/item/stack/ore/plasma = 3,
 		/mob/living/basic/mining/lobstrosity = 1,

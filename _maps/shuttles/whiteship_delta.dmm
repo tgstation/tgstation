@@ -463,10 +463,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/basic/giant_spider/hunter/scrawny,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -474,10 +470,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/basic/spider/giant/hunter/scrawny,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -977,11 +969,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/mob/living/basic/giant_spider/tarantula/scrawny,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/gun/energy/laser/retro,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -989,10 +976,6 @@
 	},
 /obj/structure/cable,
 /mob/living/basic/spider/giant/tarantula/scrawny,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/gun/energy/laser/retro,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1565,21 +1548,12 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/giant_spider/nurse/scrawny,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/spider/giant/nurse/scrawny,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1659,18 +1633,7 @@
 "dG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
-/mob/living/basic/giant_spider/hunter/scrawny,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/mob/living/basic/spider/giant/hunter/scrawny,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /mob/living/basic/spider/giant/hunter/scrawny,
