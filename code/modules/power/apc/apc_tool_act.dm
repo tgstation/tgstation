@@ -113,12 +113,6 @@
 		terminal.dismantle(user, W)
 		return TRUE
 
-/obj/machinery/power/apc/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	if(panel_open && !opened)
-		wires.interact(user)
-		return
-	return ..()
-
 /obj/machinery/power/apc/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
 
