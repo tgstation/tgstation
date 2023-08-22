@@ -72,12 +72,11 @@
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
-	var/mutable_appearance/alert = mutable_appearance('icons/obj/storage/closet.dmi', "cardboard_special")
-	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)
-	var/atom/movable/flick_visual/exclamation = flick_overlay_view(alert, 1 SECONDS)
-	exclamation.alpha = 0
-	exclamation.pixel_x = -pixel_x
-	animate(exclamation, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
+	var/image/alert_image = image('icons/obj/storage/closet.dmi', src, "cardboard_special", layer+1)
+	SET_PLANE_EXPLICIT(alert_image, ABOVE_LIGHTING_PLANE, src)
+	flick_overlay_view(alert_image, 0.8 SECONDS)
+	alert_image.alpha = 0
+	animate(alert_image, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
 	// We use this list to update plane values on parent z change, which is why we need the timer too
 	// I'm sorry :(
 	LAZYADD(update_on_z, alert_image)

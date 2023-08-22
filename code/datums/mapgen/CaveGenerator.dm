@@ -147,7 +147,7 @@
 					break
 			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
 			else
-				var/list/things_in_range = range(12, turf)
+				var/list/things_in_range = range(12, new_turf)
 				for(var/mob/living/mob_blocker in things_in_range)
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
