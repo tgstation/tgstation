@@ -488,7 +488,7 @@
 	desc = "A significant portion of the power distribution network has been cut open, resulting in massive power loss and runaway electrocution."
 	occur_text = "lets out a violent \"zhwarp\" sound as angry electric arcs attack the surrounding air"
 	examine_desc = "has lots of wires mauled wires sticking out"
-	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing."
+	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or hemostat."
 
 	severity = WOUND_SEVERITY_CRITICAL
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_FLESH)
@@ -529,7 +529,7 @@
 	wound_path_to_generate = /datum/wound/electrical_damage/slash/critical
 
 #undef ELECTRICAL_DAMAGE_ON_STASIS_MULT
-#undef ELECTRICAL_DAMAGE_GRASPED_MUL
+#undef ELECTRICAL_DAMAGE_GRASPED_MULT
 #undef ELECTRICAL_DAMAGE_LYING_DOWN_MULT
 
 #undef ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY

@@ -201,7 +201,7 @@
 			sustain unrelated wounds."
 	occur_text = "lets out a slight groan as it turns a dull shade of thermal red"
 	examine_desc = "is glowing a dull thermal red and giving off heat"
-	treat_text = "Reduction of body temperature to expedite the passive heat dissipation - or, if thermal shock is to be risked, application of a fire extinguisher."
+	treat_text = "Reduction of body temperature to expedite the passive heat dissipation - or, if thermal shock is to be risked, application of a fire extinguisher/shower."
 	severity = WOUND_SEVERITY_MODERATE
 
 	damage_mulitplier_penalty = 1.1 //1.1x damage taken
