@@ -228,6 +228,9 @@
 	victim.visible_message(span_green("[user] finishes fastening [their_or_other] [limb.plaintext_zone]!"))
 	remove_wound()
 
+/datum/wound/blunt/robotic/get_limb_examine_description()
+	return span_warning("This limb looks loosely held together.")
+
 /datum/wound/blunt/robotic/severe
 	name = "Detached Fastenings"
 	desc = "Various fastening devices are extremely loose, and solder has disconnected at multiple points, causing significant jostling of internal components and \

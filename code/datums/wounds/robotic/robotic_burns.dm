@@ -109,6 +109,9 @@
 
 	return new /obj/effect/dummy/lighting_obj(limb, light_range, light_power, light_color)
 
+/datum/wound/burn/robotic/get_limb_examine_description()
+	return span_warning("The metal on this limb is glowing radiantly.")
+
 /datum/wound/burn/robotic/overheat/handle_process(seconds_per_tick, times_fired)
 
 	reagent_temp_diff_allowed_this_interval = (reagent_temp_diff_allowed_per_interval * seconds_per_tick)

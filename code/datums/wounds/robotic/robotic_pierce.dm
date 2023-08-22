@@ -8,6 +8,9 @@
 /datum/wound_pregen_data/electrical_damage/pierce
 	abstract = TRUE
 
+/datum/wound/burn/electrical_damage/pierce/get_limb_examine_description()
+	return span_warning("The metal on this limb is pierced open.")
+
 /datum/wound/electrical_damage/pierce/moderate
 	name = "Punctured Capacitor"
 	desc = "A major capacitor has been broken open, causing slow but noticable electrical damage."

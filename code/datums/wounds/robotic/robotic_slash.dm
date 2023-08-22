@@ -88,6 +88,9 @@
 
 	required_limb_biostate = (BIO_WIRED)
 
+/datum/wound/burn/electrical_damage/slash/get_limb_examine_description()
+	return span_warning("The metal on this limb is slashed open.")
+
 /datum/wound/electrical_damage/handle_process(seconds_per_tick, times_fired)
 	. = ..()
 
