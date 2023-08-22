@@ -26,9 +26,6 @@
 	/// Stamina damage to heal over a second
 	var/stamina_heal = 0
 
-	/// Amount of cloning damage to heal over a second
-	var/clone_heal = 0
-
 	/// Amount of blood to heal over a second
 	var/blood_heal = 0
 
@@ -57,7 +54,6 @@
 	toxin_heal = 0,
 	suffocation_heal = 0,
 	stamina_heal = 0,
-	clone_heal = 0,
 	blood_heal = 0,
 	organ_healing = null,
 	simple_heal = 0,
@@ -76,7 +72,6 @@
 	src.toxin_heal = toxin_heal
 	src.suffocation_heal = suffocation_heal
 	src.stamina_heal = stamina_heal
-	src.clone_heal = clone_heal
 	src.blood_heal = blood_heal
 	src.organ_healing = organ_healing
 	src.simple_heal = simple_heal
@@ -126,7 +121,6 @@
 
 			candidate.adjustOxyLoss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
 			candidate.adjustStaminaLoss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
-			candidate.adjustCloneLoss(-clone_heal * seconds_per_tick, updating_health = FALSE)
 
 			for (var/organ in organ_healing)
 				candidate.adjustOrganLoss(organ, -organ_healing[organ] * seconds_per_tick)

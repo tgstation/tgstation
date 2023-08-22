@@ -4,7 +4,6 @@
 	var/burn_mod = 1 // % of burn damage taken from all sources
 	var/tox_mod = 1 // % of toxin damage taken from all sources
 	var/oxy_mod = 1 // % of oxygen damage taken from all sources
-	var/clone_mod = 1 // % of clone damage taken from all sources
 	var/stamina_mod = 1 // % of stamina damage taken from all sources
 	var/brain_mod = 1 // % of brain damage taken from all sources
 

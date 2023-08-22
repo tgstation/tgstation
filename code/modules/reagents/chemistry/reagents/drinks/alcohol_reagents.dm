@@ -1293,7 +1293,6 @@
 	if(drinker.health <= 0)
 		drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		drinker.adjustFireLoss(-3 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-		drinker.adjustCloneLoss(-5 * REM * seconds_per_tick, 0)
 		drinker.adjustOxyLoss(-4 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		drinker.adjustToxLoss(-3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		. = TRUE

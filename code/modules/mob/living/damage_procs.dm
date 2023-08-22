@@ -29,8 +29,6 @@
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
 			adjustOxyLoss(damage_amount, forced = forced)
-		if(CLONE)
-			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			adjustStaminaLoss(damage_amount, forced = forced)
 	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
@@ -47,8 +45,6 @@
 			return adjustToxLoss(damage)
 		if(OXY)
 			return adjustOxyLoss(damage)
-		if(CLONE)
-			return adjustCloneLoss(damage)
 		if(STAMINA)
 			return adjustStaminaLoss(damage)
 
@@ -63,13 +59,11 @@
 			return getToxLoss()
 		if(OXY)
 			return getOxyLoss()
-		if(CLONE)
-			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
 
 /// applies multiple damages at once via [/mob/living/proc/apply_damage]
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -80,8 +74,6 @@
 		apply_damage(tox, TOX, def_zone, blocked)
 	if(oxy)
 		apply_damage(oxy, OXY, def_zone, blocked)
-	if(clone)
-		apply_damage(clone, CLONE, def_zone, blocked)
 	if(stamina)
 		apply_damage(stamina, STAMINA, def_zone, blocked)
 	if(brain)
@@ -259,25 +251,6 @@
 	fireloss = amount
 	if(updating_health)
 		updatehealth()
-
-/mob/living/proc/getCloneLoss()
-	return cloneloss
-
-/mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
-		return FALSE
-	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
-	if(updating_health)
-		updatehealth()
-	return amount
-
-/mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
-		return FALSE
-	cloneloss = amount
-	if(updating_health)
-		updatehealth()
-	return amount
 
 /mob/living/proc/adjustOrganLoss(slot, amount, maximum, required_organ_flag)
 	return

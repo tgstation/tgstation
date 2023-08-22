@@ -81,8 +81,6 @@ In all, this is a lot like the monkey code. /N
 				adjustToxLoss(damage)
 			if(OXY)
 				adjustOxyLoss(damage)
-			if(CLONE)
-				adjustCloneLoss(damage)
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 

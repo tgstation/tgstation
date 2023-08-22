@@ -157,7 +157,6 @@
 	affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
-	affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, FALSE, affected_biotype)
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(power * REM * seconds_per_tick)
@@ -169,22 +168,6 @@
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(round(volume * 3))
 	mytray.adjust_toxic(-round(volume * 3))
-
-/datum/reagent/medicine/clonexadone
-	name = "Clonexadone"
-	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
-	color = "#3D3DC6"
-	taste_description = "muscle"
-	ph = 13
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
-/datum/reagent/medicine/clonexadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.bodytemperature < T0C)
-		affected_mob.adjustCloneLoss((0.00006 * (affected_mob.bodytemperature ** 2) - 6) * REM * seconds_per_tick, FALSE)
-		REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		. = TRUE
-	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (affected_mob.bodytemperature ** 2) + 0.75)
-	..()
 
 /datum/reagent/medicine/pyroxadone
 	name = "Pyroxadone"
@@ -211,7 +194,6 @@
 		affected_mob.adjustBruteLoss(-power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1.5 * power * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustToxLoss(-power * REM * seconds_per_tick, FALSE, TRUE, affected_biotype)
-		affected_mob.adjustCloneLoss(-power * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		for(var/i in affected_mob.all_wounds)
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(power * REM * seconds_per_tick)
@@ -229,8 +211,8 @@
 	taste_description = "fish"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+// Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that. // No such luck so far // 2023 here, rip rezadone o7
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that. // No such luck so far
 	affected_mob.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 	REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	..()
@@ -1221,7 +1203,6 @@
 	affected_mob.adjustOxyLoss(-15 * REM * seconds_per_tick, FALSE)
 	affected_mob.adjustToxLoss(-5 * REM * seconds_per_tick, FALSE)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15 * REM * seconds_per_tick)
-	affected_mob.adjustCloneLoss(-3 * REM * seconds_per_tick, FALSE)
 	..()
 	. = TRUE
 
@@ -1248,7 +1229,6 @@
 		affected_mob.adjustFireLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustOxyLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.adjustToxLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-		affected_mob.adjustCloneLoss(-0.1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, affected_organ_flags) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	else
@@ -1256,7 +1236,6 @@
 		affected_mob.adjustFireLoss(-5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustOxyLoss(-3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		affected_mob.adjustToxLoss(-3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-		affected_mob.adjustCloneLoss(-1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjustStaminaLoss(-3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 		affected_mob.adjust_jitter_up_to(6 SECONDS * REM * seconds_per_tick, 1 MINUTES)
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, 150, affected_organ_flags)

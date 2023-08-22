@@ -63,7 +63,6 @@
 			owner.adjustBruteLoss(-heal_amt * seconds_per_tick)
 			owner.adjustFireLoss(-heal_amt * seconds_per_tick)
 			owner.adjustOxyLoss(-heal_amt * seconds_per_tick)
-			owner.adjustCloneLoss(-heal_amt * seconds_per_tick)
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * seconds_per_tick)
 

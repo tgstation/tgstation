@@ -47,7 +47,6 @@
 		vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 		vampire.adjustToxLoss(-2 * seconds_per_tick)
 		vampire.adjustOxyLoss(-2 * seconds_per_tick)
-		vampire.adjustCloneLoss(-2 * seconds_per_tick)
 		return
 	vampire.blood_volume -= 0.125 * seconds_per_tick
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)

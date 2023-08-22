@@ -124,7 +124,6 @@ Consuming extracts:
 	M.adjustFireLoss(-5)
 	M.adjustToxLoss(-5, forced=1) //To heal slimepeople.
 	M.adjustOxyLoss(-5)
-	M.adjustCloneLoss(-5)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
 
 /obj/item/slimecross/consuming/blue

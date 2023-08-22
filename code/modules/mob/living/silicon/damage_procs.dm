@@ -21,12 +21,6 @@
 /mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE) //immune to clone damage
-	return FALSE
-
-/mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	return FALSE
-
 /mob/living/silicon/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype) //immune to stamina damage.
 	return FALSE
 

@@ -327,7 +327,7 @@ Versioning
 		first_death["role"] = null
 		first_death["role"] = L.mind.assigned_role.title
 		first_death["area"] = "[AREACOORD(L)]"
-		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>/<font color='pink'>[L.getCloneLoss()]</font>"
+		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>"
 		first_death["last_words"] = L.last_words
 
 	if(!SSdbcore.Connect())
@@ -349,7 +349,7 @@ Versioning
 		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_loss returns null without a brain but a value is required for this column
 		"oxy" = L.getOxyLoss(),
 		"tox" = L.getToxLoss(),
-		"clone" = L.getCloneLoss(),
+		"clone" = 0, // rip clone damage
 		"stamina" = L.getStaminaLoss(),
 		"x_coord" = L.x,
 		"y_coord" = L.y,

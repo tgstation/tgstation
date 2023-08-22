@@ -985,8 +985,6 @@
 		healing_types += BURN
 	if(owner.getToxLoss() > 0)
 		healing_types += TOX
-	if(owner.getCloneLoss() > 0)
-		healing_types += CLONE
 
 	if(length(healing_types))
 		owner.apply_damage_type(-heal_amount, damagetype = pick(healing_types))

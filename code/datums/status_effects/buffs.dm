@@ -49,8 +49,6 @@
 	owner.adjustFireLoss(-grace_heal)
 	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
 	owner.adjustOxyLoss(-(grace_heal * 2))
-	owner.adjustCloneLoss(-grace_heal)
-
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
 	id = "wish_granters_gift"
@@ -91,7 +89,6 @@
 		human_owner.physiology.burn_mod *= 0.1
 		human_owner.physiology.tox_mod *= 0.1
 		human_owner.physiology.oxy_mod *= 0.1
-		human_owner.physiology.clone_mod *= 0.1
 		human_owner.physiology.stamina_mod *= 0.1
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
@@ -104,7 +101,6 @@
 		human_owner.physiology.burn_mod *= 10
 		human_owner.physiology.tox_mod *= 10
 		human_owner.physiology.oxy_mod *= 10
-		human_owner.physiology.clone_mod *= 10
 		human_owner.physiology.stamina_mod *= 10
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 	owner.remove_stun_absorption(id)
@@ -190,7 +186,6 @@
 		toxin_heal = 1.4, \
 		suffocation_heal = 1.4, \
 		stamina_heal = 1.4, \
-		clone_heal = 0.4, \
 		simple_heal = 1.4, \
 		organ_healing = organ_healing, \
 		healing_color = "#375637", \
@@ -260,7 +255,6 @@
 			itemUser.adjustOxyLoss(-1.5, forced = TRUE)
 			itemUser.adjustStaminaLoss(-1.5)
 			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
-			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message(span_notice("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
