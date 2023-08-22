@@ -152,8 +152,6 @@
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break
-				// Also block spawns if there's a random lavaland mob spawner nearby
-				can_spawn = can_spawn && !(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
 				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, new_turf))
