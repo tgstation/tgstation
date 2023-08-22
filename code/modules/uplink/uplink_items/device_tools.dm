@@ -254,7 +254,7 @@
 	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
 
