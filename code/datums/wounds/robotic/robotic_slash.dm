@@ -1,8 +1,13 @@
+/// How much damage and progress is reduced when on stasis.
 #define ELECTRICAL_DAMAGE_ON_STASIS_MULT 0.1
+/// How much damage and progress is reduced when limb is grasped.
 #define ELECTRICAL_DAMAGE_GRASPED_MULT 0.5
+/// How much damage and progress is reduced when our victim lies down.
 #define ELECTRICAL_DAMAGE_LYING_DOWN_MULT 0.5
 
+/// Base time for a wirecutter being used.
 #define ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY 4 SECONDS
+/// Base time for a cable coil being used.
 #define ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY 1 SECONDS
 
 /datum/wound/electrical_damage
@@ -14,31 +19,47 @@
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/stack/cable_coil)
 
+	/// If our wiring is safe to manually manipultae. If false, attempts to use sutures/coils will shock the helper.
 	var/wiring_reset = FALSE
 
+	/// How many sparks do we spawn when we're gained?
 	var/initial_sparks_amount
 
+	/// How much of our damage is reduced if the target is shock immune. Percent.
 	var/shock_immunity_self_damage_reduction = 75
 
+	/// Mult for our damage if we are unimportant.
 	var/limb_unimportant_damage_mult = 1
+	/// Mult for our progress if we are unimportant.
 	var/limb_unimportant_progress_mult = 1
 
+	/// The overall "intensity" of this wound. Goes up to [processing_full_shock_threshold], and is used for determining our effect scaling. Measured in deciseconds.
 	var/intensity
+	/// The time, in deciseconds, it takes to reach 100% power.
 	var/processing_full_shock_threshold
+	/// If [intensity] is at or below this, we remove ourselves.
 	var/minimum_intensity = 0
 
+	/// How much shock power we add to [processing_shock_power_this_tick] per tick. Lower bound
 	var/processing_shock_power_per_second_min
+	/// How much shock power we add to [processing_shock_power_this_tick] per tick. Upper bound
 	var/processing_shock_power_per_second_max
 
-	/// In the case we get below 1 power, we add the power to this buffer and use it next tick
+	/// In the case we get below 1 power, we add the power to this buffer and use it next tick.
 	var/processing_shock_power_this_tick
+	/// The chance for each processed shock to stun the user.
 	var/processing_shock_stun_chance
+	/// The chance for each processed shock to spark.
 	var/processing_shock_spark_chance
+	/// The chance for each processed shock to message the user.
 	var/process_shock_message_chance = 80
 
+	/// Simple mult for how much of real time is added to [intensity].
 	var/seconds_per_intensity_mult = 1
 
+	/// How many sparks we spawn if a shock sparks. Lower bound
 	var/process_shock_spark_count_min
+	/// How many sparks we spawn if a shock sparks. Upper bound
 	var/process_shock_spark_count_max
 
 	var/wirecut_repair_percent
@@ -506,3 +527,10 @@
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/slash/critical
+
+#undef ELECTRICAL_DAMAGE_ON_STASIS_MULT
+#undef ELECTRICAL_DAMAGE_GRASPED_MUL
+#undef ELECTRICAL_DAMAGE_LYING_DOWN_MULT
+
+#undef ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY
+#undef ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY

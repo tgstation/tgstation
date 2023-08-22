@@ -24,6 +24,7 @@
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
+	/// If this wound can generate a scar.
 	var/can_scar = TRUE
 
 	/// The file we take our scar descriptions from.
@@ -176,16 +177,19 @@
 
 	return TRUE
 
+/// Returns TRUE if we can be applied to the limb.
 /datum/wound/proc/can_be_applied_to(obj/item/bodypart/L, datum/wound/old_wound)
 	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 
 	return pregen_data.can_be_applied_to(L, wound_type, old_wound)
 
+/// Returns the zones we can be applied to.
 /datum/wound/proc/get_viable_zones()
 	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 
 	return pregen_data.viable_zones
 
+/// Returns the biostate we require to be applied.
 /datum/wound/proc/get_required_biostate()
 	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 
@@ -337,6 +341,7 @@
 	// lastly, treat them
 	return treat(I, user) // we allow treat to return a value so it can control if the item does its normal interaction or not
 
+/// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour == treatable_tool)
@@ -449,6 +454,7 @@
 
 	return get_desc_intensity(desc)
 
+/// A hook proc used to modify desc before it is spanned via [get_desc_intensity]. Useful for inserting spans yourself.
 /datum/wound/proc/modify_desc_before_span(desc, mob/user)
 	return desc
 
@@ -467,6 +473,7 @@
 		if(4 to INFINITY)
 			return "tightly"
 
+/// Spans [desc] based on our severity.
 /datum/wound/proc/get_desc_intensity(desc)
 	SHOULD_BE_PURE(TRUE)
 	if (severity > WOUND_SEVERITY_MODERATE)
@@ -487,6 +494,7 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
 
+/// Returns false if our limb is the head or chest, true otherwise.
 /datum/wound/proc/limb_unimportant()
 	return (!(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST))
 
@@ -494,5 +502,6 @@
 /datum/wound/proc/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)
 	return scar_keyword
 
+/// Getter proc for our scar_file, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
 	return scar_file

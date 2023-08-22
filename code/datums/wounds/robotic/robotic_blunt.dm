@@ -38,6 +38,7 @@
 /// Any incoming attacks must be below this value to count as percussive maintenance
 #define PERCUSSIVE_MAINTENANCE_DAMAGE_THRESHOLD 8
 
+/// Cost of an RCD to quickly fix our broken superstructure
 #define ROBOTIC_T3_BLUNT_WOUND_RCD_COST 25
 
 #define BLUNT_ATTACK_EXPOSED_ORGAN_CHANCE_MULT 0.2
@@ -54,26 +55,36 @@
 	name = "Robotic Blunt (Screws and bolts) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
 
+	/// Minimum score required to proc dizziness on daze()
 	var/daze_dizzy_minimum_score = 5
+	/// Score mult for daze() dizziness
 	var/daze_dizzy_mult = 1
 
+	/// Score mult for daze() camerashake duration
 	var/daze_shake_duration_mult = 0.2
+	/// Score mult for daze() camerashake intensity
 	var/daze_shake_intensity_mult = 0.2
 
 	/// The minimum damage our limb must sustain before we try to daze our victim.
 	var/daze_attacked_minimum_score = 8
+	/// Minimum score required for a daze() proc when we move
 	var/daze_movement_base_score = 5 // the same as if someone hit you with a 5 force weapon
 	/// Assuming we sustain more damage than our minimum, this is the chance for a given attack to proc a daze attempt.
 	var/daze_attacked_chance = 35
 	/// Percent chance, every time we move, to attempt to daze the victim if we are on the head.
 	var/head_movement_daze_chance = 5
 
+	/// Score mult for daze() camerashake duration on move
 	var/daze_movement_shake_duration_mult = 1
+	/// Score mult for daze() camerashake intensity on move
 	var/daze_movement_shake_intensity_mult = 1
 
+	/// Score mult for daze() camerashake duration on hit
 	var/daze_attacked_shake_duration_mult = 1
+	/// Score mult for daze() camerashake intensity on hit
 	var/daze_attacked_shake_intensity_mult = 1
 
+	/// The maximum time in deciseconds daze() may cause dizziness for
 	var/daze_dizziness_maximum_duration = 20 SECONDS
 
 	/// The maximum duration our nausea will last for.
@@ -103,31 +114,42 @@
 	var/chest_attacked_organ_damage_individual_max = 10
 	/// The chance for the internal organs of our limb to be damaged when the limb is attacked.
 	var/chest_attacked_organ_damage_chance = 0
+	/// Score mult for overall organ damage on hit
 	var/chest_attacked_organ_damage_mult = 0.5
+	/// Minimum score required to damage random organs on hit
 	var/chest_attacked_organ_damage_minimum_score = 5
 
 	/// Damage arms take is multiplied by this to get the percent chance of dropping it's held item when attacked.
 	var/drop_item_on_hit_chance_mult = 0.2
+	/// Minimum damage that must be taken to drop an item
 	var/drop_item_on_hit_minimum_damage = WOUND_MINIMUM_DAMAGE
 	/// Damage legs take is multiplied by this to get the percent chance of the victim collapsing when legs are attacked.
 	var/knockdown_on_hit_chance_mult = 0.2
+	/// Minimum damage that must be taken to fall over
 	var/knockdown_on_hit_minimum_damage = WOUND_MINIMUM_DAMAGE
 	/// Time, in deciseconds, a knockdown from being hit in the legs will last.
 	var/knockdown_on_hit_time = 1 SECONDS
 
 	/// Our current counter for gel + gauze regeneration
 	var/regen_time_elapsed = 0 SECONDS
+	/// Time needed for gel to secure internals.
 	var/regen_time_needed = 30 SECONDS
 
+	/// If we can use bone gel to secure internals.
 	var/gellable = FALSE
+	/// If we have used bone gel to secure internals.
 	var/gelled = FALSE
+	/// Total brute damage taken over the span of [regen_time_needed] deciseconds when we gel our limb.
 	var/gel_damage = 40 // brute in total
 
+	/// If we are ready to begin screwdrivering or gelling our limb.
 	var/ready_to_secure_internals = FALSE
-	// If we've secured internals already, next step is to weld
+	/// If internals are secured, and we are ready to weld our limb closed and end the wound
 	var/ready_to_ghetto_weld = TRUE
 
+	/// % chance for hitting our limb to fix something.
 	var/percussive_maintenance_repair_chance = 25
+	/// Damage must be over this to proc percussive maintenance.
 	var/percussive_maintenance_damage_threshold = 7
 
 	scar_file = ROBOTIC_BLUNT_SCAR_FILE
@@ -791,10 +813,6 @@
 				var/nausea_or_not = (nausea ? " a wave of nausea as" : "")
 				to_chat(victim, span_warning("You feel[nausea_or_not] your [limb.plaintext_zone]'s internals jostle[painfully_or_not] from the[from_or_nothing] impact!"))
 
-	/*if (wounding_dmg > WOUND_MINIMUM_DAMAGE)
-		if (exposed_organ_attacked(wounding_type, wounding_dmg))
-			attack_random_organs(total_damage = wounding_dmg)*/
-
 	if (uses_percussive_maintenance() && (damage > 0)) // we use the threshold because generally speaking higher force attacks are trying to fuck you up
 		if (damage <= percussive_maintenance_damage_threshold && (damagetype == BRUTE && !sharpness)) // anything above it wont try to repair it
 			var/mob/living/user
@@ -938,3 +956,13 @@
 	limb.update_wounds()
 
 #undef BLUNT_ATTACK_DAZE_MULT
+
+#undef PERCUSSIVE_MAINTENANCE_REPAIR_CHANCE
+#undef PERCUSSIVE_MAINTENANCE_DAMAGE_THRESHOLD
+
+#undef ROBOTIC_T3_BLUNT_WOUND_RCD_COST
+
+#undef BLUNT_ATTACK_EXPOSED_ORGAN_CHANCE_MULT
+#undef SLASH_ATTACK_EXPOSED_ORGAN_CHANCE_MULT
+#undef PIERCE_ATTACK_EXPOSED_ORGAN_CHANCE_MULT
+#undef BURN_ATTACK_EXPOSED_ORGAN_CHANCE_MULT

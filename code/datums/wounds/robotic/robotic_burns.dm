@@ -1,6 +1,3 @@
-#define ROBOTIC_BURN_T1_STARTING_TEMP_MIN (BODYTEMP_NORMAL + 200)  // kelvin
-#define ROBOTIC_BURN_T1_STARTING_TEMP_MAX (ROBOTIC_BURN_T1_STARTING_TEMP_MIN + 50)
-
 /datum/wound_pregen_data/burnt_metal
 	abstract = TRUE
 
@@ -9,37 +6,57 @@
 /datum/wound/burn/robotic/overheat
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
 
+	/// The virtual temperature of the chassis. Crucial for many things, like our severity, the temp we transfer, our cooling damage, etc.
 	var/chassis_temperature
 
+	/// The lower bound of the chassis_temperature we can start with.
 	var/starting_temperature_min = (BODYTEMP_NORMAL + 200)
+	/// The upper bound of the chassis_temperature we can start with.
 	var/starting_temperature_max = (BODYTEMP_NORMAL + 250)
 
+	/// If [chassis_temperature] goes below this, we reduce in severity.
 	var/cooling_threshold = (BODYTEMP_NORMAL + 3)
+	/// If [chassis_temperature] goes above this, we increase in severity.
 	var/heating_threshold = (BODYTEMP_NORMAL + 300)
 
+	/// The buffer in kelvin we will subtract from the chassis_temperature of a wound we demote to.
 	var/cooling_demote_buffer = 60
+	/// The buffer in kelvin we will add to the chassis_temperature of a wound we promote to.
 	var/heating_promote_buffer = 60
 
+	/// The coefficient of heat transfer we will use when shifting our temp to the victim's.
 	var/bodytemp_coeff = 0.04
+	/// The coefficient of heat transfer we will use when shifting our victim's temp to ours.
 	var/outgoing_bodytemp_coeff = 0
+	/// The mult applied to heat output when we are on a important limb, e.g. head/torso.
 	var/important_outgoing_mult = 1.2
+	/// The coefficient of heat transfer we will use when shifting our temp to a turf.
 	var/turf_coeff = 0.02
 
+	/// If we are hit with burn damage, the damage will be multiplied against this to determine the effective heat we get.
 	var/incoming_damage_heat_coeff = 3
 
+	/// The coefficient of heat transfer we will use when receiving heat from reagent contact.
 	var/base_reagent_temp_coefficient = 0.07
 
+	/// The ratio of temp shift -> brute damage. Careful with this value, it can make stuff really really nasty.
 	var/heat_shock_delta_to_damage_ratio = 0.2
+	/// The minimum heat difference we must have on reagent contact to cause heat shock damage.
 	var/heat_shock_minimum_delta = 5
 
+	/// The wound we demote to when we go below cooling threshold. If null, removes us.
 	var/datum/wound/burn/robotic/demotes_to
+	/// The wound we promote to when we go above heating threshold.
 	var/datum/wound/burn/robotic/promotes_to
 
+	/// The color of the light we will generate.
 	var/light_color
+	/// The power of the light we will generate.
 	var/light_power
+	/// The range of the light we will generate.
 	var/light_range
 
-	//var/obj/effect/dummy/lighting_obj/glow
+	/// The glow we have attached to our victim, to simulate our limb glowing.
 	var/obj/effect/dummy/lighting_obj/moblight/mob_glow
 
 	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT

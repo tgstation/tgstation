@@ -25,7 +25,9 @@
 	/// If we're a persistent scar or may become one, we go in this character slot
 	var/persistent_character_slot = 0
 
+	/// The biostates we require from a limb to give them our scar.
 	var/required_limb_biostate
+	/// If false, we will only check to see if a limb has ALL our biostates, instead of just any.
 	var/check_any_biostates
 
 /datum/scar/Destroy(force, ...)
@@ -175,4 +177,4 @@
 /// Used to format a scar to save in preferences for persistent scars
 /datum/scar/proc/format_amputated(body_zone, scar_file = FLESH_SCAR_FILE)
 	description = pick_list(scar_file, "dismember")
-	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_STANDARD]|[persistent_character_slot]|[check_any_biostates]"
+	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[required_limb_biostate]|[persistent_character_slot]|[check_any_biostates]"

@@ -14,19 +14,25 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 	return data
 
-// singleton instances
+/// A singleton datum that holds pre-gen and static data about a wound. Each wound datum should have a corresponding wound_pregen_data.
 /datum/wound_pregen_data
 	var/datum/wound/wound_path_to_generate
 
+	/// Will this be instantiated?
 	var/abstract = FALSE
 
+	/// A list of biostates a limb must have to receive our wound, in wounds.dm.
 	var/required_limb_biostate
+	/// If false, we will check if the limb has all of our required biostates instead of just any.
 	var/check_for_any = FALSE
 
+	/// If false, we will iterate through wounds on a given limb, and if any match our type, we wont add our wound.
 	var/duplicates_allowed = FALSE
 
+	/// If we require BIO_BLOODED, we will not add our wound if this is true and the limb cannot bleed.
 	var/ignore_cannot_bleed = TRUE // a lot of bleed wounds should still be applied for purposes of mangling flesh
 
+	/// A list of bodyzones we are applicable to.
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 /datum/wound_pregen_data/New()
@@ -39,6 +45,17 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 			stack_trace("wound_path_to_generate null - please set it! occured on: [src.type]")
 
 // this proc is the primary reason this datum exists - a singleton instance so we can always run this proc even without the wound existing
+/**
+ * Args:
+ * * obj/item/bodypart/limb: The limb we are considering.
+ * * wound_type: The wound type of the wound acquisition attempt. Ex. WOUND_SLASH
+ * * datum/wound/old_wound: If we would replace a wound, this would be said wound.
+ *
+ * Returns:
+ * FALSE if the limb cannot be wounded, if wound_type is not ours, if we have a higher severity wound already in our series,
+ * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
+ * TRUE otherwise.
+ */
 /datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type, datum/wound/old_wound)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
@@ -74,6 +91,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 				return FALSE
 	return TRUE
 
+/// Returns true if we have the given biostates, or any biostate in it if check_for_any is true. False otherwise.
 /datum/wound_pregen_data/proc/biostate_valid(biostate)
 	if (check_for_any)
 		if (!(biostate & required_limb_biostate))
@@ -83,6 +101,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 	return TRUE
 
+/// Returns a new instance of our wound datum.
 /datum/wound_pregen_data/proc/generate_instance(obj/item/bodypart/limb, ...)
 	RETURN_TYPE(/datum/wound)
 

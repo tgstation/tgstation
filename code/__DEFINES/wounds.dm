@@ -157,10 +157,6 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_BONE | BODYPART_MANGLED_FLESH)
 
 // ~wound flag defines
-/// If this wound requires having the BIO_FLESH biological_state on the limb
-//#define FLESH_WOUND (1<<0)
-/// If this wound requires having the BIO_BONE biological_state on the limb
-//#define BONE_WOUND (1<<1)
 /// If having this wound counts as mangled flesh for dismemberment
 #define MANGLES_FLESH (1<<2)
 /// If having this wound counts as mangled bone for dismemberment
@@ -191,7 +187,7 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define SCAR_SAVE_CHECK_ANY_BIO 8
 
 /// saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
-#define SCAR_CURRENT_VERSION 3
+#define SCAR_CURRENT_VERSION 4
 /// how many scar slots, per character slot, we have to cycle through for persistent scarring, if enabled in character prefs
 #define PERSISTENT_SCAR_SLOTS 3
 
