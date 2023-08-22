@@ -120,7 +120,7 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	response_help_simple = "pet"
 	response_help_continuous = "pets"
-	AddElement(/datum/element/pet_bonus, "ungulates!")
+	AddElement(/datum/element/pet_bonus, "undulates!")
 
 /mob/living/basic/mining/goldgrub/proc/make_egg_layer()
 	AddComponent(\
