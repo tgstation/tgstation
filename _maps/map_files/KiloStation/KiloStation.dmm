@@ -7026,7 +7026,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "cui" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
+/mob/living/basic/mining/goliath/ancient,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "cuj" = (
@@ -57982,7 +57982,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "thU" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
+/mob/living/basic/mining/goliath/ancient,
 /turf/open/misc/asteroid/lowpressure,
 /area/space/nearstation)
 "thW" = (
