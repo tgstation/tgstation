@@ -20,7 +20,7 @@
 	var/prize = /obj/structure/cursed_money
 	/// should we be applying the cursed status effect?
 	var/status_effect_on_roll = TRUE
-	/// Length of the cooldown between the machine being used and being able to spin the machine again. Don't trim this down too hard or the status effect story will fall flat
+	/// Length of the cooldown between the machine being used and being able to spin the machine again.
 	var/cooldown_length = 15 SECONDS
 	/// Cooldown between pulls of the cursed slot machine.
 	COOLDOWN_DECLARE(spin_cooldown)
