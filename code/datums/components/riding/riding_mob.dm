@@ -115,8 +115,8 @@
 		return istype(vehicle_parent.inserted_key, keytype)
 
 	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user
-		for(var/obj/item/listed_item in carbon_user.get_equipped_items())
+		var/mob/living/carbon/carbon_user = user
+		for(var/obj/item/listed_item as anything in carbon_user.get_equipped_items())
 			if(listed_item.type == keytype)
 				return TRUE
 		return FALSE
