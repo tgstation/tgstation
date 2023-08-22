@@ -42,7 +42,7 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The arugment of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
-/// From base of /client/Move()
+/// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"
@@ -182,6 +182,12 @@
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
 ///From base of /turf/closed/mineral/proc/gets_drilled(): (turf/closed/mineral/rock, give_exp)
 #define COMSIG_MOB_MINED "mob_mined"
+///Sent by pilot of mech in base of /obj/vehicle/sealed/mecha/relaymove(): (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_DROVE_MECH "mob_drove_mech"
+///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when using mech equipment : (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_USED_MECH_EQUIPMENT "mob_used_mech_equipment"
+///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when triggering mech punch : (/obj/vehicle/sealed/mecha/mech)
+#define COMSIG_MOB_USED_MECH_MELEE "mob_used_mech_melee"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"

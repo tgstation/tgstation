@@ -147,7 +147,7 @@
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
 			// a 15u syringe is a nice baseline to scale lethality by
-			liver_damage += ((amount/15) * toxin.toxpwr) / liver_resistance
+			liver_damage += ((amount/15) * toxin.toxpwr * toxin.liver_damage_multiplier) / liver_resistance
 
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN

@@ -115,4 +115,4 @@
 	mobtype = /mob/living/basic/pet/penguin/baby/permanent
 
 /obj/effect/holodeck_effect/mobspawner/crab/jon
-	mobtype = /mob/living/simple_animal/crab/jon
+	mobtype = /mob/living/basic/crab/jon

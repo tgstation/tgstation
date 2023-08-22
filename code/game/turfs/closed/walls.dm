@@ -44,7 +44,7 @@
 		return
 	if(!carbon_mob.density)
 		return
-	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
+	var/turf/checked_turf = get_step(carbon_mob, REVERSE_DIR(carbon_mob.dir))
 	if(checked_turf == src)
 		carbon_mob.start_leaning(src)
 
@@ -315,9 +315,9 @@
 /turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 4 SECONDS, "cost" = 26)
 		if(RCD_WALLFRAME)
-			return list("mode" = RCD_WALLFRAME, "delay" = 10, "cost" = 25)
+			return list("mode" = RCD_WALLFRAME, "delay" = 1 SECONDS, "cost" = 8)
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

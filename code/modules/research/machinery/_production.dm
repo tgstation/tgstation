@@ -174,13 +174,9 @@
 	switch (action)
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
-
-			if(!materials.mat_container.can_hold_material(material))
-				// I don't know who you are or what you want, but whatever it is,
-				// we don't have it.
-				return
-
-			eject_sheets(material, params["amount"])
+			var/amount = text2num(params["amount"])
+			// SAFETY: eject_sheets checks for valid mats
+			materials.eject_sheets(material, amount)
 
 		if("build")
 			user_try_print_id(params["ref"], params["amount"])
@@ -308,8 +304,7 @@
 		borg.cell.use(SILICON_LATHE_TAX)
 
 	//consume materials
-	materials.mat_container.use_materials(design.materials, coefficient, print_quantity)
-	materials.silo_log(src, "built", -print_quantity, "[design.name]", design.materials)
+	materials.use_materials(design.materials, coefficient, print_quantity, "built", "[design.name]")
 	for(var/reagent in design.reagents_list)
 		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
 	//produce item
@@ -322,26 +317,6 @@
 	update_static_data_for_all_viewers()
 
 	return TRUE
-
-/obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
-	var/datum/component/material_container/mat_container = materials.mat_container
-
-	if(!mat_container)
-		say("No access to material storage, please contact the quartermaster.")
-		return 0
-
-	if(materials.on_hold())
-		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
-
-	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
-
-	var/list/matlist = list()
-	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
-
-	materials.silo_log(src, "ejected", -count, "sheets", matlist)
-
-	return count
 
 // Stuff for the stripe on the department machines
 /obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)

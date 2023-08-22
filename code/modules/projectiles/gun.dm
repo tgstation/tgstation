@@ -50,6 +50,9 @@
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
+	/// Even snowflakier way to modify projectile wounding bonus/potential for projectiles fired from this gun.
+	var/projectile_wound_bonus = 0
+
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
@@ -91,28 +94,35 @@
 		QDEL_NULL(suppressed)
 	return ..()
 
+/obj/item/gun/apply_fantasy_bonuses(bonus)
+	. = ..()
+	fire_delay = modify_fantasy_variable("fire_delay", fire_delay, -bonus, 0)
+	projectile_damage_multiplier = modify_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier, bonus/10, 0.1)
+
+/obj/item/gun/remove_fantasy_bonuses(bonus)
+	fire_delay = reset_fantasy_variable("fire_delay", fire_delay)
+	projectile_damage_multiplier = reset_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier)
+	return ..()
+
 /// Handles adding [the seclite mount component][/datum/component/seclite_attachable] to the gun.
 /// If the gun shouldn't have a seclight mount, override this with a return.
 /// Or, if a child of a gun with a seclite mount has slightly different behavior or icons, extend this.
 /obj/item/gun/proc/add_seclight_point()
 	return
 
-/obj/item/gun/handle_atom_del(atom/A)
-	if(A == pin)
+/obj/item/gun/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == pin)
 		pin = null
-	if(A == chambered)
+	if(gone == chambered)
 		chambered = null
 		update_appearance()
-	if(A == suppressed)
+	if(gone == suppressed)
 		clear_suppressor()
-	return ..()
-
-/obj/item/gun/Exited(atom/movable/gone, direction)
 	if(gone == bayonet)
 		bayonet = null
 		if(!QDELING(src))
 			update_appearance()
-	return ..()
 
 ///Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.
 /obj/item/gun/proc/clear_suppressor()

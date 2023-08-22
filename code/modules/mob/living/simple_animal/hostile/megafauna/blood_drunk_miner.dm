@@ -35,6 +35,7 @@ Difficulty: Medium
 	move_to_delay = 3
 	ranged = TRUE
 	ranged_cooldown_time = 1.6 SECONDS
+	rapid_melee = 5 // starts fast because the saw's closed. gets reduced appropriately when extended, see their transform_weapon ability
 	pixel_x = -16
 	base_pixel_x = -16
 	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
@@ -47,11 +48,12 @@ Difficulty: Medium
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
 	score_achievement_type = /datum/award/score/blood_miner_score
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
-	var/guidance = FALSE
 	death_message = "falls to the ground, decaying into glowing particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
+	var/guidance = FALSE
 	/// Dash ability
 	var/datum/action/cooldown/mob_cooldown/dash/dash
 	/// Kinetic accelerator ability
@@ -132,17 +134,17 @@ Difficulty: Medium
 		return
 	face_atom(target)
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.stat == DEAD)
-			visible_message(span_danger("[src] butchers [L]!"),
-			span_userdanger("You butcher [L], restoring your health!"))
+		var/mob/living/living_target = target
+		if(living_target.stat == DEAD)
+			visible_message(span_danger("[src] butchers [living_target]!"),
+			span_userdanger("You butcher [living_target], restoring your health!"))
 			if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 				if(guidance)
-					adjustHealth(-L.maxHealth)
+					adjustHealth(-living_target.maxHealth)
 				else
-					adjustHealth(-(L.maxHealth * 0.5))
-			L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			L.gib()
+					adjustHealth(-(living_target.maxHealth * 0.5))
+			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+			living_target.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
 	miner_saw.melee_attack_chain(src, target)
@@ -150,8 +152,8 @@ Difficulty: Medium
 		adjustHealth(-2)
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
-	if(!used_item && !isturf(A))
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
+	if(!used_item && !isturf(attacked_atom))
 		used_item = miner_saw
 	..()
 
@@ -170,13 +172,13 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, PROC_REF(fade_out))
 
 /obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
-	var/matrix/M = new
-	M.Turn(pick(90, 270))
+	var/matrix/our_matrix = new
+	our_matrix.Turn(pick(90, 270))
 	var/final_dir = dir
 	if(dir & (EAST|WEST)) //Facing east or west
 		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
-	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
+	animate(src, transform = our_matrix, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
 	sleep(0.5 SECONDS)
 	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(0.4 SECONDS)

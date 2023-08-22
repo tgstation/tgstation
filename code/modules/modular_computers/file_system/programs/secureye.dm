@@ -86,7 +86,7 @@
 /datum/computer_file/program/secureye/ui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = cam_screen.assigned_map
-	var/list/cameras = get_available_cameras()
+	var/list/cameras = get_camera_list(network)
 	data["cameras"] = list()
 	for(var/i in cameras)
 		var/obj/machinery/camera/C = cameras[i]
@@ -102,7 +102,7 @@
 		return
 	if(action == "switch_camera")
 		var/c_tag = format_text(params["name"])
-		var/list/cameras = get_available_cameras()
+		var/list/cameras = get_camera_list(network)
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		camera_ref = WEAKREF(selected_camera)
 		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
@@ -167,27 +167,5 @@
 	cam_screen.vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
-
-// Returns the list of cameras accessible from this computer
-/datum/computer_file/program/secureye/proc/get_available_cameras()
-	var/list/L = list()
-	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
-		//Get the camera's turf in case it's inside something like a borg
-		var/turf/camera_turf = get_turf(cam)
-		if(!is_station_level(camera_turf.z))//Only show station cameras.
-			continue
-		L.Add(cam)
-	var/list/camlist = list()
-	for(var/obj/machinery/camera/cam in L)
-		if(!cam.network)
-			stack_trace("Camera in a cameranet has no camera network")
-			continue
-		if(!(islist(cam.network)))
-			stack_trace("Camera in a cameranet has a non-list camera network")
-			continue
-		var/list/tempnetwork = cam.network & network
-		if(tempnetwork.len)
-			camlist["[cam.c_tag]"] = cam
-	return camlist
 
 #undef DEFAULT_MAP_SIZE

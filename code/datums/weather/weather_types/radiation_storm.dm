@@ -24,6 +24,10 @@
 	target_trait = ZTRAIT_STATION
 
 	immunity_type = TRAIT_RADSTORM_IMMUNE
+	/// Chance we get a negative mutation, if we fail we get a positive one
+	var/negative_mutation_chance = 90
+	/// Chance we mutate
+	var/mutate_chance = 40
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -31,7 +35,7 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-	if(!prob(40))
+	if(!prob(mutate_chance))
 		return
 
 	if(!ishuman(L))
@@ -51,17 +55,20 @@
 	H.random_mutate_unique_features()
 
 	if(prob(50))
-		if(prob(90))
-			H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
-		else
-			H.easy_random_mutate(POSITIVE)
-		H.domutcheck()
+		do_mutate(L)
 
 /datum/weather/rad_storm/end()
 	if(..())
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
 	status_alarm(FALSE)
+
+/datum/weather/rad_storm/proc/do_mutate(mob/living/carbon/human/mutant)
+	if(prob(negative_mutation_chance))
+		mutant.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
+	else
+		mutant.easy_random_mutate(POSITIVE)
+	mutant.domutcheck()
 
 /datum/weather/rad_storm/proc/status_alarm(active) //Makes the status displays show the radiation warning for those who missed the announcement.
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
@@ -88,10 +95,14 @@
 
 	end_message = null
 
+	mutate_chance = 0.1
+
 	///Chance we pulse a living during the storm
-	var/radiation_chance = 20
+	var/radiation_chance = 5
 
 /datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+	..()
+
 	if(!prob(radiation_chance))
 		return
 
@@ -103,7 +114,6 @@
 		max_range = 0,
 		threshold = RAD_LIGHT_INSULATION,
 		chance = URANIUM_IRRADIATION_CHANCE,
-		minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME,
 	)
 
 /datum/weather/rad_storm/nebula/status_alarm(active)

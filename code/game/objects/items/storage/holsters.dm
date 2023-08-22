@@ -94,7 +94,7 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box/c38, // Revolver speedloaders.
 		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
@@ -129,7 +129,7 @@
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_NORMAL
-	var/datum/action/item_action/chameleon/change/chameleon_action
+	actions_types = list(/datum/action/item_action/chameleon/change/belt)
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
@@ -145,7 +145,7 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box/c38,
 		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/recharge/ebow,
 		/obj/item/gun/energy/e_gun/mini,
@@ -154,22 +154,6 @@
 	))
 
 	atom_storage.silent = TRUE
-
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/storage/belt
-	chameleon_action.chameleon_name = "Belt"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/storage/belt/holster/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/storage/belt/holster/nukie
 	name = "operative holster"
@@ -188,7 +172,7 @@
 		/obj/item/ammo_box/magazine, // ALL magazines.
 		/obj/item/ammo_box/c38, //There isn't a speedloader parent type, so I just put these three here by hand.
 		/obj/item/ammo_box/a357, //I didn't want to just use /obj/item/ammo_box, because then this could hold huge boxes of ammo.
-		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_casing, // For shotgun shells, rockets, launcher grenades, and a few other things.
 		/obj/item/grenade, // All regular grenades, the big grenade launcher fires these.
 	))

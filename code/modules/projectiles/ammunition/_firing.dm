@@ -56,6 +56,9 @@
 		loaded_projectile.damage *= G.projectile_damage_multiplier
 		loaded_projectile.stamina *= G.projectile_damage_multiplier
 
+		loaded_projectile.wound_bonus += G.projectile_wound_bonus
+		loaded_projectile.bare_wound_bonus += G.projectile_wound_bonus
+
 	if(tk_firing(user, fired_from))
 		loaded_projectile.ignore_source_check = TRUE
 
