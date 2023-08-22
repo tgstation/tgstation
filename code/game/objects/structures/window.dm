@@ -76,6 +76,17 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
+	//monkestation edit start
+	var/new_color = SSstation_coloring.get_default_color()
+	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+	else
+		glass_color = new_color
+	if(fulltile)
+		color = glass_color
+	if(mapload && fulltile)
+		new /obj/structure/window_sill(get_turf(src))
+	//monkestation edit end
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -413,6 +424,7 @@
 
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
+
 
 	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25

@@ -80,3 +80,11 @@
 /// Global signal called after the station changes its name.
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
+
+
+//monkestation edit start
+// Used for smothering fires upon weather event start/stop
+#define COMSIG_GLOB_WEATHER_CHANGE "!weather_event_changed"
+
+#define COMSIG_GLOB_WEATHER_EFFECT "!weather_effect_update"
+//monkestation edit end
