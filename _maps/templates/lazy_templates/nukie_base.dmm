@@ -4230,15 +4230,6 @@
 /obj/structure/sign/poster/contraband/got_wood{
 	pixel_x = 32
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south{
-	name = "Frosted Window"
-	},
-/obj/item/soap/syndie,
-/obj/structure/sign/poster/contraband/got_wood/directional/east,
 /turf/open/floor/iron/freezer,
 /area/centcom/syndicate_mothership/control)
 "XL" = (
