@@ -11890,7 +11890,7 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "cXX" = (
-/obj/effect/landmark/tram/tramstation/rod/east,
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/closed/wall,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cYi" = (
@@ -12810,7 +12810,6 @@
 /area/station/medical/treatment_center)
 "dpG" = (
 /obj/machinery/holopad,
-/obj/effect/landmark/tram/tramstation/rod/west,
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "dpN" = (
@@ -16819,6 +16818,10 @@
 "eSx" = (
 /turf/closed/wall,
 /area/station/service/kitchen)
+"eSy" = (
+/obj/effect/landmark/tram/nav/immovable_rod,
+/turf/open/floor/carpet,
+/area/station/hallway/secondary/entry)
 "eSz" = (
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -36397,8 +36400,8 @@
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "lUP" = (
-/obj/effect/landmark/tram/tramstation/west,
 /obj/effect/turf_decal/tile/neutral/tram,
+/obj/effect/landmark/tram/platform/tramstation/west,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "lUZ" = (
@@ -38844,8 +38847,8 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom/holding)
 "mQE" = (
-/obj/effect/landmark/tram/tramstation/east,
 /obj/effect/turf_decal/tile/neutral/tram,
+/obj/effect/landmark/tram/platform/tramstation/east,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "mQS" = (
@@ -44550,8 +44553,9 @@
 /area/station/security/brig)
 "oZC" = (
 /obj/structure/industrial_lift/tram/white,
-/obj/effect/landmark/tram/tramstation/central,
 /obj/effect/turf_decal/tile/neutral/tram,
+/obj/effect/landmark/tram/nav/tramstation/main,
+/obj/effect/landmark/tram/platform/tramstation/central,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "pal" = (
@@ -149306,7 +149310,7 @@ xIL
 eVh
 kJU
 xQS
-ski
+eSy
 xQS
 pJE
 aGx

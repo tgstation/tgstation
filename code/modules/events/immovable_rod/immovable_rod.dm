@@ -185,11 +185,8 @@
 	// If we Bump into the tram front or back, push the tram. Otherwise smash the object as usual.
 	if(isobj(clong))
 		if(istramwall(clong) && !special_target)
-			switch(dir)
-				if(NORTHEAST, EAST, SOUTHEAST, NORTHWEST, WEST, SOUTHWEST)
-					rod_vs_tram_battle(clong)
-				else
-					return ..()
+			rod_vs_tram_battle(clong)
+			return ..()
 
 		var/obj/clong_obj = clong
 		clong_obj.take_damage(INFINITY, BRUTE, NONE, TRUE, dir, INFINITY)
@@ -307,7 +304,7 @@
  * * clong - the object the rod hits (in this case, the tram)
  */
 /obj/effect/immovablerod/proc/rod_vs_tram_battle(clong)
-	var/tram_turf = get_turf(clong)
+	var/turf/tram_turf = get_turf(clong)
 	var/obj/structure/industrial_lift/tram/industrial_lift = locate() in tram_turf
 
 	if(isnull(industrial_lift))
@@ -318,17 +315,9 @@
 	if(isnull(lift_master))
 		return
 
-	var/obj/effect/landmark/tram/tramstation/rod/push_target
-	switch(dir)
-		if(EAST, NORTHEAST, SOUTHEAST)
-			for(var/obj/effect/landmark/tram/tramstation/rod/east/target in GLOB.tram_landmarks[IMMOVABLE_ROD])
-				push_target = target
-		if(WEST, SOUTHWEST, SOUTHEAST)
-			for(var/obj/effect/landmark/tram/tramstation/rod/west/target in GLOB.tram_landmarks[IMMOVABLE_ROD])
-				push_target = target
+	var/push_target = lift_master.rod_collision(src)
 
 	if(!push_target)
 		return
 
-	lift_master.rod_collision(push_target, TRUE)
 	go_for_a_walk(push_target)

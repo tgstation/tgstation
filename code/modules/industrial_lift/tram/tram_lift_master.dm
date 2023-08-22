@@ -17,6 +17,9 @@
 	/// and the destination landmark.
 	var/obj/effect/landmark/tram/idle_platform
 
+	/// a navigational landmark that we use to find the tram's location on the map at any time
+	var/obj/effect/landmark/tram/nav/nav_beacon
+
 	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
 	///this var is poorly named its actually horizontal movement delay but whatever.
 	var/horizontal_speed = 0.5
@@ -58,14 +61,18 @@
 /datum/lift_master/tram/check_for_landmarks(obj/structure/industrial_lift/tram/new_lift_platform)
 	. = ..()
 	for(var/turf/platform_loc as anything in new_lift_platform.locs)
-		var/obj/effect/landmark/tram/initial_destination = locate() in platform_loc
+		var/obj/effect/landmark/tram/platform/initial_destination = locate() in platform_loc
+		var/obj/effect/landmark/tram/nav/beacon = locate() in platform_loc
 
 		if(initial_destination)
 			idle_platform = initial_destination
 
+		if(initial_destination)
+			nav_beacon = beacon
+
 /datum/lift_master/tram/proc/check_starting_landmark()
-	if(!idle_platform)
-		CRASH("a tram lift_master was initialized without any tram landmark to give it direction!")
+	if(!idle_platform || !nav_beacon)
+		CRASH("a tram lift_master was initialized without the required landmarks to give it direction!")
 
 	SStramprocess.can_fire = TRUE
 
@@ -114,7 +121,7 @@
  */
 /datum/lift_master/tram/proc/tram_travel(obj/effect/landmark/tram/destination_platform, rapid = FALSE)
 	if(destination_platform == idle_platform)
-		return
+		return FALSE
 
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_distance = get_dist(idle_platform, destination_platform)
@@ -124,38 +131,11 @@
 	set_controls(LIFT_PLATFORM_LOCKED)
 	if(rapid) // bypass for unsafe, rapid departure
 		dispatch_tram(destination_platform)
+		return TRUE
 	else
 		update_tram_doors(CLOSE_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
-
-/**
- * Moves the tram when hit by an immovable rod
- *
- * Tells the individual tram parts where to actually go and has an extra safety checks
- * incase multiple inputs get through, preventing conflicting directions and the tram
- * literally ripping itself apart. all of the actual movement is handled by SStramprocess
- *
- * Rod version also modifies the travel distance to ensure the tram positions properly on return.
- *
- * Arguments: destination platform (rod landmark)
- */
-/datum/lift_master/tram/proc/rod_collision(obj/effect/landmark/tram/destination_platform)
-	travel_direction = get_dir(idle_platform, destination_platform)
-	travel_distance = get_dist(get_turf(lift_platforms[1]), destination_platform)
-	switch(travel_direction)
-		if(EAST)
-			travel_distance -= (XING_DEFAULT_TRAM_LENGTH * 0.5)
-		if(WEST)
-			travel_distance += (XING_DEFAULT_TRAM_LENGTH * 0.5)
-		else
-			stack_trace("Tram travel receieved invalid direction to push.")
-			return
-
-	travel_trip_length = travel_distance
-	idle_platform = destination_platform
-	set_travelling(TRUE)
-	set_controls(LIFT_PLATFORM_LOCKED)
-	dispatch_tram(destination_platform)
+		return TRUE
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
@@ -248,3 +228,73 @@
 
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")
+
+/**
+ * Returns the closest tram nav beacon to an atom
+ *
+ * Creates a list of nav beacons in the requested direction
+ * and returns the closest to be passed to the industrial_lift
+ *
+ * Arguments: source: the starting point to find a beacon
+ *            travel_dir: travel direction in tram form, INBOUND or OUTBOUND
+ *            beacon_type: what list of beacons we pull from
+ */
+/datum/lift_master/tram/proc/closest_nav_in_travel_dir(atom/source, travel_dir, beacon_type)
+	if(!istype(source) || !source.z)
+		return FALSE
+
+	var/list/obj/effect/landmark/tram/nav/inbound_candidates = list()
+	var/list/obj/effect/landmark/tram/nav/outbound_candidates = list()
+
+	for(var/obj/effect/landmark/tram/nav/beacon in GLOB.tram_landmarks[beacon_type])
+		if(beacon.z != source.z)
+			continue
+
+		switch(source.dir)
+			if(EAST, WEST)
+				if(beacon.x < source.x)
+					inbound_candidates += beacon
+				else
+					outbound_candidates += beacon
+			if(NORTH, SOUTH)
+				if(beacon.y < source.y)
+					inbound_candidates += beacon
+				else
+					outbound_candidates += beacon
+
+	switch(travel_dir)
+		if(INBOUND)
+			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, inbound_candidates, src)
+			return selected
+		if(OUTBOUND)
+			var/obj/effect/landmark/tram/nav/selected = get_closest_atom(/obj/effect/landmark/tram/nav, outbound_candidates, src)
+			return selected
+		else
+			return FALSE
+
+/**
+ * Moves the tram when hit by an immovable rod
+ *
+ * Tells the individual tram parts where to actually go and has an extra safety checks
+ * incase multiple inputs get through, preventing conflicting directions and the tram
+ * literally ripping itself apart. all of the actual movement is handled by SStramprocess
+ *
+ * Arguments: collided_rod (the immovable rod that hit the tram)
+ */
+/datum/lift_master/tram/proc/rod_collision(obj/effect/immovablerod/collided_rod)
+	var/rod_velocity_sign
+	// Determine inbound or outbound
+	if(collided_rod.dir & (NORTH|SOUTH))
+		rod_velocity_sign = collided_rod.dir & NORTH ? OUTBOUND : INBOUND
+	else
+		rod_velocity_sign = collided_rod.dir & EAST ? OUTBOUND : INBOUND
+
+	var/obj/effect/landmark/tram/nav/push_destination = closest_nav_in_travel_dir(source = collided_rod, travel_dir = rod_velocity_sign, beacon_type = IMMOVABLE_ROD_DESTINATIONS)
+	travel_direction = get_dir(nav_beacon, push_destination)
+	travel_distance = get_dist(nav_beacon, push_destination)
+	travel_trip_length = travel_distance
+	idle_platform = push_destination
+	set_travelling(TRUE)
+	set_controls(LIFT_PLATFORM_LOCKED)
+	dispatch_tram(destination_platform = push_destination)
+	return push_destination
