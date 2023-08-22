@@ -47,6 +47,16 @@
 	/// Things we want to eat off the floor (or a plate, we're not picky)
 	var/static/list/goliath_foods = list(/obj/item/food/grown/ash_flora, /obj/item/food/bait/worm)
 
+	//monkestation edit
+	//pet commands when we tame the grub
+	var/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/fetch,
+	)
+	//monkestation edit
+
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
@@ -160,7 +170,14 @@
 
 /// Get ready for mounting
 /mob/living/basic/mining/goliath/proc/tamed()
+	new /obj/effect/temp_visual/heart(src.loc)
 	tamed = TRUE
+	//monkestation edit
+	AddComponent(/datum/component/obeys_commands, pet_commands)
+	response_help_simple = "pet"
+	response_help_continuous = "pets"
+	AddElement(/datum/element/pet_bonus, "wails happily!")
+	//monkestation edit ends
 
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)

@@ -106,6 +106,23 @@
 	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
 	return ..()
 
+/datum/component/riding/creature/keycheck(mob/user)
+	if(!keytype)
+		return TRUE
+
+	if(isvehicle(parent))
+		var/obj/vehicle/vehicle_parent = parent
+		return istype(vehicle_parent.inserted_key, keytype)
+
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user
+		for(var/obj/item/listed_item in carbon_user.get_equipped_items())
+			if(listed_item.type == keytype)
+				return TRUE
+		return FALSE
+	else
+		return user.is_holding_item_of_type(keytype)
+
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, gentle = FALSE)
 	var/atom/movable/movable_parent = parent

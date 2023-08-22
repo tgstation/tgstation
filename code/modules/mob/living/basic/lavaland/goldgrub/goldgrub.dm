@@ -118,6 +118,9 @@
 	new /obj/effect/temp_visual/heart(src.loc)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goldgrub)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	response_help_simple = "pet"
+	response_help_continuous = "pets"
+	AddElement(/datum/element/pet_bonus, "ungulates!")
 
 /mob/living/basic/mining/goldgrub/proc/make_egg_layer()
 	AddComponent(\
