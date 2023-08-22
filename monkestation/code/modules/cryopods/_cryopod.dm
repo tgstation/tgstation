@@ -351,7 +351,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	if(!control_computer)
 		control_computer_weakref = null
 	else
-		control_computer.frozen_crew += list(list("name" = stored_name, "job" = stored_rank, "items" = list(), "ckey" = stored_ckey), "entered_time" = world.time)
+		control_computer.frozen_crew += list(list("name" = stored_name, "job" = stored_rank, "items" = list(), "ckey" = stored_ckey, "entered_time" = world.time))
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
 	if(!quiet)
