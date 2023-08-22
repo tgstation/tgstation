@@ -16,11 +16,18 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/overwatch
 	ability_key = BB_WATCHER_OVERWATCH
+	operational_datums = list(/datum/component/ai_target_timer)
 
 /datum/ai_planning_subtree/targeted_mob_ability/overwatch/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	if (LAZYLEN(living_pawn.do_afters))
+		return // Don't interrupt our other ability
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target) || HAS_TRAIT(target, TRAIT_OVERWATCH_IMMUNE))
 		return // We should probably let miners move sometimes
+	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
+	if (time_on_target < 5 SECONDS)
+		return // We need to spend some time acquiring our target first
 	return ..()
 
 /datum/ai_planning_subtree/use_mob_ability/gaze

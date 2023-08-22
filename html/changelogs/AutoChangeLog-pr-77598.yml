@@ -1,4 +1,0 @@
-author: "DeerJesus"
-delete-after: True
-changes:
-  - bugfix: "Makes the ectoplasm anomaly not randomly move so deadchat can actually control it"

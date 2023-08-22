@@ -770,3 +770,319 @@
   - refactor: removed unused vars for further memory savings
   YehnBeep:
   - bugfix: fixed a disconnected APC in Delta's tech storage.
+2023-08-17:
+  BlueMemesauce:
+  - rscadd: 'Add policy for sentient mobs that were revived by lazarus injector (depends
+      on config)
+
+      add; Sentient mobs that were revived by malfunctioning lazarus injector now
+      get enslaved to whoever revived them.'
+  - bugfix: Servant golems get their master's real name (Won't be serving "Unknown"
+      if their master is wearing a mask)
+  DaydreamIQ:
+  - balance: Ascending as an Ash Heretic now reduces the cooldown of Nightwatchers
+      Rebirth to ten seconds, additionally Ash ascension has Bomb immunity added to
+      the resistances it offers (no stun immunity though)
+  DeerJesus:
+  - bugfix: Makes the ectoplasm anomaly not randomly move so deadchat can actually
+      control it
+  - balance: metal bat damage changed from 12 -> 20
+  FernandoJ8:
+  - bugfix: dismemberment moodlets are replaced by a lesser mood debuff when you recover
+      the limb in question.
+  - balance: dismemberment moodlets can now stack for each limb you lose, and are
+      cleared separately. Their descriptions have been updated to reflect this.
+  - bugfix: items implanted on arms no longer become permanently stuck in-hand when
+      their limb is dismembered
+  - bugfix: quickly sheathing and unsheathing the vorpal scythe can no longer bug
+      out and prevent its effects from being applied
+  FlufflesTheDog:
+  - bugfix: Spaceacillin will once again provide antiviral effects for the deceased
+  Hatterhat:
+  - bugfix: Colored ammo bands, such as those on .357 and .38 speedloaders, no longer
+      permanently disappear upon icon update.
+  Helg2:
+  - bugfix: Skeletons now heal burn damage with milk once again.
+  IndieanaJones:
+  - balance: Hunter and viper spider toxins no longer deal liver damage.
+  - balance: Tangle spider's acid injection per bite reduced from 5 to 2.5.
+  Jacquerel:
+  - bugfix: Gravitational Anomalies will now correctly clean up after themselves,
+      instead of leaving an area of the station permanently heavy or with no gravity
+      at all.
+  - bugfix: Goliaths will try to attack mechs with their tentacles.
+  LT3:
+  - bugfix: Base large airlock subtype no longer spawns a normal sized airlock
+  - image: Added mapping icons for large airlocks
+  - code_imp: Repathed all public airlocks to consistent naming
+  LemonInTheDark:
+  - balance: De-escalates terry powergaming by reducing the strength of sec
+  Melbert:
+  - balance: Red toolboxes go faster
+  MidoriWroth:
+  - rscadd: Added 28 new food recipes!
+  Mothblocks:
+  - rscadd: You can now set your voice to just blips.
+  Vincent983:
+  - qol: the chemistry heater can now be unwrenched.
+  Y0SH1M4S73R:
+  - bugfix: Head Revolutionaries no longer count towards a revolution's defeat if
+      they have become simplemobs, basic mobs, or xenomorphs.
+  iwishforducks:
+  - spellcheck: fixed the rat king text saying that they're summoning rats
+  mc-oofert:
+  - bugfix: fixed border-only firedoors being able to be walked through while closed
+  san7890:
+  - bugfix: Beam rifles will no longer inappropriately retain any bonuses they may
+      gain from wizardry.
+  - bugfix: Inappropriate stack traces over bonuses being applied to components that
+      gain bonuses innately (like Mythril stacks) should cease.
+  vinylspiders:
+  - bugfix: fixes a harddel in particle holders
+2023-08-18:
+  DeerJesus:
+  - bugfix: replaced injector with working passive vent in birdshot incinerator
+  - bugfix: conveyor lever in birdshot incinerator
+  - bugfix: fixes all the martian drinks having 20 boozepower
+  EuSouAFazer:
+  - bugfix: Moved the RD's plant to its proper place in Northstar
+  Fikou:
+  - spellcheck: fixes the name of the incline bench press
+  - balance: you cant speed up the big slappy with slime potion
+  Ghommie:
+  - bugfix: Fixed some jank with the dynamic threat curve.
+  Hatterhat:
+  - spellcheck: Fixed a lack of plurality when ejecting multiple casings from a revolver.
+  IndieanaJones:
+  - rscdel: Removed tiny mob sprite abilities for large mobs
+  - rscadd: Add a Self Seethrough ability, given to most large mobs and all mobs affected
+      by a fugu gland
+  - bugfix: Space Dragon's overlay will no longer vanish at times
+  - qol: Xenomorph Sentinel and Ambusher Spider's sneak ability now has a transition
+      to a lower alpha as opposed to being immediate.
+  - qol: The sneak ability now uses balloon alerts as opposed to chat alerts.
+  - bugfix: Fixed the Xenomorph Sentinel's Sneak ability icon being an error.
+  Jacquerel:
+  - admin: Adds Spider, Goliath, and Meteor Heart actions to the "Grant Mob Action"
+      menu.
+  - admin: Four players can ride the speedwagon
+  - bugfix: Turning into a space dragon with the polymorphic inverter will no longer
+      leave you existing in two places
+  - balance: You can no longer use the belt to transform into monkeys or xenomorphs,
+      for technical reasons.
+  - admin: The Add Mob Ability menu now prefixes the typepath of the ability with
+      the ability's name, so you can much more quickly see what the ability is.
+  Mothblocks:
+  - rscadd: Engineers now have an RCD round start.
+  - balance: RCD construction/deconstruction effects can now be attacked in order
+      to cancel them. You can get the anti-disruption upgrade disk to prevent this.
+  - balance: RCD construction/deconstruction is now slower if you already have another
+      effect up. This does not effect reconstruction.
+  - balance: Both of the above effects do not effect the CE's roundstart RCD, nor
+      any other RCDs such as combat RCDs.
+  mc-oofert:
+  - rscadd: cybernetic moth eyes and their variants
+  - bugfix: luminescent eyes no longer make you look like a cyclops in the dark
+  necromanceranne:
+  - rscadd: Settler quirk! Conqueror the great outdoors....in space. Just make sure
+      nobody asks you to get anything from the top shelf.
+  vinylspiders:
+  - image: bowtie sprite has been tweaked slightly to look a little bit more bowtie-ish
+  - bugfix: formal closet will no longer spawn with two 'error' icon suits inside
+      of it
+2023-08-19:
+  DeerJesus:
+  - bugfix: you can actually tell what hand a reagent dartgun is in now
+  EuSouAFazer:
+  - qol: Delta's Detective Office looks better now.
+  - bugfix: No more stacked items in Meta's custodial closet
+  Ghommie:
+  - bugfix: Fixed dynamic.
+  Helg2:
+  - bugfix: fixed lavaland beach bartender closets looking off.
+  - qol: CTF assault class' (with shotgun and rocket gloves)  description now mentions
+      that it has low armor and increased moving speed.
+  - balance: Decreased CTF recharge start delay for shields from 20 seconds to 12
+      seconds.
+  - balance: Marksmans rifle now has 1.7 scope.
+  - bugfix: When toggling instagib mode for CTF and pressing a cross now will just
+      cancel instead of proceeding.
+  - bugfix: When clicking on other CTF teams spawners and after you already chose
+      your team no more will ask you to join some other team to make them even.
+  - bugfix: Base iron floor tiles now will be able to stack with other base iron floor
+      tiles after being reskined to the base subtype.
+  - bugfix: '[Waystation] Windoor for secret documents now can be accessed with away
+      station secoff''s id.'
+  - bugfix: '[Waystation] Deleted a window on the same place as windoor so it won''t
+      block your path to secret documents.'
+  Jacquerel:
+  - bugfix: the goliath and watcher mating season has ended and population has returned
+      to normal levels
+  carshalash:
+  - qol: Martian fried noodles now requires 2 grown peanuts instead of salted peanut
+      packet.
+  mc-oofert:
+  - bugfix: you can now toggle repair droids and plasma engines on mechas again
+  - bugfix: you can no longer destroy syndicate modsuits by just being on fire
+  necromanceranne:
+  - bugfix: Makes sure settlers are SHORTEST.
+  san7890:
+  - refactor: Regal Rats have been refactored into basic mobs. They should be a bit
+      smarter and retain their docility (until attacked, in which case you should
+      prepare to get rekt by summoned rats), and properly flee when they can instead
+      of just sit there as you beat them to death. The framework for them interacting
+      with stuff (i.e. opening doors while slobbering on food) is a bit more unified
+      too, now. They also have cooler names too!
+2023-08-20:
+  EuSouAFazer:
+  - qol: Made the cytology lab in many maps much more convenient.
+  Fikou, Armhulen, Sheets (+rep for Mothblocks and Potato):
+  - bugfix: RD MODsuit outfit (admin only) no longer has a beret that blocks the activation
+      of the suit
+  - bugfix: The beret used by death squad officers no longer is blocked from being
+      put on a hat stabilizer module
+  - admin: Admins can now Shear matrices of objects in Modify Transform
+  - admin: Admins now have access to Test Matrices in the VV dropdown, an all-in-one
+      tool for editing transforms.
+  - rscadd: MODLink system, available through scryers (from RnD and Charlie Station)
+      and through MODsuits. Lets you call people with holographs!
+  Jacquerel:
+  - qol: Added some textual feedback to new watcher abilities
+  - balance: Watchers will not attack for a short period following their gaze attack
+  - bugfix: Watchers won't interrupt one ability to use the other one
+  LT3:
+  - bugfix: Rotated multi-tile airlocks display correctly and won't create an invisible
+      box next to itself
+  Melbert:
+  - bugfix: Reactive stealth armor decoys are half as healthy, as originally intended
+  Striders13:
+  - admin: admins can now upload files to the server up to 5mb (used to be 2.5mb)
+  - config: file upload restriction is now config
+  iwishforducks:
+  - bugfix: Some RCD constructs took more material than manual construction. The RCD
+      cost should be consistent in comparison to manual construction now.
+  mc-oofert:
+  - bugfix: ripley MK2 upgrade now properly transfers servos
+  - spellcheck: inserting parts into mechas now properly says "installed" instead
+      of "intalled"
+  spookydonut:
+  - bugfix: Incompatible quirks in existing savefiles shouldn't be possible anymore.
+  zeroisthebiggay:
+  - bugfix: healing holoparas will no longer kill slime people
+2023-08-21:
+  Deadgebert:
+  - qol: Added two magboots to engine SMES room on icebox station
+  Ghommie:
+  - bugfix: Fixed embedding for projectiles.
+  Jackal-boop:
+  - balance: the lion hunters rifle has been pegged down the knowledge tree. to make
+      sure the tree is kept happy, the rust path and blade path can access rust charge
+  - rscadd: rust charge
+  - balance: the lion hunter ammo knowledge is free
+2023-08-22:
+  CoiledLamb:
+  - bugfix: wellcheers is now based on sanity rather than mood
+  - image: resprites martian cans
+  - image: adds inhands for martian cans and wellcheers
+  - image: minor tweaks to other cans
+  - spellcheck: updates wellcheers mood text
+  DATA-xPUNGED:
+  - rscadd: Sacrificed heretic targets will now receive a phobia of heresy instead
+      of a phobia of the supernatural. Sacrificed heretics will not get this phobia,
+      but will lose knowledge points instead.
+  DeerJesus:
+  - rscadd: Adds green jester shoes that jingle to the autodrobe!
+  Ghommie:
+  - bugfix: The "Unlocked Achievements" score will now be properly saved at the end
+      of the round the first time it's loaded.
+  - rscadd: You can now feed fish with the can of fish feed without having to put
+      the fish in a aquarium first.
+  - balance: Some fish may survive in different, harsher atmospheres if given the
+      amphibious trait, like chasm chrabs on lavaland.
+  - qol: aquarium now uses balloon alerts when feeding fish.
+  - bugfix: The wary and shiny lover no longer incorrectly remove difficulty from
+      the minigame if conditions aren't met.
+  Helg2:
+  - bugfix: '[Birdshot] Morgue now has coroner''s surgery duffel bag instead of regular
+      surgery duffel.'
+  Ical92:
+  - bugfix: fixed beakers disappearing when swapped in a chem heater
+  IndieanaJones:
+  - balance: Lasers now have increased energy cost, reverting the cost back to the
+      initial value before the laser buff.
+  Jacquerel:
+  - balance: Watchers have less health
+  - balance: You can't be overwatched by several watchers at a time
+  - balance: Watchers won't overwatch you instantly upon seeing you
+  - balance: Goliaths won't launch tentacles at you instantly upon seeing you
+  JohnFulpWillard:
+  - refactor: AI's player-tracking eyes received an unwanted obligatory update, and
+      should now not tell you that a player is untrackable when they clearly obviously
+      can be.
+  - bugfix: Bots that can't be controlled (like beepsky) no longer has a stray 0 at
+      the very right side of its UI.
+  LukasBeedellCodestuff:
+  - rscadd: Added compact shotgun to the hos locker
+  - rscadd: Added compact shotgun as a traitor objective
+  - balance: gives the compact shotgun 1 extra shot
+  Melbert:
+  - bugfix: Fixed some tooltips in the sec records UI showing "false"s where they
+      shouldn't.
+  Profakos:
+  - bugfix: Mobs whose human appearance is set dynamically will once again have their
+      bespoke names and descriptions, instead of Unknown, with a blank description.
+  Rhials:
+  - rscadd: Ninjas can now temporarily disable cameras with the Ninja MOD right-click
+      hacking ability.
+  - rscadd: Ninjas can emag windoors, elevator controls, and buttons with their hacking
+      ability.
+  - rscadd: Ninjas can drain the power from energy weaponry, adding the charge to
+      their MODsuit.
+  - rscadd: Ninjas can now hack simplebots, overloading and detonating them after
+      a brief delay.
+  - rscadd: Ninjas can now hack vendors, causing them to eject their inventory at
+      people.
+  - rscadd: Ninjas can now hack the recycler, which notifies the AI and emags it once
+      complete.
+  - rscadd: Ninjas can now trigger an extended tram malfunction by hacking the tram
+      control console.
+  - rscadd: Ninjas can now hack open firelocks (temporarily) with right-click.
+  - balance: Hacking open doors with the Ninja Hacking MODule will subtract a paltry
+      amount of energy from your suit.
+  SyncIt21:
+  - code_imp: removed unused procs in ore silo
+  - code_imp: merged repeated code segments when using materials from the ore silo
+      into a single proc
+  - code_imp: added auto docs & cleaned up some procs
+  - refactor: logging when an item is inserted or sheets are ejected from the silo
+      is now handled directly by the silo itself
+  - bugfix: plumbing ducts connects to other plumbing machinery again
+  - bugfix: you can detach signaller from wires without the machine deconstructing
+      itself
+  Timberpoes:
+  - rscdel: Traitor objectives to place posters and graffiti the station have been
+      removed.
+  - rscadd: The items associated with the poster and graffiti objectives can now be
+      purchased from the Badassery section of the uplink. The posters come in a box
+      of 3 for 1TC, and the spraycans are 1TC each.
+  - rscadd: Adds a new Assault traitor objective, requiring you to the attack the
+      target a few times without needing to kill them. Earn TC and reputation by starting
+      barroom fights and bait players into escalation battles for fun and profit.
+  - rscadd: Expands low-risk steal objectives to include the Chef's fake moustache,
+      Lawyer's badge, and Mime's mask.
+  - rscadd: Adds brand new shift start Steal & Destroy objectives for early breaking
+      and entering. Smash your way into a sec checkpoint to grab a Space Law book,
+      engineering to grab some insulated gloves or the psych office to kidnap their
+      moth plush.
+  - bugfix: Fixes an issue where the steal clown shoes objective would never be valid.
+  YehnBeep:
+  - qol: Satchels can now be crafted using the same recipe (4 cloth) as backpacks.
+  - bugfix: Fixed a light inside a wall on Delta Station.
+  dieamond13:
+  - image: adds new sprites for opened fireaxe/mech crowbar cabinets.
+  distributivgesetz:
+  - rscadd: Replaced slime clone damage with a "Covered in Slime" status effect that
+      deals brute damage over time and can be washed off by standing under a shower.
+  - rscadd: Northstar and Birdshot Xenobiology have been outfitted with a new shower.
+  - code_imp: Replaced the magic strings in slime code with macros. Also included
+      some warnings to anyone daring to touch the macros.

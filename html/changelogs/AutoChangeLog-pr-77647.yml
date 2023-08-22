@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Gravitational Anomalies will now correctly clean up after themselves, instead of leaving an area of the station permanently heavy or with no gravity at all."
