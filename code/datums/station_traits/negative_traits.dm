@@ -40,7 +40,7 @@
 /datum/station_trait/common_disabled/on_round_start()
 	. = ..()
 	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
-	if(filter_threshold < COMMON_DISABLED_MIN_POP) //only runs if there are enough players by round start, although this is a waste of a trait
+	if(filter_threshold < COMMON_DISABLED_MIN_POP || force) //only runs if there are enough players by round start, although this is a waste of a trait
 		message_admins("Common radio disabled station trait didn't run because there weren't enough players.")
 		REMOVE_TRAIT(SSstation, STATION_TRAIT_COMMON_DISABLED, STATION_TRAIT)
 		qdel(src)
