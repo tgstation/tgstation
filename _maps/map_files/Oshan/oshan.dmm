@@ -11125,7 +11125,7 @@
 "kvK" = (
 /obj/machinery/power/apc/worn_out/directional/west,
 /obj/structure/cable,
-/mob/living/basic/giant_spider/sgt_araneus,
+/mob/living/basic/spider/giant/sgt_araneus,
 /obj/structure/bed/dogbed/ian,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
