@@ -1,0 +1,6 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Taking a nap can once again heal minor wounds"
+  - bugfix: "A breath of healium will no longer knock you out for eternity"
+  - bugfix: "Healium sleep now respects sleep immunity"
