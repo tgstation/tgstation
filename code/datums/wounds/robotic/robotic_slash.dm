@@ -1,5 +1,5 @@
 /// How much damage and progress is reduced when on stasis.
-#define ELECTRICAL_DAMAGE_ON_STASIS_MULT 0.1
+#define ELECTRICAL_DAMAGE_ON_STASIS_MULT 0.25
 /// How much damage and progress is reduced when limb is grasped.
 #define ELECTRICAL_DAMAGE_GRASPED_MULT 0.5
 /// How much damage and progress is reduced when our victim lies down.
@@ -69,7 +69,7 @@
 
 	/// The bodyheat our victim must be at or above to start getting passive healing.
 	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 20)
-	/// The mult that heat differences between normal and current bodytemp is multiplied against. Controls passive heat healing.
+	/// The mult that heat differences between normal and bodytemp thresh is multiplied against. Controls passive heat healing.
 	var/heat_differential_healing_mult = 5
 
 	/// Percent chance for a heat repair to give the victim a message.
@@ -233,7 +233,7 @@
 	if (potential_treater.tool_behaviour == TOOL_RETRACTOR)
 		return TRUE
 
-	if (istype(potential_treater, /obj/item/stack/cable_coil) && (limb.burn_dam <= 5))
+	if (istype(potential_treater, /obj/item/stack/cable_coil) && ((user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE) || (limb.burn_dam <= 5)))
 		return TRUE
 
 	return ..()

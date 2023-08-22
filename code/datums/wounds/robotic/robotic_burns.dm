@@ -168,7 +168,7 @@
 
 	var/reagent_coefficient = (source.total_volume * base_reagent_temp_coefficient) * base_mult
 
-	expose_temperature(source.chem_temp, reagent_coefficient, TRUE, TRUE) // if we are sprayed with something, we will immediately cool. or heat the fuck up :)
+	expose_temperature(source.chem_temp, reagent_coefficient, TRUE) // if we are sprayed with something, we will immediately cool. or heat the fuck up :)
 
 /datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE)
 	var/temp_delta = (temperature - chassis_temperature) * coeff
