@@ -1,4 +1,4 @@
-/datum/action/cooldown/wrap
+/datum/action/cooldown/mob_cooldown/wrap
 	name = "Wrap"
 	desc = "Wrap something or someone in a cocoon. \
 		If it's a human or similar species, you'll also consume them. \
@@ -11,20 +11,21 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
+	shared_cooldown = NONE
 	/// The time it takes to wrap something.
 	var/wrap_time = 5 SECONDS
 
-/datum/action/cooldown/wrap/Grant(mob/grant_to)
+/datum/action/cooldown/mob_cooldown/wrap/Grant(mob/grant_to)
 	. = ..()
 	if (!owner)
 		return
 	RegisterSignals(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
 
-/datum/action/cooldown/wrap/Remove(mob/removed_from)
+/datum/action/cooldown/mob_cooldown/wrap/Remove(mob/removed_from)
 	. = ..()
 	UnregisterSignal(removed_from, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
 
-/datum/action/cooldown/wrap/IsAvailable(feedback = FALSE)
+/datum/action/cooldown/mob_cooldown/wrap/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!. || owner.incapacitated())
 		return FALSE
@@ -34,7 +35,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/wrap/set_click_ability(mob/on_who)
+/datum/action/cooldown/mob_cooldown/wrap/set_click_ability(mob/on_who)
 	. = ..()
 	if(!.)
 		return
@@ -43,7 +44,7 @@
 	button_icon_state = "wrap_1"
 	build_all_button_icons()
 
-/datum/action/cooldown/wrap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+/datum/action/cooldown/mob_cooldown/wrap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -53,7 +54,7 @@
 	button_icon_state = "wrap_0"
 	build_all_button_icons()
 
-/datum/action/cooldown/wrap/Activate(atom/to_wrap)
+/datum/action/cooldown/mob_cooldown/wrap/Activate(atom/to_wrap)
 	if(!owner.Adjacent(to_wrap))
 		owner.balloon_alert(owner, "must be closer!")
 		return FALSE
@@ -73,7 +74,7 @@
 	INVOKE_ASYNC(src, PROC_REF(cocoon), to_wrap)
 	return TRUE
 
-/datum/action/cooldown/wrap/proc/cocoon(atom/movable/to_wrap)
+/datum/action/cooldown/mob_cooldown/wrap/proc/cocoon(atom/movable/to_wrap)
 	owner.visible_message(
 		span_notice("[owner] begins to secrete a sticky substance around [to_wrap]."),
 		span_notice("You begin wrapping [to_wrap] into a cocoon."),
@@ -83,14 +84,14 @@
 	else
 		owner.balloon_alert(owner, "interrupted!")
 
-/datum/action/cooldown/wrap/proc/wrap_target(atom/movable/to_wrap)
+/datum/action/cooldown/mob_cooldown/wrap/proc/wrap_target(atom/movable/to_wrap)
 	var/obj/structure/spider/cocoon/casing = new(to_wrap.loc)
 	if(isliving(to_wrap))
 		var/mob/living/living_wrapped = to_wrap
 		// You get a point every time you consume a living player, even if they've been consumed before.
 		// You only get a point for any individual corpse once, so you can't keep breaking it out and eating it again.
 		if(ishuman(living_wrapped) && (living_wrapped.stat != DEAD || !HAS_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED)))
-			var/datum/action/lay_eggs/enriched/egg_power = locate() in owner.actions
+			var/datum/action/cooldown/mob_cooldown/lay_eggs/enriched/egg_power = locate() in owner.actions
 			if(egg_power)
 				egg_power.charges++
 				egg_power.build_all_button_icons()

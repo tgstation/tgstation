@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "If you shapeshift into a mob which can eat things such as player corpses, those things will fall out when you stop shapeshifting"
