@@ -42,8 +42,7 @@
 	SIGNAL_HANDLER
 	curse_count++
 
-	if(!isnull(linked_alert))
-		linked_alert.update_description()
+	linked_alert?.update_description() // we may have not initialized it yet
 
 	addtimer(CALLBACK(src, PROC_REF(handle_after_effects), 1 SECONDS)) // give it a second to let the failure sink in before we exact our toll
 
@@ -110,8 +109,7 @@
 
 	if(!isnull(branded_hand))
 		var/datum/wound/brand = branded_hand.get_wound_type(/datum/wound/burn/severe/cursed_brand)
-		if(!isnull(brand))
-			brand.remove_wound()
+		brand?.remove_wound()
 
 	owner.visible_message(
 		span_notice("The smoke slowly clears from [owner.name]..."),
@@ -122,6 +120,7 @@
 
 /// If our owner's stat changes, rapidly surge the damage chance.
 /datum/status_effect/grouped/cursed/proc/on_stat_changed()
+	SIGNAL_HANDLER
 	if(owner.stat == CONSCIOUS || owner.stat == DEAD) // reset on these two states
 		damage_chance = initial(damage_chance)
 		return
