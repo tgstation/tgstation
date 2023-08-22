@@ -266,7 +266,7 @@
 		r_pocket = pick_weight(list(
 			/obj/item/coin/silver = 5,
 			/obj/item/fishing_hook = 2,
-			/obj/item/fishing_line = 2,
+			/obj/item/coin/gold = 2,
 			/obj/item/fishing_hook/shiny = 1,
 		))
 	if(prob(30))
