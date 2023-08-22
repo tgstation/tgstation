@@ -50,22 +50,22 @@
 	. = ..()
 	var/screentip_change = FALSE
 
-	if(!held_item)
+	if(!held_item && scanner_wand)
 		context[SCREENTIP_CONTEXT_RMB] = "Pick the scanner wand"
-		screentip_change = TRUE
+		return screentip_change = TRUE
 
-	else if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
-		screentip_change = TRUE
-	else if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		return screentip_change = TRUE
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-		screentip_change = TRUE
-	else if(istype(held_item) && held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		return screentip_change = TRUE
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
-		screentip_change = TRUE
-	else if(istype(held_item, /obj/item/scanner_wand))
+		return screentip_change = TRUE
+	if(istype(held_item, /obj/item/scanner_wand))
 		context[SCREENTIP_CONTEXT_LMB] = "Return the scanner wand"
-		screentip_change = TRUE
+		return screentip_change = TRUE
 
 	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
