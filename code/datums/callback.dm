@@ -80,7 +80,7 @@
 	SHOULD_CALL_PARENT(FALSE)
 	if (force)
 		return ..()
-	stack_trace("callbacks can not be qdeleted. if they are referenced they must exist. ([object == GLOBAL_PROC ? GLOBAL_PROC : object.type] [delegate])")
+	stack_trace("Callbacks can not be qdeleted. If they are referenced, they must exist. ([object == GLOBAL_PROC ? GLOBAL_PROC : object.type] [delegate])")
 	return QDEL_HINT_LETMELIVE
 
 /**
