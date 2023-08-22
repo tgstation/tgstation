@@ -172,7 +172,6 @@
 
 /datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE)
 	var/temp_delta = (temperature - chassis_temperature) * coeff
-
 	var/heating_temp_delta_mult = 1
 	if (heat_shock && abs(temp_delta) > heat_shock_minimum_delta)
 

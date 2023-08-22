@@ -78,7 +78,6 @@
 	/// If [get_intensity_mult()] is at or above this, the limb gets disabled.
 	var/disable_at_intensity_mult
 
-
 	scar_file = ROBOTIC_METAL_SCAR_FILE
 
 	processes = TRUE
@@ -93,9 +92,6 @@
 
 /datum/wound/electrical_damage/handle_process(seconds_per_tick, times_fired)
 	. = ..()
-
-	/*if (!(limb.body_zone == BODY_ZONE_CHEST || limb.body_zone == BODY_ZONE_HEAD))
-		return*/
 
 	var/base_mult = get_base_mult()
 
@@ -118,9 +114,6 @@
 	if (processing_shock_power_this_tick > 1)
 		var/stun_chance = (processing_shock_stun_chance * intensity_mult) * base_mult
 		var/spark_chance = (processing_shock_spark_chance * intensity_mult) * base_mult
-
-		//var/jitter_time = seconds_per_tick
-		//var/stutter_time = 0
 
 		var/should_stun = SPT_PROB(stun_chance, seconds_per_tick)
 		var/should_message = SPT_PROB(process_shock_message_chance, seconds_per_tick)
@@ -276,6 +269,8 @@
 		delay_mult *= 0.75
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		delay_mult *= 0.75
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		change *= 1.2
 
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	var/your_or_other = (user == victim ? "your" : "[user]'s")
@@ -328,6 +323,8 @@
 		delay_mult *= 0.75
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		delay_mult *= 0.75
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		change *= 1.2
 
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	while (wirecutting_tool.tool_start_check())

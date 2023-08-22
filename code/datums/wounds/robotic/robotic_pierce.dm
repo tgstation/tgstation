@@ -162,39 +162,5 @@
 
 	wound_path_to_generate = /datum/wound/electrical_damage/pierce/critical
 
-/datum/wound/electrical_damage/pierce/proc/update_inefficiencies()
-	SIGNAL_HANDLER
-
-	var/intensity_mult = get_intensity_mult()
-
-	var/obj/item/stack/gauze = limb.current_gauze
-	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		if(gauze?.splint_factor)
-			limp_slowdown = (initial(limp_slowdown) * gauze.splint_factor) * intensity_mult
-			limp_chance = (initial(limp_chance) * gauze.splint_factor) * intensity_mult
-		else
-			limp_slowdown = initial(limp_slowdown) * intensity_mult
-			limp_chance = initial(limp_chance) * intensity_mult
-		if (!victim.has_status_effect(/datum/status_effect/limp))
-			victim.apply_status_effect(/datum/status_effect/limp)
-		for (var/datum/status_effect/limp/limper in victim.status_effects)
-			limper.update_limp()
-			break
-
-	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		if(gauze?.splint_factor)
-			interaction_efficiency_penalty = (1 + ((interaction_efficiency_penalty - 1) * gauze.splint_factor) * intensity_mult)
-		else
-			interaction_efficiency_penalty = (initial(interaction_efficiency_penalty) * intensity_mult)
-
-	if(disable_at_intensity_mult && intensity_mult >= disable_at_intensity_mult)
-		set_disabling(gauze)
-
-	limb.update_wounds()
-
-/datum/wound/electrical_damage/pierce/adjust_intensity()
-	. = ..()
-	update_inefficiencies()
-
 #undef ELECTRICAL_DAMAGE_REPAIR_WELD_BASE_DELAY
 #undef ELECTRICAL_DAMAGE_REPLACE_METALS_BASE_DELAY

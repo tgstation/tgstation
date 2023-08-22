@@ -350,6 +350,9 @@
 		delay_mult *= 0.85
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		chance *= 5
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		chance *= 3
+		delay_mult *= 0.8
 
 	var/confused = (chance < 50) // generate chance beforehand, so we can use this var
 
@@ -377,13 +380,18 @@
 	return TRUE
 
 /datum/wound/blunt/robotic/proc/gel(obj/item/stack/medical/bone_gel/gel, mob/user)
+
+	var/delay_mult = 1
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
+
 	if (gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already filled with bone gel!"))
 		return TRUE
 
 	user.visible_message(span_danger("[user] begins hastily applying [gel] to [victim]'s' [limb.plaintext_zone]..."), span_warning("You begin hastily applying [gel] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone], disregarding the bold \"ONLY USE WITH ORGANICS\" label..."))
 
-	if (!do_after(user, base_treat_time * 2 * (user == victim ? 1.5 : 1), target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if (!do_after(user, (base_treat_time * 2 * (user == victim ? 1.5 : 1)) * delay_mult, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
 	gel.use(1)
@@ -408,6 +416,8 @@
 	var/delay_mult = 1
 	if (welding_item.tool_behaviour == TOOL_CAUTERY)
 		delay_mult *= 3
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
 
 	if (!welding_item.use_tool(target = victim, user = user, delay = 7 SECONDS * delay_mult, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
@@ -496,7 +506,6 @@
 	daze_dizziness_maximum_duration = 80 SECONDS
 	daze_dizzy_minimum_score = 1
 	daze_dizzy_mult = 15
-
 
 	daze_movement_shake_duration_mult = 1
 	daze_movement_shake_intensity_mult = 0.2
@@ -590,6 +599,10 @@
 	user.visible_message(span_danger("[user] begins softly pressing against [victim]'s collapsed [limb.plaintext_zone]..."), span_notice("You begin softly pressing against [victim]'s collapsed [limb.plaintext_zone]..."), ignored_mobs=victim)
 	to_chat(victim, span_userdanger("[user] begins softly pressing against your collapsed [limb.plaintext_zone]!"))
 
+	var/delay_mult = 1
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
+
 	if(!do_after(user, 8 SECONDS, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 	mold_metal(user)
@@ -597,11 +610,14 @@
 
 /datum/wound/blunt/robotic/critical/proc/mold_metal(mob/living/carbon/human/user)
 	var/chance = 40
+	var/delay_mult = 1
 
 	if (HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		chance *= 3
 	if (HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
 		chance *= 3
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		chance *= 2
 
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	if ((user != victim && user.combat_mode))
@@ -628,7 +644,11 @@
 	if (user)
 		user.visible_message(span_notice("[user] carefully holds [welder] to [their_or_other] [limb.plaintext_zone], slowly heating it..."))
 
-	if (!welder.use_tool(target = victim, user = user, delay = 10 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	var/delay_mult = 1
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
+
+	if (!welder.use_tool(target = victim, user = user, delay = 10 SECONDS * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
 	var/datum/wound/burn/robotic/overheat/wound_path
@@ -652,7 +672,11 @@
 	if (user)
 		user.visible_message(span_notice("[treating_rcd] whirs to life as it begins replacing the damaged superstructure of [victim]'s [limb.plaintext_zone]..."))
 
-	if (!treating_rcd.use_tool(target = victim, user = user, delay = 15 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	var/delay_mult = 1
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
+
+	if (!treating_rcd.use_tool(target = victim, user = user, delay = 10 SECONDS * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 	treating_rcd.useResource(ROBOTIC_T3_BLUNT_WOUND_RCD_COST, user)
 
@@ -667,6 +691,8 @@
 	if (HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
 		chance *= 2
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
+		chance *= 2
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		chance *= 2
 
 	if (prob(chance))
@@ -689,7 +715,11 @@
 	if (user)
 		user.visible_message(span_notice("[user] starts plunging at the dents on [their_or_other] [limb.plaintext_zone]..."))
 
-	if (!treating_plunger.use_tool(target = victim, user = user, delay = 8 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	var/delay_mult = 1
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.75
+
+	if (!treating_plunger.use_tool(target = victim, user = user, delay = 8 SECONDS * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
 	var/chance = 80
@@ -702,6 +732,8 @@
 		chance *= 1.1
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		chance *= 1.25
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		chance *= 1.5
 
 	if (prob(chance))
 		if (user)
@@ -803,9 +835,11 @@
 				var/atom/attacking_atom = attacking_item
 				user = attacking_atom.loc
 			var/chance_mult = 1
+			if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+				chance_mult *= 1.5
 			if (user)
 				if (user == victim)
-					chance_mult *= 0.25 // less likely for it to work if you hit yourself, so people can go up to people and go "please punch me"
+					chance_mult *= 0.4 // less likely for it to work if you hit yourself, so people can go up to people and go "please punch me"
 			if (prob(percussive_maintenance_repair_chance * chance_mult))
 				handle_percussive_maintenance_success(attacking_item)
 			else
