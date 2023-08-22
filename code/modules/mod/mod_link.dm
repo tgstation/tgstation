@@ -102,7 +102,7 @@
 				mod_link.frequency = tool_frequency
 
 /obj/item/mod/control/proc/can_call()
-	return wearer && wearer.stat < DEAD
+	return get_charge() && wearer && wearer.stat < DEAD
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
