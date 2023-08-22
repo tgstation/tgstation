@@ -413,6 +413,10 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	malfunctioning = FALSE
 	process()
 
+/obj/machinery/crossing_signal/proc/temp_malfunction()
+	start_malfunction()
+	addtimer(CALLBACK(src, PROC_REF(end_malfunction)), 15 SECONDS)
+
 /**
  * Finds the tram, just like the tram computer
  *
