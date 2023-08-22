@@ -10,7 +10,7 @@
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
-	icon = 'icons/mob/simple/bees.dmi'
+	icon = 'monkestation/icons/mob/simple/bees.dmi' //monkestation edit
 	gender = FEMALE
 	speak_emote = list("buzzes")
 
@@ -51,7 +51,8 @@
 	///the house we live in
 	var/obj/structure/beebox/beehome = null
 	///our icon base
-	var/icon_base = "bee"
+	var/icon_base = "angry_bee" //add friendly maint bees
+	var/dead_icon_base = "dead_bee"
 	///the bee is a queen?
 	var/is_queen = FALSE
 
@@ -93,10 +94,21 @@
 	return ..()
 
 /mob/living/basic/bee/death(gibbed)
+	icon_base = dead_icon_base
+	generate_bee_visuals()
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
-	beegent = null
+	var/obj/item/food/pollensac/sac = new(loc) //monkestation edit, bee update
+	sac.pixel_x = pixel_x
+	sac.pixel_y = pixel_y
+	sac.reagents.add_reagent(/datum/reagent/consumable/honey, 2)
+	sac.color = BEE_DEFAULT_COLOUR
+	if(beegent)
+		sac.beegent = beegent
+		sac.reagents.add_reagent(beegent.type, 5)
+		sac.color = beegent.color
+	sac.update_appearance()
 	if(flags_1 & HOLOGRAM_1 || gibbed)
 		return ..()
 	new /obj/item/trash/bee(loc, src)
@@ -147,7 +159,7 @@
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay
-	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/simple/bees.dmi')
+	greyscale_overlay = greyscale_overlay || mutable_appearance('monkestation/icons/mob/simple/bees.dmi')
 	greyscale_overlay.icon_state = "[icon_base]_grey"
 	greyscale_overlay.color = bee_color
 	add_overlay(greyscale_overlay)
@@ -190,6 +202,7 @@
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_base = "queen"
+	dead_icon_base = "dead_queen_bee"
 	is_queen = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/queen_bee
 
@@ -216,7 +229,7 @@
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	inhand_icon_state = ""
-	icon = 'icons/mob/simple/bees.dmi'
+	icon = 'monkestation/icons/mob/simple/bees.dmi'
 	/// The actual mob that our bee item corresponds to
 	var/mob/living/basic/bee/queen/queen
 
