@@ -59106,6 +59106,11 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/grass,
 /area/station/commons/dorms)
+"ufe" = (
+/obj/structure/lattice,
+/obj/machinery/light/cold/dim/directional/west,
+/turf/open/openspace,
+/area/station/asteroid)
 "ufh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -70021,6 +70026,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
+"ydd" = (
+/obj/structure/lattice,
+/obj/machinery/light/cold/dim/directional/east,
+/turf/open/openspace,
+/area/station/asteroid)
 "ydh" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -158580,13 +158590,13 @@ aaS
 afz
 afA
 afz
-afz
+ufe
 afy
 afP
 lzu
 afX
 afy
-afz
+ufe
 afz
 age
 abM
@@ -163977,13 +163987,13 @@ afv
 afz
 afA
 afz
-afz
+ydd
 afy
 afP
 wJq
 afX
 afy
-afz
+ydd
 afz
 age
 afz
@@ -172201,13 +172211,13 @@ afv
 afz
 afA
 afz
-afz
+ufe
 afy
 afP
 wJq
 afX
 afy
-afz
+ufe
 afz
 age
 aaS
@@ -177598,13 +177608,13 @@ afv
 afz
 afA
 afz
-afz
+ydd
 afy
 afP
 lMF
 afX
 afy
-afz
+ydd
 afz
 age
 aaS
