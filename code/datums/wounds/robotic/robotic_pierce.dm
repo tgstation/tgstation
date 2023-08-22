@@ -153,7 +153,7 @@
 	occur_text = "flashes with radiant blue, emitting a noise not unlike a jacobs ladder"
 	examine_desc = "'s PSU is visible, with a sizable hole in the center"
 	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or hemostat. \
-				 If the fault has become uncontrollable, extreme heat therapy is reccomended."
+				If the fault has become uncontrollable, extreme heat therapy is reccomended."
 
 	severity = WOUND_SEVERITY_CRITICAL
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_FLESH)
