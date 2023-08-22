@@ -11890,9 +11890,15 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "cXX" = (
-/obj/effect/landmark/tram/nav/immovable_rod,
-/turf/closed/wall,
-/area/station/hallway/secondary/exit/departure_lounge)
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/right)
 "cYi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -31813,17 +31819,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"ksO" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/power/apc/auto_name/directional/west,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/exit)
 "ksP" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
@@ -33768,6 +33763,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "lax" = (
@@ -48344,11 +48340,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
-"qoY" = (
-/obj/structure/lattice,
-/obj/machinery/light/dim/directional/north,
-/turf/open/openspace,
-/area/station/asteroid)
 "qoZ" = (
 /obj/item/paper/fluff/ids_for_dummies,
 /turf/open/misc/asteroid/airless,
@@ -50302,6 +50293,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "ram" = (
@@ -54496,16 +54488,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
-"sAW" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/exit)
 "sBr" = (
 /obj/machinery/newscaster/directional/west,
 /obj/structure/disposalpipe/segment{
@@ -59015,6 +58997,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/west,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "udY" = (
@@ -59330,7 +59313,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ujw" = (
-/obj/machinery/airalarm/directional/east,
 /obj/effect/landmark/start/hangover,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/white/line{
@@ -62197,11 +62179,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
-"veJ" = (
-/obj/structure/lattice,
-/obj/machinery/light/dim/directional/south,
-/turf/open/openspace,
-/area/station/asteroid)
 "veV" = (
 /turf/closed/wall,
 /area/station/commons/toilet)
@@ -158303,11 +158280,11 @@ yiM
 aEh
 iPy
 yiM
-qoY
+afz
 afS
 lzu
 afY
-veJ
+afz
 yiM
 iPy
 tBu
@@ -164214,11 +164191,11 @@ izU
 vMI
 nEl
 izU
-qoY
+afz
 afV
 wJq
 aga
-veJ
+afz
 izU
 nEl
 dnp
@@ -171924,11 +171901,11 @@ izU
 eqK
 nEl
 izU
-qoY
+afz
 afS
 wJq
 afY
-veJ
+afz
 izU
 nEl
 mhE
@@ -177835,11 +177812,11 @@ bMb
 lyt
 ghV
 bMb
-qoY
+afz
 afS
 lMF
 afY
-veJ
+afz
 bMb
 ghV
 bXG
@@ -182458,7 +182435,7 @@ lSM
 aDv
 bKY
 fgi
-rEB
+cXX
 eOw
 dfx
 brm
@@ -185288,11 +185265,11 @@ jha
 qDn
 ajg
 qZZ
-ksO
+ajg
 hSt
 pgo
 kAO
-sAW
+kAO
 udX
 kAO
 duA
@@ -187089,7 +187066,7 @@ qSm
 kIo
 qSm
 sXo
-cXX
+fmy
 aGs
 kIo
 fFx
