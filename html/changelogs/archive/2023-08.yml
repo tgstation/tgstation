@@ -329,3 +329,20 @@
   - sound: Added Rattle.ogg which sounds like a well, rattle
   iamcooldan:
   - rscadd: Added additional items to the produce order console.
+2023-08-22:
+  BlackCrystalic, Koshenko:
+  - rscadd: day/night cycle that changes brightness and color based on station time
+      to icebox and oshan
+  - rscadd: framework for particle weathers, currently un-used in maps
+  DimWhat:
+  - image: Resprited the janitor jumpsuit/skirt
+  Ebin-Halcyon:
+  - rscadd: Syndicate maid outfit for 4 tc, degenerate.
+  SeeBeeSee:
+  - rscadd: existing Fraxinella mutation to the current plant mutation list
+  dwasint:
+  - rscadd: coconuts and coconut guns
+  - rscadd: wall trim and wall paints, use a decal painter with a custom color on
+      the wall to change the trim or paint
+  iamcooldan:
+  - rscadd: new crates for departmental lathes, and a birthday crate.
