@@ -46,7 +46,7 @@
 	SIGNAL_HANDLER
 	curse_count++
 
-	linked_alert?.update_description() // we may have not initialized it yet
+	linked_alert?.update_appearance() // we may have not initialized it yet
 
 	addtimer(CALLBACK(src, PROC_REF(handle_after_effects), 1 SECONDS)) // give it a second to let the failure sink in before we exact our toll
 
@@ -178,7 +178,8 @@
 	desc = "The brand on your hand reminds you of your greed, yet you seem to be okay otherwise."
 	icon_state = "cursed_by_slots"
 
-/atom/movable/screen/alert/status_effect/cursed/update_description()
+/atom/movable/screen/alert/status_effect/cursed/update_desc()
+	. = ..()
 	var/datum/status_effect/grouped/cursed/linked_effect = attached_effect
 	var/curses = linked_effect.curse_count
 	switch(curses)
