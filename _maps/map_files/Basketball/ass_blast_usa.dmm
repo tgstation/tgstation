@@ -27,7 +27,7 @@
 /area/centcom/basketball)
 "cz" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/automatic/sniper_rifle,
+/obj/item/gun/ballistic/rifle/sniper_rifle,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "dr" = (

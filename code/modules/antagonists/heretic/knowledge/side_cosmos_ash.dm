@@ -15,7 +15,7 @@
 		/obj/item/organ/internal/liver = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
-	mob_to_summon = /mob/living/basic/fire_shark
+	mob_to_summon = /mob/living/basic/heretic_summon/fire_shark
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
