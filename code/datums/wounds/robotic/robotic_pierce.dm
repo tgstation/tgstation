@@ -12,7 +12,7 @@
 	/// The bodyheat our victim must be at or above to start getting passive healing.
 	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 20)
 	/// The mult that heat differences between normal and current bodytemp is multiplied against. Controls passive heat healing.
-	var/heat_differential_healing_mult = 10
+	var/heat_differential_healing_mult = 30
 
 	/// Percent chance for a heat repair to give the victim a message.
 	var/heat_heal_message_chance = 20
@@ -35,6 +35,12 @@
 
 	if (limb)
 		update_inefficiencies()
+
+/datum/wound/electrical_damage/pierce/set_victim(new_victim)
+	if (victim)
+		victim.remove_status_effect(/datum/status_effect/limp)
+
+	return ..()
 
 /datum/wound/electrical_damage/pierce/modify_seconds_for_intensity_after_mult(seconds_for_intensity)
 	if (!victim)
@@ -63,24 +69,24 @@
 	threshold_minimum = 40
 	threshold_penalty = 30
 
-	intensity = 0.3 MINUTES
-	processing_full_shock_threshold = 5.8 MINUTES
+	intensity = 10 SECONDS
+	processing_full_shock_threshold = 8 MINUTES
 
-	processing_shock_power_per_second_max = 0.45
-	processing_shock_power_per_second_min = 0.4
+	processing_shock_power_per_second_max = 1.1
+	processing_shock_power_per_second_min = 0.9
 
-	processing_shock_stun_chance = 0
+	processing_shock_stun_chance = 0.5
 	processing_shock_spark_chance = 35
 
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.15 //15% per wirecut
-	wire_repair_percent = 0.07 //7% per suture
+	wirecut_repair_percent = 0.015 //15% per wirecut
+	wire_repair_percent = 0.06 //6% per suture
 
 	interaction_efficiency_penalty = 2
-	limp_slowdown = 4
-	limp_chance = 40
+	limp_slowdown = 2
+	limp_chance = 60
 
 	wiring_reset = TRUE
 
@@ -99,7 +105,7 @@
 
 /datum/wound/electrical_damage/pierce/severe
 	name = "Penetrated Transformer"
-	desc = "A major transformer has been pierced, causing rapid electrical damage and progressive limb dysfunction."
+	desc = "A major transformer has been pierced, causing slow-to-progess but eventually intense electrical damage and limb dysfunction from power loss."
 	occur_text = "sputters and goes limp for a moment as it ejects a stream of sparks"
 	examine_desc = "is shuddering significantly, servos briefly giving way in a rythmic pattern"
 	treat_text = "Containment of damaged wiring via gauze, securing of wires via a wirecutter/hemostat, then application of fresh wiring or sutures."
@@ -113,24 +119,24 @@
 	threshold_minimum = 60
 	threshold_penalty = 40
 
-	intensity = 0.3 MINUTES
-	processing_full_shock_threshold = 4.3 MINUTES
+	intensity = 20 SECONDS
+	processing_full_shock_threshold = 7 MINUTES
 
-	processing_shock_power_per_second_max = 0.6
-	processing_shock_power_per_second_min = 0.4
+	processing_shock_power_per_second_max = 1.4
+	processing_shock_power_per_second_min = 1.2
 
-	processing_shock_stun_chance = 0
+	processing_shock_stun_chance = 2.5
 	processing_shock_spark_chance = 60
 
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
 	wirecut_repair_percent = 0.012 //12% per wirecut
-	wire_repair_percent = 0.05 //5% per suture
+	wire_repair_percent = 0.04 //4% per suture
 
-	interaction_efficiency_penalty = 3
-	limp_slowdown = 6
-	limp_chance = 60
+	interaction_efficiency_penalty = 2.5
+	limp_slowdown = 4
+	limp_chance = 90
 
 	initial_sparks_amount = 3
 
@@ -149,7 +155,7 @@
 
 /datum/wound/electrical_damage/pierce/critical
 	name = "Ruptured PSU"
-	desc = "Target's local PSU has suffered a core rupture, causing massive power loss that will cause intense electrical damage and limb dysfunction."
+	desc = "The local PSU of this limb has suffered a core rupture, causing a progressive power failure that will slowly intensify into extreme electrical damage and massive limb dysfunction."
 	occur_text = "flashes with radiant blue, emitting a noise not unlike a jacobs ladder"
 	examine_desc = "'s PSU is visible, with a sizable hole in the center"
 	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or hemostat. \
@@ -165,11 +171,11 @@
 	threshold_minimum = 110
 	threshold_penalty = 60
 
-	intensity = 0.3 MINUTES
-	processing_full_shock_threshold = 2.5 MINUTES
+	intensity = 40 SECONDS
+	processing_full_shock_threshold = 6.5 MINUTES
 
-	processing_shock_power_per_second_max = 1.1
-	processing_shock_power_per_second_min = 0.9
+	processing_shock_power_per_second_max = 2.1
+	processing_shock_power_per_second_min = 1.9
 
 	processing_shock_stun_chance = 1
 	processing_shock_spark_chance = 90
@@ -177,12 +183,12 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.8 //8% per wirecut
+	wirecut_repair_percent = 0.08 //8% per wirecut
 	wire_repair_percent = 0.03 //3% per suture
 
-	interaction_efficiency_penalty = 4
-	limp_slowdown = 8
-	limp_chance = 80
+	interaction_efficiency_penalty = 3
+	limp_slowdown = 6
+	limp_chance = 100
 
 	initial_sparks_amount = 8
 
@@ -210,7 +216,12 @@
 		else
 			limp_slowdown = initial(limp_slowdown) * intensity_mult
 			limp_chance = initial(limp_chance) * intensity_mult
-		victim.apply_status_effect(/datum/status_effect/limp)
+		if (!victim.has_status_effect(/datum/status_effect/limp))
+			victim.apply_status_effect(/datum/status_effect/limp)
+		for (var/datum/status_effect/limp/limper in victim.status_effects)
+			limper.update_limp()
+			break
+
 	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		if(gauze?.splint_factor)
 			interaction_efficiency_penalty = (1 + ((interaction_efficiency_penalty - 1) * gauze.splint_factor) * intensity_mult)

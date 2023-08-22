@@ -507,27 +507,30 @@
 			if (has_exterior && has_interior)
 				break
 
-			// if we're bone only, all cutting attacks go straight to the bone
-		if(has_exterior && !has_interior)
+		var/exterior_ready_to_dismember = (!has_exterior || (mangled_state & BODYPART_MANGLED_BONE))
+		var/interior_ready_to_dismember = (!has_interior || (mangled_state & BODYPART_MANGLED_FLESH))
+
+		// if we're bone only, all cutting attacks go straight to the bone
+		if(has_exterior && (interior_ready_to_dismember))
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.6)
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.75)
-			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+			if(exterior_ready_to_dismember && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
-		else if(has_exterior && has_interior)
+		else
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
-			if((mangled_state & BODYPART_MANGLED_FLESH) && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
+			if(has_exterior && (mangled_state & BODYPART_MANGLED_FLESH) && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
 				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
 					wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
-			else if((mangled_state & BODYPART_MANGLED_FLESH) && (mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+			else if(interior_ready_to_dismember && exterior_ready_to_dismember && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
@@ -1135,7 +1138,7 @@
 /obj/item/bodypart/proc/can_bleed()
 	SHOULD_BE_PURE(TRUE)
 
-	return ((biological_state & BIO_BLOODED) && HAS_TRAIT(owner, TRAIT_NOBLOOD))
+	return ((biological_state & BIO_BLOODED) && (!owner || HAS_TRAIT(owner, TRAIT_NOBLOOD)))
 
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart

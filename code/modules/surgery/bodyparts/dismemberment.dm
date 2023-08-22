@@ -189,8 +189,9 @@
 	var/base_chance = wounding_dmg
 	base_chance += (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
 
-	if(locate(/datum/wound/blunt/bone/critical) in wounds) // we only require a severe bone break, but if there's a critical bone break, we'll add 15% more
-		base_chance += 15
+	for (var/datum/wound/iterated_wound as anything in wounds)
+		if (iterated_wound.wound_type == WOUND_BLUNT && iterated_wound.severity == WOUND_SEVERITY_CRITICAL)
+			base_chance += 15 // we only require a severe bone break, but if there's a critical bone break, we'll add 15% more
 
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new

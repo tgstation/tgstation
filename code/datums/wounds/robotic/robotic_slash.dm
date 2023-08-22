@@ -161,6 +161,9 @@
 	if (limb.grasped_by)
 		base_mult *= ELECTRICAL_DAMAGE_GRASPED_MULT
 
+	var/splint_mult = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
+	base_mult *= splint_mult
+
 	return overall_effect_mult * base_mult
 
 /datum/wound/electrical_damage/proc/modify_seconds_for_intensity_after_mult(seconds_for_intensity)
@@ -412,10 +415,10 @@
 	threshold_penalty = 20
 
 	intensity = 10 SECONDS
-	processing_full_shock_threshold = 6 MINUTES
+	processing_full_shock_threshold = 3.5 MINUTES
 
-	processing_shock_power_per_second_max = 0.4
-	processing_shock_power_per_second_min = 0.3
+	processing_shock_power_per_second_max = 0.2
+	processing_shock_power_per_second_min = 0.1
 
 	processing_shock_stun_chance = 0
 	processing_shock_spark_chance = 30
@@ -423,7 +426,7 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.15 //15% per wirecut
+	wirecut_repair_percent = 0.20 //20% per wirecut
 	wire_repair_percent = 0.08 //8% per suture
 
 	wiring_reset = TRUE
@@ -457,10 +460,10 @@
 	threshold_penalty = 30
 
 	intensity = 20 SECONDS
-	processing_full_shock_threshold = 4.2 MINUTES
+	processing_full_shock_threshold = 3 MINUTES
 
-	processing_shock_power_per_second_max = 0.6
-	processing_shock_power_per_second_min = 0.4
+	processing_shock_power_per_second_max = 0.4
+	processing_shock_power_per_second_min = 0.2
 
 	processing_shock_stun_chance = 0
 	processing_shock_spark_chance = 60
@@ -468,7 +471,7 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.08 //8% per wirecut
+	wirecut_repair_percent = 0.018 //18% per wirecut
 	wire_repair_percent = 0.06 //6% per suture
 
 	initial_sparks_amount = 3
@@ -497,14 +500,14 @@
 
 	sound_volume = 30
 
-	threshold_minimum = 90
+	threshold_minimum = 100
 	threshold_penalty = 50
 
 	intensity = 30 SECONDS
-	processing_full_shock_threshold = 3.2 MINUTES
+	processing_full_shock_threshold = 2 MINUTES
 
-	processing_shock_power_per_second_max = 2
-	processing_shock_power_per_second_min = 1.8
+	processing_shock_power_per_second_max = 1
+	processing_shock_power_per_second_min = 0.8
 
 	processing_shock_stun_chance = 5
 	processing_shock_spark_chance = 90
@@ -512,7 +515,7 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.06 //6% per wirecut
+	wirecut_repair_percent = 0.016 //16% per wirecut
 	wire_repair_percent = 0.05 //5% per suture
 
 	initial_sparks_amount = 8
