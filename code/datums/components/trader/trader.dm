@@ -56,12 +56,14 @@
 
 	trader_data = new trader_data_path()
 
-	radial_icons_cache[TRADER_BUY_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
-	radial_icons_cache[TRADER_SELL_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
-	radial_icons_cache[TRADER_TALK_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk")
-	radial_icons_cache[TRADER_LORE_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore")
-	radial_icons_cache[TRADER_DISCUSS_BUY_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling")
-	radial_icons_cache[TRADER_DISCUSS_SELL_ICON] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying")
+	radial_icons_cache = list(
+		TRADER_BUY_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy"),
+		TRADER_SELL_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell"),
+		TRADER_TALK_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk"),
+		TRADER_LORE_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore"),
+		TRADER_DISCUSS_BUY_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
+		TRADER_DISCUSS_SELL_ICON = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
+	)
 
 	restock_products()
 	renew_item_demands()
