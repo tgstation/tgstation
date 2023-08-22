@@ -157,7 +157,7 @@
 		return // you get one "freebie" (single damage) to nudge you into thinking this is a bad idea before the house begins to win.
 
 	// the house won.
-	var/ticked_coefficient = rand(0.15, 0.40)
+	var/ticked_coefficient = (rand(15, 40) / 100)
 	var/effective_percentile_chance = ((curse_count == 2 ? 1 : curse_count) * damage_chance * ticked_coefficient)
 
 	if(SPT_PROB(effective_percentile_chance, seconds_between_ticks))
