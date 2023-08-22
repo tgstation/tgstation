@@ -11,8 +11,6 @@
 #define TOX "toxin"
 /// Suffocation.
 #define OXY "oxygen"
-/// Cellular degredation. Rare and difficult to treat.
-#define CLONE "clone"
 /// Exhaustion and nonlethal damage.
 #define STAMINA "stamina"
 /// Brain damage. Should probably be decomissioned and replaced with proper organ damage.

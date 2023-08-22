@@ -6,7 +6,7 @@
  *
  * Arguuments:
  * * damage - amount of damage
- * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
+ * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [STAMINA]
  * * def_zone - zone that is being hit if any
  * * blocked - armor value applied
  * * forced - bypass hit percentage
@@ -275,7 +275,7 @@
 	return
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
+	if(!forced && ( (status_flags & GODMODE)))
 		return FALSE
 	staminaloss = amount
 	if(updating_stamina)

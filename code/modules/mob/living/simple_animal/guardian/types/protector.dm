@@ -3,7 +3,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	range = 15 //worse for it due to how it leashes
-	damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
+	damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, STAMINA = 0, OXY = 0.4)
 	playstyle_string = span_holoparasite("As a <b>protector</b> type you cause your summoner to leash to you instead of you leashing to them and have two modes; Combat Mode, where you do and take medium damage, and Protection Mode, where you do and take almost no damage, but move slightly slower.")
 	magic_fluff_string = span_holoparasite("..And draw the Guardian, a stalwart protector that never leaves the side of its charge.")
 	tech_fluff_string = span_holoparasite("Boot sequence complete. Protector modules loaded. Holoparasite swarm online.")
@@ -48,7 +48,7 @@
 		melee_damage_lower += damage_penalty
 		melee_damage_upper += damage_penalty
 		speed = initial(speed)
-		damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
+		damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, STAMINA = 0, OXY = 0.4)
 		to_chat(src, span_bolddanger("You switch to combat mode."))
 		toggle = FALSE
 	else
@@ -59,7 +59,7 @@
 		melee_damage_lower -= damage_penalty
 		melee_damage_upper -= damage_penalty
 		speed = 1
-		damage_coeff = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, CLONE = 0.05, STAMINA = 0, OXY = 0.05) //damage? what's damage?
+		damage_coeff = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, STAMINA = 0, OXY = 0.05) //damage? what's damage?
 		to_chat(src, span_bolddanger("You switch to protection mode."))
 		toggle = TRUE
 

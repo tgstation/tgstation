@@ -1,6 +1,6 @@
 //Standard
 /mob/living/simple_animal/hostile/guardian/standard
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, STAMINA = 0, OXY = 0.5)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	wound_bonus = -5 //you can wound!

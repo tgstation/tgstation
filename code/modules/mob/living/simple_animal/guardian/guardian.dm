@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	mob_biotypes = MOB_BEAST
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //how much damage from each damage type we transfer to the owner
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1) //how much damage from each damage type we transfer to the owner
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
 	melee_damage_lower = 15

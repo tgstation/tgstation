@@ -17,7 +17,7 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	speak_emote = list("announces")
 
 	unsuitable_atmos_damage = 0
@@ -30,7 +30,7 @@
 	greyscale_config = /datum/greyscale_config/garden_gnome
 	ai_controller = /datum/ai_controller/basic_controller/garden_gnome
 	/// The damage resistence when sinked into the ground
-	var/resistance_when_sinked = list(BRUTE = 0.5, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	var/resistance_when_sinked = list(BRUTE = 0.5, BURN = 0.5, TOX = 1, STAMINA = 0, OXY = 1)
 	/// Realistically weighted list of usual gnome hat colours
 	var/static/list/gnome_hat_colours = list(
 		COLOR_GNOME_RED_ONE = 9,

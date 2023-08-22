@@ -468,7 +468,6 @@
 
 #define DEFAULT_BRUTE_EXAMINE_TEXT "bruising"
 #define DEFAULT_BURN_EXAMINE_TEXT "burns"
-#define DEFAULT_CLONE_EXAMINE_TEXT "cellular damage"
 
 #define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
 #define ROBOTIC_BURN_EXAMINE_TEXT "charring"
@@ -868,8 +867,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_TOX (1<<3)
 /// Heals all oxyloss.
 #define HEAL_OXY (1<<4)
-/// Heals all cellular damage.
-#define HEAL_CLONE (1<<5)
+/// Heals an unused damage type.
+#define HEAL_UNUSED (1<<5)
 /// Heals all stamina damage.
 #define HEAL_STAM (1<<6)
 /// Restore all limbs to their initial state.
@@ -900,7 +899,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_RESTRAINTS (1<<19)
 
 /// Combination flag to only heal the main damage types.
-#define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_CLONE|HEAL_STAM)
+#define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_STAM)
 /// Combination flag to only heal things messed up things about the mob's body itself.
 #define HEAL_BODY (HEAL_LIMBS|HEAL_ORGANS|HEAL_REFRESH_ORGANS|HEAL_WOUNDS|HEAL_TRAUMAS|HEAL_BLOOD|HEAL_TEMP)
 /// Combination flag to heal negative things affecting the mob.

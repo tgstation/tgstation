@@ -161,8 +161,8 @@
 #define REACTION_TAG_TOXIN (1<<2)
 /// This reagent does oxy effects (BOTH damaging and healing)
 #define REACTION_TAG_OXY (1<<3)
-/// This reagent does clone effects (BOTH damaging and healing)
-#define REACTION_TAG_CLONE (1<<4)
+/// This reagent tag is unused.
+#define REACTION_TAG_UNUSED (1<<4)
 /// This reagent primarily heals, or it's supposed to be used for healing (in the case of c2 - they are healing)
 #define REACTION_TAG_HEALING (1<<5)
 /// This reagent primarily damages

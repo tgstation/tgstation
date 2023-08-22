@@ -23,7 +23,7 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	speak_emote = list("growls")
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
 	death_sound = 'sound/magic/cosmic_expansion.ogg'
 
 	slowed_by_drag = FALSE
@@ -90,7 +90,7 @@
 		return
 	var/mob/living/living_target = target
 	living_target.apply_status_effect(/datum/status_effect/star_mark)
-	living_target.apply_damage_type(damage = 5, damagetype = CLONE)
+	living_target.apply_damage(damage = 5, damagetype = BURN, spread_damage = TRUE)
 	if(living_target.pulledby != living_pawn)
 		if(living_pawn.Adjacent(living_target) && isturf(living_target.loc) && living_target.stat == SOFT_CRIT)
 			living_target.grabbedby(living_pawn)
