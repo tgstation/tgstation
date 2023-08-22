@@ -29,9 +29,10 @@
 	/// Weakref to the vent the drone is currently attached to.
 	var/obj/structure/ore_vent/attached_vent = null
 
-/mob/living/basic/node_drone/Initialize(mapload)
+/mob/living/basic/node_drone/death(gibbed)
 	. = ..()
-
+	attached_vent = null
+	explosion(origin = src, light_impact_range = 1 ,smoke = 1)
 
 /mob/living/basic/node_drone/examine(mob/user)
 	. = ..()
@@ -45,11 +46,13 @@
  * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
  */
 /mob/living/basic/node_drone/proc/escape()
-	flick("node_drone_escape", src)
-	icon_state = "node_drone_fly"
+	flick("mining_node_escape", src)
+	icon_state = "mining_node_fly"
 	update_appearance(UPDATE_ICON_STATE)
 	animate(src, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	del(src)
+
+
 
 /// The node drone AI controller
 //	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.

@@ -8,6 +8,7 @@
 	icon = 'icons/obj/mining_zones/terrain.dmi' /// note to self, new sprites. get on it
 	icon_state = "geyser"
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //This thing will take a beating.
 	anchored = TRUE
 	density = TRUE
 	can_buckle = TRUE
@@ -24,8 +25,8 @@
 	var/list/lavaland_mobs = list(
 		/mob/living/basic/mining/goliath,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-		/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,
+		/mob/living/basic/mining/watcher,
+		/mob/living/basic/mining/lobstrosity/lava,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon,
 		/mob/living/basic/mining/bileworm
 	)
@@ -74,7 +75,7 @@
 /obj/structure/ore_vent/examine(mob/user)
 	. = ..()
 	if(discovered)
-		. += span_notice("This vent can produce [ore_string].")
+		. += span_notice("This vent can produce [ore_string]")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
 
@@ -159,12 +160,18 @@
 
 /**
  * Called when the ore vent is tapped by a scanning device.
- * Gives a readout of the ores available in the vent, then asks the user if they want to start wave defense.
+ * Gives a readout of the ores available in the vent that gets added to the description, then asks the user if they want to start wave defense.
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/user)
 	if(!discovered)
-		if(do_after(user, 10 SECONDS))
+		if(do_after(user, 4 SECONDS))
 			discovered = TRUE
+			generate_description()
+			return
+		else
+			return
+	if(tgui_alert(usr, "Are you ready to excavate \the [src]?", "Uh oh", list("Yes", "No")) != "Yes")
+		return
 	///This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
@@ -236,7 +243,6 @@
 	name = "menacing ore vent"
 	desc = "An ore vent, brimming with underground ore. This one has an evil aura about it. Better be careful."
 	unique_vent = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //This thing will take a beating.
 	///What boss do we want to spawn?
 	var/summoned_boss = null
 
