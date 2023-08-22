@@ -229,6 +229,10 @@
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")
 
+/datum/lift_master/tram/proc/set_operational(new_value)
+	if(is_operational != new_value)
+		is_operational = new_value
+
 /**
  * Returns the closest tram nav beacon to an atom
  *
@@ -296,6 +300,8 @@
  * Arguments: collided_rod (the immovable rod that hit the tram)
  */
 /datum/lift_master/tram/proc/rod_collision(obj/effect/immovablerod/collided_rod)
+	if(!is_operational)
+		return
 	var/rod_velocity_sign
 	// Determine inbound or outbound
 	if(collided_rod.dir & (NORTH|SOUTH))
@@ -319,4 +325,5 @@
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
 	dispatch_tram(destination_platform = push_destination)
+	set_operational(FALSE)
 	return push_destination

@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 //map-agnostic landmarks
 
 /obj/effect/landmark/tram/nav/immovable_rod
-	name = "DESTINATION_NOT_FOUND"
+	name = "DESTINATION/NOT/FOUND"
 	specific_lift_id = IMMOVABLE_ROD_DESTINATIONS
 
 /obj/effect/landmark/tram/nav/hilbert/research
