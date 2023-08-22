@@ -22,10 +22,11 @@
 	var/visibility = 2
 	/// Whether this scar can actually be covered up by clothing
 	var/coverable = TRUE
-	/// Obviously, scars that describe damaged flesh wouldn't apply to a skeleton (in some cases like bone wounds, there can be different descriptions for skeletons and fleshy humanoids)
-	var/required_limb_biostate
 	/// If we're a persistent scar or may become one, we go in this character slot
 	var/persistent_character_slot = 0
+
+	var/required_limb_biostate
+	var/check_any_biostates
 
 /datum/scar/Destroy(force, ...)
 	if(limb)
@@ -47,6 +48,11 @@
  * * add_to_scars- Should always be TRUE unless you're just storing a scar for later usage, like how cuts want to store a scar for the highest severity of cut, rather than the severity when the wound is fully healed (probably demoted to moderate)
  */
 /datum/scar/proc/generate(obj/item/bodypart/BP, datum/wound/W, add_to_scars=TRUE)
+
+	if (!W.can_scar)
+		qdel(src)
+		return
+
 	limb = BP
 	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))
 
@@ -59,7 +65,7 @@
 		if(victim)
 			LAZYADD(victim.all_scars, src)
 
-	description = pick_list(W.scar_file, W.scar_keyword) || "general disfigurement"
+	description = pick_list(W.get_scar_file(BP, add_to_scars), W.get_scar_keyword(BP, add_to_scars)) || "general disfigurement"
 
 	precise_location = pick_list_replacements(SCAR_LOC_FILE, limb.body_zone)
 	switch(W.severity)
@@ -81,18 +87,24 @@
 		LAZYADD(victim.all_scars, src)
 
 /// Used to "load" a persistent scar
-/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD, char_slot)
+/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity = WOUND_SEVERITY_SEVERE, required_limb_biostate = BIO_STANDARD, char_slot, check_any_biostates = FALSE)
 	if(!BP.scarrable)
 		qdel(src)
 		return
 
 	limb = BP
 	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))
-	if(limb.owner)
-		victim = limb.owner
-		if(!(limb.biological_state & required_limb_biostate) == required_limb_biostate)
+	if (isnull(check_any_biostates)) // so we dont break old scars. NOTE: REMOVE AFTER VERSION NUMBER MOVES PAST 3
+		check_any_biostates = FALSE
+	if (check_any_biostates)
+		if (!(limb.biological_state & required_limb_biostate))
 			qdel(src)
 			return
+	else if (!((limb.biological_state & required_limb_biostate) == required_limb_biostate)) // check for all
+		qdel(src)
+		return
+	if(limb.owner)
+		victim = limb.owner
 		LAZYADD(victim.all_scars, src)
 
 	src.severity = severity
@@ -158,9 +170,9 @@
 
 /// Used to format a scar to save for either persistent scars, or for changeling disguises
 /datum/scar/proc/format()
-	return "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[required_limb_biostate]|[persistent_character_slot]"
+	return "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[required_limb_biostate]|[persistent_character_slot]|[check_any_biostates]"
 
 /// Used to format a scar to save in preferences for persistent scars
 /datum/scar/proc/format_amputated(body_zone, scar_file = FLESH_SCAR_FILE)
 	description = pick_list(scar_file, "dismember")
-	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_STANDARD]|[persistent_character_slot]"
+	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_STANDARD]|[persistent_character_slot]|[check_any_biostates]"

@@ -5,7 +5,7 @@
 	return TRUE
 
 ///Remove target limb from it's owner, with side effects.
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wound_type)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
@@ -22,6 +22,10 @@
 	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
 	limb_owner.add_mood_event("dismembered_[body_zone]", /datum/mood_event/dismembered, src)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
+
+	if (wound_type)
+		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wound_type)
+
 	drop_limb()
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
@@ -34,7 +38,7 @@
 	if(dam_type == BURN)
 		burn()
 		return TRUE
-	if (limb.can_bleed())
+	if (can_bleed())
 		add_mob_blood(limb_owner)
 		limb_owner.bleed(rand(20, 40))
 	var/direction = pick(GLOB.cardinals)
@@ -48,10 +52,10 @@
 		if(new_turf.density)
 			break
 	throw_at(target_turf, throw_range, throw_speed)
+
 	return TRUE
 
-
-/obj/item/bodypart/chest/dismember()
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wound_type)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/chest_owner = owner
@@ -81,8 +85,6 @@
 		cavity_item.forceMove(chest_owner.loc)
 		. += cavity_item
 		cavity_item = null
-
-
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
 /obj/item/bodypart/proc/drop_limb(special, dismembered)
@@ -329,6 +331,8 @@
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
 
+	LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
+
 	if(special) //non conventional limb attachment
 		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
 			var/surgery_zone = check_zone(attach_surgery.location)
@@ -417,12 +421,15 @@
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)
 	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+
+	var/list/dismembered_by_copy = body_zone_dismembered_by?.Copy()
+
 	if(length(excluded_zones))
 		zone_list -= excluded_zones
 	for(var/limb_zone in zone_list)
-		regenerate_limb(limb_zone)
+		regenerate_limb(limb_zone, dismembered_by_copy)
 
-/mob/living/carbon/proc/regenerate_limb(limb_zone)
+/mob/living/carbon/proc/regenerate_limb(limb_zone, list/dismembered_by_copy = body_zone_dismembered_by?.Copy())
 	var/obj/item/bodypart/limb
 	if(get_bodypart(limb_zone))
 		return FALSE
@@ -434,6 +441,7 @@
 		limb.update_limb(is_creating = TRUE)
 		var/datum/scar/scaries = new
 		var/datum/wound/loss/phantom_loss = new // stolen valor, really
+		phantom_loss.loss_wound_type = dismembered_by_copy?[limb.body_zone]
 		scaries.generate(limb, phantom_loss)
 
 		//Copied from /datum/species/proc/on_species_gain()

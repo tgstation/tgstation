@@ -32,8 +32,6 @@
 	 * A bitfield of biological states, exclusively used to determine which wounds this limb will get,
 	 * as well as how easily it will happen.
 	 * Set to BIO_STANDARD because most species have both flesh bone and blood in their limbs.
-	 *
-	 * This currently has absolutely no meaning for robotic limbs.
 	 */
 	var/biological_state = BIO_STANDARD
 	///A bitfield of bodytypes for clothing, surgery, and misc information
@@ -1235,8 +1233,8 @@
 	// 3 + 2 = 5, with 6 limbs thats 30, on a heavy 60
 	// 60 * 0.8 = 48
 	var/time_needed = 10 SECONDS
-	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE 
-	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE 
+	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE
+	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE
 	if(severity == EMP_HEAVY)
 		time_needed *= 2
 		brute_damage *= 2

@@ -149,8 +149,8 @@
 	interaction_efficiency_penalty = 1.15
 	limp_slowdown = 2
 	limp_chance = 25
-	threshold_minimum = 23
-	threshold_penalty = 15
+	threshold_minimum = 30
+	threshold_penalty = 20
 
 	drop_item_on_hit_minimum_damage = 8
 	knockdown_on_hit_minimum_damage = 8
@@ -168,8 +168,7 @@
 	daze_movement_shake_intensity_mult = 0.1
 	head_movement_daze_chance = 60
 
-	scar_file = null
-	scar_keyword = null // no scarring
+	can_scar = FALSE
 
 	a_or_from = "from"
 
@@ -230,7 +229,7 @@
 	limp_slowdown = 6
 	limp_chance = 60
 	threshold_minimum = 65
-	threshold_penalty = 50
+	threshold_penalty = 40
 
 	drop_item_on_hit_minimum_damage = 8
 	knockdown_on_hit_minimum_damage = 8
@@ -453,8 +452,8 @@
 	interaction_efficiency_penalty = 3
 	limp_slowdown = 8
 	limp_chance = 90
-	threshold_minimum = 120
-	threshold_penalty = 50
+	threshold_minimum = 125
+	threshold_penalty = 60
 
 	scar_keyword = "robotic_bluntcritical"
 

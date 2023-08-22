@@ -1491,9 +1491,6 @@
 	var/act_result
 	var/signal_result
 
-	if (user && SEND_SIGNAL(user, COMSIG_MOB_PRE_TOOL_ACT, src, tool, tool_type, is_right_clicking) & COMPONENT_BLOCK_TOOL_ATTACK)
-		return TOOL_ACT_SIGNAL_BLOCKING
-
 	var/is_left_clicking = !is_right_clicking
 
 	if(is_left_clicking) // Left click first for sensibility

@@ -27,7 +27,7 @@
 
 	var/incoming_damage_heat_coeff = 3
 
-	var/base_reagent_temp_coefficient = 0.1
+	var/base_reagent_temp_coefficient = 0.07
 
 	var/heat_shock_delta_to_damage_ratio = 0.2
 	var/heat_shock_minimum_delta = 5
@@ -43,6 +43,7 @@
 	var/obj/effect/dummy/lighting_obj/moblight/mob_glow
 
 	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT
+	scar_file = ROBOTIC_METAL_BURN_SCAR_FILE
 
 	processes = TRUE
 
@@ -192,7 +193,7 @@
 
 	// easy to get
 	threshold_minimum = 30
-	threshold_penalty = 50
+	threshold_penalty = 30
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/moderate
 
@@ -200,13 +201,16 @@
 
 	outgoing_bodytemp_coeff = 0.001
 
-	base_reagent_temp_coefficient = 0.1
+	base_reagent_temp_coefficient = 0.07
+	heat_shock_delta_to_damage_ratio = 0.2
 
 	promotes_to = /datum/wound/burn/robotic/overheat/severe
 
 	light_color = COLOR_RED
 	light_power = 0.1
 	light_range = 0.5
+
+	can_scar = FALSE
 
 /datum/wound_pregen_data/burnt_metal/transient_overheat
 	abstract = FALSE
@@ -242,7 +246,8 @@
 	outgoing_bodytemp_coeff = 0.003
 	bodytemp_coeff = 0.01
 
-	base_reagent_temp_coefficient = 0.07
+	base_reagent_temp_coefficient = 0.04
+	heat_shock_delta_to_damage_ratio = 0.1
 
 	demotes_to = /datum/wound/burn/robotic/overheat/moderate
 	promotes_to = /datum/wound/burn/robotic/overheat/critical
@@ -250,6 +255,8 @@
 	light_color = COLOR_BRIGHT_ORANGE
 	light_power = 0.8
 	light_range = 0.5
+
+	scar_keyword = "robotic_burnsevere"
 
 /datum/wound_pregen_data/burnt_metal/transient_overheat
 	abstract = FALSE
@@ -287,7 +294,8 @@
 	outgoing_bodytemp_coeff = 0.006 // burn... BURN...
 	bodytemp_coeff = 0.008
 
-	base_reagent_temp_coefficient = 0.04
+	base_reagent_temp_coefficient = 0.01
+	heat_shock_delta_to_damage_ratio = 0.05
 
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 
@@ -296,6 +304,8 @@
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3
 	light_range = 1.5
+
+	scar_keyword = "robotic_burncritical"
 
 /datum/wound_pregen_data/burnt_metal/severe
 	abstract = FALSE

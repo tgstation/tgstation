@@ -1,3 +1,5 @@
+#define PROSTHESIS_MAX_HP 40
+
 #define ROBOTIC_LIGHT_BRUTE_MSG "marred"
 #define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
 #define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
@@ -29,7 +31,7 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 20
+	wound_resistance = 5
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -63,7 +65,7 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 20
+	wound_resistance = 5
 
 	disabling_threshold_percentage = 1
 
@@ -98,7 +100,7 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 20
+	wound_resistance = 5
 
 	disabling_threshold_percentage = 1
 
@@ -142,7 +144,7 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 20
+	wound_resistance = 5
 
 	disabling_threshold_percentage = 1
 
@@ -185,7 +187,7 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 30
+	wound_resistance = 15
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -309,7 +311,7 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 25
+	wound_resistance = 10
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -407,6 +409,11 @@
 	flash2?.forceMove(drop_loc)
 	return ..()
 
+// Prosthetics - Cheap, mediocre, and worse than organic limbs
+// The fact they dont have a internal biotype means theyre a lot weaker defensively,
+// since they skip slash and go right to blunt
+// They are VERY easy to delimb as a result
+// HP is also reduced just in case this isnt enough
 
 /obj/item/bodypart/arm/left/robot/surplus
 	name = "surplus prosthetic left arm"
@@ -415,7 +422,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	wound_resistance = 0
 
@@ -428,7 +435,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	wound_resistance = 0
 
@@ -441,7 +448,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	wound_resistance = 0
 
@@ -454,7 +461,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = 20
+	max_damage = PROSTHESIS_MAX_HP
 
 	wound_resistance = 0
 

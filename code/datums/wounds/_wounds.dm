@@ -24,6 +24,8 @@
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
+	var/can_scar = TRUE
+
 	/// The file we take our scar descriptions from.
 	var/scar_file
 
@@ -213,7 +215,7 @@
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
 	set_disabling(FALSE)
-	if(limb && !already_scarred && !replaced)
+	if(limb && can_scar && !already_scarred && !replaced)
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
@@ -487,3 +489,10 @@
 
 /datum/wound/proc/limb_unimportant()
 	return (!(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST))
+
+/// Getter proc for our scar_keyword, in case we might have some custom scar gen logic.
+/datum/wound/proc/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)
+	return scar_keyword
+
+/datum/wound/proc/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
+	return scar_file

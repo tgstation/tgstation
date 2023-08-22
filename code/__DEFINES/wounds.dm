@@ -187,6 +187,8 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define SCAR_SAVE_CHAR_SLOT 7
 ///how many fields we save for each scar (so the number of above fields)
 #define SCAR_SAVE_LENGTH 7
+/// if the scar will check for any or all biostates on the limb (defaults to FALSE, so all)
+#define SCAR_SAVE_CHECK_ANY_BIO 8
 
 /// saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
 #define SCAR_CURRENT_VERSION 3

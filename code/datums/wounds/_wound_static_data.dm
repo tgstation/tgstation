@@ -60,10 +60,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 	if (!ignore_cannot_bleed && ((required_limb_biostate & BIO_BLOODED) && !limb.can_bleed()))
 		return FALSE
 
-	if (check_for_any)
-		if (!(limb.biological_state & required_limb_biostate))
-			return FALSE
-	else if (!((limb.biological_state & required_limb_biostate) == required_limb_biostate)) // check for all
+	if (!biostate_valid(limb.biological_state))
 		return FALSE
 
 	if (!(limb.body_zone in viable_zones))
@@ -75,6 +72,15 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 		for (var/datum/wound/preexisting_wound as anything in limb.wounds)
 			if (preexisting_wound.type == wound_path_to_generate && (preexisting_wound != old_wound))
 				return FALSE
+	return TRUE
+
+/datum/wound_pregen_data/proc/biostate_valid(biostate)
+	if (check_for_any)
+		if (!(biostate & required_limb_biostate))
+			return FALSE
+	else if (!((biostate & required_limb_biostate) == required_limb_biostate)) // check for all
+		return FALSE
+
 	return TRUE
 
 /datum/wound_pregen_data/proc/generate_instance(obj/item/bodypart/limb, ...)

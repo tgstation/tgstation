@@ -5,3 +5,5 @@
 4. counterbalance cyborg limbs to be better (partially done!)
 5. revisit _scars.dm - apparantly, wounds can give different descriptions based on biotype, ex.
 bone wounds on something fleshy takes from flesh_scar_desc.json, not bone_scar_desc.json
+
+6. Consider changing scars again to just store the required biotype so shit dont break if we

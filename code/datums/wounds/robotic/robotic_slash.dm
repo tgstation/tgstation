@@ -25,6 +25,7 @@
 
 	var/intensity
 	var/processing_full_shock_threshold
+	var/minimum_intensity = 0
 
 	var/processing_shock_power_per_second_min
 	var/processing_shock_power_per_second_max
@@ -44,6 +45,8 @@
 	var/wire_repair_percent
 
 	var/overall_effect_mult = 1
+
+	scar_file = ROBOTIC_METAL_SCAR_FILE
 
 	processes = TRUE
 
@@ -112,7 +115,7 @@
 
 /datum/wound/electrical_damage/proc/get_damage_mult(mob/living/target)
 	SHOULD_BE_PURE(TRUE)
-	
+
 	var/damage_mult = get_base_mult()
 
 	if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE))
@@ -124,10 +127,10 @@
 	if (limb_unimportant())
 		damage_mult *= limb_unimportant_damage_mult
 
-	return mult
+	return damage_mult
 
 /datum/wound/electrical_damage/proc/get_base_mult()
-	var/base_mult
+	var/base_mult = 1
 
 	if (victim)
 		if (IS_IN_STASIS(victim))
@@ -303,7 +306,7 @@
 	wiring_reset = reset
 
 /datum/wound/electrical_damage/proc/remove_if_fixed()
-	if (intensity <= 0)
+	if (intensity <= minimum_intensity)
 		to_chat(victim, span_green("Your [limb.plaintext_zone] has recovered from its [name]!"))
 		remove_wound()
 		return TRUE
@@ -384,11 +387,11 @@
 
 	sound_volume = 30
 
-	threshold_minimum = 30
+	threshold_minimum = 35
 	threshold_penalty = 20
 
 	intensity = 10 SECONDS
-	processing_full_shock_threshold = 8 MINUTES
+	processing_full_shock_threshold = 6 MINUTES
 
 	processing_shock_power_per_second_max = 0.4
 	processing_shock_power_per_second_min = 0.3
@@ -410,6 +413,8 @@
 
 	a_or_from = "from"
 
+	scar_keyword = "robotic_slashmoderate"
+
 /datum/wound_pregen_data/electrical_damage/slash/moderate
 	abstract = FALSE
 
@@ -427,11 +432,11 @@
 
 	sound_volume = 15
 
-	threshold_minimum = 70
-	threshold_penalty = 50
+	threshold_minimum = 60
+	threshold_penalty = 30
 
 	intensity = 20 SECONDS
-	processing_full_shock_threshold = 6.1 MINUTES
+	processing_full_shock_threshold = 4.2 MINUTES
 
 	processing_shock_power_per_second_max = 0.6
 	processing_shock_power_per_second_min = 0.4
@@ -451,6 +456,8 @@
 
 	a_or_from = "from"
 
+	scar_keyword = "robotic_slashsevere"
+
 /datum/wound_pregen_data/electrical_damage/slash/severe
 	abstract = FALSE
 
@@ -469,10 +476,10 @@
 
 	sound_volume = 30
 
-	threshold_minimum = 110
-	threshold_penalty = 60
+	threshold_minimum = 90
+	threshold_penalty = 50
 
-	intensity = 20 SECONDS
+	intensity = 30 SECONDS
 	processing_full_shock_threshold = 3.2 MINUTES
 
 	processing_shock_power_per_second_max = 2
@@ -492,6 +499,8 @@
 	status_effect_type = /datum/status_effect/wound/electrical_damage/slash/critical
 
 	a_or_from = "a"
+
+	scar_keyword = "robotic_slashcritical"
 
 /datum/wound_pregen_data/electrical_damage/slash/critical
 	abstract = FALSE

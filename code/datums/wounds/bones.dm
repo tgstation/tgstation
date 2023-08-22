@@ -184,10 +184,18 @@
 
 	limb.update_wounds()
 
+/datum/wound/blunt/bone/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
+	if (scarred_limb.biological_state & BIO_BONE && (!(scarred_limb.biological_state & BIO_FLESH))) // only bone
+		return BONE_SCAR_FILE
+	else if (scarred_limb.biological_state & BIO_FLESH && (!(scarred_limb.biological_state & BIO_BONE)))
+		return FLESH_SCAR_FILE
+
+	return ..()
+
 /// Joint Dislocation (Moderate Blunt)
 /datum/wound/blunt/bone/moderate
 	name = "Joint Dislocation"
-	desc = "Patient's bone has been unset from socket, causing pain and reduced motor function."
+	desc = "Patient's limb has been unset from socket, causing pain and reduced motor function."
 	treat_text = "Recommended application of bonesetter to affected limb, though manual relocation by applying an aggressive grab to the patient and helpfully interacting with afflicted limb may suffice."
 	examine_desc = "is awkwardly janked out of place"
 	occur_text = "janks violently and becomes unseated"
@@ -200,6 +208,19 @@
 	treatable_tool = TOOL_BONESET
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "bluntmoderate"
+
+/datum/wound/blunt/bone/moderate/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
+	if (scarred_limb.biological_state & BIO_METAL)
+		return ROBOTIC_BLUNT_SCAR_FILE
+
+	return ..()
+
+/datum/wound/blunt/bone/moderate/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)
+	if (scarred_limb.biological_state & BIO_METAL)
+		return "dislocate_robotic"
+
+	return ..()
+
 
 /datum/wound_pregen_data/bone/dislocate
 	abstract = FALSE
