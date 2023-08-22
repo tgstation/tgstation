@@ -109,3 +109,31 @@ do { \
 
 /// Include this to have lights randomly break on initialize.
 #define LIGHTS_RANDOMLY_BROKEN
+
+//Monkestation start
+//Sunlight states
+#define SKY_BLOCKED   0
+#define SKY_VISIBLE  1
+#define SKY_VISIBLE_BORDER   2
+
+#define SUNLIGHT_DARK_MATRIX \
+	list                     \
+	(                        \
+		0, 0, 0, 0, \
+		0, 0, 0, 0, \
+		0, 0, 0, 0, \
+		0, 0, 0, 0, \
+		0, 0, 0, 1           \
+	)
+
+/// If I were you I'd leave this alone.
+#define LIGHTING_BASE_MATRIX \
+	list                     \
+	(                        \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		0, 0, 0, 1           \
+	)                        \
+//monkestation end

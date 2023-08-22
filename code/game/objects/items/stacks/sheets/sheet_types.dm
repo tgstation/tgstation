@@ -131,7 +131,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 5 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY), \
 	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS, check_density = FALSE, category = CAT_ROBOT), \
 	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time = 2 SECONDS, check_density = FALSE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("urinal", /obj/item/wallframe/urinal, 2, time = 1 SECONDS, check_density = FALSE, category = CAT_FURNITURE)
+	new/datum/stack_recipe("urinal", /obj/item/wallframe/urinal, 2, time = 1 SECONDS, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("window sill", /obj/structure/window_sill, 1, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE)
 ))
 
 /obj/item/stack/sheet/iron

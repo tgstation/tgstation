@@ -313,3 +313,36 @@
   - code_imp: Removed fancy = FALSE from /obj/item/lighter/mime and /obj/item/lighter/bright
   Salted-Zen:
   - image: Replaces bone axe and spear sprites with old ones from 1.0
+2023-08-18:
+  CannibalHunter:
+  - rscadd: Added new hairstyle, Mullet.
+  KittyNoodle:
+  - rscadd: Freerunning now doubles sprint time.
+  - balance: Changes a lot of quirk costs.
+  - balance: IPCs are now punished for taking quirks that don't effect them
+  MilkForever:
+  - sound: Almost all species in the game can scream and laugh, some species get unique
+      sounds.
+  - rscadd: 'Added a new species: Arachnids.'
+  etherware-novice, BetaCentari:
+  - rscadd: Some new emotes.
+  - sound: Added Rattle.ogg which sounds like a well, rattle
+  iamcooldan:
+  - rscadd: Added additional items to the produce order console.
+2023-08-22:
+  BlackCrystalic, Koshenko:
+  - rscadd: day/night cycle that changes brightness and color based on station time
+      to icebox and oshan
+  - rscadd: framework for particle weathers, currently un-used in maps
+  DimWhat:
+  - image: Resprited the janitor jumpsuit/skirt
+  Ebin-Halcyon:
+  - rscadd: Syndicate maid outfit for 4 tc, degenerate.
+  SeeBeeSee:
+  - rscadd: existing Fraxinella mutation to the current plant mutation list
+  dwasint:
+  - rscadd: coconuts and coconut guns
+  - rscadd: wall trim and wall paints, use a decal painter with a custom color on
+      the wall to change the trim or paint
+  iamcooldan:
+  - rscadd: new crates for departmental lathes, and a birthday crate.

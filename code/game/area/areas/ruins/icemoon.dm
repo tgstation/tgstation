@@ -15,6 +15,7 @@
 	base_icon_state = "block"
 	smoothing_flags = NONE
 	canSmoothWith = null
+	wall_trim = null //monkestation edit
 
 /area/ruin/powered/mailroom
 	name = "\improper Abandoned Post Office"
