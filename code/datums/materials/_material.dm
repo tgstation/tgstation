@@ -53,6 +53,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/obj/effect/decal/debris_type
 	/// How likely this mineral is to be found in a boulder during mining.
 	var/mineral_rarity = MATERIAL_RARITY_COMMON
+	/// How many points per units of ore does this grant?
+	var/points_per_unit = 1
 
 /** Handles initializing the material.
  *

@@ -136,7 +136,7 @@
 			if(can_spawn)
 				new picked_feature(new_turf)
 				if(istype(picked_feature, /obj/structure/ore_vent))
-					/obj/structure/ore_vent/picked_vent = picked_feature
+					var/obj/structure/ore_vent/picked_vent = picked_feature
 					if(!picked_vent.unique_vent)
 						SSore_generation.ore_vent_count -= 1
 						if(SSore_generation.ore_vent_count <= 0)

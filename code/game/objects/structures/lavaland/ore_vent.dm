@@ -219,17 +219,17 @@
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
 	generate_mineral_breakdown()
-	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_types)
+	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
 	switch(string_boulder_size)
 		if("large")
 			boulder_size = BOULDER_SIZE_LARGE
-			SSore_generation.ore_vent_types["large"] -= 1
+			SSore_generation.ore_vent_sizes["large"] -= 1
 		if("medium")
 			boulder_size = BOULDER_SIZE_MEDIUM
-			SSore_generation.ore_vent_types["medium"] -= 1
+			SSore_generation.ore_vent_sizes["medium"] -= 1
 		if("small")
 			boulder_size = BOULDER_SIZE_SMALL
-			SSore_generation.ore_vent_types["small"] -= 1
+			SSore_generation.ore_vent_sizes["small"] -= 1
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 
 /obj/structure/ore_vent/random/boss
