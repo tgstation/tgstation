@@ -422,13 +422,13 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 //TRAM CONTROLS//
-/obj/machinery/computer/tram_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+/obj/machinery/computer/icts_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
 	if(malfunction_event)
 		balloon_alert(ninja, "tram is already malfunctioning!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(specific_lift_id != MAIN_STATION_TRAM)
+	if(specific_transport_id != TRAMSTATION_LINE_1)
 		balloon_alert(ninja, "cannot hack this tram!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
