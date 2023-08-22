@@ -170,7 +170,10 @@
 	if(!on || status != LIGHT_OK)
 		return
 
+	. += emissive_appearance(overlay_icon, "[base_state]", src, alpha = src.alpha)
+
 	var/area/local_area = get_room_area(src)
+
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return

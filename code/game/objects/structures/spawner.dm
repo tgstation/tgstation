@@ -77,10 +77,10 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
 	mob_types = list(
+		/mob/living/basic/mining/basilisk,
+		/mob/living/basic/mining/goldgrub,
 		/mob/living/basic/mining/goliath/ancient,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/asteroid/basilisk,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub,
 		/mob/living/simple_animal/hostile/asteroid/hivelord,
 	)
 	faction = list(FACTION_MINING)
@@ -88,7 +88,7 @@
 /obj/structure/spawner/mining/goldgrub
 	name = "goldgrub den"
 	desc = "A den housing a nest of goldgrubs, annoying but arguably much better than anything else you'll find in a nest."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	mob_types = list(/mob/living/basic/mining/goldgrub)
 
 /obj/structure/spawner/mining/goliath
 	name = "goliath den"
@@ -103,7 +103,7 @@
 /obj/structure/spawner/mining/basilisk
 	name = "basilisk den"
 	desc = "A den housing a nest of basilisks, bring a coat."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk)
+	mob_types = list(/mob/living/basic/mining/basilisk)
 
 /obj/structure/spawner/mining/wumborian
 	name = "wumborian fugu den"

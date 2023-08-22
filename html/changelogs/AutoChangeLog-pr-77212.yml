@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "pAIs can be inserted into MODsuits and can control suit modules (but are not capable of moving the suit)."
-  - bugfix: "AIs/pAIs in MODsuits can properly pin actions"

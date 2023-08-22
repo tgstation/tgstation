@@ -8,7 +8,7 @@
 	/// Weakref for storing our stargazer
 	var/datum/weakref/our_mob
 
-/datum/action/cooldown/open_mob_commands/Grant(mob/granted_to, mob/living/basic/star_gazer/our_mob_input)
+/datum/action/cooldown/open_mob_commands/Grant(mob/granted_to, mob/living/basic/heretic_summon/star_gazer/our_mob_input)
 	. = ..()
 	our_mob = WEAKREF(our_mob_input)
 
@@ -18,7 +18,7 @@
 
 /// Opens the pet command options menu for a mob.
 /datum/action/cooldown/open_mob_commands/proc/open_menu()
-	var/mob/living/basic/star_gazer/our_mob_resolved = our_mob?.resolve()
+	var/mob/living/basic/heretic_summon/star_gazer/our_mob_resolved = our_mob?.resolve()
 	if(our_mob_resolved)
 		var/datum/component/obeys_commands/command_component = our_mob_resolved.GetComponent(/datum/component/obeys_commands)
 		if(command_component)

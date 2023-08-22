@@ -4,8 +4,6 @@
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	///category for plumbing RCD
-	category="Storage"
 
 	///maximum size of a pill
 	var/max_pill_volume = 50

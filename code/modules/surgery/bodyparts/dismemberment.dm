@@ -20,7 +20,7 @@
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
-	limb_owner.add_mood_event("dismembered", /datum/mood_event/dismembered)
+	limb_owner.add_mood_event("dismembered_[body_zone]", /datum/mood_event/dismembered, src)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
 	drop_limb()
 
@@ -95,9 +95,6 @@
 	bodypart_flags &= ~BODYPART_IMPLANTED //limb is out and about, it can't really be considered an implant
 	owner.remove_bodypart(src)
 
-	for(var/datum/wound/wound as anything in wounds)
-		wound.remove_wound(TRUE)
-
 	for(var/datum/scar/scar as anything in scars)
 		scar.victim = null
 		LAZYREMOVE(owner.all_scars, scar)
@@ -106,6 +103,9 @@
 		ext_organ.transfer_to_limb(src, null) //Null is the second arg because the bodypart is being removed from it's owner.
 
 	var/mob/living/carbon/phantom_owner = set_owner(null) // so we can still refer to the guy who lost their limb after said limb forgets 'em
+
+	for(var/datum/wound/wound as anything in wounds)
+		wound.remove_wound(TRUE)
 
 	for(var/datum/surgery/surgery as anything in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
 		if(surgery.operated_bodypart == src)
@@ -236,10 +236,9 @@
 
 /obj/item/bodypart/arm/drop_limb(special)
 	var/mob/living/carbon/arm_owner = owner
-	. = ..()
 
 	if(special || !arm_owner)
-		return
+		return ..()
 
 	if(arm_owner.hand_bodyparts[held_index] == src)
 		// We only want to do this if the limb being removed is the active hand part.
@@ -256,6 +255,7 @@
 	if(arm_owner.gloves)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
+	return ..()
 
 /obj/item/bodypart/leg/drop_limb(special)
 	if(owner && !special)
@@ -350,6 +350,10 @@
 			continue
 		scar.victim = new_limb_owner
 		LAZYADD(new_limb_owner.all_scars, scar)
+
+	if(!special && new_limb_owner.mob_mood.has_mood_of_category("dismembered_[body_zone]"))
+		new_limb_owner.clear_mood_event("dismembered_[body_zone]")
+		new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 
 	update_bodypart_damage_state()
 	if(can_be_disabled)
