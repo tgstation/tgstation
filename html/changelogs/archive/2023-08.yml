@@ -979,3 +979,110 @@
       sure the tree is kept happy, the rust path and blade path can access rust charge
   - rscadd: rust charge
   - balance: the lion hunter ammo knowledge is free
+2023-08-22:
+  CoiledLamb:
+  - bugfix: wellcheers is now based on sanity rather than mood
+  - image: resprites martian cans
+  - image: adds inhands for martian cans and wellcheers
+  - image: minor tweaks to other cans
+  - spellcheck: updates wellcheers mood text
+  DATA-xPUNGED:
+  - rscadd: Sacrificed heretic targets will now receive a phobia of heresy instead
+      of a phobia of the supernatural. Sacrificed heretics will not get this phobia,
+      but will lose knowledge points instead.
+  DeerJesus:
+  - rscadd: Adds green jester shoes that jingle to the autodrobe!
+  Ghommie:
+  - bugfix: The "Unlocked Achievements" score will now be properly saved at the end
+      of the round the first time it's loaded.
+  - rscadd: You can now feed fish with the can of fish feed without having to put
+      the fish in a aquarium first.
+  - balance: Some fish may survive in different, harsher atmospheres if given the
+      amphibious trait, like chasm chrabs on lavaland.
+  - qol: aquarium now uses balloon alerts when feeding fish.
+  - bugfix: The wary and shiny lover no longer incorrectly remove difficulty from
+      the minigame if conditions aren't met.
+  Helg2:
+  - bugfix: '[Birdshot] Morgue now has coroner''s surgery duffel bag instead of regular
+      surgery duffel.'
+  Ical92:
+  - bugfix: fixed beakers disappearing when swapped in a chem heater
+  IndieanaJones:
+  - balance: Lasers now have increased energy cost, reverting the cost back to the
+      initial value before the laser buff.
+  Jacquerel:
+  - balance: Watchers have less health
+  - balance: You can't be overwatched by several watchers at a time
+  - balance: Watchers won't overwatch you instantly upon seeing you
+  - balance: Goliaths won't launch tentacles at you instantly upon seeing you
+  JohnFulpWillard:
+  - refactor: AI's player-tracking eyes received an unwanted obligatory update, and
+      should now not tell you that a player is untrackable when they clearly obviously
+      can be.
+  - bugfix: Bots that can't be controlled (like beepsky) no longer has a stray 0 at
+      the very right side of its UI.
+  LukasBeedellCodestuff:
+  - rscadd: Added compact shotgun to the hos locker
+  - rscadd: Added compact shotgun as a traitor objective
+  - balance: gives the compact shotgun 1 extra shot
+  Melbert:
+  - bugfix: Fixed some tooltips in the sec records UI showing "false"s where they
+      shouldn't.
+  Profakos:
+  - bugfix: Mobs whose human appearance is set dynamically will once again have their
+      bespoke names and descriptions, instead of Unknown, with a blank description.
+  Rhials:
+  - rscadd: Ninjas can now temporarily disable cameras with the Ninja MOD right-click
+      hacking ability.
+  - rscadd: Ninjas can emag windoors, elevator controls, and buttons with their hacking
+      ability.
+  - rscadd: Ninjas can drain the power from energy weaponry, adding the charge to
+      their MODsuit.
+  - rscadd: Ninjas can now hack simplebots, overloading and detonating them after
+      a brief delay.
+  - rscadd: Ninjas can now hack vendors, causing them to eject their inventory at
+      people.
+  - rscadd: Ninjas can now hack the recycler, which notifies the AI and emags it once
+      complete.
+  - rscadd: Ninjas can now trigger an extended tram malfunction by hacking the tram
+      control console.
+  - rscadd: Ninjas can now hack open firelocks (temporarily) with right-click.
+  - balance: Hacking open doors with the Ninja Hacking MODule will subtract a paltry
+      amount of energy from your suit.
+  SyncIt21:
+  - code_imp: removed unused procs in ore silo
+  - code_imp: merged repeated code segments when using materials from the ore silo
+      into a single proc
+  - code_imp: added auto docs & cleaned up some procs
+  - refactor: logging when an item is inserted or sheets are ejected from the silo
+      is now handled directly by the silo itself
+  - bugfix: plumbing ducts connects to other plumbing machinery again
+  - bugfix: you can detach signaller from wires without the machine deconstructing
+      itself
+  Timberpoes:
+  - rscdel: Traitor objectives to place posters and graffiti the station have been
+      removed.
+  - rscadd: The items associated with the poster and graffiti objectives can now be
+      purchased from the Badassery section of the uplink. The posters come in a box
+      of 3 for 1TC, and the spraycans are 1TC each.
+  - rscadd: Adds a new Assault traitor objective, requiring you to the attack the
+      target a few times without needing to kill them. Earn TC and reputation by starting
+      barroom fights and bait players into escalation battles for fun and profit.
+  - rscadd: Expands low-risk steal objectives to include the Chef's fake moustache,
+      Lawyer's badge, and Mime's mask.
+  - rscadd: Adds brand new shift start Steal & Destroy objectives for early breaking
+      and entering. Smash your way into a sec checkpoint to grab a Space Law book,
+      engineering to grab some insulated gloves or the psych office to kidnap their
+      moth plush.
+  - bugfix: Fixes an issue where the steal clown shoes objective would never be valid.
+  YehnBeep:
+  - qol: Satchels can now be crafted using the same recipe (4 cloth) as backpacks.
+  - bugfix: Fixed a light inside a wall on Delta Station.
+  dieamond13:
+  - image: adds new sprites for opened fireaxe/mech crowbar cabinets.
+  distributivgesetz:
+  - rscadd: Replaced slime clone damage with a "Covered in Slime" status effect that
+      deals brute damage over time and can be washed off by standing under a shower.
+  - rscadd: Northstar and Birdshot Xenobiology have been outfitted with a new shower.
+  - code_imp: Replaced the magic strings in slime code with macros. Also included
+      some warnings to anyone daring to touch the macros.
