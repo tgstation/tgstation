@@ -4298,7 +4298,7 @@
 "Ml" = (
 /mob/living/basic/bear/russian{
 	desc = "He'll hold the line against you!";
-	light_range_outer = 3;
+	light_outer_range = 3;
 	melee_damage_upper = 25;
 	name = "Artyom"
 	},
