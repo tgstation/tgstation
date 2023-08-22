@@ -60,21 +60,21 @@
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 2 SECONDS, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
 			var/cost = 0
 			var/delay = 0
 			if(the_rcd.window_type  == /obj/structure/window)
-				cost = 6
+				cost = 4
 				delay = 2 SECONDS
 			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
-				cost = 9
+				cost = 6
 				delay = 2.5 SECONDS
 			else if(the_rcd.window_type  == /obj/structure/window/fulltile)
-				cost = 12
+				cost = 8
 				delay = 3 SECONDS
 			else if(the_rcd.window_type  == /obj/structure/window/reinforced/fulltile)
-				cost = 15
+				cost = 12
 				delay = 4 SECONDS
 			if(!cost)
 				return FALSE
