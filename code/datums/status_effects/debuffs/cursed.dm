@@ -12,6 +12,7 @@
 	/// Raw probability we have to deal damage this tick.
 	var/damage_chance = 10
 	/// Are we currently in the process of sending a monologue?
+	var/monologuing = FALSE
 	/// The hand we are branded to.
 	var/obj/item/bodypart/branded_hand = null
 	/// The cached path of the particles we're using to smoke
