@@ -98,6 +98,8 @@
 			var/obj/structure/window/window_path = the_rcd.window_type
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
+			if(!initial(window_path.fulltile)) //only fulltile windows can be built here
+				return FALSE
 			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
