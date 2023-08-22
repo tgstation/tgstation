@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/asteroid/goldgrub : /mob/living/basic/mining/goldgrub{@OLD;will_burrow=@SKIP}
