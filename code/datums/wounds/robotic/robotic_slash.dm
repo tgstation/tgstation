@@ -169,6 +169,9 @@
 	if (limb.grasped_by)
 		base_mult *= ELECTRICAL_DAMAGE_GRASPED_MULT
 
+	if (victim.has_status_effect(/datum/status_effect/determined))
+		base_mult *= WOUND_DETERMINATION_BLEED_MOD
+
 	var/splint_mult = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
 	base_mult *= splint_mult
 
@@ -259,7 +262,6 @@
 		delay_mult *= 2.2
 	if (is_suture)
 		delay_mult *= 2
-		change *= 0.8
 		var/obj/item/stack/medical/suture/suture_item = suturing_item
 		var/obj/item/stack/medical/suture/base_suture = /obj/item/stack/medical/suture
 		change += (suture_item.heal_brute - initial(base_suture.heal_brute))
@@ -280,7 +282,7 @@
 		delay_mult *= 4
 
 	while (suturing_item.tool_start_check())
-		user?.visible_message(span_warning("[user] begins [replacing_or_suturing] wiring within [their_or_other] [limb.plaintext_zone] with [suturing_item]..."), ignored_mobs = list(user))
+		user?.visible_message(span_warning("[user] begins [replacing_or_suturing] wiring within [their_or_other] [limb.plaintext_zone] with [suturing_item]..."))
 		if (!suturing_item.use_tool(target = victim, user = user, delay = ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 			return TRUE
 
@@ -313,7 +315,7 @@
 	var/change = (processing_full_shock_threshold * wirecut_repair_percent)
 	var/delay_mult = 1
 	if (user == victim)
-		delay_mult *= 3
+		delay_mult *= 2.4
 	if (is_retractor)
 		delay_mult *= 2
 		change *= 0.8
@@ -328,7 +330,7 @@
 
 	var/their_or_other = (user == victim ? "their" : "[user]'s")
 	while (wirecutting_tool.tool_start_check())
-		user?.visible_message(span_warning("[user] begins resetting misplaced wiring within [their_or_other] [limb.plaintext_zone]..."), ignored_mobs = list(user))
+		user?.visible_message(span_warning("[user] begins resetting misplaced wiring within [their_or_other] [limb.plaintext_zone]..."))
 		if (!wirecutting_tool.use_tool(target = victim, user = user, delay = ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 			return TRUE
 
@@ -451,8 +453,8 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.18 //18% per wirecut
-	wire_repair_percent = 0.07 //7% per suture
+	wirecut_repair_percent = 0.16
+	wire_repair_percent = 0.06
 
 	wiring_reset = TRUE
 
@@ -496,8 +498,8 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.16 //16% per wirecut
-	wire_repair_percent = 0.045 //4.5% per suture
+	wirecut_repair_percent = 0.14
+	wire_repair_percent = 0.05
 
 	initial_sparks_amount = 3
 
@@ -541,8 +543,8 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.14 //14% per wirecut
-	wire_repair_percent = 0.03 //3% per suture
+	wirecut_repair_percent = 0.12
+	wire_repair_percent = 0.04
 
 	initial_sparks_amount = 8
 

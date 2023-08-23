@@ -150,7 +150,9 @@
 		victim.remove_status_effect(/datum/status_effect/limp)
 
 	. = ..()
-	update_inefficiencies()
+
+	if (limb)
+		update_inefficiencies()
 
 /datum/wound/blunt/robotic/moderate
 	name = "Loosened Screws"
