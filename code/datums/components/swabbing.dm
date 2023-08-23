@@ -36,8 +36,8 @@ This component is used in vat growing to swab for microbiological samples which 
 	. = ..()
 	for(var/swabbed in swabbed_items)
 		qdel(swabbed)
-	QDEL_NULL(update_icons)
-	QDEL_NULL(update_overlays)
+	update_icons = null
+	update_overlays = null
 
 
 ///Changes examine based on your sample

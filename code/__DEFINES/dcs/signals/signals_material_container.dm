@@ -5,7 +5,7 @@
 /// Called from datum/component/material_container/proc/user_insert() : (held_item, user)
 #define COMSIG_MATCONTAINER_PRE_USER_INSERT "matcontainer_pre_user_insert"
 	#define MATCONTAINER_BLOCK_INSERT (1<<1)
-/// Called from datum/component/material_container/proc/insert_item() : (target, last_inserted_id, material_amount, container)
+/// Called from datum/component/material_container/proc/insert_item() : (target, last_inserted_id, mats_consumed, material_amount, context)
 #define COMSIG_MATCONTAINER_ITEM_CONSUMED "matcontainer_item_consumed"
-/// Called from datum/component/material_container/proc/retrieve_sheets() : (sheets)
+/// Called from datum/component/material_container/proc/retrieve_sheets() : (sheets, context)
 #define COMSIG_MATCONTAINER_SHEETS_RETRIVED "matcontainer_sheets_retrived"
