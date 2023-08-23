@@ -503,8 +503,6 @@
 	integrity_failure = 0.25
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
-	flags_1 = NODECONSTRUCT_1
-	circuit = /obj/item/circuitboard/machine/icts_controller
 	var/datum/transport_controller/linear/tram/controller_datum
 	/// If the cover is open
 	var/cover_open = FALSE
