@@ -163,6 +163,8 @@
 		if(!isnull(user.client))
 			log_admin("[user] ([user.ckey]) attempted to href dock exploit on [src] with target location \"[dest_id]\"")
 			message_admins("[ADMIN_FLW(user)] ([user.ckey]) just attempted to href dock exploit on [src] with target location \"[url_encode(dest_id)]\"")
+		else
+			stack_trace("[user] ([user.type]) tried to send the shuttle [src] to the target location [dest_id], but the target location was not found in the list of valid destinations.")
 		return SHUTTLE_CONSOLE_DESTINVALID
 	switch(SSshuttle.moveShuttle(shuttleId, dest_id, TRUE))
 		if(DOCKING_SUCCESS)
