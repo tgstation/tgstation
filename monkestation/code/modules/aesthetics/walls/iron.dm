@@ -32,6 +32,8 @@
 		new_trim.color = paint_color
 		managed_wall_paint += new_trim
 		add_overlay(managed_wall_paint)
+	QUEUE_SMOOTH(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/smooth_icon()
 	. = ..()
