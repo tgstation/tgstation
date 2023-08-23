@@ -20,6 +20,8 @@
 	var/status_effect_on_roll = TRUE
 	/// Length of the cooldown between the machine being used and being able to spin the machine again.
 	var/cooldown_length = 15 SECONDS
+	/// Are we currently in use? Anti-spam prevention measure.
+	var/in_use = FALSE
 	/// Cooldown between pulls of the cursed slot machine.
 	COOLDOWN_DECLARE(spin_cooldown)
 
@@ -34,10 +36,15 @@
 
 	var/mob/living/carbon/human/human_user = user
 
-	if(obj_flags & IN_USE || !COOLDOWN_FINISHED(src, spin_cooldown))
+	if(in_use)
+		balloon_alert(human_user, "already spinning!")
+		return
+
+	if(!COOLDOWN_FINISHED(src, spin_cooldown))
 		to_chat(human_user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
 		return
-	obj_flags |= IN_USE
+
+	in_use = TRUE
 
 	var/signal_value = SEND_SIGNAL(human_user, COMSIG_CURSED_SLOT_MACHINE_USE, max_curse_amount)
 
@@ -67,7 +74,7 @@
 /obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
 	icon_screen = initial(icon_screen)
 	update_appearance()
-	obj_flags &= ~IN_USE
+	in_use = FALSE
 	COOLDOWN_START(src, spin_cooldown, cooldown_length)
 	if(!prob(win_prob))
 		if(status_effect_on_roll && isnull(user.has_status_effect(/datum/status_effect/grouped/cursed)))
