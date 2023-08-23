@@ -140,6 +140,18 @@ if $grep 'can_perform_action\(\s*\)' $code_files; then
 	st=1
 fi;
 
+part "src as a trait source" # ideally we'd lint / test for ANY datum reference as a trait source, but 'src' is the most common.
+if $grep -i '(add_trait|remove_trait)\(.+,\s*.+,\s*src\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Using 'src' as a trait source. Source must be a string key - dont't use references to datums as a source, perhaps use 'REF(src)'.${NC}"
+	st=1
+fi;
+if $grep -i '(add_traits|remove_traits)\(.+,\s*src\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Using 'src' as trait sources. Source must be a string key - dont't use references to datums as sources, perhaps use 'REF(src)'.${NC}"
+	st=1
+fi;
+
 part "balloon_alert sanity"
 if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo

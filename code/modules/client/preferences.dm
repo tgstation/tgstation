@@ -473,14 +473,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * Arguments:
  * * client/prefs_holder - the client to get the chat_toggles pref from.
  */
-/proc/get_chat_toggles(client/prefs_holder)
-	if(!prefs_holder)
-		return FALSE
-	if(prefs_holder && !prefs_holder?.prefs)
-		stack_trace("[prefs_holder?.mob] ([prefs_holder?.ckey]) had null prefs, which shouldn't be possible!")
-		return FALSE
+/proc/get_chat_toggles(client/target)
+	if(ismob(target))
+		var/mob/target_mob = target
+		target = target_mob.client
 
-	return prefs_holder?.prefs.chat_toggles
+	if(isnull(target))
+		return NONE
+
+	var/datum/preferences/preferences = target.prefs
+	if(isnull(preferences))
+		stack_trace("[key_name(target)] preference datum was null")
+		return NONE
+
+	return preferences.chat_toggles
 
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
 /datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
