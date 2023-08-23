@@ -394,7 +394,6 @@
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/creature/goliath
-	keytype = /obj/item/key/lasso
 	vehicle_move_delay = 4
 
 /datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
