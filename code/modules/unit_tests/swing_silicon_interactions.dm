@@ -1,3 +1,4 @@
+/// Tests the ability to unlock and crowbar open a silicon
 /datum/unit_test/silicon_interacting
 
 /datum/unit_test/silicon_interacting/Run()

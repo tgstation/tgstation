@@ -17,9 +17,9 @@
 	gravity_setup()
 	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
-	default_harm_style = GLOB.attack_styles[default_harm_style]
-	default_disarm_style = GLOB.attack_styles[default_disarm_style]
-	default_help_style = GLOB.attack_styles[default_help_style]
+	default_harm_style = GLOB.attack_styles[default_harm_style_path]
+	default_disarm_style = GLOB.attack_styles[default_disarm_style_path]
+	default_help_style = GLOB.attack_styles[default_help_style_path]
 
 /mob/living/prepare_huds()
 	..()
@@ -49,9 +49,6 @@
 	QDEL_LAZYLIST(diseases)
 	QDEL_LIST(surgeries)
 
-	default_harm_style = null
-	default_disarm_style = null
-	default_help_style = null
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels, message = TRUE)

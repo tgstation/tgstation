@@ -1,3 +1,6 @@
+/// Tests that combat-mode punching someone works as intended
+/datum/unit_test/harm_punch
+
 /datum/unit_test/harm_punch/Run()
 	var/mob/living/carbon/human/puncher = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
@@ -10,6 +13,9 @@
 
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being punched")
 
+/// Tests that combat-mode smacking someone with a melee item works as intended
+/datum/unit_test/harm_melee
+
 /datum/unit_test/harm_melee/Run()
 	var/mob/living/carbon/human/tider = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
@@ -20,6 +26,9 @@
 	click_wrapper(tider, victim)
 
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being hit by a toolbox")
+
+/// Tests that combat-mode smacking someone with an item that deals burn damage works as intended
+/datum/unit_test/harm_different_damage
 
 /datum/unit_test/harm_different_damage/Run()
 	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
@@ -35,6 +44,7 @@
 	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Victim took brute damage from a lit welding tool")
 	TEST_ASSERT(victim.getFireLoss() > 0, "Victim took no burn damage after being hit by a lit welding tool")
 
+/// Tests that the attack chain is processed entirely
 /datum/unit_test/attack_chain
 	var/attack_hit
 	var/post_attack_hit
@@ -68,6 +78,9 @@
 	TEST_ASSERT(pre_attack_hit, "Pre-attack signal was not fired")
 	TEST_ASSERT(attack_hit, "Attack signal was not fired")
 	TEST_ASSERT(post_attack_hit, "Post-attack signal was not fired")
+
+/// Tests that disarming someone properly shoves or knocks down depending on whether they're against a dense object
+/datum/unit_test/disarm
 
 /datum/unit_test/disarm/Run()
 	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)

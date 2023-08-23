@@ -2,6 +2,7 @@
  * Xeno help
  */
 /datum/attack_style/unarmed/help/xeno
+	can_hit_self = FALSE
 
 /datum/attack_style/unarmed/help/xeno/finalize_attack(mob/living/carbon/alien/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(isalien(smacked))

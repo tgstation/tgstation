@@ -35,6 +35,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// How long does it take for the attack to travel between turfs?
 	/// Essentually, this is "swing speed". Does nothing for attacks which only hit a single turf.
 	var/time_per_turf = 0 SECONDS
+	/// Whether the swing can hit the swing-er itself
+	var/can_hit_self = FALSE
 
 #ifndef TESTING
 /datum/attack_style/vv_edit_var(var_name, var_value)
@@ -133,9 +135,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// so we can re-generate the affecting turfs list for swings that have travel time if the attacker moves
 	var/turf/starting_loc = attacker.loc
 	// A list of mobs that have already been hit by this attack to prevent double dipping
-	// (Starts with the swing-er in the list, to prevent self harm)
 	var/list/mob/living/already_hit = list()
-	already_hit[attacker] = TRUE
+	if(!can_hit_self)
+		already_hit[attacker] = TRUE
 	// The dir the attacker was facing when the attack started,
 	// so changing dir mid swing for attacks with travel time don't change the direction of the attack
 	var/starting_dir = attacker.dir
@@ -244,10 +246,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// This means wide arc swinging weapons can't hit in tight corridors
 	var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = weapon, check_obscured = TRUE)
 	if(blocking_us)
-		attacker.visible_message(
-			span_warning("[attacker]'s attack collides with [blocking_us]!"),
-			span_warning("[blocking_us] blocks your attack!"),
-		)
 		attack_result |= collide_with_solid_atom(blocking_us, weapon, attacker)
 
 	if(attack_result & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT)) // melbert todo check this
@@ -319,6 +317,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /// Determines behavior when we collide with a solid / dense atom mid swing.
 /datum/attack_style/proc/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
 	if(blocking_us.uses_integrity)
+		attacker.visible_message(
+			span_warning("[attacker]'s attack collides with [blocking_us]!"),
+			span_warning("[blocking_us] blocks your attack!"),
+		)
 		blocking_us.attacked_by(weapon, attacker)
 	return ATTACK_SWING_BLOCKED
 
@@ -494,5 +496,4 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.do_attack_animation(get_movable_to_layer_effect_over(affected_turfs), selected_effect)
 
 /datum/attack_style/unarmed/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
-	attacker.resolve_unarmed_attack(blocking_us)
-	return ATTACK_SWING_BLOCKED
+	return ATTACK_SWING_SKIPPED

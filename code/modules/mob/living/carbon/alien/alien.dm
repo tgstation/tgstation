@@ -15,9 +15,9 @@
 
 	heat_protection = 0.5 // minor heat insulation
 
-	default_help_style = /datum/attack_style/unarmed/help/xeno
-	// default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno // Handled by limbs, here for posterity
-	default_disarm_style = /datum/attack_style/unarmed/disarm/xeno
+	default_help_style_path = /datum/attack_style/unarmed/help/xeno
+	default_harm_style_path = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno // Handled by limbs, here for posterity
+	default_disarm_style_path = /datum/attack_style/unarmed/disarm/xeno
 
 	///Whether or not the alien is leaping. Only used by hunters.
 	var/leaping = FALSE

@@ -251,8 +251,11 @@
 	var/gravity_state = null
 
 	/// Default attack style to use when left clicking off of combat mode
-	var/datum/attack_style/unarmed/default_help_style = /datum/attack_style/unarmed/help
+	var/datum/attack_style/unarmed/default_help_style_path = /datum/attack_style/unarmed/help
+	var/datum/attack_style/unarmed/default_help_style
 	/// Default attack style to use when left clicking on combat mode
-	var/datum/attack_style/unarmed/default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack
+	var/datum/attack_style/unarmed/default_harm_style_path = /datum/attack_style/unarmed/generic_damage/mob_attack
+	var/datum/attack_style/unarmed/default_harm_style
 	/// Default attack style to use when right clicking
-	var/datum/attack_style/unarmed/default_disarm_style = /datum/attack_style/unarmed/disarm
+	var/datum/attack_style/unarmed/default_disarm_style_path = /datum/attack_style/unarmed/disarm
+	var/datum/attack_style/unarmed/default_disarm_style

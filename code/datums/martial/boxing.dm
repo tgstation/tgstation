@@ -1,4 +1,3 @@
-// melbert todo infinite loops
 /datum/attack_style/unarmed/generic_damage/limb_based/boxing
 	attack_type = STAMINA
 	attack_effect = ATTACK_EFFECT_PUNCH

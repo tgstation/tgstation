@@ -1,3 +1,4 @@
+/// Abstract test type used to setup a situation in which a baton is being used to swing on someone
 /datum/unit_test/baton_swings
 	abstract_type = /datum/unit_test/baton_swings
 
@@ -26,7 +27,8 @@
 	TEST_ASSERT(victim.getStaminaLoss() != 0, "Victim did not take stamina damage from a baton swing")
 	TEST_ASSERT(!COOLDOWN_FINISHED(baton, cooldown_check), "Baton did not have a cooldown after swinging")
 
-// Just stun
+/// Testing baton interaction in which the attacker is on combat mode and is left clicking
+/// The baton is on, so all this should do is stun
 /datum/unit_test/baton_swings/combat_mode_left_click
 
 /datum/unit_test/baton_swings/combat_mode_left_click/prepare_attacker(mob/living/carbon/human/attacker)
@@ -35,7 +37,8 @@
 /datum/unit_test/baton_swings/combat_mode_left_click/get_click_params(mob/living/carbon/human/attacker)
 	return list(LEFT_CLICK = TRUE)
 
-// Stun and bash
+/// Testing baton interaction in which the attacker is on combat mode and is right clicking
+/// The baton is on, so this should stun and bash - IE, harming while stunning
 /datum/unit_test/baton_swings/combat_mode_right_click
 
 /datum/unit_test/baton_swings/combat_mode_right_click/prepare_attacker(mob/living/carbon/human/attacker)
@@ -48,7 +51,8 @@
 	. = ..()
 	TEST_ASSERT(victim.getBruteLoss() != 0, "Victim did not take brute damage from a harmbaton swing")
 
-// Friendly click
+/// Testing baton interaction in which the attacker is off of combat mode and is left clicking
+/// Without combat mode the attacker should not be swinging, so nothing should happen
 /datum/unit_test/baton_swings/no_combat_mode_left_click
 
 /datum/unit_test/baton_swings/no_combat_mode_left_click/get_click_params(mob/living/carbon/human/attacker)
@@ -58,7 +62,8 @@
 	TEST_ASSERT(victim.getStaminaLoss() == 0, "Victim took stamina damage despite not being hit by any swing")
 	TEST_ASSERT(COOLDOWN_FINISHED(baton, cooldown_check), "Baton had a cooldown after failing to swing")
 
-// Friendly right click
+/// Testing baton interaction in which the attacker is off of combat mode and is right clicking
+/// Without combat mode the attacker should not be swinging, so nothing should happen
 /datum/unit_test/baton_swings/no_combat_mode_right_click
 
 /datum/unit_test/baton_swings/no_combat_mode_right_click/get_click_params(mob/living/carbon/human/attacker)

@@ -1,3 +1,4 @@
+/// Tests that eyestabbing with combat mode on does damage to the eyes.
 /datum/unit_test/eyestab
 
 /datum/unit_test/eyestab/Run()

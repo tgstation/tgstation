@@ -14,7 +14,7 @@
 
 	// Selected by bodyparts.
 	// Don't bother setting this to anything, carbons and humans will never use this.
-	default_harm_style = null
+	default_harm_style_path = null
 
 	///List of [/obj/item/organ/internal] in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/internal/organs = list()

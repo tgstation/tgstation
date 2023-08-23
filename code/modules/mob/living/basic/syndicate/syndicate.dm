@@ -259,7 +259,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	death_message = "is smashed into pieces!"
 	ai_controller = /datum/ai_controller/basic_controller/syndicate/viscerator
-	default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack/dismembers
+	default_harm_style_path = /datum/attack_style/unarmed/generic_damage/mob_attack/dismembers
 
 /mob/living/basic/viscerator/Initialize(mapload)
 	. = ..()

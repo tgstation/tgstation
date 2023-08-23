@@ -291,7 +291,6 @@
 	if(prob(50))
 		INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item/dualsaber, jedi_spin), attacker)
 
-// melbert todo
 /datum/attack_style/melee_weapon/swing/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	if(length(affected_turfs) < 3)
 		// affected_turfs will only get this small if we're in a super weird place like, say, in the corner of the map

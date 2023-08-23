@@ -119,6 +119,9 @@
 /datum/status_effect/blocking/proc/on_attacked(mob/living/source, atom/movable/hitby, damage, attack_text, attack_type, armour_penetration, damage_type)
 	SIGNAL_HANDLER
 
+	if(armour_penetration >= 100)
+		return NONE
+
 	if(blocking_with)
 		if(!(blocking_with.can_block_flags & attack_type))
 			return NONE

@@ -14,7 +14,7 @@
 	can_be_shoved_into = TRUE
 	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
 
-	default_disarm_style = /datum/attack_style/unarmed/disarm
+	default_disarm_style_path = /datum/attack_style/unarmed/disarm
 
 	//Hair colour and style
 	var/hair_color = "#000000"
