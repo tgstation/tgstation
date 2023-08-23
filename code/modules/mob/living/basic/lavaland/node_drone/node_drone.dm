@@ -12,7 +12,7 @@
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_LARGE
 	mob_biotypes = MOB_ROBOTIC
-	faction = list(FACTION_STATION)
+	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
@@ -28,6 +28,8 @@
 	var/active_node = FALSE
 	/// Weakref to the vent the drone is currently attached to.
 	var/obj/structure/ore_vent/attached_vent = null
+	/// Set when the drone is begining to leave lavaland after the vent is secured.
+	var/escaping = FALSE
 
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..()
@@ -46,12 +48,17 @@
  * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
  */
 /mob/living/basic/node_drone/proc/escape()
-	flick("mining_node_escape", src)
-	icon_state = "mining_node_fly"
-	update_appearance(UPDATE_ICON_STATE)
-	animate(src, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	del(src)
-
+	attached_vent?.unbuckle_mob(src)
+	if(!escaping)
+		escaping = TRUE
+		flick("mining_node_escape", src)
+		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
+		return
+	icon_state = "mining_node_flying"
+	//update_appearance(UPDATE_ICON_STATE)
+	visible_message(src, "The drone flies away to safety as the vent is secured.")
+	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	addtimer(CALLBACK(src, PROC_REF(qdel)), 1 SECONDS) //node drone died on the way back to his home planet.
 
 
 /// The node drone AI controller
@@ -75,9 +82,6 @@
 		/datum/ai_planning_subtree/flee_target/node_drone,
 		//Potentially add more behaviors here for herding boulders to the vent if they get displaced.
 	)
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
-	hunter.UnarmedAttack(hunted, TRUE)
 
 // Node subtree to hunt down ore vents.
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_vent
