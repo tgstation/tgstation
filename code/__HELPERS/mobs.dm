@@ -320,7 +320,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		progbar.end_progress()
 
 	if(interaction_key)
-		var/reduced_interaction_count = LAZYACCESS(user.do_afters, interaction_key) - 1 || 0
+		var/reduced_interaction_count = (LAZYACCESS(user.do_afters, interaction_key) || 0) - 1
 		if(reduced_interaction_count > 0) // Not done yet!
 			LAZYSET(user.do_afters, interaction_key, reduced_interaction_count)
 			return
