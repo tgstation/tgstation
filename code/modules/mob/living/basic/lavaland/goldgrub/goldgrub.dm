@@ -43,8 +43,6 @@
 
 	if(mapload)
 		generate_loot()
-	else
-		can_lay_eggs = FALSE
 
 	var/datum/action/cooldown/mob_cooldown/spit_ore/spit = new(src)
 	var/datum/action/cooldown/mob_cooldown/burrow/burrow = new(src)
@@ -169,10 +167,26 @@
 		upper_growth_value = 1,\
 		signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
+		optional_grow_behavior = CALLBACK(src, PROC_REF(grow)),\
 	)
 
 /mob/living/basic/mining/goldgrub/baby/proc/ready_to_grow()
 	return (stat == CONSCIOUS && !is_jaunting(src))
+
+/mob/living/basic/mining/goldgrub/baby/proc/grow()
+	var/mob/living/new_mob = /mob/living/basic/mining/goldgrub
+	var/new_mob_name = initial(new_mob.name)
+
+	src.visible_message(span_warning("[src] grows into \a [new_mob_name]!"))
+	var/list/friends = src.ai_controller.blackboard[BB_FRIENDS_LIST]
+	var/mob/living/basic/mining/goldgrub/transformed_mob = src.change_mob_type(/mob/living/basic/mining/goldgrub, src.loc, new_name = new_mob_name, delete_old_mob = TRUE)
+	transformed_mob.ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	
+	if(length(friends))
+		transformed_mob.tame_grub()
+
+	if(initial(new_mob.unique_name))
+		transformed_mob.set_name()
 
 /obj/item/food/egg/green/grub_egg
 	name = "grub egg"

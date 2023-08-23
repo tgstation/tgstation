@@ -22,7 +22,10 @@
 		all_moms += mother
 
 	if(length(all_moms))
-		controller.set_blackboard_key(found_mom, pick(all_moms))
+		var/mob/mom = pick(all_moms)
+		controller.set_blackboard_key(found_mom, mom)
+		if(isbasicmob(mom))
+			controller.set_blackboard_key(BB_FRIENDS_LIST, mom.ai_controller.blackboard[BB_FRIENDS_LIST])
 		finish_action(controller, TRUE)
 		return
 	finish_action(controller, FALSE)
