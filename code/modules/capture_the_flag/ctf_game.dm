@@ -135,7 +135,7 @@
 			var/datum/outfit/ctf/class = ctf_gear[key]
 			var/datum/radial_menu_choice/option = new
 			option.image  = image(icon = initial(class.icon), icon_state = initial(class.icon_state))
-			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
+			option.info = span_boldnotice("[initial(class.class_description)]")
 			display_classes[key] = option
 
 		sort_list(display_classes)
@@ -263,7 +263,7 @@
 /obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/ctf_flag))
 		return ..()
-		
+
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))

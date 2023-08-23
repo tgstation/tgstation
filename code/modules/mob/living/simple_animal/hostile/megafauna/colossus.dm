@@ -55,7 +55,6 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -425,7 +424,7 @@
 	name = "lavaland"
 	floor = /turf/open/floor/fakebasalt
 	wall = /turf/closed/wall/mineral/cult
-	flora_and_fauna = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	flora_and_fauna = list(/mob/living/basic/mining/goldgrub)
 	flora_and_fauna_chance = 1
 
 // Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.

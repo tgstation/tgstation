@@ -64,11 +64,6 @@
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
 
-/mob/dead/new_player/get_status_tab_items()
-	. = ..()
-	if(!SSticker.HasRoundStarted()) //only show this when the round hasn't started yet
-		. += "Readiness status: [ready ? "" : "Not "]Readied Up!"
-
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
 	if(QDELETED(src) || !src.client)
@@ -245,8 +240,6 @@
 		humanc.put_in_hands(new /obj/item/crowbar/large/emergency(get_turf(humanc))) //if hands full then just drops on the floor
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, character, rank)
-
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	for(var/C in GLOB.employmentCabinets)
@@ -263,9 +256,11 @@
 	if(QDELETED(src) || !client)
 		return // Disconnected while checking for the appearance ban.
 	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
-		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
-		mind.set_original_character(spawning_mob)
+		// transfer_to sets mind to null
+		var/datum/mind/preserved_mind = mind
+		preserved_mind.original_character_slot_index = client.prefs.default_slot
+		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
+		preserved_mind.set_original_character(spawning_mob)
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .

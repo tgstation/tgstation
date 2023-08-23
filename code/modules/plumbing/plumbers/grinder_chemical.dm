@@ -9,8 +9,6 @@
 	buffer = 400
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	var/eat_dir = SOUTH
-	///category for plumbing RCD
-	category="Synthesizers"
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()

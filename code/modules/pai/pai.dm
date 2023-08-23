@@ -162,6 +162,7 @@
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
+	QDEL_NULL(leash)
 	card = null
 	GLOB.pai_list.Remove(src)
 	return ..()
@@ -191,29 +192,31 @@
 	else
 		. += "Systems nonfunctional."
 
-/mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == hacking_cable)
-		untrack_pai()
-		untrack_thing(hacking_cable)
-		hacking_cable = null
-		SStgui.update_user_uis(src)
-		if(!QDELETED(card))
-			card.update_appearance()
-	if(deleting_atom == atmos_analyzer)
+/mob/living/silicon/pai/Exited(atom/movable/gone, direction)
+	if(gone == atmos_analyzer)
 		atmos_analyzer = null
-	if(deleting_atom == camera)
+	else if(gone == camera)
 		camera = null
-	if(deleting_atom == host_scan)
+	else if(gone == host_scan)
 		host_scan = null
-	if(deleting_atom == internal_gps)
+	else if(gone == internal_gps)
 		internal_gps = null
-	if(deleting_atom == instrument)
+	else if(gone == instrument)
 		instrument = null
-	if(deleting_atom == newscaster)
+	else if(gone == newscaster)
 		newscaster = null
-	if(deleting_atom == signaler)
+	else if(gone == signaler)
 		signaler = null
 	return ..()
+
+/mob/living/silicon/pai/proc/on_hacking_cable_del(atom/source)
+	SIGNAL_HANDLER
+	untrack_pai()
+	untrack_thing(hacking_cable)
+	hacking_cable = null
+	SStgui.update_user_uis(src)
+	if(!QDELETED(card))
+		card.update_appearance()
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
@@ -334,7 +337,10 @@
 	master_name = "The Syndicate"
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
-	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
+	add_supplied_law(0, "Do not interfere with the operations of the Syndicate.")
+	QDEL_NULL(leash) // Freedom!!!
+	to_chat(src, span_danger("ALERT: Foreign software detected."))
+	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
 /**
@@ -350,6 +356,7 @@
 	master_name = null
 	master_dna = null
 	add_supplied_law(0, "None.")
+	leash = AddComponent(/datum/component/leash, card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	balloon_alert(src, "software rebooted")
 	return TRUE
 
@@ -449,6 +456,9 @@
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)
+	if(emagged)
+		return
+
 	var/new_distance = leash.distance + increment_amount
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return

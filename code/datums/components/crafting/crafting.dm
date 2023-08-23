@@ -516,7 +516,7 @@
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = recipe.name || initial(atom.name)
+	data["name"] = recipe.name
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result

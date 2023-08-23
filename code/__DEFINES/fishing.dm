@@ -1,11 +1,6 @@
 /// Use in fish tables to denote miss chance.
 #define FISHING_DUD "dud"
 
-#define FISHING_BAIT_TRAIT "fishing_bait"
-#define BASIC_QUALITY_BAIT_TRAIT "removes_felinids_pr"
-#define GOOD_QUALITY_BAIT_TRAIT "adds_bitcoin_miner_pr"
-#define GREAT_QUALITY_BAIT_TRAIT "perspective_walls_pr"
-
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
 
@@ -13,6 +8,8 @@
 #define FAV_BAIT_DIFFICULTY_MOD -5
 /// Difficulty modifier when bait is fish's disliked
 #define DISLIKED_BAIT_DIFFICULTY_MOD 15
+/// Difficulty modifier when our fisherman has the trait TRAIT_SETTLER
+#define SETTLER_DIFFICULTY_MOD -5
 
 
 #define FISH_TRAIT_MINOR_DIFFICULTY_BOOST 5
@@ -53,12 +50,6 @@
 #define FISHING_LINE_REINFORCED (1 << 1)
 /// Much like FISHING_HOOK_ENSNARE but for the reel.
 #define FISHING_LINE_BOUNCY (1 << 2)
-
-#define FISHING_SPOT_PRESET_BEACH "beach"
-#define FISHING_SPOT_PRESET_LAVALAND_LAVA "lavaland lava"
-#define FISHING_SPOT_PRESET_ICEMOON_PLASMA "icemoon plasma"
-#define FISHING_SPOT_PRESET_CHASM "chasm"
-#define FISHING_SPOT_PRESET_TOILET "toilet"
 
 #define FISHING_MINIGAME_RULE_HEAVY_FISH "heavy"
 #define FISHING_MINIGAME_RULE_LUBED_FISH "lubed"

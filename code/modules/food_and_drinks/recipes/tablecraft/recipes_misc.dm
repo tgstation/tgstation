@@ -428,3 +428,129 @@
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD
 	delete_contents = FALSE
+
+/datum/crafting_recipe/food/sauteed_eggplant
+	name = "Sauteed eggplant"
+	reqs = list(
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/quality_oil = 3,
+	)
+	result = /obj/item/food/sauteed_eggplant
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/stuffed_eggplant
+	name = "Stuffed eggplant"
+	reqs = list(
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/meat/cutlet = 1,
+	)
+	result = /obj/item/food/stuffed_eggplant
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/baba_ghanoush
+	name = "Baba ghanoush"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/pita_bread = 1,
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/quality_oil = 5,
+		/datum/reagent/consumable/lemonjuice = 3,
+	)
+	result = /obj/item/food/baba_ghanoush
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/moussaka
+	name = "Moussaka"
+	reqs = list(
+		/obj/item/food/grown/eggplant = 2,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/bechamel_sauce = 1,
+	)
+	result = /obj/item/food/moussaka
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/falafel
+	name = "Falafel"
+	reqs = list(
+		/obj/item/food/grown/soybeans = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/herbs = 1,
+	)
+	result = /obj/item/food/falafel
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/candied_pineapple
+	name = "Candied pineapple"
+	reqs = list(
+		/obj/item/food/pineappleslice = 1,
+		/datum/reagent/consumable/sugar = 2,
+		/datum/reagent/water = 2,
+	)
+	result = /obj/item/food/candied_pineapple
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tzatziki_sauce
+	name = "Tzatziki sauce"
+	reqs = list(
+		/obj/item/food/grown/cucumber = 1,
+		/datum/reagent/consumable/quality_oil = 2,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/salt = 1,
+	)
+	result = /obj/item/food/tzatziki_sauce
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tzatziki_and_pita_bread
+	name = "Tzatziki and pita bread"
+	reqs = list(
+		/obj/item/food/tzatziki_sauce = 1,
+		/obj/item/food/pita_bread = 1,
+	)
+	result = /obj/item/food/tzatziki_and_pita_bread
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/grilled_beef_gyro
+	name = "Grilled beef gyro"
+	reqs = list(
+		/obj/item/food/tzatziki_sauce = 1,
+		/obj/item/food/pita_bread = 1,
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/grilled_beef_gyro
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/vegetarian_gyro
+	name = "Vegetarian gyro"
+	reqs = list(
+		/obj/item/food/tzatziki_sauce = 1,
+		/obj/item/food/pita_bread = 1,
+		/obj/item/food/grown/cucumber = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/vegetarian_gyro
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/raw_pita_bread
+	name = "Raw pita bread"
+	reqs = list(
+		/datum/reagent/consumable/flour = 10,
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/sugar = 2,
+	)
+	result = /obj/item/food/raw_pita_bread
+	category = CAT_MISCFOOD

@@ -1,4 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - bugfix: "Using the timeline jumper MOD module updates stamina after resetting it, no more infinite stamcrits"

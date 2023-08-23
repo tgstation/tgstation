@@ -143,6 +143,13 @@
 	for(var/i in 1 to 7)
 		new /obj/item/food/meat/slab(src)
 
+/obj/item/storage/box/papersack/wheat
+	desc = "It's a bit dusty, and smells like a barnyard."
+
+/obj/item/storage/box/papersack/wheat/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/food/grown/wheat(src)
+
 /obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
