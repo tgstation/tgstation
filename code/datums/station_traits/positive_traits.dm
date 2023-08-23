@@ -344,5 +344,14 @@
 	trait_to_give = STATION_TRAIT_BIGGER_PODS
 	blacklist = list(/datum/station_trait/cramped_escape_pods)
 
+/datum/station_trait/medbot_mania
+	name = "Advanced Medbots"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Your station's "
+	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
+	blacklist = list(/datum/station_trait/medbot_mania)
+
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
