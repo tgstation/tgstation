@@ -4,7 +4,9 @@
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
 
-GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
+GLOBAL_LIST_INIT(achievements_unlocked, list())
+
+GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MONKEYSTATION EDIT ADDITION PR #11 - update roundend.dm
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
@@ -382,6 +384,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 	parts += goal_report()
 	//Economy & Money
 	parts += market_report()
+	//Player Achievements
+	parts += cheevo_report()
 
 	list_clear_nulls(parts)
 
@@ -860,3 +864,25 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 				return
 			qdel(query_update_everything_ranks)
 		qdel(query_check_everything_ranks)
+
+/datum/controller/subsystem/ticker/proc/cheevo_report()
+	var/list/parts = list()
+	if(length(GLOB.achievements_unlocked))
+		parts += "<span class='header'>Achievement Get!</span><BR>"
+		parts += "<span class='infoplain'>Total Achievements Earned: <B>[length(GLOB.achievements_unlocked)]!</B></span><BR>"
+		parts += "<ul class='playerlist'>"
+		for(var/datum/achievement_report/cheevo_report in GLOB.achievements_unlocked)
+			parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
+		parts += "</ul>"
+		return "<div class='panel greenborder'><ul>[parts.Join()]</ul></div>"
+
+///A datum containing the info necessary for an achievement readout, reported and added to the global list in /datum/award/achievement/on_unlock(mob/user)
+/datum/achievement_report
+	///The winner of this achievement.
+	var/winner
+	///The achievement that was won.
+	var/cheevo
+	///The ckey of our winner
+	var/winner_key
+	///The name of the area we earned this cheevo in
+	var/award_location
