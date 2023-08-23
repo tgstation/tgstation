@@ -504,7 +504,7 @@
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
-///Medbeam - Medbeam but built into a mod
+///Medbeam - Medbeam but built into a modsuit
 /obj/item/mod/module/medbeam
 	name = "MOD Medbeam Module"
 	desc = "A wrist mounted variant of the medbeam gun, allowing the user to heal their allies without the risk of dropping it."

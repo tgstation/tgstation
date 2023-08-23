@@ -616,11 +616,11 @@
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/device_tools/medgun
-	name = "Medbeam Gun"
-	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
+/datum/uplink_item/device_tools/medgun_mod
+	name = "Medbeam Gun Module"
+	desc = "A wonder of Syndicate engineering, the Medbeam gun module, or Medi-Gun enables a medic to keep his fellow \
 		operatives in the fight, even while under fire. Don't cross the streams!"
-	item = /obj/item/gun/medbeam
+	item = /obj/item/mod/module/medbeam
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
