@@ -133,7 +133,7 @@
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 	if(affected_mob.getStaminaLoss() >= 80)
-		affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick, updating_stamina = FALSE)
+		affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getStaminaLoss() >= 100)
 		to_chat(affected_mob,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
 		affected_mob.adjustStaminaLoss(-100, updating_stamina = TRUE) // Don't add the biotype parameter here as it results in infinite sleep and chat spam.
