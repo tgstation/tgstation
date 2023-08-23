@@ -144,7 +144,7 @@
 	/// The MODlink datum we operate.
 	var/datum/mod_link/mod_link
 	/// Initial frequency of the MODlink.
-	var/starting_frequency = "NT"
+	var/starting_frequency
 	/// An additional name tag for the scryer, seen as "MODlink scryer - [label]"
 	var/label
 
@@ -297,6 +297,9 @@
 /obj/item/clothing/neck/link_scryer/proc/on_user_set_dir(atom/source, dir, newdir)
 	SIGNAL_HANDLER
 	on_user_set_dir_generic(mod_link, newdir || SOUTH)
+
+/obj/item/clothing/neck/link_scryer/loaded
+	starting_frequency = "NT"
 
 /obj/item/clothing/neck/link_scryer/loaded/Initialize(mapload)
 	. = ..()
