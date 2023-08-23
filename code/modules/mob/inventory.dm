@@ -409,7 +409,7 @@
 	if(!include_pockets)
 		items -= list(l_store, r_store, s_store)
 	if(include_accessories && w_uniform)
-		items += w_uniform.contents
+		items += w_uniform.attached_accessories
 	return items
 
 /mob/living/proc/unequip_everything()
