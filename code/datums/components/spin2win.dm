@@ -37,8 +37,8 @@
 	src.end_spin_message = end_spin_message
 
 /datum/component/spin2win/Destroy(force, silent)
-	QDEL_NULL(on_spin_callback)
-	QDEL_NULL(on_unspin_callback)
+	on_spin_callback = null
+	on_unspin_callback = null
 	return ..()
 
 /datum/component/spin2win/RegisterWithParent()

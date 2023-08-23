@@ -27,6 +27,9 @@
 	var/raw_value = get_raw_value(key)
 	return parse_value(raw_value)
 
+/datum/award/proc/on_achievement_data_init(datum/achievement_data/holder, database_value)
+	holder.original_cached_data[type] = holder.data[type] = parse_value(database_value)
+
 ///This saves the changed data to the hub.
 /datum/award/proc/get_changed_rows(key, value)
 	if(!database_id || !key || !name)
@@ -62,7 +65,7 @@
 	return result
 
 //Should return sanitized value for achievement cache
-/datum/award/proc/parse_value(raw_value, list/data)
+/datum/award/proc/parse_value(raw_value)
 	return default_value
 
 ///Can be overriden for achievement specific events
@@ -78,13 +81,26 @@
 	. = ..()
 	.["achievement_type"] = "achievement"
 
-/datum/award/achievement/parse_value(raw_value, list/data)
+/datum/award/achievement/parse_value(raw_value)
 	return raw_value > 0
 
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 	user.client.give_award(/datum/award/score/achievements_score, user, 1)
+
+	var/datum/achievement_report/new_report = new /datum/achievement_report()
+
+	new_report.winner = "[(user.real_name == user.name) ? user.real_name : "[user.real_name], as [user.name]"]"
+	new_report.cheevo = name
+	if(user.ckey)
+		new_report.winner_key = user.ckey
+	else
+		stack_trace("[name] achievement earned by [user], who did not have a ckey.")
+
+	new_report.award_location = "[get_area_name(user)]"
+
+	GLOB.achievements_unlocked += new_report
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
@@ -119,7 +135,7 @@
 			high_scores[key] = score
 		qdel(Q)
 
-/datum/award/score/parse_value(raw_value, list/data)
+/datum/award/score/parse_value(raw_value)
 	return isnum(raw_value) ? raw_value : 0
 
 ///Defining this here 'cause it's the first score a player should see in the Scores category.
@@ -135,11 +151,13 @@
  * So, let's start counting how many achievements have been unlocked so far and return its value instead,
  * which is why this award should always be loaded last.
  */
-/datum/award/score/achievements_score/parse_value(raw_value, list/data)
-	if(isnum(raw_value))
-		return raw_value
-	. = 0
-	for(var/award_type in data)
-		if(ispath(award_type, /datum/award/achievement) && data[award_type])
-			.++
-	return .
+/datum/award/score/achievements_score/on_achievement_data_init(datum/achievement_data/holder, database_value)
+	if(isnum(database_value))
+		return ..()
+	//We need to keep the value differents so that it's properly saved at the end of the round.
+	holder.original_cached_data[type] = 0
+	var/value = 0
+	for(var/award_type in holder.data)
+		if(ispath(award_type, /datum/award/achievement) && holder.data[award_type])
+			value++
+	holder.data[type] = value
