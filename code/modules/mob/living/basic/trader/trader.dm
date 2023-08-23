@@ -67,12 +67,3 @@
 	held_weapon_visual = /obj/item/gun/ballistic/revolver
 
 	trader_data_path = /datum/trader_data/mr_bones
-
-/obj/effect/mob_spawn/corpse/human/skeleton/mrbones
-	mob_species = /datum/species/skeleton
-	outfit = /datum/outfit/mrbonescorpse
-
-/datum/outfit/mrbonescorpse
-	name = "Mr Bones' Corpse"
-	head = /obj/item/clothing/head/hats/tophat
-

@@ -4253,6 +4253,7 @@
 #include "code\modules\mob\living\basic\trader\trader.dm"
 #include "code\modules\mob\living\basic\trader\trader_ai.dm"
 #include "code\modules\mob\living\basic\trader\trader_data.dm"
+#include "code\modules\mob\living\basic\trader\trader_items.dm"
 #include "code\modules\mob\living\basic\vermin\axolotl.dm"
 #include "code\modules\mob\living\basic\vermin\butterfly.dm"
 #include "code\modules\mob\living\basic\vermin\cockroach.dm"
