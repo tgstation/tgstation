@@ -335,6 +335,7 @@
 /mob/living/simple_animal/slime/attack_ui(slot, params)
 	return
 
+// melbert todo : check this.
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(buckled)
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)

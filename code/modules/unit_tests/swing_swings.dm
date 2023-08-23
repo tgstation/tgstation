@@ -51,7 +51,8 @@
 /datum/unit_test/check_swings/melee_three_tiles/Run()
 	. = ..()
 
-	var/obj/item/melee/baseball_bat/bat = allocate(/obj/item/melee/baseball_bat)
+	var/obj/item/storage/toolbox/bat = allocate(/obj/item/storage/toolbox)
+	bat.attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing]
 	attacker.put_in_active_hand(bat, forced = TRUE)
 
 	var/atom/clicking_on = get_clicking_atom()
