@@ -44,10 +44,10 @@ const BrokenTramDimmer = () => {
     <Dimmer>
       <Stack vertical>
         <Stack.Item>
-          <Icon ml={7} color="red" name="exclamation" size={10} />
+          <Icon ml={7} color="red" name="triangle-exclamation" size={10} />
         </Stack.Item>
         <Stack.Item fontSize="14px" color="red">
-          No Tram Detected!
+          Check Tram Controller!
         </Stack.Item>
       </Stack>
     </Dimmer>
