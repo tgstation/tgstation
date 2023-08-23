@@ -14,8 +14,6 @@
 	var/win_prob = 5
 	/// The maximum amount of curses we will allow a player to have before disallowing them to use the machine.
 	var/max_curse_amount = 5
-	/// clone damaged dealt each roll
-	var/damage_on_roll = 20
 	/// machine's reward when you hit jackpot
 	var/prize = /obj/structure/cursed_money
 	/// should we be applying the cursed status effect?
