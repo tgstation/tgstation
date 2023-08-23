@@ -279,7 +279,7 @@
 
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-/obj/machinery/autolathe/proc/AfterMaterialInsert(obj/machinery/machine, obj/item/item_inserted, last_inserted_id, amount_inserted, container)
+/obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
 	if(ispath(item_inserted, /obj/item/stack/ore/bluespace_crystal))

@@ -89,6 +89,19 @@
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 	user.client.give_award(/datum/award/score/achievements_score, user, 1)
 
+	var/datum/achievement_report/new_report = new /datum/achievement_report()
+
+	new_report.winner = "[(user.real_name == user.name) ? user.real_name : "[user.real_name], as [user.name]"]"
+	new_report.cheevo = name
+	if(user.ckey)
+		new_report.winner_key = user.ckey
+	else
+		stack_trace("[name] achievement earned by [user], who did not have a ckey.")
+
+	new_report.award_location = "[get_area_name(user)]"
+
+	GLOB.achievements_unlocked += new_report
+
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
 	desc = "you did it sooo many times."

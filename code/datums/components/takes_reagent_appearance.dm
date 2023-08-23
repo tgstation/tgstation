@@ -44,8 +44,8 @@
 	src.base_container_type = base_container_type || parent.type
 
 /datum/component/takes_reagent_appearance/Destroy()
-	QDEL_NULL(on_icon_changed)
-	QDEL_NULL(on_icon_reset)
+	on_icon_changed = null
+	on_icon_reset = null
 	return ..()
 
 /datum/component/takes_reagent_appearance/RegisterWithParent()

@@ -3846,9 +3846,9 @@
 	dir = 4
 	},
 /obj/machinery/disposal/delivery_chute{
+	desc = "The quickest way back to society";
 	dir = 1;
-	name = "freedom";
-	desc = "The quickest way back to society"
+	name = "freedom"
 	},
 /obj/machinery/door/window/brigdoor/right/directional/north,
 /turf/open/floor/iron/dark,
@@ -30622,8 +30622,8 @@
 	pixel_y = -3
 	},
 /obj/item/storage/box/prisoner{
-	pixel_y = -12;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -12
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -33394,8 +33394,8 @@
 	dir = 8
 	},
 /obj/machinery/computer/telecomms/monitor{
-	network = "tcommsat";
-	dir = 8
+	dir = 8;
+	network = "tcommsat"
 	},
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
@@ -50389,7 +50389,7 @@
 /obj/machinery/door/airlock/research/glass{
 	name = "Pharmacy"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
+/obj/effect/mapping_helpers/airlock/access/all/medical/pharmacy,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/pharmacy)
 "rQN" = (

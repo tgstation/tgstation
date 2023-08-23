@@ -5,7 +5,7 @@
 
 	weighted_mob_spawn_list = list(
 		/mob/living/basic/mining/lobstrosity = 15,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub = 10,
+		/mob/living/basic/mining/goldgrub = 10,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50,
 		/mob/living/simple_animal/hostile/asteroid/polarbear = 30,
 		/mob/living/simple_animal/hostile/asteroid/wolf = 50,
