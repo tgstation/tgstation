@@ -809,3 +809,90 @@
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+
+/*
+ * Messenger Bag Types
+ */
+
+/obj/item/storage/backpack/messenger
+	name = "messenger bag"
+	desc = "A trendy looking messenger bag; sometimes known as a courier bag. Fashionable and portable."
+	icon_state = "messenger"
+	inhand_icon_state = "messenger"
+	icon = 'icons/obj/storage/backpack.dmi'
+	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
+
+/obj/item/storage/backpack/messenger/eng
+	name = "industrial messenger bag"
+	desc = "A tough messenger bag made of advanced treated leather for fireproofing. It also has more pockets than usual."
+	icon_state = "messenger_engineering"
+	inhand_icon_state = "messenger_engineering"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/backpack/messenger/med
+	name = "medical messenger bag"
+	desc = "A sterile messenger bag well loved by medics for its portability and sleek profile."
+	icon_state = "messenger_medical"
+	inhand_icon_state = "messenger_medical"
+
+/obj/item/storage/backpack/messenger/vir
+	name = "virologist messenger bag"
+	desc = "A sterile messenger bag with virologist colours, useful for deploying biohazards in record times."
+	icon_state = "messenger_virology"
+	inhand_icon_state = "messenger_virology"
+
+/obj/item/storage/backpack/messenger/chem
+	name = "chemist messenger bag"
+	desc = "A sterile messenger bag with chemist colours, good for getting to your alleyway deals on time."
+	icon_state = "messenger_chemistry"
+	inhand_icon_state = "messenger_chemistry"
+
+/obj/item/storage/backpack/messenger/coroner
+	name = "coroner messenger bag"
+	desc = "A messenger bag used to sneak your way out of graveyards at a good pace."
+	icon_state = "messenger_coroner"
+	inhand_icon_state = "messenger_coroner"
+
+/obj/item/storage/backpack/messenger/gen
+	name = "geneticist messenger bag"
+	desc = "A sterile messenger bag with geneticist colours, making a remarkably cute accessory for hulks."
+	icon_state = "messenger_genetics"
+	inhand_icon_state = "messenger_genetics"
+
+/obj/item/storage/backpack/messenger/science
+	name = "scientist messenger bag"
+	desc = "Useful for holding research materials, and for speeding your way to different scan objectives."
+	icon_state = "messenger_science"
+	inhand_icon_state = "messenger_science"
+
+/obj/item/storage/backpack/messenger/hyd
+	name = "botanist messenger bag"
+	desc = "A messenger bag made of all natural fibers, great for getting to the sesh in time."
+	icon_state = "messenger_hydroponics"
+	inhand_icon_state = "messenger_hydroponics"
+
+/obj/item/storage/backpack/messenger/sec
+	name = "security messenger bag"
+	desc = "A robust messenger bag for security related needs."
+	icon_state = "messenger_security"
+	inhand_icon_state = "messenger_security"
+
+/obj/item/storage/backpack/messenger/explorer
+	name = "explorer messenger bag"
+	desc = "A robust messenger bag for stashing your loot, as well as making a remarkably cute accessory for your drakebone armor."
+	icon_state = "messenger_explorer"
+	inhand_icon_state = "messenger_explorer"
+
+/obj/item/storage/backpack/messenger/cap
+	name = "captain's messenger bag"
+	desc = "An exclusive messenger bag for Nanotrasen officers, made of real whale leather."
+	icon_state = "messenger_captain"
+	inhand_icon_state = "messenger_captain"
+
+/obj/item/storage/backpack/messenger/clown
+	name = "Giggles von Honkerton Jr."
+	desc = "The latest in storage 'technology' from Honk Co. Hey, how does this fit so much with such a small profile anyway? The wearer will definitely never tell you."
+	icon_state = "messenger_clown"
+	inhand_icon_state = "messenger_clown"
