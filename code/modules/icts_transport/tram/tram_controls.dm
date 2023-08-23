@@ -64,7 +64,7 @@
 	var/datum/transport_controller/linear/tram/tram_controller = module_ref?.resolve()
 	var/list/data = list()
 	data["moving"] = tram_controller?.controller_active
-	data["broken"] = tram_controller ? FALSE : TRUE
+	data["broken"] = (tram_controller ? FALSE : TRUE) || (tram_controller?.paired_cabinet ? FALSE : TRUE)
 	var/obj/effect/landmark/icts/nav_beacon/tram/current_loc = tram_controller?.idle_platform
 	if(current_loc)
 		data["tram_location"] = current_loc.name
