@@ -46,7 +46,7 @@
 
 	for (var/outfit_type in subtypesof(/datum/outfit))
 		// Only make one human and keep undressing it because it's much faster
-		for (var/obj/item/I in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))
+		for (var/obj/item/I in H.get_equipped_items(include_pockets = TRUE))
 			qdel(I)
 
 		var/datum/outfit/outfit = new outfit_type
