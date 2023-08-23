@@ -7,6 +7,7 @@
 	name = "tram door"
 	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	multi_tile = TRUE
 	opacity = FALSE
 	assemblytype = null
 	airlock_material = "glass"

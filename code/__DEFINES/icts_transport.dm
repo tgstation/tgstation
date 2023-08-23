@@ -1,5 +1,9 @@
 #define SEND_ICTS_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSicts_transport, sigtype, ##arguments) )
 
+// ICTS Directions
+#define INBOUND -1
+#define OUTBOUND 1
+
 // ICTS Signals
 #define COMSIG_ICTS_REQUEST "!REQ"
 #define COMSIG_ICTS_RESPONSE "!RESP"

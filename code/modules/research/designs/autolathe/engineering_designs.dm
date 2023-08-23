@@ -392,3 +392,19 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/icts_indicator
+	name = "Tram Indicator Display"
+	id = "icts_indicator"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/wallframe/icts/indicator_display
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING

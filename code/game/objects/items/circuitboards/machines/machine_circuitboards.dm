@@ -1358,24 +1358,6 @@
 		/datum/stock_part/micro_laser = 1,
 	)
 
-/obj/item/circuitboard/machine/destination_sign
-	name = "Destination Sign"
-	build_path = /obj/machinery/icts/destination_sign
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-	)
-
-/obj/item/circuitboard/machine/destination_sign/indicator
-	name = "Destination Indicator"
-	build_path = /obj/machinery/icts/destination_sign/indicator
-
-/obj/item/circuitboard/machine/icts_controller
-	name = "Tram Controller"
-	build_path = /obj/machinery/icts/controller
-	req_components = list(
-		/datum/stock_part/servo = 1,
-	)
-
 /obj/item/circuitboard/machine/guideway_sensor
 	name = "Guideway Sensor"
 	build_path = /obj/machinery/icts/guideway_sensor

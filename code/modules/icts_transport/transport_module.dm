@@ -846,16 +846,16 @@
 	create_modular_set = TRUE
 
 /obj/structure/transport/linear/tram/corner/northwest
-	icon_state = "spoiler-subfloor-nw"
+	icon_state = "subfloor-corner-nw"
 
 /obj/structure/transport/linear/tram/corner/southwest
-	icon_state = "spoiler-subfloor-sw"
+	icon_state = "subfloor-corner-sw"
 
 /obj/structure/transport/linear/tram/corner/northeast
-	icon_state = "spoiler-subfloor-ne"
+	icon_state = "subfloor-corner-ne"
 
 /obj/structure/transport/linear/tram/corner/southeast
-	icon_state = "spoiler-subfloor-se"
+	icon_state = "subfloor-corner-se"
 
 /obj/structure/transport/linear/tram/add_item_on_transport(datum/source, atom/movable/item)
 	. = ..()

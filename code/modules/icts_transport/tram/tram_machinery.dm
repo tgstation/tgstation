@@ -3,6 +3,30 @@
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	///options to be passed with the requests
 	var/options = NONE
+
+/obj/item/assembly/control/icts/multitool_act(mob/living/user)
+	var/list/available_platforms = list()
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform as anything in SSicts_transport.nav_beacons[specific_transport_id])
+		LAZYADD(available_platforms, platform.name)
+
+	var/selected_platform = tgui_input_list(user, "Set the platform ID", "Platform", available_platforms)
+	var/obj/effect/landmark/icts/nav_beacon/tram/change_platform
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+		if(destination.name == selected_platform)
+			change_platform = destination
+			break
+
+	if(!change_platform || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+
+	if(get_dist(change_platform, src) > 15)
+		balloon_alert(user, "out of range!")
+		return
+
+	id = change_platform.platform_code
+	balloon_alert(user, "platform changed")
+	to_chat(user, span_notice("You change the platform ID to [change_platform.name]."))
+
 /obj/item/assembly/control/icts/call_button
 	name = "tram call button"
 	desc = "A small device used to bring trams to you."

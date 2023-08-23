@@ -15,13 +15,14 @@
 		"check its wire voltages" = TOOL_MULTITOOL,
 		"cut some excess wires" = TOOL_WIRECUTTER,
 	)
+	var/malfunctioning = FALSE
 
 /obj/machinery/icts/proc/local_fault()
-	if(machine_stat & BROKEN || repair_signals)
+	if(malfunctioning || repair_signals)
 		return
 
 	generate_repair_signals()
-	set_machine_stat(machine_stat | BROKEN)
+	malfunctioning = TRUE
 	set_is_operational(FALSE)
 	update_appearance()
 
@@ -80,16 +81,69 @@
 	UnregisterSignal(src, repair_signals)
 	QDEL_LAZYLIST(repair_signals)
 	QDEL_LAZYLIST(methods_to_fix)
-	set_machine_stat(machine_stat & ~BROKEN)
+	malfunctioning = FALSE
 	set_machine_stat(machine_stat & ~EMAGGED)
 	update_appearance()
 	return TRUE
 
-/obj/machinery/icts/proc/detailed_destination_list(specific_transport_id)
-	. = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
-		var/list/this_destination = list()
-		this_destination["name"] = destination.name
-		this_destination["dest_icons"] = destination.tgui_icons
-		this_destination["id"] = destination.platform_code
-		. += list(this_destination)
+/obj/machinery/icts/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "it doesn't need repairs!")
+		return TRUE
+	balloon_alert(user, "repairing...")
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
+		return TRUE
+	balloon_alert(user, "repaired")
+	atom_integrity = max_integrity
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
+	return TRUE
+
+/obj/item/wallframe/icts/try_build(obj/structure/tram/on_tram, mob/user)
+	if(get_dist(on_tram,user) > 1)
+		balloon_alert(user, "you are too far!")
+		return
+
+	var/floor_to_tram = get_dir(user, on_tram)
+	if(!(floor_to_tram in GLOB.cardinals))
+		balloon_alert(user, "stand in line with tram wall!")
+		return
+
+	var/turf/tram_turf = get_turf(user)
+	var/obj/structure/thermoplastic/tram_floor = locate() in tram_turf
+	if(!istype(tram_floor))
+		balloon_alert(user, "needs tram!")
+		return
+
+	if(check_wall_item(tram_turf, floor_to_tram, wall_external))
+		balloon_alert(user, "already something here!")
+		return
+
+	return TRUE
+
+/obj/item/wallframe/icts/attach(obj/structure/tram/on_tram, mob/user)
+	if(result_path)
+		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+		user.visible_message(span_notice("[user.name] installs [src] on the tram."),
+			span_notice("You install [src] on the tram."),
+			span_hear("You hear clicking."))
+		var/floor_to_wall = get_dir(user, on_tram)
+
+		var/obj/cabinet = new result_path(get_turf(user), floor_to_tram, TRUE)
+		cabinet.setDir(floor_to_tram)
+
+		if(pixel_shift)
+			switch(floor_to_tram)
+				if(NORTH)
+					cabinet.pixel_y = pixel_shift
+				if(SOUTH)
+					cabinet.pixel_y = -pixel_shift
+				if(EAST)
+					cabinet.pixel_x = pixel_shift
+				if(WEST)
+					cabinet.pixel_x = -pixel_shift
+		after_attach(cabinet)
+
+	qdel(src)

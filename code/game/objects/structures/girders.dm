@@ -411,6 +411,7 @@
 	name = "tram frame"
 	icon_state = "tram"
 	state = GIRDER_TRAM
+	density = FALSE
 
 /obj/structure/girder/tram/corner
 	name = "tram frame corner"

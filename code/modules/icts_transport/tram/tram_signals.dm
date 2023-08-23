@@ -3,8 +3,8 @@
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/tram/crossing_signal.dmi'
-	icon_state = "crossing-signal"
-	base_icon_state = "crossing-"
+	icon_state = "crossing-inbound"
+	base_icon_state = "crossing-inbound"
 	plane = GAME_PLANE_UPPER
 	layer = TRAM_SIGNAL_LAYER
 	max_integrity = 250
@@ -31,6 +31,7 @@
 	var/outbound
 	/// If us or anything else in the operation chain is broken
 	var/operating_status = ICTS_SYSTEM_NORMAL
+	var/sign_dir = INBOUND
 	/** Proximity thresholds for crossing signal states
 	*
 	* The proc that checks the distance between the tram and crossing signal uses these vars to determine the distance between tram and signal to change
@@ -61,17 +62,21 @@
  *  so signals on the east side have their distance reduced by the tram length, in this case 10 for Tramstation.
 */
 /obj/machinery/icts/crossing_signal/northwest
-	dir = WEST
+	dir = NORTH
+	sign_dir = INBOUND
 
 /obj/machinery/icts/crossing_signal/northeast
-	dir = EAST
+	dir = NORTH
+	sign_dir = OUTBOUND
 
 /obj/machinery/icts/crossing_signal/southwest
-	dir = WEST
+	dir = SOUTH
+	sign_dir = INBOUND
 	pixel_y = 20
 
 /obj/machinery/icts/crossing_signal/southeast
-	dir = EAST
+	dir = SOUTH
+	sign_dir = OUTBOUND
 	pixel_y = 20
 
 /obj/machinery/static_signal
@@ -92,17 +97,17 @@
 	luminosity = 1
 
 /obj/machinery/static_signal/northwest
-	dir = WEST
+	dir = NORTH
 
 /obj/machinery/static_signal/northeast
-	dir = EAST
+	dir = NORTH
 
 /obj/machinery/static_signal/southwest
-	dir = WEST
+	dir = SOUTH
 	pixel_y = 20
 
 /obj/machinery/static_signal/southeast
-	dir = EAST
+	dir = SOUTH
 	pixel_y = 20
 
 /obj/machinery/icts/crossing_signal/Initialize(mapload)
@@ -130,13 +135,28 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/icts/crossing_signal/module/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/icts/crossing_signal/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 
 	if(default_change_direction_wrench(user, tool))
 		clear_uplink()
 		update_appearance()
 		return TRUE
+
+/obj/machinery/icts/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+
+	if(weapon.tool_behaviour == TOOL_WRENCH && panel_open)
+		switch(sign_dir)
+			if(INBOUND)
+				sign_dir = OUTBOUND
+			if(OUTBOUND)
+				sign_dir = INBOUND
+
+		to_chat(user, span_notice("You flip directions on [src]."))
+		update_appearance()
+
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Finds the tram, just like the tram computer
@@ -347,6 +367,23 @@
 	flick_overlay()
 	update_appearance()
 
+/obj/machinery/icts/crossing_signal/update_icon_state()
+	switch(dir)
+		if(SOUTH, EAST)
+			pixel_y = 20
+		if(NORTH, WEST)
+			pixel_y = 0
+
+	switch(sign_dir)
+		if(INBOUND)
+			icon_state = "crossing-inbound"
+			base_icon_state = "crossing-inbound"
+		if(OUTBOUND)
+			icon_state = "crossing-outbound"
+			base_icon_state = "crossing-outbound"
+
+	return ..()
+
 /obj/machinery/icts/crossing_signal/update_appearance(updates)
 	. = ..()
 
@@ -376,8 +413,8 @@
 	if(machine_stat & BROKEN)
 		operating_status = ICTS_LOCAL_FAULT
 
-	var/lights_overlay = "[base_icon_state][signal_state]"
-	var/status_overlay = "status-[operating_status]"
+	var/lights_overlay = "[base_icon_state]-l[signal_state]"
+	var/status_overlay = "[base_icon_state]-s[operating_status]"
 
 	. += mutable_appearance(icon, lights_overlay)
 	. += mutable_appearance(icon, status_overlay)

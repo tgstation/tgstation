@@ -11,6 +11,7 @@
 	var/controller_active = FALSE
 	///whether all required parts of the tram are considered operational
 	var/controller_operational = TRUE
+	var/obj/machinery/icts/tram_controller/paired_cabinet
 	///if we're travelling, what direction are we going
 	var/travel_direction = NONE
 	///if we're travelling, how far do we have to go
@@ -53,8 +54,6 @@
 	var/recovery_clear_count = 0
 
 	var/datum/tram_mfg_info/tram_registration
-
-	var/obj/machinery/icts/controller/control_panel
 
 /datum/tram_mfg_info
 	var/serial_number
@@ -124,6 +123,12 @@
 	. = ..()
 	if(var_name == "base_speed_limiter")
 		speed_limiter = max(speed_limiter, base_speed_limiter)
+
+/datum/transport_controller/linear/tram/Destroy()
+	paired_cabinet = null
+	set_status_code(SYSTEM_FAULT, TRUE)
+
+	..()
 
 /**
  * Register transport modules to the controller
@@ -261,10 +266,15 @@
  * run a recovery procedure to head to the nearest platform and 'reset' once the issue is resolved.
  */
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
+	if(isnull(paired_cabinet))
+		halt_and_catch_fire()
+		return PROCESS_KILL
+
 	if(!travel_remaining)
 		if(!controller_operational)
 			degraded_stop()
 			return PROCESS_KILL
+
 		normal_stop()
 		return PROCESS_KILL
 
@@ -322,6 +332,24 @@
 	var/throw_direction = travel_direction
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
+
+/datum/transport_controller/linear/tram/proc/halt_and_catch_fire()
+	if(travel_remaining)
+		travel_remaining = 0
+		var/throw_direction = travel_direction
+		for(var/obj/structure/transport/linear/tram/module in transport_modules)
+			module.estop_throw(throw_direction)
+
+	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
+	idle_platform = null
+	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
+	travel_trip_length = 0
+	current_speed = 0
+	current_load = 0
+	set_active(FALSE)
+	set_status_code(SYSTEM_FAULT, TRUE)
+	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		door.open()
 
 /**
  * Handles unlocking the tram controls for use after moving
@@ -412,10 +440,17 @@
 
 	update_status()
 
-/datum/transport_controller/linear/tram/proc/notify_controller(obj/machinery/icts/controller/new_controller)
-	control_panel = new_controller
-	RegisterSignal(new_controller, COMSIG_MACHINERY_POWER_LOST, PROC_REF(power_lost))
-	RegisterSignal(new_controller, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(power_restored))
+/datum/transport_controller/linear/tram/proc/notify_controller(obj/machinery/icts/tram_controller/new_cabinet)
+	paired_cabinet = new_cabinet
+	RegisterSignal(new_cabinet, COMSIG_MACHINERY_POWER_LOST, PROC_REF(power_lost))
+	RegisterSignal(new_cabinet, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(power_restored))
+	RegisterSignal(new_cabinet, COMSIG_QDELETING, PROC_REF(on_cabinet_qdel))
+	if(controller_status & SYSTEM_FAULT)
+		set_status_code(SYSTEM_FAULT, FALSE)
+
+/datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
+	paired_cabinet = null
+	set_status_code(SYSTEM_FAULT, TRUE)
 
 /**
  * Tram malfunction random event. Set comm error, increase tram lethality.
@@ -424,7 +459,7 @@
 	set_status_code(SYSTEM_FAULT, TRUE)
 	set_status_code(COMM_ERROR, TRUE)
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
-	control_panel.generate_repair_signals()
+	paired_cabinet.generate_repair_signals()
 	collision_lethality = 1.25
 
 /**
@@ -437,7 +472,7 @@
 	if(!(controller_status & COMM_ERROR))
 		return
 	set_status_code(COMM_ERROR, FALSE)
-	control_panel.clear_repair_signals()
+	paired_cabinet.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 
@@ -455,7 +490,7 @@
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
  */
-/obj/machinery/icts/controller
+/obj/machinery/icts/tram_controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something."
 	icon = 'icons/obj/tram/tram_controllers.dmi'
@@ -476,21 +511,20 @@
 	/// If the cover is locked
 	var/cover_locked = FALSE
 
-/obj/machinery/icts/controller/Initialize(mapload)
+/obj/machinery/icts/tram_controller/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
  */
-/obj/machinery/icts/controller/LateInitialize(mapload)
+/obj/machinery/icts/tram_controller/LateInitialize(mapload)
 	. = ..()
-	if(!find_controller())
-		stack_trace("Tram cabinet failed to find controller datum!")
 
+	find_controller()
 	update_appearance()
 
-/obj/machinery/icts/controller/atom_break()
+/obj/machinery/icts/tram_controller/atom_break()
 	var/controller_integrity = get_integrity()
 	if(controller_integrity <= 0)
 		update_integrity(1)
@@ -499,7 +533,7 @@
 
 	..()
 
-/obj/machinery/icts/controller/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/icts/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
@@ -512,7 +546,7 @@
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
  */
-/obj/machinery/icts/controller/update_overlays()
+/obj/machinery/icts/tram_controller/update_overlays()
 	. = ..()
 
 	if(!cover_open)
@@ -563,34 +597,33 @@
 /**
  * Find the controller associated with the transport module the cabinet is sitting on.
  */
-/obj/machinery/icts/controller/proc/find_controller()
+/obj/machinery/icts/tram_controller/proc/find_controller()
 	var/obj/structure/transport/linear/tram/tram_structure = locate() in src.loc
 	if(!tram_structure)
-		return FALSE
+		return
 
 	controller_datum = tram_structure.transport_controller_datum
 	if(!controller_datum)
-		return FALSE
+		return
 
 	controller_datum.notify_controller(src)
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
-	return TRUE
 
 /**
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
  */
-/obj/machinery/icts/controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
+/obj/machinery/icts/tram_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
 	if(controller != controller_datum)
 		return
 	update_appearance()
 
-/obj/machinery/icts/controller/attack_hand(mob/living/user, params)
+/obj/machinery/icts/tram_controller/attack_hand(mob/living/user, params)
 	. = ..()
 
 	if(!cover_open)
 		return try_toggle_lock(user)
 
-/obj/machinery/icts/controller/attack_hand_secondary(mob/living/user, params)
+/obj/machinery/icts/tram_controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
 
 	if(cover_locked)
@@ -604,7 +637,7 @@
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/icts/controller/proc/try_toggle_lock(mob/living/user, item, params)
+/obj/machinery/icts/tram_controller/proc/try_toggle_lock(mob/living/user, item, params)
 	if(user.get_idcard() && !cover_open)
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			cover_locked = !cover_locked
@@ -620,7 +653,7 @@
 			balloon_alert(user, "access denied")
 			return FALSE
 
-/obj/machinery/icts/controller/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/icts/tram_controller/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		balloon_alert(user, "already fried!")
 		return FALSE
@@ -634,7 +667,7 @@
 /**
  * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
  */
-/obj/machinery/icts/controller/try_fix_machine(obj/machinery/icts/machine, mob/living/user, obj/item/tool)
+/obj/machinery/icts/tram_controller/try_fix_machine(obj/machinery/icts/machine, mob/living/user, obj/item/tool)
 	. = ..()
 
 	if(. == FALSE)
@@ -645,7 +678,7 @@
 
 	controller_datum.end_malf_event()
 
-/obj/machinery/icts/controller/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/icts/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
 	if(!is_operational || !cover_open)
@@ -656,7 +689,7 @@
 		ui = new(user, src, "ICTSTransportControls")
 		ui.open()
 
-/obj/machinery/icts/controller/ui_data(mob/user)
+/obj/machinery/icts/tram_controller/ui_data(mob/user)
 	var/list/data = list()
 
 	data = list(
@@ -672,3 +705,12 @@
 	)
 
 	return data
+
+/obj/item/wallframe/icts/tram_controller
+	name = "tram controller cabinet"
+	desc = "A box that makes the tram go, or something. Just secure to the tram."
+	icon = 'icons/obj/tram/tram_controllers.dmi'
+	icon_state = "controller-panel"
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	result_path = /obj/machinery/icts/tram_controller
+	pixel_shift = 32

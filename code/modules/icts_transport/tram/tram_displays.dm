@@ -10,7 +10,6 @@
 	density = FALSE
 	subsystem_type = /datum/controller/subsystem/processing/icts_transport
 	layer = SIGN_LAYER
-	circuit = /obj/item/circuitboard/machine/destination_sign
 
 	/// The ID of the tram we're indicating
 	var/tram_id = TRAMSTATION_LINE_1
@@ -20,8 +19,6 @@
 	var/static/list/available_faces = list()
 	/// The light mask overlay we use
 	var/light_mask
-	/// Is this sign malfunctioning?
-	var/malfunctioning = FALSE
 
 /obj/machinery/icts/destination_sign/indicator
 	icon = 'icons/obj/tram/tram_indicator.dmi'
@@ -29,7 +26,15 @@
 	base_icon_state = "indi_"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
-	circuit = /obj/item/circuitboard/machine/destination_sign/indicator
+
+/obj/item/wallframe/icts/indicator_display
+	name = "indicator display frame"
+	desc = "Used to build tram indicator displays, just secure to the wall."
+	icon_state = "indi_off"
+	icon = 'icons/obj/tram/tram_indicator.dmi'
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	result_path = /obj/machinery/icts/destination_sign/indicator
+	pixel_shift = 32
 
 /obj/machinery/icts/destination_sign/Initialize(mapload)
 	. = ..()
@@ -43,17 +48,6 @@
 	SSicts_transport.displays -= src
 	. = ..()
 
-/obj/machinery/icts/destination_sign/attackby(obj/item/weapon, mob/living/user, params)
-	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
-
-		if(default_deconstruction_crowbar(weapon))
-			return
-
-	return ..()
-
-
 /obj/machinery/icts/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
 	SIGNAL_HANDLER
 
@@ -61,6 +55,28 @@
 		return
 	update_sign()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
+
+/obj/machinery/icts/destination_sign/indicator/deconstruct(disassembled = TRUE)
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	if(disassembled)
+		new /obj/item/wallframe/icts/indicator_display(drop_location())
+	else
+		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
+		new /obj/item/stack/sheet/iron(drop_location(), 1)
+		new /obj/item/shard(drop_location())
+		new /obj/item/shard(drop_location())
+	qdel(src)
+
+/obj/machinery/icts/destination_sign/indicator/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 6 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		deconstruct()
+		return TRUE
 
 /obj/machinery/icts/destination_sign/proc/update_operating()
 	// Immediately process for snappy feedback

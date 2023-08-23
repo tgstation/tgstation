@@ -7286,6 +7286,17 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"bvg" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram/right{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "bvk" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -8612,6 +8623,17 @@
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/right)
+"bUf" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "bUh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8667,6 +8689,13 @@
 /obj/effect/spawner/random/bureaucracy/folder,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
+"bUH" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "bUI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -20734,6 +20763,9 @@
 /obj/machinery/computer/icts_controls/directional/south{
 	pixel_x = 8
 	},
+/obj/structure/chair/sofa/bench/tram/left{
+	dir = 1
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "grf" = (
@@ -25838,6 +25870,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"irp" = (
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram/left{
+	dir = 4
+	},
+/turf/open/floor/noslip/tram_plate,
+/area/station/hallway/primary/tram/center)
 "irv" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
@@ -26863,6 +26904,17 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/main)
+"iMP" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram/left{
+	dir = 8
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "iNc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29663,6 +29715,7 @@
 /obj/machinery/button/icts/tram/directional/north{
 	id = 2
 	},
+/obj/effect/landmark/start/chief_engineer,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "jHX" = (
@@ -39372,6 +39425,9 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram/right{
+	dir = 4
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "nel" = (
@@ -51234,7 +51290,7 @@
 "rrg" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/tram/solid,
-/obj/machinery/icts/controller,
+/obj/machinery/icts/tram_controller,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "rrk" = (
@@ -57874,6 +57930,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"tLT" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram/right,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "tMb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
@@ -58123,6 +58186,7 @@
 /obj/machinery/computer/icts_controls/directional/north{
 	pixel_x = -8
 	},
+/obj/structure/chair/sofa/bench/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "tQq" = (
@@ -58709,7 +58773,6 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/chief_engineer,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "ubx" = (
@@ -69981,6 +70044,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
+"yfo" = (
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic,
+/obj/structure/chair/sofa/bench/tram/right{
+	dir = 8
+	},
+/turf/open/floor/noslip/tram_plate,
+/area/station/hallway/primary/tram/center)
 "yfw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -166885,7 +166957,7 @@ mYI
 fhc
 rrg
 vtP
-pfk
+irp
 ndX
 tdv
 qrl
@@ -167655,7 +167727,7 @@ rOu
 umT
 ykP
 dtY
-vtP
+tLT
 pfk
 gre
 frh
@@ -167912,9 +167984,9 @@ rOu
 wCl
 izU
 dtY
-vtP
+bUH
 jUw
-ndX
+bUf
 dtY
 izU
 jHR
@@ -168171,7 +168243,7 @@ ykP
 ezo
 tQf
 egQ
-ndX
+bvg
 dtY
 ykP
 lej
@@ -168941,8 +169013,8 @@ mpa
 aiH
 tdv
 vtP
-pfk
-ndX
+yfo
+iMP
 tdv
 dhI
 lej

@@ -177,6 +177,22 @@
 				new mineral(loc)
 	qdel(src)
 
+/obj/structure/tram/attackby(obj/item/item, mob/user, params)
+	. = ..()
+
+	if(istype(item, /obj/item/wallframe/icts))
+		try_wallmount(item, user)
+
+/obj/structure/tram/proc/try_wallmount(obj/item/wallmount, mob/user)
+	if(!istype(wallmount, /obj/item/wallframe/icts))
+		return
+
+	var/obj/item/wallframe/frame = wallmount
+	if(frame.try_build(src, user))
+		frame.attach(src, user)
+
+	return
+
 /*
  * Other misc tramwall types
  */
