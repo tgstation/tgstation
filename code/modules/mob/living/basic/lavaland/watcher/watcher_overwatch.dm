@@ -45,6 +45,7 @@
 	living_owner.face_atom(target)
 	living_owner.Stun(overwatch_duration, ignore_canstun = TRUE)
 	target.apply_status_effect(/datum/status_effect/overwatch, overwatch_duration, owner, projectile_type, projectile_sound)
+	owner.visible_message(span_warning("[owner]'s eye locks on to [target]!"))
 	StartCooldown()
 	return TRUE
 
@@ -95,7 +96,7 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	ADD_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	owner.do_alert_animation()
 	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
@@ -108,7 +109,7 @@
 /datum/status_effect/overwatch/on_remove()
 	UnregisterSignal(owner, forbidden_actions + list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	QDEL_NULL(link)
-	REMOVE_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	if (!QDELETED(owner))
 		owner.apply_status_effect(/datum/status_effect/overwatch_immune)
 	return ..()
@@ -134,6 +135,7 @@
 		qdel(src)
 		return
 	overwatch_triggered = TRUE
+	watcher.do_alert_animation()
 	INVOKE_ASYNC(watcher, TYPE_PROC_REF(/atom/, fire_projectile), projectile_type, owner, projectile_sound)
 
 /// Can't overwatch you if I don't exist

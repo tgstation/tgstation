@@ -193,7 +193,6 @@
 	for (var/datum/computer_file/program/messenger/app in data["targets"])
 		if(!QDELETED(app))
 			app.receive_message(src)
-	data["targets"] = null
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()

@@ -254,6 +254,9 @@
 /datum/wound/burn/on_synthflesh(reac_volume)
 	flesh_healing += reac_volume * 0.5 // 20u patch will heal 10 flesh standard
 
+/datum/wound/burn/get_limb_examine_description()
+	return span_warning("The flesh on this limb appears badly cooked.")
+
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/moderate
 	name = "Second Degree Burns"

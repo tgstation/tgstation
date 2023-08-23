@@ -96,6 +96,7 @@
 				/obj/item/clothing/under/rank/civilian/mime/skirt = 1,
 				/obj/item/clothing/under/rank/civilian/clown/jester = 1,
 				/obj/item/clothing/head/costume/jester = 1,
+				/obj/item/clothing/shoes/jester_shoes = 1,
 				/obj/item/clothing/under/costume/villain = 1,
 				/obj/item/clothing/suit/costume/joker = 1,
 				/obj/item/clothing/under/costume/joker = 1,
