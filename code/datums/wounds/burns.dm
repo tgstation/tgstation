@@ -40,6 +40,10 @@
 	var/strikes_to_lose_limb = 3
 
 /datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
+
+	if (!victim || IS_IN_STASIS(victim))
+		return
+
 	. = ..()
 	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
 		victim.adjustToxLoss(0.25 * seconds_per_tick)

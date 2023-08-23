@@ -122,6 +122,10 @@
 		return BLOOD_FLOW_INCREASING
 
 /datum/wound/slash/flesh/handle_process(seconds_per_tick, times_fired)
+
+	if (!victim || IS_IN_STASIS(victim))
+		return
+
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
 	if(!no_bleeding)
 		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))

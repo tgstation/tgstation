@@ -8,7 +8,7 @@
 /// Base time for a wirecutter being used.
 #define ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY 4 SECONDS
 /// Base time for a cable coil being used.
-#define ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY 1 SECONDS
+#define ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY 1.5 SECONDS
 
 /datum/wound/electrical_damage
 	name = "Electrical (Wires) Wound"
@@ -140,6 +140,11 @@
 	if (limb_unimportant())
 		progress_mult *= limb_unimportant_progress_mult
 
+	if (isliving(victim.pulledby))
+		var/mob/living/living_puller = victim.pulledby
+		if (living_puller.grab_state >= GRAB_AGGRESSIVE && living_puller.zone_selected == limb.body_zone)
+			progress_mult *= 0.5 // theyre holding it down
+
 	return get_base_mult() * seconds_per_intensity_mult
 
 /datum/wound/electrical_damage/proc/get_damage_mult(mob/living/target)
@@ -192,6 +197,8 @@
 
 	if (disable_at_intensity_mult)
 		set_disabling(get_intensity_mult() >= disable_at_intensity_mult)
+
+	remove_if_fixed()
 
 /datum/wound/electrical_damage/wound_injury(datum/wound/electrical_damage/old_wound, attack_direction)
 	. = ..()
@@ -283,7 +290,7 @@
 
 	while (suturing_item.tool_start_check())
 		user?.visible_message(span_warning("[user] begins [replacing_or_suturing] wiring within [their_or_other] [limb.plaintext_zone] with [suturing_item]..."))
-		if (!suturing_item.use_tool(target = victim, user = user, delay = ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		if (!suturing_item.use_tool(target = victim, user = user, delay = ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY * delay_mult, amount = 1, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 			return TRUE
 
 		if (user != victim && user.combat_mode)
@@ -300,9 +307,9 @@
 				user?.electrocute_act(max(process_shock_spark_count_max * get_intensity_mult(), 1), limb)
 				set_wiring_status(TRUE, user)
 
-			suturing_item.use(1)
+			//suturing_item.use(1)
 
-		if (remove_if_fixed())
+		if (fixed())
 			return TRUE
 	return TRUE
 
@@ -344,7 +351,7 @@
 			victim.balloon_alert(user, "intensity reduced to [get_intensity_mult() * 100]%")
 			set_wiring_status(TRUE, user)
 
-		if (remove_if_fixed())
+		if (fixed())
 			return TRUE
 	return TRUE
 
@@ -356,11 +363,14 @@
 	wiring_reset = reset
 
 /datum/wound/electrical_damage/proc/remove_if_fixed()
-	if (intensity <= minimum_intensity)
+	if (fixed())
 		to_chat(victim, span_green("Your [limb.plaintext_zone] has recovered from its [name]!"))
 		remove_wound()
 		return TRUE
 	return FALSE
+
+/datum/wound/electrical_damage/proc/fixed()
+	return (intensity <= minimum_intensity || isnull(limb))
 
 /datum/wound/electrical_damage/proc/get_intensity_mult()
 	return (min((intensity / processing_full_shock_threshold), 1))
@@ -453,7 +463,7 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.16
+	wirecut_repair_percent = 0.1
 	wire_repair_percent = 0.06
 
 	wiring_reset = TRUE
@@ -498,8 +508,8 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.14
-	wire_repair_percent = 0.05
+	wirecut_repair_percent = 0.09
+	wire_repair_percent = 0.06
 
 	initial_sparks_amount = 3
 
@@ -543,8 +553,8 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.12
-	wire_repair_percent = 0.04
+	wirecut_repair_percent = 0.08
+	wire_repair_percent = 0.05
 
 	initial_sparks_amount = 8
 

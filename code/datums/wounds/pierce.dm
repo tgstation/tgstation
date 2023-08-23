@@ -67,6 +67,9 @@
 	return BLOOD_FLOW_STEADY
 
 /datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
+	if (!victim || IS_IN_STASIS(victim))
+		return
+
 	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 	if(!no_bleeding)

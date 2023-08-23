@@ -69,20 +69,24 @@
 	var/daze_attacked_minimum_score = 8
 	/// Minimum score required for a daze() proc when we move
 	var/daze_movement_base_score = 5 // the same as if someone hit you with a 5 force weapon
-	/// Assuming we sustain more damage than our minimum, this is the chance for a given attack to proc a daze attempt.
-	var/daze_attacked_chance = 35
-	/// Percent chance, every time we move, to attempt to daze the victim if we are on the head.
-	var/head_movement_daze_chance = 5
 
-	/// Score mult for daze() camerashake duration on move
-	var/daze_movement_shake_duration_mult = 1
-	/// Score mult for daze() camerashake intensity on move
-	var/daze_movement_shake_intensity_mult = 1
+	/// % chance, every time we're hit, to try to shake our victims camera.
+	var/head_attacked_shake_chance = 100
+	/// % chance, every time we're hit, to try to increase our victims dizziness.
+	var/head_attacked_dizzy_chance = 100
 
-	/// Score mult for daze() camerashake duration on hit
-	var/daze_attacked_shake_duration_mult = 1
-	/// Score mult for daze() camerashake intensity on hit
-	var/daze_attacked_shake_intensity_mult = 1
+	var/head_attacked_shake_duration_ratio = 0.3
+	var/head_attacked_shake_intensity_ratio = 0.2
+
+	var/head_attacked_dizzy_duration_ratio = 0.2
+
+	var/head_movement_shake_chance = 100
+	var/head_movement_dizzy_chance = 100
+
+	var/head_movement_base_shake_duration = 1
+	var/head_movement_base_shake_intensity = 1
+
+	var/head_movement_dizzy_base_duration = 1
 
 	/// The maximum time in deciseconds daze() may cause dizziness for
 	var/daze_dizziness_maximum_duration = 20 SECONDS
@@ -141,6 +145,11 @@
 	/// Damage must be over this to proc percussive maintenance.
 	var/percussive_maintenance_damage_threshold = 7
 
+	/// If true, when we move, we can attempt to shake the camera of our victim.
+	var/can_do_movement_shake = TRUE
+	/// The time, in world time, that we will be allowed to do another movement shake. Useful because it lets us prioritize attacked shakes over movement shakes.
+	var/time_til_next_movement_shake_allowed // nulled by default
+
 	scar_file = ROBOTIC_BLUNT_SCAR_FILE
 
 	wound_series = WOUND_SERIES_METAL_BLUNT_BASIC
@@ -174,18 +183,28 @@
 	threshold_minimum = 30
 	threshold_penalty = 20
 
-	daze_attacked_chance = 70
 	daze_attacked_minimum_score = 8
-	daze_attacked_shake_duration_mult = 0.05
-	daze_attacked_shake_intensity_mult = 0.1
 
 	daze_dizziness_maximum_duration = 10 SECONDS
 	daze_dizzy_minimum_score = 5
 	daze_dizzy_mult = 2
 
-	daze_movement_shake_duration_mult = 0.2
-	daze_movement_shake_intensity_mult = 0.1
-	head_movement_daze_chance = 60
+	chest_attacked_nausea_mult = 0.2
+
+	head_movement_shake_chance = 100
+	head_movement_dizzy_chance = 100
+
+	head_movement_dizzy_base_duration = 0.3 SECONDS
+
+	head_movement_base_shake_intensity = 0.05
+	head_movement_base_shake_duration = 1 // exxxtremely weak
+
+	head_attacked_dizzy_duration_ratio = 2.4
+
+	head_attacked_shake_duration_ratio = 0.05
+	head_attacked_shake_intensity_ratio = 0.08
+
+	daze_dizziness_maximum_duration = 22 SECONDS
 
 	can_scar = FALSE
 
@@ -253,24 +272,23 @@
 	threshold_minimum = 65
 	threshold_penalty = 40
 
-	daze_attacked_chance = 95
 	daze_attacked_minimum_score = 6
-	daze_attacked_shake_duration_mult = 0.4
-	daze_attacked_shake_intensity_mult = 0.8
+
+	//daze_attacked_shake_duration_mult = 0.4
+	//daze_attacked_shake_intensity_mult = 0.8
 
 	daze_dizziness_maximum_duration = 20 SECONDS
 	daze_dizzy_minimum_score = 3
 	daze_dizzy_mult = 10
 
-	daze_movement_shake_duration_mult = 0.3
-	daze_movement_shake_intensity_mult = 0.08
-	head_movement_daze_chance = 75
+	//daze_movement_shake_duration_mult = 0.3
+	//daze_movement_shake_intensity_mult = 0.08
 
 	max_nausea_duration = DISGUST_LEVEL_VERYGROSS + 2 // just BARELY above the vomit threshold
 
 	chest_movement_nausea_chance = 0
 	chest_attacked_nausea_chance = 75
-	chest_attacked_nausea_mult = 0.7 // saw = 15, 1.5 seconds of disgust at x1
+	chest_attacked_nausea_mult = 0.25 // saw = 15, 1.5 seconds of disgust at x1
 
 	chest_movement_organ_damage_chance = 0
 	chest_movement_organ_damage_min = 2
@@ -278,8 +296,20 @@
 	chest_movement_organ_damage_individual_max = 2
 
 	attacked_organ_damage_individual_max = 3
-	attacked_organ_damage_chance = 50
+	attacked_organ_damage_chance = 25
 	attacked_organ_damage_mult = 0.4
+
+	head_movement_base_shake_intensity = 0.25
+	head_movement_base_shake_duration = 1
+
+	head_movement_dizzy_base_duration = 5
+
+	head_attacked_shake_duration_ratio = 0.18
+	head_attacked_shake_intensity_ratio = 0.1
+
+	daze_dizziness_maximum_duration = 40 SECONDS
+
+	head_attacked_dizzy_duration_ratio = 3.4
 
 	a_or_from = "from"
 
@@ -439,9 +469,14 @@
 /datum/wound/blunt/robotic/handle_process(seconds_per_tick, times_fired)
 	. = ..()
 
+	if (!victim || IS_IN_STASIS(victim))
+		return
+
 	if (!gelled)
 		processes = FALSE
 		CRASH("handle_process called when gelled was false!")
+
+	update_next_movement_shake()
 
 	regen_time_elapsed += ((seconds_per_tick SECONDS) / 2)
 	if(victim.body_position == LYING_DOWN)
@@ -449,7 +484,6 @@
 			regen_time_elapsed += 1 SECONDS
 		if(victim.IsSleeping() && SPT_PROB(30, seconds_per_tick))
 			regen_time_elapsed += 1 SECONDS
-
 
 	var/effective_damage = ((gel_damage / (regen_time_needed / 10)) * seconds_per_tick)
 	var/obj/item/stack/gauze = limb.current_gauze
@@ -469,6 +503,12 @@
 		ready_to_ghetto_weld = TRUE
 		ready_to_secure_internals = FALSE
 		set_disabling(FALSE)
+
+/datum/wound/blunt/robotic/proc/update_next_movement_shake()
+	if (!isnull(time_til_next_movement_shake_allowed))
+		if (world.time >= time_til_next_movement_shake_allowed)
+			time_til_next_movement_shake_allowed = null
+			can_do_movement_shake = TRUE
 
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
@@ -500,18 +540,16 @@
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/severe
 	treatable_tool = TOOL_WELDER
 
-	daze_attacked_chance = 100
 	daze_attacked_minimum_score = 1
-	daze_attacked_shake_duration_mult = 1
-	daze_attacked_shake_intensity_mult = 1.2
+	//daze_attacked_shake_duration_mult = 1
+	//daze_attacked_shake_intensity_mult = 1.2
 
 	daze_dizziness_maximum_duration = 80 SECONDS
 	daze_dizzy_minimum_score = 1
 	daze_dizzy_mult = 15
 
-	daze_movement_shake_duration_mult = 1
-	daze_movement_shake_intensity_mult = 0.2
-	head_movement_daze_chance = 100
+	//daze_movement_shake_duration_mult = 1
+	//daze_movement_shake_intensity_mult = 0.2
 
 	max_nausea_duration = DISGUST_LEVEL_DISGUSTED + 5
 
@@ -522,7 +560,7 @@
 	chest_movement_nausea_chance = 4
 
 	chest_attacked_nausea_chance = 75
-	chest_attacked_nausea_mult = 0.5 // saw = 15, 1.5 seconds of disgust at x1
+	chest_attacked_nausea_mult = 0.3
 	chest_attacked_nausea_minimum_score = 4
 
 	chest_movement_organ_damage_chance = 2
@@ -815,8 +853,12 @@
 		if (BODY_ZONE_HEAD)
 			if (effective_damage < daze_attacked_minimum_score)
 				return
-			if (prob(daze_attacked_chance))
-				daze(effective_damage, daze_attacked_shake_duration_mult, daze_attacked_shake_intensity_mult)
+			if (prob(head_attacked_shake_chance))
+				var/duration = (effective_damage * head_attacked_shake_duration_ratio)
+				shake_camera(victim, duration = (effective_damage * head_attacked_shake_duration_ratio), strength = (effective_damage * head_attacked_shake_intensity_ratio))
+				time_til_next_movement_shake_allowed = (world.time + (duration SECONDS))
+			if (prob(head_attacked_dizzy_chance))
+				victim.adjust_dizzy_up_to(effective_damage * head_attacked_dizzy_duration_ratio, daze_dizziness_maximum_duration)
 
 		if (BODY_ZONE_CHEST)
 			var/nausea_prob_mult = 1
@@ -870,12 +912,17 @@
 	overall_mult *= get_buckled_movement_consequence_mult(victim.buckled)
 
 	if (can_daze())
-		var/daze_chance = head_movement_daze_chance
-		daze_chance *= overall_mult
+		var/shake_chance = head_movement_shake_chance
+		var/dizzy_chance = head_movement_dizzy_chance
 
-		if (prob(daze_chance))
-			var/daze_mult = LERP(1, 1.2, rand())
-			daze(daze_movement_base_score * daze_mult, daze_movement_shake_duration_mult, daze_movement_shake_intensity_mult)
+		shake_chance *= overall_mult
+		dizzy_chance *= overall_mult
+		var/daze_mult = LERP(1, 1.2, rand())
+
+		if (can_do_movement_shake && prob(shake_chance))
+			shake_camera(victim, duration = (daze_mult * head_movement_base_shake_duration), strength = (daze_mult * head_movement_base_shake_intensity))
+		if (prob(dizzy_chance))
+			victim.adjust_dizzy_up_to(head_movement_dizzy_base_duration * daze_mult, daze_dizziness_maximum_duration)
 
 	if (limb.body_zone == BODY_ZONE_CHEST)
 		if (prob(chest_movement_nausea_chance * overall_mult))

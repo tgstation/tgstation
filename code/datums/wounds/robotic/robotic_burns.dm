@@ -1,3 +1,5 @@
+#define OVERHEAT_ON_STASIS_HEAT_MULT 0.25
+
 /datum/wound_pregen_data/burnt_metal
 	abstract = TRUE
 
@@ -44,10 +46,13 @@
 	/// The minimum heat difference we must have on reagent contact to cause heat shock damage.
 	var/heat_shock_minimum_delta = 5
 
-	/// The max thermal shock we can sustain during this tick interval, used for preventing things like splashing a beaker to instantly kill someone.
+	/*/// The max thermal shock we can sustain during this tick interval, used for preventing things like splashing a beaker to instantly kill someone.
 	var/heat_shock_damage_allowed_this_interval = 0
 	/// The max thermal shock we can sustain during a given tick interval, used for preventing things like splashing a beaker to instantly kill someone.
-	var/heat_shock_damage_allowed_per_interval = 40
+	var/heat_shock_damage_allowed_per_interval = 85*/
+
+	/// The max damage a given thermal shock can do. Used for preventing things like spalshing a beaker to instantly kill someone.
+	var/heat_shock_max_damage_per_shock = 80
 
 	/// The wound we demote to when we go below cooling threshold. If null, removes us.
 	var/datum/wound/burn/robotic/demotes_to
@@ -116,16 +121,21 @@
 
 /datum/wound/burn/robotic/overheat/handle_process(seconds_per_tick, times_fired)
 
-	heat_shock_damage_allowed_this_interval = (heat_shock_damage_allowed_per_interval * seconds_per_tick)
+	//heat_shock_damage_allowed_this_interval = (heat_shock_damage_allowed_per_interval * seconds_per_tick)
 
 	if (victim)
-		if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick)))
+
+		var/statis_mult = 1
+		if (IS_IN_STASIS(victim))
+			statis_mult *= OVERHEAT_ON_STASIS_HEAT_MULT
+
+		if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick * statis_mult)))
 			return
 		if (outgoing_bodytemp_coeff)
 			var/mult = outgoing_bodytemp_coeff
 			if (!limb_unimportant())
 				mult *= important_outgoing_mult
-			victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * mult) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
+			victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * mult) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick * statis_mult)
 	else
 		var/turf/our_turf = get_turf(limb)
 		if (our_turf)
@@ -155,20 +165,13 @@
 /datum/wound/burn/robotic/overheat/proc/victim_exposed_to_reagents(datum/signal_source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 
-	if (!(methods & TOUCH) && !(methods & VAPOR))
+	if (istype(source.my_atom, /obj/effect/particle_effect/water/extinguisher)) // this used to be a lot, lot more modular, but sadly reagent temps/volumes and shit are horribly inconsistant
+		expose_temperature(source.chem_temp, 1.7 * base_reagent_temp_coefficient, TRUE)
 		return
 
-	var/base_mult = 0
-	if (methods & TOUCH)
-		base_mult = 1
-	else if (methods & VAPOR)
-		base_mult = 0.05
-
-	base_mult *= volume_modifier
-
-	var/reagent_coefficient = (source.total_volume * base_reagent_temp_coefficient) * base_mult
-
-	expose_temperature(source.chem_temp, reagent_coefficient, TRUE) // if we are sprayed with something, we will immediately cool. or heat the fuck up :)
+	if (istype(source.my_atom, /obj/machinery/shower))
+		expose_temperature(source.chem_temp, (10 * volume_modifier * base_reagent_temp_coefficient), TRUE)
+		return
 
 /datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE)
 	var/temp_delta = (temperature - chassis_temperature) * coeff
@@ -178,7 +181,7 @@
 		var/gauze_mult = 1
 		var/obj/item/stack/gauze = limb.current_gauze
 		if (gauze)
-			gauze_mult *= gauze.splint_factor
+			gauze_mult *= (gauze.splint_factor) * 0.4 // very very effective
 
 		if (victim)
 			var/gauze_or_not = (!isnull(gauze) ? ", but [gauze] helps to keep it together" : "")
@@ -186,14 +189,12 @@
 			playsound(victim, 'sound/items/welder.ogg', 25)
 
 		var/unclamped_damage = (temp_delta * heat_shock_delta_to_damage_ratio) * gauze_mult
-		var/sign = SIGN(unclamped_damage)
-		var/damage = min(abs(unclamped_damage), heat_shock_damage_allowed_this_interval)
-		heat_shock_damage_allowed_this_interval -= damage
+		var/damage = min(abs(unclamped_damage), heat_shock_max_damage_per_shock)
+		//heat_shock_damage_allowed_this_interval -= damage
 		var/percent_remaining = (damage / abs(unclamped_damage))
 
-		damage *= sign
 		heating_temp_delta_mult *= percent_remaining
-		
+
 		limb.receive_damage(brute = damage, wound_bonus = CANT_WOUND)
 
 	var/heating_temp_delta = temp_delta * heating_temp_delta_mult
@@ -252,7 +253,7 @@
 	outgoing_bodytemp_coeff = 0.001
 
 	base_reagent_temp_coefficient = 0.05
-	heat_shock_delta_to_damage_ratio = 0.16
+	heat_shock_delta_to_damage_ratio = 0.2
 
 	promotes_to = /datum/wound/burn/robotic/overheat/severe
 
@@ -297,7 +298,7 @@
 	bodytemp_coeff = 0.01
 
 	base_reagent_temp_coefficient = 0.03
-	heat_shock_delta_to_damage_ratio = 0.1
+	heat_shock_delta_to_damage_ratio = 0.2
 
 	demotes_to = /datum/wound/burn/robotic/overheat/moderate
 	promotes_to = /datum/wound/burn/robotic/overheat/critical
@@ -344,8 +345,8 @@
 	outgoing_bodytemp_coeff = 0.006 // burn... BURN...
 	bodytemp_coeff = 0.008
 
-	base_reagent_temp_coefficient = 0.008
-	heat_shock_delta_to_damage_ratio = 0.07
+	base_reagent_temp_coefficient = 0.02
+	heat_shock_delta_to_damage_ratio = 0.25
 
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 
@@ -366,3 +367,5 @@
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/burn/robotic/overheat/critical
+
+#undef OVERHEAT_ON_STASIS_HEAT_MULT

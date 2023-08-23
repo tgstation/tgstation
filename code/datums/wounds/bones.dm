@@ -70,6 +70,10 @@
 
 /datum/wound/blunt/bone/handle_process(seconds_per_tick, times_fired)
 	. = ..()
+
+	if (!victim || IS_IN_STASIS(victim))
+		return
+
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if(active_trauma)
 			QDEL_NULL(active_trauma)

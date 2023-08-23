@@ -1,9 +1,3 @@
-1. maybe add oil decals if T2/3 blunt wounds happen
-2. test dislocations on robotic limbs
-3. test ALL SPECIES (oh god) for wounsd and shit
 
-4. counterbalance cyborg limbs to be better (partially done!)
-5. revisit _scars.dm - apparantly, wounds can give different descriptions based on biotype, ex.
-bone wounds on something fleshy takes from flesh_scar_desc.json, not bone_scar_desc.json
-
-6. Consider changing scars again to just store the required biotype so shit dont break if we
+1. perfect blunt wounds time_til_next_movement_shake_allowed calculation to properly estimate when the shake will end
+2. finish balancing critical blunt wounds
