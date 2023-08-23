@@ -597,6 +597,14 @@
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+	/datum/uplink_item/device_tools/medgun_mod
+	name = "Medbeam Gun Module"
+	desc = "A wonder of Syndicate engineering, the Medbeam gun module, or Medi-Gun enables a medic to keep his fellow \
+		operatives in the fight, even while under fire. Don't cross the streams!"
+	item = /obj/item/mod/module/medbeam
+	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
 // Devices
 
 /datum/uplink_item/device_tools/assault_pod
@@ -614,14 +622,6 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
-/datum/uplink_item/device_tools/medgun_mod
-	name = "Medbeam Gun Module"
-	desc = "A wonder of Syndicate engineering, the Medbeam gun module, or Medi-Gun enables a medic to keep his fellow \
-		operatives in the fight, even while under fire. Don't cross the streams!"
-	item = /obj/item/mod/module/medbeam
-	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/medkit
