@@ -887,7 +887,7 @@
 
 /obj/item/storage/backpack/messenger/cap
 	name = "captain's messenger bag"
-	desc = "An exclusive messenger bag for NanoTrasen officers, made of real whaleleather."
+	desc = "An exclusive messenger bag for Nanotrasen officers, made of real whale leather."
 	icon_state = "messenger_captain"
 	inhand_icon_state = "messenger_captain"
 
