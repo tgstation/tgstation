@@ -14,7 +14,7 @@
 // We don't want spurious hard deletes off this, so let's only sleep for the requested period of time here yeah?
 #ifdef UNIT_TESTS
 	sleep(initial_delay)
-	return CEILING(DS2TICKS(intial_delay), 1)
+	return CEILING(DS2TICKS(initial_delay), 1)
 #else
 	. = 0
 	var/i = DS2TICKS(initial_delay)
