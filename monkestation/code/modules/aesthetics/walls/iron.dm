@@ -32,12 +32,23 @@
 		new_trim.color = paint_color
 		managed_wall_paint += new_trim
 		add_overlay(managed_wall_paint)
-	QUEUE_SMOOTH(src)
-	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/smooth_icon()
 	. = ..()
-	update_appearance()
+	if(wall_trim)
+		cut_overlay(managed_wall_trim)
+		managed_wall_trim = list()
+		var/image/new_trim = image("icon" = wall_trim, "icon_state" = icon_state, "layer" = src.layer + 0.02)
+		new_trim.color = trim_color
+		managed_wall_trim += new_trim
+		add_overlay(managed_wall_trim)
+	if(paint_color)
+		cut_overlay(managed_wall_paint)
+		managed_wall_paint = list()
+		var/image/new_trim = image("icon" = icon, "icon_state" = icon_state, "layer" = src.layer + 0.01)
+		new_trim.color = paint_color
+		managed_wall_paint += new_trim
+		add_overlay(managed_wall_paint)
 
 /turf/closed/wall/r_wall
 	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi'
