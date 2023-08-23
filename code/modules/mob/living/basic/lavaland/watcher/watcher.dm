@@ -11,8 +11,8 @@
 	base_pixel_x = -12
 	speak_emote = list("chimes")
 	speed = 3
-	maxHealth = 200
-	health = 200
+	maxHealth = 160
+	health = 160
 	attack_verb_continuous = "buffets"
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
@@ -44,6 +44,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
+	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/basic_ranged_ready_overlay, overlay_state = eye_glow)
 	AddComponent(\
 		/datum/component/ranged_attacks,\
@@ -84,8 +85,8 @@
 	icon_living = "watcher_magmawing"
 	icon_dead = "watcher_magmawing_dead"
 	eye_glow = "fire_glow"
-	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
-	health = 215
+	maxHealth = 175 //Compensate for the lack of slowdown on projectiles with a bit of extra health
+	health = 175
 	projectile_type = /obj/projectile/temp/watcher/magma_wing
 	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/fire
 	crusher_loot = /obj/item/crusher_trophy/blaster_tubes/magma_wing
@@ -98,8 +99,8 @@
 	icon_state = "watcher_icewing"
 	icon_living = "watcher_icewing"
 	icon_dead = "watcher_icewing_dead"
-	maxHealth = 170
-	health = 170
+	maxHealth = 130
+	health = 130
 	projectile_type = /obj/projectile/temp/watcher/ice_wing
 	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/ice
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1)

@@ -275,6 +275,9 @@
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts."))
 
+/datum/wound/slash/get_limb_examine_description()
+	return span_warning("The flesh on this limb appears badly lacerated.")
+
 /datum/wound/slash/moderate
 	name = "Rough Abrasion"
 	desc = "Patient's skin has been badly scraped, generating moderate blood loss."

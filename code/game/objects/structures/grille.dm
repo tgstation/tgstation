@@ -141,6 +141,8 @@
 		return
 	var/mob/M = AM
 	shock(M, 70)
+	if(prob(50))
+		take_damage(1, BURN, FIRE, sound_effect = FALSE)
 
 /obj/structure/grille/attack_animal(mob/user, list/modifiers)
 	. = ..()
