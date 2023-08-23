@@ -1,8 +1,0 @@
-author: "wraith-54321"
-delete-after: True
-changes:
-  - balance: "All clockwork weapons are now worse at wounding"
-  - balance: "Clockwork arrows now deal 25 damage instead of 30"
-  - bugfix: "Heretic ghouls can no longer use scriptures"
-  - bugfix: "Clock borgs can no longer be subverted by emags"
-  - bugfix: "Heretics are now correctly immune to the Kindle scripture"

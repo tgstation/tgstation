@@ -346,3 +346,10 @@
       the wall to change the trim or paint
   iamcooldan:
   - rscadd: new crates for departmental lathes, and a birthday crate.
+2023-08-23:
+  wraith-54321:
+  - balance: All clockwork weapons are now worse at wounding
+  - balance: Clockwork arrows now deal 25 damage instead of 30
+  - bugfix: Heretic ghouls can no longer use scriptures
+  - bugfix: Clock borgs can no longer be subverted by emags
+  - bugfix: Heretics are now correctly immune to the Kindle scripture
