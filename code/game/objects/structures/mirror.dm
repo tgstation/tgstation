@@ -363,3 +363,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/turf/open/chasm/new_chasm = user_turf
 	new_chasm.set_target(dest)
 	new_chasm.drop(user)
+
+#undef CHANGE_HAIR
+#undef CHANGE_BEARD
+
+#undef CHANGE_RACE
+#undef CHANGE_SEX
+#undef CHANGE_NAME
+#undef CHANGE_EYES
+
+#undef INERT_MIRROR_OPTIONS
+#undef PRIDE_MIRROR_OPTIONS
+#undef MAGIC_MIRROR_OPTIONS
