@@ -835,6 +835,7 @@
 	sechud_icon_state = SECHUD_QUARTERMASTER
 	minimal_access = list(
 		ACCESS_AUX_BASE,
+		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MINING,
@@ -1033,6 +1034,7 @@
 	assignment = "Security Officer (Cargo)"
 	subdepartment_color = COLOR_CARGO_BROWN
 	department_access = list(
+		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_MINING,
 		ACCESS_SHIPPING,
