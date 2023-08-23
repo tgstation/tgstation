@@ -373,6 +373,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			item_content.dropped(mob_occupant)
 			control_computer.frozen_item += item_content
 			for(var/list/stored as anything in control_computer.frozen_crew)
+				if(!istype(stored))
+					continue
 				if(stored["name"] == stored_name)
 					stored["items"] += item_content
 		else

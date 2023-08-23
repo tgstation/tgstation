@@ -7,7 +7,8 @@
 	static_lighting = FALSE
 
 	base_lighting_alpha = 255
-	base_lighting_color = COLOR_STARLIGHT
+	base_lighting_color = "#FFFFFF"
+
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -18,13 +19,14 @@
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
 
+/area/space/Initialize(mapload)
+	. = ..()
+	set_base_lighting(GLOB.starlight_color, alpha)
+
 /area/space/nearstation
 	icon_state = "space_near"
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	static_lighting = TRUE
-	base_lighting_alpha = 0
-	base_lighting_color = COLOR_WHITE
-
 /area/misc/start
 	name = "start area"
 	icon_state = "start"
