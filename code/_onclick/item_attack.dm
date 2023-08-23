@@ -71,7 +71,7 @@
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
-	return afterattack_result & TRUE //this is really stupid but its needed because afterattack can return TRUE | FLAGS.
+	return afterattack_result
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
@@ -258,6 +258,7 @@
 	user.changeNext_move(min(item_cd, CLICK_CD_MELEE * 1.25))
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
+	return TRUE
 
 /**
  * Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds

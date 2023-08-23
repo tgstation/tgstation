@@ -206,7 +206,11 @@
 /datum/attack_style/melee_weapon/swing/sm_sword
 	cd = CLICK_CD_MELEE
 	slowdown = 0
-	time_per_turf = 0.3 SECONDS
+	time_per_turf = 0.1 SECONDS
+
+/datum/attack_style/melee_weapon/swing/sm_sword/collide_with_solid_atom(atom/blocking_us, obj/item/melee/supermatter_sword/weapon, mob/living/attacker)
+	weapon.consume_everything(blocking_us)
+	return ATTACK_SWING_HIT
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
@@ -247,13 +251,17 @@
 		if(!isspaceturf(turf))
 			consume_turf(turf)
 
-/obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
-	. = ..()
-	if(user && target == user)
+/obj/item/melee/supermatter_sword/attack(mob/living/target_mob, mob/living/user, params)
+	if(target_mob == user)
 		user.dropItemToGround(src)
-	if(proximity_flag)
-		consume_everything(target)
-		return . | AFTERATTACK_PROCESSED_ITEM
+	consume_everything(target_mob)
+	return TRUE
+
+/obj/item/melee/supermatter_sword/attack_atom(atom/attacked_atom, mob/living/user, params)
+	if(attacked_atom == src)
+		return FALSE
+	consume_everything(attacked_atom)
+	return TRUE
 
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()

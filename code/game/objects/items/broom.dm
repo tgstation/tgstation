@@ -17,6 +17,7 @@
 	attack_verb_continuous = list("sweeps", "brushes off", "bludgeons", "whacks")
 	attack_verb_simple = list("sweep", "brush off", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
+	weapon_sprite_angle = 225
 	attack_style_path = /datum/attack_style/melee_weapon/overhead
 	alt_attack_style_path = /datum/attack_style/melee_weapon/swing
 

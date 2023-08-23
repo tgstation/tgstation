@@ -308,13 +308,13 @@
 	if(IS_BLOCKING(src))
 		balloon_alert(src, "can't act while blocking!")
 		changeNext_move(0.25 SECONDS)
-		return FALSE
+		return
 
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
 	if(close_enough && (!combat_mode || !isliving(clicked_on)))
-		// Only stop the swing attempt if the attack chain return TRUE at any point
+		// Only stop the swing attempt if the attack chain return TRUE (or AFTERATTACK_PROCESSED_ITEM) at any point
 		if(clicked_with_what.melee_attack_chain(src, clicked_on, params))
 			return
 

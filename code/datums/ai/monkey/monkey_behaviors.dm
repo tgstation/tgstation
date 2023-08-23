@@ -192,7 +192,7 @@
 		if(disarm)
 			fake_params = list2params(list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
 		else
-			fake_params = list2params(list(RIGHT_CLICK = FALSE, BUTTON = LEFT_CLICK))
+			fake_params = list2params(list(LEFT_CLICK = TRUE, BUTTON = LEFT_CLICK))
 		living_pawn.ai_controller_click(target, optional_params = fake_params)
 		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // We reset their memory of the gun being 'broken' if they accomplish some other attack
 

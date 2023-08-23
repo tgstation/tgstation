@@ -298,7 +298,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	var/mob/living/living_owner = owner
 	if(living_owner.mobility_flags & MOBILITY_MOVE)
-		living_owner.changeNext_move(CLICK_CD_RESIST)
 		return living_owner.resist_fire()
 
 /atom/movable/screen/alert/give // information set when the give alert is made

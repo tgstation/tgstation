@@ -1055,6 +1055,8 @@
 /mob/living/can_resist()
 	if(next_move > world.time)
 		return FALSE
+	if(last_special > world.time)
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return FALSE
 	return TRUE
@@ -1083,7 +1085,7 @@
 		return TRUE
 
 	//unbuckling yourself
-	if(buckled && last_special <= world.time)
+	if(buckled)
 		resist_buckle()
 		changeNext_move(CLICK_CD_RESIST)
 		return TRUE
@@ -1097,12 +1099,10 @@
 	if(mobility_flags & MOBILITY_MOVE)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
-			changeNext_move(CLICK_CD_RESIST)
 			return TRUE
 
 		if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
-			changeNext_move(CLICK_CD_RESIST)
 			return TRUE
 
 	return FALSE

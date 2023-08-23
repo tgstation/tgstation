@@ -43,10 +43,10 @@
 	if(.)
 		return
 
-	. = TRUE // no attack / afterattack
-
 	if (!try_syringe(target, user))
 		return
+
+	. = TRUE // no attack / afterattack
 
 	var/contained = reagents.get_reagent_log_string()
 	log_combat(user, target, "attempted to inject", src, addition="which had [contained]")

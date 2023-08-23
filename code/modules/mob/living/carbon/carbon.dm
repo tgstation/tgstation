@@ -261,6 +261,8 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
+	changeNext_move(CLICK_CD_RESIST)
+	last_special = world.time + CLICK_CD_RESIST
 	adjust_fire_stacks(-5)
 	Paralyze(60, ignore_canstun = TRUE)
 	spin(32,2)
