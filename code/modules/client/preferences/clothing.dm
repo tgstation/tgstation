@@ -57,7 +57,7 @@
 		if (DDUFFELBAG)
 			return /obj/item/storage/backpack/duffelbag/med
 		if (DMESSENGER)
-			return /obj/item/storage/backpack/satchel/med
+			return /obj/item/storage/backpack/messenger/med
 
 /datum/preference/choiced/backpack/apply_to_human(mob/living/carbon/human/target, value)
 	target.backpack = value
