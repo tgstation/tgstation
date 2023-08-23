@@ -821,7 +821,7 @@
 
 /datum/greyscale_config/buckets_cleanbot
 	name = "Buckets - Cleanbot"
-	icon_file = 'icons/mob/silicon/aibots.dmi'
+	icon_file = 'monkestation/code/modules/aesthetics/icons/cleanbot.dmi' //monkestation edit
 	json_config = 'code/datums/greyscale/json_configs/buckets_bot.json'
 
 /datum/greyscale_config/buttondown_slacks
