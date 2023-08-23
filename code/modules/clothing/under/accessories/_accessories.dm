@@ -65,7 +65,7 @@
 
 	var/mob/living/carbon/human/wearer = attached_to.loc
 
-	if(!ishuman(wearer))
+	if(!istype(wearer))
 		return
 
 	attached_to.update_accessory_overlay()
