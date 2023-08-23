@@ -171,6 +171,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
 	var/list/datum/weakref/saviors = null
+	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
+	var/supermatter_sliver_removed = FALSE
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
@@ -504,7 +506,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		emergency_channel
 	)
 
-	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
+	var/delamination_countdown_time = SUPERMATTER_COUNTDOWN_TIME
+	// If a sliver was removed from the supermatter, the countdown time is significantly decreased
+	if (supermatter_sliver_removed == TRUE)
+		delamination_countdown_time = SUPERMATTER_SLIVER_REMOVED_COUNTDOWN_TIME
+		radio.talk_into(
+			src,
+			"WARNING: Projected time until full crystal delamination significantly lower than expected. \
+			Please inspect crystal for structural abnormalities or sabatoge!",
+			emergency_channel
+			)
+
+	for(var/i in delamination_countdown_time to 0 step -10)
 		if(last_delamination_strategy != delamination_strategy)
 			count_down_messages = delamination_strategy.count_down_messages()
 			last_delamination_strategy = delamination_strategy
