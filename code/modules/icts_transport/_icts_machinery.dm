@@ -129,7 +129,7 @@
 		user.visible_message(span_notice("[user.name] installs [src] on the tram."),
 			span_notice("You install [src] on the tram."),
 			span_hear("You hear clicking."))
-		var/floor_to_wall = get_dir(user, on_tram)
+		var/floor_to_tram = get_dir(user, on_tram)
 
 		var/obj/cabinet = new result_path(get_turf(user), floor_to_tram, TRUE)
 		cabinet.setDir(floor_to_tram)
