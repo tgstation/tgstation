@@ -260,7 +260,7 @@
 
 	var/mob/living/carbon/human/wearer = loc
 
-	if(!ishuman(wearer))
+	if(!istype(wearer))
 		return
 
 	wearer.update_clothing(slot_flags)
