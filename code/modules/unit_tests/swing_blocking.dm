@@ -69,16 +69,16 @@
 /datum/unit_test/blocking/touch_spells
 
 /datum/unit_test/blocking/touch_spells/setup_attacker(mob/living/carbon/human/attacker)
-	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = new(attacker)
+	var/datum/action/cooldown/spell/touch/shock/grasp = new(attacker)
 	grasp.Grant(attacker)
 	grasp.Trigger()
 	if(!istype(attacker.get_active_held_item(), grasp.hand_path))
-		TEST_FAIL("Mansus grasp failed to place a touch attack item in the attacker's hand, a prerequisite for this test.")
+		TEST_FAIL("Shocking grasp failed to place a touch attack item in the attacker's hand, a prerequisite for this test.")
 
 	return ..()
 
 /datum/unit_test/blocking/touch_spells/test_results(mob/living/carbon/human/attacker, mob/living/carbon/human/victim)
-	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss() + victim.getFireLoss(), 0, "Victim failed to take damage from Mansus Grasp against a blocking foe, which should penetrate block.")
+	TEST_ASSERT_NOTEQUAL(victim.getFireLoss(), 0, "Victim failed to take damage from Shock grasp against a blocking foe, which should penetrate block.")
 
 // Tests the [TRAIT_CANNOT_HEAL_STAMINA] trait blocking uses
 /datum/unit_test/no_stam_healing
