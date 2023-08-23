@@ -241,3 +241,9 @@
 	desc = "I've paid my dues, shift after shift... I've done my sentence but commited no griff..."
 	database_id = MEDAL_DEBT_EXTINGUISHED
 	icon = "outdebted"
+
+/datum/award/achievement/misc/this_is_fine
+	name = "This Is Fine"
+	desc = "It might be time to go home and sob into a pillow after what just almost happened."
+	database_id = MEDAL_THIS_IS_FINE
+	icon = "thisisfine"

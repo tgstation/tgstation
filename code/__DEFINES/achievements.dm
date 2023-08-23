@@ -54,6 +54,7 @@
 #define MEDAL_EARTHQUAKE_VICTIM "Earthquake Victim"
 #define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
 #define MEDAL_ARCHMAGE "Archmage"
+#define MEDAL_THIS_IS_FINE "This Is Fine"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

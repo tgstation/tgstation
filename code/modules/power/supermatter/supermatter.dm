@@ -514,6 +514,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(healed)
 			final_countdown = FALSE
+
+			if(!istype(delamination_strategy, /datum/sm_delam/cascade))
+				return
+
+			for(var/mob/living/carbon/lucky_engi in mobs_in_area_type(list(/area/station/engineering/supermatter)))
+				if(!istype(lucky_engi.client))
+					continue
+				lucky_engi.client.give_award(/datum/award/achievement/misc/this_is_fine, lucky_engi)
+
 			return // delam averted
 		sleep(1 SECONDS)
 
