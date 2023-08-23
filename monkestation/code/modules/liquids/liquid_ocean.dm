@@ -526,3 +526,14 @@ GLOBAL_LIST_INIT(the_lever, list())
 	icon_state = "seafloor_heavy"
 	base_icon_state = "seafloor_heavy"
 	baseturfs = /turf/open/floor/plating/ocean/rock/heavy
+
+/turf/closed/mineral/random/regrowth
+	turf_transforms = FALSE
+	color = "#58606b"
+
+/turf/closed/mineral/random/regrowth/Destroy(force)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(regrow_mineral), get_turf(src)), 10 SECONDS)
+
+/proc/regrow_mineral(turf/location)
+	new /turf/closed/mineral/random/regrowth(location)

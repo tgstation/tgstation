@@ -81,6 +81,8 @@
 #define FACTION_TURRET "turret"
 /// Vines, lots of overlap with plants
 #define FACTION_VINES "vines"
+/// Tamed creatures
+#define FACTION_TAMED "tamed"
 
 // Antagonist factions
 
