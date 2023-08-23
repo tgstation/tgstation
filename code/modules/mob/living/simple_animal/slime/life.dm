@@ -183,7 +183,7 @@
 		return
 
 	if(iscarbon(prey))
-		prey.adjustCloneLoss(rand(2, 4) * 0.5 * seconds_per_tick)
+		prey.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_per_tick)
 		prey.adjustToxLoss(rand(1, 2) * 0.5 * seconds_per_tick)
 
 		if(SPT_PROB(5, seconds_per_tick) && prey.client)
@@ -199,7 +199,7 @@
 		var/mob/living/animal_victim = prey
 
 		var/totaldamage = 0 //total damage done to this unfortunate animal
-		totaldamage += animal_victim.adjustCloneLoss(rand(2, 4) * 0.5 * seconds_per_tick)
+		totaldamage += animal_victim.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_per_tick)
 		totaldamage += animal_victim.adjustToxLoss(rand(1, 2) * 0.5 * seconds_per_tick)
 
 		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop

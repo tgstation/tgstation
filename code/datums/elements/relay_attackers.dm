@@ -28,7 +28,8 @@
 
 /datum/element/relay_attackers/proc/on_attacked_by(atom/target, mob/living/attacker, obj/item/weapon, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	SIGNAL_HANDLER
-	relay_attacker(target, attacker, damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
+	if(damage)
+		relay_attacker(target, attacker, damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK)
 
 /datum/element/relay_attackers/proc/on_shoved(atom/target, mob/living/attacker)
 	SIGNAL_HANDLER
@@ -41,7 +42,7 @@
 		return
 	if(!ismob(hit_projectile.firer))
 		return
-	relay_attacker(target, hit_projectile.firer, hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
+	relay_attacker(target, hit_projectile.firer, hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK)
 
 /// Even if another component blocked this hit, someone still threw something
 /datum/element/relay_attackers/proc/on_hitby(atom/target, atom/movable/hit_atom, datum/thrownthing/throwingdatum)
@@ -54,11 +55,11 @@
 	var/mob/thrown_by = hit_item.thrownby?.resolve()
 	if(!ismob(thrown_by))
 		return
-	relay_attacker(target, thrown_by, hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
+	relay_attacker(target, thrown_by, hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK)
 
 /datum/element/relay_attackers/proc/on_attack_mech(atom/target, obj/vehicle/sealed/mecha/mecha_attacker, mob/living/pilot)
 	SIGNAL_HANDLER
-	relay_attacker(target, mecha_attacker)
+	relay_attacker(target, mecha_attacker, ATTACKER_DAMAGING_ATTACK)
 
 /// Send out a signal identifying whoever just attacked us (usually a mob but sometimes a mech or turret)
 /datum/element/relay_attackers/proc/relay_attacker(atom/victim, atom/attacker, attack_flags = NONE)

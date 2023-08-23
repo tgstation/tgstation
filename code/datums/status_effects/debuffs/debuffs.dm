@@ -134,9 +134,10 @@
 	. = ..()
 	if(!.)
 		return
-	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
 		tick_interval = -1
+	else
+		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_insomniac))
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_sleepy))
 

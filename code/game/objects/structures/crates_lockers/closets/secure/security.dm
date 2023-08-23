@@ -71,6 +71,7 @@
 	// Traitor steal objectives
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/pinpointer/nuke(src)
+	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "warden's locker"

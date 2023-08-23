@@ -1,5 +1,0 @@
-author: "Striders13"
-delete-after: True
-changes:
-  - admin: "admins can now upload files to the server up to 5mb (used to be 2.5mb)"
-  - config: "file upload restriction is now config"

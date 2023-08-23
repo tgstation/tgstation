@@ -1,26 +1,24 @@
-/proc/generate_possible_values_for_sprite_accessories_on_head(accessories)
-	var/list/values = possible_values_for_sprite_accessory_list(accessories)
+/proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory)
+	var/static/icon/head_icon
+	if (isnull(head_icon))
+		head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
-	var/icon/head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
-	head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+	if (isnull(sprite_accessory))
+		return head_icon
 
-	for (var/name in values)
-		var/datum/sprite_accessory/accessory = accessories[name]
-		if (accessory == null || accessory.icon_state == null)
-			continue
+	ASSERT(istype(sprite_accessory))
 
-		var/icon/final_icon = new(head_icon)
+	var/icon/final_icon = new(head_icon)
 
-		var/icon/beard_icon = values[name]
-		beard_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
-		final_icon.Blend(beard_icon, ICON_OVERLAY)
+	var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+	head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
+	final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
 
-		final_icon.Crop(10, 19, 22, 31)
-		final_icon.Scale(32, 32)
+	final_icon.Crop(10, 19, 22, 31)
+	final_icon.Scale(32, 32)
 
-		values[name] = final_icon
-
-	return values
+	return final_icon
 
 /datum/preference/color/eye_color
 	priority = PREFERENCE_PRIORITY_BODYPARTS
@@ -64,7 +62,10 @@
 	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/choiced/facial_hairstyle/init_possible_values()
-	return generate_possible_values_for_sprite_accessories_on_head(GLOB.facial_hairstyles_list)
+	return assoc_to_keys_features(GLOB.facial_hairstyles_list)
+
+/datum/preference/choiced/facial_hairstyle/icon_for(value)
+	return generate_icon_with_head_accessory(GLOB.facial_hairstyles_list[value])
 
 /datum/preference/choiced/facial_hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_hairstyle(value, update = FALSE)
@@ -137,7 +138,10 @@
 	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/choiced/hairstyle/init_possible_values()
-	return generate_possible_values_for_sprite_accessories_on_head(GLOB.hairstyles_list)
+	return assoc_to_keys_features(GLOB.hairstyles_list)
+
+/datum/preference/choiced/hairstyle/icon_for(value)
+	return generate_icon_with_head_accessory(GLOB.hairstyles_list[value])
 
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hairstyle(value, update = FALSE)
