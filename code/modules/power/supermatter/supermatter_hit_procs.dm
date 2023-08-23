@@ -67,6 +67,7 @@
 		if (scalpel.usesLeft)
 			to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
 			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
+			supermatter_sliver_removed = TRUE
 			external_power_trickle += 800
 			log_activation(who = user, how = scalpel)
 			scalpel.usesLeft--
