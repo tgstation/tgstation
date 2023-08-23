@@ -401,7 +401,8 @@
 /**
  * Checks if this mob has some form of shield or blocking implement
  *
- * * hitby - the thing that is attacking us
+ * * hitby - the thing that is attacking us. This can be a mob (if they're punching) or an item (a mob attacking with an item, or a thrown item), or a projectile, so on.
+ * Make use of the [GET_ASSAILANT] macro to determine if there is a mob that is behind the attack.
  * * damage - how much it's doing.
  * Does not always equate to hitby's force, sometimes it might be some relevant value - like blocking a stun = 100 damage.
  * * attack_text - the text of the attack, usually like "the baton" (so you can format feedback messages as "blocks the baton with their shield")

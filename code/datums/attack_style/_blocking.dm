@@ -161,6 +161,7 @@
 			span_danger("[source] blocks [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 			span_danger("You block [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 		)
+
 	if(final_damage > 0)
 		source.add_movespeed_modifier(/datum/movespeed_modifier/successful_block)
 		addtimer(CALLBACK(source, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/successful_block), 0.5 SECONDS)
@@ -174,6 +175,7 @@
 		animate(time = 0.20 SECONDS, pixel_x = -2, easing = BACK_EASING|EASE_OUT)
 		animate(time = 0.15 SECONDS, pixel_x = 0, easing = BACK_EASING|EASE_OUT)
 
+	SEND_SIGNAL(hitby, COMSIG_MOVABLE_HITTING_BLOCK, source, attacker, blocking_with, final_damage, attack_type, damage_type)
 	return SUCCESSFUL_BLOCK
 
 /datum/status_effect/blocking/proc/on_health_update(mob/living/source)

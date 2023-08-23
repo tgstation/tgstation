@@ -114,3 +114,6 @@
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
 /// From base of area/Exited(): (area/left, direction)
 #define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"
+
+/// from /datum/status_effect/blocking(), sent to the item being used to block
+#define COMSIG_MOVABLE_HITTING_BLOCK "movable_hitting_block"

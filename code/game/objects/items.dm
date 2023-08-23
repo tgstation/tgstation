@@ -729,6 +729,7 @@
 	attack_type = MELEE_ATTACK,
 	damage_type = BRUTE,
 )
+	// SHOULD_BE_PURE(TRUE)
 	return blocking_ability
 
 /**

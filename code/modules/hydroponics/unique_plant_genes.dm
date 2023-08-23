@@ -58,6 +58,9 @@
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, PROC_REF(on_plant_attack))
 	RegisterSignal(our_plant, COMSIG_ITEM_AFTERATTACK, PROC_REF(after_plant_attack))
 
+	our_plant.item_flags &= ~NOBLUDGEON
+	our_plant.attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon]
+
 /// Signal proc for [COMSIG_ITEM_ATTACK] that allows for effects on attack
 /datum/plant_gene/trait/attack/proc/on_plant_attack(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER

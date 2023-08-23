@@ -170,6 +170,7 @@
 	if(..())
 		return TRUE
 
+	// This line causes non-combat-mode clicks on people to go on CD, even if they do nothing. If it's annoying remove it
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(attacking_item.attack_wrapper(src, user, params) & (ATTACK_NO_AFTERATTACK|ATTACK_SWING_CANCEL|ATTACK_SWING_SKIPPED))
 		return TRUE // end chain

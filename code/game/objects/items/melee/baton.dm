@@ -4,7 +4,7 @@
 	return FALSE // Assume pacifism is fine, check it later in the chain depending on whether it's harmbatonning
 
 /datum/attack_style/melee_weapon/baton/get_hit_sound(obj/item/melee/baton/weapon, attack_result)
-	return (attack_result & ATTACK_SWING_SKIPPED) ? null : ..() // no hitsound on stunning, todo do this better
+	return (attack_result & ATTACK_SWING_SKIPPED) ? null : ..() // no hitsound if we skipped. TODO, make this better.
 
 /obj/item/melee/baton
 	name = "police baton"
@@ -76,6 +76,7 @@
 		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
+	RegisterSignal(src, COMSIG_MOVABLE_HITTING_BLOCK, PROC_REF(block_stun))
 
 /obj/item/melee/baton/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -105,6 +106,22 @@
 		return FALSE
 
 	return TRUE
+
+/// Signal proc for [COMSIG_MOVABLE_HITTING_BLOCK]
+/// When a baton hits someone blocking, and they successfully block the attack, follow up with a stun that they must also block.
+/obj/item/melee/baton/proc/block_stun(
+	obj/item/source,
+	mob/living/blocker,
+	mob/living/attacker,
+	obj/item/blocking_with,
+	final_damage,
+	attack_type,
+	damage_type,
+)
+	SIGNAL_HANDLER
+
+	if(active && damage_type != STAMINA)
+		finalize_baton_attack(blocker, attacker, in_attack_chain = FALSE)
 
 /*
  * Attack -> left clicking -> stun attacking, no harmbatong
@@ -141,7 +158,7 @@
 		target_mob.visible_message(desc["visible"], desc["local"])
 
 	finalize_baton_attack(target_mob, user)
-	return ATTACK_SWING_SKIPPED
+	return ATTACK_SWING_HIT|ATTACK_SWING_SKIPPED
 
 /*
  * Secondaru attack -> right clicking -> harmbatong, no stun

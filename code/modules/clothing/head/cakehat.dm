@@ -17,6 +17,7 @@
 	bare_wound_bonus = 5
 	dog_fashion = /datum/dog_fashion/head
 	hitsound = 'sound/weapons/tap.ogg'
+	attack_style_path = /datum/attack_style/melee_weapon
 	var/hitsound_on = 'sound/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
 	var/hitsound_off = 'sound/weapons/tap.ogg'
 	var/force_on = 15

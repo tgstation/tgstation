@@ -516,6 +516,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(!proximity || user.stat || !isfloorturf(target) || istype(target, /area/shuttle))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/belt_dir = get_dir(target, user)
 	if(target == user.loc)
 		to_chat(user, span_warning("You cannot place a conveyor belt under yourself!"))

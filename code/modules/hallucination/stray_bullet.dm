@@ -29,6 +29,7 @@
 	icon_state = null
 	hitsound = ""
 	suppressed = SUPPRESSED_VERY
+	armour_penetration = 100
 	ricochets_max = 0
 	ricochet_chance = 0
 	damage = 0

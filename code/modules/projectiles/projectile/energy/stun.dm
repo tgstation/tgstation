@@ -2,6 +2,7 @@
 	name = "electrode"
 	icon_state = "spark"
 	color = "#FFFF00"
+	armour_penetration = 100
 	paralyze = 10 SECONDS
 	stutter = 10 SECONDS
 	jitter = 40 SECONDS
