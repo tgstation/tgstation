@@ -11,6 +11,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
