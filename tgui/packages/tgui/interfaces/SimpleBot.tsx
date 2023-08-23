@@ -8,14 +8,8 @@ type SimpleBotContext = {
   locked: number;
   emagged: number;
   has_access: number;
-  pai: Pai;
   settings: Settings;
   custom_controls: Controls;
-};
-
-type Pai = {
-  allow_pai: number;
-  card_inserted: number;
 };
 
 type Settings = {
@@ -23,6 +17,9 @@ type Settings = {
   airplane_mode: number;
   maintenance_lock: number;
   patrol_station: number;
+  allow_possession: number;
+  possession_enabled: number;
+  has_personality: number;
 };
 
 type Controls = {
@@ -59,13 +56,18 @@ export const SimpleBot = (props, context) => {
 /** Creates a lock button at the top of the controls */
 const TabDisplay = (props, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { can_hack, has_access, locked, pai } = data;
-  const { allow_pai } = pai;
+  const { can_hack, has_access, locked } = data;
 
   return (
     <>
       {!!can_hack && <HackButton />}
-      {!!allow_pai && <PaiButton />}
+      <Button
+        color="transparent"
+        icon="fa-poll-h"
+        onClick={() => act('rename')}
+        tooltip="Update the bot's name registration.">
+        Rename
+      </Button>
       <Button
         color="transparent"
         disabled={!has_access && !can_hack}
@@ -101,38 +103,18 @@ const HackButton = (props, context) => {
   );
 };
 
-/** Creates a button indicating PAI status and offers the eject action */
-const PaiButton = (props, context) => {
-  const { act, data } = useBackend<SimpleBotContext>(context);
-  const { card_inserted } = data.pai;
-
-  if (!card_inserted) {
-    return (
-      <Button
-        color="transparent"
-        icon="robot"
-        tooltip={multiline`Insert an active PAI card to control this device.`}>
-        No PAI Inserted
-      </Button>
-    );
-  } else {
-    return (
-      <Button
-        disabled={!card_inserted}
-        icon="eject"
-        onClick={() => act('eject_pai')}
-        tooltip={multiline`Ejects the current PAI.`}>
-        Eject PAI
-      </Button>
-    );
-  }
-};
-
 /** Displays the bot's standard settings: Power, patrol, etc. */
 const SettingsDisplay = (props, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
   const { settings } = data;
-  const { airplane_mode, patrol_station, power, maintenance_lock } = settings;
+  const {
+    airplane_mode,
+    patrol_station,
+    power,
+    maintenance_lock,
+    allow_possession,
+    possession_enabled,
+  } = settings;
 
   return (
     <LabeledControls>
@@ -187,6 +169,23 @@ const SettingsDisplay = (props, context) => {
           />
         </Tooltip>
       </LabeledControls.Item>
+      {allow_possession && (
+        <LabeledControls.Item label="Personality">
+          <Tooltip
+            content={
+              possession_enabled
+                ? 'Resets personality to factory default.'
+                : 'Enables download of a unique personality.'
+            }>
+            <Icon
+              size={2}
+              name="robot"
+              color={possession_enabled ? 'good' : 'gray'}
+              onClick={() => act('toggle_personality')}
+            />
+          </Tooltip>
+        </LabeledControls.Item>
+      )}
     </LabeledControls>
   );
 };

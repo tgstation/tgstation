@@ -2505,7 +2505,7 @@
 /area/station/security/brig)
 "cpJ" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
-/mob/living/simple_animal/hostile/lizard/wags_his_tail{
+/mob/living/basic/lizard/wags_his_tail{
 	name = "Wags-Her-Tail"
 	},
 /obj/structure/chair/stool/directional/west,
@@ -11125,7 +11125,7 @@
 "kvK" = (
 /obj/machinery/power/apc/worn_out/directional/west,
 /obj/structure/cable,
-/mob/living/basic/giant_spider/sgt_araneus,
+/mob/living/basic/spider/giant/sgt_araneus,
 /obj/structure/bed/dogbed/ian,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
@@ -20587,7 +20587,7 @@
 "tRl" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/machinery/light_switch/directional/east,
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
+/mob/living/basic/lizard/wags_his_tail,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
