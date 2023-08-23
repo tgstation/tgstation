@@ -499,7 +499,7 @@
 	density = FALSE
 	armor_type = /datum/armor/transport_module
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	max_integrity = 1000
+	max_integrity = 750
 	integrity_failure = 0.25
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
@@ -523,12 +523,7 @@
 	update_appearance()
 
 /obj/machinery/icts/tram_controller/atom_break()
-	var/controller_integrity = get_integrity()
-	if(controller_integrity <= 0)
-		update_integrity(1)
-
 	set_machine_stat(machine_stat | BROKEN)
-
 	..()
 
 /obj/machinery/icts/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
