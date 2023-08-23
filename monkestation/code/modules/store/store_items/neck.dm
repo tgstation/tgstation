@@ -74,6 +74,16 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	item_path = /obj/item/clothing/neck/infinity_scarf
 	item_cost = 7500
 
+/datum/store_item/neck/boatcloak
+	name = "Boat cloak"
+	item_path = /obj/item/clothing/neck/boatcloak
+	item_cost = 7500
+
+/datum/store_item/neck/polycloak
+	name = "Poly cloak"
+	item_path = /obj/item/clothing/neck/polycloak
+	item_cost = 7500
+
 /*
 *	NECKTIES
 */
