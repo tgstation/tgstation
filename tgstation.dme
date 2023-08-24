@@ -5466,6 +5466,7 @@
 #include "monkestation\code\game\objects\items\storage\boxes.dm"
 #include "monkestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "monkestation\code\modules\admin\antag_tokens.dm"
+#include "monkestation\code\modules\admin\camera_view.dm"
 #include "monkestation\code\modules\aesthetics\airlock\airlock.dm"
 #include "monkestation\code\modules\aesthetics\mobs\slime.dm"
 #include "monkestation\code\modules\aesthetics\objects\misc.dm"
