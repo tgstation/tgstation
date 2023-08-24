@@ -1,0 +1,4 @@
+author: "Donglesplonge"
+delete-after: True
+changes:
+  - balance: "removes the access restrictions from all animals found under the livestocks tab of the cargo order console, now assistants can private order animals for their farms without access hunting"
