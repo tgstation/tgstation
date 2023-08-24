@@ -4379,9 +4379,10 @@
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "bsx" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "bsG" = (
@@ -10468,6 +10469,7 @@
 "dgf" = (
 /obj/machinery/firealarm/directional/north,
 /obj/structure/chair,
+/obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "dgj" = (
@@ -14612,11 +14614,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
-"ewq" = (
-/obj/machinery/light_switch/directional/north,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "ewz" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -16612,6 +16609,7 @@
 /area/mine/laborcamp)
 "feB" = (
 /obj/machinery/airalarm/directional/east,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "feJ" = (
@@ -16997,6 +16995,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/quantum_server,
+/obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
@@ -34308,10 +34307,11 @@
 /turf/open/floor/iron/dark/smooth_corner,
 /area/station/bitrunning/den)
 "kQL" = (
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/structure/chair,
+/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/area/station/cargo/storage)
 "kQM" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
@@ -42489,6 +42489,8 @@
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 1
 	},
+/obj/machinery/holopad,
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
 "nyC" = (
@@ -42677,9 +42679,12 @@
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "nAS" = (
-/obj/effect/landmark/start/bitrunner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
-/area/station/cargo/storage)
+/area/station/cargo/miningdock)
 "nBe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -43478,9 +43483,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/area/station/cargo/storage)
 "nME" = (
 /obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/plating/snowed/icemoon,
@@ -47195,12 +47200,11 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "oVf" = (
-/obj/effect/landmark/start/shaft_miner,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/cargo/miningdock)
+/area/station/cargo/storage)
 "oVt" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -51813,17 +51817,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"qtT" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Dock"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/cargo/miningdock)
 "que" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Chapel South"
@@ -61452,7 +61445,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/event_spawn,
+/obj/machinery/door/airlock/mining{
+	name = "Mining Dock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "tyK" = (
@@ -68480,7 +68477,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Level","4"="Station                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Level")
+	preset_destination_names = list("3"="Icemoon                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Level","4"="Station                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -228372,7 +228369,7 @@ iaF
 iaF
 ajw
 ajw
-nAS
+ajw
 fNx
 fNx
 vWV
@@ -228628,7 +228625,7 @@ aET
 smx
 qqJ
 gjP
-sTU
+ajw
 ajw
 vWV
 edk
@@ -229141,9 +229138,9 @@ mAN
 vra
 lZQ
 wXR
-qjQ
-aOd
-qtT
+kXr
+sTU
+eMa
 fNx
 kQK
 dgj
@@ -229398,9 +229395,9 @@ kXA
 oDt
 kRU
 oQa
-qjQ
+kXr
 kQL
-hxE
+oVf
 fNx
 flq
 nyB
@@ -229655,8 +229652,8 @@ cXl
 uxl
 oRy
 aHC
-qjQ
-ewq
+kXr
+ghl
 oVf
 fNx
 vWV
@@ -229913,13 +229910,13 @@ cHb
 psW
 psW
 nMB
-hxE
-hxE
+oVf
+oVf
 tyH
 hxE
 hxE
-hxE
-hxE
+bsx
+nAS
 hxE
 hxE
 wBV
@@ -230169,10 +230166,10 @@ ljl
 kXA
 rLu
 nRq
+maT
+ajw
+eMa
 aOd
-hoD
-bsx
-hoD
 qJJ
 hxE
 iVA
@@ -230429,7 +230426,7 @@ uuP
 tue
 nZh
 lNG
-nZh
+tue
 tue
 hxE
 feB

@@ -303,7 +303,7 @@
 		return
 
 	var/datum/lazy_template/virtual_domain/generated_domain = server.generated_domain
-	if(isnull(generated_domain) || !server.get_is_ready())
+	if(isnull(generated_domain) || !server.is_ready)
 		balloon_alert(neo, "nothing loaded!")
 		return
 

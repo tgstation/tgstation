@@ -63670,6 +63670,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/bitrunner,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/bitrunning/den)
 "wFM" = (
