@@ -1,0 +1,4 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - rscdel: "Removes miscellaneous sources of clone damage from the game."
