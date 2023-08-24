@@ -90,7 +90,7 @@
 
 				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-		if(check_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
+		if(check_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type, P.armor_flag))
 			P.on_hit(src, 100, def_zone, piercing_hit)
 			return BULLET_ACT_HIT
 
@@ -109,7 +109,7 @@
 		def_zone = passed_part.body_zone
 
 	var/cover_flags_to_check = body_zone2cover_flags(check_zone(def_zone))
-	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE))
+	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE) + held_items)
 		if(worn_thing in held_items)
 			// Things that are supposed to be worn being held in hand - don't count
 			if(worn_thing.slot_flags & CLOTHING_ITEM_SLOTS)
@@ -132,7 +132,7 @@
 	if(.)
 		return TRUE
 
-	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE))
+	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE) + held_items)
 		// Things that are supposed to be worn being held in hand - don't count
 		if((worn_thing.slot_flags & CLOTHING_ITEM_SLOTS) && (worn_thing in held_items))
 			continue

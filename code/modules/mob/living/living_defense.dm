@@ -1,5 +1,5 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
+/mob/living/proc/run_armor_check(def_zone = null, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
 	var/our_armor = getarmor(def_zone, attack_flag)
 
 	if(our_armor <= 0)
@@ -403,16 +403,25 @@
  *
  * * hitby - the thing that is attacking us. This can be a mob (if they're punching) or an item (a mob attacking with an item, or a thrown item), or a projectile, so on.
  * Make use of the [GET_ASSAILANT] macro to determine if there is a mob that is behind the attack.
- * * damage - how much it's doing.
+ * * damage - How much damage it's doing.
  * Does not always equate to hitby's force, sometimes it might be some relevant value - like blocking a stun = 100 damage.
- * * attack_text - the text of the attack, usually like "the baton" (so you can format feedback messages as "blocks the baton with their shield")
- * * attack_type - what type of attack is incoming
- * * armour_penetration - how much, if any, armor penetration the attack has. compared agaiinst armor penetration of the item doing the blocking.
- * this means that items which have their own armor penetration are better at shielding
+ * * attack_text - The text of the attack, usually like "the baton" (so you can format feedback messages as "blocks the baton with their shield")
+ * * attack_type - What type of attack is incoming, this is a define unique to this proc, see [MELEE_ATTACK] and co for defines.
+ * * armour_penetration - how much, if any, armor penetration the attack has.
+ * * damage_type - What type of damage the attack is doing, [BRUTE] [STAMINA] etc.
+ * * armor_flag - What type of armor the attack is being blocked by. Like [MELEE], [ENERGY], etc.
  */
-/mob/living/proc/check_block(atom/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+/mob/living/proc/check_block(
+	atom/hitby,
+	damage = 0,
+	attack_text = "the attack",
+	attack_type = MELEE_ATTACK,
+	armour_penetration = 0,
+	damage_type = BRUTE,
+	attack_flag = MELEE,
+)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hitby, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag) & SUCCESSFUL_BLOCK)
 		return TRUE
 
 	return FALSE

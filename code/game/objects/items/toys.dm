@@ -510,7 +510,7 @@
 	else
 		return ..()
 
-/obj/item/toy/sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/toy/sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? blocking_ability : -1
 
 /*
@@ -607,7 +607,7 @@
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
 
-/obj/item/dualsaber/toy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/dualsaber/toy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	return HAS_TRAIT(src, TRAIT_WIELDED) ? blocking_ability : -1
 
 /obj/item/dualsaber/toy/IsReflect()

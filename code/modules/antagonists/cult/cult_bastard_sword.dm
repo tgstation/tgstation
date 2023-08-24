@@ -101,13 +101,21 @@
 	owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 	return TRUE
 
-/obj/item/cult_bastard/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/cult_bastard/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(!IS_CULTIST(blocker))
 		return 100
 
 	return blocking_ability
 
-/obj/item/cult_bastard/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+/obj/item/cult_bastard/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage,
+	attack_text,
+	attack_type,
+	damage_type,
+	attack_flag,
+)
 	. = ..()
 	if(IS_CULTIST(blocker))
 		blocker.visible_message(

@@ -26,7 +26,7 @@
 	. = ..()
 	if(.)
 		return
-	if(damage_type != BRUTE || attack_text != UNARMED_ATTACK)
+	if(damage_type != BRUTE || attack_type != UNARMED_ATTACK || attack_flag != MELEE)
 		return FALSE
 	if(damage <= 10)
 		playsound(loc, 'sound/effects/bang.ogg', 10, TRUE)

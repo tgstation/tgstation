@@ -116,7 +116,16 @@
 
 	qdel(src)
 
-/datum/status_effect/blocking/proc/on_attacked(mob/living/source, atom/movable/hitby, damage, attack_text, attack_type, armour_penetration, damage_type)
+/datum/status_effect/blocking/proc/on_attacked(
+	mob/living/source,
+	atom/hitby,
+	damage,
+	attack_text,
+	attack_type,
+	armour_penetration,
+	damage_type,
+	attack_flag,
+)
 	SIGNAL_HANDLER
 
 	if(armour_penetration >= 100)
@@ -130,7 +139,7 @@
 		return NONE
 
 	// Depending on the item (or lack thereof) you are blocking with, the damage taken is converted to more (or maybe less!) stamina damage
-	var/defense_multiplier = blocking_with ? blocking_with.get_blocking_ability(source, hitby, damage, attack_type, damage_type) : BARE_HAND_DEFENSE_MULTIPLIER
+	var/defense_multiplier = blocking_with ? blocking_with.get_blocking_ability(source, hitby, damage, attack_type, damage_type, attack_flag) : BARE_HAND_DEFENSE_MULTIPLIER
 	if(defense_multiplier < 0)
 		return NONE
 	if(damage_type == STAMINA)
@@ -156,7 +165,7 @@
 		return NONE
 
 	// Stops all following effects of the attack.
-	if(isnull(blocking_with) || !blocking_with.on_successful_block(source, hitby, damage, attack_text, attack_type, damage_type))
+	if(isnull(blocking_with) || !blocking_with.on_successful_block(source, hitby, damage, attack_text, attack_type, damage_type, attack_flag))
 		source.visible_message(
 			span_danger("[source] blocks [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 			span_danger("You block [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),

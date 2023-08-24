@@ -24,3 +24,15 @@
 	attacker.put_in_active_hand(id, forced = TRUE)
 	click_wrapper(attacker, borgo)
 	TEST_ASSERT(borgo.locked, "Robot was not re-locked when swiped with ID")
+
+/// Tests unarmed clicking a cyborg doesn't cause damage
+/datum/unit_test/silicon_punch
+
+/datum/unit_test/silicon_punch/Run()
+	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/silicon/robot/borgo = allocate(/mob/living/silicon/robot)
+	borgo.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
+	attacker.set_combat_mode(TRUE)
+	click_wrapper(attacker, borgo)
+	TEST_ASSERT_EQUAL(borgo.getBruteLoss(), 0, "Cyborg took damage from an unarmed punched - \
+		their unarmed damage threshold should be too high for this to happen.")

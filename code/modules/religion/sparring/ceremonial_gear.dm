@@ -54,7 +54,7 @@
 /obj/item/ceremonial_blade/describe_blocking()
 	return ..() + " Less effective at blocking if not sparring."
 
-/obj/item/ceremonial_blade/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/ceremonial_blade/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(attack_type != MELEE_ATTACK)
 		return blocking_ability
 	var/mob/living/attacker = GET_ASSAILANT(hitby)

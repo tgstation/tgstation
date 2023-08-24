@@ -55,7 +55,7 @@
 	var/attack_verb = select_attack_verb(attacker, smacked, weapon, damage)
 	var/damage_type = attack_type || attacker.get_attack_type()
 
-	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration_modifier, damage_type))
+	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration_modifier, damage_type, MELEE))
 		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?

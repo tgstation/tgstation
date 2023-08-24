@@ -77,6 +77,9 @@
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 10
 	bare_wound_bonus = 25
+	weapon_sprite_angle = 45
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
+	alt_attack_style = /datum/attack_style/melee_weapon/swing/fast
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()

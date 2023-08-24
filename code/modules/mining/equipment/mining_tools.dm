@@ -18,6 +18,7 @@
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
+	weapon_sprite_angle = 45
 	attack_style_path = /datum/attack_style/melee_weapon/swing
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
@@ -372,5 +373,5 @@
 	to_chat(user, span_danger("The weight of [src] recoils!"))
 	log_combat(user, user, "recoiled [src] into")
 
-/obj/item/shovel/giant_wrench/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/shovel/giant_wrench/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? DEFAULT_ITEM_DEFENSE_MULTIPLIER : blocking_ability

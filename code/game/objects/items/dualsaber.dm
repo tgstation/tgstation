@@ -67,11 +67,13 @@
 		[p_they()] can block about [HITS_TO_CRIT((25 * blocking_ability))] [all_blockables] before having guard broken. \
 		Must be active to block."
 
-/obj/item/dualsaber/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/dualsaber/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return -1
-	if(damage_type == LASER || damage_type == ENERGY)
+	if(attack_flag == LASER || attack_flag == ENERGY)
 		return 0 // perfectly able to block energy shots.
+	if(isprojectile(hitby) && damtype == STAMINA)
+		return 0 // disabler fire should also be blocked
 
 	return blocking_ability
 
@@ -178,8 +180,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/dualsaber/IsReflect()
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return 1
+	return HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/dualsaber/ignition_effect(atom/A, mob/user)
 	// same as /obj/item/melee/energy, mostly
@@ -268,18 +269,13 @@
 	sprite_size_multiplier = 2
 
 /datum/attack_style/melee_weapon/swing/desword/get_swing_description(has_alt_style)
-	. = "Swings out to all adjacent tiles besides directly behind you. It must be active to swing."
-	if(!has_alt_style)
-		. += " Right-clicking will swing in the opposite direction."
-	return .
+	return "Swings out to all adjacent tiles besides directly behind you. It must be active to swing."
 
 /datum/attack_style/melee_weapon/swing/desword/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	var/list/turfs_in_order = list()
 	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, 90), reversed = TRUE)
 	turfs_in_order |= get_step(attacker, attack_direction)
 	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, -90), reversed = TRUE)
-	if(right_clicking)
-		reverse_range(turfs_in_order)
 	return turfs_in_order
 
 /datum/attack_style/melee_weapon/swing/desword/execute_attack(mob/living/attacker, obj/item/dualsaber/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)

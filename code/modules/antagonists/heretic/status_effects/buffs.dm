@@ -169,6 +169,7 @@
 	attack_type = MELEE_ATTACK,
 	armour_penetration = 0,
 	damage_type = BRUTE,
+	attack_flag = MELEE,
 )
 	SIGNAL_HANDLER
 

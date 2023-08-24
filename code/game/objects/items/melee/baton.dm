@@ -193,7 +193,7 @@
 	COOLDOWN_START(src, cooldown_check, cooldown)
 	playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
 	// Bonus last chance to block the incoming stamina stun damage
-	if(target.check_block(src, stamina_damage - force, "the [name]'s stun", MELEE_ATTACK, 0, STAMINA))
+	if(target.check_block(src, stamina_damage - force, "the [name]'s stun", MELEE_ATTACK, 0, STAMINA, MELEE)) // perhaps should be energy attack flag.
 		return
 
 	if(user)

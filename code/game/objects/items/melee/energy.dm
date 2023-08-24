@@ -76,7 +76,7 @@
 		[p_they()] can block about [HITS_TO_CRIT((25 * blocking_ability))] [all_blockables] before having guard broken. \
 		Must be active to block."
 
-/obj/item/melee/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/melee/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return -1
 	if(damage_type == LASER || damage_type == ENERGY)
@@ -368,23 +368,11 @@
 
 // Attack style for eswords
 /datum/attack_style/melee_weapon/swing/esword
-	cd = CLICK_CD_MELEE * 1.25 // Much faster than normal swings
+	cd = CLICK_CD_MELEE * 1.5 // Much faster than normal swings
 	slowdown = 0.75
-	reverse_for_lefthand = FALSE
 	time_per_turf = 0.1 SECONDS
 
-/datum/attack_style/melee_weapon/swing/esword/get_swing_description(has_alt_style)
-	. = ..()
-	if(!has_alt_style)
-		. += " Right-clicking will swing in the opposite direction."
-	return .
-
-/datum/attack_style/melee_weapon/swing/esword/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
-	. = ..()
-	if(right_clicking)
-		reverse_range(.)
-
 /datum/attack_style/melee_weapon/stab_out/esword
-	cd = CLICK_CD_MELEE * 1.25
+	cd = CLICK_CD_MELEE
 	slowdown = 0.75
 	sprite_size_multiplier = 1.25

@@ -10,7 +10,7 @@
 	attacker.changeNext_move(CLICK_CD_MELEE)
 
 	if(attacker != smacked)
-		if(smacked.check_block(attacker, 0, "[attacker]'s touch", UNARMED_ATTACK, 0, STAMINA))
+		if(smacked.check_block(attacker, 0, "[attacker]'s touch", attack_type = UNARMED_ATTACK))
 			return ATTACK_SWING_BLOCKED
 
 		// Todo : move this out and into its own style?

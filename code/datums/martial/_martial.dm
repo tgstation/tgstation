@@ -107,7 +107,7 @@
 /datum/martial_art/proc/block_check(mob/living/source, atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	SIGNAL_HANDLER
 
-	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK)
+	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK && attack_flag != MELEE)
 		return NONE
 	if(!source.throw_mode || !can_use(source) || source.incapacitated(IGNORE_GRAB))
 		return NONE

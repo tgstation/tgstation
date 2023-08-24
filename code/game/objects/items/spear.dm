@@ -23,8 +23,8 @@
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	bare_wound_bonus = 15
-	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
-	alt_attack_style_path = /datum/attack_style/melee_weapon/stab_out/spear
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out/spear
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 45
 
 	/// For explosive spears, what we cry out when we use this to bap someone

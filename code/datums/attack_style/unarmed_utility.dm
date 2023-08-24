@@ -19,7 +19,7 @@
 
 	var/shove_verb = smacked.response_disarm_simple || "shove"
 
-	if(smacked.check_block(attacker, 30, "[attacker]'s [shove_verb]", UNARMED_ATTACK, 0, STAMINA)) // ~30 damage means you can block one shove with your bare hands.
+	if(smacked.check_block(attacker, 30, "[attacker]'s [shove_verb]", attack_type = UNARMED_ATTACK)) // ~30 damage means you can block one shove with your bare hands.
 		return ATTACK_SWING_BLOCKED
 
 	if(attacker.move_force < smacked.move_resist)
@@ -167,7 +167,7 @@
 	miss_sound = null
 
 /datum/attack_style/unarmed/grab/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	if(smacked.check_block(attacker, 30, "[attacker]'s grab", UNARMED_ATTACK, 0, STAMINA)) // likewise, 30 damage = one grab
+	if(smacked.check_block(attacker, 30, "[attacker]'s grab", attack_type = UNARMED_ATTACK)) // likewise, 30 damage = one grab
 		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?

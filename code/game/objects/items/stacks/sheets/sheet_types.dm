@@ -624,7 +624,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	amount = 50
 
 /obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
+	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage)) // melbert todo : broken ?
 		var/atom/droploc = drop_location()
 		if(use(1))
 			playsound(I, 'sound/items/bikehorn.ogg', 50, TRUE, -1)

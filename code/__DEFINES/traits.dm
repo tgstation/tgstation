@@ -1295,3 +1295,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This means the "caster" of the spell is changed to the mob's loc
 /// Note this doesn't mean all spells are guaranteed to work or the mob is guaranteed to cast
 #define TRAIT_CASTABLE_LOC "castable_loc"
+
+/// This trait is applied by some attack swings
+/// It causes the user's next swing to be reversed if applicable
+#define TRAIT_ALTERNATE_SWING_DIRECTION "go_the_other_way"

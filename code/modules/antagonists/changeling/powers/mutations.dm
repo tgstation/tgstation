@@ -473,7 +473,15 @@
 	if(ismob(loc))
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
-/obj/item/shield/changeling/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+/obj/item/shield/changeling/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage,
+	attack_text,
+	attack_type,
+	damage_type,
+	attack_flag,
+)
 	. = ..()
 	if(QDELETED(src))
 		return

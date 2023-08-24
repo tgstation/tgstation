@@ -30,8 +30,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/cd = CLICK_CD_MELEE
 	/// Movement slowdown applied on an attack
 	var/slowdown = 1
-	/// The number of mobs that can be hit per hit turf
-	var/hits_per_turf_allowed = 1
+	/// The max total mob size that can be hit in a single turf.
+	/// If multiple humans are stacked on the same turf, it'll only hit one (by default),
+	/// but if there's multiple bees or other small mobs, you could hit multiple.
+	var/total_mob_size_hit_allowed = MOB_SIZE_HUMAN
 	/// How long does it take for the attack to travel between turfs?
 	/// Essentually, this is "swing speed". Does nothing for attacks which only hit a single turf.
 	var/time_per_turf = 0 SECONDS
@@ -237,8 +239,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(attack_result & (ATTACK_SWING_MISSED|ATTACK_SWING_SKIPPED))
 			continue
 		if(attack_result & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
-			total_hit++
-		if(total_hit >= hits_per_turf_allowed)
+			total_hit += max(smack_who.mob_size, 0.25)
+		if(total_hit >= total_mob_size_hit_allowed)
 			break
 
 	// Right after dealing damage we handle getting blocked by dense stuff
@@ -316,12 +318,15 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /// Determines behavior when we collide with a solid / dense atom mid swing.
 /datum/attack_style/proc/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
-	if(blocking_us.uses_integrity)
-		attacker.visible_message(
-			span_warning("[attacker]'s attack collides with [blocking_us]!"),
-			span_warning("[blocking_us] blocks your attack!"),
-		)
-		blocking_us.attacked_by(weapon, attacker)
+	if(!blocking_us.uses_integrity)
+		// This is stuff like walls - essentially does this swing get stopped by hitting a wall?
+		return NONE
+
+	attacker.visible_message(
+		span_warning("[attacker]'s attack collides with [blocking_us]!"),
+		span_warning("[blocking_us] blocks your attack!"),
+	)
+	blocking_us.attacked_by(weapon, attacker)
 	return ATTACK_SWING_BLOCKED
 
 /**
@@ -396,7 +401,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/melee_weapon/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	// Blocking is checked here. Does NOT calculate final damage when passing to check block (IE, ignores armor / physiology)
-	if(smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
+	if(smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype, MELEE))
 		return ATTACK_SWING_BLOCKED
 
 	var/attack_result = NONE

@@ -88,6 +88,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	density = FALSE
 	del_on_death = 1
+	mob_size = MOB_SIZE_TINY
 	var/clickbox_state = "hivelord"
 	var/clickbox_max_scale = INFINITY
 

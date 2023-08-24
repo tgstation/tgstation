@@ -9,6 +9,17 @@
 /datum/attack_style/melee_weapon/swing/get_swing_description(has_alt_style)
 	return "Swings in an arc of three tiles in the direction you are attacking."
 
+/datum/attack_style/melee_weapon/swing/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
+	. = ..()
+	if(!(. & ATTACK_SWING_HIT))
+		return
+
+	// The next attack with this style will go the opposite direction, to do back-and-forth
+	if(HAS_TRAIT_FROM(attacker, TRAIT_ALTERNATE_SWING_DIRECTION, type))
+		REMOVE_TRAIT(attacker, TRAIT_ALTERNATE_SWING_DIRECTION, type)
+	else
+		ADD_TRAIT(attacker, TRAIT_ALTERNATE_SWING_DIRECTION, type)
+
 /datum/attack_style/melee_weapon/swing/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	var/num_turfs_to_move = length(affected_turfs)
 	var/final_animation_length = time_per_turf * num_turfs_to_move
@@ -37,7 +48,7 @@
 	)
 
 /datum/attack_style/melee_weapon/swing/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
-	var/should_reverse = reverse_for_lefthand && (attacker.active_hand_index % 2 == 1)
+	var/should_reverse = reverse_for_lefthand && (attacker.active_hand_index % 2 == 1) || HAS_TRAIT(attacker, TRAIT_ALTERNATE_SWING_DIRECTION)
 	return get_turfs_and_adjacent_in_direction(attacker, attack_direction, reversed = should_reverse)
 
 /datum/attack_style/melee_weapon/swing/wider_arc
@@ -50,7 +61,7 @@
 	// Also grab turfs to the left and right of the attacker
 	var/turf/adjacent_left = get_step(attacker, turn(attack_direction, -90))
 	var/turf/adjacent_right = get_step(attacker, turn(attack_direction, 90))
-	if(reverse_for_lefthand && (attacker.active_hand_index % 2 == 1))
+	if((reverse_for_lefthand && (attacker.active_hand_index % 2 == 1)) || HAS_TRAIT(attacker, TRAIT_ALTERNATE_SWING_DIRECTION))
 		// If the list was reversed, right goes to the start and left goes to the end
 		swing_turfs.Insert(1, adjacent_right)
 		swing_turfs.Add(adjacent_left)

@@ -56,14 +56,7 @@
 		descriptions += "May shatter under heavy damage."
 	return jointext(descriptions, "\n")
 
-/obj/item/shield/get_blocking_ability(
-	mob/living/blocker,
-	atom/movable/hitby,
-	damage = 0,
-	attack_type = MELEE_ATTACK,
-	damage_type = BRUTE,
-)
-
+/obj/item/shield/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return -1 // Cannot block that
 
@@ -81,10 +74,11 @@
 /obj/item/shield/on_successful_block(
 	mob/living/blocker,
 	atom/movable/hitby,
-	damage = 0,
+	damage,
 	attack_text,
-	attack_type = MELEE_ATTACK,
-	damage_type = BRUTE,
+	attack_type,
+	damage_type,
+	attack_flag,
 )
 	. = ..()
 	if(!breakable_by_damage)
@@ -217,7 +211,15 @@
 /obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
 	flash_away(user)
 
-/obj/item/shield/riot/flash/on_successful_block(mob/living/blocker)
+/obj/item/shield/riot/flash/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage,
+	attack_text,
+	attack_type,
+	damage_type,
+	attack_flag,
+)
 	. = ..()
 	if(QDELETED(src))
 		return
@@ -318,7 +320,7 @@
 	return "[p_They()] [p_are()] able to flawlessly block all laser and energy [all_blockables], \
 		But cannot block anything else. Must be active to block."
 
-/obj/item/shield/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/shield/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && (damage_type == ENERGY || damage_type == LASER))
 		return 0
 
@@ -368,7 +370,7 @@
 /obj/item/shield/riot/tele/describe_blocking()
 	return ..() + " Must be extended to block."
 
-/obj/item/shield/riot/tele/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/shield/riot/tele/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return ..()
 	return DEFAULT_ITEM_DEFENSE_MULTIPLIER

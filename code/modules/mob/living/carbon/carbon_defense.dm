@@ -182,7 +182,7 @@
 	// In the future these should be combined into one item flag / trait / whatever
 
 	// Clothing prevents you from being knocked over
-	for (var/obj/item/clothing/clothing in get_equipped_items(include_pockets = FALSE))
+	for (var/obj/item/clothing/clothing in get_equipped_items(include_pockets = FALSE) + held_items)
 		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
 			return TRUE
 	// Shields or items that block leap attacks similarly block you from falling over

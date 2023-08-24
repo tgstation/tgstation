@@ -381,22 +381,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/describe_blocking()
 	return "[p_they()] can block about [HITS_TO_CRIT((25 * blocking_ability))] unarmed attacks before having guard broken."
 
-/obj/item/chair/get_blocking_ability(
-	mob/living/blocker,
-	atom/movable/hitby,
-	damage = 0,
-	attack_type = MELEE_ATTACK,
-	damage_type = BRUTE,
-)
+/obj/item/chair/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	return (attack_type == UNARMED_ATTACK) ? blocking_ability : DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
 /obj/item/chair/on_successful_block(
 	mob/living/blocker,
 	atom/movable/hitby,
-	damage = 0,
+	damage,
 	attack_text,
-	attack_type = MELEE_ATTACK,
-	damage_type = BRUTE,
+	attack_type,
+	damage_type,
+	attack_flag,
 )
 	. = ..()
 	if(attack_type == UNARMED_ATTACK)

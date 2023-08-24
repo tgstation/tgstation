@@ -175,6 +175,7 @@
 	toolspeed = 1
 	wound_bonus = 10
 	bare_wound_bonus = 15
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
 
 /obj/item/scalpel/Initialize(mapload)
 	. = ..()
@@ -344,6 +345,7 @@
 	light_range = 1
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
+	weapon_sprite_angle = 270
 	attack_style_path = /datum/attack_style/melee_weapon/stab_out // We start on stab mode
 
 /obj/item/scalpel/advanced/Initialize(mapload)

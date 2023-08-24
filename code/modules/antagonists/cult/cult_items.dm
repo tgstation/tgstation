@@ -77,13 +77,21 @@ Striking a noncultist, however, will tear their flesh."}
 	effectiveness = 100, \
 	)
 
-/obj/item/melee/cultblade/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/melee/cultblade/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	if(!IS_CULTIST(blocker))
 		return DEFAULT_ITEM_DEFENSE_MULTIPLIER * 3 // makes it worse for you!
 
 	return blocking_ability
 
-/obj/item/melee/cultblade/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+/obj/item/melee/cultblade/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage,
+	attack_text,
+	attack_type,
+	damage_type,
+	attack_flag,
+)
 	. = ..()
 	if(IS_CULTIST(blocker))
 		var/offhanding = (src == blocker.get_inactive_held_item())
@@ -729,7 +737,7 @@ Striking a noncultist, however, will tear their flesh."}
 		QDEL_NULL(halberd_act)
 	return ..()
 
-/obj/item/melee/cultblade/halberd/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/melee/cultblade/halberd/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		. *= 0.75
@@ -973,7 +981,15 @@ Striking a noncultist, however, will tear their flesh."}
 	var/illusions = 2
 	var/charge_period = 45 SECONDS
 
-/obj/item/shield/mirror/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+/obj/item/shield/mirror/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage,
+	attack_text,
+	attack_type,
+	damage_type,
+	attack_flag,
+)
 	. = ..()
 	if(QDELETED(src))
 		return

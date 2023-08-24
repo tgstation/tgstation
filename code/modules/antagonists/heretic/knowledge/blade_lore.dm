@@ -127,6 +127,7 @@
 	attack_type = MELEE_ATTACK,
 	armour_penetration = 0,
 	damage_type = BRUTE,
+	attack_flag = MELEE,
 )
 
 	SIGNAL_HANDLER
@@ -181,7 +182,7 @@
 		span_warning("You lean into [attack_text] and deliver a sudden riposte back at [target]!"),
 		span_hear("You hear a clink, followed by a stab."),
 	)
-	weapon.melee_attack_chain(source, target)
+	weapon.attack_style.process_attack(source, weapon, target)
 
 /datum/heretic_knowledge/blade_dance/proc/reset_riposte(mob/living/carbon/human/source)
 	riposte_ready = TRUE
@@ -360,7 +361,7 @@
 	// Subtract the decrement
 	blade.force -= offand_force_decrement
 	// Perform the offhand attack
-	blade.melee_attack_chain(source, target)
+	blade.attack_style.process_attack(source, blade, target)
 	// Restore the force.
 	blade.force = last_weapon_force
 

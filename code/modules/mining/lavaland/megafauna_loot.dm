@@ -708,10 +708,18 @@
 /obj/item/melee/ghost_sword/holographic/describe_blocking()
 	return ..() + " More effective at blocking with additional ghosts."
 
-/obj/item/melee/ghost_sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+/obj/item/melee/ghost_sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type, attack_flag)
 	return max(DEFAULT_ITEM_DEFENSE_MULTIPLIER - (ghost_check() * 0.2), 0.2)
 
-/obj/item/melee/ghost_sword/on_successful_block(mob/living/blocker, atom/movable/hitby, damage, attack_text, attack_type, damage_type)
+/obj/item/melee/ghost_sword/on_successful_block(
+	mob/living/blocker,
+	atom/movable/hitby,
+	damage,
+	attack_text,
+	attack_type,
+	damage_type,
+	attack_flag,
+)
 	. = ..()
 	var/num_ghosts = ghost_check()
 	if(num_ghosts > 0)

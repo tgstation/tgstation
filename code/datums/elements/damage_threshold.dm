@@ -29,6 +29,7 @@
 	attack_type,
 	armour_penetration,
 	damage_type,
+	attack_flag,
 )
 	SIGNAL_HANDLER
 

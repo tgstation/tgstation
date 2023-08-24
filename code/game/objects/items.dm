@@ -728,6 +728,7 @@
 	damage = 0,
 	attack_type = MELEE_ATTACK,
 	damage_type = BRUTE,
+	attack_flag = MELEE,
 )
 	// SHOULD_BE_PURE(TRUE)
 	return blocking_ability
@@ -745,6 +746,7 @@
 	attack_text,
 	attack_type = MELEE_ATTACK,
 	damage_type = BRUTE,
+	attack_flag = MELEE,
 )
 	SHOULD_CALL_PARENT(TRUE)
 
