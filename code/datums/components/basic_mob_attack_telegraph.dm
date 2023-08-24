@@ -25,6 +25,12 @@
 	src.telegraph_duration = telegraph_duration
 	src.on_began_forecast = on_began_forecast
 
+/datum/component/basic_mob_attack_telegraph/Destroy()
+	QDEL_NULL(target_overlay)
+	wearer = null
+	on_began_forecast = null
+	return ..()
+
 /datum/component/basic_mob_attack_telegraph/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
