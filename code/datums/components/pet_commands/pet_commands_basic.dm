@@ -164,3 +164,43 @@
 	// We also don't check if the cooldown is over because there's no way a pet owner can know that, the behaviour will handle it
 	controller.queue_behavior(/datum/ai_behavior/pet_use_ability, pet_ability_key, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/pet_command/protect_owner
+	command_name = "Protect owner"
+	command_desc = "Your pet will run to your aid."
+	hidden = TRUE
+	///the range our owner needs to be in for us to protect him
+	var/protect_range = 9
+	///the behavior we will use when he is attacked
+	var/protect_behavior = /datum/ai_behavior/basic_melee_attack
+
+/datum/pet_command/protect_owner/add_new_friend(mob/living/tamer)
+	RegisterSignal(tamer, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(set_attacking_target))
+	if(!HAS_TRAIT(tamer, TRAIT_RELAYING_ATTACKER))
+		tamer.AddElement(/datum/element/relay_attackers)
+
+/datum/pet_command/protect_owner/remove_friend(mob/living/unfriended)
+	UnregisterSignal(unfriended, COMSIG_ATOM_WAS_ATTACKED)
+
+/datum/pet_command/protect_owner/execute_action(datum/ai_controller/controller)
+	var/datum/targetting_datum/basic/targetting = controller.blackboard[BB_TARGETTING_DATUM]
+	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
+	if(victim.stat > targetting.stat_attack)
+		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+		return
+	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETTING_DATUM)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim)
+	. = ..()
+	set_command_target(parent, victim)
+
+/datum/pet_command/protect_owner/proc/set_attacking_target(atom/source, mob/living/attacker)
+	var/mob/living/basic/owner = weak_parent.resolve()
+	if(isnull(owner))
+		return
+	var/mob/living/current_target = owner.ai_controller?.blackboard[BB_CURRENT_PET_TARGET]
+	if(attacker == current_target) //we are already dealing with this target
+		return
+	if(isliving(attacker) && can_see(owner, attacker, protect_range))
+		set_command_active(owner, attacker)
