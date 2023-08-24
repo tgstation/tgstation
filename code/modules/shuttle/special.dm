@@ -7,8 +7,8 @@
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
 	icon = 'icons/obj/engine/singularity.dmi'
-	icon_state = "emitter_+a"
-	base_icon_state = "emitter_+a"
+	icon_state = "emitter-active"
+	base_icon_state = "emitter-active"
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
@@ -423,7 +423,7 @@
 		alarm_beep()
 		return ..()
 
-/mob/living/simple_animal/hostile/bear/fightpit
+/mob/living/basic/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
 	environment_smash = ENVIRONMENT_SMASH_NONE

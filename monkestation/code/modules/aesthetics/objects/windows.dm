@@ -2,6 +2,7 @@
 	var/glass_color
 	var/glass_color_blend_to_color
 	var/glass_color_blend_to_ratio
+	var/uses_color = TRUE
 
 /obj/structure/window/proc/change_color(new_color)
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)

@@ -165,9 +165,7 @@
 	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
 	// We do a poll on roundstart, don't let ghosts in early
-	cargorilla.being_polled_for = TRUE
 	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
-
 	// hm our sloth looks funny today
 	qdel(cargo_sloth)
 

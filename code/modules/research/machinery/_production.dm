@@ -367,7 +367,7 @@
 	if(!stripe_color)
 		return
 
-	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolate_stripe")
+	var/mutable_appearance/stripe = mutable_appearance('monkestation/icons/obj/machines/research.dmi', "protolate_stripe") //monkestation edit
 
 	if(!panel_open)
 		stripe.icon_state = "protolathe_stripe"

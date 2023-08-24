@@ -50,5 +50,9 @@
 #define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 /// from base of atom/attack_robot_secondary(): (mob/user)
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
-///from relay_attackers element: (atom/attacker)
+///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
+	///The damage type of the weapon projectile is non-lethal stamina
+	#define ATTACKER_STAMINA_ATTACK (1<<0)
+	///the attacker is shoving the source
+	#define ATTACKER_SHOVING (1<<1)

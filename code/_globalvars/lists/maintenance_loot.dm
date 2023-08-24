@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 
 
 GLOBAL_LIST_INIT(maint_fauna, list(//fauna: there be critters living in yer maint tunnels
-		/mob/living/simple_animal/hostile/bee/friendly = 1,
+		/mob/living/basic/bee/friendly = 1,
 	))
 
 

@@ -145,6 +145,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		to_chat(invoker, span_brass("You fail to invoke [name]."))
 		return FALSE
 
+	if(HAS_TRAIT(invoker, TRAIT_NO_SLAB_INVOKE))
+		to_chat(invoker, span_warning("Something blocks you from invoking scriptures."))
+		return FALSE
+
 	var/invokers = 0
 	if(locate(/obj/item/toy/plush/ratplush) in range(1, invoker)) //ratvar plushies count as an invoker
 		invokers++
