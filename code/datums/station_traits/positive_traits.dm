@@ -349,7 +349,7 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Your station's medibots have recieved a hardware upgrade."
+	report_message = "Your station's medibots have recieved a hardware upgrade, enabling expanded healing capabilities."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
 	blacklist = list(/datum/station_trait/medbot_mania)
 
