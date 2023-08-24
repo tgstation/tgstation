@@ -471,8 +471,8 @@
 		slowdown = initial(slowdown)
 		atom_storage.locked = STORAGE_SOFT_LOCKED
 		atom_storage.display_contents = FALSE
-		for(var/obj/item/storage/storage_item in get_all_contents_type(/obj/item/storage)) //close ui of this and all storage items(e.g. boxes) inside dufflebag
-			storage_item.atom_storage.close_all()
+		for(var/obj/item/weapon in get_all_contents_type(/obj/item)) //close ui of this and all items inside dufflebag
+			weapon.atom_storage?.close_all() //not everything has storage initialized
 	else
 		slowdown = zip_slowdown
 		atom_storage.locked = STORAGE_NOT_LOCKED
