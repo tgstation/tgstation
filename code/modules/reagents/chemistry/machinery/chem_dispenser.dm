@@ -374,6 +374,17 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+	if(panel_open)
+		if(istype(I, /obj/item/stock_parts/cell))
+			I.forceMove(src) // Force it out of our hands so we can put the old cell in it
+			if(!user.put_in_hands(cell))
+				cell.forceMove(get_turf(src))
+			component_parts -= cell // Remove the old cell so the new one spawns when deconstructed
+			I.moveToNullspace() // Now get out of contents
+			to_chat(user, span_notice("You replace [cell] with [I]."))
+			cell = I // Set the cell
+			component_parts += I // Add new cell
+		return
 	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
