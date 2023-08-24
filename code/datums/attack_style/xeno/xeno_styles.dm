@@ -116,7 +116,7 @@
 			span_hear("You hear something slam loudly onto the floor!"),
 			ignored_mobs = attacker,
 		)
-		to_chat(attacker, span_danger("You slam [src] into the floor beneath you!"))
+		to_chat(attacker, span_danger("You slam [smacked] into the floor beneath you!"))
 		log_combat(attacker, smacked, "slammed into the ground")
 		return
 

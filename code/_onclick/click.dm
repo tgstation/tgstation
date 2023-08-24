@@ -79,6 +79,7 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	// note these aren't true/false, they're string or null - where the string is "1".
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/middle_clicking = LAZYACCESS(modifiers, MIDDLE_CLICK)
 	var/ctrl_clicking = LAZYACCESS(modifiers, CTRL_CLICK)
@@ -177,7 +178,12 @@
 			click_on_without_item(item_atom, TRUE, modifiers)
 
 	// From here on we only deal in the physical realm
-	if(istype(clicked_on, /atom/movable/screen))
+	// Essentially this is here so you can't use telekinesis or shoot your gun at your hud objects
+	// However some screen objects must allowed a click to pass through, click catchers and cursor catchers, so ... society
+	// Find a better way to filter these out later
+	if(istype(clicked_on, /atom/movable/screen)\
+		&& !istype(clicked_on, /atom/movable/screen/click_catcher) \
+		&& !istype(clicked_on, /atom/movable/screen/fullscreen))
 		return
 
 	// -- Attacking with an item --
