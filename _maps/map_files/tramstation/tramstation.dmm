@@ -10095,7 +10095,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /turf/closed/wall,
 /area/station/science/xenobiology)
@@ -44034,7 +44034,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)

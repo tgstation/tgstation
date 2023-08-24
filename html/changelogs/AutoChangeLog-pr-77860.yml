@@ -1,5 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - balance: "Grilles will now take 0-1 damage every time they shock something."
-  - balance: "Powersinks are now available earlier in traitor progression."
