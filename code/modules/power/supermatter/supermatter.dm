@@ -169,6 +169,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
+	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
+	var/list/datum/weakref/saviors = null
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	gas_percentage = list()
@@ -312,6 +315,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	processing_sound()
 	handle_high_power()
 	psychological_examination()
+
+	if(get_status() < SUPERMATTER_WARNING && !isnull(saviors))
+		for(var/datum/weakref/savior_ref as anything in saviors)
+			var/mob/living/carbon/savior = savior_ref.resolve()
+			if(!istype(savior)) // didn't live to tell the tale, sadly.
+				continue
+			savior.client?.give_award(/datum/award/achievement/misc/this_is_fine, savior)
+		LAZYNULL(saviors)
+
 	if(prob(15))
 		supermatter_pull(loc, min(internal_energy/850, 3))//850, 1700, 2550
 	update_appearance()
@@ -519,9 +531,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				return
 
 			for(var/mob/living/carbon/lucky_engi in mobs_in_area_type(list(/area/station/engineering/supermatter)))
-				if(!istype(lucky_engi.client))
+				if(isnull(lucky_engi.client))
 					continue
-				lucky_engi.client.give_award(/datum/award/achievement/misc/this_is_fine, lucky_engi)
+				LAZYADD(saviors, WEAKREF(lucky_engi))
 
 			return // delam averted
 		sleep(1 SECONDS)
