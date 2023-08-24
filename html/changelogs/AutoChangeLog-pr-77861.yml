@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "The roundend report will now read out any achievements (\"cheevos\" as you may know them) earned by players over the course of the round."
