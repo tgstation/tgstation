@@ -22,7 +22,7 @@
 /mob/living/silicon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type = BRUTE)
+/mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag)
 	. = ..()
 	if(.)
 		return

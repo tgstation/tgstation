@@ -104,7 +104,7 @@
 		remove_verb(holder_living, help_verb)
 	UnregisterSignal(holder_living, COMSIG_LIVING_CHECK_BLOCK)
 
-/datum/martial_art/proc/block_check(mob/living/source, atom/hitby, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+/datum/martial_art/proc/block_check(mob/living/source, atom/hitby, damage, attack_text, attack_type, armour_penetration, attack_flag)
 	SIGNAL_HANDLER
 
 	if(attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK && attack_flag != MELEE)
