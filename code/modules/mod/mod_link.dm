@@ -102,7 +102,7 @@
 				mod_link.frequency = tool_frequency
 
 /obj/item/mod/control/proc/can_call()
-	return wearer && wearer.stat < DEAD
+	return get_charge() && wearer && wearer.stat < DEAD
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -132,7 +132,7 @@
 
 /obj/item/mod/control/proc/on_wearer_set_dir(atom/source, dir, newdir)
 	SIGNAL_HANDLER
-	on_user_set_dir_generic(mod_link, newdir)
+	on_user_set_dir_generic(mod_link, newdir || SOUTH)
 
 /obj/item/clothing/neck/link_scryer
 	name = "\improper MODlink scryer"
@@ -144,7 +144,7 @@
 	/// The MODlink datum we operate.
 	var/datum/mod_link/mod_link
 	/// Initial frequency of the MODlink.
-	var/starting_frequency = "NT"
+	var/starting_frequency
 	/// An additional name tag for the scryer, seen as "MODlink scryer - [label]"
 	var/label
 
@@ -173,7 +173,7 @@
 		. += span_notice("The battery charge reads [cell.percent()]%. <b>Right-click</b> with an empty hand to remove it.")
 	else
 		. += span_notice("It is missing a battery, one can be installed by clicking with a power cell on it.")
-	. += span_notice("The MODlink ID is [mod_link.id], frequency is [mod_link.frequency]. <b>Right-click</b> with multitool to copy/imprint frequency.")
+	. += span_notice("The MODlink ID is [mod_link.id], frequency is [mod_link.frequency || "unset"]. <b>Right-click</b> with multitool to copy/imprint frequency.")
 	. += span_notice("Use in hand to set name.")
 
 /obj/item/clothing/neck/link_scryer/equipped(mob/living/user, slot)
@@ -260,7 +260,7 @@
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
-	return istype(user) && cell.charge && user.stat < DEAD
+	return istype(user) && cell?.charge && user.stat < DEAD
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
@@ -296,7 +296,10 @@
 
 /obj/item/clothing/neck/link_scryer/proc/on_user_set_dir(atom/source, dir, newdir)
 	SIGNAL_HANDLER
-	on_user_set_dir_generic(mod_link, newdir)
+	on_user_set_dir_generic(mod_link, newdir || SOUTH)
+
+/obj/item/clothing/neck/link_scryer/loaded
+	starting_frequency = "NT"
 
 /obj/item/clothing/neck/link_scryer/loaded/Initialize(mapload)
 	. = ..()
