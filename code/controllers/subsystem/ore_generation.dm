@@ -13,17 +13,19 @@ SUBSYSTEM_DEF(ore_generation)
 	var/list/available_boulders = list()
 	/// All the ore vents that are currently in the game, not just the ones that are producing boulders.
 	var/list/possible_vents = list()
-	/// The quantity of ore vents that mapgen will attempt to spawn.
+	/// The quantity of ore vents that a single cave_generation mapgen will attempt to spawn. 
 	var/ore_vent_count = 15
+	/// A list of all the minerals that are being mined by ore vents. We reset this list every time cave generation is done.
+	var/list/ore_vent_minerals = list()
 	/**
 	 * Associated list of minerals to be associated with our ore vents.
-	 * Should be empty by the time initialize ends. Each value by each key is the number of vents that have this ore as a possible choice.
+	 * Generally Should be empty by the time initialize ends on lavaland. Each key value is the number of vents that will have this ore as a unique possible choice.
 	 */
-	var/list/ore_vent_minerals = list(
-		/datum/material/iron = 12,
+	var/static/list/ore_vent_minerals_default = list(
+		/datum/material/iron = 13,
 		/datum/material/glass = 12,
-		/datum/material/plasma = 8,
-		/datum/material/titanium = 5,
+		/datum/material/plasma = 9,
+		/datum/material/titanium = 6,
 		/datum/material/silver = 5,
 		/datum/material/gold = 5,
 		/datum/material/diamond = 3,

@@ -66,6 +66,7 @@
  * @param volume: How much reagent to draw from the washing input.
  */
 /obj/machinery/bouldertech/refinery/proc/process_reagents(volume = MACHINE_REAGENT_TRANSFER)
+	say("Processing reagents!")
 	if(volume > washing_input.reagents.total_volume) //not enough washing fluid
 		return null
 
@@ -82,7 +83,7 @@
 		.[reagent.type] = volume_to_draw
 		washing_input.reagents.remove_reagent(reagent.type, volume_to_draw)
 		refining_efficiency = max(allowed_reagents[reagent.type], refining_efficiency) //Set refining efficiency to the highest efficiency of the reagents used within the input reagents.
-
+	say("efficiency is now [refining_efficiency]")
 	generate_waste(.)
 
 /**
@@ -93,6 +94,7 @@
 	var/total_waste = 0
 	for(var/reagent_type as anything in used_reagents)
 		switch(reagent_type)
+
 			if(/datum/reagent/toxin/acid/fluacid)
 				total_waste += used_reagents[reagent_type] * 4
 				continue

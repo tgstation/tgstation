@@ -44,6 +44,12 @@
 	else
 		. += span_warning("This vile Nanotrasen trash is trying to destroy the environment. Attack it to free the mineral vent from its grasp.")
 
+/mob/living/basic/node_drone/proc/arrive()
+	icon_state = "mining_node_flying"
+	update_appearance(UPDATE_ICON_STATE)
+	pixel_z = 400
+	animate(src, pixel_z = 0, time = 2 SECONDS, easing = QUAD_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+
 /**
  * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
  */
@@ -58,7 +64,7 @@
 	//update_appearance(UPDATE_ICON_STATE)
 	visible_message(src, "The drone flies away to safety as the vent is secured.")
 	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, PROC_REF(qdel)), 1 SECONDS) //node drone died on the way back to his home planet.
+	addtimer(CALLBACK(src, PROC_REF(qdel), src), 1 SECONDS) //node drone died on the way back to his home planet.
 
 
 /// The node drone AI controller

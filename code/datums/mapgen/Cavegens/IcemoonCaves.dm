@@ -27,7 +27,7 @@
 		/obj/structure/geyser/random = 2,
 		/obj/structure/geyser/wittel = 10,
 		/obj/structure/ore_vent/random = 40,
-		/obj/structure/ore_vent/random/boss = 2,
+		/obj/structure/ore_vent/boss = 2,
 		)
 
 /datum/map_generator/cave_generator/icemoon/surface

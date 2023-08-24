@@ -1,12 +1,13 @@
 #define MAX_ARTIFACT_ROLL_CHANCE 10
 
-#define MINERAL_TYPE_OPTIONS 4
+#define MINERAL_TYPE_OPTIONS_RANDOM 4
+#define MINERAL_TYPE_OPTIONS_BOSS 8
 
 /obj/structure/ore_vent
 	name = "ore vent"
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
 	icon = 'icons/obj/mining_zones/terrain.dmi' /// note to self, new sprites. get on it
-	icon_state = "geyser"
+	icon_state = "ore_vent"
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //This thing will take a beating.
 	anchored = TRUE
@@ -22,7 +23,7 @@
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
 	var/list/mineral_breakdown = list()
 	/// A list of mobs that can be spawned by this vent during a wave defense event.
-	var/list/lavaland_mobs = list(
+	var/list/defending_mobs = list(
 		/mob/living/basic/mining/goliath,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
 		/mob/living/basic/mining/watcher,
@@ -32,6 +33,8 @@
 	)
 	/// How many rolls on the mineral_breakdown list are made per boulder produced? EG: 3 rolls means 3 minerals per boulder, with order determining percentage.
 	var/minerals_per_boulder = 3
+	/// How many minerals are picked to be in the ore vent? These are added to the mineral_breakdown list.
+	var/minerals_per_breakdown = MINERAL_TYPE_OPTIONS_RANDOM
 	/// What size boulders does this vent produce?
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Reference to this ore vent's NODE drone, to track wave success.
@@ -93,11 +96,20 @@
 	return refined_list
 
 /obj/structure/ore_vent/proc/generate_mineral_breakdown()
-	for(var/i in 1 to MINERAL_TYPE_OPTIONS)
+	var/iterator = 1
+	while(iterator <= MINERAL_TYPE_OPTIONS_RANDOM)
+		if(SSore_generation.ore_vent_minerals.len == 0)
+			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material = pick_weight(SSore_generation.ore_vent_minerals)
+		if(is_type_in_list(mineral_breakdown, material))
+			continue
+		priority_announce("[material.name] is the material picked.")
 		//We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
 		SSore_generation.ore_vent_minerals[material] -= 1
-		mineral_breakdown.Insert(mineral_breakdown.len, material)
+		if(SSore_generation.ore_vent_minerals[material] <= 0)
+			SSore_generation.ore_vent_minerals.Remove(material)
+		mineral_breakdown[material] = rand(1,4)
+		iterator++
 
 
 /**
@@ -116,7 +128,7 @@
 /obj/structure/ore_vent/proc/start_wave_defense()
 	//faction = FACTION_MINING,	//todo: is there some reason I can't sanity check mob faction?
 	AddComponent(/datum/component/spawner,\
-		spawn_types = lavaland_mobs,\
+		spawn_types = defending_mobs,\
 		spawn_time = 15 SECONDS,\
 		max_spawned = 10,\
 		spawn_per_attempt = (1 + (boulder_size/5)),\
@@ -157,6 +169,8 @@
 			if(user_id_card)
 				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER * boulder_size)
 	node.escape() //Visually show the drone is done and flies away.
+	icon_state = "ore_vent_active"
+	update_appearance(UPDATE_ICON_STATE)
 
 /**
  * Called when the ore vent is tapped by a scanning device.
@@ -175,6 +189,7 @@
 	///This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
+	node.arrive()
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))
@@ -204,16 +219,11 @@
 	tapped = TRUE
 	discovered = TRUE
 	unique_vent = TRUE
+	boulder_size = BOULDER_SIZE_SMALL
 	mineral_breakdown = list(
 		/datum/material/iron = 50,
 		/datum/material/glass = 50,
 	)
-
-/obj/structure/ore_vent/medium
-	boulder_size = BOULDER_SIZE_MEDIUM
-
-/obj/structure/ore_vent/large
-	boulder_size = BOULDER_SIZE_LARGE
 
 /obj/structure/ore_vent/random
 	/// Static list of ore vent types, for random generation.
@@ -225,7 +235,8 @@
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
-	generate_mineral_breakdown()
+	if(!unique_vent)
+		generate_mineral_breakdown()
 	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
 	switch(string_boulder_size)
 		if("large")
@@ -239,14 +250,37 @@
 			SSore_generation.ore_vent_sizes["small"] -= 1
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 
-/obj/structure/ore_vent/random/boss
+/obj/structure/ore_vent/random/icebox
+	defending_mobs = list(
+		/mob/living/basic/mining/ice_whelp,
+		/mob/living/basic/mining/lobstrosity,
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow,
+		/mob/living/simple_animal/hostile/asteroid/ice_demon,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/simple_animal/hostile/asteroid/wolf
+	)
+
+/obj/structure/ore_vent/boss
 	name = "menacing ore vent"
 	desc = "An ore vent, brimming with underground ore. This one has an evil aura about it. Better be careful."
 	unique_vent = TRUE
+	boulder_size = BOULDER_SIZE_LARGE
+	mineral_breakdown = list(
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
+		/datum/material/plasma = 1,
+		/datum/material/titanium = 1,
+		/datum/material/silver = 1,
+		/datum/material/gold = 1,
+		/datum/material/diamond = 1,
+		/datum/material/uranium = 1,
+		/datum/material/bluespace = 1,
+		/datum/material/plastic = 1
+	)
 	///What boss do we want to spawn?
 	var/summoned_boss = null
 
-/obj/structure/ore_vent/random/boss/Initialize(mapload)
+/obj/structure/ore_vent/boss/Initialize(mapload)
 	. = ..()
 	summoned_boss = pick(list(
 		/mob/living/simple_animal/hostile/megafauna/bubblegum,
@@ -254,7 +288,7 @@
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	))
 
-/obj/structure/ore_vent/random/boss/examine(mob/user)
+/obj/structure/ore_vent/boss/examine(mob/user)
 	. = ..()
 	var/boss_string = ""
 	switch(summoned_boss)
@@ -266,15 +300,17 @@
 			boss_string = "A giant, armored behemoth"
 	. += span_notice("[boss_string] is etched into the side of the vent.")
 
-/obj/structure/ore_vent/random/boss/start_wave_defense()
+/obj/structure/ore_vent/boss/start_wave_defense()
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion)) ///Lets hope this is how this works
 	boss.say("You dare disturb my slumber?!") //to stop warnings namely
 
-/obj/structure/ore_vent/random/boss/handle_wave_conclusion()
+/obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
 	. = ..()
+
+
 
 /obj/item/boulder
 	name = "boulder"
@@ -302,6 +338,78 @@
 	. = ..()
 	. += span_notice("This boulder would take [durability] more steps to refine.")
 
+/obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(weapon.tool_behaviour == TOOL_MINING)
+		manual_process(weapon, user)
+	if(isgolem(user))
+		manual_process(weapon, user, 3)
+		return
+
+/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/user, golem_speed)
+	var/process_speed = 0
+	if(weapon)
+		process_speed = weapon.toolspeed
+		weapon.play_tool_sound(src, 50)
+	else if (golem_speed)
+		process_speed = golem_speed
+	else
+		return
+
+	to_chat(user, span_notice("You start picking at \the [src]..."))
+
+
+	if(!do_after(user, (2 * process_speed SECONDS), target = src))
+		return
+	if(!user.Adjacent(src))
+		return
+	durability--
+	if(durability <= 0)
+		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
+		convert_to_ore()
+		qdel(src)
+		return
+	else if(durability == 1)
+		to_chat(user, span_notice("\The [src] has been weakened, and is close to crumbling!"))
+		manual_process(weapon, user, golem_speed)
+		return
+	else
+		to_chat(user, span_notice("You finish working on \the [src], and it looks a bit weaker."))
+		manual_process(weapon, user, golem_speed)
+		return
+
+/obj/item/boulder/proc/convert_to_ore()
+	for(var/datum/material/picked in custom_materials)
+		/// Take the associated value and convert it into ore stacks, but less resources than if they processed it.
+		switch(picked)
+			if(/datum/material/iron)
+				new /obj/item/stack/ore/iron(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/gold)
+				new /obj/item/stack/ore/gold(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/silver)
+				new /obj/item/stack/ore/silver(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/plasma)
+				new /obj/item/stack/ore/plasma(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/diamond)
+				new /obj/item/stack/ore/diamond(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/glass)
+				new /obj/item/stack/ore/glass(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/bluespace)
+				new /obj/item/stack/ore/bluespace_crystal(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/titanium)
+				new /obj/item/stack/ore/titanium(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+			if(/datum/material/uranium)
+				new /obj/item/stack/ore/uranium(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
+				continue
+
 /obj/item/boulder/proc/can_get_processed()
 	if(COOLDOWN_FINISHED(src, processing_cooldown))
 		return TRUE
@@ -319,4 +427,5 @@
 	new /obj/item/relic(src) //var/obj/item/relic/boulder_relic
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
-#undef MINERAL_TYPE_OPTIONS
+#undef MINERAL_TYPE_OPTIONS_RANDOM
+#undef MINERAL_TYPE_OPTIONS_BOSS

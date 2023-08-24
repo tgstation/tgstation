@@ -113,6 +113,8 @@
 	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
 	var/start_time = REALTIMEOFDAY
+	var/ore_vents_spawned = SSore_generation.ore_vent_count
+	SSore_generation.ore_vent_minerals = SSore_generation.ore_vent_minerals_default
 
 	for(var/turf/turf as anything in turfs)
 		if(!(turf.type in open_turf_types)) //only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped
@@ -141,12 +143,14 @@
 
 			if(can_spawn)
 				new picked_feature(turf)
-				if(istype(picked_feature, /obj/structure/ore_vent))
-					var/obj/structure/ore_vent/picked_vent = picked_feature
-					if(!picked_vent.unique_vent)
-						SSore_generation.ore_vent_count -= 1
-						if(SSore_generation.ore_vent_count <= 0)
-							feature_spawn_list = expand_weights(weighted_feature_spawn_list - /obj/structure/ore_vent/random)
+				to_chat(world, span_boldannounce("WE JUST SPAWNED A [picked_feature] A MOMENT AGO, [ore_vents_spawned] VENTS LEFT"))
+				if(ispath(picked_feature, /obj/structure/ore_vent/random))
+					var/obj/structure/ore_vent/random/picked_vent = picked_feature
+					ore_vents_spawned--
+					to_chat(world, span_boldannounce("YO ARCANE [ore_vents_spawned] VENTS LEFT"))
+					if(ore_vents_spawned <= 0)
+						weighted_feature_spawn_list.Remove(picked_vent)
+						feature_spawn_list = expand_weights(weighted_feature_spawn_list)
 				spawned_something = TRUE
 
 		//MOB SPAWNING HERE
