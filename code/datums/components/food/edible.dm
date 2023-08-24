@@ -458,7 +458,7 @@ Behavior that's still missing from this component that original food items had t
 
 	//Give a buff when the dish is hand-crafted and unbitten
 	if(bitecount == 0)
-		ApplyBuff(eater)
+		apply_buff(eater)
 
 	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
@@ -500,7 +500,7 @@ Behavior that's still missing from this component that original food items had t
 	return TRUE
 
 ///Applies food buffs according to the crafting complexity
-/datum/component/edible/proc/ApplyBuff(mob/eater)
+/datum/component/edible/proc/apply_buff(mob/eater)
 	var/buff
 	var/recipe_complexity = get_recipe_complexity()
 	if(recipe_complexity == 0)
