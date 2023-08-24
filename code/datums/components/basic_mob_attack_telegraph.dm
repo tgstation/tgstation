@@ -28,7 +28,7 @@
 /datum/component/basic_mob_attack_telegraph/Destroy(force, silent)
 	if(current_target)
 		forget_target(current_target)
-	QDEL_NULL(target_overlay)
+	target_overlay = null
 	on_began_forecast = null
 	return ..()
 
