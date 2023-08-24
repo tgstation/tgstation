@@ -45,7 +45,7 @@
 
 /obj/item/storage/secure/briefcase/white/mcr_loadout/tacticool/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/microfusion_gun_attachment/suppressor = 1,
+		/obj/item/microfusion_gun_attachment/barrel/suppressor = 1,
 		/obj/item/microfusion_gun_attachment/rail = 1,
 		/obj/item/microfusion_gun_attachment/grip = 1,
 		/obj/item/microfusion_gun_attachment/camo = 1,

@@ -267,11 +267,11 @@ Makes operators operate operatingly.
 	slot = GUN_SLOT_BARREL
 	attachment_overlay_icon_state = "attachment_suppressor"
 
-/obj/item/microfusion_gun_attachment/suppressor/run_attachment(obj/item/gun/microfusion/microfusion_gun)
+/obj/item/microfusion_gun_attachment/barrel/suppressor/run_attachment(obj/item/gun/microfusion/microfusion_gun)
 	. = ..()
 	microfusion_gun.suppressed = TRUE
 
-/obj/item/microfusion_gun_attachment/suppressor/remove_attachment(obj/item/gun/microfusion/microfusion_gun)
+/obj/item/microfusion_gun_attachment/barrel/suppressor/remove_attachment(obj/item/gun/microfusion/microfusion_gun)
 	. = ..()
 	microfusion_gun.suppressed = null
 

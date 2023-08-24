@@ -615,7 +615,7 @@
 	if(sound_cell_remove)
 		playsound(src, sound_cell_remove, sound_cell_remove_volume, sound_cell_remove_vary)
 	old_cell.update_appearance()
-	cell.parent_gun = null
+	old_cell.parent_gun = null
 	cell = null
 	update_appearance()
 
