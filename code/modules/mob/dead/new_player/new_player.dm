@@ -251,8 +251,6 @@
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, character, rank)
-
 	if(humanc)
 		for(var/datum/loadout_item/item as anything in loadout_list_to_datums(humanc?.client?.prefs?.loadout_list))
 			if (item.restricted_roles && length(item.restricted_roles) && !(job.title in item.restricted_roles))
@@ -292,7 +290,7 @@
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)
 		joined_area.on_joining_game(new_character)
-//	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, new_character, new_character.mind.assigned_role.title) //monkestation edit, this makes this signal send twice
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, new_character, new_character.mind.assigned_role.title)
 	new_character = null
 	qdel(src)
 
