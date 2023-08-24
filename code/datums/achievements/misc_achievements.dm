@@ -242,8 +242,8 @@
 	database_id = MEDAL_DEBT_EXTINGUISHED
 	icon = "outdebted"
 
-/datum/award/achievement/misc/this_is_fine
-	name = "This Is Fine"
-	desc = "It might be time to go home and sob into a pillow after what just almost happened."
-	database_id = MEDAL_THIS_IS_FINE
-	icon = "thisisfine"
+/datum/award/achievement/misc/theoretical_limits
+	name = "All Within Theoretical Limits"
+	desc = "I never thought I'd see a resonance cascade, let alone prevent one..."
+	database_id = MEDAL_THEORETICAL_LIMITS
+	icon = "theoreticallimits"
