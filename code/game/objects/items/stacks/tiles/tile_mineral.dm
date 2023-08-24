@@ -88,7 +88,7 @@
 	turf_type = /turf/open/floor/mineral/adamantium
 	mineralType = "adamantine"
 	mats_per_unit = list(/datum/material/adamantine=SHEET_MATERIAL_AMOUNT*0.25)
-	merge_type = /obj/item/stack/tile/mineral/adamantine
+	merge_type = /obj/item/stack/tile/mineral/adamantium
 
 /obj/item/stack/tile/mineral/runite
 	name = "runite tile"
@@ -109,14 +109,14 @@
 	inhand_icon_state = "tile-metalhydrogen"
 	turf_type = /turf/open/floor/mineral/metal_hydrogen
 	mineralType = "metal_hydrogen"
-	mats_per_unit = list(/datum/material/metal_hydrogen=SHEET_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/metalhydrogen=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen
 	tile_reskin_types = list(
 		/obj/item/stack/tile/mineral/metal_hydrogen,
 		/obj/item/stack/tile/mineral/metal_hydrogen/alt,
-		/obj/item/stack/tile/mineral/metal_hydrogen/half,
-		/obj/item/stack/tile/mineral/metal_hydrogen/corner,
-		/obj/item/stack/tile/mineral/metal_hydrogen/single,
+		/obj/item/stack/tile/mineral/metal_hydrogen/alt_half,
+		/obj/item/stack/tile/mineral/metal_hydrogen/alt_corner,
+		/obj/item/stack/tile/mineral/metal_hydrogen/alt_single,
 		)
 /obj/item/stack/tile/mineral/metal_hydrogen/alt
 	name = "metal hydrogen tile"

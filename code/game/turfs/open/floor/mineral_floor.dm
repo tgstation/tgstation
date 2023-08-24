@@ -234,7 +234,7 @@
 /turf/open/floor/mineral/adamantium
 	name = "adamantine floor"
 	icon_state = "adamantine"
-	floor_tile = /obj/item/stack/tile/mineral/adamantine
+	floor_tile = /obj/item/stack/tile/mineral/adamantium
 	icons = list("adamantium")
 	custom_materials = list(/datum/material/adamantine = SMALL_MATERIAL_AMOUNT*5)
 
@@ -260,27 +260,27 @@
 	icon_state = "metalhydrogen"
 	floor_tile = /obj/item/stack/tile/mineral/metal_hydrogen
 	icons = list("metalhydrogen")
-	custom_materials = list(/datum/material/metal_hydrogen = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/metalhydrogen = SMALL_MATERIAL_AMOUNT*5)
 
-/turf/open/floor/metal_hydrogen/alt
+/turf/open/floor/mineral/metal_hydrogen/alt
 	icon_state = "metalhydrogen_alt"
 	base_icon_state = "metalhydrogen_alt"
-	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_alt
+	floor_tile = /obj/item/stack/tile/mineral/metal_hydrogen/alt
 
-/turf/open/floor/metal_hydrogen/alt_half
+/turf/open/floor/mineral/metal_hydrogen/alt_half
 	icon_state = "metalhydrogen_half"
 	base_icon_state = "metalhydrogen_half"
-	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_half
+	floor_tile = /obj/item/stack/tile/mineral/metal_hydrogen/alt_half
 
-/turf/open/floor/metal_hydrogen/alt_corner
+/turf/open/floor/mineral/metal_hydrogen/alt_corner
 	icon_state = "metalhydrogen_corner"
 	base_icon_state = "metalhydrogen_corner"
-	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_corner
+	floor_tile = /obj/item/stack/tile/mineral/metal_hydrogen/alt_corner
 
-/turf/open/floor/metal_hydrogen/alt_single
+/turf/open/floor/mineral/metal_hydrogen/alt_single
 	icon_state = "metalhydrogen_singular"
 	base_icon_state = "metalhydrogen_singular"
-	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_singular
+	floor_tile = /obj/item/stack/tile/mineral/metal_hydrogen/alt_single
 
 /turf/open/floor/mineral/metalhydrogen/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
