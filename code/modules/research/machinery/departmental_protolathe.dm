@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department/engineering
 	stripe_color = "#EFB341"
 	payment_department = ACCOUNT_ENG
+	tax_access = ACCESS_ENGINEERING
 
 /obj/machinery/rnd/production/protolathe/department/engineering/no_tax
 	circuit = /obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
@@ -21,6 +22,7 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department/service
 	stripe_color = "#83ca41"
 	payment_department = ACCOUNT_SRV
+	tax_access = ACCESS_SERVICE
 
 /obj/machinery/rnd/production/protolathe/department/medical
 	name = "department protolathe (Medical)"
@@ -28,6 +30,7 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department/medical
 	stripe_color = "#52B4E9"
 	payment_department = ACCOUNT_MED
+	tax_access = ACCESS_MEDICAL
 
 /obj/machinery/rnd/production/protolathe/department/cargo
 	name = "department protolathe (Cargo)"
@@ -35,6 +38,7 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department/cargo
 	stripe_color = "#956929"
 	payment_department = ACCOUNT_CAR
+	tax_access = ACCESS_CARGO
 
 /obj/machinery/rnd/production/protolathe/department/science
 	name = "department protolathe (Science)"
@@ -42,6 +46,7 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department/science
 	stripe_color = "#D381C9"
 	payment_department = ACCOUNT_SCI
+	tax_access = ACCESS_SCIENCE
 
 /obj/machinery/rnd/production/protolathe/department/security
 	name = "department protolathe (Security)"
@@ -49,3 +54,4 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department/security
 	stripe_color = "#DE3A3A"
 	payment_department = ACCOUNT_SEC
+	tax_access = ACCESS_SECURITY

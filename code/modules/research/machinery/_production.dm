@@ -27,6 +27,9 @@
 
 	/// Does this charge the user's ID on fabrication?
 	var/charges_tax = TRUE
+	
+	/// People with this access dont get taxed for usage
+	var/tax_access
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
@@ -283,21 +286,20 @@
 	var/total_cost = LATHE_TAX * max(round(print_quantity / 10), 1)
 	if(!charges_tax)
 		total_cost = 0
-	if(isliving(usr))
+	if(isliving(usr) && charges_tax)
 		var/mob/living/user = usr
 		var/obj/item/card/id/card = user.get_idcard(TRUE)
 
 		if(!card && istype(user.pulling, /obj/item/card/id))
 			card = user.pulling
 
-		if(card && card.registered_account)
-			var/datum/bank_account/our_acc = card.registered_account
-			if(our_acc.account_job.departments_bitflags & allowed_department_flags)
-				total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
+		if(card && tax_access && tax_access in card.access)
+			total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
+
 	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
 		return FALSE
-	if(iscyborg(usr))
+	if(iscyborg(usr) && charges_tax)
 		var/mob/living/silicon/robot/borg = usr
 		if(!borg.cell)
 			return FALSE

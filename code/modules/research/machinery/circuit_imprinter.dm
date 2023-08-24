@@ -5,6 +5,7 @@
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 	production_animation = "circuit_imprinter_ani"
 	allowed_buildtypes = IMPRINTER
+	tax_access = ACCESS_ENGINEERING
 
 /obj/machinery/rnd/production/circuit_imprinter/calculate_efficiency()
 	. = ..()
@@ -21,4 +22,4 @@
 	desc = "Manufactures circuit boards for the construction of machines. Its ancient construction may limit its ability to print all known technology."
 	allowed_buildtypes = AWAY_IMPRINTER
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter/offstation
-	charges_tax = FALSE
+	charges_tax = FALSE //tax_access is irrelevant if this is FALSE

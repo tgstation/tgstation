@@ -9,3 +9,4 @@
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department/science
 	allowed_department_flags = DEPARTMENT_BITFLAG_SCIENCE
 	payment_department = ACCOUNT_SCI
+	tax_access = ACCESS_SCIENCE

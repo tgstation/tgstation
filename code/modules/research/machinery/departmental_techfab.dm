@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/techfab/department/engineering
 	stripe_color = "#EFB341"
 	payment_department = ACCOUNT_ENG
+	tax_access = ACCESS_ENGINEERING
 
 /obj/machinery/rnd/production/techfab/department/service
 	name = "department techfab (Service)"
@@ -17,6 +18,7 @@
 	circuit = /obj/item/circuitboard/machine/techfab/department/service
 	stripe_color = "#83ca41"
 	payment_department = ACCOUNT_SRV
+	tax_access = ACCESS_SERVICE
 
 /obj/machinery/rnd/production/techfab/department/medical
 	name = "department techfab (Medical)"
@@ -24,6 +26,7 @@
 	circuit = /obj/item/circuitboard/machine/techfab/department/medical
 	stripe_color = "#52B4E9"
 	payment_department = ACCOUNT_MED
+	tax_access = ACCESS_MEDICAL
 
 /obj/machinery/rnd/production/techfab/department/cargo
 	name = "department techfab (Cargo)"
@@ -31,6 +34,7 @@
 	circuit = /obj/item/circuitboard/machine/techfab/department/cargo
 	stripe_color = "#956929"
 	payment_department = ACCOUNT_CAR
+	tax_access = ACCESS_CARGO
 
 /obj/machinery/rnd/production/techfab/department/science
 	name = "department techfab (Science)"
@@ -38,6 +42,7 @@
 	circuit = /obj/item/circuitboard/machine/techfab/department/science
 	stripe_color = "#D381C9"
 	payment_department = ACCOUNT_SCI
+	tax_access = ACCESS_SCIENCE
 
 /obj/machinery/rnd/production/techfab/department/security
 	name = "department techfab (Security)"
@@ -45,3 +50,4 @@
 	circuit = /obj/item/circuitboard/machine/techfab/department/security
 	stripe_color = "#DE3A3A"
 	payment_department = ACCOUNT_SEC
+	tax_access = ACCESS_SECURITY
