@@ -15,6 +15,7 @@
 	RegisterSignal(target, COMSIG_ATOM_PREHITBY, PROC_REF(on_hitby))
 	RegisterSignal(target, COMSIG_ATOM_HULK_ATTACK, PROC_REF(on_attack_hulk))
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, PROC_REF(on_attack_mech))
+	ADD_TRAIT(target, TRAIT_RELAYING_ATTACKER, REF(src))
 
 /datum/element/relay_attackers/Detach(datum/source, ...)
 	. = ..()
@@ -30,6 +31,7 @@
 		COMSIG_ATOM_HULK_ATTACK,
 		COMSIG_ATOM_ATTACK_MECH,
 	))
+	REMOVE_TRAIT(source, TRAIT_RELAYING_ATTACKER, REF(src))
 
 /datum/element/relay_attackers/proc/after_attackby(atom/target, obj/item/weapon, mob/attacker)
 	SIGNAL_HANDLER
