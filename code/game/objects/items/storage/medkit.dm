@@ -348,9 +348,9 @@
 
 /obj/item/storage/medkit/coroner/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = 24
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_slots = 14
-	atom_storage.max_total_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 24
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers,
 		/obj/item/bodybag,
