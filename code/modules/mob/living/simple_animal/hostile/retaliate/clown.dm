@@ -207,6 +207,7 @@
 	emote_see = list("honks", "sweats", "jiggles", "contemplates its existence")
 	speak_chance = 5
 	dextrous = TRUE
+	hud_type = /datum/hud/dextrous
 	maxHealth = 140
 	health = 140
 	speed = -5

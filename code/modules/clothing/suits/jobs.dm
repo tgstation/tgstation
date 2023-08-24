@@ -40,6 +40,18 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
 
+/obj/item/clothing/suit/apron/overalls
+	name = "coveralls"
+	desc = "A set of overalls, good for protecting thinner clothes from the elements."
+	icon_state = "overalls"
+	inhand_icon_state = ""
+	body_parts_covered = CHEST|GROIN|LEGS
+	species_exception = list(/datum/species/golem)
+	greyscale_config = /datum/greyscale_config/overalls
+	greyscale_config_worn = /datum/greyscale_config/overalls/worn
+	greyscale_colors = "#313c6e"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 //Captain
 /obj/item/clothing/suit/jacket/capjacket
 	name = "captain's parade jacket"
@@ -173,8 +185,8 @@
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
-	name = "blue suit jacket"
-	desc = "A snappy dress jacket."
+	name = "blue formal suit jacket"
+	desc = "A professional suit jacket."
 	icon_state = "suitjacket_blue"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
@@ -184,16 +196,44 @@
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/toggle/lawyer/purple
-	name = "purple suit jacket"
-	desc = "A foppish dress jacket."
+	name = "purple formal suit jacket"
 	icon_state = "suitjacket_purp"
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/toggle/lawyer/black
-	name = "black suit jacket"
-	desc = "A professional suit jacket."
+	name = "black formal suit jacket"
 	icon_state = "suitjacket_black"
 	inhand_icon_state = "ro_suit"
+
+// Cargo
+
+/obj/item/clothing/suit/toggle/cargo_tech
+	name = "cargo gorka"
+	desc = "A brown and black puffy jacket; made from synthetic fabric. Inspired by old Eastern European designs."
+	icon_state = "cargo_jacket"
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	inhand_icon_state = null
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+
+// Quartermaster
+
+/obj/item/clothing/suit/jacket/quartermaster
+	name = "quatermaster's overcoat"
+	desc = "A luxury, brown double-breasted overcoat, made from kangaroo skin. It's gold cuffs linked are styled on the credits symbol. It makes you feel more important then you probably are."
+	icon_state = "qm_coat"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/toggle/lawyer/greyscale
+	name = "formal suit jacket"
+	icon_state = "jacket_lawyer"
+	inhand_icon_state = ""
+	greyscale_config = /datum/greyscale_config/jacket_lawyer
+	greyscale_config_worn = /datum/greyscale_config/jacket_lawyer/worn
+	greyscale_colors = "#ffffff"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 //Mime
 /obj/item/clothing/suit/toggle/suspenders
@@ -295,7 +335,6 @@
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
 
-//Robotocist
 /datum/armor/jacket_curator
 	melee = 25
 	bullet = 10
@@ -303,6 +342,7 @@
 	energy = 35
 	acid = 45
 
+//Robotocist
 /obj/item/clothing/suit/hooded/techpriest
 	name = "techpriest robes"
 	desc = "For those who REALLY love their toasters."

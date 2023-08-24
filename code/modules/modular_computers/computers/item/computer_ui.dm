@@ -15,6 +15,7 @@
 	if(!active_ui)
 		if(active_program)
 			active_ui = new(user, src, active_program.tgui_id, active_program.filedesc)
+			active_program.ui_interact(user, active_ui)
 		else
 			active_ui = new(user, src, "NtosMain")
 		return active_ui.open()
@@ -22,6 +23,7 @@
 	if(active_program)
 		active_ui.interface = active_program.tgui_id
 		active_ui.title = active_program.filedesc
+		active_program.ui_interact(user, active_ui)
 	else
 		active_ui.interface = "NtosMain"
 
@@ -126,7 +128,7 @@
 
 	switch(action)
 		if("PC_exit")
-			active_program.kill_program()
+			active_program.kill_program(usr)
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
@@ -144,7 +146,7 @@
 			if(!istype(killed_program))
 				return
 
-			killed_program.kill_program()
+			killed_program.kill_program(usr)
 			to_chat(usr, span_notice("Program [killed_program.filename].[killed_program.filetype] with PID [rand(100,999)] has been killed."))
 			return TRUE
 
@@ -197,8 +199,7 @@
 						return TRUE
 
 		if("PC_Imprint_ID")
-			saved_identification = computer_id_slot.registered_name
-			saved_job = computer_id_slot.assignment
+			imprint_id()
 			UpdateDisplay()
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 
@@ -220,3 +221,8 @@
 	if(physical)
 		return physical
 	return src
+
+/obj/item/modular_computer/ui_close(mob/user)
+	. = ..()
+	if(active_program)
+		active_program.ui_close(user)

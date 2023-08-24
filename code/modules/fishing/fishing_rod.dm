@@ -70,6 +70,20 @@
 	//Remove any leftover fishing lines
 	QDEL_LIST(fishing_lines)
 
+/obj/item/fishing_rod/examine(mob/user)
+	. = ..()
+	. += "<b>Right-Click</b> in your active hand to access its slots UI"
+	var/list/equipped_stuff = list()
+	if(line)
+		equipped_stuff += "[icon2html(line, user)] <b>[line.name]</b>"
+	if(hook)
+		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
+	if(length(equipped_stuff))
+		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
+	if(bait)
+		. += span_notice("\a [icon2html(bait, user)] <b>[bait]</b> is being used as bait.")
+	else
+		. += span_warning("It doesn't have any bait attached. Fishing will be more tedious!")
 
 /**
  * Catch weight modifier for the given fish_type (or FISHING_DUD)
@@ -103,11 +117,15 @@
 /obj/item/fishing_rod/proc/reason_we_cant_fish(datum/fish_source/target_fish_source)
 	return hook?.reason_we_cant_fish(target_fish_source)
 
-
-/obj/item/fishing_rod/proc/consume_bait()
-	if(bait)
-		QDEL_NULL(bait)
-		update_icon()
+/obj/item/fishing_rod/proc/consume_bait(atom/movable/reward)
+	if(!reward)
+		return
+	var/mob/living/caught_mob = isliving(reward) ? reward : null
+	// catching non-fish, non-mob movables, or dead mobs (probably from a chasm) doesn't consume baits.
+	if(!bait || !isfish(reward) || !caught_mob || (caught_mob && caught_mob.stat == DEAD))
+		return
+	QDEL_NULL(bait)
+	update_icon()
 
 /obj/item/fishing_rod/interact(mob/user)
 	if(currently_hooked_item)
@@ -250,16 +268,15 @@
 	var/line_color = line?.line_color || default_line_color
 	/// Line part by the rod, always visible
 	var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
-	reel_appearance.color = line_color;
+	reel_appearance.color = line_color
 	. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)
 		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay")
-		line_overlay.color = line_color;
+		line_overlay.color = line_color
 		. += line_overlay
-		var/mutable_appearance/hook_overlay = mutable_appearance(icon, hook?.rod_overlay_icon_state || "hook_overlay")
-		. += hook_overlay
+		. += hook?.rod_overlay_icon_state || "hook_overlay"
 
 	if(bait)
 		var/bait_state = "worm_overlay" //default to worm overlay for anything without specific one
@@ -338,7 +355,7 @@
 			if(!istype(item,/obj/item/fishing_line))
 				return FALSE
 		if(ROD_SLOT_BAIT)
-			if(!HAS_TRAIT(item, FISHING_BAIT_TRAIT))
+			if(!HAS_TRAIT(item, TRAIT_FISHING_BAIT))
 				return FALSE
 	return TRUE
 
@@ -494,7 +511,7 @@
 	name = "master fishing rod"
 	desc = "The mythical rod of a lost fisher king. Said to be imbued with un-paralleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
 	difficulty_modifier = -10
-	ui_description = "This rods makes fishing easy even for an absolute beginner."
+	ui_description = "This rod makes fishing easy even for an absolute beginner."
 	icon_state = "fishing_rod_master"
 	reel_overlay = "reel_master"
 	active_force = 13 //It's that sturdy
@@ -512,7 +529,7 @@
 	bait = infinite_supply_of_bait
 	update_icon()
 
-/obj/item/fishing_rod/tech/consume_bait()
+/obj/item/fishing_rod/tech/consume_bait(atom/movable/reward)
 	return
 
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)

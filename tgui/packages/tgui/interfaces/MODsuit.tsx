@@ -33,6 +33,11 @@ type SuitStatus = {
   complexity: number;
   selected_module: string;
   ai_name: string;
+  has_pai: boolean;
+  is_ai: boolean;
+  link_id: string;
+  link_freq: string;
+  link_call: string;
 };
 
 type UserStatus = {
@@ -313,6 +318,11 @@ const SuitStatusSection = (props, context) => {
     malfunctioning,
     locked,
     ai_name,
+    has_pai,
+    is_ai,
+    link_id,
+    link_freq,
+    link_call,
   } = data.suit_status;
   const { display_time, shift_time, shift_id } = data.module_custom_status;
   const status = malfunctioning
@@ -373,6 +383,22 @@ const SuitStatusSection = (props, context) => {
             onClick={() => act('lock')}
           />
         </LabeledList.Item>
+        <LabeledList.Item label="MODLink">
+          <Button
+            icon={'wifi'}
+            color={link_call ? 'good' : 'default'}
+            disabled={!link_freq}
+            tooltip={link_freq ? '' : 'Set a frequency with a multitool!'}
+            content={
+              link_freq
+                ? link_call
+                  ? 'Calling (' + link_call + ')'
+                  : 'Call (' + link_id + ')'
+                : 'Frequency Unset'
+            }
+            onClick={() => act('call')}
+          />
+        </LabeledList.Item>
         {!!open && (
           <LabeledList.Item label="Cover">
             <Box color="red">Open</Box>
@@ -384,7 +410,16 @@ const SuitStatusSection = (props, context) => {
           </LabeledList.Item>
         )}
         {!!ai_name && (
-          <LabeledList.Item label="AI Core">{ai_name}</LabeledList.Item>
+          <LabeledList.Item label="pAI Control">
+            {has_pai && (
+              <Button
+                icon="eject"
+                content="Eject pAI"
+                disabled={is_ai}
+                onClick={() => act('eject_pai')}
+              />
+            )}
+          </LabeledList.Item>
         )}
       </LabeledList>
 
@@ -409,8 +444,8 @@ const HardwareSection = (props, context) => {
   return (
     <Section title="Hardware" style={{ 'text-transform': 'capitalize' }}>
       <LabeledList>
-        <LabeledList.Item label="AI Card">
-          {ai_name || 'No AI Card Detected'}
+        <LabeledList.Item label="AI Assistant">
+          {ai_name || 'No AI Detected'}
         </LabeledList.Item>
         <LabeledList.Item label="Core">
           {core_name || 'No Core Detected'}

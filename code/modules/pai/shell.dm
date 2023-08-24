@@ -122,11 +122,6 @@
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, PAI_FOLDED)
-	if(istype(card.loc, /obj/item/modular_computer))
-		var/obj/item/modular_computer/pc = card.loc
-		pc.inserted_pai = null
-		pc.visible_message(span_notice("[src] ejects itself from [pc]!"))
-		card.forceMove(get_turf(pc))
 	forceMove(get_turf(card))
 	if(client)
 		client.perspective = EYE_PERSPECTIVE

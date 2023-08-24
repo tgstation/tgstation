@@ -308,9 +308,16 @@
 		balloon_alert(user, "only 1 charging cable!")
 		return FALSE
 
-	if(istype(O, /obj/item/storage/bag/tray))
+	if(istype(O, /obj/item/storage))
 		var/obj/item/storage/T = O
 		var/loaded = 0
+
+		if(!istype(O, /obj/item/storage/bag/tray))
+			// Non-tray dumping requires a do_after
+			to_chat(user, span_notice("You start dumping out the contents of [O] into [src]..."))
+			if(!do_after(user, 2 SECONDS, target = T))
+				return
+
 		for(var/obj/S in T.contents)
 			if(!IS_EDIBLE(S))
 				continue

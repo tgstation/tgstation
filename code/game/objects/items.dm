@@ -220,7 +220,7 @@
 	var/throw_verb
 
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
-	var/list/fantasy_modifications
+	var/list/fantasy_modifications = null
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -298,13 +298,15 @@
 
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_QDELETING, PROC_REF(on_action_deleted))
-	if(ismob(loc))
-		// We're being held or are equipped by someone while adding an action?
-		// Then they should also probably be granted the action, given it's in a correct slot
-		var/mob/holder = loc
-		give_item_action(action, holder, holder.get_slot_by_item(src))
-
+	grant_action_to_bearer(action)
 	return action
+
+/// Grant the action to anyone who has this item equipped to an appropriate slot
+/obj/item/proc/grant_action_to_bearer(datum/action/action)
+	if(!ismob(loc))
+		return
+	var/mob/holder = loc
+	give_item_action(action, holder, holder.get_slot_by_item(src))
 
 /// Removes an instance of an action from our list of item actions.
 /obj/item/proc/remove_item_action(datum/action/action)
@@ -1560,8 +1562,13 @@
 
 /// Modifies the fantasy variable
 /obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
-	if(LAZYACCESS(fantasy_modifications, variable_key) != null)
+	var/result = LAZYACCESS(fantasy_modifications, variable_key)
+	if(!isnull(result))
+		if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+			return result // we are immune to your foul magicks you inferior wizard, we keep our bonuses
+
 		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
+
 	var/intended_target = value + bonus
 	value = max(minimum, intended_target)
 
@@ -1573,9 +1580,14 @@
 /// Returns the original fantasy variable value
 /obj/item/proc/reset_fantasy_variable(variable_key, current_value)
 	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+
+	if(isnum(modification) && HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+		return modification // we are immune to your foul magicks you inferior wizard, we keep our bonuses the way they are
+
 	LAZYREMOVE(fantasy_modifications, variable_key)
-	if(!modification)
+	if(isnull(modification))
 		return current_value
+
 	return current_value - modification
 
 /obj/item/proc/apply_fantasy_bonuses(bonus)

@@ -302,3 +302,16 @@
 	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pineapple_salsa
+	name = "pineapple salsa"
+	desc = "A not-so liquid salsa made of pineapples, tomatoes, onions, and chilis. Makes for delightfully contrasting flavors."
+	icon = 'icons/obj/food/mexican.dmi'
+	icon_state = "pineapple_salsa"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("pineapple" = 4, "tomato" = 3, "onion" = 2, "chili" = 2)
+	foodtypes = VEGETABLES | FRUIT | PINEAPPLE
+	w_class = WEIGHT_CLASS_SMALL

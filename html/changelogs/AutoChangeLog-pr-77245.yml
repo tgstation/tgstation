@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "[Shuttles] Kilo's Emergency Shuttle no longer has a stacked light in its brig."

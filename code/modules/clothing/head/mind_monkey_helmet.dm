@@ -81,7 +81,9 @@
 		if(prob(10))
 			switch(rand(1,4))
 				if(1) //blood rage
-					magnification.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
+					var/datum/ai_controller/monkey/monky_controller = magnification.ai_controller
+					monky_controller.set_trip_mode(mode = FALSE)
+					monky_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
 				if(2) //brain death
 					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
 				if(3) //primal gene (gorilla)
