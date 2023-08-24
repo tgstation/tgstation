@@ -299,13 +299,9 @@
 /**
  * Rod will push the tram to a landmark if it hits the tram from the front/back
  * while flying parallel.
- *
- * Arguments:
- * * clong - the object the rod hits (in this case, the tram)
  */
-/obj/effect/immovablerod/proc/rod_vs_tram_battle(clong)
-	var/turf/tram_turf = get_turf(clong)
-	var/obj/structure/industrial_lift/tram/industrial_lift = locate() in tram_turf
+/obj/effect/immovablerod/proc/rod_vs_tram_battle()
+	var/obj/structure/industrial_lift/tram/industrial_lift = locate() in src.loc
 
 	if(isnull(industrial_lift))
 		return

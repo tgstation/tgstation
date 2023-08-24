@@ -298,6 +298,7 @@
  * literally ripping itself apart. all of the actual movement is handled by SStramprocess
  *
  * Arguments: collided_rod (the immovable rod that hit the tram)
+ * Return: push_destination (the landmark /obj/effect/landmark/tram/nav that the tram is being pushed to due to the rod's trajectory)
  */
 /datum/lift_master/tram/proc/rod_collision(obj/effect/immovablerod/collided_rod)
 	if(!is_operational)
@@ -319,8 +320,8 @@
 	// Don't bother processing crossing signals, where this tram's going there are no signals
 	for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
 		xing.temp_malfunction()
-	priority_announce("In a turn of rather peculiar events, it appears that a high-velocity flying rod (don't ask us where it came from) has led to a station brakes failure on one of the platforms.\n\n\
-		Our diligent team of engineers have been informed and they're rushing over - although not quite at the speed of our recent flying friend.\n\n\
+	priority_announce("In a turn of rather peculiar events, it appears that [GLOB.station_name] has struck an immovable rod. (Don't ask us where it came from.) This has led to a station brakes failure on one of the tram platforms.\n\n\
+		Our diligent team of engineers have been informed and they're rushing over - although not quite at the speed of our recently flying tram.\n\n\
 		So while we all look in awe at the universe's mysterious sense of humour, please stand clear of the tracks and remember to stand behind the yellow line.", "Braking News")
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
