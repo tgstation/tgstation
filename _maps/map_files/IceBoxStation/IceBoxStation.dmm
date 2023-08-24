@@ -46328,9 +46328,7 @@
 /area/station/command/heads_quarters/captain)
 "oGR" = (
 /obj/item/radio/intercom/directional/north,
-/obj/structure/reagent_dispensers/plumbed{
-	dir = 8
-	},
+/obj/structure/reagent_dispensers/plumbed,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
