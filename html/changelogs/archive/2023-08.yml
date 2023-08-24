@@ -1107,3 +1107,22 @@
       the request console.
   ZephyrTFA:
   - bugfix: pda messages are no longer hidden from dead players who are not observers
+2023-08-24:
+  Fikou:
+  - rscadd: wizards are now introverts
+  JohnFulpWillard:
+  - balance: The Traitor's Camera bug is now a tablet app that works like a silent
+      camera console with an extra ability to track people through their nearby cameras.
+  MidoriWroth:
+  - bugfix: Moussaka now only uses eggplants instead of eggplants and potatoes
+  - bugfix: Pita bread no longer burns on the griddle/oven
+  Nerev4r & Zydras:
+  - image: Adds messenger bags to character setup and drobes/lockers!
+  Rhials:
+  - rscadd: The roundend report will now read out any achievements ("cheevos" as you
+      may know them) earned by players over the course of the round.
+  Vekter:
+  - balance: Grilles will now take 0-1 damage every time they shock something.
+  - balance: Powersinks are now available earlier in traitor progression.
+  YehnBeep:
+  - qol: Icebox perma now has holopads.
