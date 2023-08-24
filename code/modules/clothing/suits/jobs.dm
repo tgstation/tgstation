@@ -25,7 +25,7 @@
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
 		/obj/item/seeds,
-		/obj/item/storage/bag/plants
+		/obj/item/storage/bag/plants,
 	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
@@ -173,7 +173,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/t_scanner,
-		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
@@ -217,7 +217,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(
-		/obj/item/stamp
+		/obj/item/stamp,
+		/obj/item/storage/bag/mail,
 	)
 
 // Quartermaster
@@ -229,7 +230,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(
-		/obj/item/stamp
+		/obj/item/stamp,
+		/obj/item/storage/bag/mail,
 	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
