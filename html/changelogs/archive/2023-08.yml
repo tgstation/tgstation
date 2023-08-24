@@ -296,3 +296,60 @@
   necromanceranne:
   - rscadd: You can now make a tactical turtleneck via the washing machine, as god
       intended
+2023-08-15:
+  KittyNoodle:
+  - balance: Roundstart malf should now appear at similar rates to midround malf
+  - balance: Latejoin/Midround tot has been reigned in
+  - balance: Bloodsuckers have had their threat requirement increased and now need
+      20 living players to spawn
+  - bugfix: Dynamic should once again start with threat.
+  - bugfix: Bloodsuckers don't roll on command staff.
+  QueenReduviidae:
+  - bugfix: Your plasmaman security team is no longer on fire.
+  The-Black-Screen:
+  - bugfix: removes vending machines that are in front of an airlock
+2023-08-16:
+  Coding-Grape:
+  - code_imp: Removed fancy = FALSE from /obj/item/lighter/mime and /obj/item/lighter/bright
+  Salted-Zen:
+  - image: Replaces bone axe and spear sprites with old ones from 1.0
+2023-08-18:
+  CannibalHunter:
+  - rscadd: Added new hairstyle, Mullet.
+  KittyNoodle:
+  - rscadd: Freerunning now doubles sprint time.
+  - balance: Changes a lot of quirk costs.
+  - balance: IPCs are now punished for taking quirks that don't effect them
+  MilkForever:
+  - sound: Almost all species in the game can scream and laugh, some species get unique
+      sounds.
+  - rscadd: 'Added a new species: Arachnids.'
+  etherware-novice, BetaCentari:
+  - rscadd: Some new emotes.
+  - sound: Added Rattle.ogg which sounds like a well, rattle
+  iamcooldan:
+  - rscadd: Added additional items to the produce order console.
+2023-08-22:
+  BlackCrystalic, Koshenko:
+  - rscadd: day/night cycle that changes brightness and color based on station time
+      to icebox and oshan
+  - rscadd: framework for particle weathers, currently un-used in maps
+  DimWhat:
+  - image: Resprited the janitor jumpsuit/skirt
+  Ebin-Halcyon:
+  - rscadd: Syndicate maid outfit for 4 tc, degenerate.
+  SeeBeeSee:
+  - rscadd: existing Fraxinella mutation to the current plant mutation list
+  dwasint:
+  - rscadd: coconuts and coconut guns
+  - rscadd: wall trim and wall paints, use a decal painter with a custom color on
+      the wall to change the trim or paint
+  iamcooldan:
+  - rscadd: new crates for departmental lathes, and a birthday crate.
+2023-08-23:
+  wraith-54321:
+  - balance: All clockwork weapons are now worse at wounding
+  - balance: Clockwork arrows now deal 25 damage instead of 30
+  - bugfix: Heretic ghouls can no longer use scriptures
+  - bugfix: Clock borgs can no longer be subverted by emags
+  - bugfix: Heretics are now correctly immune to the Kindle scripture

@@ -1,8 +1,0 @@
-author: "KittyNoodle"
-delete-after: True
-changes:
-  - balance: "Roundstart malf should now appear at similar rates to midround malf"
-  - balance: "Latejoin/Midround tot has been reigned in"
-  - balance: "Bloodsuckers have had their threat requirement increased and now need 20 living players to spawn"
-  - bugfix: "Dynamic should once again start with threat."
-  - bugfix: "Bloodsuckers don't roll on command staff."

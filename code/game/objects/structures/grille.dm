@@ -29,6 +29,7 @@
 /obj/structure/grille/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	update_appearance()
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
@@ -46,9 +47,11 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
+/* monkestation removal
 /obj/structure/grille/update_icon_state()
 	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
 	return ..()
+*/
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
@@ -359,6 +362,10 @@
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
+	icon = 'icons/obj/structures.dmi'
+	canSmoothWith =  null
+	smoothing_flags = null
+	smoothing_groups = null
 	icon_state = "brokengrille"
 	density = FALSE
 	broken = TRUE

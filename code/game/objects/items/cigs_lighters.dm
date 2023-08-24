@@ -736,7 +736,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
+	AddComponent(\
+		/datum/component/bullet_intercepting,\
+		block_chance = 0.5,\
+		active_slots = ITEM_SLOT_SUITSTORE,\
+		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+	)
 	update_appearance()
+
+/// Destroy the lighter when it's shot by a bullet
+/obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
+	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
+	playsound(victim, get_sfx(SFX_RICOCHET), 100, TRUE)
+	new /obj/effect/decal/cleanable/oil(get_turf(src))
+	do_sparks(1, TRUE, src)
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	qdel(src)
 
 /obj/item/lighter/cyborg_unequip(mob/user)
 	if(!lit)
@@ -947,7 +962,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
 	light_outer_range = 0
 	light_power = 0
-	fancy = FALSE
 
 /obj/item/lighter/mime/ignition_effect(atom/A, mob/user)
 	. = span_infoplain("[user] lifts the [name] to the [A], which miraculously lights!")
@@ -961,7 +975,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
 	light_outer_range = 8
 	light_power = 3 //Irritatingly bright and large enough to cover a small room.
-	fancy = FALSE
 
 /obj/item/lighter/bright/examine(mob/user)
 	. = ..()

@@ -167,7 +167,7 @@
 		/datum/reagent/medicine/insulin = -2) //depletes hunny.
 
 	virus_suspectibility = 2
-	resulting_atoms = list(/mob/living/simple_animal/hostile/bear = 1)
+	resulting_atoms = list(/mob/living/basic/bear = 1)
 
 /datum/micro_organism/cell_line/carp
 	desc = "Cyprinid cells"
@@ -629,7 +629,7 @@
 		/datum/reagent/copper = -1)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/mushroom = 1)
+	resulting_atoms = list(/mob/living/basic/mushroom = 1)
 
 /datum/micro_organism/cell_line/queen_bee
 	desc = "aphid cells"
@@ -659,10 +659,32 @@
 /datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
 	for(var/i in 1 to 5)
-		new /mob/living/simple_animal/hostile/bee(get_turf(vat))
+		new /mob/living/basic/bee(get_turf(vat))
 	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
 		return
 	QDEL_NULL(vat.biological_sample)
+
+/datum/micro_organism/cell_line/butterfly
+	desc = "Papilionoidea cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+	)
+	supplementary_reagents = list(
+		/datum/reagent/consumable/honey = 4,
+		/datum/reagent/consumable/korta_nectar = 3,
+		/datum/reagent/consumable/applejuice = 2,
+		/datum/reagent/water = 1,
+		/datum/reagent/consumable/sugar = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -3,
+		/datum/reagent/toxin/carpotoxin = -2,
+		/datum/reagent/toxin = -2,
+	)
+
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/basic/butterfly = 3)
 
 /datum/micro_organism/cell_line/leaper
 	desc = "atypical amphibian cells"
@@ -712,6 +734,6 @@
 		/datum/reagent/drug/nicotine = -1,
 		/datum/reagent/toxin/pestkiller = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/mega_arachnid = 1)
+	resulting_atoms = list(/mob/living/basic/mega_arachnid = 1)
 
 #undef VAT_GROWTH_RATE

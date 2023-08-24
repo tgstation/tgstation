@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
-#define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
+#define isregalrat(A) (istype(A, /mob/living/basic/regal_rat))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/giant_spider))
+#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 
 
 //Misc mobs

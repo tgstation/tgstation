@@ -140,8 +140,8 @@
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
-	icon = 'icons/obj/food/meat.dmi'
-	icon_state = "spiderling"
+	icon = 'icons/mob/simple/animal.dmi'
+	icon_state = "spiderling_dead"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/toxin = 4,
@@ -233,6 +233,7 @@
 	tastes = list("butter" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	dog_fashion = /datum/dog_fashion/head/butter
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()

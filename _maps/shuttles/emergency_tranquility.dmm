@@ -851,7 +851,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/mob/living/simple_animal/butterfly{
+/mob/living/basic/butterfly{
 	name = "Peacekeeper Henry"
 	},
 /turf/open/floor/grass,
@@ -2549,7 +2549,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "UJ" = (
-/mob/living/simple_animal/butterfly{
+/mob/living/basic/butterfly{
 	name = "Peacekeeper Henry"
 	},
 /turf/open/floor/grass,
@@ -2642,7 +2642,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "WM" = (

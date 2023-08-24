@@ -4,11 +4,13 @@
 
 /obj/structure/disposalpipe/trunk/multiz
 	name = "Disposal trunk that goes up"
+	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "pipe-up"
 	var/multiz_dir = MULTIZ_PIPE_UP ///Set the multiz direction of your trunk. 1 = up, 2 = down
 
 /obj/structure/disposalpipe/trunk/multiz/down
 	name = "Disposal trunk that goes down"
+	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "pipe-down"
 	multiz_dir = MULTIZ_PIPE_DOWN
 

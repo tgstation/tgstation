@@ -1,4 +1,0 @@
-author: "The-Black-Screen"
-delete-after: True
-changes:
-  - bugfix: "removes vending machines that are in front of an airlock"

@@ -20,6 +20,8 @@
 	hand_path = /obj/item/melee/touch_attack/star_touch
 	/// Stores the weakref for the Star Gazer after ascending
 	var/datum/weakref/star_gazer
+	/// If the heretic is ascended or not
+	var/ascended = FALSE
 
 /datum/action/cooldown/spell/touch/star_touch/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -43,7 +45,13 @@
 	return TRUE
 
 /datum/action/cooldown/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
-	return list(get_turf(owner), get_step(owner, turn(owner.dir, 90)), get_step(owner, turn(owner.dir, 270)))
+	var/list/target_turfs = list(get_turf(owner))
+	var/range = ascended ? 2 : 1
+	var/list/directions = list(turn(owner.dir, 90), turn(owner.dir, 270))
+	for (var/direction as anything in directions)
+		for (var/i in 1 to range)
+			target_turfs += get_ranged_target_turf(owner, direction, i)
+	return target_turfs
 
 /// To set the star gazer
 /datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/star_gazer/star_gazer_mob)
@@ -222,7 +230,7 @@
 /// What to add when the beam connects to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.AddElement(/datum/element/effect_trail/cosmic_trail)
+		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return
 
 /// What to process when the beam is connected to a target
@@ -234,5 +242,5 @@
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.RemoveElement(/datum/element/effect_trail/cosmic_trail)
+		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return
