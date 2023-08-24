@@ -30,7 +30,7 @@
 
 /datum/component/religious_tool/Destroy(force, silent)
 	easy_access_sect = null
-	perform_rites = null
+	performing_rite = null
 	catalyst_type = null
 	after_sect_select_cb = null
 	return ..()
