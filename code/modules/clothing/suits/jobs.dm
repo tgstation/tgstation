@@ -229,7 +229,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(
-		/obj/item/stamp,
+		/obj/item/stamp
 	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
