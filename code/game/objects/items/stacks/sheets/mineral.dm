@@ -363,7 +363,8 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(adamantine_recipes, list(
-	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1, category = CAT_ROBOT),
+	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1, category = CAT_ROBOT), \
+	new/datum/stack_recipe("adamantine floor tile", /obj/item/stack/tile/mineral/adamantium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/adamantine
@@ -392,7 +393,13 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	merge_type = /obj/item/stack/sheet/mineral/runite
 	material_type = /datum/material/runite
 
+GLOBAL_LIST_INIT(runite_recipes, list ( \
+	new/datum/stack_recipe("runite floor tile", /obj/item/stack/tile/mineral/runite, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
+	))
 
+/obj/item/stack/sheet/mineral/runite/get_main_recipes()
+	. = ..()
+	. += GLOB.runite_recipes
 /*
  * Mythril
  */
@@ -473,6 +480,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	new /datum/stack_recipe("ancient armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 5, res_amount = 1, check_density = FALSE, category = CAT_CLOTHING),
 	new /datum/stack_recipe("ancient helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 3, res_amount = 1, check_density = FALSE, category = CAT_CLOTHING),
 	new /datum/stack_recipe("metallic hydrogen axe", /obj/item/fireaxe/metal_h2_axe, req_amount = 15, res_amount = 1, check_density = FALSE, category = CAT_WEAPON_MELEE),
+	new /datum/stack_recipe("metallic hydrogen tile", /obj/item/stack/tile/mineral/metal_hydrogen 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/mineral/metal_hydrogen
