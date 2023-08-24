@@ -510,7 +510,7 @@
 	desc = "A wrist mounted variant of the medbeam gun, allowing the user to heal their allies without the risk of dropping it."
 	icon_state = "chronogun"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN
 	device = /obj/item/gun/medbeam/mod
 	incompatible_modules = list(/obj/item/mod/module/medbeam)
