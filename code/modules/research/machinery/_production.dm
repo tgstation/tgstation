@@ -293,7 +293,7 @@
 		if(!card && istype(user.pulling, /obj/item/card/id))
 			card = user.pulling
 
-		if(card && tax_access && tax_access in card.access)
+		if(card && tax_access && (tax_access in card.access))
 			total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
 
 	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
