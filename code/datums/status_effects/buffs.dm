@@ -468,10 +468,9 @@
 /atom/movable/screen/alert/status_effect/blessing_of_insanity
 	name = "Blessing of Insanity"
 	desc = "Your devotion to madness has improved your resilience to all damage and you gain the power to levitate!"
-	/*icon_state = "blessing_of_insanity"*/
+	//no screen alert - the gravity already throws one
 
 /datum/status_effect/blessing_of_insanity/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, MAD_WIZARD_TRAIT)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.brute_mod *= 0.5
@@ -480,11 +479,11 @@
 		human_owner.physiology.oxy_mod *= 0.5
 		human_owner.physiology.clone_mod *= 0.5
 		human_owner.physiology.stamina_mod *= 0.5
-	owner.add_stun_absorption(source = id, priority = 4)
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
-	ADD_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
+	owner.add_stun_absorption(source = id, priority = 4)
+	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -497,9 +496,8 @@
 		human_owner.physiology.oxy_mod *= 2
 		human_owner.physiology.clone_mod *= 2
 		human_owner.physiology.stamina_mod *= 2
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, MAD_WIZARD_TRAIT)
-	owner.remove_stun_absorption(id)
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
-	REMOVE_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, MAD_WIZARD_TRAIT)
+	owner.remove_stun_absorption(id)
+	remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
