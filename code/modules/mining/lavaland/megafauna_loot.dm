@@ -846,11 +846,11 @@
 //Blood-Drunk Miner: Cleaving Saw
 
 /datum/attack_style/melee_weapon/cleaving_saw_closed
-	cd = 3 DECISECONDS
+	cd = CLICK_CD_MELEE * 0.5
 	slowdown = 0.5
 
 /datum/attack_style/melee_weapon/swing/cleaving_saw_open
-	cd = 12 DECISECONDS
+	cd = CLICK_CD_MELEE * 1.2
 	slowdown = 0.8
 
 /obj/item/melee/cleaving_saw

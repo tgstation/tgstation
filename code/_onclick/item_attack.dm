@@ -14,9 +14,6 @@
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
 
-	if(isliving(target) && !can_attack_with(user, params))
-		return TRUE
-
 	var/pre_attack_result
 	if (is_right_clicking)
 		switch (pre_attack_secondary(target, user, params))
