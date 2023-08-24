@@ -31,7 +31,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Destroy()
 	GLOB.keycard_events.clearEvent("triggerEvent", ev)
-	QDEL_NULL(ev)
+	ev = null
 	return ..()
 
 /obj/machinery/keycard_auth/ui_state(mob/user)

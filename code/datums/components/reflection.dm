@@ -58,6 +58,7 @@
 /datum/component/reflection/Destroy()
 	QDEL_LIST_ASSOC_VAL(reflected_movables)
 	QDEL_NULL(reflection_holder)
+	can_reflect = null
 	return ..()
 
 ///Called when the parent changes its direction.
