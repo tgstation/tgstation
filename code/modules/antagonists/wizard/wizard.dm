@@ -57,6 +57,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+
+/datum/antagonist/wizard_minion/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard_minion/proc/create_objectives()
@@ -83,6 +88,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	. = ..()
 	if(allow_rename)
 		rename_wizard()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 
 /datum/antagonist/wizard/create_team(datum/team/wizard/new_team)
 	if(!new_team)
@@ -172,6 +178,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			qdel(spell)
 			owner.current.actions -= spell
 
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()
