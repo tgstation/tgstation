@@ -316,7 +316,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	handle_high_power()
 	psychological_examination()
 
-	if(get_status() < SUPERMATTER_WARNING && !isnull(saviors))
+	if(get_status() < SUPERMATTER_EMERGENCY && !isnull(saviors))
 		for(var/datum/weakref/savior_ref as anything in saviors)
 			var/mob/living/carbon/savior = savior_ref.resolve()
 			if(!istype(savior)) // didn't live to tell the tale, sadly.
