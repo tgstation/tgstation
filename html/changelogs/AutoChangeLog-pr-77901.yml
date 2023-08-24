@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - qol: "QM jumpsuit/skirt expose the torso when adjusted."
