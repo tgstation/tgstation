@@ -5740,6 +5740,8 @@
 #include "monkestation\code\modules\hydroponics\mutations\infusions.dm"
 #include "monkestation\code\modules\hydroponics\seeds\coconut.dm"
 #include "monkestation\code\modules\indicators\ssd_indicator.dm"
+#include "monkestation\code\modules\job_xp\preferences\base_preferences.dm"
+#include "monkestation\code\modules\job_xp\preferences\xp_handlers.dm"
 #include "monkestation\code\modules\liquids\drains.dm"
 #include "monkestation\code\modules\liquids\height_floors.dm"
 #include "monkestation\code\modules\liquids\liquid_controller.dm"
