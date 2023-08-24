@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT *2)
+	custom_materials = list(/datum/material/iron= 200)
 	greyscale_config_inhand_left = /datum/greyscale_config/fish_analyzer_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/fish_analyzer_inhand_right
 	greyscale_config_worn = /datum/greyscale_config/fish_analyzer_worn
@@ -104,7 +104,7 @@
 	fish_menu = show_radial_menu_persistent(user, aquarium, radial_choices, select_proc = CALLBACK(src, PROC_REF(choice_selected), user, aquarium), tooltips = TRUE, custom_check = CALLBACK(src, PROC_REF(can_select_fish), user, aquarium))
 	RegisterSignal(aquarium, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(on_aquarium_entered))
 	RegisterSignal(aquarium, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_aquarium_exited))
-	RegisterSignal(aquarium, COMSIG_QDELETING, PROC_REF(delete_radial))
+	RegisterSignal(aquarium, COMSIG_PARENT_QDELETING, PROC_REF(delete_radial))
 
 ///Instantiates a radial menu choice datum for the current fish and adds it to the list of choices.
 /obj/item/fish_analyzer/proc/radial_choices(obj/item/fish/fish)
@@ -157,7 +157,7 @@
 ///Unregisters signals, delete the radial menu, unsets the choices.
 /obj/item/fish_analyzer/proc/delete_radial(obj/structure/aquarium/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_ATOM_ABSTRACT_EXITED, COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_QDELETING))
+	UnregisterSignal(source, list(COMSIG_ATOM_ABSTRACT_EXITED, COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_PARENT_QDELETING))
 	QDEL_NULL(fish_menu)
 	radial_choices = null
 

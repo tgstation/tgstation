@@ -948,7 +948,7 @@
 	desc = "An advanced fishing hook that gives the user a tighter control on the fish when reeling in."
 	id = "stabilized_hook"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron = 500, /datum/material/gold = 300, /datum/material/titanium = 200)
 	build_path = /obj/item/fishing_hook/stabilized
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
@@ -960,7 +960,7 @@
 	desc = "An analyzer used to monitor fish's status and traits with."
 	id = "fish_analyzer"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
 	build_path = /obj/item/fish_analyzer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE

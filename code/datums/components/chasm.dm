@@ -35,12 +35,9 @@
 /datum/component/chasm/Initialize(turf/target, mapload)
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
-	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Entered))
 	target_turf = target
-	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
-	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
-	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
+	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
 	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff when the turf is changed.
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
@@ -48,6 +45,7 @@
 	parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
 
 /datum/component/chasm/UnregisterFromParent()
+	STOP_PROCESSING(SSobj, src)
 	storage = null
 
 /datum/component/chasm/proc/Entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)

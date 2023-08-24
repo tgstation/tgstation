@@ -447,10 +447,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(equipped_item.pulledby)
 		equipped_item.pulledby.stop_pulling()
 
-	equipping.screen_loc = null // will get moved if inventory is visible
-	equipping.forceMove(src)
-	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
-	equipping.on_equipped(src, slot)
+	equipped_item.screen_loc = null // will get moved if inventory is visible
+	equipped_item.forceMove(src)
+	SET_PLANE_EXPLICIT(equipped_item, ABOVE_HUD_PLANE, src)
+	equipped_item.on_equipped(src, slot)
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
 	if((. = guardian_overlays[cache_index]))

@@ -1417,7 +1417,7 @@
 				/mob/living/basic/carp/magic/chaos,
 				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
-				/mob/living/simple_animal/crab,
+				/mob/living/basic/crab,
 				/mob/living/basic/spider/giant,
 				/mob/living/basic/spider/giant/hunter,
 				/mob/living/basic/mining/goliath,

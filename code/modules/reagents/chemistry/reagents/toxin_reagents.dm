@@ -1316,14 +1316,14 @@
 		if(12 to 20)
 			silent_toxin = FALSE
 			toxpwr = 0.5
-			affected_mob.adjustStaminaLoss(2.5 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-2.5 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(20, seconds_per_tick))
 				affected_mob.losebreath += 1 * REM * seconds_per_tick
 			if(SPT_PROB(40, seconds_per_tick))
 				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
 			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
 			affected_mob.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
-			affected_mob.adjustStaminaLoss(2 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-2 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(4, seconds_per_tick))
 				paralyze_limb(affected_mob)
 			if(SPT_PROB(10, seconds_per_tick))
@@ -1337,7 +1337,7 @@
 			affected_mob.set_slurring_if_lower(3 SECONDS * REM * seconds_per_tick)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("you feel horribly weak."))
-			affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-5 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(8, seconds_per_tick))
 				paralyze_limb(affected_mob)
 			if(SPT_PROB(10, seconds_per_tick))
@@ -1346,7 +1346,7 @@
 			toxpwr = 1.5
 			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, BRAIN_DAMAGE_DEATH)
 			affected_mob.set_silence_if_lower(3 SECONDS * REM * seconds_per_tick)
-			affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-5 * REM * seconds_per_tick, 0)
 			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
 			if(SPT_PROB(15, seconds_per_tick))
 				paralyze_limb(affected_mob)
