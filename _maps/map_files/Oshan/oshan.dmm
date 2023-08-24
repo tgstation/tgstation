@@ -1700,7 +1700,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "baJ" = (
-/mob/living/basic/giant_spider/maintenance,
+/mob/living/basic/spider/maintenance,
 /obj/effect/gibspawner/xeno/bodypartless,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating,
@@ -17129,7 +17129,7 @@
 "krD" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -18444,7 +18444,7 @@
 /area/station/service/chapel)
 "lfR" = (
 /obj/effect/gibspawner/xeno/bodypartless,
-/mob/living/basic/giant_spider/maintenance,
+/mob/living/basic/spider/maintenance,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -19801,25 +19801,16 @@
 /turf/closed/wall/r_wall,
 /area/station/commons/dorms)
 "lUB" = (
-/obj/machinery/power/apc/worn_out/directional/west,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 10
 	},
-/mob/living/basic/carp/pet/lia,
 /obj/structure/bed/dogbed/lia,
 /obj/item/food/spaghetti/security{
 	pixel_y = -3
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/power/apc/worn_out/directional/west,
 /obj/structure/cable,
-/mob/living/basic/spider/giant/sgt_araneus,
-/obj/structure/bed/dogbed/ian,
+/mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/hos)
 "lUX" = (
@@ -30379,7 +30370,7 @@
 	},
 /area/station/security/warden)
 "ssO" = (
-/mob/living/simple_animal/pet/fox/renault,
+/mob/living/basic/pet/fox/renault,
 /obj/structure/bed/dogbed/renault,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/captain/private)
@@ -31029,7 +31020,7 @@
 "sMx" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -33399,7 +33390,7 @@
 "ukF" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
