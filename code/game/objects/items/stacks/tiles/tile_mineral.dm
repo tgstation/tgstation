@@ -79,6 +79,77 @@
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/diamond
 
+/obj/item/stack/tile/mineral/adamantium
+	name = "adamantine floor"
+	singular_name = "adamantine floor tile"
+	desc = "A tile made out of adamantine, made using golem desgins. Why aren't they worried about walking on their insides? Don't think about it."
+	icon_state = "tile_adamantium"
+	inhand_icon_state = "tile-adamantium"
+	turf_type = /turf/open/floor/mineral/adamantium
+	mineralType = "adamantine"
+	mats_per_unit = list(/datum/material/adamantine=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/adamantine
+
+/obj/item/stack/tile/mineral/runite
+	name = "runite tile"
+	singular_name = "runite floor tile"
+	desc = "A tile made out of runite. What does the rune say? 'Floor'. What were you expecting?"
+	icon_state = "tile_runite"
+	inhand_icon_state = "tile-runite"
+	turf_type = /turf/open/floor/mineral/runite
+	mineralType = "runite"
+	mats_per_unit = list(/datum/material/runite=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/runite
+
+/obj/item/stack/tile/mineral/metal_hydrogen
+	name = "metal hydrogen tile"
+	singular_name = "metal hydrogen floor tile"
+	desc = "Standard metal hydrogen tile. Cool to the touch, and the eyes!"
+	icon_state = "tile_metalhydrogen"
+	inhand_icon_state = "tile-metalhydrogen"
+	turf_type = /turf/open/floor/mineral/metal_hydrogen
+	mineralType = "metal_hydrogen"
+	mats_per_unit = list(/datum/material/metal_hydrogen=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/metal_hydrogen,
+		/obj/item/stack/tile/mineral/metal_hydrogen/alt,
+		/obj/item/stack/tile/mineral/metal_hydrogen/half,
+		/obj/item/stack/tile/mineral/metal_hydrogen/corner,
+		/obj/item/stack/tile/mineral/metal_hydrogen/single,
+		)
+/obj/item/stack/tile/mineral/metal_hydrogen/alt
+	name = "metal hydrogen tile"
+	singular_name = "metal hydrogen floor tile"
+	desc = "Metal hydrogen tile patterned to resamble regular counterpart. Rather cloudy."
+	turf_type = /turf/open/floor/mineral/metal_hydrogen/alt
+	icon_state = "metal_hydrogen_alt"
+	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/alt
+
+/obj/item/stack/tile/mineral/metal_hydrogen/alt_half
+	name = "metal hydrogen half tile"
+	singular_name = "metal hydrogen half floor tile"
+	desc = "Metal hydrogen tile patterned to resamble regular counterpart. Sunny, with a side of clouds."
+	turf_type = /turf/open/floor/mineral/metal_hydrogen/alt_half
+	icon_state = "metal_hydrogen_alt_half"
+	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/alt_half
+
+/obj/item/stack/tile/mineral/metal_hydrogen/alt_corner
+	name = "corner metal hydrogen tile"
+	singular_name = "corner metal hydrogen  floor tile"
+	desc = "Metal hydrogen tile patterned to resamble regular counterpart. Clouds surround us."
+	turf_type = /turf/open/floor/mineral/metal_hydrogen/alt_corner
+	icon_state = "metal_hydrogen_alt_corner"
+	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/alt_corner
+
+/obj/item/stack/tile/mineral/metal_hydrogen/alt_single
+	name = "inverse corner metal hydrogen tile"
+	singular_name = "inverse corner metal hydrogen floor tile"
+	desc = "Metal hydrogen tile patterned to resamble regular counterpart. Mostly sunny."
+	turf_type = /turf/open/floor/mineral/metal_hydrogen/alt_single
+	icon_state = "metal_hydrogen_alt_single"
+	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/alt_single
+
 /obj/item/stack/tile/mineral/bananium
 	name = "bananium tile"
 	singular_name = "bananium floor tile"

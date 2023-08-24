@@ -229,6 +229,62 @@
 	icons = list("diamond","diamond_dam")
 	custom_materials = list(/datum/material/diamond = SMALL_MATERIAL_AMOUNT*5)
 
+//ADAMANTIUM
+
+/turf/open/floor/mineral/adamantium
+	name = "adamantine floor"
+	icon_state = "adamantine"
+	floor_tile = /obj/item/stack/tile/mineral/adamantine
+	icons = list("adamantium")
+	custom_materials = list(/datum/material/adamantine = SMALL_MATERIAL_AMOUNT*5)
+
+/turf/open/floor/mineral/adamantium/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+//RUNITE
+
+/turf/open/floor/mineral/runite
+	name = "runite floor"
+	icon_state = "runite"
+	floor_tile = /obj/item/stack/tile/mineral/runite
+	icons = list("runite")
+	custom_materials = list(/datum/material/runite = SMALL_MATERIAL_AMOUNT*5)
+
+/turf/open/floor/mineral/runite/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+//METAL HYDROGEN
+
+/turf/open/floor/mineral/metal_hydrogen
+	name = "metal hydrogen floor"
+	icon_state = "metalhydrogen"
+	floor_tile = /obj/item/stack/tile/mineral/metal_hydrogen
+	icons = list("metalhydrogen")
+	custom_materials = list(/datum/material/metal_hydrogen = SMALL_MATERIAL_AMOUNT*5)
+
+/turf/open/floor/metal_hydrogen/alt
+	icon_state = "metalhydrogen_alt"
+	base_icon_state = "metalhydrogen_alt"
+	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_alt
+
+/turf/open/floor/metal_hydrogen/alt_half
+	icon_state = "metalhydrogen_half"
+	base_icon_state = "metalhydrogen_half"
+	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_half
+
+/turf/open/floor/metal_hydrogen/alt_corner
+	icon_state = "metalhydrogen_corner"
+	base_icon_state = "metalhydrogen_corner"
+	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_corner
+
+/turf/open/floor/metal_hydrogen/alt_single
+	icon_state = "metalhydrogen_singular"
+	base_icon_state = "metalhydrogen_singular"
+	floor_tile = /obj/item/stack/tile/iron/white/metalhydrogen_singular
+
+/turf/open/floor/mineral/metalhydrogen/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 //URANIUM
 
 /turf/open/floor/mineral/uranium

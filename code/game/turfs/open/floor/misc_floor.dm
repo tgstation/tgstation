@@ -327,3 +327,41 @@
 
 /turf/open/floor/iron/tgmcemblem/center
 	icon_state = "tgmc_center"
+
+/turf/open/floor/bone
+	name = "bone tile"
+	desc = "Crude flooring of bones dug and trampled into the dirt."
+	icon_state = "bone_tile"
+
+/turf/open/floor/bone/corner
+	icon_state = "bone_corner"
+
+/turf/open/floor/bone/path
+	name = "bone path"
+	desc = "Crude path of bones dug and trampled into the dirt."
+	icon_state = "bone_straight"
+
+/turf/open/floor/bone/spine
+	name = "bone path"
+	desc = "A spine of some humanoid creature with its ribs straightened to better fit for a flooring."
+	icon_state = "bone_spine"
+
+/turf/open/floor/organic_bone
+	name = "bone crossing"
+	desc = "An intersection of bones within an organism, or a singular creatures rendered flat square. Whichever is more horryfying."
+	icon_state = "meatbone_tile"
+
+/turf/open/floor/organic_bone/corner
+	name = "bone corner"
+	desc = "A corner of bones... Would you call that a joint?"
+	icon_state = "meatbone_corner"
+
+/turf/open/floor/organic_bone/path
+	name = "bone structure"
+	desc = "Broad bone structure, likely supporting a major part of some organism."
+	icon_state = "meatbone_straight"
+
+/turf/open/floor/organic_bone/spine
+	name = "spine"
+	desc = "A spine of some rather large creature."
+	icon_state = "meatbone_spine"
