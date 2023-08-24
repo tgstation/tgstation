@@ -334,9 +334,8 @@
 /datum/uplink_item/weapon_kits/high_cost/cqc
 	name = "CQC Equipment Case (Very Hard)"
 	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant and a snazzy bandana (and a hat stabilizer to go with it)."
-	item = /obj/item/book/granter/martial/cqc
+	item = /obj/item/storage/toolbox/guncase/cqc
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	surplus = 0
 
 /datum/uplink_item/weapon_kits/high_cost/doublesword
 	name = "Double-Energy Sword Case (Very Hard)"
