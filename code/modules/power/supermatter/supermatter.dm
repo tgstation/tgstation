@@ -318,7 +318,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(get_status() < SUPERMATTER_EMERGENCY && !isnull(saviors))
 		for(var/datum/weakref/savior_ref as anything in saviors)
-			var/mob/living/carbon/savior = savior_ref.resolve()
+			var/mob/living/savior = savior_ref.resolve()
 			if(!istype(savior)) // didn't live to tell the tale, sadly.
 				continue
 			savior.client?.give_award(/datum/award/achievement/misc/this_is_fine, savior)
@@ -530,8 +530,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(!istype(delamination_strategy, /datum/sm_delam/cascade))
 				return
 
-			for(var/mob/living/carbon/lucky_engi in mobs_in_area_type(list(/area/station/engineering/supermatter)))
+			for(var/mob/living/lucky_engi as anything in mobs_in_area_type(list(/area/station/engineering/supermatter)))
 				if(isnull(lucky_engi.client))
+					continue
+				if(isanimal_or_basicmob(lucky_engi))
 					continue
 				LAZYADD(saviors, WEAKREF(lucky_engi))
 
