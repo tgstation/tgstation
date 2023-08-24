@@ -32,7 +32,7 @@
 			target = null
 			error = "Connection to destination relay lost."
 
-/datum/computer_file/program/ntnet_dos/kill_program()
+/datum/computer_file/program/ntnet_dos/kill_program(mob/user)
 	if(target)
 		target.dos_sources.Remove(src)
 	target = null

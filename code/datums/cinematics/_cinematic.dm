@@ -52,7 +52,7 @@
 
 /datum/cinematic/Destroy()
 	QDEL_NULL(screen)
-	QDEL_NULL(special_callback)
+	special_callback = null
 	watching.Cut()
 	locked.Cut()
 	return ..()

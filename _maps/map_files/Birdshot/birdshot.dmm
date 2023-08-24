@@ -1771,6 +1771,7 @@
 /area/station/engineering/break_room)
 "aMy" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "aME" = (
@@ -3846,9 +3847,9 @@
 	dir = 4
 	},
 /obj/machinery/disposal/delivery_chute{
+	desc = "The quickest way back to society";
 	dir = 1;
-	name = "freedom";
-	desc = "The quickest way back to society"
+	name = "freedom"
 	},
 /obj/machinery/door/window/brigdoor/right/directional/north,
 /turf/open/floor/iron/dark,
@@ -7748,6 +7749,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "dcG" = (
@@ -8606,6 +8608,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
+"dtk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/closed/wall,
+/area/station/science/ordnance/testlab)
 "dtq" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -9630,10 +9636,6 @@
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
-"dMn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall,
-/area/station/science/ordnance/testlab)
 "dMM" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
@@ -13802,6 +13804,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
+"fnd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/station/science/ordnance/testlab)
 "fni" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/opposingcorners{
@@ -17783,7 +17789,6 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "gFs" = (
@@ -23110,10 +23115,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
-"iuN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance/testlab)
 "iuW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -30280,8 +30281,17 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "kZF" = (
+/obj/structure/closet/crate/secure{
+	desc = "A secure crate containing various materials for building a customised test-site.";
+	name = "Test Site Materials Crate";
+	req_access = list("ordnance")
+	},
+/obj/item/target/clown,
+/obj/item/target/clown,
+/obj/item/target/syndicate,
+/obj/item/target/alien,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "lao" = (
@@ -30623,8 +30633,8 @@
 	pixel_y = -3
 	},
 /obj/item/storage/box/prisoner{
-	pixel_y = -12;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -12
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -31637,9 +31647,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "lwn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hatch,
+/obj/machinery/atmospherics/components/binary/pump/on/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "lwp" = (
@@ -33396,8 +33406,8 @@
 	dir = 8
 	},
 /obj/machinery/computer/telecomms/monitor{
-	network = "tcommsat";
-	dir = 8
+	dir = 8;
+	network = "tcommsat"
 	},
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
@@ -38269,6 +38279,7 @@
 /area/station/maintenance/central/lesser)
 "nNZ" = (
 /obj/structure/tank_dispenser,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "nOf" = (
@@ -44093,6 +44104,13 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"pSB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/station/science/ordnance/testlab)
 "pSI" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/destructible/cult/item_dispenser/archives/library,
@@ -48916,19 +48934,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
-"rsA" = (
-/obj/structure/closet/crate/secure{
-	desc = "A secure crate containing various materials for building a customised test-site.";
-	name = "Test Site Materials Crate";
-	req_access = list("ordnance")
-	},
-/obj/item/target/clown,
-/obj/item/target/clown,
-/obj/item/target/syndicate,
-/obj/item/target/alien,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/science/ordnance/testlab)
 "rsH" = (
 /obj/structure/punching_bag,
 /obj/effect/turf_decal/bot,
@@ -50393,7 +50398,7 @@
 /obj/machinery/door/airlock/research/glass{
 	name = "Pharmacy"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
+/obj/effect/mapping_helpers/airlock/access/all/medical/pharmacy,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/pharmacy)
 "rQN" = (
@@ -50759,7 +50764,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "rVX" = (
@@ -121618,7 +121622,7 @@ yeZ
 yeZ
 yeZ
 yeZ
-iuN
+fnd
 yeZ
 yeZ
 qei
@@ -121875,9 +121879,9 @@ yeZ
 rma
 xxn
 xFL
-dMn
+dtk
 kZF
-rsA
+pSB
 qei
 qZU
 jeG
