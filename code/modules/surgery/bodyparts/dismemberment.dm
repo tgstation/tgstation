@@ -1,6 +1,6 @@
 
 /obj/item/bodypart/proc/can_dismember(obj/item/item)
-	if(bodypart_flags & BODYPART_UNREMOVABLE)
+	if(bodypart_flags & BODYPART_UNREMOVABLE || (owner && HAS_TRAIT(owner, TRAIT_NODISMEMBER)))
 		return FALSE
 	return TRUE
 
@@ -183,6 +183,9 @@
  * * bare_wound_bonus: ditto above
  */
 /obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+	if (!can_dismember())
+		return
+
 	if(wounding_dmg < DISMEMBER_MINIMUM_DAMAGE)
 		return
 

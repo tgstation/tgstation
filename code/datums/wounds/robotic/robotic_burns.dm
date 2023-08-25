@@ -240,6 +240,16 @@
 
 	damage_mulitplier_penalty = 1.1 //1.1x damage taken
 
+	starting_temperature_min = (BODYTEMP_NORMAL + 350)
+	/// The upper bound of the chassis_temperature we can start with.
+	starting_temperature_max = (BODYTEMP_NORMAL + 400)
+
+	cooling_threshold = (BODYTEMP_NORMAL + 100)
+	heating_threshold = (BODYTEMP_NORMAL + 500)
+
+	cooling_demote_buffer = 60
+	heating_promote_buffer = 100
+
 	a_or_from = "from"
 
 	// easy to get
@@ -250,7 +260,8 @@
 
 	sound_volume = 20
 
-	outgoing_bodytemp_coeff = 0.001
+	outgoing_bodytemp_coeff = 0.009
+	bodytemp_coeff = 0.02
 
 	base_reagent_temp_coefficient = 0.05
 	heat_shock_delta_to_damage_ratio = 0.2
@@ -286,16 +297,16 @@
 
 	damage_mulitplier_penalty = 1.3 // 1.3x damage taken
 
-	starting_temperature_min = (BODYTEMP_NORMAL + 400)
-	starting_temperature_max = (BODYTEMP_NORMAL + 500)
+	starting_temperature_min = (BODYTEMP_NORMAL + 550)
+	starting_temperature_max = (BODYTEMP_NORMAL + 600)
 
-	heating_promote_buffer = 100
+	heating_promote_buffer = 150
 
-	cooling_threshold = (BODYTEMP_NORMAL + 300)
-	heating_threshold = (BODYTEMP_NORMAL + 600)
+	cooling_threshold = (BODYTEMP_NORMAL + 375)
+	heating_threshold = (BODYTEMP_NORMAL + 800)
 
-	outgoing_bodytemp_coeff = 0.003
-	bodytemp_coeff = 0.012
+	outgoing_bodytemp_coeff = 0.009
+	bodytemp_coeff = 0.017
 
 	base_reagent_temp_coefficient = 0.03
 	heat_shock_delta_to_damage_ratio = 0.2
@@ -334,16 +345,16 @@
 
 	damage_mulitplier_penalty = 1.6 //1.6x damage taken
 
-	starting_temperature_min = (BODYTEMP_NORMAL + 700)
-	starting_temperature_max = (BODYTEMP_NORMAL + 900)
+	starting_temperature_min = (BODYTEMP_NORMAL + 1050)
+	starting_temperature_max = (BODYTEMP_NORMAL + 1100)
 
 	cooling_demote_buffer = 100
 
-	cooling_threshold = (BODYTEMP_NORMAL + 600)
+	cooling_threshold = (BODYTEMP_NORMAL + 775)
 	heating_threshold = INFINITY
 
-	outgoing_bodytemp_coeff = 0.006 // burn... BURN...
-	bodytemp_coeff = 0.011
+	outgoing_bodytemp_coeff = 0.009 // burn... BURN...
+	bodytemp_coeff = 0.013
 
 	base_reagent_temp_coefficient = 0.02
 	heat_shock_delta_to_damage_ratio = 0.25

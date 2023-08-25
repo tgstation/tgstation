@@ -1,6 +1,0 @@
-
-1. perfect blunt wounds time_til_next_movement_shake_allowed calculation to properly estimate when the shake will end
-2. finish balancing critical blunt wounds
-
-
-!! UNSET LOWMEMORYMODE !!

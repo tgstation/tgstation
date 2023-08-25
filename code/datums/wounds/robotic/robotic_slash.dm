@@ -237,7 +237,7 @@
 /datum/wound/electrical_damage/get_scanner_description(mob/user)
 	. = ..()
 
-	. += " Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue(0)]% to remove the wound."
+	. += " Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue("[0]")]% to remove the wound."
 
 /datum/wound/electrical_damage/item_can_treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_RETRACTOR)
@@ -509,7 +509,7 @@
 	process_shock_spark_count_min = 1
 
 	wirecut_repair_percent = 0.09
-	wire_repair_percent = 0.07
+	wire_repair_percent = 0.075
 
 	initial_sparks_amount = 3
 
@@ -554,7 +554,7 @@
 	process_shock_spark_count_min = 2
 
 	wirecut_repair_percent = 0.08
-	wire_repair_percent = 0.06
+	wire_repair_percent = 0.07
 
 	initial_sparks_amount = 8
 
