@@ -145,6 +145,10 @@
 		if(busy)
 			say("The autolathe is busy. Please wait for completion of previous operation.")
 			return
+		
+		if(isclosedturf(get_step(src, drop_direction)))
+			say("Output is obstructed.")
+			return
 
 		var/design_id = params["id"]
 		if(!istext(design_id))
