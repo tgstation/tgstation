@@ -55,6 +55,14 @@
 		qdel(src)
 		return
 
+	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[W.type]
+	if (!pregen_data)
+		qdel(src)
+		return
+
+	required_limb_biostate = pregen_data.required_limb_biostate
+	check_any_biostates = pregen_data.check_for_any
+
 	limb = BP
 	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))
 

@@ -70,7 +70,7 @@
 	/// The bodyheat our victim must be at or above to start getting passive healing.
 	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 20)
 	/// The mult that heat differences between normal and bodytemp thresh is multiplied against. Controls passive heat healing.
-	var/heat_differential_healing_mult = 5
+	var/heat_differential_healing_mult = 2
 
 	/// Percent chance for a heat repair to give the victim a message.
 	var/heat_heal_message_chance = 20
@@ -237,7 +237,7 @@
 /datum/wound/electrical_damage/get_scanner_description(mob/user)
 	. = ..()
 
-	. += " Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%."
+	. += " Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue(0)]% to remove the wound."
 
 /datum/wound/electrical_damage/item_can_treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_RETRACTOR)
@@ -266,7 +266,7 @@
 	var/change = (processing_full_shock_threshold * wire_repair_percent)
 	var/delay_mult = 1
 	if (user == victim)
-		delay_mult *= 2.2
+		delay_mult *= 1.5
 	if (is_suture)
 		delay_mult *= 2
 		var/obj/item/stack/medical/suture/suture_item = suturing_item
@@ -285,7 +285,7 @@
 	var/your_or_other = (user == victim ? "your" : "[user]'s")
 	var/replacing_or_suturing = (is_suture ? "repairing some" : "replacing")
 	if (!wiring_reset)
-		to_chat(user, span_warning("You notice the wiring within [your_or_other] [limb.plaintext_zone] is still loose... you might shock yourself!"))
+		to_chat(user, span_warning("You notice the wiring within [your_or_other] [limb.plaintext_zone] is still loose... you might shock yourself! Maybe use some wirecutters first?"))
 		delay_mult *= 4
 
 	while (suturing_item.tool_start_check())
@@ -452,7 +452,7 @@
 	threshold_penalty = 20
 
 	intensity = 10 SECONDS
-	processing_full_shock_threshold = 2 MINUTES
+	processing_full_shock_threshold = 3 MINUTES
 
 	processing_shock_power_per_second_max = 0.2
 	processing_shock_power_per_second_min = 0.1
@@ -464,7 +464,7 @@
 	process_shock_spark_count_min = 1
 
 	wirecut_repair_percent = 0.1
-	wire_repair_percent = 0.06
+	wire_repair_percent = 0.08
 
 	wiring_reset = TRUE
 
@@ -497,7 +497,7 @@
 	threshold_penalty = 30
 
 	intensity = 10 SECONDS
-	processing_full_shock_threshold = 1.5 MINUTES
+	processing_full_shock_threshold = 2 MINUTES
 
 	processing_shock_power_per_second_max = 0.4
 	processing_shock_power_per_second_min = 0.2
@@ -509,7 +509,7 @@
 	process_shock_spark_count_min = 1
 
 	wirecut_repair_percent = 0.09
-	wire_repair_percent = 0.06
+	wire_repair_percent = 0.07
 
 	initial_sparks_amount = 3
 
@@ -554,7 +554,7 @@
 	process_shock_spark_count_min = 2
 
 	wirecut_repair_percent = 0.08
-	wire_repair_percent = 0.05
+	wire_repair_percent = 0.06
 
 	initial_sparks_amount = 8
 

@@ -295,7 +295,7 @@
 	heating_threshold = (BODYTEMP_NORMAL + 600)
 
 	outgoing_bodytemp_coeff = 0.003
-	bodytemp_coeff = 0.01
+	bodytemp_coeff = 0.012
 
 	base_reagent_temp_coefficient = 0.03
 	heat_shock_delta_to_damage_ratio = 0.2
@@ -343,7 +343,7 @@
 	heating_threshold = INFINITY
 
 	outgoing_bodytemp_coeff = 0.006 // burn... BURN...
-	bodytemp_coeff = 0.008
+	bodytemp_coeff = 0.011
 
 	base_reagent_temp_coefficient = 0.02
 	heat_shock_delta_to_damage_ratio = 0.25

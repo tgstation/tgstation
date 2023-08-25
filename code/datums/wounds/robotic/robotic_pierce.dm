@@ -40,8 +40,8 @@
 	process_shock_spark_count_max = 1
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.09 //15% per wirecut
-	wire_repair_percent = 0.05 //6% per suture
+	wirecut_repair_percent = 0.1
+	wire_repair_percent = 0.07
 
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 2
@@ -90,8 +90,8 @@
 	process_shock_spark_count_max = 2
 	process_shock_spark_count_min = 1
 
-	wirecut_repair_percent = 0.06 //12% per wirecut
-	wire_repair_percent = 0.04 //4% per suture
+	wirecut_repair_percent = 0.08
+	wire_repair_percent = 0.05
 
 	interaction_efficiency_penalty = 2.5
 	limp_slowdown = 4
@@ -142,8 +142,8 @@
 	process_shock_spark_count_max = 3
 	process_shock_spark_count_min = 2
 
-	wirecut_repair_percent = 0.05 //8% per wirecut
-	wire_repair_percent = 0.03 //3% per suture
+	wirecut_repair_percent = 0.07
+	wire_repair_percent = 0.04
 
 	interaction_efficiency_penalty = 3
 	limp_slowdown = 6
