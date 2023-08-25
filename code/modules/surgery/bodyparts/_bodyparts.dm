@@ -190,6 +190,13 @@
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
+	/// In the case we dont have dismemberable features, or literally cant get wounds, we will use this percent to determine when we can be dismembered. Compared to our ABSOLUTE maximum.
+	var/hp_percent_to_dismemberable = 0.8
+	/// If false, no wound that can be applied to us can mangle our flesh. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	var/can_theoretically_have_flesh_mangled
+	/// If false, no wound that can be applied to us can mangle our bone. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	var/can_theoretically_have_bone_mangled
+
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
 	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
@@ -503,11 +510,28 @@
 			if (has_exterior && has_interior)
 				break
 
+		if (isnull(can_theoretically_have_bone_mangled) || isnull(can_theoretically_have_flesh_mangled))
+			can_theoretically_have_bone_mangled = FALSE
+			can_theoretically_have_flesh_mangled = FALSE
+			for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
+				var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+				if (!pregen_data.can_be_applied_to(src))
+					continue
+				if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_FLESH)
+					can_theoretically_have_flesh_mangled = TRUE
+				if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_BONE)
+					can_theoretically_have_bone_mangled = TRUE
+
+				if (can_theoretically_have_bone_mangled && can_theoretically_have_flesh_mangled)
+					break
+
+		var/can_theoretically_be_dismembered = (can_theoretically_have_bone_mangled || (can_theoretically_have_flesh_mangled && !has_exterior))
+
 		var/exterior_ready_to_dismember = (!has_exterior || (mangled_state & BODYPART_MANGLED_BONE))
 		var/interior_ready_to_dismember = (!has_interior || (mangled_state & BODYPART_MANGLED_FLESH))
 
 		// if we're bone only, all cutting attacks go straight to the bone
-		if(has_exterior && (interior_ready_to_dismember))
+		if(has_exterior && interior_ready_to_dismember)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.6)
@@ -519,7 +543,7 @@
 		else
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
-			if(has_exterior && (mangled_state & BODYPART_MANGLED_FLESH) && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
+			if(has_exterior && interior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
 				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
 					wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
@@ -528,6 +552,11 @@
 				wounding_type = WOUND_BLUNT
 			else if(interior_ready_to_dismember && exterior_ready_to_dismember && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
+		if (!can_theoretically_be_dismembered)
+			var/percent_to_total_max = (get_damage() / max_damage)
+			if (percent_to_total_max >= hp_percent_to_dismemberable)
+				if (try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+					return
 
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)

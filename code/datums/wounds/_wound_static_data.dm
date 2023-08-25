@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
  * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type, datum/wound/old_wound)
+/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type = initial(wound_path_to_generate.wound_type), datum/wound/old_wound)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
 

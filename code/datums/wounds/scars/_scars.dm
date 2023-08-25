@@ -75,6 +75,12 @@
 		if(victim)
 			LAZYADD(victim.all_scars, src)
 
+	var/scar_file = W.get_scar_file(BP, add_to_scars)
+	var/scar_keyword = W.get_scar_keyword(BP, add_to_scars)
+	if (!scar_file || !scar_keyword)
+		qdel(src)
+		return
+
 	description = pick_list(W.get_scar_file(BP, add_to_scars), W.get_scar_keyword(BP, add_to_scars)) || "general disfigurement"
 
 	precise_location = pick_list_replacements(SCAR_LOC_FILE, limb.body_zone)
