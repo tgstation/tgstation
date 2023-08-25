@@ -75,7 +75,7 @@
 /obj/item/storage/box/stockparts/basic/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/stock_parts/capacitor = 3,
-		/obj/item/stock_parts/manipulator = 3,
+		/obj/item/stock_parts/servo = 3,
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/scanning_module = 3,
@@ -91,7 +91,7 @@
 	var/static/items_inside = list(
 		/obj/item/stock_parts/capacitor/quadratic = 3,
 		/obj/item/stock_parts/scanning_module/triphasic = 3,
-		/obj/item/stock_parts/manipulator/femto = 3,
+		/obj/item/stock_parts/servo/femto = 3,
 		/obj/item/stock_parts/micro_laser/quadultra = 3,
 		/obj/item/stock_parts/matter_bin/bluespace = 3,
 		)
@@ -111,6 +111,13 @@
 /obj/item/storage/box/stabilized //every single stabilized extract from xenobiology
 	name = "box of stabilized extracts"
 	icon_state = "syndiebox"
+
+/obj/item/storage/box/stabilized/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = 99
 
 /obj/item/storage/box/stabilized/PopulateContents()
 	var/static/items_inside = list(

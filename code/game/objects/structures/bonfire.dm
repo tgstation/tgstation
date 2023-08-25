@@ -10,7 +10,7 @@
 /obj/structure/bonfire
 	name = "bonfire"
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
 	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
@@ -50,7 +50,7 @@
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
 				to_chat(user, span_notice("You add a rod to \the [src]."))
-				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
@@ -146,13 +146,13 @@
 			var/mob/living/burn_victim = burn_target
 			burn_victim.adjust_fire_stacks(BONFIRE_FIRE_STACK_STRENGTH * 0.5 * seconds_per_tick)
 			burn_victim.ignite_mob()
-		else if(isobj(burn_target))
-			var/obj/burned_object = burn_target
-			if(grill && isitem(burned_object))
-				var/obj/item/grilled_item = burned_object
+		else
+			var/atom/movable/burned_movable = burn_target
+			if(grill && isitem(burned_movable))
+				var/obj/item/grilled_item = burned_movable
 				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick) //Not a big fan, maybe make this use fire_act() in the future.
 				continue
-			burned_object.fire_act(1000, 250 * seconds_per_tick)
+			burned_movable.fire_act(1000, 250 * seconds_per_tick)
 
 /obj/structure/bonfire/process(seconds_per_tick)
 	if(!check_oxygen())

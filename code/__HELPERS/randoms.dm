@@ -55,3 +55,16 @@
 	while(length(str) < 5)
 		str = "0" + str
 	. = str
+
+///Gets a random coin excluding the blocked type and including extra coins which aren't pathed like coins.
+/proc/get_random_coin()
+	var/list/blocked = list(
+		/obj/item/coin/gold/debug,
+		/obj/item/coin/eldritch,
+		/obj/item/coin/mythril,
+	)
+	var/list/extra_coins = list(
+		/obj/item/food/chococoin,
+	)
+	var/list/allowed_coins = subtypesof(/obj/item/coin) - blocked + extra_coins
+	return pick(allowed_coins)

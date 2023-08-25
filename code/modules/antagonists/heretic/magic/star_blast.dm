@@ -35,7 +35,7 @@
 
 /obj/projectile/magic/star_ball/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/effect_trail/cosmic_trail)
+	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 
 /obj/projectile/magic/star_ball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()

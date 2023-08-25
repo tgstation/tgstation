@@ -10,11 +10,19 @@
 	force = 5
 	var/list/grenades = new/list()
 	var/max_grenades = 3
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
 	. = ..()
 	. += "[grenades.len] / [max_grenades] grenades loaded."
+
+/obj/item/gun/grenadelauncher/apply_fantasy_bonuses(bonus)
+	. = ..()
+	max_grenades = modify_fantasy_variable("max_syringes", max_grenades, bonus, minimum = 1)
+
+/obj/item/gun/grenadelauncher/remove_fantasy_bonuses(bonus)
+	max_grenades = reset_fantasy_variable("max_syringes", max_grenades)
+	return ..()
 
 /obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
 

@@ -49,11 +49,10 @@
 	var/chosen_attack = 1
 	/// Attack actions, sets chosen_attack to the number in the action
 	var/list/attack_action_types = list()
-	/// If there is a small sprite icon for players controlling the megafauna to use
-	var/small_sprite_type
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
@@ -62,9 +61,6 @@
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
 		attack_action.Grant(src)
-	if(small_sprite_type)
-		var/datum/action/small_sprite/small_action = new small_sprite_type()
-		small_action.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	//Safety check
@@ -100,6 +96,10 @@
 		return
 	else
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/singularity_act()
+	set_health(0)
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
@@ -145,6 +145,8 @@
 
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
+
+	return TRUE
 
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)

@@ -121,3 +121,27 @@
 	)
 	result = /obj/item/food/fish_poke
 	category = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/futomaki_sushi_roll
+	name ="Futomaki sushi roll"
+	reqs = list(
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/grown/cucumber = 1,
+	)
+	result = /obj/item/food/futomaki_sushi_roll
+	category = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/philadelphia_sushi_roll
+	name ="Philadelphia sushi roll"
+	reqs = list(
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/grown/cucumber = 1,
+	)
+	result = /obj/item/food/philadelphia_sushi_roll
+	category = CAT_SEAFOOD

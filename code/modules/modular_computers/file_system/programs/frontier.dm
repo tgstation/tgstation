@@ -38,7 +38,7 @@
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()
 	if(selected_file in computer.stored_files)
 		return FALSE
-	UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+	UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 	selected_file = null
 	paper_to_be.set_experiment()
 
@@ -164,10 +164,7 @@
 					data["purchaseableBoosts"][partner.type] += node_id
 	return data
 
-/datum/computer_file/program/scipaper_program/ui_act(action, params)
-	. = ..()
-	if (.)
-		return
+/datum/computer_file/program/scipaper_program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("et_alia")
 			paper_to_be.et_alia = !paper_to_be.et_alia
@@ -192,12 +189,12 @@
 			return TRUE
 		if("select_file") // Selecting new file will necessitate a change in paper type. This will be done on select_experiment and not here.
 			if(selected_file)
-				UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+				UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 			paper_to_be.set_experiment() // Clears the paper info.
 			for(var/datum/computer_file/data/ordnance/ordnance_data in computer.stored_files)
 				if(ordnance_data.uid == params["selected_uid"])
 					selected_file = ordnance_data
-					RegisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED, PROC_REF(recheck_file_presence))
+					RegisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(recheck_file_presence))
 					return TRUE
 		if("select_experiment")
 			var/ex_path = text2path(params["selected_expath"])
@@ -232,7 +229,7 @@
 	if(linked_techweb.add_scientific_paper(paper_to_be))
 		computer.say("\"[paper_to_be.title]\" has been published!")
 		paper_to_be = new
-		UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+		UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 		selected_file = null
 		SStgui.update_uis(src)
 		playsound(computer, 'sound/machines/ping.ogg', 25)

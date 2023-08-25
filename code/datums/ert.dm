@@ -116,3 +116,13 @@
 	polldesc = "a Centcom-hired bounty hunting gang"
 	random_names = FALSE
 	ert_template = /datum/map_template/shuttle/ert/bounty
+
+/datum/ert/militia
+	roles = list(/datum/antagonist/ert/militia)
+	leader_role = /datum/antagonist/ert/militia/general
+	teamsize = 4
+	opendoors = FALSE
+	rename_team = "Frontier Militia"
+	mission = "Having heard the station's request for aid, assist the crew in defending themselves."
+	polldesc = "an independent station defense militia"
+	random_names = TRUE

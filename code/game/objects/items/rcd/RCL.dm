@@ -27,7 +27,7 @@
 
 /obj/item/rcl/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /// triggered on wield of two handed item
@@ -208,7 +208,7 @@
 					return //If we've run out, display message and exit
 			else
 				last = null
-		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
+		last = loaded.place_turf(get_turf(src), user, REVERSE_DIR(user.dir))
 		is_empty(user) //If we've run out, display message
 	update_appearance()
 

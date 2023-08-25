@@ -86,8 +86,8 @@
 	var/scar_keyword = "generic"
 	/// If we've already tried scarring while removing (remove_wound can be called twice in a del chain, let's be nice to our code yeah?) TODO: make this cleaner
 	var/already_scarred = FALSE
-	/// If we forced this wound through badmin smite, we won't count it towards the round totals
-	var/from_smite
+	/// The source of how we got the wound, typically a weapon.
+	var/wound_source
 
 	/// What flags apply to this wound
 	var/wound_flags = (FLESH_WOUND | BONE_WOUND | ACCEPTS_GAUZE)
@@ -100,6 +100,11 @@
 	victim = null
 	return ..()
 
+// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
+#define TRAIT_WOUND_SCANNED "wound_scanned"
+// I dunno lol
+#define ANALYZER_TRAIT "analyzer_trait"
+
 /**
  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
  *
@@ -110,9 +115,10 @@
  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  * * attack_direction: For bloodsplatters, if relevant
+ * * wound_source: The source of the wound, such as a weapon.
  */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED) || (L.owner.status_flags & GODMODE))
 		qdel(src)
 		return
 
@@ -129,13 +135,17 @@
 			qdel(src)
 			return
 
+	if(isitem(wound_source))
+		var/obj/item/wound_item = wound_source
+		src.wound_source = wound_item.name
+	else
+		src.wound_source = wound_source
+
 	set_victim(L.owner)
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
-	//it's ok to not typecheck, humans are the only ones that deal with wounds
-	var/mob/living/carbon/human/human_victim = victim
-	no_bleeding = HAS_TRAIT(human_victim, TRAIT_NOBLOOD)
+	no_bleeding = HAS_TRAIT(victim, TRAIT_NOBLOOD)
 	update_descriptions()
 	limb.update_wounds()
 	if(status_effect_type)
@@ -177,11 +187,11 @@
 
 /datum/wound/proc/set_victim(new_victim)
 	if(victim)
-		UnregisterSignal(victim, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(victim, COMSIG_QDELETING)
 	remove_wound_from_victim()
 	victim = new_victim
 	if(victim)
-		RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(null_victim))
+		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
 
 /datum/wound/proc/source_died()
 	SIGNAL_HANDLER
@@ -221,7 +231,7 @@
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction)
+	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
 	. = new_wound
 	qdel(src)
 
@@ -236,9 +246,9 @@
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
 	if(limb)
-		UnregisterSignal(limb, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(limb, COMSIG_QDELETING)
 	limb = new_value
-	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, PROC_REF(source_died))
+	RegisterSignal(new_value, COMSIG_QDELETING, PROC_REF(source_died))
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
 		old_limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
@@ -410,8 +420,16 @@
  * * mob/user: The user examining the wound's owner, if that matters
  */
 /datum/wound/proc/get_examine_description(mob/user)
-	. = "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
+	. = get_wound_description(user)
+	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		. += span_notice("\nThere is a holo-image next to the wound that seems to contain indications for treatment.")
+
+	return .
+
+/datum/wound/proc/get_wound_description(mob/user)
+	. = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
+	return .
 
 /datum/wound/proc/get_scanner_description(mob/user)
 	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
@@ -426,3 +444,8 @@
 			return "Severe"
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
+
+/// Returns what string is displayed when a limb that has sustained this wound is examined
+/// (This is examining the LIMB ITSELF, when it's not attached to someone.)
+/datum/wound/proc/get_limb_examine_description()
+	return

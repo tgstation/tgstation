@@ -13,6 +13,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
 	fire_stack_decay_rate = -0.55
+	tts_silicon_voice_effect = TRUE
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -24,8 +25,8 @@
 
 	var/obj/item/radio/borg/radio = null  ///If this is a path, this gets created as an object in Initialize.
 
-	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
-	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
 	//These lists will contain each law that should be announced / set to yes in the state laws menu.
 	///List keeping track of which laws to announce
@@ -51,8 +52,11 @@
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
 
+
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
+	if(SStts.tts_enabled)
+		voice = pick(SStts.available_speakers)
 	GLOB.silicon_mobs += src
 	faction += FACTION_SILICON
 	if(ispath(radio))
@@ -87,27 +91,21 @@
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/pda/silicon(src)
+	var/job_name = ""
 	if(isAI(src))
-		modularInterface.saved_job = "AI"
+		job_name = "AI"
 	if(ispAI(src))
-		modularInterface.saved_job = "pAI Messenger"
+		job_name = "pAI Messenger"
 
 	modularInterface.layer = ABOVE_HUD_PLANE
 	SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
-	modularInterface.saved_identification = real_name || name
+	modularInterface.imprint_id(real_name || name, job_name)
 
 /mob/living/silicon/robot/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg(src)
-		modularInterface.saved_job = "Cyborg"
+		modularInterface.imprint_id(job_name = "Cyborg")
 	return ..()
-
-/mob/living/silicon/robot/model/syndicate/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
-		modularInterface.saved_job = "Cyborg"
-	return ..()
-
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -172,7 +170,7 @@
 /mob/living/silicon/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE))
-		to_chat(user, span_alert("[p_their(TRUE)] outer shell is too tough."))
+		to_chat(user, span_alert("[p_Their()] outer shell is too tough."))
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -460,7 +458,9 @@
 		modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
-		program.force_full_update()
+		var/datum/tgui/active_ui = SStgui.get_open_ui(src, program.computer)
+		if(active_ui)
+			active_ui.send_full_update()
 
 /// Same as the normal character name replacement, but updates the contents of the modular interface.
 /mob/living/silicon/fully_replace_character_name(oldname, newname)
@@ -468,4 +468,4 @@
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
-	modularInterface.saved_identification = newname
+	modularInterface.imprint_id(name = newname)

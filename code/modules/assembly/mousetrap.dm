@@ -3,7 +3,7 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	inhand_icon_state = "mousetrap"
-	custom_materials = list(/datum/material/iron=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	attachable = TRUE
 	var/armed = FALSE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
@@ -138,11 +138,7 @@
 	else if(ismouse(target))
 		var/mob/living/basic/mouse/splatted = target
 		visible_message(span_boldannounce("SPLAT!"))
-		if(splatted.health <= 5)
-			splatted.splat()
-		else
-			splatted.adjust_health(5)
-			splatted.Stun(1 SECONDS)
+		splatted.splat() // mousetraps are instadeath for mice
 
 	else if(isregalrat(target))
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.

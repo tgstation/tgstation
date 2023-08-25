@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "headset"
-	custom_materials = list(/datum/material/iron=75)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75)
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
 
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /// Grants all the languages this headset allows the mob to understand via installed chips.
 /obj/item/radio/headset/proc/grant_headset_languages(mob/grant_to)
 	for(var/language in language_list)
-		grant_to.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+		grant_to.grant_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/equipped(mob/user, slot, initial)
 	. = ..()
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
 	for(var/language in language_list)
-		user.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+		user.remove_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
@@ -211,10 +211,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot = /obj/item/encryptionkey/headset_srvsec
 
 /obj/item/radio/headset/headset_srvmed
-	name = "psychology headset"
+	name = "service medical headset"
 	desc = "A headset allowing the wearer to communicate with medbay and service."
-	icon_state = "med_headset"
-	worn_icon_state = "med_headset"
+	icon_state = "srv_headset"
+	worn_icon_state = "srv_headset"
 	keyslot = /obj/item/encryptionkey/headset_srvmed
 
 /obj/item/radio/headset/headset_com
@@ -431,7 +431,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(istype(mob_loc) && mob_loc.get_item_by_slot(slot_flags) == src)
 		// Remove all the languages we may not be able to know anymore
 		for(var/language in old_language_list)
-			mob_loc.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+			mob_loc.remove_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_RADIOKEY)
 
 		// And grant all the languages we definitely should know now
 		grant_headset_languages(mob_loc)

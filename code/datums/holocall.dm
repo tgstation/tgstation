@@ -223,7 +223,7 @@
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
 	obj_flags = UNIQUE_RENAME
-	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -352,7 +352,7 @@
 	outfit_type = /datum/outfit/syndicate_empty/battlecruiser
 
 /datum/preset_holoimage/hivebot
-	nonhuman_mobtype = /mob/living/simple_animal/hostile/hivebot
+	nonhuman_mobtype = /mob/living/basic/hivebot
 
 /datum/preset_holoimage/ai
 	nonhuman_mobtype = /mob/living/silicon/ai

@@ -79,7 +79,7 @@
 			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
-	if(istype(P, /obj/projectile/bullet/reusable))
+	if(istype(P, /obj/projectile/bullet))
 		P.on_hit(src, 0, piercing_hit)
 	visible_message(span_danger("[src] is hit by [P]!"))
 	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE)

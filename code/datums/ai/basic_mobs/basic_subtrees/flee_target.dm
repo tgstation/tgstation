@@ -11,9 +11,8 @@
 	. = ..()
 	if (!controller.blackboard[BB_BASIC_MOB_FLEEING])
 		return
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	if(!target || QDELETED(target))
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
 		return
 	controller.queue_behavior(flee_behaviour, target_key, hiding_place_key)
 	return SUBTREE_RETURN_FINISH_PLANNING //we gotta get out of here.

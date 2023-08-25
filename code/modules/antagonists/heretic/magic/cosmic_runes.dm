@@ -53,7 +53,7 @@
 	name = "cosmic rune"
 	desc = "A strange rune, that can instantly transport people to another location."
 	anchored = TRUE
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
@@ -61,6 +61,12 @@
 	var/datum/weakref/linked_rune
 	/// Effect for when someone teleports
 	var/obj/effect/rune_effect = /obj/effect/temp_visual/rune_light
+
+/obj/effect/cosmic_rune/Initialize(mapload)
+	. = ..()
+	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
 
 /obj/effect/cosmic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -124,16 +130,28 @@
 
 /obj/effect/temp_visual/cosmic_rune_fade
 	name = "cosmic rune"
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_fade"
 	layer = SIGIL_LAYER
 	anchored = TRUE
 	duration = 5
 
+/obj/effect/temp_visual/cosmic_rune_fade/Initialize(mapload)
+	. = ..()
+	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
+
 /obj/effect/temp_visual/rune_light
 	name = "cosmic rune"
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_light"
 	layer = SIGIL_LAYER
 	anchored = TRUE
 	duration = 5
+
+/obj/effect/temp_visual/rune_light/Initialize(mapload)
+	. = ..()
+	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)

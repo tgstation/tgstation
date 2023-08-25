@@ -4,8 +4,7 @@
 	if(!isturf(living_pawn.loc) || living_pawn.pulledby)
 		return
 
-	var/datum/weakref/weak_item = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
-	var/obj/item/carry_item = weak_item?.resolve()
+	var/obj/item/carry_item = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
 	// if we're just ditzing around carrying something, occasionally print a message so people know we have something
 	if(carry_item && SPT_PROB(5, seconds_per_tick))
 		living_pawn.visible_message(span_notice("[living_pawn] gently teethes on \the [carry_item] in [living_pawn.p_their()] mouth."), vision_distance=COMBAT_MESSAGE_RANGE)

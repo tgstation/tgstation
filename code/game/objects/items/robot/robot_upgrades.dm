@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade
 	name = "borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
@@ -267,9 +267,9 @@
 
 /obj/item/borg/upgrade/lavaproof
 	name = "mining cyborg lavaproof chassis"
-	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to a mining cyborg's chassis, enabling them to withstand exposure to molten rock."
+	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to a mining cyborg's chassis, enabling them to withstand exposure to molten rock and liquid plasma."
 	icon_state = "ash_plating"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
@@ -277,12 +277,12 @@
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		ADD_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
+		R.add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), type)
 
 /obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		REMOVE_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
+		R.remove_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), type)
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
@@ -473,7 +473,7 @@
 	defib_instance = D
 	name = defib_instance.name
 	defib_instance.moveToNullspace()
-	RegisterSignals(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_defib_instance_qdel_or_moved))
+	RegisterSignals(defib_instance, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_defib_instance_qdel_or_moved))
 
 /obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
 	SIGNAL_HANDLER
@@ -566,17 +566,15 @@
 			robot.SetLockdown(FALSE)
 		robot.set_anchored(FALSE)
 		robot.notransform = FALSE
-		robot.resize = 2
 		robot.hasExpanded = TRUE
-		robot.update_transform()
+		robot.update_transform(2)
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
 		if (R.hasExpanded)
 			R.hasExpanded = FALSE
-			R.resize = 0.5
-			R.update_transform()
+			R.update_transform(0.5)
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
@@ -751,13 +749,153 @@
 	if (BR)
 		R.model.remove_module(BR, TRUE)
 
+/obj/item/borg/upgrade/condiment_synthesizer
+	name = "Service Cyborg Condiment Synthesiser"
+	desc = "An upgrade to the service model cyborg, allowing it to produce solid condiments."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/condiment_synthesizer/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/reagent_containers/borghypo/condiment_synthesizer/cynthesizer = locate() in install.model.modules
+	if(cynthesizer)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	cynthesizer = new(install.model)
+	install.model.basic_modules += cynthesizer
+	install.model.add_module(cynthesizer, FALSE, TRUE)
+
+/obj/item/borg/upgrade/condiment_synthesizer/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/reagent_containers/borghypo/condiment_synthesizer/cynthesizer = locate() in install.model.modules
+	if (cynthesizer)
+		install.model.remove_module(cynthesizer, TRUE)
+
+/obj/item/borg/upgrade/silicon_knife
+	name = "Service Cyborg Kitchen Toolset"
+	desc = "An upgrade to the service model cyborg, to help process foods."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/silicon_knife/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/knife/kitchen/silicon/snife = locate() in install.model.modules
+	if(snife)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	snife = new(install.model)
+	install.model.basic_modules += snife
+	install.model.add_module(snife, FALSE, TRUE)
+
+/obj/item/borg/upgrade/silicon_knife/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/knife/kitchen/silicon/snife = locate() in install.model.modules
+	if (snife)
+		install.model.remove_module(snife, TRUE)
+
+/obj/item/borg/upgrade/service_apparatus
+	name = "Service Cyborg Service Apparatus"
+	desc = "An upgrade to the service model cyborg, to help handle foods and paper."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/service_apparatus/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/borg/apparatus/service/saparatus = locate() in install.model.modules
+	if(saparatus)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	saparatus = new(install.model)
+	install.model.basic_modules += saparatus
+	install.model.add_module(saparatus, FALSE, TRUE)
+
+/obj/item/borg/upgrade/service_apparatus/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/borg/apparatus/service/saparatus = locate() in install.model.modules
+	if (saparatus)
+		install.model.remove_module(saparatus, TRUE)
+
+/obj/item/borg/upgrade/rolling_table
+	name = "Service Cyborg Rolling Table Dock"
+	desc = "An upgrade to the service model cyborg, to help provide mobile service."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/rolling_table/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/rolling_table_dock/rtable = locate() in install.model.modules
+	if(rtable)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	rtable = new(install.model)
+	install.model.basic_modules += rtable
+	install.model.add_module(rtable, FALSE, TRUE)
+
+/obj/item/borg/upgrade/rolling_table/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/rolling_table_dock/rtable = locate() in install.model.modules
+	if (rtable)
+		install.model.remove_module(rtable, TRUE)
+
+/obj/item/borg/upgrade/service_cookbook
+	name = "Service Cyborg Cookbook"
+	desc = "An upgrade to the service model cyborg, that lets them create more foods."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/service_cookbook/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/borg/cookbook/book = locate() in install.model.modules
+	if(book)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	book = new(install.model)
+	install.model.basic_modules += book
+	install.model.add_module(book, FALSE, TRUE)
+
+/obj/item/borg/upgrade/service_cookbook/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/borg/cookbook/book = locate() in install.model.modules
+	if(book)
+		install.model.remove_module(book, TRUE)
+
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade1"
 
 /obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)

@@ -105,7 +105,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
-	if(!tool.tool_start_check(user, amount=0))
+	if(!tool.tool_start_check(user, amount=1))
 		return
 	if(atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to repair [src]."),
@@ -296,6 +296,13 @@
 	if(!ui)
 		ui = new(user, src, "Reflector")
 		ui.open()
+
+/obj/structure/reflector/attack_robot(mob/user)
+	ui_interact(user)
+	return
+
+/obj/structure/reflector/ui_state(mob/user)
+	return GLOB.physical_state //Prevents borgs from adjusting this at range
 
 /obj/structure/reflector/ui_data(mob/user)
 	var/list/data = list()

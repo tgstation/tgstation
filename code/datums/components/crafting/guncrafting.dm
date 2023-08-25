@@ -11,10 +11,16 @@
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 6)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 6)
 	resistance_flags = FLAMMABLE
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "riflestock"
+
+/obj/item/weaponcrafting/giant_wrench
+	name = "Big Slappy parts kit"
+	desc = "Illegal parts to make a giant like wrench commonly known as a Big Slappy."
+	icon = 'icons/obj/weapons/improvised.dmi'
+	icon_state = "weaponkit_gw"
 
 ///These gun kits are printed from the security protolathe to then be used in making new weapons
 

@@ -1,7 +1,7 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/extinguisher.dmi'
 	icon_state = "cabinet"
 	anchored = TRUE
 	density = FALSE
@@ -18,7 +18,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 		opened = TRUE
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)
-	update_icon()
+	update_appearance(UPDATE_ICON)
 	AddElement(/datum/element/wall_mount)
 	register_context()
 
@@ -45,8 +45,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
-		qdel(stored_extinguisher)
-		stored_extinguisher = null
+		QDEL_NULL(stored_extinguisher)
 	return ..()
 
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
@@ -61,10 +60,10 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += stored_extinguisher
 
-/obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
-	if(A == stored_extinguisher)
+/obj/structure/extinguisher_cabinet/Exited(atom/movable/gone, direction)
+	if(gone == stored_extinguisher)
 		stored_extinguisher = null
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/used_item, mob/living/user, params)
 	if(used_item.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
@@ -84,7 +83,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 				return
 			stored_extinguisher = used_item
 			user.balloon_alert(user, "extinguisher stored")
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 			return TRUE
 		else
 			toggle_cabinet(user)
@@ -103,11 +102,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 	if(stored_extinguisher)
 		user.put_in_hands(stored_extinguisher)
 		user.balloon_alert(user, "extinguisher removed")
-		stored_extinguisher = null
 		if(!opened)
 			opened = 1
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
-		update_appearance()
 	else
 		toggle_cabinet(user)
 
@@ -125,7 +122,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 		stored_extinguisher = null
 		opened = TRUE
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return
 	toggle_cabinet(user)
 
@@ -139,7 +136,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/structure/extinguisher_cabinet/atom_break(damage_flag)
 	. = ..()
@@ -149,7 +146,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 		if(stored_extinguisher)
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -174,6 +171,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
-	icon_state = "extinguisher"
+	icon = 'icons/obj/extinguisher.dmi'
+	icon_state = "extinguisher_assembly"
 	result_path = /obj/structure/extinguisher_cabinet
 	pixel_shift = 29 // wallening todo: is this like... ok?

@@ -54,7 +54,12 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom)
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom/single)
 
+/// Mapping object, a glowshroom that doesn't spread or die
 /obj/structure/glowshroom/single
+
+/obj/structure/glowshroom/single/Initialize(mapload, obj/item/seeds/newseed)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/glowshroom/single/Spread()
 	return

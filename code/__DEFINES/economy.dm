@@ -22,7 +22,8 @@
 
 #define STATION_TARGET_BUFFER 25
 
-
+///The coefficient for the amount of dosh that's collected everytime some is earned or received.
+#define DEBT_COLLECTION_COEFF 0.75
 
 #define MAX_GRANT_DPT 500
 
@@ -43,6 +44,9 @@
 #define ACCOUNT_CAR_NAME "Cargo Budget"
 #define ACCOUNT_SEC "SEC"
 #define ACCOUNT_SEC_NAME "Defense Budget"
+
+#define IS_DEPARTMENTAL_CARD(card) (card in SSeconomy.dep_cards)
+#define IS_DEPARTMENTAL_ACCOUNT(account) (account in SSeconomy.departmental_accounts)
 
 #define NO_FREEBIES "commies go home"
 

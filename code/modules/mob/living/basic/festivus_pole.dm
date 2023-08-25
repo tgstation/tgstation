@@ -1,7 +1,7 @@
 /mob/living/basic/festivus
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
-	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
@@ -42,10 +42,13 @@
 
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/item/stack/rods))
+	AddComponent(/datum/component/seethrough_mob)
+	var/static/list/death_loot = list(/obj/item/stack/rods)
+	AddElement(/datum/element/death_drops, death_loot)
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 	var/datum/action/cooldown/mob_cooldown/charge_apc/charge_ability = new(src)
 	charge_ability.Grant(src)
-	ai_controller.blackboard[BB_FESTIVE_APC] = WEAKREF(charge_ability)
+	ai_controller.set_blackboard_key(BB_FESTIVE_APC, charge_ability)
 
 /datum/ai_controller/basic_controller/festivus_pole
 	blackboard = list(
@@ -98,8 +101,7 @@
 	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/apcs/target_caught(mob/living/basic/hunter, obj/machinery/power/apc/hunted)
-	var/datum/weakref/ability_weakref =  hunter.ai_controller.blackboard[BB_FESTIVE_APC]
-	var/datum/action/cooldown/mob_cooldown/charge_ability = ability_weakref?.resolve()
+	var/datum/action/cooldown/mob_cooldown/charge_ability = hunter.ai_controller.blackboard[BB_FESTIVE_APC]
 	if(isnull(charge_ability))
 		return
 	charge_ability.Activate(hunted)

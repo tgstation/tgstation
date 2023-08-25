@@ -53,13 +53,13 @@ GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 #define GAS_OVERLAYS(gases, out_var, z_layer_turf)\
 	do { \
 		out_var = list();\
-		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf);\
+		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf) + 1;\
 		for(var/_ID in gases){\
 			if(GLOB.nonoverlaying_gases[_ID]) continue;\
 			var/_GAS = gases[_ID];\
 			var/_GAS_META = _GAS[GAS_META];\
 			if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
-			var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset + 1];\
+			var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset];\
 			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
 		} \
 	}\

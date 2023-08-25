@@ -8,11 +8,11 @@
 	active_overlay_icon_state = "bg_spell_border_active_blue"
 
 	school = SCHOOL_TRANSLOCATION
-	cooldown_time = 30 SECONDS
-	cooldown_reduction_per_rank = 6 SECONDS
+	cooldown_time = 25 SECONDS
+	cooldown_reduction_per_rank = 10 SECONDS
+	spell_max_level = 3
 	cast_range = 9
-	invocation = "FRO' BRT'TRO, DA!"
-	invocation_type = INVOCATION_SHOUT
+	invocation_type = INVOCATION_NONE
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_STATION
 	active_msg = "You prepare to swap locations with a target..."
 

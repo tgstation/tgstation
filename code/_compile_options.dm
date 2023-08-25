@@ -69,6 +69,10 @@
 // We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
 // #define USE_BYOND_TRACY
 
+// If defined, we will compile with FULL timer debug info, rather then a limited scope
+// Be warned, this increases timer creation cost by 5x
+// #define TIMER_DEBUG
+
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
 //#define DO_NOT_DEFER_ASSETS
 
@@ -94,7 +98,7 @@
 #endif
 
 #ifndef PRELOAD_RSC //set to:
-#define PRELOAD_RSC 2 // 0 to allow using external resources or on-demand behaviour;
+#define PRELOAD_RSC 1 // 0 to allow using external resources or on-demand behaviour;
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
@@ -124,6 +128,8 @@
 #define GC_FAILURE_HARD_LOOKUP
 //Ensures all early assets can actually load early
 #define DO_NOT_DEFER_ASSETS
+//Test at full capacity, the extra cost doesn't matter
+#define TIMER_DEBUG
 #endif
 
 #ifdef TGS

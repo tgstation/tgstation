@@ -1,6 +1,7 @@
 /obj/item/radio/intercom
 	name = "station intercom"
 	desc = "Talk through this."
+	icon = 'icons/obj/machines/intercom.dmi'
 	icon_state = "intercom"
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
@@ -130,6 +131,8 @@
 	AreaPowerCheck() // Make sure the area/local APC is powered first before we actually turn back on.
 
 /obj/item/radio/intercom/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
 	if(obj_flags & EMAGGED)
 		return
 
@@ -140,17 +143,17 @@
 			playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 			freqlock = RADIO_FREQENCY_UNLOCKED
 			obj_flags |= EMAGGED
+			return TRUE
 
 		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
 		if(RADIO_FREQENCY_LOCKED)
 			balloon_alert(user, "can't override frequency lock!")
 			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+			return
 
 		// Emagging an unlocked one will do nothing, for now
 		else
 			return
-
-	return ..()
 
 /obj/item/radio/intercom/update_icon_state()
 	icon_state = on ? initial(icon_state) : "intercom-p"
@@ -176,10 +179,11 @@
 /obj/item/wallframe/intercom
 	name = "intercom frame"
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
+	icon = 'icons/obj/machines/intercom.dmi'
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 26
-	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom)
 

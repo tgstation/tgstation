@@ -1,7 +1,7 @@
 #define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/unary/thermomachine
-	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	icon = 'icons/obj/machines/atmospherics/thermomachine.dmi'
 	icon_state = "thermo_base"
 	plane = GAME_PLANE
 

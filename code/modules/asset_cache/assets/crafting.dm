@@ -64,11 +64,11 @@
 		TOOL_SCALPEL = icon('icons/obj/medical/surgery_tools.dmi', "scalpel"),
 		TOOL_SAW = icon('icons/obj/medical/surgery_tools.dmi', "saw"),
 		TOOL_BONESET = icon('icons/obj/medical/surgery_tools.dmi', "bonesetter"),
-		TOOL_KNIFE = icon('icons/obj/kitchen.dmi', "knife"),
+		TOOL_KNIFE = icon('icons/obj/service/kitchen.dmi', "knife"),
 		TOOL_BLOODFILTER = icon('icons/obj/medical/surgery_tools.dmi', "bloodfilter"),
-		TOOL_ROLLINGPIN = icon('icons/obj/kitchen.dmi', "rolling_pin"),
+		TOOL_ROLLINGPIN = icon('icons/obj/service/kitchen.dmi', "rolling_pin"),
 		TOOL_RUSTSCRAPER = icon('icons/obj/tools.dmi', "wirebrush"),
 	)
 
 	for(var/tool in tool_icons)
-		Insert(tool, tool_icons[tool])
+		Insert(replacetext(tool, " ", ""), tool_icons[tool])

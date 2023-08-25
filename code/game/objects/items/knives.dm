@@ -1,7 +1,7 @@
 // Knife Template, should not appear in game normaly //
 /obj/item/knife
 	name = "knife"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
@@ -16,7 +16,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 6
-	custom_materials = list(/datum/material/iron=12000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
@@ -53,7 +53,7 @@
 /obj/item/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bone_blade"
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
@@ -61,12 +61,16 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	item_flags = CRUEL_IMPLEMENT //maybe they want to use it in surgery
+	force = 15
+	throwforce = 15
+	wound_bonus = 20
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/knife/bloodletter
 	name = "bloodletter"
 	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bloodletter"
 	worn_icon_state = "render"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -94,7 +98,7 @@
 	flags_1 = CONDUCT_1
 	force = 15
 	throwforce = 10
-	custom_materials = list(/datum/material/iron=18000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
 	attack_verb_continuous = list("slices", "dices", "chops", "cubes", "minces", "juliennes", "chiffonades", "batonnets")
 	attack_verb_simple = list("slice", "dice", "chop", "cube", "mince", "julienne", "chiffonade", "batonnet")
 	w_class = WEIGHT_CLASS_NORMAL
@@ -103,6 +107,7 @@
 
 /obj/item/knife/hunting
 	name = "hunting knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
@@ -117,6 +122,7 @@
 
 /obj/item/knife/combat
 	name = "combat knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
@@ -128,6 +134,7 @@
 
 /obj/item/knife/combat/survival
 	name = "survival knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "survivalknife"
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	desc = "A hunting grade survival knife."
@@ -138,6 +145,7 @@
 /obj/item/knife/combat/bone
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "bone_dagger"
 	worn_icon_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -160,7 +168,7 @@
 
 /obj/item/knife/shiv
 	name = "glass shiv"
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "shiv"
 	inhand_icon_state = "shiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -171,7 +179,7 @@
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
 	armor_type = /datum/armor/none
-	custom_materials = list(/datum/material/glass=400)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/knife/shiv/Initialize(mapload)
 	flags_1 &= ~CONDUCT_1
@@ -185,7 +193,7 @@
 	force = 9
 	throwforce = 13
 	armor_type = /datum/armor/shiv_plasma
-	custom_materials = list(/datum/material/glass=400, /datum/material/plasma=200)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT *4, /datum/material/plasma=SMALL_MATERIAL_AMOUNT * 2)
 
 /datum/armor/shiv_plasma
 	melee = 25
@@ -205,7 +213,7 @@
 	throw_range = 7
 	wound_bonus = 10
 	armor_type = /datum/armor/shiv_titanium
-	custom_materials = list(/datum/material/glass=400, /datum/material/titanium=200)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4, /datum/material/titanium=SMALL_MATERIAL_AMOUNT * 2)
 
 /datum/armor/shiv_titanium
 	melee = 25
@@ -228,7 +236,7 @@
 	wound_bonus = 10
 	bare_wound_bonus = 20
 	armor_type = /datum/armor/shiv_plastitanium
-	custom_materials = list(/datum/material/glass=400, /datum/material/alloy/plastitanium=200)
+	custom_materials = list(/datum/material/glass= SMALL_MATERIAL_AMOUNT * 4, /datum/material/alloy/plastitanium= SMALL_MATERIAL_AMOUNT * 2)
 
 /datum/armor/shiv_plastitanium
 	melee = 50
@@ -243,7 +251,6 @@
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
 	inhand_icon_state = "carrotshiv"
-	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	custom_materials = null
 

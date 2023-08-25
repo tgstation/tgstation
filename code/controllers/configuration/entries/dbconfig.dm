@@ -68,3 +68,8 @@
 	. = ..()
 	if (.)
 		SSdbcore.max_concurrent_queries = config_entry_value
+
+/// The exe for mariadbd.exe.
+/// Shouldn't really be set on production servers, primarily for EZDB.
+/datum/config_entry/string/db_daemon
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN

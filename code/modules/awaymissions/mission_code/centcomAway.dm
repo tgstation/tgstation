@@ -7,7 +7,7 @@
 
 /area/awaymission/centcom_away/general
 	name = "XCC-P5831"
-	ambientsounds = list('sound/ambience/ambigen3.ogg')
+	ambientsounds = list('sound/ambience/ambigen2.ogg')
 
 /area/awaymission/centcom_away/maint
 	name = "XCC-P5831 Maintenance"
@@ -32,7 +32,7 @@
 /area/awaymission/centcom_away/hangar
 	name = "XCC-P5831 Hangars"
 	icon_state = "away4"
-	ambientsounds = list('sound/ambience/ambigen5.ogg')
+	ambientsounds = list('sound/ambience/ambigen4.ogg')
 
 //centcomAway items
 

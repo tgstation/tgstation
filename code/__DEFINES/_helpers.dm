@@ -17,6 +17,14 @@
 /// Until a condition is true, sleep
 #define UNTIL(X) while(!(X)) stoplag()
 
+/// Sleep if we haven't been deleted
+/// Otherwise, return
+#define SLEEP_NOT_DEL(time) \
+	if(QDELETED(src)) { \
+		return; \
+	} \
+	sleep(time);
+
 #ifdef EXPERIMENT_515_DONT_CACHE_REF
 /// Takes a datum as input, returns its ref string
 #define text_ref(datum) ref(datum)

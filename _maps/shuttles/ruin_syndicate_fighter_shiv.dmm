@@ -90,10 +90,9 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/syndicate1)
 "YY" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/west{
-	name = "Syndicate Fighter Power Controller";
-	req_access = list("syndicate")
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/machinery/computer/security{
 	dir = 1;
 	network = list("caravansyndicate1")

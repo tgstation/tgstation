@@ -79,7 +79,7 @@
 		return FALSE
 	computer.crew_manifest_update = TRUE
 
-/datum/computer_file/program/card_mod/kill_program(forced)
+/datum/computer_file/program/card_mod/kill_program(mob/user)
 	computer.crew_manifest_update = FALSE
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 	if(inserted_auth_card)
@@ -87,10 +87,7 @@
 
 	return ..()
 
-/datum/computer_file/program/card_mod/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/card_mod/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	var/mob/user = usr
 	var/obj/item/card/id/inserted_auth_card = computer.computer_id_slot
 
@@ -209,7 +206,7 @@
 		if("PRG_assign")
 			if(!computer || !authenticated_card || !inserted_auth_card)
 				return TRUE
-			var/new_asignment = sanitize(params["assignment"])
+			var/new_asignment = trim(sanitize(params["assignment"]), MAX_NAME_LEN)
 			inserted_auth_card.assignment = new_asignment
 			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
 			inserted_auth_card.update_label()

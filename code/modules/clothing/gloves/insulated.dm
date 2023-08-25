@@ -15,6 +15,15 @@
 	cut_type = /obj/item/clothing/gloves/cut
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 
+/obj/item/clothing/gloves/color/yellow/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(bonus >= 10)
+		detach_clothing_traits(TRAIT_CHUNKYFINGERS)
+
+/obj/item/clothing/gloves/color/yellow/remove_fantasy_bonuses(bonus)
+	attach_clothing_traits(TRAIT_CHUNKYFINGERS)
+	return ..()
+
 /datum/armor/color_yellow
 	bio = 50
 

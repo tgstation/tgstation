@@ -93,6 +93,10 @@ FLOOR SAFES
 			if(3)
 				desc = initial(desc) + "\nThe lock seems to be broken."
 
+		return TRUE
+
+	return FALSE
+
 /obj/structure/safe/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/simple/safe),

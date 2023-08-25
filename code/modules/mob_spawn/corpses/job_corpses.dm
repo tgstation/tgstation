@@ -75,7 +75,12 @@
 	name = JOB_BARTENDER
 	outfit = /datum/outfit/spacebartender
 
+/obj/effect/mob_spawn/corpse/human/prisoner
+	name = JOB_PRISONER
+	outfit = /datum/outfit/job/prisoner
+
 /obj/effect/mob_spawn/corpse/human/roboticist
 	name = JOB_ROBOTICIST
 	outfit = /datum/outfit/job/roboticist
 	icon_state = "corpseroboticist"
+	

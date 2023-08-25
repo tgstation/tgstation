@@ -267,8 +267,8 @@
 	var/delay_multiplier = 6.7 // magic number from wheelchair code
 
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
-	for(var/datum/stock_part/manipulator/manipulator in our_chair.component_parts)
-		speed += manipulator.tier
+	for(var/datum/stock_part/servo/servo in our_chair.component_parts)
+		speed += servo.tier
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
 	return ..()
 

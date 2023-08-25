@@ -1,10 +1,10 @@
 /proc/get_step_multiz(ref, dir)
 	if(dir & UP)
 		dir &= ~UP
-		return get_step(SSmapping.get_turf_above(get_turf(ref)), dir)
+		return get_step(GET_TURF_ABOVE(get_turf(ref)), dir)
 	if(dir & DOWN)
 		dir &= ~DOWN
-		return get_step(SSmapping.get_turf_below(get_turf(ref)), dir)
+		return get_step(GET_TURF_BELOW(get_turf(ref)), dir)
 	return get_step(ref, dir)
 
 /proc/get_dir_multiz(turf/us, turf/them)
@@ -28,24 +28,24 @@
 		return (dir | get_dir(us, them))
 
 /turf/proc/above()
-	return get_step_multiz(src, UP)
+	return GET_TURF_ABOVE(src)
 
 /turf/proc/below()
-	return get_step_multiz(src, DOWN)
+	return GET_TURF_BELOW(src)
 
 /proc/get_lowest_turf(atom/ref)
 	var/turf/us = get_turf(ref)
-	var/next = SSmapping.get_turf_below(us)
+	var/next = GET_TURF_BELOW(us)
 	while(next)
 		us = next
-		next = SSmapping.get_turf_below(us)
+		next = GET_TURF_BELOW(us)
 	return us
 
 // I wish this was lisp
 /proc/get_highest_turf(atom/ref)
 	var/turf/us = get_turf(ref)
-	var/next = SSmapping.get_turf_above(us)
+	var/next = GET_TURF_ABOVE(us)
 	while(next)
 		us = next
-		next = SSmapping.get_turf_above(us)
+		next = GET_TURF_ABOVE(us)
 	return us

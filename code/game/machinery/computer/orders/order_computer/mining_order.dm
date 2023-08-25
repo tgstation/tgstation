@@ -60,7 +60,7 @@
 	SSshuttle.shopping_list += new_order
 
 /obj/machinery/computer/order_console/mining/retrive_points(obj/item/card/id/id_card)
-	return FLOOR(id_card.registered_account.mining_points, 1)
+	return round(id_card.registered_account.mining_points)
 
 /obj/machinery/computer/order_console/mining/ui_act(action, params)
 	. = ..()
@@ -149,7 +149,7 @@
 	icon_state = "data_1"
 
 	///Amount of points this card contains.
-	var/points = 500
+	var/points = 0
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	. = ..()

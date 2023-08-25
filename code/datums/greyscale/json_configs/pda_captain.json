@@ -14,7 +14,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "pda_stripe_split",
+			"icon_state": "pda_stripe_double",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		},

@@ -1,8 +1,8 @@
 /// The light switch. Can have multiple per area.
 /obj/machinery/light_switch
 	name = "light switch"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "light-p"
+	icon = 'icons/obj/machines/lightswitch.dmi'
+	icon_state = "light-nopower"
 	base_icon_state = "light"
 	desc = "Make dark."
 	power_channel = AREA_USAGE_LIGHT
@@ -43,9 +43,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light_switch)
 	set_light(area.lightswitch ? 0 : light_on_range)
 	icon_state = "[base_icon_state]"
 	if(machine_stat & NOPOWER)
-		icon_state += "-p"
+		icon_state += "-nopower"
 		return ..()
-	icon_state += "[area.lightswitch ? 0 : 1]"
+	icon_state += area.lightswitch ? "-on" : "-off"
 	return ..()
 
 /obj/machinery/light_switch/update_overlays()
@@ -94,7 +94,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light_switch)
 /obj/item/wallframe/light_switch
 	name = "light switch"
 	desc = "An unmounted light switch. Attach it to a wall to use."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/lightswitch.dmi'
 	icon_state = "light-nopower"
 	result_path = /obj/machinery/light_switch
 	pixel_shift = 26

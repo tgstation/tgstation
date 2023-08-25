@@ -145,6 +145,11 @@
 	access_list += ACCESS_MORGUE
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/medical/coroner/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_MORGUE_SECURE
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/any/medical/chemistry/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_PLUMBING
@@ -616,6 +621,11 @@
 	access_list += ACCESS_MORGUE
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/all/medical/coroner/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_MORGUE_SECURE
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_PLUMBING
@@ -839,6 +849,15 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/leader/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_SYNDICATE_LEADER
+	return access_list
+
+// -------------------- Bounty hunter access helpers
+/obj/effect/mapping_helpers/airlock/access/all/hunter
+	icon_state = "access_helper_hunt"
+
+/obj/effect/mapping_helpers/airlock/access/all/hunter/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_HUNTER
 	return access_list
 
 // -------------------- Away access helpers

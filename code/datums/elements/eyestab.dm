@@ -40,7 +40,7 @@
 
 	if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(CLUMSY_ATTACK_SELF_CHANCE))
 		target = user
-	
+
 	if (target.is_eyes_covered() || isalien(target) || isbrain(target))
 		return
 
@@ -68,7 +68,7 @@
 		)
 
 	if (target_limb)
-		target.apply_damage(damage, BRUTE, target_limb)
+		target.apply_damage(damage, BRUTE, target_limb, attacking_item = item)
 	else
 		target.take_bodypart_damage(damage)
 

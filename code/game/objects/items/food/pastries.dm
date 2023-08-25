@@ -45,10 +45,10 @@
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
-	if(!ishuman(user))
+	if(!isliving(user))
 		return
-	var/mob/living/carbon/human/moffin_observer = user
-	if(moffin_observer.dna.species.liked_food & CLOTH)
+	var/mob/living/moffin_observer = user
+	if(moffin_observer.get_liked_foodtypes() & CLOTH)
 		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
 	else
 		. += span_warning("You're not too sure what's on top though...")
@@ -135,7 +135,7 @@
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
-	trash_type = /obj/item/paper/paperslip
+	trash_type = /obj/item/paper/paperslip/fortune
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
@@ -152,11 +152,8 @@
 		return fortune
 
 	// Otherwise, use a generic one
-	var/obj/item/paper/paperslip/fortune_slip = new trash_type(drop_location)
-	fortune_slip.name = "fortune slip"
+	var/obj/item/paper/paperslip/fortune/fortune_slip = new trash_type(drop_location)
 	// if someone adds lottery tickets in the future, be sure to add random numbers to this
-	fortune_slip.default_raw_text = pick(GLOB.wisdoms)
-
 	return fortune_slip
 
 /obj/item/food/fortunecookie/make_leave_trash()
@@ -326,7 +323,7 @@
 /obj/item/food/icecream
 	name = "waffle cone"
 	desc = "Delicious waffle cone, but no ice cream."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "icecream_cone_waffle"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cream" = 2, "waffle" = 1)
@@ -368,6 +365,15 @@
 		/datum/reagent/consumable/flour,
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/consumable/coco,
+	)
+
+/obj/item/food/icecream/korta
+	name = "korta cone"
+	desc = "Delicious lizard-friendly cone, but no ice cream."
+	foodtypes = NUTS | SUGAR
+	ingredients = list(
+		/datum/reagent/consumable/korta_flour,
+		/datum/reagent/consumable/sugar,
 	)
 
 /obj/item/food/cookie/peanut_butter
@@ -486,4 +492,49 @@
 	)
 	tastes = list("peanut butter" = 1, "peanuts" = 1, "cream" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/chocolate_chip_cookie
+	name = "chocolate chip cookie"
+	desc = "A delightful-smelling chocolate chip cookie. Where's the milk?"
+	icon_state = "COOKIE!!!"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("soft cookie" = 2, "chocolate" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/snickerdoodle
+	name = "snickerdoodle"
+	desc = "A soft cookie made from vanilla and cinnamon."
+	icon_state = "snickerdoodle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("soft cookie" = 2, "vanilla" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cookie/macaron
+	name = "macaron"
+	desc = "A sandwich-like confectionary with a soft cookie shell and a creamy meringue center."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	icon_state = "macaron_1"
+	base_icon_state = "macaron"
+	tastes = list("wafer" = 2, "creamy meringue" = 3)
+	foodtypes = GRAIN | SUGAR | DAIRY
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/cookie/macaron/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 4)]"
+
+/obj/item/food/cookie/thumbprint_cookie
+	name = "thumbprint cookie"
+	desc = "A cookie with a thumb-sized indent in the middle made for fillings. This one is filled with cherry jelly"
+	icon_state = "thumbprint_cookie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	tastes = list("cookie" = 2, "cherry jelly" = 3)
+	foodtypes = GRAIN | SUGAR | FRUIT
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL

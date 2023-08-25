@@ -23,7 +23,7 @@
 	src.spawn_text = spawn_text
 	src.max_spawned = max_spawned
 
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(stop_spawning))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
 /datum/component/spawner/process()
@@ -55,15 +55,17 @@
 		created_mob.faction = src.faction
 		RegisterSignal(created, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
 
+
 	if (spawn_text)
 		spawner.visible_message(span_danger("[created] [spawn_text] [spawner]."))
 
-	RegisterSignal(created, COMSIG_PARENT_QDELETING, PROC_REF(on_deleted))
+	SEND_SIGNAL(src, COMSIG_SPAWNER_SPAWNED, created)
+	RegisterSignal(created, COMSIG_QDELETING, PROC_REF(on_deleted))
 
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()
 	for (var/datum/weakref/weak_thing as anything in spawned_things)
-		var/atom/previously_spawned = weak_thing.resolve()
+		var/atom/previously_spawned = weak_thing?.resolve()
 		if (!previously_spawned)
 			spawned_things -= weak_thing
 			continue
@@ -84,4 +86,4 @@
 	if (source.stat != DEAD)
 		return
 	spawned_things -= WEAKREF(source)
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE))

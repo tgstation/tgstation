@@ -24,7 +24,7 @@
 	usr.reset_perspective(O)
 	usr.control_object = O
 	O.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Possess Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Possess Object") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /proc/release()
 	set name = "Release Obj"
@@ -45,7 +45,7 @@
 	usr.forceMove(get_turf(usr.control_object))
 	usr.reset_perspective()
 	usr.control_object = null
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Release Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Release Object") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /proc/givetestverbs(mob/M in GLOB.mob_list)
 	set desc = "Give this guy possess/release verbs"
@@ -53,4 +53,4 @@
 	set name = "Give Possessing Verbs"
 	add_verb(M, GLOBAL_PROC_REF(possess))
 	add_verb(M, GLOBAL_PROC_REF(release))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Possessing Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Possessing Verbs") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

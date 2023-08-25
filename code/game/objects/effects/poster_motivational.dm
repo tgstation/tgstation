@@ -77,7 +77,7 @@
 /datum/proximity_monitor/advanced/quirk_posters/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, department)
 	. = ..()
 	src.department = department
-	RegisterSignal(host, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(host, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/proximity_monitor/advanced/quirk_posters/field_turf_crossed(atom/movable/crossed, turf/location)
 	if (!isliving(crossed) || !can_see(crossed, host, current_range))
