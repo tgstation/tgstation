@@ -788,6 +788,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	var/list/standing = list()
 
+	if(istype(source, /mob/living/carbon/human/dummy/extra_tall))
+		var/mob/living/carbon/human/dummy/extra_tall/bleh = source
+		bleh.extra_bodyparts = list()
+
 	source.remove_overlay(BODY_BEHIND_LAYER)
 	source.remove_overlay(BODY_ADJ_LAYER)
 	source.remove_overlay(BODY_FRONT_LAYER)
