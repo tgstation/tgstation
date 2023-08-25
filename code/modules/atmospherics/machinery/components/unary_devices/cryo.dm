@@ -270,6 +270,8 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process(seconds_per_tick)
 	..()
+	if(!occupant)
+		return
 
 	if(!on)
 		// Should turn on if set to auto
@@ -277,8 +279,6 @@
 			set_on(TRUE)
 		else
 			return
-	if(!occupant)
-		return
 
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant.on_fire)
