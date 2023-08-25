@@ -1,5 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "fixed apocalypse rune applying invisibility to mobs."
-  - bugfix: "Unholy water preview icon is now similar with the icon it has."

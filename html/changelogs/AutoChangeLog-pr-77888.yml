@@ -1,5 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "regal rats now run away from whoever attacked them"
-  - rscadd: "new pet behavior which makes pets defend their owners if they got attacked"
