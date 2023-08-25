@@ -161,7 +161,7 @@
 			break
 	if(!validdest) //Didn't find our destination in the list of valid destinations, something bad happening
 		log_admin("[user] attempted to href dock exploit on [src] with target location \"[dest_id]\"")
-		message_admins("[user] just attempted to href dock exploit on [src] with target location \"[dest_id]\"")
+		message_admins("[user] just attempted to href dock exploit on [src] with target location \"[url_encode(dest_id)]\"")
 		return SHUTTLE_CONSOLE_DESTINVALID
 	switch(SSshuttle.moveShuttle(shuttleId, dest_id, TRUE))
 		if(DOCKING_SUCCESS)
@@ -216,12 +216,13 @@
 			to_chat(GLOB.admins, "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A HREF='?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>")
 			return TRUE
 
-/obj/machinery/computer/shuttle/emag_act(mob/user)
+/obj/machinery/computer/shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You fried the consoles ID checking system."))
+	balloon_alert(user, "id checking system fried")
+	return TRUE
 
 /obj/machinery/computer/shuttle/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(!mapload)

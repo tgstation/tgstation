@@ -30,10 +30,8 @@
 	src.on_cleaned_callback = on_cleaned_callback
 
 /datum/component/cleaner/Destroy(force, silent)
-	if(pre_clean_callback)
-		QDEL_NULL(pre_clean_callback)
-	if(on_cleaned_callback)
-		QDEL_NULL(on_cleaned_callback)
+	pre_clean_callback = null
+	on_cleaned_callback = null
 	return ..()
 
 /datum/component/cleaner/RegisterWithParent()
@@ -117,9 +115,7 @@
 		cleaning_duration = (cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset, 1))
 
 	//do the cleaning
-	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
 	if(do_after(user, cleaning_duration, target = target))
-		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(clean_target)
 			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))

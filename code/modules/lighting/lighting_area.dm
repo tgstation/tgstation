@@ -64,7 +64,7 @@
 		lighting_effect.layer = LIGHTING_PRIMARY_LAYER
 		lighting_effect.blend_mode = BLEND_ADD
 		lighting_effect.alpha = base_lighting_alpha
-		lighting_effect.color = base_lighting_color
+		lighting_effect.color = (base_lighting_color == COLOR_STARLIGHT ? GLOB.starlight_color : base_lighting_color)
 		lighting_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 		lighting_effects += lighting_effect
 	add_overlay(lighting_effects[1])

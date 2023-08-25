@@ -23,7 +23,8 @@
 		cure()
 		return FALSE
 
-	if((NOTRANSSTING in affected_mob.dna.species.species_traits) || (NO_DNA_COPY in affected_mob.dna.species.species_traits)) //Only species that can be spread by transformation sting can be spread by the retrovirus
+	//Only species that can be spread by transformation sting can be spread by the retrovirus
+	if(HAS_TRAIT(affected_mob, TRAIT_NO_TRANSFORMATION_STING) || HAS_TRAIT(affected_mob, TRAIT_NO_DNA_COPY))
 		cure()
 		return FALSE
 
@@ -32,7 +33,7 @@
 		strain_data["dna"] = new affected_mob.dna.type
 		affected_mob.dna.copy_dna(strain_data["dna"])
 		carrier = TRUE
-		stage = 4
+		update_stage(4)
 		return
 
 	switch(stage)

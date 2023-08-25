@@ -14,13 +14,6 @@
 /obj/item/wallframe/camera,
 /turf/template_noop,
 /area/template_noop)
-"ae" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
-/turf/template_noop,
-/area/template_noop)
 "af" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
@@ -38,13 +31,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"ai" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
-/turf/template_noop,
-/area/template_noop)
 "aj" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -57,48 +43,12 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"an" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
-/turf/template_noop,
-/area/template_noop)
 "ao" = (
 /obj/item/stack/sheet/mineral/titanium,
 /turf/template_noop,
 /area/template_noop)
-"ap" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
-/turf/template_noop,
-/area/template_noop)
-"as" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
-/turf/template_noop,
-/area/template_noop)
 "aD" = (
 /obj/item/stack/rods,
-/turf/template_noop,
-/area/template_noop)
-"aE" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
-/turf/template_noop,
-/area/template_noop)
-"aT" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
 /turf/template_noop,
 /area/template_noop)
 "bl" = (
@@ -274,6 +224,11 @@
 	},
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter3)
+"fE" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/plating/directional/south,
+/turf/template_noop,
+/area/template_noop)
 "fG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/frame/computer,
@@ -352,6 +307,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/shuttle/ruin/caravan/freighter2)
+"ly" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/template_noop,
+/area/template_noop)
 "lC" = (
 /turf/closed/mineral/random/high_chance,
 /area/ruin/space/has_grav)
@@ -508,6 +468,10 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/ruin/caravan/freighter2)
+"re" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "rj" = (
 /obj/effect/turf_decal/bot_white/right,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -666,16 +630,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/ruin/caravan/freighter3)
-"yk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav)
 "zk" = (
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav)
@@ -699,6 +653,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/freighter3)
+"As" = (
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/template_noop,
+/area/template_noop)
 "AA" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -719,6 +677,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/freighter2)
+"Bq" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "Bv" = (
 /obj/structure/chair{
 	dir = 4
@@ -908,6 +870,10 @@
 "JW" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/ruin/caravan/freighter2)
+"Ku" = (
+/obj/structure/broken_flooring/plating/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "KC" = (
 /obj/item/stack/cable_coil{
 	amount = 1
@@ -915,6 +881,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
+"KQ" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/plating/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "Lx" = (
 /obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide,
@@ -933,6 +904,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter3)
+"MD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/pile/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/shuttle/ruin/caravan/freighter2)
+"MG" = (
+/obj/effect/turf_decal/box/white/corners,
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/knife/combat,
+/turf/open/floor/iron/dark/airless,
+/area/shuttle/ruin/caravan/freighter2)
 "MI" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -944,12 +927,6 @@
 	density = 0;
 	name = "broken airlock"
 	},
-/turf/open/floor/iron/dark/airless,
-/area/shuttle/ruin/caravan/freighter2)
-"MT" = (
-/obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter2)
 "Nl" = (
@@ -1062,6 +1039,14 @@
 	},
 /turf/open/floor/iron/airless,
 /area/shuttle/ruin/caravan/freighter2)
+"SK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/south,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
 "TA" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1134,14 +1119,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav)
-"XE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/shuttle/ruin/caravan/freighter2)
 "Yv" = (
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/decal/cleanable/dirt,
@@ -2228,7 +2205,7 @@ mR
 Po
 Po
 Po
-yk
+SK
 PY
 bs
 mR
@@ -2283,7 +2260,7 @@ mR
 bs
 bs
 aa
-ae
+Ku
 aa
 aa
 aa
@@ -2458,7 +2435,7 @@ aa
 aa
 aa
 aa
-aE
+Bq
 aa
 ao
 aa
@@ -2570,7 +2547,7 @@ aa
 aa
 aa
 aa
-as
+re
 zk
 zk
 zk
@@ -3653,7 +3630,7 @@ GY
 Gu
 kX
 FU
-MT
+MG
 wB
 Bz
 cF
@@ -3859,7 +3836,7 @@ aa
 aa
 dM
 AP
-XE
+MD
 bs
 mn
 Fr
@@ -3913,7 +3890,7 @@ aa
 bs
 dc
 aa
-an
+KQ
 FS
 dM
 dM
@@ -4015,7 +3992,7 @@ aa
 aa
 aa
 aa
-aT
+As
 aa
 aD
 aa
@@ -5007,7 +4984,7 @@ aa
 aa
 aa
 aa
-aT
+As
 aa
 aa
 aa
@@ -5057,7 +5034,7 @@ mc
 mc
 bs
 ab
-aE
+Bq
 aa
 aa
 aa
@@ -5159,8 +5136,8 @@ rj
 xD
 nc
 dX
-ai
-aT
+fE
+As
 aa
 aa
 aa
@@ -5213,7 +5190,7 @@ bv
 QE
 JQ
 wJ
-ap
+ly
 aa
 aa
 br

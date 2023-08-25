@@ -2,10 +2,7 @@
  * ### Growth and Differentiation Component: Used to randomly "grow" a creature into a new entity over its lifespan.
  *
  * If we are passed a typepath, we will 100% grow into that type. However, if we are not passed a typepath, we will pick one from a subtype of the parent we were applied to!
- *
- * Used for spiderlings to turn them into giant spiders.
  */
-
 /datum/component/growth_and_differentiation
 	/// What this mob turns into when fully grown.
 	var/growth_path
@@ -18,6 +15,8 @@
 	var/lower_growth_value
 	/// Integer - The upper bound for the percentage we have to grow before we can differentiate.
 	var/upper_growth_value
+	/// List of signals we kill on ourselves when we grow.
+	var/list/signals_to_kill_on
 	/// Optional callback for checks to see if we're okay to grow.
 	var/datum/callback/optional_checks
 	/// Optional callback in case we wish to override the default grow() behavior. Assume we supersede the change_mob_type() call if we have this set.
@@ -32,7 +31,16 @@
 	/// and will actively try to grow the mob (only barred by optional checks).
 	var/ready_to_grow = FALSE
 
-/datum/component/growth_and_differentiation/Initialize(growth_time, growth_path, growth_probability, lower_growth_value, upper_growth_value, optional_checks, optional_grow_behavior)
+/datum/component/growth_and_differentiation/Initialize(
+	growth_time,
+	growth_path,
+	growth_probability,
+	lower_growth_value,
+	upper_growth_value,
+	list/signals_to_kill_on,
+	datum/callback/optional_checks,
+	datum/callback/optional_grow_behavior,
+)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -44,6 +52,10 @@
 	src.optional_checks = optional_checks
 	src.optional_grow_behavior = optional_grow_behavior
 
+	if(islist(signals_to_kill_on))
+		src.signals_to_kill_on = signals_to_kill_on
+		RegisterSignals(parent, src.signals_to_kill_on, PROC_REF(stop_component_processing_entirely))
+
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(comp_on_round_start))
@@ -52,11 +64,14 @@
 	return setup_growth_tracking()
 
 /datum/component/growth_and_differentiation/Destroy(force, silent)
-	. = ..()
+	STOP_PROCESSING(SSdcs, src)
 	deltimer(timer_id)
+	return ..()
 
-/datum/component/growth_and_differentiation/UnregisterFromParent()
-	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+/// Wrapper for qdel() so we can pass it in RegisterSignals(). I hate it here too.
+/datum/component/growth_and_differentiation/proc/stop_component_processing_entirely()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// What we invoke when the round starts so we can set up our timer.
 /datum/component/growth_and_differentiation/proc/comp_on_round_start()
@@ -64,7 +79,7 @@
 	setup_growth_tracking()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 
-/// Sets up the failover timer for certain growth.
+/// Sets up the two different systems for growth: the timer and the probability based one. Both can coexist. Return COMPONENT_INCOMPATIBLE if we fail to set up either.
 /datum/component/growth_and_differentiation/proc/setup_growth_tracking()
 	var/did_we_add_at_least_one_thing = FALSE
 
@@ -113,13 +128,16 @@
 		optional_grow_behavior.Invoke()
 		return
 
-	var/mob/living/new_mob = growth_path
-	if(!istype(new_mob))
+	if(!ispath(growth_path, /mob/living))
 		CRASH("Growth and Differentiation Component: Growth path was not a mob type! If you wanted to do something special, please put it in the optional_grow_behavior callback instead!")
+
+	var/mob/living/new_mob = growth_path
 
 	var/new_mob_name = initial(new_mob.name)
 
 	if(!silent)
 		old_mob.visible_message(span_warning("[old_mob] grows into \a [new_mob_name]!"))
 
-	old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
+	var/mob/living/transformed_mob = old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
+	if(initial(new_mob.unique_name))
+		transformed_mob.set_name()

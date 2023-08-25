@@ -55,3 +55,18 @@
 			to_chat(user, span_warning("You need a crowbar to pry this open!"))
 			return FALSE //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
 					//The large crate has no non-attack interactions other than the crowbar, anyway.
+
+/obj/structure/closet/crate/large/hats/PopulateContents()
+	..()
+	for (var/i in 1 to 5)
+		new /obj/effect/spawner/random/clothing/funny_hats(src)
+	for (var/i in 1 to 5)
+		new /obj/item/mod/module/hat_stabilizer(src)
+	if(prob(1))
+		var/our_contents = list()
+		for(var/obj/item/clothing/head/any_hat in contents)
+			our_contents[any_hat]++
+		if(our_contents)
+			var/obj/item/clothing/head/lucky_hat = pick(our_contents)
+			lucky_hat.AddComponent(/datum/component/unusual_effect, color = "#FFEA0030", include_particles = TRUE)
+			lucky_hat.name = "unusual [name]"

@@ -56,6 +56,11 @@
 	speech_chance = 3
 	emote_see = list("jumps in a circle.", "shakes.")
 
+/datum/ai_planning_subtree/random_speech/lizard // all of these have to be three words long or i'm killing you. you're dead.
+	speech_chance = 3
+	emote_hear = list("stamps around some.", "hisses a bit.")
+	emote_see = list("blehs the tongue.", "tilts the head.", "does a spin.")
+
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
 	speak = list("baaa","baaaAAAAAH!","baaah")
@@ -84,6 +89,18 @@
 		"Mmphe mmphe mmphe!",
 		"Hmm mmm mmm!",
 	)
+
+/datum/ai_planning_subtree/random_speech/chicken
+	speech_chance = 15 // really talkative ladies
+	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
+	emote_hear = list("clucks.", "croons.")
+	emote_see = list("pecks at the ground.","flaps her wings viciously.")
+
+/datum/ai_planning_subtree/random_speech/chick
+	speech_chance = 4
+	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
+	emote_hear = list("cheeps.")
+	emote_see = list("pecks at the ground.","flaps her tiny wings.")
 
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
@@ -132,7 +149,7 @@
 
 /datum/ai_planning_subtree/random_speech/tree
 	speech_chance = 3
-	emote_see = list("photosynthesizes angirly.")
+	emote_see = list("photosynthesizes angrily.")
 
 /datum/ai_planning_subtree/random_speech/pig
 	speech_chance = 3
@@ -140,3 +157,45 @@
 	sound = list('sound/creatures/pig1.ogg', 'sound/creatures/pig2.ogg')
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
+
+/datum/ai_planning_subtree/random_speech/pony
+	speech_chance = 3
+	emote_hear = list("whinnies!")
+	emote_see = list("horses around.")
+
+/datum/ai_planning_subtree/random_speech/pony/tamed
+	speech_chance = 3
+	emote_see = list("snorts.")
+
+/datum/ai_planning_subtree/random_speech/killer_tomato
+	speech_chance = 3
+	speak = list("gnashes.", "growls lowly.", "snarls.")
+	emote_hear = list("gnashes.")
+	emote_see = list("salivates.")
+
+/datum/ai_planning_subtree/random_speech/ant
+	speech_chance = 1
+	emote_hear = list("buzzes.", "clacks.")
+	emote_see = list("shakes their head.", "twitches their antennae.")
+	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
+
+/datum/ai_planning_subtree/random_speech/fox
+	speech_chance = 1
+	emote_hear = list("howls.", "barks.", "screams.")
+	emote_see = list("shakes their head.", "shivers.")
+	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
+
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 1
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
+
+/datum/ai_planning_subtree/random_speech/penguin
+	speech_chance = 5
+	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")
+	emote_hear = list("squawks", "gakkers")
+
+/datum/ai_planning_subtree/random_speech/bear
+	speech_chance = 5
+	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
+	emote_see = list("stares ferociously.")

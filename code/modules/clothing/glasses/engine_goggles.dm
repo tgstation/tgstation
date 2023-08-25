@@ -122,7 +122,7 @@
 				continue
 			if(!connection_images[smart][dir2text(direction)])
 				var/image/arrow
-				arrow = new('icons/obj/atmospherics/pipes/simple.dmi', get_turf(smart), "connection_overlay")
+				arrow = new('icons/obj/pipes_n_cables/simple.dmi', get_turf(smart), "connection_overlay")
 				arrow.dir = direction
 				arrow.layer = smart.layer
 				arrow.color = smart.pipe_color

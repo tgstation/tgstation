@@ -315,6 +315,9 @@
 	base_icon_state = "recharge_floor"
 	floor_tile = /obj/item/stack/tile/iron/recharge_floor
 
+/turf/open/floor/iron/recharge_floor/Airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/recharge_floor/asteroid
 	icon_state = "recharge_floor_asteroid"
 	base_icon_state = "recharge_floor_asteroid"
@@ -324,25 +327,40 @@
 	base_icon_state = "smooth"
 	floor_tile = /obj/item/stack/tile/iron/smooth
 
+/turf/open/floor/iron/smooth/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/smooth_edge
 	icon_state = "smooth_edge"
 	base_icon_state = "smooth_edge"
 	floor_tile = /obj/item/stack/tile/iron/smooth_edge
+
+/turf/open/floor/iron/smooth_edge/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/smooth_half
 	icon_state = "smooth_half"
 	base_icon_state = "smooth_half"
 	floor_tile = /obj/item/stack/tile/iron/smooth_half
 
+/turf/open/floor/iron/smooth_half/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/smooth_corner
 	icon_state = "smooth_corner"
 	base_icon_state = "smooth_corner"
 	floor_tile = /obj/item/stack/tile/iron/smooth_corner
 
+/turf/open/floor/iron/smooth_corner/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/smooth_large
 	icon_state = "smooth_large"
 	base_icon_state = "smooth_large"
 	floor_tile = /obj/item/stack/tile/iron/smooth_large
+
+/turf/open/floor/iron/smooth_large/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/terracotta
 	icon_state = "terracotta"
@@ -419,10 +437,7 @@
 
 /turf/open/floor/iron/kitchen_coldroom
 	name = "cold room floor"
-
-/turf/open/floor/iron/kitchen_coldroom/Initialize(mapload)
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	return ..()
 
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
 	icon_state = "freezerfloor"
@@ -453,21 +468,36 @@
 	base_icon_state = "stairs"
 	tiled_dirt = FALSE
 
+/turf/open/floor/iron/stairs/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/stairs/left
 	icon_state = "stairs-l"
 	base_icon_state = "stairs-l"
+
+/turf/open/floor/iron/stairs/left/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/stairs/medium
 	icon_state = "stairs-m"
 	base_icon_state = "stairs-m"
 
+/turf/open/floor/iron/stairs/medium/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/stairs/right
 	icon_state = "stairs-r"
 	base_icon_state = "stairs-r"
 
+/turf/open/floor/iron/stairs/right/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/stairs/old
 	icon_state = "stairs-old"
 	base_icon_state = "stairs-old"
+
+/turf/open/floor/iron/stairs/old/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/bluespace
 	icon_state = "bluespace"

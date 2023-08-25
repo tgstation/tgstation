@@ -21,7 +21,7 @@
 
 	render_source = source.render_target
 	SET_PLANE_EXPLICIT(src, initial(plane), source)
-	RegisterSignal(source, COMSIG_PARENT_QDELETING, PROC_REF(on_source_deleting)) 
+	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_source_deleting))
 
 /atom/movable/render_step/ex_act(severity)
 	return FALSE

@@ -8,7 +8,7 @@
 /obj/machinery/atmospherics/miner
 	name = "gas miner"
 	desc = "Gasses mined from the gas giant below (above?) flow out through this massive vent."
-	icon = 'icons/obj/atmospherics/components/miners.dmi'
+	icon = 'icons/obj/machines/atmospherics/miners.dmi'
 	icon_state = "miner"
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF

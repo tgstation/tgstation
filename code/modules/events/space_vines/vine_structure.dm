@@ -2,7 +2,7 @@
 /obj/structure/spacevine
 	name = "space vine"
 	desc = "An extremely expansionistic species of vine."
-	icon = 'icons/effects/spacevines.dmi'
+	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "Light1"
 	anchored = TRUE
 	density = FALSE
@@ -30,6 +30,7 @@
 
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),

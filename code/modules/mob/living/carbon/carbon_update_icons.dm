@@ -31,6 +31,8 @@
 		update_suit_storage()
 	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
 		update_pockets()
+	if(slot_flags & ITEM_SLOT_HANDS)
+		update_held_items()
 
 /// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)
@@ -67,44 +69,20 @@
 		if(OFFSET_HELD)
 			update_held_items()
 
-//IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
-/mob/living/carbon/perform_update_transform()
-	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/final_pixel_y = pixel_y
-	var/final_dir = dir
-	var/changed = 0
-	if(lying_angle != lying_prev && rotate_on_lying)
-		changed++
-		ntransform.TurnTo(lying_prev , lying_angle)
-		if(!lying_angle) //Lying to standing
-			final_pixel_y = base_pixel_y
-		else //if(lying != 0)
-			if(lying_prev == 0) //Standing to lying
-				pixel_y = base_pixel_y
-				final_pixel_y = base_pixel_y + PIXEL_Y_OFFSET_LYING
-				if(dir & (EAST|WEST)) //Facing east or west
-					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-	if(resize != RESIZE_DEFAULT_SIZE)
-		changed++
-		ntransform.Scale(resize)
-		resize = RESIZE_DEFAULT_SIZE
-
-	if(changed)
-		SEND_SIGNAL(src, COMSIG_PAUSE_FLOATING_ANIM, 0.3 SECONDS)
-		animate(src, transform = ntransform, time = (lying_prev == 0 || lying_angle == 0) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
-
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
+	SEND_SIGNAL(src, COMSIG_CARBON_APPLY_OVERLAY, cache_index, .)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
 	var/I = overlays_standing[cache_index]
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
+	SEND_SIGNAL(src, COMSIG_CARBON_REMOVE_OVERLAY, cache_index, I)
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
@@ -447,7 +425,7 @@
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
-		if(handcuffed.blocks_emissive)
+		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
@@ -488,7 +466,7 @@
 	RETURN_TYPE(/list)
 
 	. = list()
-	if(blocks_emissive)
+	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
@@ -599,26 +577,35 @@
 
 /obj/item/bodypart/head/generate_icon_key()
 	. = ..()
-	. += "-[facial_hairstyle]"
-	. += "-[facial_hair_color]"
-	if(facial_hair_gradient_style)
-		. += "-[facial_hair_gradient_style]"
-		if(hair_gradient_color)
-			. += "-[facial_hair_gradient_color]"
+	if(lip_style)
+		. += "-[lip_style]"
+		. += "-[lip_color]"
+
 	if(facial_hair_hidden)
 		. += "-FACIAL_HAIR_HIDDEN"
+	else
+		. += "-[facial_hairstyle]"
+		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
+		. += "-[facial_hair_alpha]"
+		if(gradient_styles?[GRADIENT_FACIAL_HAIR_KEY])
+			. += "-[gradient_styles[GRADIENT_FACIAL_HAIR_KEY]]"
+			. += "-[gradient_colors[GRADIENT_FACIAL_HAIR_KEY]]"
+
+	if(show_eyeless)
+		. += "-SHOW_EYELESS"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
 		return .
 
-	. += "-[hair_style]"
-	. += "-[fixed_hair_color || override_hair_color || hair_color]"
-	if(hair_gradient_style)
-		. += "-[hair_gradient_style]"
-		if(hair_gradient_color)
-			. += "-[hair_gradient_color]"
 	if(hair_hidden)
 		. += "-HAIR_HIDDEN"
+	else
+		. += "-[hairstyle]"
+		. += "-[override_hair_color || fixed_hair_color || hair_color]"
+		. += "-[hair_alpha]"
+		if(gradient_styles?[GRADIENT_HAIR_KEY])
+			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
+			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
 
 	return .
 

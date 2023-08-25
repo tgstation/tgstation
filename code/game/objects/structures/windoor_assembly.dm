@@ -98,7 +98,7 @@
 	switch(state)
 		if("01")
 			if(W.tool_behaviour == TOOL_WELDER && !anchored)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=1))
 					return
 
 				user.visible_message(span_notice("[user] disassembles the windoor assembly."),

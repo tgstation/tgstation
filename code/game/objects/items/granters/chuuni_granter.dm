@@ -1,5 +1,7 @@
 /// Turns the user into a chuunibyou.
 /obj/item/book/granter/chuunibyou
+	starting_title = "I Found a Mysterious Book in the Library That Teaches Me How to Become a Chuunibyou, But It Turns Out It's Actually a Grimoire That Unlocks My Hidden Powers!"
+	starting_author = "Anonymous"
 	name = "I Found a Mysterious Book in the Library That Teaches Me How to Become a Chuunibyou, But It Turns Out It's Actually a Grimoire That Unlocks My Hidden Powers!"
 	desc = "I'd rather get caught holding a syndicate revolver, honestly."
 	icon_state ="chuuni_manga"

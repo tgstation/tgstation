@@ -7,7 +7,7 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -61,7 +61,7 @@
 /turf/open/misc/asteroid,
 /area/centcom/heretic_sacrifice/void)
 "lz" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
@@ -160,7 +160,7 @@
 /area/centcom/heretic_sacrifice/ash)
 "qM" = (
 /obj/structure/stone_tile/block/cracked,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
@@ -260,7 +260,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "zb" = (
 /obj/structure/stone_tile/slab,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
@@ -425,7 +425,7 @@
 	},
 /area/centcom/heretic_sacrifice/ash)
 "Kz" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -457,7 +457,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "Mf" = (
 /obj/effect/decal/cleanable/ash/large,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/wasteland{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -530,7 +530,7 @@
 	pixel_x = -2;
 	pixel_y = -8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -598,7 +598,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0

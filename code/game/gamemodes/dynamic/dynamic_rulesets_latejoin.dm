@@ -144,7 +144,7 @@
 		new_head.remove_clumsy = TRUE
 		new_head = M.mind.add_antag_datum(new_head, revolution)
 		revolution.update_objectives()
-		revolution.update_heads()
+		revolution.update_rev_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	else
@@ -158,6 +158,10 @@
 		return
 
 	finished = winner
+
+	if(winner == REVOLUTION_VICTORY)
+		GLOB.revolutionary_win = TRUE
+
 	return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.
@@ -239,7 +243,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 12
-	requirements = list(101,101,40,40,20,20,10,10,10,10)
+	requirements = list(101,101,60,50,40,20,20,10,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/stowaway_changeling/execute()

@@ -214,7 +214,7 @@
 	quality = POSITIVE
 	severity = SEVERITY_TRIVIAL
 
-/datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
+/datum/spacevine_mutation/transparency/on_birth(obj/structure/spacevine/holder)
 	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 

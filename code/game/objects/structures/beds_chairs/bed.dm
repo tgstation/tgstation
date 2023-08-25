@@ -11,7 +11,7 @@
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/bed.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -66,6 +66,7 @@
 		/datum/element/contextual_screentip_bare_hands, \
 		rmb_text = "Fold up", \
 	)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
@@ -112,12 +113,6 @@
 	//Push them up from the normal lying position
 	M.pixel_y = M.base_pixel_y
 
-/obj/structure/bed/roller/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
-
-
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	set_density(FALSE)
 	icon_state = "down"
@@ -130,6 +125,9 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/medical/rollerbed.dmi'
 	icon_state = "folded"
+	inhand_icon_state = "rollerbed"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 
 /obj/item/roller/attackby(obj/item/I, mob/living/user, params)

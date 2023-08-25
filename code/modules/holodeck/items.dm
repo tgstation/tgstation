@@ -37,7 +37,7 @@
 
 /obj/item/toy/cards/deck/syndicate/holographic/Initialize(mapload, obj/machinery/computer/holodeck/holodeck)
 	src.holodeck = holodeck
-	RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(handle_card_delete))
+	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(handle_card_delete))
 	. = ..()
 
 /obj/item/toy/cards/deck/syndicate/holographic/proc/handle_card_delete(datum/source)
@@ -75,7 +75,7 @@
 /obj/machinery/readybutton
 	name = "ready declaration device"
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "auth_off"
 	var/ready = 0
 	var/area/currentarea = null

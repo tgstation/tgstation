@@ -113,8 +113,7 @@
 		customer_pawn.say(pick(customer_data.leave_mad_lines))
 
 /datum/ai_behavior/leave_venue
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	required_distance = 1
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 
 /datum/ai_behavior/leave_venue/setup(datum/ai_controller/controller, venue_key)
 	. = ..()

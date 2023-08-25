@@ -64,7 +64,7 @@
 	if(!istype(turf))
 		return
 
-	if(!turf.footstep || source.buckled || source.throwing || source.movement_type & (VENTCRAWLING | FLYING) || HAS_TRAIT(source, TRAIT_IMMOBILIZED))
+	if(!turf.footstep || source.buckled || source.throwing || source.movement_type & (VENTCRAWLING | FLYING) || HAS_TRAIT(source, TRAIT_IMMOBILIZED) || CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 
 	if(source.body_position == LYING_DOWN) //play crawling sound if we're lying
@@ -89,38 +89,34 @@
 
 	if(steps != 0 && !source.has_gravity()) // don't need to step as often when you hop around
 		return
-	return turf
 
-/datum/element/footstep/proc/play_simplestep(mob/living/source)
+	. = list(FOOTSTEP_MOB_SHOE = turf.footstep, FOOTSTEP_MOB_BAREFOOT = turf.barefootstep, FOOTSTEP_MOB_HEAVY = turf.heavyfootstep, FOOTSTEP_MOB_CLAW = turf.clawfootstep, STEP_SOUND_PRIORITY = STEP_SOUND_NO_PRIORITY)
+	SEND_SIGNAL(turf, COMSIG_TURF_PREPARE_STEP_SOUND, .)
+	return .
+
+/datum/element/footstep/proc/play_simplestep(mob/living/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (SHOULD_DISABLE_FOOTSTEPS(source))
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
-	var/turf/open/source_loc = prepare_step(source)
-	if(!source_loc)
+	var/list/prepared_steps = prepare_step(source)
+	if(!prepared_steps)
 		return
+
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(source_loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
+		playsound(source.loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
 		return
-	var/turf_footstep
-	switch(footstep_type)
-		if(FOOTSTEP_MOB_CLAW)
-			turf_footstep = source_loc.clawfootstep
-		if(FOOTSTEP_MOB_BAREFOOT)
-			turf_footstep = source_loc.barefootstep
-		if(FOOTSTEP_MOB_HEAVY)
-			turf_footstep = source_loc.heavyfootstep
-		if(FOOTSTEP_MOB_SHOE)
-			turf_footstep = source_loc.footstep
+
+	var/turf_footstep = prepared_steps[footstep_type]
 	if(!turf_footstep)
 		return
-	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
+	playsound(source.loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
 
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
 		return
 
 	var/volume_multiplier = 1
@@ -130,8 +126,8 @@
 		volume_multiplier = 0.6
 		range_adjustment = -2
 
-	var/turf/open/source_loc = prepare_step(source)
-	if(!source_loc)
+	var/list/prepared_steps = prepare_step(source)
+	if(!prepared_steps)
 		return
 
 	//cache for sanic speed (lists are references anyways)
@@ -142,35 +138,41 @@
 	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
 		// we are wearing shoes
 
-		heard_clients = playsound(source_loc, pick(footstep_sounds[source_loc.footstep][1]),
-			footstep_sounds[source_loc.footstep][2] * volume * volume_multiplier,
+		var/shoestep_type = prepared_steps[FOOTSTEP_MOB_SHOE]
+		heard_clients = playsound(source.loc, pick(footstep_sounds[shoestep_type][1]),
+			footstep_sounds[shoestep_type][2] * volume * volume_multiplier,
 			TRUE,
-			footstep_sounds[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+			footstep_sounds[shoestep_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 	else
+		var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
 		if(source.dna.species.special_step_sounds)
-			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
+			heard_clients = playsound(source.loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
 			var/static/list/bare_footstep_sounds = GLOB.barefootstep
 
-			heard_clients = playsound(source_loc, pick(bare_footstep_sounds[source_loc.barefootstep][1]),
-				bare_footstep_sounds[source_loc.barefootstep][2] * volume * volume_multiplier,
+			heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),
+				bare_footstep_sounds[barefoot_type][2] * volume * volume_multiplier,
 				TRUE,
-				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+				bare_footstep_sounds[barefoot_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
 
 
 ///Prepares a footstep for machine walking
-/datum/element/footstep/proc/play_simplestep_machine(atom/movable/source)
+/datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (SHOULD_DISABLE_FOOTSTEPS(source))
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
 	var/turf/open/source_loc = get_turf(source)
 	if(!istype(source_loc))
 		return
+
+	if(CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+		return
+
 	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
 
 #undef SHOULD_DISABLE_FOOTSTEPS

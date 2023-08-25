@@ -91,8 +91,18 @@
 /obj/machinery/harvester/proc/start_harvest()
 	if(!occupant || !iscarbon(occupant))
 		return
-	var/mob/living/carbon/C = occupant
-	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+
+	var/mob/living/carbon/carbon_occupant = occupant
+
+	if(carbon_occupant.stat < UNCONSCIOUS)
+		notify_ghosts(
+			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
+			source = src,
+			header = "Gruesome!",
+			action = NOTIFY_ORBIT,
+		)
+
+	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
 	visible_message(span_notice("The [name] begins warming up!"))
@@ -174,12 +184,14 @@
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
 		open_machine()
 
-/obj/machinery/harvester/emag_act(mob/user)
+/obj/machinery/harvester/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	allow_living = TRUE
-	to_chat(user, span_warning("You overload [src]'s lifesign scanners."))
+	allow_clothing = TRUE
+	balloon_alert(!user, "lifesign scanners overloaded")
+	return TRUE
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)

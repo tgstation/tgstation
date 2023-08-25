@@ -102,7 +102,7 @@
 /obj/item/modular_computer/pda/heads/quartermaster
 	name = "quartermaster PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#D6B328#6506CA#927444"
+	greyscale_colors = "#c4b787#18191e#8b4c31"
 	inserted_item = /obj/item/pen/survival
 	stored_paper = 20
 	starting_programs = list(
@@ -112,7 +112,6 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/shipping,
-		/datum/computer_file/program/robocontrol,
 	)
 
 /**
@@ -139,7 +138,7 @@
 
 /obj/item/modular_computer/pda/warden
 	name = "warden PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#EA3232#0000CC#363636"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
@@ -183,7 +182,7 @@
 
 /obj/item/modular_computer/pda/roboticist
 	name = "roboticist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#484848#0099CC#D94927"
 	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
@@ -191,7 +190,7 @@
 
 /obj/item/modular_computer/pda/geneticist
 	name = "geneticist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#FAFAFA#000099#0097CA"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
@@ -212,6 +211,8 @@
 
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
+	greyscale_colors = "#28334D#000099#3F96CC"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
@@ -219,7 +220,7 @@
 
 /obj/item/modular_computer/pda/viro
 	name = "virology PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
@@ -246,7 +247,7 @@
 
 /obj/item/modular_computer/pda/cargo
 	name = "cargo technician PDA"
-	greyscale_colors = "#D6B328#6506CA"
+	greyscale_colors = "#8b4c31#2c2e32"
 	stored_paper = 20
 	starting_programs = list(
 		/datum/computer_file/program/shipping,
@@ -257,7 +258,7 @@
 /obj/item/modular_computer/pda/shaftminer
 	name = "shaft miner PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#927444#D6B328#6C3BA1"
+	greyscale_colors = "#927444#8b4c31#4c202d"
 	starting_programs = list(
 		/datum/computer_file/program/skill_tracker,
 	)
@@ -361,7 +362,7 @@
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
 		msg.mime_mode = TRUE
-		msg.ringer_status = FALSE
+		msg.alert_silenced = TRUE
 
 /obj/item/modular_computer/pda/curator
 	name = "curator PDA"
@@ -379,7 +380,17 @@
 /obj/item/modular_computer/pda/curator/Initialize(mapload)
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
-		msg.ringer_status = FALSE
+		msg.alert_silenced = TRUE
+
+/obj/item/modular_computer/pda/psychologist
+	name = "psychologist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#333333#000099#3F96CC"
+	starting_programs = list(
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+	)
 
 /**
  * No Department
@@ -414,3 +425,13 @@
 	greyscale_config = null
 	greyscale_colors = null
 	long_ranged = TRUE
+
+/obj/item/modular_computer/pda/clear/Initialize(mapload)
+	. = ..()
+	var/datum/computer_file/program/themeify/theme_app = locate() in stored_files
+	if(theme_app)
+		for(var/theme_key in GLOB.pda_name_to_theme - GLOB.default_pda_themes)
+			theme_app.imported_themes += theme_key
+
+/obj/item/modular_computer/pda/clear/get_messenger_ending()
+	return "Sent from my crystal PDA"

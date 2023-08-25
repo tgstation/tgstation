@@ -30,7 +30,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, PROC_REF(orbit_begin))
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_STOP, PROC_REF(orbit_stop))
 	RegisterSignal(parent, COMSIG_VV_TOPIC, PROC_REF(handle_vv_topic))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	deadchat_mode = _deadchat_mode
 	inputs = _inputs
 	input_cooldown = _input_cooldown
@@ -190,7 +190,7 @@
 	if(!isobserver(user))
 		return
 
-	examine_list += span_notice("[A.p_theyre(TRUE)] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
+	examine_list += span_notice("[A.p_Theyre()] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
 
 	if(deadchat_mode & DEMOCRACY_MODE)
 		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] second\s.")

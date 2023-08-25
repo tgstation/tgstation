@@ -1,14 +1,14 @@
 /obj/effect/decal/cleanable/generic
 	name = "clutter"
 	desc = "Someone should clean that up."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "shards"
 	beauty = -50
 
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust, and into space."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
 	beauty = -50
@@ -20,9 +20,8 @@
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
 
-/obj/effect/decal/cleanable/ash/crematorium
-//crematoriums need their own ash cause default ash deletes itself if created in an obj
-	turf_loc_check = FALSE
+/obj/effect/decal/cleanable/ash/NeverShouldHaveComeHere(turf/here_turf)
+	return !istype(here_turf, /obj/structure/bodycontainer/crematorium) && ..()
 
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
@@ -34,7 +33,7 @@
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
 	desc = "Back to sand."
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "tiny"
 	beauty = -100
 
@@ -64,7 +63,7 @@
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon = 'icons/effects/dirt.dmi'
-	icon_state = "dirt"
+	icon_state = "dirt-flat-0"
 	base_icon_state = "dirt"
 	smoothing_flags = NONE
 	smoothing_groups = SMOOTH_GROUP_CLEANABLE_DIRT
@@ -74,6 +73,10 @@
 
 /obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
+	icon_state = pick("dirt-flat-0","dirt-flat-1","dirt-flat-2","dirt-flat-3")
+	var/obj/structure/broken_flooring/broken_flooring = locate(/obj/structure/broken_flooring) in loc
+	if(!isnull(broken_flooring))
+		return
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
 		smoothing_flags = SMOOTH_BITMASK
@@ -89,6 +92,12 @@
 /obj/effect/decal/cleanable/dirt/dust
 	name = "dust"
 	desc = "A thin layer of dust coating the floor."
+	icon_state = "dust"
+	base_icon_state = "dust"
+
+/obj/effect/decal/cleanable/dirt/dust/Initialize(mapload)
+	. = ..()
+	icon_state = base_icon_state
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
@@ -165,6 +174,21 @@
 			reagents.trans_to(H, reagents.total_volume, transfered_by = user, methods = INGEST)
 			qdel(src)
 
+/obj/effect/decal/cleanable/vomit/nebula
+	name = "nebula vomit"
+	desc = "Gosh, how... beautiful."
+	icon_state = "vomitnebula_1"
+	random_icon_states = list("vomitnebula_1", "vomitnebula_2", "vomitnebula_3", "vomitnebula_4")
+	beauty = 10
+
+/obj/effect/decal/cleanable/vomit/nebula/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/decal/cleanable/vomit/nebula/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
+
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
@@ -179,7 +203,7 @@
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
 	gender = NEUTER
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "ash"
 
 /obj/effect/decal/cleanable/shreds
@@ -247,14 +271,14 @@
 /obj/effect/decal/cleanable/plastic
 	name = "plastic shreds"
 	desc = "Bits of torn, broken, worthless plastic."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "shards"
 	color = "#c6f4ff"
 
 /obj/effect/decal/cleanable/wrapping
 	name = "wrapping shreds"
 	desc = "Torn pieces of cardboard and paper, left over from a package."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "paper_shreds"
 
 /obj/effect/decal/cleanable/wrapping/pinata
@@ -268,7 +292,7 @@
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"
 	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "garbage"
 	plane = GAME_PLANE
 	layer = FLOOR_CLEAN_LAYER //To display the decal over wires.
@@ -282,7 +306,7 @@
 /obj/effect/decal/cleanable/ants
 	name = "space ants"
 	desc = "A small colony of space ants. They're normally used to the vacuum of space, so they can't climb too well."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "ants"
 	beauty = -150
 	plane = GAME_PLANE
@@ -426,7 +450,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, PROC_REF(burn_process))
+	RegisterSignal(hotspot, COMSIG_QDELETING, PROC_REF(burn_process))
 
 /**
  * Ignites other oil pools around itself.

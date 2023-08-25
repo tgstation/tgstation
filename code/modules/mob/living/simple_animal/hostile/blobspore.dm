@@ -87,13 +87,11 @@
 
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/Destroy()
+/mob/living/simple_animal/hostile/blob/blobspore/death()
 	if(factory)
 		factory.spores -= src
-		factory = null
-	if(corpse)
-		corpse.forceMove(loc)
-		corpse = null
+	corpse?.forceMove(loc)
+	corpse = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
@@ -160,8 +158,8 @@
 	death_cloud_size = 0
 	icon = target.icon
 	icon_state = "zombie"
-	target.hairstyle = null
-	target.update_body_parts()
+	target.set_facial_hairstyle("Shaved", update = FALSE)
+	target.set_hairstyle("Bald", update = TRUE)
 	target.forceMove(src)
 	corpse = target
 	update_icons()

@@ -1,7 +1,7 @@
 /obj/item/organ/internal/cyberimp/bci
 	name = "brain-computer interface"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "bci"
 	visual = FALSE
 	zone = BODY_ZONE_HEAD
@@ -183,7 +183,7 @@
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
 
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
@@ -194,7 +194,7 @@
 	user = null
 
 	UnregisterSignal(owner, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 	))
@@ -223,7 +223,7 @@
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_they(capitalized = TRUE)] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
 
 /obj/item/circuit_component/bci_core/Topic(href, list/href_list)
 	..()
@@ -237,7 +237,7 @@
 /datum/action/innate/bci_charge_action
 	name = "Check BCI Charge"
 	check_flags = NONE
-	button_icon = 'icons/obj/power.dmi'
+	button_icon = 'icons/obj/machines/cell_charger.dmi'
 	button_icon_state = "cell"
 
 	var/obj/item/circuit_component/bci_core/circuit_component

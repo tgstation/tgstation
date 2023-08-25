@@ -187,7 +187,7 @@
 /datum/supply_pack/vending/wardrobes/medical
 	name = "Medical Wardrobe Supply Crate"
 	desc = "This crate contains refills for the MediDrobe, \
-		ChemDrobe, and ViroDrobe."
+		ChemDrobe, ViroDrobe, and MortiDrobe."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
 					/obj/item/vending_refill/wardrobe/chem_wardrobe,

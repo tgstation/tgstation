@@ -52,8 +52,15 @@ SUBSYSTEM_DEF(move_manager)
 /datum/movement_packet
 	///Our parent atom
 	var/atom/movable/parent
-	///The move loop that's currently running
+	///The move loop that's currently running, excluding those that ignore priority.
 	var/datum/move_loop/running_loop
+	/**
+	 * Flags passed from the move loop before it calls move() and unset right after.
+	 * Allows for properties of a move loop to be easily checked by mechanics outside of it.
+	 * Having this a bitfield rather than a type var means we don't get screwed over
+	 * if the move loop gets deleted mid-move, FYI.
+	 */
+	var/processing_move_loop_flags = NONE
 	///Assoc list of subsystems -> loop datum. Only one datum is allowed per subsystem
 	var/list/existing_loops = list()
 

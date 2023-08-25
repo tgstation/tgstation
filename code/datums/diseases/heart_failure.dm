@@ -13,7 +13,7 @@
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	spread_text = "Organ failure"
 	visibility_flags = HIDDEN_PANDEMIC
-	required_organs = list(/obj/item/organ/internal/heart)
+	required_organ = ORGAN_SLOT_HEART
 	bypasses_immunity = TRUE // Immunity is based on not having an appendix; this isn't a virus
 	var/sound = FALSE
 

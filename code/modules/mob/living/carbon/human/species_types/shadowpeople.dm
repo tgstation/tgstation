@@ -3,11 +3,8 @@
 	name = "Shadow"
 	plural_form = "Shadowpeople"
 	id = SPECIES_SHADOW
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
-	species_traits = list(
-		NOEYESPRITES,
-	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_RADIMMUNE,

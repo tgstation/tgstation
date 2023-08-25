@@ -37,16 +37,16 @@
 	src.end_spin_message = end_spin_message
 
 /datum/component/spin2win/Destroy(force, silent)
-	QDEL_NULL(on_spin_callback)
-	QDEL_NULL(on_unspin_callback)
+	on_spin_callback = null
+	on_unspin_callback = null
 	return ..()
 
 /datum/component/spin2win/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 
 /datum/component/spin2win/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
 
 ///signal called on parent being examined
 /datum/component/spin2win/proc/on_examine(datum/source, mob/user, list/examine_list)

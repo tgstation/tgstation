@@ -161,7 +161,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/electrocute_act(shock_damage, source, siemens_coeff, flags)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
+	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && isatom(source)) // strings are sometimes used in electrocute_act()
 		FindTarget(list(source))
 	return ..()
 
@@ -246,6 +246,10 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
+	if(!isatom(the_target))
+		stack_trace("Invalid target in CanAttack(): [the_target]")
+		return FALSE
+
 	if(isturf(the_target) || QDELETED(the_target) || QDELETED(src)) // bail out on invalids
 		return FALSE
 
@@ -475,20 +479,11 @@
 		else
 			targeted_zone = ran_zone()
 		casing.fire_casing(targeted_atom, src, null, null, null, targeted_zone, 0,  src)
-	else if(projectiletype)
-		var/obj/projectile/P = new projectiletype(startloc)
-		playsound(src, projectilesound, 100, TRUE)
-		P.starting = startloc
-		P.firer = src
-		P.fired_from = src
-		P.yo = targeted_atom.y - startloc.y
-		P.xo = targeted_atom.x - startloc.x
+		return
+	if(projectiletype)
+		fire_projectile(projectiletype, targeted_atom, projectilesound)
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
 			newtonian_move(get_dir(targeted_atom, target_from))
-		P.original = targeted_atom
-		P.preparePixelProjectile(targeted_atom, src)
-		P.fire()
-		return P
 
 
 /mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
@@ -661,16 +656,17 @@
 
 /mob/living/simple_animal/hostile/proc/handle_target_del(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(target, COMSIG_QDELETING)
 	target = null
 	LoseTarget()
 
 /mob/living/simple_animal/hostile/proc/add_target(new_target)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_FOUND_TARGET, new_target)
 	if(target)
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(target, COMSIG_QDELETING)
 	target = new_target
 	if(target)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(handle_target_del))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(handle_target_del))
 
 /mob/living/simple_animal/hostile/befriend(mob/living/new_friend)
 	. = ..()

@@ -1,7 +1,7 @@
 /obj/item/turbine_parts
 	name = "turbine parts"
 	desc = "you really should call an admin"
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "inlet_compressor"
 
 	///Efficiency of the part to the turbine machine

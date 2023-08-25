@@ -56,8 +56,10 @@
 
 	//Handle the exit here
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
-		visible_message(span_notice("[src] begins climbing out from the ventilation system..."), span_notice("You begin climbing out from the ventilation system..."))
+		to_chat(src, span_notice("You begin climbing out from the ventilation system..."))
 		if(has_client && isnull(client))
+			return
+		if(!do_after(src, 1 SECONDS, target = ventcrawl_target))
 			return
 		visible_message(span_notice("[src] scrambles out from the ventilation ducts!"),span_notice("You scramble out from the ventilation ducts."))
 		forceMove(ventcrawl_target.loc)

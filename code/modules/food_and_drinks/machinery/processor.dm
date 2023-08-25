@@ -3,11 +3,13 @@
 /obj/machinery/processor
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
+	pass_flags = PASSTABLE
 	circuit = /obj/item/circuitboard/machine/processor
+	anchored_tabletop_offset = 8
 	///Is the processor blending items at the moment
 	var/processing = FALSE
 	///The speed at which the processor processes items

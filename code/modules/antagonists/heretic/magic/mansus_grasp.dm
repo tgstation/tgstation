@@ -69,7 +69,8 @@
 		success_feedback = "You remove %THEEFFECT.", \
 		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, PROC_REF(after_clear_rune)), \
-		effects_we_clear = list(/obj/effect/heretic_rune))
+		effects_we_clear = list(/obj/effect/heretic_rune), \
+		time_to_remove = 0.4 SECONDS)
 
 /*
  * Callback for effect_remover component.
@@ -77,7 +78,7 @@
 /obj/item/melee/touch_attack/mansus_fist/proc/after_clear_rune(obj/effect/target, mob/living/user)
 	new /obj/effect/temp_visual/drawing_heretic_rune/fail(target.loc, target.greyscale_colors)
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = spell_which_made_us?.resolve()
-	grasp?.spell_feedback()
+	grasp?.spell_feedback(user)
 
 	remove_hand_with_no_refund(user)
 

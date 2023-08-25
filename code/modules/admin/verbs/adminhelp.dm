@@ -573,6 +573,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in ticket_interactions)
 		dat += "[I]<br>"
 
+	// Helper for opening directly to player ticket history
+	dat += "<br><br><b>Player Ticket History:</b>"
+	dat += "[FOURSPACES]<A href='?_src_=holder;[HrefToken()];player_ticket_history=[initiator_ckey]'>Open</A>"
+
 	// Append any tickets also opened by this user if relevant
 	var/list/related_tickets = GLOB.ahelp_tickets.TicketsByCKey(initiator_ckey)
 	if (related_tickets.len > 1)

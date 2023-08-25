@@ -11,10 +11,7 @@
 	var/allow_intruder_use = FALSE
 
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
-	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion) \
-		&& !allow_intruder_use)
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !allow_intruder_use)
 		return FALSE
 	return TRUE
 
@@ -224,7 +221,7 @@
 		butcher_sound = hitsound, \
 	)
 
-/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0
 	return ..()

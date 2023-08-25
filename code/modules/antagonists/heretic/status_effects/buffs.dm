@@ -23,7 +23,7 @@
 	location = null
 
 /datum/status_effect/crucible_soul/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] [owner.p_do()]n't seem to be all here.")
+	return span_notice("[owner.p_They()] [owner.p_do()]n't seem to be all here.")
 
 // DUSK AND DAWN
 /datum/status_effect/duskndawn
@@ -56,7 +56,7 @@
 /datum/status_effect/marshal/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
-/datum/status_effect/marshal/tick()
+/datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbie = owner
@@ -156,7 +156,7 @@
 	var/obj/effect/floating_blade/blade = new(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
-	RegisterSignal(blade, COMSIG_PARENT_QDELETING, PROC_REF(remove_blade))
+	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
 	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
 
 /// Signal proc for [COMSIG_HUMAN_CHECK_SHIELDS].
@@ -168,6 +168,7 @@
 	attack_text = "the attack",
 	attack_type = MELEE_ATTACK,
 	armour_penetration = 0,
+	damage_type = BRUTE,
 )
 	SIGNAL_HANDLER
 

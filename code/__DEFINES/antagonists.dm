@@ -325,12 +325,43 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
+#define ANTAG_GROUP_FUGITIVES "Escaped Fugitives"
+#define ANTAG_GROUP_HUNTERS "Bounty Hunters"
+#define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
 
 
 // If this flag is enabled the antagonist datum allows the antagonist to be inducted into a nuclear operative team.
 #define FLAG_ANTAG_CAN_BE_INDUCTED (1 << 0)
 
-#define HUNTER_PACK_COPS "cop_hunters"
-#define HUNTER_PACK_RUSSIAN "russian_hunters"
-#define HUNTER_PACK_BOUNTY "bounty_hunters"
-#define HUNTER_PACK_PSYKER "psyker_hunters"
+#define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
+#define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
+#define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
+#define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"
+
+/// Changeling abilities with DNA cost = this are innately given to all changelings
+#define CHANGELING_POWER_INNATE -1
+/// Changeling abilities with DNA cost = this are not obtainable by changelings - either used for secret unlockable or abstract abilities
+#define CHANGELING_POWER_UNOBTAINABLE -2
+
+/// For changelings, this is how many recent say lines are retained when absorbing a mob
+#define LING_ABSORB_RECENT_SPEECH 8
+
+// Various abductor equipment modes.
+
+#define VEST_STEALTH 1
+#define VEST_COMBAT 2
+
+#define GIZMO_SCAN 1
+#define GIZMO_MARK 2
+
+#define MIND_DEVICE_MESSAGE 1
+#define MIND_DEVICE_CONTROL 2
+
+#define TOOLSET_MEDICAL 1
+#define TOOLSET_HACKING 2
+
+#define BATON_STUN 0
+#define BATON_SLEEP 1
+#define BATON_CUFF 2
+#define BATON_PROBE 3
+#define BATON_MODES 4

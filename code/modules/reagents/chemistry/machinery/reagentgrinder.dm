@@ -1,15 +1,15 @@
-#define MILK_TO_BUTTER_COEFF 15
 
 /obj/machinery/reagentgrinder
 	name = "\improper All-In-One Grinder"
 	desc = "From BlenderTech. Will It Blend? Let's test it out!"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "juicer1"
 	base_icon_state = "juicer"
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
+	anchored_tabletop_offset = 8
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
@@ -112,13 +112,13 @@
 /obj/machinery/reagentgrinder/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/reagentgrinder/handle_atom_del(atom/A)
+/obj/machinery/reagentgrinder/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-	if(holdingitems[A])
-		holdingitems -= A
+	if(holdingitems[gone])
+		holdingitems -= gone
 
 /obj/machinery/reagentgrinder/proc/drop_all_items()
 	for(var/i in holdingitems)
@@ -173,14 +173,23 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
+		if(!I.contents.len)
+			to_chat(user, span_notice("[I] is empty!"))
+			return TRUE
+
 		var/list/inserted = list()
 		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
-			if(!I.contents.len)
-				to_chat(user, span_notice("You empty [I] into [src]."))
-			else
-				to_chat(user, span_notice("You fill [src] to the brim."))
+			inserted = list()
+		if(I.atom_storage.remove_type(/obj/item/food/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+
+		if(!I.contents.len)
+			to_chat(user, span_notice("You empty [I] into [src]."))
+		else
+			to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
 	if(!I.grind_results && !I.juice_results)
@@ -361,5 +370,3 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)
-
-#undef MILK_TO_BUTTER_COEFF

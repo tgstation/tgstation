@@ -137,7 +137,11 @@
 	if(!istype(location))
 		return FALSE
 
-	for(var/turf/spread_turf as anything in location.reachableAdjacentTurfs(no_id = TRUE))
+	for(var/iter_dir in GLOB.cardinals)
+		var/turf/spread_turf = get_step(src, iter_dir)
+		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, no_id = TRUE))
+			continue
+
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
 		if(foundfoam)
 			continue
@@ -423,7 +427,7 @@
 	location.ClearWet()
 	if(location.air)
 		var/datum/gas_mixture/air = location.air
-		air.temperature = 293.15
+		air.temperature = T20C
 		for(var/obj/effect/hotspot/fire in location)
 			qdel(fire)
 

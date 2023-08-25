@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe
-	icon = 'icons/obj/atmospherics/pipes/bridge_pipe.dmi'
+	icon = 'icons/obj/pipes_n_cables/bridge_pipe.dmi'
 	icon_state = "bridge_center"
 
 	name = "bridge pipe"
@@ -22,7 +22,7 @@
 
 /obj/machinery/atmospherics/pipe/bridge_pipe/update_overlays()
 	. = ..()
-	var/mutable_appearance/center = mutable_appearance('icons/obj/atmospherics/pipes/bridge_pipe.dmi', "bridge_center")
+	var/mutable_appearance/center = mutable_appearance('icons/obj/pipes_n_cables/bridge_pipe.dmi', "bridge_center")
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	. += center
 

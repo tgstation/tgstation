@@ -15,8 +15,8 @@
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_click))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(atom_exited))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
-	RegisterSignals(target, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_death))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
+	RegisterSignals(target, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_death))
 
 /// Returns the item held in a mob's blackboard, if it has one
 /datum/element/ai_held_item/proc/get_held_item(mob/living/source)
@@ -54,7 +54,7 @@
 	var/obj/item/carried_item = get_held_item(source)
 	if (!carried_item)
 		return
-	examine_text += span_notice("[source.p_they(TRUE)] [source.p_are()] carrying [carried_item.get_examine_string(user)].")
+	examine_text += span_notice("[source.p_They()] [source.p_are()] carrying [carried_item.get_examine_string(user)].")
 
 /// If we died, drop anything we were carrying
 /datum/element/ai_held_item/proc/on_death(mob/living/ol_yeller)

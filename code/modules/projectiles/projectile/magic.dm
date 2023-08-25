@@ -141,7 +141,7 @@
 /obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = FALSE
+		A.unlock()
 	D.open()
 
 /obj/projectile/magic/change
@@ -431,9 +431,9 @@
 	/// The duration of the trail before deleting.
 	var/trail_lifespan = 0 SECONDS
 	/// The icon the trail uses.
-	var/trail_icon = 'icons/obj/wizard.dmi'
+	var/trail_icon = 'icons/effects/magic.dmi'
 	/// The icon state the trail uses.
-	var/trail_icon_state = "trail"
+	var/trail_icon_state = "arrow"
 
 /obj/projectile/magic/aoe/Range()
 	if(trigger_range >= 1)

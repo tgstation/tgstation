@@ -31,7 +31,7 @@
 	var/list/result_atoms = list()
 	/// If set, required_atoms checks for these *exact* types and doesn't allow them to be ingredients.
 	var/list/banned_atom_types = list()
-	/// Cost of knowledge in knowlege points
+	/// Cost of knowledge in knowledge points
 	var/cost = 0
 	/// If true, adds a side path point. Only main branch powers that split into sidepaths should have this.
 	var/adds_sidepath_point = FALSE
@@ -134,11 +134,11 @@
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
  * Creates atoms from types in result_atoms.
- * Override this is you want something else to happen.
+ * Override this if you want something else to happen.
  * This CAN sleep, such as for summoning rituals which poll for ghosts.
  *
  * Arguments
- * * user - the mob who did the  ritual
+ * * user - the mob who did the ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
  * * loc - the turf the ritual's occuring on
  *
@@ -521,6 +521,8 @@
 	abstract_parent_type = /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
+	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
+	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/summoned = new mob_to_summon(loc)
@@ -532,7 +534,7 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
 	if(!LAZYLEN(candidates))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)
@@ -652,7 +654,7 @@
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
-	user.add_mob_memory(/datum/memory/heretic_knowlege_ritual)
+	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS

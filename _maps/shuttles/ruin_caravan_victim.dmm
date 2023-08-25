@@ -358,9 +358,7 @@
 /area/shuttle/ruin/caravan/freighter1)
 "zV" = (
 /obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/south,
 /turf/template_noop,
 /area/shuttle/ruin/caravan/freighter1)
 "Bh" = (

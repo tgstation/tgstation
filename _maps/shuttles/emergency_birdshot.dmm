@@ -12,13 +12,6 @@
 "ax" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
-"aJ" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "aQ" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/plastitanium/red,
@@ -54,13 +47,6 @@
 "cr" = (
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
-"cK" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "cX" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -156,6 +142,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"gn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "gz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
@@ -169,13 +161,36 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"gP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/item/trash/can/food/pine_nuts,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "ho" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape/brig)
+"hs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "hF" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Door"
 	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"ib" = (
+/obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/kirbyplants/organic/applebush,
+/obj/item/trash/boritos/purple,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ig" = (
@@ -196,12 +211,6 @@
 "jt" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
-"jA" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "kj" = (
 /obj/machinery/light/small/directional/south,
@@ -303,7 +312,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/robot_debris,
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "oL" = (
@@ -312,6 +321,12 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"oN" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
 "oZ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/rack,
@@ -373,6 +388,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"qj" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
 "qB" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -383,7 +402,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "rZ" = (
@@ -440,6 +459,12 @@
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/escape)
+"uz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "vk" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
@@ -488,15 +513,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
-"xN" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
-/obj/item/trash/boritos/purple,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "ye" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -546,25 +562,21 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "AK" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
-"AQ" = (
-/obj/machinery/light/small/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
-/obj/effect/decal/cleanable/garbage{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "AR" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/table,
 /obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"AV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "AZ" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -605,22 +617,8 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
-"Cv" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "De" = (
 /turf/open/floor/mineral/titanium/tiled,
-/area/shuttle/escape)
-"Dy" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "DH" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -668,14 +666,6 @@
 /obj/effect/spawner/random/trash/soap,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"GJ" = (
-/obj/item/trash/peanuts{
-	pixel_x = 15;
-	pixel_y = -9
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "Hn" = (
 /obj/structure/chair/comfy/shuttle{
@@ -728,7 +718,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/shuttle/escape)
 "IK" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -739,12 +729,11 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
-"Jc" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
+"IQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
-/obj/machinery/light/small/broken/directional/west,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Ju" = (
 /turf/open/floor/mineral/titanium/blue,
@@ -753,6 +742,12 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Kh" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Ko" = (
 /obj/structure/table/optable,
@@ -771,14 +766,14 @@
 "KJ" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape/brig)
-"Lx" = (
+"Ll" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
+/obj/item/kirbyplants/organic/applebush,
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -5;
+	pixel_y = 2
 	},
-/obj/item/trash/can/food/pine_nuts,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Ly" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -869,6 +864,13 @@
 "Sm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
+"Sz" = (
+/obj/item/trash/peanuts{
+	pixel_x = 15;
+	pixel_y = -9
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
 "SA" = (
 /obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/north,
@@ -878,13 +880,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"Tv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "TP" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -893,7 +888,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Uh" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
@@ -1046,10 +1041,10 @@ rZ
 LX
 rZ
 LX
-aJ
+uz
 Kp
-Tv
-cK
+hs
+IQ
 LX
 en
 LX
@@ -1095,7 +1090,7 @@ ax
 LX
 LX
 LX
-AQ
+Ll
 DH
 gN
 BO
@@ -1170,10 +1165,10 @@ rZ
 LX
 rZ
 LX
-Lx
-jA
+gP
+AV
 Xd
-Cv
+gn
 LX
 LX
 LX
@@ -1233,7 +1228,7 @@ mU
 mU
 mp
 ig
-Jc
+Kh
 Uh
 mU
 nQ
@@ -1246,8 +1241,8 @@ nQ
 (9,1,1) = {"
 rZ
 BH
-MW
-GJ
+qj
+Sz
 rZ
 nQ
 nQ
@@ -1295,7 +1290,7 @@ mU
 mU
 Vo
 jt
-Dy
+oN
 IK
 mU
 nQ
@@ -1405,7 +1400,7 @@ ax
 LX
 LX
 LX
-xN
+ib
 ab
 gN
 dM

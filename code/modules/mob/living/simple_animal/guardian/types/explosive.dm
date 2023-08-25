@@ -1,7 +1,7 @@
 #define UNREGISTER_BOMB_SIGNALS(A) \
 	do { \
 		UnregisterSignal(A, boom_signals); \
-		UnregisterSignal(A, COMSIG_PARENT_EXAMINE); \
+		UnregisterSignal(A, COMSIG_ATOM_EXAMINE); \
 	} while (0)
 
 //Explosive
@@ -19,7 +19,7 @@
 	creator_desc = "High damage resist and medium power attack. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay."
 	creator_icon = "explosive"
 	/// Static list of signals that activate the boom.
-	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
+	var/static/list/boom_signals = list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 	/// After this amount of time passses, boom deactivates.
 	var/decay_time = 1 MINUTES
 	/// Time between bombs.
@@ -44,7 +44,7 @@
 		return
 	to_chat(src, span_bolddanger("Success! Bomb armed!"))
 	COOLDOWN_START(src, bomb_cooldown, bomb_cooldown_time)
-	RegisterSignal(planting_on, COMSIG_PARENT_EXAMINE, PROC_REF(display_examine))
+	RegisterSignal(planting_on, COMSIG_ATOM_EXAMINE, PROC_REF(display_examine))
 	RegisterSignals(planting_on, boom_signals, PROC_REF(kaboom))
 	addtimer(CALLBACK(src, PROC_REF(disable), planting_on), decay_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 

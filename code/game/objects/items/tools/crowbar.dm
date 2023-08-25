@@ -45,7 +45,7 @@
 /obj/item/crowbar/abductor
 	name = "alien crowbar"
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	icon_state = "crowbar"
@@ -102,10 +102,15 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
+	/// Used on Initialize, how much time to cut cable restraints and zipties.
+	var/snap_time_weak_handcuffs = 0 SECONDS
+	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	var/snap_time_strong_handcuffs = 0 SECONDS
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
@@ -124,8 +129,13 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
-	balloon_alert(user, "attached [active ? "cutting" : "prying"]")
-	playsound(user ? user : src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	if(user)
+		balloon_alert(user, "attached [active ? "cutting" : "prying"]")
+	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_CROWBAR)
+		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
+	else
+		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/crowbar/power/syndicate
@@ -154,14 +164,6 @@
 				target_bodypart.drop_limb()
 				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
 	return BRUTELOSS
-
-/obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)
-	if(istype(attacked_carbon) && attacked_carbon.handcuffed && tool_behaviour == TOOL_WIRECUTTER)
-		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
-		qdel(attacked_carbon.handcuffed)
-		return
-
-	return ..()
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"

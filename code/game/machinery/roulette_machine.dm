@@ -58,7 +58,7 @@
 /obj/machinery/roulette/Initialize(mapload)
 	. = ..()
 	jackpot_loop = new(src, FALSE)
-	wires = new /datum/wires/roulette(src)
+	set_wires(new /datum/wires/roulette(src))
 
 /obj/machinery/roulette/Destroy()
 	QDEL_NULL(jackpot_loop)
@@ -139,7 +139,7 @@
 			return FALSE
 
 		if(my_card)
-			if(istype(player_card, /obj/item/card/id/departmental_budget)) // Are they using a department ID
+			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 				return FALSE
@@ -193,7 +193,7 @@
 			name = msg
 			desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 			my_card = player_card
-			RegisterSignal(my_card, COMSIG_PARENT_QDELETING, PROC_REF(on_my_card_deleted))
+			RegisterSignal(my_card, COMSIG_QDELETING, PROC_REF(on_my_card_deleted))
 			to_chat(user, span_notice("You link the wheel to your account."))
 			power_change()
 			return
@@ -439,7 +439,7 @@
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"
 	desc = "N.T. approved roulette wheel beacon, toss it down and you will have a complementary roulette wheel delivered to you."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "floor_beacon"
 	var/used
 

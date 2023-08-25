@@ -17,6 +17,9 @@
 /// Useful for doing "we're done" effects without duped code
 #define BREATH_LOST 1
 
+//The proportion of oxygen needed for metabolism compared to pluoxium. (Pluoxium is this many times efficient as oxygen)
+#define PLUOXIUM_PROPORTION 8
+
 //Defines for N2O and Healium euphoria moodlets
 #define EUPHORIA_INACTIVE 0
 #define EUPHORIA_ACTIVE 1
@@ -144,3 +147,6 @@
 #define SHOES_MIN_TEMP_PROTECT 2.0
 /// For gloves
 #define SHOES_MAX_TEMP_PROTECT 1500
+
+///Minimum temperature for items on fire
+#define BURNING_ITEM_MINIMUM_TEMPERATURE (150+T0C)

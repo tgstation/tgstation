@@ -2,11 +2,6 @@
 "aA" = (
 /turf/template_noop,
 /area/template_noop)
-"aU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
 "be" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -119,12 +114,25 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
+"iF" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
 "iQ" = (
 /obj/structure/sign/warning/explosives/alt/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "js" = (
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"kw" = (
+/obj/item/stack/sheet/plasmarglass,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "kE" = (
@@ -171,14 +179,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"oV" = (
-/obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/ruin/syndicate_lava_base/testlab)
 "qY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -195,14 +195,17 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"rX" = (
-/obj/machinery/atmospherics/components/unary/passive_vent,
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/ruin/syndicate_lava_base/testlab)
 "sa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/testlab)
+"sY" = (
+/obj/machinery/atmospherics/components/trinary/filter/on{
+	dir = 1;
+	filter_type = list(/datum/gas/nitrogen)
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "uG" = (
 /obj/item/storage/toolbox/syndicate,
@@ -218,12 +221,6 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"xD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
 "xI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -235,10 +232,13 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"yO" = (
-/obj/machinery/power/supermatter_crystal/shard/syndicate,
-/obj/structure/window/reinforced/plasma/spawner,
-/turf/open/floor/engine,
+"yU" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "Au" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -252,19 +252,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"AV" = (
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
-"Ce" = (
-/obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
+"Ch" = (
+/obj/machinery/power/supermatter_crystal/shard/syndicate,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "EC" = (
@@ -273,11 +263,6 @@
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
-/area/ruin/syndicate_lava_base/testlab)
-"GD" = (
-/obj/item/stack/sheet/plasmarglass,
-/obj/structure/window/reinforced/plasma/spawner,
-/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "HC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -294,18 +279,30 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
-"JO" = (
-/obj/machinery/atmospherics/components/trinary/filter/on{
-	dir = 1;
-	filter_type = list(/datum/gas/nitrogen)
-	},
-/obj/structure/window/reinforced/plasma/spawner,
-/turf/open/floor/engine,
-/area/ruin/syndicate_lava_base/testlab)
 "Lc" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"Ni" = (
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/syndicate_lava_base/testlab)
+"OO" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"Qz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "Rn" = (
@@ -404,7 +401,7 @@ XN
 uG
 em
 kE
-xD
+Qz
 aA
 aA
 "}
@@ -434,7 +431,7 @@ Ys
 xT
 em
 kE
-aU
+xI
 aA
 aA
 "}
@@ -443,8 +440,8 @@ hK
 me
 XS
 fY
-GD
-oV
+kw
+iF
 js
 kP
 IG
@@ -459,13 +456,13 @@ me
 XS
 Rn
 js
-yO
+Ch
 js
 rT
 IG
 Vp
 ef
-AV
+yU
 on
 "}
 (8,1,1) = {"
@@ -473,8 +470,8 @@ em
 me
 AS
 oo
-JO
-Ce
+sY
+OO
 Rp
 lR
 em
@@ -499,7 +496,7 @@ aA
 aA
 "}
 (10,1,1) = {"
-rX
+Ni
 sa
 sa
 em

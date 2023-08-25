@@ -343,18 +343,18 @@
 
 /obj/item/food/baguette/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if (HAS_TRAIT(user, TRAIT_MIMING) && held_item == src)
+	if(HAS_MIND_TRAIT(user, TRAIT_MIMING) && held_item == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Toggle Swordplay"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/food/baguette/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_MIMING))
+	if(HAS_MIND_TRAIT(user, TRAIT_MIMING))
 		. += span_notice("You can wield this like a sword by using it in your hand.")
 
 /obj/item/food/baguette/attack_self(mob/user, modifiers)
 	. = ..()
-	if(!HAS_TRAIT(user, TRAIT_MIMING))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MIMING))
 		return
 	if(fake_swordplay)
 		end_swordplay(user)

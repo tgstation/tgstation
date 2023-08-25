@@ -10,6 +10,12 @@
 	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
+"aL" = (
+/mob/living/basic/ant{
+	environment_smash = 0
+	},
+/turf/open/floor/grass,
+/area/ruin/bughabitat)
 "aR" = (
 /obj/item/reagent_containers/syringe/syriniver,
 /obj/effect/turf_decal/siding/wideplating/dark/corner,
@@ -27,12 +33,6 @@
 	dir = 8
 	},
 /turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"cK" = (
-/mob/living/simple_animal/hostile/ant{
-	environment_smash = 0
-	},
-/turf/open/floor/grass,
 /area/ruin/bughabitat)
 "eM" = (
 /obj/structure/chair/pew/right{
@@ -70,6 +70,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/ruin/bughabitat)
+"gw" = (
+/obj/machinery/door/window/right/directional/north,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 9
+	},
+/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "hk" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -123,11 +131,6 @@
 /obj/structure/statue/snow/snowman,
 /turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
-"mM" = (
-/obj/machinery/light/warm/directional/west,
-/obj/structure/tank_holder/oxygen,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "of" = (
 /obj/structure/sink/directional/east,
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -144,6 +147,25 @@
 "oZ" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron,
+/area/ruin/bughabitat)
+"pc" = (
+/obj/structure/table/rolling,
+/obj/item/petri_dish/random,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"pL" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"qS" = (
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "qV" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -178,7 +200,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "uB" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /obj/structure/chair/pew/left{
 	dir = 8
 	},
@@ -189,14 +211,6 @@
 /obj/structure/table,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
-"wC" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26"
-	},
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "wL" = (
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
@@ -205,7 +219,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "xq" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26"
 	},
@@ -223,6 +237,15 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
+"zz" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
 "zJ" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -236,12 +259,6 @@
 /area/ruin/bughabitat)
 "Bs" = (
 /turf/closed/wall/ice,
-/area/ruin/bughabitat)
-"BK" = (
-/obj/structure/table/rolling,
-/obj/item/petri_dish/random,
-/obj/structure/window/reinforced/spawner,
-/turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Cb" = (
 /turf/open/floor/plastic,
@@ -299,15 +316,6 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/snow,
 /area/ruin/bughabitat)
-"Kc" = (
-/obj/structure/table,
-/obj/machinery/light_switch/directional/south,
-/obj/machinery/cell_charger,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26"
-	},
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
 "Kq" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/carpet/neon/simple/lime,
@@ -322,7 +330,7 @@
 /obj/item/stack/ducts/fifty{
 	amount = 23
 	},
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Nv" = (
@@ -336,15 +344,6 @@
 /obj/item/plunger,
 /mob/living/basic/mouse,
 /obj/machinery/light/small/blacklight/directional/south,
-/turf/open/floor/plastic,
-/area/ruin/bughabitat)
-"Pt" = (
-/obj/machinery/light/warm/directional/west,
-/obj/machinery/door/window/right/directional/north,
-/obj/effect/turf_decal/siding/wideplating/light{
-	color = "#236F26";
-	dir = 9
-	},
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Qd" = (
@@ -473,7 +472,7 @@ Xn
 HA
 bu
 ot
-Pt
+gw
 of
 bQ
 wL
@@ -494,7 +493,7 @@ Xt
 zJ
 AL
 AL
-Kc
+zz
 HA
 ZT
 QV
@@ -507,12 +506,12 @@ Xn
 Xn
 Qd
 Bs
-cK
+aL
 Ft
 Ea
 aR
 hM
-wC
+pL
 HA
 RR
 RR
@@ -568,7 +567,7 @@ Tp
 yC
 lj
 hy
-mM
+qS
 IX
 VM
 Bs
@@ -636,7 +635,7 @@ Qd
 Qd
 Qd
 Bs
-BK
+pc
 uB
 eM
 ax

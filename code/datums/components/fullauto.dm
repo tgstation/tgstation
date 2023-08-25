@@ -62,10 +62,8 @@
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
-	if(iscarbon(user))
-		var/mob/living/carbon/arizona_ranger = user
-		if(arizona_ranger.is_holding(parent))
-			autofire_on(arizona_ranger.client)
+	if(user.is_holding(parent))
+		autofire_on(user.client)
 
 // There is a gun and there is a user wielding it. The component now waits for the mouse click.
 /datum/component/automatic_fire/proc/autofire_on(client/usercli)
@@ -81,7 +79,7 @@
 	if(!QDELETED(shooter))
 		RegisterSignal(shooter, COMSIG_MOB_LOGOUT, PROC_REF(autofire_off))
 		UnregisterSignal(shooter, COMSIG_MOB_LOGIN)
-	RegisterSignals(parent, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(autofire_off))
+	RegisterSignals(parent, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(autofire_off))
 	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, TYPE_PROC_REF(/obj/item/gun/, autofire_bypass_check))
 	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, TYPE_PROC_REF(/obj/item/gun/, do_autofire))
 
@@ -102,7 +100,7 @@
 	if(!QDELETED(shooter))
 		RegisterSignal(shooter, COMSIG_MOB_LOGIN, PROC_REF(on_client_login))
 		UnregisterSignal(shooter, COMSIG_MOB_LOGOUT)
-	UnregisterSignal(parent, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED))
 	shooter = null
 	parent.UnregisterSignal(parent, COMSIG_AUTOFIRE_SHOT)
 	parent.UnregisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)

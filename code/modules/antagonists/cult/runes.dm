@@ -33,7 +33,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	name = "rune"
 	desc = "An odd collection of symbols drawn in what seems to be blood."
 	anchored = TRUE
-	icon = 'icons/obj/rune.dmi'
+	icon = 'icons/obj/antags/cult/rune.dmi'
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
@@ -236,7 +236,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/F = invokers[1]
 	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	var/datum/team/cult/Cult_team = C.cult_team
-	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
+	var/is_convertable = is_convertable_to_cult(L, C.cult_team)
 	if(L.stat != DEAD && is_convertable)
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
@@ -1019,8 +1019,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 			images += A
 			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
-			var/construct = pick("floater","artificer","behemoth")
-			var/image/B = image('icons/mob/simple/mob.dmi',M,construct, ABOVE_MOB_LAYER)
+			var/construct = pick("wraith","artificer","juggernaut")
+			var/image/B = image('icons/mob/nonhuman-player/cult.dmi',M,construct, ABOVE_MOB_LAYER)
 			B.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, NONE)
 			addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"mob_apoc",TRUE), duration)

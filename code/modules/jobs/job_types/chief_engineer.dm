@@ -43,7 +43,7 @@
 		/obj/effect/spawner/random/engineering/tool_advanced = 3
 	)
 	rpg_title = "Head Crystallomancer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -61,7 +61,8 @@
 	uniform = /obj/item/clothing/under/rank/engineering/chief_engineer
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
-		)
+		/obj/item/construction/rcd/ce = 1,
+	)
 	belt = /obj/item/storage/belt/utility/chief/full
 	ears = /obj/item/radio/headset/heads/ce
 	gloves = /obj/item/clothing/gloves/color/black
@@ -72,6 +73,7 @@
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
+	messenger = /obj/item/storage/backpack/messenger/eng
 
 	box = /obj/item/storage/box/survival/engineer
 	chameleon_extras = /obj/item/stamp/head/ce
