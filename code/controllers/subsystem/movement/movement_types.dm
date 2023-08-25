@@ -405,6 +405,7 @@
 /datum/move_loop/has_target/jps/Destroy()
 	id = null //Kill me
 	avoid = null
+	on_finish_callback = null
 	return ..()
 
 /datum/move_loop/has_target/jps/proc/handle_no_id()

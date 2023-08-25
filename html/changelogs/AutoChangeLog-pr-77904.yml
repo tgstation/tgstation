@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - refactor: "fixed a bunch of instances of callbacks being qdeleted and cleaned up related code"

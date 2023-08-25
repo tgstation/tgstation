@@ -367,6 +367,10 @@
 	GLOB.mod_link_ids -= id
 	if(link_call)
 		end_call()
+	get_user_callback = null
+	make_visual_callback = null
+	get_visual_callback = null
+	delete_visual_callback = null
 	return ..()
 
 /datum/mod_link/proc/get_other()
