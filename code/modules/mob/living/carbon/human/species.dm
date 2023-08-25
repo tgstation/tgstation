@@ -850,6 +850,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = fixed_mut_color
 							else
 								accessory_overlay.color = source.dna.features["mcolor"]
+						if(MUTCOLORS_SECONDARY)
+							if(fixed_mut_color)
+								accessory_overlay.color = fixed_mut_color
+							else
+								accessory_overlay.color = source.dna.features["mcolor_secondary"]
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = source.dna.features["mcolor"]
@@ -866,6 +871,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
+
+			if(length(accessory.body_slots) || length(accessory.external_slots) || istype(source, /mob/living/carbon/human/dummy/extra_tall))
+				standing += return_accessory_layer(layer, accessory, source, accessory_overlay.color)
 
 			if(accessory.hasinner)
 				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(accessory.icon, layer = -layer)
