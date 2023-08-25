@@ -41,7 +41,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	var/relevant
 	var/request_flags = options
 	var/datum/transport_controller/linear/tram/transport_controller
-	var/obj/effect/landmark/icts/nav_beacon/tram/destination
+	var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination
 	for(var/datum/transport_controller/linear/tram/candidate_controller as anything in transports_by_type[ICTS_TYPE_TRAM])
 		if(candidate_controller.specific_transport_id == transport_network)
 			transport_controller = candidate_controller
@@ -58,7 +58,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		return
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/potential_destination in network)
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/potential_destination in network)
 		if(potential_destination.platform_code == platform)
 			destination = potential_destination
 			break
@@ -138,7 +138,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 
 /datum/controller/subsystem/processing/icts_transport/proc/detailed_destination_list(specific_transport_id)
 	. = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons

@@ -22,11 +22,15 @@
 #define NO_CALL_REQUIRED "!NCR"
 #define INTERNAL_ERROR "!ERR"
 
-/// ICTS Tram lines
+/// ICTS Tram Lines
 #define TRAMSTATION_LINE_1 "tram_1"
 #define HILBERT_LINE_1 "hilb_1"
 #define BIRDSHOT_LINE_1 "bird_1"
 #define BIRDSHOT_LINE_2 "bird_2"
+
+/// ICTS Navigation Aids
+#define TRAM_NAV_BEACONS "tram_nav"
+#define IMMOVABLE_ROD_DESTINATIONS "immovable_rod"
 
 /// ICTS Elevator IDs
 #define ELEVATOR_1 "elev_1"

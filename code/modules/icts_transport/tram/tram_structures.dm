@@ -26,7 +26,8 @@
 	icon_state = "tram-part-0"
 	base_icon_state = "tram-part"
 	max_integrity = 150
-	layer = LOW_OBJ_LAYER
+	layer = CLOSED_TURF_LAYER
+	plane = WALL_PLANE
 	density = TRUE
 	opacity = FALSE
 	anchored = TRUE

@@ -21,15 +21,15 @@
 
 	///multiplier on how much damage/force the tram imparts on things it hits
 	var/collision_lethality = 1
-
+	var/obj/effect/landmark/icts/nav_beacon/tram/nav/nav_beacon
 	/// reference to the destination landmarks we consider ourselves "at" or travelling towards. since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
-	var/obj/effect/landmark/icts/nav_beacon/tram/idle_platform
+	var/obj/effect/landmark/icts/nav_beacon/tram/platform/idle_platform
 	/// reference to the destination landmarks we consider ourselves travelling towards. since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
-	var/obj/effect/landmark/icts/nav_beacon/tram/destination_platform
+	var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
 
 	var/current_speed = 0
 	var/current_load = 0
@@ -147,10 +147,14 @@
 /datum/transport_controller/linear/tram/check_for_landmarks(obj/structure/transport/linear/tram/new_transport_module)
 	. = ..()
 	for(var/turf/platform_loc as anything in new_transport_module.locs)
-		var/obj/effect/landmark/icts/nav_beacon/tram/initial_destination = locate() in platform_loc
+		var/obj/effect/landmark/icts/nav_beacon/tram/platform/initial_destination = locate() in platform_loc
+		var/obj/effect/landmark/icts/nav_beacon/tram/nav/beacon = locate() in platform_loc
 
 		if(initial_destination)
 			idle_platform = initial_destination
+
+		if(beacon)
+			nav_beacon = beacon
 
 /**
  * Verify tram is in a valid starting location, start the subsystem.
@@ -160,8 +164,8 @@
  * Now that the tram is aware of its surroundings, we start the subsystem.
  */
 /datum/transport_controller/linear/tram/proc/check_starting_landmark()
-	if(!idle_platform)
-		CRASH("a tram transport_controller was initialized without any tram landmark to give it direction!")
+	if(!idle_platform || !nav_beacon)
+		CRASH("a tram lift_master was initialized without the required landmarks to give it direction!")
 
 	SSicts_transport.can_fire = TRUE
 
@@ -218,11 +222,8 @@
 		return FALSE
 
 	destination_platform = destination
-	travel_direction = get_dir(idle_platform, destination_platform)
-	travel_remaining = get_dist(idle_platform, destination_platform)
-	var/physical_dist = get_dist(get_turf(transport_modules[1]), destination_platform)
-	if(physical_dist != travel_remaining + (DEFAULT_TRAM_LENGTH * 0.5) && physical_dist != travel_remaining - (DEFAULT_TRAM_LENGTH * 0.5))
-		message_admins("ICTS: WARNING! Calculated trip of [travel_remaining] doesn't match validation of [physical_dist]!")
+	travel_direction = get_dir(nav_beacon, destination_platform)
+	travel_remaining = get_dist(nav_beacon, destination_platform)
 	travel_trip_length = travel_remaining
 	return TRUE
 
@@ -486,6 +487,106 @@
 /datum/transport_controller/linear/tram/proc/power_restored()
 	controller_operational = TRUE
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+
+/datum/transport_controller/linear/tram/proc/set_operational(new_value)
+	if(controller_operational != new_value)
+		controller_operational = new_value
+
+/**
+ * Returns the closest tram nav beacon to an atom
+ *
+ * Creates a list of nav beacons in the requested direction
+ * and returns the closest to be passed to the industrial_lift
+ *
+ * Arguments: source: the starting point to find a beacon
+ *            travel_dir: travel direction in tram form, INBOUND or OUTBOUND
+ *            beacon_type: what list of beacons we pull from
+ */
+/datum/transport_controller/linear/tram/proc/closest_nav_in_travel_dir(atom/origin, travel_dir, beacon_type)
+	if(!istype(origin) || !origin.z)
+		return FALSE
+
+	var/list/obj/effect/landmark/icts/nav_beacon/tram/inbound_candidates = list()
+	var/list/obj/effect/landmark/icts/nav_beacon/tram/outbound_candidates = list()
+
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/candidate_beacon in SSicts_transport.nav_beacons[beacon_type])
+		if(candidate_beacon.z != origin.z || candidate_beacon.z != nav_beacon.z)
+			continue
+
+		switch(nav_beacon.dir)
+			if(EAST, WEST)
+				if(candidate_beacon.y != nav_beacon.y)
+					continue
+				else if(candidate_beacon.x < nav_beacon.x)
+					inbound_candidates += candidate_beacon
+				else
+					outbound_candidates += candidate_beacon
+			if(NORTH, SOUTH)
+				if(candidate_beacon.x != nav_beacon.x)
+					continue
+				else if(candidate_beacon.y < nav_beacon.y)
+					inbound_candidates += candidate_beacon
+				else
+					outbound_candidates += candidate_beacon
+
+	switch(travel_dir)
+		if(INBOUND)
+			var/obj/effect/landmark/icts/nav_beacon/tram/nav/selected = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram, inbound_candidates, origin)
+			if(selected)
+				return selected
+			stack_trace("No inbound beacon candidate found for [origin]. Cancelling dispatch.")
+			return FALSE
+
+		if(OUTBOUND)
+			var/obj/effect/landmark/icts/nav_beacon/tram/nav/selected = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram, outbound_candidates, origin)
+			if(selected)
+				return selected
+			stack_trace("No outbound beacon candidate found for [origin]. Cancelling dispatch.")
+			return FALSE
+
+		else
+			stack_trace("Tram receieved invalid travel direction [travel_dir]. Cancelling dispatch.")
+
+	return FALSE
+
+/**
+ * Moves the tram when hit by an immovable rod
+ *
+ * Tells the individual tram parts where to actually go and has an extra safety checks
+ * incase multiple inputs get through, preventing conflicting directions and the tram
+ * literally ripping itself apart. all of the actual movement is handled by SStramprocess
+ *
+ * Arguments: collided_rod (the immovable rod that hit the tram)
+ * Return: push_destination (the landmark /obj/effect/landmark/tram/nav that the tram is being pushed to due to the rod's trajectory)
+ */
+/datum/transport_controller/linear/tram/proc/rod_collision(obj/effect/immovablerod/collided_rod)
+	if(!controller_operational)
+		return
+	var/rod_velocity_sign
+	// Determine inbound or outbound
+	if(collided_rod.dir & (NORTH|SOUTH))
+		rod_velocity_sign = collided_rod.dir & NORTH ? OUTBOUND : INBOUND
+	else
+		rod_velocity_sign = collided_rod.dir & EAST ? OUTBOUND : INBOUND
+
+	var/obj/effect/landmark/icts/nav_beacon/tram/nav/push_destination = closest_nav_in_travel_dir(origin = nav_beacon, travel_dir = rod_velocity_sign, beacon_type = IMMOVABLE_ROD_DESTINATIONS)
+	if(!push_destination)
+		return
+	travel_direction = get_dir(nav_beacon, push_destination)
+	travel_remaining = get_dist(nav_beacon, push_destination)
+	travel_trip_length = travel_remaining
+	destination_platform = push_destination
+	// Don't bother processing crossing signals, where this tram's going there are no signals
+	//for(var/obj/machinery/icts/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
+	//	xing.temp_malfunction()
+	priority_announce("In a turn of rather peculiar events, it appears that [GLOB.station_name] has struck an immovable rod. (Don't ask us where it came from.) This has led to a station brakes failure on one of the tram platforms.\n\n\
+		Our diligent team of engineers have been informed and they're rushing over - although not quite at the speed of our recently flying tram.\n\n\
+		So while we all look in awe at the universe's mysterious sense of humour, please stand clear of the tracks and remember to stand behind the yellow line.", "Braking News")
+	set_active(TRUE)
+	set_status_code(CONTROLS_LOCKED, TRUE)
+	dispatch_transport(destination_platform = push_destination)
+	set_operational(FALSE)
+	return push_destination
 
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.

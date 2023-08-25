@@ -86,7 +86,7 @@
 		return
 	end_processing()
 
-/obj/machinery/icts/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
+/obj/machinery/icts/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform)
 
 	if(!controller || !controller.controller_operational)
 		icon_state = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]"

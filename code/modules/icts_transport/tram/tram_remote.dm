@@ -1,5 +1,3 @@
-#define TRAMCTRL_INBOUND 1
-#define TRAMCTRL_OUTBOUND 0
 #define TRAMCTRL_FAST 1
 #define TRAMCTRL_SAFE 0
 
@@ -53,7 +51,7 @@
 
 /obj/item/assembly/control/icts/proc/get_destinations()
 	. = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
@@ -93,9 +91,9 @@
 		icon_state = "tramremote_nis"
 		return
 	switch(direction)
-		if(TRAMCTRL_INBOUND)
+		if(INBOUND)
 			icon_state = "tramremote_ib"
-		if(TRAMCTRL_OUTBOUND)
+		if(OUTBOUND)
 			icon_state = "tramremote_ob"
 
 /obj/item/assembly/control/icts/remote/update_overlays()
