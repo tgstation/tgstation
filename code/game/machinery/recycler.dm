@@ -116,7 +116,8 @@
 /obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
 	SIGNAL_HANDLER
 
-	// This is explicitly so we avoid processing items that are entering from nullspace.
+	// This is explicitly so we avoid processing items that are entering from nullspace,
+	// to avoid infinite loops.
 	if(!old_loc)
 		return
 
