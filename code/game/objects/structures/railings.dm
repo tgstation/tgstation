@@ -48,6 +48,19 @@
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
+	var/static/list/tool_behaviors = list(
+        TOOL_WELDER = list(
+            SCREENTIP_CONTEXT_LMB = "Repair",
+        ),
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor/Unanchor"
+		),
+		TOOL_WIRECUTTER = list(
+			SCREENTIP_CONTEXT_LMB = "Deconstruct"
+		)
+    )
+    AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
 	add_fingerprint(user)
