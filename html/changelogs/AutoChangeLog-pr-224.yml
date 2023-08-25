@@ -1,5 +1,0 @@
-author: "MrMelbert"
-delete-after: True
-changes:
-  - rscadd: "Adds the new teach spellbook entry ritual from TG"
-  - bugfix: "Chuunibyou casting no longer makes it impossible to cast robed spells"

@@ -387,3 +387,7 @@
   - bugfix: Carp, Trees, and Festivus Poles will once more sometimes emote at you
       if they think you are looking at them the wrong way, before they come over to
       beat you up.
+2023-08-25:
+  MrMelbert:
+  - rscadd: Adds the new teach spellbook entry ritual from TG
+  - bugfix: Chuunibyou casting no longer makes it impossible to cast robed spells
