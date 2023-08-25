@@ -1,0 +1,5 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - rscadd: "Replaces decloning clone damage with a strike system that you can replenish with Mutadone."
+  - bugfix: "The decloning virus is curable with rezadone again."
