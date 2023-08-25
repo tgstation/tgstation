@@ -241,7 +241,6 @@
 	damage_mulitplier_penalty = 1.1 //1.1x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 350)
-	/// The upper bound of the chassis_temperature we can start with.
 	starting_temperature_max = (BODYTEMP_NORMAL + 400)
 
 	cooling_threshold = (BODYTEMP_NORMAL + 100)
