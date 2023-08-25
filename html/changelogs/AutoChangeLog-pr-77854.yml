@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - qol: "Medical Kiosk now have their wand removed with a right click, got new screentips and have a few of its chat messages turned into balloon alerts."
