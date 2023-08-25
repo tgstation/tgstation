@@ -33,7 +33,7 @@
 
 /datum/ai_behavior/run_away_from_target/proc/plot_path_away_from(datum/ai_controller/controller, atom/target)
 	var/turf/target_destination = get_turf(controller.pawn)
-	var/list/offset_directions=list(45, 90, 135, 180, 225, 270)
+	var/list/offset_directions = list(45, 90, 135, 180, 225, 270)
 	for(var/direction in offset_directions)
 		var/turf/test_turf = get_furthest_turf(controller.pawn, direction, target)
 		if(isnull(test_turf))
