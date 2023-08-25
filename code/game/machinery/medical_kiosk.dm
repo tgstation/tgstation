@@ -51,7 +51,7 @@
 	var/screentip_change = FALSE
 
 	if(!held_item && scanner_wand)
-		context[SCREENTIP_CONTEXT_RMB] = "Pick the scanner wand"
+		context[SCREENTIP_CONTEXT_RMB] = "Pick up scanner wand"
 		return screentip_change = TRUE
 
 	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
