@@ -137,8 +137,6 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define WOUND_BURN_SANITIZATION_RATE 0.075
 /// how much blood you can lose per tick per slash max.
 #define WOUND_SLASH_MAX_BLOODFLOW 4.5
-/// ^ but for robotic wounds
-#define WOUND_SLASH_ROBOTIC_MAX_BLOODFLOW WOUND_SLASH_MAX_BLOODFLOW * 10
 /// further slash attacks on a bodypart with a slash wound have their blood_flow further increased by damage * this (10 damage slash adds .25 flow)
 #define WOUND_SLASH_DAMAGE_FLOW_COEFF 0.025
 /// if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)

@@ -1,5 +1,3 @@
-#define PROSTHESIS_MAX_HP 40
-
 #define ROBOTIC_LIGHT_BRUTE_MSG "marred"
 #define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
 #define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
@@ -30,8 +28,6 @@
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
-
-	wound_resistance = 5
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -65,8 +61,6 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 5
-
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -99,8 +93,6 @@
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
-
-	wound_resistance = 5
 
 	disabling_threshold_percentage = 1
 
@@ -144,8 +136,6 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 5
-
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -186,8 +176,6 @@
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
-
-	wound_resistance = 15
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -311,8 +299,6 @@
 	brute_modifier = 0.8
 	burn_modifier = 0.8
 
-	wound_resistance = 10
-
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
 	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
@@ -422,9 +408,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
-
-	wound_resistance = 0
+	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -435,9 +419,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
-
-	wound_resistance = 0
+	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -448,9 +430,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
-
-	wound_resistance = 0
+	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -461,9 +441,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
-
-	wound_resistance = 0
+	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -474,5 +452,3 @@
 #undef ROBOTIC_LIGHT_BURN_MSG
 #undef ROBOTIC_MEDIUM_BURN_MSG
 #undef ROBOTIC_HEAVY_BURN_MSG
-
-#undef PROSTHESIS_MAX_HP

@@ -90,13 +90,6 @@
 /datum/wound/loss/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
 	if (scarred_limb.biological_state & BIO_FLESH)
 		return FLESH_SCAR_FILE
-	if (scarred_limb.biological_state & BIO_METAL)
-		if (loss_wound_type == WOUND_SLASH || loss_wound_type == WOUND_PIERCE)
-			return ROBOTIC_METAL_SCAR_FILE
-		else if (loss_wound_type == WOUND_BURN)
-			return ROBOTIC_METAL_BURN_SCAR_FILE
-		else if (loss_wound_type == WOUND_BLUNT)
-			return ROBOTIC_BLUNT_SCAR_FILE
 	if (scarred_limb.biological_state & BIO_BONE)
 		return BONE_SCAR_FILE
 

@@ -205,88 +205,7 @@
 /datum/status_effect/wound/blunt/bone/critical
 	id = "compound"
 
-/datum/status_effect/wound/blunt/robotic/moderate
-	id = "unsecure_moderate"
-
-/datum/status_effect/wound/blunt/robotic/severe
-	id = "unsecure_severe"
-
-/datum/status_effect/wound/blunt/robotic/critical
-	id = "unsecure_critical"
-
-/datum/status_effect/wound/blunt/robotic/on_apply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
-	on_swap_hands()
-
-/datum/status_effect/wound/blunt/robotic/on_remove()
-	. = ..()
-	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
-	var/mob/living/carbon/wound_owner = owner
-	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/robotic_blunt_wound)
-
-/datum/status_effect/wound/blunt/robotic/proc/on_swap_hands()
-	SIGNAL_HANDLER
-
-	var/mob/living/carbon/wound_owner = owner
-	if(wound_owner.get_active_hand() == linked_limb)
-		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/robotic_blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
-	else
-		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/robotic_blunt_wound)
-
-/datum/status_effect/wound/blunt/robotic/nextmove_modifier()
-	var/mob/living/carbon/C = owner
-
-	if(C.get_active_hand() == linked_limb)
-		return linked_wound.interaction_efficiency_penalty
-
-	return 1
-
 // slash
-/datum/status_effect/wound/electrical_damage/slash/moderate
-	id = "electric_slash_moderate"
-
-/datum/status_effect/wound/electrical_damage/slash/severe
-	id = "electric_slash_severe"
-
-/datum/status_effect/wound/electrical_damage/slash/critical
-	id = "electric_slash_critical"
-
-/datum/status_effect/wound/electrical_damage/pierce/on_apply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
-	on_swap_hands()
-
-/datum/status_effect/wound/electrical_damage/pierce/on_remove()
-	. = ..()
-	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
-	var/mob/living/carbon/wound_owner = owner
-	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/electric_pierce_wound)
-
-/datum/status_effect/wound/electrical_damage/pierce/proc/on_swap_hands()
-	SIGNAL_HANDLER
-
-	var/mob/living/carbon/wound_owner = owner
-	if(wound_owner.get_active_hand() == linked_limb)
-		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/electric_pierce_wound, (linked_wound.interaction_efficiency_penalty - 1))
-	else
-		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/electric_pierce_wound)
-
-/datum/status_effect/wound/electrical_damage/pierce/nextmove_modifier()
-	var/mob/living/carbon/C = owner
-
-	if(C.get_active_hand() == linked_limb)
-		return linked_wound.interaction_efficiency_penalty
-
-	return 1
-/datum/status_effect/wound/electrical_damage/pierce/moderate
-	id = "electric_pierce_moderate"
-
-/datum/status_effect/wound/electrical_damage/pierce/severe
-	id = "electric_pierce_severe"
-
-/datum/status_effect/wound/electrical_damage/pierce/critical
-	id = "electric_pierce_critical"
 
 /datum/status_effect/wound/slash/flesh/moderate
 	id = "abrasion"
@@ -302,12 +221,6 @@
 /datum/status_effect/wound/pierce/critical
 	id = "rupture"
 // burns
-/datum/status_effect/wound/burn/robotic/moderate
-	id = "overheated"
-/datum/status_effect/wound/burn/robotic/severe
-	id = "warpedmetal"
-/datum/status_effect/wound/burn/robotic/critical
-	id = "demagnetizedmetal"
 /datum/status_effect/wound/burn/flesh/moderate
 	id = "seconddeg"
 /datum/status_effect/wound/burn/flesh/severe
