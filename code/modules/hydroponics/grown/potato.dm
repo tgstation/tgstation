@@ -11,7 +11,7 @@
 	production = 1
 	yield = 4
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "potato-grow"
 	icon_dead = "potato-dead"
 	genes = list(/datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)

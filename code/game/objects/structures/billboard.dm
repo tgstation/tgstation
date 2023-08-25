@@ -1,7 +1,7 @@
 /obj/structure/billboard
 	name = "blank billboard"
 	desc = "A blank billboard, with space for all kinds of advertising."
-	icon = 'icons/obj/billboard.dmi'
+	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_blank"
 	max_integrity = 1000
 	bound_width = 96
@@ -93,6 +93,11 @@
 	name = "\improper Fortune Teller billboard"
 	desc = "A billboard advertising Fortune Telling. Apparently it's done by real psykers!"
 	icon_state = "billboard_fortune_tell"
+
+/obj/structure/billboard/Phone_booth
+	name = "\improper Holophone Billboard"
+	desc = "A billboard advertising Holophones. Interstellar calls for a affordable 49.99 credits with duty free snacks!"
+	icon_state = "billboard_phone"
 
 /obj/structure/billboard/american_diner
 	name = "\improper All-American Diner billboard"

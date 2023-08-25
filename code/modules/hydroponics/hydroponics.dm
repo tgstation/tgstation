@@ -2,7 +2,7 @@
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
 	desc = "A basin used to grow plants in."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
@@ -11,7 +11,7 @@
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
-	var/waterlevel = 100
+	var/waterlevel = 0
 	///The maximum amount of water in the tray
 	var/maxwater = 100
 	///How many units of nutrients will be drained in the tray.
@@ -59,7 +59,9 @@
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(maxnutri, INJECTABLE)
-	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
+	if(mapload)
+		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
+		waterlevel = 100
 	. = ..()
 
 	var/static/list/hovering_item_typechecks = list(
@@ -151,7 +153,7 @@
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
@@ -165,8 +167,8 @@
 	var/tmp_capacity = 0
 	for (var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		tmp_capacity += matter_bin.tier
-	for (var/datum/stock_part/manipulator/manipulator in component_parts)
-		rating = manipulator.tier
+	for (var/datum/stock_part/servo/servo in component_parts)
+		rating = servo.tier
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
 	reagents.maximum_volume = maxnutri
@@ -507,15 +509,15 @@
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowwater3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3")
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3")
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowhealth3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3")
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_alert3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3")
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3")
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
@@ -811,6 +813,17 @@
 		particles = null
 
 /**
+ * Bee pollinate proc.
+ * Checks if the bee can pollinate the plant
+ */
+/obj/machinery/hydroponics/proc/can_bee_pollinate()
+	if(isnull(myseed))
+		return FALSE
+	if(plant_status == HYDROTRAY_PLANT_DEAD || recent_bee_visit)
+		return FALSE
+	return TRUE
+
+/**
  * Pest Mutation Proc.
  * When a tray is mutated with high pest values, it will spawn spiders.
  * * User - Person who last added chemicals to the tray for logging purposes.
@@ -820,7 +833,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings.")
 		user.log_message("last altered a hydro tray, which spiderlings spawned from.", LOG_GAME)
 		visible_message(span_warning("The pests seem to behave oddly..."))
-		spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, src, 3, FALSE)
+		spawn_atom_to_turf(/mob/living/basic/spider/growing/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
 		visible_message(span_warning("The pests seem to behave oddly in [myseed.name] tray, but quickly settle down..."))
 
@@ -859,9 +872,9 @@
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-				var/image/splash_animation = image('icons/effects/effects.dmi', src, "splash_hydroponics")
+				var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash_hydroponics")
 				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
-				flick_overlay_global(splash_animation, GLOB.clients, 1.1 SECONDS)
+				flick_overlay_view(splash_animation, 1.1 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))
@@ -986,9 +999,13 @@
 		return
 
 	else if(istype(O, /obj/item/storage/bag/plants))
-		attack_hand(user)
-		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
-			O.atom_storage?.attempt_insert(G, user, TRUE)
+		if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
+			var/list/harvest = myseed.harvest(user)
+			for(var/obj/item/food/grown/G in harvest)
+				O.atom_storage?.attempt_insert(G, user, TRUE)
+		else if(plant_status == HYDROTRAY_PLANT_DEAD)
+			to_chat(user, span_notice("You remove the dead plant from [src]."))
+			set_seed(null)
 		return
 
 	else if(O.tool_behaviour == TOOL_SHOVEL)
@@ -1130,7 +1147,7 @@
  * Upon using strange reagent on a tray, it will spawn a killer tomato or killer tree at random.
  */
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
-	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/simple_animal/hostile/killertomato)
+	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/basic/killer_tomato)
 	var/chosen = pick(livingplants)
 	var/mob/living/C = new chosen(get_turf(src))
 	C.faction = list(FACTION_PLANTS)
@@ -1139,7 +1156,7 @@
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
 	desc = "A patch of dirt."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	gender = PLURAL
 	circuit = null
@@ -1164,12 +1181,15 @@
 	balloon_alert(user, "clearing up soil...")
 	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
 		balloon_alert(user, "cleared")
-		qdel(src)
+		deconstruct(disassembled = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
 
+/obj/machinery/hydroponics/soil/deconstruct(disassembled)
+	new /obj/item/stack/ore/glass(drop_location(), 3)
+	return ..()
 
 ///The usb port circuit
 

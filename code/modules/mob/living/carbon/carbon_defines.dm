@@ -61,7 +61,7 @@
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
-	var/rotate_on_lying = 1
+	rotate_on_lying = TRUE
 
 	/// Gets filled up in [/datum/species/proc/replace_body].
 	/// Will either contain a list of typepaths if nothing has been created yet,
@@ -115,5 +115,10 @@
 
 	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
 	var/last_top_offset
+
+	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
+	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+
+	var/is_leaning = FALSE
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

@@ -157,6 +157,7 @@
 	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE)
 	flick("activate", src)
 	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
+	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
 /obj/effect/grand_rune/proc/remove_rune()
 	new /obj/effect/decal/cleanable/grand_remains(get_turf(src))
@@ -181,7 +182,7 @@
 		return
 
 	var/datum/round_event_control/final_event = pick (possible_events)
-	final_event.runEvent()
+	final_event.run_event(event_cause = "a Grand Ritual Rune")
 	to_chat(user, span_notice("Your released magic afflicts the crew: [final_event.name]!"))
 
 /// Applies some local side effects to the area
@@ -309,8 +310,10 @@
 		spell_colour = finale_effect.glow_colour
 
 /obj/effect/grand_rune/finale/summon_round_event(mob/living/user)
+	user.client?.give_award(/datum/award/achievement/misc/grand_ritual_finale, user)
 	if (!finale_effect)
 		return ..()
+	SSblackbox.record_feedback("tally", "grand_ritual_finale", 1, finale_effect)
 	finale_effect.trigger(user)
 
 /obj/effect/grand_rune/finale/get_invoke_time()

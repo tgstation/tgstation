@@ -4,7 +4,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "separator"
 	light_power = 1
-	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	var/fill_icon_state = "separator"
 	/// Icons for different percentages of beaker/separator reagent volumes
 	var/list/fill_icon_thresholds = list(1,30,80)
@@ -43,9 +43,9 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
-/obj/structure/chem_separator/handle_atom_del(atom/deleted_atom)
-	..()
-	if(deleted_atom == beaker)
+/obj/structure/chem_separator/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		update_appearance(UPDATE_ICON)
 

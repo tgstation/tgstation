@@ -21,11 +21,13 @@
 		// carbons without tongues normally have TRAIT_AGEUSIA but sensible fallback
 		. = DEFAULT_TASTE_SENSITIVITY
 
-// non destructively tastes a reagent container
+/**
+ * Non destructively tastes a reagent container
+ * and gives feedback to the user.
+ **/
 /mob/living/proc/taste(datum/reagents/from)
 	if(HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return
-
 
 	if(last_taste_time + 50 < world.time)
 		var/taste_sensitivity = get_taste_sensitivity()
@@ -42,5 +44,71 @@
 
 			last_taste_time = world.time
 			last_taste_text = text_output
+
+/**
+ * Gets food flags that this mob likes
+ **/
+/mob/living/proc/get_liked_foodtypes()
+	return NONE
+
+/mob/living/carbon/get_liked_foodtypes()
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
+		return NONE
+	return tongue.liked_foodtypes
+
+/**
+ * Gets food flags that this mob dislikes
+ **/
+/mob/living/proc/get_disliked_foodtypes()
+	return NONE
+
+/mob/living/carbon/get_disliked_foodtypes()
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
+		return NONE
+	return tongue.disliked_foodtypes
+
+/**
+ * Gets food flags that this mob hates
+ * Toxic food is the only category that ignores ageusia, KEEP IT LIKE THAT!
+ **/
+/mob/living/proc/get_toxic_foodtypes()
+	return TOXIC
+
+/mob/living/carbon/get_toxic_foodtypes()
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue)
+		return TOXIC
+	return tongue.toxic_foodtypes
+
+/**
+ * Gets the food reaction a mob would normally have from the given food item,
+ * assuming that no check_liked callback was used in the edible component.
+ *
+ * Does not get called if the owner has ageusia.
+ **/
+/mob/living/proc/get_food_taste_reaction(obj/item/food, foodtypes)
+	var/food_taste_reaction
+	if(foodtypes & get_toxic_foodtypes())
+		food_taste_reaction = FOOD_TOXIC
+	else if(foodtypes & get_disliked_foodtypes())
+		food_taste_reaction = FOOD_DISLIKED
+	else if(foodtypes & get_liked_foodtypes())
+		food_taste_reaction = FOOD_LIKED
+	return food_taste_reaction
+
+/mob/living/carbon/get_food_taste_reaction(obj/item/food, foodtypes)
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
+		// i hate that i have to do this, but we want to ensure toxic food is still BAD
+		if(foodtypes & get_toxic_foodtypes())
+			return FOOD_TOXIC
+		return
+	return tongue.get_food_taste_reaction(food, foodtypes)
 
 #undef DEFAULT_TASTE_SENSITIVITY

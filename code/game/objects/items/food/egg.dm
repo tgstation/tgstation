@@ -67,14 +67,14 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		var/chance = rand(0, 255)
 		switch(chance)
 			if(0 to 30)
-				new /mob/living/simple_animal/chick(hit_turf)
+				new /mob/living/basic/chick(hit_turf)
 				GLOB.chicks_from_eggs++
 				visible_message(span_notice("A chick comes out of the cracked egg!"))
 			if(31)
 				var/spawned_chickens = min(4, MAX_CHICKENS - GLOB.chicks_from_eggs) // We don't want to go over the limit
 				visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
 				for(var/i in 1 to spawned_chickens)
-					new /mob/living/simple_animal/chick(hit_turf)
+					new /mob/living/basic/chick(hit_turf)
 					GLOB.chicks_from_eggs++
 
 	reagents.expose(hit_atom, TOUCH)
@@ -162,6 +162,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	icon_state = "egg-yellow"
 	inhand_icon_state = "egg-yellow"
 
+/obj/item/food/egg/penguin_egg
+	icon = 'icons/mob/simple/penguins.dmi'
+	icon_state = "penguin_egg"
+
 /obj/item/food/egg/fertile
 	name = "fertile-looking egg"
 	desc = "An egg! It looks fertilized.\nQuite how you can tell this just by looking at it is a mystery."
@@ -171,7 +175,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	. = ..()
 
 	AddComponent(/datum/component/fertile_egg,\
-		embryo_type = /mob/living/simple_animal/chick,\
+		embryo_type = /mob/living/basic/chick,\
 		minimum_growth_rate = 1,\
 		maximum_growth_rate = 2,\
 		total_growth_required = 200,\

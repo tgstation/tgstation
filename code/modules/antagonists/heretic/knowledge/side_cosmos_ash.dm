@@ -2,7 +2,7 @@
 
 /datum/heretic_knowledge/summon/fire_shark
 	name = "Scorching Shark"
-	desc = "Allows you to transmute a pool of ash, a pool of salt, and a sheet of plasma into a Fire Shark. \
+	desc = "Allows you to transmute a pool of ash, a liver, and a sheet of plasma into a Fire Shark. \
 		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks. \
 		Fire Sharks inject phlogiston into its victims and spawn plasma once they die."
 	gain_text = "My knowledge of the universe with the energy of remains, constructed it. It gave the Fire Shark life."
@@ -12,12 +12,13 @@
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
-		/obj/effect/decal/cleanable/food/salt = 1,
+		/obj/item/organ/internal/liver = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
-	mob_to_summon = /mob/living/basic/fire_shark
+	mob_to_summon = /mob/living/basic/heretic_summon/fire_shark
 	cost = 1
 	route = PATH_SIDE
+	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
 
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"

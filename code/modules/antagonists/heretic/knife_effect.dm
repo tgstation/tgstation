@@ -1,7 +1,7 @@
 // "Floating ghost blade" effect for blade heretics
 /obj/effect/floating_blade
 	name = "knife"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "knife"
 	/// The color the knife glows around it.
 	var/glow_color = "#ececff"

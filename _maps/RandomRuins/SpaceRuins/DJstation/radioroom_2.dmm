@@ -2,15 +2,6 @@
 "a" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
-"b" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/djstation)
 "c" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck/cas{
@@ -32,22 +23,6 @@
 	dir = 1
 	},
 /area/ruin/space/djstation)
-"e" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/djstation)
-"f" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/djstation)
 "g" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -65,6 +40,13 @@
 "k" = (
 /obj/modular_map_root/djstation{
 	key = "kitchen"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"l" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
@@ -104,6 +86,10 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"t" = (
+/obj/machinery/light/floor,
+/turf/open/floor/wood/parquet,
+/area/ruin/space/djstation)
 "u" = (
 /obj/item/radio/intercom{
 	dir = 8;
@@ -173,6 +159,12 @@
 	},
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/space/djstation)
+"M" = (
+/obj/modular_map_connector,
+/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
 "N" = (
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
@@ -223,17 +215,18 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/djstation)
-"V" = (
-/obj/modular_map_connector,
-/obj/effect/turf_decal/tile/green/half/contrasted,
-/turf/open/floor/iron/dark,
-/area/ruin/space/djstation)
 "W" = (
 /turf/open/floor/wood/parquet,
 /area/ruin/space/djstation)
-"X" = (
+"Y" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"Z" = (
 /obj/structure/cable,
-/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
@@ -272,25 +265,25 @@ v
 R
 c
 p
-b
+l
 r
 u
 F
 O
-X
+Z
 "}
 (4,1,1) = {"
 s
 o
 R
 y
-W
-f
+t
+Y
 I
 U
 q
 d
-V
+M
 "}
 (5,1,1) = {"
 s
@@ -298,7 +291,7 @@ v
 R
 W
 W
-e
+x
 L
 u
 Q

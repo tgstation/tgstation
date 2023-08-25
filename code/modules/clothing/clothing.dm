@@ -23,6 +23,9 @@
 
 	var/can_be_bloody = TRUE
 
+	///Prevents the article of clothing from gaining the mood boost from washing. Used for the tacticool turtleneck.
+	var/stubborn_stains = FALSE
+
 	/// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
 
@@ -288,7 +291,7 @@
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
-		. += span_warning("<b>[p_theyre(TRUE)] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
+		. += span_warning("<b>[p_Theyre()] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
 		return
 
 	switch (max_heat_protection_temperature)
@@ -397,6 +400,9 @@
 // you just dont get the same feeling with handwashed clothes
 /obj/item/clothing/machine_wash()
 	. = ..()
+	if(stubborn_stains) //Just can't make it feel right
+		return
+
 	var/fresh_mood = AddComponent( \
 		/datum/component/onwear_mood, \
 		saved_event_type = /datum/mood_event/fresh_laundry, \
@@ -528,3 +534,11 @@ BLIND     // can't see anything
 		to_chat(L, span_warning("The damaged threads on your [src.name] chafe!"))
 
 #undef MOTH_EATING_CLOTHING_DAMAGE
+
+/obj/item/clothing/apply_fantasy_bonuses(bonus)
+	. = ..()
+	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = bonus)))
+
+/obj/item/clothing/remove_fantasy_bonuses(bonus)
+	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
+	return ..()

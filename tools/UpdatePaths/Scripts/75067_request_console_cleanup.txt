@@ -1,0 +1,1 @@
+/obj/machinery/requests_console/@SUBTYPES{announcementConsole=1} : /obj/machinery/requests_console/@SUBTYPES{@OLD;can_send_announcements=1;announcementConsole=@SKIP}

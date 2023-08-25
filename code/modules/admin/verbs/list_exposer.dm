@@ -6,7 +6,7 @@
 		return
 	var/data = "<b>Bombing List</b><hr>"
 	for(var/entry in GLOB.bombers)
-		data += text("[entry]<br>")
+		data += "[entry]<br>"
 	usr << browse(data, "window=bombers;size=800x500")
 
 /datum/admins/proc/list_signalers()

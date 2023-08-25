@@ -4,14 +4,14 @@
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
-		return
+		return FALSE
 
 	. = ..() //contents explosion
 	if(QDELETED(src))
-		return
+		return TRUE
 	if(target == src)
 		take_damage(INFINITY, BRUTE, BOMB, 0)
-		return
+		return TRUE
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			take_damage(INFINITY, BRUTE, BOMB, 0)
@@ -20,12 +20,14 @@
 		if(EXPLODE_LIGHT)
 			take_damage(rand(10, 90), BRUTE, BOMB, 0)
 
+	return TRUE
+
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, TRUE)
 	var/damage
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration)
+		damage = take_damage(P.damage * P.demolition_mod, P.damage_type, P.armor_flag, 0, REVERSE_DIR(P.dir), P.armour_penetration)
 	if(P.suppressed != SUPPRESSED_VERY)
 		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
 
@@ -98,10 +100,10 @@
 ///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
 	. = ..()
-	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || (acidpwr <= 0))
 		return FALSE
 
-	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	AddComponent(/datum/component/acid, acidpwr, acid_volume, custom_acid_overlay || GLOB.acid_overlay)
 	return TRUE
 
 ///called when the obj is destroyed by acid.
@@ -113,8 +115,8 @@
 ///Called when the obj is exposed to fire.
 /obj/fire_act(exposed_temperature, exposed_volume)
 	if(isturf(loc))
-		var/turf/T = loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+		var/turf/our_turf = loc
+		if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
@@ -123,9 +125,8 @@
 		return TRUE
 	return ..()
 
-///called when the obj is destroyed by fire
-/obj/burn()
-	. = ..()
+/// Should be called when the atom is destroyed by fire, comparable to acid_melt() proc
+/obj/proc/burn()
 	deconstruct(FALSE)
 
 ///Called when the obj is hit by a tesla bolt.

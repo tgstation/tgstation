@@ -3,13 +3,9 @@
 	desc = "Turns plants into various types of booze."
 	icon_state = "fermenter"
 	layer = ABOVE_ALL_MOB_LAYER
-
-
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	///category for plumbing RCD
-	category="Synthesizers"
 
 	///input dir
 	var/eat_dir = SOUTH

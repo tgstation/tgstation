@@ -15,7 +15,7 @@
 	throw_speed = 2
 	throw_range = 4
 	demolition_mod = 1.5
-	custom_materials = list(/datum/material/iron=13000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6.5)
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
 	hitsound = SFX_SWING_HIT
@@ -26,6 +26,18 @@
 	var/on = FALSE
 	///The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop
+
+/obj/item/chainsaw/apply_fantasy_bonuses(bonus)
+	. = ..()
+	force_on = modify_fantasy_variable("force_on", force_on, bonus)
+	if(on)
+		force = force_on
+
+/obj/item/chainsaw/remove_fantasy_bonuses(bonus)
+	force_on = reset_fantasy_variable("force_on", force_on)
+	if(on)
+		force = force_on
+	return ..()
 
 /obj/item/chainsaw/Initialize(mapload)
 	. = ..()
@@ -87,7 +99,7 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)

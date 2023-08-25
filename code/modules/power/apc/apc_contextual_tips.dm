@@ -1,7 +1,15 @@
 /obj/machinery/power/apc/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if (isnull(held_item))
+	if(isAI(user) || iscyborg(user))
+		context[SCREENTIP_CONTEXT_LMB] = "Open UI"
+		context[SCREENTIP_CONTEXT_RMB] = locked ? "Unlock" : "Lock"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = operating ? "Disable power" : "Enable power"
+		context[SCREENTIP_CONTEXT_SHIFT_LMB] = lighting ? "Disable lights" : "Enable lights"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = equipment ? "Disable equipment" : "Enable equipment"
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = environ ? "Disable environment" : "Enable environment"
+
+	else if (isnull(held_item))
 		if (opened == APC_COVER_CLOSED)
 			context[SCREENTIP_CONTEXT_RMB] = locked ? "Unlock" : "Lock"
 		else if (opened == APC_COVER_OPENED && cell)

@@ -42,7 +42,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "entertainment_blank" // wallening todo - Should this be merged back into telescreens or keep using status display icons? Icon needs updating regardless.
 	network = list()
 	density = FALSE
@@ -54,7 +54,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 
 /obj/item/wallframe/telescreen/entertainment
 	name = "entertainment telescreen frame"
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "entertainment_blank"
 	result_path = /obj/machinery/computer/security/telescreen/entertainment
 
@@ -318,5 +318,5 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar)
 	is_show_active = !is_show_active
 	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
 	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
 		tv.update_shows(is_show_active, tv_network_id, announcement)

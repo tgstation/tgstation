@@ -8,7 +8,6 @@
 	///List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
 	var/list/squeak_sound = list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1)
 	lace_time = 20 SECONDS // how the hell do these laces even work??
-	species_exception = list(/datum/species/golem/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()
@@ -54,10 +53,3 @@
 	desc = "The adorable sound they make when you walk will mean making friends is more likely."
 	icon_state = "meown_shoes"
 	squeak_sound = list('sound/effects/footstep/meowstep1.ogg'=1) //mew mew mew mew
-
-/obj/item/clothing/shoes/clown_shoes/ducky_shoes
-	name = "ducky shoes"
-	desc = "I got boots, that go *quack quack quack quack quack."
-	icon_state = "ducky_shoes"
-	inhand_icon_state = "ducky_shoes"
-	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack

@@ -75,7 +75,7 @@
 	 * Associated list of items able to be sold to the NPC with the money given for them.
 	 * The price given should be the "base" price; any price manipulation based on variables should be done with apply_sell_price_mods()
 	 * ADDITIONAL_DESCRIPTION is any additional text added to explain how the variables of the item effect the price; if it's stack based, it's final price depends how much is in the stack
-	 * EX; /obj/item/stack/sheet/mineral/diamond = list(500, INFINITY, ", per 2000 cm3 sheet of diamond")
+	 * EX; /obj/item/stack/sheet/mineral/diamond = list(500, INFINITY, ", per 100 cm3 sheet of diamond")
 	 * This list is filled by Initialize(), if you want to change the starting wanted items, modify initial_wanteds()
 	*/
 	var/list/wanted_items

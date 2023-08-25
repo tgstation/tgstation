@@ -4,6 +4,10 @@
 	"map_path": "map_files/debug",
 	"map_file": "runtimestation.dmm",
 	"space_ruin_levels": 1,
+	"ignored_unit_tests": [
+		"/datum/unit_test/job_roundstart_spawnpoints",
+		"/datum/unit_test/required_map_items"
+	],
 	"shuttles": {
 		"cargo": "cargo_delta"
 	}

@@ -90,6 +90,8 @@ Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
 * Close issues purely for breaking a template if the same information is contained without it.
 
+For more information reference the [Issue Manager Guide](.github/guides/ISSUE_MANAGER.md).
+
 </details>
 
 ## Development Guides
@@ -105,13 +107,14 @@ Things you **CAN'T** do:
 
 #### Misc
 
-- [AI Datums](../code/datums/ai/making_your_ai.md)
+- [AI Datums](../code/datums/ai/learn_ai.md)
 - [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md)
 - [Hard Deletes](./guides/HARDDELETES.md)
 - [MC Tab Guide](./guides/MC_tab.md)
 - [Policy Configuration System](./guides/POLICYCONFIG.md)
-- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
+- [Quickly setting up a development database with ezdb](./guides/EZDB.md)
 - [Required Tests (Continuous Integration)](./guides/CI.md)
+- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
 - [UI Development](../tgui/README.md)
 - [Visual Effects and Systems](./guides/VISUALS.md)
 

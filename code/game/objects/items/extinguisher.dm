@@ -1,7 +1,7 @@
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
-	icon = 'icons/obj/weapons/extinguisher.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "fire_extinguisher0"
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
@@ -13,7 +13,7 @@
 	throw_range = 7
 	force = 10
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = 90)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.9)
 	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
@@ -59,7 +59,7 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT* 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4)
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
@@ -70,7 +70,7 @@
 
 /obj/item/extinguisher/crafted
 	name = "Improvised cooling spray"
-	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
+	desc = "Spraycan turned coolant dispenser. Can be sprayed on containers to cool them. Refill using water."
 	icon_state = "coolant0"
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
@@ -79,7 +79,7 @@
 	throwforce = 1
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4)
 	max_water = 30
 	sprite_name = "coolant"
 	dog_fashion = null
@@ -209,10 +209,10 @@
 
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			var/obj/B = user.buckled
-			var/movementdirection = turn(direction,180)
+			var/movementdirection = REVERSE_DIR(direction)
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 1)
 		else
-			user.newtonian_move(turn(direction, 180))
+			user.newtonian_move(REVERSE_DIR(direction))
 
 		//Get all the turfs that can be shot at
 		var/turf/T = get_turf(target)

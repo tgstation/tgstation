@@ -8,7 +8,7 @@
 	base_icon_state = "coffeemaker"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
-	pixel_y = 4 //needed to make it sit nicely on tables
+	anchored_tabletop_offset = 4
 	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
@@ -56,11 +56,13 @@
 	return ..()
 
 /obj/machinery/coffeemaker/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(gone == coffeepot)
 		coffeepot = null
+		update_appearance(UPDATE_OVERLAYS)
 	if(gone == cartridge)
 		cartridge = null
-	return ..()
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/RefreshParts()
 	. = ..()
@@ -138,14 +140,6 @@
 
 /obj/machinery/coffeemaker/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
-
-/obj/machinery/coffeemaker/handle_atom_del(atom/A)
-	. = ..()
-	if(A == coffeepot)
-		coffeepot = null
-	if(A == cartridge)
-		cartridge = null
-	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/update_overlays()
 	. = ..()
@@ -527,13 +521,6 @@
 	QDEL_NULL(coffee)
 	return ..()
 
-/obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)
-	if(gone == coffeepot)
-		coffeepot = null
-	if(gone == coffee)
-		coffee = null
-	return ..()
-
 /obj/machinery/coffeemaker/impressa/examine(mob/user)
 	. = ..()
 	if(coffee)
@@ -571,13 +558,11 @@
 			. += "grinder_full"
 	return .
 
-/obj/machinery/coffeemaker/impressa/handle_atom_del(atom/A)
+/obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == coffeepot)
-		coffeepot = null
-	if(A == coffee)
-		coffee.Cut()
-	update_appearance(UPDATE_OVERLAYS)
+	if(gone in coffee)
+		coffee -= gone
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/impressa/try_brew()
 	if(coffee_amount <= 0)

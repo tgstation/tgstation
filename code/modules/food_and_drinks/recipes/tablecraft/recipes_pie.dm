@@ -200,7 +200,7 @@
 /datum/crafting_recipe/food/baklava
 	name = "Baklava pie"
 	reqs = list(
-		/obj/item/food/butter = 2,
+		/obj/item/food/butterslice = 2,
 		/obj/item/food/tortilla = 4, //Layers
 		/obj/item/seeds/wheat/oat = 4
 	)

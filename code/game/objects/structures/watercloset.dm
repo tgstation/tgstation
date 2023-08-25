@@ -16,7 +16,8 @@
 	. = ..()
 	open = round(rand(0, 1))
 	update_appearance()
-
+	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
+		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
 
 /obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -91,7 +92,7 @@
 		else
 			for(var/i in custom_materials)
 				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 	..()
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
@@ -120,8 +121,9 @@
 			return
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
+		return
 
-	else if(is_reagent_container(I) && !user.combat_mode)
+	if(is_reagent_container(I) && !user.combat_mode)
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
@@ -249,6 +251,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 		/datum/reagent/ammonia = 1,
 	)
 	foodtypes = TOXIC | GROSS
+	preserved_food = TRUE
 
 /obj/item/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] squishes [src]!"), span_notice("You squish [src]."), "<i>You hear a squish.</i>")
@@ -258,7 +261,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 /obj/item/bikehorn/rubberducky/plasticducky
 	name = "plastic ducky"
 	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
-	custom_materials = list(/datum/material/plastic = 1000)
+	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
@@ -269,6 +272,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "duck"
+	sound_file = 'sound/effects/quack.ogg'
 
 /obj/structure/sink
 	name = "sink"
@@ -511,7 +515,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	else
 		for(var/i in custom_materials)
 			var/datum/material/M = i
-			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/proc/begin_reclamation()
 	START_PROCESSING(SSplumbing, src)
@@ -574,7 +578,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/sinkframe/proc/drop_materials()
 	for(var/datum/material/material as anything in custom_materials)
-		new material.sheet_type(loc, FLOOR(custom_materials[material] / MINERAL_MATERIAL_AMOUNT, 1))
+		new material.sheet_type(loc, FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1))
 	return
 
 //Water source, use the type water_source for unlimited water sources like classic sinks.
@@ -739,6 +743,12 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	var/open = TRUE
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
+
+/obj/structure/curtain/Initialize(mapload)
+	// see-through curtains should let emissives shine through
+	if(!opaque_closed)
+		blocks_emissive = EMISSIVE_BLOCK_NONE
+	return ..()
 
 /obj/structure/curtain/proc/toggle()
 	open = !open

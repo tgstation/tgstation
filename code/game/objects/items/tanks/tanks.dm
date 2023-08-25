@@ -9,7 +9,7 @@
  */
 /obj/item/tank
 	name = "tank"
-	icon = 'icons/obj/atmospherics/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	icon_state = "generic"
 	inhand_icon_state = "generic_tank"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
@@ -24,7 +24,7 @@
 	throw_speed = 1
 	throw_range = 4
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5

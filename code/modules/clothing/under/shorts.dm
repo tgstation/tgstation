@@ -3,7 +3,7 @@
 	desc = "A pair of comfy shorts."
 	icon_state = "shorts"
 	greyscale_config = /datum/greyscale_config/shorts
-	greyscale_config_worn = /datum/greyscale_config/shorts_worn
+	greyscale_config_worn = /datum/greyscale_config/shorts/worn
 	greyscale_colors = "#575757#3E3E3E#75634F"
 	gender = PLURAL
 	body_parts_covered = GROIN
@@ -18,7 +18,7 @@
 	desc = "A nondescript pair of tough jean shorts."
 	icon_state = "jeanshorts"
 	greyscale_config = /datum/greyscale_config/jeanshorts
-	greyscale_config_worn = /datum/greyscale_config/jeanshorts_worn
+	greyscale_config_worn = /datum/greyscale_config/jeanshorts/worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
 
 /obj/item/clothing/under/shorts/red

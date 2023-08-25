@@ -13,7 +13,6 @@
 	if(!.)
 		return FALSE
 
-	host_role.add_note("N[game.turn] - [target_role.body.real_name] - Revealed true identity")
 	to_chat(host_role.body, span_warning("You have revealed the true nature of the [target_role]!"))
 	target_role.reveal_role(game, verbose = TRUE)
 	return TRUE

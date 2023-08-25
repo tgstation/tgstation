@@ -113,6 +113,7 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
 	if(light)
 		update_light()
 	if(rotation)

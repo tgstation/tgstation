@@ -222,11 +222,6 @@
 		return TRUE
 	return FALSE
 
-
-/mob/proc/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) // utilized in the species code
-	return TRUE
-
-
 /**
  * Fancy notifications for ghosts
  *
@@ -277,17 +272,23 @@
 		alert.target = source
 		if(!alert_overlay)
 			alert_overlay = new(source)
+			alert_overlay.pixel_x = 0
+			alert_overlay.pixel_y = 0
 			var/icon/size_check = icon(source.icon, source.icon_state)
 			var/scale = 1
 			var/width = size_check.Width()
 			var/height = size_check.Height()
+			if(width > world.icon_size)
+				alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
+			if(height > world.icon_size)
+				alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
 			if(width > world.icon_size || height > world.icon_size)
 				if(width >= height)
 					scale = world.icon_size / width
 				else
 					scale = world.icon_size / height
 			alert_overlay.transform = alert_overlay.transform.Scale(scale)
-			alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.appearance_flags |= TILE_BOUND
 		alert_overlay.layer = FLOAT_LAYER
 		alert_overlay.plane = FLOAT_PLANE
 		alert.add_overlay(alert_overlay)
@@ -513,7 +514,7 @@
 			"name" = offhand.name,
 		)
 
-	GLOB.logger.Log(
+	logger.Log(
 		LOG_CATEGORY_TARGET_ZONE_SWITCH,
 		"[key_name(src)] manually changed selected zone",
 		data,

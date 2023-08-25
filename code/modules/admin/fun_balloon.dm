@@ -142,7 +142,7 @@
 	for (var/S in SSshuttle.stationary_docking_ports)
 		var/obj/docking_port/stationary/SM = S
 		if (SM.shuttle_id == "emergency_home")
-			var/new_dir = turn(SM.dir, 180)
+			var/new_dir = REVERSE_DIR(SM.dir)
 			SM.forceMove(get_ranged_target_turf(SM, new_dir, crash_strength))
 			break
 

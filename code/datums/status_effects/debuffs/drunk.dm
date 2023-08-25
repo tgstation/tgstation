@@ -38,17 +38,17 @@
 	// .01s are used in case the drunk value ends up to be a small decimal.
 	switch(drunk_value)
 		if(11 to 21)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] slightly flushed.")
+			return span_warning("[owner.p_They()] [owner.p_are()] slightly flushed.")
 		if(21.01 to 41)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] flushed.")
+			return span_warning("[owner.p_They()] [owner.p_are()] flushed.")
 		if(41.01 to 51)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] quite flushed and [owner.p_their()] breath smells of alcohol.")
+			return span_warning("[owner.p_They()] [owner.p_are()] quite flushed and [owner.p_their()] breath smells of alcohol.")
 		if(51.01 to 61)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] very flushed and [owner.p_their()] movements jerky, with breath reeking of alcohol.")
+			return span_warning("[owner.p_They()] [owner.p_are()] very flushed and [owner.p_their()] movements jerky, with breath reeking of alcohol.")
 		if(61.01 to 91)
-			return span_warning("[owner.p_they(TRUE)] look[owner.p_s()] like a drunken mess.")
+			return span_warning("[owner.p_They()] look[owner.p_s()] like a drunken mess.")
 		if(91.01 to INFINITY)
-			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] a shitfaced, slobbering wreck.")
+			return span_warning("[owner.p_They()] [owner.p_are()] a shitfaced, slobbering wreck.")
 
 	return null
 
@@ -61,7 +61,7 @@
 	if(drunk_value <= 0)
 		qdel(src)
 
-/datum/status_effect/inebriated/tick()
+/datum/status_effect/inebriated/tick(seconds_between_ticks)
 	// Drunk value does not decrease while dead or in stasis
 	if(owner.stat == DEAD || IS_IN_STASIS(owner))
 		return
@@ -144,16 +144,13 @@
 		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
-	// There's always a 30% chance to gain some drunken slurring
-	if(prob(30))
-		owner.adjust_slurring(4 SECONDS)
+	// Drunk slurring scales in intensity based on how drunk we are -at 16 you will likely not even notice it,
+	// but when we start to scale up you definitely will
+	if(drunk_value >= 16)
+		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 20 SECONDS)
 
 	// And drunk people will always lose jitteriness
 	owner.adjust_jitter(-6 SECONDS)
-
-	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
-	if(drunk_value >= 11)
-		owner.adjust_slurring_up_to(2.4 SECONDS, 10 SECONDS)
 
 	// Over 41, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
 	if(drunk_value >= 41)

@@ -14,7 +14,7 @@
 	/// The rite currently being invoked
 	var/datum/religion_rites/performing_rite
 	///Sets the type for catalyst
-	var/catalyst_type = /obj/item/storage/book/bible
+	var/catalyst_type = /obj/item/book/bible
 	///Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.
 	var/force_catalyst_afterattack = FALSE
 	var/datum/callback/after_sect_select_cb
@@ -29,11 +29,11 @@
 		catalyst_type = override_catalyst_type
 
 /datum/component/religious_tool/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(AttemptActions))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(AttemptActions))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/religious_tool/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE))
 
 /**
  * Sets the easy access variable to the global if it exists.
@@ -120,7 +120,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when selecting a sect.")
 		return
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
+		to_chat(user, span_warning("You are not the high priest, and therefore cannot select a religious sect."))
 		return
 	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You cannot select a sect at this time."))

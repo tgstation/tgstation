@@ -40,8 +40,7 @@
 	using_ability = initial(using_ability)
 
 /**
- * Called when attempting to use the ability.
- * All abilities are called at the end of each phase, and this is called when performing the action.
+ * Used to check if this ability can be used on a potential target.
  * Args:
  * game - The Mafia controller that holds reference to the game.
  * potential_target - The player we are attempting to validate the action on.
@@ -57,7 +56,7 @@
 		return FALSE
 
 	if(potential_target)
-		if(!(use_flags & CAN_USE_ON_DEAD) && (potential_target.game_status == MAFIA_DEAD))
+		if((use_flags & CAN_USE_ON_DEAD) && (potential_target.game_status != MAFIA_DEAD))
 			if(!silent)
 				to_chat(host_role.body, span_notice("This can only be used on dead players."))
 			return FALSE

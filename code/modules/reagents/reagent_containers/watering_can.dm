@@ -1,12 +1,12 @@
 /obj/item/reagent_containers/cup/watering_can
 	name = "watering can"
 	desc = "It's a watering can. It is scientifically proved that using a watering can to simulate rain increases plant happiness!"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "watering_can"
 	inhand_icon_state = "watering_can"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 200)
+	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 100
 	amount_per_transfer_from_this = 20
@@ -25,7 +25,7 @@
 	name = "advanced watering can"
 	icon_state = "adv_watering_can"
 	inhand_icon_state = "adv_watering_can"
-	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	list_reagents = list(/datum/reagent/water = 100)
 	///Refill rate for the watering can
 	var/refill_rate = 5

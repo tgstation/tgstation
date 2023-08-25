@@ -257,7 +257,7 @@
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
 				if(isjellyperson(human))
-					stage = 5
+					update_stage(5)
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
@@ -314,7 +314,7 @@
 	stage3 = list(span_danger("Your appendages are melting away."), span_danger("Your limbs begin to lose their shape."))
 	stage4 = list(span_danger("You're ravenous."))
 	stage5 = list(span_danger("You have become a morph."))
-	new_form = /mob/living/simple_animal/hostile/morph
+	new_form = /mob/living/basic/morph
 	infectable_biotypes = MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD //magic!
 	transformed_antag_datum = /datum/antagonist/morph
 

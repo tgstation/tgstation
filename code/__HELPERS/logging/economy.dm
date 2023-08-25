@@ -1,3 +1,2 @@
-/proc/log_econ(text)
-	if (CONFIG_GET(flag/log_econ))
-		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
+/proc/log_econ(text, list/data)
+	logger.Log(LOG_CATEGORY_ECONOMY, text, data)

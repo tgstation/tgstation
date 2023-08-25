@@ -56,15 +56,17 @@
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	return
 
-/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+/// Checks if the round should be ending, called every ticker tick
+/datum/game_mode/proc/check_finished()
 	if(!SSticker.setup_done)
 		return FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
 	if(GLOB.station_was_nuked)
 		return TRUE
-	if(force_ending)
+	if(GLOB.revolutionary_win)
 		return TRUE
+	return FALSE
 
 /*
  * Generate a list of station goals available to purchase to report to the crew.

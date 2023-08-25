@@ -37,7 +37,7 @@
 /datum/status_effect/terrified/on_remove()
 	UnregisterSignal(owner, COMSIG_CARBON_HELPED)
 
-/datum/status_effect/terrified/tick(seconds_per_tick, times_fired)
+/datum/status_effect/terrified/tick(seconds_between_ticks)
 	if(check_surrounding_darkness())
 		if(terror_buildup < DARKNESS_TERROR_CAP)
 			terror_buildup += DARKNESS_TERROR_AMOUNT
@@ -49,13 +49,13 @@
 		return
 
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD) //The onset, minor effects of terror buildup
-		owner.adjust_dizzy_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
-		owner.adjust_stutter_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
-		owner.adjust_jitter_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
+		owner.adjust_dizzy_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
+		owner.adjust_stutter_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
+		owner.adjust_jitter_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
-		owner.adjust_eye_blur_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
+		owner.adjust_eye_blur_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
 		if(prob(5)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
 			owner.visible_message(
@@ -78,7 +78,7 @@
 
 /datum/status_effect/terrified/get_examine_text()
 	if(terror_buildup > DARKNESS_TERROR_CAP) //If we're approaching a heart attack
-		return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] seizing up, about to collapse in fear!")
+		return span_boldwarning("[owner.p_They()] [owner.p_are()] seizing up, about to collapse in fear!")
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD)
 		return span_boldwarning("[owner] is visibly trembling and twitching. It looks like [owner.p_theyre()] freaking out!")
@@ -86,7 +86,7 @@
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD)
 		return span_warning("[owner] looks very worried about something. [owner.p_are(TRUE)] [owner.p_they()] alright?")
 
-	return span_notice("[owner] looks rather anxious. [owner.p_they(TRUE)] could probably use a hug...")
+	return span_notice("[owner] looks rather anxious. [owner.p_They()] could probably use a hug...")
 
 /// If we get a hug from a friend, we calm down! If we get a hug from a nightmare, we FREAK OUT.
 /datum/status_effect/terrified/proc/comfort_owner(datum/source, mob/living/hugger)

@@ -2,7 +2,7 @@
 /obj/item/melee/sickly_blade
 	name = "\improper sickly blade"
 	desc = "A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched..."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	throwforce = 10
+	toolspeed = 0.375
 	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 35

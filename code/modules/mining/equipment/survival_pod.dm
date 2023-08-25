@@ -79,6 +79,11 @@
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
 
+/obj/item/survivalcapsule/bathroom
+	name = "emergency relief capsule"
+	desc = "Provides vital emergency support to employees who are caught short in the field."
+	template_id = "shelter_toilet"
+
 //Pod objects
 
 //Window
@@ -93,7 +98,7 @@
 
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	icon_state = "pwindow"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
@@ -120,14 +125,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 
 //Windoor
 /obj/machinery/door/window/survival_pod
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	use_hitbox_render = FALSE
 	icon_state = "windoor"
 	base_state = "windoor"
 
 //Table
 /obj/structure/table/survival_pod
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	icon_state = "table"
 	smoothing_flags = NONE
 	smoothing_groups = null
@@ -135,7 +140,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	icon_state = "sleeper"
 	base_icon_state = "sleeper"
 
@@ -146,14 +151,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 
 //Lifeform Stasis Unit
 /obj/machinery/stasis/survival_pod
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	buckle_lying = 270
 
 //Computer
 /obj/item/gps/computer
 	name = "pod computer"
+	icon = 'icons/obj/mining_zones/pod_computer.dmi'
 	icon_state = "pod_computer"
-	icon = 'icons/obj/lavaland/pod_computer.dmi'
 	anchored = TRUE
 	density = TRUE
 	pixel_y = -32
@@ -178,11 +183,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 
 //Bed
 /obj/structure/bed/pod
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	icon_state = "bed"
 
 /obj/structure/bed/double/pod
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	icon_state = "bed_double"
 
 //Survival Storage Unit
@@ -190,7 +195,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	name = "survival pod storage"
 	desc = "A heated storage unit."
 	icon_state = "donkvendor"
-	icon = 'icons/obj/lavaland/donkvendor.dmi'
+	icon = 'icons/obj/mining_zones/donkvendor.dmi'
 	base_build_path = /obj/machinery/smartfridge/survival_pod
 	light_range = 5
 	light_power = 1.2
@@ -221,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 //Fluff
 /obj/structure/tubes
 	icon_state = "tubes"
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	name = "tubes"
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER

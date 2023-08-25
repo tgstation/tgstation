@@ -64,7 +64,7 @@
 	displayed_text = new_val
 
 	if(displayed_text)
-		maptext = MAPTEXT("<font size = [text_size]>[displayed_text]</font>")
+		maptext = MAPTEXT("[displayed_text]")
 	else
 		maptext = null
 
@@ -102,14 +102,13 @@
 
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
-	text_size = 1
 	color = "#00ff80"
 
 /obj/effect/countdown/supermatter/get_value()
 	var/obj/machinery/power/supermatter_crystal/S = attached_to
 	if(!istype(S))
 		return
-	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity_percent())]%</div>"
+	return "<div align='center' valign='bottom' style='position:relative; top:0px; left:0px'>[round(S.get_integrity_percent())]%</div>"
 
 /obj/effect/countdown/transformer
 	name = "transformer countdown"

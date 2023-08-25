@@ -90,7 +90,7 @@
 
 /obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"
@@ -247,15 +247,14 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor_type = /datum/armor/costume_russian_officer
+	armor_type = /datum/armor/clothing_under/costume_russian_officer
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	can_adjust = FALSE
 
-/datum/armor/costume_russian_officer
+/datum/armor/clothing_under/costume_russian_officer
 	melee = 10
-	bio = 10
 	fire = 30
 	acid = 30
 
@@ -266,25 +265,44 @@
 	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	species_exception = list(/datum/species/golem)
-	can_adjust = FALSE
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/costume/buttondown/slacks
 	name = "buttondown shirt with slacks"
 	desc = "A fancy buttondown shirt with slacks."
 	icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
-	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks_worn
+	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/under/costume/buttondown/slacks/service //preset one to be a formal white shirt and black pants
+	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
 /obj/item/clothing/under/costume/buttondown/shorts
 	name = "buttondown shirt with shorts"
 	desc = "A fancy buttondown shirt with shorts."
 	icon_state = "buttondown_shorts"
 	greyscale_config = /datum/greyscale_config/buttondown_shorts
-	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts_worn
+	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/under/costume/buttondown/skirt
+	name = "buttondown shirt with skirt"
+	desc = "A fancy buttondown shirt with skirt."
+	icon_state = "buttondown_skirt"
+	greyscale_config = /datum/greyscale_config/buttondown_skirt
+	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
+	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
+	body_parts_covered = CHEST|GROIN|ARMS
+	flags_1 = IS_PLAYER_COLORABLE_1
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/costume/buttondown/skirt/service //preset one to be a formal white shirt and black skirt
+	greyscale_colors = "#EEEEEE#CBDBFC#17171B#222227"
 
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"
@@ -304,7 +322,7 @@
 	icon_state = "football_suit"
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/football_suit
-	greyscale_config_worn = /datum/greyscale_config/football_suit_worn
+	greyscale_config_worn = /datum/greyscale_config/football_suit/worn
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -360,3 +378,13 @@
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/henchmen
+	name = "henchmen jumpsuit"
+	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
+	icon = 'icons/obj/clothing/under/syndicate.dmi'
+	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	icon_state = "henchmen"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR

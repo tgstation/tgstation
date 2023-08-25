@@ -29,6 +29,15 @@
 	if(main)
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
 
-/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/T)
-	return isgroundlessturf(T)
+/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/here_turf)
+	return isgroundlessturf(here_turf)
+
+/obj/effect/decal/cleanable/crayon/proc/on_painted(datum/source, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
+	SIGNAL_HANDLER
+	var/cost = spraycan.all_drawables[icon_state] || CRAYON_COST_DEFAULT
+	if (HAS_TRAIT(user, TRAIT_TAGGER))
+		cost *= 0.5
+	spraycan.use_charges(user, cost, requires_full = FALSE)
+	return DONT_USE_SPRAYCAN_CHARGES

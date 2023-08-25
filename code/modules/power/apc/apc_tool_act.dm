@@ -1,7 +1,20 @@
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
+	//Prying off broken cover
+	#warn does this apc stuff work
+	if((opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED) && (machine_stat & BROKEN))
+		crowbar.play_tool_sound(src)
+		balloon_alert(user, "prying...")
+		if(!crowbar.use_tool(src, user, 5 SECONDS))
+			return
+		opened = APC_COVER_REMOVED
+		balloon_alert(user, "cover removed")
+		update_appearance()
+		return
+
 	if(!panel_open || has_electronics != APC_ELECTRONICS_INSTALLED)
+		//Opening and closing cover
 		if(opened == APC_COVER_REMOVED)
 			return
 		if(machine_stat & BROKEN)
@@ -21,6 +34,7 @@
 		update_appearance()
 		return
 
+	//Taking out the electronics
 	if(terminal)
 		balloon_alert(user, "disconnect wires first!")
 		return
@@ -89,14 +103,32 @@
 
 /obj/machinery/power/apc/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
+
+	//repairing the cover
+	if((atom_integrity < max_integrity) && has_electronics)
+		if(opened == APC_COVER_REMOVED)
+			balloon_alert(user, "no cover to repair!")
+			return
+		if (machine_stat & BROKEN)
+			balloon_alert(user, "too damaged to repair!")
+			return
+		if(!welder.tool_start_check(user, amount=1))
+			return
+		balloon_alert(user, "repairing...")
+		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
+			update_integrity(min(atom_integrity += 50,max_integrity))
+			balloon_alert(user, "repaired")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	//disassembling the frame
 	if(!opened || has_electronics || terminal)
 		return
-	if(!welder.tool_start_check(user, amount=3))
+	if(!welder.tool_start_check(user, amount=1))
 		return
 	user.visible_message(span_notice("[user.name] welds [src]."), \
 						span_hear("You hear welding."))
 	balloon_alert(user, "welding the APC frame")
-	if(!welder.use_tool(src, user, 50, volume=50, amount=3))
+	if(!welder.use_tool(src, user, 50, volume=50))
 		return
 	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
@@ -117,13 +149,13 @@
 		if(machine_stat & BROKEN)
 			balloon_alert(user, "frame is too damaged!")
 			return FALSE
-		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
+		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
 
 	if(!cell)
 		if(machine_stat & MAINT)
 			balloon_alert(user, "no board for a cell!")
 			return FALSE
-		return list("mode" = RCD_WALLFRAME, "delay" = 50, "cost" = 10)
+		return list("mode" = RCD_WALLFRAME, "delay" = 5 SECONDS, "cost" = 10)
 
 	balloon_alert(user, "has both board and cell!")
 	return FALSE
@@ -158,28 +190,36 @@
 	balloon_alert(user, "has both board and cell!")
 	return FALSE
 
-/obj/machinery/power/apc/emag_act(mob/user)
+/obj/machinery/power/apc/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if((obj_flags & EMAGGED) || malfhack)
-		return
+		return FALSE
+
+	if(opened)
+		balloon_alert(user, "close the cover first!")
+
+/obj/machinery/power/apc/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if((obj_flags & EMAGGED) || malfhack)
+		return FALSE
 
 	if(opened)
 		balloon_alert(user, "close the cover first!")
 		return
 	else if(panel_open)
 		balloon_alert(user, "close the panel first!")
-		return
+		return FALSE
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
-		return
+		return FALSE
 	var/image/overlay = image(icon, src, "sparks_flick", layer, dir)
 	SET_PLANE_EXPLICIT(overlay, plane, src)
 	flick_overlay_view(overlay, src, 0.5 SECONDS)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 	locked = FALSE
-	balloon_alert(user, "you emag the APC")
+	balloon_alert(user, "interface damaged")
 	update_appearance()
-
+	return TRUE
+	
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)
 	. = ..()
@@ -209,7 +249,5 @@
 			locked = !locked
 			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
-			if(!locked)
-				ui_interact(user)
 		else
 			balloon_alert(user, "access denied!")

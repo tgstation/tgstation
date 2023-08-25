@@ -7,9 +7,24 @@
 
 ///////MEDBAY
 
-/obj/structure/sign/departments/medbay
+/obj/structure/sign/departments/med
 	name = "\improper Medbay sign"
 	sign_change_name = "Department - Medbay"
+	desc = "A sign labeling an area of medical department."
+	icon_state = "med"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med)
+
+/obj/structure/sign/departments/med_alt
+	name = "\improper Medbay sign"
+	sign_change_name = "Department - Medbay Alt"
+	icon_state = "medbay"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med_alt)
+
+/obj/structure/sign/departments/medbay
+	name = "\improper Medbay sign"
+	sign_change_name = "Generic Medical"
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
 	icon_state = "bluecross"
 
@@ -17,8 +32,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay)
 
 /obj/structure/sign/departments/medbay/alt
 	name = "\improper Medbay sign"
-	sign_change_name = "Department - Medbay Alt"
-	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
+	sign_change_name = "Generic Medical Alt"
 	icon_state = "department_med"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay/alt)
@@ -56,10 +70,26 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/pharmac
 /obj/structure/sign/departments/psychology
 	name = "\improper Psychology sign"
 	sign_change_name = "Department - Medbay: Psychology"
-	desc = "A sign labelling where the Psychologist works, they can probably help you get your head straight."
+	desc = "A sign labelling an area where the Psychologist works, they can probably help you get your head straight."
 	icon_state = "department_psych"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/psychology)
+
+/obj/structure/sign/departments/virology
+	name = "\improper Virology sign"
+	sign_change_name = "Department - Medbay: Virology"
+	desc = "A sign labelling an area where the virologist's laboratory is located."
+	icon_state = "pharmacy"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology)
+
+/obj/structure/sign/departments/morgue
+	name = "\improper Morgue sign"
+	sign_change_name = "Department - Medbay: Morgue"
+	desc = "A sign labelling an area where station stores its ever-piling bodies."
+	icon_state = "morgue"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue)
 
 ///////ENGINEERING
 
@@ -87,10 +117,11 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science)
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science/alt)
 
+
 /obj/structure/sign/departments/xenobio
 	name = "\improper Xenobiology sign"
 	sign_change_name = "Department - Science: Xenobiology"
-	desc = "A sign labelling an area as a place where xenobiological entities are researched."
+	desc = "A sign labelling an area where xenobiological entities are researched."
 	icon_state = "department_xeno"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio)
@@ -100,9 +131,16 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio)
 	sign_change_name = "Department - Science: Xenobiology Alt"
 	icon_state = "xenobio2"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio/alt, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio/alt)
 
-// Wallening todo: we need a new sprite for this
+// Wallening todo: new sprite for htis, clear it out of signs.dmi
+/obj/structure/sign/departments/genetics
+	name = "\improper Genetics sign"
+	sign_change_name = "Department - Science: Genetics"
+	desc = "A sign labelling an area where the field of genetics is researched."
+	icon_state = "gene"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/genetics)
 /obj/structure/sign/departments/rndserver
 	name ="\improper R&D Server sign"
 	sign_change_name = "Department - Science: R&D Server"
@@ -133,6 +171,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt1, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt2, 32)
 
+/obj/structure/sign/departments/botany/botany/alt3
+	sign_change_name = "Department - Botany (Tray) Alt"
+	icon_state = "botany"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3, 32)
+
 /obj/structure/sign/departments/custodian
 	name = "\improper Janitor sign"
 	sign_change_name = "Department - Janitor"
@@ -148,6 +192,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian)
 	icon_state = "department_chapel"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
+
+/obj/structure/sign/departments/holy_alt
+	name = "\improper Chapel sign"
+	sign_change_name = "Department - Chapel"
+	desc = "A sign labelling a religious area."
+	icon_state = "chapel"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
 
 /obj/structure/sign/departments/lawyer
 	name = "\improper Legal Department sign"

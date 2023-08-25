@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 23
+#define DB_MINOR_VERSION 24
 
 
 //! ## Timing subsystem
@@ -159,6 +159,7 @@
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
+#define INIT_ORDER_TTS 33
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
@@ -196,13 +197,14 @@
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_WET_FLOORS 20
-#define FIRE_PRIORITY_FLUIDS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
+#define FIRE_PRIORITY_ASSETS 20
 #define FIRE_PRIORITY_HYPERSPACE_DRIFT 20
 #define FIRE_PRIORITY_NPC_MOVEMENT 21
 #define FIRE_PRIORITY_NPC_ACTIONS 22
 #define FIRE_PRIORITY_PATHFINDING 23
+#define FIRE_PRIORITY_CLIFF_FALLING 24
 #define FIRE_PRIORITY_PROCESS 25
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
@@ -214,13 +216,14 @@
 #define FIRE_PRIORITY_DEFAULT 50
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
+#define FIRE_PRIORITY_FLUIDS 80
 #define FIRE_PRIORITY_MOBS 100
-#define FIRE_PRIORITY_ASSETS 105
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
+#define FIRE_PRIORITY_TTS 425
 #define FIRE_PRIORITY_MOUSE_ENTERED 450
 #define FIRE_PRIORITY_OVERLAYS 500
 #define FIRE_PRIORITY_EXPLOSIONS 666
@@ -233,7 +236,6 @@
 
 // SS runlevels
 
-#define RUNLEVEL_INIT 0
 #define RUNLEVEL_LOBBY 1
 #define RUNLEVEL_SETUP 2
 #define RUNLEVEL_GAME 4
@@ -252,6 +254,14 @@
 #define GAME_STATE_PLAYING 3
 /// Game has round finished
 #define GAME_STATE_FINISHED 4
+
+// Used for SSticker.force_ending
+/// Default, round is not being forced to end.
+#define END_ROUND_AS_NORMAL 0
+/// End the round now as normal
+#define FORCE_END_ROUND 1
+/// For admin forcing roundend, can be used to distinguish the two
+#define ADMIN_FORCE_END_ROUND 2
 
 /**
 	Create a new timer and add it to the queue.
@@ -278,8 +288,8 @@
 #define SSAIR_REBUILD_QUEUE 2
 
 // Explosion Subsystem subtasks
-#define SSEXPLOSIONS_MOVABLES 1
-#define SSEXPLOSIONS_TURFS 2
+#define SSEXPLOSIONS_TURFS 1
+#define SSEXPLOSIONS_MOVABLES 2
 #define SSEXPLOSIONS_THROWS 3
 
 // Wardrobe subsystem tasks

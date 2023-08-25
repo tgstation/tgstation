@@ -11,7 +11,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 	reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW * 0.5
 	sharpness = SHARP_POINTY
@@ -145,8 +145,12 @@
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
+	. += update_reagent_overlay()
+
+/// Returns a list of overlays to add that relate to the reagents inside the syringe
+/obj/item/reagent_containers/syringe/proc/update_reagent_overlay()
 	if(reagents?.total_volume)
-		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[get_rounded_vol()]")
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "syringe[get_rounded_vol()]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
 
@@ -195,6 +199,7 @@
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
 	amount_per_transfer_from_this = 50
+	has_variable_transfer_amount = FALSE
 	volume = 50
 
 /obj/item/reagent_containers/syringe/lethal/choral
@@ -207,6 +212,7 @@
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
+	has_variable_transfer_amount = FALSE
 	volume = 1
 	list_reagents = list(/datum/reagent/mulligan = 1)
 
@@ -214,6 +220,7 @@
 	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
+	has_variable_transfer_amount = FALSE
 	volume = 1
 	list_reagents = list(/datum/reagent/gluttonytoxin = 1)
 
@@ -244,6 +251,19 @@
 	base_icon_state = "crude"
 	possible_transfer_amounts = list(1,5)
 	volume = 5
+
+/obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
+	return
+
+	// Used by monkeys from the elemental plane of bananas. Reagents come from bungo pit, death berries, destroying angel, jupiter cups, and jumping beans.
+/obj/item/reagent_containers/syringe/crude/tribal
+	name = "tribal syringe"
+	desc = "A crudely made syringe. Smells like bananas."
+
+/obj/item/reagent_containers/syringe/crude/tribal/Initialize(mapload)
+	var/toxin_to_get = pick(/datum/reagent/toxin/bungotoxin, /datum/reagent/toxin/coniine, /datum/reagent/toxin/amanitin, /datum/reagent/consumable/liquidelectricity/enriched, /datum/reagent/ants)
+	list_reagents = list((toxin_to_get) = 5)
+	return ..()
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"

@@ -1,3 +1,6 @@
+///The color of light space emits
+GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
+
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
@@ -21,7 +24,6 @@
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.75
-	light_color = COLOR_STARLIGHT
 	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
@@ -32,53 +34,6 @@
 	SHOULD_CALL_PARENT(FALSE)
 	//This is used to optimize the map loader
 	return
-
-/**
- * Space Initialize
- *
- * Doesn't call parent, see [/atom/proc/Initialize].
- * When adding new stuff to /atom/Initialize, /turf/Initialize, etc
- * don't just add it here unless space actually needs it.
- *
- * There is a lot of work that is intentionally not done because it is not currently used.
- * This includes stuff like smoothing, blocking camera visibility, etc.
- * If you are facing some odd bug with specifically space, check if it's something that was
- * intentionally ommitted from this implementation.
- */
-/turf/open/space/Initialize(mapload)
-	SHOULD_CALL_PARENT(FALSE)
-	air = space_gas
-
-	if (PERFORM_ALL_TESTS(focus_only/multiple_space_initialization))
-		if(flags_1 & INITIALIZED_1)
-			stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
-
-
-	// We make the assumption that the space plane will never be blacklisted, as an optimization
-	if(SSmapping.max_plane_offset)
-		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
-
-	var/area/our_area = loc
-	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
-		// Intentionally not add_overlay for performance reasons.
-		// add_overlay does a bunch of generic stuff, like creating a new list for overlays,
-		// queueing compile, cloning appearance, etc etc etc that is not necessary here.
-		overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
-
-	if (!mapload)
-		if(requires_activation)
-			SSair.add_to_active(src, TRUE)
-
-		if(SSmapping.max_plane_offset)
-			var/turf/T = SSmapping.get_turf_above(src)
-			if(T)
-				T.multiz_turf_new(src, DOWN)
-			T = SSmapping.get_turf_below(src)
-			if(T)
-				T.multiz_turf_new(src, UP)
-
-	return INITIALIZE_HINT_NORMAL
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /turf/open/space/attack_ghost(mob/dead/observer/user)
@@ -212,9 +167,9 @@
 		if(RCD_CATWALK)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 			if(lattice)
-				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 1)
-			else
 				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 2)
+			else
+				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 4)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -251,6 +206,8 @@
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
+	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
+		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	icon_state = "pure_white"
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
@@ -260,6 +217,13 @@
 /turf/open/space/openspace/LateInitialize()
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
+
+/turf/open/space/openspace/Destroy()
+	// Signals persist through destroy, GO HOME
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		UnregisterSignal(below, COMSIG_TURF_CHANGE)
+	return ..()
 
 /turf/open/space/openspace/zAirIn()
 	return TRUE
@@ -296,7 +260,7 @@
 	return FALSE
 
 /turf/open/space/openspace/enable_starlight()
-	var/turf/below = SSmapping.get_turf_below(src)
+	var/turf/below = GET_TURF_BELOW(src)
 	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
 	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
 	if(!isspaceturf(below))
@@ -308,7 +272,7 @@
 	if(.)
 		return
 	// If we're here, the starlight is not to be
-	var/turf/below = SSmapping.get_turf_below(src)
+	var/turf/below = GET_TURF_BELOW(src)
 	UnregisterSignal(below, COMSIG_TURF_CHANGE)
 
 /turf/open/space/openspace/proc/on_below_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
