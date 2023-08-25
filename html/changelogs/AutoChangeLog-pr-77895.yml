@@ -1,4 +1,0 @@
-author: "iwishforducks"
-delete-after: True
-changes:
-  - bugfix: "You should be able to click on lattices on icebox with the RCD and construct a floor now"

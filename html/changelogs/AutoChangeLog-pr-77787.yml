@@ -1,6 +1,0 @@
-author: "Deadgebert"
-delete-after: True
-changes:
-  - qol: "Adds air supply for cycling airlocks in ordnance and atmos incinerator on all stations"
-  - qol: "Makes internal incinerator chamber a vacuum"
-  - bugfix: "Adds missing incinerator airlock control console to Tram station"
