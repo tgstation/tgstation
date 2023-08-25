@@ -124,10 +124,10 @@
  * Can be overriden by knoweldge subtypes.
  */
 /datum/heretic_knowledge/proc/parse_required_item(atom/item, number_of_things)
-			// If we need a human, there is a high likelihood we actually need a (dead) body
-	if(ishuman(initial(item.type)))
+	// If we need a human, there is a high likelihood we actually need a (dead) body
+	if(ishuman(item))
 		return "[number_of_things > 1 ? "bodies" : "body"]"
-	if(isliving(initial(item.type)))
+	if(isliving(item))
 		return "of any kind of carcass"
 
 /**
@@ -176,7 +176,7 @@
 			var/obj/item/stack/sac_stack = sacrificed
 			var/how_much_to_use = 0
 			for(var/requirement in required_atoms)
-				if(istype(sacrificed, requirement) || (islist(requirement) ? is_type_in_list(sacrificed, requirement)))
+				if(istype(sacrificed, requirement) || (islist(requirement) ? is_type_in_list(sacrificed, requirement) : TRUE))
 					how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 					break
 

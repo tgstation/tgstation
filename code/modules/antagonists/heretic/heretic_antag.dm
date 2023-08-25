@@ -80,6 +80,7 @@
 	var/list/data = list()
 
 	data["charges"] = knowledge_points
+	data["side_charges"] = side_path_points
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
@@ -136,18 +137,22 @@
 			if(!ispath(researched_path))
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
 
-			if(initial(researched_path.cost) > knowledge_points)
-
-				// If side path and has path points, buy!
-				if(!(initial(researched_path.route) == PATH_SIDE && side_path_points > 0))
-					return TRUE
-				side_path_points--
+			// If side path and has path points, buy!
+			var/coupon = FALSE
+			if((initial(researched_path.route) == PATH_SIDE )&& (side_path_points > 0))
+				coupon = TRUE
+			// else try normal purchase
+			else if(initial(researched_path.cost) > knowledge_points)
+				return
 
 			if(!gain_knowledge(researched_path))
 				return TRUE
 
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
-			knowledge_points -= initial(researched_path.cost)
+			if(coupon)
+				side_path_points--
+			else
+				knowledge_points -= initial(researched_path.cost)
 			return TRUE
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)

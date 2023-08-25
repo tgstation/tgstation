@@ -51,6 +51,7 @@ type Objective = {
 
 type Info = {
   charges: number;
+  side_charges: number;
   total_sacrifices: number;
   ascended: BooleanLike;
   objectives: Objective[];
@@ -160,7 +161,7 @@ const GuideSection = () => {
 
 const InformationSection = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { charges, total_sacrifices, ascended } = data;
+  const { charges, side_charges, total_sacrifices, ascended } = data;
   return (
     <Stack.Item>
       <Stack vertical fill>
@@ -182,6 +183,13 @@ const InformationSection = (props, context) => {
           <span style={hereticBlue}>
             knowledge point{charges !== 1 ? 's' : ''}
           </span>
+          {!!side_charges && (
+            <span>
+              {' '}
+              and <b>{side_charges}</b> side point
+              {side_charges !== 1 ? 's' : ''}
+            </span>
+          )}{' '}
           .
         </Stack.Item>
         <Stack.Item>
@@ -278,7 +286,7 @@ const KnowledgeShop = (props, context) => {
 
 const ResearchInfo = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { charges } = data;
+  const { charges, side_charges } = data;
 
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
@@ -288,7 +296,14 @@ const ResearchInfo = (props, context) => {
             You have <b>{charges || 0}</b>&nbsp;
             <span style={hereticBlue}>
               knowledge point{charges !== 1 ? 's' : ''}
-            </span>{' '}
+            </span>
+            {!!side_charges && (
+              <span>
+                {' '}
+                and <b>{side_charges}</b> side point
+                {side_charges !== 1 ? 's' : ''}
+              </span>
+            )}{' '}
             to spend.
           </Stack.Item>
           <Stack.Item grow>

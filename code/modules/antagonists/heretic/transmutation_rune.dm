@@ -148,9 +148,10 @@
 		if(islist(req_type))
 			var/list/req_type_list = req_type
 			for(var/atom/possible_type as anything in req_type_list)
-				formatted_thing += parse_required_item(possible_type)
+				formatted_thing += ritual.parse_required_item(possible_type)
 
-		else formatted_thing += parse_required_item(possible_type)
+		else
+			formatted_thing = ritual.parse_required_item(req_type)
 
 		what_are_we_missing += formatted_thing
 
