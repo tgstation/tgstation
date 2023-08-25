@@ -73,6 +73,9 @@
 			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role.title in exclusive_roles)) // Is the rule exclusive to their job?
 				trimmed_list.Remove(M)
 				continue
+			if(M.mind.pilot_ref) // are they in the vdom?
+				trimmed_list.Remove(M)
+				continue
 	return trimmed_list
 
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
