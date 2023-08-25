@@ -7,7 +7,6 @@
 	desc = "A brown dress shirt, coupled with a pair of black slacks. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	inhand_icon_state = "lb_suit"
-	alt_covers_chest = FALSE
 
 /obj/item/clothing/under/rank/cargo/qm/skirt
 	name = "quartermaster's skirt"
