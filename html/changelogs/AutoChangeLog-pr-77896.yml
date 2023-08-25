@@ -1,0 +1,4 @@
+author: "iwishforducks"
+delete-after: True
+changes:
+  - bugfix: "You should no longer attack RCD effects when they're done constructing."
