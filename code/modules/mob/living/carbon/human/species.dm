@@ -2317,6 +2317,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
 	target.create_bodyparts(bodypart_overrides)
+	target.regenerate_icons()
 
 /datum/species/proc/spec_revival(mob/living/carbon/human/H)
 	return
