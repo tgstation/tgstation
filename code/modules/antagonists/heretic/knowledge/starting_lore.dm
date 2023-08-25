@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "Codex Cicatrix"
 	desc = "Allows you to transmute a book, any unique pen (anything but generic pens), and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
 		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
-		It can also be used to draw and remove transmutation runes easier."
+		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
 	required_atoms = list(
