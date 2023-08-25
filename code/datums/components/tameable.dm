@@ -32,6 +32,10 @@
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
 
+/datum/component/tameable/Destroy(force, silent)
+	after_tame = null
+	return ..()
+
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
 	if(!is_type_in_list(food, food_types))
