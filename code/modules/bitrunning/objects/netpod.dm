@@ -73,6 +73,10 @@
 		icon_state = base_icon_state + "_open_active"
 		return ..()
 
+	if(panel_open)
+		icon_state = base_icon_state + "_panel"
+		return ..()
+
 	icon_state = base_icon_state + "_closed"
 	if(occupant)
 		icon_state += "_active"
@@ -160,10 +164,12 @@
 /obj/machinery/netpod/default_pry_open(obj/item/crowbar, mob/living/pryer)
 	if(isnull(occupant) || !iscarbon(occupant))
 		if(!state_open)
+			if(panel_open)
+				return FALSE
 			open_machine()
 		else
 			shut_pod()
-		crowbar.play_tool_sound(src, 50)
+
 		return TRUE
 
 	pryer.visible_message(

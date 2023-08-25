@@ -23,8 +23,8 @@
 	var/domain_randomized = FALSE
 	/// If any threats were spawned, adds to rewards
 	var/domain_threats = 0
-	/// Currently (un)loading a domain. Prevents multiple user actions.
-	var/is_ready = FALSE
+	/// Prevents multiple user actions. Handled by loading domains and cooldowns
+	var/is_ready = TRUE
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
