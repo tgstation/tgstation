@@ -45,16 +45,6 @@
 	var/amber_distance_threshold = AMBER_THRESHOLD_NORMAL
 	var/red_distance_threshold = RED_THRESHOLD_NORMAL
 
-/obj/machinery/icts/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
-	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
-
-		if(default_deconstruction_crowbar(weapon))
-			return
-
-	return ..()
-
 /** Crossing signal subtypes
  *
  *  Each map will have a different amount of tiles between stations, so adjust the signals here based on the map.
@@ -115,6 +105,7 @@
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 	RegisterSignal(SSicts_transport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
 	SSicts_transport.crossing_signals += src
+	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/icts/crossing_signal/LateInitialize(mapload)
@@ -126,6 +117,37 @@
 /obj/machinery/icts/crossing_signal/Destroy()
 	SSicts_transport.crossing_signals -= src
 	. = ..()
+
+/obj/machinery/icts/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
+
+	if(panel_open)
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			//context[SCREENTIP_CONTEXT_LMB] = "rotate signal" // gotta move this
+			context[SCREENTIP_CONTEXT_RMB] = "flip signal"
+		if(malfunctioning || methods_to_fix.len)
+			context[SCREENTIP_CONTEXT_LMB] = "repair electronics"
+		if(held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_RMB] = "deconstruct"
+
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "repair frame"
+
+	if(istype(held_item, /obj/item/card/emag) && !(obj_flags & EMAGGED))
+		context[SCREENTIP_CONTEXT_LMB] = "disable sensors"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/icts/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
+	if (!user.combat_mode)
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
+			return
+
+		if(default_deconstruction_crowbar(weapon))
+			return
+
+	return ..()
 
 /obj/machinery/icts/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -139,8 +161,7 @@
 	. = ..()
 
 	if(default_change_direction_wrench(user, tool))
-		clear_uplink()
-		update_appearance()
+		find_uplink()
 		return TRUE
 
 /obj/machinery/icts/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
@@ -213,6 +234,29 @@
 	inbound = null
 	outbound = null
 	update_appearance()
+
+/obj/machinery/icts/crossing_signal/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+
+	if(!is_operational)
+		return
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ICTSCrossingSignal")
+		ui.open()
+
+/obj/machinery/icts/crossing_signal/ui_data(mob/user)
+	var/list/data = list()
+
+	data = list(
+		"sensorStatus" = linked_sensor ? TRUE : FALSE,
+		"operatingStatus" = operating_status,
+		"inboundPlatform" = inbound,
+		"outboundPlatform" = outbound,
+	)
+
+	return data
 
 /**
  * Only process if the tram is actually moving
@@ -613,7 +657,7 @@
 	inbound = null
 	outbound = null
 
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/beacon in SSicts_transport.nav_beacons[configured_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/beacon in SSicts_transport.nav_beacons[configured_transport_id])
 		if(beacon.z != src.z)
 			continue
 
