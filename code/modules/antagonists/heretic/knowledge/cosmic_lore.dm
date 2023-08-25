@@ -126,7 +126,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to people's cells through cosmic radiation. \
+	desc = "Your blade now deals damage to people's brains through cosmic radiation. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
 		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
@@ -160,8 +160,8 @@
 	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), combo_duration, TIMER_STOPPABLE)
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
-	target.adjustFireLoss(4)
-	target.adjustCloneLoss(2)
+	target.adjustFireLoss(6)
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 100)
 	if(target == second_target_resolved || target == third_target_resolved)
 		reset_combo(source)
 		return
@@ -171,12 +171,12 @@
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
 		second_target_resolved.adjustFireLoss(10)
-		second_target_resolved.adjustCloneLoss(6)
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 6, 100)
 		if(third_target_resolved)
 			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 			third_target_resolved.adjustFireLoss(20)
-			third_target_resolved.adjustCloneLoss(12)
+			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 12, 100)
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
 				if(target.mind && target.stat != DEAD)

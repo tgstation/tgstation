@@ -236,7 +236,7 @@
 /// What to process when the beam is connected to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
 	target.adjustFireLoss(3)
-	target.adjustCloneLoss(1)
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 100)
 	return
 
 /// What to remove when the beam disconnects from a target
