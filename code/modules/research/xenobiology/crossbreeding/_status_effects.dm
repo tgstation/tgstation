@@ -992,7 +992,7 @@
 		owner.apply_damage_type(-heal_amount, damagetype = pick(healing_types))
 
 	owner.adjust_nutrition(3)
-	drained.adjustCloneLoss(heal_amount * DRAIN_DAMAGE_MULTIPLIER)
+	drained.apply_damage(heal_amount * DRAIN_DAMAGE_MULTIPLIER, damagetype = BRUTE, spread_damage = TRUE)
 	return ..()
 
 #undef DRAIN_DAMAGE_MULTIPLIER

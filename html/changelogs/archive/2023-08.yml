@@ -1126,3 +1126,56 @@
   - balance: Powersinks are now available earlier in traitor progression.
   YehnBeep:
   - qol: Icebox perma now has holopads.
+2023-08-25:
+  Ben10Omintrix:
+  - bugfix: regal rats now run away from whoever attacked them
+  - rscadd: new pet behavior which makes pets defend their owners if they got attacked
+  Deadgebert:
+  - qol: Adds air supply for cycling airlocks in ordnance and atmos incinerator on
+      all stations
+  - qol: Makes internal incinerator chamber a vacuum
+  - bugfix: Adds missing incinerator airlock control console to Tram station
+  Derpguy3:
+  - bugfix: Rotated a water tank in icebox's lower service hall, connecting the plumbing
+      to the water source.
+  Dmeto:
+  - bugfix: Some incident display adverts on Northstar and Birdshot have been unobstructed.
+  Donglesplonge:
+  - balance: removes the access restrictions from all animals found under the livestocks
+      tab of the cargo order console, now assistants can private order animals for
+      their farms without access hunting
+  Fikou:
+  - bugfix: fixes multitools possibly randomly losing their buffer
+  - bugfix: fixes modlinks checking battery charge without a battery and working without
+      charge
+  - qol: modlink stuff is a bit more explained
+  - bugfix: modlinks printed from rnd no longer start with a frequency (remember to
+      copy it from another one with a multitool buffer, robotics starts with 2 NT
+      frequency linked ones)
+  - balance: ninja's stealth module gives silent footsteps when active
+  - balance: all ninjas now have the light step and freerunning quirks
+  - balance: ninja's hacker module shove no longer stuns in 1 hit. first shove knocks
+      down and pushes away, second one stuns
+  - bugfix: fixes ninja shoves not causing sparks
+  - qol: the person in an energy net is now reasonable to hit, the dark part of the
+      sprite is now an underlay, so you can click the person inside the net pretty
+      easily and if you wanna hit the net you click the green part or the darker sides
+      that the human sprite doesnt cover
+  Guillaume Prata:
+  - qol: QM jumpsuit/skirt expose the torso when adjusted.
+  Helg2:
+  - bugfix: fixed apocalypse rune applying invisibility to mobs.
+  - bugfix: Unholy water preview icon is now similar with the icon it has.
+  LT3:
+  - rscadd: Immovable rod will now battle the unstoppable tram should they cross paths
+  - bugfix: Birdshot's maint tram doors now work properly
+  - bugfix: Tramstation's exterior light fixtures no longer get destroyed as soon
+      as the tram moves
+  - code_imp: Tram landmarks are now all subtyped instead of map varedits
+  distributivgesetz:
+  - rscdel: Removes miscellaneous sources of clone damage from the game.
+  iwishforducks:
+  - bugfix: You should be able to click on lattices on icebox with the RCD and construct
+      a floor now
+  mc-oofert:
+  - rscadd: becoming a felinid makes your brain smaller (visually)
