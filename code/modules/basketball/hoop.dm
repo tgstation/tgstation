@@ -56,7 +56,6 @@
 /obj/structure/hoop/update_overlays()
 	. = ..()
 	cut_overlays()
-	#warn do hoops still render above players
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
 
