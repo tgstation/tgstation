@@ -31,7 +31,7 @@
 
 /datum/component/golem_food/Destroy(force, silent)
 	QDEL_NULL(golem_snack)
-	QDEL_NULL(extra_validation)
+	extra_validation = null
 	return ..()
 
 /// Attempt to feed this item to golem

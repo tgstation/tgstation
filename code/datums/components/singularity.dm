@@ -110,7 +110,7 @@
 
 /datum/component/singularity/Destroy(force, silent)
 	GLOB.singularities -= src
-	QDEL_NULL(consume_callback)
+	consume_callback = null
 	target = null
 
 	return ..()
