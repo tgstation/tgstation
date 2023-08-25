@@ -39,7 +39,7 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Reference to this ore vent's NODE drone, to track wave success.
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
-	/// Percent chance that this vent will produce an artifact as well.
+	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
 	/// String of ores that this vent can produce.
 	var/ore_string = ""
@@ -47,6 +47,7 @@
 
 /obj/structure/ore_vent/Initialize(mapload)
 	generate_description()
+	register_context()
 	SSore_generation.possible_vents += src
 	if(tapped)
 		SSore_generation.processed_vents += src
@@ -81,6 +82,12 @@
 		. += span_notice("This vent can produce [ore_string]")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+
+/obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	// single use lights can be toggled on once
+	if(istype(held_item, /obj/item/t_scanner/adv_mining_scanner))
+		context[SCREENTIP_CONTEXT_LMB] = "Scan vent"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Picks n types materials to pack into a boulder created by this ore vent, where n is this vent's minerals_per_boulder.
@@ -167,7 +174,9 @@
 			if(!user_id_card)
 				continue
 			if(user_id_card)
-				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER * boulder_size)
+				var/point_reward_val = MINER_POINT_MULTIPLIER * boulder_size
+				user_id_card.registered_account.mining_points += (point_reward_val)
+				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.escape() //Visually show the drone is done and flies away.
 	icon_state = "ore_vent_active"
 	update_appearance(UPDATE_ICON_STATE)
@@ -216,6 +225,7 @@
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
 	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
+	icon_state = "ore_vent_active"
 	tapped = TRUE
 	discovered = TRUE
 	unique_vent = TRUE
@@ -277,16 +287,17 @@
 		/datum/material/bluespace = 1,
 		/datum/material/plastic = 1
 	)
+	defending_mobs = list(
+		/mob/living/simple_animal/hostile/megafauna/bubblegum,
+		/mob/living/simple_animal/hostile/megafauna/dragon,
+		/mob/living/simple_animal/hostile/megafauna/colossus
+	)
 	///What boss do we want to spawn?
 	var/summoned_boss = null
 
 /obj/structure/ore_vent/boss/Initialize(mapload)
 	. = ..()
-	summoned_boss = pick(list(
-		/mob/living/simple_animal/hostile/megafauna/bubblegum,
-		/mob/living/simple_animal/hostile/megafauna/dragon,
-		/mob/living/simple_animal/hostile/megafauna/colossus,
-	))
+	summoned_boss = pick(defending_mobs)
 
 /obj/structure/ore_vent/boss/examine(mob/user)
 	. = ..()
@@ -298,7 +309,11 @@
 			boss_string = "Sharp teeth and scales"
 		if(/mob/living/simple_animal/hostile/megafauna/colossus)
 			boss_string = "A giant, armored behemoth"
-	. += span_notice("[boss_string] is etched into the side of the vent.")
+		if(/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner)
+			boss_string = "A bloody drillmark"
+		if(/mob/living/simple_animal/hostile/megafauna/wendigo)
+			boss_string = "A chilling skull"
+	. += span_notice("[boss_string] is etched onto the side of the vent.")
 
 /obj/structure/ore_vent/boss/start_wave_defense()
 	// Completely override the normal wave defense, and just spawn the boss.
@@ -310,121 +325,12 @@
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
 	. = ..()
 
-
-
-/obj/item/boulder
-	name = "boulder"
-	desc = "This rocks."
-	icon_state = "ore"
-	icon = 'icons/obj/ore.dmi'
-	item_flags = NO_MAT_REDEMPTION
-	///When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
-	var/obj/machinery/bouldertech/processed_by = null
-	/// How many steps of refinement this boulder has gone through. Starts at 5-8, goes down one each machine process.
-	var/durability = 5
-	COOLDOWN_DECLARE(processing_cooldown)
-
-/obj/item/boulder/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
-	durability += rand(0, 3) //randomize durability a bit for some flavor. Gives room for subtypes to have different durability values.
-
-/obj/item/boulder/Destroy(force)
-	. = ..()
-	SSore_generation.available_boulders -= src
-	processed_by = null
-
-/obj/item/boulder/examine(mob/user)
-	. = ..()
-	. += span_notice("This boulder would take [durability] more steps to refine.")
-
-/obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
-	. = ..()
-	if(weapon.tool_behaviour == TOOL_MINING)
-		manual_process(weapon, user)
-	if(isgolem(user))
-		manual_process(weapon, user, 3)
-		return
-
-/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/user, golem_speed)
-	var/process_speed = 0
-	if(weapon)
-		process_speed = weapon.toolspeed
-		weapon.play_tool_sound(src, 50)
-	else if (golem_speed)
-		process_speed = golem_speed
-	else
-		return
-
-	to_chat(user, span_notice("You start picking at \the [src]..."))
-
-
-	if(!do_after(user, (2 * process_speed SECONDS), target = src))
-		return
-	if(!user.Adjacent(src))
-		return
-	durability--
-	if(durability <= 0)
-		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
-		convert_to_ore()
-		qdel(src)
-		return
-	else if(durability == 1)
-		to_chat(user, span_notice("\The [src] has been weakened, and is close to crumbling!"))
-		manual_process(weapon, user, golem_speed)
-		return
-	else
-		to_chat(user, span_notice("You finish working on \the [src], and it looks a bit weaker."))
-		manual_process(weapon, user, golem_speed)
-		return
-
-/obj/item/boulder/proc/convert_to_ore()
-	for(var/datum/material/picked in custom_materials)
-		/// Take the associated value and convert it into ore stacks, but less resources than if they processed it.
-		switch(picked)
-			if(/datum/material/iron)
-				new /obj/item/stack/ore/iron(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/gold)
-				new /obj/item/stack/ore/gold(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/silver)
-				new /obj/item/stack/ore/silver(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/plasma)
-				new /obj/item/stack/ore/plasma(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/diamond)
-				new /obj/item/stack/ore/diamond(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/glass)
-				new /obj/item/stack/ore/glass(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/bluespace)
-				new /obj/item/stack/ore/bluespace_crystal(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/titanium)
-				new /obj/item/stack/ore/titanium(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-			if(/datum/material/uranium)
-				new /obj/item/stack/ore/uranium(drop_location(), clamp(round(custom_materials[picked]/200), 1, 3))
-				continue
-
-/obj/item/boulder/proc/can_get_processed()
-	if(COOLDOWN_FINISHED(src, processing_cooldown))
-		return TRUE
-	return FALSE
-
-/obj/item/boulder/proc/reset_processing_cooldown()
-	COOLDOWN_START(src, processing_cooldown, 2 SECONDS)
-
-/obj/item/boulder/artifact
-	name = "artifact boulder"
-	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
-
-/obj/item/boulder/artifact/Initialize(mapload)
-	. = ..()
-	new /obj/item/relic(src) //var/obj/item/relic/boulder_relic
+/obj/structure/ore_vent/boss/icebox
+	defending_mobs = list(
+		/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
+		/mob/living/simple_animal/hostile/megafauna/wendigo,
+		/mob/living/simple_animal/hostile/megafauna/colossus
+	)
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM

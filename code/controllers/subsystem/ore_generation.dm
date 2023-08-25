@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(ore_generation)
 	var/list/available_boulders = list()
 	/// All the ore vents that are currently in the game, not just the ones that are producing boulders.
 	var/list/possible_vents = list()
-	/// The quantity of ore vents that a single cave_generation mapgen will attempt to spawn. 
+	/// The quantity of ore vents that a single cave_generation mapgen will attempt to spawn.
 	var/ore_vent_count = 15
 	/// A list of all the minerals that are being mined by ore vents. We reset this list every time cave generation is done.
 	var/list/ore_vent_minerals = list()
@@ -68,6 +68,3 @@ SUBSYSTEM_DEF(ore_generation)
 		current_vent.Shake(duration = 1.5 SECONDS)
 		new_rock.set_custom_materials(mats_list)
 		available_boulders += new_rock
-
-
-

@@ -143,11 +143,9 @@
 
 			if(can_spawn)
 				new picked_feature(turf)
-				to_chat(world, span_boldannounce("WE JUST SPAWNED A [picked_feature] A MOMENT AGO, [ore_vents_spawned] VENTS LEFT"))
 				if(ispath(picked_feature, /obj/structure/ore_vent/random))
 					var/obj/structure/ore_vent/random/picked_vent = picked_feature
 					ore_vents_spawned--
-					to_chat(world, span_boldannounce("YO ARCANE [ore_vents_spawned] VENTS LEFT"))
 					if(ore_vents_spawned <= 0)
 						weighted_feature_spawn_list.Remove(picked_vent)
 						feature_spawn_list = expand_weights(weighted_feature_spawn_list)
