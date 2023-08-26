@@ -93,7 +93,7 @@
 		new /obj/item/grown/snapcorncob(user.loc)
 		qdel(src)
 
-/obj/item/grown/corn/snapcorncob
+/obj/item/grown/snapcorncob
 	seed = /obj/item/seeds/corn/snapcorn
 	name = "snap corn cob"
 	desc = "A reminder of pranks gone by."
