@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "The Achievements UI now shows how many people have unlocked a given achievement."
+  - bugfix: "The \"Skills\" Category for achievements should no longer be hidden."
