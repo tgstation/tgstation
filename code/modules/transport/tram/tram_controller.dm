@@ -384,7 +384,7 @@
 		return
 
 	controller_active = new_status
-	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * Sets the controller status bitfield
@@ -407,7 +407,7 @@
 			stack_trace("Transport controller received invalid status code request [code]/[value]")
 			return
 
-	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * Part of the pre-departure list, checks the status of the doors on the tram
@@ -459,7 +459,7 @@
 /datum/transport_controller/linear/tram/proc/start_malf_event()
 	set_status_code(SYSTEM_FAULT, TRUE)
 	set_status_code(COMM_ERROR, TRUE)
-	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
+	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
 	paired_cabinet.generate_repair_signals()
 	collision_lethality = 1.25
 
@@ -475,18 +475,18 @@
 	set_status_code(COMM_ERROR, FALSE)
 	paired_cabinet.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
-	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
+	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 
 /datum/transport_controller/linear/tram/proc/register_collision()
 	tram_registration["collisions"] += 1
 
 /datum/transport_controller/linear/tram/proc/power_lost()
 	controller_operational = FALSE
-	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/power_restored()
 	controller_operational = TRUE
-	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/set_operational(new_value)
 	if(controller_operational != new_value)

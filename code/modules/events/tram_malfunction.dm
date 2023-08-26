@@ -37,13 +37,13 @@
 	priority_announce("Our automated control system has lost contact with the tram's on board computer. Please take extra care while engineers diagnose and resolve the issue. Signals and emergency braking may not be available during this time.", "CentCom Engineering Division")
 
 /datum/round_event/tram_malfunction/start()
-	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(malfunctioning_controller.specific_transport_id == specific_transport_id)
 			malfunctioning_controller.start_malf_event()
 			return
 
 /datum/round_event/tram_malfunction/end()
-	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.controller_status & COMM_ERROR)
 			malfunctioning_controller.end_malf_event()
 			priority_announce("We've remotely reset the software on the tram, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "CentCom Engineering Division")

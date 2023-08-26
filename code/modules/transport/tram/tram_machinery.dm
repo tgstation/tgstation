@@ -36,7 +36,7 @@
 /obj/item/assembly/control/icts/call_button/Initialize(mapload)
 	..()
 	SStransport.hello(src)
-	RegisterSignal(SStransport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 
 /obj/item/assembly/control/icts/proc/call_response(controller, list/relevant, response_code, response_info)
 	SIGNAL_HANDLER
@@ -69,7 +69,7 @@
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 
 	// INVOKE_ASYNC(SStransport, TYPE_PROC_REF(/datum/controller/subsystem/processing/transport, call_request), src, specific_transport_id, id)
-	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, id)
+	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, id)
 
 /obj/machinery/button/icts/tram
 	name = "tram request"
@@ -104,7 +104,7 @@
 	if(next_platform > 3)
 		next_platform = 1
 
-	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, next_platform)
+	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, next_platform)
 	addtimer(CALLBACK(src, PROC_REF(debug_autotram), next_platform), 10 SECONDS)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/icts/tram, 32)

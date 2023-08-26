@@ -50,11 +50,7 @@ export const ICTSTransportControls = (props, context) => {
   );
 
   return (
-    <Window
-      title="ICTS Transport Controller"
-      width={830}
-      height={430}
-      theme="dark">
+    <Window title="Transport Controller" width={830} height={430} theme="dark">
       <Window.Content>
         <Flex direction="row">
           <Flex.Item width={350} px={0.5}>

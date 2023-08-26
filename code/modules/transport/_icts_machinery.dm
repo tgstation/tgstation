@@ -23,7 +23,7 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/icts/proc/link_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id != configured_transport_id)
 			continue
 		transport_ref = WEAKREF(tram)
@@ -39,7 +39,7 @@
 	update_appearance()
 
 /**
- * All ICTS subtypes have the same method of repair for consistency and predictability
+ * All subtypes have the same method of repair for consistency and predictability
  * The key of this assoc list is the "method" of how they're fixing the thing (just flavor for examine),
  * and the value is what tool they actually need to use on the thing to fix it
  */
@@ -69,7 +69,7 @@
 			. += span_info("It needs someone to [tool_method].")
 
 /**
- * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the ICTS machinery.
+ * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machinery.
  *
  * We allow for someone to stop the event early by using the proper tools, hinted at in examine, on the machine
  */

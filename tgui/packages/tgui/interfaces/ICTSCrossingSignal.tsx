@@ -20,7 +20,7 @@ export const ICTSCrossingSignal = (props, context) => {
     data;
 
   return (
-    <Window title="ICTS Crossing Signal" width={400} height={175} theme="dark">
+    <Window title="Crossing Signal" width={400} height={175} theme="dark">
       <Window.Content>
         <Flex direction="row">
           <Flex.Item>

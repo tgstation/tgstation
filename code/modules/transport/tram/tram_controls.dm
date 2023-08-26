@@ -37,7 +37,7 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/computer/icts_controls/proc/find_tram()
-	for(var/datum/transport_controller/linear/transport as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(transport.specific_transport_id == specific_transport_id)
 			module_ref = WEAKREF(transport)
 
@@ -107,7 +107,7 @@
 			if (!destination_platform)
 				return FALSE
 
-			SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, destination_platform.platform_code)
+			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination_platform.platform_code)
 			update_appearance()
 
 /obj/machinery/computer/icts_controls/proc/update_tram_display(obj/effect/landmark/icts/nav_beacon/tram/idle_platform, controller_active)

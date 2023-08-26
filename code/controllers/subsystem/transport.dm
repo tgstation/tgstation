@@ -1,5 +1,5 @@
 PROCESSING_SUBSYSTEM_DEF(transport)
-	name = "ICTS Transport"
+	name = "Transport"
 	wait = 0.5
 	/// only used on maps with trams, so only enabled by such.
 	can_fire = FALSE
@@ -30,7 +30,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	)
 
 /datum/controller/subsystem/processing/transport/proc/hello(new_unit)
-	RegisterSignal(new_unit, COMSIG_ICTS_REQUEST, PROC_REF(incoming_request))
+	RegisterSignal(new_unit, COMSIG_TRANSPORT_REQUEST, PROC_REF(incoming_request))
 
 /datum/controller/subsystem/processing/transport/Recover()
 	_listen_lookup = SStransport._listen_lookup
@@ -42,7 +42,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	var/request_flags = options
 	var/datum/transport_controller/linear/tram/transport_controller
 	var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination
-	for(var/datum/transport_controller/linear/tram/candidate_controller as anything in transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/candidate_controller as anything in transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(candidate_controller.specific_transport_id == transport_network)
 			transport_controller = candidate_controller
 			break
@@ -50,11 +50,11 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	LAZYADD(relevant, source)
 
 	if(!transport_controller || !transport_controller.controller_operational)
-		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, NOT_IN_SERVICE)
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NOT_IN_SERVICE)
 		return
 
 	if(transport_controller.controller_active) //in use
-		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
 		return
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)
@@ -64,22 +64,22 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 			break
 
 	if(!destination)
-		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
 		return
 
 	if(!destination.platform_status == PLATFORM_ACTIVE)
-		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, PLATFORM_DISABLED)
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, PLATFORM_DISABLED)
 		return
 
 	if(transport_controller.idle_platform == destination) //did you even look?
-		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, NO_CALL_REQUIRED)
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NO_CALL_REQUIRED)
 		return
 
 	if(!transport_controller.calculate_route(destination))
-		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
 		return
 
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_SUCCESS)
+	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_SUCCESS)
 
 	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, request_flags)
 
@@ -132,7 +132,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	transport_controller.travel_remaining = 0
 	transport_controller.set_active(FALSE)
 	transport_controller.set_status_code(SYSTEM_FAULT, TRUE)
-	message_admins("ICTS: Transport Controller Failed!")
+	message_admins("TRANSPORT: Transport Controller Failed!")
 	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
 

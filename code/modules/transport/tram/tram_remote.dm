@@ -20,7 +20,7 @@
 /obj/item/assembly/control/icts/remote/Initialize(mapload)
 	. = ..()
 	SStransport.hello(src)
-	RegisterSignal(SStransport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 	register_context()
 
 /obj/item/assembly/control/icts/remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -122,7 +122,7 @@
 		balloon_alert(user, "no destination!")
 		return
 
-	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, destination, options)
+	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination, options)
 
 /obj/item/assembly/control/icts/remote/AltClick(mob/user)
 	link_tram(user)
@@ -130,7 +130,7 @@
 /obj/item/assembly/control/icts/remote/proc/link_tram(mob/user)
 	specific_transport_id = null
 	var/list/transports_available
-	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		LAZYADD(transports_available, tram.specific_transport_id)
 
 	specific_transport_id = tgui_input_list(user, "Available transports", "Select a transport", transports_available)

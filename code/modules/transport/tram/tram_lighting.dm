@@ -17,7 +17,7 @@
 	find_tram()
 
 /obj/machinery/lightbar/tram/exterior/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id != specific_transport_id)
 			continue
 		RegisterSignal(tram, COMSIG_TRANSPORT_LIGHTS, PROC_REF(set_direction))
