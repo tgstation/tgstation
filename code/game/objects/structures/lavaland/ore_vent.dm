@@ -80,6 +80,13 @@
 	. = ..()
 	if(discovered)
 		. += span_notice("This vent can produce [ore_string]")
+		switch(boulder_size)
+			if(BOULDER_SIZE_SMALL)
+				. += span_notice("This vent produces [span_bold("small")] boulders.")
+			if(BOULDER_SIZE_MEDIUM)
+				. += span_notice("This vent produces [span_bold("medium")] boulders.")
+			if(BOULDER_SIZE_LARGE)
+				. += span_notice("This vent produces [span_bold("large")] boulders.")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
 
