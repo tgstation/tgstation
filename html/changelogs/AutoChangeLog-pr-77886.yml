@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "zipping a duffle bag closes the UI of all storage items opened inside it"

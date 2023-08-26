@@ -321,6 +321,7 @@
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
 	spawn_pipe = FALSE
+	anchored = FALSE
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
