@@ -663,7 +663,7 @@
 	SIGNAL_HANDLER
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
+		if(issilicon(H) || M.move_intent == MOVE_INTENT_RUN)
 			to_chat(M, span_danger("You step on the snap pop!"))
 			pop_burst(2, 0)
 

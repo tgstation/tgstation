@@ -654,9 +654,6 @@
 		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(25, 8, 5))
 		set_invis_see(min(see_invisible, SEE_INVISIBLE_LIVING))
 
-	if(see_override)
-		set_invis_see(see_override)
-
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		new_sight = null
 
