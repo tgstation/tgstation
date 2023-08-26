@@ -252,15 +252,12 @@
 		if("large")
 			boulder_size = BOULDER_SIZE_LARGE
 			SSore_generation.ore_vent_sizes["large"] -= 1
-			break
 		if("medium")
 			boulder_size = BOULDER_SIZE_MEDIUM
 			SSore_generation.ore_vent_sizes["medium"] -= 1
-			break
 		if("small")
 			boulder_size = BOULDER_SIZE_SMALL
 			SSore_generation.ore_vent_sizes["small"] -= 1
-			break
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
 
