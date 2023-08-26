@@ -29,7 +29,6 @@
 	usage_sound = AUTO_TELEPORT_SOUND
 
 /obj/machinery/bouldertech/brm/process()
-	boulders_held = 0
 	balloon_alert_to_viewers("Bzzap!")
 	if(SSore_generation.available_boulders.len < 1)
 		say("No boulders to collect. Entering idle mode.")
@@ -43,10 +42,10 @@
 			i-- //Retry
 	for(var/ground_rocks in loc.contents)
 		if(istype(ground_rocks, /obj/item/boulder))
-
-			boulders_held++
-			if(boulders_held > boulders_held_max)
+			boulders_contained += ground_rocks
+			if(boulders_contained.len > boulders_held_max)
 				STOP_PROCESSING(SSmachines, src)
+				boulders_contained = list()
 				icon_state = "brm"
 				update_appearance(UPDATE_ICON_STATE)
 				playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

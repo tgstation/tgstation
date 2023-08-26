@@ -411,13 +411,7 @@
 
 /turf/closed/mineral/random/labormineral/mineral_chances()
 	return list(
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 95,
-		/obj/item/stack/ore/plasma = 30,
-		/obj/item/stack/ore/silver = 20,
-		/obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/uranium = 3,
+		/obj/item/boulder/gulag = 165,
 		/turf/closed/mineral/gibtonite = 2,
 	)
 
@@ -429,14 +423,7 @@
 
 /turf/closed/mineral/random/labormineral/volcanic/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 95,
-		/obj/item/stack/ore/plasma = 30,
-		/obj/item/stack/ore/silver = 20,
-		/obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/uranium = 3,
+		/obj/item/boulder/gulag/volcanic = 166,
 		/turf/closed/mineral/gibtonite/volcanic = 2,
 	)
 
@@ -453,19 +440,6 @@
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	defer_change = TRUE
-
-/turf/closed/mineral/random/labormineral/ice/mineral_chances()
-	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 95,
-		/obj/item/stack/ore/plasma = 30,
-		/obj/item/stack/ore/silver = 20,
-		/obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/uranium = 3,
-		/turf/closed/mineral/gibtonite/volcanic = 2,
-	)
 
 /turf/closed/mineral/random/labormineral/ice/Change_Ore(ore_type, random = 0)
 	. = ..()

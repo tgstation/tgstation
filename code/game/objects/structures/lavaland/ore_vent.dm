@@ -84,7 +84,6 @@
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	// single use lights can be toggled on once
 	if(istype(held_item, /obj/item/t_scanner/adv_mining_scanner))
 		context[SCREENTIP_CONTEXT_LMB] = "Scan vent"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -247,18 +246,24 @@
 	. = ..()
 	if(!unique_vent)
 		generate_mineral_breakdown()
+	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
 	switch(string_boulder_size)
 		if("large")
 			boulder_size = BOULDER_SIZE_LARGE
 			SSore_generation.ore_vent_sizes["large"] -= 1
+			break
 		if("medium")
 			boulder_size = BOULDER_SIZE_MEDIUM
 			SSore_generation.ore_vent_sizes["medium"] -= 1
+			break
 		if("small")
 			boulder_size = BOULDER_SIZE_SMALL
 			SSore_generation.ore_vent_sizes["small"] -= 1
-	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
+			break
+		else
+			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
+
 
 /obj/structure/ore_vent/random/icebox
 	defending_mobs = list(

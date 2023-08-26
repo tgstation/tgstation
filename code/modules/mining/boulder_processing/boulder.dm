@@ -138,3 +138,39 @@
 /obj/item/boulder/artifact/Initialize(mapload)
 	. = ..()
 	new /obj/item/relic(src) //var/obj/item/relic/boulder_relic
+
+/obj/item/boulder/gulag
+	name = "boulder"
+	desc = "This rocks. It's also a gulag boulder, so it's probably not worth as much."
+	var/list/pick_minerals = list(
+		/datum/material/diamond = 1,
+		/datum/material/gold = 8,
+		/datum/material/iron = 95,
+		/datum/material/plasma = 30,
+		/datum/material/silver = 20,
+		/datum/material/titanium = 8,
+		/datum/material/uranium = 3
+	)
+
+/obj/item/boulder/gulag/Initialize(mapload)
+	. = ..()
+	add_gulag_minerals()
+
+/obj/item/boulder/gulag/proc/add_gulag_minerals()
+	var/datum/material/materials = pick_weight(pick_minerals)
+	custom_materials[materials] = SHEET_MATERIAL_AMOUNT
+
+/obj/item/boulder/gulag/volcanic
+	pick_minerals = list(
+		/datum/material/bluespace = 1,
+		/datum/material/diamond = 1,
+		/datum/material/gold = 8,
+		/datum/material/iron = 95,
+		/datum/material/plasma = 30,
+		/datum/material/silver = 20,
+		/datum/material/titanium = 8,
+		/datum/material/uranium = 3
+	)
+
+
+

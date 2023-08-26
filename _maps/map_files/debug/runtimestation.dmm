@@ -1845,6 +1845,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"oC" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/station/cargo/miningoffice)
 "oV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1995,6 +2000,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"wr" = (
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "wB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2042,6 +2054,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/science)
+"AT" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "mining"
+	},
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2155,6 +2175,13 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"FW" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "HW" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2292,10 +2319,21 @@
 /obj/item/stock_parts/cell/bluespace,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"Oz" = (
+/obj/machinery/bouldertech/refinery,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "OU" = (
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/station/science)
+"Pd" = (
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "Pk" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2379,6 +2417,14 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"TS" = (
+/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "TV" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2506,6 +2552,14 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"Yf" = (
+/obj/machinery/bouldertech/brm,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mining"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "Ym" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
@@ -2938,12 +2992,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+em
+em
+em
+em
+em
+em
 aa
 aa
 aa
@@ -3030,12 +3084,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+em
+Pd
+oC
+AT
+Pd
+em
 aa
 aa
 aa
@@ -3122,12 +3176,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+em
+Pd
+Pd
+TS
+Pd
+em
 aa
 aa
 aa
@@ -3214,12 +3268,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+em
+Pd
+Pd
+FW
+Pd
+em
 aa
 aa
 aa
@@ -3306,12 +3360,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+em
+Pd
+Pd
+Oz
+Pd
+em
 aa
 aa
 aa
@@ -3398,12 +3452,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+em
+Pd
+wr
+FW
+Pd
+em
 aa
 aa
 aa
@@ -3491,10 +3545,10 @@ em
 em
 em
 em
-em
-em
-em
-em
+Pd
+Pd
+Yf
+Pd
 em
 dY
 en

@@ -11,8 +11,8 @@
 	var/refining_efficiency = 1
 	/// How many boulders can we process maximum per loop?
 	var/boulders_processing_max = 1
-	/// How many boulders are we holding?
-	var/boulders_held = 0
+	/// What boulder(s) are we holding?
+	var/list/boulders_contained = list()
 	/// How many boulders can we hold maximum?
 	var/boulders_held_max = 1
 	/// Does this machine have a mineral storage link to the silo?
@@ -33,10 +33,10 @@
 	. = ..()
 	if(holds_minerals)
 		silo_materials = AddComponent(
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = MATCONTAINER_NO_INSERT, \
-	)
+			/datum/component/remote_materials, \
+			mapload, \
+			mat_container_flags = BREAKDOWN_FLAGS_ORM|MATCONTAINER_NO_INSERT|MATCONTAINER_EXAMINE \
+		)
 
 /obj/machinery/bouldertech/LateInitialize()
 	. = ..()
@@ -46,6 +46,11 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/bouldertech/Destroy()
+	. = ..()
+	boulders_contained = null
+	silo_materials = null
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -89,6 +94,8 @@
 	for(var/i in 1 to contents.len)
 		if(boulders_concurrent <= 0)
 			return //Try again next time
+		if(!contents[i])
+			break
 		if(!istype(contents[i], /obj/item/boulder))
 			continue
 		var/obj/item/boulder/boulder = contents[i]
@@ -96,9 +103,11 @@
 		boulder.durability-- //One less durability to the processed boulder.
 		if(COOLDOWN_FINISHED(src, sound_cooldown))
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(loc, usage_sound, (60-(5*abs(boulder.durability))), FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+		playsound(loc, usage_sound, (60-(5*abs(boulder.durability))), FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		blocker = TRUE
 		if(boulder.durability <= 0)
+			say("we're on brakedown of boulder, index [i]")
 			breakdown_boulder(boulder) //Crack that bouwlder open!
 			continue
 		else
@@ -114,7 +123,7 @@
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(boulders_held >= boulders_held_max)
+	if(boulders_contained.len >= boulders_held_max)
 		return FALSE
 	if(istype(mover, /obj/item/boulder))
 		var/obj/item/boulder/boulder = mover
@@ -161,7 +170,7 @@
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	use_power(100)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
-	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
+	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM,)
 	balloon_alert_to_viewers("Boulder processed!")
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)
@@ -177,7 +186,7 @@
 /obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
 	if(isnull(new_boulder))
 		return FALSE
-	if(boulders_held >= boulders_held_max) //Full already
+	if(boulders_contained.len >= boulders_held_max) //Full already
 		visible_message(span_warning("no space!"))
 		return FALSE
 	if(!new_boulder.custom_materials) //Shouldn't happen, but just in case.
@@ -185,7 +194,7 @@
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 	new_boulder.forceMove(src)
-	boulders_held++
+	boulders_contained += new_boulder
 	START_PROCESSING(SSmachines, src) //Starts processing if we aren't already.
 	return TRUE
 
@@ -201,6 +210,7 @@
 	if(isnull(possible_boulder))
 		return FALSE
 	if(!possible_boulder.custom_materials)
+		boulders_contained -= possible_boulder
 		qdel(possible_boulder)
 		update_boulder_count()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -208,16 +218,15 @@
 	var/obj/item/boulder/real_boulder = possible_boulder
 	real_boulder.reset_processing_cooldown()
 	real_boulder.forceMove(src.drop_location())
-	boulders_held = clamp(boulders_held--, 0, boulders_held_max)
-	visible_message(span_warning("[boulders_held] remaining!"))
+	visible_message(span_notice("[boulders_contained.len] boulders remaining!"))
 	update_boulder_count()
 	return TRUE
 
 /obj/machinery/bouldertech/proc/update_boulder_count()
-	boulders_held = 0
+	boulders_contained = list()
 	for(var/obj/item/boulder/boulder in contents)
-		boulders_held++
-	return boulders_held
+		boulders_contained += boulder
+	return boulders_contained.len
 
 /obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
 	SIGNAL_HANDLER
