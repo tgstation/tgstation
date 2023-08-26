@@ -2,7 +2,7 @@
 /proc/add_jobxp(client/target, amount, job, needs_job = TRUE)
 	if(!target || !target.prefs || !amount || !job)
 		return
-	if(client.mob.mind.assigned_role.title != job && needs_job)
+	if(target.mob.mind.assigned_role.title != job && needs_job)
 		return
 	target.prefs.job_xp_list[job] += amount
 	target.prefs.check_levelup(job)
@@ -11,7 +11,7 @@
 /proc/remove_jobxp(client/target, amount, job, needs_job = TRUE)
 	if(!target || !target.prefs || !amount || !job)
 		return
-	if(client.mob.mind.assigned_role.title != job && needs_job)
+	if(target.mob.mind.assigned_role.title != job && needs_job)
 		return
 	target.prefs.job_xp_list[job] -= amount
 
@@ -19,7 +19,7 @@
 /proc/add_jobxp_chance(client/target, amount, job, chance, needs_job = TRUE)
 	if(!target || !target.prefs || !amount || !job)
 		return
-	if(client.mob.mind.assigned_role.title != job && needs_job)
+	if(target.mob.mind.assigned_role.title != job && needs_job)
 		return
 	if(prob(chance))
 		target.prefs.job_xp_list[job] += amount
@@ -28,7 +28,7 @@
 /proc/add_jobxp_chance_delayed_check(client/target, amount, job, chance, needs_job = TRUE)
 	if(!target || !target.prefs || !amount || !job)
 		return
-	if(client.mob.mind.assigned_role.title != job && needs_job)
+	if(target.mob.mind.assigned_role.title != job && needs_job)
 		return
 	if(prob(chance))
 		target.prefs.job_xp_list[job] += amount

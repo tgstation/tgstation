@@ -281,7 +281,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
-	var/minute = round(((wtime) - (hour * 36000)) / 600)
+	var/minute = round(((world.time - SSticker.round_start_time) - (hour * 36000)) / 600)
 	var/added_xp = round(25 + (minute**0.85))
 	for(var/client/C in GLOB.clients)
 		if(C && C.prefs)
