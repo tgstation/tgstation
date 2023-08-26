@@ -65,8 +65,8 @@
 	// Doing this with relative changes. This way we don't override any existing pixel_x/y values
 	// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
 	// Relative animations are weird, so we do actually need this
+	animate(owner.client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
 	delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
-	addtimer(CALLBACK(src, PROC_REF(dizziness_done)), delay + 3)
 
 	x_diff = amplitude * sin(next_amount * (time + delay))
 	y_diff = amplitude * cos(next_amount * (time + delay))
