@@ -254,6 +254,17 @@
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
+// If the item is a piece of clothing and is being worn, make sure it updates on the player
+/obj/item/clothing/update_greyscale()
+	. = ..()
+
+	var/mob/living/carbon/human/wearer = loc
+
+	if(!istype(wearer))
+		return
+
+	wearer.update_clothing(slot_flags)
+
 /**
  * Inserts a trait (or multiple traits) into the clothing traits list
  *
@@ -392,7 +403,7 @@
 
 	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone
 		var/mob/living/M = loc
-		if(src in M.get_equipped_items(FALSE))
+		if(src in M.get_equipped_items())
 			to_chat(M, span_warning("Your [name] start[p_s()] to fall apart!"))
 		else
 			to_chat(M, span_warning("[src] start[p_s()] to fall apart!"))
@@ -515,7 +526,7 @@ BLIND     // can't see anything
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(isliving(loc))
 			var/mob/living/M = loc
-			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands
+			if(src in M.get_equipped_items()) //make sure they were wearing it and not attacking the item in their hands
 				M.visible_message(span_danger("[M]'s [src.name] fall[p_s()] off, [p_theyre()] completely shredded!"), span_warning("<b>Your [src.name] fall[p_s()] off, [p_theyre()] completely shredded!</b>"), vision_distance = COMBAT_MESSAGE_RANGE)
 				M.dropItemToGround(src)
 			else
