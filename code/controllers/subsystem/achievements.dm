@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(achievements)
 	achievements_enabled = TRUE
 
 	var/list/achievements_by_db_id = list()
-	for(var/datum/award/achievement/achievement in subtypesof(/datum/award/achievement))
+	for(var/datum/award/achievement/achievement as anything in subtypesof(/datum/award/achievement))
 		if(!initial(achievement.database_id)) // abstract type
 			continue
 		var/datum/award/achievement/instance = new achievement
@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(achievements)
 		awards[achievement] = instance
 		achievements_by_db_id[instance.database_id] = instance
 
-	for(var/datum/award/score/score in subtypesof(/datum/award/score))
+	for(var/datum/award/score/score as anything in subtypesof(/datum/award/score))
 		if(!initial(score.database_id)) // abstract type
 			continue
 		var/instance = new score
@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(achievements)
 		while(query.NextRow())
 			var/id = query.item[1]
 			var/datum/award/achievement/instance = id ? achievements_by_db_id[id] : null
-			if(!instance) // removed achievement
+			if(isnull(instance)) // removed achievement
 				continue
 			instance.times_achieved = query.item[2]
 			// the results are ordered in descending orders, so the first in the list should be the most unlocked one.
