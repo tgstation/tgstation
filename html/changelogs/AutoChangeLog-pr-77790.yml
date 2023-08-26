@@ -1,0 +1,4 @@
+author: "Deadgebert"
+delete-after: True
+changes:
+  - bugfix: "multitool can be used on APC/Teslacoil/SMES/emitter if it has exposed wires."
