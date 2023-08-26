@@ -8,11 +8,15 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
+	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
-	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
-	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
+	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
+	var/always_new_team = FALSE
+	/// Should the user be moved to default spawnpoint after being granted this datum.
+	var/send_to_spawnpoint = TRUE
+	/// The DEFAULT outfit we will give to players granted this datum
 	var/nukeop_outfit = /datum/outfit/syndicate
-	/// The outfit we will auto-equip for plasmamen
+	/// The outfit we will auto-equip for plasmamen granted this datum
 	var/plasmaman_outfit = /datum/outfit/syndicate/plasmaman
 
 	preview_outfit = /datum/outfit/nuclear_operative_elite
@@ -37,7 +41,7 @@
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
 
-	if(is_species(owner, /datum/species/plasmaman)) //This will absolutely change later
+	if(is_species(operative, /datum/species/plasmaman))
 		operative.equipOutfit(plasmaman_outfit)
 	else
 		operative.equipOutfit(nukeop_outfit)
@@ -240,7 +244,10 @@
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
 	always_new_team = TRUE
+	plasmaman_outfit = /datum/outfit/syndicate/leader/plasmaman
+	/// Randomly chosen honorific, for distinction
 	var/title
+	/// The nuclear challenge remote we will spawn this player with.
 	var/challengeitem = /obj/item/nuclear_challenge
 
 /datum/antagonist/nukeop/leader/memorize_code()
@@ -316,6 +323,7 @@
 	preview_outfit = /datum/outfit/nuclear_operative
 	preview_outfit_behind = null
 	nuke_icon_state = null
+	plasmaman_outfit = /datum/outfit/syndicate/full/plasmaman
 
 /datum/antagonist/nukeop/lone/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
@@ -335,6 +343,7 @@
 	show_in_antagpanel = FALSE
 	send_to_spawnpoint = FALSE
 	nukeop_outfit = /datum/outfit/syndicate/reinforcement
+	nukeop_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 
 /datum/team/nuclear
 	var/syndicate_name
