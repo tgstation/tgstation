@@ -789,6 +789,12 @@
 		ui = new(user, src, "ICTSTransportControls")
 		ui.open()
 
+/obj/machinery/icts/tram_controller/ui_status(mob/user)
+	if(!allowed(user))
+		return UI_UPDATE
+
+	return ..()
+
 /obj/machinery/icts/tram_controller/ui_data(mob/user)
 	var/list/data = list()
 
