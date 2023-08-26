@@ -120,8 +120,9 @@
 	desc = "Removable disk used to download engineering-related tablet apps."
 	icon_state = "datadisk6"
 	starting_programs = list(
-		/datum/computer_file/program/supermatter_monitor,
-		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/supermatter_monitor,
+		
 	)
 
