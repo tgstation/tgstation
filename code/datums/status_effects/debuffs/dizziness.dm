@@ -3,7 +3,6 @@
 	tick_interval = 2 SECONDS
 	alert_type = null
 	remove_on_fullheal = TRUE
-	var/applying_dizziness = FALSE
 
 /datum/status_effect/dizziness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -18,7 +17,6 @@
 	// In case our client's offset is somewhere wacky from the dizziness effect
 	owner.client?.pixel_x = initial(owner.client?.pixel_x)
 	owner.client?.pixel_y = initial(owner.client?.pixel_y)
-	applying_dizziness = FALSE
 
 /// Signal proc that self deletes our dizziness effect
 /datum/status_effect/dizziness/proc/clear_dizziness(datum/source)
@@ -67,8 +65,6 @@
 	// Doing this with relative changes. This way we don't override any existing pixel_x/y values
 	// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
 	// Relative animations are weird, so we do actually need this
-	applying_dizziness = TRUE
-	animate(owner.client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
 	delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
 	addtimer(CALLBACK(src, PROC_REF(dizziness_done)), delay + 3)
 
@@ -80,6 +76,3 @@
 
 	// Now we reset back to our old pixel_x/y, since these animates are relative
 	animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-
-/datum/status_effect/dizziness/proc/dizziness_done()
-	applying_dizziness = FALSE
