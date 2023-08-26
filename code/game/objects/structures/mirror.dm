@@ -38,7 +38,7 @@
 	update_choices()
 
 /obj/structure/mirror/Destroy()
-	QDEL_LIST_ASSOC(mirror_options)
+	QDEL_LIST(mirror_options)
 	. = ..()
 
 /obj/structure/mirror/proc/update_choices()
