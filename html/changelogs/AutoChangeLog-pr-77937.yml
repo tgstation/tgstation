@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "Fixes the recycler being able to grind the server to a halt by trying to recycle the same sheet worth of material over and over and over again."

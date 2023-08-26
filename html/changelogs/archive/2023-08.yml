@@ -1179,3 +1179,25 @@
       a floor now
   mc-oofert:
   - rscadd: becoming a felinid makes your brain smaller (visually)
+2023-08-26:
+  GoldenAlpharex:
+  - bugfix: Fixes the recycler being able to grind the server to a halt by trying
+      to recycle the same sheet worth of material over and over and over again.
+  Guillaume Prata:
+  - qol: Medical Kiosk now have their wand removed with a right click, got new screentips
+      and have a few of its chat messages turned into balloon alerts.
+  YehnBeep:
+  - qol: Messenger bags can be crafted with 4 cloth.
+  distributivgesetz:
+  - rscadd: Replaces decloning clone damage with a strike system that you can replenish
+      with Mutadone.
+  - bugfix: The decloning virus is curable with rezadone again.
+  iwishforducks:
+  - bugfix: You should no longer attack RCD effects when they're done constructing.
+  san7890:
+  - admin: The "HREF Dock Exploit" message should now contain a bit more usable information
+      (such as a jump link) so you can investigate if something is really going wacky
+      with shuttles.
+  vinylspiders:
+  - refactor: fixed a bunch of instances of callbacks being qdeleted and cleaned up
+      related code

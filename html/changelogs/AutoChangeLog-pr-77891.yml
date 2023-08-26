@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - admin: "The \"HREF Dock Exploit\" message should now contain a bit more usable information (such as a jump link) so you can investigate if something is really going wacky with shuttles."
