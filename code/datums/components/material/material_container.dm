@@ -599,7 +599,7 @@
 		//create sheets in null space so it doesn't merge & delete itself
 		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(null, min(sheet_amt, MAX_STACK_SIZE), FALSE, list((material) = SHEET_MATERIAL_AMOUNT))
 		if(new_sheets.is_zero_amount(delete_if_zero = TRUE)) // this should never happen but just in case, we do not want an infinite loop
-			stack_trace("WARNING: [new_sheets]([new_sheets.type]) was created with an amount <= 0 in the recycler! Check to ensure that the order of args in its Initialize are correct.")
+			stack_trace("WARNING: [new_sheets]([new_sheets.type]) was created with an amount <= 0 in the recycler! Check to ensure that the order of args here match its Initialize().")
 			break
 		count += new_sheets.amount
 		//use material & deduct work needed
