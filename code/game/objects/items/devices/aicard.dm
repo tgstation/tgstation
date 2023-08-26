@@ -49,6 +49,7 @@
 	desc = "A storage device for AIs. Nanotrasen forgot to make the patent, so the Syndicate made their own version!"
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "syndicard"
+	base_icon_state = "syndicard"
 	item_flags = null
 	force = 7
 
