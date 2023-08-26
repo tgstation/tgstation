@@ -597,6 +597,24 @@
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/suits/syndi_intellicard
+	name = "Pre-Loaded Syndicate Intellicard"
+	desc = "A syndicate intellicard that can be activated to download a captured Nanotrasen AI, modified with the standard syndicate lawset. You can slot it into your modsuit for a conversational partner! It can additionally control the MODsuit's modules at will, and move your body around even if you're in critical condition or dead. \
+			However, due to failsafes activated during the extraction process, the AI is unable to interact with electronics from anywhere but direct proximity..."
+	item = /obj/item/aicard/syndie/loaded
+	cost = 12
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	refundable = TRUE
+
+/datum/uplink_item/suits/synd_ai_upgrade
+	name = "Syndicate AI Upgrade"
+	desc = "...unless you buy the Syndicate Upgrade! This data chip allows the captured AI to increase its interaction range by two tiles per application. The Syndicate recommends three or four purchases at most, for a total of seven or infinite meters of range."
+	item = /obj/item/computer_disk/syndie_ai_upgrade
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	cant_discount = TRUE
+	refundable = TRUE
+
 // Devices
 
 /datum/uplink_item/device_tools/assault_pod
