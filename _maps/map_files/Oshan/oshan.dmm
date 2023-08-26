@@ -19142,7 +19142,6 @@
 /turf/closed/wall/r_wall,
 /area/station/science/robotics/lab)
 "ssO" = (
-/mob/living/simple_animal/pet/fox/renault,
 /obj/structure/bed/dogbed/renault,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/captain/private)

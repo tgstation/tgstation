@@ -208,6 +208,7 @@
 "oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/plasma,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "or" = (
@@ -508,6 +509,7 @@
 /area/station/engineering/supermatter/room)
 "JC" = (
 /obj/structure/window/plasma,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "JH" = (

@@ -72,12 +72,13 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Space Engine Room"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gQ" = (
 /obj/machinery/the_singularitygen,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gY" = (
@@ -249,6 +250,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"vd" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "PTL room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "vB" = (
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/plating/airless,
@@ -398,8 +407,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "BM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
@@ -547,6 +554,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"NP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "NS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
@@ -566,8 +580,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/iron,
@@ -928,7 +940,7 @@ je
 zC
 np
 gQ
-zC
+HO
 eI
 BM
 Ew
@@ -952,10 +964,10 @@ je
 je
 "}
 (11,1,1) = {"
-je
 MT
 MT
-kO
+vd
+MT
 MT
 OU
 zC
@@ -983,8 +995,8 @@ je
 je
 je
 je
-kO
-Yy
+MT
+NP
 Df
 Oh
 MT

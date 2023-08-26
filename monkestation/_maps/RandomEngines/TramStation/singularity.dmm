@@ -407,6 +407,7 @@
 "SQ" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ST" = (
@@ -421,6 +422,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "TZ" = (
@@ -441,6 +443,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/fans/tiny,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "WI" = (
@@ -714,7 +717,7 @@ JE
 Mj
 Ys
 AP
-JE
+GS
 Ho
 Ho
 Ho
