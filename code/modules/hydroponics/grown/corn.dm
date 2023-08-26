@@ -21,7 +21,7 @@
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	trash_type = /obj/item/grown/corncob/snap
+	trash_type = /obj/item/grown/corncob
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/cornmeal = 0)
