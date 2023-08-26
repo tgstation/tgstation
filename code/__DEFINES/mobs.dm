@@ -650,7 +650,9 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 33
+#define TOTAL_LAYERS 34
+/// Mutant race multiparts - Lbelly
+#define ACCESSORIES_LAYER 34
 /// Mutations layer - Tk headglows, cold resistance glow, etc
 #define MUTATIONS_LAYER 33
 /// Mutantrace features (tail when looking south) that must appear behind the body parts

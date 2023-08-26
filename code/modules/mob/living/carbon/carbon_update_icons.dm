@@ -502,6 +502,10 @@
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 
+	if(istype(src, /mob/living/carbon/human/dummy/extra_tall))
+		var/mob/living/carbon/human/dummy/extra_tall/bleh = src
+		overlays_standing[BODYPARTS_LAYER] += bleh.extra_bodyparts
+
 	apply_overlay(BODYPARTS_LAYER)
 
 /// This looks at the chest and legs of the mob and decides how much our chest, arms, and head should be adjusted. This is useful for limbs that are larger or smaller than the scope of normal human height while keeping the feet anchored to the bottom of the tile

@@ -192,6 +192,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isfish(A) (istype(A, /obj/item/fish))
+
 #define isstack(A) (istype(A, /obj/item/stack))
 
 #define isgrenade(A) (istype(A, /obj/item/grenade))
@@ -205,6 +207,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isidcard(I) (istype(I, /obj/item/card/id))
 
 #define isstructure(A) (istype(A, /obj/structure))
+
+#define isaquarium(A) (istype(A, /obj/structure/aquarium))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
