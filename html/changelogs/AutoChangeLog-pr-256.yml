@@ -1,0 +1,5 @@
+author: "Glyphee"
+delete-after: True
+changes:
+  - rscadd: "Goblin Roundstart Race"
+  - rscadd: "Gobbish Language"
