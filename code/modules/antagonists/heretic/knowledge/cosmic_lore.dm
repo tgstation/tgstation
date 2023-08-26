@@ -67,7 +67,7 @@
 	desc = "Grants you Cosmic Runes, a spell that creates two runes linked with eachother for easy teleportation. \
 		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark. \
 		However, people with a star mark will get transported along with another person using the rune."
-	gain_text = "A sigil appeared below me, I lowered my face to it and heard distant roars, I flung myself in and saw a beast behind dense clouds of gas."
+	gain_text = "A sigil appeared below me, I lowered my face to it and heard distant roars, I flung myself in and saw a figuire behind dense clouds of gas, shifting and writhing."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
