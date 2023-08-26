@@ -84,7 +84,7 @@
 	if(!job_xp_list[job])
 		return
 	var/current_level = job_level_list[job]
-	var/xp_needed = (current_level ** 1.5) + 50
+	var/xp_needed = (current_level ** 1.5) + 125
 	if(job_xp_list[job] > xp_needed)
 		job_xp_list[job] -= xp_needed
 		job_level_list[job]++
