@@ -596,16 +596,25 @@
 	//eject sheets based on available amount after each iteration
 	var/count = 0
 	while(sheet_amt > 0)
-		//create sheets in null space so it doesn't merge & delete itself
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(null, min(sheet_amt, MAX_STACK_SIZE), null, list((material) = SHEET_MATERIAL_AMOUNT))
+		//don't merge yet. we need to do stuff with it first
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, min(sheet_amt, MAX_STACK_SIZE), FALSE)
 		count += new_sheets.amount
 		//use material & deduct work needed
 		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= new_sheets.amount
 		//send signal
 		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets, context)
-		//now move to target so it gets merged
-		new_sheets.forceMove(target)
+		//now we can merge since we are done with it
+		for(var/obj/item/stack/item_stack in target)
+			if(item_stack == new_sheets || item_stack.type != material.sheet_type) //don't merge with self or different type
+				continue
+			if(item_stack.get_amount() == item_stack.max_amount) //stack is full, no space to merge
+				continue
+			//speed merge
+			var/merge_amount = min(new_sheets.amount, item_stack.max_amount - item_stack.get_amount())
+			item_stack.add(merge_amount)
+			new_sheets.use(merge_amount)
+			break
 	return count
 
 /**
