@@ -5,7 +5,7 @@
 	desc = "Allows you to transmute a pool of ash, a liver, and a sheet of plasma into a Fire Shark. \
 		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks. \
 		Fire Sharks inject phlogiston into its victims and spawn plasma once they die."
-	gain_text = "The nebula teemed with frenzied creatures, one of which emitted a dank purple smoke."
+	gain_text = "The cradle of the nebula was cold, but not dead. Light and heat flits even through the deepest darkness, and is hunted by its own predators."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_runes,
 		/datum/heretic_knowledge/spell/ash_passage,
