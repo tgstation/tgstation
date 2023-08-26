@@ -63,10 +63,7 @@
  */
 /obj/item/food/cheese/wheel/proc/consume_cheese()
 	visible_message(span_revenwarning("...before being consumed in a vortex of chaos!"))
-	var/datum/effect_system/spark_spread/cheese_sparks = new
-	cheese_sparks.set_up(number = 1, cardinals_only = TRUE, location = get_turf(src))
-	cheese_sparks.attach(src)
-	cheese_sparks.start()
+	do_sparks(number = 1, cardinal_only = TRUE, source = get_turf(src))
 	qdel(src)
 
 /obj/item/food/cheese/royal

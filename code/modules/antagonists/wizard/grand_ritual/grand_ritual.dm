@@ -161,7 +161,7 @@
 /// Draws the ritual rune
 /datum/action/cooldown/grand_ritual/proc/draw_rune(turf/target_turf)
 	drawing_rune = TRUE
-	var/next_rune_typepath = appropriate_rune_typepath()
+	var/next_rune_typepath = get_appropriate_rune_typepath()
 	target_turf.balloon_alert(owner, "conjuring rune...")
 	var/draw_effect_typepath = /obj/effect/temp_visual/wizard_rune/drawing
 	if(next_rune_typepath == /obj/effect/grand_rune/finale/cheesy)
@@ -203,7 +203,7 @@
 	StartCooldown(2 MINUTES) // To put a damper on wizards who have 5 ranks of Teleport
 
 /// The seventh rune we spawn is special
-/datum/action/cooldown/grand_ritual/proc/appropriate_rune_typepath()
+/datum/action/cooldown/grand_ritual/proc/get_appropriate_rune_typepath()
 	if (times_completed < GRAND_RITUAL_FINALE_COUNT - 1)
 		return /obj/effect/grand_rune
 	if (drew_finale)

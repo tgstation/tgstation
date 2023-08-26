@@ -406,7 +406,7 @@
  * Already insane people are instead cured of their madness, ignoring any other effects as the station around them loses its marbles.
  */
 /datum/grand_finale/cheese
-	/**we don't set name, desc and others, thus we won't appear in the radial choice of a normal finale rune */
+	// we don't set name, desc and others, thus we won't appear in the radial choice of a normal finale rune
 	dire_warning = TRUE
 	minimum_time = 45 MINUTES //i'd imagine speedrunning this would be crummy, but the wizard's average lifespan is barely reaching this point
 

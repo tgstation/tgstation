@@ -20,5 +20,6 @@
 /obj/item/book/granter/action/spell/summon_cheese/recoil(mob/living/user)
 	to_chat(user, span_warning("\The [src] turns into a wedge of cheese!"))
 	var/obj/item/food/cheese/wedge/book_cheese = new
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	user.put_in_hands(book_cheese)
 	qdel(src)

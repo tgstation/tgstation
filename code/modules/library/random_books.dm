@@ -109,7 +109,8 @@
 	var/static/cheese_granter_spawned = FALSE
 
 /obj/structure/bookcase/random/reference/wizard/after_random_load()
-	if(!cheese_granter_spawned)
-		cheese_granter_spawned = TRUE
-		new /obj/item/book/granter/action/spell/summon_cheese (src)
-		new /obj/item/book/manual/ancient_parchment(src)
+	if(cheese_granter_spawned)
+		return
+	cheese_granter_spawned = TRUE
+	new /obj/item/book/granter/action/spell/summon_cheese (src)
+	new /obj/item/book/manual/ancient_parchment(src)
