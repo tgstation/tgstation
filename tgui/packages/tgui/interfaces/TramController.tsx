@@ -4,7 +4,7 @@ import { Section, NoticeBox, Dropdown, LabeledList, ProgressBar, Flex, Button } 
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';
 
-type ICTSData = {
+type TransportData = {
   transportId: string;
   controllerActive: number;
   controllerOperational: BooleanLike;
@@ -27,8 +27,8 @@ type TramDestination = {
   id: number;
 };
 
-export const ICTSTransportControls = (props, context) => {
-  const { act, data } = useBackend<ICTSData>(context);
+export const TramController = (props, context) => {
+  const { act, data } = useBackend<TransportData>(context);
 
   const {
     transportId,
@@ -50,7 +50,7 @@ export const ICTSTransportControls = (props, context) => {
   );
 
   return (
-    <Window title="Transport Controller" width={830} height={430} theme="dark">
+    <Window title="Tram Controller" width={830} height={430} theme="dark">
       <Window.Content>
         <Flex direction="row">
           <Flex.Item width={350} px={0.5}>

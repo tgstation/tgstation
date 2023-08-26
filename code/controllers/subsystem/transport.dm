@@ -49,7 +49,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	LAZYADD(relevant, source)
 
-	if(!transport_controller || !transport_controller.controller_operational)
+	if(!transport_controller || !transport_controller.controller_operational || !transport_controller.paired_cabinet)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NOT_IN_SERVICE)
 		return
 

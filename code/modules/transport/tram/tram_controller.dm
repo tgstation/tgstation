@@ -614,6 +614,7 @@
 
 /obj/machinery/icts/tram_controller/Initialize(mapload)
 	. = ..()
+	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
 /**
@@ -629,15 +630,57 @@
 	set_machine_stat(machine_stat | BROKEN)
 	..()
 
-/obj/machinery/icts/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
-	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
+/obj/machinery/icts/tram_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
-		if(default_deconstruction_crowbar(weapon))
-			return
+	if(!held_item && !cover_locked)
+		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "open cabinet"
+
+	if(istype(held_item, /obj/item/card/id/) && allowed(user) && !cover_open)
+		context[SCREENTIP_CONTEXT_LMB] = cover_locked ? "unlock cabinet" : "lock cabinet"
+
+	if(panel_open)
+		if(held_item?.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_RMB] = "unscrew cabinet"
+		if(malfunctioning || methods_to_fix.len)
+			context[SCREENTIP_CONTEXT_LMB] = "repair electronics"
+
+	if(held_item?.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "repair frame"
+
+	if(istype(held_item, /obj/item/card/emag) && !(obj_flags & EMAGGED))
+		context[SCREENTIP_CONTEXT_LMB] = "emag controller"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/icts/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
+	if(!user.combat_mode)
+		if(weapon && istype(weapon, /obj/item/card/id) && !cover_open)
+			return try_toggle_lock(user)
 
 	return ..()
+
+/obj/machinery/icts/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(panel_open)
+		balloon_alert(user, "unsecuring...")
+		tool.play_tool_sound(src)
+		if(tool.use_tool(src, user, 6 SECONDS))
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+			balloon_alert(user, "unsecured")
+			deconstruct()
+
+/obj/machinery/icts/tram_controller/deconstruct(disassembled = TRUE)
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	if(disassembled)
+		new /obj/item/wallframe/icts/tram_controller(drop_location())
+	else
+		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
+		new /obj/item/stack/sheet/iron(drop_location(), 1)
+		new /obj/item/shard(drop_location())
+	qdel(src)
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
@@ -673,10 +716,6 @@
 	if(controller_datum.controller_active)
 		. += mutable_appearance(icon, "active")
 		. += emissive_appearance(icon, "active", src, alpha = src.alpha)
-
-	if(controller_datum.controller_status & EMERGENCY_STOP)
-		. += mutable_appearance(icon, "estop")
-		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
 
 	else if(controller_datum.controller_status & SYSTEM_FAULT)
 		. += mutable_appearance(icon, "fault")
@@ -714,12 +753,6 @@
 		return
 	update_appearance()
 
-/obj/machinery/icts/tram_controller/attack_hand(mob/living/user, params)
-	. = ..()
-
-	if(!cover_open)
-		return try_toggle_lock(user)
-
 /obj/machinery/icts/tram_controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
 
@@ -735,20 +768,20 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/icts/tram_controller/proc/try_toggle_lock(mob/living/user, item, params)
-	if(user.get_idcard() && !cover_open)
-		if(allowed(user) && !(obj_flags & EMAGGED))
-			cover_locked = !cover_locked
-			balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
-			update_appearance()
-			return TRUE
+	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "access controller damaged!")
+		return FALSE
 
-		else if(obj_flags & EMAGGED)
-			balloon_alert(user, "access controller damaged!")
-			return FALSE
+	else if(check_access(id_card))
+		cover_locked = !cover_locked
+		balloon_alert(user, "controls [cover_locked ? "locked" : "unlocked"]")
+		update_appearance()
+		return TRUE
 
-		else
-			balloon_alert(user, "access denied")
-			return FALSE
+	else
+		balloon_alert(user, "access denied")
+		return FALSE
 
 /obj/machinery/icts/tram_controller/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -759,7 +792,6 @@
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "access controller shorted")
 	return TRUE
-
 
 /**
  * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
@@ -786,7 +818,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ICTSTransportControls")
+		ui = new(user, src, "TramController")
 		ui.open()
 
 /obj/machinery/icts/tram_controller/ui_status(mob/user)
@@ -825,4 +857,4 @@
 	icon_state = "controller-panel"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/icts/tram_controller
-	pixel_shift = 32
+	pixel_shift = 16

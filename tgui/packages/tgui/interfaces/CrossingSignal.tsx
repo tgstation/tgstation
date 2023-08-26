@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Section, LabeledList, Flex } from '../components';
 import { Window } from '../layouts';
 
-type ICTSData = {
+type TransportData = {
   sensorStatus: boolean;
   operatingStatus: number;
   inboundPlatform: number;
@@ -13,8 +13,8 @@ type Props = {
   context: any;
 };
 
-export const ICTSCrossingSignal = (props, context) => {
-  const { act, data } = useBackend<ICTSData>(context);
+export const CrossingSignal = (props, context) => {
+  const { act, data } = useBackend<TransportData>(context);
 
   const { sensorStatus, operatingStatus, inboundPlatform, outboundPlatform } =
     data;

@@ -129,6 +129,18 @@
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
+/obj/machinery/icts/destination_sign/update_icon_state()
+	. = ..()
+	switch(dir)
+		if(SOUTH, EAST)
+			pixel_x = 8
+		if(NORTH, WEST)
+			pixel_x = -8
+
+/obj/machinery/icts/destination_sign/indicator/update_icon_state()
+	. = ..()
+	pixel_x = 0
+
 /obj/machinery/icts/destination_sign/indicator/power_change()
 	..()
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
@@ -137,4 +149,5 @@
 
 	update_sign(src, tram, tram.controller_active, tram.controller_status, tram.travel_direction, tram.destination_platform)
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/icts/destination_sign, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/icts/destination_sign/indicator, 32)
