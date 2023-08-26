@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "greyscale colors will now update on the mob when modifying them via the VV menu"
