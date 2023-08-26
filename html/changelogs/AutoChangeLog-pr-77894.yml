@@ -1,0 +1,4 @@
+author: "iwishforducks"
+delete-after: True
+changes:
+  - balance: "Railings now only cost 2 rods and are much easier to construct. But they can now be destroyed much easier and cut with wirecutters without unwrenching."
