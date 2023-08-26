@@ -326,6 +326,8 @@ rough example of the "cone" made by the 3 dirs checked
 
 /// Returns an x and y value require to reverse the transformations made to center an oversized icon
 /atom/proc/get_oversized_icon_offsets()
+	if (pixel_x == 0 && pixel_y == 0)
+		return list("x" = 0, "y" = 0)
 	if (!(type in GLOB.oversized_atom_icon_offsets))
 		var/icon/my_icon = icon(icon, icon_state)
 		var/icon_width = my_icon.Width()
