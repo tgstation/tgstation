@@ -1,0 +1,4 @@
+author: "SeeBeeSee"
+delete-after: True
+changes:
+  - rscadd: "Added \"Girl\", \"Boy\", \"Yes-Man\", \"Boxfort\", \"Hotdog\", and \"Terminal\" AI sprites from /vg/ as per a PR we had prior to the tgcode rebase"
