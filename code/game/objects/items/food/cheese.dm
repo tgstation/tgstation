@@ -44,8 +44,6 @@
 	) //Hard cheeses contain about 25% protein
 	w_class = WEIGHT_CLASS_NORMAL
 	rat_heal = 35
-	///Whether this cheese wheel is about to be whisked away to a hellish realm or not
-	var/touched_by_madness = FALSE
 
 /obj/item/food/cheese/wheel/Initialize(mapload)
 	. = ..()
@@ -62,7 +60,7 @@
  * Used in wizard grand rituals' optional cheesy alternative.
  */
 /obj/item/food/cheese/wheel/proc/consume_cheese()
-	visible_message(span_revenwarning("...before being consumed in a vortex of chaos!"))
+	visible_message(span_revenwarning("...and is consumed in a vortex of chaos!"))
 	do_sparks(number = 1, cardinal_only = TRUE, source = get_turf(src))
 	qdel(src)
 

@@ -131,7 +131,7 @@
 	//fetch cheese on the rune
 	var/list/obj/item/food/cheese/wheel/cheese_list = list()
 	for(var/obj/item/food/cheese/wheel/nearby_cheese in range(1, src))
-		if(nearby_cheese.touched_by_madness) //already haunted
+		if(HAS_TRAIT(nearby_cheese, TRAIT_HAUNTED)) //already haunted
 			continue
 		cheese_list += nearby_cheese
 	//handle cheese sacrifice - haunt a part of all cheese on the rune with each invocation, then delete it
@@ -141,14 +141,12 @@
 	//so hopefully this will properly do that, and on the third invocation it will just eat all remaining cheese
 	cheese_to_haunt = cheese_list.Copy(1, min(round(length(cheese_list) * times_invoked * 0.4), max(length(cheese_list), 3)))
 	for(var/obj/item/food/cheese/wheel/sacrifice as anything in cheese_to_haunt)
-		sacrifice.touched_by_madness = TRUE
 		sacrifice.AddComponent(\
 			/datum/component/haunted_item, \
 			haunt_color = spell_colour, \
-			haunt_duration = 9 SECONDS, \
+			haunt_duration = 10 SECONDS, \
 			aggro_radius = 0, \
-			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldy energies!"), \
-			despawn_message = span_revenwarning("[sacrifice] descends on the ground one last time..."), \
+			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldy energies..."),
 		)
 		addtimer(CALLBACK(sacrifice, TYPE_PROC_REF(/obj/item/food/cheese/wheel, consume_cheese)), 10 SECONDS)
 	cheese_sacrificed += length(cheese_to_haunt)
