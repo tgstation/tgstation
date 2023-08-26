@@ -149,6 +149,7 @@
 /area/station/engineering/supermatter/room)
 "np" = (
 /obj/machinery/the_singularitygen/tesla,
+/obj/structure/sign/directions/ptl/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "nM" = (

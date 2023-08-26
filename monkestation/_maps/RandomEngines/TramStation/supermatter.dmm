@@ -564,6 +564,13 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"sR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/directions/ptl/directional/west,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "ta" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1540,9 +1547,9 @@ ft
 RS
 pV
 gb
-Dk
+sR
 FF
-pV
+Dk
 mg
 pV
 pV

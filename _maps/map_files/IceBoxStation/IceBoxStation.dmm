@@ -32770,6 +32770,10 @@
 	dir = 4;
 	name = "Output Release"
 	},
+/obj/structure/sign/directions/ptl/directional/west{
+	pixel_x = 0;
+	pixel_y = -32
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kAZ" = (
@@ -35425,6 +35429,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"lrC" = (
+/obj/structure/sign/directions/ptl/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "lrD" = (
 /obj/machinery/shower/directional/north,
 /obj/item/soap/deluxe,
@@ -47176,7 +47184,13 @@
 /area/station/security/prison/work)
 "pdV" = (
 /obj/machinery/vending/coffee,
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm/directional/east{
+	pixel_y = 6
+	},
+/obj/structure/sign/directions/ptl/directional/south{
+	pixel_y = -6;
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "pdW" = (
@@ -51314,7 +51328,7 @@
 /area/station/ai_monitored/command/storage/eva)
 "qwj" = (
 /turf/open/genturf/orange,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/surface/outdoors/noruins)
 "qwB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood,
@@ -237072,7 +237086,7 @@ dfa
 ixZ
 rGu
 eZO
-wRd
+lrC
 gka
 xNn
 snO

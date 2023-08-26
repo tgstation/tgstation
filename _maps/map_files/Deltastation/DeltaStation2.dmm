@@ -1773,6 +1773,9 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/box,
+/obj/structure/sign/directions/ptl/directional/south{
+	pixel_y = -36
+	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "atv" = (
@@ -43156,6 +43159,7 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/sign/warning/electric_shock/directional/south,
 /obj/effect/spawner/random/structure/tank_holder,
+/obj/structure/sign/directions/ptl/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "kxg" = (
@@ -48178,6 +48182,9 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/directions/ptl/directional/west{
+	pixel_y = -4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "lIv" = (
@@ -50084,6 +50091,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/directions/ptl/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "mhE" = (

@@ -265,6 +265,7 @@
 	dir = 4
 	},
 /obj/structure/window/plasma/spawner/directional/south,
+/obj/structure/sign/directions/ptl/directional/west,
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/engineering/supermatter/room)
 "DD" = (

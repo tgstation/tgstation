@@ -12118,7 +12118,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -12969,6 +12968,7 @@
 /area/space/nearstation)
 "exD" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/sign/directions/ptl/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "exH" = (
@@ -21375,6 +21375,12 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/port/greater)
+"hgP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/sign/directions/ptl/directional/south,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/ce)
 "hgW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/assist,
@@ -25694,6 +25700,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "isO" = (
@@ -35154,6 +35161,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/landmark/generic_maintenance_landmark,
+/obj/structure/sign/directions/ptl/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "lzg" = (
@@ -109698,7 +109706,7 @@ qZX
 qZX
 sxF
 xRm
-sxF
+hgP
 fvC
 vfd
 ePY

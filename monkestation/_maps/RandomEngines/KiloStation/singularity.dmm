@@ -541,6 +541,7 @@
 	},
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "LZ" = (
@@ -588,6 +589,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"NS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/directions/ptl/directional/east,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "OT" = (
 /obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating,
@@ -723,7 +729,6 @@
 "WU" = (
 /obj/structure/cable,
 /obj/machinery/light/blacklight/directional/north,
-/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "WZ" = (
@@ -1203,7 +1208,7 @@ xG
 xG
 kI
 re
-Ii
+NS
 oe
 RN
 tB

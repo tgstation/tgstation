@@ -15540,6 +15540,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
+"efW" = (
+/obj/structure/sign/directions/ptl/directional/west,
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "egb" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -19060,6 +19064,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"fAc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/sign/directions/ptl/directional/south,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "fAg" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
@@ -25500,6 +25509,10 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/commons/dorms)
+"ifp" = (
+/obj/structure/sign/directions/ptl/directional/south,
+/turf/closed/wall/r_wall,
+/area/station/engineering/main)
 "ifw" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
@@ -33508,6 +33521,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "laz" = (
@@ -45645,7 +45659,6 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "pHk" = (
@@ -66922,6 +66935,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"xwW" = (
+/obj/structure/sign/directions/ptl/directional/west,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/starboard/lesser)
 "xxe" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -95160,7 +95177,7 @@ vhm
 vhm
 vhm
 eGd
-aac
+efW
 aaa
 aaa
 aaa
@@ -98742,7 +98759,7 @@ pLH
 pLH
 uGy
 xAB
-uGy
+fAc
 pLH
 aeL
 aeL
@@ -98982,7 +98999,7 @@ aOn
 cjy
 cjy
 cjy
-cjy
+ifp
 cjy
 cjy
 cjy
@@ -103611,7 +103628,7 @@ lxH
 lxH
 pvC
 gIk
-mwK
+xwW
 pgS
 bHv
 eVK

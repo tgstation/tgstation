@@ -46038,6 +46038,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/sign/directions/ptl/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "qGP" = (
@@ -65690,6 +65691,10 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/sign/directions/ptl/directional/east{
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "xzu" = (
