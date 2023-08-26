@@ -331,6 +331,7 @@
 		stop_pulling()
 
 	changeNext_move(CLICK_CD_GRABBING)
+	animate_interact(AM, INTERACT_PULL) //monkestatione dit
 
 	if(AM.pulledby)
 		if(!supress_message)
@@ -445,6 +446,7 @@
 		stop_pulling()
 
 /mob/living/stop_pulling()
+	animate_interact(pulling, INTERACT_UNPULL)//monkestation edit
 	if(ismob(pulling))
 		reset_pull_offsets(pulling)
 	..()
