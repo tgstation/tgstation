@@ -99,6 +99,12 @@
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
 
+/datum/ai_planning_subtree/random_speech/deer
+	speech_chance = 1
+	speak = list("Weeeeeeee?", "Weeee", "WEOOOOOOOOOO")
+	emote_hear = list("brays.")
+	emote_see = list("shakes her head.")
+
 /datum/ai_planning_subtree/random_speech/dog
 	speech_chance = 1
 
@@ -149,6 +155,11 @@
 	emote_hear = list("howls.", "barks.", "screams.")
 	emote_see = list("shakes their head.", "shivers.")
 	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
+
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 1
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
 
 /datum/ai_planning_subtree/random_speech/penguin
 	speech_chance = 5

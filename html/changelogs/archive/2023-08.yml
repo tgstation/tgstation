@@ -391,3 +391,7 @@
   MrMelbert:
   - rscadd: Adds the new teach spellbook entry ritual from TG
   - bugfix: Chuunibyou casting no longer makes it impossible to cast robed spells
+2023-08-26:
+  epochayur, mrmelbert:
+  - bugfix: RDS no longer tells you when you are rolling a delayed antag.
+  - bugfix: You can no longer hear the voice of people using sign language.

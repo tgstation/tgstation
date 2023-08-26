@@ -162,6 +162,9 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 	name = "Pet Delivery Beacon"
 	item_path = /obj/item/choice_beacon/pet
 
+/datum/loadout_item/pocket_items/rollie
+	name = "Cannabis Rollie"
+	item_path = /obj/item/clothing/mask/cigarette/rollie/cannabis
 
 /*
 *	DONATOR

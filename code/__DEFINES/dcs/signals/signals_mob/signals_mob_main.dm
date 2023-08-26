@@ -38,8 +38,10 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The arugment of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
-/// From base of /client/Move()
+/// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
+/// From base of /client/Move(): but sent to the client over mob
+#define COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND "client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"
 /// From base of /mob/proc/reset_perspective() : ()

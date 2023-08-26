@@ -131,23 +131,13 @@
 		return
 
 	var/list/floor_gases = floor_gas_mixture.gases
-	var/list/gases_to_check = list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
-	var/trace_gases
-	for(var/id in floor_gases)
-		if(id in gases_to_check)
-			continue
-		trace_gases = TRUE
-		break
-
-	// Can most things breathe?
-	if(trace_gases)
-		return
-	if(!(floor_gases[/datum/gas/oxygen] && floor_gases[/datum/gas/oxygen][MOLES] >= 16))
-		return
-	if(floor_gases[/datum/gas/plasma])
-		return
-	if(floor_gases[/datum/gas/carbon_dioxide] && floor_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
-		return
+	var/static/list/gases_to_check = list(
+		/datum/gas/oxygen = list(16, 100),
+		/datum/gas/nitrogen,
+		/datum/gas/carbon_dioxide = list(0, 10)
+	)
+	if(!check_gases(floor_gases, gases_to_check))
+		return FALSE
 
 	// Aim for goldilocks temperatures and pressure
 	if((floor_gas_mixture.temperature <= 270) || (floor_gas_mixture.temperature >= 360))
