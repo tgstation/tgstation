@@ -202,7 +202,7 @@
 	name = "Cosmic Expansion"
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
-	gain_text = "The ground now shook beneath me. The beast inhabited me, and their voice was intoxicating "
+	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
