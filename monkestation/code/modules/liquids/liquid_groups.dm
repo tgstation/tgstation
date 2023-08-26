@@ -219,26 +219,28 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(!(member in members))
 		return
+	if(!turf_reagents)
+		return
 	turf_reagents.expose(member, TOUCH, liquid = TRUE)
 
 /datum/liquid_group/proc/build_turf_reagent()
-	if(turf_reagents)
-		qdel(turf_reagents)
-	turf_reagents = new(100000)
+	if(!members)
+		return
+	if(!turf_reagents)
+		turf_reagents = new(100000)
 
 	exposure = FALSE
-	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
 		var/datum/reagent/pulled_reagent = reagent_type
 		var/amount = pulled_reagent.volume / members.len
 		if(!amount)
 			continue
-		passed_list[pulled_reagent.type] = amount
+		if(pulled_reagent.type in turf_reagents.previous_reagent_list)
+			turf_reagents.remove_all_type(pulled_reagent.type, 100000)
+		turf_reagents.add_reagent(pulled_reagent.type, amount)
 		if(pulled_reagent.turf_exposure)
 			exposure = TRUE
 
-	turf_reagents.add_reagent_list(passed_list)
-	turf_reagents.chem_temp = group_temperature
 
 /datum/liquid_group/proc/process_turf_disperse()
 	if(!total_reagent_volume)
@@ -322,7 +324,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		remove_specific(amount = remove_amount, reagent_type = reagent_type)
 
 /datum/liquid_group/proc/add_reagents(obj/effect/abstract/liquid_turf/member, reagent_list, chem_temp)
-	reagents.add_reagent_list(reagent_list)
+	reagents.add_reagent_list(reagent_list, _no_react = TRUE)
 
 	var/amount = 0
 	for(var/list_item in reagent_list)
@@ -721,40 +723,16 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 ///EXPOSURE AND SPREADING
 /datum/liquid_group/proc/expose_members_turf(obj/effect/abstract/liquid_turf/member)
+	if(!turf_reagents)
+		return
 	var/turf/members_turf = member.my_turf
-	var/datum/reagents/exposed_reagents = new(1000)
-	var/list/passed_list = list()
-	for(var/reagent_type in reagents.reagent_list)
-		var/datum/reagent/pulled_reagent = reagent_type
-		var/amount = pulled_reagent.volume / members.len
-		if(!amount)
-			continue
-		passed_list[pulled_reagent.type] = amount
-
-	exposed_reagents.add_reagent_list(passed_list)
-	exposed_reagents.chem_temp = group_temperature
-
 	for(var/atom/movable/target_atom in members_turf)
-		exposed_reagents.expose(target_atom, TOUCH, liquid = TRUE)
-	qdel(exposed_reagents)
+		turf_reagents.expose(target_atom, TOUCH, liquid = TRUE)
 
 /datum/liquid_group/proc/expose_atom(atom/target, modifier = 0, method)
-	var/datum/reagents/exposed_reagents = new(1000)
-	var/list/passed_list = list()
-	for(var/reagent_type in reagents.reagent_list)
-		var/datum/reagent/pulled_reagent = reagent_type
-		var/amount = pulled_reagent.volume / members.len
-		if(!amount)
-			continue
-		passed_list[pulled_reagent.type] = amount
-
-	exposed_reagents.add_reagent_list(passed_list)
-	exposed_reagents.chem_temp = group_temperature
-
-	if(modifier)
-		exposed_reagents.remove_any((exposed_reagents.total_volume * modifier))
-
-	exposed_reagents.expose(target, method, liquid = TRUE)
+	if(!turf_reagents)
+		return
+	turf_reagents.expose(target, method, liquid = TRUE)
 
 /datum/liquid_group/proc/spread_liquid(turf/new_turf, turf/source_turf)
 	if(isclosedturf(new_turf) || !source_turf.atmos_adjacent_turfs)

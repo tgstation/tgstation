@@ -50,8 +50,6 @@ multiple modular subtrees with behaviors
 	// Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
 	var/datum/ai_movement/ai_movement = /datum/ai_movement/dumb
-	///Cooldown until next movement
-	COOLDOWN_DECLARE(movement_cooldown)
 	///Delay between movements. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
 
@@ -66,7 +64,8 @@ multiple modular subtrees with behaviors
 	if(idle_behavior)
 		idle_behavior = new idle_behavior()
 
-	PossessPawn(new_pawn)
+	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
+		PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
 	set_ai_status(AI_STATUS_OFF)
@@ -150,6 +149,9 @@ multiple modular subtrees with behaviors
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
+	if(isnull(pawn))
+		return // instantiated without an applicable pawn, fine
+
 	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE))
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -157,7 +159,6 @@ multiple modular subtrees with behaviors
 	pawn = null
 	if(destroy)
 		qdel(src)
-	return
 
 ///Returns TRUE if the ai controller can actually run at the moment.
 /datum/ai_controller/proc/able_to_run()
@@ -395,6 +396,9 @@ multiple modular subtrees with behaviors
 	// Assume it is an error when trying to set a value overtop a list
 	if(islist(blackboard[key]))
 		CRASH("set_blackboard_key attempting to set a blackboard value to key [key] when it's a list!")
+	// Don't do anything if it's already got this value
+	if (blackboard[key] == thing)
+		return
 
 	// Clear existing values
 	if(!isnull(blackboard[key]))
@@ -402,6 +406,7 @@ multiple modular subtrees with behaviors
 
 	TRACK_AI_DATUM_TARGET(thing, key)
 	blackboard[key] = thing
+	post_blackboard_key_set(key)
 
 /**
  * Sets the key at index thing to the passed value
@@ -415,9 +420,14 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/set_blackboard_key_assoc(key, thing, value)
 	if(!islist(blackboard[key]))
 		CRASH("set_blackboard_key_assoc called on non-list key [key]!")
+	// Don't do anything if it's already got this value
+	if (blackboard[key][thing] == value)
+		return
+
 	TRACK_AI_DATUM_TARGET(thing, key)
 	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] = value
+	post_blackboard_key_set(key)
 
 /**
  * Similar to [proc/set_blackboard_key_assoc] but operates under the assumption the key is a lazylist (so it will create a list)
@@ -429,9 +439,22 @@ multiple modular subtrees with behaviors
  */
 /datum/ai_controller/proc/set_blackboard_key_assoc_lazylist(key, thing, value)
 	LAZYINITLIST(blackboard[key])
+	// Don't do anything if it's already got this value
+	if (blackboard[key][thing] == value)
+		return
+
 	TRACK_AI_DATUM_TARGET(thing, key)
 	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] = value
+	post_blackboard_key_set(key)
+
+/**
+ * Called after we set a blackboard key, forwards signal information.
+ */
+/datum/ai_controller/proc/post_blackboard_key_set(key)
+	if (isnull(pawn))
+		return
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key))
 
 /**
  * Adds the passed "thing" to the associated key
@@ -519,8 +542,13 @@ multiple modular subtrees with behaviors
  * * key - A blackboard key
  */
 /datum/ai_controller/proc/clear_blackboard_key(key)
+	if(isnull(blackboard[key]))
+		return
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
+	if(isnull(pawn))
+		return
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(key))
 
 /**
  * Remove the passed thing from the associated blackboard key

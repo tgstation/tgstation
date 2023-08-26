@@ -49,6 +49,10 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 
+	//monkestation edit start
+	if(SSstation_coloring.wall_trims)
+		trim_color = SSstation_coloring.get_default_color()
+
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
 	dismantle_wall(TRUE, FALSE)

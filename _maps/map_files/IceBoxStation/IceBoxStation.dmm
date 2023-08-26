@@ -3817,6 +3817,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"blr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/basic/lizard/wags_his_tail,
+/turf/open/floor/iron,
+/area/station/service/janitor)
 "blO" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
@@ -10812,6 +10818,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"dqF" = (
+/obj/structure/flora/grass/green/style_random,
+/mob/living/basic/pet/penguin/emperor{
+	name = "Club"
+	},
+/turf/open/misc/asteroid/snow/standard_air,
+/area/station/science/research)
 "dqR" = (
 /obj/machinery/computer/rdconsole,
 /obj/structure/cable,
@@ -21854,12 +21867,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"gZa" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "gZb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
@@ -23241,14 +23248,6 @@
 "hyV" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/testlab)
-"hyW" = (
-/obj/item/toy/snowball{
-	pixel_x = -6;
-	pixel_y = -3
-	},
-/mob/living/simple_animal/pet/penguin/baby,
-/turf/open/misc/asteroid/snow/standard_air,
-/area/station/science/research)
 "hyY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -27554,6 +27553,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/port/fore)
+"iTd" = (
+/obj/structure/bed/dogbed/renault,
+/mob/living/basic/pet/fox/renault,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "iTy" = (
 /obj/machinery/space_heater,
 /obj/machinery/airalarm/directional/south,
@@ -31498,6 +31502,15 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
+"kii" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/obj/machinery/siren/weather{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "kin" = (
 /obj/machinery/pdapainter/supply,
 /turf/open/floor/carpet,
@@ -34935,13 +34948,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"lkP" = (
-/obj/structure/flora/grass/green/style_random,
-/mob/living/simple_animal/pet/penguin/emperor{
-	name = "Club"
-	},
-/turf/open/misc/asteroid/snow/standard_air,
-/area/station/science/research)
 "lkS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/food/pie_smudge,
@@ -35025,11 +35031,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"lmo" = (
-/obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/captain)
 "lms" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -45089,12 +45090,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
-"owv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
-/turf/open/floor/iron,
-/area/station/service/janitor)
 "owC" = (
 /turf/closed/wall/r_wall,
 /area/station/science/server)
@@ -46344,6 +46339,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
+"oQV" = (
+/obj/item/toy/snowball{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/mob/living/basic/pet/penguin/baby/permanent,
+/turf/open/misc/asteroid/snow/standard_air,
+/area/station/science/research)
 "oQY" = (
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -59983,6 +59986,12 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
+"tqb" = (
+/obj/machinery/siren/weather{
+	dir = 2
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "tqk" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -218880,7 +218889,7 @@ gXS
 fsv
 fMJ
 rvE
-bln
+tqb
 bln
 bln
 bln
@@ -237401,7 +237410,7 @@ iuv
 vXh
 xVK
 fDJ
-owv
+blr
 pYF
 uwO
 rSx
@@ -238665,7 +238674,7 @@ tEd
 lpM
 eEC
 aTw
-lmo
+iTd
 hpe
 wwB
 mBX
@@ -253332,7 +253341,7 @@ vvE
 tJG
 oHK
 goq
-hyW
+oQV
 kdJ
 usP
 wLl
@@ -253590,7 +253599,7 @@ meg
 oHK
 pnq
 xsD
-lkP
+dqF
 pvU
 wLl
 jUX
@@ -257678,7 +257687,7 @@ jZM
 xVG
 jZM
 sEB
-gZa
+kii
 sEB
 jZM
 xVG

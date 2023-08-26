@@ -5689,10 +5689,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
-"aHV" = (
-/obj/effect/spawner/random_bar/tramstation,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/asteroid)
 "aIi" = (
 /turf/open/floor/iron,
 /area/station/security/prison/work)
@@ -25060,6 +25056,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"hYk" = (
+/obj/structure/bed/dogbed/renault,
+/obj/structure/cable,
+/mob/living/basic/pet/fox/renault,
+/turf/open/floor/carpet,
+/area/station/command/heads_quarters/captain)
 "hYn" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -32625,6 +32627,16 @@
 "kNT" = (
 /turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
+"kNZ" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Cargo Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/cargo)
 "kOc" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -39284,12 +39296,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"npH" = (
-/obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/captain)
 "npR" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small/directional/east,
@@ -42888,6 +42894,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
+"oJA" = (
+/obj/effect/spawner/random_bar/tramstation,
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
 "oKZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -64925,17 +64935,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
-"wFz" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Cargo Maintenance Hatch"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/cargo)
 "wFA" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -156874,7 +156873,7 @@ xEo
 xEo
 nFZ
 jXU
-npH
+hYk
 xEo
 aaS
 aaS
@@ -162790,7 +162789,7 @@ aaa
 aaa
 aaa
 aaa
-aHV
+oJA
 izU
 wWn
 cut
@@ -177684,7 +177683,7 @@ ohS
 eaI
 ohS
 lZW
-wFz
+kNZ
 lZW
 lZW
 lZW

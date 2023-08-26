@@ -110,6 +110,17 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 	name = "Zippo Lighter"
 	item_path = /obj/item/lighter
 
+/datum/loadout_item/pocket_items/illumative_lighter
+	name = "Illuminative Lighter"
+	item_path = /obj/item/lighter/bright
+
+/datum/loadout_item/pocket_items/skull_lighter
+	name = "Skull Zippo Lighter"
+	item_path = /obj/item/lighter/skull
+
+/datum/loadout_item/pocket_items/mime_lighter
+	name = "Mime Lighter"
+	item_path = /obj/item/lighter/mime
 
 /datum/loadout_item/pocket_items/paicard
 	name = "Personal AI Device"

@@ -16,3 +16,15 @@
 					/obj/item/key/janitor)
 	crate_name = "janicart crate"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/service/birthday
+	name = "Birthday Bash Pack"
+	desc = "This is for that corgi, isn't it..."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/toy/balloon = 5,
+					/obj/item/reagent_containers/spray/chemsprayer/party = 2,
+					/obj/item/clothing/head/costume/party = 5,
+					/obj/item/food/cake/birthday,
+					/obj/item/plate/small = 5,
+					/obj/item/a_gift/anything)
+	crate_name = "Birthday Crate"
