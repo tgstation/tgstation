@@ -772,10 +772,6 @@
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/supermatter)
-"AQ" = (
-/obj/structure/cable,
-/turf/closed/wall/rust,
-/area/station/engineering/supermatter/room)
 "Bl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -838,7 +834,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "Ee" = (
-/obj/structure/cable,
 /turf/closed/wall,
 /area/station/engineering/supermatter/room)
 "Ei" = (
@@ -2023,7 +2018,7 @@ LO
 rW
 Qn
 dq
-AQ
+Ar
 Ee
 fx
 Ar

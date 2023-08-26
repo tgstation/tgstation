@@ -34846,6 +34846,10 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"mGV" = (
+/obj/structure/sign/warning/yes_smoking,
+/turf/closed/wall,
+/area/space/nearstation)
 "mGX" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -114560,7 +114564,7 @@ aaa
 cpH
 lMJ
 lMJ
-lAu
+mGV
 lMJ
 aox
 aaa

@@ -334,10 +334,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"xr" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter/room)
 "xs" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
@@ -1229,8 +1225,8 @@ Qn
 nb
 dq
 mS
-xr
-xr
+zs
+zs
 fx
 Ar
 zs
