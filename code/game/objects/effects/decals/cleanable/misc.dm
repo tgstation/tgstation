@@ -124,6 +124,25 @@
 	desc = "You know who to call."
 	light_power = 2
 
+/obj/effect/decal/cleanable/greenglow/waste
+	name = "industrial waste"
+	desc = "A puddle of radioactive waste."
+	light_power = 1
+	beauty = -300
+	decal_reagent = /datum/reagent/toxin/acid/industrial_waste
+
+/obj/effect/decal/cleanable/greenglow/waste/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(eat_floor)), 45 SECONDS)
+
+/obj/effect/decal/cleanable/greenglow/waste/proc/eat_floor()
+	var/atom/splashed_turf = get_turf(src)
+	if(!isfloorturf(splashed_turf))
+		return
+	var/turf/open/splash_floor = splashed_turf
+	splash_floor.ScrapeAway(flags = CHANGETURF_IGNORE_AIR) //Eat away the floor
+	visible_message("The waste eats away at the floor, leaving \the [get_turf(src)] behind.")
+
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
 	desc = "Somebody should remove that."

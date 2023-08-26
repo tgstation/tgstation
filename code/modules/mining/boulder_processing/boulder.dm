@@ -77,6 +77,7 @@
 	durability--
 	if(durability <= 0)
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
+		playsound(src, 'sound/effects/rock_break.ogg', 50)
 		convert_to_ore()
 		qdel(src)
 		return

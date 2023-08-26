@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(ore_generation)
 			local_vent_count++
 
 		if(local_vent_count >= MAX_BOULDERS_PER_VENT)
-			return //We don't want to be accountable for literally hundreds of unprocessed boulders for no reason.
+			continue //We don't want to be accountable for literally hundreds of unprocessed boulders for no reason.
 		var/obj/item/boulder/new_rock
 		if(current_vent.artifact_chance)
 			if(prob(current_vent.artifact_chance))

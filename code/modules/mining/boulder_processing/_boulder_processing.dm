@@ -97,7 +97,8 @@
 
 		if(!istype(potential_boulder, /obj/item/boulder))
 			potential_boulder.forceMove(drop_location())
-			CRASH("\The [src] had a non-boulder in it!")
+			say("non-boulder found!")
+			CRASH("\The [src] had a non-boulder in it!") //This should never happen.
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
@@ -193,6 +194,10 @@
 	remove_boulder(new_rock)
 	return TRUE
 
+/**
+ * Accepts a boulder into the machine. Used when a boulder is first placed into the machine.
+ * @param new_boulder The boulder to be accepted.
+ */
 /obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
 	if(isnull(new_boulder))
 		return FALSE
@@ -208,7 +213,12 @@
 	START_PROCESSING(SSmachines, src) //Starts processing if we aren't already.
 	return TRUE
 
-/obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder)
+/**
+ * Ejects a boulder from the machine. Used when a boulder is finished processing, or when a boulder can't be processed.
+ * @param drop_turf The location to eject the boulder to. If null, it will eject to the machine's drop_location().
+ * @param specific_boulder The boulder to be ejected.
+ */
+/obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder, turf/drop_turf = null)
 	if(!specific_boulder)
 		CRASH("remove_boulder() called with no boulder!")
 	if(isnull(specific_boulder))
@@ -219,8 +229,11 @@
 		update_boulder_count()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	specific_boulder.reset_processing_cooldown()
-	specific_boulder.forceMove(drop_location())
+	specific_boulder.reset_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
+	if(drop_turf && isturf(drop_turf))
+		specific_boulder.forceMove(drop_turf)
+	else
+		specific_boulder.forceMove(drop_location())
 	update_boulder_count()
 	visible_message(span_notice("[boulders_contained.len] boulders remaining! THIS IS THE ONE IN REMOVE BOULDER!!!"))
 	return TRUE
@@ -235,16 +248,24 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
 
+/**
+ * Looks for a boost to the machine's efficiency, and applies it if found.
+ * Applied more on the chemistry integration but can be used for other things if desired.
+ */
 /obj/machinery/bouldertech/proc/check_for_boosts()
+	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100%.
 	return
 
+/**
+ * Checks if a custom_material is in a list of processable materials in the machine.
+ */
 /obj/machinery/bouldertech/proc/check_for_processable_materials(list/boulder_mats)
-	var/skip = TRUE // Check that it's something we actually care about first!
+	var/contains_mats = FALSE // Check that it's something we actually care about first!
 	for(var/material as anything in boulder_mats)
 		if(is_type_in_list(material, processable_materials))
-			skip = FALSE
+			contains_mats = TRUE
 			break
-	return skip
+	return contains_mats
 
 ///Beacon to launch a new mining setup when activated. For testing and speed!
 /obj/item/boulder_beacon
