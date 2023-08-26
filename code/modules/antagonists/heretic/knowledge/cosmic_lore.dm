@@ -83,7 +83,7 @@
 	desc = "Your Mansus Grasp now applies the Mark of Cosmos. The mark is triggered from an attack with your Cosmic Blade. \
 		When triggered, the victim is returned to the location where the mark was originally applied to them. \
 		They will then be paralyzed for 2 seconds."
-	gain_text = "The beast now whsipered to me occasionally, only small tidbits of their circumstance's. I can help them, I have to help them."
+	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. I can help them, I have to help them."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/cosmic)
 	route = PATH_COSMIC
 	mark_type = /datum/status_effect/eldritch/cosmic
