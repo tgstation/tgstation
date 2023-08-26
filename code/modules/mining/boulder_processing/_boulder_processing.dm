@@ -64,10 +64,6 @@
 		START_PROCESSING(SSmachines, src)
 		return
 
-/obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers) //todo: this probably shouldn't exist? maybe retool elsewhere?
-	. = ..()
-	remove_boulder()
-
 /obj/machinery/bouldertech/deconstruct(disassembled)
 	. = ..()
 	if(holds_minerals)
@@ -89,32 +85,40 @@
 		return FALSE
 
 /obj/machinery/bouldertech/process()
-	var/blocker = FALSE
-	var/boulders_concurrent = boulders_processing_max
-	for(var/i in 1 to contents.len)
-		if(boulders_concurrent <= 0)
-			return //Try again next time
-		if(!contents[i])
+	var/stop_processing_check = FALSE
+	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
+	for(var/obj/item/potential_boulder as anything in boulders_contained)
+		if(!potential_boulder)
 			break
-		if(!istype(contents[i], /obj/item/boulder))
+		if(boulders_concurrent <= 0)
+			break //Try again next time
+		if(!boulders_contained.len)
+			break
+
+		if(!istype(potential_boulder, /obj/item/boulder))
+			potential_boulder.forceMove(drop_location())
+			CRASH("\The [src] had a non-boulder in it!")
+
+		var/obj/item/boulder/boulder = potential_boulder
+		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
+			say("no processable materials found!")
+			boulders_concurrent-- //We count skipped boulders
+			remove_boulder(boulder)
 			continue
-		var/obj/item/boulder/boulder = contents[i]
 		boulders_concurrent--
 		boulder.durability-- //One less durability to the processed boulder.
 		if(COOLDOWN_FINISHED(src, sound_cooldown))
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-
-		playsound(loc, usage_sound, (60-(5*abs(boulder.durability))), FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-		blocker = TRUE
+		playsound(loc, usage_sound, 40, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
+		stop_processing_check = TRUE
 		if(boulder.durability <= 0)
-			say("we're on brakedown of boulder, index [i]")
 			breakdown_boulder(boulder) //Crack that bouwlder open!
 			continue
 		else
 			if(prob(25))
 				var/list/quips = list("clang!", "crack!", "bang!", "clunk!", "clank!",)
 				balloon_alert_to_viewers("[pick(quips)]")
-	if(!blocker)
+	if(!stop_processing_check)
 		STOP_PROCESSING(SSmachines, src)
 		balloon_alert_to_viewers("clear!")
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
@@ -142,6 +146,7 @@
 		return FALSE
 	if(QDELETED(chosen_boulder))
 		return FALSE
+
 	if(!chosen_boulder.custom_materials)
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -157,15 +162,17 @@
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 		if(!is_type_in_list(possible_mat, processable_materials))
 			var/quantity = chosen_boulder.custom_materials[possible_mat]
-			visible_message(span_warning("[possible_mat] remains at [quantity] value!"))
+			visible_message(span_warning("[quantity] units of [possible_mat] are left over!"))
 			remaining_ores += possible_mat
 			remaining_ores[possible_mat] = quantity
 			chosen_boulder.custom_materials[possible_mat] = null
 		else
 			points_held += (chosen_boulder.custom_materials[possible_mat] * possible_mat.points_per_unit)/// put point total here into machine
 			tripped = TRUE
+			visible_message(span_warning("WE TRIPPED!"))
 
 	if(!tripped)
+		visible_message(span_warning("No ores found! Removing [chosen_boulder]."))
 		remove_boulder(chosen_boulder)
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	use_power(100)
@@ -174,12 +181,15 @@
 	balloon_alert_to_viewers("Boulder processed!")
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)
+		say("boulder deleted! removed.")
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_boulder_count()
 		return TRUE
 
+	say("we carried over! new boulder has been made.")
 	var/obj/item/boulder/new_rock = new (src)
 	new_rock.set_custom_materials(remaining_ores)
+	new_rock.reset_processing_cooldown() //So that we don't pick it back up!
 	remove_boulder(new_rock)
 	return TRUE
 
@@ -199,27 +209,20 @@
 	return TRUE
 
 /obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder)
-	if(!contents.len)
+	if(!specific_boulder)
+		CRASH("remove_boulder() called with no boulder!")
+	if(isnull(specific_boulder))
 		return FALSE
-	var/obj/item/possible_boulder = specific_boulder
-	if(isnull(possible_boulder))
-		for(var/i in 1 to contents.len)
-			if(istype(contents[i], /obj/item/boulder))
-				possible_boulder = contents[i]
-				break
-	if(isnull(possible_boulder))
-		return FALSE
-	if(!possible_boulder.custom_materials)
-		boulders_contained -= possible_boulder
-		qdel(possible_boulder)
+	if(!specific_boulder.custom_materials)
+		say("Empty boulder removed!")
+		qdel(specific_boulder)
 		update_boulder_count()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	var/obj/item/boulder/real_boulder = possible_boulder
-	real_boulder.reset_processing_cooldown()
-	real_boulder.forceMove(src.drop_location())
-	visible_message(span_notice("[boulders_contained.len] boulders remaining!"))
+	specific_boulder.reset_processing_cooldown()
+	specific_boulder.forceMove(drop_location())
 	update_boulder_count()
+	visible_message(span_notice("[boulders_contained.len] boulders remaining! THIS IS THE ONE IN REMOVE BOULDER!!!"))
 	return TRUE
 
 /obj/machinery/bouldertech/proc/update_boulder_count()
@@ -234,6 +237,14 @@
 
 /obj/machinery/bouldertech/proc/check_for_boosts()
 	return
+
+/obj/machinery/bouldertech/proc/check_for_processable_materials(list/boulder_mats)
+	var/skip = TRUE // Check that it's something we actually care about first!
+	for(var/material as anything in boulder_mats)
+		if(is_type_in_list(material, processable_materials))
+			skip = FALSE
+			break
+	return skip
 
 ///Beacon to launch a new mining setup when activated. For testing and speed!
 /obj/item/boulder_beacon
