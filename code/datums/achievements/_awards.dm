@@ -101,7 +101,7 @@
 		.["achieve_tooltip"] = "This is the most unlocked achievement"
 		return
 	var/percent = FLOOR(times_achieved / SSachievements.most_unlocked_achievement.times_achieved * 100, 0.01)
-	.["achieve_tooltip"] = "[(times_achieved && !percent) ? "Less than 0.01" : percent]% of the most unlocked achievement ([SSachievements.most_unlocked_achievement.name])"
+	.["achieve_tooltip"] = "[(times_achieved && !percent) ? "Less than 0.01" : percent]% compared to the achievement unlocked by the most players: \"[SSachievements.most_unlocked_achievement.name])\""
 
 /datum/award/achievement/parse_value(raw_value)
 	return raw_value > 0
