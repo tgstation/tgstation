@@ -1,0 +1,4 @@
+author: "YesterdaysPromise"
+delete-after: True
+changes:
+  - rscadd: "Gave snow legions a separate corpse-drop pool: ash walkers excluded, but eskimos included."

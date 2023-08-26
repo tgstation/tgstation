@@ -1,0 +1,4 @@
+author: "Deadgebert"
+delete-after: True
+changes:
+  - qol: "Icebox monsters no longer spawn close enough to aggro Lia at round start"

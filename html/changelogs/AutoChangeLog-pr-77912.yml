@@ -1,0 +1,4 @@
+author: "CoiledLamb"
+delete-after: True
+changes:
+  - bugfix: "the coroner medkit can now hold every item it spawns with"

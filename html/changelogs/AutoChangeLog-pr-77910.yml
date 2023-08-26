@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Watchers won't retain an ethereal outline of their wings hovering over their dead body."
