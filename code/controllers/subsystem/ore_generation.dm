@@ -67,4 +67,5 @@ SUBSYSTEM_DEF(ore_generation)
 		var/list/mats_list = current_vent.create_mineral_contents()
 		current_vent.Shake(duration = 1.5 SECONDS)
 		new_rock.set_custom_materials(mats_list)
+		new_rock.flavor_based_on_vent(current_vent)
 		available_boulders += new_rock

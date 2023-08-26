@@ -19,7 +19,6 @@
 	. = ..()
 	register_context()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
-	durability += rand(0, 3) //randomize durability a bit for some flavor. Gives room for subtypes to have different durability values.
 
 /obj/item/boulder/Destroy(force)
 	. = ..()
@@ -131,13 +130,40 @@
 /obj/item/boulder/proc/reset_processing_cooldown()
 	COOLDOWN_START(src, processing_cooldown, 2 SECONDS)
 
+/**
+ * This is called when a boulder is spawned from a vent, and is used to set the boulder's icon as well as durability.
+ */
+/obj/item/boulder/proc/flavor_based_on_vent(obj/structure/ore_vent/parent_vent)
+	var/durability_min = parent_vent.boulder_size
+	var/durability_max = parent_vent.boulder_size + BOULDER_SIZE_SMALL
+	if(!parent_vent)
+		durability_min = BOULDER_SIZE_SMALL
+		durability_max = BOULDER_SIZE_MEDIUM
+	durability = rand(durability_min, durability_max) //randomize durability a bit for some flavor.
+	switch(parent_vent?.boulder_size)
+		if(BOULDER_SIZE_SMALL)
+			icon_state = "boulder_small"
+		if(BOULDER_SIZE_MEDIUM)
+			icon_state = "boulder_medium"
+		if(BOULDER_SIZE_LARGE)
+			icon_state = "boulder_large"
+		else
+			icon_state = "boulder_small"
+	update_appearance(UPDATE_ICON_STATE)
+
 /obj/item/boulder/artifact
 	name = "artifact boulder"
 	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
+	var/artifact_type = /obj/item/relic
 
 /obj/item/boulder/artifact/Initialize(mapload)
 	. = ..()
-	new /obj/item/relic(src) //var/obj/item/relic/boulder_relic
+	new artifact_type(src) /// This could be poggers for archaeology
+
+/obj/item/boulder/artifact/convert_to_ore()
+	. = ..()
+	visible_message(src, "The boulder crumbles into ore, but something else is inside... \a [artifact_type]?")
+	new artifact_type(drop_location())
 
 /obj/item/boulder/gulag
 	name = "boulder"
