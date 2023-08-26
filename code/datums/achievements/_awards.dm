@@ -72,14 +72,36 @@
 /datum/award/proc/on_unlock(mob/user)
 	return
 
+///returns additional ui data for the Check Achievements menu
+/datum/award/proc/get_ui_data()
+	return list(
+		"score" = FALSE,
+		"achieve_info" = null,
+		"achieve_tooltip" = null,
+	)
+
 ///Achievements are one-off awards for usually doing cool things.
 /datum/award/achievement
 	desc = "Achievement for epic people"
 	icon = "" // This should warn contributors that do not declare an icon when contributing new achievements.
+	///How many players have earned this achievement
+	var/times_achieved = 0
 
 /datum/award/achievement/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "achievement"
+
+/datum/award/achievement/get_ui_data()
+	. = ..()
+	.["achieve_info"] = "Unlocked by [times_achieved] players so far"
+	if(!SSachievements.most_unlocked_achievement)
+		.["achieve_tooltip"] = "No achievement has been unlocked yet. Be the first today!"
+		return
+	if(SSachievements.most_unlocked_achievement == src)
+		.["achieve_tooltip"] = "This is the most unlocked achievement"
+		return
+	var/percent = FLOOR(times_achieved / SSachievements.most_unlocked_achievement.times_achieved * 100, 0.01)
+	.["achieve_tooltip"] = "[(times_achieved && !percent) ? "Less than 0.01" : percent]% compared to the achievement unlocked by the most players: \"[SSachievements.most_unlocked_achievement.name])\""
 
 /datum/award/achievement/parse_value(raw_value)
 	return raw_value > 0
@@ -88,6 +110,9 @@
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 	user.client.give_award(/datum/award/score/achievements_score, user, 1)
+	times_achieved++
+	if(SSachievements.most_unlocked_achievement?.times_achieved < times_achieved)
+		SSachievements.most_unlocked_achievement = src
 
 	var/datum/achievement_report/new_report = new /datum/achievement_report()
 
@@ -119,6 +144,10 @@
 /datum/award/score/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "score"
+
+/datum/award/score/get_ui_data()
+	. = ..()
+	.["score"] = TRUE
 
 /datum/award/score/proc/LoadHighScores()
 	var/datum/db_query/Q = SSdbcore.NewQuery(
