@@ -60,6 +60,13 @@
 	. = ..()
 	process_reagents()
 
+/obj/machinery/bouldertech/refinery/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(istype(held_item, /obj/item/boulder))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert boulder"
+	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /**
  * Try and draw reagents and produce waste. Utilized when we have boosting chemicals to use.
  * Calls generate_waste() when successful.

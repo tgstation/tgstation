@@ -14,21 +14,35 @@
 	// Cooldown used for left click teleportation.
 	COOLDOWN_DECLARE(manual_teleport_cooldown)
 
+/obj/machinery/bouldertech/brm/Initialize(mapload)
+	. = ..()
+	set_wires(new /datum/wires/brm(src))
+
+/obj/machinery/bouldertech/brm/Destroy()
+	. = ..()
+	QDEL_NULL(wires)
+
 /obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
+		return
+	if(panel_open)
+		balloon_alert(user, "close panel first!")
 		return
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	pre_collect_boulder()
 
 	COOLDOWN_START(src, manual_teleport_cooldown, teleportation_time)
 
+/obj/machinery/bouldertech/brm/attackby(obj/item/attacking_item, mob/user, params)
+	if(is_wire_tool(attacking_item) && panel_open)
+		wires.interact(user)
+		return TRUE
+	return ..()
+
 /obj/machinery/bouldertech/brm/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	START_PROCESSING(SSmachines, src)
-	icon_state = "brm-toggled"
-	update_appearance(UPDATE_ICON_STATE)
-	usage_sound = AUTO_TELEPORT_SOUND
+	toggle_auto_on(user)
 
 /obj/machinery/bouldertech/brm/process()
 	balloon_alert_to_viewers("Bzzap!")
@@ -53,7 +67,6 @@
 
 /obj/machinery/bouldertech/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-
 	context[SCREENTIP_CONTEXT_LMB] = "Teleport single boulder"
 	context[SCREENTIP_CONTEXT_RMB] = "Toggle automatic boulder retrieval"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -85,6 +98,16 @@
 	balloon_alert_to_viewers("boulder appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	use_power(100)
+
+/obj/machinery/bouldertech/brm/proc/toggle_auto_on(mob/user)
+	if(panel_open)
+		if(user)
+			balloon_alert(user, "close panel first!")
+		return
+	START_PROCESSING(SSmachines, src)
+	icon_state = "brm-toggled"
+	update_appearance(UPDATE_ICON_STATE)
+	usage_sound = AUTO_TELEPORT_SOUND
 
 #undef MANUAL_TELEPORT_SOUND
 #undef AUTO_TELEPORT_SOUND

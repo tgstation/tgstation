@@ -31,6 +31,7 @@
 
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
+	register_context()
 	if(holds_minerals)
 		silo_materials = AddComponent(
 			/datum/component/remote_materials, \
@@ -64,6 +65,15 @@
 		START_PROCESSING(SSmachines, src)
 		return
 
+/obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(holds_minerals)
+		if(!boulders_contained.len)
+			visible_message(span_warning("No boulders to remove!"))
+			return
+		remove_boulder(pick(boulders_contained))
+		return
+
 /obj/machinery/bouldertech/deconstruct(disassembled)
 	. = ..()
 	if(holds_minerals)
@@ -75,14 +85,14 @@
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
-		return FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_pry_open(tool, close_after_pry = TRUE, closed_density = FALSE))
-		return FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(default_deconstruction_crowbar(tool))
-		return FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/bouldertech/process()
 	var/stop_processing_check = FALSE
@@ -163,17 +173,14 @@
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 		if(!is_type_in_list(possible_mat, processable_materials))
 			var/quantity = chosen_boulder.custom_materials[possible_mat]
-			visible_message(span_warning("[quantity] units of [possible_mat] are left over!"))
 			remaining_ores += possible_mat
 			remaining_ores[possible_mat] = quantity
 			chosen_boulder.custom_materials[possible_mat] = null
 		else
 			points_held += (chosen_boulder.custom_materials[possible_mat] * possible_mat.points_per_unit)/// put point total here into machine
 			tripped = TRUE
-			visible_message(span_warning("WE TRIPPED!"))
 
 	if(!tripped)
-		visible_message(span_warning("No ores found! Removing [chosen_boulder]."))
 		remove_boulder(chosen_boulder)
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	use_power(100)
@@ -182,12 +189,10 @@
 	balloon_alert_to_viewers("Boulder processed!")
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)
-		say("boulder deleted! removed.")
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_boulder_count()
 		return TRUE
 
-	say("we carried over! new boulder has been made.")
 	var/obj/item/boulder/new_rock = new (src)
 	new_rock.set_custom_materials(remaining_ores)
 	new_rock.reset_processing_cooldown() //So that we don't pick it back up!
@@ -234,8 +239,11 @@
 		specific_boulder.forceMove(drop_turf)
 	else
 		specific_boulder.forceMove(drop_location())
-	update_boulder_count()
-	visible_message(span_notice("[boulders_contained.len] boulders remaining! THIS IS THE ONE IN REMOVE BOULDER!!!"))
+	if(!update_boulder_count())
+		STOP_PROCESSING(SSmachines, src)
+		balloon_alert_to_viewers("clear!")
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
+		return TRUE
 	return TRUE
 
 /obj/machinery/bouldertech/proc/update_boulder_count()

@@ -201,7 +201,7 @@
 			return
 	if(tgui_alert(usr, "Are you ready to excavate \the [src]?", "Uh oh", list("Yes", "No")) != "Yes")
 		return
-	///This is where we start spitting out mobs.
+	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive()
@@ -219,6 +219,10 @@
 
 	start_wave_defense()
 
+/**
+ * Generates a description of the ore vent to ore_string, based on the minerals contained within it.
+ * Ore_string is passed to examine().
+ */
 /obj/structure/ore_vent/proc/generate_description()
 	for(var/mineral_count in 1 to mineral_breakdown.len)
 		var/datum/material/resource = mineral_breakdown[mineral_count]
@@ -255,6 +259,7 @@
 		generate_mineral_breakdown()
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
+	name = "[string_boulder_size] ore vent"
 	switch(string_boulder_size)
 		if("large")
 			boulder_size = BOULDER_SIZE_LARGE
@@ -267,6 +272,8 @@
 			SSore_generation.ore_vent_sizes["small"] -= 1
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
+			name = initial(name)
+
 
 
 /obj/structure/ore_vent/random/icebox
