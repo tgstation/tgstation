@@ -109,7 +109,7 @@
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
 		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
-	gain_text = "The beast was behind me now at all times, with each sacrifice words of affirmation coarsed through me"
+	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coarsed through me."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
