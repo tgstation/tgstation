@@ -5747,6 +5747,7 @@
 #include "monkestation\code\modules\mob\living\status_procs.dm"
 #include "monkestation\code\modules\mob\living\basic\animatronic.dm"
 #include "monkestation\code\modules\mob\living\basic\space_fauna\fugu_gland.dm"
+#include "monkestation\code\modules\mob\living\basic\vermin\mothroach.dm"
 #include "monkestation\code\modules\mob\living\basic\vermin\mouse.dm"
 #include "monkestation\code\modules\mob\living\carbon\carbon_defense.dm"
 #include "monkestation\code\modules\mob\living\carbon\carbon_defines.dm"
