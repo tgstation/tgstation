@@ -31,7 +31,7 @@
 	desc = "Opens up the Path of Cosmos to you. \
 		Allows you to transmute a sheet of plasma and a knife into an Cosmic Blade. \
 		You can only create two at a time."
-	gain_text = "A nebula appeared in the sky, its infernal births shone onto me, this was the start of a great transcendence."
+	gain_text = "A nebula appeared in the sky, its infernal birth shone upon me. This was the start of a great transcendence."
 	next_knowledge = list(/datum/heretic_knowledge/cosmic_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
