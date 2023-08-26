@@ -12,6 +12,8 @@
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
 	var/nukeop_outfit = /datum/outfit/syndicate
+	/// The outfit we will auto-equip for plasmamen
+	var/plasmaman_outfit = /datum/outfit/syndicate/plasmaman
 
 	preview_outfit = /datum/outfit/nuclear_operative_elite
 
@@ -35,9 +37,13 @@
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
 
-	operative.set_species(/datum/species/human) //Plasmamen burn up otherwise, and besides, all other species are vulnerable to asimov AIs. Let's standardize all operatives being human.
+	if(is_species(owner, /datum/species/plasmaman)) //This will absolutely change later
+		operative.equipOutfit(plasmaman_outfit)
+	else
+		operative.equipOutfit(nukeop_outfit)
 
-	operative.equipOutfit(nukeop_outfit)
+	//When you add a pref, remember to use operative.set_species(/datum/species/human)
+
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
