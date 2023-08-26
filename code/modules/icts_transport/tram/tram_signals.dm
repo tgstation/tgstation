@@ -12,7 +12,7 @@
 	light_range = 2
 	light_power = 0.7
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2.4
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.48
 	anchored = TRUE
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/crossing_signal
@@ -73,7 +73,7 @@
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/tram/crossing_signal.dmi'
-	icon_state = "crossing-signal"
+	icon_state = "crossing-inbound"
 	plane = GAME_PLANE_UPPER
 	max_integrity = 250
 	integrity_failure = 0.25
@@ -85,19 +85,24 @@
 	light_power = 3
 	light_color = COLOR_VIBRANT_LIME
 	luminosity = 1
+	var/sign_dir = INBOUND
 
 /obj/machinery/static_signal/northwest
 	dir = NORTH
+	sign_dir = INBOUND
 
 /obj/machinery/static_signal/northeast
 	dir = NORTH
+	sign_dir = OUTBOUND
 
 /obj/machinery/static_signal/southwest
 	dir = SOUTH
+	sign_dir = INBOUND
 	pixel_y = 20
 
 /obj/machinery/static_signal/southeast
 	dir = SOUTH
+	sign_dir = OUTBOUND
 	pixel_y = 20
 
 /obj/machinery/icts/crossing_signal/Initialize(mapload)
@@ -178,18 +183,6 @@
 		update_appearance()
 
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/**
- * Finds the tram, just like the tram computer
- *
- * Locates tram parts in the lift global list after everything is done.
- */
-/obj/machinery/icts/proc/link_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
-		if(tram.specific_transport_id != configured_transport_id)
-			continue
-		transport_ref = WEAKREF(tram)
-		break
 
 /obj/machinery/icts/crossing_signal/proc/link_sensor()
 	linked_sensor = find_closest_valid_sensor()
@@ -428,6 +421,23 @@
 
 	return ..()
 
+/obj/machinery/static_signal/update_icon_state()
+	switch(dir)
+		if(SOUTH, EAST)
+			pixel_y = 20
+		if(NORTH, WEST)
+			pixel_y = 0
+
+	switch(sign_dir)
+		if(INBOUND)
+			icon_state = "crossing-inbound"
+			base_icon_state = "crossing-inbound"
+		if(OUTBOUND)
+			icon_state = "crossing-outbound"
+			base_icon_state = "crossing-outbound"
+
+	return ..()
+
 /obj/machinery/icts/crossing_signal/update_appearance(updates)
 	. = ..()
 
@@ -626,7 +636,9 @@
 	. = ..()
 
 	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
-	buddy.update_appearance()
+	if(buddy)
+		buddy.update_appearance()
+
 	update_appearance()
 
 /obj/machinery/icts/crossing_signal/proc/find_closest_valid_sensor()

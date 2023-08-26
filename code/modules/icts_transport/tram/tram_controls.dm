@@ -120,29 +120,4 @@
 	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
 
-/obj/machinery/computer/icts_controls/power_change() // Change tram operating status on power loss/recovery
-	. = ..()
-	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
-	update_operating()
-	if(icts_controller)
-		for(var/obj/machinery/icts/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
-			xing.set_signal_state(XING_STATE_MALF, TRUE)
-		if(is_operational)
-			for(var/obj/machinery/icts/destination_sign/desto as anything in SSicts_transport.displays)
-				desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
-				desto.update_appearance()
-		else
-			//icts_controller.set_status_code(EMERGENCY_STOP, TRUE)
-			for(var/obj/machinery/icts/destination_sign/desto as anything in SSicts_transport.displays)
-				desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
-				desto.update_appearance()
-
-/obj/machinery/computer/icts_controls/proc/update_operating() // Pass the operating status from the controls to the transport_controller
-	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
-	if(icts_controller)
-		if(machine_stat & NOPOWER)
-			icts_controller.controller_operational = FALSE
-		else
-			icts_controller.controller_operational = TRUE
-
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/icts_controls, 32)

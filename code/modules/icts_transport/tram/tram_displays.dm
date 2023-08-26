@@ -12,9 +12,7 @@
 	layer = SIGN_LAYER
 
 	/// The ID of the tram we're indicating
-	var/tram_id = TRAMSTATION_LINE_1
-	/// Weakref to the tram piece we indicate
-	var/datum/weakref/tram_ref
+	configured_transport_id = TRAMSTATION_LINE_1
 	/// What sign face prefixes we have icons for
 	var/static/list/available_faces = list()
 	/// The light mask overlay we use
@@ -43,15 +41,20 @@
 	available_faces = list(
 		TRAMSTATION_LINE_1,
 	)
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/icts/destination_sign/Destroy()
 	SSicts_transport.displays -= src
 	. = ..()
 
+/obj/machinery/icts/destination_sign/indicator/LateInitialize(mapload)
+	. = ..()
+	link_tram()
+
 /obj/machinery/icts/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
 	SIGNAL_HANDLER
 
-	if(controller.specific_transport_id != tram_id)
+	if(controller.specific_transport_id != configured_transport_id)
 		return
 	update_sign()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
@@ -87,6 +90,12 @@
 	end_processing()
 
 /obj/machinery/icts/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform)
+	if(machine_stat & (NOPOWER|BROKEN))
+		icon_state = "[base_icon_state]off"
+		light_mask = null
+		set_light(l_on = FALSE)
+		update_appearance()
+		return PROCESS_KILL
 
 	if(!controller || !controller.controller_operational)
 		icon_state = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]"
@@ -96,6 +105,7 @@
 
 	use_power(active_power_usage)
 
+	set_light(l_on = TRUE)
 	var/sign_face = ""
 	sign_face += "[base_icon_state]"
 	if(!LAZYFIND(available_faces, controller.specific_transport_id))
@@ -118,5 +128,13 @@
 
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
+
+/obj/machinery/icts/destination_sign/indicator/power_change()
+	..()
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(!tram)
+		return
+
+	update_sign(src, tram, tram.controller_active, tram.controller_status, tram.travel_direction, tram.destination_platform)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/icts/destination_sign/indicator, 32)

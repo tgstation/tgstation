@@ -317,7 +317,7 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
 	idle_platform = destination_platform
-	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
+	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
@@ -326,7 +326,7 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	set_lights(estop = TRUE)
 	idle_platform = destination_platform
-	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
+	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
@@ -343,7 +343,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	idle_platform = null
-	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
+	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
@@ -478,7 +478,7 @@
 	SEND_ICTS_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 
 /datum/transport_controller/linear/tram/proc/register_collision()
-	tram_registration.collisions += 1
+	tram_registration["collisions"] += 1
 
 /datum/transport_controller/linear/tram/proc/power_lost()
 	controller_operational = FALSE
@@ -604,6 +604,8 @@
 	integrity_failure = 0.25
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 4.8
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 4.8
 	var/datum/transport_controller/linear/tram/controller_datum
 	/// If the cover is open
 	var/cover_open = FALSE
@@ -707,6 +709,7 @@
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
  */
 /obj/machinery/icts/tram_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
+	use_power(active_power_usage)
 	if(controller != controller_datum)
 		return
 	update_appearance()
@@ -775,7 +778,10 @@
 /obj/machinery/icts/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
-	if(!is_operational || !cover_open)
+	if(!cover_open && !issilicon(user))
+		return
+
+	if(!is_operational)
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -797,6 +803,12 @@
 		"currentSpeed" = controller_datum.current_speed,
 		"currentLoad" = controller_datum.current_load,
 	)
+
+	return data
+
+/obj/machinery/icts/tram_controller/ui_static_data(mob/user)
+	var/list/data = list()
+	data["destinations"] = SSicts_transport.detailed_destination_list(controller_datum.specific_transport_id)
 
 	return data
 

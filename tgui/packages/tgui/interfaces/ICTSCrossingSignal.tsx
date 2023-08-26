@@ -20,16 +20,16 @@ export const ICTSCrossingSignal = (props, context) => {
     data;
 
   return (
-    <Window title="ICTS Crossing Signal" width={830} height={430} theme="dark">
+    <Window title="ICTS Crossing Signal" width={400} height={175} theme="dark">
       <Window.Content>
         <Flex direction="row">
-          <Flex.Item width={350} px={0.5}>
+          <Flex.Item>
             <Section title="System Status">
               <LabeledList>
                 <LabeledList.Item
                   label="Operating Status"
-                  color={operatingStatus ? 'good' : 'bad'}>
-                  {operatingStatus ? 'Normal' : 'Degraded'}
+                  color={operatingStatus ? 'bad' : 'good'}>
+                  {operatingStatus ? 'Degraded' : 'Normal'}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Sensor Status"

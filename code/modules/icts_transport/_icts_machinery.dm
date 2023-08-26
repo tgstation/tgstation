@@ -17,6 +17,18 @@
 	)
 	var/malfunctioning = FALSE
 
+/**
+ * Finds the tram
+ *
+ * Locates tram parts in the lift global list after everything is done.
+ */
+/obj/machinery/icts/proc/link_tram()
+	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+		if(tram.specific_transport_id != configured_transport_id)
+			continue
+		transport_ref = WEAKREF(tram)
+		break
+
 /obj/machinery/icts/proc/local_fault()
 	if(malfunctioning || repair_signals)
 		return
