@@ -1,5 +1,0 @@
-author: "epochayur, mrmelbert"
-delete-after: True
-changes:
-  - bugfix: "RDS no longer tells you when you are rolling a delayed antag."
-  - bugfix: "You can no longer hear the voice of people using sign language."
