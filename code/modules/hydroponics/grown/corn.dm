@@ -21,7 +21,7 @@
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	trash_type = /obj/item/grown/corncob
+	trash_type = /obj/item/grown/corncob/snap
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/cornmeal = 0)
@@ -90,10 +90,10 @@
 		user.put_in_hands(S)
 	snap_pops -= 1
 	if(!snap_pops)
-		new /obj/item/grown/snapcorncob(user.loc)
+		new /obj/item/grown/corncob/snap(user.loc)
 		qdel(src)
 
-/obj/item/grown/snapcorncob
+/obj/item/grown/corncob/snap
 	seed = /obj/item/seeds/corn/snapcorn
 	name = "snap corn cob"
 	desc = "A reminder of pranks gone by."
@@ -105,7 +105,7 @@
 	throw_range = 7
 	grind_results = list(/datum/reagent/cellulose = 10) //really partially hemicellulose
 
-/obj/item/grown/snapcorncob/attackby(obj/item/grown/W, mob/user, params)
+/obj/item/grown/corncob/snap/attackby(obj/item/grown/W, mob/user, params)
 	if(W.get_sharpness())
 		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
