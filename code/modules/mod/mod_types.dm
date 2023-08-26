@@ -70,12 +70,12 @@
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/t_ray,
-		/obj/item/mod/module/tether,
+		/obj/item/mod/module/magboot,
 		/obj/item/mod/module/quick_carry,
 	)
 	default_pins = list(
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/tether,
+		/obj/item/mod/module/magboot,
 	)
 
 /obj/item/mod/control/pre_equipped/advanced
