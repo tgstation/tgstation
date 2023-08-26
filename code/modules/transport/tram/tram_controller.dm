@@ -2,7 +2,7 @@
  * Tram specific variant of the generic linear transport controller.
  *
  * Hierarchy
- * The ssICTS_transport subsystem manages a list of controllers,
+ * The sstransport subsystem manages a list of controllers,
  * A controller manages a list of transport modules (individual tiles) which together make up a transport unit (in this case a tram)
  */
 /datum/transport_controller/linear/tram
@@ -46,11 +46,11 @@
 	///whether we have been slowed down automatically
 	var/recovery_mode = FALSE
 
-	///how many times we moved while costing more than SSicts_transport.max_time milliseconds per movement.
-	///if this exceeds SSicts_transport.max_exceeding_moves
+	///how many times we moved while costing more than SStransport.max_time milliseconds per movement.
+	///if this exceeds SStransport.max_exceeding_moves
 	var/recovery_activate_count = 0
 
-	///how many times we moved while costing less than 0.5 * SSicts_transport.max_time milliseconds per movement
+	///how many times we moved while costing less than 0.5 * SStransport.max_time milliseconds per movement
 	var/recovery_clear_count = 0
 
 	var/datum/tram_mfg_info/tram_registration
@@ -167,7 +167,7 @@
 	if(!idle_platform || !nav_beacon)
 		CRASH("a tram lift_master was initialized without the required landmarks to give it direction!")
 
-	SSicts_transport.can_fire = TRUE
+	SStransport.can_fire = TRUE
 
 	return TRUE
 
@@ -199,10 +199,10 @@
 			explosion(transport_module, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(transport_module)
 
-		for(var/obj/machinery/icts/destination_sign/desto as anything in SSicts_transport.displays)
+		for(var/obj/machinery/icts/destination_sign/desto as anything in SStransport.displays)
 			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 
-		for(var/obj/machinery/icts/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
+		for(var/obj/machinery/icts/crossing_signal/xing as anything in SStransport.crossing_signals)
 			xing.set_signal_state(XING_STATE_MALF)
 			xing.update_appearance()
 
@@ -232,7 +232,7 @@
  *
  * Called by the subsystem, the controller tells the individual tram parts where to actually go and has extra safety checks
  * incase multiple inputs get through, preventing conflicting directions and the tram literally ripping itself apart.
- * All of the actual movement is handled by SSicts_transport.
+ * All of the actual movement is handled by SStransport.
  *
  * If we're this far all the PRE_DEPARTURE checks should have passed, so we leave the PRE_DEPARTURE status and actually move.
  * We send a signal to anything registered that cares about the physical movement of the tram.
@@ -253,7 +253,7 @@
 
 	scheduled_move = world.time + speed_limiter
 
-	START_PROCESSING(SSicts_transport, src)
+	START_PROCESSING(SStransport, src)
 
 /**
  * Tram processing loop
@@ -289,21 +289,21 @@
 		current_load = duration
 		current_speed = transport_modules[1].glide_size
 		if(recovery_mode)
-			if(duration <= (SSicts_transport.max_time / 2))
+			if(duration <= (SStransport.max_time / 2))
 				recovery_clear_count++
 			else
 				recovery_clear_count = 0
 
-			if(recovery_clear_count >= SSicts_transport.max_cheap_moves)
+			if(recovery_clear_count >= SStransport.max_cheap_moves)
 				speed_limiter = base_speed_limiter
 				recovery_mode = FALSE
 				recovery_clear_count = 0
 
-		else if(duration > SSicts_transport.max_time)
+		else if(duration > SStransport.max_time)
 			recovery_activate_count++
 
-			if(recovery_activate_count >= SSicts_transport.max_exceeding_moves)
-				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking more than [SSicts_transport.max_time] milliseconds per movement, halving its movement speed. if this continues to be a problem you can call reset_lift_contents() on the trams transport_controller_datum to reset it to its original state and clear added objects")
+			if(recovery_activate_count >= SStransport.max_exceeding_moves)
+				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking more than [SStransport.max_time] milliseconds per movement, halving its movement speed. if this continues to be a problem you can call reset_lift_contents() on the trams transport_controller_datum to reset it to its original state and clear added objects")
 				speed_limiter = base_speed_limiter * 2 //halves its speed
 				recovery_mode = TRUE
 				recovery_activate_count = 0
@@ -349,7 +349,7 @@
 	current_load = 0
 	set_active(FALSE)
 	set_status_code(SYSTEM_FAULT, TRUE)
-	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 		door.open()
 
 /**
@@ -369,7 +369,7 @@
  * Send a signal to any lights associated with the tram so they can change based on the status and direction.
  */
 /datum/transport_controller/linear/tram/proc/set_lights(estop = FALSE)
-	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_LIGHTS, controller_active, controller_status, travel_direction, estop)
+	SEND_SIGNAL(src, COMSIG_TRANSPORT_LIGHTS, controller_active, controller_status, travel_direction, estop)
 
 /**
  * Sets the active status for the controller and sends a signal to listeners.
@@ -384,7 +384,7 @@
 		return
 
 	controller_active = new_status
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * Sets the controller status bitfield
@@ -407,7 +407,7 @@
 			stack_trace("Transport controller received invalid status code request [code]/[value]")
 			return
 
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * Part of the pre-departure list, checks the status of the doors on the tram
@@ -418,7 +418,7 @@
  */
 /datum/transport_controller/linear/tram/proc/update_status()
 	set_status_code(DOORS_OPEN, FALSE)
-	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 		if(door.transport_linked_id == specific_transport_id)
 			if(door.airlock_state != 1)
 				set_status_code(DOORS_OPEN, TRUE)
@@ -430,12 +430,12 @@
 /datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
 	switch(door_status)
 		if(OPEN_DOORS)
-			for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+			for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 				if(door.transport_linked_id == specific_transport_id)
 					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
 
 		if(CLOSE_DOORS)
-			for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+			for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 				if(door.transport_linked_id == specific_transport_id)
 					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close))
 
@@ -482,11 +482,11 @@
 
 /datum/transport_controller/linear/tram/proc/power_lost()
 	controller_operational = FALSE
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/power_restored()
 	controller_operational = TRUE
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	SEND_ICTS_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/set_operational(new_value)
 	if(controller_operational != new_value)
@@ -509,7 +509,7 @@
 	var/list/obj/effect/landmark/icts/nav_beacon/tram/inbound_candidates = list()
 	var/list/obj/effect/landmark/icts/nav_beacon/tram/outbound_candidates = list()
 
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/candidate_beacon in SSicts_transport.nav_beacons[beacon_type])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/candidate_beacon in SStransport.nav_beacons[beacon_type])
 		if(candidate_beacon.z != origin.z || candidate_beacon.z != nav_beacon.z)
 			continue
 
@@ -577,7 +577,7 @@
 	travel_trip_length = travel_remaining
 	destination_platform = push_destination
 	// Don't bother processing crossing signals, where this tram's going there are no signals
-	//for(var/obj/machinery/icts/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
+	//for(var/obj/machinery/icts/crossing_signal/xing as anything in SStransport.crossing_signals)
 	//	xing.temp_malfunction()
 	priority_announce("In a turn of rather peculiar events, it appears that [GLOB.station_name] has struck an immovable rod. (Don't ask us where it came from.) This has led to a station brakes failure on one of the tram platforms.\n\n\
 		Our diligent team of engineers have been informed and they're rushing over - although not quite at the speed of our recently flying tram.\n\n\
@@ -703,7 +703,7 @@
 		return
 
 	controller_datum.notify_controller(src)
-	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
 
 /**
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
@@ -814,7 +814,7 @@
 
 /obj/machinery/icts/tram_controller/ui_static_data(mob/user)
 	var/list/data = list()
-	data["destinations"] = SSicts_transport.detailed_destination_list(controller_datum.specific_transport_id)
+	data["destinations"] = SStransport.detailed_destination_list(controller_datum.specific_transport_id)
 
 	return data
 

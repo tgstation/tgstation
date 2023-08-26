@@ -1,4 +1,4 @@
-#define SEND_ICTS_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSicts_transport, sigtype, ##arguments) )
+#define SEND_ICTS_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SStransport, sigtype, ##arguments) )
 
 // ICTS Directions
 #define INBOUND -1
@@ -9,9 +9,9 @@
 #define COMSIG_ICTS_RESPONSE "!RESP"
 #define REQUEST_FAIL "!FAIL"
 #define REQUEST_SUCCESS "!ACK"
-#define COMSIG_ICTS_TRANSPORT_ACTIVE "!ACTV"
+#define COMSIG_TRANSPORT_ACTIVE "!ACTV"
 #define COMSIG_ICTS_DESTINATION "!DEST"
-#define COMSIG_ICTS_TRANSPORT_LIGHTS "!LITE"
+#define COMSIG_TRANSPORT_LIGHTS "!LITE"
 #define COMSIG_COMMS_STATUS "!COMM"
 
 // ICTS Codes

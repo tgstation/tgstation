@@ -15,10 +15,10 @@
 
 /obj/effect/landmark/icts/nav_beacon/tram/Initialize(mapload)
 	. = ..()
-	LAZYADDASSOCLIST(SSicts_transport.nav_beacons, specific_transport_id, src)
+	LAZYADDASSOCLIST(SStransport.nav_beacons, specific_transport_id, src)
 
 /obj/effect/landmark/icts/nav_beacon/tram/Destroy()
-	LAZYREMOVEASSOC(SSicts_transport.nav_beacons, specific_transport_id, src)
+	LAZYREMOVEASSOC(SStransport.nav_beacons, specific_transport_id, src)
 	return ..()
 
 /obj/effect/landmark/icts/nav_beacon/tram/nav

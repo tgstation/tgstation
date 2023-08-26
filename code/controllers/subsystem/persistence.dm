@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
-	if(SSicts_transport.can_fire)
+	if(SStransport.can_fire)
 		save_tram_stats()
 		save_tram_counter()
 
@@ -592,7 +592,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 
 	var/list/tram_data = list()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
 		tram_data += list(tram.get_json_data())
 
 	var/json_data = json_encode(tram_data)

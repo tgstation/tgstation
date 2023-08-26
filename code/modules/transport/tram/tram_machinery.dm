@@ -6,12 +6,12 @@
 
 /obj/item/assembly/control/icts/multitool_act(mob/living/user)
 	var/list/available_platforms = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/platform as anything in SSicts_transport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/platform as anything in SStransport.nav_beacons[specific_transport_id])
 		LAZYADD(available_platforms, platform.name)
 
 	var/selected_platform = tgui_input_list(user, "Set the platform ID", "Platform", available_platforms)
 	var/obj/effect/landmark/icts/nav_beacon/tram/platform/change_platform
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 		if(destination.name == selected_platform)
 			change_platform = destination
 			break
@@ -35,8 +35,8 @@
 
 /obj/item/assembly/control/icts/call_button/Initialize(mapload)
 	..()
-	SSicts_transport.hello(src)
-	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
+	SStransport.hello(src)
+	RegisterSignal(SStransport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
 
 /obj/item/assembly/control/icts/proc/call_response(controller, list/relevant, response_code, response_info)
 	SIGNAL_HANDLER
@@ -68,7 +68,7 @@
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 
-	// INVOKE_ASYNC(SSicts_transport, TYPE_PROC_REF(/datum/controller/subsystem/processing/icts_transport, call_request), src, specific_transport_id, id)
+	// INVOKE_ASYNC(SStransport, TYPE_PROC_REF(/datum/controller/subsystem/processing/transport, call_request), src, specific_transport_id, id)
 	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, id)
 
 /obj/machinery/button/icts/tram

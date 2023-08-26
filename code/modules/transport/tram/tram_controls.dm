@@ -24,12 +24,12 @@
 
 /obj/machinery/computer/icts_controls/LateInitialize()
 	. = ..()
-	SSicts_transport.hello(src)
+	SStransport.hello(src)
 	find_tram()
 
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
 	if(icts_controller)
-		RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(update_tram_display))
+		RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_tram_display))
 
 /**
  * Finds the tram from the console
@@ -37,7 +37,7 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/computer/icts_controls/proc/find_tram()
-	for(var/datum/transport_controller/linear/transport as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/transport as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
 		if(transport.specific_transport_id == specific_transport_id)
 			module_ref = WEAKREF(transport)
 
@@ -84,7 +84,7 @@
  */
 /obj/machinery/computer/icts_controls/proc/get_destinations()
 	. = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
@@ -99,7 +99,7 @@
 	switch (action)
 		if ("send")
 			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
-			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 				if(destination.platform_code == params["destination"])
 					destination_platform = destination
 					break

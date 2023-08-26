@@ -875,7 +875,7 @@
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 	src.travelling = travelling
-	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_ACTIVE, travelling)
+	SEND_SIGNAL(src, COMSIG_TRANSPORT_ACTIVE, travelling)
 
 /obj/structure/transport/linear/tram/set_currently_z_moving()
 	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so

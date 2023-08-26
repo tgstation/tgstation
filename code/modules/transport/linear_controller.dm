@@ -22,7 +22,7 @@
 	///lift platforms have already been sorted in order of z level.
 	var/z_sorted = FALSE
 
-	///transport_id taken from our base lift platform, used to put us into SSicts_transport.transports_by_type
+	///transport_id taken from our base lift platform, used to put us into SStransport.transports_by_type
 	var/transport_id = BASIC_LIFT_ID
 
 	///overridable ID string to link control units to this specific transport_controller datum. created by placing a lift id landmark object
@@ -42,7 +42,7 @@
 	link_transport_modules(transport_module)
 	ignored_smashthroughs = typecacheof(ignored_smashthroughs)
 
-	LAZYADDASSOCLIST(SSicts_transport.transports_by_type, transport_id, src)
+	LAZYADDASSOCLIST(SStransport.transports_by_type, transport_id, src)
 
 	for(var/obj/structure/transport/linear/lift as anything in transport_modules)
 		lift.add_initial_contents()
@@ -52,9 +52,9 @@
 		transport_module.transport_controller_datum = null
 	transport_modules = null
 
-	LAZYREMOVEASSOC(SSicts_transport.transports_by_type, transport_id, src)
-	if(isnull(SSicts_transport.transports_by_type))
-		SSicts_transport.transports_by_type = list()
+	LAZYREMOVEASSOC(SStransport.transports_by_type, transport_id, src)
+	if(isnull(SStransport.transports_by_type))
+		SStransport.transports_by_type = list()
 
 	return ..()
 

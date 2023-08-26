@@ -18,7 +18,7 @@
 	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	//subsystem_type = /datum/controller/subsystem/processing/fastprocess
-	subsystem_type = /datum/controller/subsystem/processing/icts_transport
+	subsystem_type = /datum/controller/subsystem/processing/transport
 	light_color = LIGHT_COLOR_BABY_BLUE
 	luminosity = 1
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
@@ -107,9 +107,9 @@
 
 /obj/machinery/icts/crossing_signal/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(wake_up))
-	RegisterSignal(SSicts_transport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
-	SSicts_transport.crossing_signals += src
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+	RegisterSignal(SStransport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
+	SStransport.crossing_signals += src
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -120,7 +120,7 @@
 	find_uplink()
 
 /obj/machinery/icts/crossing_signal/Destroy()
-	SSicts_transport.crossing_signals -= src
+	SStransport.crossing_signals -= src
 	. = ..()
 
 /obj/machinery/icts/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -509,13 +509,13 @@
 
 /obj/machinery/icts/guideway_sensor/Initialize(mapload)
 	. = ..()
-	SSicts_transport.sensors += src
+	SStransport.sensors += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/icts/guideway_sensor/LateInitialize(mapload)
 	. = ..()
 	pair_sensor()
-	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 
 /obj/machinery/icts/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)
@@ -536,7 +536,7 @@
 		divorcee.update_appearance()
 		paired_sensor = null
 
-	for(var/obj/machinery/icts/guideway_sensor/potential_sensor in SSicts_transport.sensors)
+	for(var/obj/machinery/icts/guideway_sensor/potential_sensor in SStransport.sensors)
 		if(potential_sensor == src)
 			continue
 		switch(potential_sensor.dir)
@@ -560,7 +560,7 @@
 	playsound(src, 'sound/machines/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
 
 /obj/machinery/icts/guideway_sensor/Destroy()
-	SSicts_transport.sensors -= src
+	SStransport.sensors -= src
 	if(paired_sensor)
 		var/obj/machinery/icts/guideway_sensor/divorcee = paired_sensor?.resolve()
 		divorcee.set_machine_stat(machine_stat & ~MAINT)
@@ -647,7 +647,7 @@
 
 	var/list/obj/machinery/icts/guideway_sensor/sensor_candidates = list()
 
-	for(var/obj/machinery/icts/guideway_sensor/sensor in SSicts_transport.sensors)
+	for(var/obj/machinery/icts/guideway_sensor/sensor in SStransport.sensors)
 		if(sensor.z == src.z)
 			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
 				sensor_candidates += sensor
@@ -669,7 +669,7 @@
 	inbound = null
 	outbound = null
 
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/beacon in SSicts_transport.nav_beacons[configured_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/beacon in SStransport.nav_beacons[configured_transport_id])
 		if(beacon.z != src.z)
 			continue
 

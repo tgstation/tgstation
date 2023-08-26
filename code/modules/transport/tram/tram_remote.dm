@@ -19,8 +19,8 @@
 
 /obj/item/assembly/control/icts/remote/Initialize(mapload)
 	. = ..()
-	SSicts_transport.hello(src)
-	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
+	SStransport.hello(src)
+	RegisterSignal(SStransport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
 	register_context()
 
 /obj/item/assembly/control/icts/remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -51,7 +51,7 @@
 
 /obj/item/assembly/control/icts/proc/get_destinations()
 	. = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
@@ -130,7 +130,7 @@
 /obj/item/assembly/control/icts/remote/proc/link_tram(mob/user)
 	specific_transport_id = null
 	var/list/transports_available
-	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
 		LAZYADD(transports_available, tram.specific_transport_id)
 
 	specific_transport_id = tgui_input_list(user, "Available transports", "Select a transport", transports_available)

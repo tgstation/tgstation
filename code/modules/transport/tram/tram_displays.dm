@@ -8,7 +8,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
 	anchored = TRUE
 	density = FALSE
-	subsystem_type = /datum/controller/subsystem/processing/icts_transport
+	subsystem_type = /datum/controller/subsystem/processing/transport
 	layer = SIGN_LAYER
 
 	/// The ID of the tram we're indicating
@@ -36,15 +36,15 @@
 
 /obj/machinery/icts/destination_sign/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(update_sign))
-	SSicts_transport.displays += src
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_sign))
+	SStransport.displays += src
 	available_faces = list(
 		TRAMSTATION_LINE_1,
 	)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/icts/destination_sign/Destroy()
-	SSicts_transport.displays -= src
+	SStransport.displays -= src
 	. = ..()
 
 /obj/machinery/icts/destination_sign/indicator/LateInitialize(mapload)

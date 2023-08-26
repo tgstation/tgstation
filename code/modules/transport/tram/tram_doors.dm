@@ -168,7 +168,7 @@
  * Set the weakref for the tram we're attached to
  */
 /obj/machinery/door/airlock/tram/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[ICTS_TYPE_TRAM])
 		if(tram.specific_transport_id == transport_linked_id)
 			tram_ref = WEAKREF(tram)
 
@@ -180,11 +180,11 @@
 /obj/machinery/door/airlock/tram/LateInitialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(open))
-	SSicts_transport.doors += src
+	SStransport.doors += src
 	find_tram()
 
 /obj/machinery/door/airlock/tram/Destroy()
-	SSicts_transport.doors -= src
+	SStransport.doors -= src
 	return ..()
 
 /**

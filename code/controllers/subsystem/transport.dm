@@ -1,4 +1,4 @@
-PROCESSING_SUBSYSTEM_DEF(icts_transport)
+PROCESSING_SUBSYSTEM_DEF(transport)
 	name = "ICTS Transport"
 	wait = 0.5
 	/// only used on maps with trams, so only enabled by such.
@@ -29,13 +29,13 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 	)
 
-/datum/controller/subsystem/processing/icts_transport/proc/hello(new_unit)
+/datum/controller/subsystem/processing/transport/proc/hello(new_unit)
 	RegisterSignal(new_unit, COMSIG_ICTS_REQUEST, PROC_REF(incoming_request))
 
-/datum/controller/subsystem/processing/icts_transport/Recover()
-	_listen_lookup = SSicts_transport._listen_lookup
+/datum/controller/subsystem/processing/transport/Recover()
+	_listen_lookup = SStransport._listen_lookup
 
-/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, platform, options)
+/datum/controller/subsystem/processing/transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, platform, options)
 	SIGNAL_HANDLER
 
 	var/relevant
@@ -83,32 +83,32 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 
 	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, request_flags)
 
-/datum/controller/subsystem/processing/icts_transport/proc/dispatch_transport(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
+/datum/controller/subsystem/processing/transport/proc/dispatch_transport(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
 	if(transport_controller.idle_platform == transport_controller.destination_platform)
 		return
 
 	transport_controller.set_active(TRUE)
 	pre_departure(transport_controller, request_flags)
 
-/datum/controller/subsystem/processing/icts_transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, request_flags)
+/datum/controller/subsystem/processing/transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, request_flags)
 	if(transport_controller.controller_status & COMM_ERROR)
 		request_flags |= BYPASS_SENSORS
 	transport_controller.set_status_code(PRE_DEPARTURE, TRUE)
 	transport_controller.set_status_code(CONTROLS_LOCKED, TRUE)
 	transport_controller.set_lights()
 	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS) // bypass for unsafe, rapid departure
-		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close), BYPASS_DOOR_CHECKS)
 		if(request_flags & RAPID_MODE)
 			transport_controller.dispatch_transport()
 			return
 	else
-		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close))
 
 	addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller), 3 SECONDS)
 
-/datum/controller/subsystem/processing/icts_transport/proc/validate_and_dispatch(datum/transport_controller/linear/tram/transport_controller, attempt)
+/datum/controller/subsystem/processing/transport/proc/validate_and_dispatch(datum/transport_controller/linear/tram/transport_controller, attempt)
 	var/current_attempt
 	if(attempt)
 		current_attempt = attempt
@@ -128,17 +128,17 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	else
 		transport_controller.dispatch_transport()
 
-/datum/controller/subsystem/processing/icts_transport/proc/halt_and_catch_fire(datum/transport_controller/linear/tram/transport_controller)
+/datum/controller/subsystem/processing/transport/proc/halt_and_catch_fire(datum/transport_controller/linear/tram/transport_controller)
 	transport_controller.travel_remaining = 0
 	transport_controller.set_active(FALSE)
 	transport_controller.set_status_code(SYSTEM_FAULT, TRUE)
 	message_admins("ICTS: Transport Controller Failed!")
-	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
 
-/datum/controller/subsystem/processing/icts_transport/proc/detailed_destination_list(specific_transport_id)
+/datum/controller/subsystem/processing/transport/proc/detailed_destination_list(specific_transport_id)
 	. = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons

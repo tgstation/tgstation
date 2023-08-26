@@ -94,7 +94,7 @@
 		build_with_titanium(object, user)
 
 /turf/open/floor/noslip/tram_plate/energized/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[TRAM_LIFT_ID])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRAM_LIFT_ID])
 		if(tram.specific_transport_id != TRAMSTATION_LINE_1)
 			continue
 		return tram
