@@ -41,9 +41,9 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// The list of wounds it belongs in, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN
+	/// The type of attack that can generate this wound. E.g. WOUND_SLASH = A sword can cause us, or WOUND_BLUNT = a hammer can cause us/a sword attacking mangled flesh.
 	var/wound_type
-	/// The series of wounds this is in. Ex. WOUND_SERIES_BLEED_SLASH = avulsions, abrasions...
+	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
 	var/wound_series
 
 	/// Who owns the body part that we're wounding
@@ -495,9 +495,10 @@
 			return "Critical"
 
 
-/// Returns false if our limb is the head or chest, true otherwise.
-/datum/wound/proc/limb_unimportant()
-	return (!(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST))
+/// Returns TRUE if our limb is the head or chest, FALSE otherwise.
+/// Essential in the sense of "we cannot live without it".
+/datum/wound/proc/limb_essential()
+	return (limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
 
 /// Getter proc for our scar_keyword, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)

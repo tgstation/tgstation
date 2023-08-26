@@ -88,36 +88,16 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 
 // Wound series
 // A "wound series" is just a family of wounds that logically follow eachother
+// Multiple wounds in a single series cannot be on a limb - the highest severity will always be prioritized, and lower ones will be skipped
 
+/// T1-T3 Bleeding slash wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: slash.dm
 #define WOUND_SERIES_FLESH_SLASH_BLEED 1
+/// T1-T3 Basic blunt wounds. T1 requires jointed, but 2-3 require bone. From: bone.dm
 #define WOUND_SERIES_BONE_BLUNT_BASIC 2
+/// T1-T3 Basic burn wounds. Requires flesh. From: burns.dm
 #define WOUND_SERIES_FLESH_BURN_BASIC 3
+/// T1-3 Bleeding puncture wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: pierce.dm
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED 4
-
-#define WOUND_SERIES_METAL_SLASH_BLEED 5
-#define WOUND_SERIES_METAL_BLUNT_BASIC 6
-#define WOUND_SERIES_METAL_BURN_OVERHEAT 7
-#define WOUND_SERIES_METAL_PUNCTURE_BLEED 8
-
-#define WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE 9
-#define WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE 10
-
-// every single type of wound that can be rolled naturally, in case you need to pull a random one
-GLOBAL_LIST_INIT(global_all_wound_types, list(
-	/datum/wound/blunt/bone/critical,
-	/datum/wound/blunt/bone/severe,
-	/datum/wound/blunt/bone/moderate,
-	/datum/wound/slash/flesh/critical,
-	/datum/wound/slash/flesh/severe,
-	/datum/wound/slash/flesh/moderate,
-	/datum/wound/pierce/bleed/critical,
-	/datum/wound/pierce/bleed/severe,
-	/datum/wound/pierce/bleed/moderate,
-	/datum/wound/burn/flesh/critical,
-	/datum/wound/burn/flesh/severe,
-	/datum/wound/burn/flesh/moderate,
-))
-
 
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse
@@ -156,11 +136,11 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 
 // ~wound flag defines
 /// If having this wound counts as mangled flesh for dismemberment
-#define MANGLES_FLESH (1<<2)
+#define MANGLES_FLESH (1<<0)
 /// If having this wound counts as mangled bone for dismemberment
-#define MANGLES_BONE (1<<3)
+#define MANGLES_BONE (1<<1)
 /// If this wound marks the limb as being allowed to have gauze applied
-#define ACCEPTS_GAUZE (1<<4)
+#define ACCEPTS_GAUZE (1<<2)
 
 
 // ~scar persistence defines

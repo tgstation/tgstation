@@ -190,12 +190,13 @@
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
-	/// In the case we dont have dismemberable features, or literally cant get wounds, we will use this percent to determine when we can be dismembered. Compared to our ABSOLUTE maximum.
+	/// In the case we dont have dismemberable features, or literally cant get wounds, we will use this percent to determine when we can be dismembered.
+	/// Compared to our ABSOLUTE maximum. Stored in decimal; 0.8 = 80%.
 	var/hp_percent_to_dismemberable = 0.8
 	/// If false, no wound that can be applied to us can mangle our flesh. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
-	var/can_theoretically_have_flesh_mangled
+	var/any_existing_wound_can_mangle_our_flesh
 	/// If false, no wound that can be applied to us can mangle our bone. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
-	var/can_theoretically_have_bone_mangled
+	var/any_existing_wound_can_mangle_our_bone
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -510,22 +511,24 @@
 			if (has_exterior && has_interior)
 				break
 
-		if (isnull(can_theoretically_have_bone_mangled) || isnull(can_theoretically_have_flesh_mangled))
-			can_theoretically_have_bone_mangled = FALSE
-			can_theoretically_have_flesh_mangled = FALSE
+		// We put this here so we dont increase init time by doing this all at once on initialization
+		// Effectively, we "lazy load"
+		if (isnull(any_existing_wound_can_mangle_our_bone) || isnull(any_existing_wound_can_mangle_our_flesh))
+			any_existing_wound_can_mangle_our_bone = FALSE
+			any_existing_wound_can_mangle_our_flesh = FALSE
 			for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
 				var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
 				if (!pregen_data.can_be_applied_to(src))
 					continue
 				if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_FLESH)
-					can_theoretically_have_flesh_mangled = TRUE
+					any_existing_wound_can_mangle_our_flesh = TRUE
 				if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_BONE)
-					can_theoretically_have_bone_mangled = TRUE
+					any_existing_wound_can_mangle_our_bone = TRUE
 
-				if (can_theoretically_have_bone_mangled && can_theoretically_have_flesh_mangled)
+				if (any_existing_wound_can_mangle_our_bone && any_existing_wound_can_mangle_our_flesh)
 					break
 
-		var/can_theoretically_be_dismembered = (can_theoretically_have_bone_mangled || (can_theoretically_have_flesh_mangled && !has_exterior))
+		var/can_theoretically_be_dismembered = (any_existing_wound_can_mangle_our_bone || (any_existing_wound_can_mangle_our_flesh && !has_exterior))
 
 		var/exterior_ready_to_dismember = (!has_exterior || (mangled_state & BODYPART_MANGLED_BONE))
 		var/interior_ready_to_dismember = (!has_interior || (mangled_state & BODYPART_MANGLED_FLESH))
