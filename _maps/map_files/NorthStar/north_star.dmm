@@ -24296,10 +24296,6 @@
 	dir = 1
 	},
 /area/station/cargo/miningdock)
-"guf" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/space/basic,
-/area/station/engineering/supermatter/room)
 "gui" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -48677,7 +48673,7 @@
 /area/station/hallway/floor2/fore)
 "mPk" = (
 /obj/machinery/door/airlock/external/glass{
-	name = "PTL room airlock"
+	name = "PTL Room Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -59725,7 +59721,7 @@
 /area/station/hallway/floor1/aft)
 "pIW" = (
 /obj/machinery/door/airlock/external/glass{
-	name = "PTL room airlock"
+	name = "PTL Room Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -145753,9 +145749,9 @@ owI
 owI
 owI
 owI
-guf
 owI
-guf
+owI
+owI
 owI
 owI
 owI

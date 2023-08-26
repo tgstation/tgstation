@@ -15195,7 +15195,7 @@
 /area/station/engineering/atmos/mix)
 "eNg" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Emitter Room"
+	name = "PTL Room"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,

@@ -15431,10 +15431,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"fSQ" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/space/basic,
-/area/station/engineering/supermatter/room)
 "fTn" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
@@ -113283,9 +113279,9 @@ qXB
 qzg
 enK
 tCS
-fSQ
 aaa
-fSQ
+aaa
+aaa
 aaa
 aaa
 aaa

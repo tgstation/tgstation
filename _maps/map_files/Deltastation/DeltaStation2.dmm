@@ -5084,7 +5084,7 @@
 "bjk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/highsecurity{
-	name = "PTL room"
+	name = "PTL Room"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -17026,10 +17026,10 @@
 /area/station/security/prison)
 "edc" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/door/airlock/highsecurity{
-	name = "PTL room"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/airlock/highsecurity{
+	name = "PTL Room"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "edd" = (
@@ -94698,11 +94698,6 @@
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
-"xfE" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/light/small/directional/east,
-/turf/open/space/basic,
-/area/station/engineering/supermatter/room)
 "xfR" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Security - Interrogation Monitoring"
@@ -117612,9 +117607,9 @@ kvX
 tGf
 vVc
 rIP
-xfE
 vVc
-xfE
+vVc
+vVc
 vVc
 vVc
 hWr

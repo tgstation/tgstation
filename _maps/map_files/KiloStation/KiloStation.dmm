@@ -24959,6 +24959,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable/layer1,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
 "ijd" = (
@@ -32202,7 +32203,7 @@
 /area/station/engineering/storage/tech)
 "kEb" = (
 /obj/machinery/door/airlock/engineering{
-	name = "abandoned PTL room"
+	name = "Abandoned PTL Room"
 	},
 /obj/structure/barricade/wooden/crude,
 /obj/structure/cable/layer1,

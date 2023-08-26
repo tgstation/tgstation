@@ -4003,7 +4003,7 @@
 /area/station/security/office)
 "ave" = (
 /obj/machinery/door/airlock/external/glass{
-	name = "PTL room airlock"
+	name = "PTL Room Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -20865,7 +20865,7 @@
 /area/station/maintenance/central/greater)
 "gmE" = (
 /obj/machinery/door/airlock/external/glass{
-	name = "PTL room airlock"
+	name = "PTL Room Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4

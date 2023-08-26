@@ -730,7 +730,7 @@
 /area/station/engineering/supermatter/room)
 "Je" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "PTL room"
+	name = "PTL Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/cable,
