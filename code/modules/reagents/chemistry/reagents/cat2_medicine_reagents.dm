@@ -117,7 +117,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick)
+	affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(affected_mob.getStaminaLoss()))
 		if(10 to 40)
