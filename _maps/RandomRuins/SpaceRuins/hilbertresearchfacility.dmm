@@ -329,7 +329,8 @@
 	bulb_power = 0.6
 	},
 /obj/structure/industrial_lift/tram/purple,
-/obj/effect/landmark/tram/hilbert/middle,
+/obj/effect/landmark/tram/platform/hilbert/middle,
+/obj/effect/landmark/tram/nav/hilbert/research,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iY" = (
@@ -936,6 +937,10 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yf" = (
+/obj/effect/landmark/tram/nav/immovable_rod,
+/turf/closed/indestructible/riveted/plastinum,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "yi" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/food/grown/banana,
@@ -1156,6 +1161,7 @@
 /obj/machinery/door/airlock/science{
 	name = "Hilbert's Office"
 	},
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BF" = (
@@ -1383,7 +1389,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Gf" = (
-/obj/effect/landmark/tram/hilbert/right,
+/obj/effect/landmark/tram/platform/hilbert/right,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Gi" = (
@@ -1477,7 +1483,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "It" = (
-/obj/effect/landmark/tram/hilbert/left,
+/obj/effect/landmark/tram/platform/hilbert/left,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Iv" = (
@@ -2846,7 +2852,7 @@ Bo
 Bo
 Ok
 CP
-Bo
+yf
 CP
 Ok
 Bo
