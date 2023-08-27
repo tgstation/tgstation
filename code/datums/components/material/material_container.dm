@@ -604,16 +604,17 @@
 		sheet_amt -= new_sheets.amount
 		//send signal
 		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIEVED, new_sheets, context)
+		//no point merging anything into an already full stack
+		if(new_sheets.amount == new_sheets.max_amount)
+			continue
 		//now we can merge since we are done with it
 		for(var/obj/item/stack/item_stack in target)
 			if(item_stack == new_sheets || item_stack.type != material.sheet_type) //don't merge with self or different type
 				continue
-			if(item_stack.get_amount() == item_stack.max_amount) //stack is full, no space to merge
-				continue
 			//speed merge
-			var/merge_amount = min(new_sheets.amount, item_stack.max_amount - item_stack.get_amount())
-			item_stack.add(merge_amount)
-			new_sheets.use(merge_amount)
+			var/merge_amount = min(item_stack.amount, new_sheets.max_amount - new_sheets.get_amount())
+			item_stack.use(merge_amount)
+			new_sheets.add(merge_amount)
 			break
 	return count
 
