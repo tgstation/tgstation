@@ -859,7 +859,7 @@
 
 	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
 	if(malfunction_event)
-		controller_datum.end_malf_event()
+		malfunction_event.end()
 
 	if(controller_datum.controller_status & COMM_ERROR)
 		controller_datum.set_status_code(COMM_ERROR, FALSE)
@@ -913,19 +913,6 @@
 		return
 
 	switch(action)
-		if("auto")
-			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
-			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[controller_datum.specific_transport_id])
-				if(destination.name == params["tripDestination"])
-					destination_platform = destination
-					break
-
-			if(!destination_platform)
-				return FALSE
-
-			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code)
-			update_appearance()
-
 		if("dispatch")
 			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
 			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[controller_datum.specific_transport_id])
