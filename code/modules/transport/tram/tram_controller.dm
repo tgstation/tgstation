@@ -245,7 +245,6 @@
 	set_status_code(PRE_DEPARTURE, FALSE)
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
-		speed_limiter = initial(speed_limiter)
 
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
@@ -331,6 +330,7 @@
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
+	speed_limiter = initial(speed_limiter)
 
 /datum/transport_controller/linear/tram/proc/degraded_stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
@@ -343,6 +343,7 @@
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
+	speed_limiter = initial(speed_limiter)
 	var/throw_direction = travel_direction
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
@@ -362,7 +363,6 @@
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
-	speed_limiter = 2
 
 /datum/transport_controller/linear/tram/proc/reset_position()
 	if(idle_platform)
@@ -384,12 +384,17 @@
 	travel_remaining = get_dist(nav_beacon, reset_beacon)
 	travel_trip_length = travel_remaining
 	destination_platform = reset_beacon
+	speed_limiter = 1.5
+	playsound(paired_cabinet, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	paired_cabinet.say("Peforming controller reset... Navigating to reset point.")
 	cycle_doors(CLOSE_DOORS)
 	set_active(TRUE)
 	set_status_code(CONTROLS_LOCKED, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(dispatch_transport), reset_beacon), 3 SECONDS)
 
 /datum/transport_controller/linear/tram/proc/estop()
+	playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	paired_cabinet.say("Emergency stop activated!")
 	set_status_code(EMERGENCY_STOP, TRUE)
 
 /**
