@@ -667,7 +667,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 
 	if(HAS_TRAIT_FROM(user, TRAIT_PACIFISM, type))
-		to_chat(user, span_warning("You've already sworn a bow. You start preparing to rescind it..."))
+		to_chat(user, span_warning("You've already sworn a vow. You start preparing to rescind it..."))
 		if(do_after(user, 5 SECONDS, target = user))
 			user.say("Yeah this Hippopotamus thing isn't working out. I quit!", forced = "hippocratic forswearance")
 			REMOVE_TRAIT(user, TRAIT_PACIFISM, type)
