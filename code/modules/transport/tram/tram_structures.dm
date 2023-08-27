@@ -431,8 +431,8 @@
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	girder_type = /obj/structure/girder/tram/corner
 	smoothing_flags = NONE
-	smoothing_groups = NONE
-	canSmoothWith = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/tram/spoiler/Initialize(mapload)
 	. = ..()
