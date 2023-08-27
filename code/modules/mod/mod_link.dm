@@ -95,6 +95,8 @@
 		mod_link.frequency = tool_frequency
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
+		if(!user.is_holding(tool))
+			return
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
@@ -241,6 +243,8 @@
 		mod_link.frequency = tool_frequency
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
+		if(!user.is_holding(tool))
+			return
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
