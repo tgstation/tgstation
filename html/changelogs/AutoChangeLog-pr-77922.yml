@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Ops wanting to get the CQC kit will actually get given the kit, and not just the CQC book."

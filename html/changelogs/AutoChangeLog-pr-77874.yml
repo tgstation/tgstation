@@ -1,4 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - qol: "Stabilized yellow slime extracts no longer spam a message every charge pulse (but examining characters will still show that it's active)."
