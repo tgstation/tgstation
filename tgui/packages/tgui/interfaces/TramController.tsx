@@ -14,7 +14,14 @@ type TransportData = {
   recoveryMode: BooleanLike;
   currentSpeed: number;
   currentLoad: number;
-  bypassSensors: boolean;
+  statusSF: boolean;
+  statusCE: boolean;
+  statusES: boolean;
+  statusPD: boolean;
+  statusDO: boolean;
+  statusCL: boolean;
+  statusBS: boolean;
+  statusMM: boolean;
   destinations: TramDestination[];
 };
 
@@ -41,7 +48,14 @@ export const TramController = (props, context) => {
     recoveryMode,
     currentSpeed,
     currentLoad,
-    bypassSensors,
+    statusSF,
+    statusCE,
+    statusES,
+    statusPD,
+    statusDO,
+    statusCL,
+    statusBS,
+    statusMM,
     destinations = [],
   } = data;
 
@@ -52,7 +66,7 @@ export const TramController = (props, context) => {
   );
 
   return (
-    <Window title="Tram Controller" width={695} height={330} theme="dark">
+    <Window title="Tram Controller" width={800} height={350} theme="dark">
       <Window.Content>
         <Flex direction="row">
           <Flex.Item width={350} px={0.5}>
@@ -159,11 +173,7 @@ export const TramController = (props, context) => {
                 minHeight={2}
                 textAlign="center"
                 content="Automatic"
-                onClick={() =>
-                  act('dispatch', {
-                    'tripDestination': tripDestination,
-                  })
-                }
+                onClick={() => act('automatic', {})}
               />
               <Button
                 icon="location-dot"
@@ -187,11 +197,6 @@ export const TramController = (props, context) => {
                 displayText={tripDestination || 'Pick a Destination'}
                 onSelected={(value) => setTripDestination(value)}
               />
-            </Section>
-            <Section title="Operational">
-              <NoticeBox>
-                You can&apos;t cut back on Engineering. YOU WILL REGRET THIS!
-              </NoticeBox>
               <Button
                 icon="bars"
                 color="blue"
@@ -216,7 +221,7 @@ export const TramController = (props, context) => {
               />
               <Button
                 icon="bars"
-                color={bypassSensors ? 'good' : 'bad'}
+                color={statusBS ? 'good' : 'bad'}
                 my={1}
                 lineHeight={2}
                 minWidth={11}
@@ -224,6 +229,71 @@ export const TramController = (props, context) => {
                 textAlign="center"
                 content="Door Sensors"
                 onClick={() => act('togglesensors', {})}
+              />
+            </Section>
+            <Section title="Operational">
+              <Button
+                color={statusES ? 'red' : 'transparent'}
+                my={1}
+                lineHeight={2}
+                minWidth={5}
+                minHeight={2}
+                textAlign="center"
+                content="ESTOP"
+              />
+              <Button
+                color={statusSF ? 'yellow' : 'transparent'}
+                my={1}
+                lineHeight={2}
+                minWidth={5}
+                minHeight={2}
+                textAlign="center"
+                content="FAULT"
+              />
+              <Button
+                color={statusCE ? 'teal' : 'transparent'}
+                my={1}
+                lineHeight={2}
+                minWidth={5}
+                minHeight={2}
+                textAlign="center"
+                content="COMMS"
+              />
+              <Button
+                color={statusPD ? 'blue' : 'transparent'}
+                my={1}
+                lineHeight={2}
+                minWidth={5}
+                minHeight={2}
+                textAlign="center"
+                content="DEPT"
+              />
+              <Button
+                color={statusDO ? 'blue' : 'transparent'}
+                my={1}
+                lineHeight={2}
+                minWidth={5}
+                minHeight={2}
+                textAlign="center"
+                content="DOORS"
+              />
+              <Button
+                color={statusCL ? 'blue' : 'transparent'}
+                my={1}
+                lineHeight={2}
+                minWidth={5}
+                minHeight={2}
+                textAlign="center"
+                content="LOCKED"
+              />
+              <Button
+                color={statusMM ? 'blue' : 'transparent'}
+                my={1}
+                lineHeight={2}
+                minWidth={5}
+                minHeight={2}
+                textAlign="center"
+                content="MANUAL"
               />
             </Section>
           </Flex.Item>

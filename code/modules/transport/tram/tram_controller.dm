@@ -242,6 +242,8 @@
 	set_status_code(PRE_DEPARTURE, FALSE)
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
+		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller reset.")
 
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
@@ -786,6 +788,10 @@
 		. += mutable_appearance(icon, "comms")
 		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
 
+	else if(controller_datum.controller_status & MANUAL_MODE)
+		. += mutable_appearance(icon, "manual")
+		. += emissive_appearance(icon, "manual", src, alpha = src.alpha)
+
 	else
 		. += mutable_appearance(icon, "normal")
 		. += emissive_appearance(icon, "normal", src, alpha = src.alpha)
@@ -906,7 +912,14 @@
 		"recoveryMode" = controller_datum.recovery_mode,
 		"currentSpeed" = controller_datum.current_speed,
 		"currentLoad" = controller_datum.current_load,
-		"bypassSensors" = controller_datum.controller_status & BYPASS_SENSORS,
+		"statusSF" = controller_datum.controller_status & SYSTEM_FAULT,
+		"statusCE" = controller_datum.controller_status & COMM_ERROR,
+		"statusES" = controller_datum.controller_status & EMERGENCY_STOP,
+		"statusPD" = controller_datum.controller_status & PRE_DEPARTURE,
+		"statusDO" = controller_datum.controller_status & DOORS_OPEN,
+		"statusCL" = controller_datum.controller_status & CONTROLS_LOCKED,
+		"statusBS" = controller_datum.controller_status & BYPASS_SENSORS,
+		"statusMM" = controller_datum.controller_status & MANUAL_MODE,
 	)
 
 	return data
@@ -923,6 +936,9 @@
 		return
 
 	switch(action)
+		if("automatic")
+			controller_datum.set_status_code(MANUAL_MODE, FALSE)
+
 		if("dispatch")
 			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
 			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[controller_datum.specific_transport_id])
@@ -933,7 +949,8 @@
 			if(!destination_platform)
 				return FALSE
 
-			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code)
+			controller_datum.set_status_code(MANUAL_MODE, TRUE)
+			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code, MANUAL_MODE)
 			update_appearance()
 
 		if("estop")

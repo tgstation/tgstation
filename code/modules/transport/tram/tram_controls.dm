@@ -25,6 +25,7 @@
 /obj/machinery/computer/tram_controls/LateInitialize()
 	. = ..()
 	SStransport.hello(src)
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 	find_tram()
 
 	var/datum/transport_controller/linear/tram/icts_controller = transport_ref?.resolve()
@@ -105,18 +106,18 @@
 
 /obj/machinery/computer/tram_controls/ui_act(action, params)
 	. = ..()
-	if (.)
+	if(.)
 		return
 
-	switch (action)
-		if ("send")
+	switch(action)
+		if("send")
 			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
-			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
+			for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 				if(destination.platform_code == params["destination"])
 					destination_platform = destination
 					break
 
-			if (!destination_platform)
+			if(!destination_platform)
 				return FALSE
 
 			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination_platform.platform_code)
@@ -131,5 +132,27 @@
 		icon_screen = "[base_icon_state][icts_controller.destination_platform.name]_idle"
 	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
+
+/obj/machinery/computer/tram_controls/proc/call_response(controller, list/relevant, response_code, response_info)
+	SIGNAL_HANDLER
+	switch(response_code)
+		if(REQUEST_SUCCESS)
+			say("The next station is: [response_info]")
+
+		if(REQUEST_FAIL)
+			if(!LAZYFIND(relevant, src))
+				return
+
+			switch(response_info)
+				if(NOT_IN_SERVICE)
+					say("The tram is not in service. Please contact the nearest engineer.")
+				if(INVALID_PLATFORM)
+					say("Configuration error. Please contact the nearest engineer.")
+				if(PLATFORM_DISABLED)
+					say("The tram is currently under manual operation.")
+				if(INTERNAL_ERROR)
+					say("Tram controller error. Please contact the nearest engineer.")
+				else
+					return
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)
