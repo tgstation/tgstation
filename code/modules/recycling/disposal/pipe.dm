@@ -337,6 +337,5 @@
 
 /obj/structure/disposalpipe/rotator/flip
 	icon_state = "pipe-r2"
-	initialize_dirs = DISP_DIR_LEFT | DISP_DIR_RIGHT | DISP_DIR_FLIP
 	flip_type = /obj/structure/disposalpipe/rotator
 	direction_angle = 90
