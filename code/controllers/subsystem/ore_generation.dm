@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(ore_generation)
 	name = "Ore_generation"
-	wait = 0.1 MINUTES //Final time will be closer to 1 minute/fire
+	wait = 1 MINUTES
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 	flags = SS_NO_INIT
@@ -40,7 +40,6 @@ SUBSYSTEM_DEF(ore_generation)
 		"small" = 7,
 	)
 
-
 /datum/controller/subsystem/ore_generation/fire(resumed)
 
 	available_boulders = list() // reset upon new fire.
@@ -59,7 +58,8 @@ SUBSYSTEM_DEF(ore_generation)
 		var/obj/item/boulder/new_rock
 		if(prob(current_vent.artifact_chance))
 			new_rock = new /obj/item/boulder/artifact(current_vent.loc)
-		new_rock = new (current_vent.loc)
+		else
+			new_rock = new (current_vent.loc)
 		available_boulders += new_rock
 		var/list/mats_list = current_vent.create_mineral_contents()
 		current_vent.Shake(duration = 1.5 SECONDS)

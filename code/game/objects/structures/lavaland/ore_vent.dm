@@ -31,6 +31,10 @@
 		/mob/living/simple_animal/hostile/asteroid/brimdemon,
 		/mob/living/basic/mining/bileworm
 	)
+	var/static/list/scanning_equipment = list(
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/amining_scanner
+	)
 
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
 	var/list/mineral_breakdown = list()
@@ -44,6 +48,8 @@
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
 	/// String of ores that this vent can produce.
 	var/ore_string = ""
+	/// What string do we use to warn the player about the excavation event?
+	var/excavation_warning = "Are you ready to excavate this ore vent?"
 
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
@@ -69,7 +75,7 @@
 
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner))
+	if(is_type_in_list(attacking_item, ))
 		if(tapped)
 			visible_message(span_notice("\the [src] has already been tapped!"))
 			return
@@ -207,7 +213,7 @@
 			return
 		else
 			return
-	if(tgui_alert(usr, "Are you ready to excavate \the [src]?", "Uh oh", list("Yes", "No")) != "Yes")
+	if(tgui_alert(usr, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
@@ -317,6 +323,7 @@
 		/mob/living/simple_animal/hostile/megafauna/dragon,
 		/mob/living/simple_animal/hostile/megafauna/colossus
 	)
+	excavation_warning = "Something big is nearby. Are you ABSOLUTELY ready to excavate this ore vent?"
 	///What boss do we want to spawn?
 	var/summoned_boss = null
 
@@ -344,7 +351,7 @@
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion)) ///Lets hope this is how this works
-	boss.say("You dare disturb my slumber?!") //to stop warnings namely
+	boss.say("You dare disturb my slumber?!")
 
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.

@@ -152,13 +152,14 @@
 	name = "artifact boulder"
 	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
 	icon_state = "boulder_artifact"
+	/// This is the type of item that will be inside the boulder. Default is a strange object.
 	var/artifact_type = /obj/item/relic
 	/// References to the relic inside the boulder, if any.
 	var/obj/item/artifact_inside
 
 /obj/item/boulder/artifact/Initialize(mapload)
 	. = ..()
-	artifact_inside = new artifact_type(src) /// This could be poggers for archaeology
+	artifact_inside = new artifact_type(src) /// This could be poggers for archaeology in the future.
 
 /obj/item/boulder/artifact/Destroy(force)
 	. = ..()
@@ -167,7 +168,6 @@
 
 /obj/item/boulder/artifact/convert_to_ore()
 	. = ..()
-	// visible_message(src, "The boulder crumbles into ore, but something else is inside... \a [artifact_type]?")
 	artifact_inside.forceMove(drop_location())
 	artifact_inside = null
 

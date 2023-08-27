@@ -22,7 +22,11 @@
 
 	temperature = TCMB
 	var/turf/open/floor/plating/turf_type = /turf/open/misc/asteroid/airless
+	/// The path of the ore stack we spawn when we're mined.
 	var/obj/item/stack/ore/mineralType = null
+	/// If we spawn a boulder like on the gulag, we use this in lou of mineralType
+	var/obj/item/boulder/spawned_boulder = null
+	/// How much ore we spawn when we're mining a mineralType.
 	var/mineralAmt = 3
 	///Holder for the image we display when we're pinged by a mining scanner
 	var/scan_state = ""
@@ -82,7 +86,7 @@
 	if(ispath(ore_type, /obj/item/boulder))
 		//var/obj/item/boulder/the_boulder = ore_type //see todo
 		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
-		//Todo: MineralType can't handle boulders...
+		spawned_boulder = /obj/item/boulder/gulag/volcanic
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
@@ -143,9 +147,11 @@
 /turf/closed/mineral/proc/gets_drilled(mob/user, give_exp = FALSE)
 	if(istype(user))
 		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
-	if (mineralType && (mineralAmt > 0))
+	if(mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
+	if(spawned_boulder)
+		new spawned_boulder(src)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(give_exp)
