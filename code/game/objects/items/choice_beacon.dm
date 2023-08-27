@@ -195,18 +195,18 @@
 			/mob/living/basic/mouse,
 			/mob/living/basic/mouse/rat,
 			/mob/living/simple_animal/parrot,
-			/mob/living/simple_animal/butterfly,
-			/mob/living/simple_animal/crab,
-			/mob/living/simple_animal/crab/evil,
-			/mob/living/simple_animal/pet/penguin/baby,
-			/mob/living/simple_animal/pet/fox,
+			/mob/living/basic/butterfly,
+			/mob/living/basic/crab,
+			/mob/living/basic/crab/evil,
+			/mob/living/basic/pet/penguin/baby,
+			/mob/living/basic/pet/fox,
 			/mob/living/simple_animal/pet/cat,
 			/mob/living/simple_animal/pet/cat/kitten,
 			/mob/living/basic/pet/dog/corgi,
 			/mob/living/basic/pet/dog/pug,
 			/mob/living/basic/pet/dog/bullterrier,
-			/mob/living/simple_animal/hostile/lizard,
-			/mob/living/simple_animal/hostile/ant
+			/mob/living/basic/lizard,
+			/mob/living/basic/ant
 		)
 
 		for(var/mob/living/basic_mob as anything in selectable_pets)

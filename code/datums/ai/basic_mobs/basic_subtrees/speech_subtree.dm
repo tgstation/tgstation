@@ -52,6 +52,11 @@
 	speech_chance = 3
 	emote_see = list("jumps in a circle.", "shakes.")
 
+/datum/ai_planning_subtree/random_speech/lizard // all of these have to be three words long or i'm killing you. you're dead.
+	speech_chance = 3
+	emote_hear = list("stamps around some.", "hisses a bit.")
+	emote_see = list("blehs the tongue.", "tilts the head.", "does a spin.")
+
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
 	speak = list("baaa","baaaAAAAAH!","baaah")
@@ -94,6 +99,12 @@
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
 
+/datum/ai_planning_subtree/random_speech/deer
+	speech_chance = 1
+	speak = list("Weeeeeeee?", "Weeee", "WEOOOOOOOOOO")
+	emote_hear = list("brays.")
+	emote_see = list("shakes her head.")
+
 /datum/ai_planning_subtree/random_speech/dog
 	speech_chance = 1
 
@@ -120,3 +131,42 @@
 /datum/ai_planning_subtree/random_speech/tree
 	speech_chance = 3
 	emote_see = list("photosynthesizes angirly.")
+
+/datum/ai_planning_subtree/random_speech/pig
+	speech_chance = 3
+	speak = list("oink?","oink","snurf")
+	emote_hear = list("snorts.")
+	emote_see = list("sniffs around.")
+
+/datum/ai_planning_subtree/random_speech/killer_tomato
+	speech_chance = 3
+	speak = list("gnashes.", "growls lowly.", "snarls.")
+	emote_hear = list("gnashes.")
+	emote_see = list("salivates.")
+
+/datum/ai_planning_subtree/random_speech/ant
+	speech_chance = 1
+	emote_hear = list("buzzes.", "clacks.")
+	emote_see = list("shakes their head.", "twitches their antennae.")
+	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
+
+/datum/ai_planning_subtree/random_speech/fox
+	speech_chance = 1
+	emote_hear = list("howls.", "barks.", "screams.")
+	emote_see = list("shakes their head.", "shivers.")
+	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
+
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 1
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
+
+/datum/ai_planning_subtree/random_speech/penguin
+	speech_chance = 5
+	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")
+	emote_hear = list("squawks", "gakkers")
+
+/datum/ai_planning_subtree/random_speech/bear
+	speech_chance = 5
+	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
+	emote_see = list("stares ferociously.")

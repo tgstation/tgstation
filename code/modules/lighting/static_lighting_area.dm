@@ -2,12 +2,13 @@
 /// Fills with offsets as they are generated
 GLOBAL_LIST_INIT_TYPED(fullbright_overlays, /mutable_appearance, list(create_fullbright_overlay(0)))
 
-/proc/create_fullbright_overlay(offset)
+/proc/create_fullbright_overlay(offset, color)
 	var/mutable_appearance/lighting_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
 	SET_PLANE_W_SCALAR(lighting_effect, LIGHTING_PLANE, offset)
 	lighting_effect.layer = LIGHTING_PRIMARY_LAYER
 	lighting_effect.blend_mode = BLEND_ADD
-	lighting_effect.color = COLOR_STARLIGHT
+	if(color)
+		lighting_effect.color = color
 	return lighting_effect
 
 /area

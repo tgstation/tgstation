@@ -980,12 +980,6 @@
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/wood,
 /area/station/commons/locker)
-"amq" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk{
-	environment_smash = 0
-	},
-/turf/open/misc/asteroid/airless,
-/area/space/nearstation)
 "amr" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -7026,7 +7020,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "cui" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
+/mob/living/basic/mining/goliath/ancient,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "cuj" = (
@@ -13020,14 +13014,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "eyl" = (
-/mob/living/simple_animal/hostile/bear{
-	desc = "Once a trained show bear, this creature has been left abandoned and unfed.";
-	environment_smash = 0;
-	health = 160;
-	maxHealth = 160;
-	melee_damage_upper = 25;
-	name = "hungry show bear"
-	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "eyv" = (
@@ -14772,9 +14758,6 @@
 /area/station/maintenance/disposal/incinerator)
 "fdA" = (
 /obj/structure/table_frame/wood,
-/mob/living/simple_animal/hostile/asteroid/basilisk{
-	environment_smash = 0
-	},
 /turf/open/floor/carpet/green,
 /area/station/cargo/warehouse)
 "fdC" = (
@@ -16975,11 +16958,6 @@
 "fJr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/hostile/russian{
-	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
-	name = "Russian Mobster"
-	},
 /turf/open/floor/carpet/green,
 /area/station/maintenance/port/greater)
 "fJs" = (
@@ -18679,6 +18657,10 @@
 /obj/effect/spawner/random/decoration/carpet,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"glv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/mineral/random/labormineral,
+/area/space/nearstation)
 "glG" = (
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
@@ -20203,7 +20185,6 @@
 "gLm" = (
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "gLn" = (
@@ -23865,6 +23846,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
+"hRs" = (
+/obj/machinery/firealarm/directional/south,
+/turf/closed/wall,
+/area/station/maintenance/fore)
 "hRB" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -33544,7 +33529,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/basic/giant_spider/tarantula/scrawny,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -36987,7 +36971,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/basic/giant_spider/hunter/scrawny,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
@@ -38193,6 +38176,8 @@
 	},
 /obj/structure/spider/stickyweb,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood,
+/mob/living/basic/syndicate/russian/ranged/lootless,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "mCO" = (
@@ -39967,12 +39952,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/security/prison)
-"ngW" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/cat_butcherer,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "nhc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -48791,6 +48770,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"qjL" = (
+/mob/living/basic/mining/lobstrosity,
+/turf/open/misc/asteroid/airless,
+/area/space/nearstation)
 "qjM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51363,6 +51346,16 @@
 /obj/item/taperecorder,
 /turf/open/floor/carpet/green,
 /area/station/security/detectives_office)
+"rbN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/chair/stool/directional/west,
+/mob/living/basic/syndicate/russian/ranged/lootless,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard)
 "rbO" = (
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -54025,7 +54018,6 @@
 "rSL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/basic/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rSN" = (
@@ -56248,7 +56240,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/fox/renault,
+/mob/living/basic/pet/fox/renault,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "sHh" = (
@@ -57984,7 +57976,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "thU" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
+/mob/living/basic/mining/goliath/ancient,
 /turf/open/misc/asteroid/lowpressure,
 /area/space/nearstation)
 "thW" = (
@@ -63378,11 +63370,6 @@
 /area/station/science/ordnance)
 "uYp" = (
 /obj/structure/chair/stool/bar/directional/west,
-/mob/living/simple_animal/hostile/russian{
-	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
-	name = "Russian Mobster"
-	},
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
 "uYw" = (
@@ -70432,16 +70419,6 @@
 "xha" = (
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
-"xhe" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/simple_animal/hostile/russian{
-	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
-	name = "Russian Mobster"
-	},
-/turf/open/floor/carpet/green,
-/area/station/maintenance/port/greater)
 "xhi" = (
 /obj/structure/sign/departments/chemistry/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -79208,7 +79185,7 @@ aaa
 aeU
 aeu
 aeU
-amq
+aeU
 aeU
 aeu
 dWG
@@ -84244,7 +84221,7 @@ aaa
 aaa
 aeu
 aeu
-aeu
+qjL
 aeu
 aeu
 aeu
@@ -84581,7 +84558,7 @@ vku
 acm
 vjh
 xVH
-xhe
+spr
 oFt
 gfc
 vjh
@@ -104095,7 +104072,7 @@ pGA
 vVM
 oYV
 jCD
-efG
+hRs
 qlC
 yaN
 efG
@@ -104349,7 +104326,7 @@ aeu
 qlC
 rtx
 aIv
-ngW
+uDt
 tlb
 bSA
 kFG
@@ -104837,7 +104814,7 @@ anH
 aeu
 aeu
 aeU
-amq
+aeU
 aeu
 aeu
 aeu
@@ -110248,7 +110225,7 @@ aeu
 aeu
 aeu
 aeu
-aeu
+glv
 vJc
 jhN
 qmW
@@ -113863,7 +113840,7 @@ xZL
 xZL
 fsp
 wCY
-wCY
+rbN
 bQD
 pio
 qpZ
@@ -122867,7 +122844,7 @@ aeu
 aeu
 aeu
 aUz
-amq
+aeU
 aeU
 aeu
 aeu
@@ -131849,7 +131826,7 @@ aeu
 aeu
 aeu
 aeu
-amq
+aeU
 aeU
 coy
 aeu

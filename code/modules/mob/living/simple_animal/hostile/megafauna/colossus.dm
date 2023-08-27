@@ -425,7 +425,7 @@
 	name = "lavaland"
 	floor = /turf/open/floor/fakebasalt
 	wall = /turf/closed/wall/mineral/cult
-	flora_and_fauna = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	flora_and_fauna = list(/mob/living/basic/mining/goldgrub)
 	flora_and_fauna_chance = 1
 
 // Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
@@ -526,10 +526,10 @@
 	if(.)
 		return
 	if(ready_to_deploy)
-		var/be_helper = tgui_alert(usr,"Become a Lightgeist? (Warning, You can no longer be revived!)",,list("Yes","No"))
-		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
-			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			W.key = user.key
+		var/be_helper = tgui_alert(usr, "Become a Lightgeist? (Warning, You can no longer be revived!)", "Lightgeist Deployment", list("Yes", "No"))
+		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
+			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
+			deployable.key = user.key
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)

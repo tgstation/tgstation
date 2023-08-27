@@ -224,6 +224,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	turf_reagents.expose(member, TOUCH, liquid = TRUE)
 
 /datum/liquid_group/proc/build_turf_reagent()
+	if(!members)
+		return
 	if(!turf_reagents)
 		turf_reagents = new(100000)
 
@@ -236,6 +238,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(pulled_reagent.type in turf_reagents.previous_reagent_list)
 			turf_reagents.remove_all_type(pulled_reagent.type, 100000)
 		turf_reagents.add_reagent(pulled_reagent.type, amount)
+		if(pulled_reagent.turf_exposure)
+			exposure = TRUE
 
 
 /datum/liquid_group/proc/process_turf_disperse()

@@ -10673,7 +10673,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/floor2/aft)
 "cHn" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/entry)
 "cHr" = (
@@ -23091,7 +23091,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
 "gdd" = (
-/mob/living/simple_animal/pet/penguin/emperor{
+/mob/living/basic/pet/penguin/emperor{
 	desc = "Spaghetti.";
 	name = "Spaghetti"
 	},
@@ -27190,7 +27190,7 @@
 /area/station/hallway/floor1/aft)
 "hkj" = (
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
+/mob/living/basic/pet/fox/renault,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/west,
@@ -35523,7 +35523,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/basic/lizard{
 	name = "Allad Minsa"
 	},
 /obj/machinery/camera/directional/west{
@@ -36400,7 +36400,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/service/bar/atrium)
 "jLE" = (
@@ -42037,7 +42037,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 1
 	},
-/mob/living/simple_animal/pet/fox,
+/mob/living/basic/pet/fox,
 /turf/open/floor/noslip,
 /area/station/maintenance/floor1/port)
 "ljs" = (
@@ -54688,7 +54688,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "onY" = (
-/mob/living/simple_animal/pet/penguin/baby{
+/mob/living/basic/pet/penguin/baby/permanent{
 	dir = 8
 	},
 /turf/open/floor/fake_snow{
@@ -61901,7 +61901,7 @@
 "qpF" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/entry)
 "qqj" = (
@@ -87336,7 +87336,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/service/bar/atrium)
 "xit" = (
@@ -90002,7 +90002,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xVl" = (
-/mob/living/simple_animal/crab,
+/mob/living/basic/crab,
 /obj/structure/railing{
 	dir = 1
 	},

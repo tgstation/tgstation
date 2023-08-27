@@ -5,6 +5,7 @@
 	id = SPECIES_LIZARD
 	species_traits = list(
 		MUTCOLORS,
+		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
 	)
@@ -123,6 +124,7 @@ Lizard subspecies: ASHWALKERS
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	species_traits = list(
 		MUTCOLORS,
+		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
 	)

@@ -53,6 +53,7 @@
 		icon_state = "[anchored ? "con" : null]disposal"
 		return ..()
 
+	icon = initial(pipe_type.icon)
 	icon_state = "[is_pipe() ? "con" : null][initial(pipe_type.icon_state)]"
 	return ..()
 

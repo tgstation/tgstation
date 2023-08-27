@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(station_coloring)
 	init_order = INIT_ORDER_ICON_COLORING // before SSicon_smooth
 	flags = SS_NO_FIRE
 	///do we bother with wall trims?
-	var/wall_trims = FALSE
+	var/wall_trims = TRUE
 	//RED (Only sec stuff honestly)
 	var/list/red = list("#d0294c", "#d6292f", "#d62f29", "#d63a29")
 	//BAR
@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(station_coloring)
 		                        /area/station/service/hydroponics),
 		pick(blue)         = typesof(/area/station/medical),
 		pick(bar)          = list(/area/station/service/bar),
-		pick(brown)		   = typesof(/area/station/cargo),
+		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
 		COLOR_WHITE        = typesof(/area/shuttle),
 		COLOR_WHITE        = typesof(/area/centcom),
 	)
@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(station_coloring)
 		                        /area/station/service/hydroponics),
 		pick(blue)         = typesof(/area/station/medical),
 		pick(bar)          = list(/area/station/service/bar),
-		pick(brown)		   = typesof(/area/station/cargo),
+		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
 		COLOR_WHITE        = typesof(/area/shuttle),
 		COLOR_WHITE        = typesof(/area/centcom),
 	)

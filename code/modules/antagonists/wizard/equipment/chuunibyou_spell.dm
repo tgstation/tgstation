@@ -28,12 +28,15 @@
 	if(ishuman(cast_on))
 		var/mob/living/carbon/human/human_cast_on = cast_on
 		human_cast_on.dropItemToGround(human_cast_on.glasses)
-		var/obj/item/clothing/head/wizard/wizhat = human_cast_on.head
+//monkestation removal start
+/*		var/obj/item/clothing/head/wizard/wizhat = human_cast_on.head
 		if(istype(wizhat))
 			to_chat(human_cast_on, span_notice("Your [wizhat] transforms into an eyepatch."))
 			qdel(wizhat)
 		else
-			to_chat(human_cast_on, span_notice("An eyepatch pops into existence over one of your eyes."))
+			to_chat(human_cast_on, span_notice("An eyepatch pops into existence over one of your eyes.")) */
+//monkestation removal end
+		to_chat(human_cast_on, span_notice("An eyepatch pops into existence over one of your eyes.")) //monkestation edit: makes it not remove your wizard hat
 		human_cast_on.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch/medical/chuuni(human_cast_on), ITEM_SLOT_EYES)
 
 	qdel(src)

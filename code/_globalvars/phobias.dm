@@ -51,9 +51,9 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
-	"spiders" = typecacheof(list(/mob/living/basic/giant_spider)),
+	"spiders" = typecacheof(list(/mob/living/basic/spider/giant)),
 	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
-	"lizards" = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
+	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 	"snakes" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/snake)),
 	"robots" = typecacheof(list(
@@ -65,14 +65,14 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 	"the supernatural" = typecacheof(list(
 		/mob/dead/observer,
+		/mob/living/basic/bat,
+		/mob/living/basic/demon,
+		/mob/living/basic/faithless,
+		/mob/living/basic/ghost,
 		/mob/living/simple_animal/bot/mulebot/paranormal,
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/basic/faithless,
 		/mob/living/simple_animal/hostile/heretic_summon,
-		/mob/living/simple_animal/hostile/imp,
-		/mob/living/basic/bat,
-		/mob/living/basic/ghost,
 		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,
@@ -86,18 +86,18 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"conspiracies" = typecacheof(list(
 		/mob/living/simple_animal/bot/secbot,
 		/mob/living/simple_animal/drone,
-		/mob/living/simple_animal/pet/penguin,
+		/mob/living/basic/pet/penguin,
 	)),
 	"birds" = typecacheof(list(
 		/mob/living/simple_animal/chick,
 		/mob/living/basic/chicken,
 		/mob/living/simple_animal/parrot,
-		/mob/living/simple_animal/pet/penguin,
+		/mob/living/basic/pet/penguin,
 	)),
 	"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
 	"insects" = typecacheof(list(
 		/mob/living/basic/cockroach,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 	)),
 ))
 

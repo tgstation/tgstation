@@ -4300,7 +4300,7 @@
 "qD" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "qF" = (
@@ -6216,7 +6216,7 @@
 /area/centcom/central_command_areas/control)
 "yl" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/crab,
+/mob/living/basic/crab,
 /turf/open/indestructible/dark,
 /area/centcom/central_command_areas/prison/cells)
 "yn" = (
@@ -7179,7 +7179,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/generic/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "Cf" = (
@@ -7554,7 +7554,7 @@
 /area/centcom/central_command_areas/evacuation)
 "DS" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/indestructible/dark,
 /area/centcom/central_command_areas/prison/cells)
 "DV" = (
@@ -9377,7 +9377,7 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/generic/style_random,
 /obj/machinery/light/directional/south,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "MU" = (
@@ -12397,7 +12397,7 @@
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/pointy/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "YN" = (

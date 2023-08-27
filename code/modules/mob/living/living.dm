@@ -15,6 +15,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
+	voice_type = pick(voice_type2sound) //monkestation edit
 
 /mob/living/prepare_huds()
 	..()
@@ -662,6 +663,7 @@
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
+	playsound(loc, 'goon/sounds/body_thud.ogg', ishuman(src) ? 40 : 15, 1, 0.3)
 
 
 /// Proc to append behavior related to lying down.
@@ -1409,40 +1411,45 @@
 
 		if(WABBAJACK_ANIMAL)
 			var/picked_animal = pick(
-				/mob/living/basic/carp,
-				/mob/living/simple_animal/hostile/bear,
-				/mob/living/simple_animal/hostile/mushroom,
-				/mob/living/basic/statue,
 				/mob/living/basic/bat,
-				/mob/living/simple_animal/hostile/retaliate/goat,
-				/mob/living/simple_animal/hostile/killertomato,
-				/mob/living/basic/giant_spider,
-				/mob/living/basic/giant_spider/hunter,
-				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+				/mob/living/basic/bear,
+				/mob/living/basic/butterfly,
+				/mob/living/basic/carp,
 				/mob/living/basic/carp/magic,
 				/mob/living/basic/carp/magic/chaos,
-				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-				/mob/living/simple_animal/hostile/headcrab,
-				/mob/living/simple_animal/hostile/morph,
+				/mob/living/basic/chicken,
+				/mob/living/basic/cow,
+				/mob/living/basic/crab,
+				/mob/living/basic/spider/giant,
+				/mob/living/basic/spider/giant/hunter,
+				/mob/living/basic/mining/goliath,
+				/mob/living/basic/headslug,
+				/mob/living/basic/killer_tomato,
+				/mob/living/basic/lizard,
+				/mob/living/basic/mining/goliath,
+				/mob/living/basic/mining/watcher,
+				/mob/living/basic/morph,
+				/mob/living/basic/mouse,
+				/mob/living/basic/mushroom,
+				/mob/living/basic/pet/dog/breaddog,
+				/mob/living/basic/pet/dog/corgi,
+				/mob/living/basic/pet/dog/pug,
+				/mob/living/basic/pet/fox,
+				/mob/living/basic/spider/giant,
+				/mob/living/basic/spider/giant/hunter,
+				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
+				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+				/mob/living/simple_animal/hostile/gorilla,
+				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+				/mob/living/simple_animal/hostile/retaliate/goat,
+				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/parrot,
-				/mob/living/basic/pet/dog/corgi,
-				/mob/living/simple_animal/crab,
-				/mob/living/basic/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
-				/mob/living/basic/mouse,
-				/mob/living/basic/chicken,
-				/mob/living/basic/cow,
-				/mob/living/simple_animal/hostile/lizard,
-				/mob/living/simple_animal/pet/fox,
-				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
-				/mob/living/basic/pet/dog/breaddog,
-				/mob/living/simple_animal/chick,
 			)
 			new_mob = new picked_animal(loc)
 

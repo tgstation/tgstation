@@ -877,16 +877,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	splattable = typecacheof(list(
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/butterfly,
+		/mob/living/basic/ant,
+		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/obj/item/queen_bee,
-		/mob/living/basic/spiderling,
-		/mob/living/simple_animal/hostile/ant,
+		/mob/living/basic/spider/growing/spiderling,
+		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
+		/obj/item/queen_bee,
 	))
 	strong_against = typecacheof(list(
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/spider/giant,
 	))
 
 
@@ -1119,7 +1119,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 25
 
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
-	if(!IS_WIZARD(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
