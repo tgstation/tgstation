@@ -194,8 +194,8 @@
 		new wood.plank_type(loc, 1 + seed_modifier)
 		. = TRUE
 	else
-		var/retrived = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
-		if(retrived > 0) //item was salvaged i.e. deleted
+		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+		if(retrieved > 0) //item was salvaged i.e. deleted
 			materials.retrieve_all()
 			return TRUE
 	qdel(weapon)
