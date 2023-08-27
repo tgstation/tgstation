@@ -1,0 +1,6 @@
+author: "Comxy"
+delete-after: True
+changes:
+  - rscadd: "New rotator disposal pipe."
+  - bugfix: "Flipped transit tube stations are now accessible in the RPD again."
+  - image: "New rotator disposal pipe sprite."

@@ -1201,3 +1201,60 @@
   vinylspiders:
   - refactor: fixed a bunch of instances of callbacks being qdeleted and cleaned up
       related code
+2023-08-27:
+  CoiledLamb:
+  - bugfix: the coroner medkit can now hold every item it spawns with
+  Deadgebert:
+  - bugfix: multitool can be used on APC/Teslacoil/SMES/emitter if it has exposed
+      wires.
+  - qol: Icebox monsters no longer spawn close enough to aggro Lia at round start
+  Fikou:
+  - bugfix: quartermasters get their voice of god power boost correctly
+  Ghommie:
+  - bugfix: Fixed the double-barreled shotgun not working properly
+  - qol: The Achievements UI now shows how many people have unlocked a given achievement.
+  - bugfix: The "Skills" Category for achievements should no longer be hidden.
+  Jacquerel:
+  - bugfix: Watchers won't retain an ethereal outline of their wings hovering over
+      their dead body.
+  Kubisopplay:
+  - bugfix: Borgs no longer get permastunned by emotes
+  - bugfix: Borg hud should not fuck up in few situations
+  MTandi:
+  - bugfix: Fixed Phazon construction message typo
+  RikuTheKiller:
+  - bugfix: Light eaters can no longer be eaten by their higher-grade brothers, the
+      trash eaters. (recyclers)
+  SyncIt21:
+  - bugfix: zipping a duffle bag closes the UI of all storage items opened inside
+      it
+  YehnBeep:
+  - qol: Stabilized yellow slime extracts no longer spam a message every charge pulse
+      (but examining characters will still show that it's active).
+  YesterdaysPromise:
+  - rscadd: 'Gave snow legions a separate corpse-drop pool: ash walkers excluded,
+      but eskimos included.'
+  carlarctg:
+  - rscadd: Adds a syndicate AI card for nuke ops. Costs 12 TC, can be refunded. Activating
+      it in-hand opens up a ghost poll like normal reinforcements. Base interaction
+      range for syndicate AIs is one, which means they can handle electronics only
+      in proximity.
+  - rscadd: Adds a syndicate AI interaction range upgrade for nuke ops, costs 4 TC
+      and can be applied onto a syndicate AI (inside any container) to increase its
+      interaction range by two per. (Three purchases are recommended for seven tiles
+      of range!)
+  iwishforducks:
+  - balance: Railings now only cost 2 rods and are much easier to construct. But they
+      can now be destroyed much easier and cut with wirecutters without unwrenching.
+  mc-oofert:
+  - qol: rats no longer spawn on multiz cable hubs
+  necromanceranne:
+  - bugfix: Ops wanting to get the CQC kit will actually get given the kit, and not
+      just the CQC book.
+  tf-4:
+  - spellcheck: Fixed a spelling error with the daps emote.
+  vinylspiders:
+  - bugfix: greyscale colors will now update on the mob when modifying them via the
+      VV menu
+  - qol: inserting new high luminosity eyes will now properly remember the previous
+      eyes' color and default to that initially
