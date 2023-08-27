@@ -193,11 +193,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			to_chat(sexist, span_notice("Woah dude, you feel like a dude!"))
 		if("Itzard")
 			sexist.gender = NEUTER
-			to_chat(sexist, span_notice("Woah dude, you feel like a person(?)"))
+			to_chat(sexist, span_notice("Woah dude, you're something else!"))
 
 	var/bodysekai = tgui_input_list(sexist, "Alter your physique as well?", "Confirmation", list("Warlock Physique", "Witch Physique", "Wizards Don't Need Gender"))
 
-	if(bodysekai != "Wizards Don't Need Gender")
+	if(bodysekai && bodysekai != "Wizards Don't Need Gender")
 		sexist.physique = (bodysekai == "Warlock Physique") ? MALE : FEMALE
 
 	sexist.dna.update_ui_block(DNA_GENDER_BLOCK)
