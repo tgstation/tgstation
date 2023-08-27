@@ -184,7 +184,12 @@
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	use_power(100)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
-	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
+	silo_materials.mat_container.insert_item(
+		weapon = chosen_boulder,\
+		multiplier = refining_efficiency,\
+		breakdown_flags = BREAKDOWN_FLAGS_ORM,\
+		context = src \
+	)
 	balloon_alert_to_viewers("Boulder processed!")
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)
@@ -195,6 +200,7 @@
 	var/obj/item/boulder/new_rock = new (src)
 	new_rock.set_custom_materials(remaining_ores)
 	new_rock.reset_processing_cooldown() //So that we don't pick it back up!
+	new_rock.flavor_boulder(null, )
 	remove_boulder(new_rock)
 	return TRUE
 

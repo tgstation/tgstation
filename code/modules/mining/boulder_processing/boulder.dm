@@ -130,14 +130,18 @@
 /**
  * This is called when a boulder is spawned from a vent, and is used to set the boulder's icon as well as durability.
  */
-/obj/item/boulder/proc/flavor_based_on_vent(obj/structure/ore_vent/parent_vent)
+/obj/item/boulder/proc/flavor_boulder(obj/structure/ore_vent/parent_vent, size = BOULDER_SIZE_SMALL, is_artifact = FALSE)
 	var/durability_min = parent_vent.boulder_size
 	var/durability_max = parent_vent.boulder_size + BOULDER_SIZE_SMALL
 	if(!parent_vent)
-		durability_min = BOULDER_SIZE_SMALL
-		durability_max = BOULDER_SIZE_MEDIUM
+		durability_min = size
+		durability_max = size + BOULDER_SIZE_SMALL
 	durability = rand(durability_min, durability_max) //randomize durability a bit for some flavor.
-	switch(parent_vent?.boulder_size)
+
+	var/switch_size = size
+	if(parent_vent)
+		switch_size = parent_vent.boulder_size
+	switch(switch_size)
 		if(BOULDER_SIZE_SMALL)
 			icon_state = "boulder_small"
 		if(BOULDER_SIZE_MEDIUM)
@@ -146,6 +150,8 @@
 			icon_state = "boulder_large"
 		else
 			icon_state = "boulder_small"
+	if(istype(src, /obj/item/boulder/artifact) || is_artifact)
+		icon_state = "boulder_artifact"
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/boulder/artifact

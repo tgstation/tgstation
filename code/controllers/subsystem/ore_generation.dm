@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(ore_generation)
 	name = "Ore_generation"
-	wait = 1 MINUTES
+	wait = 5 MINUTES
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 	flags = SS_NO_INIT
@@ -64,5 +64,5 @@ SUBSYSTEM_DEF(ore_generation)
 		var/list/mats_list = current_vent.create_mineral_contents()
 		current_vent.Shake(duration = 1.5 SECONDS)
 		new_rock.set_custom_materials(mats_list)
-		new_rock.flavor_based_on_vent(current_vent)
+		new_rock.flavor_boulder(current_vent)
 		available_boulders += new_rock

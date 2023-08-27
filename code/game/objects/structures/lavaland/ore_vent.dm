@@ -161,11 +161,11 @@
 		spawn_text = "emerges to assault",\
 		spawn_distance = 4,\
 		spawn_distance_exclude = 3)
-	var/wave_timer = 20 SECONDS
+	var/wave_timer = 60 SECONDS
 	if(boulder_size == BOULDER_SIZE_MEDIUM)
-		wave_timer = 40 SECONDS
+		wave_timer = 90 SECONDS
 	else if(boulder_size == BOULDER_SIZE_LARGE)
-		wave_timer = 60 SECONDS
+		wave_timer = 150 SECONDS
 
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 
