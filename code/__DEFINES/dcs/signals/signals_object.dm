@@ -462,3 +462,6 @@
 
 /// from /obj/plunger_act when an object is being plungered
 #define COMSIG_PLUNGER_ACT "plunger_act"
+
+/// from /obj/item/surgery_tray/set_tray_mode : (new_state)
+#define COMSIG_SURGERY_TRAY_TOGGLE "surgery_tray_toggle"
