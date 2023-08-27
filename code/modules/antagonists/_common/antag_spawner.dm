@@ -105,7 +105,7 @@
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
 	/// The outfit given to plasmaman operatives
-	var/datum/outfit/syndicate/plasmaman_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
+	var/datum/outfit/syndicate/plasma_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 	/// The antag datum applied
 	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
 	/// Style used by the droppod
@@ -164,10 +164,8 @@
 		var/species_type = our_client.prefs.read_preference(/datum/preference/choiced/species)
 		nukie.set_species(species_type)
 
-	if(is_species(nukie, /datum/species/plasmaman))
-		antag_datum.nukeop_outfit = plasmaman_outfit
-	else
-		antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+	antag_datum.plasmaman_outfit = plasma_outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)

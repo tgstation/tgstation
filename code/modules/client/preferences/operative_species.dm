@@ -18,3 +18,6 @@
 		return TRUE
 
 	return FALSE
+
+/datum/preference/toggle/nuke_ops_species/apply_to_human(mob/living/carbon/human/target, value)
+	return
