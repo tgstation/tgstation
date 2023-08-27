@@ -308,6 +308,8 @@
 		"comp_access_checker",
 		"comp_arithmetic",
 		"comp_assoc_list_pick",
+		"comp_assoc_list_remove",
+		"comp_assoc_list_set",
 		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
