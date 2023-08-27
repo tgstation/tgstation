@@ -328,12 +328,10 @@ rough example of the "cone" made by the 3 dirs checked
 /atom/proc/get_oversized_icon_offsets()
 	if (pixel_x == 0 && pixel_y == 0)
 		return list("x" = 0, "y" = 0)
-	if (!(type in GLOB.oversized_atom_icon_offsets))
-		var/icon/my_icon = icon(icon, icon_state)
-		var/icon_width = my_icon.Width()
-		var/icon_height = my_icon.Height()
-		GLOB.oversized_atom_icon_offsets[type] = list(
-			"x" = icon_width > world.icon_size && pixel_x != 0 ? (icon_width - world.icon_size) * 0.5 : 0,
-			"y" = icon_height > world.icon_size && pixel_y != 0 ? (icon_height - world.icon_size) * 0.5 : 0,
-		)
-	return GLOB.oversized_atom_icon_offsets[type]
+	var/list/icon_dimensions = get_icon_dimensions(icon)
+	var/icon_width = icon_dimensions["width"]
+	var/icon_height = icon_dimensions["height"]
+	return list(
+		"x" = icon_width > world.icon_size && pixel_x != 0 ? (icon_width - world.icon_size) * 0.5 : 0,
+		"y" = icon_height > world.icon_size && pixel_y != 0 ? (icon_height - world.icon_size) * 0.5 : 0,
+	)
