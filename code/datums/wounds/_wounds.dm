@@ -48,7 +48,7 @@
 
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
-	/// The bodypart we're parented to
+	/// The bodypart we're parented to. Not guaranteed to be non-null, especially after/during removal or if we haven't been applied
 	var/obj/item/bodypart/limb = null
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
@@ -103,9 +103,8 @@
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)
-	remove_wound()
-	set_limb(null)
-	victim = null
+	if (limb)
+		remove_wound()
 	return ..()
 
 // Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
@@ -229,6 +228,8 @@
 	if(limb && !ignore_limb)
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds(replaced)
+	set_limb(null) // since we're removing limb's ref to us, we should do the same
+	// if you want to keep the ref, do it externally, theres no reason for us, once we unlink from our limb, to remember it
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)
@@ -241,23 +242,21 @@
 /**
  * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
  *
- * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
- *
  * Arguments:
  * * new_wound- The wound instance you want to replace this
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  */
 /datum/wound/proc/replace_wound(datum/wound/new_wound, smited = FALSE, attack_direction = attack_direction)
 	already_scarred = TRUE
+	var/obj/item/bodypart/cached_limb = limb // remove_wound() nulls limb so we have to track it locally
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
+	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
 	. = new_wound
 	qdel(src)
 
 /// The immediate negative effects faced as a result of the wound
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	return
-
 
 /// Proc called to change the variable `limb` and react to the event.
 /datum/wound/proc/set_limb(obj/item/bodypart/new_value)

@@ -59,6 +59,8 @@
 		set_highest_scar(new_scar)
 		new_scar.generate(limb, src, add_to_scars=FALSE)
 
+	return ..()
+
 /datum/wound/slash/flesh/proc/set_highest_scar(datum/scar/new_scar)
 	if(highest_scar)
 		UnregisterSignal(highest_scar, COMSIG_QDELETING)

@@ -193,6 +193,8 @@
 	/// In the case we dont have dismemberable features, or literally cant get wounds, we will use this percent to determine when we can be dismembered.
 	/// Compared to our ABSOLUTE maximum. Stored in decimal; 0.8 = 80%.
 	var/hp_percent_to_dismemberable = 0.8
+	/// If true, we will use [hp_percent_to_dismemberable] even if we are dismemberable via wounds. Useful for things with extreme wound resistance.
+	var/use_alternate_dismemberment_calc_even_if_mangleable = FALSE
 	/// If false, no wound that can be applied to us can mangle our flesh. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
 	var/any_existing_wound_can_mangle_our_flesh
 	/// If false, no wound that can be applied to us can mangle our bone. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
@@ -555,7 +557,7 @@
 				wounding_type = WOUND_BLUNT
 			else if(interior_ready_to_dismember && exterior_ready_to_dismember && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
-		if (!can_theoretically_be_dismembered)
+		if (use_alternate_dismemberment_calc_even_if_mangleable || !can_theoretically_be_dismembered)
 			var/percent_to_total_max = (get_damage() / max_damage)
 			if (percent_to_total_max >= hp_percent_to_dismemberable)
 				if (try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
@@ -1166,7 +1168,7 @@
 /obj/item/bodypart/proc/can_bleed()
 	SHOULD_BE_PURE(TRUE)
 
-	return ((biological_state & BIO_BLOODED) && (!owner || HAS_TRAIT(owner, TRAIT_NOBLOOD)))
+	return ((biological_state & BIO_BLOODED) && (!owner || !HAS_TRAIT(owner, TRAIT_NOBLOOD)))
 
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart
