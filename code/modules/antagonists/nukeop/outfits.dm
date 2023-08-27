@@ -84,6 +84,7 @@
 	back = /obj/item/mod/control/pre_equipped/nuclear/plasmaman
 	uniform = /obj/item/clothing/under/plasmaman/syndicate
 	r_pocket = /obj/item/tank/internals/plasmaman/belt/full
+	mask = null
 
 /datum/outfit/syndicate/full/plasmaman/New()
 	backpack_contents += /obj/item/clothing/head/helmet/space/plasmaman/syndie
