@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Mobs whose human appearance is set dynamically will once again have their bespoke names and descriptions, instead of Unknown, with a blank description."

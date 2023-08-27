@@ -1,4 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes:
-  - balance: "Lasers now have increased energy cost, reverting the cost back to the initial value before the laser buff."
