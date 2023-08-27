@@ -233,7 +233,7 @@
 
 /turf/open/floor/mineral/adamantium
 	name = "adamantine floor"
-	icon_state = "adamantine"
+	icon_state = "adamantium"
 	floor_tile = /obj/item/stack/tile/mineral/adamantium
 	icons = list("adamantium")
 	custom_materials = list(/datum/material/adamantine = SMALL_MATERIAL_AMOUNT*5)
