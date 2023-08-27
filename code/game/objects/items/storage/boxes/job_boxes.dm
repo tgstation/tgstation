@@ -225,11 +225,26 @@
 	illustration = "heart"
 	foldable_result = null
 	mask_type = null
+	var/random_funny_internals = TRUE
+
+/obj/item/storage/box/survival/hug/PopulateContents()
+	..()
+	if(!random_funny_internals)
+		return
+	var/obj/item/internals = locate(internal_type) in src
+	qdel(internals)
+	var/which_funny_tank = pick(list(
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/bz,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/helium,
+			))
+	new which_funny_tank(src)
 
 //Mime survival box
 /obj/item/storage/box/survival/hug/black
 	icon_state = "hugbox_black"
 	illustration = "heart_black"
+	random_funny_internals = FALSE
 
 //Duplicated suicide/attack self procs, since the survival boxes are a subtype of box/survival
 /obj/item/storage/box/survival/hug/suicide_act(mob/living/user)
