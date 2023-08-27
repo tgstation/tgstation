@@ -133,6 +133,7 @@
 	turf_type = /turf/open/floor/mineral/metal_hydrogen/alt_half
 	icon_state = "metal_hydrogen_alt_half"
 	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/alt_half
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/mineral/metal_hydrogen/alt_corner
 	name = "corner metal hydrogen tile"
@@ -141,6 +142,7 @@
 	turf_type = /turf/open/floor/mineral/metal_hydrogen/alt_corner
 	icon_state = "metal_hydrogen_alt_corner"
 	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/alt_corner
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/mineral/metal_hydrogen/alt_single
 	name = "inverse corner metal hydrogen tile"
@@ -149,6 +151,7 @@
 	turf_type = /turf/open/floor/mineral/metal_hydrogen/alt_single
 	icon_state = "metal_hydrogen_alt_single"
 	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/alt_single
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/mineral/bananium
 	name = "bananium tile"
