@@ -32,6 +32,7 @@
 		RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_tram_display))
 
 /obj/machinery/computer/tram_controls/update_icon_state()
+	. = ..()
 	switch(dir)
 		if(NORTH)
 			pixel_x = -8

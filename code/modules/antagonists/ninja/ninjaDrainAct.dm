@@ -443,7 +443,10 @@
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
 	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	malfunction_event.end_when *= 3
+	malfunction_event.end_when *= 2
+	for(var/obj/machinery/transport/guideway_sensor/sensor as anything in SStransport.sensors)
+		if(prob(50))
+			sensor.local_fault()
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

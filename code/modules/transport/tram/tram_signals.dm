@@ -1,5 +1,5 @@
 /// Pedestrian crossing signal for tram
-/obj/machinery/icts/crossing_signal
+/obj/machinery/transport/crossing_signal
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/tram/crossing_signal.dmi'
@@ -24,7 +24,7 @@
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
 	/// the sensor we use
-	var/obj/machinery/icts/guideway_sensor/linked_sensor
+	var/obj/machinery/transport/guideway_sensor/linked_sensor
 	/// Inbound station
 	var/inbound
 	/// Outbound station
@@ -51,20 +51,20 @@
  *  The distance is calculated from the bottom left corner of the tram,
  *  so signals on the east side have their distance reduced by the tram length, in this case 10 for Tramstation.
 */
-/obj/machinery/icts/crossing_signal/northwest
+/obj/machinery/transport/crossing_signal/northwest
 	dir = NORTH
 	sign_dir = INBOUND
 
-/obj/machinery/icts/crossing_signal/northeast
+/obj/machinery/transport/crossing_signal/northeast
 	dir = NORTH
 	sign_dir = OUTBOUND
 
-/obj/machinery/icts/crossing_signal/southwest
+/obj/machinery/transport/crossing_signal/southwest
 	dir = SOUTH
 	sign_dir = INBOUND
 	pixel_y = 20
 
-/obj/machinery/icts/crossing_signal/southeast
+/obj/machinery/transport/crossing_signal/southeast
 	dir = SOUTH
 	sign_dir = OUTBOUND
 	pixel_y = 20
@@ -105,7 +105,7 @@
 	sign_dir = OUTBOUND
 	pixel_y = 20
 
-/obj/machinery/icts/crossing_signal/Initialize(mapload)
+/obj/machinery/transport/crossing_signal/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 	RegisterSignal(SStransport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
@@ -113,17 +113,17 @@
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/icts/crossing_signal/LateInitialize(mapload)
+/obj/machinery/transport/crossing_signal/LateInitialize(mapload)
 	. = ..()
 	link_tram()
 	link_sensor()
 	find_uplink()
 
-/obj/machinery/icts/crossing_signal/Destroy()
+/obj/machinery/transport/crossing_signal/Destroy()
 	SStransport.crossing_signals -= src
 	. = ..()
 
-/obj/machinery/icts/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/machinery/transport/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
@@ -144,7 +144,7 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/icts/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
@@ -154,7 +154,7 @@
 
 	return ..()
 
-/obj/machinery/icts/crossing_signal/emag_act(mob/living/user)
+/obj/machinery/transport/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	balloon_alert(user, "disabled motion sensors")
@@ -162,14 +162,14 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/icts/crossing_signal/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/transport/crossing_signal/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 
 	if(default_change_direction_wrench(user, tool))
 		find_uplink()
 		return TRUE
 
-/obj/machinery/icts/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 
 	if(weapon.tool_behaviour == TOOL_WRENCH && panel_open)
@@ -184,12 +184,12 @@
 
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/icts/crossing_signal/proc/link_sensor()
+/obj/machinery/transport/crossing_signal/proc/link_sensor()
 	linked_sensor = find_closest_valid_sensor()
 	RegisterSignal(linked_sensor, COMSIG_QDELETING, PROC_REF(unlink_sensor))
 	update_appearance()
 
-/obj/machinery/icts/crossing_signal/proc/unlink_sensor()
+/obj/machinery/transport/crossing_signal/proc/unlink_sensor()
 	SIGNAL_HANDLER
 
 	linked_sensor = null
@@ -198,7 +198,7 @@
 		degraded_response()
 	update_appearance()
 
-/obj/machinery/icts/crossing_signal/proc/wake_sensor()
+/obj/machinery/transport/crossing_signal/proc/wake_sensor()
 	if(operating_status > TRANSPORT_REMOTE_WARNING)
 		degraded_response()
 		return
@@ -215,20 +215,20 @@
 		operating_status = TRANSPORT_REMOTE_WARNING
 		degraded_response()
 
-/obj/machinery/icts/crossing_signal/proc/normal_response()
+/obj/machinery/transport/crossing_signal/proc/normal_response()
 	amber_distance_threshold = AMBER_THRESHOLD_NORMAL
 	red_distance_threshold = RED_THRESHOLD_NORMAL
 
-/obj/machinery/icts/crossing_signal/proc/degraded_response()
+/obj/machinery/transport/crossing_signal/proc/degraded_response()
 	amber_distance_threshold = AMBER_THRESHOLD_DEGRADED
 	red_distance_threshold = RED_THRESHOLD_DEGRADED
 
-/obj/machinery/icts/crossing_signal/proc/clear_uplink()
+/obj/machinery/transport/crossing_signal/proc/clear_uplink()
 	inbound = null
 	outbound = null
 	update_appearance()
 
-/obj/machinery/icts/crossing_signal/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/transport/crossing_signal/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
 	if(!is_operational)
@@ -239,7 +239,7 @@
 		ui = new(user, src, "TRANSPORTCrossingSignal")
 		ui.open()
 
-/obj/machinery/icts/crossing_signal/ui_data(mob/user)
+/obj/machinery/transport/crossing_signal/ui_data(mob/user)
 	var/list/data = list()
 
 	data = list(
@@ -254,7 +254,7 @@
 /**
  * Only process if the tram is actually moving
  */
-/obj/machinery/icts/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
+/obj/machinery/transport/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
 	SIGNAL_HANDLER
 
 	if(machine_stat & BROKEN || machine_stat & NOPOWER)
@@ -276,19 +276,19 @@
 	wake_sensor()
 	update_operating()
 
-/obj/machinery/icts/crossing_signal/on_set_machine_stat()
+/obj/machinery/transport/crossing_signal/on_set_machine_stat()
 	. = ..()
 	if(machine_stat & BROKEN)
 		operating_status = TRANSPORT_REMOTE_FAULT
 	else
 		operating_status = TRANSPORT_SYSTEM_NORMAL
 
-/obj/machinery/icts/crossing_signal/on_set_is_operational()
+/obj/machinery/transport/crossing_signal/on_set_is_operational()
 	. = ..()
 
 	update_operating()
 
-/obj/machinery/icts/crossing_signal/proc/comms_change(source, controller, new_status)
+/obj/machinery/transport/crossing_signal/proc/comms_change(source, controller, new_status)
 	SIGNAL_HANDLER
 
 	var/datum/transport_controller/linear/tram/updated_controller = controller
@@ -309,7 +309,7 @@
  *
  * Returns whether we are still processing.
  */
-/obj/machinery/icts/crossing_signal/proc/update_operating()
+/obj/machinery/transport/crossing_signal/proc/update_operating()
 	use_power(idle_power_usage)
 	update_appearance()
 	// Immediately process for snappy feedback
@@ -319,7 +319,7 @@
 		return
 	end_processing()
 
-/obj/machinery/icts/crossing_signal/process()
+/obj/machinery/transport/crossing_signal/process()
 
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
@@ -396,7 +396,7 @@
  * new_state - the new state (XING_STATE_RED, etc)
  * force_update - force appearance to update even if state didn't change.
  */
-/obj/machinery/icts/crossing_signal/proc/set_signal_state(new_state, force = FALSE)
+/obj/machinery/transport/crossing_signal/proc/set_signal_state(new_state, force = FALSE)
 	if(new_state == signal_state && !force)
 		return
 
@@ -404,7 +404,7 @@
 	flick_overlay()
 	update_appearance()
 
-/obj/machinery/icts/crossing_signal/update_icon_state()
+/obj/machinery/transport/crossing_signal/update_icon_state()
 	switch(dir)
 		if(SOUTH, EAST)
 			pixel_y = 20
@@ -438,7 +438,7 @@
 
 	return ..()
 
-/obj/machinery/icts/crossing_signal/update_appearance(updates)
+/obj/machinery/transport/crossing_signal/update_appearance(updates)
 	. = ..()
 
 	if(machine_stat & NOPOWER)
@@ -458,7 +458,7 @@
 
 	set_light(l_on = TRUE, l_color = new_color)
 
-/obj/machinery/icts/crossing_signal/update_overlays()
+/obj/machinery/transport/crossing_signal/update_overlays()
 	. = ..()
 
 	if(machine_stat & NOPOWER)
@@ -495,7 +495,7 @@
 	. += emissive_appearance(icon, "crossing-0", offset_spokesman = src, alpha = src.alpha)
 	. += emissive_appearance(icon, "status-0", offset_spokesman = src, alpha = src.alpha)
 
-/obj/machinery/icts/guideway_sensor
+/obj/machinery/transport/guideway_sensor
 	name = "guideway sensor"
 	icon = 'icons/obj/tram/tram_sensor.dmi'
 	icon_state = "sensor-base"
@@ -507,17 +507,17 @@
 	/// Sensors work in a married pair
 	var/datum/weakref/paired_sensor
 
-/obj/machinery/icts/guideway_sensor/Initialize(mapload)
+/obj/machinery/transport/guideway_sensor/Initialize(mapload)
 	. = ..()
 	SStransport.sensors += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/icts/guideway_sensor/LateInitialize(mapload)
+/obj/machinery/transport/guideway_sensor/LateInitialize(mapload)
 	. = ..()
 	pair_sensor()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 
-/obj/machinery/icts/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
@@ -527,16 +527,16 @@
 
 	return ..()
 
-/obj/machinery/icts/guideway_sensor/proc/pair_sensor()
+/obj/machinery/transport/guideway_sensor/proc/pair_sensor()
 	set_machine_stat(machine_stat | MAINT)
 	if(paired_sensor)
-		var/obj/machinery/icts/guideway_sensor/divorcee = paired_sensor?.resolve()
+		var/obj/machinery/transport/guideway_sensor/divorcee = paired_sensor?.resolve()
 		divorcee.set_machine_stat(machine_stat | MAINT)
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
 		paired_sensor = null
 
-	for(var/obj/machinery/icts/guideway_sensor/potential_sensor in SStransport.sensors)
+	for(var/obj/machinery/transport/guideway_sensor/potential_sensor in SStransport.sensors)
 		if(potential_sensor == src)
 			continue
 		switch(potential_sensor.dir)
@@ -553,16 +553,16 @@
 
 	update_appearance()
 
-	var/obj/machinery/icts/guideway_sensor/new_partner = paired_sensor?.resolve()
+	var/obj/machinery/transport/guideway_sensor/new_partner = paired_sensor?.resolve()
 	new_partner.paired_sensor = WEAKREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()
 	playsound(src, 'sound/machines/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
 
-/obj/machinery/icts/guideway_sensor/Destroy()
+/obj/machinery/transport/guideway_sensor/Destroy()
 	SStransport.sensors -= src
 	if(paired_sensor)
-		var/obj/machinery/icts/guideway_sensor/divorcee = paired_sensor?.resolve()
+		var/obj/machinery/transport/guideway_sensor/divorcee = paired_sensor?.resolve()
 		divorcee.set_machine_stat(machine_stat & ~MAINT)
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
@@ -570,14 +570,14 @@
 		paired_sensor = null
 	. = ..()
 
-/obj/machinery/icts/guideway_sensor/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/transport/guideway_sensor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 
 	if(default_change_direction_wrench(user, tool))
 		pair_sensor()
 		return TRUE
 
-/obj/machinery/icts/guideway_sensor/update_overlays()
+/obj/machinery/transport/guideway_sensor/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
 		return
@@ -592,7 +592,7 @@
 		. += emissive_appearance(icon, "sensor-[TRANSPORT_REMOTE_FAULT]", src, alpha = src.alpha)
 		return
 
-	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
+	var/obj/machinery/transport/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(buddy)
 		if(!buddy.is_operational)
 			. += mutable_appearance(icon, "sensor-[TRANSPORT_REMOTE_WARNING]")
@@ -606,8 +606,8 @@
 		. += mutable_appearance(icon, "sensor-[TRANSPORT_REMOTE_FAULT]")
 		. += emissive_appearance(icon, "sensor-[TRANSPORT_REMOTE_FAULT]", src, alpha = src.alpha)
 
-/obj/machinery/icts/guideway_sensor/proc/trigger_sensor()
-	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
+/obj/machinery/transport/guideway_sensor/proc/trigger_sensor()
+	var/obj/machinery/transport/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(!buddy)
 		return FALSE
 
@@ -616,7 +616,7 @@
 
 	return TRUE
 
-/obj/machinery/icts/guideway_sensor/proc/wake_up()
+/obj/machinery/transport/guideway_sensor/proc/wake_up()
 	SIGNAL_HANDLER
 
 	if(machine_stat & BROKEN)
@@ -625,41 +625,41 @@
 	if(prob(TRANSPORT_BREAKDOWN_RATE))
 		local_fault()
 
-	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
+	var/obj/machinery/transport/guideway_sensor/buddy = paired_sensor?.resolve()
 
 	if(buddy)
 		set_machine_stat(machine_stat & ~MAINT)
 
 	update_appearance()
 
-/obj/machinery/icts/guideway_sensor/on_set_is_operational()
+/obj/machinery/transport/guideway_sensor/on_set_is_operational()
 	. = ..()
 
-	var/obj/machinery/icts/guideway_sensor/buddy = paired_sensor?.resolve()
+	var/obj/machinery/transport/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(buddy)
 		buddy.update_appearance()
 
 	update_appearance()
 
-/obj/machinery/icts/crossing_signal/proc/find_closest_valid_sensor()
+/obj/machinery/transport/crossing_signal/proc/find_closest_valid_sensor()
 	if(!istype(src) || !src.z)
 		return FALSE
 
-	var/list/obj/machinery/icts/guideway_sensor/sensor_candidates = list()
+	var/list/obj/machinery/transport/guideway_sensor/sensor_candidates = list()
 
-	for(var/obj/machinery/icts/guideway_sensor/sensor in SStransport.sensors)
+	for(var/obj/machinery/transport/guideway_sensor/sensor in SStransport.sensors)
 		if(sensor.z == src.z)
 			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
 				sensor_candidates += sensor
 
-	var/obj/machinery/icts/guideway_sensor/selected_sensor = get_closest_atom(/obj/machinery/icts/guideway_sensor, sensor_candidates, src)
+	var/obj/machinery/transport/guideway_sensor/selected_sensor = get_closest_atom(/obj/machinery/transport/guideway_sensor, sensor_candidates, src)
 	var/sensor_distance = get_dist(src, selected_sensor)
 	if(sensor_distance <= DEFAULT_TRAM_LENGTH)
 		return selected_sensor
 
 	return FALSE
 
-/obj/machinery/icts/crossing_signal/proc/find_uplink()
+/obj/machinery/transport/crossing_signal/proc/find_uplink()
 	if(!istype(src) || !src.z)
 		return FALSE
 

@@ -1,4 +1,4 @@
-/obj/machinery/icts
+/obj/machinery/transport
 	/// ID of the transport we're associated with for filtering commands
 	var/configured_transport_id = TRAMSTATION_LINE_1
 	/// weakref of the transport we're associated with
@@ -22,14 +22,14 @@
  *
  * Locates tram parts in the lift global list after everything is done.
  */
-/obj/machinery/icts/proc/link_tram()
+/obj/machinery/transport/proc/link_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id != configured_transport_id)
 			continue
 		transport_ref = WEAKREF(tram)
 		break
 
-/obj/machinery/icts/proc/local_fault()
+/obj/machinery/transport/proc/local_fault()
 	if(malfunctioning || repair_signals)
 		return
 
@@ -43,7 +43,7 @@
  * The key of this assoc list is the "method" of how they're fixing the thing (just flavor for examine),
  * and the value is what tool they actually need to use on the thing to fix it
  */
-/obj/machinery/icts/proc/generate_repair_signals()
+/obj/machinery/transport/proc/generate_repair_signals()
 
 	// Select a few methods of how to fix it
 	var/list/fix_it_keys = assoc_to_keys(how_do_we_fix_it)
@@ -58,11 +58,11 @@
 	if(length(repair_signals))
 		RegisterSignals(src, repair_signals, PROC_REF(on_machine_tooled))
 
-/obj/machinery/icts/proc/clear_repair_signals()
+/obj/machinery/transport/proc/clear_repair_signals()
 	UnregisterSignal(src, repair_signals)
 	QDEL_LAZYLIST(repair_signals)
 
-/obj/machinery/icts/examine(mob/user)
+/obj/machinery/transport/examine(mob/user)
 	. = ..()
 	if(methods_to_fix)
 		for(var/tool_method as anything in methods_to_fix)
@@ -73,14 +73,14 @@
  *
  * We allow for someone to stop the event early by using the proper tools, hinted at in examine, on the machine
  */
-/obj/machinery/icts/proc/on_machine_tooled(obj/machinery/source, mob/living/user, obj/item/tool)
+/obj/machinery/transport/proc/on_machine_tooled(obj/machinery/source, mob/living/user, obj/item/tool)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(try_fix_machine), source, user, tool)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /// Attempts a do_after, and if successful, stops the event
-/obj/machinery/icts/proc/try_fix_machine(obj/machinery/icts/machine, mob/living/user, obj/item/tool)
+/obj/machinery/transport/proc/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 
 	machine.balloon_alert(user, "percussive maintenance...")
@@ -98,7 +98,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/icts/welder_act(mob/living/user, obj/item/tool)
+/obj/machinery/transport/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return
 	if(atom_integrity >= max_integrity)

@@ -1,4 +1,4 @@
-/obj/machinery/icts/destination_sign
+/obj/machinery/transport/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
 	icon = 'icons/obj/tram/tram_display.dmi'
@@ -18,7 +18,7 @@
 	/// The light mask overlay we use
 	var/light_mask
 
-/obj/machinery/icts/destination_sign/indicator
+/obj/machinery/transport/destination_sign/indicator
 	icon = 'icons/obj/tram/tram_indicator.dmi'
 	icon_state = "indi_off"
 	base_icon_state = "indi_"
@@ -31,10 +31,10 @@
 	icon_state = "indi_off"
 	icon = 'icons/obj/tram/tram_indicator.dmi'
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
-	result_path = /obj/machinery/icts/destination_sign/indicator
+	result_path = /obj/machinery/transport/destination_sign/indicator
 	pixel_shift = 32
 
-/obj/machinery/icts/destination_sign/Initialize(mapload)
+/obj/machinery/transport/destination_sign/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_sign))
 	SStransport.displays += src
@@ -43,15 +43,15 @@
 	)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/icts/destination_sign/Destroy()
+/obj/machinery/transport/destination_sign/Destroy()
 	SStransport.displays -= src
 	. = ..()
 
-/obj/machinery/icts/destination_sign/indicator/LateInitialize(mapload)
+/obj/machinery/transport/destination_sign/indicator/LateInitialize(mapload)
 	. = ..()
 	link_tram()
 
-/obj/machinery/icts/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
+/obj/machinery/transport/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
 	SIGNAL_HANDLER
 
 	if(controller.specific_transport_id != configured_transport_id)
@@ -59,7 +59,7 @@
 	update_sign()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
 
-/obj/machinery/icts/destination_sign/indicator/deconstruct(disassembled = TRUE)
+/obj/machinery/transport/destination_sign/indicator/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(disassembled)
@@ -71,7 +71,7 @@
 		new /obj/item/shard(drop_location())
 	qdel(src)
 
-/obj/machinery/icts/destination_sign/indicator/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/transport/destination_sign/indicator/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
@@ -81,7 +81,7 @@
 		deconstruct()
 		return TRUE
 
-/obj/machinery/icts/destination_sign/proc/update_operating()
+/obj/machinery/transport/destination_sign/proc/update_operating()
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
@@ -89,7 +89,7 @@
 		return
 	end_processing()
 
-/obj/machinery/icts/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform)
+/obj/machinery/transport/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform)
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = "[base_icon_state]off"
 		light_mask = null
@@ -121,7 +121,7 @@
 	update_appearance()
 	return PROCESS_KILL
 
-/obj/machinery/icts/destination_sign/update_overlays()
+/obj/machinery/transport/destination_sign/update_overlays()
 	. = ..()
 	if(!light_mask)
 		return
@@ -129,7 +129,7 @@
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
-/obj/machinery/icts/destination_sign/update_icon_state()
+/obj/machinery/transport/destination_sign/update_icon_state()
 	. = ..()
 	switch(dir)
 		if(SOUTH, EAST)
@@ -137,11 +137,11 @@
 		if(NORTH, WEST)
 			pixel_x = -8
 
-/obj/machinery/icts/destination_sign/indicator/update_icon_state()
+/obj/machinery/transport/destination_sign/indicator/update_icon_state()
 	. = ..()
 	pixel_x = 0
 
-/obj/machinery/icts/destination_sign/indicator/power_change()
+/obj/machinery/transport/destination_sign/indicator/power_change()
 	..()
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 	if(!tram)
@@ -149,5 +149,5 @@
 
 	update_sign(src, tram, tram.controller_active, tram.controller_status, tram.travel_direction, tram.destination_platform)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/icts/destination_sign, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/icts/destination_sign/indicator, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/transport/destination_sign, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/transport/destination_sign/indicator, 32)

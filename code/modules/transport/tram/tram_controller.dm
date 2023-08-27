@@ -11,7 +11,7 @@
 	var/controller_active = FALSE
 	///whether all required parts of the tram are considered operational
 	var/controller_operational = TRUE
-	var/obj/machinery/icts/tram_controller/paired_cabinet
+	var/obj/machinery/transport/tram_controller/paired_cabinet
 	///if we're travelling, what direction are we going
 	var/travel_direction = NONE
 	///if we're travelling, how far do we have to go
@@ -199,10 +199,10 @@
 			explosion(transport_module, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(transport_module)
 
-		for(var/obj/machinery/icts/destination_sign/desto as anything in SStransport.displays)
+		for(var/obj/machinery/transport/destination_sign/desto as anything in SStransport.displays)
 			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 
-		for(var/obj/machinery/icts/crossing_signal/xing as anything in SStransport.crossing_signals)
+		for(var/obj/machinery/transport/crossing_signal/xing as anything in SStransport.crossing_signals)
 			xing.set_signal_state(XING_STATE_MALF)
 			xing.update_appearance()
 
@@ -489,7 +489,7 @@
 
 	update_status()
 
-/datum/transport_controller/linear/tram/proc/notify_controller(obj/machinery/icts/tram_controller/new_cabinet)
+/datum/transport_controller/linear/tram/proc/notify_controller(obj/machinery/transport/tram_controller/new_cabinet)
 	paired_cabinet = new_cabinet
 	RegisterSignal(new_cabinet, COMSIG_MACHINERY_POWER_LOST, PROC_REF(power_lost))
 	RegisterSignal(new_cabinet, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(power_restored))
@@ -624,7 +624,7 @@
 	travel_trip_length = travel_remaining
 	destination_platform = push_destination
 	// Don't bother processing crossing signals, where this tram's going there are no signals
-	//for(var/obj/machinery/icts/crossing_signal/xing as anything in SStransport.crossing_signals)
+	//for(var/obj/machinery/transport/crossing_signal/xing as anything in SStransport.crossing_signals)
 	//	xing.temp_malfunction()
 	priority_announce("In a turn of rather peculiar events, it appears that [GLOB.station_name] has struck an immovable rod. (Don't ask us where it came from.) This has led to a station brakes failure on one of the tram platforms.\n\n\
 		Our diligent team of engineers have been informed and they're rushing over - although not quite at the speed of our recently flying tram.\n\n\
@@ -638,7 +638,7 @@
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
  */
-/obj/machinery/icts/tram_controller
+/obj/machinery/transport/tram_controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something."
 	icon = 'icons/obj/tram/tram_controllers.dmi'
@@ -659,7 +659,7 @@
 	/// If the cover is locked
 	var/cover_locked = FALSE
 
-/obj/machinery/icts/tram_controller/Initialize(mapload)
+/obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
@@ -667,17 +667,17 @@
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
  */
-/obj/machinery/icts/tram_controller/LateInitialize(mapload)
+/obj/machinery/transport/tram_controller/LateInitialize(mapload)
 	. = ..()
 	SStransport.hello(src)
 	find_controller()
 	update_appearance()
 
-/obj/machinery/icts/tram_controller/atom_break()
+/obj/machinery/transport/tram_controller/atom_break()
 	set_machine_stat(machine_stat | BROKEN)
 	..()
 
-/obj/machinery/icts/tram_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/machinery/transport/tram_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
@@ -701,14 +701,14 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/icts/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
 	if(!user.combat_mode)
 		if(weapon && istype(weapon, /obj/item/card/id) && !cover_open)
 			return try_toggle_lock(user)
 
 	return ..()
 
-/obj/machinery/icts/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(panel_open)
 		balloon_alert(user, "unsecuring...")
@@ -718,7 +718,7 @@
 			balloon_alert(user, "unsecured")
 			deconstruct()
 
-/obj/machinery/icts/tram_controller/deconstruct(disassembled = TRUE)
+/obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(disassembled)
@@ -732,7 +732,7 @@
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
  */
-/obj/machinery/icts/tram_controller/update_overlays()
+/obj/machinery/transport/tram_controller/update_overlays()
 	. = ..()
 
 	if(!cover_open)
@@ -784,7 +784,7 @@
 /**
  * Find the controller associated with the transport module the cabinet is sitting on.
  */
-/obj/machinery/icts/tram_controller/proc/find_controller()
+/obj/machinery/transport/tram_controller/proc/find_controller()
 	var/obj/structure/transport/linear/tram/tram_structure = locate() in src.loc
 	if(!tram_structure)
 		return
@@ -799,13 +799,13 @@
 /**
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
  */
-/obj/machinery/icts/tram_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
+/obj/machinery/transport/tram_controller/proc/sync_controller(source, controller, controller_status, travel_direction, destination_platform)
 	use_power(active_power_usage)
 	if(controller != controller_datum)
 		return
 	update_appearance()
 
-/obj/machinery/icts/tram_controller/attack_hand_secondary(mob/living/user, params)
+/obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
 
 	if(cover_locked)
@@ -819,7 +819,7 @@
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/icts/tram_controller/proc/try_toggle_lock(mob/living/user, item, params)
+/obj/machinery/transport/tram_controller/proc/try_toggle_lock(mob/living/user, item, params)
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(obj_flags & EMAGGED)
 		balloon_alert(user, "access controller damaged!")
@@ -835,7 +835,7 @@
 		balloon_alert(user, "access denied")
 		return FALSE
 
-/obj/machinery/icts/tram_controller/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/transport/tram_controller/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		balloon_alert(user, "already fried!")
 		return FALSE
@@ -848,7 +848,7 @@
 /**
  * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
  */
-/obj/machinery/icts/tram_controller/try_fix_machine(obj/machinery/icts/machine, mob/living/user, obj/item/tool)
+/obj/machinery/transport/tram_controller/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)
 	. = ..()
 
 	if(. == FALSE)
@@ -857,9 +857,14 @@
 	if(!controller_datum)
 		return
 
-	controller_datum.end_malf_event()
+	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
+	if(malfunction_event)
+		controller_datum.end_malf_event()
 
-/obj/machinery/icts/tram_controller/ui_interact(mob/user, datum/tgui/ui)
+	if(controller_datum.controller_status & COMM_ERROR)
+		controller_datum.set_status_code(COMM_ERROR, FALSE)
+
+/obj/machinery/transport/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
 	if(!cover_open && !issilicon(user))
@@ -873,13 +878,13 @@
 		ui = new(user, src, "TramController")
 		ui.open()
 
-/obj/machinery/icts/tram_controller/ui_status(mob/user)
+/obj/machinery/transport/tram_controller/ui_status(mob/user)
 	if(!allowed(user))
 		return UI_UPDATE
 
 	return ..()
 
-/obj/machinery/icts/tram_controller/ui_data(mob/user)
+/obj/machinery/transport/tram_controller/ui_data(mob/user)
 	var/list/data = list()
 
 	data = list(
@@ -896,13 +901,13 @@
 
 	return data
 
-/obj/machinery/icts/tram_controller/ui_static_data(mob/user)
+/obj/machinery/transport/tram_controller/ui_static_data(mob/user)
 	var/list/data = list()
 	data["destinations"] = SStransport.detailed_destination_list(controller_datum.specific_transport_id)
 
 	return data
 
-/obj/machinery/icts/tram_controller/ui_act(action, params)
+/obj/machinery/transport/tram_controller/ui_act(action, params)
 	. = ..()
 	if (.)
 		return
@@ -952,5 +957,5 @@
 	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "controller-panel"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
-	result_path = /obj/machinery/icts/tram_controller
+	result_path = /obj/machinery/transport/tram_controller
 	pixel_shift = 16

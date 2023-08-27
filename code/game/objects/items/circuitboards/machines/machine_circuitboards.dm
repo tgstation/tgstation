@@ -1353,14 +1353,14 @@
 //Tram
 /obj/item/circuitboard/machine/crossing_signal
 	name = "Crossing Signal"
-	build_path = /obj/machinery/icts/crossing_signal
+	build_path = /obj/machinery/transport/crossing_signal
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 	)
 
 /obj/item/circuitboard/machine/guideway_sensor
 	name = "Guideway Sensor"
-	build_path = /obj/machinery/icts/guideway_sensor
+	build_path = /obj/machinery/transport/guideway_sensor
 	req_components = list(
 		/obj/item/assembly/prox_sensor = 1,
 	)
