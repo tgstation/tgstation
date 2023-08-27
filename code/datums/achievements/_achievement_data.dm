@@ -75,6 +75,7 @@
 		A.on_unlock(user) //Only on default achievement, as scores keep going up.
 	else if(istype(A, /datum/award/score))
 		data[achievement_type] += value
+	update_static_data(user)
 
 ///Getter for the status/score of an achievement
 /datum/achievement_data/proc/get_achievement_status(achievement_type)
@@ -94,34 +95,30 @@
 		ui = new(user, src, "Achievements")
 		ui.open()
 
-/datum/achievement_data/ui_data(mob/user)
-	var/ret_data = list() // screw standards (qustinnus you must rename src.data ok)
-	ret_data["categories"] = list("Bosses", "Jobs", "Misc", "Mafia", "Scores")
-	ret_data["achievements"] = list()
-	ret_data["user_key"] = user.ckey
+/datum/achievement_data/ui_static_data(mob/user)
+	. = ..()
+	.["categories"] = GLOB.achievement_categories
+	.["achievements"] = list()
+	.["highscore"] = list()
+	.["user_key"] = user.ckey
 
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
-	//This should be split into static data later
 	for(var/achievement_type in SSachievements.awards)
-		if(!SSachievements.awards[achievement_type].name) //No name? we a subtype.
+		var/datum/award/award = SSachievements.awards[achievement_type]
+		if(!award.name) //No name? we a subtype.
 			continue
 		if(isnull(data[achievement_type])) //We're still loading
 			continue
-		var/list/this = list(
-			"name" = SSachievements.awards[achievement_type].name,
-			"desc" = SSachievements.awards[achievement_type].desc,
-			"category" = SSachievements.awards[achievement_type].category,
-			"icon_class" = assets.icon_class_name(SSachievements.awards[achievement_type].icon),
+		var/list/award_data = list(
+			"name" = award.name,
+			"desc" = award.desc,
+			"category" = award.category,
+			"icon_class" = assets.icon_class_name(award.icon),
 			"value" = data[achievement_type],
-			"score" = ispath(achievement_type,/datum/award/score)
 			)
-		ret_data["achievements"] += list(this)
+		award_data += award.get_ui_data()
+		.["achievements"] += list(award_data)
 
-	return ret_data
-
-/datum/achievement_data/ui_static_data(mob/user)
-	. = ..()
-	.["highscore"] = list()
 	for(var/score in SSachievements.scores)
 		var/datum/award/score/S = SSachievements.scores[score]
 		if(!S.name || !S.track_high_scores || !S.high_scores.len)

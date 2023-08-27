@@ -372,3 +372,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 #undef DESC_DUAL
 #undef DESC_DELAM
 #undef DESC_TRAM
+
+#undef TREND_RISING
+#undef TREND_FALLING

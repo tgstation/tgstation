@@ -236,6 +236,15 @@
 	accessory_overlay.alpha = prime_accessory.alpha
 	accessory_overlay.color = prime_accessory.color
 
+/// Updates the accessory's worn overlay mutable appearance
+/obj/item/clothing/under/proc/update_accessory_overlay()
+	if(isnull(accessory_overlay))
+		return
+
+	cut_overlay(accessory_overlay)
+	create_accessory_overlay()
+	update_appearance() // so we update the suit inventory overlay too
+
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
 	. = ..()
 	// If one of our accessories was moved out, handle it

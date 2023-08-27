@@ -18607,7 +18607,8 @@
 	},
 /obj/structure/industrial_lift/tram,
 /obj/machinery/door/window/tram/right/directional/north{
-	pixel_y = -25
+	pixel_y = -25;
+	associated_lift = "maint_tram"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -20581,6 +20582,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/east,
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "hzK" = (
@@ -21988,7 +21990,8 @@
 /obj/structure/industrial_lift/tram,
 /obj/machinery/door/window/tram/left/directional/north{
 	pixel_x = -32;
-	pixel_y = -25
+	pixel_y = -25;
+	associated_lift = "maint_tram"
 	},
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -26875,9 +26878,8 @@
 /area/station/engineering/supermatter/room)
 "jMv" = (
 /obj/structure/industrial_lift/tram,
-/obj/effect/landmark/tram/birdshot/maint_left{
-	specific_lift_id = "maint_tram"
-	},
+/obj/effect/landmark/tram/nav/birdshot/maint,
+/obj/effect/landmark/tram/platform/birdshot/maint_left,
 /turf/open/floor/noslip/tram_plate,
 /area/station/maintenance/port/aft)
 "jMC" = (
@@ -28711,10 +28713,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "kvb" = (
-/obj/effect/landmark/tram/birdshot/sec_wing{
-	specific_lift_id = "prison_tram"
-	},
 /obj/structure/industrial_lift/tram/white,
+/obj/effect/landmark/tram/nav/birdshot/prison,
+/obj/effect/landmark/tram/platform/birdshot/sec_wing,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "kvf" = (
@@ -31602,6 +31603,7 @@
 	name = "Prison Garden"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
@@ -35628,9 +35630,7 @@
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
 "mOP" = (
-/obj/effect/landmark/tram/birdshot/prison_wing{
-	specific_lift_id = "prison_tram"
-	},
+/obj/effect/landmark/tram/platform/birdshot/prison_wing,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "mOT" = (
@@ -39687,9 +39687,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "oqS" = (
-/obj/effect/landmark/tram/birdshot/maint_right{
-	specific_lift_id = "maint_tram"
-	},
+/obj/effect/landmark/tram/platform/birdshot/maint_right,
 /turf/open/floor/noslip/tram_plate,
 /area/station/maintenance/department/medical/central)
 "oqT" = (
@@ -41545,10 +41543,11 @@
 /turf/open/floor/iron/smooth,
 /area/station/service/greenroom)
 "pca" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/maintenance/port/lesser)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/landmark/tram/nav/immovable_rod,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "pcb" = (
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 4
@@ -45633,6 +45632,11 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"qop" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "qoD" = (
 /turf/closed/wall/r_wall,
 /area/station/command/corporate_showroom)
@@ -63798,6 +63802,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"wiP" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "wiT" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/newscaster/directional/south,
@@ -71056,6 +71065,10 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"yhE" = (
+/obj/effect/landmark/tram/nav/immovable_rod,
+/turf/closed/wall,
+/area/station/maintenance/port/aft)
 "yhF" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -85118,7 +85131,7 @@ uAi
 fEC
 rui
 qVP
-blb
+qop
 xkt
 nKf
 mVt
@@ -85375,7 +85388,7 @@ xjU
 fEC
 kJJ
 qVP
-blb
+wiP
 xkt
 kJp
 pJx
@@ -85621,7 +85634,7 @@ tdg
 wBm
 wXk
 bVv
-xOS
+pca
 rQC
 von
 vRe
@@ -85632,7 +85645,7 @@ tAu
 fEC
 rui
 qVP
-pca
+rui
 qVP
 llW
 llW
@@ -87732,7 +87745,7 @@ trp
 trp
 trp
 trp
-trp
+yhE
 trp
 trp
 trp

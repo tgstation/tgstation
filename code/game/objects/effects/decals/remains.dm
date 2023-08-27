@@ -37,7 +37,7 @@
 
 	if(iscarbon(tomb_raider))
 		var/mob/living/carbon/nearby_carbon = tomb_raider
-		if (nearby_carbon.m_intent != MOVE_INTENT_WALK || prob(15))
+		if (nearby_carbon.move_intent != MOVE_INTENT_WALK || prob(15))
 			release_smoke(nearby_carbon)
 			COOLDOWN_START(src, gas_cooldown, rand(20 SECONDS, 2 MINUTES))
 
