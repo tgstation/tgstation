@@ -2092,6 +2092,7 @@
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
 	boost_item_paths = list(
+		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
