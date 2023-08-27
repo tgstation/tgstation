@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { LabeledList, NoticeBox, Section, Stack } from '../components';
+import { Button, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CryopodConsole = (props, context) => {
@@ -20,6 +20,9 @@ export const CryopodConsole = (props, context) => {
           </Stack.Item>
           <Stack.Item grow>
             <CrewList />
+          </Stack.Item>
+          <Stack.Item grow>
+            <ItemList />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -43,5 +46,31 @@ const CrewList = (props, context) => {
         </LabeledList>
       </Section>
     )) || <NoticeBox>No stored crew!</NoticeBox>
+  );
+};
+
+const ItemList = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { item_ref_list, item_ref_name, item_retrieval_allowed } = data;
+  if (!item_retrieval_allowed) {
+    return <NoticeBox>You are not authorized for item management.</NoticeBox>;
+  }
+  return (
+    (item_ref_list.length && (
+      <Section fill scrollable>
+        <LabeledList>
+          {item_ref_list.map((item) => (
+            <LabeledList.Item key={item} label={item_ref_name[item]}>
+              <Button
+                icon="exclamation-circle"
+                content="Retrieve"
+                color="bad"
+                onClick={() => act('item_get', { item_get: item })}
+              />
+            </LabeledList.Item>
+          ))}
+        </LabeledList>
+      </Section>
+    )) || <NoticeBox>No stored items!</NoticeBox>
   );
 };

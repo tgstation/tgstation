@@ -65,6 +65,7 @@
 	if(length(laser_effects))
 		destroy_lasers()
 	blocked_objects = null
+
 /obj/machinery/power/transmission_laser/proc/get_back_turf()
 	//this is weird as i believe byond sets the bottom left corner as the source corner like
 	// x-x-x
