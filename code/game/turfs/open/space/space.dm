@@ -62,6 +62,9 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	if(SSmapping.max_plane_offset)
 		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 
+	if(!SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT))
+		space_lit = TRUE
+
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
 		// Intentionally not add_overlay for performance reasons.
@@ -120,8 +123,8 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 
 /// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
-	//set_light(l_color = GLOB.starlight_color, l_on = TRUE)
-	return
+	if(space_lit)
+		set_light(l_color = GLOB.starlight_color, l_on = TRUE)
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

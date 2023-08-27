@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	return ..()
 
 /datum/controller/subsystem/outdoor_effects/proc/fullPlonk()
-	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
 		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
 			var/area/TArea = T.loc
 			if (TArea.static_lighting)
@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	fire(FALSE, TRUE)
 
 	var/daylight = FALSE
-	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
 		if(SSmapping.level_trait(z, ZTRAIT_DAYCYCLE))
 			daylight = TRUE
 			continue
@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/outdoor_effects/proc/InitializeTurfs(list/targets)
-	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
 		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
 			var/area/TArea = T.loc
 			if (TArea.static_lighting || istype(TArea, /area/space))
