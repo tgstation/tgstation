@@ -1,0 +1,4 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - balance: "Damaging synchronous mesh blobs now incorporates damage resistance of other blob structures when dealing shared damage to those nearby."
