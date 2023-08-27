@@ -220,7 +220,7 @@
  * Funny internals
  */
 /obj/item/tank/internals/emergency_oxygen/engi/clown
-	name = "funny oxygen tank"
+	name = "funny emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen with an extra of a funny gas, so try to conserve it until you actually need it."
 	icon_state = "emergency_clown"
 	inhand_icon_state = "emergency_clown"
