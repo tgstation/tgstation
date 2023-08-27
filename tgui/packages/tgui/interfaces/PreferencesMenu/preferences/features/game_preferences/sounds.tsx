@@ -84,7 +84,7 @@ export const sound_elevator: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_achievement: FeatureToggle = {
+export const sound_achievement: FeatureChoiced = {
   name: 'Achievement unlock sound',
   category: 'SOUND',
   description: multiline`
