@@ -41,6 +41,10 @@
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
 
+	// If our nuke_ops_species pref is set to TRUE, (or we have no client) make us a human
+	if(!operative.client || operative.client.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
+		operative.set_species(/datum/species/human)
+
 	if(is_species(operative, /datum/species/plasmaman))
 		operative.equipOutfit(plasmaman_outfit)
 	else

@@ -440,5 +440,6 @@
 /obj/item/clothing/head/helmet/space/plasmaman/syndie
 	name = "tacticool envirosuit helmet"
 	desc = "There's no doubt about it, this helmet puts you above ALL of the other plasmamen. If you see another plasmaman wearing a helmet like this, it's either because they're a fellow badass, \
-	or they've murdered one of your fellow badasses and have taken it from them as a trophy. Either way, anyone wearing this deserves at least a cursory nod of respect."
+		or they've murdered one of your fellow badasses and have taken it from them as a trophy. Either way, anyone wearing this deserves at least a cursory nod of respect."
 	icon_state = "syndie_envirohelm"
+	inhand_icon_state = null
