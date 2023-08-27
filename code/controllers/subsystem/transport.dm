@@ -120,7 +120,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		current_attempt = 0
 
 	if(current_attempt >= 4)
-		halt_and_catch_fire(transport_controller)
+		transport_controller.halt_and_catch_fire()
 		return
 
 	current_attempt++
@@ -131,14 +131,6 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		return
 	else
 		transport_controller.dispatch_transport()
-
-/datum/controller/subsystem/processing/transport/proc/halt_and_catch_fire(datum/transport_controller/linear/tram/transport_controller)
-	transport_controller.travel_remaining = 0
-	transport_controller.set_active(FALSE)
-	transport_controller.set_status_code(SYSTEM_FAULT, TRUE)
-	message_admins("TRANSPORT: Transport Controller Failed!")
-	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
-		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
 
 /datum/controller/subsystem/processing/transport/proc/detailed_destination_list(specific_transport_id)
 	. = list()

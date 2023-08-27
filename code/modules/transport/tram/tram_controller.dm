@@ -212,10 +212,7 @@
  * These will eventually be passed to the transport modules as args telling them where to move.
  * We do some sanity checking in case of discrepencany between where the subsystem thinks the
  * tram is and where the tram actually is. (For example, moving the landmarks after round start.)
- *
- * TODO: the message_admins is just for debugging. remove before PRing. ideally the tram will
- * self-recover with the SYSTEM_FAULT operational status if it finds a mismatch between subsystem
- * and controller.
+
  */
 /datum/transport_controller/linear/tram/proc/calculate_route(obj/effect/landmark/icts/nav_beacon/tram/destination)
 	if(destination == idle_platform)
@@ -349,6 +346,10 @@
 		module.estop_throw(throw_direction)
 
 /datum/transport_controller/linear/tram/proc/halt_and_catch_fire()
+	if(controller_status & SYSTEM_FAULT)
+		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller error. Please contact your engineering department.")
+
 	if(travel_remaining)
 		travel_remaining = 0
 		var/throw_direction = travel_direction
@@ -378,6 +379,8 @@
 	var/reset_beacon = closest_nav_in_travel_dir(nav_beacon, tram_velocity_sign, specific_transport_id)
 
 	if(!reset_beacon)
+		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller reset failed. Contact manufacturer.") // If you screwed up the tram this bad, I don't even
 		return
 
 	travel_direction = get_dir(nav_beacon, reset_beacon)
@@ -502,7 +505,6 @@
  * Tram malfunction random event. Set comm error, increase tram lethality.
  */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
-	set_status_code(SYSTEM_FAULT, TRUE)
 	set_status_code(COMM_ERROR, TRUE)
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
 	paired_cabinet.generate_repair_signals()

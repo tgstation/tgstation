@@ -446,10 +446,10 @@
 	SIGNAL_HANDLER
 
 	var/spoiler_direction = travel_direction
-	if(obj_flags & EMAGGED || controller_status & SYSTEM_FAULT)
-		do_sparks(3, cardinal_only = FALSE, source = src)
+	if(obj_flags & EMAGGED || controller_status & COMM_ERROR)
 		if(!deployed)
 			// Bring out the blades
+			do_sparks(3, cardinal_only = FALSE, source = src)
 			deploy_spoiler()
 		return
 
