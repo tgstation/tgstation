@@ -894,9 +894,11 @@
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
 
+/*
 /area/station/solars/Initialize(mapload)
 	. = ..()
 	set_base_lighting(new_base_lighting_color = GLOB.starlight_color, new_alpha = 255)
+*/
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"

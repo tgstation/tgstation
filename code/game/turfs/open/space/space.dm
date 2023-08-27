@@ -25,7 +25,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	light_inner_range = 0.1
 	light_outer_range = 4
 	light_falloff_curve = 5
-	space_lit = TRUE
+	//space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
@@ -120,7 +120,8 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 
 /// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
-	set_light(l_color = GLOB.starlight_color, l_on = TRUE)
+	//set_light(l_color = GLOB.starlight_color, l_on = TRUE)
+	return
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

@@ -214,7 +214,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	COOLDOWN_START(src, time_left, weather_duration)
 	weather_start_time = world.time
 	running = TRUE
-	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
+	addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 	weather_warnings()
 	if(particle_effect_type)
 		SSparticle_weather.set_particle_effect(new particle_effect_type);
@@ -247,7 +247,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 		messaged_mobs = list()
 
 	if(severity_steps_taken < severity_steps && as_step)
-		addtimer(CALLBACK(src, .proc/change_severity), weather_duration / severity_steps)
+		addtimer(CALLBACK(src, PROC_REF(change_severity)), weather_duration / severity_steps)
 
 /datum/particle_weather/proc/wind_down()
 	severity = 0
@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 		SSparticle_weather.particle_effect.animate_severity(severity_mod())
 
 		//Wait for the last particle to fade, then qdel yourself
-		addtimer(CALLBACK(src, .proc/end), SSparticle_weather.particle_effect.lifespan + SSparticle_weather.particle_effect.fade)
+		addtimer(CALLBACK(src, PROC_REF(end)), SSparticle_weather.particle_effect.lifespan + SSparticle_weather.particle_effect.fade)
 
 /datum/particle_weather/proc/end()
 	running = FALSE
