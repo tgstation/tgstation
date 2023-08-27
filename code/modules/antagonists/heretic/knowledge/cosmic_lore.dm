@@ -99,7 +99,7 @@
 		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that \
 		deals a bit of fire damage and damages the cells. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
-	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
+	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \ My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
 	next_knowledge = list(/datum/heretic_knowledge/spell/star_blast)
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
@@ -127,7 +127,7 @@
 		The combo is reset after two seconds without making an attack, \
 		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
 		a cosmic trail and increase your combo timer up to ten seconds."
-	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
+	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \ The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
 	route = PATH_COSMIC
 	/// Storage for the second target.
@@ -222,7 +222,7 @@
 		The Star Gazer is a strong ally who can even break down reinforced walls. \
 		The Star Gazer has an aura that will heal you and damage opponents. \
 		Star Touch can now teleport you to the Star Gazer when activated in your hand."
-	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. I clung on to them, they would protect me, and I would protect it. I closed my eyes with my head laid against their form. I was safe. WITNESS MY ASCENSION!"
+	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \ I clung on to them, they would protect me, and I would protect it. I closed my eyes with my head laid against their form. I was safe. \ WITNESS MY ASCENSION!"
 	route = PATH_COSMIC
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(
