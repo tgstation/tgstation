@@ -20,9 +20,33 @@
 	/// Weakref to the tram we're attached
 	var/datum/weakref/tram_ref
 	var/retry_counter
-	/// Are the doors in a malfunctioning state (dangerous)
-	var/malfunctioning = FALSE
 	bound_width = 64
+
+/**
+ * Generates the airlock's wire layout.
+ */
+/obj/machinery/door/airlock/tram/get_wires()
+	return new /datum/wires/airlock/tram(src)
+
+/datum/wires/airlock/tram
+	dictionary_key = /datum/wires/airlock/tram
+	proper_name = "Tram Door"
+
+/datum/wires/airlock/tram/New(atom/holder)
+	. = ..()
+	wires = list(
+		WIRE_AI,
+		WIRE_BACKUP1,
+		WIRE_BACKUP2,
+		WIRE_OPEN,
+		WIRE_POWER1,
+		WIRE_POWER2,
+		WIRE_SAFETY,
+		WIRE_SHOCK,
+		WIRE_ZAP1,
+		WIRE_ZAP2,
+	)
+	add_duds(2)
 
 /obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
@@ -82,8 +106,8 @@
 		return FALSE
 	if(density)
 		return TRUE
-	var/hungry_door = (forced == BYPASS_DOOR_CHECKS || malfunctioning)
-	if((obj_flags & EMAGGED) || malfunctioning)
+	var/hungry_door = (forced == BYPASS_DOOR_CHECKS || !safe)
+	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
 		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	use_power(50)

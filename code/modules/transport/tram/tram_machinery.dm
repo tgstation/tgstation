@@ -57,6 +57,8 @@
 					say("The tram is tramversing the station, please wait.")
 				if(PLATFORM_DISABLED)
 					say("The tram is set to skip this platform.")
+				if(INTERNAL_ERROR)
+					say("Tram controller error. Please contact the nearest engineer.")
 				if(NO_CALL_REQUIRED) //already here
 					say("The tram is already here. Please board the tram and select a destination.")
 				else

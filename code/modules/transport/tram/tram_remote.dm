@@ -142,7 +142,5 @@
 
 	update_appearance()
 
-#undef TRAMCTRL_INBOUND
-#undef TRAMCTRL_OUTBOUND
 #undef TRAMCTRL_FAST
 #undef TRAMCTRL_SAFE

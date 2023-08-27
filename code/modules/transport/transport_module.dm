@@ -40,6 +40,9 @@
 	///used so that we dont have to change the glide_size of every object every movement, which scales to cost more than you'd think
 	var/list/atom/movable/changed_gliders = list()
 
+	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the transport_controller
+	var/speed_limiter = 0.5
+
 	///master datum that controls our movement. in general /transport/linear subtypes control moving themselves, and
 	/// /datum/transport_controller instances control moving the entire tram and any behavior associated with that.
 	var/datum/transport_controller/linear/transport_controller_datum
@@ -397,13 +400,14 @@
 			for(var/mob/living/victim_living in dest_turf.contents)
 				var/damage_multiplier = victim_living.maxHealth * 0.01
 				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
-				for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
-					if(get_dist(my_spoiler, victim_living) != 1)
-						continue
+				if(speed_limiter == 0.5) // slow trams don't cause extra damage
+					for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
+						if(get_dist(my_spoiler, victim_living) != 1)
+							continue
 
-					if(my_spoiler.obj_flags & EMAGGED)
-						extra_ouch = TRUE
-						break
+						if(my_spoiler.obj_flags & EMAGGED)
+							extra_ouch = TRUE
+							break
 
 				if(transport_controller_datum.ignored_smashthroughs[victim_living.type])
 					continue
@@ -839,9 +843,6 @@
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 
-	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the transport_controller
-	var/speed_limiter = 0.5
-
 	/// Do we want this transport to link with nearby modules to make a multi-tile platform
 	create_modular_set = TRUE
 
@@ -926,6 +927,8 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
 
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
+	if(prob(50))
+		do_sparks(2, FALSE, src)
 	for(var/mob/living/passenger in transport_contents)
 		to_chat(passenger, span_bolddanger("The tram comes to a sudden, grinding stop!"))
 		var/throw_target = get_edge_target_turf(src, throw_direction)

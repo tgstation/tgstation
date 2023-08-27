@@ -136,6 +136,7 @@ export const TramController = (props, context) => {
                 minHeight={2}
                 textAlign="center"
                 content="E-Stop"
+                onClick={() => act('estop', {})}
               />
               <Button
                 icon="pause"
@@ -146,6 +147,7 @@ export const TramController = (props, context) => {
                 minHeight={2}
                 textAlign="center"
                 content="Reset"
+                onClick={() => act('reset', {})}
               />
               <Button
                 icon="play"
@@ -186,24 +188,15 @@ export const TramController = (props, context) => {
                 caused by usage of the tram.
               </NoticeBox>
               <Button
-                icon="person"
-                color="green"
+                icon="bars"
+                color="blue"
                 my={1}
                 lineHeight={2}
                 minWidth={5}
                 minHeight={2}
                 textAlign="center"
-                content="Stop for Humans"
-              />
-              <Button
-                icon="cat"
-                color="red"
-                my={1}
-                lineHeight={2}
-                minWidth={5}
-                minHeight={2}
-                textAlign="center"
-                content="Stop for Felinids"
+                content="Open Doors"
+                onClick={() => act('dopen', {})}
               />
               <Button
                 icon="bars"
@@ -213,7 +206,8 @@ export const TramController = (props, context) => {
                 minWidth={5}
                 minHeight={2}
                 textAlign="center"
-                content="Toggle Doors"
+                content="Close Doors"
+                onClick={() => act('dclose', {})}
               />
             </Section>
           </Flex.Item>

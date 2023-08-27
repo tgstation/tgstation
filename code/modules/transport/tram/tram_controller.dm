@@ -243,6 +243,10 @@
 
 /datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
 	set_status_code(PRE_DEPARTURE, FALSE)
+	if(controller_status & EMERGENCY_STOP)
+		set_status_code(EMERGENCY_STOP, FALSE)
+		speed_limiter = initial(speed_limiter)
+
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
@@ -268,6 +272,9 @@
  */
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
 	if(isnull(paired_cabinet))
+		set_status_code(SYSTEM_FAULT, TRUE)
+
+	if(controller_status & SYSTEM_FAULT || controller_status & EMERGENCY_STOP)
 		halt_and_catch_fire()
 		return PROCESS_KILL
 
@@ -316,6 +323,9 @@
 	cycle_doors(OPEN_DOORS)
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
+	if(controller_status & SYSTEM_FAULT)
+		set_status_code(SYSTEM_FAULT, FALSE)
+		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
@@ -325,6 +335,9 @@
 /datum/transport_controller/linear/tram/proc/degraded_stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	set_lights(estop = TRUE)
+	if(controller_status & SYSTEM_FAULT)
+		set_status_code(SYSTEM_FAULT, FALSE)
+		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
@@ -341,16 +354,43 @@
 		for(var/obj/structure/transport/linear/tram/module in transport_modules)
 			module.estop_throw(throw_direction)
 
+	set_lights(estop = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(cycle_doors), OPEN_DOORS), 2 SECONDS)
 	idle_platform = null
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
-	set_active(FALSE)
-	set_status_code(SYSTEM_FAULT, TRUE)
-	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
-		door.open()
+	speed_limiter = 2
+
+/datum/transport_controller/linear/tram/proc/reset_position()
+	if(idle_platform)
+		set_status_code(SYSTEM_FAULT, FALSE)
+		return
+
+	var/tram_velocity_sign
+	if(travel_direction & (NORTH|SOUTH))
+		tram_velocity_sign = travel_direction & NORTH ? OUTBOUND : INBOUND
+	else
+		tram_velocity_sign = travel_direction & EAST ? OUTBOUND : INBOUND
+
+	var/reset_beacon = closest_nav_in_travel_dir(nav_beacon, tram_velocity_sign, specific_transport_id)
+
+	if(!reset_beacon)
+		return
+
+	travel_direction = get_dir(nav_beacon, reset_beacon)
+	travel_remaining = get_dist(nav_beacon, reset_beacon)
+	travel_trip_length = travel_remaining
+	destination_platform = reset_beacon
+	cycle_doors(CLOSE_DOORS)
+	set_active(TRUE)
+	set_status_code(CONTROLS_LOCKED, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(dispatch_transport), reset_beacon), 3 SECONDS)
+
+/datum/transport_controller/linear/tram/proc/estop()
+	set_status_code(EMERGENCY_STOP, TRUE)
 
 /**
  * Handles unlocking the tram controls for use after moving
@@ -622,7 +662,7 @@
  */
 /obj/machinery/icts/tram_controller/LateInitialize(mapload)
 	. = ..()
-
+	SStransport.hello(src)
 	find_controller()
 	update_appearance()
 
@@ -709,6 +749,11 @@
 		. += emissive_appearance(icon, "fatal", src, alpha = src.alpha)
 		return
 
+	if(controller_datum.controller_status & EMERGENCY_STOP)
+		. += mutable_appearance(icon, "estop")
+		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
+		return
+
 	if(controller_datum.controller_status & DOORS_OPEN)
 		. += mutable_appearance(icon, "doors")
 		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
@@ -717,7 +762,7 @@
 		. += mutable_appearance(icon, "active")
 		. += emissive_appearance(icon, "active", src, alpha = src.alpha)
 
-	else if(controller_datum.controller_status & SYSTEM_FAULT)
+	if(controller_datum.controller_status & SYSTEM_FAULT)
 		. += mutable_appearance(icon, "fault")
 		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
 
@@ -849,6 +894,50 @@
 	data["destinations"] = SStransport.detailed_destination_list(controller_datum.specific_transport_id)
 
 	return data
+
+/obj/machinery/icts/tram_controller/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+
+	switch(action)
+		if("auto")
+			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
+			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[controller_datum.specific_transport_id])
+				if(destination.name == params["tripDestination"])
+					destination_platform = destination
+					break
+
+			if(!destination_platform)
+				return FALSE
+
+			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code)
+			update_appearance()
+
+		if("dispatch")
+			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
+			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[controller_datum.specific_transport_id])
+				if(destination.name == params["tripDestination"])
+					destination_platform = destination
+					break
+
+			if(!destination_platform)
+				return FALSE
+
+			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code)
+			update_appearance()
+
+		if("estop")
+			controller_datum.estop()
+
+		if("reset")
+			controller_datum.reset_position()
+
+		if("dclose")
+			controller_datum.cycle_doors(CLOSE_DOORS)
+
+		if("dopen")
+			controller_datum.cycle_doors(OPEN_DOORS)
 
 /obj/item/wallframe/icts/tram_controller
 	name = "tram controller cabinet"
