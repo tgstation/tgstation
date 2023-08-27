@@ -57,6 +57,10 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
 		return
 
+	if(transport_controller.controller_status & MANUAL_MODE)
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, PLATFORM_DISABLED)
+		return
+
 	if(transport_controller.controller_active) //in use
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
 		return
@@ -69,10 +73,6 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	if(!destination)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
-		return
-
-	if(!destination.platform_status == PLATFORM_ACTIVE)
-		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, PLATFORM_DISABLED)
 		return
 
 	if(transport_controller.idle_platform == destination) //did you even look?
@@ -100,7 +100,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	transport_controller.set_status_code(PRE_DEPARTURE, TRUE)
 	transport_controller.set_status_code(CONTROLS_LOCKED, TRUE)
 	transport_controller.set_lights()
-	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS) // bypass for unsafe, rapid departure
+	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS || transport_controller.controller_status & BYPASS_SENSORS) // bypass for unsafe, rapid departure
 		for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close), BYPASS_DOOR_CHECKS)
 		if(request_flags & RAPID_MODE)

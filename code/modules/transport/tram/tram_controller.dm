@@ -321,6 +321,8 @@
 	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
+		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller reset.")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
@@ -334,6 +336,8 @@
 	set_lights(estop = TRUE)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
+		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller reset.")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
@@ -368,6 +372,9 @@
 /datum/transport_controller/linear/tram/proc/reset_position()
 	if(idle_platform)
 		set_status_code(SYSTEM_FAULT, FALSE)
+		set_status_code(EMERGENCY_STOP, FALSE)
+		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller reset.")
 		return
 
 	var/tram_velocity_sign
@@ -388,7 +395,7 @@
 	travel_trip_length = travel_remaining
 	destination_platform = reset_beacon
 	speed_limiter = 1.5
-	playsound(paired_cabinet, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(paired_cabinet, 'sound/machines/ping.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Peforming controller reset... Navigating to reset point.")
 	cycle_doors(CLOSE_DOORS)
 	set_active(TRUE)
@@ -496,6 +503,8 @@
 	RegisterSignal(new_cabinet, COMSIG_QDELETING, PROC_REF(on_cabinet_qdel))
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
+		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller reset.")
 
 /datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
 	paired_cabinet = null
@@ -897,6 +906,7 @@
 		"recoveryMode" = controller_datum.recovery_mode,
 		"currentSpeed" = controller_datum.current_speed,
 		"currentLoad" = controller_datum.current_load,
+		"bypassSensors" = controller_datum.controller_status & BYPASS_SENSORS,
 	)
 
 	return data
@@ -937,6 +947,12 @@
 
 		if("dopen")
 			controller_datum.cycle_doors(OPEN_DOORS)
+
+		if("togglesensors")
+			if(controller_datum.controller_status & BYPASS_SENSORS)
+				controller_datum.set_status_code(BYPASS_SENSORS, FALSE)
+			else
+				controller_datum.set_status_code(BYPASS_SENSORS, TRUE)
 
 /obj/item/wallframe/icts/tram_controller
 	name = "tram controller cabinet"

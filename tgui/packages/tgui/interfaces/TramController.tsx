@@ -14,6 +14,7 @@ type TransportData = {
   recoveryMode: BooleanLike;
   currentSpeed: number;
   currentLoad: number;
+  bypassSensors: boolean;
   destinations: TramDestination[];
 };
 
@@ -40,6 +41,7 @@ export const TramController = (props, context) => {
     recoveryMode,
     currentSpeed,
     currentLoad,
+    bypassSensors,
     destinations = [],
   } = data;
 
@@ -50,7 +52,7 @@ export const TramController = (props, context) => {
   );
 
   return (
-    <Window title="Tram Controller" width={830} height={430} theme="dark">
+    <Window title="Tram Controller" width={695} height={330} theme="dark">
       <Window.Content>
         <Flex direction="row">
           <Flex.Item width={350} px={0.5}>
@@ -121,12 +123,11 @@ export const TramController = (props, context) => {
             </Section>
           </Flex.Item>
           <Flex.Item width={480} px={0.5}>
-            <Section title="Configuration">
-              <NoticeBox>
-                You can&apos;t cut back on Engineering. YOU WILL REGRET THIS!
-              </NoticeBox>
-            </Section>
             <Section title="Controls">
+              <NoticeBox>
+                Nanotrasen is not responsible for any injuries or fatalities
+                caused by usage of the tram.
+              </NoticeBox>
               <Button
                 icon="square"
                 color="bad"
@@ -151,13 +152,18 @@ export const TramController = (props, context) => {
               />
               <Button
                 icon="play"
-                color="blue"
+                color="green"
                 my={1}
                 lineHeight={2}
                 minWidth={5}
                 minHeight={2}
                 textAlign="center"
-                content="Start: Automatic"
+                content="Automatic"
+                onClick={() =>
+                  act('dispatch', {
+                    'tripDestination': tripDestination,
+                  })
+                }
               />
               <Button
                 icon="location-dot"
@@ -167,7 +173,7 @@ export const TramController = (props, context) => {
                 minWidth={5}
                 minHeight={2}
                 textAlign="center"
-                content="Start: Destination"
+                content="Manual: Destination"
                 onClick={() =>
                   act('dispatch', {
                     'tripDestination': tripDestination,
@@ -175,7 +181,7 @@ export const TramController = (props, context) => {
                 }
               />
               <Dropdown
-                width="100%"
+                width="99%"
                 options={destinations.map((id) => id.name)}
                 selected={tripDestination}
                 displayText={tripDestination || 'Pick a Destination'}
@@ -184,15 +190,14 @@ export const TramController = (props, context) => {
             </Section>
             <Section title="Operational">
               <NoticeBox>
-                Nanotrasen is not responsible for any injuries or fatalities
-                caused by usage of the tram.
+                You can&apos;t cut back on Engineering. YOU WILL REGRET THIS!
               </NoticeBox>
               <Button
                 icon="bars"
                 color="blue"
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={10}
                 minHeight={2}
                 textAlign="center"
                 content="Open Doors"
@@ -203,11 +208,22 @@ export const TramController = (props, context) => {
                 color="blue"
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={10}
                 minHeight={2}
                 textAlign="center"
                 content="Close Doors"
                 onClick={() => act('dclose', {})}
+              />
+              <Button
+                icon="bars"
+                color={bypassSensors ? 'good' : 'bad'}
+                my={1}
+                lineHeight={2}
+                minWidth={11}
+                minHeight={2}
+                textAlign="center"
+                content="Door Sensors"
+                onClick={() => act('togglesensors', {})}
               />
             </Section>
           </Flex.Item>
