@@ -20,11 +20,10 @@
 	if(target.z == user.z)
 		return
 	var/turf/checked_turf = get_turf(target)
-	do
-		checked_turf = checked_turf?.above()
+	while(!isnull(checked_turf))
+		checked_turf = checked_turf.above()
 		if(checked_turf?.z == user.z)
 			INVOKE_ASYNC(source, TYPE_PROC_REF(/obj/item, handle_openspace_click), checked_turf, user, user.CanReach(checked_turf, source), click_parameters)
 			break
-	while(!isnull(checked_turf))
 
 	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
