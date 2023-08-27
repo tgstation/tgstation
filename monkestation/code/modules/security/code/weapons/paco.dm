@@ -1,11 +1,11 @@
-/obj/item/gun/ballistic/automatic/pistol/paco //Sec pistol, Paco from CEV Eris.
-	name = "\improper FS HG .35 Auto \"Paco\""
+/obj/item/gun/ballistic/automatic/pistol/paco //Sec pistol, Paco(renamed to TACO) from CEV Eris.
+	name = "\improper FS HG .35 Auto \"Taco\""
 	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 and high capacity magazines."
-	icon = 'monkestation/icons/obj/guns/paco.dmi'
+	icon = 'monkestation/code/modules/security/icons/paco.dmi'
 	icon_state = "paco"
 	inhand_icon_state = "paco"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m35
 	can_suppress = FALSE
@@ -17,7 +17,7 @@
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag
 	spawnwithmagazine = FALSE
 
-//Lethal ammo for Paco.
+//Lethal ammo for Taco.
 /obj/item/ammo_casing/c35
 	name = ".35 bullet casing"
 	desc = "A .35 bullet casing."
@@ -25,9 +25,9 @@
 	projectile_type = /obj/projectile/bullet/c35
 
 /obj/item/ammo_box/magazine/m35
-	name = "\improper \"Paco\" pistol magazine (.35)"
-	desc = "A .35 pistol magazine for the Paco handgun. Consult your head of security before use."
-	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	name = "\improper \"Taco\" pistol magazine (.35)"
+	desc = "A .35 pistol magazine for the Taco handgun. Consult your head of security before use."
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "35"
 	base_icon_state = "35"
 	ammo_type = /obj/item/ammo_casing/c35
@@ -47,17 +47,17 @@
 
 /obj/item/ammo_box/c35
 	name = "ammo box (.35)"
-	desc = "An ammo box with .35 ammo for the \"Paco\" handgun. This one has a heart on it, d'awww."
-	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	desc = "An ammo box with .35 ammo for the \"Taco\" handgun. This one has a heart on it, d'awww."
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "35_ammobox"
 	ammo_type = /obj/item/ammo_casing/c35
 	max_ammo = 40
 	w_class = WEIGHT_CLASS_NORMAL
 
-//Rubber ammo for Paco.
+//Rubber ammo for Taco.
 /obj/item/ammo_box/magazine/m35/rubber
-	name = "\improper \"Paco\" pistol magazine (.35 Rubber)"
-	desc = "A .35 rubber pistol magazine for the \"Paco\" handgun. Loaded with rubber ammo for assisting in arrests."
+	name = "\improper \"Taco\" pistol magazine (.35 Rubber)"
+	desc = "A .35 rubber pistol magazine for the \"Taco\" handgun. Loaded with rubber ammo for assisting in arrests."
 	icon_state = "35r"
 	base_icon_state = "35r"
 	ammo_type = /obj/item/ammo_casing/c35/rubber
@@ -76,7 +76,7 @@
 
 /obj/item/ammo_box/c35/rubber
 	name = "ammo box (.35 Rubber)"
-	desc = "An ammo box with .35 rubber ammo for the \"Paco\" handgun."
+	desc = "An ammo box with .35 rubber ammo for the \"Taco\" handgun."
 	icon_state = "35r_ammobox"
 	ammo_type = /obj/item/ammo_casing/c35/rubber
 	max_ammo = 40
