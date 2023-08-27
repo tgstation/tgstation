@@ -31,9 +31,10 @@
 		/mob/living/simple_animal/hostile/asteroid/brimdemon,
 		/mob/living/basic/mining/bileworm
 	)
+	///What items can be used to scan a vent?
 	var/static/list/scanning_equipment = list(
 		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/amining_scanner
+		/obj/item/mining_scanner
 	)
 
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
@@ -75,7 +76,7 @@
 
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(is_type_in_list(attacking_item, ))
+	if(is_type_in_list(attacking_item, scanning_equipment))
 		if(tapped)
 			visible_message(span_notice("\the [src] has already been tapped!"))
 			return

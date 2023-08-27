@@ -188,6 +188,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
+/obj/structure/ore_box,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "by" = (
@@ -870,6 +871,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "fU" = (
@@ -1691,8 +1693,9 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
 "kx" = (
-/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/structure/table,
+/obj/item/paper/fluff/stations/lavaland/orm_notice,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -2489,13 +2492,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
-"nt" = (
-/obj/structure/table,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron/dark,
-/area/mine/production)
 "nv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -3490,11 +3486,10 @@
 /turf/open/floor/plating,
 /area/mine/storage)
 "tO" = (
-/obj/structure/table,
-/obj/item/paper/fluff/stations/lavaland/orm_notice,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/structure/table,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -4446,10 +4441,10 @@
 /area/lavaland/surface/outdoors)
 "Ac" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/ore_box,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
+/obj/machinery/computer/order_console/mining,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "Ae" = (
@@ -7124,6 +7119,7 @@
 	dir = 1
 	},
 /obj/structure/barricade/wooden/crude,
+/obj/structure/barricade/wooden,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "RV" = (
@@ -7606,6 +7602,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/structure/ore_box,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/mine/production)
 "UZ" = (
@@ -48484,7 +48481,7 @@ RY
 RY
 dQ
 Cg
-nt
+lb
 pK
 Ob
 IL
