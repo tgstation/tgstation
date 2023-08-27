@@ -603,7 +603,7 @@
 		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= new_sheets.amount
 		//send signal
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets, context)
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIEVED, new_sheets, context)
 		//now we can merge since we are done with it
 		for(var/obj/item/stack/item_stack in target)
 			if(item_stack == new_sheets || item_stack.type != material.sheet_type) //don't merge with self or different type
