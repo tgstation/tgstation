@@ -25,7 +25,6 @@
 /datum/outfit/syndicate/plasmaman
 	name = "Syndicate Operative - Basic (Plasmaman)"
 	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
-	mask = /obj/item/clothing/mask/gas/syndicate
 	uniform = /obj/item/clothing/under/plasmaman/syndicate
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 
@@ -38,7 +37,6 @@
 /datum/outfit/syndicate/leader/plasmaman
 	name = "Syndicate Leader - Basic (Plasmaman)"
 	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
-	mask = /obj/item/clothing/mask/gas/syndicate
 	uniform = /obj/item/clothing/under/plasmaman/syndicate
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 
@@ -110,7 +108,6 @@
 /datum/outfit/syndicate/reinforcement/plasmaman
 	name = "Syndicate Operative - Reinforcement (Plasmaman)"
 	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
-	mask = /obj/item/clothing/mask/gas/syndicate
 	uniform = /obj/item/clothing/under/plasmaman/syndicate
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	tc = 0

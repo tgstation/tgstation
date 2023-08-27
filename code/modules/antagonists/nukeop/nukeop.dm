@@ -50,8 +50,6 @@
 	else
 		operative.equipOutfit(nukeop_outfit)
 
-	//When you add a pref, remember to use operative.set_species(/datum/species/human)
-
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
@@ -347,7 +345,7 @@
 	show_in_antagpanel = FALSE
 	send_to_spawnpoint = FALSE
 	nukeop_outfit = /datum/outfit/syndicate/reinforcement
-	nukeop_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
+	plasmaman_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 
 /datum/team/nuclear
 	var/syndicate_name
