@@ -1,3 +1,24 @@
+/datum/storage/medicart/New()
+	.=..()
+	max_total_storage = 30
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+	max_slots = 14
+	set_holdable(list(
+				/obj/item/hemostat,
+				/obj/item/scalpel,
+				/obj/item/retractor,
+				/obj/item/circular_saw,
+				/obj/item/surgicaldrill,
+				/obj/item/cautery,
+				/obj/item/bonesetter,
+				/obj/item/surgical_drapes,
+				/obj/item/clothing/mask/surgical,
+				/obj/item/razor,
+				/obj/item/blood_filter,
+				/obj/item/stack/sticky_tape/surgical,
+				/obj/item/stack/medical/bone_gel,
+	))
+
 /obj/item/surgery_tray
 	name = "surgery tray"
 	desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
