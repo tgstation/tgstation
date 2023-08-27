@@ -244,7 +244,7 @@
 	if (victim)
 		UnregisterSignal(victim, COMSIG_LIVING_DOORCRUSHED)
 	if (new_victim)
-		RegisterSignal(victim, COMSIG_LIVING_DOORCRUSHED, PROC_REF(door_crush))
+		RegisterSignal(new_victim, COMSIG_LIVING_DOORCRUSHED, PROC_REF(door_crush))
 
 	return ..()
 
