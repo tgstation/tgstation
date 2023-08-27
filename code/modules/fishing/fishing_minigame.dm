@@ -38,6 +38,50 @@
 
 	var/experience_multiplier = 1
 
+	/// How much space the fish takes on the minigame slider
+	var/fish_height
+	/// How much space the bait takes on the minigame slider
+	var/bait_height
+	/// The position of the fish on the minigame slider
+	var/fish_position
+	/// The position of the bait on the minigame slider
+	var/bait_position
+	/// The current speed the fish is moving at
+	var/fish_velocity
+	/// The current speed the bait is moving at
+	var/bait_velocity
+
+	/// The completion score. If it reaches 100, it's a win. If it reaches 0, it's a loss.
+	var/completion
+	/// How much completion is lost per second when the bait area is not intersecting with the fish's
+	var/completion_loss
+	/// How much completion is gained per second when the bait area is intersecting with the fish's
+	var/completion_gain
+
+	/// How likely the fish is to perform a standard jump
+	var/short_jump_chance_per_second
+	/// How likely the fish is to perform a long jump
+	var/long_jump_chance_per_second
+	/// The speed limit for the short jump
+	var/short_jump_velocity_limit = 400
+	/// The speed limit for the long jump
+	var/long_jump_velocity_limit = 200
+	/// The current speed limit used
+	var/current_velocity_limit = 200
+	/// A position on the slider the fish wants to get to
+	var/target_position
+	/// If true, the fish can jump while a target position is set, thus overriding it
+	var/can_interrupt_move
+
+	/// Whether the bait is idle or reeling up or down (left and right click)
+	var/reeling_state
+	/// The acceleration of the bait while not reeling
+	var/gravity_velocity = -1000
+	/// The acceleration of the bait while reeling
+	var/reeling_velocity = 1500
+	/// By how much the bait recoils back when hitting the bounds of the slider while idle
+	var/bounce_coeff = 0.6
+
 /datum/fishing_challenge/New(datum/component/fishing_spot/comp, reward_path, obj/item/fishing_rod/rod, mob/user)
 	src.user = user
 	src.reward_path = reward_path
