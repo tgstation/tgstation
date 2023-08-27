@@ -112,7 +112,6 @@
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
-			say("no processable materials found!")
 			boulders_concurrent-- //We count skipped boulders
 			remove_boulder(boulder)
 			continue
@@ -185,7 +184,7 @@
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	use_power(100)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
-	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM,)
+	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
 	balloon_alert_to_viewers("Boulder processed!")
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)

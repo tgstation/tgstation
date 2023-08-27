@@ -129,10 +129,12 @@
 	desc = "A puddle of radioactive waste."
 	light_power = 1
 	beauty = -300
+	clean_type = CLEAN_TYPE_ACID
 	decal_reagent = /datum/reagent/toxin/acid/industrial_waste
 
 /obj/effect/decal/cleanable/greenglow/waste/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	visible_message(span_warning("\The [src] begins corroding the floor!"))
 	addtimer(CALLBACK(src, PROC_REF(eat_floor)), 45 SECONDS)
 
 /obj/effect/decal/cleanable/greenglow/waste/proc/eat_floor()
@@ -141,7 +143,7 @@
 		return
 	var/turf/open/splash_floor = splashed_turf
 	splash_floor.ScrapeAway(flags = CHANGETURF_IGNORE_AIR) //Eat away the floor
-	visible_message("The waste eats away at the floor, leaving \the [get_turf(src)] behind.")
+	visible_message(span_warning("The waste eats away at the floor, leaving \the [get_turf(src)] behind."))
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"

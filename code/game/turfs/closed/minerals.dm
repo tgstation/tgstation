@@ -24,13 +24,14 @@
 	var/turf/open/floor/plating/turf_type = /turf/open/misc/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
 	var/mineralAmt = 3
-	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
+	///Holder for the image we display when we're pinged by a mining scanner
+	var/scan_state = ""
 	var/defer_change = 0
-	// If true you can mine the mineral turf without tools.
+	/// If true you can mine the mineral turf without tools.
 	var/weak_turf = FALSE
-	///How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
+	/// How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
 	var/tool_mine_speed = 4 SECONDS
-	///How long it takes to mine this turf without tools, if it's weak.
+	/// How long it takes to mine this turf without tools, if it's weak.
 	var/hand_mine_speed = 15 SECONDS
 
 
@@ -78,6 +79,10 @@
 		var/obj/item/stack/ore/the_ore = ore_type
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
+	if(ispath(ore_type, /obj/item/boulder))
+		//var/obj/item/boulder/the_boulder = ore_type //see todo
+		scan_state = "rock_Boulder" //Yes even the lowly boulder has a scan state
+		//Todo: MineralType can't handle boulders...
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)

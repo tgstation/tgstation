@@ -75,6 +75,9 @@
 	if(!user.Adjacent(src))
 		return
 	durability--
+	if(ishuman(user))
+		var/mob/living/carbon/human/miner = user
+		miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 	if(durability <= 0)
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
 		playsound(src, 'sound/effects/rock_break.ogg', 50)
@@ -94,34 +97,27 @@
 	for(var/datum/material/picked in custom_materials)
 		/// Take the associated value and convert it into ore stacks, but less resources than if they processed it.
 		say("[picked?.name] is inside!")
+		var/obj/item/stack/ore/cracked_ore
 		switch(picked.type)
 			if(/datum/material/iron)
-				new /obj/item/stack/ore/iron(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/iron(drop_location(), 1)
 			if(/datum/material/gold)
-				new /obj/item/stack/ore/gold(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/gold(drop_location(), 1)
 			if(/datum/material/silver)
-				new /obj/item/stack/ore/silver(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/silver(drop_location(), 1)
 			if(/datum/material/plasma)
-				new /obj/item/stack/ore/plasma(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/plasma(drop_location(), 1)
 			if(/datum/material/diamond)
-				new /obj/item/stack/ore/diamond(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/diamond(drop_location(), 1)
 			if(/datum/material/glass)
-				new /obj/item/stack/ore/glass/basalt(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/glass/basalt(drop_location(), 1)
 			if(/datum/material/bluespace)
-				new /obj/item/stack/ore/bluespace_crystal(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/bluespace_crystal(drop_location(), 1)
 			if(/datum/material/titanium)
-				new /obj/item/stack/ore/titanium(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/titanium(drop_location(), 1)
 			if(/datum/material/uranium)
-				new /obj/item/stack/ore/uranium(drop_location(), 1)
-				continue
+				cracked_ore = new /obj/item/stack/ore/uranium(drop_location(), 1)
+		SSblackbox.record_feedback("tally", "ore_mined", 1, cracked_ore)
 
 /obj/item/boulder/proc/can_get_processed()
 	if(COOLDOWN_FINISHED(src, processing_cooldown))
@@ -155,16 +151,26 @@
 /obj/item/boulder/artifact
 	name = "artifact boulder"
 	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
+	icon_state = "boulder_artifact"
 	var/artifact_type = /obj/item/relic
+	/// References to the relic inside the boulder, if any.
+	var/obj/item/artifact_inside
 
 /obj/item/boulder/artifact/Initialize(mapload)
 	. = ..()
-	new artifact_type(src) /// This could be poggers for archaeology
+	artifact_inside = new artifact_type(src) /// This could be poggers for archaeology
+
+/obj/item/boulder/artifact/Destroy(force)
+	. = ..()
+	artifact_inside.forceMove(drop_location())
+	artifact_inside = null
 
 /obj/item/boulder/artifact/convert_to_ore()
 	. = ..()
-	visible_message(src, "The boulder crumbles into ore, but something else is inside... \a [artifact_type]?")
-	new artifact_type(drop_location())
+	// visible_message(src, "The boulder crumbles into ore, but something else is inside... \a [artifact_type]?")
+	artifact_inside.forceMove(drop_location())
+	artifact_inside = null
+
 
 /obj/item/boulder/gulag
 	name = "boulder"
@@ -183,9 +189,15 @@
 	. = ..()
 	add_gulag_minerals()
 
+/**
+ * Unique proc for gulag boulders, which adds a random amount of minerals to the boulder.
+ */
 /obj/item/boulder/gulag/proc/add_gulag_minerals()
-	var/datum/material/materials = pick_weight(pick_minerals)
-	custom_materials[materials] = SHEET_MATERIAL_AMOUNT
+	var/datum/material/new_material = pick_weight(pick_minerals)
+	var/list/new_mats = list()
+	new_mats += new_material
+	new_mats[new_material] = SHEET_MATERIAL_AMOUNT //We only want one sheet of material in the gulag boulders
+	set_custom_materials(new_mats)
 
 /obj/item/boulder/gulag/volcanic
 	pick_minerals = list(

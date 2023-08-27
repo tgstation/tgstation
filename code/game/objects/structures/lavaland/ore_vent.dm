@@ -1,7 +1,6 @@
 #define MAX_ARTIFACT_ROLL_CHANCE 10
 
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
-#define MINERAL_TYPE_OPTIONS_BOSS 8
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -20,8 +19,9 @@
 	var/discovered = FALSE
 	/// Is this type of vent exempt from the 15 vent limit? Think the free iron/glass vent or boss vents. This also causes it to not roll for random mineral breakdown.
 	var/unique_vent = FALSE
-	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
-	var/list/mineral_breakdown = list()
+	/// What icon_state do we use when the ore vent has been tapped?
+	var/icon_state_tapped = "ore_vent_active"
+
 	/// A list of mobs that can be spawned by this vent during a wave defense event.
 	var/list/defending_mobs = list(
 		/mob/living/basic/mining/goliath,
@@ -31,6 +31,9 @@
 		/mob/living/simple_animal/hostile/asteroid/brimdemon,
 		/mob/living/basic/mining/bileworm
 	)
+
+	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
+	var/list/mineral_breakdown = list()
 	/// How many rolls on the mineral_breakdown list are made per boulder produced? EG: 3 rolls means 3 minerals per boulder, with order determining percentage.
 	var/minerals_per_boulder = 3
 	/// How many minerals are picked to be in the ore vent? These are added to the mineral_breakdown list.
@@ -39,10 +42,11 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Reference to this ore vent's NODE drone, to track wave success.
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
-	/// Percent chance that this vent will produce an artifact boulder.
-	var/artifact_chance = 0
 	/// String of ores that this vent can produce.
 	var/ore_string = ""
+
+	/// Percent chance that this vent will produce an artifact boulder.
+	var/artifact_chance = 0
 
 
 /obj/structure/ore_vent/Initialize(mapload)
@@ -51,6 +55,8 @@
 	SSore_generation.possible_vents += src
 	if(tapped)
 		SSore_generation.processed_vents += src
+		icon_state = icon_state_tapped
+		update_appearance(UPDATE_ICON_STATE)
 	. = ..()
 	///This is the part where we start processing to produce a new boulder over time.
 
@@ -161,6 +167,7 @@
 	if(node) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
+		visible_message(span_danger("\the [src] begins to produce boulders as \the [node] flies away."))
 	else
 		//Wave defense is failed, and the ore vent downgrades one tier, capping at small.
 		if(boulder_size == BOULDER_SIZE_LARGE)
@@ -171,12 +178,13 @@
 			visible_message(span_danger("\the [src] crumbles as the mining attempt fails, and the ore vent is left damaged!"))
 		else
 			visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
-		return FALSE //Band end, try again.
+		return FALSE //Bad end, try again.
 
 	for(var/potential_miner as anything in oview(5))
 		if(ishuman(potential_miner))
 			var/mob/living/carbon/human/true_miner = potential_miner
 			var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
+			true_miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
 			if(!user_id_card)
 				continue
 			if(user_id_card)
@@ -184,7 +192,7 @@
 				user_id_card.registered_account.mining_points += (point_reward_val)
 				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.escape() //Visually show the drone is done and flies away.
-	icon_state = "ore_vent_active"
+	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
 
 /**
@@ -235,7 +243,6 @@
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
 	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
-	icon_state = "ore_vent_active"
 	tapped = TRUE
 	discovered = TRUE
 	unique_vent = TRUE
@@ -277,6 +284,8 @@
 
 
 /obj/structure/ore_vent/random/icebox
+	icon_state = "ore_vent_ice"
+	icon_state_tapped = "ore_vent_ice_active"
 	defending_mobs = list(
 		/mob/living/basic/mining/ice_whelp,
 		/mob/living/basic/mining/lobstrosity,
@@ -291,7 +300,7 @@
 	desc = "An ore vent, brimming with underground ore. This one has an evil aura about it. Better be careful."
 	unique_vent = TRUE
 	boulder_size = BOULDER_SIZE_LARGE
-	mineral_breakdown = list(
+	mineral_breakdown = list( // All the riches of the world, eeny meeny boulder room.
 		/datum/material/iron = 1,
 		/datum/material/glass = 1,
 		/datum/material/plasma = 1,
@@ -342,6 +351,8 @@
 	. = ..()
 
 /obj/structure/ore_vent/boss/icebox
+	icon_state = "ore_vent_ice"
+	icon_state_tapped = "ore_vent_ice_active"
 	defending_mobs = list(
 		/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
 		/mob/living/simple_animal/hostile/megafauna/wendigo,
@@ -350,4 +361,3 @@
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM
-#undef MINERAL_TYPE_OPTIONS_BOSS

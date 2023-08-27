@@ -45,3 +45,5 @@
 #define FISHING_SKILL_EXP_PER_SECOND (SKILL_EXP_LEGENDARY / (22 MINUTES))
 ///The maximum amount of experience one can get per fishing minigame. I appreciate the effort though.
 #define FISHING_SKILL_EXP_CAP_PER_GAME (SKILL_EXP_LEGENDARY / 5)
+///The base modifier a boulder's size grants to the mining skill.
+#define MINING_SKILL_BOULDER_SIZE_XP 10

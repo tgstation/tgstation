@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(ore_generation)
 	name = "Ore_generation"
-	wait = 0.1 MINUTES
+	wait = 0.1 MINUTES //Final time will be closer to 1 minute/fire
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 	flags = SS_NO_INIT
@@ -57,13 +57,10 @@ SUBSYSTEM_DEF(ore_generation)
 		if(local_vent_count >= MAX_BOULDERS_PER_VENT)
 			continue //We don't want to be accountable for literally hundreds of unprocessed boulders for no reason.
 		var/obj/item/boulder/new_rock
-		if(current_vent.artifact_chance)
-			if(prob(current_vent.artifact_chance))
-				new_rock = new /obj/item/boulder/artifact(current_vent.loc)
-				available_boulders += new_rock
-				return
-
+		if(prob(current_vent.artifact_chance))
+			new_rock = new /obj/item/boulder/artifact(current_vent.loc)
 		new_rock = new (current_vent.loc)
+		available_boulders += new_rock
 		var/list/mats_list = current_vent.create_mineral_contents()
 		current_vent.Shake(duration = 1.5 SECONDS)
 		new_rock.set_custom_materials(mats_list)
