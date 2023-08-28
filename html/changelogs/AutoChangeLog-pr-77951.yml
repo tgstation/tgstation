@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - balance: "Pre-equipped engineering modsuit now includes emergency tether"
+  - balance: "Pre-equipped atmospherics modsuit now includes magboots"
