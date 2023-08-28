@@ -43,6 +43,8 @@
 		. += span_notice("It appears to be moving around listlessly.")
 	else
 		. += span_warning("It's moving around intelligently!")
+	if (egg_lain)
+		. += span_notice("Its reproductive equipment appears to have withered.")
 
 /// Signal Handler proc that runs on every attack and checks to see if this is a valid target for implantation. If so, it implants the egg and starts the countdown to death.
 /mob/living/basic/headslug/proc/check_and_implant(mob/living/basic/attacker, atom/target)
@@ -90,3 +92,7 @@
 /datum/ai_controller/basic_controller/headslug
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+/// Neutered version to prevent people from turning themselves into changelings with sentience potions or transformation
+/mob/living/basic/headslug/beakless
+	egg_lain = TRUE

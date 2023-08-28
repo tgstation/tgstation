@@ -64,9 +64,9 @@
 /obj/item/paper/fluff/ruins/oldstation/protosupermatter
 	name = "Supermatter Crystal Generator"
 	default_raw_text = "<b>*Supermatter Crystal Shard*</b><br><br>Modern power generation typically comes in two forms, a Fusion Generator or a Fission Generator. Fusion provides the best space to power \
-	\ntratio, and is typically seen on military or high security ships and stations, however Fission reactors require the usage of expensive, and rare, materials in its construction. \
-	Fission generators are massive and bulky, and require a large reserve of uranium to power, however they are extremely cheap to operate and oft need little maintenance once \
-	\ntoperational.<br><br>The Supermatter aims to alter this, a functional Supermatter is essentially a gas producer that generates far more radiation than Fusion or Fission \ntgenerators can ever hope to produce. "
+	ratio, and is typically seen on military or high security ships and stations, however Fission reactors require the usage of expensive and rare materials in its construction. \
+	Fission generators are massive and bulky, and require a large reserve of uranium to power, however they are extremely cheap to operate and need little maintenance once \
+	\noperational.<br><br>The Supermatter aims to alter this, a functional Supermatter is essentially a gas producer that generates far more radiation than Fusion or Fission generators can ever hope to produce. "
 
 /obj/item/paper/fluff/ruins/oldstation/protoinv
 	name = "Laboratory Inventory"

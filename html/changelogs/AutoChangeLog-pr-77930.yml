@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - rscadd: "clickdragging an autolathe changes its output direction"
