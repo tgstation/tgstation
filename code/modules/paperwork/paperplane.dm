@@ -14,6 +14,16 @@
 	var/hit_probability = 2 //%
 	var/obj/item/paper/internalPaper
 
+	//monkestation edit start
+	/// How long does getting shot in the eyes knock you down for?
+	var/knockdown_duration = 4 SECONDS
+	/// How much eye damage does it deal at minimum on eye impact?
+	var/impact_eye_damage_lower = 6
+	/// How much eye damage does it deal at maximum on eye impact?
+	var/impact_eye_damage_higher = 8
+	/// Does it get deleted when hitting anything or landing?
+	var/delete_on_impact = FALSE
+	//monkestation edit end
 /obj/item/paperplane/syndicate
 	desc = "Paper, masterfully folded in the shape of a plane."
 	throwforce = 20 //same as throwing stars, but no chance of embedding.
@@ -51,7 +61,7 @@
 	user.visible_message(span_suicide("[user] jams [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.adjust_eye_blur(12 SECONDS)
 	if(eyes)
-		eyes.apply_organ_damage(rand(6,8))
+		eyes.apply_organ_damage(rand(impact_eye_damage_lower, impact_eye_damage_higher)) //monkestation edit
 	sleep(1 SECONDS)
 	return BRUTELOSS
 
@@ -101,16 +111,26 @@
 
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
+	//monkestation edit
+	if(delete_on_impact)
+		qdel(src)
+	//monkestation edit end
 	var/mob/living/carbon/human/H = hit_atom
 	var/obj/item/organ/internal/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
 	if(prob(hit_probability))
 		if(H.is_eyes_covered())
 			return
+		//monkestation edit
+		if(delete_on_impact)
+			qdel(src)
+		//monkestation edit end
 		visible_message(span_danger("\The [src] hits [H] in the eye[eyes ? "" : " socket"]!"))
 		H.adjust_eye_blur(12 SECONDS)
-		eyes?.apply_organ_damage(rand(6,8))
-		H.Paralyze(40)
+		eyes?.apply_organ_damage(rand(impact_eye_damage_lower, impact_eye_damage_higher))
+		H.Knockdown(knockdown_duration)
 		H.emote("scream")
+		if(delete_on_impact)
+			qdel(src)
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
