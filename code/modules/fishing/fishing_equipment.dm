@@ -204,6 +204,10 @@
 	force = 5
 	throwforce = 5
 
+/obj/item/storage/toolbox/fishing/small/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //It can still hold a fishing rod
+
 /obj/item/storage/toolbox/fishing/small/PopulateContents()
 	new /obj/item/fishing_rod(src)
 	new /obj/item/fishing_hook(src)
