@@ -1,22 +1,22 @@
 /datum/storage/medicart/New()
-	.=..()
+	. = ..()
 	max_total_storage = 30
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_slots = 14
 	set_holdable(list(
-				/obj/item/hemostat,
-				/obj/item/scalpel,
-				/obj/item/retractor,
-				/obj/item/circular_saw,
-				/obj/item/surgicaldrill,
-				/obj/item/cautery,
-				/obj/item/bonesetter,
-				/obj/item/surgical_drapes,
-				/obj/item/clothing/mask/surgical,
-				/obj/item/razor,
-				/obj/item/blood_filter,
-				/obj/item/stack/sticky_tape/surgical,
-				/obj/item/stack/medical/bone_gel,
+		/obj/item/blood_filter,
+		/obj/item/bonesetter,
+		/obj/item/cautery,
+		/obj/item/circular_saw,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/hemostat,
+		/obj/item/razor,
+		/obj/item/retractor,
+		/obj/item/scalpel,
+		/obj/item/stack/medical/bone_gel,
+		/obj/item/stack/sticky_tape/surgical,
+		/obj/item/surgical_drapes,
+		/obj/item/surgicaldrill,
 	))
 
 /obj/item/surgery_tray
@@ -45,19 +45,19 @@
 
 /obj/item/surgery_tray/proc/PopulateContents()
 	var/static/list/items_inside = list(
-		/obj/item/scalpel = 1,
-		/obj/item/hemostat = 1,
-		/obj/item/retractor = 1,
-		/obj/item/circular_saw = 1,
-		/obj/item/surgicaldrill = 1,
-		/obj/item/cautery = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/surgical_drapes = 1,
-		/obj/item/clothing/mask/surgical = 1,
-		/obj/item/razor = 1,
 		/obj/item/blood_filter = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/cautery = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/clothing/mask/surgical = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/razor = 1,
+		/obj/item/retractor = 1,
+		/obj/item/scalpel = 1,
 		/obj/item/stack/medical/bone_gel = 1,
+		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/surgicaldrill = 1,
 	)
 	generate_items_inside(items_inside, src)
 
@@ -89,12 +89,16 @@
 
 /obj/item/surgery_tray/attack_self(mob/user, modifiers)
 	. = ..()
+	if(.)
+		return
 	var/turf/open/placement_turf = get_turf(user)
 	if(isgroundlessturf(placement_turf) || isclosedturf(placement_turf))
 		to_chat(user, span_warning("You can't deploy [src] here!"))
-		return
+		balloon_alert(user, "can't deploy!")
+		return TRUE
 	set_tray_mode(FALSE, user)
 	forceMove(placement_turf)
+	return TRUE
 
 /obj/item/surgery_tray/attack_hand(mob/living/user)
 	if(!user.can_perform_action(src, NEED_HANDS))
@@ -111,16 +115,16 @@
 
 /obj/item/surgery_tray/morgue/PopulateContents()
 	var/static/list/items_inside = list(
-		/obj/item/scalpel/cruel = 1,
-		/obj/item/hemostat/cruel = 1,
-		/obj/item/retractor/cruel = 1,
-		/obj/item/circular_saw = 1,
-		/obj/item/surgicaldrill = 1,
-		/obj/item/cautery/cruel = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/surgical_drapes = 1,
-		/obj/item/clothing/mask/surgical = 1,
-		/obj/item/razor = 1,
 		/obj/item/blood_filter = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/cautery/cruel = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/clothing/mask/surgical = 1,
+		/obj/item/hemostat/cruel = 1,
+		/obj/item/razor = 1,
+		/obj/item/retractor/cruel = 1,
+		/obj/item/scalpel/cruel = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/surgicaldrill = 1,
 	)
 	generate_items_inside(items_inside, src)

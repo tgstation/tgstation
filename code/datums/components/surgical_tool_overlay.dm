@@ -7,16 +7,17 @@
 	var/tray_toggled = FALSE
 
 /datum/component/surgical_tool_overlay/Initialize()
-	.=..()
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/surgical_tool_overlay/RegisterWithParent()
-	.=..()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_overlays))
 	RegisterSignal(parent, COMSIG_SURGERY_TRAY_TOGGLE, PROC_REF(toggle_tray_state))
 
 /datum/component/surgical_tool_overlay/proc/toggle_tray_state(atom/my_bag, new_state)
+	SIGNAL_HANDLER
 	tray_toggled = new_state
 
 /// Check contents for the overlays
