@@ -41,6 +41,141 @@
 	var/mode = MINEDRONE_COLLECT
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 
+/mob/living/basic/mining_drone
+	name = "\improper Nanotrasen minebot"
+	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
+	gender = NEUTER
+	icon = 'icons/mob/silicon/aibots.dmi'
+	icon_state = "mining_drone"
+	icon_living = "mining_drone"
+	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
+	mouse_opacity = MOUSE_OPACITY_ICON
+	faction = list(FACTION_NEUTRAL)
+	combat_mode = TRUE
+	habitable_atmos  = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = T0C
+	health = 125
+	maxHealth = 125
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	obj_damage = 10
+	attack_verb_continuous = "drills"
+	attack_verb_simple = "drill"
+	attack_sound = 'sound/weapons/circsawhit.ogg'
+	sentience_type = SENTIENCE_MINEBOT
+	speak_emote = list("states")
+	mob_biotypes = MOB_ROBOTIC
+//	loot = list(/obj/effect/decal/cleanable/robot_debris)
+//	del_on_death = TRUE
+	light_system = MOVABLE_LIGHT
+	light_range = 6
+	light_on = FALSE
+	var/attack_mode = FALSE
+	var/obj/item/card/id/access_card
+	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
+
+/mob/living/basic/mining_drone/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
+//	AddElement(/datum/element/wall_smasher)
+	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
+
+	stored_gun = new(src)
+	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new(src)
+	toggle_light_action.Grant(src)
+	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action = new(src)
+	toggle_meson_vision_action.Grant(src)
+	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action = new(src)
+	toggle_mode_action.Grant(src)
+	var/datum/action/innate/minedrone/dump_ore/dump_ore_action = new(src)
+	dump_ore_action.Grant(src)
+	var/obj/item/implant/radio/mining/imp = new(src)
+	imp.implant(src)
+
+	access_card = new /obj/item/card/id/advanced/gold(src)
+	SSid_access.apply_trim_to_card(access_card, /datum/id_trim/job/shaft_miner)
+
+/mob/living/basic/mining_drone/proc/toggle_behavior()
+	attack_mode = !attack_mode
+	var/functioning_mode = attack_mode ? "attack" : "collect"
+	icon_state = attack_mode ? "mining_drone_offense" : "mining_drone"
+	to_chat(src, span_info("You are set to [functioning_mode] mode."))
+
+/mob/living/basic/mining_drone/examine(mob/user)
+	. = ..()
+	if(health < maxHealth)
+		if(health >= maxHealth * 0.5)
+			. += span_warning("[p_They()] look slightly dented.")
+		else
+			. += span_boldwarning("[p_They()] look severely dented!")
+
+	. += {"<span class='notice'>Using a mining scanner on [p_them()] will instruct it to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n
+	Field repairs can be done with a welder."}
+
+	if(!stored_gun?.max_mod_capacity)
+		return
+	. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
+	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
+		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
+
+/mob/living/basic/mining_drone/welder_act(mob/living/user, obj/item/welder)
+	if(user.combat_mode)
+		return
+	. = TRUE
+	if(attack_mode)
+		to_chat(user, span_warning("[src] can't be repaired while in attack mode!"))
+		return
+
+	if(maxHealth == health)
+		to_chat(user, span_info("[src] is at full integrity."))
+		return
+
+	if(welder.use_tool(src, user, 0, volume=40))
+		adjustBruteLoss(-15)
+		to_chat(user, span_info("You repair some of the armor on [src]."))
+
+/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, params)
+	if(istype(item_used, /obj/item/mining_scanner) || istype(item_used, /obj/item/t_scanner/adv_mining_scanner))
+		to_chat(user, span_info("You instruct [src] to drop any collected ore."))
+		drop_ore()
+		return
+	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
+		item_used.melee_attack_chain(user, stored_gun, params)
+		return
+	return ..()
+
+/mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	. = ..()
+	if(!.)
+		return
+	if(!proximity_flag)
+		return
+
+	if(istype(attack_target, /obj/item/stack/ore))
+		var/obj/item/target_ore = attack_target
+		target_ore.forceMove(src)
+
+/mob/living/basic/mining_drone/proc/drop_ore()
+	if(!contents.len)
+		to_chat(src, span_warning("You attempt to dump your stored ore, but you have none!"))
+		return
+
+	to_chat(src, span_notice("You dump your stored ore."))
+	for(var/obj/dropped_item as anything in contents)
+		dropped_item.forceMove(get_turf(src))
+
+/mob/living/basic/mining_drone/proc/attempt_access(mob/drone, obj/door_attempt)
+	SIGNAL_HANDLER
+	if(door_attempt.check_access(access_card))
+		return ACCESS_ALLOWED
+	return ACCESS_DISALLOWED
+
+
+/mob/living/basic/mining_drone/Destroy()
+	QDEL_NULL(stored_gun)
+	return ..()
+
 /mob/living/simple_animal/hostile/mining_drone/Initialize(mapload)
 	. = ..()
 
@@ -61,7 +196,7 @@
 	access_card = new /obj/item/card/id/advanced/gold(src)
 	SSid_access.apply_trim_to_card(access_card, /datum/id_trim/job/shaft_miner)
 
-	SetCollectBehavior()
+//	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
 	QDEL_NULL(stored_gun)
@@ -105,10 +240,10 @@
 		adjustBruteLoss(-15)
 		to_chat(user, span_info("You repair some of the armor on [src]."))
 
-/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/item_used, mob/user, params)
+/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, params)
 	if(istype(item_used, /obj/item/mining_scanner) || istype(item_used, /obj/item/t_scanner/adv_mining_scanner))
 		to_chat(user, span_info("You instruct [src] to drop any collected ore."))
-		DropOre()
+		drop_ore()
 		return
 	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
 		item_used.melee_attack_chain(user, stored_gun, params)
@@ -146,34 +281,10 @@
 	else if(istype(mover, /obj/projectile/destabilizer))
 		return TRUE
 
-/mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
-	mode = MINEDRONE_COLLECT
-	vision_range = 9
-	search_objects = 2
-	wander = TRUE
-	ranged = FALSE
-	minimum_distance = 1
-	retreat_distance = null
-	icon_state = "mining_drone"
-	to_chat(src, span_info("You are set to collect mode. You can now collect loose ore."))
-
-/mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	mode = MINEDRONE_ATTACK
-	vision_range = 7
-	search_objects = 0
-	wander = FALSE
-	ranged = TRUE
-	retreat_distance = 2
-	minimum_distance = 1
-	icon_state = "mining_drone_offense"
-	to_chat(src, span_info("You are set to attack mode. You can now attack from range."))
-
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
 	if(istype(target, /obj/item/stack/ore) && mode == MINEDRONE_COLLECT)
 		CollectOre()
 		return
-	if(isliving(target))
-		SetOffenseBehavior()
 	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/OpenFire(atom/target)
@@ -194,12 +305,6 @@
 		to_chat(src, span_notice("You dump your stored ore."))
 	for(var/obj/item/stack/ore/O in contents)
 		O.forceMove(drop_location())
-
-/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(mode != MINEDRONE_ATTACK && amount > 0)
-		SetOffenseBehavior()
-	. = ..()
-
 /datum/action/innate/minedrone/toggle_meson_vision
 	name = "Toggle Meson Vision"
 	button_icon_state = "meson"
@@ -225,9 +330,9 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/toggle_mode()
 	switch(mode)
 		if(MINEDRONE_ATTACK)
-			SetCollectBehavior()
+//			SetCollectBehavior()
 		else
-			SetOffenseBehavior()
+//			SetOffenseBehavior()
 
 //Actions for sentient minebots
 
