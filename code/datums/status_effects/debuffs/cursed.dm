@@ -34,7 +34,7 @@
 	return ..()
 
 /// Checks the number of curses we have and returns information back to the slot machine. `max_curse_amount` is set by the slot machine itself.
-/datum/status_effect/grouped/cursed/proc/check_curses(max_curse_amount)
+/datum/status_effect/grouped/cursed/proc/check_curses(mob/user, max_curse_amount)
 	SIGNAL_HANDLER
 	if(curse_count >= max_curse_amount)
 		return SLOT_MACHINE_USE_CANCEL
