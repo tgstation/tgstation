@@ -825,7 +825,7 @@
 		return
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 50
-		to_chat(user, span_warning("You can't move while buckled to [src]!"))
+		balloon_alert(user, "can't move while buckled!")
 	return
 
 /**
