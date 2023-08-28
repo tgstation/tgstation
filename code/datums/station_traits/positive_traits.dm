@@ -351,16 +351,16 @@
 	show_in_report = TRUE
 	report_message = "Your station's medibots have recieved a hardware upgrade, enabling expanded healing capabilities."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
-	blacklist = list(/datum/station_trait/medbot_mania)
 
 /datum/station_trait/random_event_weight_modifier/shuttle_loans
 	name = "Loaner Shuttle"
-	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space to assist with special requests. Expect to recieve more shuttle loan opportunities."
+	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space to assist with special requests. Expect to recieve more shuttle loan opportunities, and slightly higher payouts."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 3
 	event_control_path = /datum/round_event_control/shuttle_loan
 	weight_multiplier = 2.5
-	max_occurrences_modifier = 5 //All but one loan event should occur over the course of a round.
+	max_occurrences_modifier = 5 //All but one loan event will occur over the course of a round.
+	trait_to_give = STATION_TRAIT_LOANER_SHUTTLE
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
