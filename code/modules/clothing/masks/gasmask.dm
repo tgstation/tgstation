@@ -191,6 +191,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's rebreather"
 	desc = "A state of the art mask, with retractable bits for easier storage and a dual purpose slot for either a gas filter or narcotics."
+	actions_types = list(/datum/action/item_action/adjust)
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	icon_state = "gas_cap"
