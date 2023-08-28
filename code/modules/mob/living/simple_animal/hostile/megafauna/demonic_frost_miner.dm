@@ -354,8 +354,8 @@ Difficulty: Extremely Hard
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
-	var/icon/size_check = icon(owner.icon, owner.icon_state)
-	cube.Scale(size_check.Width(), size_check.Height())
+	var/list/icon_dimensions = get_icon_dimensions(owner.icon)
+	cube.Scale(icon_dimensions["width"], icon_dimensions["height"])
 	owner.add_overlay(cube)
 	return ..()
 
