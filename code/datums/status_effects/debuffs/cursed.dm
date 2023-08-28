@@ -5,6 +5,8 @@
 /datum/status_effect/grouped/cursed
 	id = "cursed"
 	alert_type = /atom/movable/screen/alert/status_effect/cursed
+	remove_on_fullheal = TRUE
+	heal_flag_necessary = HEAL_ADMIN
 	/// The max number of curses a target can incur with this status effect.
 	var/max_curse_count = DEFAULT_MAX_CURSE_COUNT
 	/// The amount of times we have been "applied" to the target.
