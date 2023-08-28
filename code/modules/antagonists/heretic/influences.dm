@@ -220,6 +220,7 @@
 	RegisterSignal(on_turf, COMSIG_TURF_CHANGE, PROC_REF(replace_our_turf))
 
 /obj/effect/heretic_influence/proc/replace_our_turf(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+	SIGNAL_HANDLER
 	post_change_callbacks += CALLBACK(src, PROC_REF(replace_our_turf_two))
 	on_turf = null //hard del ref?
 
