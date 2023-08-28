@@ -106,6 +106,8 @@
 	. = ..()
 	if(.)
 		return
+	if(.)
+		return
 	var/turf/open/placement_turf = get_turf(user)
 	if(isgroundlessturf(placement_turf) || isclosedturf(placement_turf))
 		balloon_alert(user, "can't deploy!")
