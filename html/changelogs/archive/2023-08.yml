@@ -1258,3 +1258,48 @@
       VV menu
   - qol: inserting new high luminosity eyes will now properly remember the previous
       eyes' color and default to that initially
+2023-08-28:
+  Comxy:
+  - rscadd: New rotator disposal pipe.
+  - bugfix: Flipped transit tube stations are now accessible in the RPD again.
+  - image: New rotator disposal pipe sprite.
+  Das15:
+  - bugfix: Big fuel tanks' capacity is back to 5000.
+  Ghommie:
+  - bugfix: Fixed an issue with the "recolor from string" option in the greyscale
+      modify menu that resulted in invisible icons.
+  Guillaume Prata:
+  - bugfix: Unary vents have a pressure cap on both their pressuring and siphoning
+      mode now, preventing the bypass trick of putting "infinite" pressure on tiles/pipelines.
+  - balance: Overclocked Volume Pumps do not have a pressure cap anymore.
+  Jacquerel:
+  - bugfix: You can't use the bioscrambler belt to turn yourself into a changeling.
+  JohnFulpWillard:
+  - qol: Display case chassis now uses balloon alerts, screentips, examine hints,
+      etc. Basically, the construction steps are more visible to players.
+  LT3:
+  - bugfix: Using an airlock painter on a GAGS airlock works properly
+  - bugfix: Tram will no longer fly off into space when admins try to reset the contents
+  MTandi:
+  - qol: Crafting menu "Can Make" category shows complex recipes first.
+  Sealed101:
+  - bugfix: after a long 6 years, alien alloy once again unlocks the Alien Technology
+      node (the one that lets you print alien alloy)
+  Watermelon914:
+  - rscadd: Added associative list variables and associative list variable manipulation
+      for finer data manipulation and storage.
+  - rscadd: List Find components will now return the index of the element it has found.
+  distributivgesetz:
+  - rscadd: Add an achievement for saving a cascading engine from the final countdown.
+  - balance: Damaging synchronous mesh blobs now incorporates damage resistance of
+      other blob structures when dealing shared damage to those nearby.
+  mc-oofert:
+  - rscadd: clickdragging an autolathe changes its output direction
+  nikothedude:
+  - bugfix: Woundscans no longer runtime
+  - bugfix: Normal health analyzers can no longer give the first aid bonus when woundscanning
+  vinylspiders:
+  - code_imp: fixed some typos
+  - bugfix: fixes a runtime with arrow projectiles
+  xXPawnStarrXx:
+  - bugfix: fixed corn cobs not making seeds and lying to you in the text box.

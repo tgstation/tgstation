@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Display case chassis now uses balloon alerts, screentips, examine hints, etc. Basically, the construction steps are more visible to players."
