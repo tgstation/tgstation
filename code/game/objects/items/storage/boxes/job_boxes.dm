@@ -90,9 +90,9 @@
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
-	new /obj/item/crowbar/red(get_turf(user))
-	new /obj/item/screwdriver/red(get_turf(user))
-	new /obj/item/weldingtool/mini(get_turf(user))
+	new /obj/item/crowbar/red(src)
+	new /obj/item/screwdriver/red(src)
+	new /obj/item/weldingtool/mini(src)
 	new /obj/item/paper/fluff/operative(src)
 
 /obj/item/storage/box/survival/centcom
