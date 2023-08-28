@@ -1,4 +1,10 @@
 #define DOOR_CLOSE_WAIT 60 ///Default wait until doors autoclose
+
+#define CRUSH_PARALYZE_DURATION 100 // How long the crush victim is on the ground if they're crushed by a door.
+#define CRUSH_DELIMB_CHANCE 5 // 5% chance getting crushed will take off a limb
+#define CRUSH_DELIMB_KNOCKDOWN_TIME 3 SECONDS // How long someone is on the ground after getting a limb detached by a door.
+#define CRUSH_BEHEAD_CHANCE 0.01 // .01% chance getting crushed will behead the victim!
+
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
@@ -492,21 +498,65 @@
 		sleep(0.1 SECONDS)
 		open()
 
+/obj/machinery/door/proc/hurt_human(var/mob/living/carbon/victim)
+	if (prob(CRUSH_BEHEAD_CHANCE))
+		var/obj/item/bodypart/head = victim.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			victim.visible_message(span_warning("[src] closes on [victim]'s neck, beheading [victim.p_them()]!"), span_userdanger("[src] closes on your neck, beheading you!"))
+			head.dismember()
+		return // No scream happens. The victim probably didn't know what hit them...
+	else if (prob(CRUSH_DELIMB_CHANCE))
+		// The list of limbs that can possibly be removed
+		var/list/target_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG)
+
+		// Collect the list of victim's limbs that can be removed
+		var/list/valid_targets = list()
+		for (var/obj/item/bodypart/possible_target as anything in victim.bodyparts)
+			if (possible_target.bodypart_flags & BODYPART_UNREMOVABLE)
+				continue
+
+			if (!(possible_target.body_zone in target_zones))
+				continue
+			valid_targets += possible_target
+
+		// Check that at least one limb can be removed. If so pick one and, remove it.
+		if (length(valid_targets))
+			var/obj/item/bodypart/limb = pick(valid_targets)
+			limb.dismember()
+			victim.visible_message(span_warning("[src] closes on [victim]'s [limb.name], amputating it!"), span_userdanger("[src] closes on your [limb.name], amputating it!"))
+			victim.emote("scream")
+
+			// No Paralyze() call because the victim isn't being held down by the airlock. The train of thought is that
+			// they are on one side of the airlock, their detached limb is on the other. The airlock did push the person
+			// to the ground before the limb was severed though, so Knockdown is called.
+			victim.Knockdown(CRUSH_DELIMB_KNOCKDOWN_TIME)
+			return
+
+	// The victim didn't get beheaded and they didn't lose a limb. This is not in an else block
+	// so that this code can run just in case prob(CRUSH_DELIMB_CHANCE) returns true but no viable
+	// limbs could be found and removed.
+	victim.visible_message(span_warning("[src] closes on [victim], crushing [victim.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
+	victim.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+	victim.emote("scream")
+	victim.Paralyze(CRUSH_PARALYZE_DURATION)
+
 /obj/machinery/door/proc/crush()
 	for(var/turf/checked_turf in locs)
 		for(var/mob/living/future_pancake in checked_turf)
-			future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
 			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+
+			if(!ishuman(future_pancake))
+				// If the victim is not a human, always show this message. A human getting crushed is more nuanced, and they might get a different message.
+				future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
+
 			if(isalien(future_pancake))  //For xenos
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 				future_pancake.emote("roar")
 			else if(ishuman(future_pancake)) //For humans
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				future_pancake.emote("scream")
-				future_pancake.Paralyze(100)
+				hurt_human(future_pancake)
 			else if(ismonkey(future_pancake)) //For monkeys
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				future_pancake.Paralyze(100)
+				future_pancake.Paralyze(CRUSH_PARALYZE_DURATION)
 			else //for simple_animals & borgs
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				var/turf/location = get_turf(src)
