@@ -14477,7 +14477,6 @@
 	},
 /obj/machinery/light_switch/directional/west,
 /obj/item/radio/intercom/directional/north,
-/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "foP" = (
