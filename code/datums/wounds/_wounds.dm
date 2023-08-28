@@ -180,6 +180,9 @@
 /datum/wound/proc/can_be_applied_to(obj/item/bodypart/L, datum/wound/old_wound)
 	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 
+	// We assume we aren't being randomly applied - we have no reason to believe we are
+	// And, besides, if we were, you could just as easily check our pregen data rather than run this proc
+	// Generally speaking this proc is called in apply_wound, which is called when the caller is already confidant in its ability to be applied
 	return pregen_data.can_be_applied_to(L, wound_type, old_wound)
 
 /// Returns the zones we can be applied to.

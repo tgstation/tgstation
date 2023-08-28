@@ -64,7 +64,7 @@
 				playsound(human_owner, SFX_SEAR, 50, TRUE)
 				var/obj/item/bodypart/affecting = human_owner.get_active_hand()
 				branded_hand = affecting
-				affecting.force_wound_upwards(/datum/wound/burn/severe/cursed_brand, wound_source = "curse of the slot machine")
+				affecting.force_wound_upwards(/datum/wound/burn/flesh/severe/cursed_brand, wound_source = "curse of the slot machine")
 
 			messages += span_boldwarning("Your hand burns, and you quickly let go of the lever! You feel a little sick as the nerves deaden in your hand...")
 			messages += span_boldwarning("Some smoke appears to be coming out of your hand now, but it's not too bad...")
@@ -114,7 +114,7 @@
 	SIGNAL_HANDLER
 
 	if(!isnull(branded_hand))
-		var/datum/wound/brand = branded_hand.get_wound_type(/datum/wound/burn/severe/cursed_brand)
+		var/datum/wound/brand = branded_hand.get_wound_type(/datum/wound/burn/flesh/severe/cursed_brand)
 		brand?.remove_wound()
 
 	owner.visible_message(

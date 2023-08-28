@@ -85,7 +85,7 @@
 	var/list/datum/wound/possible_wounds = list()
 	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
-		if (pregen_data.can_be_applied_to(src, woundtype))
+		if (pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
 			possible_wounds += type
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))

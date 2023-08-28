@@ -20,10 +20,14 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 /// A singleton datum that holds pre-gen and static data about a wound. Each wound datum should have a corresponding wound_pregen_data.
 /datum/wound_pregen_data
+	/// The typepath of the wound we will be handling and storing data of. NECESSARY IF THIS IS A NON-ABSTRACT TYPE!
 	var/datum/wound/wound_path_to_generate
 
 	/// Will this be instantiated?
 	var/abstract = FALSE
+
+	/// If true, our wound can be selected in ordinary wound rolling. If this is set to false, our wound can only be directly instantiated by use of specific typepath.
+	var/can_be_randomly_generated = TRUE
 
 	/// A list of biostates a limb must have to receive our wound, in wounds.dm.
 	var/required_limb_biostate
@@ -55,16 +59,20 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
  * * wound_type: The type of the "wound acquisition attempt". Example: A slashing attack cannot proc a blunt wound, so wound_type = WOUND_SLASH would
  * fail if we expect WOUND_BLUNT. Defaults to the wound type we expect.
  * * datum/wound/old_wound: If we would replace a wound, this would be said wound. Nullable.
+ * * random_roll = FALSE: If this is in the context of a random wound generation, and this wound wasn't specifically checked.
  *
  * Returns:
  * FALSE if the limb cannot be wounded, if wound_type is not ours, if we have a higher severity wound already in our series,
  * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type = initial(wound_path_to_generate.wound_type), datum/wound/old_wound)
+/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type = initial(wound_path_to_generate.wound_type), datum/wound/old_wound, random_roll = FALSE)
 	SHOULD_BE_PURE(TRUE)
 
 	if (!istype(limb) || !limb.owner)
+		return FALSE
+
+	if (random_roll && !can_be_randomly_generated)
 		return FALSE
 
 	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (limb.owner.status_flags & GODMODE))

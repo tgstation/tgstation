@@ -386,6 +386,7 @@
 
 /datum/wound_pregen_data/flesh_slash/cuts
 	abstract = FALSE
+	can_be_randomly_generated = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/moderate/many_cuts
 
@@ -401,5 +402,6 @@
 
 /datum/wound_pregen_data/flesh_slash/cleave
 	abstract = FALSE
+	can_be_randomly_generated = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/critical

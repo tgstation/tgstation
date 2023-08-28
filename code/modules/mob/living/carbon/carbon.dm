@@ -1252,7 +1252,7 @@
 		else
 			for (var/datum/wound/path as anything in shuffle(GLOB.all_wound_pregen_data))
 				var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[path]
-				if (pregen_data.can_be_applied_to(scar_part))
+				if (pregen_data.can_be_applied_to(scar_part, random_roll = TRUE))
 					wound_type = path
 					break
 

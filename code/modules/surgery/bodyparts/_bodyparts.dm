@@ -520,7 +520,7 @@
 			any_existing_wound_can_mangle_our_flesh = FALSE
 			for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
 				var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
-				if (!pregen_data.can_be_applied_to(src))
+				if (!pregen_data.can_be_applied_to(src, random_roll = TRUE)) // we only consider randoms because non-randoms are usually really specific
 					continue
 				if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_FLESH)
 					any_existing_wound_can_mangle_our_flesh = TRUE
