@@ -59,6 +59,6 @@
 
 /obj/item/clothing/under/rank/cargo/miner/lavaland
 	name = "shaft miner's jumpsuit"
-	desc = "A green uniform for operating in hazardous environments."
+	desc = "A grey uniform for operating in hazardous environments."
 	icon_state = "explorer"
 	inhand_icon_state = null
