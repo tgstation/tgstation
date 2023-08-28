@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			//So miners cant spam buy crates for a very low price
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				return
-				
+
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	return FALSE
 
 /**
- * whatever type of points was retrived in retrive_points() subtract those type of points from the card upon confirming order
+ * whatever type of points was retrieved in retrive_points() subtract those type of points from the card upon confirming order
  * Args:
  * final_cost - amount of points to subtract from this card
  * card - The ID card to subtract these points from

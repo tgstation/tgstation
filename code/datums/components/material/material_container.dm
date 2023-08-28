@@ -447,7 +447,7 @@
  *
  * Arguments:
  * -[mat][datum/material] : the material type to check for 3 cases
- * a) If it's an path its ref is retrived
+ * a) If it's an path its ref is retrieved
  * b) If it's text then its an category material & there is no way to deal with it so return 0
  * c) If normal material proceeds as usual
  */
@@ -461,7 +461,7 @@
  * if this container does not support glass, any glass in 'I' will not be taken into account
  *
  * Arguments:
- * - [I][obj/item]: the item whos materials must be retrived
+ * - [I][obj/item]: the item whos materials must be retrieved
  * - breakdown_flags: how this item must be broken down to retrive its materials
  */
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I, breakdown_flags = mat_container_flags)
@@ -573,7 +573,7 @@
  * sheet_amt: number of sheets to extract
  * [material][datum/material]: type of sheets present in this container to extract
  * [target][atom]: drop location
- * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_SHEETS_RETRIVED and is used mostly for silo logging
+ * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_SHEETS_RETRIEVED and is used mostly for silo logging
  */
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null, atom/context = parent)
 	//do we support sheets of this material
@@ -597,13 +597,13 @@
 	var/count = 0
 	while(sheet_amt > 0)
 		//create sheets in null space so it doesn't merge & delete itself
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(null, min(sheet_amt, MAX_STACK_SIZE), null, list((material) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(null, min(sheet_amt, MAX_STACK_SIZE), FALSE, list((material) = SHEET_MATERIAL_AMOUNT))
 		count += new_sheets.amount
 		//use material & deduct work needed
 		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= new_sheets.amount
 		//send signal
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets, context)
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIEVED, new_sheets, context)
 		//now move to target so it gets merged
 		new_sheets.forceMove(target)
 	return count

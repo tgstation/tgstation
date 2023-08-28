@@ -32,12 +32,12 @@ This component is used in vat growing to swab for microbiological samples which 
 	src.update_icons = update_icons
 	src.update_overlays = update_overlays
 
-/datum/component/swabbing/Destroy()
-	. = ..()
+/datum/component/swabbing/Destroy(force, silent)
 	for(var/swabbed in swabbed_items)
 		qdel(swabbed)
 	update_icons = null
 	update_overlays = null
+	return ..()
 
 
 ///Changes examine based on your sample
