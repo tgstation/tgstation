@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/has_fov = TRUE
 	///Cigarette in the mask
 	var/obj/item/clothing/mask/cigarette/cig
+	///Allows the mask to fit a cigarette even if it's covering the mouth
+	var/cig_slot = FALSE
 
 /datum/armor/mask_gas
 	bio = 100
@@ -84,7 +86,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/valid_wearer = ismob(loc)
 	var/mob/wearer = loc
 	if(istype(tool, /obj/item/clothing/mask/cigarette))
-		if(flags_cover & MASKCOVERSMOUTH)
+		if(flags_cover & MASKCOVERSMOUTH & !cig_slot)
 			balloon_alert(user, "mask's mouth is covered!")
 			return ..()
 
@@ -187,11 +189,18 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/atmos/captain
-	name = "captain's gas mask"
-	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
+	name = "captain's rebreather"
+	desc = "A state of the art mask, with retractable bits for easier storage and a dual purpose slot for either a gas filter or narcotics."
+	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	icon_state = "gas_cap"
 	inhand_icon_state = "gasmask_captain"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	cig_slot = TRUE
+
+/obj/item/clothing/mask/gas/atmos/captain/ui_action_click(mob/user, action)
+	adjustmask(user)
+	playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 20, TRUE)
 
 /obj/item/clothing/mask/gas/atmos/centcom
 	name = "\improper CentCom gas mask"
