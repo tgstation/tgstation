@@ -148,7 +148,7 @@
 	switch(curse_count)
 		if(2 to 3)
 			particle_path = /particles/smoke/steam
-		if(4)
+		if(4 to INFINITY)
 			particle_path = /particles/smoke/steam/bad
 
 	if(smoke_path == particle_path)
