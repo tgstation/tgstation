@@ -160,10 +160,6 @@
 	antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE
 
-	if(!our_client.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
-		var/species_type = our_client.prefs.read_preference(/datum/preference/choiced/species)
-		nukie.set_species(species_type)
-
 	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 	antag_datum.plasmaman_outfit = plasma_outfit
 
