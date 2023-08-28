@@ -1,0 +1,4 @@
+author: "xXPawnStarrXx"
+delete-after: True
+changes:
+  - bugfix: "fixed corn cobs not making seeds and lying to you in the text box."

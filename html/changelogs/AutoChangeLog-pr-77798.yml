@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed an issue with the \"recolor from string\" option in the greyscale modify menu that resulted in invisible icons."
