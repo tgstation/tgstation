@@ -1,0 +1,5 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - rscadd: "Cargo now once again has access to a \"Cargo Shortskirt\", a skirt variant of their shorts!"
+  - image: "tweaks and adjustments to the Cargo resprite have been made, as well as respriting some missed icons such as the Winter Coats and QM Cloak"
