@@ -1,9 +1,18 @@
+/**
+ * surgery tray overlay
+ *
+ * displays surgery tools diagetically, with higher tiers appearing instead of lower tiers
+ *
+ */
+
 #define TIER_ALIEN 3
 #define TIER_ADVANCED 2
 #define TIER_CRUEL 1
 #define TIER_NORMAL 0
 
+///This component handles the placement of surgical tools based on the contents of the parent item
 /datum/component/surgical_tool_overlay
+	///This proc updates the tray datum's tray_toggled var, swapping between the lower trays's looks
 	var/tray_toggled = FALSE
 
 /datum/component/surgical_tool_overlay/Initialize()
@@ -16,6 +25,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_overlays))
 	RegisterSignal(parent, COMSIG_SURGERY_TRAY_TOGGLE, PROC_REF(toggle_tray_state))
 
+///This proc updates the tray datum's tray_toggled var, swapping between the lower trays's looks
 /datum/component/surgical_tool_overlay/proc/toggle_tray_state(atom/my_bag, new_state)
 	SIGNAL_HANDLER
 	tray_toggled = new_state
@@ -47,7 +57,7 @@
 		if (istype(tool, /obj/item/blood_filter))
 			has_filter = TRUE
 			continue
-		if (istype(tool, /obj/item/razor))
+		if (istype(tool, /obj/item/razor/surgery))
 			has_razor = TRUE
 			continue
 

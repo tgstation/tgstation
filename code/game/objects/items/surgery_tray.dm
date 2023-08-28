@@ -1,8 +1,18 @@
-/datum/storage/medicart/New()
-	. = ..()
+/**
+ * surgery trays
+ *
+ * a storage object that displays tools in its contents, and can be folded up and carried. click it to draw a random tool
+ *
+ */
+
+
+/datum/storage/medicart
 	max_total_storage = 30
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_slots = 14
+
+/datum/storage/medicart/New()
+	. = ..()
 	set_holdable(list(
 		/obj/item/blood_filter,
 		/obj/item/bonesetter,
@@ -39,9 +49,18 @@
 	PopulateContents()
 	AddComponent(/datum/component/surgical_tool_overlay)
 	set_tray_mode(tray_mode)
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance(UPDATE_OVERLAYS | UPDATE_ICON_STATE | UPDATE_DESC)
 	AddElement(/datum/element/noisy_movement)
 	AddElement(/datum/element/drag_pickup)
+
+/obj/item/surgery_tray/update_icon_state()
+	. = ..()
+	icon_state = tray_mode ? "tray" : "medicart"
+
+/obj/item/surgery_tray/update_desc()
+	. = ..()
+	desc = tray_mode ? "The wheels and bottom storage of this medical cart have been stowed away, leaving a smaller, but still bulky tray in it's place." : "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
+
 
 /obj/item/surgery_tray/proc/PopulateContents()
 	var/static/list/items_inside = list(
@@ -51,7 +70,7 @@
 		/obj/item/circular_saw = 1,
 		/obj/item/clothing/mask/surgical = 1,
 		/obj/item/hemostat = 1,
-		/obj/item/razor = 1,
+		/obj/item/razor/surgery = 1,
 		/obj/item/retractor = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/stack/medical/bone_gel = 1,
@@ -72,15 +91,11 @@
 	if(tray_mode)
 		interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 		pass_flags |= PASSTABLE
-		desc = "The wheels and bottom storage of this medical cart have been stowed away, leaving a smaller, but still bulky tray in it's place."
-		icon_state = "tray"
 	else
 		interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 		pass_flags &= ~PASSTABLE
-		desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
-		icon_state = "medicart"
 	SEND_SIGNAL(src, COMSIG_SURGERY_TRAY_TOGGLE, tray_mode)
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance(UPDATE_OVERLAYS | UPDATE_ICON_STATE | UPDATE_DESC)
 
 /obj/item/surgery_tray/equipped(mob/user, slot, initial)
 	. = ..()
@@ -93,12 +108,13 @@
 		return
 	var/turf/open/placement_turf = get_turf(user)
 	if(isgroundlessturf(placement_turf) || isclosedturf(placement_turf))
-		to_chat(user, span_warning("You can't deploy [src] here!"))
 		balloon_alert(user, "can't deploy!")
 		return TRUE
+	if(!user.transferItemToLoc(src, placement_turf))
+		balloon_alert(user, "tray stuck!")
+		return TRUE
 	set_tray_mode(FALSE, user)
-	forceMove(placement_turf)
-	return TRUE
+	return
 
 /obj/item/surgery_tray/attack_hand(mob/living/user)
 	if(!user.can_perform_action(src, NEED_HANDS))
@@ -121,7 +137,7 @@
 		/obj/item/circular_saw = 1,
 		/obj/item/clothing/mask/surgical = 1,
 		/obj/item/hemostat/cruel = 1,
-		/obj/item/razor = 1,
+		/obj/item/razor/surgery = 1,
 		/obj/item/retractor/cruel = 1,
 		/obj/item/scalpel/cruel = 1,
 		/obj/item/surgical_drapes = 1,
