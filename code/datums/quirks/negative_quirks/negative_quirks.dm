@@ -440,7 +440,7 @@
 		quirk_holder.clear_mood_event("nyctophobia")
 		return
 
-	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
+	if(quirk_holder.move_intent == MOVE_INTENT_RUN)
 		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 		quirk_holder.toggle_move_intent()
 	quirk_holder.add_mood_event("nyctophobia", /datum/mood_event/nyctophobia)

@@ -33,16 +33,32 @@
 
 /datum/ai_behavior/run_away_from_target/proc/plot_path_away_from(datum/ai_controller/controller, atom/target)
 	var/turf/target_destination = get_turf(controller.pawn)
-	for (var/i in 1 to run_distance)
-		var/turf/test_destination = get_ranged_target_turf_direct(controller.pawn, target, range = i, offset = 180)
-		var/list/airlocks = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock)
-		if (test_destination.is_blocked_turf(exclude_mobs = TRUE, source_atom = controller.pawn, ignore_atoms = airlocks))
+	var/static/list/offset_angles = list(45, 90, 135, 180, 225, 270)
+	for(var/angle in offset_angles)
+		var/turf/test_turf = get_furthest_turf(controller.pawn, angle, target)
+		if(isnull(test_turf))
+			continue
+		var/distance_from_target = get_dist(target, test_turf)
+		if(distance_from_target <= get_dist(target, target_destination))
+			continue
+		target_destination = test_turf
+		if(distance_from_target == run_distance) //we already got the max running distance
 			break
-		target_destination = test_destination
+
 	if (target_destination == get_turf(controller.pawn))
 		return FALSE
 	set_movement_target(controller, target_destination)
 	return TRUE
+
+/datum/ai_behavior/run_away_from_target/proc/get_furthest_turf(atom/source, angle, atom/target)
+	var/turf/return_turf
+	var/list/airlocks = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock)
+	for(var/i in 1 to run_distance)
+		var/turf/test_destination = get_ranged_target_turf_direct(source, target, range = i, offset = angle)
+		if(test_destination.is_blocked_turf(exclude_mobs = !source.density, source_atom = source, ignore_atoms = airlocks))
+			break
+		return_turf = test_destination
+	return return_turf
 
 /datum/ai_behavior/run_away_from_target/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
 	. = ..()

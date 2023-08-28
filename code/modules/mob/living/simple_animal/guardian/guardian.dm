@@ -406,10 +406,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	to_chat(summoner, span_bolddanger("Your [name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
-	switch(summoner.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(summoner, span_bolddanger("Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!"))
-			summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
+	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+		to_chat(summoner, span_bolddanger("Your head pounds, you can't take the strain of sustaining [src] in this condition!"))
+		summoner.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount * 0.5)
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
