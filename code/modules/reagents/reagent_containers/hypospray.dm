@@ -40,7 +40,8 @@
 	if(reagents.total_volume && (ignore_flags || affected_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(affected_mob, span_warning("You feel a tiny prick!"))
 		to_chat(user, span_notice("You inject [affected_mob] with [src]."))
-		playsound(get_turf(affected_mob), 'sound/items/hypospray.ogg', 50, TRUE)
+		if(!stealthy)
+			playsound(get_turf(affected_mob), 'sound/items/hypospray.ogg', 50, TRUE)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 
 
@@ -120,6 +121,8 @@
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
 	custom_price = PAYCHECK_CREW
 	custom_premium_price = PAYCHECK_COMMAND
+	/// If TRUE, won't play a noise when injecting.
+	var/stealthy = FALSE
 	var/label_examine = TRUE
 	var/label_text
 
