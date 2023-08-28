@@ -1523,7 +1523,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 /// Returns a list containing the width and height of an icon file
 /proc/get_icon_dimensions(icon_path)
-	if (!(icon_path in GLOB.icon_dimensions))
+	if (isnull(GLOB.icon_dimensions[icon_path]))
 		var/icon/my_icon = icon(icon_path)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
