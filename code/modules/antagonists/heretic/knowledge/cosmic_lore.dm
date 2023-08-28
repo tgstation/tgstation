@@ -43,7 +43,8 @@
 /datum/heretic_knowledge/cosmic_grasp
 	name = "Grasp of Cosmos"
 	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand."
-	gain_text = "Some stars dimmed, others' magnitude increased. With newfound strength I could channel the nebula's power into myself."
+	gain_text = "Some stars dimmed, others' magnitude increased. \
+	With newfound strength I could channel the nebula's power into myself."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_runes)
 	cost = 1
 	route = PATH_COSMIC
@@ -67,7 +68,8 @@
 	desc = "Grants you Cosmic Runes, a spell that creates two runes linked with eachother for easy teleportation. \
 		Only the entity activating the rune will get transported, and it can be used by anyone without a star mark. \
 		However, people with a star mark will get transported along with another person using the rune."
-	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. I spoke, and heard my own words echoed back."
+	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
+	I spoke, and heard my own words echoed back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
@@ -83,7 +85,8 @@
 	desc = "Your Mansus Grasp now applies the Mark of Cosmos. The mark is triggered from an attack with your Cosmic Blade. \
 		When triggered, the victim is returned to the location where the mark was originally applied to them. \
 		They will then be paralyzed for 2 seconds."
-	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. I can help them, I have to help them."
+	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. \
+	I can help them, I have to help them."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/cosmic)
 	route = PATH_COSMIC
 	mark_type = /datum/status_effect/eldritch/cosmic
@@ -99,7 +102,8 @@
 		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that \
 		deals a bit of fire damage and damages the cells. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
-	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \ My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
+	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
+	My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
 	next_knowledge = list(/datum/heretic_knowledge/spell/star_blast)
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
@@ -127,7 +131,8 @@
 		The combo is reset after two seconds without making an attack, \
 		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
 		a cosmic trail and increase your combo timer up to ten seconds."
-	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \ The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
+	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
+	The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
 	route = PATH_COSMIC
 	/// Storage for the second target.
@@ -222,7 +227,10 @@
 		The Star Gazer is a strong ally who can even break down reinforced walls. \
 		The Star Gazer has an aura that will heal you and damage opponents. \
 		Star Touch can now teleport you to the Star Gazer when activated in your hand."
-	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \ I clung on to them, they would protect me, and I would protect it. I closed my eyes with my head laid against their form. I was safe. \ WITNESS MY ASCENSION!"
+	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
+	I clung on to them, they would protect me, and I would protect it. \
+	I closed my eyes with my head laid against their form. I was safe. \
+	WITNESS MY ASCENSION!"
 	route = PATH_COSMIC
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(
