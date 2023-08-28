@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "Items worn on a void cloak's suit storage are no longer visible on the stripping menu."
+  - qol: "Misclicking the turf below a heretic influence no longer leaves a fingerprint."
