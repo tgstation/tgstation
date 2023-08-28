@@ -659,7 +659,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/hippocratic/attack_self(mob/user)
 	if(!iscarbon(user))
-		to_chat(user, span_warning("You remember how the Hippocratic Oath specifies 'my fellow human beings' and realize that it's completely meaningiess to you."))
+		to_chat(user, span_warning("You remember how the Hippocratic Oath specifies 'my fellow human beings' and realize that it's completely meaningless to you."))
 		return
 
 	if(reference)
