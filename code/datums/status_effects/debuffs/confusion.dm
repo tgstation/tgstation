@@ -1,5 +1,5 @@
-/// The threshold in which all of our movements are fully randomized, in seconds.
-#define CONFUSION_FULL_THRESHOLD 40
+/// The threshold in a third of our movements are fully randomized, in seconds.
+#define CONFUSION_FINAL_THRESHOLD 40
 /// A multiplier applied on how much time is left (in seconds) that determines the chance of moving sideways randomly
 #define CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND 1.5
 /// A multiplier applied on how much time is left (in seconds) that determines the chance of moving diagonally randomly
@@ -31,7 +31,7 @@
 	var/direction = move_args[MOVE_ARG_DIRECTION]
 	var/new_dir
 
-	if(time_left > CONFUSION_FULL_THRESHOLD)
+	if(time_left > CONFUSION_FINAL_THRESHOLD && prob(30))
 		new_dir = pick(GLOB.alldirs)
 
 	else if(prob(time_left * CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND))
@@ -44,6 +44,6 @@
 		move_args[MOVE_ARG_NEW_LOC] = get_step(owner, new_dir)
 		move_args[MOVE_ARG_DIRECTION] = new_dir
 
-#undef CONFUSION_FULL_THRESHOLD
+#undef CONFUSION_FINAL_THRESHOLD
 #undef CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND
 #undef CONFUSION_DIAGONAL_MOVE_PROB_PER_SECOND
