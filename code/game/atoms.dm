@@ -824,7 +824,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
 		return
 	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
+		buckle_message_cooldown = world.time + 25
 		balloon_alert(user, "can't move while buckled!")
 	return
 
