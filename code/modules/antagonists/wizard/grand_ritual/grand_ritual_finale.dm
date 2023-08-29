@@ -415,7 +415,7 @@
 	priority_announce("Danger: Extremely potent reality altering object has been summoned on station. Immediate evacuation advised. Brace for impact.", "Central Command Higher Dimensional Affairs", 'sound/effects/glassbr1.ogg')
 
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
-		if (!crewmate.mind)
+		if (isnull(crewmate.mind))
 			continue
 		if (crewmate == invoker) //everyone but the wizard is royally fucked, no matter who they are
 			continue

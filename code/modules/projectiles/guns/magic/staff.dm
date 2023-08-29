@@ -188,28 +188,29 @@
 
 /obj/item/gun/magic/staff/chaos/true_wabbajack/Initialize(mapload)
 	. = ..()
+	allowed_projectile_types |= subtypesof(/obj/projectile/bullet/cannonball)
+	allowed_projectile_types |= subtypesof(/obj/projectile/bullet/rocket)
+	allowed_projectile_types |= subtypesof(/obj/projectile/energy/tesla)
 	allowed_projectile_types |= subtypesof(/obj/projectile/magic)
 	allowed_projectile_types |= subtypesof(/obj/projectile/temp)
-	allowed_projectile_types += subtypesof(/obj/projectile/bullet/rocket)
-	allowed_projectile_types += subtypesof(/obj/projectile/energy/tesla)
-	allowed_projectile_types += subtypesof(/obj/projectile/bullet/cannonball)
-	allowed_projectile_types += list(
-		/obj/projectile/curse_hand,
-		/obj/projectile/meteor,
+	allowed_projectile_types |= list(
 		/obj/projectile/beam/mindflayer,
-		/obj/projectile/plasma,
 		/obj/projectile/bullet/gyro,
-		/obj/projectile/neurotoxin,
-		/obj/projectile/gravityrepulse,
-		/obj/projectile/gravityattract,
-		/obj/projectile/gravitychaos,
-		/obj/projectile/energy/nuclear_particle,
-		/obj/projectile/energy/electrode,
-		/obj/projectile/energy/net,
-		/obj/projectile/energy/declone,
 		/obj/projectile/bullet/honker,
 		/obj/projectile/bullet/mime,
-	) //if you ever try to expand this list, avoid adding bullets/energy porjectiles, this ain't supposed to be a gun... unless it's funny
+		/obj/projectile/curse_hand,
+		/obj/projectile/energy/declone,
+		/obj/projectile/energy/electrode,
+		/obj/projectile/energy/net,
+		/obj/projectile/energy/nuclear_particle,
+		/obj/projectile/gravityattract,
+		/obj/projectile/gravitychaos,
+		/obj/projectile/gravityrepulse,
+		/obj/projectile/ion,
+		/obj/projectile/meteor,
+		/obj/projectile/neurotoxin,
+		/obj/projectile/plasma,
+	) //if you ever try to expand this list, avoid adding bullets/energy projectiles, this ain't supposed to be a gun... unless it's funny
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"

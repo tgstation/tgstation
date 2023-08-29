@@ -5,16 +5,19 @@
 	action_name = "summon cheese"
 	granted_action = /datum/action/cooldown/spell/conjure/cheese
 	remarks = list(
-		"I never knew so many types of cheese existed...",
-		"Why do I need a reason for everything?..",
-		"Madness tastes of parmesan...",
-		"Healthy snacks for unsuspecting victims...",
-		"Time is an artificial construct...",
-		"Why cheese, of all things?..",
-		"What's this about sacrificing cheese?!..",
 		"Always forward, never back...",
-		"Order or biscuits...",
+		"Are these pages... cheese slices?..",
+		"Healthy snacks for unsuspecting victims...",
+		"I never knew so many types of cheese existed...",
+		"Madness reeks of goat cheese...",
+		"Madness tastes of gouda...",
+		"Madness tastes of parmesan...",
+		"Time is an artificial construct...",
+		"Was it order or biscuits?..",
+		"What's this about sacrificing cheese?!..",
 		"Who wouldn't like that?..",
+		"Why cheese, of all things?..",
+		"Why do I need a reason for everything?..",
 	)
 
 /obj/item/book/granter/action/spell/summon_cheese/recoil(mob/living/user)

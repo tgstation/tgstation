@@ -473,12 +473,13 @@
 /datum/status_effect/blessing_of_insanity/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 0.5
-		human_owner.physiology.burn_mod *= 0.5
-		human_owner.physiology.tox_mod *= 0.5
-		human_owner.physiology.oxy_mod *= 0.5
-		human_owner.physiology.clone_mod *= 0.5
-		human_owner.physiology.stamina_mod *= 0.5
+		var/datum/physiology/owner_physiology = human_owner.physiology
+		owner_physiology.brute_mod *= 0.5
+		owner_physiology.burn_mod *= 0.5
+		owner_physiology.tox_mod *= 0.5
+		owner_physiology.oxy_mod *= 0.5
+		owner_physiology.clone_mod *= 0.5
+		owner_physiology.stamina_mod *= 0.5
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
@@ -490,12 +491,13 @@
 /datum/status_effect/blessing_of_insanity/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 2
-		human_owner.physiology.burn_mod *= 2
-		human_owner.physiology.tox_mod *= 2
-		human_owner.physiology.oxy_mod *= 2
-		human_owner.physiology.clone_mod *= 2
-		human_owner.physiology.stamina_mod *= 2
+		var/datum/physiology/owner_physiology = human_owner.physiology
+		owner_physiology.brute_mod *= 2
+		owner_physiology.burn_mod *= 2
+		owner_physiology.tox_mod *= 2
+		owner_physiology.oxy_mod *= 2
+		owner_physiology.clone_mod *= 2
+		owner_physiology.stamina_mod *= 2
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
