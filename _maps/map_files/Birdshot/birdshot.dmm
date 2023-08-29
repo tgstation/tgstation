@@ -60328,14 +60328,6 @@
 	dir = 1
 	},
 /area/station/service/lawoffice)
-"vcY" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/wood/tile,
-/area/station/maintenance/port/lesser)
 "vdf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -82308,7 +82300,7 @@ kCo
 peR
 dyW
 fEC
-vcY
+eHN
 vAD
 vAD
 roq
