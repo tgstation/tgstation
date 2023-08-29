@@ -110,6 +110,10 @@
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 	user.client.give_award(/datum/award/score/achievements_score, user, 1)
+	var/sound/sound_to_send = LAZYACCESS(GLOB.achievement_sounds, user.client.prefs.read_preference(/datum/preference/choiced/sound_achievement))
+	if(sound_to_send)
+		SEND_SOUND(user, sound_to_send)
+
 	times_achieved++
 	if(SSachievements.most_unlocked_achievement?.times_achieved < times_achieved)
 		SSachievements.most_unlocked_achievement = src
