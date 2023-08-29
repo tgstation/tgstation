@@ -124,7 +124,7 @@
 		if(!held_item)
 			if(!right_clicks)
 				listed_atom.attack_hand(dummy_human)
-				if(istype(listed_atom, /obj/item)) // yoink it if its an item
+				if(istype(listed_atom, /obj/item) && !held_item) // yoink it if its an item
 					held_item = listed_atom
 			else
 				dummy_human.istate |= ISTATE_SECONDARY
