@@ -18,7 +18,7 @@
 
 		if(selected_enemy)
 			if(!controller.blackboard[BB_CHICKEN_AGGRESSIVE] && !controller.blackboard[BB_CHICKEN_RETALIATE])
-				controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = selected_enemy
+				controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = selected_enemy
 				if(controller.blackboard[BB_CHICKEN_RECRUIT_COOLDOWN] * 100 < world.time) ///basically fuck off we don't wanna cycle this
 					controller.queue_behavior(/datum/ai_behavior/recruit_chickens)
 				controller.queue_behavior(/datum/ai_behavior/chicken_flee)
@@ -26,13 +26,13 @@
 
 			if(!selected_enemy.stat) //He's up, get him!
 				if(living_pawn.health < CHICKEN_FLEE_HEALTH) //Time to skeddadle
-					controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = selected_enemy
+					controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = selected_enemy
 					if(controller.blackboard[BB_CHICKEN_RECRUIT_COOLDOWN] < world.time)
 						controller.queue_behavior(/datum/ai_behavior/recruit_chickens)
 					controller.queue_behavior(/datum/ai_behavior/chicken_flee)
 					return //I'm running fuck you guys
 
-				controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = selected_enemy
+				controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = selected_enemy
 				controller.current_movement_target = selected_enemy
 				if(controller.blackboard[BB_CHICKEN_RECRUIT_COOLDOWN] < world.time)
 					controller.queue_behavior(/datum/ai_behavior/recruit_chickens)

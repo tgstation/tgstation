@@ -4,7 +4,7 @@
 /datum/ai_behavior/chicken_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 
-	var/mob/living/target = controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET]
+	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/mob/living/living_pawn = controller.pawn
 
 	if(!target || target.stat != CONSCIOUS)
@@ -17,7 +17,7 @@
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 	SSmove_manager.stop_looping(living_pawn)
-	controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = null
+	controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
 
 /// attack using a projectile otherwise unarmed the enemy, then if we are angry there is a chance we might calm down a little
 /datum/ai_behavior/chicken_attack_mob/proc/shoot(atom/targeted_atom, datum/ai_controller/controller)
@@ -69,7 +69,7 @@
 	if(controller.blackboard[BB_CHICKEN_SHITLIST][target] <= 0)
 		var/list/enemies = controller.blackboard[BB_CHICKEN_SHITLIST]
 		enemies.Remove(target)
-		if(controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] == target)
+		if(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] == target)
 			finish_action(controller, TRUE)
 
 /datum/ai_behavior/recruit_chickens/perform(seconds_per_tick, datum/ai_controller/controller)
@@ -86,7 +86,7 @@
 
 		var/datum/ai_controller/chicken/chicken_ai = living_viewers.ai_controller
 
-		var/atom/your_enemy = controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET]
+		var/atom/your_enemy = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 		var/list/enemies = living_viewers.ai_controller.blackboard[BB_CHICKEN_SHITLIST]
 		enemies[your_enemy] = CHICKEN_RECRUIT_HATED_AMOUNT
 		chicken_ai.blackboard[BB_CHICKEN_RECRUIT_COOLDOWN] = world.time + CHICKEN_RECRUIT_COOLDOWN
@@ -112,110 +112,15 @@
 	else
 		finish_action(controller, TRUE)
 
-/datum/ai_behavior/eat_ground_food
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	required_distance = 1
-	action_cooldown = 30 SECONDS
-	var/max_attempts = 3
-	var/obj/item/food/chosen_one
-
-/datum/ai_behavior/eat_ground_food/setup(datum/ai_controller/controller, ...)
-	. = ..()
-	var/mob/living/basic/chicken/living_pawn = controller.pawn
-	var/datum/weakref/target_ref
-	var/list/floor_foods = list()
-	for(var/obj/effect/chicken_feed/food_item in view(3, living_pawn.loc))
-		floor_foods |= food_item
-
-	if(floor_foods.len)
-		chosen_one = pick(floor_foods)
-		target_ref = WEAKREF(chosen_one)
-	if(!target_ref)
-		return FALSE
-	controller.current_movement_target = target_ref.resolve()
-	return TRUE
-
-/datum/ai_behavior/eat_ground_food/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/basic/chicken/living_pawn = controller.pawn
-	if(!controller.current_movement_target)
-		finish_action(controller, TRUE)
-		return
-	if(living_pawn.current_feed_amount > 3) // so no vomit
-		finish_action(controller, TRUE)
-		return
-
-	controller.blackboard[BB_CHICKEN_ATTEMPT_TRACKING]++
-	if(controller.blackboard[BB_CHICKEN_ATTEMPT_TRACKING] >= max_attempts)
-		finish_action(controller, TRUE)
-		return
-
-	if(living_pawn.CanReach(chosen_one))
-		living_pawn.eat_feed(chosen_one)
-		finish_action(controller, TRUE)
-		return
-
-/datum/ai_behavior/eat_ground_food/finish_action(datum/ai_controller/controller, succeeded, ...)
-	. = ..()
-	controller.blackboard[BB_CHICKEN_ATTEMPT_TRACKING] = 0
-
 /datum/ai_behavior/follow_leader
 
 /datum/ai_behavior/follow_leader/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/mob/living/target = controller.blackboard[BB_CHICKEN_CURRENT_LEADER]
 
-	if(controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET]) // they care more about attacking right now
+	if(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) // they care more about attacking right now
 		finish_action(controller, TRUE)
 	if(target)
 		step_to(living_pawn, target,1)
 	else
 		finish_action(controller, TRUE)
-
-/datum/ai_behavior/find_and_lay
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	required_distance = 0
-	action_cooldown = 30 SECONDS
-	var/max_attempts = 3
-
-/datum/ai_behavior/find_and_lay/setup(datum/ai_controller/controller, ...)
-	. = ..()
-	var/mob/living/basic/chicken/living_pawn = controller.pawn
-	var/datum/weakref/target_ref
-	for(var/obj/structure/nestbox/nesting_box in view(3, living_pawn.loc))
-		target_ref = WEAKREF(nesting_box)
-		break
-	if(!target_ref)
-		return FALSE
-	controller.current_movement_target = target_ref.resolve()
-	return TRUE
-
-/datum/ai_behavior/find_and_lay/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/basic/chicken/living_pawn = controller.pawn
-
-	if(!controller.current_movement_target)
-		finish_action(controller, TRUE)
-		return
-
-	controller.blackboard[BB_CHICKEN_ATTEMPT_TRACKING]++
-	if(controller.blackboard[BB_CHICKEN_ATTEMPT_TRACKING] >= max_attempts)
-		finish_action(controller, TRUE)
-		return
-
-	var/turf/target_turf = get_turf(controller.current_movement_target)
-	if(target_turf == living_pawn.loc)
-		living_pawn.visible_message("[living_pawn] [pick(living_pawn.layMessage)]")
-
-		var/passes_minimum_checks = FALSE
-		if(living_pawn.total_times_eaten > 4 && prob(25))
-			passes_minimum_checks = TRUE
-
-		SEND_SIGNAL(living_pawn, COMSIG_MUTATION_TRIGGER, get_turf(living_pawn), passes_minimum_checks)
-		living_pawn.eggs_left--
-		finish_action(controller, TRUE)
-
-/datum/ai_behavior/find_and_lay/finish_action(datum/ai_controller/controller, succeeded, ...)
-	. = ..()
-	controller.blackboard[BB_CHICKEN_ATTEMPT_TRACKING] = 0
-	controller.blackboard[BB_CHICKEN_READY_LAY] = FALSE

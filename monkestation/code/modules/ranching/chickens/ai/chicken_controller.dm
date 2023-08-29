@@ -3,20 +3,20 @@
 	planning_subtrees = list(/datum/ai_planning_subtree/chicken_tree)
 	idle_behavior = /datum/idle_behavior/chicken
 	blackboard = list(
+		BB_BASIC_MOB_CURRENT_TARGET = null,
 		BB_CHICKEN_SHITLIST = list(),
 		BB_CHICKEN_AGGRESSIVE = FALSE,
 		BB_CHICKEN_RETALIATE = FALSE,
-		BB_CHICKEN_CURRENT_ATTACK_TARGET = null,
 		BB_CHICKEN_TARGETED_ABILITY = null,
 		BB_CHICKEN_SELF_ABILITY = null,
 		BB_CHICKEN_PROJECTILE = null,
 		BB_CHICKEN_RECRUIT_COOLDOWN = null,
 		BB_CHICKEN_SHOOT_PROB = 10,
-		BB_CHICKEN_HONKS_SORROW = FALSE,
 		BB_CHICKEN_SPECALITY_ABILITY = null,
 		BB_CHICKEN_CURRENT_LEADER = null,
-		BB_CHICKEN_READY_LAY = FALSE,
 		BB_CHICKEN_ATTEMPT_TRACKING = 0,
+		BB_CHICKEN_NESTING_BOX = null,
+		BB_CHICKEN_FEED = null
 	)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -67,16 +67,6 @@
 	blackboard[BB_CHICKEN_RETALIATE] = TRUE
 
 
-//CLOWN AIS
-
-
-/datum/ai_controller/chicken/clown/sad
-
-/datum/ai_controller/chicken/clown/sad/TryPossessPawn(atom/new_pawn)
-	. = ..()
-	if(. & AI_CONTROLLER_INCOMPATIBLE)
-		return
-	blackboard[BB_CHICKEN_HONKS_SORROW] = TRUE // honk but sad
 ///Start of ai calls
 
 // Stops sentient chickens from being knocked over like weak dunces.
@@ -158,16 +148,6 @@
 
 	var/list/blackboard = controller.blackboard
 
-	if((!blackboard[BB_CHICKEN_READY_LAY]&& SPT_PROB(10, seconds_per_tick) && living_pawn.eggs_left > 0) && living_pawn.egg_type && living_pawn.gender == FEMALE && controller.behavior_cooldowns[/datum/ai_behavior/find_and_lay] < world.time)
-		blackboard[BB_CHICKEN_READY_LAY] = TRUE
-
-	if(blackboard[BB_CHICKEN_READY_LAY])
-		controller.queue_behavior(/datum/ai_behavior/find_and_lay)
-
-	if(SPT_PROB(10, seconds_per_tick) && controller.behavior_cooldowns[/datum/ai_behavior/eat_ground_food] < world.time)
-		if(locate(/obj/item/food) in view(5, controller.pawn))
-			controller.queue_behavior(/datum/ai_behavior/eat_ground_food)
-
 	if(SPT_PROB(25, seconds_per_tick) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
@@ -179,9 +159,8 @@
 			enemies[picked]--
 			if(enemies[picked] <= 0)
 				enemies.Remove(picked)
-				blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = null
+				blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
 				controller.queue_behavior(/datum/ai_behavior/chicken_flee)
-
 
 /datum/ai_controller/chicken/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -194,11 +173,11 @@
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken
 	ability_key = BB_CHICKEN_TARGETED_ABILITY
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range
-	target_key = BB_CHICKEN_CURRENT_ATTACK_TARGET
+	target_key = BB_BASIC_MOB_CURRENT_TARGET
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/target = controller.blackboard[target_key]
-	var/datum/action/cooldown/mob_cooldown/chicken/stored_action = controller.blackboard[BB_CHICKEN_TARGETED_ABILITY]
+	var/datum/action/cooldown/mob_cooldown/chicken/stored_action = controller.blackboard[ability_key]
 	use_ability_behaviour = stored_action.what_range
 	if (QDELETED(target))
 		return
@@ -208,24 +187,27 @@
 	ability_key = BB_CHICKEN_SELF_ABILITY
 	finish_planning = TRUE
 
-
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/clown
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/clown/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 
-	if(controller.blackboard[BB_CHICKEN_HONKS_SORROW])
+	if(istype(living_pawn, /mob/living/basic/chicken/clown_sad))
 		var/list/clucking_mad = list()
 		for(var/mob/living/carbon/human/unlucky in GLOB.player_list)
 			clucking_mad |= unlucky
-		controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = pick(clucking_mad)
+
+		if(!length(clucking_mad))
+			return
+		controller.blackboard[target_key] = pick(clucking_mad)
 		clucking_mad = null
 	else
 		var/list/pick_me = list()
 		for(var/mob/living/carbon/human/target in view(living_pawn, CHICKEN_ENEMY_VISION))
 			pick_me |= target
-		if(pick_me.len)
-			controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = pick(pick_me)
+		if(!length(pick_me))
+			return
+		controller.blackboard[target_key] = pick(pick_me)
 
 	return ..()
 
@@ -239,6 +221,42 @@
 	for(var/mob/living/basic/chicken/found_chicken in view(4, living_pawn.loc))
 		if(!istype(found_chicken, /mob/living/basic/chicken/rev_raptor) || !istype(found_chicken, /mob/living/basic/chicken/raptor) || !istype(found_chicken, /mob/living/basic/chicken/rev_raptor))
 			viable_conversions |= found_chicken
-	controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = pick(viable_conversions)
+	if(!length(viable_conversions))
+		return
+	controller.blackboard[target_key] = pick(viable_conversions)
 
+	return ..()
+
+/datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/lay_egg
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+	target_key = BB_CHICKEN_NESTING_BOX
+	ability_key = BB_CHICKEN_LAY_EGG
+
+/datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/lay_egg/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/basic/chicken/living_pawn = controller.pawn
+	if(living_pawn.eggs_left <= 0)
+		return
+
+	var/list/found_spots = list()
+	for(var/obj/structure/nestbox/listed_box in view(7, living_pawn.loc))
+		found_spots |= listed_box
+	if(!length(found_spots))
+		return
+	controller.blackboard[target_key] = pick(found_spots)
+	return ..()
+
+/datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+	target_key = BB_BASIC_MOB_CURRENT_TARGET
+	ability_key = BB_CHICKEN_FEED
+
+/datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+
+	var/list/found_spots = list()
+	for(var/obj/effect/chicken_feed/listed_feed in view(7, living_pawn.loc))
+		found_spots |= listed_feed
+	if(!length(found_spots))
+		return
+	controller.blackboard[target_key] = pick(found_spots)
 	return ..()

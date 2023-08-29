@@ -156,27 +156,34 @@
 		else
 			name = "[breed_name] Hen"
 
+	var/list/new_planning_subtree = list()
+	for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
+		new_planning_subtree |= listed_tree.type
+
+	var/datum/action/cooldown/mob_cooldown/chicken/feed/feed_ability = new(src)
+	feed_ability.Grant(src)
+	ai_controller.blackboard[BB_CHICKEN_FEED] = feed_ability
+	new_planning_subtree |= /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed
+
+	if(gender == FEMALE)
+		var/datum/action/cooldown/mob_cooldown/chicken/lay_egg/new_ability = new(src)
+		new_ability.Grant(src)
+		ai_controller.blackboard[BB_CHICKEN_LAY_EGG] = new_ability
+		new_planning_subtree |= /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/lay_egg
+
 	if(targeted_ability)
 		var/datum/action/cooldown/mob_cooldown/created_ability = new targeted_ability(src)
 		created_ability.Grant(src)
 		ai_controller.blackboard[BB_CHICKEN_TARGETED_ABILITY] = created_ability
-
-		var/list/new_planning_subtree = list()
-		for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
-			new_planning_subtree |= listed_tree.type
 		new_planning_subtree |= targeted_ability_planning_tree
-		ai_controller.replace_planning_subtrees(new_planning_subtree)
 
 	if(self_ability)
 		var/datum/action/cooldown/mob_cooldown/created_ability = new self_ability(src)
 		created_ability.Grant(src)
 		ai_controller.blackboard[BB_CHICKEN_SELF_ABILITY] = created_ability
-
-		var/list/new_planning_subtree = list()
-		for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
-			new_planning_subtree |= listed_tree.type
 		new_planning_subtree |= ability_planning_tree
-		ai_controller.replace_planning_subtrees(new_planning_subtree)
+
+	ai_controller.replace_planning_subtrees(new_planning_subtree)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -373,7 +380,7 @@
 						ai_controller.queue_behavior(/datum/ai_behavior/follow_leader)
 
 			else if (findtext(phrase, "stop"))
-				ai_controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = null
+				ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
 
 			else if (findtext(phrase, "stay"))
 				if(ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] == who)
@@ -389,7 +396,7 @@
 							else if((!Friends[target] || Friends[target] < 1))
 								if(ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER])
 									ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] = null
-								ai_controller.blackboard[BB_CHICKEN_CURRENT_ATTACK_TARGET] = target
+								ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
 						break
 		speech_buffer = list()
 
@@ -525,3 +532,68 @@
 			add_visual("angry")
 	if(source)
 		set_friendship(source, amount * 0.1)
+
+
+/datum/action/cooldown/mob_cooldown/chicken/lay_egg
+	name = "Lay Egg"
+	desc = "Lay an egg."
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "eye"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
+	click_to_activate = FALSE
+	cooldown_time = 15 SECONDS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	shared_cooldown = NONE
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+
+/datum/action/cooldown/mob_cooldown/chicken/lay_egg/PreActivate(atom/target)
+	. = ..()
+	var/mob/living/basic/chicken/chicken_owner = owner
+	if(!istype(chicken_owner))
+		return
+	if(chicken_owner.eggs_left <= 0)
+		return
+
+/datum/action/cooldown/mob_cooldown/chicken/lay_egg/Activate(atom/target)
+	. = ..()
+	var/mob/living/basic/chicken/chicken_owner = owner
+	chicken_owner.visible_message("[chicken_owner] [pick(chicken_owner.layMessage)]")
+
+	var/passes_minimum_checks = FALSE
+	if(chicken_owner.total_times_eaten > 4 && prob(25))
+		passes_minimum_checks = TRUE
+
+	SEND_SIGNAL(chicken_owner, COMSIG_MUTATION_TRIGGER, get_turf(chicken_owner), passes_minimum_checks)
+	chicken_owner.eggs_left--
+	StartCooldown()
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/chicken/feed
+	name = "Feast"
+	desc = "Eat from some laid feed."
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "eye"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
+	cooldown_time = 20 SECONDS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	shared_cooldown = NONE
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+
+/datum/action/cooldown/mob_cooldown/chicken/feed/PreActivate(atom/target)
+	. = ..()
+	if(!istype(target, /obj/effect/chicken_feed))
+		return
+
+	if(!owner.CanReach(target))
+		return
+
+/datum/action/cooldown/mob_cooldown/chicken/feed/Activate(atom/target)
+	. = ..()
+	var/mob/living/basic/chicken/chicken_owner = owner
+	chicken_owner.eat_feed(target)
+	StartCooldown()
+	return TRUE

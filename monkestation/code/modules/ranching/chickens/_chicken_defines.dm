@@ -139,3 +139,6 @@
 
 /datum/ai_behavior/targeted_mob_ability/min_range/gaze
 	required_distance = 4
+
+/datum/ai_behavior/targeted_mob_ability/min_range/on_top
+	required_distance = 0
