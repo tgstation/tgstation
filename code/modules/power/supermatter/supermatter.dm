@@ -503,7 +503,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radio.talk_into(
 		src,
 		count_down_messages[1],
-		emergency_channel
+		emergency_channel,
+		list(SPAN_COMMAND)
 	)
 
 	var/delamination_countdown_time = SUPERMATTER_COUNTDOWN_TIME
@@ -514,7 +515,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			src,
 			"WARNING: Projected time until full crystal delamination significantly lower than expected. \
 			Please inspect crystal for structural abnormalities or sabatoge!",
-			emergency_channel
+			emergency_channel,
+			list(SPAN_COMMAND)
 			)
 
 	for(var/i in delamination_countdown_time to 0 step -10)
@@ -536,7 +538,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			message = "[i*0.1]..."
 
-		radio.talk_into(src, message, emergency_channel)
+		radio.talk_into(src, message, emergency_channel, list(SPAN_COMMAND))
 
 		if(healed)
 			final_countdown = FALSE
