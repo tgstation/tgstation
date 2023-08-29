@@ -169,8 +169,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
+<<<<<<< HEAD
 	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
 	var/list/datum/weakref/saviors = null
+=======
+>>>>>>> 6569a2aab6dd60ffd3ef1150ad542fbf85d9715a
 	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
 	var/supermatter_sliver_removed = FALSE
 
