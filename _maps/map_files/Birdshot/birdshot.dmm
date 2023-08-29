@@ -23536,7 +23536,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "iBV" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -26588,10 +26588,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/hallway/secondary/exit/departure_lounge)
-"jGO" = (
-/obj/structure/cable,
-/turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
 "jGW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -37294,7 +37290,7 @@
 "num" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/closed/wall,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "nuo" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -39219,7 +39215,7 @@
 /area/station/maintenance/department/medical/central)
 "ofZ" = (
 /turf/closed/mineral/random/stationside,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "ogi" = (
 /obj/effect/landmark/start/captain,
 /obj/structure/cable,
@@ -48803,7 +48799,7 @@
 "roq" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "row" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/plumbed,
@@ -56975,7 +56971,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/table/bronze,
 /turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "tXw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -57673,7 +57669,7 @@
 "uhq" = (
 /obj/structure/chair/bronze,
 /turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "uhu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
@@ -60339,7 +60335,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "vdf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -61933,7 +61929,7 @@
 /area/station/security/tram)
 "vAD" = (
 /turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "vAK" = (
 /obj/machinery/door/airlock{
 	name = "Maintenance"
@@ -65217,7 +65213,7 @@
 "wCz" = (
 /obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/wood/tile,
-/area/station/service/abandoned_gambling_den/gaming)
+/area/station/maintenance/port/lesser)
 "wCH" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
@@ -81800,8 +81796,8 @@ tYT
 fEC
 ofZ
 ofZ
-xQJ
-xQJ
+fEC
+fEC
 dDB
 dDB
 dDB
@@ -82058,8 +82054,8 @@ fEC
 wCz
 vAD
 roq
-xQJ
-xQJ
+fEC
+fEC
 tYT
 tYT
 aJq
@@ -82316,7 +82312,7 @@ vcY
 vAD
 vAD
 roq
-xQJ
+fEC
 vmL
 aJq
 aJq
@@ -82569,7 +82565,7 @@ qXB
 tmT
 qXB
 fEC
-jGO
+eHN
 uhq
 tXl
 vAD
@@ -82830,7 +82826,7 @@ iBE
 uhq
 tXl
 roq
-xQJ
+fEC
 aJq
 aJq
 aJq
@@ -83087,7 +83083,7 @@ iBE
 roq
 roq
 roq
-xQJ
+fEC
 aJq
 aJq
 aJq
