@@ -29,9 +29,6 @@
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
-	greyscale_config = /datum/greyscale_config/flower_simple
-	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
-	greyscale_colors = "#d23838"
 
 // Lily
 /obj/item/seeds/poppy/lily
