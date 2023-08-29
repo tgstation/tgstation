@@ -105,7 +105,7 @@
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)
-	if (limb) // if we have limb but we dont have victim, we have a much much bigger problem than failing to remove properly
+	if (limb)
 		remove_wound()
 	return ..()
 
