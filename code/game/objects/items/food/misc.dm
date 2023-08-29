@@ -604,8 +604,6 @@
 	tastes = list("pita bread" = 2)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
-	burns_on_grill = TRUE
-	burns_in_oven = TRUE
 
 /obj/item/food/tzatziki_sauce
 	name = "tzatziki sauce"
