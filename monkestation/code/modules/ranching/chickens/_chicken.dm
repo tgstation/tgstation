@@ -156,8 +156,27 @@
 		else
 			name = "[breed_name] Hen"
 
-	if(unique_ability)
-		ai_controller.blackboard[BB_CHICKEN_SPECALITY_ABILITY] = unique_ability
+	if(targeted_ability)
+		var/datum/action/cooldown/mob_cooldown/created_ability = new targeted_ability(src)
+		created_ability.Grant(src)
+		ai_controller.blackboard[BB_CHICKEN_TARGETED_ABILITY] = created_ability
+
+		var/list/new_planning_subtree = list()
+		for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
+			new_planning_subtree |= listed_tree.type
+		new_planning_subtree |= targeted_ability_planning_tree
+		ai_controller.replace_planning_subtrees(new_planning_subtree)
+
+	if(self_ability)
+		var/datum/action/cooldown/mob_cooldown/created_ability = new self_ability(src)
+		created_ability.Grant(src)
+		ai_controller.blackboard[BB_CHICKEN_SELF_ABILITY] = created_ability
+
+		var/list/new_planning_subtree = list()
+		for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
+			new_planning_subtree |= listed_tree.type
+		new_planning_subtree |= ability_planning_tree
+		ai_controller.replace_planning_subtrees(new_planning_subtree)
 
 	return INITIALIZE_HINT_LATELOAD
 

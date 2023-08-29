@@ -11,7 +11,7 @@
 	melee_damage_lower = 8
 	obj_damage = 10
 
-	projectile_type = /obj/projectile/magic/venomous_spit
+	targeted_ability = /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze
 	shoot_prob = 10
 
 	egg_type = /obj/item/food/egg/cockatrice
@@ -41,3 +41,29 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/user = target
 		user.petrify(10)
+
+/datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze
+	name = "Petrifying Gaze"
+	desc = "Petrify those who dare to look at you."
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "eye"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
+	cooldown_time = 20 SECONDS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	click_to_activate = TRUE
+	shared_cooldown = NONE
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/gaze
+
+/datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze/PreActivate(atom/target)
+	. = ..()
+	if (target == owner)
+		return
+
+/datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze/Activate(mob/living/target)
+	var/mob/living/living_owner = owner
+	living_owner.face_atom(target)
+	target.petrify(2 SECONDS)
+	StartCooldown()
+	return TRUE

@@ -73,11 +73,9 @@
 	var/likes_pets = TRUE
 
 	///unique ability for chicken
-	var/unique_ability = null
-	///cooldown of ability
-	var/cooldown_time = DEFAULT_CHICKEN_ABILITY_COOLDOWN
-	/// is it a combat ability?
-	var/combat_ability = FALSE
+	var/self_ability = null
+	///targeted ability of this chicken
+	var/targeted_ability = null
 	/// probability for ability
 	var/ability_prob = 3
 	///what type of projectile do we shoot?
@@ -101,6 +99,10 @@
 	var/is_marked = FALSE
 	///the current visual effect applied
 	var/mutable_appearance/applied_visual
+	///the self ability planning tree
+	var/ability_planning_tree = /datum/ai_planning_subtree/use_mob_ability/chicken
+	///the targeted ability planning tree
+	var/targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken
 
 #undef DEFAULT_CHICKEN_ABILITY_COOLDOWN
 
@@ -127,3 +129,13 @@
 	var/fresh_mutation = FALSE
 	///is this egg fertile? used when picked up / dropped
 	var/is_fertile = FALSE
+
+
+/datum/action/cooldown/mob_cooldown/chicken
+	var/datum/ai_behavior/targeted_mob_ability/min_range/what_range = /datum/ai_behavior/targeted_mob_ability/min_range/melee
+
+/datum/ai_behavior/targeted_mob_ability/min_range/melee
+	required_distance = 1
+
+/datum/ai_behavior/targeted_mob_ability/min_range/gaze
+	required_distance = 4

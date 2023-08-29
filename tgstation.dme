@@ -5972,7 +5972,6 @@
 #include "monkestation\code\modules\ranching\items.dm"
 #include "monkestation\code\modules\ranching\chickens\_chicken.dm"
 #include "monkestation\code\modules\ranching\chickens\_chicken_defines.dm"
-#include "monkestation\code\modules\ranching\chickens\ai\chicken_abilities.dm"
 #include "monkestation\code\modules\ranching\chickens\ai\chicken_behaviors.dm"
 #include "monkestation\code\modules\ranching\chickens\ai\chicken_controller.dm"
 #include "monkestation\code\modules\ranching\chickens\ai\chicken_subtrees.dm"
