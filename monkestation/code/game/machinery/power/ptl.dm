@@ -147,7 +147,7 @@
 /obj/machinery/power/transmission_laser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	firing = !firing
-	to_chat(user, span_notice("You turn the firing mode on the [src] to [turned_on ? "On" : "Off"]."))
+	to_chat(user, span_notice("You turn the firing mode on the [src] to [firing ? "On" : "Off"]."))
 	update_appearance()
 	if(length(laser_effects) && !firing)
 		addtimer(CALLBACK(src, PROC_REF(destroy_lasers)), 5 SECONDS)
