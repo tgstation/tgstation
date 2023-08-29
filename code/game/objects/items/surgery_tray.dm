@@ -35,12 +35,11 @@
 	icon = 'icons/obj/medicart.dmi'
 	icon_state = "tray"
 	w_class = WEIGHT_CLASS_BULKY
-	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = 1
 	var/tray_mode = TRUE
+	item_flags = SLOWS_WHILE_IN_HAND | ITEM_HAS_CONTEXTUAL_SCREENTIPS
 
 /obj/item/surgery_tray/deployed
-	icon_state = "medicart"
 	tray_mode = FALSE
 
 /obj/item/surgery_tray/Initialize(mapload)
@@ -53,13 +52,19 @@
 	AddElement(/datum/element/noisy_movement)
 	AddElement(/datum/element/drag_pickup)
 
+/obj/item/surgery_tray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Fumble with tools"
+	context[SCREENTIP_CONTEXT_RMB] = "Remove a specific tool"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/surgery_tray/update_icon_state()
 	. = ..()
 	icon_state = tray_mode ? "tray" : "medicart"
 
 /obj/item/surgery_tray/update_desc()
 	. = ..()
-	desc = tray_mode ? "The wheels and bottom storage of this medical cart have been stowed away, leaving a smaller, but still bulky tray in it's place." : "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
+	desc = tray_mode ? "The wheels and bottom storage of this medical cart have been stowed away, leaving a cumbersome tray in it's place." : "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
 
 
 /obj/item/surgery_tray/proc/PopulateContents()
@@ -106,8 +111,6 @@
 	. = ..()
 	if(.)
 		return
-	if(.)
-		return
 	var/turf/open/placement_turf = get_turf(user)
 	if(isgroundlessturf(placement_turf) || isclosedturf(placement_turf))
 		balloon_alert(user, "can't deploy!")
@@ -129,7 +132,7 @@
 
 /obj/item/surgery_tray/morgue
 	name = "autopsy tray"
-	desc = "A Deforest brand medical cart, made for use in morgues. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
+	desc = "A Deforest brand surgery tray, made for use in morgues. It is a folding model, meaning the wheels on the bottom can be extended outwards, making it a cart."
 
 /obj/item/surgery_tray/morgue/PopulateContents()
 	var/static/list/items_inside = list(
