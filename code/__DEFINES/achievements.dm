@@ -11,6 +11,12 @@
 ///the priority of the achievements score. NO achievement should have a priority equal or lower than this.
 #define AWARD_PRIORITY_LAST 0
 
+/// preferences for the sound played when unlocking an achievement
+#define CHEEVO_SOUND_TADA "Tada Fanfare"
+#define CHEEVO_SOUND_JINGLE "Beeps Jingle"
+#define CHEEVO_SOUND_PING "Success Ping"
+#define CHEEVO_SOUND_OFF "Disabled"
+
 //Misc Medal hub IDs
 #define MEDAL_METEOR "Your Life Before Your Eyes"
 #define MEDAL_PULSE "Jackpot"
