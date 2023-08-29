@@ -30,7 +30,7 @@
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 	var/turf/owner_location = limb_owner.loc
-	if(istype(owner_location) && can_bleed())
+	if(wound_type != WOUND_BURN && istype(owner_location) && can_bleed())
 		limb_owner.add_splatter_floor(owner_location)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
@@ -64,7 +64,7 @@
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
-	if(isturf(chest_owner.loc) && can_bleed())
+	if(wound_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
 		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
 	for(var/obj/item/organ/organ as anything in chest_owner.organs)
@@ -193,8 +193,7 @@
 	base_chance += (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
 
 	for (var/datum/wound/iterated_wound as anything in wounds)
-		if (iterated_wound.wound_type == WOUND_BLUNT && iterated_wound.severity == WOUND_SEVERITY_CRITICAL)
-			base_chance += 15 // we only require a severe bone break, but if there's a critical bone break, we'll add 15% more
+		base_chance += iterated_wound.get_dismember_chance_bonus(base_chance)
 
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new

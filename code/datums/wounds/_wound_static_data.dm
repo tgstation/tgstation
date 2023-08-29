@@ -13,6 +13,12 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 		if (initial(path.abstract))
 			continue
 
+		if (!isnull(data[initial(path.wound_path_to_generate)]))
+			stack_trace("pre-existing pregen data for [initial(path.wound_path_to_generate)] when [path] was being considered: [data[initial(path.wound_path_to_generate)]]. \
+						this is definitely a bug, and is probably because one of the two pregen data have the wrong wound typepath defined. [path] will not be instantiated")
+
+			continue
+
 		var/datum/wound_pregen_data/pregen_data = new path
 		data[pregen_data.wound_path_to_generate] = pregen_data
 

@@ -98,8 +98,13 @@
 	return "<B>[msg.Join()]</B>"
 
 /datum/wound/slash/flesh/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	if (!victim) // if we are dismembered, we can still take damage, its fine to check here
+		return
+
 	if(victim.stat != DEAD && wound_bonus != CANT_WOUND && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		adjust_blood_flow(WOUND_SLASH_DAMAGE_FLOW_COEFF * wounding_dmg)
+
+	return ..()
 
 /datum/wound/slash/flesh/drag_bleed_amount()
 	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
@@ -404,4 +409,4 @@
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 
-	wound_path_to_generate = /datum/wound/slash/flesh/critical
+	wound_path_to_generate = /datum/wound/slash/flesh/critical/cleave

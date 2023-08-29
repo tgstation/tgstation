@@ -14,6 +14,8 @@
 	deciding what specific wound will be applied. I'd like to have a few different types of wounds for at least some of the choices, but I'm just doing rough generals for now. Expect polishing
 */
 
+#define WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS 15
+
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
@@ -125,8 +127,6 @@
  * * wound_source: The source of the wound, such as a weapon.
  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
-	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
-	// in case we ever directly add wounds
 
 	if (!can_be_applied_to(L, old_wound))
 		qdel(src)
@@ -229,10 +229,8 @@
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
 	if(limb && !ignore_limb)
-		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds(replaced)
-	set_limb(null) // since we're removing limb's ref to us, we should do the same
-	// if you want to keep the ref, do it externally, theres no reason for us, once we unlink from our limb, to remember it
+		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
+		// if you want to keep the ref, do it externally, theres no reason for us to remember it
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)
@@ -262,21 +260,26 @@
 	return
 
 /// Proc called to change the variable `limb` and react to the event.
-/datum/wound/proc/set_limb(obj/item/bodypart/new_value)
+/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
-	if(limb)
+	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
 		UnregisterSignal(limb, COMSIG_QDELETING)
+		LAZYREMOVE(limb.wounds, src)
+		limb.update_wounds(replaced)
+		if (disabling)
+			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
 	limb = new_value
-	RegisterSignal(new_value, COMSIG_QDELETING, PROC_REF(source_died))
-	if(. && disabling)
-		var/obj/item/bodypart/old_limb = .
-		old_limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
+	// POST-CHANGE
+
+	if (limb)
+		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
 	if(limb)
 		if(disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
-
 
 /// Proc called to change the variable `disabling` and react to the event.
 /datum/wound/proc/set_disabling(new_value)
@@ -515,3 +518,11 @@
 /datum/wound/proc/get_limb_examine_description()
 	return
 
+/// Gets the flat percentage chance increment of a dismember occuring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
+/datum/wound/proc/get_dismember_chance_bonus(existing_chance)
+	SHOULD_BE_PURE(TRUE)
+
+	if (wound_type == WOUND_BLUNT && severity >= WOUND_SEVERITY_CRITICAL)
+		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
+
+#undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS
