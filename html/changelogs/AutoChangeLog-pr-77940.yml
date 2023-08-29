@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - image: "progress bars and cleaning particles are now centered on the tile occupied by the target, if it is a big sprite"

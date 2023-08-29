@@ -1,4 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - bugfix: "Syndicate ranged mobs (and probably other basic mobs) properly update their shell's description to show they are spent."

@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Ash drakes, colossi, and Bubblegum spawn on Lavaland more often; a sharp increase from the previous bugged amount of \"basically never\"."
