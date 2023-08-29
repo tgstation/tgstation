@@ -712,7 +712,7 @@
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
-	desc = "A dorky fannypack for keeping small items in. Conspicuous, or ugly enough to advert their eyes, that others won't see what you put in or take out easily."
+	desc = "A dorky fannypack for keeping small items in. Concealed, or ugly enough to advert their eyes, that others won't see what you put in or take out easily."
 	icon_state = "fannypack_leather"
 	inhand_icon_state = null
 	worn_icon_state = "fannypack_leather"
