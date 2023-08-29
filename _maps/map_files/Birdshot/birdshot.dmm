@@ -12378,6 +12378,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "eHN" = (
+/obj/structure/cable,
 /turf/open/floor/wood/tile,
 /area/station/maintenance/port/lesser)
 "eHR" = (
@@ -20658,6 +20659,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"hzV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/port/lesser)
 "hzX" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Dock Airlock"
@@ -23526,6 +23532,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
+"iBE" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
+/area/station/service/abandoned_gambling_den/gaming)
 "iBV" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -26577,6 +26588,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/hallway/secondary/exit/departure_lounge)
+"jGO" = (
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
+/area/station/service/abandoned_gambling_den/gaming)
 "jGW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -55342,6 +55357,7 @@
 /area/station/command/heads_quarters/captain/private)
 "tvZ" = (
 /obj/effect/spawner/random/trash,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "twf" = (
@@ -60316,6 +60332,14 @@
 	dir = 1
 	},
 /area/station/service/lawoffice)
+"vcY" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/wood/tile,
+/area/station/service/abandoned_gambling_den/gaming)
 "vdf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -82288,7 +82312,7 @@ kCo
 peR
 dyW
 fEC
-vAD
+vcY
 vAD
 vAD
 roq
@@ -82545,7 +82569,7 @@ qXB
 tmT
 qXB
 fEC
-vAD
+jGO
 uhq
 tXl
 vAD
@@ -82802,7 +82826,7 @@ hbm
 aZw
 vSW
 fEC
-roq
+iBE
 uhq
 tXl
 roq
@@ -83057,9 +83081,9 @@ qVP
 wmV
 cpH
 tqo
-tqo
+hzV
 eHN
-roq
+iBE
 roq
 roq
 roq
@@ -83314,7 +83338,7 @@ qVP
 fEC
 cpH
 fEC
-tqo
+hzV
 fEC
 qVP
 fNu
@@ -83571,7 +83595,7 @@ qVP
 nHu
 dpt
 tvZ
-tqo
+hzV
 efr
 qVP
 ets
