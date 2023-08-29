@@ -37,7 +37,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 1
 	var/tray_mode = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND | ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/surgery_tray/deployed
 	tray_mode = FALSE
@@ -51,6 +51,7 @@
 	update_appearance(UPDATE_OVERLAYS | UPDATE_ICON_STATE | UPDATE_DESC)
 	AddElement(/datum/element/noisy_movement)
 	AddElement(/datum/element/drag_pickup)
+	register_context()
 
 /obj/item/surgery_tray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
