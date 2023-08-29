@@ -288,7 +288,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items(TRUE)
+	var/Itemlist = get_equipped_items(include_pockets = TRUE)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)
@@ -378,7 +378,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/crab))
+	if(ispath(MP, /mob/living/basic/crab))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE
@@ -390,7 +390,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/mouse))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
+	if(ispath(MP, /mob/living/basic/bear))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/parrot))
 		return TRUE //Parrots are no longer unfinished! -Nodrak

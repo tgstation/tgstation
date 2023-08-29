@@ -75,7 +75,7 @@
 	if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
 		return
 
-	if((flags & CALTROP_IGNORE_WALKERS) && H.m_intent == MOVE_INTENT_WALK)
+	if((flags & CALTROP_IGNORE_WALKERS) && H.move_intent == MOVE_INTENT_WALK)
 		return
 
 	if(H.movement_type & (FLOATING|FLYING)) //check if they are able to pass over us

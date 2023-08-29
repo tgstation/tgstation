@@ -8,18 +8,18 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
-	/// armor more or less consistent with grille. max_integrity about one time and a half that of a grille.
+	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
-	max_integrity = 75
+	max_integrity = 25
 
 	var/climbable = TRUE
 	///Initial direction of the railing.
 	var/ini_dir
 
 /datum/armor/structure_railing
-	melee = 50
-	bullet = 70
-	laser = 70
+	melee = 35
+	bullet = 50
+	laser = 50
 	energy = 100
 	bomb = 10
 
@@ -27,6 +27,12 @@
 	icon_state = "railing_corner"
 	density = FALSE
 	climbable = FALSE
+
+/obj/structure/railing/corner/end //end of a segment of railing without making a loop
+	icon_state = "railing_end"
+
+/obj/structure/railing/corner/end/flip //same as above but flipped around
+	icon_state = "railing_end_flip"
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
@@ -39,6 +45,19 @@
 			COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_WELDER = list(
+			SCREENTIP_CONTEXT_LMB = "Repair",
+		),
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor/Unanchor",
+		),
+		TOOL_WIRECUTTER = list(
+			SCREENTIP_CONTEXT_LMB = "Deconstruct",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
@@ -64,11 +83,10 @@
 
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(!anchored)
-		to_chat(user, span_warning("You cut apart the railing."))
-		I.play_tool_sound(src, 100)
-		deconstruct()
-		return TRUE
+	to_chat(user, span_warning("You cut apart the railing."))
+	I.play_tool_sound(src, 100)
+	deconstruct()
+	return TRUE
 
 /obj/structure/railing/deconstruct(disassembled)
 	if(!(flags_1 & NODECONSTRUCT_1))

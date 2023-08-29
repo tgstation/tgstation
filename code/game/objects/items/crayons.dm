@@ -21,7 +21,7 @@
  */
 
 /obj/item/toy/crayon
-	name = "red crayon"
+	name = "crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonred"

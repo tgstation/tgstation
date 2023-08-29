@@ -1,5 +1,4 @@
 //predominantly negative traits
-
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
@@ -367,6 +366,7 @@
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/reagent_containers/cup/glass/waterbottle)
 
+
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
@@ -440,10 +440,86 @@
 		quirk_holder.clear_mood_event("nyctophobia")
 		return
 
-	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
+	if(quirk_holder.move_intent == MOVE_INTENT_RUN)
 		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 		quirk_holder.toggle_move_intent()
 	quirk_holder.add_mood_event("nyctophobia", /datum/mood_event/nyctophobia)
+
+#define MOOD_CATEGORY_PHOTOPHOBIA "photophobia"
+
+/datum/quirk/photophobia
+	name = "Photophobia"
+	desc = "Bright lights seem to bother you more than others. Maybe it's a medical condition."
+	icon = FA_ICON_ARROWS_TO_EYE
+	value = -4
+	gain_text = span_danger("The safety of light feels off...")
+	lose_text = span_notice("Enlightening.")
+	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
+	hardcore_value = 4
+	mail_goodies = list(
+		/obj/item/flashlight/flashdark,
+		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
+		/obj/item/skillchip/light_remover,
+	)
+
+/datum/quirk/photophobia/add(client/client_source)
+	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_eyes))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(restore_eyes))
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+	update_eyes(quirk_holder.get_organ_slot(ORGAN_SLOT_EYES))
+
+/datum/quirk/photophobia/remove()
+	UnregisterSignal(quirk_holder, list(
+		COMSIG_CARBON_GAIN_ORGAN,
+		COMSIG_CARBON_LOSE_ORGAN,
+		COMSIG_MOVABLE_MOVED,))
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
+	var/obj/item/organ/internal/eyes/normal_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
+	if(istype(normal_eyes))
+		normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
+
+/datum/quirk/photophobia/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
+	SIGNAL_HANDLER
+	if(!istype(sensitive_eyes))
+		return
+	update_eyes(sensitive_eyes)
+
+/datum/quirk/photophobia/proc/update_eyes(obj/item/organ/internal/eyes/target_eyes)
+	if(!istype(target_eyes))
+		return
+	target_eyes.flash_protect = max(target_eyes.flash_protect - 1, FLASH_PROTECTION_HYPER_SENSITIVE)
+
+/datum/quirk/photophobia/proc/restore_eyes(obj/item/organ/internal/eyes/normal_eyes)
+	SIGNAL_HANDLER
+	if(!istype(normal_eyes))
+		return
+	normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
+
+/datum/quirk/photophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(human_holder.sight & SEE_TURFS)
+		return
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+
+	var/lums = holder_turf.get_lumcount()
+
+	var/eye_protection = quirk_holder.get_eye_protection()
+	if(lums < LIGHTING_TILE_IS_DARK || eye_protection >= FLASH_PROTECTION_NONE)
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
+		return
+	quirk_holder.add_mood_event(MOOD_CATEGORY_PHOTOPHOBIA, /datum/mood_event/photophobia)
+
+	#undef MOOD_CATEGORY_PHOTOPHOBIA
 
 /datum/quirk/softspoken
 	name = "Soft-Spoken"
@@ -1418,3 +1494,44 @@
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
+
+/datum/quirk/indebted
+	name = "Indebted"
+	desc = "Bad life decisions, medical bills, student loans, whatever it may be, you've incurred quite the debt. A portion of all you receive will go towards extinguishing it."
+	icon = FA_ICON_DOLLAR
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_HIDE_FROM_SCAN
+	value = -2
+	medical_record_text = "Alas, the patient struggled to scrape together enough money to pay the checkup bill."
+	hardcore_value = 2
+
+/datum/quirk/indebted/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(!human_holder.account_id)
+		return
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[human_holder.account_id]"]
+	var/debt = PAYCHECK_CREW * rand(275, 325)
+	account.account_debt += debt
+	RegisterSignal(account, COMSIG_BANK_ACCOUNT_DEBT_PAID, PROC_REF(on_debt_paid))
+	to_chat(client_source.mob, span_warning("You remember, you've a hefty, [debt] credits debt to pay..."))
+
+///Once the debt is extinguished, award an achievement and a pin for actually taking care of it.
+/datum/quirk/indebted/proc/on_debt_paid(datum/bank_account/source)
+	SIGNAL_HANDLER
+	if(source.account_debt)
+		return
+	UnregisterSignal(source, COMSIG_BANK_ACCOUNT_DEBT_PAID)
+	///The debt was extinguished while the quirk holder was logged out, so let's kindly award it once they come back.
+	if(!quirk_holder.client)
+		RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(award_on_login))
+	else
+		quirk_holder.client.give_award(/datum/award/achievement/misc/debt_extinguished, quirk_holder)
+	podspawn(list(
+		"target" = get_turf(quirk_holder),
+		"style" = STYLE_BLUESPACE,
+		"spawn" = /obj/item/clothing/accessory/debt_payer_pin,
+	))
+
+/datum/quirk/indebted/proc/award_on_login(mob/source)
+	SIGNAL_HANDLER
+	quirk_holder.client.give_award(/datum/award/achievement/misc/debt_extinguished, quirk_holder)
+	UnregisterSignal(source, COMSIG_MOB_LOGIN)

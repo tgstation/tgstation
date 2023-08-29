@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define istransparentturf(A) (HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
 
+#define iscliffturf(A) (istype(A, /turf/open/cliff))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -157,7 +159,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
-#define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
+#define isregalrat(A) (istype(A, /mob/living/basic/regal_rat))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
@@ -167,7 +169,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/giant_spider))
+#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 
 
 //Misc mobs
@@ -190,6 +192,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isfish(A) (istype(A, /obj/item/fish))
+
 #define isstack(A) (istype(A, /obj/item/stack))
 
 #define isgrenade(A) (istype(A, /obj/item/grenade))
@@ -204,7 +208,13 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isstructure(A) (istype(A, /obj/structure))
 
+#define isaquarium(A) (istype(A, /obj/structure/aquarium))
+
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define istramwall(A) (istype(A, /obj/structure/window/reinforced/tram/front))
+
+#define isvendor(A) (istype(A, /obj/machinery/vending))
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
@@ -229,6 +239,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isprojectile(A) (istype(A, /obj/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
+
+#define isammobox(A) (istype(A, /obj/item/ammo_box))
 
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 

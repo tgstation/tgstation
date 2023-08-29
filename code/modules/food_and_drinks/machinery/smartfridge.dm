@@ -349,7 +349,8 @@
 	.["name"] = name
 	.["isdryer"] = FALSE
 
-/obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
+/obj/machinery/smartfridge/Exited(atom/movable/gone, direction) // Update the UIs in case something inside is removed
+	. = ..()
 	SStgui.update_uis(src)
 
 /obj/machinery/smartfridge/ui_act(action, params)
@@ -597,8 +598,11 @@
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (matter_bin.tier - 1) * 0.5)
 
 /obj/machinery/smartfridge/organ/process(seconds_per_tick)
-	for(var/obj/item/organ/organ in contents)
-		organ.apply_organ_damage(-repair_rate * organ.maxHealth * seconds_per_tick)
+	for(var/obj/item/organ/target_organ in contents)
+		if(!target_organ.damage)
+			continue
+
+		target_organ.apply_organ_damage(-repair_rate * target_organ.maxHealth * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()

@@ -54,8 +54,10 @@
 
 /mob/living/basic/tree/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	AddElement(/datum/element/death_drops, list(/obj/item/stack/sheet/mineral/wood))
+	var/static/list/death_loot = list(/obj/item/stack/sheet/mineral/wood)
+	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 
 /mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)

@@ -244,7 +244,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "Iq" = (
 /obj/structure/table/reinforced,
-/obj/item/camera_bug,
+/obj/item/computer_disk/syndicate/camera_app,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "LS" = (

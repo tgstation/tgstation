@@ -14,19 +14,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	program_icon = "address-book"
 
 	var/change_position_cooldown = 30
-	///Jobs blacklisted from having their slots edited.
-	var/static/list/blacklisted = list(
-		JOB_CAPTAIN,
-		JOB_HEAD_OF_PERSONNEL,
-		JOB_HEAD_OF_SECURITY,
-		JOB_RESEARCH_DIRECTOR,
-		JOB_CHIEF_ENGINEER,
-		JOB_CHIEF_MEDICAL_OFFICER,
-		JOB_QUARTERMASTER,
-		JOB_AI,
-		JOB_CYBORG,
-		JOB_ASSISTANT,
-	)
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
@@ -41,14 +28,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 
 /datum/computer_file/program/job_management/proc/can_edit_job(datum/job/job)
-	if(!job || !(job.job_flags & JOB_CREW_MEMBER) || (job.title in blacklisted))
+	if(!istype(job))
+		return FALSE
+	if(!(job.job_flags & JOB_CREW_MEMBER))
+		return FALSE
+	if(job.job_flags & JOB_CANNOT_OPEN_SLOTS)
 		return FALSE
 	return TRUE
 
 
 /datum/computer_file/program/job_management/proc/can_open_job(datum/job/job)
-	if(!can_edit_job(job))
-		return FALSE
 	if((job.total_positions <= length(GLOB.player_list) * (max_relative_positions / 100)))
 		var/delta = (world.time / 10) - GLOB.time_last_changed_position
 		if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
@@ -57,8 +46,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 
 /datum/computer_file/program/job_management/proc/can_close_job(datum/job/job)
-	if(!can_edit_job(job))
-		return FALSE
 	if(job.total_positions > length(GLOB.player_list) * (max_relative_positions / 100))
 		var/delta = (world.time / 10) - GLOB.time_last_changed_position
 		if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
@@ -75,7 +62,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if("PRG_open_job")
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
-			if(!j || !can_open_job(j))
+			if(!can_edit_job(j) || !can_open_job(j))
 				return TRUE
 			if(opened_positions[edit_job_target] >= 0)
 				GLOB.time_last_changed_position = world.time / 10
@@ -87,7 +74,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if("PRG_close_job")
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
-			if(!j || !can_close_job(j))
+			if(!can_edit_job(j) || !can_close_job(j))
 				return TRUE
 			//Allow instant closing without cooldown if a position has been opened before
 			if(opened_positions[edit_job_target] <= 0)
@@ -100,7 +87,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if("PRG_priority")
 			var/priority_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(priority_target)
-			if(!j || !can_edit_job(j))
+			if(!can_edit_job(j))
 				return TRUE
 			if(j.total_positions <= j.current_positions)
 				return TRUE
@@ -128,7 +115,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/pos = list()
 	var/list/priority = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(job.title in blacklisted)
+		if(!can_edit_job(job))
 			continue
 		if(job in SSjob.prioritized_jobs)
 			priority += job.title
@@ -145,4 +132,3 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/delta = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 	data["cooldown"] = delta < 0 ? 0 : delta
 	return data
-

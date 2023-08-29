@@ -100,17 +100,50 @@
 		ear_owner.RemoveElement(/datum/element/waddling)
 
 /obj/item/organ/internal/ears/cybernetic
-	name = "cybernetic ears"
+	name = "basic cybernetic ears"
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/ears/cybernetic/upgraded
-	name = "upgraded cybernetic ears"
+	name = "cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
+	desc =  "An advanced cybernetic ear, surpassing the performance of organic ears."
 	damage_multiplier = 0.5
+
+/obj/item/organ/internal/ears/cybernetic/whisper
+	name = "whisper-sensitive cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
+	// Same sensitivity as felinid ears
+	damage_multiplier = 2
+
+// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
+// This seems like the least invasive solution
+/obj/item/organ/internal/ears/cybernetic/whisper/on_insert(mob/living/carbon/ear_owner)
+	. = ..()
+	ADD_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
+
+/obj/item/organ/internal/ears/cybernetic/whisper/on_remove(mob/living/carbon/ear_owner)
+	. = ..()
+	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
+
+// "X-ray ears" that let you hear through walls
+/obj/item/organ/internal/ears/cybernetic/xray
+	name = "wall-penetrating cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Throguh the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
+	// Same sensitivity as felinid ears
+	damage_multiplier = 2
+
+/obj/item/organ/internal/ears/cybernetic/xray/on_insert(mob/living/carbon/ear_owner)
+	. = ..()
+	ADD_TRAIT(ear_owner, TRAIT_XRAY_HEARING, ORGAN_TRAIT)
+
+/obj/item/organ/internal/ears/cybernetic/xray/on_remove(mob/living/carbon/ear_owner)
+	. = ..()
+	REMOVE_TRAIT(ear_owner, TRAIT_XRAY_HEARING, ORGAN_TRAIT)
 
 /obj/item/organ/internal/ears/cybernetic/emp_act(severity)
 	. = ..()

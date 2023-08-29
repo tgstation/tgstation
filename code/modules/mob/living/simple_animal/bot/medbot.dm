@@ -35,6 +35,45 @@
 	path_image_color = "#DDDDFF"
 	possessed_message = "You are a medbot! Ensure good health among the crew to the best of your ability!"
 
+	automated_announcements = list(
+		MEDIBOT_VOICED_HOLD_ON = 'sound/voice/medbot/coming.ogg',
+		MEDIBOT_VOICED_WANT_TO_HELP = 'sound/voice/medbot/help.ogg',
+		MEDIBOT_VOICED_YOU_ARE_INJURED = 'sound/voice/medbot/injured.ogg',
+		MEDIBOT_VOICED_ALL_PATCHED_UP = 'sound/voice/medbot/patchedup.ogg',
+		MEDIBOT_VOICED_APPLE_A_DAY = 'sound/voice/medbot/apple.ogg',
+		MEDIBOT_VOICED_FEEL_BETTER = 'sound/voice/medbot/feelbetter.ogg',
+		MEDIBOT_VOICED_STAY_WITH_ME = 'sound/voice/medbot/no.ogg',
+		MEDIBOT_VOICED_LIVE = 'sound/voice/medbot/live.ogg',
+		MEDIBOT_VOICED_NEVER_LOST = 'sound/voice/medbot/lost.ogg',
+		MEDIBOT_VOICED_DELICIOUS = 'sound/voice/medbot/delicious.ogg',
+		MEDIBOT_VOICED_PLASTIC_SURGEON = 'sound/voice/medbot/surgeon.ogg',
+		MEDIBOT_VOICED_MASK_ON = 'sound/voice/medbot/radar.ogg',
+		MEDIBOT_VOICED_ALWAYS_A_CATCH = 'sound/voice/medbot/catch.ogg',
+		MEDIBOT_VOICED_LIKE_FLIES = 'sound/voice/medbot/flies.ogg',
+		MEDIBOT_VOICED_SUFFER = 'sound/voice/medbot/why.ogg',
+		MEDIBOT_VOICED_FUCK_YOU = 'sound/voice/medbot/fuck_you.ogg',
+		MEDIBOT_VOICED_NOT_A_GAME = 'sound/voice/medbot/turn_off.ogg',
+		MEDIBOT_VOICED_IM_DIFFERENT = 'sound/voice/medbot/im_different.ogg',
+		MEDIBOT_VOICED_FOURTH_WALL = 'sound/voice/medbot/close.ogg',
+		MEDIBOT_VOICED_SHINDEMASHOU = 'sound/voice/medbot/shindemashou.ogg',
+		MEDIBOT_VOICED_WAIT = 'sound/voice/medbot/hey_wait.ogg',
+		MEDIBOT_VOICED_DONT = 'sound/voice/medbot/please_dont.ogg',
+		MEDIBOT_VOICED_TRUSTED_YOU = 'sound/voice/medbot/i_trusted_you.ogg',
+		MEDIBOT_VOICED_NO_SAD = 'sound/voice/medbot/nooo.ogg',
+		MEDIBOT_VOICED_OH_FUCK = 'sound/voice/medbot/oh_fuck.ogg',
+		MEDIBOT_VOICED_FORGIVE = 'sound/voice/medbot/forgive.ogg',
+		MEDIBOT_VOICED_THANKS = 'sound/voice/medbot/thank_you.ogg',
+		MEDIBOT_VOICED_GOOD_PERSON = 'sound/voice/medbot/youre_good.ogg',
+		MEDIBOT_VOICED_BEHAVIOUR_REPORTED = 'sound/voice/medbot/reported.ogg',
+		MEDIBOT_VOICED_ASSISTANCE = 'sound/voice/medbot/i_require_asst.ogg',
+		MEDIBOT_VOICED_PUT_BACK = 'sound/voice/medbot/please_put_me_back.ogg',
+		MEDIBOT_VOICED_IM_SCARED = 'sound/voice/medbot/please_im_scared.ogg',
+		MEDIBOT_VOICED_NEED_HELP = 'sound/voice/medbot/dont_like.ogg',
+		MEDIBOT_VOICED_THIS_HURTS = 'sound/voice/medbot/pain_is_real.ogg',
+		MEDIBOT_VOICED_THE_END = 'sound/voice/medbot/is_this_the_end.ogg',
+		MEDIBOT_VOICED_NOOO = 'sound/voice/medbot/nooo.ogg',
+	)
+
 	/// drop determining variable
 	var/healthanalyzer = /obj/item/healthanalyzer
 	/// drop determining variable
@@ -93,6 +132,39 @@
 	heal_threshold = 0
 	heal_amount = 5
 
+/mob/living/simple_animal/bot/medbot/nukie
+	name = "Oppenheimer"
+	desc = "A medibot stolen from a Nanotrasen station and upgraded by the Syndicate. Despite their best efforts at reprogramming, it still appears visibly upset near nuclear explosives."
+	skin = "bezerk"
+	health = 40
+	maxHealth = 40
+	maints_access_required = list(ACCESS_SYNDICATE)
+	radio_key = /obj/item/encryptionkey/syndicate
+	radio_channel = RADIO_CHANNEL_SYNDICATE
+	damagetype_healer = "all"
+	heal_threshold = 0
+	heal_amount = 5
+
+/mob/living/simple_animal/bot/medbot/nukie/Initialize(mapload, new_skin)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DISARMED, PROC_REF(nuke_disarm))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(nuke_arm))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DETONATING, PROC_REF(nuke_detonate))
+	internal_radio.set_frequency(FREQ_SYNDICATE)
+	internal_radio.freqlock = RADIO_FREQENCY_LOCKED
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_disarm()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_FORGIVE, MEDIBOT_VOICED_THANKS, MEDIBOT_VOICED_GOOD_PERSON))
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_arm()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_WAIT, MEDIBOT_VOICED_DONT, MEDIBOT_VOICED_IM_SCARED))
+
+/mob/living/simple_animal/bot/medbot/nukie/proc/nuke_detonate()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(speak), pick(MEDIBOT_VOICED_THE_END, MEDIBOT_VOICED_NOOO, MEDIBOT_VOICED_SUFFER))
+
 /mob/living/simple_animal/bot/medbot/examine(mob/user)
 	. = ..()
 	if(tipped_status == MEDBOT_PANIC_NONE)
@@ -136,7 +208,8 @@
 	access_card.add_access(para_trim.access + para_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
-	skin = new_skin
+	if(!isnull(new_skin))
+		skin = new_skin
 	update_appearance()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		linked_techweb = SSresearch.science_tech
@@ -251,7 +324,11 @@
 	last_found = world.time
 	if(COOLDOWN_FINISHED(src, last_newpatient_speak))
 		COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
-		var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
+		var/list/messagevoice = list(
+			"Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',
+			"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',
+			"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg',
+		)
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], 50, FALSE)
@@ -267,16 +344,14 @@
 		return
 
 	COOLDOWN_START(src, last_tipping_action_voice, MEDBOT_FREAKOUT_DELAY) // message for tipping happens when we start interacting, message for righting comes after finishing
-	var/static/list/messagevoice = list(
-		"Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',
-		"Please don't..." = 'sound/voice/medbot/please_dont.ogg',
-		"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg',
-		"Nooo..." = 'sound/voice/medbot/nooo.ogg',
-		"Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg',
-		)
-	var/message = pick(messagevoice)
-	speak(message)
-	playsound(src, messagevoice[message], 70, FALSE)
+	var/static/list/worried_line = list(
+		MEDIBOT_VOICED_WAIT,
+		MEDIBOT_VOICED_DONT,
+		MEDIBOT_VOICED_TRUSTED_YOU,
+		MEDIBOT_VOICED_NO_SAD,
+		MEDIBOT_VOICED_OH_FUCK,
+	)
+	speak(pick(worried_line))
 
 /*
  * Proc used in a callback for after this medibot is tipped by the tippable component.
@@ -297,18 +372,16 @@
 	var/list/messagevoice
 	if(user)
 		if(user.name == tipper_name)
-			messagevoice = list("I forgive you." = 'sound/voice/medbot/forgive.ogg')
+			messagevoice = list(MEDIBOT_VOICED_FORGIVE)
 		else
-			messagevoice = list("Thank you!" = 'sound/voice/medbot/thank_you.ogg', "You are a good person." = 'sound/voice/medbot/youre_good.ogg')
+			messagevoice = list(MEDIBOT_VOICED_THANKS, MEDIBOT_VOICED_GOOD_PERSON)
 	else
-		messagevoice = list("Fuck you." = 'sound/voice/medbot/fuck_you.ogg', "Your behavior has been reported, have a nice day." = 'sound/voice/medbot/reported.ogg')
+		messagevoice = list(MEDIBOT_VOICED_FUCK_YOU, MEDIBOT_VOICED_BEHAVIOUR_REPORTED)
 	tipper_name = null
 
 	if(COOLDOWN_FINISHED(src, last_tipping_action_voice))
 		COOLDOWN_START(src, last_tipping_action_voice, MEDBOT_FREAKOUT_DELAY)
-		var/message = pick(messagevoice)
-		speak(message)
-		playsound(src, messagevoice[message], 70)
+		speak(pick(messagevoice))
 	tipped_status = MEDBOT_PANIC_NONE
 	mode = BOT_IDLE
 
@@ -319,15 +392,15 @@
 
 	switch(tipped_status)
 		if(MEDBOT_PANIC_LOW)
-			messagevoice = list("I require assistance." = 'sound/voice/medbot/i_require_asst.ogg')
+			messagevoice = list(MEDIBOT_VOICED_ASSISTANCE)
 		if(MEDBOT_PANIC_MED)
-			messagevoice = list("Please put me back." = 'sound/voice/medbot/please_put_me_back.ogg')
+			messagevoice = list(MEDIBOT_VOICED_PUT_BACK)
 		if(MEDBOT_PANIC_HIGH)
-			messagevoice = list("Please, I am scared!" = 'sound/voice/medbot/please_im_scared.ogg')
+			messagevoice = list(MEDIBOT_VOICED_IM_SCARED)
 		if(MEDBOT_PANIC_FUCK)
-			messagevoice = list("I don't like this, I need help!" = 'sound/voice/medbot/dont_like.ogg', "This hurts, my pain is real!" = 'sound/voice/medbot/pain_is_real.ogg')
+			messagevoice = list(MEDIBOT_VOICED_NEED_HELP, MEDIBOT_VOICED_THIS_HURTS)
 		if(MEDBOT_PANIC_ENDING)
-			messagevoice = list("Is this the end?" = 'sound/voice/medbot/is_this_the_end.ogg', "Nooo!" = 'sound/voice/medbot/nooo.ogg')
+			messagevoice = list(MEDIBOT_VOICED_THE_END, MEDIBOT_VOICED_NOOO)
 		if(MEDBOT_PANIC_END)
 			speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
 
@@ -335,9 +408,7 @@
 		do_jitter_animation(tipped_status * 0.1)
 
 	if(messagevoice)
-		var/message = pick(messagevoice)
-		speak(message)
-		playsound(src, messagevoice[message], 70)
+		speak(pick(messagevoice))
 	else if(prob(tipped_status * 0.2))
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 30, extrarange=-2)
 
@@ -366,26 +437,24 @@
 	if(QDELETED(patient))
 		if(medical_mode_flags & MEDBOT_SPEAK_MODE && prob(1))
 			if(bot_cover_flags & BOT_COVER_EMAGGED && prob(30))
-				var/list/i_need_scissors = list(
-					'sound/voice/medbot/fuck_you.ogg',
-					'sound/voice/medbot/turn_off.ogg',
-					'sound/voice/medbot/im_different.ogg',
-					'sound/voice/medbot/close.ogg',
-					'sound/voice/medbot/shindemashou.ogg',
+				var/static/list/i_need_scissors = list(
+					MEDIBOT_VOICED_FUCK_YOU,
+					MEDIBOT_VOICED_NOT_A_GAME,
+					MEDIBOT_VOICED_IM_DIFFERENT,
+					MEDIBOT_VOICED_FOURTH_WALL,
+					MEDIBOT_VOICED_SHINDEMASHOU,
 				)
-				playsound(src, pick(i_need_scissors), 70)
+				speak(pick(i_need_scissors))
 			else
-				var/static/list/messagevoice = list(
-					"Delicious!" = 'sound/voice/medbot/delicious.ogg',
-					"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',
-					"Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',
-					"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',
-					"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',
-					"Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg',
+				var/static/list/idle_lines = list(
+					MEDIBOT_VOICED_DELICIOUS,
+					MEDIBOT_VOICED_PLASTIC_SURGEON,
+					MEDIBOT_VOICED_MASK_ON,
+					MEDIBOT_VOICED_ALWAYS_A_CATCH,
+					MEDIBOT_VOICED_LIKE_FLIES,
+					MEDIBOT_VOICED_SUFFER,
 				)
-				var/message = pick(messagevoice)
-				speak(message)
-				playsound(src, messagevoice[message], 50)
+				speak(pick(idle_lines))
 		var/scan_range = (medical_mode_flags & MEDBOT_STATIONARY_MODE ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
 		patient = scan(list(/mob/living/carbon/human), oldpatient, scan_range)
 		oldpatient = patient
@@ -511,10 +580,12 @@
 		return
 
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
-		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
-		var/message = pick(messagevoice)
-		speak(message)
-		playsound(src, messagevoice[message], 50)
+		var/static/list/grief_lines = list(
+			MEDIBOT_VOICED_STAY_WITH_ME,
+			MEDIBOT_VOICED_LIVE,
+			MEDIBOT_VOICED_NEVER_LOST,
+		)
+		speak(pick(grief_lines))
 		oldpatient = patient
 		soft_reset()
 		return
@@ -548,10 +619,12 @@
 			if(C.maxHealth - C.get_organic_health() < heal_threshold)
 				to_chat(src, span_notice("[C] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)"))
 
-			var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
-			var/message = pick(messagevoice)
-			speak(message)
-			playsound(src, messagevoice[message], 50)
+			var/static/list/success_lines = list(
+				MEDIBOT_VOICED_ALL_PATCHED_UP,
+				MEDIBOT_VOICED_APPLE_A_DAY,
+				MEDIBOT_VOICED_FEEL_BETTER,
+			)
+			speak(pick(success_lines))
 			bot_reset()
 			tending = FALSE
 		else if(patient)

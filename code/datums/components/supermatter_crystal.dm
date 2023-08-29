@@ -21,6 +21,11 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
+/datum/component/supermatter_crystal/Destroy(force, silent)
+	tool_act_callback = null
+	consume_callback = null
+	return ..()
+
 /datum/component/supermatter_crystal/UnregisterFromParent(force, silent)
 	var/list/signals_to_remove = list(
 		COMSIG_ATOM_BLOB_ACT,
@@ -213,6 +218,8 @@
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER
 	for(var/atom/movable/hit_object as anything in falling_movables)
+		if(hit_object == source)
+			continue
 		bumped_hit(parent, hit_object)
 	return FALL_INTERCEPTED | FALL_NO_MESSAGE
 

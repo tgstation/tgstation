@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - rscadd: "The Lavaland Cursed Slot Machine of Greed suddenly seems a lot more sinister..."
+  - refactor: "Instead of taking clone damage from the cursed slot machine, you now get a status effect with a number of curses associated with it. There's some interesting florid language associated with the status effect as a nicety until your eventual gibbing from chasing that prize."

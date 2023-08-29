@@ -155,8 +155,11 @@
 	if(blood_flow > 0)
 		try_treating(I, user)
 
+/datum/wound/pierce/get_limb_examine_description()
+	return span_warning("The flesh on this limb appears badly perforated.")
+
 /datum/wound/pierce/moderate
-	name = "Minor Breakage"
+	name = "Minor Skin Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
 	treat_text = "Treat affected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // space is cold in ss13, so it's like an ice pack!
 	examine_desc = "has a small, circular hole, gently bleeding"

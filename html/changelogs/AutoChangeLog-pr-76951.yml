@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "[Birdshot] Xenos can no longer immediately destroy the shield wall generator to break out."

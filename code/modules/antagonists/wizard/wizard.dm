@@ -50,6 +50,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+
+/datum/antagonist/wizard_minion/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard_minion/proc/create_objectives()
@@ -69,6 +74,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		CRASH("Wizard datum with no owner.")
 	assign_ritual()
 	equip_wizard()
+	owner.current.add_quirk(/datum/quirk/introvert)
 	if(give_objectives)
 		create_objectives()
 	if(move_to_lair)
@@ -76,6 +82,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	. = ..()
 	if(allow_rename)
 		rename_wizard()
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 
 /datum/antagonist/wizard/Destroy()
 	QDEL_NULL(ritual)
@@ -169,6 +176,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			qdel(spell)
 			owner.current.actions -= spell
 
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()

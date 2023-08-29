@@ -491,6 +491,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/mob/living/simple_animal/bot/medbot/nukie{
+	name = "Dr. Pax";
+	desc = "A twitchy medibot. It can't seem to hold still. Slightly concerning."
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "fY" = (
