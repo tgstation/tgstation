@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(ore_generation)
 	wait = 5 MINUTES
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
-	flags = SS_NO_INIT
 
 	/// All ore vents that are currently producing boulders.
 	var/list/processed_vents = list()
@@ -33,15 +32,25 @@ SUBSYSTEM_DEF(ore_generation)
 		/datum/material/bluespace = 3,
 		/datum/material/plastic = 1,
 	)
- 	///Associated list of vent sizes that remain. We can't have more than 3 large vents, 5 medium vents, and 7 small vents.
+ 	///Associated list of vent size weights to pick from.
 	var/list/ore_vent_sizes = list(
 		"large" = 3,
 		"medium" = 5,
 		"small" = 7,
 	)
 
-/datum/controller/subsystem/ore_generation/fire(resumed)
+/datum/controller/subsystem/ore_generation/Initialize()
+	. = ..()
+	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
+	while(ore_vent_minerals.len > 0)
+		for(var/obj/structure/ore_vent/vent in possible_vents)
+			if(vent.unique_vent)
+				continue //Ya'll already got your minerals.
+			if(ore_vent_minerals.len <= 0)
+				break
+			vent.generate_mineral_breakdown(max_minerals = 1)
 
+/datum/controller/subsystem/ore_generation/fire(resumed)
 	available_boulders = list() // reset upon new fire.
 	for(var/vent in processed_vents)
 		var/obj/structure/ore_vent/current_vent = vent

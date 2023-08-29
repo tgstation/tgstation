@@ -121,9 +121,11 @@
 		refined_list[material] += ore_quantity_function(iteration)
 	return refined_list
 
-/obj/structure/ore_vent/proc/generate_mineral_breakdown()
+/obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM)
 	var/iterator = 1
-	while(iterator <= MINERAL_TYPE_OPTIONS_RANDOM)
+	if(max_minerals < 1)
+		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
+	while(iterator <= max_minerals)
 		if(SSore_generation.ore_vent_minerals.len == 0)
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material = pick_weight(SSore_generation.ore_vent_minerals)
@@ -269,8 +271,8 @@
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
-	if(!unique_vent)
-		generate_mineral_breakdown()
+	if(!unique_vent && !mapload)
+		generate_mineral_breakdown() //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
 	name = "[string_boulder_size] ore vent"

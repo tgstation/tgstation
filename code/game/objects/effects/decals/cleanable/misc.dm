@@ -125,8 +125,9 @@
 	light_power = 2
 
 /obj/effect/decal/cleanable/greenglow/waste
-	name = "industrial waste"
-	desc = "A puddle of radioactive waste."
+	name = "caustic sludge"
+	desc = "A puddle of radioactive waste. Eats through the floor if not cleaned up."
+	icon_state = "waste_spill"
 	light_power = 1
 	beauty = -300
 	clean_type = CLEAN_TYPE_ACID
@@ -134,7 +135,12 @@
 
 /obj/effect/decal/cleanable/greenglow/waste/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	visible_message(span_warning("\The [src] begins corroding the floor!"))
+	pre_eat()
+
+/obj/effect/decal/cleanable/greenglow/waste/proc/pre_eat(display_message = TRUE)
+	if(display_message)
+		visible_message(span_warning("\The [src] begins corroding \the [get_turf(src)]!"))
+	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(eat_floor)), 45 SECONDS)
 
 /obj/effect/decal/cleanable/greenglow/waste/proc/eat_floor()

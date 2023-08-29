@@ -2741,7 +2741,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/structure/sign/poster/contraband/random/directional/west,
-/turf/closed/mineral/random/labormineral/volcanic,
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "pa" = (
 /obj/structure/stone_tile{
@@ -7661,9 +7661,6 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/mine/laborcamp)
-"Vj" = (
-/turf/closed/mineral/random/labormineral/volcanic,
 /area/mine/laborcamp)
 "Vm" = (
 /obj/machinery/hydroponics/constructable,
@@ -28190,7 +28187,7 @@ Jf
 Jf
 WF
 Zt
-Vj
+Zt
 Zt
 Zt
 Ee

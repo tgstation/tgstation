@@ -1151,19 +1151,55 @@
 // 	if(istype(A, /obj/machinery/plumbing/disposer) || istype(A, /obj/machinery/plumbing/output))
 // 		spew_waste(spew_source = A, transfer_volume = trans_volume, spew_range = 2)
 
+/datum/reagent/toxin/acid/industrial_waste/intercept_reagents_transfer(datum/reagents/target)
+	. = ..()
+	if(target.total_volume == target.maximum_volume)
+		spew_waste(round(volume / 15))
+		return TRUE
+
+/datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
+	. = ..()
+	spew_waste(spew_range = 2)
+
+/datum/reagent/toxin/acid/industrial_waste/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if(reac_volume < 5)
+		return // The waste is too small to do anything.
+	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
+		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
+		goo.visible_message(span_warning("\The new waste reactivates \the [goo]!"))
+		goo.pre_eat(FALSE)
+		if(prob(25))
+			goo.balloon_alert_to_viewers("Hisss!")
+	else
+
 /datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	var/obj/effect/decal/cleanable/greenglow/waste/glow = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste)
-	if(!QDELETED(glow))
-		glow.reagents.add_reagent(type, reac_volume)
+	if(volume < 5)
+		return // The waste is too small to do anything.
+	var/obj/effect/decal/cleanable/greenglow/waste/goo
+	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste)
+	if(!QDELETED(goo))
+		goo.reagents.add_reagent(type, reac_volume)
 
-/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(atom/spew_source, transfer_volume, spew_range = 1)
-	var/datum/reagents/waste_holder = new (transfer_volume)
-	waste_holder.add_reagent(/datum/reagent/toxin/acid/industrial_waste, transfer_volume)
-	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
-	smoke.set_up(spew_range, holder = get_turf(spew_source), location = get_turf(spew_source), carry = waste_holder)
-	smoke.start(log = TRUE)
-	QDEL_NULL(waste_holder)
+/**
+ * Pick a random turf in the spew range and split our waste there.
+ */
+/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1)
+	var/turf/dropturf = null
+	var/list/turfs = TURF_NEIGHBORS(get_turf(holder.my_atom)) //NO MORE DISCS IN WINDOWS
+	while(length(turfs))
+		var/turf/T = pick_n_take(turfs)
+		if(T.is_blocked_turf(TRUE))
+			continue
+		else
+			dropturf = T
+			break
+
+	if (!dropturf)
+		dropturf = drop_location()
+	expose_turf(dropturf, volume/2)
+	volume = volume/2
 
 /datum/reagent/toxin/delayed
 	name = "Toxin Microcapsules"

@@ -147,7 +147,7 @@
 					var/obj/structure/ore_vent/random/picked_vent = picked_feature
 					ore_vents_spawned--
 					if(ore_vents_spawned <= 0)
-						weighted_feature_spawn_list.Remove(picked_vent)
+						weighted_feature_spawn_list.Remove(picked_vent.type)
 						feature_spawn_list = expand_weights(weighted_feature_spawn_list)
 				spawned_something = TRUE
 
