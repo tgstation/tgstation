@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "roundstart modlink scryers now come with the nt frequency"

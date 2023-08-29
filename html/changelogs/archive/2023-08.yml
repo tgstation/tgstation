@@ -1303,3 +1303,48 @@
   - bugfix: fixes a runtime with arrow projectiles
   xXPawnStarrXx:
   - bugfix: fixed corn cobs not making seeds and lying to you in the text box.
+2023-08-29:
+  Ben10Omintrix:
+  - bugfix: mobs do not get stuck when running away from danger
+  DATA-xPUNGED:
+  - bugfix: Quartermaster's Overcoat and Cargo's gorka can now hold stamps in their
+      suit slots, just like their winter coat counterpart
+  Fikou:
+  - bugfix: roundstart modlink scryers now come with the nt frequency
+  FlufflesTheDog:
+  - bugfix: Made it easier to place tiles on multi z level holes
+  - bugfix: Non-surgically debraining someone no longer makes their brain unusuable
+  Hatterhat:
+  - bugfix: Ash drakes, colossi, and Bubblegum spawn on Lavaland more often; a sharp
+      increase from the previous bugged amount of "basically never".
+  Jacquerel:
+  - image: progress bars and cleaning particles are now centered on the tile occupied
+      by the target, if it is a big sprite
+  LT3:
+  - balance: Pre-equipped engineering modsuit now includes emergency tether
+  - balance: Pre-equipped atmospherics modsuit now includes magboots
+  OrionTheFox:
+  - rscadd: Cargo now once again has access to a "Cargo Shortskirt", a skirt variant
+      of their shorts!
+  - image: tweaks and adjustments to the Cargo resprite have been made, as well as
+      respriting some missed icons such as the Winter Coats and QM Cloak
+  Seven:
+  - bugfix: Syndicate ranged mobs (and probably other basic mobs) properly update
+      their shell's description to show they are spent.
+  Vincent983:
+  - qol: Various jobs have gotten additional programs uploaded at roundstart, engineers
+      now have the canary and atmospheric scanner programs, atmospheric technicians
+      now have the supermatter monitor, and Robotisists/RDs now have the silliconnect
+      program.
+  carlarctg:
+  - bugfix: Items worn on a void cloak's suit storage are no longer visible on the
+      stripping menu.
+  - qol: Misclicking the turf below a heretic influence no longer leaves a fingerprint.
+  iwishforducks:
+  - bugfix: Railings no longer give more metal than they take
+  san7890:
+  - rscadd: The Lavaland Cursed Slot Machine of Greed suddenly seems a lot more sinister...
+  - refactor: Instead of taking clone damage from the cursed slot machine, you now
+      get a status effect with a number of curses associated with it. There's some
+      interesting florid language associated with the status effect as a nicety until
+      your eventual gibbing from chasing that prize.
