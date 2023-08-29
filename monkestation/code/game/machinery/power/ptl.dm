@@ -59,6 +59,7 @@
 		return
 	terminal.master = src
 	update_appearance()
+	register_context()
 
 /obj/machinery/power/transmission_laser/Destroy()
 	. = ..()
@@ -117,6 +118,17 @@
 	else if(charge_level > 0)
 		. += "charge_[charge_level]"
 		. += emissive_appearance(icon, "charge_[charge_level]", src)
+
+
+/obj/machinery/power/transmission_laser/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	context[SCREENTIP_CONTEXT_LMB] = "Turn [turned_on ? "Off" : "On"] the PTL."
+	context[SCREENTIP_CONTEXT_RMB] = "Turn [firing ? "Off" : "On"] the PTL's Firing mechanism."
+	return CONTEXTUAL_SCREENTIP_SET
 
 ///returns the charge level from [0 to 6]
 /obj/machinery/power/transmission_laser/proc/return_charge()
