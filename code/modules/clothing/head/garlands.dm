@@ -16,8 +16,8 @@
 /obj/item/clothing/head/costume/rainbowbunchcrown
 	name = "rainbow flower crown"
 	desc = "A flower crown made out of the flowers of the rainbow bunch plant."
-	icon_state = "garland"
-	worn_icon_state = "garland"
+	icon_state = "rainbow_bunch_crown"
+	worn_icon_state = "rainbow_bunch_crown"
 
 /obj/item/clothing/head/costume/rainbowbunchcrown/Initialize()
 	. = ..()
