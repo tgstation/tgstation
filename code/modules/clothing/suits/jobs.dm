@@ -408,6 +408,8 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/storage/bag/construction,
 		/obj/item/t_scanner,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
 	)
 
 /datum/armor/atmos_overalls
