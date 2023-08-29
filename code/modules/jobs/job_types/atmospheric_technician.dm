@@ -61,6 +61,7 @@
 /datum/outfit/job/atmos/mod
 	name = "Atmospheric Technician (MODsuit)"
 
+	suit = null
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/atmospheric
 	mask = /obj/item/clothing/mask/gas/atmos
