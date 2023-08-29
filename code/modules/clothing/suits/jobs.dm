@@ -216,6 +216,10 @@
 	inhand_icon_state = null
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
+	allowed = list(
+		/obj/item/stamp,
+		/obj/item/storage/bag/mail,
+	)
 
 // Quartermaster
 
@@ -225,6 +229,10 @@
 	icon_state = "qm_coat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(
+		/obj/item/stamp,
+		/obj/item/storage/bag/mail,
+	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
 	name = "formal suit jacket"

@@ -68689,7 +68689,6 @@
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
-/obj/item/computer_disk/atmos,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

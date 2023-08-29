@@ -313,3 +313,13 @@
 	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
 	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
 	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."
+
+/// special severe wound caused by the cursed slot machine.
+/datum/wound/burn/severe/cursed_brand
+	name = "Ancient Brand"
+	desc  = "Patient is suffering extreme burns with oddly ornate brand markings, creating serious risk of infection and greatly reduced limb integrity."
+	examine_desc = "appears to have ornate symbols painfully branded into their flesh, leaving severe burns"
+	occur_text = "chars rapidly into a pattern that can only be described as an agglomeration of several financial symbols, burned into the flesh"
+
+/datum/wound/burn/severe/cursed_brand/get_limb_examine_description()
+	return span_warning("The flesh on this limb has several ornate symbols burned into it, with pitting throughout.")

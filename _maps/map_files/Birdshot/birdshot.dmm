@@ -37339,7 +37339,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/dead_body_placer,
+/obj/effect/mapping_helpers/dead_body_placer{
+	bodycount = 2
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "nxJ" = (

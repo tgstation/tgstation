@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - rscadd: "Added associative list variables and associative list variable manipulation for finer data manipulation and storage."
-  - rscadd: "List Find components will now return the index of the element it has found."

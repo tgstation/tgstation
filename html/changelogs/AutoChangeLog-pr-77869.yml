@@ -1,5 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Woundscans no longer runtime"
-  - bugfix: "Normal health analyzers can no longer give the first aid bonus when woundscanning"
