@@ -112,5 +112,5 @@
 	if(cheese_granter_spawned)
 		return
 	cheese_granter_spawned = TRUE
-	new /obj/item/book/granter/action/spell/summon_cheese (src)
+	new /obj/item/book/granter/action/spell/summon_cheese(src)
 	new /obj/item/book/manual/ancient_parchment(src)
