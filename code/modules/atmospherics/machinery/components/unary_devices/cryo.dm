@@ -402,8 +402,8 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
-		if(loc == usr.loc)
-			to_chat(usr, span_warning("You can't close [src] on yourself!"))
+		if(loc == user?.loc)
+			to_chat(user, span_warning("You can't close [src] on yourself!"))
 			return
 		flick("pod-close-anim", src)
 		..(user)
