@@ -22,19 +22,17 @@
 /obj/item/clothing/head/costume/rainbowbunchcrown/Initialize()
 	. = ..()
 	var/crown_type = rand(1,4)
+	icon_state = "[icon_state]_[crown_type]"
+	worn_icon_state = "[worn_icon_state]_[crown_type]"
 	switch(crown_type)
 		if(1)
-			desc += " This one has red, yellow and white flowers."
-			icon_state = "rainbow_bunch_crown_1"
+			desc += "This one has red, yellow, and white flowers."
 		if(2)
-			desc += " This one has blue, yellow, green and white flowers."
-			icon_state = "rainbow_bunch_crown_2"
+			desc += "This one has blue, yellow, green, and white flowers."
 		if(3)
-			desc += " This one has red, blue, purple and pink flowers."
-			icon_state = "rainbow_bunch_crown_3"
+			desc += "This one has red, blue, purple, and pink flowers."
 		if(4)
-			desc += " This one has yellow, green and white flowers."
-			icon_state = "rainbow_bunch_crown_4"
+			desc += "This one has yellow, green, and white flowers."
 
 /obj/item/clothing/head/costume/rainbowbunchcrown/equipped(mob/living/user, slot)
 	. = ..()
