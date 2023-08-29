@@ -60,88 +60,88 @@ Reproductive extracts:
 
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 
 /obj/item/slimecross/reproductive/orange
 	extract_type = /obj/item/slime_extract/orange
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 
 /obj/item/slimecross/reproductive/purple
 	extract_type = /obj/item/slime_extract/purple
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 
 /obj/item/slimecross/reproductive/blue
 	extract_type = /obj/item/slime_extract/blue
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 
 /obj/item/slimecross/reproductive/metal
 	extract_type = /obj/item/slime_extract/metal
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 
 /obj/item/slimecross/reproductive/yellow
 	extract_type = /obj/item/slime_extract/yellow
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 
 /obj/item/slimecross/reproductive/darkpurple
 	extract_type = /obj/item/slime_extract/darkpurple
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 
 /obj/item/slimecross/reproductive/darkblue
 	extract_type = /obj/item/slime_extract/darkblue
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 
 /obj/item/slimecross/reproductive/silver
 	extract_type = /obj/item/slime_extract/silver
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 
 /obj/item/slimecross/reproductive/bluespace
 	extract_type = /obj/item/slime_extract/bluespace
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 
 /obj/item/slimecross/reproductive/sepia
 	extract_type = /obj/item/slime_extract/sepia
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 
 /obj/item/slimecross/reproductive/cerulean
 	extract_type = /obj/item/slime_extract/cerulean
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 
 /obj/item/slimecross/reproductive/pyrite
 	extract_type = /obj/item/slime_extract/pyrite
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 
 /obj/item/slimecross/reproductive/red
 	extract_type = /obj/item/slime_extract/red
-	colour = "red"
+	colour = SLIME_TYPE_RED
 
 /obj/item/slimecross/reproductive/green
 	extract_type = /obj/item/slime_extract/green
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 
 /obj/item/slimecross/reproductive/pink
 	extract_type = /obj/item/slime_extract/pink
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 
 /obj/item/slimecross/reproductive/gold
 	extract_type = /obj/item/slime_extract/gold
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 
 /obj/item/slimecross/reproductive/oil
 	extract_type = /obj/item/slime_extract/oil
-	colour = "oil"
+	colour = SLIME_TYPE_OIL
 
 /obj/item/slimecross/reproductive/black
 	extract_type = /obj/item/slime_extract/black
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 
 /obj/item/slimecross/reproductive/lightpink
 	extract_type = /obj/item/slime_extract/lightpink
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 
 /obj/item/slimecross/reproductive/adamantine
 	extract_type = /obj/item/slime_extract/adamantine
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 
 /obj/item/slimecross/reproductive/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW

@@ -85,6 +85,7 @@
 	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)
 	var/atom/movable/flick_visual/exclamation = flick_overlay_view(alert, 1 SECONDS)
 	exclamation.alpha = 0
+	exclamation.pixel_x = -pixel_x
 	animate(exclamation, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
 	// We use this list to update plane values on parent z change, which is why we need the timer too
 	// I'm sorry :(

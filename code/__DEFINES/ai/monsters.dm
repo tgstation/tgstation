@@ -59,8 +59,63 @@
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
 
-///hivebot keys
+/// Key containing overwatch ability information
+#define BB_WATCHER_OVERWATCH "BB_watcher_overwatch"
+/// Key containing gazae ability information
+#define BB_WATCHER_GAZE "BB_watcher_gaze"
+
+// eyeball keys
+///the death glare ability
+#define BB_GLARE_ABILITY "BB_glare_ability"
+///the blind target we must protect
+#define BB_BLIND_TARGET "BB_blind_target"
+///value to store the minimum eye damage to prevent us from attacking a human
+#define BB_EYE_DAMAGE_THRESHOLD "BB_eye_damage_threshold"
+
+// hivebot keys
 ///the machine we must go to repair
 #define BB_MACHINE_TARGET "BB_machine_target"
 ///the hivebot partner we will go communicate with
 #define BB_HIVE_PARTNER "BB_hive_partner"
+
+// Ice Whelps
+///whelp's straight line fire ability
+#define BB_WHELP_STRAIGHTLINE_FIRE "BB_whelp_straightline_fire"
+///whelp's secondary enraged ability
+#define BB_WHELP_WIDESPREAD_FIRE "BB_whelp_widespread_fire"
+///how enraged the whelp is
+#define BB_WHELP_ENRAGED "BB_whelp_enraged"
+///the target rock we will attempt to create a sculpture out of
+#define BB_TARGET_ROCK "BB_target_rock"
+///the cannibal target we shall consume
+#define BB_TARGET_CANNIBAL "BB_target_cannibal"
+///the tree we will burn down
+#define BB_TARGET_TREE "BB_target_tree"
+
+// Regal Rats
+/// The rat's ability to corrupt an area.
+#define BB_DOMAIN_ABILITY "BB_domain_ability"
+/// The rat's ability to raise a horde of soldiers.
+#define BB_RAISE_HORDE_ABILITY "BB_raise_horde_ability"
+
+// mega arachnid keys
+/// ability to throw restrain projectiles
+#define BB_ARACHNID_RESTRAIN "BB_arachnid_restrain"
+/// the found surveillance item we must destroy
+#define BB_SURVEILLANCE_TARGET "BB_surveillance_target"
+/// our acid slip ability
+#define BB_ARACHNID_SLIP "BB_arachnid_slip"
+
+// goldgrub keys
+/// key that tells if a storm is coming
+#define BB_STORM_APPROACHING "BB_storm_approaching"
+/// key that tells the wall we will mine
+#define BB_TARGET_MINERAL_WALL "BB_target_mineral_wall"
+/// key that holds our spit ability
+#define BB_SPIT_ABILITY "BB_spit_ability"
+/// key that holds our dig ability
+#define BB_BURROW_ABILITY "BB_burrow_ability"
+/// key that holds the ore we will eat
+#define BB_ORE_TARGET "BB_ore_target"
+/// which ore types we will not eat
+#define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"

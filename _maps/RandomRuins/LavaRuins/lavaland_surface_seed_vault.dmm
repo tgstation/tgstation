@@ -88,7 +88,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "as" = (
-/obj/machinery/door/airlock/multi_tile/glass,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "at" = (

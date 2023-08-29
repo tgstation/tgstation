@@ -16,6 +16,6 @@
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/carp/magic/chaos,
 		/mob/living/simple_animal/bot/secbot/ed209,
-		/mob/living/basic/giant_spider/viper/wizard,
+		/mob/living/basic/spider/giant/viper/wizard,
 		/mob/living/simple_animal/hostile/construct/juggernaut/mystic,
 	)

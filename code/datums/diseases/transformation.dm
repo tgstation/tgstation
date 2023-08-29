@@ -61,7 +61,7 @@
 		if(affected_mob.notransform)
 			return
 		affected_mob.notransform = 1
-		for(var/obj/item/W in affected_mob.get_equipped_items(TRUE))
+		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)
 			affected_mob.dropItemToGround(I)
@@ -314,7 +314,7 @@
 	stage3 = list(span_danger("Your appendages are melting away."), span_danger("Your limbs begin to lose their shape."))
 	stage4 = list(span_danger("You're ravenous."))
 	stage5 = list(span_danger("You have become a morph."))
-	new_form = /mob/living/simple_animal/hostile/morph
+	new_form = /mob/living/basic/morph
 	infectable_biotypes = MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD //magic!
 	transformed_antag_datum = /datum/antagonist/morph
 

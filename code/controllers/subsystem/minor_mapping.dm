@@ -26,13 +26,13 @@ SUBSYSTEM_DEF(minor_mapping)
 
 		to_spawn--
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_SPIDER_INFESTATION) && prob(PROB_SPIDER_REPLACEMENT))
-			new /mob/living/basic/giant_spider/maintenance(proposed_turf)
+			new /mob/living/basic/spider/maintenance(proposed_turf)
 			return
 
 		if (prob(PROB_MOUSE_SPAWN))
 			new /mob/living/basic/mouse(proposed_turf)
 		else
-			new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
+			new /mob/living/basic/regal_rat/controlled(proposed_turf)
 
 /// Returns true if a mouse won't die if spawned on this turf
 /datum/controller/subsystem/minor_mapping/proc/valid_mouse_turf(turf/open/proposed_turf)
@@ -67,7 +67,9 @@ SUBSYSTEM_DEF(minor_mapping)
 	for(var/turf/open/floor/plating/T in all_turfs)
 		if(T.is_blocked_turf())
 			continue
-		if(locate(/obj/structure/cable) in T)
+		//dont include multiz cables in the list because repairing them sucks
+		var/cable = locate(/obj/structure/cable) in T
+		if(cable && !istype(cable, /obj/structure/cable/multilayer/multiz))
 			exposed_wires += T
 
 	return shuffle(exposed_wires)
