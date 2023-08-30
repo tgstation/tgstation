@@ -285,6 +285,7 @@
 		)
 		statue.set_visuals(owner.appearance)
 		statue.forceMove(get_turf(owner))
+		statue.dir = owner.dir
 		owner.forceMove(statue)
 		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(human_left_statue))
 
@@ -328,6 +329,7 @@
 	statue.max_integrity = 100 // statues already have 100 max integrity, so this is a safety net
 	statue.set_armor(/datum/armor/obj_structure/silverscale_statue_armor)
 	statue.flags_ricochet |= RICOCHET_SHINY
+	ADD_TRAIT(statue, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT)
 	RegisterSignals(statue, list(COMSIG_OBJ_DECONSTRUCT, COMSIG_ATOM_DESTRUCTION), PROC_REF(statue_destroyed))
 	RegisterSignal(statue, COMSIG_QDELETING, PROC_REF(statue_deleted))
 
