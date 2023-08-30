@@ -58,6 +58,10 @@
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		)
 
+/datum/ai_controller/chicken/hostile/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	new_pawn.AddComponent(/datum/component/ai_target_timer)
+
 //RETALIATE
 /datum/ai_controller/chicken/retaliate
 	blackboard = list(

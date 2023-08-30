@@ -157,8 +157,6 @@
 			name = "[breed_name] Hen"
 
 	var/list/new_planning_subtree = list()
-	for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
-		new_planning_subtree |= listed_tree.type
 
 	var/datum/action/cooldown/mob_cooldown/chicken/feed/feed_ability = new(src)
 	feed_ability.Grant(src)
@@ -186,6 +184,9 @@
 	if(projectile_type)
 		AddComponent(/datum/component/ranged_attacks, projectile_type = src.projectile_type, cooldown_time = ranged_cooldown)
 		new_planning_subtree |= /datum/ai_planning_subtree/basic_ranged_attack_subtree/chicken
+
+	for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
+		new_planning_subtree |= listed_tree.type
 
 	ai_controller.replace_planning_subtrees(new_planning_subtree)
 

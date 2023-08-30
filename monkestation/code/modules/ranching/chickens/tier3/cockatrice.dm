@@ -69,6 +69,6 @@
 	var/mob/living/living_owner = owner
 	living_owner.visible_message("[living_owner] glares at [target] petrifying them.", "You glare at [target] petrifying them.")
 	living_owner.face_atom(target)
-	target.petrify(2)
+	target.petrify(10)
 	StartCooldown()
 	return TRUE

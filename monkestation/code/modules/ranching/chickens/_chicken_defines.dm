@@ -132,4 +132,5 @@
 
 
 /datum/action/cooldown/mob_cooldown/chicken
+	melee_cooldown_time =  1 // dumb
 	var/datum/ai_behavior/targeted_mob_ability/min_range/what_range = /datum/ai_behavior/targeted_mob_ability/min_range/melee
