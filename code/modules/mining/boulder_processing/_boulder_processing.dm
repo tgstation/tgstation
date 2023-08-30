@@ -26,6 +26,8 @@
 
 	/// Silo link to it's materials list.
 	var/datum/component/remote_materials/silo_materials
+	///Does this machine hold mining points?
+	var/holds_mining_points = FALSE
 	/// Mining points held by the machine for miners.
 	var/points_held = 0
 
@@ -64,6 +66,19 @@
 		visible_message(span_warning("[my_boulder] is accepted into \the [src]"))
 		START_PROCESSING(SSmachines, src)
 		return
+	if(istype(attacking_item, /obj/item/card/id))
+		if(!holds_mining_points)
+			return
+		var/obj/item/card/id/id_card = attacking_item
+		var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
+		if(!amount)
+			return
+		if(amount > points_held)
+			amount = points_held
+		id_card.registered_account.mining_points += amount
+		points_held -= amount
+		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
+
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -145,6 +160,11 @@
 			return TRUE
 		return FALSE
 
+/obj/machinery/bouldertech/examine(mob/user)
+	. = ..()
+	if(holds_mining_points)
+		. += span_notice("The machine reads that it has [span_bold("[points_held] mining points")] stored. Swipe an ID to claim them.")
+
 /**
  * Accepts a boulder into the machinery, then converts it into minerals.
  * @param chosen_boulder The boulder to being breaking down into minerals.
@@ -222,6 +242,7 @@
 		return FALSE
 	new_boulder.forceMove(src)
 	boulders_contained += new_boulder
+	SSore_generation.available_boulders -= new_boulder
 	START_PROCESSING(SSmachines, src) //Starts processing if we aren't already.
 	return TRUE
 

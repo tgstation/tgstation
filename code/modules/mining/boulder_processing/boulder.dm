@@ -143,7 +143,6 @@
 	durability = rand(durability_min, durability_max) //randomize durability a bit for some flavor.
 	boulder_size = size
 	if(parent_vent)
-		switch_size = parent_vent.boulder_size
 		boulder_size = parent_vent.boulder_size
 		boulder_string = parent_vent.boulder_icon_state
 	switch(boulder_size)
@@ -221,6 +220,3 @@
 		/datum/material/titanium = 8,
 		/datum/material/uranium = 3
 	)
-
-
-
