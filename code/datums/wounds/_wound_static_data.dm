@@ -110,6 +110,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 	return TRUE
 
+/// Determines if the wound_type of a given application is valid for us. Defaults to comparing it against our wound's wound_type.
 /datum/wound_pregen_data/proc/wound_type_valid(wound_type)
 	return (wound_type == initial(wound_path_to_generate.wound_type))
 
