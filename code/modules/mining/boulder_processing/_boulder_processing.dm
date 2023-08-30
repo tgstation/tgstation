@@ -191,6 +191,8 @@
 		context = src \
 	)
 	balloon_alert_to_viewers("Boulder processed!")
+	var/old_size = chosen_boulder.boulder_size
+	var/is_artifact = istype(chosen_boulder, /obj/item/boulder/artifact)
 	if(!remaining_ores.len)
 		qdel(chosen_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -200,7 +202,7 @@
 	var/obj/item/boulder/new_rock = new (src)
 	new_rock.set_custom_materials(remaining_ores)
 	new_rock.reset_processing_cooldown() //So that we don't pick it back up!
-	new_rock.flavor_boulder(null, )
+	new_rock.flavor_boulder(null, old_size, is_artifact)
 	remove_boulder(new_rock)
 	return TRUE
 

@@ -13,6 +13,8 @@
 	var/obj/machinery/bouldertech/processed_by = null
 	/// How many steps of refinement this boulder has gone through. Starts at 5-8, goes down one each machine process.
 	var/durability = 5
+	/// What was the size of the boulder when it was spawned? This is used for inheiriting the icon_state.
+	var/boulder_size = BOULDER_SIZE_SMALL
 	COOLDOWN_DECLARE(processing_cooldown)
 
 /obj/item/boulder/Initialize(mapload)
@@ -129,29 +131,32 @@
 
 /**
  * This is called when a boulder is spawned from a vent, and is used to set the boulder's icon as well as durability.
+ * We also set our boulder_size variable, which is used for inheiriting the icon_state later on if processed.
  */
 /obj/item/boulder/proc/flavor_boulder(obj/structure/ore_vent/parent_vent, size = BOULDER_SIZE_SMALL, is_artifact = FALSE)
 	var/durability_min = parent_vent.boulder_size
 	var/durability_max = parent_vent.boulder_size + BOULDER_SIZE_SMALL
+	var/boulder_string = "boulder"
 	if(!parent_vent)
 		durability_min = size
 		durability_max = size + BOULDER_SIZE_SMALL
 	durability = rand(durability_min, durability_max) //randomize durability a bit for some flavor.
-
-	var/switch_size = size
+	boulder_size = size
 	if(parent_vent)
 		switch_size = parent_vent.boulder_size
-	switch(switch_size)
+		boulder_size = parent_vent.boulder_size
+		boulder_string = parent_vent.boulder_icon_state
+	switch(boulder_size)
 		if(BOULDER_SIZE_SMALL)
-			icon_state = "boulder_small"
+			icon_state = "[boulder_string]_small"
 		if(BOULDER_SIZE_MEDIUM)
-			icon_state = "boulder_medium"
+			icon_state = "[boulder_string]_medium"
 		if(BOULDER_SIZE_LARGE)
-			icon_state = "boulder_large"
+			icon_state = "[boulder_string]_large"
 		else
-			icon_state = "boulder_small"
+			icon_state = "[boulder_string]_small"
 	if(istype(src, /obj/item/boulder/artifact) || is_artifact)
-		icon_state = "boulder_artifact"
+		icon_state = "boulder_artifact" //special case
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/boulder/artifact

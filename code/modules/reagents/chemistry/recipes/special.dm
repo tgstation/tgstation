@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	name = "Old Recipe"
 
 	///List of possible recipes we could display
-	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
+	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen, /datum/chemical_reaction/randomized/industrial_waste_disposal)
 	///The one we actually end up displaying
 	var/recipe_id = null
 
@@ -355,5 +355,18 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	dat += "."
 	add_raw_text(dat.Join(""))
 	update_appearance()
+
+/datum/chemical_reaction/randomized/industrial_waste_disposal
+	persistent = TRUE
+	persistence_period = 1 //Reset every day
+	randomize_req_temperature = TRUE
+	randomize_impurity_minimum = TRUE
+	min_ph = 6
+	max_ph = 8
+	inoptimal_range_ph = 1 //We're doing an acid base reaction, so it needs to be just about even here.
+	min_catalysts = 1
+	max_catalysts = 1
+	possible_catalysts = list(/datum/reagent/toxin/acid/industrial_waste)
+	results = list(/datum/reagent/consumable/salt = 1, /datum/reagent/water = 1)
 
 #undef VALID_RANDOM_RECIPE_REAGENT

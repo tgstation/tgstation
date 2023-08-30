@@ -51,6 +51,8 @@
 	var/ore_string = ""
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
+	/// What base icon_state do we use for this vent's boulders?
+	var/boulder_icon_state = "boulder"
 
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
@@ -60,6 +62,11 @@
 	generate_description()
 	register_context()
 	SSore_generation.possible_vents += src
+	boulder_icon_state = pick(list(
+		"boulder",
+		"rock",
+		"stone"
+	))
 	if(tapped)
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
@@ -131,7 +138,6 @@
 		var/datum/material/material = pick_weight(SSore_generation.ore_vent_minerals)
 		if(is_type_in_list(mineral_breakdown, material))
 			continue
-		priority_announce("[material.name] is the material picked.")
 		//We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
 		SSore_generation.ore_vent_minerals[material] -= 1
 		if(SSore_generation.ore_vent_minerals[material] <= 0)
