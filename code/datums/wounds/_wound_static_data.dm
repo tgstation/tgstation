@@ -84,13 +84,13 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (limb.owner.status_flags & GODMODE))
 		return FALSE
 
-	if (wound_type != initial(wound_path_to_generate.wound_type))
+	if (!wound_type_valid(wound_type))
 		return
-	else
-		for (var/datum/wound/preexisting_wound as anything in limb.wounds)
-			if (preexisting_wound.wound_series == initial(wound_path_to_generate.wound_series))
-				if (preexisting_wound.severity >= initial(wound_path_to_generate.severity))
-					return FALSE
+
+	for (var/datum/wound/preexisting_wound as anything in limb.wounds)
+		if (preexisting_wound.wound_series == initial(wound_path_to_generate.wound_series))
+			if (preexisting_wound.severity >= initial(wound_path_to_generate.severity))
+				return FALSE
 
 	if (!ignore_cannot_bleed && ((required_limb_biostate & BIO_BLOODED) && !limb.can_bleed()))
 		return FALSE
@@ -107,7 +107,11 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 		for (var/datum/wound/preexisting_wound as anything in limb.wounds)
 			if (preexisting_wound.type == wound_path_to_generate && (preexisting_wound != old_wound))
 				return FALSE
+
 	return TRUE
+
+/datum/wound_pregen_data/proc/wound_type_valid(wound_type)
+	return (wound_type == initial(wound_path_to_generate.wound_type))
 
 /// Returns true if we have the given biostates, or any biostate in it if check_for_any is true. False otherwise.
 /datum/wound_pregen_data/proc/biostate_valid(biostate)
