@@ -67,6 +67,7 @@
 /area/station/engineering/supermatter)
 "eo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eP" = (
@@ -99,7 +100,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "fB" = (
@@ -239,6 +240,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "km" = (
@@ -516,12 +518,8 @@
 	network = list("ss13","engine")
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/button/door/directional/east{
-	id = "engineaccess";
-	name = "Engine Access Lockdown";
-	req_access = list("engineering")
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/sign/directions/ptl/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tr" = (
@@ -771,10 +769,6 @@
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/supermatter)
-"AQ" = (
-/obj/structure/cable,
-/turf/closed/wall/rust,
-/area/station/engineering/supermatter/room)
 "Bl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -837,7 +831,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "Ee" = (
-/obj/structure/cable,
 /turf/closed/wall,
 /area/station/engineering/supermatter/room)
 "Ei" = (
@@ -865,14 +858,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
-"EK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/firealarm/directional/north,
-/obj/structure/cable,
-/turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "EO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1294,11 +1279,15 @@
 /turf/open/space,
 /area/space/nearstation)
 "RN" = (
-/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/east{
+	id = "engineaccess";
+	name = "Engine Access Lockdown";
+	req_access = list("engineering")
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "RV" = (
@@ -1388,6 +1377,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "UP" = (
@@ -1856,7 +1846,7 @@ aK
 "}
 (13,1,1) = {"
 zp
-EK
+Pp
 kY
 uc
 Dm
@@ -2022,7 +2012,7 @@ LO
 rW
 Qn
 dq
-AQ
+Ar
 Ee
 fx
 Ar

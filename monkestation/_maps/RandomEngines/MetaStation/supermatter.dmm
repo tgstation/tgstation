@@ -91,13 +91,13 @@
 /area/station/engineering/supermatter/room)
 "eI" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "eO" = (
@@ -116,9 +116,9 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gQ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gU" = (
@@ -198,6 +198,10 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"lX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter/room)
 "mO" = (
 /obj/item/wrench,
 /obj/structure/cable,
@@ -213,10 +217,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "np" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/sign/directions/ptl/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "nu" = (
@@ -238,6 +242,7 @@
 	name = "Gas to Mix"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "og" = (
@@ -282,7 +287,6 @@
 /area/station/engineering/supermatter/room)
 "qz" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room"
 	},
@@ -336,6 +340,13 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"tp" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
 "tt" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/directional/south{
@@ -404,7 +415,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "vY" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/color_adapter,
 /turf/open/floor/iron/dark,
@@ -414,6 +424,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "wo" = (
@@ -526,11 +537,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"AZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
 "Bc" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -628,7 +634,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "EU" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -724,6 +729,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"Je" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "PTL Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "Jo" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
@@ -760,6 +773,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/structure/cable,
 /turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"Lo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Lv" = (
 /obj/effect/turf_decal/stripes/line{
@@ -819,6 +836,7 @@
 /area/station/engineering/supermatter)
 "NN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "NS" = (
@@ -872,6 +890,7 @@
 /area/station/engineering/supermatter/room)
 "PU" = (
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "PV" = (
@@ -883,6 +902,7 @@
 "Qq" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "QX" = (
@@ -1024,6 +1044,13 @@
 "Yf" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"Yw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Yz" = (
@@ -1266,7 +1293,7 @@ vY
 hT
 WQ
 kO
-bY
+Yw
 iY
 uU
 af
@@ -1293,7 +1320,7 @@ vY
 GM
 WQ
 kO
-bY
+Yw
 Nu
 DK
 yn
@@ -1342,10 +1369,10 @@ kK
 kK
 "}
 (11,1,1) = {"
-kK
 MT
 MT
-kO
+Je
+MT
 MT
 OC
 HO
@@ -1373,7 +1400,7 @@ kK
 kK
 kK
 kK
-AZ
+MT
 Yz
 Sw
 PN
@@ -1509,7 +1536,7 @@ kK
 kK
 kK
 MT
-zC
+Lo
 SS
 oW
 zC
@@ -1536,7 +1563,7 @@ Av
 Av
 Av
 MT
-MT
+lX
 MT
 MT
 MT
@@ -1563,7 +1590,7 @@ kK
 kK
 Av
 Av
-kK
+tp
 kK
 kK
 Av
