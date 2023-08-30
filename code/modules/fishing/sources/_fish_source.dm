@@ -116,7 +116,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	if((reward_path in fish_counts)) // This is limited count result
 		fish_counts[reward_path] -= 1
 		if(!fish_counts[reward_path])
-			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)ù
+			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
 
 	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
 	if(!reward) //baloon alert instead
@@ -182,7 +182,7 @@ GLOBAL_LIST(fishing_property_cache)
 
 	var/list/fish_list_properties = collect_fish_properties()
 
-	var/list/final_table = fish_table.Copy()
+	var/list/final_table = fish_table + fish_counts
 	for(var/result in final_table)
 		if((result in fish_counts) && fish_counts[result] <= 0) //ran out of these, ignore
 			final_table -= result
