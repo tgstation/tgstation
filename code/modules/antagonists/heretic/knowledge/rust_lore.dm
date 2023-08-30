@@ -74,7 +74,7 @@
 		airlock.loseMainPower()
 
 	for(var/dir in GLOB.cardinals)
-		var/turf/nearby_turf = get_step(victim, dir)
+		var/turf/nearby_turf = get_step(target, dir)
 		if(istype(nearby_turf))
 			nearby_turf.rust_heretic_act()
 		target.rust_heretic.act()
