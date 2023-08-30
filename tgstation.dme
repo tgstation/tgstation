@@ -1077,7 +1077,6 @@
 #include "code\datums\components\summoning.dm"
 #include "code\datums\components\supermatter_crystal.dm"
 #include "code\datums\components\surgery_initiator.dm"
-#include "code\datums\components\surgical_tool_overlay.dm"
 #include "code\datums\components\swabbing.dm"
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\tackle.dm"

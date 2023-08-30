@@ -473,6 +473,3 @@
 
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
 #define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"
-
-/// from /obj/item/surgery_tray/set_tray_mode : (new_state)
-#define COMSIG_SURGERY_TRAY_TOGGLE "surgery_tray_toggle"
