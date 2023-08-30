@@ -19,7 +19,7 @@
 	icon_state = "rainbow_bunch_crown"
 	worn_icon_state = "rainbow_bunch_crown"
 
-/obj/item/clothing/head/costume/rainbowbunchcrown/Initialize()
+/obj/item/clothing/head/costume/rainbowbunchcrown/Initialize(mapload)
 	. = ..()
 	var/crown_type = rand(1,4)
 	icon_state = "[icon_state]_[crown_type]"
