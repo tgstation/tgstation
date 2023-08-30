@@ -1,0 +1,7 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - rscadd: "Added PTL lasers to all maps"
+  - rscadd: "Added SMES units to all maps"
+  - qol: "Deltastations engine no longer loses power 1 nanosecond into the shift"
+  - bugfix: "fixed north star's engine being hot-wired round-start"
