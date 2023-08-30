@@ -49,6 +49,7 @@ GLOBAL_LIST_EMPTY(anime_middle_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(anime_bottom_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(arachnid_appendages_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(arachnid_chelicerae_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(goblin_ears_list) //Monkestation Addition
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",
@@ -139,12 +140,15 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Banned",
 	"Bliss",
 	"Blue",
+	"Boxfort",
+	"Boy",
 	"Clown",
 	"Database",
 	"Dorf",
 	"Firewall",
 	"Fuzzy",
 	"Gentoo",
+	"Girl",
 	"Glitchman",
 	"Gondola",
 	"Goon",
@@ -152,6 +156,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"HAL 9000",
 	"Heartline",
 	"Helios",
+	"Hotdog",
 	"House",
 	"Inverted",
 	"Matrix",
@@ -167,11 +172,13 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Red",
 	"Static",
 	"Syndicat Meow",
+	"Terminal",
 	"Text",
 	"Too Deep",
 	"Triumvirate-M",
 	"Triumvirate",
 	"Weird",
+	"Yes-Man",
 )))
 
 /// A form of resolve_ai_icon that is guaranteed to never sleep.
