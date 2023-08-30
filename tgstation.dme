@@ -5343,6 +5343,7 @@
 #include "monkestation\code\game\objects\effects\spawners\roomspawner.dm"
 #include "monkestation\code\game\objects\items\cirno_plush.dm"
 #include "monkestation\code\game\objects\items\gravity_gun.dm"
+#include "monkestation\code\game\objects\items\miningweapons.dm"
 #include "monkestation\code\game\objects\items\plushies.dm"
 #include "monkestation\code\game\objects\items\stickers.dm"
 #include "monkestation\code\game\objects\items\superglue.dm"
