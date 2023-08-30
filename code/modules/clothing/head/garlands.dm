@@ -13,13 +13,13 @@
 	. = ..()
 	user.clear_mood_event("garland")
 
-/obj/item/clothing/head/costume/rainbowbunchcrown
+/obj/item/clothing/head/costume/garland/rainbowbunch
 	name = "rainbow flower crown"
 	desc = "A flower crown made out of the flowers of the rainbow bunch plant."
 	icon_state = "rainbow_bunch_crown_1"
 	base_icon_state = "rainbow_bunch_crown"
 
-/obj/item/clothing/head/costume/rainbowbunchcrown/Initialize(mapload)
+/obj/item/clothing/head/costume/garland/rainbowbunch/Initialize(mapload)
 	. = ..()
 	var/crown_type = rand(1,4)
 	icon_state = "[base_icon_state]_[crown_type]"
@@ -33,56 +33,21 @@
 		if(4)
 			desc += "This one has yellow, green, and white flowers."
 
-/obj/item/clothing/head/costume/rainbowbunchcrown/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot_flags & slot)
-		user.add_mood_event("garland", /datum/mood_event/garland)
-
-/obj/item/clothing/head/costume/rainbowbunchcrown/dropped(mob/living/user)
-	. = ..()
-	user.clear_mood_event("garland")
-
-/obj/item/clothing/head/costume/sunflowercrown
+/obj/item/clothing/head/costume/garland/sunflower
 	name = "sunflower crown"
 	desc = "A bright flower crown made out sunflowers that is sure to brighten up anyone's day!"
 	icon_state = "sunflower_crown"
 	worn_icon_state = "sunflower_crown"
 
-/obj/item/clothing/head/costume/sunflowercrown/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot_flags & slot)
-		user.add_mood_event("garland", /datum/mood_event/garland)
-
-/obj/item/clothing/head/costume/sunflowercrown/dropped(mob/living/user)
-	. = ..()
-	user.clear_mood_event("garland")
-
-/obj/item/clothing/head/costume/poppycrown
+/obj/item/clothing/head/costume/garland/poppy
 	name = "poppy crown"
 	desc = "A flower crown made out of a string of bright red poppies."
 	icon_state = "poppy_crown"
 	worn_icon_state = "poppy_crown"
 
-/obj/item/clothing/head/costume/poppycrown/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot_flags & slot)
-		user.add_mood_event("garland", /datum/mood_event/garland)
-
-/obj/item/clothing/head/costume/poppycrown/dropped(mob/living/user)
-	. = ..()
-	user.clear_mood_event("garland")
-
-/obj/item/clothing/head/costume/lilycrown
+/obj/item/clothing/head/costume/garland/lily
 	name = "lily crown"
 	desc = "A leafy flower crown with a cluster of large white lilies at at the front."
 	icon_state = "lily_crown"
 	worn_icon_state = "lily_crown"
 
-/obj/item/clothing/head/costume/lilycrown/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot_flags & slot)
-		user.add_mood_event("garland", /datum/mood_event/garland)
-
-/obj/item/clothing/head/costume/lilycrown/dropped(mob/living/user)
-	. = ..()
-	user.clear_mood_event("garland")
