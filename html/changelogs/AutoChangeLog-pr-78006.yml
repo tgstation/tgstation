@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "autolathe prints the correct amount of stacks and merges it with existing stacks on the turf"
+  - bugfix: "autolathe takes constant time when printing stacks"
+  - code_imp: "autolathe will attempt to award you the \"getting an upgrade\" award only once when printing multiple items & updates UI immediately"
