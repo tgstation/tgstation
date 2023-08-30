@@ -1,0 +1,4 @@
+author: "LukasBeedellCodestuff"
+delete-after: True
+changes:
+  - bugfix: "Changed icebox permabrig door type to be correct"
