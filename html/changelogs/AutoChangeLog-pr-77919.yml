@@ -1,0 +1,5 @@
+author: "Momo8289"
+delete-after: True
+changes:
+  - qol: "Cryotubes will now notify medbay if the patient within is dead, and will eject them if auto is on."
+  - qol: "Cryotubes will now automatically turn on when a patient enters it if auto is on, but you can no longer close the cryotube on yourself."
