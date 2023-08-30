@@ -549,12 +549,12 @@
 	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
 
 /datum/action/cooldown/mob_cooldown/chicken/lay_egg/PreActivate(atom/target)
-	. = ..()
 	var/mob/living/basic/chicken/chicken_owner = owner
 	if(!istype(chicken_owner))
 		return
 	if(chicken_owner.eggs_left <= 0)
 		return
+	. = ..()
 
 /datum/action/cooldown/mob_cooldown/chicken/lay_egg/Activate(atom/target)
 	. = ..()
@@ -584,12 +584,11 @@
 	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
 
 /datum/action/cooldown/mob_cooldown/chicken/feed/PreActivate(atom/target)
-	. = ..()
 	if(!istype(target, /obj/effect/chicken_feed))
 		return
-
 	if(!owner.CanReach(target))
 		return
+	. = ..()
 
 /datum/action/cooldown/mob_cooldown/chicken/feed/Activate(atom/target)
 	. = ..()
