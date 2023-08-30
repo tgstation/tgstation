@@ -16,8 +16,6 @@
 	var/send_to_spawnpoint = TRUE
 	/// The DEFAULT outfit we will give to players granted this datum
 	var/nukeop_outfit = /datum/outfit/syndicate
-	/// The outfit we will auto-equip for plasmamen granted this datum
-	var/plasmaman_outfit = /datum/outfit/syndicate/plasmaman
 
 	preview_outfit = /datum/outfit/nuclear_operative_elite
 
@@ -45,10 +43,7 @@
 	if(!operative.client || operative.client.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
 		operative.set_species(/datum/species/human)
 
-	if(is_species(operative, /datum/species/plasmaman))
-		operative.equipOutfit(plasmaman_outfit)
-	else
-		operative.equipOutfit(nukeop_outfit)
+	operative.equip_species_outfit(nukeop_outfit)
 
 	return TRUE
 
@@ -246,7 +241,6 @@
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
 	always_new_team = TRUE
-	plasmaman_outfit = /datum/outfit/syndicate/leader/plasmaman
 	/// Randomly chosen honorific, for distinction
 	var/title
 	/// The nuclear challenge remote we will spawn this player with.
@@ -325,7 +319,6 @@
 	preview_outfit = /datum/outfit/nuclear_operative
 	preview_outfit_behind = null
 	nuke_icon_state = null
-	plasmaman_outfit = /datum/outfit/syndicate/full/plasmaman
 
 /datum/antagonist/nukeop/lone/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
@@ -345,7 +338,6 @@
 	show_in_antagpanel = FALSE
 	send_to_spawnpoint = FALSE
 	nukeop_outfit = /datum/outfit/syndicate/reinforcement
-	plasmaman_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 
 /datum/team/nuclear
 	var/syndicate_name

@@ -161,7 +161,6 @@
 	antag_datum.send_to_spawnpoint = FALSE
 
 	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
-	antag_datum.plasmaman_outfit = plasma_outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
