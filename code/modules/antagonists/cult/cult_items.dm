@@ -67,7 +67,8 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	attack_style_path = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/overhead
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 45
 
 /obj/item/melee/cultblade/Initialize(mapload)

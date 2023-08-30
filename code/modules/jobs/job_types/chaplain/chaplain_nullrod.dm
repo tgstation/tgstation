@@ -466,7 +466,8 @@
 	wound_bonus = -20
 	bare_wound_bonus = 25
 	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
-	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 240
 
 /obj/item/nullrod/armblade/Initialize(mapload)

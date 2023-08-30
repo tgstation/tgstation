@@ -2,7 +2,7 @@
 /datum/attack_style/melee_weapon/swing
 	cd = CLICK_CD_MELEE * 2
 	sprite_size_multiplier = 1.5
-	time_per_turf = 0.2 SECONDS
+	time_per_turf = 0.1 SECONDS
 	/// If TRUE, the list of affected turfs will be reversed if the attack is being sourced from the lefthand
 	var/reverse_for_lefthand = TRUE
 
@@ -74,7 +74,6 @@
 /datum/attack_style/melee_weapon/swing/only_left
 	cd = CLICK_CD_MELEE * 1.25
 	slowdown = 0.8
-	time_per_turf = 0.1 SECONDS
 
 /datum/attack_style/melee_weapon/swing/only_left/get_swing_description(has_alt_style)
 	return "Swings in an arc of two tiles in the direction you are attacking, away from your active hand."
@@ -89,4 +88,3 @@
 /datum/attack_style/melee_weapon/swing/fast
 	cd = CLICK_CD_MELEE * 1.25
 	slowdown = 0.75
-	time_per_turf = 0.1 SECONDS

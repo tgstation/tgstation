@@ -72,6 +72,7 @@
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
+	weapon_sprite_angle = 90
 
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
@@ -137,6 +138,8 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED
+	weapon_sprite_angle = 45
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 
 /obj/item/shovel/Initialize(mapload)
 	. = ..()

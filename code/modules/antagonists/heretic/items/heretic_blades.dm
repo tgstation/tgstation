@@ -1,7 +1,6 @@
 /datum/attack_style/melee_weapon/swing/heretic_sickle
 	cd = CLICK_CD_MELEE
 	slowdown = 0.6
-	time_per_turf = 0.15 SECONDS
 	sprite_size_multiplier = 1.33
 
 /obj/item/melee/sickly_blade

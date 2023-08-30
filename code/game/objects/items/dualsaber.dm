@@ -223,7 +223,6 @@
 
 /datum/attack_style/melee_weapon/stab_out/desword
 	cd = CLICK_CD_MELEE * 1.25
-	time_per_turf = 0.1 SECONDS
 	slowdown = 0.5
 	sprite_size_multiplier = 1.5
 
@@ -264,7 +263,6 @@
 /datum/attack_style/melee_weapon/swing/desword
 	cd = CLICK_CD_MELEE * 1.25
 	reverse_for_lefthand = FALSE
-	time_per_turf = 0.1 SECONDS
 	slowdown = 0.75
 	sprite_size_multiplier = 2
 

@@ -2,7 +2,6 @@
 /*********************Mining Hammer****************/
 /datum/attack_style/melee_weapon/swing/crusher
 	cd = CLICK_CD_MELEE * 1.5
-	time_per_turf = 0.15 SECONDS
 	slowdown = 0.5
 
 /obj/item/kinetic_crusher

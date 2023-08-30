@@ -370,7 +370,6 @@
 /datum/attack_style/melee_weapon/swing/esword
 	cd = CLICK_CD_MELEE * 1.5 // Much faster than normal swings
 	slowdown = 0.75
-	time_per_turf = 0.1 SECONDS
 
 /datum/attack_style/melee_weapon/stab_out/esword
 	cd = CLICK_CD_MELEE

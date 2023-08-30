@@ -14,6 +14,8 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_banhammer
 	resistance_flags = FIRE_PROOF
+	attack_style_path = /datum/attack_style/melee_weapon/swing/fast
+	weapon_sprite_angle = 45
 
 /datum/armor/item_banhammer
 	fire = 100

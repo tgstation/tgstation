@@ -1,6 +1,6 @@
 // Direct stabs out to turfs in front
 /datum/attack_style/melee_weapon/stab_out
-	time_per_turf = 0.2 SECONDS
+	time_per_turf = 0.1 SECONDS
 	/// How far the stab goes
 	var/stab_range = 1
 	/// How long the animation lingers after finishing

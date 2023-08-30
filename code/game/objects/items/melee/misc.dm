@@ -42,7 +42,8 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 240
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
@@ -79,7 +80,7 @@
 	bare_wound_bonus = 25
 	weapon_sprite_angle = 45
 	attack_style_path = /datum/attack_style/melee_weapon/stab_out
-	alt_attack_style = /datum/attack_style/melee_weapon/swing/fast
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/fast
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
@@ -209,7 +210,6 @@
 /datum/attack_style/melee_weapon/swing/sm_sword
 	cd = CLICK_CD_MELEE
 	slowdown = 0
-	time_per_turf = 0.1 SECONDS
 
 /datum/attack_style/melee_weapon/swing/sm_sword/collide_with_solid_atom(atom/blocking_us, obj/item/melee/supermatter_sword/weapon, mob/living/attacker)
 	weapon.consume_everything(blocking_us)
