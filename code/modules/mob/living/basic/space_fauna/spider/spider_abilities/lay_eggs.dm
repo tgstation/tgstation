@@ -61,11 +61,22 @@
 	if (spider_directive)
 		new_eggs.directive = spider_directive.current_directive
 
+/datum/action/cooldown/mob_cooldown/lay_eggs/abnormal
+	name = "Lay Abnormal Eggs"
+	desc = "Lay a cluster of eggs, which will soon grow into a uncommon spider."
+	button_icon_state = "lay_abnormal_eggs"
+	cooldown_time = 180 SECONDS
+	egg_type = /obj/effect/mob_spawn/ghost_role/spider/abnormal
+	///How long it takes for a broodmother to lay eggs.
+	var/egg_lay_time = 6 SECONDS
+
 /datum/action/cooldown/mob_cooldown/lay_eggs/enriched
 	name = "Lay Enriched Eggs"
-	desc = "Lay a cluster of eggs, which will soon grow into a greater spider.  Requires you drain a human per cluster of these eggs."
+	desc = "Lay a cluster of eggs, which will soon grow into a rare spider.  Requires you drain a human per cluster of these eggs."
 	button_icon_state = "lay_enriched_eggs"
 	egg_type = /obj/effect/mob_spawn/ghost_role/spider/enriched
+	///How long it takes for a broodmother to lay eggs.
+	var/egg_lay_time = 8 SECONDS
 	/// How many charges we have to make eggs
 	var/charges = 0
 

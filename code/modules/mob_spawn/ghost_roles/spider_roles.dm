@@ -36,6 +36,9 @@
 			if(100 to INFINITY)
 				. += span_info("These eggs are plump, teeming with life. Any moment now...")
 
+/obj/structure/spider/eggcluster/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
 	color = rgb(148, 0, 211)
@@ -129,6 +132,17 @@
 	QDEL_NULL(egg)
 	var/datum/antagonist/spider/spider_antag = new(directive)
 	spawned_mob.mind.add_antag_datum(spider_antag)
+
+/obj/effect/mob_spawn/ghost_role/spider/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
+	you_are_text = "You are an enriched spider."
+	cluster_type = /obj/structure/spider/eggcluster/abnormal
+	potentialspawns = list(
+		/mob/living/basic/spider/growing/spiderling/tank,
+		/mob/living/basic/spider/growing/spiderling/breacher,
+	)
+	flash_window = TRUE
 
 /obj/effect/mob_spawn/ghost_role/spider/enriched
 	name = "enriched egg cluster"
