@@ -11,7 +11,7 @@
 
 /datum/action/cooldown/mob_cooldown/minedrone/Activate()
 	owner.set_light_on(!owner.light_on)
-	owner.balloon_alert(owner, "Lights [owner.light_on ? "on" : "off"]!")
+	owner.balloon_alert(owner, "lights [owner.light_on ? "on" : "off"]!")
 
 /datum/action/cooldown/mob_cooldown/minedrone/dump_ore
 	name = "Dump Ore"

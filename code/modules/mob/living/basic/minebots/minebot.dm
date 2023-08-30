@@ -102,15 +102,14 @@
 		return
 	. = TRUE
 	if(combat_mode)
-		user.balloon_alert(user, "")
-		to_chat(user, span_warning("[src] can't be repaired while in attack mode!"))
+		user.balloon_alert(user, "can't in attack mode!")
 		return
 	if(maxHealth == health)
-		to_chat(user, span_info("[src] is at full integrity."))
+		user.balloon_alert(user, "at full integrity!")
 		return
 	if(welder.use_tool(src, user, 0, volume=40))
 		adjustBruteLoss(-15)
-		to_chat(user, span_info("You repair some of the armor on [src]."))
+		user.balloon_alert(user, "successfully repaired!")
 
 /mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, params)
 	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
