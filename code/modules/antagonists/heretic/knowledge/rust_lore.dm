@@ -142,8 +142,6 @@
 		source.blood_volume += 2.5 * seconds_per_tick
 	heretic_eyes.flash_protect = FLASH_PROTECTION_WELDER
 	RegisterSignal(source, COMSIG_CARBON_SOUNDBANG, PROC_REF(protect_ears))
-	SIGNAL_HANDLER
-	reflist[1]--
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
