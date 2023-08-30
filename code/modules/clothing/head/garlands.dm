@@ -16,14 +16,13 @@
 /obj/item/clothing/head/costume/rainbowbunchcrown
 	name = "rainbow flower crown"
 	desc = "A flower crown made out of the flowers of the rainbow bunch plant."
-	icon_state = "rainbow_bunch_crown"
-	worn_icon_state = "rainbow_bunch_crown"
+	icon_state = "rainbow_bunch_crown_1"
+	base_icon_state = "rainbow_bunch_crown"
 
 /obj/item/clothing/head/costume/rainbowbunchcrown/Initialize(mapload)
 	. = ..()
 	var/crown_type = rand(1,4)
-	icon_state = "[icon_state]_[crown_type]"
-	worn_icon_state = "[worn_icon_state]_[crown_type]"
+	icon_state = "[base_icon_state]_[crown_type]"
 	switch(crown_type)
 		if(1)
 			desc += "This one has red, yellow, and white flowers."
