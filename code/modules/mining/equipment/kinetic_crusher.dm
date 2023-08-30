@@ -32,7 +32,7 @@
 	var/overrides_main = FALSE //monkestation edit //do we override the main init?
 	var/overrides_twohandrequired = FALSE //Do we have the fumble on one handed attack attempt?
 	var/override_markeffect = FALSE //Do we have the default affect on detonating a mark?
-	var/override_twohandedsprite = FALSE //DOES IT HAVE A TWO HANDED SPRITE
+	var/override_twohandedsprite = FALSE //ENABLE THIS FOR ALL NEW CRUSHER VARIENTS OR ELSE IT WILL BREAK
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
