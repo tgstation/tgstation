@@ -73,7 +73,11 @@
 		var/obj/machinery/door/airlock/airlock = target
 		airlock.loseMainPower()
 
-	target.rust_heretic_act()
+	for(var/dir in GLOB.cardinals)
+		var/turf/nearby_turf = get_step(victim, dir)
+		if(istype(nearby_turf))
+			nearby_turf.rust_heretic_act()
+		target.rust_heretic.act()
 	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/rust_regen
