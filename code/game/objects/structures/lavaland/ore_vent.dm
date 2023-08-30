@@ -99,14 +99,13 @@
 /obj/structure/ore_vent/examine(mob/user)
 	. = ..()
 	if(discovered)
-		. += span_notice("This vent can produce [ore_string]")
 		switch(boulder_size)
 			if(BOULDER_SIZE_SMALL)
-				. += span_notice("This vent produces [span_bold("small")] boulders.")
+				. += span_notice("This vent produces [span_bold("small")] boulders containing [ore_string]")
 			if(BOULDER_SIZE_MEDIUM)
-				. += span_notice("This vent produces [span_bold("medium")] boulders.")
+				. += span_notice("This vent produces [span_bold("medium")] boulders containing [ore_string]")
 			if(BOULDER_SIZE_LARGE)
-				. += span_notice("This vent produces [span_bold("large")] boulders.")
+				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
 
@@ -182,20 +181,12 @@
 	if(node) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
-		visible_message(span_danger("\the [src] begins to produce boulders as \the [node] flies away."))
+		balloon_alert_to_viewers("vent tapped!")
 	else
-		//Wave defense is failed, and the ore vent downgrades one tier, capping at small.
-		if(boulder_size == BOULDER_SIZE_LARGE)
-			boulder_size = BOULDER_SIZE_MEDIUM
-			visible_message(span_danger("\the [src] crumbles as the mining attempt fails, and the ore vent partially closes up!"))
-		else if(boulder_size == BOULDER_SIZE_MEDIUM)
-			boulder_size = BOULDER_SIZE_SMALL
-			visible_message(span_danger("\the [src] crumbles as the mining attempt fails, and the ore vent is left damaged!"))
-		else
-			visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
+		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
 		return FALSE //Bad end, try again.
 
-	for(var/potential_miner as anything in oview(5))
+	for(var/mob/living/carbon/human/potential_miner as anything in range(9, src)) //Give the miners who are near the vent points and xp.
 		if(ishuman(potential_miner))
 			var/mob/living/carbon/human/true_miner = potential_miner
 			var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
@@ -216,8 +207,11 @@
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/user)
 	if(!discovered)
+		balloon_alert(user, "scanning...")
 		if(do_after(user, 4 SECONDS))
 			discovered = TRUE
+			balloon_alert(user, "vent scanned!")
+			playsound(src, 'sound/items/timer.ogg', 30, TRUE)
 			generate_description()
 			return
 		else

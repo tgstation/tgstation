@@ -22,6 +22,7 @@
 	)
 	circuit = /obj/item/circuitboard/machine/refinery
 	usage_sound = 'sound/machines/mining/refinery.ogg'
+	holds_mining_points = TRUE
 
 /// okay so var that holds mining points to claim
 /// add total of pts from minerals mined in parent proc
@@ -43,6 +44,8 @@
 	. = ..()
 	if(istype(held_item, /obj/item/boulder))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert boulder"
+	if(istype(held_item, /obj/item/card/id) && points_held > 0)
+		context[SCREENTIP_CONTEXT_LMB] = "Claim mining points"
 	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder"
 	return CONTEXTUAL_SCREENTIP_SET
 

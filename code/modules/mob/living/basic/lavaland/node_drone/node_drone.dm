@@ -54,6 +54,7 @@
  * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
  */
 /mob/living/basic/node_drone/proc/escape()
+	var/funny_ending = FALSE
 	attached_vent?.unbuckle_mob(src)
 	if(!escaping)
 		escaping = TRUE
@@ -61,10 +62,15 @@
 		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
 		return
 	icon_state = "mining_node_flying"
-	//update_appearance(UPDATE_ICON_STATE)
-	visible_message(src, "The drone flies away to safety as the vent is secured.")
+	if(prob(1))
+		say("I have to go now, my planet needs me.")
+		funny_ending = TRUE
+	visible_message(span_notice("The drone flies away to safety as the vent is secured."))
 	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, PROC_REF(qdel), src), 1 SECONDS) //node drone died on the way back to his home planet.
+	sleep(2 SECONDS)
+	if(funny_ending)
+		playsound(src, 'sound/effects/explosion3.ogg', 50, FALSE) //node drone died on the way back to his home planet.
+	qdel(src)
 
 
 /// The node drone AI controller

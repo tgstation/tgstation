@@ -68,7 +68,14 @@
 		return
 	if(istype(attacking_item, /obj/item/card/id))
 		if(!holds_mining_points)
-			return
+			return FALSE
+		if(points_held <= 0)
+			balloon_alert_to_viewers("no points to claim!")
+			if(!COOLDOWN_FINISHED(src, sound_cooldown))
+				return TRUE
+			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
+			return FALSE
 		var/obj/item/card/id/id_card = attacking_item
 		var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
 		if(!amount)
@@ -78,6 +85,7 @@
 		id_card.registered_account.mining_points += amount
 		points_held -= amount
 		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
+		return TRUE
 
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)

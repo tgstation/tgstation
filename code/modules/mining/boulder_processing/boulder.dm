@@ -9,6 +9,8 @@
 	item_flags = NO_MAT_REDEMPTION
 	throw_range = 2
 	throw_speed = 0.5
+	slowdown = 1.5 // It's a big rock.
+	drag_slowdown = 1.5 // It's still a big rock.
 	///When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
 	var/obj/machinery/bouldertech/processed_by = null
 	/// How many steps of refinement this boulder has gone through. Starts at 5-8, goes down one each machine process.
@@ -134,12 +136,12 @@
  * We also set our boulder_size variable, which is used for inheiriting the icon_state later on if processed.
  */
 /obj/item/boulder/proc/flavor_boulder(obj/structure/ore_vent/parent_vent, size = BOULDER_SIZE_SMALL, is_artifact = FALSE)
-	var/durability_min = parent_vent.boulder_size
-	var/durability_max = parent_vent.boulder_size + BOULDER_SIZE_SMALL
+	var/durability_min = size
+	var/durability_max = size + BOULDER_SIZE_SMALL
 	var/boulder_string = "boulder"
-	if(!parent_vent)
-		durability_min = size
-		durability_max = size + BOULDER_SIZE_SMALL
+	if(parent_vent)
+		durability_min = parent_vent.boulder_size
+		durability_max = parent_vent.boulder_size + BOULDER_SIZE_SMALL
 	durability = rand(durability_min, durability_max) //randomize durability a bit for some flavor.
 	boulder_size = size
 	if(parent_vent)
