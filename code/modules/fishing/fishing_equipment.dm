@@ -188,11 +188,30 @@
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
 	// Can hold fishing rod despite the size
-	var/static/list/exception_cache = typecacheof(/obj/item/fishing_rod)
+	var/static/list/exception_cache = typecacheof(
+		/obj/item/fishing_rod,
+		/obj/item/fishing_line,
+	)
 	atom_storage.exception_hold = exception_cache
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
+	new /obj/item/fishing_rod(src)
+	new /obj/item/fishing_hook(src)
+	new /obj/item/fishing_line(src)
+
+/obj/item/storage/toolbox/fishing/small
+	name = "compact fishing toolbox"
+	desc = "Contains everything you need for your fishing trip. Except for the bait."
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 5
+	throwforce = 5
+
+/obj/item/storage/toolbox/fishing/small/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //It can still hold a fishing rod
+
+/obj/item/storage/toolbox/fishing/small/PopulateContents()
 	new /obj/item/fishing_rod(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
