@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Compact fishing toolboxes no longer break space and time to contain any normal-sized object. Instead, they only break space and time to contain fishing rods. Settlers migrating to Nanotrasen space have no reasonable explanation for this phenomenon."
