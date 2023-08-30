@@ -1,0 +1,4 @@
+author: "iwishforducks"
+delete-after: True
+changes:
+  - bugfix: "Space heaters no longer give extra cells when deconstructed"
