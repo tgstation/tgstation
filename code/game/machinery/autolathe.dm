@@ -329,9 +329,8 @@
 			if(length(picked_materials))
 				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
 				if(!client_awarded) //so we dont award the medal multiple times
-					for(var/x in picked_materials)
-						var/datum/material/M = x
-						if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/iron))
+					for(var/datum/material/mat in picked_materials)
+						if(!istype(mat, /datum/material/glass) && !istype(mat, /datum/material/iron))
 							user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
 							client_awarded = TRUE
 
