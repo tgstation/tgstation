@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - qol: "The \"You can't move while buckled to X\" is now a balloon alert instead of a to_chat message. Hopefully we all get buckle stuck processing why our inputs are not working less often for now on."
