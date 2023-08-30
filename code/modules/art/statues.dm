@@ -432,7 +432,7 @@ Moving interrupts
 	/// The thing it will look like - Unmodified resulting statue appearance
 	var/atom/movable/current_target
 	/// The icon that we apply filters too
-	var/icon/finished_statue
+	var/icon/finished_statue_icon
 	/// Currently chosen preset statue type
 	var/current_preset_type
 	//Table of required materials for each non-abstract statue type
@@ -446,6 +446,8 @@ Moving interrupts
 
 /obj/structure/carving_block/Destroy()
 	current_target = null
+	finished_statue_icon = null
+	//remove_filter("partial_uncover")
 	//target_appearance_with_filters = null
 	return ..()
 
@@ -485,8 +487,8 @@ Moving interrupts
 		preset_statue.set_custom_materials(custom_materials)
 		qdel(src)
 	else if(current_target)
-		var/obj/structure/statue/custom/new_statue = new(get_turf(src))
-		new_statue.set_visuals(current_target)
+		var/obj/structure/statue/custom/new_statue = new(get_turf(src), finished_statue_icon)
+		new_statue.dir = dir
 		new_statue.set_custom_materials(custom_materials)
 
 		//fcopy(new_statue.icon, "statue_test_hur_dur2.dmi")
@@ -501,16 +503,17 @@ Moving interrupts
 	if(!current_target)
 		return
 
-	if(!finished_statue)
-		finished_statue = icon('icons/blanks/32x32.dmi', "nothing")
+	if(!finished_statue_icon)
+		finished_statue_icon = icon('icons/blanks/32x32.dmi', "nothing")
 
 		for(var/direction in GLOB.cardinals)
-			var/icon/flat_icon = getFlatIcon(current_target, defdir=direction, no_anim = TRUE)
-			finished_statue.Insert(flat_icon, dir=direction)
-			finished_statue.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
+			var/icon/flat_icon = getFlatIcon(current_target, defdir=direction, no_anim=TRUE)
+			finished_statue_icon.Insert(flat_icon, dir=direction)
+			finished_statue_icon.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
 
-		statue_overlay = new(finished_statue)
+		statue_overlay = new(finished_statue_icon)
 		statue_overlay.filters = filter(type="color", color=greyscale_with_value_bump, space=FILTER_COLOR_HSV)
+		dir = current_target.dir
 
 	completion = value
 	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
@@ -518,7 +521,7 @@ Moving interrupts
 		if(0)
 			//delete uncovered and reset filters
 			remove_filter("partial_uncover")
-			finished_statue = null
+			//finished_statue_icon = null
 		else
 			var/mask_offset = min(world.icon_size, round(completion * world.icon_size))
 			remove_filter("partial_uncover")
@@ -556,10 +559,20 @@ Moving interrupts
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
+/obj/structure/statue/custom/Initialize(mapload, icon/statue_icon)
+	. = ..()
+	if(mapload && !statue_icon)
+		stack_trace("[src] spawned without a statue icon.")
+		return INITIALIZE_HINT_QDEL
+
+	icon = statue_icon
+
 /obj/structure/statue/custom/Destroy()
 	//content_ma = null
 	return ..()
 
+// We need this for the silver tongue /datum/action/cooldown/turn_to_statue ability
+// Need to update the icon every time they use the ability
 /obj/structure/statue/custom/proc/set_visuals(atom/movable/target)
 	var/icon/statue_icon = icon('icons/blanks/32x32.dmi', "nothing")
 
