@@ -125,7 +125,6 @@
  */
 /datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-	var/obj/item/organ/internal/eyes/heretic_eyes = source.get_organ_slot(ORGAN_SLOT_EYES)
 	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
@@ -141,7 +140,6 @@
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * seconds_per_tick
-	heretic_eyes.flash_protect = FLASH_PROTECTION_WELDER
 	RegisterSignal(source, COMSIG_CARBON_SOUNDBANG, PROC_REF(protect_ears))
 
 /datum/heretic_knowledge/mark/rust_mark
