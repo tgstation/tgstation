@@ -276,7 +276,7 @@
 /obj/item/storage/belt/medical/chief/full
 	preload = TRUE
 
-/obj/item/storage/belt/utility/chief/full/PopulateContents()
+/obj/item/storage/belt/medical/chief/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
 	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
 	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
