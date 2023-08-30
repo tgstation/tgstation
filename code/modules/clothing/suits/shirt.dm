@@ -73,7 +73,7 @@
 	icon_state = "messyworn_shirt_ian"
 	greyscale_colors = "#FFFFFF#E1B26C"
 
-/obj/item/clothing/suit/costume/wellworn_shirt/messy/gamer
+/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/gamer
 	name = "gamer shirt"
 	desc = "A baggy, extremely well-used shirt with vintage game character Phanic the Weasel far-too-boldly displayed on the chest. Your mind cannot hope to withstand the assault of remembering the Phanic Phanart you've seen; let alone the stench of this top."
 	icon_state = "messyworn_shirt_gamer"
