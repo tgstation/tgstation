@@ -124,33 +124,6 @@
 	desc = "You know who to call."
 	light_power = 2
 
-/obj/effect/decal/cleanable/greenglow/waste
-	name = "caustic sludge"
-	desc = "A puddle of radioactive waste. Eats through the floor if not cleaned up."
-	icon_state = "waste_spill"
-	light_power = 1
-	beauty = -300
-	clean_type = CLEAN_TYPE_ACID
-	decal_reagent = /datum/reagent/toxin/acid/industrial_waste
-
-/obj/effect/decal/cleanable/greenglow/waste/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	pre_eat()
-
-/obj/effect/decal/cleanable/greenglow/waste/proc/pre_eat(display_message = TRUE)
-	if(display_message)
-		visible_message(span_warning("\The [src] begins corroding \the [get_turf(src)]!"))
-	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(eat_floor)), 45 SECONDS)
-
-/obj/effect/decal/cleanable/greenglow/waste/proc/eat_floor()
-	var/atom/splashed_turf = get_turf(src)
-	if(!isfloorturf(splashed_turf))
-		return
-	var/turf/open/splash_floor = splashed_turf
-	splash_floor.ScrapeAway(flags = CHANGETURF_IGNORE_AIR) //Eat away the floor
-	visible_message(span_warning("The waste eats away at the floor, leaving \the [get_turf(src)] behind."))
-
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
 	desc = "Somebody should remove that."

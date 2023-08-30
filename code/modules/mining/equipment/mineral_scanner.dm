@@ -86,8 +86,3 @@
 /obj/effect/temp_visual/mining_overlay/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = duration, easing = EASE_IN)
-
-/obj/effect/temp_visual/mining_overlay/vent
-	icon = 'icons/effects/vent_overlays.dmi'
-	pixel_x = 0
-	pixel_y = 0
