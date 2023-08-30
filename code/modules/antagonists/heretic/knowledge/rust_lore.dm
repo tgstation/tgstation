@@ -120,7 +120,7 @@
  */
 /datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-
+	var/obj/item/organ/internal/eyes/heretic_eyes = source.get_organ_slot(ORGAN_SLOT_EYES)
 	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
@@ -129,13 +129,17 @@
 	source.adjustBruteLoss(-2, FALSE)
 	source.adjustFireLoss(-2, FALSE)
 	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
-	source.adjustOxyLoss(-0.5, FALSE)
-	source.adjustStaminaLoss(-2)
+	source.adjustOxyLoss(-1, FALSE)
+	source.adjustStaminaLoss(-5)
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility(-0.5 SECONDS)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * seconds_per_tick
+	heretic_eyes.flash_protect = FLASH_PROTECTION_WELDER
+	RegisterSignal(source, COMSIG_CARBON_SOUNDBANG, PROC_REF(protect_ears))
+	SIGNAL_HANDLER
+	reflist[1]--
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
