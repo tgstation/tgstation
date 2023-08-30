@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - qol: "removes the nukie tool parcel and places the tools directly in their box"
