@@ -1284,14 +1284,14 @@
 /obj/machinery/vending/proc/vend_greyscale(list/params, datum/greyscale_modify_menu/menu)
 	if(usr != menu.user)
 		return
-	vend(params, menu.split_colors, menu.icon_state)
+	vend(params, menu.split_colors)
 
 /**
  * The entire shebang of vending the picked item. Processes the vending and initiates the payment for the item.
  * arguments:
  * greyscale_colors - greyscale config for the item we're about to vend, if any
  */
-/obj/machinery/vending/proc/vend(list/params, list/greyscale_colors, greyscale_state)
+/obj/machinery/vending/proc/vend(list/params, list/greyscale_colors)
 	. = TRUE
 	if(!can_vend(usr))
 		return
@@ -1373,8 +1373,6 @@
 		LAZYREMOVE(item_record.returned_products, vended_item)
 		vended_item.forceMove(get_turf(src))
 	if(greyscale_colors)
-		if(greyscale_state)
-			vended_item.icon_state = greyscale_state
 		vended_item.set_greyscale(colors=greyscale_colors)
 	item_record.amount--
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))

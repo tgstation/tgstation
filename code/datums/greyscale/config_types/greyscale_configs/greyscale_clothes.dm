@@ -647,14 +647,11 @@
 	name = "Well-Worn Shirt (Graphic)(Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
-/datum/greyscale_config/wornout_shirt
+/datum/greyscale_config/wellworn_shirt/wornout
 	name = "Worn-Out Shirt"
-	icon_file = 'icons/obj/clothing/suits/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wornout_shirt.json'
 
-/datum/greyscale_config/wornout_shirt/worn
+/datum/greyscale_config/wellworn_shirt/worn/wornout
 	name = "Worn-Out Shirt (Worn)"
-	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
 /datum/greyscale_config/wornout_shirt_graphic
 	name = "Worn-Out Shirt (Graphic)"
@@ -665,14 +662,11 @@
 	name = "Worn-Out Shirt (Graphic)(Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
-/datum/greyscale_config/messyworn_shirt
+/datum/greyscale_config/wellworn_shirt/messy
 	name = "Messy Worn Shirt"
-	icon_file = 'icons/obj/clothing/suits/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/messyworn_shirt.json'
 
-/datum/greyscale_config/messyworn_shirt/worn
+/datum/greyscale_config/wellworn_shirt/worn/messy
 	name = "Messy Worn Shirt (Worn)"
-	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
 /datum/greyscale_config/messyworn_shirt_graphic
 	name = "Messy Shirt (Graphic)"

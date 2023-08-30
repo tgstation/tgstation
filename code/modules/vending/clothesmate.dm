@@ -120,10 +120,13 @@
 				/obj/item/clothing/suit/apron/overalls = 2,
 				/obj/item/clothing/suit/costume/wellworn_shirt = 2,
 				/obj/item/clothing/suit/costume/wellworn_shirt/graphic = 2,
+				/obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian = 2,
 				/obj/item/clothing/suit/costume/wellworn_shirt/wornout = 2,
 				/obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic = 2,
+				/obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic/ian = 2,
 				/obj/item/clothing/suit/costume/wellworn_shirt/messy = 2,
 				/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic = 2,
+				/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/ian = 2,
 			),
 		),
 
@@ -158,7 +161,7 @@
 				/obj/item/clothing/suit/hooded/ethereal_raincoat = 3,
 				/obj/item/clothing/under/ethereal_tunic = 3,
 
-				/obj/item/clothing/suit/costume/wellworn_shirt/ian = 1,
+				/obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian = 1,
 				/obj/item/clothing/suit/costume/irs = 20,
 				/obj/item/clothing/head/costume/irs = 20,
 				/obj/item/clothing/head/costume/tmc = 20,

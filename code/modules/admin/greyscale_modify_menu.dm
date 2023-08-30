@@ -323,7 +323,6 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 
 /datum/greyscale_modify_menu/proc/DefaultApply()
 	var/atom/atom_target = target
-	atom_target.icon_state = icon_state
 	atom_target.set_greyscale(split_colors, config.type)
 
 /// Gets the top level type that first uses the configuration in this type path
