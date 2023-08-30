@@ -17,7 +17,8 @@
 			"icon_state": "nerd_base",
 			"blend_mode": "overlay"
 		}
-	],"wornout_shirt_ian": [
+	],
+	"wornout_shirt_ian": [
         {
             "type": "icon_state",
             "icon_state": "worn_out",

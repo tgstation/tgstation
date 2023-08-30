@@ -6,14 +6,16 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
-	],"wornout_shirt": [
+	],
+	"wornout_shirt": [
 		{
 			"type": "icon_state",
 			"icon_state": "worn_out",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
-	],"messyworn_shirt": [
+	],
+	"messyworn_shirt": [
 		{
 			"type": "icon_state",
 			"icon_state": "worn_messy",
