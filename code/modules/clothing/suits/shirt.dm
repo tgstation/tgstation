@@ -1,13 +1,17 @@
-/obj/item/clothing/suit/costume/ianshirt
-	name = "worn shirt"
-	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
-	icon_state = "ianshirt"
-	inhand_icon_state = null
+/obj/item/clothing/suit/costume/wellworn_shirt
+	name = "well-worn shirt"
+	desc = "A worn out, curiously comfortable t-shirt. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
+	icon_state = "wellworn_shirt"
+	inhand_icon_state = null //LEAVE THIS, GAGS INHANDS FUCKING SUUUUCK
+	greyscale_config = /datum/greyscale_config/wellworn_shirt
+	greyscale_config_worn = /datum/greyscale_config/wellworn_shirt/worn
+	greyscale_colors = "#FFFFFF"
 	species_exception = list(/datum/species/golem)
+	flags_1 = IS_PLAYER_COLORABLE_1
 	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)
 	var/wash_count = 0
 
-/obj/item/clothing/suit/costume/ianshirt/machine_wash(obj/machinery/washing_machine/washer)
+/obj/item/clothing/suit/costume/wellworn_shirt/machine_wash(obj/machinery/washing_machine/washer)
 	. = ..()
 	if(wash_count <= 5)
 		transform *= TRANSFORM_USING_VARIABLE(0.8, 1)
@@ -17,9 +21,57 @@
 		washer.visible_message("[src] implodes due to repeated washing.")
 		qdel(src)
 
-/obj/item/clothing/suit/costume/nerdshirt
+/obj/item/clothing/suit/costume/wellworn_shirt/ian
+	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian the Corgi. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
+	icon_state = "wellworn_shirt_ian"
+	greyscale_colors = "#FFFFFF#E1B26C"
+	greyscale_config = /datum/greyscale_config/wellworn_shirt_graphic
+	greyscale_config_worn = /datum/greyscale_config/wellworn_shirt_graphic/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/graphic
+	name = "well-worn graphic shirt"
+	desc = "A worn out, curiously comfortable t-shirt with a delightful and relatable character on the chest. It adds some charm points to itself and the wearer."
+	icon_state = "wellworn_shirt_ian"
+	greyscale_colors = "#FFFFFF#E1B26C"
+	greyscale_config = /datum/greyscale_config/wellworn_shirt_graphic
+	greyscale_config_worn = /datum/greyscale_config/wellworn_shirt_graphic/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/wornout
+	name = "worn-out shirt"
+	desc = "A pretty grubby, yet still comfortable t-shirt. You've been sleeping in this one for a bit too long."
+	icon_state = "wornout_shirt"
+	greyscale_colors = "#FFFFFF"
+	greyscale_config = /datum/greyscale_config/wornout_shirt
+	greyscale_config_worn = /datum/greyscale_config/wornout_shirt/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic
+	name = "worn-out graphic shirt"
+	desc = "A pretty grubby, yet still comfortable t-shirt with a delightful and relatable character on the chest. You should get some kind of achievement for sleeping in it this many days straight."
+	icon_state = "wornout_shirt_ian"
+	greyscale_colors = "#FFFFFF#E1B26C"
+	greyscale_config = /datum/greyscale_config/wornout_shirt_graphic
+	greyscale_config_worn = /datum/greyscale_config/wornout_shirt_graphic/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/messy
+	name = "messy worn-out shirt"
+	desc = "This worn-out, somehow comfortable t-shirt has reached a more thorough understanding of grime; maybe the fact that it's still gone unwashed could function as a sort of camo?"
+	icon_state = "messyworn_shirt"
+	greyscale_colors = "#FFFFFF"
+	greyscale_config = /datum/greyscale_config/messyworn_shirt
+	greyscale_config_worn = /datum/greyscale_config/messyworn_shirt/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic
+	name = "messy graphic shirt"
+	desc = "This worn-out, somehow comfortable t-shirt has reached a more thorough understanding of grime. Normies will never understand that this is a collector's item, and your sense of fashion absolutely mogs theirs."
+	icon_state = "messyworn_shirt_gamer"
+	greyscale_colors = "#FFFFFF#46B45B"
+	greyscale_config = /datum/greyscale_config/messyworn_shirt_graphic
+	greyscale_config_worn = /datum/greyscale_config/messyworn_shirt_graphic/worn
+
+/obj/item/clothing/suit/costume/wellworn_shirt/messy/gamer
 	name = "gamer shirt"
-	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would anyone wear this?"
-	icon_state = "nerdshirt"
-	inhand_icon_state = null
-	species_exception = list(/datum/species/golem)
+	desc = "A baggy, extremely well-used shirt with vintage game character Phanic the Weasel far-too-boldly displayed on the chest. Your mind cannot hope to withstand the assault of remembering the Phanic Phanart you've seen; let alone the stench of this top."
+	icon_state = "messyworn_shirt_gamer"
+	greyscale_colors = "#FFFFFF#46B45B"
+	greyscale_config = /datum/greyscale_config/messyworn_shirt_graphic
+	greyscale_config_worn = /datum/greyscale_config/messyworn_shirt_graphic/worn

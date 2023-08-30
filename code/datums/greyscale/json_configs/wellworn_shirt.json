@@ -1,0 +1,10 @@
+{
+    "wellworn_shirt": [
+        {
+            "type": "icon_state",
+            "icon_state": "worn_clean",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}

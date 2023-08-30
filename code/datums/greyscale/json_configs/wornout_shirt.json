@@ -1,0 +1,11 @@
+{
+    "wornout_shirt": [
+        {
+            "type": "icon_state",
+            "icon_state": "worn_out",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}
+

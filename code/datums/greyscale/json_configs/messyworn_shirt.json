@@ -1,0 +1,10 @@
+{
+    "messyworn_shirt": [
+        {
+            "type": "icon_state",
+            "icon_state": "worn_messy",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}
