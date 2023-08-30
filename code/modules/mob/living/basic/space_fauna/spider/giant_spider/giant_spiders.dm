@@ -247,6 +247,59 @@
 	return TRUE
 
 /**
+ * ### Spider Tank
+ * A subtype of the giant spider which is similar on every single way,
+ * This spider is only slightly slower than a human.
+ */
+/mob/living/basic/giant_spider/tank
+	name = "tank spider"
+	desc = "Furry and Purple with a white top, it makes you shudder to look at it. This one has bright yellow eyes."
+	icon_state = "tank"
+	icon_living = "tank"
+	icon_dead = "tank_dead"
+	maxHealth = 100
+	health = 100
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0.5, OXY = 1)
+	melee_damage_lower = 20
+	melee_damage_upper = 25
+	obj_damage = 30
+	speed = 5
+	player_speed_modifier = -4
+	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
+
+/mob/living/basic/giant_spider/guard/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
+
+
+/**
+ * ### Spider Breacher
+ * A subtype of the giant spider which is similar on every single way,
+ * This spider is only slightly slower than a human.
+ */
+/mob/living/basic/giant_spider/breacher
+	name = "breacher spider"
+	desc = "Furry and light brown with a white dark brown highlights, it makes you shudder to look at it. This one has bright red eyes."
+	icon_state = "breacher"
+	icon_living = "breacher"
+	icon_dead = "breacher_dead"
+	maxHealth = 120
+	health = 120
+	melee_damage_lower = 15
+	melee_damage_upper = 25
+	sharpness = SHARP_EDGED
+	bare_wound_bonus = 50
+	obj_damage = 50
+	speed = 5
+	player_speed_modifier = -4
+	menu_description = "Tanky and strong for the defense of the nest and other spiders, made to absorb the pain."
+
+/mob/living/basic/giant_spider/guard/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
+/**
  * ### Tarantula
  *
  * A subtype of the giant spider which specializes in pure strength and staying power.
