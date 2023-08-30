@@ -260,12 +260,14 @@
 /mob/living/carbon/resist_fire()
 	if(IsKnockdown())
 		return
-	adjust_fire_stacks(-5)
-	Knockdown(60, ignore_canstun = TRUE)
-	spin(32,2)
+	Knockdown(6 SECONDS, ignore_canstun = TRUE)
+	spin(6 SECONDS,2)
 	visible_message(span_danger("[src] rolls on the floor, trying to put [p_them()]self out!"), \
 		span_notice("You stop, drop, and roll!"))
-	sleep(3 SECONDS)
+	if(do_after(src, 6 SECONDS))
+		adjust_fire_stacks(-5)
+	else
+		to_chat(src, span_notice("You fail to extinguish yourself."))
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
 			span_notice("You extinguish yourself."))
