@@ -6,6 +6,8 @@
 		return TRUE
 	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
 		return FALSE
+	if(HAS_TRAIT(accessor, TRAIT_ALWAYS_NO_ACCESS))
+		return FALSE
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
@@ -59,6 +61,8 @@
 
 // Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
+	//if(I && HAS_TRAIT(I, TRAIT_ALWAYS_NO_ACCESS))
+	//	return FALSE
 	return check_access_list(I ? I.GetAccess() : null)
 
 /obj/proc/check_access_list(list/access_list)
