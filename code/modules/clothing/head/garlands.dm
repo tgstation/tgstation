@@ -25,13 +25,13 @@
 	icon_state = "[base_icon_state]_[crown_type]"
 	switch(crown_type)
 		if(1)
-			desc += "This one has red, yellow, and white flowers."
+			desc += " This one has red, yellow, and white flowers."
 		if(2)
-			desc += "This one has blue, yellow, green, and white flowers."
+			desc += " This one has blue, yellow, green, and white flowers."
 		if(3)
-			desc += "This one has red, blue, purple, and pink flowers."
+			desc += " This one has red, blue, purple, and pink flowers."
 		if(4)
-			desc += "This one has yellow, green, and white flowers."
+			desc += " This one has yellow, green, and white flowers."
 
 /obj/item/clothing/head/costume/garland/sunflower
 	name = "sunflower crown"
