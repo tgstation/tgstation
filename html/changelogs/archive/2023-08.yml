@@ -1348,3 +1348,31 @@
       get a status effect with a number of curses associated with it. There's some
       interesting florid language associated with the status effect as a nicety until
       your eventual gibbing from chasing that prize.
+2023-08-30:
+  Ghommie:
+  - sound: Unlocking an achievement now plays a sound by default. You can change it
+      in the Sound category of the game preferences.
+  Melbert:
+  - balance: If your server has non-human morgue cadavers enabled, you will be guaranteed
+      one human cadaver no matter what.
+  - balance: All maps (with the exception of Birdboat) now have an additional morgue
+      cadaver roundstart.
+  RikuTheKiller:
+  - bugfix: Probital overdose no longer causes plasmamen and other inorganics to receive
+      the longest nap in their lives.
+  Sealed101:
+  - qol: Metastation has had more navigate landmarks added, namely for areas like
+      Medbay, Cargo, Engineering, department heads offices and a few more.
+  SyncIt21:
+  - refactor: sheets are merged in a better way when ejected from machines & material
+      related stuff
+  - bugfix: rcd can build wallmounts on reinforced walls
+  - qol: rcd can build directional windows without requiring/building a grill
+  Timberpoes:
+  - bugfix: Fixes an issue where role banned players would be able to accept certain
+      ghost roles they're meant to be banned from.
+  VladinXXV:
+  - qol: The coroner can now store scythes in their labcoat and winter coat suit storage.
+      Ask not for whom the bell tolls...
+  xPokee:
+  - bugfix: fixed skeleton wings not being visible from behind while closed
