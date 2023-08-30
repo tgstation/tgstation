@@ -1,24 +1,41 @@
 /mob/living/basic/proc/pass_stats(atom/child)
 	return
-/mob/living/simple_animal/chick
+
+
+/datum/ai_controller/basic_controller/chick
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_FIND_MOM_TYPES = list(/mob/living/basic/chicken),
+		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/chick),
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/look_for_adult,
+	)
+
+/**
+ * ## Chicks
+ *
+ * Baby birds that grow into big chickens.
+ */
+/mob/living/basic/chick
 	name = "\improper chick"
 	desc = "Adorable! They make such a racket though."
 	icon = 'monkestation/icons/mob/ranching/chickens.dmi'
 	icon_state = "chick"
 	icon_living = "chick"
-	icon_dead = "dead_state"
+	icon_dead = "chick_dead"
 	icon_gib = "chick_gib"
-	worn_slot_flags = ITEM_SLOT_HEAD
-	held_state = "chick"
 	gender = FEMALE
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
-	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_emote = list("cheeps")
-	emote_hear = list("cheeps.")
-	emote_see = list("pecks at the ground.","flaps its tiny wings.")
 	density = FALSE
-	speak_chance = 2
-	turns_per_move = 2
 	butcher_results = list(/obj/item/food/meat/slab/chicken = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -28,18 +45,15 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	footstep_type = FOOTSTEP_MOB_CLAW
-
 	health = 3
 	maxHealth = 3
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	chat_color = "#FFDC9B"
+	gold_core_spawnable = FRIENDLY_SPAWN
 
+	ai_controller = /datum/ai_controller/basic_controller/chick
 
-	///How close to being an adult is this chicken
-	var/amount_grown = 0
-	///What type of chicken is this?
+	/// What we grow into.
 	var/grown_type = /mob/living/basic/chicken
 	///Glass chicken exclusive:what reagent were the eggs filled with?
 	var/list/glass_egg_reagent = list()
@@ -48,12 +62,39 @@
 	/// list of friends inherited by parent
 	var/list/friends = list()
 
-/mob/living/simple_animal/chick/Initialize(mapload)
+/mob/living/basic/chick/Initialize(mapload)
 	. = ..()
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = base_pixel_x + rand(-6, 6)
+	pixel_y = base_pixel_y + rand(0, 10)
 
-/mob/living/simple_animal/chick/proc/assign_chick_icon(mob/living/basic/chicken/chicken_type)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+	AddElement(/datum/element/pet_bonus, "chirps!")
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+
+	if(!isnull(grown_type)) // we don't have a set time to grow up beyond whatever RNG dictates, and if we somehow get a client, all growth halts.
+		AddComponent(\
+			/datum/component/growth_and_differentiation,\
+			growth_time = null,\
+			growth_path = grown_type,\
+			growth_probability = 100,\
+			lower_growth_value = 1,\
+			upper_growth_value = 2,\
+			signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
+			optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
+			optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up)),\
+		)
+
+/// We don't grow into a chicken if we're not conscious.
+/mob/living/basic/chick/proc/ready_to_grow()
+	return (stat == CONSCIOUS)
+
+/// Variant of chick that just spawns in the holodeck so you can pet it. Doesn't grow up.
+/mob/living/basic/chick/permanent
+	grown_type = null
+
+/mob/living/basic/chick/proc/assign_chick_icon(mob/living/basic/chicken/chicken_type)
 	if(!chicken_type) // do we have a grown type?
 		return
 
@@ -64,38 +105,30 @@
 	icon_dead = "dead_[hatched_type.icon_suffix]"
 	qdel(hatched_type)
 
-/mob/living/simple_animal/chick/Life()
-	. =..()
-	if(!.)
+/mob/living/basic/chick/proc/grow_up()
+	if(!grown_type)
 		return
-	if(!stat && !ckey)
-		amount_grown += rand(1,2)
-		if(amount_grown >= 100)
-			if(!grown_type)
-				return
-			var/mob/living/basic/chicken/new_chicken = new grown_type(src.loc)
-			new_chicken.Friends = src.friends
-			new_chicken.age += rand(1,10) //add a bit of age to each chicken causing staggered deaths
-			if(istype(new_chicken, /mob/living/basic/chicken/glass))
-				for(var/list_item in glass_egg_reagent)
-					new_chicken.glass_egg_reagents.Add(list_item)
+	var/mob/living/basic/chicken/new_chicken = new grown_type(src.loc)
+	new_chicken.Friends = src.friends
+	new_chicken.age += rand(1,10) //add a bit of age to each chicken causing staggered deaths
 
-			if(istype(new_chicken, /mob/living/basic/chicken/stone))
-				if(production_type)
-					new_chicken.production_type = production_type
-			qdel(src)
+	if(istype(new_chicken, /mob/living/basic/chicken/glass))
+		for(var/list_item in glass_egg_reagent)
+			new_chicken.glass_egg_reagents.Add(list_item)
 
-/mob/living/simple_animal/chick/death(gibbed)
+	if(istype(new_chicken, /mob/living/basic/chicken/stone))
+		if(production_type)
+			new_chicken.production_type = production_type
+	qdel(src)
+
+
+/mob/living/basic/chick/death(gibbed)
 	friends = null
 	..()
 
-/mob/living/simple_animal/chick/Destroy()
+/mob/living/basic/chick/Destroy()
 	friends = null
 	return ..()
-
-/mob/living/simple_animal/chick/holo/Life()
-	..()
-	amount_grown = 0
 
 /mob/living/basic/chicken
 	name = "\improper chicken"
@@ -117,10 +150,10 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
+	response_harm_continuous = "pecks"
+	response_harm_simple = "peck"
+	attack_verb_continuous = "pecks"
+	attack_verb_simple = "peck"
 
 	density = FALSE
 	speed = 1.1
@@ -420,7 +453,7 @@
 		src.death()
 
 	var/animal_count = 0
-	for(var/mob/living/simple_animal/animals in view(1, src))
+	for(var/mob/living/basic/animals in view(1, src))
 		animal_count ++
 	if(animal_count >= overcrowding)
 		adjust_happiness(-1)
@@ -468,7 +501,7 @@
 	STOP_PROCESSING(SSobj, src)
 	if(failed_mutations || !src.loc)
 		return
-	var/mob/living/simple_animal/chick/birthed = new /mob/living/simple_animal/chick(src.loc)
+	var/mob/living/basic/chick/birthed = new /mob/living/basic/chick(src.loc)
 
 	if(possible_mutations.len)
 		var/datum/mutation/ranching/chicken/chosen_mutation = pick(possible_mutations)
