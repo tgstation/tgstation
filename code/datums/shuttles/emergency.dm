@@ -43,6 +43,13 @@
 	credit_cost = CARGO_CRATE_VALUE * 10
 	occupancy_limit = "45"
 
+/datum/map_template/shuttle/emergency/humpback
+	suffix = "humpback"
+	name = "Humpback Emergency Shuttle"
+	description = "A repurposed cargo hauling and salvaging ship, for sightseeing and tourism. Has a bar."
+	credit_cost = CARGO_CRATE_VALUE * 12
+	occupancy_limit = "30"
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
