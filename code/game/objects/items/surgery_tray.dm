@@ -44,7 +44,7 @@
 	var/obj/item/stack/sticky_tape/surgical/surgical_tape
 	var/obj/item/blood_filter/blood_filter
 
-	var/obj/item/razor/razor
+	var/obj/item/razor/surgery/razor
 	var/obj/item/bonesetter/bonesetter
 	var/obj/item/surgical_drapes/surgical_drapes
 
@@ -257,12 +257,16 @@
 /obj/item/surgery_tray/proc/PopulateContents()
 	blood_filter = new(src)
 	bonesetter = new(src)
-	cautery = new(src)
+	razor = new(src)
+	if(!cautery)
+		cautery = new(src)
+	if(!hemostat)
+		hemostat = new(src)
+	if(!retractor)
+		retractor = new(src)
+	if(!scalpel)
+		scalpel = new(src)
 	circular_saw = new(src)
-	hemostat = new(src)
-	razor = new /obj/item/razor/surgery(src)
-	retractor = new(src)
-	scalpel = new(src)
 	bone_gel = new(src)
 	surgical_tape = new(src)
 	surgical_drapes = new(src)
@@ -323,17 +327,8 @@
 		meaning the wheels on the bottom can be extended outwards, making it a cart."
 
 /obj/item/surgery_tray/morgue/PopulateContents()
-	blood_filter = new(src)
-	bonesetter = new(src)
 	cautery = new /obj/item/cautery/cruel(src)
-	circular_saw = new(src)
 	hemostat = new /obj/item/hemostat/cruel(src)
-	razor = new /obj/item/razor/surgery(src)
 	retractor = new /obj/item/retractor/cruel(src)
 	scalpel = new /obj/item/scalpel/cruel(src)
-	surgical_drapes = new(src)
-	surgical_drill = new(src)
-	var/static/list/items_inside = list(
-		/obj/item/clothing/mask/surgical = 1,
-	)
-	generate_items_inside(items_inside, src)
+	return ..()
