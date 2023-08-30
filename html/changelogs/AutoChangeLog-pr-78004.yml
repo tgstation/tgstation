@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Fixes a rare issue that could lead to players entering an infinite disconnection loop from having a null view."
