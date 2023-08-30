@@ -1,0 +1,7 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - balance: "Prosthetics and slimepeople can now have limbs dismembered"
+  - balance: "Slimepeople can now receive slash wounds, but cannot bleed"
+  - balance: "Most limbs can now be dislocated"
+  - refactor: "Scar backend reworked, scars will be wiped as they update to the new format"
