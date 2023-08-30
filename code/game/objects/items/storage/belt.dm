@@ -266,6 +266,26 @@
 		/obj/item/wrench/medical,
 	))
 
+/obj/item/storage/belt/medical/chief
+	name = "\improper Chief Medical Officer's toolbelt"
+	desc = "Can hold various medical equipment."
+	icon_state = "medical_cmo"
+	inhand_icon_state = "medical_cmo"
+	worn_icon_state = "medical_cmo"
+
+/obj/item/storage/belt/medical/chief/full
+	preload = TRUE
+
+/obj/item/storage/belt/utility/chief/full/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
+	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
+	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
+	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/spray/medical, src)
+	SSwardrobe.provide_type(/obj/item/blood_filter, src)
+	SSwardrobe.provide_type(/obj/item/bonesetter, src)
+	//much roomier now that we've managed to remove two tools
+
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
 	icon_state = "emt"
