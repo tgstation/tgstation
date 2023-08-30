@@ -188,7 +188,10 @@
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
 	// Can hold fishing rod despite the size
-	var/static/list/exception_cache = typecacheof(/obj/item/fishing_rod)
+	var/static/list/exception_cache = typecacheof(
+		/obj/item/fishing_rod,
+		/obj/item/fishing_line,
+	)
 	atom_storage.exception_hold = exception_cache
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
