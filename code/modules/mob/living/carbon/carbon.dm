@@ -258,8 +258,10 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
+	if(IsKnockdown())
+		return
 	adjust_fire_stacks(-5)
-	Paralyze(60, ignore_canstun = TRUE)
+	Knockdown(60, ignore_canstun = TRUE)
 	spin(32,2)
 	visible_message(span_danger("[src] rolls on the floor, trying to put [p_them()]self out!"), \
 		span_notice("You stop, drop, and roll!"))
