@@ -63,7 +63,7 @@
 
 /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze/Activate(mob/living/target)
 	var/mob/living/living_owner = owner
-	living_owner.visible_message("[living_owner] glares at [target].", "You glare at [target].")
+	living_owner.visible_message("[living_owner] glares at [target] petrifying them.", "You glare at [target] petrifying them.")
 	living_owner.face_atom(target)
 	target.petrify(2 SECONDS)
 	StartCooldown()
