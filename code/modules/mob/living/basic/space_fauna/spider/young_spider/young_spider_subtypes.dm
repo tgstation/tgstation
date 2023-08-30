@@ -99,6 +99,7 @@
 	)
 
 /// Will differentiate into the "tangle" giant spider.
+
 /mob/living/basic/spider/growing/young/tangle
 	grow_as = /mob/living/basic/spider/giant/tangle
 	name = "young tangle spider"
@@ -136,6 +137,36 @@
 		balloon_alert(src, "on fire!")
 		return FALSE
 	return TRUE
+
+
+/// Will differentiate into the "tank" giant spider.
+/mob/living/basic/spider/growing/young/tank
+	grow_as = /mob/living/basic/spider/giant/tank
+	name = "young tank spider"
+	desc = "Furry and purple, it looks defenseless. This one has dim yellow eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "young_tank"
+	icon_dead = "young_tank_dead"
+	maxHealth = 50
+	health = 50
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0.5, OXY = 1)
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	speed = 1
+
+	/// Will differentiate into the "breacher" giant spider.
+/mob/living/basic/spider/growing/young/breacher
+	grow_as = /mob/living/basic/spider/giant/breacher
+	name = "young breacher spider"
+	desc = "Furry and baige, it looks defenseless. This one has dim red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "young_breacher"
+	icon_dead = "young_breacher_dead"
+	maxHealth = 60
+	health = 60
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	speed = 1
 
 /// Will differentiate into the "midwife" giant spider.
 /mob/living/basic/spider/growing/young/midwife
