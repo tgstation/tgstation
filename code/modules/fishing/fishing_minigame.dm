@@ -25,6 +25,11 @@
 #define REELING_STATE_UP 1
 #define REELING_STATE_DOWN 2
 
+///The height of the minigame bar, which is its icon height, minus 2 on each side
+#define MINIGAME_SLIDER_HEIGHT 76
+///The standard height of the bait
+#define MINIGAME_BAIT_HEIGHT 25
+
 /datum/fishing_challenge
 	/// When the ui minigame phase started
 	var/start_time
@@ -105,13 +110,7 @@
 	var/bait_bounce_coeff = 0.6
 
 	///The background as shown in the minigame, and the holder of the other visual overlays
-	var/atom/movable/hud_background
-	///The fish as shown in the minigame
-	var/atom/movable/hud_fish
-	///The bait as shown in the minigame
-	var/atom/movable/hud_bait
-	///The completion bar as shown in the minigame
-	var/atom/movable/hud_completion
+	var/atom/movable/fishing_hud/fishing_hud
 
 /datum/fishing_challenge/New(datum/component/fishing_spot/comp, reward_path, obj/item/fishing_rod/rod, mob/user)
 	src.user = user
@@ -331,10 +330,7 @@
 
 /datum/fishing_challenge/proc/remove_minigame_hud()
 	SSfishing.end_minigame_process(src)
-	QDEL_NULL(hud_background)
-	QDEL_NULL(hud_fish)
-	QDEL_NULL(hud_bait)
-	QDEL_NULL(hud_completion)
+	QDEL_NULL(fishing_hud)
 
 /datum/fishing_challenge/process(seconds_per_tick)
 	move_fish(seconds_per_tick)
@@ -415,11 +411,11 @@
 	var/velocity_change
 	switch(reeling_state)
 		if(REELING_STATE_UP)
-			acceleration = reeling_velocity
+			velocity_change = reeling_velocity
 		if(REELING_STATE_DOWN)
-			acceleration = -reeling_velocity
+			velocity_change = -reeling_velocity
 		if(REELING_STATE_IDLE)
-			acceleration = gravity_velocity
+			velocity_change = gravity_velocity
 	velocity_change *= (fish_on_bait ? FISH_ON_BAIT_ACCELERATION_COEFF : 1) * seconds_per_tick
 
 	velocity_change = round(velocity_change)
@@ -456,6 +452,47 @@
 	set_glide_size(source.glide_size)
 	forceMove(source.loc)
 
+/atom/movable/fishing_hud
+	icon = 'icons/hud/fishing_hud.dmi'
+	screen_loc = "CENTER+1:10,CENTER-1:8"
+	///The fish as shown in the minigame
+	var/atom/movable/hud_fish
+	///The bait as shown in the minigame
+	var/atom/movable/hud_bait
+	///The completion bar as shown in the minigame
+	var/atom/movable/hud_completion
+
+/atom/movable/fishing_hud/Initialize(mapload, datum/fishing_challenge/challenge)
+	. = ..()
+	if(!challenge) //create and destroy, mayhaps.
+		return
+	icon_state = challenge.background
+	add_overlay("frame")
+	hud_bait = new
+	hud_bait.icon = icon
+	hud_bait.icon_state = "bait"
+	var/static/icon/cut_bait_mask = icon(icon, "cut_bait")
+	var/new_sprite_height = round(MINIGAME_BAIT_HEIGHT * (challenge.bait_height/initial(challenge.bait_height)), 1)
+	if(new_sprite_height < MINIGAME_BAIT_HEIGHT)
+		var/size = MINIGAME_BAIT_HEIGHT - new_sprite_height
+		hud_bait.add_filter("Cut_Bait", 1, displacement_map_filter(cut_bait_mask, x = 0, y = 0, size = size))
+	vis_contents += hud_bait
+	hud_fish = new
+	hud_fish.icon = icon
+	hud_fish.icon_state = "fish"
+	vis_contents += hud_fish
+	hud_completion = new
+	hud_completion.icon = icon
+	hud_completion.icon_state = "completion_[FLOOR(challenge.completion, 5)]"
+	vis_contents += hud_completion
+	challenge.user.client.screen += src
+
+/atom/movable/fishing_hud/Destroy()
+	QDEL_NULL(hud_fish)
+	QDEL_NULL(hud_bait)
+	QDEL_NULL(hud_completion)
+	return ..()
+
 #undef WAIT_PHASE
 #undef BITING_PHASE
 #undef MINIGAME_PHASE
@@ -468,6 +505,8 @@
 #undef FISH_ON_BAIT_ACCELERATION_COEFF
 #undef BAIT_MIN_VELOCITY_BOUNCE
 
+#undef MINIGAME_SLIDER_HEIGHT
+#undef MINIGAME_BAIT_HEIGHT
 
 #undef REELING_STATE_IDLE
 #undef REELING_STATE_UP
