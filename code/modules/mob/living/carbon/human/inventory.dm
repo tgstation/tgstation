@@ -395,7 +395,7 @@
 	else
 		outfit_to_equip = new outfit
 
-	if(!outfit_to_equip)
+	if(isnull(outfit_to_equip))
 		return FALSE
 
 	return outfit_to_equip.equip(src, visualsOnly)
