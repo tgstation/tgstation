@@ -51,8 +51,6 @@
 
 		handle_diseases(seconds_per_tick, times_fired)// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
-		handle_wounds(seconds_per_tick, times_fired)
-
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
 
@@ -66,6 +64,8 @@
 			handle_environment(environment, seconds_per_tick, times_fired)
 
 		handle_gravity(seconds_per_tick, times_fired)
+
+	handle_wounds(seconds_per_tick, times_fired)
 
 	if(machine)
 		machine.check_eye(src)

@@ -3,18 +3,21 @@
 	Piercing wounds
 */
 /datum/wound/pierce
+	wound_type = WOUND_PIERCE
 
-/datum/wound/pierce
+/datum/wound/pierce/bleed
 	name = "Piercing Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
-	wound_type = WOUND_PIERCE
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
-	wound_flags = (ACCEPTS_GAUZE | CAN_BE_GRASPED)
+	wound_flags = (ACCEPTS_GAUZE)
 
-	default_scar_file = FLESH_SCAR_FILE
+	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
+
+	scar_file = FLESH_SCAR_FILE
+
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -26,7 +29,7 @@
 	/// If we let off blood when hit, the max blood lost is this * the incoming damage
 	var/internal_bleeding_coefficient
 
-/datum/wound/pierce/wound_injury(datum/wound/old_wound = null, attack_direction = null)
+/datum/wound/pierce/bleed/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
 	if(limb.can_bleed() && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
@@ -34,7 +37,7 @@
 	return ..()
 
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
+	if(victim.stat == DEAD || (wounding_dmg < 5) || no_bleeding || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
 		return
 	if(limb.current_gauze?.splint_factor)
 		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
@@ -55,7 +58,7 @@
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
-/datum/wound/pierce/get_bleed_rate_of_change()
+/datum/wound/pierce/bleed/get_bleed_rate_of_change()
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
@@ -65,7 +68,10 @@
 		return BLOOD_FLOW_DECREASING
 	return BLOOD_FLOW_STEADY
 
-/datum/wound/pierce/handle_process(seconds_per_tick, times_fired)
+/datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
+	if (!victim || IS_IN_STASIS(victim))
+		return
+
 	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 	if(limb.can_bleed())
@@ -84,31 +90,33 @@
 	if(blood_flow <= 0)
 		qdel(src)
 
-/datum/wound/pierce/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/pierce/bleed/on_stasis(seconds_per_tick, times_fired)
 	. = ..()
 	if(blood_flow <= 0)
 		qdel(src)
 
-/datum/wound/pierce/check_grab_treatments(obj/item/I, mob/user)
+/datum/wound/pierce/bleed/check_grab_treatments(obj/item/I, mob/user)
 	if(I.get_temperature()) // if we're using something hot but not a cautery, we need to be aggro grabbing them first, so we don't try treating someone we're eswording
 		return TRUE
 
-/datum/wound/pierce/treat(obj/item/I, mob/user)
+/datum/wound/pierce/bleed/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/suture))
-		suture(I, user)
+		return suture(I, user)
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
-		tool_cauterize(I, user)
+		return tool_cauterize(I, user)
 
-/datum/wound/pierce/on_xadone(power)
+/datum/wound/pierce/bleed/on_xadone(power)
 	. = ..()
-	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
-/datum/wound/pierce/on_synthflesh(power)
+	if (limb) // parent can cause us to be removed, so its reasonable to check if we're still applied
+		adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+
+/datum/wound/pierce/bleed/on_synthflesh(power)
 	. = ..()
 	adjust_blood_flow(-0.025 * power) // 20u * 0.05 = -1 blood flow, less than with slashes but still good considering smaller bleed rates
 
 /// If someone is using a suture to close this puncture
-/datum/wound/pierce/proc/suture(obj/item/stack/medical/suture/I, mob/user)
+/datum/wound/pierce/bleed/proc/suture(obj/item/stack/medical/suture/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.4 : 1)
 	var/treatment_delay = base_treat_time * self_penalty_mult
 
@@ -120,7 +128,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
+	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -128,18 +136,27 @@
 	I.use(1)
 
 	if(blood_flow > 0)
-		try_treating(I, user)
+		return try_treating(I, user)
 	else
 		to_chat(user, span_green("You successfully close the hole in [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
+		return TRUE
 
 /// If someone is using either a cautery tool or something with heat to cauterize this pierce
-/datum/wound/pierce/proc/tool_cauterize(obj/item/I, mob/user)
+/datum/wound/pierce/bleed/proc/tool_cauterize(obj/item/I, mob/user)
+
 	var/improv_penalty_mult = (I.tool_behaviour == TOOL_CAUTERY ? 1 : 1.25) // 25% longer and less effective if you don't use a real cautery
 	var/self_penalty_mult = (user == victim ? 1.5 : 1) // 50% longer and less effective if you do it to yourself
 
-	user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
-	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return
+	var/treatment_delay = base_treat_time * self_penalty_mult * improv_penalty_mult
+
+	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		treatment_delay *= 0.5
+		user.visible_message(span_danger("[user] begins expertly cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I], keeping the holo-image indications in mind..."))
+	else
+		user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
+
+	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
 
 	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
@@ -150,7 +167,13 @@
 	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > 0)
-		try_treating(I, user)
+		return try_treating(I, user)
+	return TRUE
+
+/datum/wound_pregen_data/flesh_pierce
+	abstract = TRUE
+
+	required_limb_biostate = (BIO_FLESH)
 
 /datum/wound_pregen_data/flesh_pierce
 	abstract = TRUE
@@ -184,14 +207,12 @@
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/moderate
 
-	threshold_minimum = 30
-
 /datum/wound/pierce/bleed/moderate/update_descriptions()
-	if(!limb.can_bleed())
+	if(no_bleeding)
 		examine_desc = "has a small, circular hole"
 		occur_text = "splits a small hole open"
 
-/datum/wound/pierce/severe
+/datum/wound/pierce/bleed/severe
 	name = "Open Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
 	treat_text = "Repair punctures in skin by suture or cautery, extreme cold may also work."
@@ -212,13 +233,11 @@
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/severe
 
-	threshold_minimum = 50
-
 /datum/wound/pierce/bleed/severe/update_descriptions()
-	if(!limb.can_bleed())
+	if(no_bleeding)
 		occur_text = "tears a hole open"
 
-/datum/wound/pierce/critical
+/datum/wound/pierce/bleed/critical
 	name = "Ruptured Cavity"
 	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
 	treat_text = "Surgical repair of puncture wound, followed by supervised resanguination."
@@ -233,11 +252,9 @@
 	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
 
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/critical
-
-	threshold_minimum = 100
