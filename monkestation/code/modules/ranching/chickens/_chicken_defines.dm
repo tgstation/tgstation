@@ -129,6 +129,10 @@
 	var/fresh_mutation = FALSE
 	///is this egg fertile? used when picked up / dropped
 	var/is_fertile = FALSE
+	///the holder of our factions used so that we keep faction friends through generations
+	var/list/faction_holder = list()
+	///our stored_glass_egg_reagents from the parent
+	var/list/glass_egg_reagents = list()
 
 
 /datum/action/cooldown/mob_cooldown/chicken

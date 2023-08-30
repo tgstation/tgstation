@@ -60,7 +60,7 @@
 	///Stone Chicken Exclusive: what ore type is in the eggs?
 	var/obj/item/stack/ore/production_type = null
 	/// list of friends inherited by parent
-	var/list/friends = list()
+	var/list/Friends = list()
 
 /mob/living/basic/chick/Initialize(mapload)
 	. = ..()
@@ -109,7 +109,8 @@
 	if(!grown_type)
 		return
 	var/mob/living/basic/chicken/new_chicken = new grown_type(src.loc)
-	new_chicken.Friends = src.friends
+	new_chicken.Friends = src.Friends
+	new_chicken.happiness = src.happiness
 	new_chicken.age += rand(1,10) //add a bit of age to each chicken causing staggered deaths
 
 	if(istype(new_chicken, /mob/living/basic/chicken/glass))
@@ -123,12 +124,26 @@
 
 
 /mob/living/basic/chick/death(gibbed)
-	friends = null
+	Friends = null
 	..()
 
 /mob/living/basic/chick/Destroy()
-	friends = null
+	Friends = null
 	return ..()
+
+/mob/living/basic/chick/proc/absorb_eggstat(obj/item/food/egg/host_egg)
+	for(var/listed_faction in host_egg.faction_holder)
+		src.faction |= listed_faction
+
+	src.happiness = host_egg.happiness
+	src.Friends = host_egg.Friends
+	if(istype(grown_type, /mob/living/basic/chicken/glass))
+		for(var/list_item in host_egg.glass_egg_reagents)
+			src.glass_egg_reagent.Add(list_item)
+
+	if(istype(grown_type, /mob/living/basic/chicken/stone))
+		if(host_egg.production_type)
+			src.production_type = host_egg.production_type
 
 /mob/living/basic/chicken
 	name = "\improper chicken"
@@ -173,6 +188,8 @@
 	pixel_y = rand(0, 10)
 
 	AddComponent(/datum/component/mutation, mutation_list, TRUE)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	if(prob(40))
 		gender = MALE
@@ -256,6 +273,7 @@
 	var/obj/item/food/egg/layed_egg = child
 
 	layed_egg.Friends = src.Friends
+	layed_egg.faction_holder = src.faction
 	layed_egg.layer_hen_type = src.type
 	layed_egg.happiness = src.happiness
 	layed_egg.consumed_food = src.consumed_food
@@ -320,10 +338,12 @@
 	else
 		..()
 
-/mob/living/basic/chicken/proc/set_friendship(new_friend, amount = 1)
+/mob/living/basic/chicken/proc/set_friendship(atom/new_friend, amount = 1)
 	if(!Friends[new_friend])
 		Friends[new_friend] = 0
 	Friends[new_friend] += amount
+	if(Friends[new_friend] >= 25)
+		faction |= REF(new_friend)
 
 /mob/living/basic/chicken/proc/feed_food(obj/item/given_item, mob/user)
 	handle_happiness_changes(given_item, user)
@@ -518,6 +538,7 @@
 	if(birthed.grown_type == /mob/living/basic/chicken/stone)
 		birthed.production_type = src.production_type
 
+	birthed.absorb_eggstat(src)
 	birthed.assign_chick_icon(birthed.grown_type)
 	visible_message("[src] hatches with a quiet cracking sound.")
 	qdel(src)
@@ -569,7 +590,7 @@
 		if(!natural_cause)
 			add_visual("angry")
 	if(source)
-		set_friendship(source, amount * 0.1)
+		set_friendship(source, amount * 0.5)
 
 
 /datum/action/cooldown/mob_cooldown/chicken/lay_egg

@@ -7775,8 +7775,7 @@
 "cXc" = (
 /obj/machinery/light/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/flora/bush/leavy/style_random,
-/turf/open/floor/grass,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "cXw" = (
 /obj/machinery/holopad,
@@ -7858,11 +7857,11 @@
 /area/station/maintenance/port)
 "cZm" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/door/window/left/directional/north{
-	name = "Pen #2"
-	},
 /mob/living/basic/chicken/brown,
-/turf/open/floor/grass,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "cZu" = (
 /obj/structure/disposalpipe/segment{
@@ -8259,8 +8258,8 @@
 /area/station/maintenance/port)
 "dfR" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/chicken_grinder,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/chicken_grinder,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "dfS" = (
@@ -8890,6 +8889,14 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/structure/table/glass,
+/obj/item/fish_feed{
+	pixel_y = 3
+	},
+/obj/item/fishing_hook,
+/obj/item/fishing_line,
+/obj/item/fishing_rod,
+/obj/item/aquarium_kit,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "dsQ" = (
@@ -9239,9 +9246,8 @@
 /area/station/maintenance/starboard/lesser)
 "dBz" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/egg_incubator,
 /obj/structure/sign/poster/random/directional/south,
-/turf/open/floor/grass,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "dBV" = (
 /obj/docking_port/stationary/escape_pod{
@@ -12459,17 +12465,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"eKD" = (
-/obj/structure/table/glass,
-/obj/item/aquarium_kit,
-/obj/item/fishing_rod,
-/obj/item/fishing_line,
-/obj/item/fishing_hook,
-/obj/item/fish_feed{
-	pixel_y = 3
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics)
 "eKP" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/freezerchamber)
@@ -15693,9 +15688,10 @@
 /area/station/security/office)
 "fYI" = (
 /obj/structure/sign/poster/random/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/flora/bush/flowers_yw/style_random,
-/turf/open/floor/grass,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "fYJ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -16305,10 +16301,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
-"gkx" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/grass,
-/area/station/service/hydroponics)
 "gkD" = (
 /obj/machinery/recharger{
 	pixel_y = 3
@@ -17450,7 +17442,7 @@
 /area/station/command/heads_quarters/hos)
 "gFD" = (
 /obj/structure/nestbox,
-/turf/open/floor/grass,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "gFL" = (
 /obj/effect/turf_decal/tile/green{
@@ -24973,7 +24965,7 @@
 "jgK" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/nestbox,
-/turf/open/floor/grass,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "jgQ" = (
 /obj/structure/table,
@@ -29033,11 +29025,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "kCD" = (
-/obj/machinery/door/window/right/directional/north{
-	name = "Pen #1"
-	},
-/obj/structure/flora/bush/generic/style_random,
-/turf/open/floor/grass,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "kCN" = (
 /obj/structure/disposalpipe/segment,
@@ -35994,8 +35982,8 @@
 /area/station/engineering/atmos)
 "nbJ" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/grass,
+/mob/living/basic/chicken,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "nbS" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -37589,6 +37577,16 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/table/glass,
+/obj/item/food/grown/pumpkin{
+	pixel_y = 5
+	},
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/carrot,
+/obj/item/grown/corncob,
+/obj/item/seeds/potato,
+/obj/item/seeds/wheat,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "nDP" = (
@@ -39377,7 +39375,7 @@
 /area/station/science/server)
 "onf" = (
 /mob/living/basic/chicken/brown,
-/turf/open/floor/grass,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "onp" = (
 /obj/structure/table/wood,
@@ -41373,7 +41371,11 @@
 /area/space/nearstation)
 "oYu" = (
 /obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "oYM" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -43068,7 +43070,10 @@
 /area/station/science/research)
 "pEB" = (
 /obj/effect/landmark/start/botanist,
-/turf/open/floor/grass,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "pEG" = (
 /obj/item/kirbyplants/random,
@@ -45420,7 +45425,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "qxh" = (
@@ -45806,8 +45810,10 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "qDA" = (
-/mob/living/basic/chicken,
-/turf/open/floor/grass,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "qDS" = (
 /obj/structure/cable,
@@ -50689,7 +50695,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "snE" = (
-/mob/living/basic/chicken/brown,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -50748,7 +50753,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/mob/living/basic/chicken,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "soW" = (
@@ -55121,11 +55125,33 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/office)
 "tOQ" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/cup/watering_can,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/status_display/ai/directional/north,
+/obj/structure/table/glass,
+/obj/item/chicken_feed{
+	pixel_y = 2;
+	pixel_x = -5
+	},
+/obj/machinery/feed_machine{
+	pixel_y = 1;
+	pixel_x = 9
+	},
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/storage/bag/egg,
+/obj/item/chicken_scanner,
+/obj/item/chicken_scanner,
+/obj/item/chicken_scanner,
+/obj/item/chicken_scanner,
+/obj/item/chicken_scanner,
+/obj/item/chicken_book,
+/obj/item/chicken_book,
+/obj/item/chicken_book,
+/obj/item/chicken_book,
+/obj/item/chicken_book,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "tOZ" = (
@@ -58534,6 +58560,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"uYG" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "uYP" = (
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/north{
@@ -59550,22 +59580,12 @@
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "vqi" = (
-/obj/item/seeds/wheat,
-/obj/item/seeds/sugarcane,
-/obj/item/seeds/potato,
-/obj/item/seeds/apple,
-/obj/item/grown/corncob,
-/obj/item/food/grown/carrot,
-/obj/item/food/grown/wheat,
-/obj/item/food/grown/pumpkin{
-	pixel_y = 5
-	},
-/obj/structure/table/glass,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hydroponics - Aft"
 	},
-/turf/open/floor/grass,
+/mob/living/basic/chicken,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "vqk" = (
 /obj/structure/cable,
@@ -61492,7 +61512,10 @@
 "was" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/floor/grass,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "waB" = (
 /obj/machinery/door/airlock/external/glass{
@@ -65482,8 +65505,7 @@
 "xyc" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/cup/watering_can,
+/obj/machinery/egg_incubator,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "xyp" = (
@@ -65635,17 +65657,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "xAg" = (
-/obj/structure/table/glass,
-/obj/machinery/feed_machine{
-	pixel_y = 1;
-	pixel_x = 9
-	},
-/obj/item/chicken_feed{
-	pixel_y = 2;
-	pixel_x = -5
-	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/grass,
+/obj/structure/nestbox,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics)
 "xAi" = (
 /obj/machinery/vending/autodrobe,
@@ -65882,6 +65896,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/reagent_containers/cup/watering_can,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xEf" = (
@@ -103230,7 +103246,7 @@ xyc
 rwd
 qxe
 cOa
-eKD
+qDA
 vqi
 tUn
 tUn
@@ -103485,7 +103501,7 @@ bii
 wYB
 kCZ
 soU
-gkx
+lXr
 oYu
 nbJ
 jgK
@@ -103742,7 +103758,7 @@ wen
 bMa
 kCZ
 sve
-gkx
+lXr
 pEB
 kCD
 onf
@@ -104000,7 +104016,7 @@ gEe
 kCZ
 iNy
 snE
-lXr
+uYG
 cZm
 cXc
 tUn
