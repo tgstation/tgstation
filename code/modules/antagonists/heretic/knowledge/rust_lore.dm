@@ -108,14 +108,15 @@
  */
 /datum/heretic_knowledge/rust_regen/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
-
+	var/obj/item/organ/internal/eyes/heretic_eyes = source.get_organ_slot(ORGAN_SLOT_EYES)
 	var/turf/mover_turf = get_turf(source)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
 		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
+		heretic_eyes.flash_protect = FLASH_PROTECTION_WELDER
 		return
 
 	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-
+	heretic_eyes.flash_protect = FLASH_PROTECTION_NONE
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
  *
