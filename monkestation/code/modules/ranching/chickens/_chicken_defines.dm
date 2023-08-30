@@ -81,7 +81,7 @@
 	///what type of projectile do we shoot?
 	var/projectile_type = null
 	///probabilty of firing a shot on any given attack
-	var/shoot_prob = 0
+	var/ranged_cooldown = 1 SECONDS
 
 	///Glass Chicken exclusive: reagents for eggs
 	var/list/glass_egg_reagents = list()
@@ -133,12 +133,3 @@
 
 /datum/action/cooldown/mob_cooldown/chicken
 	var/datum/ai_behavior/targeted_mob_ability/min_range/what_range = /datum/ai_behavior/targeted_mob_ability/min_range/melee
-
-/datum/ai_behavior/targeted_mob_ability/min_range/melee
-	required_distance = 1
-
-/datum/ai_behavior/targeted_mob_ability/min_range/gaze
-	required_distance = 4
-
-/datum/ai_behavior/targeted_mob_ability/min_range/on_top
-	required_distance = 0

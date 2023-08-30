@@ -12,7 +12,6 @@
 	obj_damage = 10
 
 	targeted_ability = /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze
-	shoot_prob = 10
 
 	egg_type = /obj/item/food/egg/cockatrice
 
@@ -26,7 +25,12 @@
 /mob/living/basic/chicken/cockatrice/Initialize(mapload)
 	. = ..()
 	if(gender == FEMALE)
-		ai_controller.blackboard[BB_CHICKEN_AGGRESSIVE] = FALSE
+		var/list/new_planning_subtree = list()
+		for(var/datum/ai_planning_subtree/listed_tree as anything in ai_controller.planning_subtrees)
+			new_planning_subtree |= listed_tree.type
+
+		new_planning_subtree -= /datum/ai_planning_subtree/basic_melee_attack_subtree/chicken
+		ai_controller.replace_planning_subtrees(new_planning_subtree)
 
 /obj/item/ammo_casing/venomous_spit
 	projectile_type = /obj/projectile/magic/venomous_spit
@@ -57,14 +61,14 @@
 	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/gaze
 
 /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze/PreActivate(atom/target)
-	. = ..()
 	if (target == owner)
 		return
+	. = ..()
 
 /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze/Activate(mob/living/target)
 	var/mob/living/living_owner = owner
 	living_owner.visible_message("[living_owner] glares at [target] petrifying them.", "You glare at [target] petrifying them.")
 	living_owner.face_atom(target)
-	target.petrify(2 SECONDS)
+	target.petrify(2)
 	StartCooldown()
 	return TRUE

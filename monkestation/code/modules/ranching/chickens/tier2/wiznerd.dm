@@ -14,6 +14,7 @@
 	mutation_list = list()
 
 	projectile_type = /obj/projectile/magic/magic_missle_weak
+	ranged_cooldown = 1.5 SECONDS
 
 	book_desc = "It seems the Wizard's Federation has spread its influence into the local chicken population, Nano-Transen higher ups will look into this."
 /obj/item/food/egg/wiznerd

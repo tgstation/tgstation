@@ -273,6 +273,8 @@
 	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
 		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
 		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s
+		if(!isopenturf(enemy_tile))
+			continue
 		if(enemy_tile.run_later)
 			LAZYADD(share_end, enemy_tile)
 

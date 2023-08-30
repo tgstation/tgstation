@@ -183,6 +183,10 @@
 		ai_controller.blackboard[BB_CHICKEN_SELF_ABILITY] = created_ability
 		new_planning_subtree |= ability_planning_tree
 
+	if(projectile_type)
+		AddComponent(/datum/component/ranged_attacks, projectile_type = src.projectile_type, cooldown_time = ranged_cooldown)
+		new_planning_subtree |= /datum/ai_planning_subtree/basic_ranged_attack_subtree/chicken
+
 	ai_controller.replace_planning_subtrees(new_planning_subtree)
 
 	return INITIALIZE_HINT_LATELOAD
