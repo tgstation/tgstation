@@ -122,8 +122,8 @@
 					continue
 				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
 					var/type_wound = pick(list(
-					/datum/wound/blunt/moderate,
-					/datum/wound/blunt/severe,
+					/datum/wound/blunt/bone/moderate,
+					/datum/wound/blunt/bone/severe,
 					))
 					head_to_wound.force_wound_upwards(type_wound, wound_source = src)
 					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)

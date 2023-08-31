@@ -180,7 +180,7 @@
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
-	if(is_banned_from(user.key, role_ban))
+	if(is_banned_from(user.ckey, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
