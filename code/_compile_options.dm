@@ -102,7 +102,6 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#define LOWMEMORYMODE
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "runtimestation"
 #define FORCE_MAP_DIRECTORY "_maps"

@@ -2780,6 +2780,7 @@
 #include "code\modules\antagonists\heretic\magic\blood_cleave.dm"
 #include "code\modules\antagonists\heretic\magic\blood_siphon.dm"
 #include "code\modules\antagonists\heretic\magic\burglar_finesse.dm"
+#include "code\modules\antagonists\heretic\magic\caretaker.dm"
 #include "code\modules\antagonists\heretic\magic\cosmic_expansion.dm"
 #include "code\modules\antagonists\heretic\magic\cosmic_runes.dm"
 #include "code\modules\antagonists\heretic\magic\eldritch_blind.dm"

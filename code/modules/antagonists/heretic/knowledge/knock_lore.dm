@@ -156,10 +156,19 @@
 	desc = "Your blade has a chance to cause a weeping avulsion on attack."
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
-	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
+	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_KNOCK
 	wound_type = /datum/wound/slash/critical
 
 /datum/heretic_knowledge/blade_upgrade/flesh/knock/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(prob(40))
+	if(prob(35))
 		. = ..()
+
+/datum/heretic_knowledge/spell/caretaker_refuge
+	name = "Opening Blade"
+	desc = "Your blade has a chance to cause a weeping avulsion on attack."
+	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
+		I finally began to understand. And then, blood rained from the heavens."
+	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
+	route = PATH_KNOCK
+	spell_to_add = /datum/action/cooldown/spell/caretaker
