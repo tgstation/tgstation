@@ -432,17 +432,12 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/celebrate_kill(mob/living/L)
 	visible_message(span_hierophant_warning("\"[pick(kill_phrases)]\""))
-	visible_message(span_hierophant_warning("[src] annihilates [L]'s organs!"),span_userdanger("You annihilate [L]'s organs, restoring your health!"))
+	visible_message(span_hierophant_warning("[src] obliterates [L]!"),span_userdanger("You absorb [L]'s life force, restoring your health!"))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
 	. = ..()
 	if(istype(the_target, /mob/living/simple_animal/hostile/asteroid/hivelordbrood)) //ignore temporary targets in favor of more permanent targets
 		return FALSE
-	if (!.)
-		return FALSE
-	var/mob/living/living_target = the_target
-	if(istype(living_target))
-		return !living_target.has_status_effect(/datum/status_effect/gutted)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)

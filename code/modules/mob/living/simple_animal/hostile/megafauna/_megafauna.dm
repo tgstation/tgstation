@@ -144,7 +144,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/celebrate_kill(mob/living/L)
 	visible_message(
-		span_danger("[src] devours [L]'s organs!"),
+		span_danger("[src] disembowels [L]!"),
 		span_userdanger("You feast on [L]'s organs, restoring your health!"))
 
 
@@ -153,9 +153,10 @@
 	. = ..()
 	if (!.)
 		return FALSE
+	if(!isliving(the_target))
+		return TRUE
 	var/mob/living/living_target = the_target
-	if(istype(living_target))
-		return !living_target.has_status_effect(/datum/status_effect/gutted)
+	return !living_target.has_status_effect(/datum/status_effect/gutted)
 
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
