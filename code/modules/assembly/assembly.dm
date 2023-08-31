@@ -1,4 +1,3 @@
-
 /obj/item/assembly
 	name = "assembly"
 	desc = "A small electronic device that should never exist."
@@ -66,7 +65,7 @@
 
 /obj/item/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		to_chat(user, span_warning("The [name] is unsecured!"))
+		balloon_alert(user, "[src] is unsecured!")
 		return FALSE
 	return TRUE
 
@@ -141,9 +140,9 @@
 	if(..())
 		return TRUE
 	if(toggle_secure())
-		to_chat(user, span_notice("\The [src] is ready!"))
+		balloon_alert(user, "[src] is ready")
 	else
-		to_chat(user, span_notice("\The [src] can now be attached!"))
+		balloon_alert(user, "[src] can now be attached")
 	add_fingerprint(user)
 	return TRUE
 
