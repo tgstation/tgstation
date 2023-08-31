@@ -178,7 +178,6 @@
 /datum/pet_command/automate_mining/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, TRUE)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	return
 
 /datum/pet_command/minebot_ability
 	command_name = "Minebot ability"

@@ -99,17 +99,17 @@
 
 /mob/living/basic/mining_drone/welder_act(mob/living/user, obj/item/welder)
 	if(user.combat_mode)
-		return
-	. = TRUE
+		return FALSE
 	if(combat_mode)
 		user.balloon_alert(user, "can't in attack mode!")
-		return
+		return TRUE
 	if(maxHealth == health)
 		user.balloon_alert(user, "at full integrity!")
-		return
+		return TRUE
 	if(welder.use_tool(src, user, 0, volume=40))
 		adjustBruteLoss(-15)
 		user.balloon_alert(user, "successfully repaired!")
+	return TRUE
 
 /mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, params)
 	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
@@ -163,7 +163,7 @@
 /mob/living/basic/mining_drone/death(gibbed)
 	drop_ore()
 
-	if(!stored_gun)
+	if(isnull(stored_gun))
 		return ..()
 
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)

@@ -12,11 +12,11 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(minebot.melee_damage_upper != initial(minebot.melee_damage_upper))
-		to_chat(user, span_warning("[minebot] already has a combat upgrade installed!"))
+		user.balloon_alert(user, "already has armor!")
 		return
 	minebot.melee_damage_lower += 7
 	minebot.melee_damage_upper += 7
-	to_chat(user, "<span class='notice'>You increase the close-quarter combat abilities of [minebot].")
+	to_chat(user, span_notice("You increase the close-quarter combat abilities of [minebot]."))
 	qdel(src)
 
 //Health
@@ -50,7 +50,7 @@
 	///cooldown boost to add
 	var/base_cooldown_add = 10
 
-/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/basic/basic_mob)
+/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/basic_mob)
 	if(!istype(basic_mob, /mob/living/basic/mining_drone))
 		return
 	var/mob/living/basic/mining_drone/minebot = basic_mob
