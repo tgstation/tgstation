@@ -68,6 +68,8 @@
 					post_status("alert", "bluealert")
 				if(SEC_LEVEL_GREEN)
 					post_status("alert", "greenalert")
+		else
+			post_status("alert", picture)
 
 	log_game("[key_name(usr)] has changed the station status display message to \"[picture]\" [loc_name(usr)]")
 
