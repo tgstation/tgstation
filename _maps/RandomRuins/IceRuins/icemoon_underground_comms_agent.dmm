@@ -337,7 +337,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "wn" = (
-/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/effect/decal/remains/human/smokey,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "xi" = (
@@ -594,6 +594,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/ruin/powered/comms_agent)
+"KQ" = (
+/turf/open/genturf,
+/area/icemoon/underground/explored)
 "Lh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2749,7 +2752,7 @@ MH
 MH
 MH
 MH
-OM
+KQ
 MH
 YX
 YX
@@ -2805,8 +2808,8 @@ MH
 MH
 MH
 MH
-OM
-OM
+KQ
+KQ
 MH
 MH
 MH
@@ -2862,9 +2865,9 @@ MH
 MH
 MH
 MH
-OM
-OM
-OM
+KQ
+KQ
+KQ
 MH
 MH
 MH
@@ -2920,8 +2923,8 @@ PC
 MH
 MH
 MH
-OM
-OM
+KQ
+KQ
 MH
 MH
 MH
@@ -2978,7 +2981,7 @@ sB
 MH
 MH
 MH
-OM
+KQ
 MH
 MH
 OM
