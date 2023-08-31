@@ -141,7 +141,7 @@
  * - y_offset: The y offset to load the map at
  * - z_offset: The z offset to load the map at
  * - only_load_this_z: If set, only this z level from the given map will be loaded
- * - crow_map: If true, the map will be cropped to the world bounds
+ * - crop_map: If true, the map will be cropped to the world bounds
  * - measure_only: If true, the map will not be loaded, but the bounds will be calculated
  * - no_changeturf: If true, the map will not call /turf/AfterChange
  * - x_lower: The minimum x coordinate to load
@@ -157,7 +157,7 @@
 	y_offset = 0,
 	z_offset = 0,
 	only_load_this_z = 0,
-	crow_map = FALSE,
+	crop_map = FALSE,
 	measure_only = FALSE,
 	no_changeturf = FALSE,
 	x_lower = -INFINITY,
@@ -173,7 +173,7 @@
 	var/datum/parsed_map/parsed_map = GLOB.cached_maps[dmm_file]
 	parsed_map = parsed_map.copy()
 	if(!measure_only && !isnull(parsed_map.bounds))
-		parsed_map.load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+		parsed_map.load(x_offset, y_offset, z_offset, only_load_this_z, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
 	return parsed_map
 
 /// Parse a map, possibly cropping it.
