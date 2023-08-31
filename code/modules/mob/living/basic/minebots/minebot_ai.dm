@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/minebot
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite),
 		BB_AUTOMATED_MINING = FALSE,
 	)
@@ -210,3 +211,9 @@
 
 /datum/pet_command/point_targetting/attack/minebot
 	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot
+
+/datum/pet_command/point_targetting/attack/execute_action(datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	if(!living_pawn.combat_mode)
+		living_pawn.set_combat_mode(TRUE)
+	return ..()
