@@ -231,7 +231,7 @@
 	var/turf/open/targetted_turf = get_turf(target)
 	var/list/compiled_reagents = list()
 	for(var/datum/reagent/listed_reagent in reagents.reagent_list)
-		compiled_reagents += new listed_reagent
+		compiled_reagents += new listed_reagent.type
 		compiled_reagents[listed_reagent] = listed_reagent.volume
 
 	new /obj/effect/chicken_feed(targetted_turf, held_foods, compiled_reagents, mix_color_from_reagents(reagents.reagent_list), name)

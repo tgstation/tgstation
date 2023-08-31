@@ -1,6 +1,7 @@
 /datum/ai_controller/chicken
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_target/low_health,
 		)
 	idle_behavior = /datum/idle_behavior/chicken
@@ -52,9 +53,10 @@
 	)
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/chicken,
 		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/chicken,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		)
 
@@ -79,8 +81,9 @@
 	)
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_target/low_health,
 		)
 

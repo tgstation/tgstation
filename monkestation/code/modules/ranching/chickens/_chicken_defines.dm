@@ -103,6 +103,15 @@
 	var/ability_planning_tree = /datum/ai_planning_subtree/use_mob_ability/chicken
 	///the targeted ability planning tree
 	var/targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/attack/chicken,
+		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/play_dead,
+	)
+
 
 #undef DEFAULT_CHICKEN_ABILITY_COOLDOWN
 
@@ -138,3 +147,6 @@
 /datum/action/cooldown/mob_cooldown/chicken
 	melee_cooldown_time =  1 // dumb
 	var/datum/ai_behavior/targeted_mob_ability/min_range/what_range = /datum/ai_behavior/targeted_mob_ability/min_range/melee
+
+/datum/pet_command/point_targetting/attack/chicken
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack/chicken

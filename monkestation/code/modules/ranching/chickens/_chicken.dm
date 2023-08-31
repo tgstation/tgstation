@@ -113,6 +113,10 @@
 	new_chicken.happiness = src.happiness
 	new_chicken.age += rand(1,10) //add a bit of age to each chicken causing staggered deaths
 
+	for(var/mob/living/friend as anything in new_chicken.Friends)
+		if(new_chicken.Friends[friend] >= 25)
+			new_chicken.befriend(friend)
+
 	if(istype(new_chicken, /mob/living/basic/chicken/glass))
 		for(var/list_item in glass_egg_reagent)
 			new_chicken.glass_egg_reagents.Add(list_item)
@@ -190,6 +194,7 @@
 	AddComponent(/datum/component/mutation, mutation_list, TRUE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	if(prob(40))
 		gender = MALE
@@ -343,7 +348,7 @@
 		Friends[new_friend] = 0
 	Friends[new_friend] += amount
 	if(Friends[new_friend] >= 25)
-		faction |= REF(new_friend)
+		befriend(new_friend)
 
 /mob/living/basic/chicken/proc/feed_food(obj/item/given_item, mob/user)
 	handle_happiness_changes(given_item, user)
@@ -422,49 +427,10 @@
 			speech_buffer += speaker
 			speech_buffer += lowertext(html_decode(message))
 
-/mob/living/basic/chicken/proc/handle_speech()
-	if (speech_buffer.len > 0)
-		var/who = speech_buffer[1] // Who said it?
-		var/phrase = speech_buffer[2] // What did they say?
-		if (findtext(phrase, "chickens")) // Talking to us
-			if(findtext(phrase, "follow"))
-				if (ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER])
-					if(Friends[who] > Friends[ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER]]) // following you bby
-						ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] = who
-						ai_controller.queue_behavior(/datum/ai_behavior/follow_leader)
-				else
-					if (Friends[who] >= CHICKEN_FRIENDSHIP_FOLLOW)
-						ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] = who
-						ai_controller.queue_behavior(/datum/ai_behavior/follow_leader)
-
-			else if (findtext(phrase, "stop"))
-				ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = null
-
-			else if (findtext(phrase, "stay"))
-				if(ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] == who)
-					ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] = null
-					SSmove_manager.stop_looping(src)
-
-			else if (findtext(phrase, "attack"))
-				if (Friends[who] >= CHICKEN_FRIENDSHIP_ATTACK)
-					for (var/mob/living/target in view(7,src)-list(src,who))
-						if (findtext(phrase, lowertext(target.name)))
-							if (istype(target, /mob/living/basic/chicken))
-								return
-							else if((!Friends[target] || Friends[target] < 1))
-								if(ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER])
-									ai_controller.blackboard[BB_CHICKEN_CURRENT_LEADER] = null
-								ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
-						break
-		speech_buffer = list()
-
 /mob/living/basic/chicken/Life()
 	. =..()
 	if(!.)
 		return
-
-	handle_speech()
-
 	if(COOLDOWN_FINISHED(src, age_cooldown))
 		COOLDOWN_START(src, age_cooldown, age_speed)
 		age ++
