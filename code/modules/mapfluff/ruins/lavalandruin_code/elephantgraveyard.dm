@@ -293,7 +293,7 @@
 		user.visible_message(
 			span_danger("[user] emerges from [src], scattering dirt everywhere!"),
 			span_notice("You triumphantly surface out of [src], scattering dirt all around the grave!"),
-			)
+		)
 		bust_open()
 	else
 		if(user.loc == src)
