@@ -46,7 +46,7 @@
 /mob/living/basic/mining_drone/Initialize(mapload)
 	. = ..()
 
-	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris)
+	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris/old)
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
