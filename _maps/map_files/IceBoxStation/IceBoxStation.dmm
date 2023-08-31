@@ -24858,6 +24858,7 @@
 	id = "medsecprivacy";
 	name = "Privacy Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/medical)
 "hSF" = (
@@ -74518,6 +74519,7 @@
 	id = "medsecprivacy";
 	name = "Privacy Shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/medical)
 "xGI" = (
