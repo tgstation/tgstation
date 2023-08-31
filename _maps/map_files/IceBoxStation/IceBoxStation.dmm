@@ -6949,6 +6949,9 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -34429,6 +34432,9 @@
 	shuttle_id = "arrival"
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -35045,6 +35051,7 @@
 /obj/machinery/light/small/dim/directional/west,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/three,
+/obj/structure/sign/departments/maint/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "kQW" = (
@@ -37728,15 +37735,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/interrogation)
 "lGL" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Arrivals Hallway South"
 	},
-/turf/open/floor/iron/white/corner{
-	dir = 1
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
 	},
+/turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "lGY" = (
 /obj/structure/chair/stool/directional/south,
@@ -38609,6 +38614,9 @@
 "lVY" = (
 /obj/effect/turf_decal/siding/thinplating_new/corner{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/iron/white/side{
 	dir = 8
@@ -47535,6 +47543,9 @@
 	shuttle_id = "arrival"
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -47770,9 +47781,6 @@
 "oMq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -47902,6 +47910,9 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "oOP" = (
 /obj/effect/turf_decal/siding/thinplating_new/corner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -51370,6 +51381,8 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/generic,
+/obj/structure/sign/departments/maint/directional/west,
+/obj/structure/sign/departments/maint/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
 "pQa" = (
@@ -221711,7 +221724,7 @@ aui
 qTj
 btW
 jJd
-uUu
+syL
 lGL
 uUu
 oMq
@@ -225843,7 +225856,7 @@ lSu
 lSu
 lSu
 bln
-lSu
+gnZ
 bln
 bln
 bln
@@ -226871,7 +226884,7 @@ bNo
 maT
 dsg
 bln
-lSu
+gnZ
 bln
 bln
 bln
