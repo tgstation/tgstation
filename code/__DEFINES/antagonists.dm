@@ -72,7 +72,7 @@
 
 
 // Heretic path defines.
-#define HERETIC
+#define HERETIC "Heretic"
 #define PATH_START "Start Path"
 #define PATH_SIDE "Side Path"
 #define PATH_ASH "Ash Path"
