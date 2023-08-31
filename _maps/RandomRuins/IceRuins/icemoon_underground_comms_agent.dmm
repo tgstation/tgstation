@@ -193,6 +193,10 @@
 /obj/machinery/oven/range,
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
+"oE" = (
+/obj/item/tape/frozen,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "pl" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/centcom{
@@ -207,7 +211,6 @@
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
 "qE" = (
-/obj/item/taperecorder/empty,
 /obj/item/pickaxe,
 /obj/structure/closet/crate,
 /obj/item/flashlight,
@@ -353,7 +356,8 @@
 	fax_id = listening_post;
 	fax_name = "Listening Post";
 	jammed = 1;
-	desc = "Bluespace technologies on the application of bureaucracy. This one is send-only"
+	desc = "Bluespace technologies on the application of bureaucracy. This one is send-only";
+	pixel_y = 5
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
@@ -390,6 +394,7 @@
 /area/ruin/powered/comms_agent)
 "yR" = (
 /obj/structure/table,
+/obj/item/taperecorder/empty,
 /turf/open/floor/carpet,
 /area/ruin/powered/comms_agent)
 "zG" = (
@@ -484,9 +489,14 @@
 /obj/item/multitool,
 /turf/open/floor/wood/tile,
 /area/ruin/powered/comms_agent)
+"FZ" = (
+/obj/effect/baseturf_helper/reinforced_plating/ceiling,
+/turf/open/floor/wood,
+/area/ruin/powered/comms_agent)
 "Gp" = (
 /obj/structure/fluff/empty_sleeper/syndicate{
-	dir = 1
+	dir = 1;
+	desc = "An open sleeper. This one seems to be malfunctioning."
 	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/comms_agent)
@@ -825,10 +835,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/powered/comms_agent)
-"Zt" = (
-/obj/item/toy/plush/goatplushie,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "ZE" = (
 /obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2286,7 +2292,7 @@ LP
 un
 zG
 mb
-eE
+FZ
 eE
 in
 bt
@@ -2470,7 +2476,7 @@ MH
 MH
 OM
 OM
-OB
+OM
 OB
 OB
 OB
@@ -2527,7 +2533,7 @@ MH
 TV
 OM
 OM
-OB
+OM
 OB
 OB
 OB
@@ -2582,16 +2588,16 @@ YX
 MH
 MH
 OM
+oE
 OM
 OM
-OM
 OB
 OB
 OB
 OB
 OB
 OM
-Zt
+OM
 MH
 MH
 OB
@@ -2743,7 +2749,7 @@ MH
 MH
 MH
 MH
-EL
+OM
 MH
 YX
 YX
@@ -2799,8 +2805,8 @@ MH
 MH
 MH
 MH
-EL
-EL
+OM
+OM
 MH
 MH
 MH
@@ -2856,9 +2862,9 @@ MH
 MH
 MH
 MH
-EL
-EL
-EL
+OM
+OM
+OM
 MH
 MH
 MH
@@ -2914,8 +2920,8 @@ PC
 MH
 MH
 MH
-EL
-EL
+OM
+OM
 MH
 MH
 MH
@@ -2972,7 +2978,7 @@ sB
 MH
 MH
 MH
-EL
+OM
 MH
 MH
 OM
