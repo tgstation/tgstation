@@ -465,7 +465,7 @@
 	 * and I suppose that's the second reason the old minigame TGUI felt annoying,
 	 * the other being input lag.
 	 */
-	if((bait_velocity > 0 && (reeling_state == REELING_STATE_IDLE || (reeling_state == REELING_STATE_DOWN)) || (bait_velocity < 0 && (reeling_state == REELING_STATE_UP || (bidirectional && reeling_state == REELING_STATE_IDLE)))
+	if((bait_velocity > 0 && (reeling_state == REELING_STATE_IDLE || (reeling_state == REELING_STATE_DOWN)) || (bait_velocity < 0 && (reeling_state == REELING_STATE_UP || (bidirectional && reeling_state == REELING_STATE_IDLE))))
 		if(bait_velocity > 0)
 			bait_velocity += max(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
 		else
