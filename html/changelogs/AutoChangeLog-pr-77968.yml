@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - sound: "Unlocking an achievement now plays a sound by default. You can change it in the Sound category of the game preferences."

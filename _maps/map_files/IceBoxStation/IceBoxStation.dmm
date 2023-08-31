@@ -4947,6 +4947,7 @@
 	cycle_id = "perma-entrance"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "bBr" = (
@@ -18907,6 +18908,7 @@
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "fTB" = (

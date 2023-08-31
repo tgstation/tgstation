@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "If your server has non-human morgue cadavers enabled, you will be guaranteed one human cadaver no matter what."
-  - balance: "All maps (with the exception of Birdboat) now have an additional morgue cadaver roundstart."
