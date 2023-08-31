@@ -137,7 +137,7 @@
 /datum/wound/electrical_damage/proc/get_progress_mult()
 	var/progress_mult = get_base_mult() * seconds_per_intensity_mult
 
-	if (limb_unimportant())
+	if (!limb_essential())
 		progress_mult *= limb_unimportant_progress_mult
 
 	if (isliving(victim.pulledby))
@@ -158,7 +158,7 @@
 		else
 			return 0
 
-	if (limb_unimportant())
+	if (!limb_essential())
 		damage_mult *= limb_unimportant_damage_mult
 
 	return damage_mult

@@ -133,7 +133,7 @@
 			return
 		if (outgoing_bodytemp_coeff)
 			var/mult = outgoing_bodytemp_coeff
-			if (!limb_unimportant())
+			if (limb_essential())
 				mult *= important_outgoing_mult
 			victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * mult) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick * statis_mult)
 	else

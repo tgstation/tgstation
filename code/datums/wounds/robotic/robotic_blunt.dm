@@ -845,7 +845,7 @@
 				victim.adjust_disgust(nausea_damage * chest_attacked_nausea_mult, max_nausea_duration)
 				to_chat(victim, span_warning("You feel a wave of nausea as your [limb.plaintext_zone]'s internals jostle from the impact!"))
 
-	if (!limb_unimportant() && (effective_damage >= attacked_organ_damage_minimum_score) && prob(attacked_organ_damage_chance))
+	if (limb_essential() && (effective_damage >= attacked_organ_damage_minimum_score) && prob(attacked_organ_damage_chance))
 		attack_random_organs((effective_damage * attacked_organ_damage_mult), attacked_organ_damage_individual_max)
 
 	if (uses_percussive_maintenance() && (damage > 0)) // we use the threshold because generally speaking higher force attacks are trying to fuck you up
@@ -883,7 +883,7 @@
 		overall_mult *= gauze.splint_factor
 	if (!victim.has_gravity(get_turf(victim)))
 		overall_mult *= 0.5
-	else if (victim.body_position == LYING_DOWN || (!forced && victim.m_intent == MOVE_INTENT_WALK))
+	else if (victim.body_position == LYING_DOWN || (!forced && victim.move_intent == MOVE_INTENT_WALK))
 		overall_mult *= 0.25
 	if (victim.has_status_effect(/datum/status_effect/determined))
 		overall_mult *= ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD
