@@ -40,7 +40,9 @@
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
 	var/eye_icon_state = "eyes"
+	/// The color of the previous left eye before this one was inserted
 	var/old_eye_color_left = "fff"
+	/// The color of the previous right eye before this one was inserted
 	var/old_eye_color_right = "fff"
 
 	/// Glasses cannot be worn over these eyes. Currently unused
@@ -51,16 +53,24 @@
 	var/native_fov = FOV_90_DEGREES
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
+	// If we don't do this before everything else, heterochromia will be reset leading to eye_color_right no longer being accurate
+	if(ishuman(eye_recipient))
+		var/mob/living/carbon/human/human_recipient = eye_recipient
+		old_eye_color_left = human_recipient.eye_color_left
+		old_eye_color_right = human_recipient.eye_color_right
+
 	. = ..()
+
 	if(!.)
 		return
+
 	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(eye_recipient, inserting = TRUE, call_update = TRUE)
+	refresh(eye_recipient, call_update = TRUE)
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
-/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, inserting = FALSE, call_update = TRUE)
+/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, call_update = TRUE)
 	owner.update_sight()
 	owner.update_tint()
 
@@ -68,9 +78,6 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = eye_owner
-	if(inserting) // we only want to be setting old_eye_color the one time
-		old_eye_color_left = affected_human.eye_color_left
-		old_eye_color_right = affected_human.eye_color_right
 	if(initial(eye_color_left))
 		affected_human.eye_color_left = eye_color_left
 	else
@@ -415,9 +422,10 @@
 		return
 	deactivate(close_ui = TRUE)
 
-/// We have to do this here because on_insert gets called before refresh(), which we need to have been called for old_eye_color vars to be set
+/// Set the initial color of the eyes on insert to be the mob's previous eye color.
 /obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
+	current_color_string = old_eye_color_left
 	current_left_color_string = old_eye_color_left
 	current_right_color_string = old_eye_color_right
 

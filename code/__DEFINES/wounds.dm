@@ -46,31 +46,58 @@
 /// While someone has determination in their system, their bleed rate is slightly reduced
 #define WOUND_DETERMINATION_BLEED_MOD 0.85
 
-// ~wound global lists
-// list in order of highest severity to lowest
-GLOBAL_LIST_INIT(global_wound_types, list(
-	WOUND_BLUNT = list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate),
-	WOUND_SLASH = list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate),
-	WOUND_PIERCE = list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate),
-	WOUND_BURN = list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate),
+// ~biology defines
+// What kind of biology a limb has, and what wounds it can suffer
+/// Has absolutely fucking nothing, no wounds
+#define BIO_INORGANIC NONE
+/// Has bone - allows the victim to suffer T2-T3 bone blunt wounds
+#define BIO_BONE (1<<0)
+/// Has flesh - allows the victim to suffer fleshy slash pierce and burn wounds
+#define BIO_FLESH (1<<1)
+/// Self explanatory
+#define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
+/// Has metal - allows the victim to suffer robotic blunt and burn wounds
+#define BIO_METAL (1<<2)
+/// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
+#define BIO_WIRED (1<<3)
+/// Robotic: shit like cyborg limbs, mostly
+#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
+/// Has bloodflow - can suffer bleeding wounds and can bleed
+#define BIO_BLOODED (1<<4)
+/// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
+#define BIO_JOINTED (1<<5)
+/// Standard humanoid - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed
+#define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
+
+// "Where" a specific "bio" feature is within a given limb
+// Exterior is hard shit, the last line, shit lines bones
+// Interior is soft shit, targetted by slashes and pierces (usually), protects exterior
+// Yes, it makes no sense
+/// The given biostate is on the "exterior" of the limb - hard shit, protected by interior
+#define BIO_EXTERIOR (1<<0)
+/// The given biostate is on the "exterior" of the limb - soft shit, protects exterior
+#define BIO_INTERIOR (1<<1)
+#define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
+
+GLOBAL_LIST_INIT(bio_state_states, list(
+	"[BIO_WIRED]" = BIO_INTERIOR,
+	"[BIO_METAL]" = BIO_EXTERIOR,
+	"[BIO_FLESH]" = BIO_INTERIOR,
+	"[BIO_BONE]" = BIO_EXTERIOR,
 ))
 
-// every single type of wound that can be rolled naturally, in case you need to pull a random one
-GLOBAL_LIST_INIT(global_all_wound_types, list(
-	/datum/wound/blunt/critical,
-	/datum/wound/blunt/severe,
-	/datum/wound/blunt/moderate,
-	/datum/wound/slash/critical,
-	/datum/wound/slash/severe,
-	/datum/wound/slash/moderate,
-	/datum/wound/pierce/critical,
-	/datum/wound/pierce/severe,
-	/datum/wound/pierce/moderate,
-	/datum/wound/burn/critical,
-	/datum/wound/burn/severe,
-	/datum/wound/burn/moderate,
-))
+// Wound series
+// A "wound series" is just a family of wounds that logically follow eachother
+// Multiple wounds in a single series cannot be on a limb - the highest severity will always be prioritized, and lower ones will be skipped
 
+/// T1-T3 Bleeding slash wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: slash.dm
+#define WOUND_SERIES_FLESH_SLASH_BLEED 1
+/// T1-T3 Basic blunt wounds. T1 requires jointed, but 2-3 require bone. From: bone.dm
+#define WOUND_SERIES_BONE_BLUNT_BASIC 2
+/// T1-T3 Basic burn wounds. Requires flesh. From: burns.dm
+#define WOUND_SERIES_FLESH_BURN_BASIC 3
+/// T1-3 Bleeding puncture wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: pierce.dm
+#define WOUND_SERIES_FLESH_PUNCTURE_BLEED 4
 
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse
@@ -107,30 +134,13 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define BODYPART_MANGLED_FLESH (1<<1)
 #define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_BONE | BODYPART_MANGLED_FLESH)
 
-
-// ~biology defines
-// What kind of biology a limb has, and what wounds it can suffer
-/// golems and androids, cannot suffer any wounds
-#define BIO_INORGANIC NONE
-/// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
-#define BIO_BONE (1<<0)
-/// nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds
-#define BIO_FLESH (1<<1)
-/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_BONE and BIO_FLESH
-#define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
-
-
 // ~wound flag defines
-/// If this wound requires having the BIO_FLESH biological_state on the limb
-#define FLESH_WOUND (1<<0)
-/// If this wound requires having the BIO_BONE biological_state on the limb
-#define BONE_WOUND (1<<1)
 /// If having this wound counts as mangled flesh for dismemberment
-#define MANGLES_FLESH (1<<2)
+#define MANGLES_FLESH (1<<0)
 /// If having this wound counts as mangled bone for dismemberment
-#define MANGLES_BONE (1<<3)
+#define MANGLES_BONE (1<<1)
 /// If this wound marks the limb as being allowed to have gauze applied
-#define ACCEPTS_GAUZE (1<<4)
+#define ACCEPTS_GAUZE (1<<2)
 
 
 // ~scar persistence defines
@@ -149,11 +159,13 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(
 #define SCAR_SAVE_BIOLOGY 6
 /// Which character slot this was saved to
 #define SCAR_SAVE_CHAR_SLOT 7
+/// if the scar will check for any or all biostates on the limb (defaults to FALSE, so all)
+#define SCAR_SAVE_CHECK_ANY_BIO 8
 ///how many fields we save for each scar (so the number of above fields)
-#define SCAR_SAVE_LENGTH 7
+#define SCAR_SAVE_LENGTH 8
 
 /// saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
-#define SCAR_CURRENT_VERSION 3
+#define SCAR_CURRENT_VERSION 4
 /// how many scar slots, per character slot, we have to cycle through for persistent scarring, if enabled in character prefs
 #define PERSISTENT_SCAR_SLOTS 3
 

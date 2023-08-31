@@ -468,7 +468,6 @@
 	name = "Moussaka"
 	reqs = list(
 		/obj/item/food/grown/eggplant = 2,
-		/obj/item/food/grown/potato = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/meat/cutlet = 1,
