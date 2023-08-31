@@ -59,15 +59,15 @@
 		post_status(picture)
 	else
 		if(picture == "currentalert") // You cannot set Code Blue display during Code Red and similiar
-				switch(SSsecurity_level.get_current_level_as_number())
-					if(SEC_LEVEL_DELTA)
-						post_status("alert", "deltaalert")
-					if(SEC_LEVEL_RED)
-						post_status("alert", "redalert")
-					if(SEC_LEVEL_BLUE)
-						post_status("alert", "bluealert")
-					if(SEC_LEVEL_GREEN)
-						post_status("alert", "greenalert")
+			switch(SSsecurity_level.get_current_level_as_number())
+				if(SEC_LEVEL_DELTA)
+					post_status("alert", "deltaalert")
+				if(SEC_LEVEL_RED)
+					post_status("alert", "redalert")
+				if(SEC_LEVEL_BLUE)
+					post_status("alert", "bluealert")
+				if(SEC_LEVEL_GREEN)
+					post_status("alert", "greenalert")
 
 	log_game("[key_name(usr)] has changed the station status display message to \"[picture]\" [loc_name(usr)]")
 
