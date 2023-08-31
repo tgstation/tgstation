@@ -221,7 +221,7 @@
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
-	node.arrive()
+	node.arrive(src)
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))

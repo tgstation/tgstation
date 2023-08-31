@@ -1,13 +1,20 @@
+/**
+ * Mining drones that are spawned when starting a ore vent's wave defense minigame.
+ * They will latch onto the vent to defend it from lavaland mobs, and will flee if attacked by lavaland mobs.
+ * If the drone survives, they will fly away to safety as the vent spawns ores.
+ * If the drone dies, the wave defense will fail.
+ */
+
 /mob/living/basic/node_drone
 	name = "NODE drone"
 	desc = "Standard in-atmosphere drone, used by Nanotrasen to operate and excavate valuable ore vents."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_node_active"
 	icon_living = "mining_node_active"
-	icon_dead = "mining_node"
+	icon_dead = "mining_node_active"
 
-	maxHealth = 1000
-	health = 1000
+	maxHealth = 200
+	health = 200
 	density = TRUE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_LARGE
@@ -33,8 +40,10 @@
 
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..()
+	attached_vent.node = null //clean our reference to the vent both ways.
 	attached_vent = null
-	explosion(origin = src, light_impact_range = 1 ,smoke = 1)
+	explosion(origin = src, light_impact_range = 1, smoke = 1)
+	qdel(src)
 
 /mob/living/basic/node_drone/examine(mob/user)
 	. = ..()
@@ -44,11 +53,13 @@
 	else
 		. += span_warning("This vile Nanotrasen trash is trying to destroy the environment. Attack it to free the mineral vent from its grasp.")
 
-/mob/living/basic/node_drone/proc/arrive()
+/mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
+	attached_vent = parent_vent
 	icon_state = "mining_node_flying"
 	update_appearance(UPDATE_ICON_STATE)
 	pixel_z = 400
 	animate(src, pixel_z = 0, time = 2 SECONDS, easing = QUAD_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+
 
 /**
  * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
@@ -88,9 +99,9 @@
 	planning_subtrees = list(
 		// Top priority is to look for and execute hunts for vents, even if we're being attacked.
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent,
-		// Next priority is see if lavaland mobs are looking at us
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		// Fly you feel
+		// Next priority is see if lavaland mobs are attacking us to flee from them.
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		// Fly you fool
 		/datum/ai_planning_subtree/flee_target/node_drone,
 		//Potentially add more behaviors here for herding boulders to the vent if they get displaced.
 	)

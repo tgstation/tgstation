@@ -1,8 +1,9 @@
+/// How many boulders can a single ore vent have on it's tile before it stops producing more?
 #define MAX_BOULDERS_PER_VENT 10
 
 SUBSYSTEM_DEF(ore_generation)
 	name = "Ore_generation"
-	wait = 5 MINUTES
+	wait = 60 SECONDS
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 
@@ -75,3 +76,5 @@ SUBSYSTEM_DEF(ore_generation)
 		new_rock.set_custom_materials(mats_list)
 		new_rock.flavor_boulder(current_vent)
 		available_boulders += new_rock
+
+#undef MAX_BOULDERS_PER_VENT
