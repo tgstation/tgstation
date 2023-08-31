@@ -97,13 +97,12 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = null
 	planning_subtrees = list(
-		// Top priority is to look for and execute hunts for vents, even if we're being attacked.
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent,
-		// Next priority is see if lavaland mobs are attacking us to flee from them.
+		// Priority is see if lavaland mobs are attacking us to flee from them.
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		// Fly you fool
 		/datum/ai_planning_subtree/flee_target/node_drone,
-		//Potentially add more behaviors here for herding boulders to the vent if they get displaced.
+		// Otherwise, look for and execute hunts for vents to latch onto.
+		/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent,
 	)
 
 // Node subtree to hunt down ore vents.
