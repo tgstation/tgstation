@@ -103,7 +103,7 @@
 
 /obj/item/surgery_tray/examine(mob/living/carbon/human/user)
 	. = ..()
-	. += tray_toggled ? span_notice("Click and drag it to yourself to deploy it as a cart!") : span_notice("Activate it while in your hand to turn it into a tray!")
+	. += tray_toggled ? span_notice("You can click and drag it to yourself to pick it up, then use it in your hand to make it a cart!") : span_notice("You can click and drag it to yourself to turn it into a tray!")
 
 /obj/item/surgery_tray/update_overlays()
 	. = ..()
