@@ -99,6 +99,14 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 /// T1-3 Bleeding puncture wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: pierce.dm
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED 4
 
+#define WOUND_SERIES_METAL_SLASH_BLEED 5
+#define WOUND_SERIES_METAL_BLUNT_BASIC 6
+#define WOUND_SERIES_METAL_BURN_OVERHEAT 7
+#define WOUND_SERIES_METAL_PUNCTURE_BLEED 8
+
+#define WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE 9
+#define WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE 10
+
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse
 /// below this has no ill effects from infection
