@@ -25,12 +25,12 @@
 	///The inner radius of the bulb's light, where it is at maximum brightness
 	var/bulb_inner_range = 1.5
 	///Basically the alpha of the emitted light source
-	var/bulb_power = 0.8
+	var/bulb_power = 1
 	///The falloff of the emitted light. Adjust until it looks good.
 	var/bulb_falloff = LIGHTING_DEFAULT_FALLOFF_CURVE
 
 	///Default colour of the light.
-	var/bulb_colour = "#f0fafa"
+	var/bulb_colour = "#f3fffac4"
 	///LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/status = LIGHT_OK
 	///Should we flicker?

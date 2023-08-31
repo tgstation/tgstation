@@ -109,9 +109,9 @@
 	lum_g += delta_g
 	lum_b += delta_b
 
-	add_r = clamp((lum_r - 1.1) * 0.3, 0, 0.22)
-	add_g = clamp((lum_g - 1.1) * 0.3, 0, 0.22)
-	add_b = clamp((lum_b - 1.1) * 0.3, 0, 0.22)
+	add_r = clamp((lum_r - 1.3) * 0.45, 0, 0.3)
+	add_g = clamp((lum_g - 1.3) * 0.45, 0, 0.3)
+	add_b = clamp((lum_b - 1.3) * 0.45, 0, 0.3)
 
 	applying_additive = add_r || add_b || add_g
 
