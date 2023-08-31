@@ -167,44 +167,44 @@
 			else
 				. += "saw_normal"
 
-/obj/item/surgery_tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/item/surgery_tray/Entered(obj/item/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(istype(arrived, /obj/item/blood_filter))
-		if(blood_filter)
+		if(blood_filter && blood_filter.toolspeed < arrived.toolspeed)
 			return
 		blood_filter = arrived
+	else if(istype(arrived, /obj/item/cautery))
+		if(cautery && cautery.toolspeed < arrived.toolspeed)
+			return
+		cautery = arrived
+	else if(istype(arrived, /obj/item/circular_saw))
+		if(circular_saw && circular_saw.toolspeed < arrived.toolspeed)
+			return
+		circular_saw = arrived
+	else if(istype(arrived, /obj/item/hemostat))
+		if(hemostat && hemostat.toolspeed < arrived.toolspeed)
+			return
+		hemostat = arrived
+	else if(istype(arrived, /obj/item/surgicaldrill))
+		if(surgical_drill && surgical_drill.toolspeed < arrived.toolspeed)
+			return
+		surgical_drill = arrived
+	else if(istype(arrived, /obj/item/retractor))
+		if(retractor && retractor.toolspeed < arrived.toolspeed)
+			return
+		retractor = arrived
+	else if(istype(arrived, /obj/item/scalpel))
+		if(scalpel && scalpel.toolspeed < arrived.toolspeed)
+			return
+		scalpel = arrived
 	else if(istype(arrived, /obj/item/bonesetter))
 		if(bonesetter)
 			return
 		bonesetter = arrived
-	else if(istype(arrived, /obj/item/cautery))
-		if(cautery)
-			return
-		cautery = arrived
-	else if(istype(arrived, /obj/item/circular_saw))
-		if(circular_saw)
-			return
-		circular_saw = arrived
-	else if(istype(arrived, /obj/item/hemostat))
-		if(hemostat)
-			return
-		hemostat = arrived
 	else if(istype(arrived, /obj/item/razor))
 		if(razor)
 			return
 		razor = arrived
-	else if(istype(arrived, /obj/item/surgicaldrill))
-		if(surgical_drill)
-			return
-		surgical_drill = arrived
-	else if(istype(arrived, /obj/item/retractor))
-		if(retractor)
-			return
-		retractor = arrived
-	else if(istype(arrived, /obj/item/scalpel))
-		if(scalpel)
-			return
-		scalpel = arrived
 	else if(istype(arrived, /obj/item/stack/medical/bone_gel))
 		if(bone_gel)
 			return
