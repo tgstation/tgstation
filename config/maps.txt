@@ -31,6 +31,11 @@ map icebox
 	votable
 endmap
 
+map catwalkstation
+	minplayers 25
+	votable
+endmap
+
 map metastation
 	minplayers 25
 	#voteweight 0.5
@@ -56,7 +61,4 @@ map multiz_debug
 endmap
 
 map runtimestation
-endmap
-
-map catwalkstation
 endmap
