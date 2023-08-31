@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(ore_generation)
 		/datum/material/bluespace = 3,
 		/datum/material/plastic = 1,
 	)
- 	///Associated list of vent size weights to pick from.
+	/// Associated list of vent size weights to pick from.
 	var/list/ore_vent_sizes = list(
 		"large" = 3,
 		"medium" = 5,
