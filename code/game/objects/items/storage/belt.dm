@@ -284,7 +284,7 @@
 	SSwardrobe.provide_type(/obj/item/reagent_containers/spray/medical, src)
 	SSwardrobe.provide_type(/obj/item/blood_filter, src)
 	SSwardrobe.provide_type(/obj/item/bonesetter, src)
-	//much roomier now that we've managed to remove two tools
+	//much roomier now that we've managed to remove three tools
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
