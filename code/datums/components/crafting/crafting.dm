@@ -204,9 +204,9 @@
 			var/list/parts = del_reqs(recipe, crafter)
 			var/atom/movable/result
 			if(ispath(recipe.result, /obj/item/stack))
-				result = new recipe.result(get_turf(a.loc), R.result_amount || 1)
+				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
 			else if (ispath(recipe.result, /obj/item/food))
-				result = new recipe.result(get_turf(a.loc), no_base_reagents = TRUE)
+				result = new recipe.result(get_turf(crafter.loc), no_base_reagents = TRUE)
 			else
 				result = new recipe.result(get_turf(crafter.loc))
 				if(result.atom_storage && recipe.delete_contents)
