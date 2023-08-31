@@ -1,6 +1,6 @@
 /obj/item/onetankbomb
 	name = "bomb"
-	icon = 'icons/obj/atmospherics/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -57,9 +57,9 @@
 	..()
 	. = FALSE
 	if(status)
-		to_chat(user, span_warning("[bombtank] already has a pressure hole!"))
+		balloon_alert(user, "[bombtank] already has a pressure hole!")
 		return
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
@@ -127,7 +127,7 @@
 		return
 
 	if(!user.canUnEquip(assembly))
-		to_chat(user, span_warning("[assembly] is stuck to your hand!"))
+		to_chat(user, span_warning("[assembly] is stuck to your hand!")) //reason you exploded (dumbass) is worth logging in chat
 		return
 
 	var/obj/item/onetankbomb/bomb = new
@@ -145,7 +145,7 @@
 	bomb.update_appearance()
 
 	user.put_in_hands(bomb) //Equips the bomb if possible, or puts it on the floor.
-	to_chat(user, span_notice("You attach [assembly] to [src]."))
+	balloon_alert(user, "you attach [assembly] to [src]")
 	return
 
 /obj/item/onetankbomb/return_analyzable_air()
