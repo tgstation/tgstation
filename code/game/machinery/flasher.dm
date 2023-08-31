@@ -178,7 +178,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 	if(iscarbon(proximity_check_mob))
 		var/mob/living/carbon/proximity_carbon = proximity_check_mob
-		if (proximity_carbon.m_intent != MOVE_INTENT_WALK && anchored)
+		if (proximity_carbon.move_intent != MOVE_INTENT_WALK && anchored)
 			flash()
 
 /obj/machinery/flasher/portable/vv_edit_var(vname, vval)

@@ -418,8 +418,9 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	playsound(src,'sound/effects/podwoosh.ogg',50, FALSE)
 	do_smoke(1, holder = src, location = get_turf(src))
 
-/obj/machinery/exodrone_launcher/handle_atom_del(atom/A)
-	if(A == fuel_canister)
+/obj/machinery/exodrone_launcher/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == fuel_canister)
 		fuel_canister = null
 		update_icon()
 

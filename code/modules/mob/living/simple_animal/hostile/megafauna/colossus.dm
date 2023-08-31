@@ -55,7 +55,6 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -157,11 +156,6 @@
 		return TRUE
 	var/mob/living/carbon/human/human_victim = victim
 	return human_victim.mind && istype(human_victim.mind.martial_art, /datum/martial_art/the_sleeping_carp)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
-	visible_message(span_colossus("[src] disintegrates [victim]!"))
-	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	victim.dust()
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -425,7 +419,7 @@
 	name = "lavaland"
 	floor = /turf/open/floor/fakebasalt
 	wall = /turf/closed/wall/mineral/cult
-	flora_and_fauna = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	flora_and_fauna = list(/mob/living/basic/mining/goldgrub)
 	flora_and_fauna_chance = 1
 
 // Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.

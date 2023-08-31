@@ -16,10 +16,11 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_eat))
 
-/obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
+/obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
 
 	king.cheese_heal(src, rat_heal, span_green("You eat [src], restoring some health."))
+	return COMPONENT_RAT_INTERACTED
 
 /obj/item/food/cheese/wedge
 	name = "cheese wedge"
@@ -54,6 +55,15 @@
 
 /obj/item/food/cheese/wheel/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+
+/**
+ * Whiffs away cheese that was touched by the chaos entity byond the realm. In layman's terms, deletes the cheese and throws sparks.
+ * Used in wizard grand rituals' optional cheesy alternative.
+ */
+/obj/item/food/cheese/wheel/proc/consume_cheese()
+	visible_message(span_revenwarning("...and is consumed in a vortex of chaos!"))
+	do_sparks(number = 1, cardinal_only = TRUE, source = get_turf(src))
+	qdel(src)
 
 /obj/item/food/cheese/royal
 	name = "royal cheese"

@@ -61,11 +61,11 @@
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
 	if(!can_change_cable_layer || !cable_layer_change_checks(user, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return
 
 	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
 	if(isnull(choice))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
 	balloon_alert(user, "now operating on the [choice]")

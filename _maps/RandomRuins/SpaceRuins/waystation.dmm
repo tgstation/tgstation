@@ -1952,10 +1952,11 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 9
 	},
-/obj/machinery/door/window/brigdoor/security/cell/left,
+/obj/machinery/door/window/brigdoor/security/cell/left{
+	req_access = list("away_sec")
+	},
 /obj/structure/filingcabinet,
 /obj/item/folder/documents,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)

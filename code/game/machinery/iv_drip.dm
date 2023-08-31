@@ -248,7 +248,7 @@
 			var/list/arm_zones = shuffle(list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 			var/obj/item/bodypart/chosen_limb = attached_mob.get_bodypart(arm_zones[1]) || attached_mob.get_bodypart(arm_zones[2]) || attached_mob.get_bodypart(BODY_ZONE_CHEST)
 			chosen_limb.receive_damage(3)
-			chosen_limb.force_wound_upwards(/datum/wound/pierce/moderate, wound_source = "IV needle")
+			chosen_limb.force_wound_upwards(/datum/wound/pierce/bleed/moderate, wound_source = "IV needle")
 		else
 			visible_message(span_warning("[attached] is detached from [src]."))
 		detach_iv()
@@ -443,6 +443,9 @@
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/iv_drip/plumbing/deconstruct(disassembled = TRUE)
+	qdel(src)
+
 /atom/movable/screen/alert/iv_connected
 	name = "IV Connected"
 	desc = "You have an IV connected to your arm. Remember to remove it or drag the IV stand with you before moving, or else it will rip out!"
@@ -457,3 +460,5 @@
 #undef IV_TRANSFER_RATE_STEP
 
 #undef ALERT_IV_CONNECTED
+
+#undef DEFAULT_IV_TRANSFER_RATE

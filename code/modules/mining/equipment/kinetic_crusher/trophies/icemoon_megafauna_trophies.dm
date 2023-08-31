@@ -23,8 +23,8 @@
 	duration = 4 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/ice_block_talisman
-	///Stored icon overlay for the hit mob, removed when effect is removed
-	var/icon/cube = null
+	/// Stored icon overlay for the hit mob, removed when effect is removed
+	var/icon/cube
 
 /datum/status_effect/ice_block_talisman/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -41,12 +41,12 @@
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
-	var/icon/size_check = icon(owner.icon, owner.icon_state)
-	cube.Scale(size_check.Width(), size_check.Height())
+	var/list/icon_dimensions = get_icon_dimensions(owner.icon)
+	cube.Scale(icon_dimensions["width"], icon_dimensions["height"])
 	owner.add_overlay(cube)
 	return ..()
 
-///Blocks movement from the status effect owner
+/// Blocks movement from the status effect owner
 /datum/status_effect/ice_block_talisman/proc/owner_moved()
 	SIGNAL_HANDLER
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE

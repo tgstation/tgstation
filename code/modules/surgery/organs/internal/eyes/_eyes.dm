@@ -40,7 +40,9 @@
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
 	var/eye_icon_state = "eyes"
+	/// The color of the previous left eye before this one was inserted
 	var/old_eye_color_left = "fff"
+	/// The color of the previous right eye before this one was inserted
 	var/old_eye_color_right = "fff"
 
 	/// Glasses cannot be worn over these eyes. Currently unused
@@ -51,16 +53,24 @@
 	var/native_fov = FOV_90_DEGREES
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
+	// If we don't do this before everything else, heterochromia will be reset leading to eye_color_right no longer being accurate
+	if(ishuman(eye_recipient))
+		var/mob/living/carbon/human/human_recipient = eye_recipient
+		old_eye_color_left = human_recipient.eye_color_left
+		old_eye_color_right = human_recipient.eye_color_right
+
 	. = ..()
+
 	if(!.)
 		return
+
 	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(eye_recipient, inserting = TRUE, call_update = TRUE)
+	refresh(eye_recipient, call_update = TRUE)
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
-/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, inserting = FALSE, call_update = TRUE)
+/obj/item/organ/internal/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, call_update = TRUE)
 	owner.update_sight()
 	owner.update_tint()
 
@@ -68,9 +78,6 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = eye_owner
-	if(inserting) // we only want to be setting old_eye_color the one time
-		old_eye_color_left = affected_human.eye_color_left
-		old_eye_color_right = affected_human.eye_color_right
 	if(initial(eye_color_left))
 		affected_human.eye_color_left = eye_color_left
 	else
@@ -130,7 +137,6 @@
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, alpha = eye_left.alpha)
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
-
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
@@ -390,12 +396,8 @@
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/max_light_beam_distance = 5
 	var/obj/item/flashlight/eyelight/glow/eye
-	/// The overlay that is used when both eyes are set to match the light color
-	var/mutable_appearance/eyes_overlay
-	/// The overlay that is used when custom color selection is enabled, for the left eye
-	var/mutable_appearance/eyes_overlay_left
-	/// The overlay that is used when custom color selection is enabled, for the right eye
-	var/mutable_appearance/eyes_overlay_right
+	/// base icon state for eye overlays
+	var/base_eye_state = "eyes_glow_gs"
 	/// Whether or not to match the eye color to the light or use a custom selection
 	var/eye_color_mode = MATCH_LIGHT_COLOR
 	/// The selected color for the light beam itself
@@ -420,9 +422,10 @@
 		return
 	deactivate(close_ui = TRUE)
 
-/// We have to do this here because on_insert gets called before refresh(), which we need to have been called for old_eye_color vars to be set
+/// Set the initial color of the eyes on insert to be the mob's previous eye color.
 /obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
+	current_color_string = old_eye_color_left
 	current_left_color_string = old_eye_color_left
 	current_right_color_string = old_eye_color_right
 
@@ -433,9 +436,6 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	deactivate(eye_owner, close_ui = TRUE)
-	QDEL_NULL(eyes_overlay)
-	QDEL_NULL(eyes_overlay_left)
-	QDEL_NULL(eyes_overlay_right)
 	eye.forceMove(src)
 	return ..()
 
@@ -522,14 +522,14 @@
 	eye.on = TRUE
 	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively, no light overlay
 		eye.set_light_on(TRUE)
-	update_mob_eyes_overlay()
+	update_mob_eye_color()
 
 /**
  * Deactivates the light
  *
  * Turns off the attached flashlight object, closes UIs, updates the mob overlay to be removed.
  * Arguments:
- * * mob/living/carbon/eye_owner - the mob who the eyes belong to, for passing to update_mob_eyes_overlay
+ * * mob/living/carbon/eye_owner - the mob who the eyes belong to
  * * close_ui - whether or not to close the ui
  */
 /obj/item/organ/internal/eyes/robotic/glow/proc/deactivate(mob/living/carbon/eye_owner = owner, close_ui = FALSE)
@@ -537,7 +537,7 @@
 		SStgui.close_uis(src)
 	eye.on = FALSE
 	eye.set_light_on(FALSE)
-	update_mob_eyes_overlay(eye_owner)
+	update_mob_eye_color(eye_owner)
 
 /**
  * Randomizes the light color
@@ -629,44 +629,19 @@
 
 	if(QDELETED(eye_owner) || !ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return
-
-	eye_owner.dna.species.handle_body(eye_owner)
-	update_mob_eyes_overlay()
-
-/**
- * Updates the emissive mob eye overlay
- *
- * When the light is on, the overlay(s) are added. When it is disabled, they are cut.
- * Adds one or two overlays depending on what the eye_color_mode toggle is set to.
- * Arguments:
- * * mob/living/carbon/eye_owner - the mob to add the overlay to
- */
-/obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eyes_overlay(mob/living/carbon/eye_owner = owner)
-	if(QDELETED(eye_owner))
-		return
-
-	if(!ishuman(eye_owner))
-		return
-
-	eye_owner.cut_overlay(eyes_overlay)
-	eye_owner.cut_overlay(eyes_overlay_left)
-	eye_owner.cut_overlay(eyes_overlay_right)
-
+	
 	if(!eye.on)
-		return
+		eye_icon_state = initial(eye_icon_state)
+		overlay_ignore_lighting = FALSE
+	else
+		overlay_ignore_lighting = TRUE
+		eye_icon_state = base_eye_state
 
-	switch(eye_color_mode)
-		if(MATCH_LIGHT_COLOR)
-			eyes_overlay = emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_gs", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
-			eyes_overlay.color = current_color_string
-			eye_owner.add_overlay(eyes_overlay)
-		if(USE_CUSTOM_COLOR)
-			eyes_overlay_left = emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_gs_left", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
-			eyes_overlay_right = emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_gs_right", eye_owner, layer = -BODY_LAYER, alpha = owner.alpha)
-			eyes_overlay_left.color = eye_color_left
-			eyes_overlay_right.color = eye_color_right
-			eye_owner.add_overlay(eyes_overlay_left)
-			eye_owner.add_overlay(eyes_overlay_right)
+	var/obj/item/bodypart/head/head = eye_owner.get_bodypart(BODY_ZONE_HEAD) //if we have eyes we definently have a head anyway
+	var/previous_flags = head.head_flags
+	head.head_flags = previous_flags | HEAD_EYECOLOR
+	eye_owner.dna.species.handle_body(eye_owner)
+	head.head_flags = previous_flags
 
 #undef MATCH_LIGHT_COLOR
 #undef USE_CUSTOM_COLOR
@@ -680,6 +655,44 @@
 	eye_icon_state = "motheyes"
 	icon_state = "eyeballs-moth"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/moth
+	name = "robotic moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+	desc = "Your vision is augmented. Much like actual moth eyes, very sensitive to bright lights."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/basic/moth
+	name = "basic robotic moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/xray/moth
+	name = "robotic eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+	desc = "These cybernetic imitation moth eyes will give you X-ray vision. Blinking is futile. Much like actual moth eyes, very sensitive to bright lights."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/shield/moth
+	name = "shielded robotic moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
+
+/obj/item/organ/internal/eyes/robotic/glow/moth
+	name = "High Luminosity Moth Eyes"
+	eye_icon_state = "motheyes"
+	base_eye_state = "eyes_mothglow"
+	icon_state = "eyeballs-cybermoth"
+	desc = "Special glowing eyes, to be one with the lamp. Much like actual moth eyes, very sensitive to bright lights."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/thermals/moth //we inherit flash weakness from thermals
+	name = "thermal moth eyes"
+	eye_icon_state = "motheyes"
+	icon_state = "eyeballs-cybermoth"
 
 /obj/item/organ/internal/eyes/snail
 	name = "snail eyes"
