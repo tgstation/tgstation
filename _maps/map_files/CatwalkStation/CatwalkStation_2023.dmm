@@ -9834,10 +9834,6 @@
 	pixel_y = -9
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/condiment/quality_oil{
-	pixel_x = 8;
-	pixel_y = -12
-	},
 /obj/item/storage/fancy/cigarettes/cigpack_midori{
 	pixel_x = 8;
 	pixel_y = 12
@@ -11256,10 +11252,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
-"fsr" = (
-/obj/item/toy/plush/narplush,
-/turf/open/openspace,
-/area/space)
 "fsM" = (
 /obj/effect/turf_decal/tile/red,
 /obj/structure/table/reinforced,
@@ -21063,10 +21055,6 @@
 	pixel_y = 4
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/condiment/quality_oil{
-	pixel_x = 9;
-	pixel_y = 6
-	},
 /turf/open/floor/plating,
 /area/space)
 "jHL" = (
@@ -27272,10 +27260,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/lesser)
-"mGg" = (
-/obj/item/toy/plush/ratplush,
-/turf/open/openspace,
-/area/space)
 "mGw" = (
 /obj/structure/closet/crate,
 /obj/item/storage/box/lights/mixed,
@@ -46277,10 +46261,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
-"vJk" = (
-/obj/item/toy/plush/bubbleplush,
-/turf/open/openspace,
-/area/space)
 "vJz" = (
 /obj/structure/railing{
 	dir = 4
@@ -133447,7 +133427,7 @@ pzA
 pzA
 pzA
 pzA
-mGg
+pzA
 pzA
 pzA
 pzA
@@ -133703,8 +133683,8 @@ pzA
 pzA
 pzA
 pzA
-vJk
-fsr
+pzA
+pzA
 pzA
 pzA
 pzA
@@ -135841,10 +135821,10 @@ pzA
 pzA
 pzA
 pzA
-aMD
 pzA
 pzA
-aMD
+pzA
+pzA
 pzA
 pzA
 pzA
