@@ -7097,7 +7097,7 @@
 /obj/machinery/computer/security/telescreen/rd{
 	pixel_x = -30
 	},
-/obj/item/kirbyplants/random,
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "bMz" = (
@@ -12712,6 +12712,7 @@
 /area/station/engineering/storage/tcomms)
 "dlt" = (
 /obj/machinery/airalarm/directional/south,
+/obj/machinery/pdapainter/security,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "dly" = (
@@ -16227,7 +16228,7 @@
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
-	preset_destination_names = list("2"="Supply-Engi Floor","3"="Med-Sci Floor","4"="Service Floor")
+	preset_destination_names = list("2"="Supply-Engi  Floor","3"="Med-Sci  Floor","4"="Service  Floor")
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "fore_vator";
@@ -53518,7 +53519,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "aft_vator";
 	pixel_x = 24;
-	preset_destination_names = list("2"="Supply-Engi Floor","3"="Med-Sci Floor","4"="Service Floor")
+	preset_destination_names = list("2"="Supply-Engi  Floor","3"="Med-Sci  Floor","4"="Service  Floor")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
@@ -55032,8 +55033,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/warehouse)
 "ooQ" = (
@@ -57870,13 +57871,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "pdY" = (
-/obj/machinery/computer/crew{
-	dir = 8
-	},
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
 /obj/machinery/light/small/directional/east,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "peg" = (
@@ -71561,7 +71560,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/industrial/loader,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron/textured,
 /area/station/command/heads_quarters/qm)
 "sMY" = (
@@ -116252,7 +116251,7 @@ rYA
 eEB
 lUY
 bUC
-yiZ
+rYA
 yiZ
 mMH
 ncc
