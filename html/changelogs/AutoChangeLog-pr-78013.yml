@@ -1,0 +1,4 @@
+author: "VladinXXV"
+delete-after: True
+changes:
+  - qol: "The organ harvester's output is more predictable, and the direction can be changed by alt-clicking with the panel screwed open."
