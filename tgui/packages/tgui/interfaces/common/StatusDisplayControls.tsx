@@ -73,12 +73,6 @@ export const StatusDisplayControls = (props, context) => {
           content="Radiation"
           onClick={() => act('setStatusPicture', { picture: 'radiation' })}
         />
-
-        <Button
-          icon="flag"
-          content="Logo"
-          onClick={() => act('setStatusPicture', { picture: 'default' })}
-        />
       </Section>
 
       <Section title="Message">
