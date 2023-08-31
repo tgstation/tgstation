@@ -60,4 +60,4 @@
 	desc = "Fully regenerate your body, consuming your regenerative core in the process. \
 		This process will trigger automatically if you are badly wounded."
 	button_icon_state = "legion_core_stable"
-	check_flags = NONE
+	check_flags = AB_CHECK_CONSCIOUS
