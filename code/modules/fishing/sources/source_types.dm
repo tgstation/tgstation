@@ -25,7 +25,7 @@
 	catalog_description = "Fish dimension (Fishing portal generator)"
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
-	background = "fishing_background_lavaland"
+	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 15,

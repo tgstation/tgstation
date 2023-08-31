@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
-	var/background = "fishing_background_default"
+	var/background = "background_default"
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)

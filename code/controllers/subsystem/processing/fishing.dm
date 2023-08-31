@@ -1,7 +1,7 @@
 ///Super fast to minimize output lag, but it doesn't fire unless someone is actually fishing.
 PROCESSING_SUBSYSTEM_DEF(fishing)
 	name = "Fishing"
-	wait = 0.5 SECONDS
+	wait = 0.05 SECONDS
 	can_fire = FALSE
 
 /datum/controller/subsystem/processing/fishing/proc/begin_minigame_process(datum/fishing_challenge/minigame)
