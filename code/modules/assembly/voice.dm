@@ -98,7 +98,7 @@
 	..()
 	mode %= modes.len
 	mode++
-	to_chat(user, span_notice("You set [src] into [modes[mode]] mode."))
+	balloon_alert(user, "you set [src] into [modes[mode]] mode")
 	listening = FALSE
 	recorded = ""
 	return TRUE
