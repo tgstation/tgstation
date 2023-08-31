@@ -1,3 +1,6 @@
+#define AUGGED_LIMB_EMP_BRUTE_DAMAGE 3
+#define AUGGED_LIMB_EMP_BURN_DAMAGE 2
+
 /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
@@ -22,14 +25,15 @@
 	/// DO NOT MODIFY DIRECTLY. Use set_owner()
 	var/mob/living/carbon/owner
 
+	/// If this limb can be scarred.
+	var/scarrable = TRUE
+
 	/**
 	 * A bitfield of biological states, exclusively used to determine which wounds this limb will get,
 	 * as well as how easily it will happen.
-	 * Set to BIO_FLESH_BONE because most species have both flesh and bone in their limbs.
-	 *
-	 * This currently has absolutely no meaning for robotic limbs.
+	 * Set to BIO_STANDARD because most species have both flesh bone and blood in their limbs.
 	 */
-	var/biological_state = BIO_FLESH_BONE
+	var/biological_state = BIO_STANDARD
 	///A bitfield of bodytypes for clothing, surgery, and misc information
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
@@ -186,6 +190,16 @@
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
+	/// In the case we dont have dismemberable features, or literally cant get wounds, we will use this percent to determine when we can be dismembered.
+	/// Compared to our ABSOLUTE maximum. Stored in decimal; 0.8 = 80%.
+	var/hp_percent_to_dismemberable = 0.8
+	/// If true, we will use [hp_percent_to_dismemberable] even if we are dismemberable via wounds. Useful for things with extreme wound resistance.
+	var/use_alternate_dismemberment_calc_even_if_mangleable = FALSE
+	/// If false, no wound that can be applied to us can mangle our flesh. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	var/any_existing_wound_can_mangle_our_flesh
+	/// If false, no wound that can be applied to us can mangle our bone. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	var/any_existing_wound_can_mangle_our_bone
+
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
 	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
@@ -254,14 +268,10 @@
 	if(burn_dam > DAMAGE_PRECISION)
 		. += span_warning("This limb has [burn_dam > 30 ? "severe" : "minor"] burns.")
 
-	if(locate(/datum/wound/blunt) in wounds)
-		. += span_warning("The bones in this limb appear badly cracked.")
-	if(locate(/datum/wound/slash) in wounds)
-		. += span_warning("The flesh on this limb appears badly lacerated.")
-	if(locate(/datum/wound/pierce) in wounds)
-		. += span_warning("The flesh on this limb appears badly perforated.")
-	if(locate(/datum/wound/burn) in wounds)
-		. += span_warning("The flesh on this limb appears badly cooked.")
+	for(var/datum/wound/wound as anything in wounds)
+		var/wound_desc = wound.get_limb_examine_description()
+		if(wound_desc)
+			. += wound_desc
 
 /**
  * Called when a bodypart is checked for injuries.
@@ -481,35 +491,75 @@
 		else if (sharpness & SHARP_POINTY)
 			wounding_type = WOUND_PIERCE
 
-	if(owner)
+	if(owner) // i tried to modularize the below, but the modifications to wounding_dmg and wounding_type cant be extracted to a proc
 		var/mangled_state = get_mangled_state()
 		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-		//Handling for bone only/flesh only(none right now)/flesh and bone targets
-		switch(biological_state)
-			// if we're bone only, all cutting attacks go straight to the bone
-			if(BIO_BONE)
-				if(wounding_type == WOUND_SLASH)
-					wounding_type = WOUND_BLUNT
-					wounding_dmg *= (easy_dismember ? 1 : 0.6)
-				else if(wounding_type == WOUND_PIERCE)
-					wounding_type = WOUND_BLUNT
-					wounding_dmg *= (easy_dismember ? 1 : 0.75)
-				if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
-					return
-			// note that there's no handling for BIO_FLESH since we don't have any that are that right now (slimepeople maybe someday)
-			// standard humanoids
-			if(BIO_FLESH_BONE)
-				// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
-				// So a big sharp weapon is still all you need to destroy a limb
-				if((mangled_state & BODYPART_MANGLED_FLESH) && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
-					playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
-					if(wounding_type == WOUND_SLASH && !easy_dismember)
-						wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
-					if(wounding_type == WOUND_PIERCE && !easy_dismember)
-						wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
-					wounding_type = WOUND_BLUNT
-				else if((mangled_state & BODYPART_MANGLED_FLESH) && (mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+		var/has_exterior = FALSE
+		var/has_interior = FALSE
+
+		for (var/state as anything in GLOB.bio_state_states)
+			var/flag = text2num(state)
+			if (!(biological_state & flag))
+				continue
+
+			var/value = GLOB.bio_state_states[state]
+			if (value & BIO_EXTERIOR)
+				has_exterior = TRUE
+			if (value & BIO_INTERIOR)
+				has_interior = TRUE
+
+			if (has_exterior && has_interior)
+				break
+
+		// We put this here so we dont increase init time by doing this all at once on initialization
+		// Effectively, we "lazy load"
+		if (isnull(any_existing_wound_can_mangle_our_bone) || isnull(any_existing_wound_can_mangle_our_flesh))
+			any_existing_wound_can_mangle_our_bone = FALSE
+			any_existing_wound_can_mangle_our_flesh = FALSE
+			for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
+				var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+				if (!pregen_data.can_be_applied_to(src, random_roll = TRUE)) // we only consider randoms because non-randoms are usually really specific
+					continue
+				if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_FLESH)
+					any_existing_wound_can_mangle_our_flesh = TRUE
+				if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_BONE)
+					any_existing_wound_can_mangle_our_bone = TRUE
+
+				if (any_existing_wound_can_mangle_our_bone && any_existing_wound_can_mangle_our_flesh)
+					break
+
+		var/can_theoretically_be_dismembered = (any_existing_wound_can_mangle_our_bone || (any_existing_wound_can_mangle_our_flesh && !has_exterior))
+
+		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_BONE) == BODYPART_MANGLED_BONE))
+		var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_FLESH) == BODYPART_MANGLED_FLESH))
+
+		// if we're bone only, all cutting attacks go straight to the bone
+		if(has_exterior && interior_ready_to_dismember)
+			if(wounding_type == WOUND_SLASH)
+				wounding_type = WOUND_BLUNT
+				wounding_dmg *= (easy_dismember ? 1 : 0.6)
+			else if(wounding_type == WOUND_PIERCE)
+				wounding_type = WOUND_BLUNT
+				wounding_dmg *= (easy_dismember ? 1 : 0.75)
+			if(exterior_ready_to_dismember && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+				return
+		else
+			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+			// So a big sharp weapon is still all you need to destroy a limb
+			if(has_exterior && interior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
+				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
+				if(wounding_type == WOUND_SLASH && !easy_dismember)
+					wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
+				if(wounding_type == WOUND_PIERCE && !easy_dismember)
+					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+				wounding_type = WOUND_BLUNT
+			else if(interior_ready_to_dismember && exterior_ready_to_dismember && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+				return
+		if (use_alternate_dismemberment_calc_even_if_mangleable || !can_theoretically_be_dismembered)
+			var/percent_to_total_max = (get_damage() / max_damage)
+			if (percent_to_total_max >= hp_percent_to_dismemberable)
+				if (try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 					return
 
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
@@ -517,7 +567,7 @@
 			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction, damage_source = damage_source)
 
 	for(var/datum/wound/iter_wound as anything in wounds)
-		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus)
+		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus, damage_source)
 
 	/*
 	// END WOUND HANDLING
@@ -1040,7 +1090,7 @@
 	if(!owner)
 		return
 
-	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || !IS_ORGANIC_LIMB(src))
+	if(!can_bleed())
 		if(cached_bleed_rate != old_bleed_rate)
 			update_part_wound_overlay()
 		return
@@ -1081,7 +1131,7 @@
 /obj/item/bodypart/proc/update_part_wound_overlay()
 	if(!owner)
 		return FALSE
-	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || !IS_ORGANIC_LIMB(src))
+	if(!can_bleed())
 		if(bleed_overlay_icon)
 			bleed_overlay_icon = null
 			owner.update_wound_overlays()
@@ -1113,6 +1163,11 @@
 #undef BLEED_OVERLAY_LOW
 #undef BLEED_OVERLAY_MED
 #undef BLEED_OVERLAY_GUSH
+
+/obj/item/bodypart/proc/can_bleed()
+	SHOULD_BE_PURE(TRUE)
+
+	return ((biological_state & BIO_BLOODED) && (!owner || !HAS_TRAIT(owner, TRAIT_NOBLOOD)))
 
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart
@@ -1206,10 +1261,12 @@
 		return FALSE
 	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 
+	// with defines at the time of writing, this is 3 brute and 2 burn
+	// 3 + 2 = 5, with 6 limbs thats 30, on a heavy 60
+	// 60 * 0.8 = 48
 	var/time_needed = 10 SECONDS
-	var/brute_damage = 5 + 1.5 // Augments reduce brute damage by 5.
-	var/burn_damage = 4 + 2.5 // As above, but for burn it's 4.
-
+	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE
+	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE
 	if(severity == EMP_HEAVY)
 		time_needed *= 2
 		brute_damage *= 2

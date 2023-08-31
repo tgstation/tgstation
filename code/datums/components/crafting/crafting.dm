@@ -199,6 +199,8 @@
 			var/atom/movable/I
 			if(ispath(R.result, /obj/item/stack))
 				I = new R.result (get_turf(a.loc), R.result_amount || 1)
+			else if (ispath(R.result, /obj/item/food))
+				I = new R.result (get_turf(a.loc), no_base_reagents = TRUE)
 			else
 				I = new R.result (get_turf(a.loc))
 				if(I.atom_storage && R.delete_contents)
@@ -462,7 +464,7 @@
 				else
 					if(!istype(result, /obj/effect/spawner))
 						result.forceMove(user.drop_location())
-				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
+				to_chat(user, span_notice("[crafting_recipe.name] crafted."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)
 			else

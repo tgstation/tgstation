@@ -300,11 +300,12 @@
 		diag_hud.remove_atom_from_hud(src)
 	return ..()
 
-/obj/machinery/door/airlock/handle_atom_del(atom/A)
-	if(A == note)
+/obj/machinery/door/airlock/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == note)
 		note = null
 		update_appearance()
-	if(A == seal)
+	if(gone == seal)
 		seal = null
 		update_appearance()
 
@@ -1374,7 +1375,12 @@
 
 	// applies the user-chosen airlock's icon, overlays and assemblytype to the src airlock
 	painter.use_paint(user)
-	icon = initial(airlock.icon)
+	if(initial(airlock.greyscale_config))
+		greyscale_config = initial(airlock.greyscale_config)
+		greyscale_colors = initial(airlock.greyscale_colors)
+		update_greyscale()
+	else
+		icon = initial(airlock.icon)
 	overlays_file = initial(airlock.overlays_file)
 	assemblytype = initial(airlock.assemblytype)
 	update_appearance()
@@ -1545,7 +1551,7 @@
 			if(security_level != AIRLOCK_SECURITY_NONE)
 				to_chat(user, span_notice("[src]'s reinforcement needs to be removed first."))
 				return FALSE
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 32)
 	return FALSE
 
 /obj/machinery/door/airlock/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -1610,7 +1616,7 @@
 	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
 	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
 	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
-	wire["lights"] = !wires.is_cut(WIRE_LIGHT)
+	wire["lights"] = !wires.is_cut(WIRE_BOLTLIGHT)
 	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
 	wire["timing"] = !wires.is_cut(WIRE_TIMING)
 
@@ -1785,9 +1791,7 @@
 /obj/structure/fluff/airlock_filler/singularity_pull(S, current_size)
 	return
 
-/*
-	Station Airlocks Regular
-*/
+// Station Airlocks Regular
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
@@ -1849,10 +1853,7 @@
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
 
-//////////////////////////////////
-/*
-	Station Airlocks Glass
-*/
+// Station Airlocks Glass
 
 /obj/machinery/door/airlock/glass
 	opacity = FALSE
@@ -1940,10 +1941,7 @@
 	glass = TRUE
 	normal_integrity = 200
 
-//////////////////////////////////
-/*
-	Station Airlocks Mineral
-*/
+// Station Airlocks Mineral
 
 /obj/machinery/door/airlock/gold
 	name = "gold airlock"
@@ -2093,14 +2091,13 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru
 	opacity = FALSE
 	glass = TRUE
-//////////////////////////////////
-/*
-	Station2 Airlocks
-*/
+
+
+// Public Airlocks
 
 /obj/machinery/door/airlock/public
-	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/public/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
 
 /obj/machinery/door/airlock/public/glass
@@ -2119,10 +2116,7 @@
 	name = "Turbine Exterior Airlock"
 	id_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
 
-//////////////////////////////////
-/*
-	External Airlocks
-*/
+// External Airlocks
 
 /obj/machinery/door/airlock/external
 	name = "external airlock"
@@ -2173,20 +2167,16 @@
 
 	return ..()
 
-/// Access free external airlock
+// Access free external airlocks
 /obj/machinery/door/airlock/external/ruin
 
 /obj/machinery/door/airlock/external/glass
 	opacity = FALSE
 	glass = TRUE
 
-/// Access free external glass airlock
 /obj/machinery/door/airlock/external/glass/ruin
 
-//////////////////////////////////
-/*
-	CentCom Airlocks
-*/
+// CentCom Airlocks
 
 /obj/machinery/door/airlock/centcom //Use grunge as a station side version, as these have special effects related to them via phobias and such.
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
@@ -2201,10 +2191,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_grunge
 
-//////////////////////////////////
-/*
-	Vault Airlocks
-*/
+
+// Vault Airlocks
 
 /obj/machinery/door/airlock/vault
 	name = "vault door"
@@ -2215,10 +2203,8 @@
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6
 
-//////////////////////////////////
-/*
-	Hatch Airlocks
-*/
+
+// Hatch Airlocks
 
 /obj/machinery/door/airlock/hatch
 	name = "airtight hatch"
@@ -2234,10 +2220,7 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
 
-//////////////////////////////////
-/*
-	High Security Airlocks
-*/
+// High Security Airlocks
 
 /obj/machinery/door/airlock/highsecurity
 	name = "high tech security airlock"
@@ -2249,10 +2232,7 @@
 	security_level = 1
 	damage_deflection = 30
 
-//////////////////////////////////
-/*
-	Shuttle Airlocks
-*/
+// Shuttle Airlocks
 
 /obj/machinery/door/airlock/shuttle
 	name = "shuttle airlock"
@@ -2278,10 +2258,7 @@
 	normal_integrity = 700
 	security_level = 1
 
-//////////////////////////////////
-/*
-	Cult Airlocks
-*/
+// Cult Airlocks
 
 /obj/machinery/door/airlock/cult
 	name = "cult airlock"
@@ -2385,11 +2362,8 @@
 	damage_deflection = 5
 	armor_type = /datum/armor/none
 
+// Material Airlocks
 
-//////////////////////////////////
-/*
-	Material Airlocks
-*/
 /obj/machinery/door/airlock/material
 	name = "Airlock"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
@@ -2413,20 +2387,15 @@
 	opacity = FALSE
 	glass = TRUE
 
-//////////////////////////////////
-/*
-	Misc Airlocks
-*/
+// Multi-tile (Large) Airlocks
 
-/obj/machinery/door/airlock/multi_tile/glass
+/obj/machinery/door/airlock/multi_tile
+	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_public
 	multi_tile = TRUE
-	name = "large glass airlock"
-	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
 	opacity = FALSE
-	assemblytype = /obj/structure/door_assembly/multi_tile/glass
 	glass = TRUE
-	bound_width = 64 // 2x1
 
 /obj/structure/fluff/airlock_filler
 	name = "airlock fluff"
@@ -2441,10 +2410,17 @@
 	/// The door/airlock this fluff panel is attached to
 	var/obj/machinery/door/filled_airlock
 
+/obj/machinery/door/airlock/multi_tile/public/glass
+
 /obj/machinery/door/airlock/multi_tile/narsie_act()
 	return
 
-/// Subtype used in unit tests to ensure instant airlock opening/closing. Pretty much just excises everything that would delay the process or is un-needed for the sake of the test (sleeps, icon animations).
+/*
+ * Subtype used in unit tests to ensure instant airlock opening/closing.
+ *
+ * Pretty much just excises everything that would delay the process or is un-needed
+ * for the sake of the test (sleeps, icon animations).
+*/
 /obj/machinery/door/airlock/instant
 
 // set_density on both open and close procs has a check and return builtin.

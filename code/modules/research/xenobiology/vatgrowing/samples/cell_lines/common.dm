@@ -10,11 +10,10 @@
 	supplementary_reagents = list(
 		/datum/reagent/growthserum = 2,
 		/datum/reagent/consumable/liquidgibs = 2,
-		/datum/reagent/consumable/cornoil = 2,
 		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 		/datum/reagent/consumable/sugar = 1,
-		/datum/reagent/consumable/cooking_oil = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/rice = 1,
 		/datum/reagent/consumable/eggyolk = 1)
 
@@ -176,9 +175,8 @@
 		/datum/reagent/consumable/nutriment)
 
 	supplementary_reagents = list(
-		/datum/reagent/consumable/cornoil = 4, //Carp are oily fish
+		/datum/reagent/consumable/nutriment/fat/oil = 4, //Carp are oily fish
 		/datum/reagent/toxin/carpotoxin = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 2)
 
 	suppressive_reagents = list(
@@ -197,10 +195,9 @@
 		/datum/reagent/consumable/nutriment)
 
 	supplementary_reagents = list(
-		/datum/reagent/consumable/cornoil = 4,
+		/datum/reagent/consumable/nutriment/fat/oil = 4,
 		/datum/reagent/growthserum = 3,
 		/datum/reagent/toxin/carpotoxin = 2,
-		/datum/reagent/consumable/cooking_oil = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 2)
 
 	suppressive_reagents = list(
@@ -251,7 +248,7 @@
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/slime = 1)
 
-/datum/micro_organism/cell_line/blob_spore //shitty cell line to dilute the pool, feel free to make easier to grow if it doesn't interfer with growing the powerful mobs enough.
+/datum/micro_organism/cell_line/blob_spore //nuisance cell line
 	desc = "Immature blob spores"
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
@@ -262,7 +259,8 @@
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/tinlux = -6,
-		/datum/reagent/napalm = -4)
+		/datum/reagent/napalm = -4,
+		/datum/reagent/medicine/psicodine = -2) //Blob zombies likely wouldn't appreciate psicodine so why this is here
 
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobspore/independent = 2) //These are useless so we might as well spawn 2.
@@ -341,17 +339,18 @@
 ////////////////////
 //// MISC ////
 ////////////////////
-/datum/micro_organism/cell_line/cockroach //nuisance cell line designed to complicate the growing of slime type cell lines.
+/datum/micro_organism/cell_line/cockroach //general nuisance cell line
 	desc = "Blattodeoid anthropod cells"
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 	supplementary_reagents = list(
-		/datum/reagent/yuck = 4,
-		/datum/reagent/growthserum = 2,
+		/datum/reagent/growthserum = 1,
 		/datum/reagent/toxin/slimejelly = 2,
+		/datum/reagent/yuck = 2, //Almost every fun recipe requires this. Making this value too high makes cockroaches extremely anti-fun.
 		/datum/reagent/consumable/nutriment/vitamin = 1)
 
 	suppressive_reagents = list(
 		/datum/reagent/toxin/pestkiller = -2,
+		/datum/reagent/consumable/salt = -3, //Some salts are toxic to cockroaches, + helps makes the cell line more manageable
 		/datum/reagent/consumable/poisonberryjuice = -4,
 		/datum/reagent/consumable/ethanol/bug_spray = -4)
 
@@ -524,8 +523,7 @@
 		/datum/reagent/consumable/vanillapudding = 8,
 		/datum/reagent/growthserum = 6,
 		/datum/reagent/consumable/nutriment/peptides = 4,
-		/datum/reagent/consumable/cornoil = 3,
-		/datum/reagent/consumable/cooking_oil = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 3,
 		/datum/reagent/consumable/space_cola = 1)
 
 	suppressive_reagents = list(
@@ -734,6 +732,6 @@
 		/datum/reagent/drug/nicotine = -1,
 		/datum/reagent/toxin/pestkiller = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/mega_arachnid = 1)
+	resulting_atoms = list(/mob/living/basic/mega_arachnid = 1)
 
 #undef VAT_GROWTH_RATE

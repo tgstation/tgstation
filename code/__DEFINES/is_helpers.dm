@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
-#define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
+#define isregalrat(A) (istype(A, /mob/living/basic/regal_rat))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
@@ -211,6 +211,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isaquarium(A) (istype(A, /obj/structure/aquarium))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define istramwall(A) (istype(A, /obj/structure/window/reinforced/tram/front))
 
 #define isvendor(A) (istype(A, /obj/machinery/vending))
 

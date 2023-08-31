@@ -213,51 +213,57 @@
 				src, RCD_MEMORY_WALL,
 			)
 		if(RCD_REFLECTOR)
-			return list("mode" = RCD_REFLECTOR, "delay" = 20, "cost" = 30)
+			return list("mode" = RCD_REFLECTOR, "delay" = 2 SECONDS, "cost" = 20)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
-				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
+				return list("mode" = RCD_AIRLOCK, "delay" = 5 SECONDS, "cost" = 20)
 			else
-				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
+				return list("mode" = RCD_AIRLOCK, "delay" = 5 SECONDS, "cost" = 16)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
+			//default cost for building a grill for fulltile windows
+			var/cost = 4
+			var/delay = 1 SECONDS
+			if(the_rcd.window_type  == /obj/structure/window)
+				cost = 4
+				delay = 2 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
+				cost = 6
+				delay = 2.5 SECONDS
 			return rcd_result_with_memory(
-				list("mode" = RCD_WINDOWGRILLE, "delay" = 1 SECONDS, "cost" = 4),
+				list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost),
 				src, RCD_MEMORY_WINDOWGRILLE,
 			)
 		if(RCD_MACHINE)
-			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
+			return list("mode" = RCD_MACHINE, "delay" = 2 SECONDS, "cost" = 20)
 		if(RCD_COMPUTER)
-			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
+			return list("mode" = RCD_COMPUTER, "delay" = 2 SECONDS, "cost" = 20)
 		if(RCD_FLOODLIGHT)
-			return list("mode" = RCD_FLOODLIGHT, "delay" = 30, "cost" = 35)
+			return list("mode" = RCD_FLOODLIGHT, "delay" = 3 SECONDS, "cost" = 20)
 		if(RCD_GIRDER)
 			return list("mode" = RCD_GIRDER, "delay" = 1.3 SECONDS, "cost" = 8)
 		if(RCD_FURNISHING)
 			var/cost = 0
 			var/delay = 0
 			if(the_rcd.furnish_type == /obj/structure/chair || the_rcd.furnish_type == /obj/structure/chair/stool)
-				cost = 8
-				delay = 10
+				cost = 4
+				delay = 1 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/chair/stool/bar)
 				cost = 4
-				delay = 5
-			else if(the_rcd.furnish_type == /obj/structure/chair/stool/bar)
-				cost = 4
-				delay = 5
+				delay = 0.5 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/table)
-				cost = 15
-				delay = 20
+				cost = 8
+				delay = 2 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/table/glass)
-				cost = 12
-				delay = 15
+				cost = 8
+				delay = 2 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/rack)
-				cost = 20
-				delay = 25
+				cost = 4
+				delay = 2.5 SECONDS
 			else if(the_rcd.furnish_type == /obj/structure/bed)
-				cost = 10
-				delay = 15
+				cost = 8
+				delay = 1.5 SECONDS
 			if(cost == 0)
 				return FALSE
 			return list("mode" = RCD_FURNISHING, "delay" = cost, "cost" = delay)
@@ -337,6 +343,21 @@
 				return FALSE
 			return TRUE
 		if(RCD_WINDOWGRILLE)
+			//check if we are building a window
+			var/obj/structure/window/window_path = the_rcd.window_type
+			if(!ispath(window_path))
+				CRASH("Invalid window path type in RCD: [window_path]")
+
+			//allow directional windows to be built without grills
+			if(!initial(window_path.fulltile))
+				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "window already here!")
+					return FALSE
+				var/obj/structure/window/WD = new the_rcd.window_type(src, user.dir)
+				WD.set_anchored(TRUE)
+				return TRUE
+
+			//build grills to deal with full tile windows
 			if(locate(/obj/structure/grille) in src)
 				return FALSE
 			var/obj/structure/grille/new_grille = new(src)

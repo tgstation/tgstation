@@ -52,10 +52,10 @@
 	. = ..()
 	if(!weighted_mob_spawn_list)
 		weighted_mob_spawn_list = list(
+			/mob/living/basic/mining/basilisk = 4,
+			/mob/living/basic/mining/goldgrub = 1,
 			/mob/living/basic/mining/goliath/ancient = 5,
-			/mob/living/simple_animal/hostile/asteroid/basilisk = 4,
 			/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
-			/mob/living/simple_animal/hostile/asteroid/goldgrub = 1,
 		)
 	mob_spawn_list = expand_weights(weighted_mob_spawn_list)
 	mob_spawn_no_mega_list = expand_weights(weighted_mob_spawn_list - SPAWN_MEGAFAUNA)
@@ -144,10 +144,12 @@
 		//MOB SPAWNING HERE
 		if(mobs_allowed && !spawned_something && prob(mob_spawn_chance))
 			var/atom/picked_mob = pick(mob_spawn_list)
+			var/is_megafauna = FALSE
 
 			if(picked_mob == SPAWN_MEGAFAUNA)
 				if(megas_allowed) //this is danger. it's boss time.
 					picked_mob = pick(megafauna_spawn_list)
+					is_megafauna = TRUE
 				else //this is not danger, don't spawn a boss, spawn something else
 					picked_mob = pick(mob_spawn_no_mega_list) //What if we used 100% of the brain...and did something (slightly) less shit than a while loop?
 
@@ -158,12 +160,16 @@
 				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, turf))
 					can_spawn = FALSE
 					break
-			//if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			else if(isminingpath(picked_mob))
-				for(var/mob/living/mob_blocker in range(12, turf))
+			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
+			else
+				var/list/things_in_range = range(12, turf)
+				for(var/mob/living/mob_blocker in things_in_range)
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break
+				// Also block spawns if there's a random lavaland mob spawner nearby and it's not a mega
+				if(!is_megafauna)
+					can_spawn = can_spawn && !(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
 				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, turf))

@@ -27,8 +27,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		/obj/item/reagent_containers/condiment/coldsauce,
 		/obj/item/reagent_containers/condiment/mayonnaise,
 		/obj/item/reagent_containers/condiment/ketchup,
-		/obj/item/reagent_containers/condiment/quality_oil,
-		/obj/item/reagent_containers/condiment/cooking_oil,
+		/obj/item/reagent_containers/condiment/olive_oil,
+		/obj/item/reagent_containers/condiment/vegetable_oil,
 		/obj/item/reagent_containers/condiment/peanut_butter,
 		/obj/item/reagent_containers/condiment/cherryjelly,
 		/obj/item/reagent_containers/condiment/honey,
@@ -105,9 +105,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	replace_beaker()
 	return ..()
 
-/obj/machinery/chem_master/handle_atom_del(atom/deleted_atom)
-	..()
-	if(deleted_atom == beaker)
+/obj/machinery/chem_master/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		update_appearance(UPDATE_ICON)
 

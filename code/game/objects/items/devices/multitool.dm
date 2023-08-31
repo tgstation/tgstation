@@ -30,7 +30,7 @@
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
-	var/obj/machinery/buffer // simple machine buffer for device linkage
+	var/datum/buffer // simple machine buffer for device linkage
 	var/mode = 0
 
 /obj/item/multitool/examine(mob/user)
@@ -41,6 +41,17 @@
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
+/obj/item/multitool/proc/set_buffer(datum/buffer)
+	if(src.buffer)
+		UnregisterSignal(src.buffer, COMSIG_QDELETING)
+	if(QDELETED(buffer))
+		return
+	src.buffer = buffer
+	RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
+
+/obj/item/multitool/proc/on_buffer_del(datum/source)
+	SIGNAL_HANDLER
+	buffer = null
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
@@ -84,10 +95,6 @@
 /obj/item/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
 	detect_state = PROXIMITY_NONE
-	for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
-		if(AI.cameraFollow == src)
-			detect_state = PROXIMITY_ON_SCREEN
-			return
 
 	for(var/mob/camera/ai_eye/AI_eye as anything in GLOB.aiEyes)
 		if(!AI_eye.ai_detector_visible)

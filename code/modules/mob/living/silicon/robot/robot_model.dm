@@ -188,9 +188,8 @@
 		if(!to_stock) //Nothing for us in the silo
 			continue
 
-		storage_datum.energy += mat_container.use_amount_mat(to_stock, storage_datum.mat_type)
+		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		charger.materials.silo_log(charger, "resupplied", -1, "units", list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock))
 		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, "restock process complete")

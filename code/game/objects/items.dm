@@ -207,8 +207,8 @@
 
 	///Grinder var:A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/grind_results
-	//Grinder var:A reagent list containing blah blah... but when JUICED in a grinder!
-	var/list/juice_results
+	///A reagent the nutriments are converted into when the item is juiced.
+	var/datum/reagent/consumable/juice_typepath
 
 	var/canMouseDown = FALSE
 
@@ -220,7 +220,7 @@
 	var/throw_verb
 
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
-	var/list/fantasy_modifications
+	var/list/fantasy_modifications = null
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -950,12 +950,35 @@
 /obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
 	return TRUE
 
-///Called BEFORE the object is ground up - use this to change grind results based on conditions. Use "return -1" to prevent the grinding from occurring
+///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
+///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
+/obj/item/proc/grind(datum/reagents/target_holder, mob/user)
+	if(on_grind() == -1)
+		return FALSE
+	if(!reagents)
+		reagents = new()
+	reagents.add_reagent_list(grind_results)
+	if(reagents && target_holder)
+		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+	return TRUE
+
+///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
+	if(!juice_typepath)
+		return -1
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
+
+///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
+/obj/item/proc/juice(datum/reagents/target_holder, mob/user)
+	if(on_juice() == -1)
+		return FALSE
+	reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
+	if(reagents && target_holder)
+		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+	return TRUE
 
 /obj/item/proc/set_force_string()
 	switch(force)
@@ -1562,8 +1585,13 @@
 
 /// Modifies the fantasy variable
 /obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
-	if(LAZYACCESS(fantasy_modifications, variable_key) != null)
+	var/result = LAZYACCESS(fantasy_modifications, variable_key)
+	if(!isnull(result))
+		if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+			return result // we are immune to your foul magicks you inferior wizard, we keep our bonuses
+
 		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
+
 	var/intended_target = value + bonus
 	value = max(minimum, intended_target)
 
@@ -1575,9 +1603,14 @@
 /// Returns the original fantasy variable value
 /obj/item/proc/reset_fantasy_variable(variable_key, current_value)
 	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+
+	if(isnum(modification) && HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+		return modification // we are immune to your foul magicks you inferior wizard, we keep our bonuses the way they are
+
 	LAZYREMOVE(fantasy_modifications, variable_key)
-	if(!modification)
+	if(isnull(modification))
 		return current_value
+
 	return current_value - modification
 
 /obj/item/proc/apply_fantasy_bonuses(bonus)

@@ -134,11 +134,11 @@
 	return ..()
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/clothing/suit/space/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		thermal_on = FALSE
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/clothing/suit/space/get_cell()

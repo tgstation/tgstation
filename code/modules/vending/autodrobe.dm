@@ -96,6 +96,7 @@
 				/obj/item/clothing/under/rank/civilian/mime/skirt = 1,
 				/obj/item/clothing/under/rank/civilian/clown/jester = 1,
 				/obj/item/clothing/head/costume/jester = 1,
+				/obj/item/clothing/shoes/jester_shoes = 1,
 				/obj/item/clothing/under/costume/villain = 1,
 				/obj/item/clothing/suit/costume/joker = 1,
 				/obj/item/clothing/under/costume/joker = 1,
@@ -161,6 +162,7 @@
 			"products" = list(
 				/obj/item/clothing/under/costume/buttondown/slacks/service = 1,
 				/obj/item/clothing/under/costume/buttondown/skirt/service = 1,
+				/obj/item/clothing/neck/bowtie = 2,
 				/obj/item/clothing/accessory/waistcoat = 1,
 				/obj/item/clothing/under/suit/waiter = 1,
 				/obj/item/clothing/suit/apron = 1,

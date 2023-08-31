@@ -58,6 +58,12 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Slip))
 
+/datum/component/slippery/Destroy(force, silent)
+	can_slip_callback = null
+	on_slip_callback = null
+	holder = null
+	return ..()
+
 /datum/component/slippery/proc/apply_fantasy_bonuses(obj/item/source, bonus)
 	SIGNAL_HANDLER
 	knockdown_time = source.modify_fantasy_variable("knockdown_time", knockdown_time, bonus)
@@ -73,6 +79,7 @@
 	knockdown_time = source.reset_fantasy_variable("knockdown_time", knockdown_time)
 	paralyze_time = source.reset_fantasy_variable("paralyze_time", paralyze_time)
 	var/previous_lube_flags = LAZYACCESS(source.fantasy_modifications, "lube_flags")
+	LAZYREMOVE(source.fantasy_modifications, "lube_flags")
 	if(!isnull(previous_lube_flags))
 		lube_flags = previous_lube_flags
 

@@ -382,7 +382,18 @@
 			/obj/item/food/grown/cabbage = 1,
 			/obj/item/toy/crayon/green = 1,
 			/obj/item/flashlight/flare = 1,
-			/datum/reagent/consumable/cooking_oil = 15
+			/datum/reagent/consumable/nutriment/fat/oil = 15
 	)
 	result = /obj/item/food/burger/crazy
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/sloppy_moe
+	name = "Sloppy moe"
+	reqs = list(
+			/obj/item/food/bun = 1,
+			/obj/item/food/meat/cutlet = 2,
+			/obj/item/food/onion_slice = 1,
+			/datum/reagent/consumable/bbqsauce = 5,
+	)
+	result = /obj/item/food/burger/sloppy_moe
 	category = CAT_BURGER

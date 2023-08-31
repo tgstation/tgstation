@@ -22,6 +22,9 @@
 	if(laugh_delay)
 		src.laugh_delay = laugh_delay
 
+/datum/component/wearertargeting/sitcomlaughter/Destroy(force, silent)
+	post_comedy_callback = null
+	return ..()
 
 ///Play the laugh track if any of the signals related to comedy have been sent.
 /datum/component/wearertargeting/sitcomlaughter/proc/EngageInComedy(datum/source)
