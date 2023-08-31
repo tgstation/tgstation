@@ -139,7 +139,7 @@
 	circuit = /obj/item/circuitboard/machine/feed_machine
 
 	///the current held beaker used when feed is produced to add reagents to it
-	var/obj/item/reagent_containers/beaker = null
+	var/obj/item/reagent_containers/cup/beaker/beaker = null
 	///list of all currently held foods
 	var/list/held_foods = list()
 	///the first food object put into the feed machine this cycle
@@ -163,9 +163,12 @@
 		held_foods |= attacked_food.type //we add the type to this as we don't want a ton of random objects stored inside the feed
 		food_inserted++
 		qdel(I)
+		return
 
 	else //if not this
-		var/obj/item/reagent_containers/attacked_reagent_container = I
+		var/obj/item/reagent_containers/cup/beaker/attacked_reagent_container = I
+		if(!istype(attacked_reagent_container))
+			return
 		if(!user.transferItemToLoc(attacked_reagent_container, src))
 			return
 		if(beaker)
@@ -173,6 +176,7 @@
 			if(user && Adjacent(user) && !issiliconoradminghost(user))
 				user.put_in_hands(beaker)
 		beaker = attacked_reagent_container
+		return
 
 /obj/machinery/feed_machine/AltClick(mob/user)
 	. = ..()
@@ -190,8 +194,11 @@
 		produced_feed.held_foods |= listed_food.type
 		qdel(listed_food)
 	if(beaker && beaker.reagents)
-		produced_feed.reagents.reagent_list |= beaker.reagents.reagent_list
+		for(var/datum/reagent/reagent as anything in beaker.reagents.reagent_list)
+			produced_feed.reagents.add_reagent(reagent.type, reagent.volume)
+
 		beaker.forceMove(drop_location())
+		beaker.reagents.remove_all(1000)
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
 			user.put_in_hands(beaker)
 
