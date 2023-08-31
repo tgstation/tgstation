@@ -170,31 +170,31 @@
 /obj/item/surgery_tray/Entered(obj/item/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(istype(arrived, /obj/item/blood_filter))
-		if(blood_filter && blood_filter.toolspeed < arrived.toolspeed)
+		if(blood_filter && blood_filter.toolspeed <= arrived.toolspeed)
 			return
 		blood_filter = arrived
 	else if(istype(arrived, /obj/item/cautery))
-		if(cautery && cautery.toolspeed < arrived.toolspeed)
+		if(cautery && cautery.toolspeed <= arrived.toolspeed)
 			return
 		cautery = arrived
 	else if(istype(arrived, /obj/item/circular_saw))
-		if(circular_saw && circular_saw.toolspeed < arrived.toolspeed)
+		if(circular_saw && circular_saw.toolspeed <= arrived.toolspeed)
 			return
 		circular_saw = arrived
 	else if(istype(arrived, /obj/item/hemostat))
-		if(hemostat && hemostat.toolspeed < arrived.toolspeed)
+		if(hemostat && hemostat.toolspeed <= arrived.toolspeed)
 			return
 		hemostat = arrived
 	else if(istype(arrived, /obj/item/surgicaldrill))
-		if(surgical_drill && surgical_drill.toolspeed < arrived.toolspeed)
+		if(surgical_drill && surgical_drill.toolspeed <= arrived.toolspeed)
 			return
 		surgical_drill = arrived
 	else if(istype(arrived, /obj/item/retractor))
-		if(retractor && retractor.toolspeed < arrived.toolspeed)
+		if(retractor && retractor.toolspeed <= arrived.toolspeed)
 			return
 		retractor = arrived
 	else if(istype(arrived, /obj/item/scalpel))
-		if(scalpel && scalpel.toolspeed < arrived.toolspeed)
+		if(scalpel && scalpel.toolspeed <= arrived.toolspeed)
 			return
 		scalpel = arrived
 	else if(istype(arrived, /obj/item/bonesetter))
