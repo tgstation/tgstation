@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "rcd can build wallmounts on reinforced walls"
-  - qol: "rcd can build directional windows without requiring/building a grill"

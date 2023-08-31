@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "sheets are merged in a better way when ejected from machines & material related stuff"

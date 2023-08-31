@@ -117,7 +117,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(affected_mob.getStaminaLoss()))
 		if(10 to 40)
@@ -126,17 +126,17 @@
 			ooo_youaregettingsleepy = 2.5
 		if(61 to 200) //you really can only go to 120
 			ooo_youaregettingsleepy = 2
-	affected_mob.adjustStaminaLoss(ooo_youaregettingsleepy * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(ooo_youaregettingsleepy * REM * seconds_per_tick)
 	..()
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 	if(affected_mob.getStaminaLoss() >= 80)
 		affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getStaminaLoss() >= 100)
 		to_chat(affected_mob,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
-		affected_mob.adjustStaminaLoss(-100, TRUE, required_biotype = affected_biotype)
+		affected_mob.adjustStaminaLoss(-100, updating_stamina = TRUE) // Don't add the biotype parameter here as it results in infinite sleep and chat spam.
 		affected_mob.Sleeping(10 SECONDS)
 	..()
 	. = TRUE
