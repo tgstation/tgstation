@@ -614,7 +614,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	AddElement(/datum/element/rust)
-
+	ADD_TRAIT(src, TRAIT_RUSTY, HERETIC)
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
 		playsound(src, SFX_BODYFALL, 50, TRUE)
