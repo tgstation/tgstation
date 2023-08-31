@@ -1,4 +1,0 @@
-author: "iwishforducks"
-delete-after: True
-changes:
-  - bugfix: "Railings no longer give more metal than they take"

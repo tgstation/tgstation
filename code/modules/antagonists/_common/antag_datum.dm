@@ -260,8 +260,13 @@ GLOBAL_LIST_EMPTY(antagonists)
  */
 /datum/antagonist/proc/is_banned(mob/player)
 	if(!player)
+		stack_trace("Called is_banned without a mob. This shouldn't happen.")
 		return FALSE
-	. = (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
+
+	if(!player.ckey)
+		return FALSE
+
+	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
 
 /**
  * Proc that replaces a player who cannot play a specific antagonist due to being banned via a poll, and alerts the player of their being on the banlist.
