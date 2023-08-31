@@ -1,0 +1,58 @@
+/**
+ * Base type for a crusher trophy. Does nothing except lie to you about causing errors.
+ */
+/obj/item/crusher_trophy
+	name = "tail spike"
+	desc = "A strange spike with no usage."
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
+	icon_state = "tail_spike"
+	///Generic bonus to X var; if the trophy has a bonus effect, this is how much that effect is
+	var/bonus_value = 10
+	///Trophies that conflict with this trophy; either upgrades or something that messes up the interactions
+	var/denied_type = /obj/item/crusher_trophy
+
+/obj/item/crusher_trophy/examine(mob/living/user)
+	. = ..()
+	. += span_notice("Causes [effect_desc()] when attached to a kinetic crusher.")
+
+/obj/item/crusher_trophy/attackby(obj/item/attack_item, mob/living/user)
+	if(istype(attack_item, /obj/item/kinetic_crusher))
+		add_to(attack_item, user)
+	return ..()
+
+///Returns a string describing the special effect to add into the trophy/crusher's description
+/obj/item/crusher_trophy/proc/effect_desc()
+	return "errors"
+
+///Applies the trophy to the crusher, as well as applying any special properties
+/obj/item/crusher_trophy/proc/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
+	for(var/obj/item/crusher_trophy/trophy as anything in crusher.trophies)
+		if(istype(trophy, denied_type) || istype(src, trophy.denied_type))
+			to_chat(user, span_warning("You can't seem to attach [src] to [crusher]. Maybe remove a few trophies?"))
+			return FALSE
+	if(!user.transferItemToLoc(src, crusher))
+		return
+	crusher.trophies += src
+	crusher.balloon_alert(user, "trophy attached")
+	return TRUE
+
+///Removes the trophy from the crusher, as well as removing any special properties granted by that trophy
+/obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+	forceMove(get_turf(crusher))
+	return TRUE
+
+///Special effect to execute upon hitting an enemy in melee with the crusher
+/obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user)
+	return
+
+///Special effect to execute upon firing the destabilizer projectile
+/obj/item/crusher_trophy/proc/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+	return
+
+///Special effect to execute upon applying a destabilizer mark on an enemy
+/obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark)
+	return
+
+///Special effect to execute upon detonating a destabilizer mark attached to an enemy
+/obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user)
+	return
