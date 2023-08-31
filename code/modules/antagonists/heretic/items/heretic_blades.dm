@@ -123,6 +123,6 @@
 		What grand gates does it open?"
 	icon_state = "key_blade"
 	inhand_icon_state = "key_blade"
-	after_use_message = "The Locksmith hears your call..."
+	after_use_message = "The Mother of Ants hears your call..."
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1.3

@@ -31,7 +31,7 @@
 	desc = "Opens up the Path of Knock to you. \
 		Allows you to transmute a knife and a crowbar a Key Blade. \
 		You can only create two at a time, and they function as fast crowbars."
-	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
+	gain_text = "The Knock permits no seal and no isolation. It thrusts us gleefully out of the safety of ignorance."
 	next_knowledge = list(/datum/heretic_knowledge/knock_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -87,8 +87,7 @@
 		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
 		You can use it in-hand to change its form to a card you fused. \
 		Does not preserve the card used in the ritual."
-	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
-		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
+	gain_text = "Every door in the Mansus requires its sacrifice before it will open."
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
@@ -103,8 +102,7 @@
 	name = "Rite Of Passage"
 	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create Consecrated Lintel. \
 		It can materialize a barricade at range, that only you and people resistant to magic can pass. 3 uses."
-	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
-		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
+	gain_text = "This is the skull of a door through which power has passed."
 	required_atoms = list(
 		/obj/item/toy/crayon/white = 1,
 		/obj/item/stack/sheet/mineral/wood = 1,
@@ -131,14 +129,37 @@
 
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"
-	desc = "Grants you Cleave, an area-of-effect targeted spell \
-		that causes heavy bleeding and blood loss to anyone afflicted."
+	desc = "Grants you Burglar's Finesse, a single-target spell \
+		that puts a random item from the victims storage into your hand."
 	gain_text = "At first I didn't understand these instruments of war, but the Priest \
 		told me to use them regardless. Soon, he said, I would know them well."
 	next_knowledge = list(
-		/datum/heretic_knowledge/summon/stalker,
-		/datum/heretic_knowledge/spell/void_pull,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
+		/datum/heretic_knowledge/blade_upgrade/flesh/knock,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
+	cost = 2
+	route = PATH_KNOCK
+
+/datum/heretic_knowledge/spell/apetra_vulnera
+	name = "Apetra Vulnera"
+	desc = "Grants you Apetra Vulnera, a spell \
+		that causes heavy bleeding on all bodyparts of the victim that have more than 15 brute."
+	gain_text = "To open certain Ways, one must first open oneself."
+	next_knowledge = list()
+	spell_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
 	cost = 1
 	route = PATH_KNOCK
+
+/datum/heretic_knowledge/blade_upgrade/flesh/knock //basically a chance-based weeping avulsion version of the former
+	name = "Opening Blade"
+	desc = "Your blade has a chance to cause a weeping avulsion on attack."
+	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
+		I finally began to understand. And then, blood rained from the heavens."
+	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
+	route = PATH_KNOCK
+	wound_type = /datum/wound/slash/critical
+
+/datum/heretic_knowledge/blade_upgrade/flesh/knock/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	if(prob(40))
+		. = ..()
