@@ -12896,6 +12896,16 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"dPX" = (
+/obj/structure/sign/warning/docking/directional/east,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "dQd" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance"
@@ -42032,6 +42042,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal)
+"ndo" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "ndz" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -52252,13 +52271,6 @@
 /mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/service)
-"qhB" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron_smooth,
-/area/station/maintenance/port/lesser)
 "qhL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -70388,6 +70400,15 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/bar)
+"vUk" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "vUr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -74468,6 +74489,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/rec)
+"xeg" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "xei" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -77269,13 +77294,13 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "xXd" = (
-/obj/machinery/door/airlock/multi_tile/glass{
-	name = "Laundry"
-	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Laundry Room"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "xXf" = (
@@ -158703,7 +158728,7 @@ thA
 thA
 iLh
 eqx
-qhB
+dHk
 pJU
 wqU
 iLh
@@ -217832,7 +217857,7 @@ bln
 bln
 bln
 lSu
-fBN
+gnZ
 aBR
 aBR
 aBR
@@ -220659,7 +220684,7 @@ bln
 lSu
 bln
 bln
-fBN
+gnZ
 bln
 bln
 aBR
@@ -224257,7 +224282,7 @@ bln
 bln
 bln
 bln
-sEB
+bln
 bln
 bln
 bln
@@ -224510,7 +224535,7 @@ tKI
 bln
 bln
 bln
-sEB
+bln
 bln
 bln
 bln
@@ -224764,18 +224789,18 @@ tKI
 jez
 dBJ
 tKI
+lSu
+bln
+bln
+gnZ
 bln
 bln
 bln
-fBN
+gnZ
 bln
 bln
 bln
-vsI
-bln
-bln
-bln
-bln
+gnZ
 bln
 bln
 bln
@@ -225021,16 +225046,16 @@ tKI
 xDw
 dBJ
 tKI
-bln
-bln
-bln
-sEB
-bln
+lSu
 bln
 bln
 bln
 bln
+lSu
 bln
+bln
+lSu
+lSu
 bln
 bln
 bln
@@ -225280,12 +225305,12 @@ dpZ
 tKI
 htd
 bln
-bln
-bln
-bln
-bln
-bln
-sEB
+lSu
+lSu
+lSu
+lSu
+lSu
+lSu
 bln
 bln
 bln
@@ -225536,15 +225561,15 @@ tKI
 dBJ
 teN
 bln
+lSu
+lSu
+lSu
+lSu
+lSu
 bln
 bln
-vsI
-bln
-bln
-bln
-fBN
-bln
-bln
+lSu
+lSu
 bln
 bln
 bln
@@ -225793,17 +225818,17 @@ tKI
 dBJ
 teN
 bln
+lSu
+lSu
 bln
 bln
+lSu
+lSu
+lSu
+lSu
+lSu
 bln
-bln
-bln
-bln
-sEB
-bln
-bln
-bln
-bln
+lSu
 bln
 bln
 bln
@@ -226051,14 +226076,14 @@ dBJ
 teN
 bln
 bln
-bln
-bln
-bln
-bln
-bln
-bln
-bln
-bln
+lSu
+lSu
+lSu
+lSu
+lSu
+lSu
+lSu
+lSu
 bln
 bln
 bln
@@ -226306,16 +226331,16 @@ gak
 tKI
 oKu
 tKI
-htd
+nMj
+bln
+lSu
+lSu
 bln
 bln
-vsI
 bln
+lSu
 bln
-bln
-fBN
-bln
-bln
+lSu
 bln
 bln
 bln
@@ -226566,11 +226591,11 @@ tKI
 bln
 bln
 bln
-sEB
+lSu
 bln
-bln
+lSu
 bfP
-sEB
+lSu
 bln
 bln
 bln
@@ -226820,8 +226845,8 @@ tKI
 tKI
 jss
 tKI
-bln
-bln
+vUk
+ndo
 maT
 wSM
 oMd
@@ -226829,9 +226854,9 @@ maT
 oMd
 bNo
 maT
+dsg
 bln
-bln
-bln
+lSu
 bln
 bln
 bln
@@ -227086,8 +227111,8 @@ jIE
 bde
 ksf
 maT
-bln
-bln
+npb
+xeg
 bln
 bln
 bln
@@ -227343,10 +227368,10 @@ kXr
 hFU
 bNo
 maT
-bln
-bln
-bln
-eqn
+mZf
+ajx
+ajx
+dPX
 bln
 bln
 bln
