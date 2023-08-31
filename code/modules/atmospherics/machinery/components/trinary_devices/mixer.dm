@@ -73,10 +73,6 @@
 	if(!air1 || !air2)
 		return
 
-	if(air1.temperature <= 0 && air2.temperature <= 0)
-		//No air, no mix
-		return
-
 	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
