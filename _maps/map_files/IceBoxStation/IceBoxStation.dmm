@@ -1562,15 +1562,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"azp" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 6
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "azw" = (
 /turf/closed/wall,
 /area/station/medical/pharmacy)
@@ -1596,15 +1587,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/engine_equipment,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"azJ" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "azN" = (
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen{
@@ -20737,6 +20719,13 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva)
+"gsK" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "gsN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -23249,6 +23238,15 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
+"hjU" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "hjV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -24109,6 +24107,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "hyj" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/station/maintenance/disposal)
 "hyt" = (
@@ -25541,6 +25542,9 @@
 "hWW" = (
 /obj/structure/sign/warning/directional/south,
 /obj/structure/sign/warning/directional/south,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "hWX" = (
@@ -30732,7 +30736,9 @@
 "jEB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/light/small/dim/directional/north,
+/obj/machinery/light/small/dim/directional/north{
+	pixel_y = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "jFf" = (
@@ -35542,6 +35548,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "kXI" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "kXM" = (
@@ -36158,15 +36167,6 @@
 /obj/item/toy/figure/chaplain,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
-"liW" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 10
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "ljj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -41714,6 +41714,15 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"mZm" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "mZn" = (
 /obj/structure/sign/poster/official/soft_cap_pop_art/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -43284,7 +43293,10 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ntK" = (
 /obj/structure/flora/rock/icy/style_random,
@@ -43791,6 +43803,9 @@
 /area/station/maintenance/solars/starboard/aft)
 "nBE" = (
 /obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "nBG" = (
@@ -45665,6 +45680,9 @@
 /area/station/engineering/lobby)
 "ohx" = (
 /obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
@@ -50866,6 +50884,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
+"pJb" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "pJc" = (
 /obj/machinery/component_printer,
 /obj/machinery/camera/directional/west{
@@ -51229,6 +51256,7 @@
 "pOq" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/closet/firecloset,
+/obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "pOy" = (
@@ -51495,19 +51523,6 @@
 "pSz" = (
 /turf/open/openspace,
 /area/station/maintenance/starboard/upper)
-"pSC" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Arrivals"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/secondary/entry)
 "pSQ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51654,6 +51669,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
+"pVQ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/floor/plating/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "pVV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -63611,6 +63632,9 @@
 /area/station/maintenance/disposal)
 "tIc" = (
 /obj/structure/sign/warning/electric_shock/directional/south,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tIf" = (
@@ -69798,15 +69822,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
-"vJZ" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 6
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "vKk" = (
 /obj/machinery/vending/security,
 /turf/open/floor/iron/smooth_edge,
@@ -216542,7 +216557,7 @@ sEB
 sEB
 sjU
 bln
-bln
+lSu
 bln
 bln
 bln
@@ -216550,7 +216565,7 @@ bln
 bln
 lSu
 bln
-bln
+lSu
 bln
 eqn
 sEB
@@ -216803,9 +216818,9 @@ bln
 bln
 lSu
 bln
+lSu
 bln
-bln
-bln
+lSu
 bln
 bln
 bln
@@ -217316,9 +217331,9 @@ bln
 bln
 lSu
 lSu
-lSu
-lSu
-lSu
+jNZ
+kKU
+rzO
 lSu
 bln
 bln
@@ -217570,14 +217585,14 @@ cJt
 eWF
 fUR
 htd
-lSu
-liW
-lSu
-lSu
 jNZ
 kKU
+kKU
+sEB
+sEB
+sEB
+kKU
 rzO
-lSu
 lSu
 umb
 fUR
@@ -217826,15 +217841,15 @@ fUR
 xau
 fUR
 fUR
-lSu
-azJ
-sEB
-kKU
-kKU
+jNZ
+sNA
 sEB
 sEB
 sEB
-rzO
+sEB
+sEB
+sEB
+sEB
 ntx
 lSu
 fUR
@@ -218331,10 +218346,10 @@ bln
 lBD
 bln
 lSu
-sNA
-sEB
-sEB
-sEB
+hjU
+kKU
+kKU
+rzO
 uhx
 ykb
 hAG
@@ -218587,7 +218602,7 @@ bln
 bln
 bln
 bln
-sEB
+jNZ
 fUR
 fUR
 nFL
@@ -218844,7 +218859,7 @@ bln
 bln
 bln
 bln
-sEB
+miY
 fUR
 fNy
 xAk
@@ -219101,7 +219116,7 @@ bln
 mQb
 bln
 bln
-sEB
+miY
 mVE
 ryM
 uee
@@ -219134,7 +219149,7 @@ sfr
 fsv
 iQX
 uhx
-npb
+qVo
 bln
 bln
 lSu
@@ -219391,7 +219406,7 @@ fYW
 fsv
 asm
 uhx
-npb
+qVo
 bln
 lSu
 bln
@@ -219615,7 +219630,7 @@ bln
 bln
 uer
 bln
-sEB
+miY
 sEB
 ydI
 nvU
@@ -220126,9 +220141,9 @@ lBD
 bln
 bln
 bln
-sNA
-sEB
-sEB
+hjU
+kKU
+kKU
 sEB
 mVE
 azN
@@ -220655,14 +220670,14 @@ fUR
 fUR
 nMj
 chP
-mZf
+sEB
 sEB
 sEB
 prs
 sEB
 sEB
-rwt
-chP
+sEB
+pJb
 waT
 fUR
 fUR
@@ -220910,17 +220925,17 @@ nDJ
 wOy
 jBK
 fUR
-lSu
-vJZ
+rzO
 lSu
 mZf
 ooL
-ooL
+sEB
+sEB
+sEB
 ooL
 rwt
 lSu
 lSu
-azp
 fUR
 rJr
 bzg
@@ -221442,7 +221457,7 @@ lSF
 fUR
 fUR
 fUR
-pSC
+lSF
 tku
 fUR
 fUR
@@ -221923,7 +221938,7 @@ bln
 bln
 bln
 bln
-sEB
+jNZ
 mGf
 lJO
 rrn
@@ -223206,7 +223221,7 @@ bln
 bln
 bln
 bln
-sEB
+bln
 lJO
 cKB
 tcR
@@ -223257,7 +223272,7 @@ bln
 bln
 bln
 bln
-bln
+ozo
 bln
 bln
 aBR
@@ -224492,7 +224507,7 @@ bln
 bln
 uer
 bln
-sEB
+mZm
 hEI
 qhO
 anl
@@ -224749,7 +224764,7 @@ bln
 sxQ
 bln
 bln
-sEB
+miY
 hEI
 flD
 anl
@@ -225269,7 +225284,7 @@ qDI
 anl
 jPV
 lJO
-kXI
+pVQ
 bln
 efI
 efI
@@ -226287,7 +226302,7 @@ bln
 bln
 bln
 bln
-sEB
+miY
 hEI
 dYC
 hjI
@@ -226544,7 +226559,7 @@ bln
 bln
 bln
 bln
-sEB
+miY
 hEI
 kbd
 hjI
@@ -227369,8 +227384,8 @@ hFU
 bNo
 maT
 mZf
-ajx
-ajx
+kKU
+kKU
 dPX
 bln
 bln
@@ -227890,7 +227905,7 @@ bln
 bln
 bln
 bln
-nBE
+gsK
 ohx
 nBE
 bln
