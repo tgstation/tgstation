@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 
 /datum/pre_round_store/Destroy(force, ...)
 	. = ..()
+	owner.readied_store = null
 	owner = null
 	bought_item = null
 
