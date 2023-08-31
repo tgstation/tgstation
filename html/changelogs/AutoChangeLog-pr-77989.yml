@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "The Cursed Slot Machine should now actually give you more than one pull."
