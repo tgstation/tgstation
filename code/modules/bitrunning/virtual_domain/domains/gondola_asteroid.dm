@@ -23,7 +23,6 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/gondola_mutation_toxin/virtual_domain = 5,
-		/datum/reagent/consumable/cooking_oil = 3,
 	)
 
 /datum/reagent/gondola_mutation_toxin/virtual_domain
