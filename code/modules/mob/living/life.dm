@@ -116,7 +116,7 @@
 	for(var/bile in reagents.reagent_list)
 		var/datum/reagent/consumable/bits = bile
 		if(bits)
-			fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
+			fullness += bits.get_nutriment_factor() * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**

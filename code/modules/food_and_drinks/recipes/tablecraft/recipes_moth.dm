@@ -23,7 +23,7 @@
 		/obj/item/seeds/sunflower = 1,
 		/obj/item/seeds/pumpkin = 1,
 		/obj/item/seeds/poppy = 1,
-		/datum/reagent/consumable/quality_oil = 2
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2
 	)
 	result = /obj/item/food/toasted_seeds
 	category = CAT_MOTH
@@ -210,7 +210,7 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/cheese/mozzarella = 1,
 		/obj/item/food/grown/herbs = 1,
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 		/datum/reagent/consumable/vinegar = 2
 	)
 	result = /obj/item/food/caprese_salad
@@ -219,7 +219,7 @@
 /datum/crafting_recipe/food/fleet_salad
 	name = "Lörtonknusksolt (Fleet salad)"
 	reqs = list(
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 		/datum/reagent/consumable/vinegar = 2,
 		/obj/item/food/breadslice/plain = 1,
 		/obj/item/food/grilled_cheese = 1,
@@ -233,7 +233,7 @@
 /datum/crafting_recipe/food/cotton_salad
 	name = "Flöfrölenknusksolt (Cotton salad)"
 	reqs = list(
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 		/datum/reagent/consumable/vinegar = 2,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/mothic_salad = 1,
