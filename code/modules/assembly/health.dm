@@ -40,10 +40,10 @@
 /obj/item/assembly/health/AltClick(mob/living/user)
 	if(alarm_health == HEALTH_THRESHOLD_CRIT)
 		alarm_health = HEALTH_THRESHOLD_DEAD
-		to_chat(user, span_notice("You toggle [src] to \"detect death\" mode."))
+		balloon_alert(user, "will activate on death")
 	else
 		alarm_health = HEALTH_THRESHOLD_CRIT
-		to_chat(user, span_notice("You toggle [src] to \"detect critical state\" mode."))
+		balloon_alert(user, "will activate on critical state")
 
 /obj/item/assembly/health/process()
 	if(!scanning || !secured)
