@@ -57,3 +57,6 @@ endmap
 
 map runtimestation
 endmap
+
+map catwalkstation
+endmap
