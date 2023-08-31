@@ -18,11 +18,14 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "bT" = (
-/obj/structure/chair/stool/directional/south,
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "cK" = (
 /turf/open/floor/iron/smooth_half/airless,
@@ -151,6 +154,11 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
+"iW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
 "ji" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/turf_decal/siding/blue,
@@ -161,9 +169,10 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "jJ" = (
-/obj/structure/tank_dispenser/oxygen,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/computer/arcade/orion_trail{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "kB" = (
 /obj/machinery/door/airlock/external,
@@ -205,6 +214,10 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/light/small/dim/directional/east,
 /turf/template_noop,
+/area/shuttle/escape)
+"nm" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "ns" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -373,7 +386,8 @@
 "xy" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/light/small/dim/directional/east,
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "yc" = (
 /obj/structure/statue/gold/hos,
@@ -444,7 +458,8 @@
 /area/shuttle/escape)
 "AA" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "Bu" = (
 /obj/structure/chair/comfy/shuttle{
@@ -551,6 +566,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape)
+"JB" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
 "JW" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/computer/operating,
@@ -565,6 +587,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Kv" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "KP" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -597,10 +627,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "LC" = (
-/obj/machinery/computer/arcade/orion_trail{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "LN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -868,7 +901,7 @@ mF
 hp
 mO
 mF
-LN
+iW
 XQ
 Sl
 ns
@@ -1057,8 +1090,8 @@ hs
 nG
 ed
 Sl
-Sl
-Sl
+nm
+jJ
 Sl
 CA
 SC
@@ -1085,8 +1118,8 @@ hs
 he
 kZ
 Oj
-AA
-jJ
+Sl
+Sl
 Oj
 vO
 EO
@@ -1113,8 +1146,8 @@ Oj
 Oj
 Oj
 Oj
-vR
-vR
+JB
+Kv
 Oj
 Oj
 wf
