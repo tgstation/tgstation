@@ -171,11 +171,10 @@
 
 /obj/item/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
 	if(!armed)
-		to_chat(user, span_notice("You arm [src]."))
-	else
+		balloon_alert(user, "you arm [src]")
 		if(clumsy_check(user))
 			return
-		to_chat(user, span_notice("You disarm [src]."))
+		balloon_alert(user, "you disarm [src]")
 	armed = !armed
 	update_appearance()
 	playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
@@ -238,3 +237,4 @@
 /obj/item/assembly/mousetrap/armed
 	icon_state = "mousetraparmed"
 	armed = TRUE
+
