@@ -9,8 +9,9 @@ SUBSYSTEM_DEF(persistence)
 
 	///instantiated wall engraving components
 	var/list/wall_engravings = list()
-	///tattoo stories that we're saving.
+	///statue engravings for custom statues
 	var/list/statue_engravings = list()
+	///tattoo stories that we're saving.
 	var/list/prison_tattoos_to_save = list()
 	///tattoo stories that have been selected for this round.
 	var/list/prison_tattoos_to_use = list()
@@ -30,6 +31,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
 	load_wall_engravings()
+	load_statue_engravings()
 	load_prisoner_tattoos()
 	load_trophies()
 	load_recent_maps()
@@ -138,6 +140,54 @@ SUBSYSTEM_DEF(persistence)
 
 	//Save it to the file
 	var/json_file = file(ENGRAVING_SAVE_FILE)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(json))
+
+	return json
+
+///Loads all statue engravings, and places a select amount in maintenance and the prison.
+/datum/controller/subsystem/persistence/proc/load_statue_engravings()
+	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+
+	if(json["version"] < STATUE_ENGRAVING_PERSISTENCE_VERSION)
+		update_statue_engravings(json)
+
+	var/successfully_loaded_statue_engravings = 0
+
+	// /obj/effect/spawner/random/decoration/statue
+
+	var/list/engraving_entries = json["entries"]
+
+	if(engraving_entries.len)
+		for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
+			var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+			if(!islist(engraving))
+				stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
+				continue
+
+			var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
+
+			if(HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
+				continue
+
+			engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+			successfully_loaded_statue_engravings++
+			turfs_to_pick_from -= engraved_wall
+
+	log_world("Loaded [successfully_loaded_statue_engravings] engraved statues on map [SSmapping.config.map_name]")
+
+///This proc can update entries if the format has changed at some point.
+/datum/controller/subsystem/persistence/proc/update_statue_engravings(json)
+	for(var/engraving_entry in json["entries"])
+		continue //no versioning yet
+
+	//Save it to the file
+	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(json))
 
