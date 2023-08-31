@@ -14,6 +14,8 @@
 	deciding what specific wound will be applied. I'd like to have a few different types of wounds for at least some of the choices, but I'm just doing rough generals for now. Expect polishing
 */
 
+#define WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS 15
+
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
@@ -41,14 +43,14 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// The list of wounds it belongs in, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN
+	/// The type of attack that can generate this wound. E.g. WOUND_SLASH = A sword can cause us, or WOUND_BLUNT = a hammer can cause us/a sword attacking mangled flesh.
 	var/wound_type
-	/// The series of wounds this is in. Ex. WOUND_SERIES_BLEED_SLASH = avulsions, abrasions...
+	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
 	var/wound_series
 
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
-	/// The bodypart we're parented to
+	/// The bodypart we're parented to. Not guaranteed to be non-null, especially after/during removal or if we haven't been applied
 	var/obj/item/bodypart/limb = null
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
@@ -103,9 +105,8 @@
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)
-	remove_wound()
-	set_limb(null)
-	victim = null
+	if (limb)
+		remove_wound()
 	return ..()
 
 // Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
@@ -126,8 +127,6 @@
  * * wound_source: The source of the wound, such as a weapon.
  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown")
-	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
-	// in case we ever directly add wounds
 
 	if (!can_be_applied_to(L, old_wound))
 		qdel(src)
@@ -181,6 +180,9 @@
 /datum/wound/proc/can_be_applied_to(obj/item/bodypart/L, datum/wound/old_wound)
 	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 
+	// We assume we aren't being randomly applied - we have no reason to believe we are
+	// And, besides, if we were, you could just as easily check our pregen data rather than run this proc
+	// Generally speaking this proc is called in apply_wound, which is called when the caller is already confidant in its ability to be applied
 	return pregen_data.can_be_applied_to(L, wound_type, old_wound)
 
 /// Returns the zones we can be applied to.
@@ -227,8 +229,8 @@
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
 	if(limb && !ignore_limb)
-		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds(replaced)
+		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
+		// if you want to keep the ref, do it externally, theres no reason for us to remember it
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)
@@ -241,16 +243,15 @@
 /**
  * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
  *
- * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
- *
  * Arguments:
  * * new_wound- The wound instance you want to replace this
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  */
 /datum/wound/proc/replace_wound(datum/wound/new_wound, smited = FALSE, attack_direction = attack_direction)
 	already_scarred = TRUE
+	var/obj/item/bodypart/cached_limb = limb // remove_wound() nulls limb so we have to track it locally
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
+	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source)
 	. = new_wound
 	qdel(src)
 
@@ -258,23 +259,27 @@
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	return
 
-
 /// Proc called to change the variable `limb` and react to the event.
-/datum/wound/proc/set_limb(obj/item/bodypart/new_value)
+/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
-	if(limb)
+	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
 		UnregisterSignal(limb, COMSIG_QDELETING)
+		LAZYREMOVE(limb.wounds, src)
+		limb.update_wounds(replaced)
+		if (disabling)
+			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
 	limb = new_value
-	RegisterSignal(new_value, COMSIG_QDELETING, PROC_REF(source_died))
-	if(. && disabling)
-		var/obj/item/bodypart/old_limb = .
-		old_limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
+	// POST-CHANGE
+
+	if (limb)
+		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
 	if(limb)
 		if(disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
-
 
 /// Proc called to change the variable `disabling` and react to the event.
 /datum/wound/proc/set_disabling(new_value)
@@ -495,9 +500,10 @@
 			return "Critical"
 
 
-/// Returns false if our limb is the head or chest, true otherwise.
-/datum/wound/proc/limb_unimportant()
-	return (!(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST))
+/// Returns TRUE if our limb is the head or chest, FALSE otherwise.
+/// Essential in the sense of "we cannot live without it".
+/datum/wound/proc/limb_essential()
+	return (limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
 
 /// Getter proc for our scar_keyword, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)
@@ -512,3 +518,11 @@
 /datum/wound/proc/get_limb_examine_description()
 	return
 
+/// Gets the flat percentage chance increment of a dismember occuring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
+/datum/wound/proc/get_dismember_chance_bonus(existing_chance)
+	SHOULD_BE_PURE(TRUE)
+
+	if (wound_type == WOUND_BLUNT && severity >= WOUND_SEVERITY_CRITICAL)
+		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
+
+#undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS

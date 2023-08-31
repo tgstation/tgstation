@@ -187,9 +187,9 @@
 
 /// Reads layer configurations to take out some useful overall information
 /datum/greyscale_config/proc/ReadMetadata()
-	var/icon/source = icon(icon_file)
-	height = source.Height()
-	width = source.Width()
+	var/list/icon_dimensions = get_icon_dimensions(icon_file)
+	height = icon_dimensions["width"]
+	width = icon_dimensions["height"]
 
 	var/list/datum/greyscale_layer/all_layers = list()
 	for(var/state in icon_states)

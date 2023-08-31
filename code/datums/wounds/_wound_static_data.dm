@@ -1,3 +1,7 @@
+// This datum is merely a singleton instance that allows for custom "can be applied" behaviors without instantiating a wound instance.
+// For example: You can make a pregen_data subtype for your wound that overrides can_be_applied_to to only apply to specifically slimeperson limbs.
+// Without this, youre stuck with very static initial variables.
+
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
 
 /proc/generate_wound_static_data()
@@ -9,6 +13,12 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 		if (initial(path.abstract))
 			continue
 
+		if (!isnull(data[initial(path.wound_path_to_generate)]))
+			stack_trace("pre-existing pregen data for [initial(path.wound_path_to_generate)] when [path] was being considered: [data[initial(path.wound_path_to_generate)]]. \
+						this is definitely a bug, and is probably because one of the two pregen data have the wrong wound typepath defined. [path] will not be instantiated")
+
+			continue
+
 		var/datum/wound_pregen_data/pregen_data = new path
 		data[pregen_data.wound_path_to_generate] = pregen_data
 
@@ -16,10 +26,14 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 /// A singleton datum that holds pre-gen and static data about a wound. Each wound datum should have a corresponding wound_pregen_data.
 /datum/wound_pregen_data
+	/// The typepath of the wound we will be handling and storing data of. NECESSARY IF THIS IS A NON-ABSTRACT TYPE!
 	var/datum/wound/wound_path_to_generate
 
 	/// Will this be instantiated?
 	var/abstract = FALSE
+
+	/// If true, our wound can be selected in ordinary wound rolling. If this is set to false, our wound can only be directly instantiated by use of specific typepath.
+	var/can_be_randomly_generated = TRUE
 
 	/// A list of biostates a limb must have to receive our wound, in wounds.dm.
 	var/required_limb_biostate
@@ -48,19 +62,23 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 /**
  * Args:
  * * obj/item/bodypart/limb: The limb we are considering.
- * * wound_type: The wound type of the wound acquisition attempt. Ex. WOUND_SLASH
- * * datum/wound/old_wound: If we would replace a wound, this would be said wound.
+ * * wound_type: The type of the "wound acquisition attempt". Example: A slashing attack cannot proc a blunt wound, so wound_type = WOUND_SLASH would
+ * fail if we expect WOUND_BLUNT. Defaults to the wound type we expect.
+ * * datum/wound/old_wound: If we would replace a wound, this would be said wound. Nullable.
+ * * random_roll = FALSE: If this is in the context of a random wound generation, and this wound wasn't specifically checked.
  *
  * Returns:
  * FALSE if the limb cannot be wounded, if wound_type is not ours, if we have a higher severity wound already in our series,
  * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type = initial(wound_path_to_generate.wound_type), datum/wound/old_wound)
-	SHOULD_CALL_PARENT(TRUE)
+/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type = initial(wound_path_to_generate.wound_type), datum/wound/old_wound, random_roll = FALSE)
 	SHOULD_BE_PURE(TRUE)
 
 	if (!istype(limb) || !limb.owner)
+		return FALSE
+
+	if (random_roll && !can_be_randomly_generated)
 		return FALSE
 
 	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (limb.owner.status_flags & GODMODE))

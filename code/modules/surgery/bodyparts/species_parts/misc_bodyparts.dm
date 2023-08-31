@@ -68,7 +68,7 @@
 
 ///JELLY
 /obj/item/bodypart/head/jelly
-	biological_state = (BIO_STANDARD)
+	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
@@ -76,90 +76,90 @@
 	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/jelly
-	biological_state = (BIO_STANDARD)
+	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/arm/left/jelly
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/arm/right/jelly
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/leg/left/jelly
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/leg/right/jelly
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 ///SLIME
 /obj/item/bodypart/head/slime
-	biological_state = (BIO_STANDARD)
+	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
 	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/slime
-	biological_state = (BIO_STANDARD)
+	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = TRUE
 
 /obj/item/bodypart/arm/left/slime
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_SLIMEPERSON
 
 /obj/item/bodypart/arm/right/slime
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_SLIMEPERSON
 
 /obj/item/bodypart/leg/left/slime
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_SLIMEPERSON
 
 /obj/item/bodypart/leg/right/slime
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_SLIMEPERSON
 
 ///LUMINESCENT
 /obj/item/bodypart/head/luminescent
-	biological_state = (BIO_STANDARD)
+	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
 	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/luminescent
-	biological_state = (BIO_STANDARD)
+	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
 
 /obj/item/bodypart/arm/left/luminescent
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_LUMINESCENT
 
 /obj/item/bodypart/arm/right/luminescent
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_LUMINESCENT
 
 /obj/item/bodypart/leg/left/luminescent
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_LUMINESCENT
 
 /obj/item/bodypart/leg/right/luminescent
-	biological_state = (BIO_STANDARD|BIO_JOINTED)
+	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
 	limb_id = SPECIES_LUMINESCENT
 
 ///ZOMBIE

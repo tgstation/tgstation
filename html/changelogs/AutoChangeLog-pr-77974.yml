@@ -1,0 +1,5 @@
+author: "Seven"
+delete-after: True
+changes:
+  - bugfix: "Fixes not being able to break out of graves"
+  - qol: "Graves are no longer dense (you can walk over them now)"

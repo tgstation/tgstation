@@ -428,6 +428,8 @@
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
+	biological_state = (BIO_METAL|BIO_JOINTED)
+
 /obj/item/bodypart/arm/right/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -438,6 +440,8 @@
 	max_damage = PROSTHESIS_MAX_HP
 
 	wound_resistance = 0
+
+	biological_state = (BIO_METAL|BIO_JOINTED)
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -454,6 +458,8 @@
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
+	biological_state = (BIO_METAL|BIO_JOINTED)
+
 /obj/item/bodypart/leg/right/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -464,6 +470,8 @@
 	max_damage = PROSTHESIS_MAX_HP
 
 	wound_resistance = 0
+
+	biological_state = (BIO_METAL|BIO_JOINTED)
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 

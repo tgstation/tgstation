@@ -34,6 +34,8 @@
 	if(!no_bleeding && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
 
+	return ..()
+
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat == DEAD || (wounding_dmg < 5) || no_bleeding || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
 		return
@@ -105,7 +107,9 @@
 
 /datum/wound/pierce/bleed/on_xadone(power)
 	. = ..()
-	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+
+	if (limb) // parent can cause us to be removed, so its reasonable to check if we're still applied
+		adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
 /datum/wound/pierce/bleed/on_synthflesh(power)
 	. = ..()

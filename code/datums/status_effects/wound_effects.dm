@@ -279,6 +279,8 @@
 		return linked_wound.interaction_efficiency_penalty
 
 	return 1
+
+// slash
 /datum/status_effect/wound/electrical_damage/pierce/moderate
 	id = "electric_pierce_moderate"
 

@@ -59,6 +59,8 @@
 		set_highest_scar(new_scar)
 		new_scar.generate(limb, src, add_to_scars=FALSE)
 
+	return ..()
+
 /datum/wound/slash/flesh/proc/set_highest_scar(datum/scar/new_scar)
 	if(highest_scar)
 		UnregisterSignal(highest_scar, COMSIG_QDELETING)
@@ -96,8 +98,13 @@
 	return "<B>[msg.Join()]</B>"
 
 /datum/wound/slash/flesh/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	if (!victim) // if we are dismembered, we can still take damage, its fine to check here
+		return
+
 	if(victim.stat != DEAD && wound_bonus != CANT_WOUND && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		adjust_blood_flow(WOUND_SLASH_DAMAGE_FLOW_COEFF * wounding_dmg)
+
+	return ..()
 
 /datum/wound/slash/flesh/drag_bleed_amount()
 	// say we have 3 severe cuts with 3 blood flow each, pretty reasonable
@@ -218,7 +225,9 @@
 
 /datum/wound/slash/flesh/on_xadone(power)
 	. = ..()
-	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+
+	if (limb) // parent can cause us to be removed, so its reasonable to check if we're still applied
+		adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
 /datum/wound/slash/flesh/on_synthflesh(power)
 	. = ..()
@@ -356,9 +365,7 @@
 	desc = "Patient's skin is completely torn open, along with significant loss of tissue. Extreme blood loss will lead to quick death without intervention."
 	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
 	examine_desc = "is carved down to the bone, spraying blood wildly"
-	examine_desc = "is carved down to the bone"
 	occur_text = "is torn open, spraying blood wildly"
-	occur_text = "is torn open"
 	sound_effect = 'sound/effects/wounds/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 4
@@ -384,6 +391,7 @@
 
 /datum/wound_pregen_data/flesh_slash/cuts
 	abstract = FALSE
+	can_be_randomly_generated = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/moderate/many_cuts
 
@@ -399,5 +407,6 @@
 
 /datum/wound_pregen_data/flesh_slash/cleave
 	abstract = FALSE
+	can_be_randomly_generated = FALSE
 
-	wound_path_to_generate = /datum/wound/slash/flesh/critical
+	wound_path_to_generate = /datum/wound/slash/flesh/critical/cleave

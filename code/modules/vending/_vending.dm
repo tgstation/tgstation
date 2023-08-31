@@ -957,8 +957,6 @@
 				var/type_wound
 				if (squish_part.biological_state & BIO_BONE)
 					type_wound = pick(list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/moderate))
-				else if (squish_part.biological_state & BIO_METAL)
-					type_wound = pick(list(/datum/wound/blunt/robotic/critical, /datum/wound/blunt/robotic/severe, /datum/wound/blunt/robotic/moderate))
 				else
 					squish_part.receive_damage(brute=30)
 				if (type_wound)

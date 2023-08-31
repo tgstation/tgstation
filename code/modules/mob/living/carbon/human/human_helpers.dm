@@ -169,7 +169,7 @@
 	if(LAZYLEN(scar_data) != SCAR_SAVE_LENGTH)
 		return // invalid, should delete
 	var/version = text2num(scar_data[SCAR_SAVE_VERS])
-	if(!version || version < SCAR_CURRENT_VERSION) // get rid of old scars
+	if(!version || version != SCAR_CURRENT_VERSION) // get rid of scars using a incompatable version
 		return
 	if(specified_char_index && (mind?.original_character_slot_index != specified_char_index))
 		return
