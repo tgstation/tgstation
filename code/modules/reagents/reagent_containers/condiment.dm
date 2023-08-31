@@ -273,18 +273,18 @@
 	list_reagents = list(/datum/reagent/consumable/vinegar = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/condiment/cooking_oil
+/obj/item/reagent_containers/condiment/vegetable_oil
 	name = "cooking oil"
 	desc = "For all your deep-frying needs."
 	icon_state = "cooking_oil"
-	list_reagents = list(/datum/reagent/consumable/cooking_oil = 50)
+	list_reagents = list(/datum/reagent/consumable/nutriment/fat/oil = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/condiment/quality_oil
+/obj/item/reagent_containers/condiment/olive_oil
 	name = "quality oil"
 	desc = "For the fancy chef inside everyone."
 	icon_state = "oliveoil"
-	list_reagents = list(/datum/reagent/consumable/quality_oil = 50)
+	list_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 50)
 	fill_icon_thresholds = null
 
 /obj/item/reagent_containers/condiment/yoghurt
@@ -418,7 +418,7 @@
 		/datum/reagent/consumable/frostoil = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in its passage"),
 		/datum/reagent/consumable/salt = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"),
 		/datum/reagent/consumable/blackpepper = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"),
-		/datum/reagent/consumable/cornoil = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"),
+		/datum/reagent/consumable/nutriment/fat/oil = list("condi_cornoil", "Vegetable Oil", "A delicious oil used in cooking."),
 		/datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"),
 		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
 		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),

@@ -4,7 +4,7 @@
 /datum/reagent/consumable/nutriment/soup
 	name = "Soup"
 	chemical_flags = NONE
-	nutriment_factor = 12 * REAGENTS_METABOLISM // Slightly less to that of nutriment as soups will come with nutriments in tow
+	nutriment_factor = 12 // Slightly less to that of nutriment as soups will come with nutriments in tow
 	burning_temperature = 520
 	default_container = /obj/item/reagent_containers/cup/bowl
 	glass_price = FOOD_PRICE_CHEAP
@@ -730,7 +730,7 @@
 /datum/reagent/consumable/nutriment/soup/clown_tears
 	name = "Clown's Tears"
 	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	ph = 9.2
 	data = list("a bad joke" = 1, "mournful honking" = 1)
 	color = "#EEF442"

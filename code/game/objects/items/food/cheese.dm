@@ -7,8 +7,9 @@
 	name = "the concept of cheese"
 	desc = "This probably shouldn't exist."
 	tastes = list("cheese" = 1)
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment/fat = 3)
 	foodtypes = DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_1
 	/// used to determine how much health rats/regal rats recover when they eat it.
 	var/rat_heal = 0
 
@@ -27,24 +28,26 @@
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/fat = 2,
 		/datum/reagent/consumable/nutriment/protein = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/cheese/wheel
 	name = "cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/fat = 10,
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	) //Hard cheeses contain about 25% protein
 	w_class = WEIGHT_CLASS_NORMAL
 	rat_heal = 35
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/cheese/wheel/Initialize(mapload)
 	. = ..()
@@ -70,7 +73,7 @@
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
 	icon_state = "royalcheese"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/fat = 15,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 		/datum/reagent/gold = 20,
 		/datum/reagent/toxin/mutagen = 5,
@@ -78,6 +81,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //Curd cheese, a general term which I will now proceed to stretch as thin as the toppings on a supermarket sandwich:
 //I'll use it as a substitute for ricotta, cottage cheese and quark, as well as any other non-aged, soft grainy cheese
@@ -93,6 +97,7 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cheese/curd_cheese/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/cheese/cheese_curds, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
@@ -107,6 +112,7 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cheese/cheese_curds/Initialize(mapload)
 	. = ..()
@@ -120,6 +126,7 @@
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cheese/firm_cheese/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/firm_cheese_slice, 3, 3 SECONDS, screentip_verb = "Slice")
@@ -133,6 +140,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	rat_heal = 10
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cheese/firm_cheese_slice/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
@@ -145,3 +153,4 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
+	crafting_complexity = FOOD_COMPLEXITY_2

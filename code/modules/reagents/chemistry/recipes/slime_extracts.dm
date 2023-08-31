@@ -383,8 +383,8 @@
 		explosion(holder.my_atom, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
 
 
-/datum/chemical_reaction/slime/slimecornoil
-	results = list(/datum/reagent/consumable/cornoil = 10)
+/datum/chemical_reaction/slime/slimeoil
+	results = list(/datum/reagent/consumable/nutriment/fat/oil = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/oil
 
