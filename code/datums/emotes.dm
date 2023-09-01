@@ -208,7 +208,7 @@
 	else if(isipc(user) && message_ipc)
 		. = message_ipc
 	// MonkeStation Edit End
-	
+
 	else if(isanimal_or_basicmob(user) && message_animal_or_basic)
 		. = message_animal_or_basic
 
