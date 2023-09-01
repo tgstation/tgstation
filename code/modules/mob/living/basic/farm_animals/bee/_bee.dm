@@ -259,7 +259,7 @@
 	if(isnull(chemical))
 		return
 	if(!(chemical.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
-		to_chat(user, span_warning("[queen] backs away from the syringe, fearful of the non-synthesizable contents!"))
+		to_chat(user, span_warning("[queen] does not react to the contents of the syringe. It appears that the contents are not able to be synthesized naturally!"))
 		return
 	if(chemical.type == queen.beegent?.type)
 		to_chat(user, span_warning("[queen] already has this chemical!"))
