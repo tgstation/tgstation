@@ -25173,6 +25173,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/computer/security/mining{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "gQO" = (
@@ -49912,6 +49915,9 @@
 	assistance_requestable = 1;
 	department = "Captain's Desk";
 	name = "Captain's Requests Console"
+	},
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
