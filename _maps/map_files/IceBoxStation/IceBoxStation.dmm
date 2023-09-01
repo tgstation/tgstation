@@ -5769,12 +5769,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
-"bKc" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "bKm" = (
 /obj/machinery/vending/assist,
 /obj/structure/sign/poster/random/directional/west,
@@ -224085,7 +224079,7 @@ keT
 sHO
 hjI
 lJO
-bKc
+eUf
 lJO
 nKW
 dak
