@@ -14994,6 +14994,15 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
+"eyj" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/station/hallway/secondary/entry)
 "eyk" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/south,
@@ -31101,9 +31110,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/iron/white/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "jJe" = (
 /obj/machinery/conveyor{
@@ -37926,12 +37936,14 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Arrivals Hallway South"
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
 /obj/machinery/newscaster/directional/west,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
 /area/station/hallway/secondary/entry)
 "lGY" = (
 /obj/structure/chair/stool/directional/south,
@@ -49289,6 +49301,12 @@
 /obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
+"pgE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "pgG" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/orange,
@@ -53085,9 +53103,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/iron/white/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "qpu" = (
 /obj/machinery/button/door/directional/west{
@@ -54955,6 +54974,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "qSb" = (
@@ -63715,6 +63735,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
+"tEc" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "tEd" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -67684,11 +67711,11 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "uUu" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
@@ -222049,11 +222076,11 @@ aui
 qTj
 btW
 jJd
-syL
+eyj
 lGL
 bXx
 oMq
-fBQ
+tEc
 uUu
 sEg
 iVi
@@ -222573,7 +222600,7 @@ nwT
 nwT
 nwT
 tKI
-eVp
+pgE
 tKI
 iWb
 lBD
