@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	name = "Expharmacist Unrest"
 
 	is_heavy_threat = TRUE
-	ship_template_id = "interdyne"
+	ship_template_id = "ex_interdyne"
 	ship_name_pool = "interdyne_names"
 
 	threat_title = "Funding for Research"
