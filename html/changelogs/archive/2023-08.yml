@@ -413,3 +413,9 @@
 2023-08-30:
   Gboster-0:
   - bugfix: interaction components finally work
+2023-08-31:
+  Gboster-0:
+  - rscadd: Added PTL lasers to all maps
+  - rscadd: Added SMES units to all maps
+  - qol: Deltastations engine no longer loses power 1 nanosecond into the shift
+  - bugfix: fixed north star's engine being hot-wired round-start
