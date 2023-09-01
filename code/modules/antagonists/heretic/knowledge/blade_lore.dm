@@ -410,15 +410,15 @@
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
 	user.add_stun_absorption(
 		source = name,
-		message = "%EFFECT_OWNER throws off the stun!",
-		self_message = "You throw off the stun!",
-		examine_message = "%EFFECT_OWNER_THEYRE standing stalwartly.",
+		message = span_warning("%EFFECT_OWNER throws off the stun!"),
+		self_message = span_warning("You throw off the stun!"),
+		examine_message = span_hypnophrase("%EFFECT_OWNER_THEYRE standing stalwartly."),
 		// flashbangs are like 5-10 seoncds,
+		// a banana peel is ~5 seconds, depending on botany
 		// body throws and tackles are less than 5 seconds,
 		// stun baton / stamcrit detracts no time,
-		// and worst case: tasers are 10 seconds.
-		// So 30 seconds of stun immunity seems good.
-		max_seconds_of_stuns_blocked = 30 SECONDS,
+		// and worst case: beepsky / tasers are 10 seconds.
+		max_seconds_of_stuns_blocked = 45 SECONDS,
 		delete_after_passing_max = FALSE,
 		recharge_time = 2 MINUTES,
 	)

@@ -131,6 +131,7 @@
 
 	return COMPONENT_NO_STUN
 
+/// Simply checks if the owner of the effect is in a valid state to absorb stuns.
 /datum/status_effect/stun_absorption/proc/can_absorb_stun()
 	if(owner.stat != CONSCIOUS)
 		return FALSE
@@ -183,8 +184,8 @@
 			if(seconds_of_stuns_absorbed >= max_seconds_of_stuns_blocked)
 				qdel(src)
 
-			else if(recharge_time > 0 SECONDS)
-				addtimer(CALLBACK(src, PROC_REF(recharge_absorption), amount), recharge_time)
+		else if(recharge_time > 0 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(recharge_absorption), amount), recharge_time)
 
 	return TRUE
 
