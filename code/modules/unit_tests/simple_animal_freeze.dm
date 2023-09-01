@@ -237,6 +237,7 @@
 		/mob/living/simple_animal/pet/cat/space,
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/pet/gondola/gondolapod,
+		/mob/living/simple_animal/pet/gondola/virtual_domain,
 		/mob/living/simple_animal/revenant,
 		/mob/living/simple_animal/robot_customer,
 		/mob/living/simple_animal/shade,
