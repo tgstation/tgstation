@@ -44209,10 +44209,6 @@
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
 "nfT" = (
-/obj/modular_map_root/tramstation{
-	key = "servicecargolower_attachment_b";
-	name = "servicecargolower_attachment_b"
-	},
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/girder,
 /obj/item/stack/sheet/iron,
@@ -58481,9 +58477,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "rJm" = (
-/obj/modular_map_root/tramstation{
-	key = "barcargoupper_attachment_b"
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "rJC" = (
