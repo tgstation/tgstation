@@ -150,6 +150,12 @@
 	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/dough
 
+/datum/chemical_reaction/food/rice_dough
+	required_reagents = list(/datum/reagent/consumable/flour = 10,/datum/reagent/consumable/rice = 10,/datum/reagent/water = 10)
+	mix_message = "The ingredients form a rice dough."
+	reaction_flags = REACTION_INSTANT
+	resulting_food_path = /obj/item/food/rice_dough
+
 /datum/chemical_reaction/food/cakebatter
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
 	mix_message = "The ingredients form a cake batter."
@@ -164,7 +170,7 @@
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/flour = 5)
 
 /datum/chemical_reaction/food/uncooked_rice
-	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
+	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 15)
 	mix_message = "The rice absorbs the water."
 	reaction_flags = REACTION_INSTANT
 
