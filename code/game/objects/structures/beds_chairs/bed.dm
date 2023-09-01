@@ -158,7 +158,7 @@
 	desc = "A collapsed medical bed that can be carried around."
 	icon = 'icons/obj/medical/medical_bed.dmi'
 	icon_state = "emerg_folded"
-	inhand_icon_state = "medicalbed"
+	inhand_icon_state = "emergencybed"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
