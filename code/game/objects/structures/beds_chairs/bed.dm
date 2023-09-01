@@ -100,6 +100,23 @@
 	if(!isnull(foldable_type))
 		. += span_notice("You can fold it up with a Right-click.")
 
+/obj/structure/bed/medical/AltClick(mob/user)
+	. = ..()
+	anchored = !anchored
+	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
+
+/obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
+	set_density(TRUE)
+	icon_state = "[base_icon_state]_up"
+	// Push them up from the normal lying position
+	patient.pixel_y = patient.base_pixel_y
+
+/obj/structure/bed/medical/post_unbuckle_mob(mob/living/patient)
+	set_density(FALSE)
+	icon_state = "[base_icon_state]_down"
+	// Set them back down to the normal lying position
+	patient.pixel_y = patient.base_pixel_y + patient.body_position_pixel_y_offset
+
 /obj/structure/bed/medical/emergency/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/emergency_bed/silicon))
 		var/obj/item/emergency_bed/silicon/silicon_bed = item
@@ -135,23 +152,6 @@
 	user.put_in_hands(folding_bed)
 	qdel(src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/structure/bed/medical/emergency/AltClick(mob/user)
-	. = ..()
-	anchored = !anchored
-	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
-
-/obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
-	set_density(TRUE)
-	icon_state = "[base_icon_state]_up"
-	// Push them up from the normal lying position
-	patient.pixel_y = patient.base_pixel_y
-
-/obj/structure/bed/medical/post_unbuckle_mob(mob/living/patient)
-	set_density(FALSE)
-	icon_state = "[base_icon_state]_down"
-	// Set them back down to the normal lying position
-	patient.pixel_y = patient.base_pixel_y + patient.body_position_pixel_y_offset
 
 /obj/item/emergency_bed
 	name = "roller bed"
