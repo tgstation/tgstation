@@ -2,8 +2,6 @@
 #define BB_CHICKEN_SELF_ABILITY "BB_chicken_ability"
 #define BB_CHICKEN_TARGETED_ABILITY "BB_chicken_targeted_ability"
 #define BB_CHICKEN_SPECALITY_ABILITY "BB_chicken_special_ability"
-#define BB_CHICKEN_CURRENT_LEADER "BB_chicken_leader"
-#define BB_CHICKEN_ATTEMPT_TRACKING "BB_chicken_attempt_tracking"
 #define BB_CHICKEN_LAY_EGG "BB_chicken_lay_egg"
 #define BB_CHICKEN_NESTING_BOX "BB_chicken_lay_target"
 #define BB_CHICKEN_FEED "BB_chicken_feed_ability"
