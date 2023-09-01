@@ -14,7 +14,8 @@
 	status_flags = 0
 	combat_mode = TRUE
 	var/throw_message = "bounces off of"
-	var/fromtendril = FALSE
+	/// Is this mob subtype from a spawner (e.g. necropolis tendril, demonic portal)? Can be used to affect what it drops (e.g. legions force-dropping ashen skeletons).
+	var/from_spawner = FALSE
 	// Pale purple, should be red enough to see stuff on lavaland
 	lighting_cutoff_red = 25
 	lighting_cutoff_green = 15
@@ -32,6 +33,19 @@
 	if(crusher_loot)
 		AddElement(/datum/element/crusher_loot, crusher_loot, crusher_drop_mod, del_on_death)
 	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	var/static/list/vulnerable_projectiles
+	if(!vulnerable_projectiles)
+		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)
+	AddElement(\
+		/datum/element/ranged_armour,\
+		minimum_projectile_force = 30,\
+		below_projectile_multiplier = 0.3,\
+		vulnerable_projectile_types = vulnerable_projectiles,\
+		minimum_thrown_force = 20,\
+		throw_blocked_message = throw_message,\
+	)
+
+	RegisterSignals(src, list(COMSIG_PROJECTILE_PREHIT, COMSIG_ATOM_PREHITBY), PROC_REF(Aggro))
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -43,21 +57,3 @@
 	if(stat == DEAD)
 		return
 	icon_state = icon_living
-
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/projectile/shot)//Reduces damage from most projectiles to curb off-screen kills
-	if(!stat)
-		Aggro()
-	if(shot.damage < 30 && shot.damage_type != BRUTE)
-		shot.damage = (shot.damage / 3)
-		visible_message(span_danger("[shot] has a reduced effect on [src]!"))
-	..()
-
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
-	if(isitem(AM))
-		var/obj/item/T = AM
-		if(!stat)
-			Aggro()
-		if(T.throwforce <= 20)
-			visible_message(span_notice("The [T.name] [throw_message] [src.name]!"))
-			return
-	..()

@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!hud_users_all_z_levels[new_viewer])
 		hud_users_all_z_levels[new_viewer] = 1
 
-		RegisterSignal(new_viewer, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud users and hud atoms use these signals
+		RegisterSignal(new_viewer, COMSIG_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud users and hud atoms use these signals
 		RegisterSignal(new_viewer, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_atom_or_user_z_level_changed), override = TRUE)
 
 		var/turf/their_turf = get_turf(new_viewer)
@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 		if(!hud_atoms_all_z_levels[former_viewer])//make sure we arent unregistering changes on a mob thats also a hud atom for this hud
 			UnregisterSignal(former_viewer, COMSIG_MOVABLE_Z_CHANGED)
-			UnregisterSignal(former_viewer, COMSIG_PARENT_QDELETING)
+			UnregisterSignal(former_viewer, COMSIG_QDELETING)
 
 		hud_users_all_z_levels -= former_viewer
 
@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 	// No matter where or who you are, you matter to me :)
 	RegisterSignal(new_hud_atom, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_atom_or_user_z_level_changed), override = TRUE)
-	RegisterSignal(new_hud_atom, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud atoms and hud users use these signals
+	RegisterSignal(new_hud_atom, COMSIG_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud atoms and hud users use these signals
 	hud_atoms_all_z_levels[new_hud_atom] = TRUE
 
 	var/turf/atom_turf = get_turf(new_hud_atom)
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(huds, list(
 	//make sure we arent unregistering a hud atom thats also a hud user mob
 	if(!hud_users_all_z_levels[hud_atom_to_remove])
 		UnregisterSignal(hud_atom_to_remove, COMSIG_MOVABLE_Z_CHANGED)
-		UnregisterSignal(hud_atom_to_remove, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(hud_atom_to_remove, COMSIG_QDELETING)
 
 	for(var/mob/mob_to_remove as anything in hud_users_all_z_levels)
 		remove_atom_from_single_hud(mob_to_remove, hud_atom_to_remove)

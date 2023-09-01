@@ -7,7 +7,7 @@
  * Grasp of Ash
  * Ashen Passage
  * > Sidepaths:
- *   Priest's Ritual
+ *   Scorching Shark
  *   Ashen Eyes
  *
  * Mark of Ash
@@ -15,14 +15,14 @@
  * Fire Blast
  * Mask of Madness
  * > Sidepaths:
- *   Curse of Corrosion
+ *   Space Phase
  *   Curse of Paralysis
  *
  * Fiery Blade
  * Nightwatcher's Rebirth
  * > Sidepaths:
  *   Ashen Ritual
- *   Rusted Ritual
+ *   Eldritch Coin
  *
  * Ashlord's Rite
  */
@@ -75,7 +75,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/ash_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
-		/datum/heretic_knowledge/essence,
+		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/medallion,
 	)
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
@@ -130,7 +130,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/curse/corrosion,
+		/datum/heretic_knowledge/spell/space_phase,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
@@ -168,7 +168,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/summon/rusty,
+		/datum/heretic_knowledge/eldritch_coin,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
@@ -188,12 +188,13 @@
 	route = PATH_ASH
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
-		TRAIT_RESISTHEAT,
+		TRAIT_BOMBIMMUNE,
 		TRAIT_NOBREATH,
+		TRAIT_NOFIRE,
 		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
 	)
 
 /datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -222,6 +223,9 @@
 		existing_beam_spell.max_beam_bounces *= 2 // Double beams
 		existing_beam_spell.beam_duration *= 0.66 // Faster beams
 		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
+
+	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
+	fiery_rebirth?.cooldown_time *= 0.16
 
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
 	if(length(traits_to_apply))

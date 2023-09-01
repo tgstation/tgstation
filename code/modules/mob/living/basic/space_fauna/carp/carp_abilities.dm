@@ -37,12 +37,14 @@
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "rift"
 	desc = "Open a rift through the carp stream, allowing passage to somewhere close by."
-	cooldown_time = 1 MINUTES
-	melee_cooldown_time = 2 SECONDS
+	cooldown_time = 15 SECONDS
+	melee_cooldown_time = 0 SECONDS // Handled by rift
 	/// How far away can you place a rift?
-	var/max_range = 6
+	var/max_range = 3
 
 /datum/action/cooldown/mob_cooldown/lesser_carp_rift/Activate(atom/target_atom)
+	if (get_dist(get_turf(owner), target_atom) > max_range)
+		target_atom = get_ranged_target_turf_direct(owner, target_atom, range = max_range)
 	if (!make_rift(target_atom))
 		return FALSE
 	StartCooldown()
@@ -56,10 +58,6 @@
 	var/turf/owner_turf = get_turf(owner)
 	var/turf/target_turf = get_turf(target_atom)
 	if (!target_turf)
-		return FALSE
-
-	if (get_dist(owner_turf, target_turf) > max_range)
-		owner.balloon_alert(owner, "too far!")
 		return FALSE
 
 	if (!target_turf)
@@ -107,6 +105,8 @@
 /obj/effect/temp_visual/lesser_carp_rift/entrance
 	/// Where you get teleported to
 	var/list/exit_locs
+	/// Click CD to apply after teleporting
+	var/disorient_time = CLICK_CD_MELEE
 
 /obj/effect/temp_visual/lesser_carp_rift/entrance/Initialize(mapload)
 	. = ..()
@@ -128,6 +128,10 @@
 		return
 	if (isobserver(entered_atom))
 		return
+
+	if (isliving(entered_atom))
+		var/mob/living/teleported_mob = entered_atom
+		teleported_mob.changeNext_move(disorient_time)
 
 	var/turf/destination = pick(exit_locs)
 	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)

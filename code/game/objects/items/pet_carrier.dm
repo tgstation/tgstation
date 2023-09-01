@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
-	custom_materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -32,17 +32,11 @@
 	return ..()
 
 /obj/item/pet_carrier/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(isliving(gone) && (gone in occupants))
-		var/mob/living/L = gone
+		var/mob/living/living_gone = gone
 		occupants -= gone
-		occupant_weight -= L.mob_size
-
-/obj/item/pet_carrier/handle_atom_del(atom/A)
-	if(A in occupants && isliving(A))
-		var/mob/living/L = A
-		occupants -= L
-		occupant_weight -= L.mob_size
-	..()
+		occupant_weight -= living_gone.mob_size
 
 /obj/item/pet_carrier/examine(mob/user)
 	. = ..()

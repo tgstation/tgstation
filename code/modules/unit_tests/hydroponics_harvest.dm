@@ -28,11 +28,18 @@
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	hydroponics_tray.forceMove(run_loc_floor_bottom_left)
-	human.forceMove(locate((run_loc_floor_bottom_left.x + 1), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
+	var/nearby_loc = locate((run_loc_floor_bottom_left.x + 1), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z)
+	human.forceMove(nearby_loc)
+
+	var/seeds_loc = locate((run_loc_floor_bottom_left.x + 1), (run_loc_floor_bottom_left.y + 1), run_loc_floor_bottom_left.z)
+	planted_food_seed.forceMove(seeds_loc)
+	planted_not_food_seed.forceMove(seeds_loc)
+	planted_densified_seed.forceMove(seeds_loc)
 
 	// Apples should harvest 10 apples with 10u nutrients and 4u vitamins.
 	test_seed(hydroponics_tray, planted_food_seed, human)
-	// Sunflowers should harvest 10 sunflowers with 4u nutriment and 0u vitamins. It should also have 8u corn oil.
+	// Sunflowers should harvest 10 sunflowers with 4u nutriment and 0u vitamins. It should also have 8u oil.
 	test_seed(hydroponics_tray, planted_not_food_seed, human)
 	// Redbeets should harvest 5 beets (10 / 2) with 10u nutriments (5 x 2) and 10u vitamins (5 x 2) thanks to densified chemicals.
 	test_seed(hydroponics_tray, planted_densified_seed, human)

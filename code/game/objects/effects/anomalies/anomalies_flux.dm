@@ -56,3 +56,33 @@
 // We need to override the default arguments here to achieve the desired effect
 /obj/effect/anomaly/flux/minor/Initialize(mapload, new_lifespan, drops_core = FALSE, explosive = FLUX_NO_EXPLOSION)
 	return ..()
+
+///Bigger, meaner, immortal flux anomaly
+/obj/effect/anomaly/flux/big
+	immortal = TRUE
+	aSignal = null
+	shockdamage = 30
+
+	///range in whuich we zap
+	var/zap_range = 1
+	///strength of the zappy
+	var/zap_power = 2500
+	///the zappy flags
+	var/zap_flags = ZAP_GENERATES_POWER | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+
+/obj/effect/anomaly/flux/big/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+
+	transform *= 3
+
+/obj/effect/anomaly/flux/big/anomalyEffect()
+	. = ..()
+
+	tesla_zap(src, zap_range, zap_power, zap_flags)
+
+/obj/effect/anomaly/flux/big/Bumped(atom/movable/bumpee)
+	. = ..()
+
+	if(isliving(bumpee))
+		var/mob/living/living = bumpee
+		living.dust()

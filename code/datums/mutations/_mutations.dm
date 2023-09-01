@@ -1,5 +1,4 @@
 /datum/mutation
-
 	var/name
 
 /datum/mutation/human
@@ -121,7 +120,7 @@
 /datum/mutation/human/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_life(delta_time, times_fired)
+/datum/mutation/human/proc/on_life(seconds_per_tick, times_fired)
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)

@@ -58,8 +58,8 @@
 	//This could be a global count like sec and med record printouts. See GLOB.manifest.generalPrintCount AKA datacore.dm
 	var/frNum = ++forensicPrintCount
 
-	report_paper.name = text("FR-[] 'Forensic Record'", frNum)
-	var/report_text = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
+	report_paper.name = "FR-[frNum] 'Forensic Record'"
+	var/report_text = "<center><B>Forensic Record - (FR-[frNum])</B></center><HR><BR>"
 	report_text += jointext(log, "<BR>")
 	report_text += "<HR><B>Notes:</B><BR>"
 

@@ -1,7 +1,7 @@
 /obj/item/wallframe/bluespace_vendor_mount
 	name = "bluespace vendor wall mount"
 	desc = "Used for placing bluespace vendors."
-	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
 	pixel_shift = 30
@@ -13,7 +13,7 @@
 #define BS_MODE_OPEN 4
 
 /obj/machinery/bluespace_vendor
-	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_off"
 	base_icon_state = "bluespace_vendor"
 	name = "Bluespace Gas Vendor"
@@ -168,7 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/proc/register_machine(machine)
 	connected_machine = machine
 	LAZYADD(connected_machine.vendors, src)
-	RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, PROC_REF(unregister_machine))
+	RegisterSignal(connected_machine, COMSIG_QDELETING, PROC_REF(unregister_machine))
 	mode = BS_MODE_IDLE
 	update_appearance()
 
@@ -176,7 +176,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	SIGNAL_HANDLER
 	if(connected_machine)
-		UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(connected_machine, COMSIG_QDELETING)
 		LAZYREMOVE(connected_machine.vendors, src)
 		connected_machine = null
 	mode = BS_MODE_OFF

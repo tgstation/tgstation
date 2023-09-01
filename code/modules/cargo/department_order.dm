@@ -24,6 +24,9 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/Initialize(mapload, obj/item/circuitboard/board)
 	. = ..()
+	// All maps should have ONLY ONE of each order console roundstart
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
 	if(mapload) //check for mapping errors
 		for(var/delivery_area_type in department_delivery_areas)
 			if(GLOB.areas_by_type[delivery_area_type])
@@ -139,6 +142,12 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		if(GLOB.areas_by_type[delivery_area_type])
 			chosen_delivery_area = delivery_area_type
 			break
+			
+	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
+		return
+
 	department_order = new(pack, name, rank, ckey, "", null, chosen_delivery_area, null)
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)

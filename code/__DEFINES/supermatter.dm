@@ -71,6 +71,13 @@
 /// Purge the current forced delam and make it zero again (back to normal).
 /// Needs to be higher priority than current forced_delam though.
 #define SM_DELAM_STRATEGY_PURGE null
+///Totally disable the processing of the SM, used on the hugbox
+#define SM_PROCESS_DISABLED -1
+///Totally disable the processing of the SM, set when the timestop effect hit the SM
+#define SM_PROCESS_TIMESTOP 0
+///Enable the SM to process atmos and internal procs
+#define SM_PROCESS_ENABLED 1
+
 
 // These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
 // [/obj/machinery/power/supermatter_crystal/proc/get_status]

@@ -60,7 +60,9 @@ validPrefixes = [
     'refactor',
     'config',
     'admin',
-    'server'
+    'server',
+    'sound',
+    'image',
 ]
 
 def dictToTuples(inp):
@@ -127,6 +129,7 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
                 (change_type, _) = dictToTuples(change)[0]
                 if change_type not in validPrefixes:
                     print('  {0}: Invalid prefix {1}'.format(fileName, change_type), file=sys.stderr)
+                    sys.exit(1)
                 author_entries += [change]
                 new += 1
         currentEntries[today][cl['author']] = author_entries

@@ -383,7 +383,7 @@
 			new girder_type(loc)
 		for(var/material in custom_materials)
 			var/datum/material/material_datum = material
-			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / MINERAL_MATERIAL_AMOUNT, 1))
+			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
 	qdel(src)
 
 /obj/structure/falsewall/material/mat_update_desc(mat)

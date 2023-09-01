@@ -20,6 +20,13 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 	target_obj.alpha -= 25
 
+	if (isinternalorgan(target))
+		var/obj/item/organ/internal/organ = target
+		organ.organ_flags |= ORGAN_FROZEN
+	else if (isbodypart(target))
+		for(var/obj/item/organ/internal/organ in target_obj.contents)
+			organ.organ_flags |= ORGAN_FROZEN
+
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(target, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(shatter_on_throw))
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(shatter_on_throw))
@@ -32,7 +39,15 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	obj_source.name = replacetext(obj_source.name, "frozen ", "")
 	obj_source.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 	obj_source.alpha += 25
-	. = ..()
+
+	if (isinternalorgan(source))
+		var/obj/item/organ/internal/organ = source
+		organ.organ_flags &= ~ORGAN_FROZEN
+	else if (isbodypart(source))
+		for(var/obj/item/organ/internal/organ in obj_source.contents)
+			organ.organ_flags &= ~ORGAN_FROZEN
+
+	return ..()
 
 ///signal handler for COMSIG_OBJ_UNFREEZE that forces us to detach from the target
 /datum/element/frozen/proc/on_unfreeze(datum/source)

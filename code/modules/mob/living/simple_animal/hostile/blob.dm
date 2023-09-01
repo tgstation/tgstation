@@ -18,10 +18,10 @@
 	retreat_distance = null //! retreat doesn't obey pass_flags, so won't work on blob mobs.
 	/// Blob camera that controls the blob
 	var/mob/camera/blob/overmind = null
-	/// The factory producing spores, blobbernauts
-	var/obj/structure/blob/special/factory = null
 	/// If this is related to anything else
 	var/independent = FALSE
+	/// The factory blob tile that generated this blob minion
+	var/obj/structure/blob/special/factory/factory
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
@@ -36,9 +36,11 @@
 	else
 		pass_flags &= ~PASSBLOB
 
-/mob/living/simple_animal/hostile/blob/Destroy()
+/mob/living/simple_animal/hostile/blob/death()
+	factory = null
 	if(overmind)
 		overmind.blob_mobs -= src
+	overmind = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/get_status_tab_items()

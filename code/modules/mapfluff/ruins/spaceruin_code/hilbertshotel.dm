@@ -4,6 +4,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
 	desc = "A sphere of what appears to be an intricate network of bluespace. Observing it in detail seems to give you a headache as you try to comprehend the infinite amount of infinitesimally distinct points on its surface."
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "hilbertshotel"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -451,6 +452,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/obj/item/hilbertshotel/parentSphere
 
 /obj/item/abstracthotelstorage/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/machinery/light))
+		var/obj/machinery/light/entered_light = arrived
+		entered_light.end_processing()
 	. = ..()
 	if(ismob(arrived))
 		var/mob/M = arrived
@@ -461,6 +465,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(ismob(gone))
 		var/mob/M = gone
 		M.notransform = FALSE
+	if(istype(gone, /obj/machinery/light))
+		var/obj/machinery/light/exited_light = gone
+		exited_light.begin_processing()
 
 //Space Ruin stuff
 /area/ruin/space/has_grav/powered/hilbertresearchfacility
@@ -497,22 +504,26 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			to_chat(user, "No vacated rooms.")
 		return .
 
-/obj/effect/landmark/lift_id/hilbert
+/obj/effect/landmark/lift_id/hilbert/research
 	specific_lift_id = HILBERT_TRAM
 
-/obj/effect/landmark/tram/hilbert/left
+/obj/effect/landmark/tram/nav/hilbert/research
+	name = HILBERT_TRAM
+	specific_lift_id = TRAM_NAV_BEACONS
+
+/obj/effect/landmark/tram/platform/hilbert/left
 	name = "Port"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_PORT
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
-/obj/effect/landmark/tram/hilbert/middle
+/obj/effect/landmark/tram/platform/hilbert/middle
 	name = "Central"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_CENTRAL
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
-/obj/effect/landmark/tram/hilbert/right
+/obj/effect/landmark/tram/platform/hilbert/right
 	name = "Starboard"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_STARBOARD

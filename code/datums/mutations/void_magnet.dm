@@ -57,7 +57,7 @@
 	return ..()
 
 /// Signal proc for [COMSIG_LIVING_LIFE]. Has a chance of casting itself randomly.
-/datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	if(!isliving(source) || IS_IN_STASIS(source) || source.stat == DEAD || source.notransform)
@@ -75,7 +75,7 @@
 
 	prob_of_curse *= curse_probability_modifier
 
-	if(!DT_PROB(prob_of_curse, delta_time))
+	if(!SPT_PROB(prob_of_curse, seconds_per_tick))
 		return
 
 	cast(source)

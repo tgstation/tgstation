@@ -13,12 +13,12 @@
 	RegisterSignal(atom_target, COMSIG_ATOM_SET_LIGHT_POWER, PROC_REF(block_light_power))
 	RegisterSignal(atom_target, COMSIG_ATOM_SET_LIGHT_RANGE, PROC_REF(block_light_range))
 	RegisterSignal(atom_target, COMSIG_ATOM_SET_LIGHT_ON, PROC_REF(block_light_on))
-	RegisterSignal(atom_target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(atom_target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	/// Because the lighting system does not like movable lights getting set_light() called.
 	switch(atom_target.light_system)
 		if(STATIC_LIGHT)
-			target.set_light(0, 0, null, FALSE)
+			target.set_light(0, 0, null, l_on = FALSE)
 		else
 			target.set_light_power(0)
 			target.set_light_range(0)
@@ -29,7 +29,7 @@
 		COMSIG_ATOM_SET_LIGHT_POWER,
 		COMSIG_ATOM_SET_LIGHT_RANGE,
 		COMSIG_ATOM_SET_LIGHT_ON,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 	))
 	return ..()
 

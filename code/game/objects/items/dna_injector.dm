@@ -574,3 +574,11 @@
 /obj/item/dnainjector/antiwebbing
 	name = "\improper DNA injector (Anti-Webbing)"
 	remove_mutations = list(/datum/mutation/human/webbing)
+
+/obj/item/dnainjector/clever
+	name = "\improper DNA injector (Clever)"
+	add_mutations = list(/datum/mutation/human/clever)
+
+/obj/item/dnainjector/anticlever
+	name = "\improper DNA injector (Anti-Clever)"
+	remove_mutations = list(/datum/mutation/human/clever)

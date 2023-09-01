@@ -1,6 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/structure/table,
+/obj/structure/closet,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/shoes/sneakers/green,
+/obj/item/clothing/shoes/sneakers/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "b" = (
@@ -13,6 +17,12 @@
 /area/template_noop)
 "c" = (
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"d" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "e" = (
@@ -48,9 +58,30 @@
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
+"m" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"o" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"p" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
 "q" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "r" = (
@@ -60,7 +91,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "s" = (
-/obj/structure/chair{
+/obj/structure/chair/sofa/bench/right{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
@@ -69,6 +100,13 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"v" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "w" = (
@@ -84,10 +122,30 @@
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
+"A" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"C" = (
+/obj/structure/closet,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/shoes/sneakers/red,
+/obj/item/clothing/shoes/sneakers/red,
+/turf/open/floor/holofloor,
+/area/template_noop)
 "F" = (
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"G" = (
+/obj/structure/table,
+/obj/item/storage/box/cups,
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "J" = (
@@ -103,6 +161,20 @@
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
+"P" = (
+/obj/machinery/door/window{
+	dir = 8;
+	name = "Basketball Court"
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"Q" = (
+/obj/machinery/door/window{
+	dir = 4;
+	name = "Basketball Court"
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
 "R" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
@@ -110,9 +182,10 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "T" = (
-/obj/structure/chair{
+/obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "U" = (
@@ -137,27 +210,27 @@
 /area/template_noop)
 
 (1,1,1) = {"
-a
-s
-s
-w
-s
+C
+A
 s
 w
+A
 s
+w
+A
 s
 a
 "}
 (2,1,1) = {"
 q
-s
-s
-w
-s
-s
-w
-s
-s
+m
+v
+Q
+m
+v
+Q
+m
+v
 q
 "}
 (3,1,1) = {"
@@ -221,26 +294,26 @@ V
 c
 "}
 (8,1,1) = {"
-q
+G
+o
 T
+P
+o
 T
-w
+P
+o
 T
-T
-w
-T
-T
-q
+G
 "}
 (9,1,1) = {"
-a
-T
-T
+C
+p
+d
 w
-T
-T
+p
+d
 w
-T
-T
+p
+d
 a
 "}

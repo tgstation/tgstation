@@ -60,17 +60,17 @@
 	if(. && summoner)
 		RegisterSignal(summoner, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 
-/mob/living/simple_animal/hostile/guardian/gaseous/Life(delta_time, times_fired)
+/mob/living/simple_animal/hostile/guardian/gaseous/Life(seconds_per_tick, times_fired)
 	. = ..()
 	if(summoner)
 		summoner.extinguish_mob()
 		summoner.set_fire_stacks(0, remove_wet_stacks = FALSE)
-		summoner.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), temp_stabilization_rate * delta_time))
+		summoner.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), temp_stabilization_rate * seconds_per_tick))
 	if(!expelled_gas)
 		return
 	var/datum/gas_mixture/mix_to_spawn = new()
 	mix_to_spawn.add_gas(expelled_gas)
-	mix_to_spawn.gases[expelled_gas][MOLES] = possible_gases[expelled_gas] * delta_time
+	mix_to_spawn.gases[expelled_gas][MOLES] = possible_gases[expelled_gas] * seconds_per_tick
 	mix_to_spawn.temperature = T20C
 	var/turf/open/our_turf = get_turf(src)
 	our_turf.assume_air(mix_to_spawn)

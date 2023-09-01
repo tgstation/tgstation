@@ -13,7 +13,7 @@
 
 	var/mutable_appearance/standard_background
 
-/atom/movable/screen/movable/pic_in_pic/Initialize(mapload)
+/atom/movable/screen/movable/pic_in_pic/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	make_backgrounds()
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(multiz_offset_increase))

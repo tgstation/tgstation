@@ -5,7 +5,7 @@
 /// If the projectile doesn't have a wound_bonus of CANT_WOUND, we add (this * the stage mult) to their wound_bonus and bare_wound_bonus upon triggering
 #define GUNPOINT_BASE_WOUND_BONUS 5
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
-#define GUNPOINT_MULT_STAGE_1 1
+#define GUNPOINT_MULT_STAGE_1 1.25
 /// As above, for stage 2
 #define GUNPOINT_MULT_STAGE_2 2
 /// As above, for stage 3
@@ -15,12 +15,16 @@
 /datum/component/gunpoint
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+	/// Who we're holding up
 	var/mob/living/target
+	/// The gun we're holding them up with
 	var/obj/item/gun/weapon
 
+	/// Which stage we're on
 	var/stage = 1
+	/// How much the damage and wound values will be multiplied by
 	var/damage_mult = GUNPOINT_MULT_STAGE_1
-
+	/// If TRUE, we're committed to firing the shot, for async purposes
 	var/point_of_no_return = FALSE
 
 // *extremely bad russian accent* no!
@@ -31,25 +35,32 @@
 	var/mob/living/shooter = parent
 	target = targ
 	weapon = wep
-	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), PROC_REF(trigger_reaction))
 
+	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), PROC_REF(trigger_reaction))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
-	shooter.visible_message(span_danger("[shooter] aims [weapon] point blank at [target]!"), \
-		span_danger("You aim [weapon] point blank at [target]!"), ignored_mobs = target)
-	to_chat(target, span_userdanger("[shooter] aims [weapon] point blank at you!"))
-	add_memory_in_range(target, 7, /datum/memory/held_at_gunpoint, protagonist = target, deuteragonist = shooter, antagonist = weapon)
+	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
+	var/distance_description = (distance <= 1 ? "point blank " : "")
+
+	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"),
+		span_danger("You aim [weapon] [distance_description]at [target]!"), ignored_mobs = target)
+	to_chat(target, span_userdanger("[shooter] aims [weapon] [distance_description]at you!"))
+
+	shooter.Immobilize(0.75 SECONDS / distance)
+	if(!HAS_TRAIT(target, TRAIT_NOFEAR_HOLDUPS))
+		target.Immobilize(0.75 SECONDS / distance)
+		target.emote("gaspshock", intentional = FALSE)
+		add_memory_in_range(target, 7, /datum/memory/held_at_gunpoint, protagonist = target, deuteragonist = shooter, antagonist = weapon)
 
 	shooter.apply_status_effect(/datum/status_effect/holdup, shooter)
 	target.apply_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
+	target.do_alert_animation()
+	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
+	target.add_mood_event("gunpoint", /datum/mood_event/gunpoint)
 
 	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
 		if(target.stat == CONSCIOUS && IS_NUKE_OP(shooter) && !IS_NUKE_OP(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
 			shooter.client.give_award(/datum/award/achievement/misc/rocket_holdup, shooter)
-
-	target.do_alert_animation()
-	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
-	target.add_mood_event("gunpoint", /datum/mood_event/gunpoint)
 
 	addtimer(CALLBACK(src, PROC_REF(update_stage), 2), GUNPOINT_DELAY_STAGE_2)
 

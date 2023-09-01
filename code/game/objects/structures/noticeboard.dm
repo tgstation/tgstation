@@ -3,7 +3,7 @@
 /obj/structure/noticeboard
 	name = "notice board"
 	desc = "A board for pinning important notices upon."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "nboard00"
 	density = FALSE
 	anchored = TRUE
@@ -117,11 +117,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 /obj/item/wallframe/noticeboard
 	name = "notice board"
 	desc = "Right now it's more of a clipboard. Attach to a wall to use."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "nboard00"
 	custom_materials = list(
-		/datum/material/wood = MINERAL_MATERIAL_AMOUNT,
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT,
 	)
+	resistance_flags = FLAMMABLE
 	result_path = /obj/structure/noticeboard
 	pixel_shift = 32
 

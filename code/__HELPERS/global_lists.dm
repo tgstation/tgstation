@@ -2,7 +2,7 @@
 /////Initial Building/////
 //////////////////////////
 
-/proc/make_datum_references_lists()
+/proc/init_sprite_accessories()
 	//hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, GLOB.hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list)
 	//facial hair
@@ -33,18 +33,23 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
 
-	//Species
+/// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
+/proc/init_species_list()
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		GLOB.species_list[S.id] = spath
 	sort_list(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	//Surgeries
+/// Inits GLOB.surgeries
+/proc/init_surgeries()
+	var/surgeries = list()
 	for(var/path in subtypesof(/datum/surgery))
-		GLOB.surgeries_list += new path()
-	sort_list(GLOB.surgeries_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		surgeries += new path()
+	sort_list(surgeries, GLOBAL_PROC_REF(cmp_typepaths_asc))
+	return surgeries
 
-	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+/// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+/proc/init_hair_gradients()
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
 		var/datum/sprite_accessory/gradient/gradient = new path()
 		if(gradient.gradient_category  & GRADIENT_APPLIES_TO_HAIR)
@@ -52,11 +57,14 @@
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
 			GLOB.facial_hair_gradients_list[gradient.name] = gradient
 
-	// Keybindings
+/// Legacy procs that really should be replaced with proper _INIT macros
+/proc/make_datum_reference_lists()
+	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
+	init_sprite_accessories()
+	init_species_list()
+	init_hair_gradients()
 	init_keybindings()
-
-	GLOB.emote_list = init_emote_list()
-
+	GLOB.emote_list = init_emote_list() // WHY DOES THIS NEED TO GO HERE? IT JUST INITS DATUMS
 	init_crafting_recipes()
 	init_crafting_recipes_atoms()
 
@@ -145,44 +153,39 @@
 /proc/init_crafting_recipes_atoms()
 	var/list/recipe_lists = list(
 		GLOB.crafting_recipes,
-		GLOB.cooking_recipes
+		GLOB.cooking_recipes,
 	)
 	var/list/atom_lists = list(
 		GLOB.crafting_recipes_atoms,
-		GLOB.cooking_recipes_atoms
+		GLOB.cooking_recipes_atoms,
 	)
 
-	for(var/recipe_list in recipe_lists)
+	for(var/list_index in 1 to length(recipe_lists))
+		var/list/recipe_list = recipe_lists[list_index]
+		var/list/atom_list = atom_lists[list_index]
 		for(var/datum/crafting_recipe/recipe as anything in recipe_list)
-			var/list_index = recipe_lists.Find(recipe_list)
 			// Result
-			if(!(recipe.result in atom_lists[list_index]))
-				atom_lists[list_index] += recipe.result
+			atom_list |= recipe.result
 			// Ingredients
 			for(var/atom/req_atom as anything in recipe.reqs)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Catalysts
 			for(var/atom/req_atom as anything in recipe.chem_catalysts)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Reaction data - required container
 			if(recipe.reaction)
 				var/required_container = initial(recipe.reaction.required_container)
-				if(required_container && !(required_container in atom_lists[list_index]))
-					atom_lists[list_index] += required_container
+				if(required_container)
+					atom_list |= required_container
 			// Tools
 			for(var/atom/req_atom as anything in recipe.tool_paths)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Machinery
 			for(var/atom/req_atom as anything in recipe.machinery)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 			// Structures
 			for(var/atom/req_atom as anything in recipe.structures)
-				if(!(req_atom in atom_lists[list_index]))
-					atom_lists[list_index] += req_atom
+				atom_list |= req_atom
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.

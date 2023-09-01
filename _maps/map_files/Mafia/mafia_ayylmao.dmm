@@ -28,6 +28,7 @@
 /area/centcom/mafia)
 "l" = (
 /obj/structure/closet/abductor,
+/obj/item/abductor/gizmo,
 /turf/open/floor/plating/abductor,
 /area/centcom/mafia)
 "m" = (
@@ -42,6 +43,7 @@
 /area/centcom/mafia)
 "o" = (
 /obj/structure/closet/abductor,
+/obj/item/abductor/gizmo,
 /turf/open/floor/plating/abductor2,
 /area/centcom/mafia)
 "p" = (

@@ -38,9 +38,11 @@ excluded_files = [
     "code/modules/tgs/**/*.dm",
 ]
 
-define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?")
+define_regex = re.compile(r"(\s+)?#define\s?([A-Z0-9_]+)\(?(.+)\)?")
 
 files_to_scan = []
+
+number_of_defines = 0
 
 if not on_github:
     print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
@@ -67,9 +69,18 @@ for applicable_file in files_to_scan:
     with open(applicable_file, encoding="utf8") as file:
         file_contents = file.read()
         for define in define_regex.finditer(file_contents):
-            define_name = define.group(1)
+            number_of_defines += 1
+            define_name = define.group(2)
             if not re.search("#undef\s" + define_name, file_contents):
                 located_error_tuples.append((define_name, applicable_file))
+
+if number_of_defines == 0:
+    print(red("No defines found! This is likely an error."))
+    sys.exit(1)
+
+if number_of_defines <= 1000:
+    print(red(f"Only found {number_of_defines} defines! Something has likely gone wrong as the number of local defines should not be this low."))
+    sys.exit(1)
 
 if len(located_error_tuples):
 
@@ -90,4 +101,4 @@ if len(located_error_tuples):
     sys.exit(1)
 
 else:
-    print(green("No unhandled local defines found."))
+    print(green(f"No unhandled local defines found (found {number_of_defines} defines)."))

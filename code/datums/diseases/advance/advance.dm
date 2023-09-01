@@ -33,42 +33,76 @@
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
 	var/oldres //To prevent setting new cures unless resistance changes.
 
-	// The order goes from easy to cure to hard to cure. Keep in mind that sentient diseases pick two cures from tier 6 and up, ensure they won't react away in bodies.
+	///Lists of cures and how hard we expect them to be to cure. Sentient diseases will pick two from 6+
 	var/static/list/advance_cures = list(
-									list( // level 1
-										/datum/reagent/copper, /datum/reagent/silver, /datum/reagent/iodine, /datum/reagent/iron, /datum/reagent/carbon
-									),
-									list( // level 2
-										/datum/reagent/potassium, /datum/reagent/consumable/ethanol, /datum/reagent/lithium, /datum/reagent/silicon, /datum/reagent/bromine
-									),
-									list( // level 3
-										/datum/reagent/consumable/salt, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/milk
-									),
-									list( //level 4
-										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/c2/multiver
-									),
-									list( //level 5
-										/datum/reagent/fuel/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
-									),
-									list( // level 6
-										/datum/reagent/phenol, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine, /datum/reagent/medicine/antihol
-									),
-									list( // level 7
-										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/higadrite
-									),
-									list( // level 8
-										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
-									),
-									list( // level 9
-										/datum/reagent/toxin/lipolicide, /datum/reagent/medicine/sal_acid
-									),
-									list( // level 10
-										/datum/reagent/medicine/haloperidol, /datum/reagent/drug/aranesp, /datum/reagent/medicine/diphenhydramine
-									),
-									list( //level 11
-										/datum/reagent/medicine/modafinil, /datum/reagent/toxin/anacea
-									)
-								)
+		list( // level 1
+			/datum/reagent/carbon,
+			/datum/reagent/copper,
+			/datum/reagent/iodine,
+			/datum/reagent/iron,
+			/datum/reagent/silver,
+		),
+		list( // level 2
+			/datum/reagent/consumable/ethanol,
+			/datum/reagent/acetone,
+			/datum/reagent/bromine,
+			/datum/reagent/lithium,
+			/datum/reagent/potassium,
+			/datum/reagent/silicon,
+		),
+		list( // level 3
+			/datum/reagent/consumable/milk,
+			/datum/reagent/consumable/orangejuice,
+			/datum/reagent/consumable/salt,
+			/datum/reagent/consumable/sugar,
+			/datum/reagent/consumable/tomatojuice,
+		),
+		list( //level 4
+			/datum/reagent/fuel/oil,
+			/datum/reagent/medicine/c2/multiver,
+			/datum/reagent/medicine/epinephrine,
+			/datum/reagent/medicine/haloperidol,
+			/datum/reagent/medicine/mine_salve,
+			/datum/reagent/medicine/salglu_solution,
+		),
+		list( //level 5
+			/datum/reagent/drug/space_drugs,
+			/datum/reagent/medicine/mannitol,
+			/datum/reagent/medicine/synaptizine,
+			/datum/reagent/cryptobiolin,
+		),
+		list( // level 6
+			/datum/reagent/medicine/antihol,
+			/datum/reagent/medicine/inacusiate,
+			/datum/reagent/medicine/oculine,
+			/datum/reagent/phenol,
+		),
+		list( // level 7
+			/datum/reagent/medicine/higadrite,
+			/datum/reagent/medicine/leporazine,
+			/datum/reagent/toxin/mindbreaker,
+			/datum/reagent/acetaldehyde,
+		),
+		list( // level 8
+			/datum/reagent/drug/happiness,
+			/datum/reagent/medicine/ephedrine,
+			/datum/reagent/pax,
+		),
+		list( // level 9
+			/datum/reagent/medicine/sal_acid,
+			/datum/reagent/toxin/chloralhydrate,
+			/datum/reagent/toxin/lipolicide,
+		),
+		list( // level 10
+			/datum/reagent/drug/aranesp,
+			/datum/reagent/medicine/diphenhydramine,
+			/datum/reagent/pentaerythritol,
+		),
+		list( //level 11
+			/datum/reagent/medicine/c2/tirimol,
+			/datum/reagent/medicine/modafinil,
+		),
+	)
 
 /*
 
@@ -105,7 +139,7 @@
 
 
 // Randomly pick a symptom to activate.
-/datum/disease/advance/stage_act(delta_time, times_fired)
+/datum/disease/advance/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -177,7 +211,7 @@
 	var/list/possible_symptoms = list()
 	for(var/symp in SSdisease.list_symptoms)
 		var/datum/symptom/S = new symp
-		if(S.naturally_occuring && S.level >= level_min && S.level <= level_max)
+		if(S.can_generate_randomly() && S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
 				possible_symptoms += S
 
@@ -501,14 +535,24 @@
 	return properties["transmittable"]
 
 /**
+ *  If the disease has an incubation time (such as event diseases) start the timer, let properties determine if there's no timer set.
+ */
+/datum/disease/advance/after_add()
+	. = ..()
+
+	if(isnull(incubation_time))
+		return
+
+	if(incubation_time < world.time)
+		make_visible()
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(make_visible)), incubation_time - world.time)
+
+
+/**
  *  Make virus visible to heath scanners
  */
 /datum/disease/advance/proc/make_visible()
 	visibility_flags &= ~HIDDEN_SCANNER
-	for(var/datum/disease/advance/virus in SSdisease.active_diseases)
-		if(!virus.id)
-			stack_trace("Advanced virus ID is empty or null!")
-			return
-
-		if(virus.id == id)
-			virus.visibility_flags &= ~HIDDEN_SCANNER
+	affected_mob.med_hud_set_status()

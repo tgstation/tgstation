@@ -8,7 +8,7 @@
 */
 /obj/item/sharpener
 	name = "whetstone"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
 	force = 5

@@ -56,6 +56,12 @@
 	category = "Defensive"
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/splattercasting)
 
+/datum/spellbook_entry/chuunibyou
+	name = "Chuuni Invocations"
+	desc = "Makes all your spells shout invocations, and the invocations become... stupid. You heal slightly after casting a spell."
+	spell_type =  /datum/action/cooldown/spell/chuuni_invocations
+	category = "Defensive"
+
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
 	desc = "Entangle the strings of space-time in an area around you, \

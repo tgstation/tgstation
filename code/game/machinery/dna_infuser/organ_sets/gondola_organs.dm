@@ -31,7 +31,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/internal/heart/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
-	AddElement(/datum/element/noticable_organ, "radiates an aura of serenity.")
+	AddElement(/datum/element/noticable_organ, "radiate%PRONOUN_S an aura of serenity.")
 
 /obj/item/organ/internal/heart/gondola/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
@@ -101,20 +101,22 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 		to_chat(liver_owner, span_warning("You feel like something would be happening to your arms right now... if you still had them."))
 	to_chat(liver_owner, span_notice("Hugging a target will pacify them, but you won't be able to carry much of anything anymore."))
 	pax_hugs.teach(liver_owner)
-	RegisterSignal(liver_owner, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(on_owner_picked_up_item))
+	RegisterSignal(liver_owner, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(liver_owner, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 
 /obj/item/organ/internal/liver/gondola/Remove(mob/living/carbon/liver_owner, special)
 	. = ..()
 	pax_hugs.remove(liver_owner)
-	UnregisterSignal(liver_owner, list(COMSIG_LIVING_PICKED_UP_ITEM, COMSIG_LIVING_TRY_PULL))
+	UnregisterSignal(liver_owner, list(COMSIG_HUMAN_EQUIPPING_ITEM, COMSIG_LIVING_TRY_PULL))
 
-/obj/item/organ/internal/liver/gondola/proc/on_owner_picked_up_item(mob/living/carbon/owner, obj/item/picked_up)
+/// signal sent when prompting if an item can be equipped
+/obj/item/organ/internal/liver/gondola/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
 	SIGNAL_HANDLER
-	if(picked_up.w_class > WEIGHT_CLASS_TINY)
-		owner.dropItemToGround(picked_up)
-		picked_up.balloon_alert(owner, "too weak to hold this!")
+	if(equip_target.w_class > WEIGHT_CLASS_TINY)
+		equip_target.balloon_alert(owner, "too weak to hold this!")
+		return COMPONENT_BLOCK_EQUIP
 
+/// signal sent when owner tries to pull an item
 /obj/item/organ/internal/liver/gondola/proc/on_owner_try_pull(mob/living/carbon/owner, atom/movable/target, force)
 	SIGNAL_HANDLER
 	if(isliving(target))

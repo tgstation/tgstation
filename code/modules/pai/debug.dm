@@ -28,7 +28,7 @@
 	card.set_personality(pai)
 	if(SSpai.candidates[key])
 		SSpai.candidates -= key
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /**
  * Creates a new pAI.

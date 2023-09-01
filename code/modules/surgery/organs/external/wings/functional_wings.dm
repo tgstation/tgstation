@@ -40,7 +40,7 @@
 	if(wings_open)
 		toggle_flight(organ_owner)
 
-/obj/item/organ/external/wings/functional/on_life(delta_time, times_fired)
+/obj/item/organ/external/wings/functional/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
 	handle_flight(owner)
@@ -174,6 +174,7 @@
 /obj/item/organ/external/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
+	organ_flags = ORGAN_ROBOTIC
 	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 
 ///skeletal wings, which relate to skeletal races.

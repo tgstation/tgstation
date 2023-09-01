@@ -1,7 +1,7 @@
 // Clickable stat() button.
 /obj/effect/statclick
 	name = "Initializing..."
-	blocks_emissive = NONE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	var/target
 
 INITIALIZE_IMMEDIATE(/obj/effect/statclick)
@@ -11,7 +11,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	name = text
 	src.target = target
 	if(isdatum(target)) //Harddel man bad
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(cleanup))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(cleanup))
 
 /obj/effect/statclick/Destroy()
 	target = null

@@ -22,8 +22,9 @@
 	var/end_message = "."
 	var/rendered = begin_message + obj_message + end_message
 	deadchat_broadcast(rendered, "<b>[L]</b>", follow_target = L, turf_target = get_turf(L), message_type=DEADCHAT_ANNOUNCEMENT)
-	if(prob(1) || check_holidays(APRIL_FOOLS))
-		L.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+	if(check_holidays(APRIL_FOOLS))
+		// Note: most of the time you're getting brainwashed you're unconscious
+		L.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
 
 /datum/antagonist/brainwashed
 	name = "\improper Brainwashed Victim"

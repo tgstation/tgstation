@@ -24,3 +24,11 @@
 
 /obj/item/ammo_casing/energy/disabler/hos
 	e_cost = 60
+
+/obj/item/ammo_casing/energy/disabler/smoothbore
+	projectile_type = /obj/projectile/beam/disabler/smoothbore
+	e_cost = 1000
+
+/obj/item/ammo_casing/energy/disabler/smoothbore/prime
+	projectile_type = /obj/projectile/beam/disabler/smoothbore/prime
+	e_cost = 500

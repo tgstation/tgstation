@@ -9,7 +9,7 @@
 /obj/narsie
 	name = "Nar'Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/cult/narsie.dmi'
+	icon = 'icons/obj/antags/cult/narsie.dmi'
 	icon_state = "narsie"
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
@@ -71,8 +71,7 @@
 
 	for (var/_cult_team in all_cults)
 		var/datum/team/cult/cult_team = _cult_team
-		deltimer(cult_team.blood_target_reset_timer)
-		cult_team.blood_target = src
+		cult_team.set_blood_target(src, duration = INFINITY)
 		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
 		if(summon_objective)
 			summon_objective.summoned = TRUE
@@ -106,6 +105,9 @@
 		if (summon_objective)
 			summon_objective.summoned = FALSE
 			summon_objective.killed = TRUE
+
+	if (GLOB.cult_narsie == src)
+		GLOB.cult_narsie = null
 
 	return ..()
 
@@ -261,7 +263,7 @@
 
 ///Helper to set the round to end asap. Current usage Cult round end code
 /proc/ending_helper()
-	SSticker.force_ending = TRUE
+	SSticker.force_ending = FORCE_END_ROUND
 
 /**
  * Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward

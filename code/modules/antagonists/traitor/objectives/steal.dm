@@ -51,7 +51,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	if(!place || !is_station_level(place.z))
 		objectives_by_path[typepath] -= object
 		return
-	RegisterSignal(object, COMSIG_PARENT_QDELETING, PROC_REF(remove_item))
+	RegisterSignal(object, COMSIG_QDELETING, PROC_REF(remove_item))
 
 /datum/objective_item_handler/proc/remove_item(atom/source)
 	SIGNAL_HANDLER
@@ -97,6 +97,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	possible_items = list(
 		/datum/objective_item/steal/traitor/cargo_budget,
 		/datum/objective_item/steal/traitor/clown_shoes,
+		/datum/objective_item/steal/traitor/lawyers_badge,
+		/datum/objective_item/steal/traitor/chef_moustache,
+		/datum/objective_item/steal/traitor/pka,
 	)
 
 /datum/traitor_objective/steal_item/somewhat_risky
@@ -185,7 +188,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 			bug.balloon_alert(user, "the scanner materializes in your hand")
 			bug.target_object_type = target_item.targetitem
 			AddComponent(/datum/component/traitor_objective_register, bug, \
-				fail_signals = list(COMSIG_PARENT_QDELETING), \
+				fail_signals = list(COMSIG_QDELETING), \
 				penalty = telecrystal_penalty)
 			RegisterSignal(bug, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, PROC_REF(on_bug_planted))
 			RegisterSignal(bug, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, PROC_REF(handle_special_case))
@@ -202,7 +205,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 				return
 			succeed_objective()
 
-/datum/traitor_objective/steal_item/process(delta_time)
+/datum/traitor_objective/steal_item/process(seconds_per_tick)
 	var/mob/owner = handler.owner?.current
 	if(objective_state != OBJECTIVE_STATE_ACTIVE || !bug.planted_on)
 		return PROCESS_KILL
@@ -211,7 +214,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		return PROCESS_KILL
 	if(get_dist(get_turf(owner), get_turf(bug)) > max_distance)
 		return
-	time_fulfilled += delta_time * (1 SECONDS)
+	time_fulfilled += seconds_per_tick * (1 SECONDS)
 	if(time_fulfilled >= hold_time_required * (1 MINUTES))
 		progression_reward += extra_progression
 		telecrystal_reward += extra_tc
@@ -250,7 +253,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "bug"
 
 	/// The object on which this bug can be planted on. Has to be a type.
@@ -290,7 +293,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	target.vis_contents += src
 	vis_flags |= VIS_INHERIT_PLANE
 	planted_on = target
-	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, PROC_REF(handle_planted_on_deletion))
+	RegisterSignal(planted_on, COMSIG_QDELETING, PROC_REF(handle_planted_on_deletion))
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
 
 /obj/item/traitor_bug/proc/handle_planted_on_deletion()
@@ -308,7 +311,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		vis_flags &= ~VIS_INHERIT_PLANE
 		planted_on.vis_contents -= src
 		anchored = FALSE
-		UnregisterSignal(planted_on, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(planted_on, COMSIG_QDELETING)
 		planted_on = null
 
 /obj/item/traitor_bug/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)

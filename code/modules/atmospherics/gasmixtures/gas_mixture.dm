@@ -21,9 +21,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature = 0 //kelvins
-	var/tmp/temperature_archived = 0
-	var/volume = CELL_VOLUME //liters
+	/// The temperature of the gas mix in kelvin. Should never be lower then TCMB
+	var/temperature = TCMB
+	/// Used, like all archived variables, to ensure turf sharing is consistent inside a tick, no matter
+	/// The order of operations
+	var/tmp/temperature_archived = TCMB
+	/// Volume in liters (duh)
+	var/volume = CELL_VOLUME
+	/// The last tick this gas mixture shared on. A counter that turfs use to manage activity
 	var/last_share = 0
 	/// Tells us what reactions have happened in our gasmix. Assoc list of reaction - moles reacted pair.
 	var/list/reaction_results
@@ -35,8 +40,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/New(volume)
 	gases = new
-	if (!isnull(volume))
+	if(!isnull(volume))
 		src.volume = volume
+	if(src.volume <= 0)
+		stack_trace("Created a gas mixture with zero volume!")
 	reaction_results = new
 
 //listmos procs
@@ -688,7 +695,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		return FALSE
 
 	output_air.merge(removed)
-	return TRUE
+	return removed
 
 /// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
 /datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1)

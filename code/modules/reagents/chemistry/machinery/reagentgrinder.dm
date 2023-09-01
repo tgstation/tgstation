@@ -1,15 +1,15 @@
-#define MILK_TO_BUTTER_COEFF 15
 
 /obj/machinery/reagentgrinder
 	name = "\improper All-In-One Grinder"
 	desc = "From BlenderTech. Will It Blend? Let's test it out!"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "juicer1"
 	base_icon_state = "juicer"
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
+	anchored_tabletop_offset = 8
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
@@ -67,8 +67,8 @@
 /obj/machinery/reagentgrinder/RefreshParts()
 	. = ..()
 	speed = 1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		speed = manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		speed = servo.tier
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
@@ -112,13 +112,13 @@
 /obj/machinery/reagentgrinder/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/reagentgrinder/handle_atom_del(atom/A)
+/obj/machinery/reagentgrinder/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-	if(holdingitems[A])
-		holdingitems -= A
+	if(holdingitems[gone])
+		holdingitems -= gone
 
 /obj/machinery/reagentgrinder/proc/drop_all_items()
 	for(var/i in holdingitems)
@@ -173,17 +173,26 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
+		if(!I.contents.len)
+			to_chat(user, span_notice("[I] is empty!"))
+			return TRUE
+
 		var/list/inserted = list()
 		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
-			if(!I.contents.len)
-				to_chat(user, span_notice("You empty [I] into [src]."))
-			else
-				to_chat(user, span_notice("You fill [src] to the brim."))
+			inserted = list()
+		if(I.atom_storage.remove_type(/obj/item/food/honeycomb, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+
+		if(!I.contents.len)
+			to_chat(user, span_notice("You empty [I] into [src]."))
+		else
+			to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
-	if(!I.grind_results && !I.juice_results)
+	if(!I.grind_results && !I.juice_typepath)
 		if(user.combat_mode)
 			return ..()
 		else
@@ -295,7 +304,7 @@
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	operating = FALSE
 
-/obj/machinery/reagentgrinder/proc/juice()
+/obj/machinery/reagentgrinder/proc/juice(mob/user)
 	power_change()
 	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
@@ -304,14 +313,13 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
-		if(I.juice_results)
-			juice_item(I)
+		if(I.juice_typepath)
+			juice_item(I, user)
 
-/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I) //Juicing results can be found in respective object definitions
-	if(I.on_juice(src) == -1)
+/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I, mob/user) //Juicing results can be found in respective object definitions
+	if(!I.juice(beaker, user))
 		to_chat(usr, span_danger("[src] shorts out as it tries to juice up [I], and transfers it back to storage."))
 		return
-	beaker.reagents.add_reagent_list(I.juice_results)
 	remove_object(I)
 
 /obj/machinery/reagentgrinder/proc/grind(mob/user)
@@ -328,12 +336,9 @@
 			grind_item(i, user)
 
 /obj/machinery/reagentgrinder/proc/grind_item(obj/item/I, mob/user) //Grind results can be found in respective object definitions
-	if(I.on_grind(src) == -1) //Call on_grind() to change amount as needed, and stop grinding the item if it returns -1
+	if(!I.grind(beaker, user))
 		to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
 		return
-	beaker.reagents.add_reagent_list(I.grind_results)
-	if(I.reagents)
-		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
 	remove_object(I)
 
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
@@ -348,18 +353,13 @@
 	if(beaker?.reagents.total_volume)
 		//Recipe to make Butter
 		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
+		var/purity = beaker.reagents.get_reagent_purity(/datum/reagent/consumable/milk)
 		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
-			new /obj/item/food/butter(drop_location())
+			new /obj/item/food/butter(drop_location(), starting_reagent_purity = purity)
 		//Recipe to make Mayonnaise
 		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
-			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
-			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
-			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
+			beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
 		//Recipe to make whipped cream
 		if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
-			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
-			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
-			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)
-
-#undef MILK_TO_BUTTER_COEFF
+			beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)

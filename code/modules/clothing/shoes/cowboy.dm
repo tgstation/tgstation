@@ -56,7 +56,7 @@
 	if(contents.len >= max_occupants)
 		to_chat(user, span_warning("[src] are full!"))
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || islarva(target))
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/basic/headslug) || islarva(target))
 		target.forceMove(src)
 		to_chat(user, span_notice("[target] slithers into [src]."))
 

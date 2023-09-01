@@ -1,6 +1,6 @@
 /datum/component/wearertargeting/sitcomlaughter
 	valid_slots = list(ITEM_SLOT_HANDS, ITEM_SLOT_BELT, ITEM_SLOT_ID, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET, ITEM_SLOT_SUITSTORE, ITEM_SLOT_DEX_STORAGE)
-	signals = list(COMSIG_MOB_CREAMED, COMSIG_ON_CARBON_SLIP, COMSIG_ON_VENDOR_CRUSH, COMSIG_MOB_CLUMSY_SHOOT_FOOT)
+	signals = list(COMSIG_MOB_CREAMED, COMSIG_ON_CARBON_SLIP, COMSIG_POST_TILT_AND_CRUSH, COMSIG_MOB_CLUMSY_SHOOT_FOOT)
 	proctype = PROC_REF(EngageInComedy)
 	mobtype = /mob/living
 	///Sounds used for when user has a sitcom action occur
@@ -22,6 +22,9 @@
 	if(laugh_delay)
 		src.laugh_delay = laugh_delay
 
+/datum/component/wearertargeting/sitcomlaughter/Destroy(force, silent)
+	post_comedy_callback = null
+	return ..()
 
 ///Play the laugh track if any of the signals related to comedy have been sent.
 /datum/component/wearertargeting/sitcomlaughter/proc/EngageInComedy(datum/source)

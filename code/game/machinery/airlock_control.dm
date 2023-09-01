@@ -47,7 +47,7 @@
 		INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
 
 /obj/machinery/airlock_sensor
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "airlock_sensor_off"
 	base_icon_state = "airlock_sensor"
 	name = "airlock sensor"

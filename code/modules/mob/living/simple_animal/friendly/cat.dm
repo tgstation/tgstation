@@ -125,7 +125,7 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/runtime/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/runtime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -201,17 +201,17 @@
 		icon_state = "[icon_living]"
 
 
-/mob/living/simple_animal/pet/cat/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!stat && !buckled && !client)
-		if(DT_PROB(0.5, delta_time))
+		if(SPT_PROB(0.5, seconds_per_tick))
 			manual_emote(pick("stretches out for a belly rub.", "wags [p_their()] tail.", "lies down."))
 			set_resting(TRUE)
-		else if(DT_PROB(0.5, delta_time))
+		else if(SPT_PROB(0.5, seconds_per_tick))
 			manual_emote(pick("sits down.", "crouches on [p_their()] hind legs.", "looks alert."))
 			set_resting(TRUE)
 			icon_state = "[icon_living]_sit"
 			cut_overlays() // No collar support in sitting state
-		else if(DT_PROB(0.5, delta_time))
+		else if(SPT_PROB(0.5, seconds_per_tick))
 			if (resting)
 				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
 				set_resting(FALSE)
@@ -303,7 +303,9 @@
 	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
-	candidate.brainmob.mind.transfer_to(src)
+	var/datum/mind/candidate_mind = candidate.brainmob.mind
+	candidate_mind.transfer_to(src)
+	candidate_mind.grab_ghost()
 	to_chat(src, "[span_boldbig("You are a cak!")]<b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free cake to the station!</b>")
@@ -313,12 +315,12 @@
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
-/mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/cak/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
 	if(health < maxHealth)
-		adjustBruteLoss(-4 * delta_time) //Fast life regen
+		adjustBruteLoss(-4 * seconds_per_tick) //Fast life regen
 	for(var/obj/item/food/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(!D.is_decorated)
 			D.decorate_donut()

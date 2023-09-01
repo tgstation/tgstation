@@ -131,9 +131,9 @@
 	taste_description = "french cuisine"
 	taste_mult = 1.3
 
-/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(volume >= 10)
-		M.adjustToxLoss(5 * REM * delta_time, 0)
+		M.adjustToxLoss(5 * REM * seconds_per_tick, 0)
 	..()
 
 /obj/effect/temp_visual/leaper_crush
@@ -148,6 +148,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
 	remove_verb(src, /mob/living/verb/pulled)
 	add_cell_sample()
 
@@ -186,7 +187,7 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/jungle/leaper/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	update_icons()
 
@@ -215,7 +216,7 @@
 	if(z != target.z)
 		return
 	hopping = TRUE
-	set_density(FALSE)
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	pass_flags |= PASSMOB
 	notransform = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
@@ -228,7 +229,7 @@
 	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, PROC_REF(FinishHop)))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
-	set_density(TRUE)
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	notransform = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
@@ -245,12 +246,12 @@
 	addtimer(CALLBACK(src, PROC_REF(BellyFlopHop), new_turf), 30)
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlopHop(turf/T)
-	set_density(FALSE)
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, PROC_REF(Crush)))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
-	set_density(TRUE)
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	notransform = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, src))

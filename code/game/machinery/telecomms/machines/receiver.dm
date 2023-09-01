@@ -21,8 +21,6 @@
 	if(!is_freq_listening(signal))
 		return
 
-	signal.levels = list()
-
 	// send the signal to the hub if possible, or a bus otherwise
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/bus)

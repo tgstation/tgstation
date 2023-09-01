@@ -6,6 +6,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
@@ -127,6 +128,9 @@
 			var/obj/vehicle/sealed/mecha/mecha = AM
 			for(var/O in mecha.occupants)
 				var/mob/living/occupant = O
+				if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+					open()
+					return
 				if(allowed(occupant))
 					open_and_close()
 					return
@@ -142,14 +146,20 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if(operating || !density)
 		return
+
 	add_fingerprint(user)
 	if(!requiresID())
 		user = null
 
-	if(allowed(user))
+	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
+		open()
+
+	else if(allowed(user))
 		open_and_close()
+
 	else
 		do_animate("deny")
+
 	return
 
 /obj/machinery/door/window/CanAllowThrough(atom/movable/mover, border_dir)
@@ -162,10 +172,10 @@
 
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/moved_window = mover
-		return valid_window_location(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
+		return valid_build_direction(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
 
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
-		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
+		return valid_build_direction(loc, mover.dir, is_fulltile = FALSE)
 
 	return TRUE
 
@@ -195,7 +205,10 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
-	if (operating) //doors can still open when emag-disabled
+	if(!density)
+		return TRUE
+
+	if(operating) //doors can still open when emag-disabled
 		return FALSE
 
 	if(!try_to_force_door_open(forced))
@@ -240,6 +253,9 @@
 	return ..()
 
 /obj/machinery/door/window/close(forced = DEFAULT_DOOR_CHECKS)
+	if(density)
+		return TRUE
+
 	if(operating || !try_to_force_door_shut(forced))
 		return FALSE
 
@@ -308,16 +324,20 @@
 /obj/machinery/door/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(round(exposed_temperature / 200), BURN, 0, 0)
 
-
-/obj/machinery/door/window/emag_act(mob/user)
+/obj/machinery/door/window/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!operating && density && !(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		sleep(0.6 SECONDS)
-		operating = FALSE
-		open(BYPASS_DOOR_CHECKS)
+		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
+		return TRUE
+	return FALSE
+
+/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the windoor.
+/obj/machinery/door/window/proc/finish_emag_act()
+	operating = FALSE
+	open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()
@@ -391,12 +411,13 @@
 	try_to_activate_door(user)
 
 /obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE)
-	if (..())
+	. = ..()
+	if(.)
 		autoclose = FALSE
 
 /obj/machinery/door/window/unrestricted_side(mob/opener)
 	if(get_turf(opener) == loc)
-		return turn(dir,180) & unres_sides
+		return REVERSE_DIR(dir) & unres_sides
 	return ..()
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
@@ -420,7 +441,7 @@
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 32)
 	return FALSE
 
 /obj/machinery/door/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -430,7 +451,6 @@
 			qdel(src)
 			return TRUE
 	return FALSE
-
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

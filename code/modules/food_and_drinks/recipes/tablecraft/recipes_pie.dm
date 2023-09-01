@@ -200,7 +200,7 @@
 /datum/crafting_recipe/food/baklava
 	name = "Baklava pie"
 	reqs = list(
-		/obj/item/food/butter = 2,
+		/obj/item/food/butterslice = 2,
 		/obj/item/food/tortilla = 4, //Layers
 		/obj/item/seeds/wheat/oat = 4
 	)
@@ -228,4 +228,12 @@
 		/obj/item/food/grown/garlic = 1,
 	)
 	result = /obj/item/food/pie/shepherds_pie
+	category = CAT_PIE
+
+/datum/crafting_recipe/food/asdfpie
+	name = "Pie-flavored pie"
+	reqs = list(
+		/obj/item/food/pie/plain = 2,
+	)
+	result = /obj/item/food/pie/asdfpie
 	category = CAT_PIE

@@ -15,7 +15,7 @@
 "d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/girder,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/grille,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)

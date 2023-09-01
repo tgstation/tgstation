@@ -6,6 +6,17 @@
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
+///the priority for which awards are orded on [/datum/achievement_data/load_all_achievements()]
+#define AWARD_PRIORITY_DEFAULT 100
+///the priority of the achievements score. NO achievement should have a priority equal or lower than this.
+#define AWARD_PRIORITY_LAST 0
+
+/// preferences for the sound played when unlocking an achievement
+#define CHEEVO_SOUND_TADA "Tada Fanfare"
+#define CHEEVO_SOUND_JINGLE "Beeps Jingle"
+#define CHEEVO_SOUND_PING "Success Ping"
+#define CHEEVO_SOUND_OFF "Disabled"
+
 //Misc Medal hub IDs
 #define MEDAL_METEOR "Your Life Before Your Eyes"
 #define MEDAL_PULSE "Jackpot"
@@ -34,6 +45,7 @@
 #define MEDAL_RUST_ASCENSION "Rust"
 #define MEDAL_VOID_ASCENSION "Void"
 #define MEDAL_BLADE_ASCENSION "Blade"
+#define MEDAL_COSMOS_ASCENSION "Cosmos"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
@@ -44,9 +56,15 @@
 #define MEDAL_NARSUPREME "Narsupreme"
 #define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
 #define MEDAL_HEALTHY "Heart Healthy"
+#define MEDAL_GODS_WRATH "God's Wrath"
+#define MEDAL_EARTHQUAKE_VICTIM "Earthquake Victim"
+#define MEDAL_DEBT_EXTINGUISHED "Debt Extinguished"
+#define MEDAL_ARCHMAGE "Archmage"
+#define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
+#define MEDAL_LEGENDARY_FISHER "Legendary Fisher"
 
 //Mafia medal hub IDs (wins)
 #define MAFIA_MEDAL_ASSISTANT "Assistant"
@@ -120,6 +138,12 @@
 
 // DB ID for intento score
 #define INTENTO_SCORE "Intento Score"
+
+// DB ID for style point count
+#define STYLE_SCORE "Style Score"
+
+/// DB ID for the amount of achievements unlocked by the player.
+#define ACHIEVEMENTS_SCORE "Achievements Score"
 
 // Tourist related achievements and scores
 

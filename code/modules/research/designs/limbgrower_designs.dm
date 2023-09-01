@@ -162,7 +162,7 @@
 	id = "plasmamanliver"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/toxin/plasma = 20)
-	build_path = /obj/item/organ/internal/liver/plasmaman
+	build_path = /obj/item/organ/internal/liver/bone/plasmaman
 	category = list(SPECIES_PLASMAMAN)
 
 /datum/design/plasmaman_stomach
@@ -233,7 +233,7 @@
 	desc = "Contains designs for various limbs."
 	id = "limbdesign_parent"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/design_disk/limbs
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL

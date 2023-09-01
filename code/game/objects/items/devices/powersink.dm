@@ -22,11 +22,11 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	custom_materials = list(/datum/material/iron=750)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT* 7.5)
 	var/max_heat = 5e7 // Maximum contained heat before exploding. Not actual temperature.
 	var/internal_heat = 0 // Contained heat, goes down every tick.
 	var/mode = DISCONNECTED // DISCONNECTED, CLAMPED_OFF, OPERATING
-	var/admins_warned = FALSE // Stop spam, only warn the admins once that we are about to boom.
+	var/warning_given = FALSE //! Stop warning spam, only warn the admins/deadchat once that we are about to boom.
 
 	var/obj/structure/cable/attached
 
@@ -38,7 +38,7 @@
 	. = ..()
 	if(mode)
 		. += "\The [src] is bolted to the floor."
-	if(in_range(user, src) || isobserver(user) && internal_heat > max_heat * 0.5)
+	if((in_range(user, src) || isobserver(user)) && internal_heat > max_heat * 0.5)
 		. += span_danger("[src] is warping the air above it. It must be very hot.")
 
 /obj/item/powersink/set_anchored(anchorvalue)
@@ -124,6 +124,7 @@
 				span_hear("You hear a click."))
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
 			user.log_message("activated a powersink", LOG_GAME)
+			notify_ghosts("[user] has activated a power sink!", source = src, header = "Shocking News!")
 			set_mode(OPERATING)
 
 		if(OPERATING)
@@ -144,8 +145,8 @@
 	if(delta_temperature)
 		environment.temperature += delta_temperature
 		air_update_turf(FALSE, FALSE)
-	if(admins_warned && internal_heat < max_heat * 0.75)
-		admins_warned = FALSE
+	if(warning_given && internal_heat < max_heat * 0.75)
+		warning_given = FALSE
 		message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has cooled down and will not explode.")
 	if(mode != OPERATING && internal_heat < MINIMUM_HEAT)
 		internal_heat = 0
@@ -184,9 +185,10 @@
 	drain_power()
 
 	if(internal_heat > max_heat * ALERT / 100)
-		if (!admins_warned)
-			admins_warned = TRUE
+		if (!warning_given)
+			warning_given = TRUE
 			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached [ALERT]% of max heat. Explosion imminent.")
+			notify_ghosts("[src] is about to reach critical heat capacity!", source = src, header = "Power Sunk")
 		playsound(src, 'sound/effects/screech.ogg', 100, TRUE, TRUE)
 
 	if(internal_heat >= max_heat)

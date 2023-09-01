@@ -7,29 +7,24 @@
 /datum/species/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
-	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
-		LIPS,
-		DRINKSBLOOD,
-		BLOOD_CLANS,
-	)
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
+		TRAIT_BLOOD_CLANS,
+		TRAIT_DRINKS_BLOOD,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_USES_SKINTONES,
+		TRAIT_NO_MIRROR_REFLECTION,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	exotic_bloodtype = "U"
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
-	use_skintones = TRUE
 	mutantheart = /obj/item/organ/internal/heart/vampire
 	mutanttongue = /obj/item/organ/internal/tongue/vampire
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
@@ -46,15 +41,15 @@
 	new_vampire.update_body(0)
 	new_vampire.set_safe_hunger_level()
 
-/datum/species/vampire/spec_life(mob/living/carbon/human/vampire, delta_time, times_fired)
+/datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
-		vampire.heal_overall_damage(brute = 2 * delta_time, burn = 2 * delta_time, required_bodytype = BODYTYPE_ORGANIC)
-		vampire.adjustToxLoss(-2 * delta_time)
-		vampire.adjustOxyLoss(-2 * delta_time)
-		vampire.adjustCloneLoss(-2 * delta_time)
+		vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+		vampire.adjustToxLoss(-2 * seconds_per_tick)
+		vampire.adjustOxyLoss(-2 * seconds_per_tick)
+		vampire.adjustCloneLoss(-2 * seconds_per_tick)
 		return
-	vampire.blood_volume -= 0.125 * delta_time
+	vampire.blood_volume -= 0.125 * seconds_per_tick
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
 		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
@@ -62,8 +57,8 @@
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))
 		to_chat(vampire, span_warning("You don't belong here!"))
-		vampire.adjustFireLoss(10 * delta_time)
-		vampire.adjust_fire_stacks(3 * delta_time)
+		vampire.adjustFireLoss(10 * seconds_per_tick)
+		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
 
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)

@@ -35,20 +35,20 @@
 	return ..()
 
 /datum/component/tattoo/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/tattoo/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /datum/component/tattoo/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_boldnotice(tattoo_description)
 
 /datum/component/tattoo/proc/setup_tatted_owner(mob/living/carbon/new_owner)
-	RegisterSignal(new_owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_bodypart_owner_examine))
+	RegisterSignal(new_owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_bodypart_owner_examine))
 
 /datum/component/tattoo/proc/clear_tatted_owner(mob/living/carbon/old_owner)
-	UnregisterSignal(old_owner, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(old_owner, COMSIG_ATOM_EXAMINE)
 
 /datum/component/tattoo/proc/on_bodypart_owner_examine(mob/living/carbon/bodypart_owner, mob/user, list/examine_list)
 	SIGNAL_HANDLER

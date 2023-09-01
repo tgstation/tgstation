@@ -1,8 +1,6 @@
 GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 
 /datum/ctf_panel
-	///List of all CTF machines
-	var/list/obj/machinery/capture_the_flag/ctf_machines = list()
 
 /datum/ctf_panel/ui_state(mob/user)
 	return GLOB.observer_state
@@ -17,25 +15,28 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 	var/list/data = list()
 	var/list/teams = list()
 
-	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
-		if (!team.ctf_enabled)
-			continue
+	for(var/game_reference in GLOB.ctf_games)
+		var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[game_reference]
+		for(var/datum/ctf_team/team_reference as anything in ctf_controller.teams)
+			if (!ctf_controller.ctf_enabled)
+				continue
+			var/datum/ctf_team/team = ctf_controller.teams[team_reference]
 
-		var/list/this = list()
-		this["name"] = team
-		this["color"] = team.team
-		this["score"] = team.points + team.control_points
-		this["team_size"] = team.team_members.len
-		this["refs"] += REF(team)
-		teams += list(this)
+			var/list/this = list()
+			this["name"] = "[team.team_color] team"
+			this["color"] = team.team_color
+			this["score"] = team.points
+			this["team_size"] = team.team_members.len
+			this["refs"] += REF(team.spawner)
+			teams += list(this)
 
 	if (teams.len == 0)
 		// No CTF map has been spawned in yet
-		var/datum/ctf_voting_controller/ctf_controller = get_ctf_voting_controller(CTF_GHOST_CTF_GAME_ID)
+		var/datum/ctf_voting_controller/ctf_voting_controller = get_ctf_voting_controller(CTF_GHOST_CTF_GAME_ID)
 
-		data["voters"] = ctf_controller.volunteers.len
+		data["voters"] = ctf_voting_controller.volunteers.len
 		data["voters_required"] = CTF_REQUIRED_PLAYERS
-		data["voted"] = (user.ckey in ctf_controller.volunteers)
+		data["voted"] = (user.ckey in ctf_voting_controller.volunteers)
 	else
 		data["teams"] = teams
 
@@ -50,14 +51,14 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 
 	switch(action)
 		if("jump")
-			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"])
+			var/obj/machinery/ctf/spawner/ctf_spawner = locate(params["refs"])
 			if(istype(ctf_spawner))
 				user.forceMove(get_turf(ctf_spawner))
 				return TRUE
 		if("join")
-			var/obj/machinery/capture_the_flag/ctf_spawner = locate(params["refs"])
+			var/obj/machinery/ctf/spawner/ctf_spawner = locate(params["refs"])
 			if(istype(ctf_spawner))
-				if(ctf_spawner.ctf_enabled)
+				if(ctf_enabled())
 					user.forceMove(get_turf(ctf_spawner))
 				ctf_spawner.attack_ghost(user)
 				return TRUE
@@ -81,8 +82,7 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 			return TRUE
 
 /datum/ctf_panel/proc/ctf_enabled()
-	for (var/obj/machinery/capture_the_flag/ctf_machine as anything in GLOB.ctf_panel.ctf_machines)
-		if (ctf_machine.ctf_enabled)
-			return TRUE
-
+	var/datum/ctf_controller/ctf_enabled_check = GLOB.ctf_games[CTF_GHOST_CTF_GAME_ID]
+	if(ctf_enabled_check.ctf_enabled)
+		return TRUE
 	return FALSE

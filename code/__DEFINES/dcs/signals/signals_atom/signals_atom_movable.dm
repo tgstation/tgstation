@@ -78,6 +78,8 @@
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 ///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_atom()
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
+///Called before a movable is being teleported from `check_teleport_valid()`: (destination, channel)
+#define COMSIG_MOVABLE_TELEPORTING "movable_teleporting"
 ///Called when a movable is being teleported from `do_teleport()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
 ///Called after a movable is teleported from `do_teleport()`: ()
@@ -102,3 +104,13 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE 1
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
+
+/// Sent from /atom/movable/proc/compose_message() after the name part: (list/stored_name, visible_name)
+#define COMSIG_MOVABLE_MESSAGE_GET_NAME_PART "movable_message_get_name_part"
+	///The index of the name part
+	#define NAME_PART_INDEX 1
+
+/// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
+#define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
+/// From base of area/Exited(): (area/left, direction)
+#define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"

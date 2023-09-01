@@ -74,12 +74,12 @@
 
 	var/atom/movable/movable_source = source
 	var/turf/current_turf = movable_source.loc
-	if(!isturf(current_turf))
+	if(!isturf(current_turf) || isclosedturf(current_turf) || isgroundlessturf(current_turf))
 		return
 	if(!prob(blood_spawn_chance))
 		return
 
-	var/obj/effect/decal/blood = new blood_type(current_turf)
+	var/obj/effect/decal/cleanable/blood/blood = new blood_type(current_turf)
 	if(QDELETED(blood)) // Our blood was placed on somewhere it shouldn't be and qdeleted in init.
 		return
 

@@ -1,15 +1,21 @@
+///Tests all projectiles that none of them are phasing.
+/datum/unit_test/projectile_movetypes
+
 /datum/unit_test/projectile_movetypes/Run()
-	for(var/path in typesof(/obj/projectile))
-		var/obj/projectile/projectile = path
+	for(var/obj/projectile/projectile as anything in typesof(/obj/projectile))
 		if(initial(projectile.movement_type) & PHASING)
-			TEST_FAIL("[path] has default movement type PHASING. Piercing projectiles should be done using the projectile piercing system, not movement_types!")
+			TEST_FAIL("[projectile] has default movement type PHASING. Piercing projectiles should be done using the projectile piercing system, not movement_types!")
+
+///Shoots a victim with a gun to ensure the gun properly loads and the victim take the correct amount of damage.
+/datum/unit_test/gun_go_bang
 
 /datum/unit_test/gun_go_bang/Run()
 	// test is for a ballistic gun that starts loaded + chambered
-	var/obj/item/gun/test_gun = allocate(/obj/item/gun/ballistic/automatic/pistol)
+	var/obj/item/gun/ballistic/test_gun = allocate(/obj/item/gun/ballistic/automatic/pistol)
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/gunner = allocate(/mob/living/carbon/human/consistent)
 	ADD_TRAIT(victim, TRAIT_PIERCEIMMUNE, INNATE_TRAIT) // So the human isn't randomly affected by shrapnel
+	test_gun.can_misfire = FALSE //just in case
 
 	var/obj/item/ammo_casing/loaded_casing = test_gun.chambered
 	TEST_ASSERT(loaded_casing, "Gun started without round chambered, should be loaded")

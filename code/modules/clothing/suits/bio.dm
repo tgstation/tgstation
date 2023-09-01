@@ -6,7 +6,7 @@
 	worn_icon = 'icons/mob/clothing/head/bio.dmi'
 	icon_state = "bio"
 	inhand_icon_state = "bio_hood"
-	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/head_bio_hood
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
@@ -14,7 +14,8 @@
 
 /obj/item/clothing/head/bio_hood/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+	if(flags_inv & HIDEFACE)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /datum/armor/head_bio_hood
 	bio = 100
@@ -131,4 +132,4 @@
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()
-	allowed += list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/cane)
+	allowed += list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/cane)

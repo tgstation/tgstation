@@ -51,11 +51,6 @@
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/ruin/space/djstation)
-"O" = (
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "P" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage{
@@ -94,7 +89,7 @@ e
 e
 e
 e
-O
+e
 j
 e
 a

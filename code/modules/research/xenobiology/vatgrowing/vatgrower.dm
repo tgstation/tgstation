@@ -4,9 +4,6 @@
 	desc = "Tastes just like the chef's soup."
 	icon_state = "growing_vat"
 	buffer = 300
-	///category for plumbing RCD
-	category = "Synthesizers"
-
 
 	///List of all microbiological samples in this soup.
 	var/datum/biological_sample/biological_sample
@@ -21,12 +18,12 @@
 /obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
 /obj/machinery/plumbing/growing_vat/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
 	return NONE
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
@@ -124,13 +121,14 @@
 	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
 	update_appearance()
 
-/obj/machinery/plumbing/growing_vat/emag_act(mob/user)
+/obj/machinery/plumbing/growing_vat/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	to_chat(user, span_warning("You overload [src]'s resampling circuit."))
+	balloon_alert(user, "resampling circuit overloaded")
 	flick("growing_vat_emagged", src)
+	return TRUE
 
 /obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
 	SIGNAL_HANDLER

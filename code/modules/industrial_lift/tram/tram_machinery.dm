@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
@@ -34,6 +35,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(update_tram_display))
+		icon_screen = "[base_icon_state][tram_part.idle_platform.name]_idle"
+		update_appearance(UPDATE_ICON)
 
 /**
  * Finds the tram from the console
@@ -59,10 +62,31 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!user.can_read(src, reading_check_flags = READING_CHECK_LITERACY))
+		try_illiterate_movement(user)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TramControl", name)
 		ui.open()
+
+/// Traverse to a random location after some time
+/obj/machinery/computer/tram_controls/proc/try_illiterate_movement(mob/user)
+	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
+	if (!tram_lift || tram_lift.travelling)
+		return
+	user.visible_message(span_notice("[user] starts mashing buttons at random!"))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	if (!tram_lift || tram_lift.travelling)
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // Broke or started moving during progress bar
+	var/list/all_destinations = GLOB.tram_landmarks[specific_lift_id] || list()
+	var/list/possible_destinations = all_destinations.Copy() - tram_lift.idle_platform
+	if (!length(possible_destinations))
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // No possible places to end up
+	try_send_tram(pick(possible_destinations))
 
 /obj/machinery/computer/tram_controls/ui_data(mob/user)
 	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
@@ -120,7 +144,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		return FALSE
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
-	tram_part.tram_travel(destination_platform)
+	if(!tram_part.tram_travel(destination_platform))
+		return FALSE // lift_master failure
 	say("The next station is: [destination_platform.name]")
 	update_appearance()
 	return TRUE
@@ -367,13 +392,14 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
 
-/obj/machinery/crossing_signal/emag_act(mob/living/user)
+/obj/machinery/crossing_signal/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	balloon_alert(user, "disabled motion sensors")
 	if(signal_state != XING_STATE_MALF)
 		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/crossing_signal/proc/start_malfunction()
 	if(signal_state != XING_STATE_MALF)
@@ -386,6 +412,10 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 	malfunctioning = FALSE
 	process()
+
+/obj/machinery/crossing_signal/proc/temp_malfunction()
+	start_malfunction()
+	addtimer(CALLBACK(src, PROC_REF(end_malfunction)), 15 SECONDS)
 
 /**
  * Finds the tram, just like the tram computer
@@ -612,13 +642,13 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		GLOB.tram_signs += src
 
 	sign_states = list(
-		"[base_icon_state][DESTINATION_WEST_ACTIVE]",
-		"[base_icon_state][DESTINATION_WEST_IDLE]",
-		"[base_icon_state][DESTINATION_EAST_ACTIVE]",
-		"[base_icon_state][DESTINATION_EAST_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_IDLE]",
-		"[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
-		"[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
+		"[DESTINATION_WEST_ACTIVE]",
+		"[DESTINATION_WEST_IDLE]",
+		"[DESTINATION_EAST_ACTIVE]",
+		"[DESTINATION_EAST_IDLE]",
+		"[DESTINATION_CENTRAL_IDLE]",
+		"[DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
+		"[DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
 	)
 
 /obj/machinery/destination_sign/Destroy()
@@ -639,7 +669,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/destination_sign/proc/on_tram_travelling(datum/source, travelling)
 	SIGNAL_HANDLER
 	update_sign()
-	process()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
 
 /obj/machinery/destination_sign/proc/update_operating()
 	// Immediately process for snappy feedback
@@ -661,50 +691,50 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	use_power(active_power_usage)
 
 	if(malfunctioning)
-		icon_state = "[pick(sign_states)]"
-		light_mask = "[pick(sign_states)]_e"
+		icon_state = "[base_icon_state][pick(sign_states)]"
+		light_mask = "[base_icon_state][pick(sign_states)]_e"
 		update_appearance()
 		return PROCESS_KILL
 
 	if(!tram.travelling)
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/west))
 			icon_state = "[base_icon_state][DESTINATION_WEST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_WEST_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/central))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/east))
 			icon_state = "[base_icon_state][DESTINATION_EAST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_EAST_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/west))
 		icon_state = "[base_icon_state][DESTINATION_WEST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_WEST_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/central))
+		if(istype(previous_destination, /obj/effect/landmark/tram/platform/tramstation/west))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]_e"
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(previous_destination, /obj/effect/landmark/tram/platform/tramstation/east))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/east))
 		icon_state = "[base_icon_state][DESTINATION_EAST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_EAST_ACTIVE]_e"
 		update_appearance()
@@ -718,144 +748,16 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
-/obj/machinery/door/window/tram
-	name = "tram door"
-	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
-	icon = 'icons/obj/doors/tramdoor.dmi'
-	var/associated_lift = MAIN_STATION_TRAM
-	var/datum/weakref/tram_ref
-	/// Directions the tram door can be forced open in an emergency
-	var/space_dir = null
-	var/malfunctioning = FALSE
-
-/obj/machinery/door/window/tram/left
-	icon_state = "left"
-	base_state = "left"
-
-/obj/machinery/door/window/tram/left/directional/south
-	plane = WALL_PLANE_UPPER
-
-/obj/machinery/door/window/tram/right
-	icon_state = "right"
-	base_state = "right"
-
-/obj/machinery/door/window/tram/hilbert
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
-	associated_lift = HILBERT_TRAM
-	icon_state = "windoor"
-	base_state = "windoor"
-
-/obj/machinery/door/window/tram/emag_act(mob/living/user)
-	if(obj_flags & EMAGGED)
-		return
-	balloon_alert(user, "disabled motion sensors")
-	obj_flags |= EMAGGED
-
-/obj/machinery/door/window/tram/proc/start_malfunction()
-	if(obj_flags & EMAGGED)
-		return
-
-	malfunctioning = TRUE
-	process()
-
-/obj/machinery/door/window/tram/proc/end_malfunction()
-	if(obj_flags & EMAGGED)
-		return
-
-	malfunctioning = FALSE
-	process()
-
-/obj/machinery/door/window/tram/proc/cycle_doors(command, forced=FALSE)
-	if(command == "open" && icon_state == "[base_state]open")
-		if(!forced)
-			if(!hasPower())
-				return 0
-		return 1
-	if(command == "close" && icon_state == base_state)
-		return 1
-	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	switch(command)
-		if("open")
-			do_animate("opening")
-			icon_state ="[base_state]open"
-			sleep(7 DECISECONDS)
-			set_density(FALSE)
-			air_update_turf(TRUE, FALSE)
-		if("close")
-			if(obj_flags & EMAGGED | malfunctioning)
-				flick("[base_state]spark", src)
-				playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-				sleep(6 DECISECONDS)
-			do_animate("closing")
-			icon_state = base_state
-			sleep(19 DECISECONDS)
-			if(obj_flags & EMAGGED | malfunctioning)
-				if(malfunctioning && prob(85))
-					return
-				for(var/i=1 to 3)
-					for(var/mob/living/crushee in get_turf(src))
-						crush()
-					sleep(2 DECISECONDS)
-			air_update_turf(TRUE, TRUE)
-			operating = FALSE
-			set_density(TRUE)
-
-	update_freelook_sight()
-	return 1
-
-//When the tram is in station, the doors are locked to engineering and command only.
-/obj/machinery/door/window/tram/lock()
-	req_access = list("engineering")
-
-/obj/machinery/door/window/tram/unlock()
-	req_access = null
-
-/obj/machinery/door/window/tram/right/directional/south
-	plane = WALL_PLANE_UPPER
-
-/obj/machinery/door/window/tram/proc/find_tram()
-	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
-		if(lift.specific_lift_id == associated_lift)
-			tram_ref = WEAKREF(lift)
-
-/obj/machinery/door/window/tram/Initialize(mapload, set_dir, unres_sides)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	INVOKE_ASYNC(src, PROC_REF(open))
-	GLOB.tram_doors += src
-	find_tram()
-
-/obj/machinery/door/window/tram/Destroy()
-	GLOB.tram_doors -= src
-	return ..()
-
-/obj/machinery/door/window/tram/examine(mob/user)
-	. = ..()
-	. += span_notice("It has labels indicating that it has an emergency mechanism to open from the inside using <b>just your hands</b> in the event of an emergency.")
-
-/obj/machinery/door/window/tram/try_safety_unlock(mob/user)
-	if(!hasPower()  && density)
-		to_chat(user, span_notice("You begin pulling the tram emergency exit handle..."))
-		if(do_after(user, 15 SECONDS, target = src))
-			try_to_crowbar(null, user, TRUE)
-			return TRUE
-
-/obj/machinery/door/window/tram/open_and_close()
-	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
-	if(!open())
-		return
-	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
-		return PROCESS_KILL
-
 /obj/machinery/button/tram
 	name = "tram request"
 	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	icon_state = "tramctrl"
-	skin = "tramctrl"
+	base_icon_state = "tram"
+	icon_state = "tram"
+	light_color = LIGHT_COLOR_DARK_BLUE
+	can_alter_skin = FALSE
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
-	light_mask = "tram-light-mask"
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 
@@ -870,8 +772,6 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	. += span_notice("There's a small inscription on the button...")
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/destination_sign/indicator, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/tram, 32)

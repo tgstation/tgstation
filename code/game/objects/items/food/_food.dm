@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
-	///List of reagents this food gets on creation
+	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
 	var/food_flags
@@ -46,6 +46,20 @@
 	var/decomp_req_handle = FALSE
 	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
+	///Used to set decomposition stink particles for food, will have no particles if null
+	var/decomposition_particles = /particles/stink
+	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
+	var/starting_reagent_purity = null
+	///How exquisite the meal is. Applicable to crafted food, increasing its quality. Spans from 0 to 5.
+	var/crafting_complexity = 0
+	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
+	var/datum/status_effect/food/crafted_food_buff = null
+
+/obj/item/food/New(loc, starting_reagent_purity, no_base_reagents = FALSE, ...)
+	src.starting_reagent_purity = starting_reagent_purity
+	if(no_base_reagents)
+		food_reagents = null
+	return ..()
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -61,10 +75,10 @@
 	make_processable()
 	make_leave_trash()
 	make_grillable()
-	make_decompose(mapload)
+	make_germ_sensitive(mapload)
 	make_bakeable()
 	make_microwaveable()
-	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/make_edible()
@@ -78,8 +92,8 @@
 		eatverbs = eatverbs,\
 		bite_consumption = bite_consumption,\
 		junkiness = junkiness,\
+		reagent_purity = starting_reagent_purity,\
 	)
-
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/make_processable()
@@ -108,8 +122,13 @@
 		AddElement(/datum/element/food_trash, trash_type)
 	return
 
-///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
+///This proc makes things infective and decomposing when they stay on the floor for too long.
+///Set preserved_food to TRUE to make it never decompose.
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
-/obj/item/food/proc/make_decompose(mapload)
+///Requires /datum/component/germ_sensitive to detect exposure
+/obj/item/food/proc/make_germ_sensitive(mapload)
+	if(istype(src, /obj/item/food/bowled) || istype(src, /obj/item/food/canned) || !isnull(trash_type))
+		return // You don't eat the package and it protects from decomposing
+	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)

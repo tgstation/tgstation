@@ -18,7 +18,6 @@
 	var/status = TRUE
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
-	var/obj/item/camera_bug/bug = null
 	var/datum/weakref/assembly_ref = null
 	var/area/myarea = null
 
@@ -129,27 +128,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		LAZYREMOVE(myarea.cameras, src)
 	QDEL_NULL(alarm_manager)
 	QDEL_NULL(assembly_ref)
-	if(bug)
-		bug.bugged_cameras -= c_tag
-		if(bug.current == src)
-			bug.current = null
-		bug = null
-
 	QDEL_NULL(last_shown_paper)
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has electromagnetic interference shielding installed."
+		. += span_info("It has electromagnetic interference shielding installed.")
 	else
 		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(isXRay(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has an X-ray photodiode installed."
+		. += span_info("It has an X-ray photodiode installed.")
 	else
 		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(isMotion())
-		. += "It has a proximity sensor installed."
+		. += span_info("It has a proximity sensor installed.")
 	else
 		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
 
@@ -201,6 +194,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(invuln)
 		return FALSE
 	return ..()
+
+/obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
+	if (!istype(user))
+		return
+	if (!can_use())
+		return
+	user.switchCamera(src)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
@@ -285,7 +285,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(!panel_open)
 		return
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=2))
 		return TRUE
 
 	to_chat(user, span_notice("You start to weld [src]..."))
@@ -368,7 +368,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			if (potential_viewer.client?.eye == src)
 				to_chat(potential_viewer, "[span_name("[user]")] holds \a [itemname] up to one of the cameras ...")
 				potential_viewer.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-				potential_viewer << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+				potential_viewer << browse("<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>", "window=[itemname]")
 		return
 
 	if(istype(attacking_item, /obj/item/paper))
@@ -413,21 +413,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				log_paper("[key_name(user)] held [last_shown_paper] up to [src], and [key_name(potential_viewer)] may read it.")
 				potential_viewer.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
 				to_chat(potential_viewer, "[span_name(user)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to your camera...")
-		return
-
-
-	if(istype(attacking_item, /obj/item/camera_bug))
-		if(!can_use())
-			to_chat(user, span_notice("Camera non-functional."))
-			return
-		if(bug)
-			to_chat(user, span_notice("Camera bug removed."))
-			bug.bugged_cameras -= src.c_tag
-			bug = null
-		else
-			to_chat(user, span_notice("Camera bugged."))
-			bug = attacking_item
-			bug.bugged_cameras[src.c_tag] = WEAKREF(src)
 		return
 
 	return ..()
@@ -536,8 +521,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
+	var/turf/directly_above = GET_TURF_ABOVE(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
-	var/check_higher = pos != get_highest_turf(pos)
+	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
 		see = range(view_range, pos)
@@ -545,23 +531,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		see = get_hear(view_range, pos)
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
-		var/datum/controller/subsystem/mapping/local_mapping = SSmapping
 		for(var/turf/seen in see)
 			if(check_lower)
 				var/turf/visible = seen
 				while(visible && istransparentturf(visible))
-					var/turf/below = local_mapping.get_turf_below(visible)
+					var/turf/below = GET_TURF_BELOW(visible)
 					for(var/turf/adjacent in range(1, below))
 						see += adjacent
 						see += adjacent.contents
 					visible = below
 			if(check_higher)
-				var/turf/above = local_mapping.get_turf_above(seen)
+				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
 					for(var/turf/adjacent in range(1, above))
 						see += adjacent
 						see += adjacent.contents
-					above = local_mapping.get_turf_above(above)
+					above = GET_TURF_ABOVE(above)
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)

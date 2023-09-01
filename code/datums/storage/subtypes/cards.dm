@@ -10,7 +10,7 @@
 	. = ..()
 	set_holdable(list(/obj/item/tcgcard))
 
-/datum/storage/tcg/attempt_remove(silent = FALSE)
+/datum/storage/tcg/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE)
 	. = ..()
 	handle_empty_deck()
 
@@ -37,9 +37,8 @@
 	resolve_location.visible_message(span_notice("\the [resolve_parent] is shuffled after looking through it."))
 	resolve_location.contents = shuffle(resolve_location.contents)
 
-/datum/storage/tcg/remove_all()
+/datum/storage/tcg/dump_content_at(atom/dest_object, mob/user)
 	. = ..()
-
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return

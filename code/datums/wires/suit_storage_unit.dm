@@ -35,7 +35,7 @@
 			if(usr)
 				SSU.shock(usr)
 
-/datum/wires/suit_storage_unit/on_cut(wire, mend)
+/datum/wires/suit_storage_unit/on_cut(wire, mend, source)
 	var/obj/machinery/suit_storage_unit/SSU = holder
 	switch(wire)
 		if(WIRE_HACK)
