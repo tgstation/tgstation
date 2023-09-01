@@ -33452,6 +33452,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/cups,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "jGa" = (
@@ -61780,9 +61781,10 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "sMC" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/misc/asteroid/airless,
-/area/station/asteroid)
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
 "sMD" = (
 /obj/structure/kitchenspike,
 /obj/effect/decal/cleanable/dirt,
@@ -96885,10 +96887,10 @@ lgu
 xRr
 qxf
 pyD
-sMC
-sMC
-sMC
-sMC
+aac
+aac
+aac
+aac
 aek
 ncE
 ncE
@@ -97654,7 +97656,7 @@ kzQ
 apC
 lgu
 xRr
-lgu
+sMC
 pyD
 aaa
 aac
@@ -98170,11 +98172,11 @@ lgu
 xRr
 lgu
 pyD
-sMC
-sMC
-sMC
-sMC
-sMC
+aac
+aac
+aac
+aac
+aac
 aac
 aac
 ncE
