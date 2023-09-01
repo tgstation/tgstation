@@ -1,7 +1,7 @@
 /**
  * surgery trays
  *
- * a storage object that displays tools in its contents, and can be folded up and carried. click it to draw a random tool
+ * a storage object that displays tools in its contents based on tier, overriding the lower tiers in favor of higher ones. can be folded up and carried. click it to draw a random tool
  *
  */
 
@@ -84,8 +84,8 @@
 
 /obj/item/surgery_tray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	context[SCREENTIP_CONTEXT_LMB] = "Fumble with tools"
-	context[SCREENTIP_CONTEXT_RMB] = "Remove a specific tool"
+	context[SCREENTIP_CONTEXT_LMB] = "Take a random tool"
+	context[SCREENTIP_CONTEXT_RMB] = "Take a specific tool"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/surgery_tray/update_icon_state()
@@ -105,163 +105,97 @@
 	. = ..()
 	. += tray_toggled ? span_notice("You can click and drag it to yourself to pick it up, then use it in your hand to make it a cart!") : span_notice("You can click and drag it to yourself to turn it into a tray!")
 
-/obj/item/surgery_tray/update_overlays()
-	. = ..()
-	if(surgical_drapes)
-		. |= "drapes"
-	if(blood_filter)
-		. += "filter"
-	if(razor)
-		. += "razor"
-	if(bonesetter)
-		. += tray_toggled ? "bonesetter_out" : "bonesetter"
-	if(surgical_tape)
-		. += tray_toggled ? "tape_out" : "tape"
-	if(bone_gel)
-		. += tray_toggled ? "gel_out" : "gel"
+/// Extend this to give the item an appearance when placed in a surgical tray
+/obj/item/proc/get_surgery_tool_overlay()
+	return null
 
-	if(scalpel)
-		switch(scalpel.type)
-			if(/obj/item/scalpel/alien)
-				. += "scalpel_alien"
-			if(/obj/item/scalpel/advanced)
-				. += "scalpel_advanced"
-			if(/obj/item/scalpel/cruel)
-				. += "scalpel_cruel"
-			else
-				. += "scalpel_normal"
-	if(cautery)
-		switch(cautery.type)
-			if(/obj/item/cautery/alien)
-				. += "cautery_alien"
-			if(/obj/item/cautery/advanced)
-				. += "cautery_advanced"
-			if(/obj/item/cautery/cruel)
-				. += "cautery_cruel"
-			else
-				. += "cautery_normal"
-	if(hemostat)
-		switch(hemostat.type)
-			if(/obj/item/hemostat/alien)
-				. += "hemostat_alien"
-			if(/obj/item/hemostat/cruel)
-				. += "hemostat_cruel"
-			else
-				. += "hemostat_normal"
-	if(retractor)
-		switch(retractor.type)
-			if(/obj/item/retractor/alien)
-				. += "retractor_alien"
-			if(/obj/item/retractor/advanced)
-				. += "retractor_advanced"
-			if(/obj/item/retractor/cruel)
-				. += "retractor_cruel"
-			else
-				. += "retractor_normal"
-	if(surgical_drill)
-		switch(surgical_drill.type)
-			if(/obj/item/surgicaldrill/alien)
-				. += "drill_alien"
-			else
-				. += "drill_normal"
-	if(circular_saw)
-		switch(circular_saw.type)
-			if(/obj/item/circular_saw/alien)
-				. += "saw_alien"
-			else
-				. += "saw_normal"
+/obj/item/scalpel
+	/// How this looks when placed in a surgical tray
+	var/surgical_tray_overlay = "scalpel"
 
-/obj/item/surgery_tray/Entered(obj/item/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(istype(arrived, /obj/item/blood_filter))
-		if(blood_filter && blood_filter.toolspeed <= arrived.toolspeed)
-			return
-		blood_filter = arrived
-	else if(istype(arrived, /obj/item/cautery))
-		if(cautery && cautery.toolspeed <= arrived.toolspeed)
-			return
-		cautery = arrived
-	else if(istype(arrived, /obj/item/circular_saw))
-		if(circular_saw && circular_saw.toolspeed <= arrived.toolspeed)
-			return
-		circular_saw = arrived
-	else if(istype(arrived, /obj/item/hemostat))
-		if(hemostat && hemostat.toolspeed <= arrived.toolspeed)
-			return
-		hemostat = arrived
-	else if(istype(arrived, /obj/item/surgicaldrill))
-		if(surgical_drill && surgical_drill.toolspeed <= arrived.toolspeed)
-			return
-		surgical_drill = arrived
-	else if(istype(arrived, /obj/item/retractor))
-		if(retractor && retractor.toolspeed <= arrived.toolspeed)
-			return
-		retractor = arrived
-	else if(istype(arrived, /obj/item/scalpel))
-		if(scalpel && scalpel.toolspeed <= arrived.toolspeed)
-			return
-		scalpel = arrived
-	else if(istype(arrived, /obj/item/bonesetter))
-		if(bonesetter)
-			return
-		bonesetter = arrived
-	else if(istype(arrived, /obj/item/razor))
-		if(razor)
-			return
-		razor = arrived
-	else if(istype(arrived, /obj/item/stack/medical/bone_gel))
-		if(bone_gel)
-			return
-		bone_gel = arrived
-	else if(istype(arrived, /obj/item/stack/sticky_tape/surgical))
-		if(surgical_tape)
-			return
-		surgical_tape = arrived
-	else if(istype(arrived, /obj/item/surgical_drapes))
-		if(surgical_drapes)
-			return
-		surgical_drapes = arrived
+/obj/item/scalpel/get_surgery_tool_overlay()
+	return surgical_tray_overlay
 
-/obj/item/surgery_tray/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == blood_filter)
-		var/obj/item/blood_filter/other_filter = locate() in contents
-		blood_filter = other_filter || null
-	else if(gone == bonesetter)
-		var/obj/item/bonesetter/other_bonesetter = locate() in contents
-		bonesetter = other_bonesetter || null
-	else if(gone == cautery)
-		var/obj/item/cautery/other_cautery = locate() in contents
-		cautery = other_cautery || null
-	else if(gone == circular_saw)
-		var/obj/item/circular_saw/other_saw = locate() in contents
-		circular_saw = other_saw || null
-	else if(gone == hemostat)
-		var/obj/item/hemostat/other_hemostat = locate() in contents
-		hemostat = other_hemostat || null
-	else if(gone == razor)
-		var/obj/item/razor/other_razor = locate() in contents
-		razor = other_razor || null
-	else if(gone == surgical_drill)
-		var/obj/item/surgicaldrill/other_drill = locate() in contents
-		surgical_drill = other_drill || null
-	else if(gone == retractor)
-		var/obj/item/retractor/other_retractor = locate() in contents
-		retractor = other_retractor || null
-	else if(gone == bone_gel)
-		var/obj/item/stack/medical/bone_gel/other_gel = locate() in contents
-		bone_gel = other_gel || null
-	else if(gone == surgical_tape)
-		var/obj/item/stack/sticky_tape/other_tape = locate() in contents
-		surgical_tape = other_tape || null
-	else if(gone == surgical_drapes)
-		var/obj/item/surgical_drapes/other_drapes = locate() in contents
-		surgical_drapes = other_drapes || null
+/obj/item/scalpel/advanced
+	var/surgical_tray_overlay = "scalpel_advanced"
+
+/obj/item/scalpel/advanced/get_surgery_tool_overlay()
+	return surgical_tray_overlay
+
+/obj/item/scalpel/alien
+	var/surgical_tray_overlay = "scalpel_alien"
+
+/obj/item/scalpel/alien/get_surgery_tool_overlay()
+	return surgical_tray_overlay
+
+/obj/item/scalpel/cruel
+	var/surgical_tray_overlay = "scalpel_cruel"
+
+/obj/item/scalpel/cruel/get_surgery_tool_overlay()
+	return surgical_tray_overlay
+
+/obj/item/retractor
+	var/surgical_tray_overlay = "retractor"
+
+/obj/item/retractor/get_surgery_tool_overlay()
+	return surgical_tray_overlay
+
+/obj/item/retractor/advanced
+	var/surgical_tray_overlay = "retractor_advanced"
+
+/obj/item/retractor/advanced/get_surgery_tool_overlay()
+	return surgical_tray_overlay
+
+/obj/item/retractor/alien
+	var/surgical_tray_overlay = "retractor_alien"
+
+/obj/item/retractor/alien/get_surgery_tool_overlay()
+	return surgical_tray_overlay
+
+/obj/item/retractor/cruel
+	var/surgical_tray_overlay = "retractor_cruel"
+
+/obj/item/retractor/cruel/get_surgery_tool_overlay()
+	return surgical_tray_overlay
+
+    . = ..()
+    // assoc list of all overlays, key = the item generating the overlay, value = the overlay string
+    var/list/surgery_overlays = list()
+    // assoc list of tool behaviors to list of all items in our contents that match that behavior
+    // easy way for us to check if there are any lower quality tools within
+    var/list/tools_recorded = list()
+    // compile all the overlays from items inside us
+    for(var/obj/item/surgery_tool in src)
+        // if we are a tool, check for better tools to use instead
+        // initial is used for transforming tool memes. use their default behavior
+        var/surgery_tool_type = initial(surgery_tool.tool_behaviour)
+        if(surgery_tool_type)
+            for(var/obj/item/existing_overlay as anything in tools_recorded[surgery_tool_type])
+                if(surgery_tool.toolspeed <= existing_overlay.toolspeed)
+                    continue
+                // the existing tool was worse than us, ditch it
+                surgery_overlays -= existing_overlay
+
+            LAZYADDASSOCLIST(tools_recorded, surgery_tool_type, surgery_tool)
+
+        // slots the overlay we get in.
+        var/actual_overlay = surgery_tool.get_surgery_tool_overlay()
+        if(actual_overlay)
+            surgery_overlays[surgery_tool] = actual_overlay
+
+    for(var/surgery_tool in surgery_overlays)
+        . |= surgery_overlays[surgery_tool]
+
+/obj/item/proc/get_surgery_tool_overlay()
+    return // update on a subtype basis
 
 /obj/item/surgery_tray/proc/PopulateContents()
-	blood_filter = new(src)
-	bonesetter = new(src)
-	razor = new(src)
+	if(!blood_filter)
+		blood_filter = new(src)
+	if(!bonesetter)
+		bonesetter = new(src)
+	if(!razor)
+		razor = new(src)
 	if(!cautery)
 		cautery = new(src)
 	if(!hemostat)
@@ -270,15 +204,17 @@
 		retractor = new(src)
 	if(!scalpel)
 		scalpel = new(src)
-	circular_saw = new(src)
-	bone_gel = new(src)
-	surgical_tape = new(src)
-	surgical_drapes = new(src)
-	surgical_drill = new(src)
-	var/static/list/items_inside = list(
-		/obj/item/clothing/mask/surgical = 1,
-	)
-	generate_items_inside(items_inside, src)
+	if(!circular_saw)
+		circular_saw = new(src)
+	if(!bone_gel)
+		bone_gel = new(src)
+	if(!surgical_tape)
+		surgical_tape = new(src)
+	if(!surgical_drapes)
+		surgical_drapes = new(src)
+	if(!surgical_drill)
+		surgical_drill = new(src)
+	new obj/item/clothing/mask/surgical(src)
 
 ///Sets the surgery tray's deployment state. Silent if user is null.
 /obj/item/surgery_tray/proc/set_tray_mode(new_mode, mob/user)
