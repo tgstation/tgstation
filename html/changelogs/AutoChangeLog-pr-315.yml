@@ -1,0 +1,5 @@
+author: "Denesta"
+delete-after: True
+changes:
+  - rscadd: "Added new message when trying to wring out a dry mop into a bucket."
+  - bugfix: "Fixed right clicking a mop on a bucket also acting as a left click."
