@@ -42919,9 +42919,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"mIC" = (
-/turf/open/space/basic,
-/area/station/asteroid)
 "mIN" = (
 /obj/structure/table,
 /obj/item/radio/intercom/prison,
@@ -180332,7 +180329,7 @@ uRv
 uRv
 uRv
 aaa
-mIC
+aaa
 aaa
 aaa
 aaa
