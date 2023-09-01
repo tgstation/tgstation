@@ -22739,6 +22739,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"gbg" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/station/security/execution/education)
 "gbj" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -33259,9 +33268,12 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "jDl" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/station/security/execution/education)
 "jDE" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -34856,6 +34868,13 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering)
+"kfA" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/station/security/execution/education)
 "kfD" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/door/airlock/external{
@@ -43377,6 +43396,7 @@
 /area/station/engineering/atmos)
 "mRB" = (
 /obj/structure/lattice/catwalk/mining,
+/obj/effect/decal/remains/human,
 /turf/open/lava,
 /area/station/security/execution/education)
 "mRD" = (
@@ -43969,7 +43989,10 @@
 /area/station/maintenance/disposal)
 "nbp" = (
 /obj/structure/table,
-/obj/item/food/cake/birthday,
+/obj/item/food/cake/birthday{
+	layer = 3.01
+	},
+/obj/item/knife/butcher,
 /turf/open/floor/eighties/red{
 	icon = 'goon/icons/turf/floors.dmi';
 	icon_state = "clown_carpet"
@@ -55701,6 +55724,14 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space/basic,
 /area/space/nearstation)
+"qPp" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/station/security/execution/education)
 "qPE" = (
 /obj/structure/chair/greyscale{
 	dir = 4
@@ -78487,6 +78518,10 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
+"yeO" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/lava,
+/area/station/security/execution/education)
 "yeW" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
@@ -90611,7 +90646,7 @@ aaa
 aaa
 aaa
 gfK
-kqp
+yeO
 kqp
 kqp
 kqp
@@ -91127,7 +91162,7 @@ gfK
 gfK
 cCK
 mgg
-cBh
+qPp
 cBh
 cBh
 wDa
@@ -91384,7 +91419,7 @@ eQT
 fcD
 eQT
 mRB
-cBh
+jDl
 nbp
 wZt
 wDa
@@ -91641,9 +91676,9 @@ gfK
 gfK
 qVb
 mgg
-cBh
-cBh
-cBh
+kfA
+kfA
+gbg
 wDa
 kqp
 gfK
@@ -116903,7 +116938,7 @@ gmR
 xwG
 xwG
 ykO
-jDl
+hZr
 bNz
 bNz
 bNz
