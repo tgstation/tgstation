@@ -5798,9 +5798,6 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Vacant Office A"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/office)
 "bKI" = (
@@ -157539,9 +157536,9 @@ tjo
 tjo
 tjo
 iDt
-iDt
-iDt
-iDt
+gjq
+gjq
+gjq
 iDt
 tjo
 tjo
@@ -157794,8 +157791,8 @@ tjo
 tjo
 tjo
 tjo
-tjo
 iDt
+gjq
 gjq
 gjq
 gjq
@@ -158051,8 +158048,8 @@ tjo
 tjo
 tjo
 tjo
-tjo
 iDt
+gjq
 gjq
 gjq
 gjq
@@ -158308,12 +158305,12 @@ tjo
 tjo
 tjo
 tjo
-tjo
+iDt
 xxV
 gjq
 gjq
 gjq
-iDt
+gjq
 tjo
 tjo
 thA
@@ -158565,12 +158562,12 @@ tjo
 tjo
 tjo
 tjo
-tjo
+iDt
 iDt
 gjq
 gjq
 gjq
-iDt
+gjq
 tjo
 thA
 thA
@@ -158824,9 +158821,9 @@ tjo
 tjo
 tjo
 tjo
-tjo
-iDt
-iDt
+gjq
+gjq
+gjq
 tjo
 tjo
 thA
