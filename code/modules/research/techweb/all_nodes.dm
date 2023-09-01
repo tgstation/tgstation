@@ -279,6 +279,8 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"medicalbed",
+		"medicalbed_emergency",
 		"mmi_m",
 		"operating",
 		"petri_dish",

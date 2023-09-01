@@ -335,6 +335,30 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/medical_bed
+	name = "Medical Bed"
+	desc = "A bed made of sterile materials ideal for use in the medical field. Patient assistance or joyriding, it'll do it all!"
+	id = "medicalbed"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/structure/bed/medical
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/emergency_bed
+	name = "Medical Bed (Emergency)"
+	desc = "A portable, foldable version of the medical bed. Perfect for paramedics or whenever you have mass casualties!"
+	id = "medicalbed_emergency"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3)
+	build_path = /obj/item/emergency_bed
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
