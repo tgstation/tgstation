@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Traitors should generate with \"free objective\" less often, and will once more be assigned to steal things."
