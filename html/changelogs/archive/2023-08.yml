@@ -268,7 +268,7 @@
   Ben10Omintrix:
   - bugfix: the bee will now care more about polinating
   - qol: in case u miscliked the bee queen with a seringe 2 times, the raegent will
-      not be transfered to the quen if he alredy have this raegent
+      not be transferred to the quen if he alredy have this raegent
   BlueMemesauce:
   - rscadd: Emagged player-controlled bots now get different flavor text (depends
       on policy)

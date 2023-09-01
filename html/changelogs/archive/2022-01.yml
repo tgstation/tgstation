@@ -41,7 +41,7 @@
   - bugfix: Massively decreased initialization times in best case scenarios.
   SmArtKar:
   - bugfix: Sacrificing a mindshielded person no longer causes their soul to be left
-      in their brain instead of getting transfered to the soulstone
+      in their brain instead of getting transferred to the soulstone
   interestingusernam3:
   - bugfix: Silicons and other mobs that shouldn't be able to lie down now won't lie
       down no matter what happens.

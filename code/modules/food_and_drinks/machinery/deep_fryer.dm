@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
 		user.visible_message(span_notice("[user] drops [weapon] into [src]."), span_notice("You dissolve [weapon] in [src]."))
-		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transfered_by = user)
+		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transferred_by = user)
 		qdel(weapon)
 		return
 	// Make sure we have cooking oil

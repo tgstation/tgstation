@@ -30,7 +30,7 @@
       on Omegastation
   XDTM:
   - bugfix: Fixed Runic Golem's Abyssal Gaze blinding permanently.
-  - balance: Ocular Restoration has been removed, its effect transfered on Sensory
+  - balance: Ocular Restoration has been removed, its effect transferred on Sensory
       Restoration.
   - balance: Sensory Restoration now heals both eye and ear damage.
   - balance: Mind Restoration now no longer heals ear damage, but now heals brain
