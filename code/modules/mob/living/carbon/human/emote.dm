@@ -224,7 +224,6 @@
 //MonkeStation Edit Start
 //Butt-Based Farts
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
 	if(issilicon(user))
 		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!")
 		playsound(user, pick(
@@ -246,8 +245,9 @@
 			'monkestation/sound/effects/robot_farts/rbf16.ogg',
 			'monkestation/sound/effects/robot_farts/rbf17.ogg',
 			'monkestation/sound/effects/robot_farts/rbf18.ogg',
-	), 50, TRUE)
+		), 50, TRUE)
 		return
+	. = ..()
 	if(user.stat == CONSCIOUS)
 		if((!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user)))
 			to_chat(user, "<span class='warning'>You don't have a butt!</span>")
