@@ -5380,6 +5380,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "bGA" = (
@@ -6668,6 +6669,7 @@
 /obj/machinery/door/airlock/research{
 	name = "Crater Observation Room"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -17655,6 +17657,7 @@
 	name = "Vacant Office A"
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
 "fxR" = (
@@ -18868,6 +18871,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "fTo" = (
@@ -25942,6 +25946,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/large,
 /area/station/maintenance/aft/greater)
 "ikz" = (
@@ -27366,6 +27371,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/large,
 /area/station/medical/medbay/lobby)
 "iIF" = (
@@ -43959,6 +43965,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "nWf" = (
@@ -44159,6 +44166,7 @@
 /obj/machinery/door/airlock/research{
 	name = "Crater Observation Room"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white/side,
 /area/mine/living_quarters)
 "oaQ" = (
@@ -44846,6 +44854,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
+/obj/machinery/door/firedoor,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "olI" = (
@@ -45852,6 +45861,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "oAz" = (
@@ -49081,6 +49091,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "pzs" = (
@@ -49537,6 +49548,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "pHR" = (
@@ -49656,6 +49668,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "pJQ" = (
@@ -51577,6 +51590,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs/auxiliary)
 "qqB" = (
@@ -57300,6 +57314,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "sib" = (
@@ -59347,6 +59362,7 @@
 	id = "hopflash";
 	pixel_y = -23
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "sMY" = (
@@ -68743,6 +68759,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/security/checkpoint/science)
 "vUi" = (
@@ -72040,6 +72057,7 @@
 	name = "Auxillary Base Shutters"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "wUz" = (
