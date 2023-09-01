@@ -70494,8 +70494,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/button{
-	pixel_y = 22;
+/obj/machinery/button/door/directional/north{
 	id = "funnywindow"
 	},
 /turf/open/floor/iron/smooth,
