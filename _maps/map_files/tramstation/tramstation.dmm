@@ -75305,7 +75305,6 @@
 	limb_destroyer = 1;
 	desc = "This clown has been imprisoned for years for his many sins...";
 	loot = list(obj/item/food/cake/clown_cake);
-	armour_penetration = 1
 	},
 /turf/open/floor/eighties/red{
 	icon = 'goon/icons/turf/floors.dmi';
