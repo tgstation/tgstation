@@ -130,7 +130,6 @@
 
 		if(!istype(potential_boulder, /obj/item/boulder))
 			potential_boulder.forceMove(drop_location())
-			say("non-boulder found!")
 			CRASH("\The [src] had a non-boulder in it!") //This should never happen.
 
 		var/obj/item/boulder/boulder = potential_boulder
@@ -212,6 +211,12 @@
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	use_power(100)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
+	var/is_artifact = istype(chosen_boulder, /obj/item/boulder/artifact) //We need to know if it's an artifact so we can carry it over to the new boulder.
+	var/obj/item/potential_contents
+	if(is_artifact)
+		var/obj/item/boulder/artifact/arti_boulder = chosen_boulder
+		potential_contents = arti_boulder?.artifact_inside
+		potential_contents.forceMove(src)
 	silo_materials.mat_container.insert_item(
 		weapon = chosen_boulder,\
 		multiplier = refining_efficiency,\
@@ -220,9 +225,8 @@
 	)
 	balloon_alert_to_viewers("Boulder processed!")
 	var/old_size = chosen_boulder.boulder_size
-	var/is_artifact = istype(chosen_boulder, /obj/item/boulder/artifact)
 	if(!remaining_ores.len)
-		qdel(chosen_boulder)
+		chosen_boulder.break_apart()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_boulder_count()
 		return TRUE
@@ -231,6 +235,10 @@
 	new_rock.set_custom_materials(remaining_ores)
 	new_rock.reset_processing_cooldown() //So that we don't pick it back up!
 	new_rock.flavor_boulder(null, old_size, is_artifact)
+	if(potential_contents)
+		var/obj/item/boulder/artifact/arti_boulder = new_rock
+		arti_boulder.artifact_inside = potential_contents
+		potential_contents.forceMove(arti_boulder)
 	remove_boulder(new_rock)
 	return TRUE
 
@@ -242,7 +250,7 @@
 	if(isnull(new_boulder))
 		return FALSE
 	if(boulders_contained.len >= boulders_held_max) //Full already
-		visible_message(span_warning("no space!"))
+
 		return FALSE
 	if(!new_boulder.custom_materials) //Shouldn't happen, but just in case.
 		qdel(new_boulder)

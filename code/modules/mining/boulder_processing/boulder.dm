@@ -132,6 +132,14 @@
 	COOLDOWN_START(src, processing_cooldown, 2 SECONDS)
 
 /**
+ * Moves boulder contents to the drop location, and then deletes the boulder.
+ */
+/obj/item/boulder/proc/break_apart()
+	for(var/obj/item/content as anything in contents)
+		content.forceMove(drop_location())
+	qdel(src)
+
+/**
  * This is called when a boulder is spawned from a vent, and is used to set the boulder's icon as well as durability.
  * We also set our boulder_size variable, which is used for inheiriting the icon_state later on if processed.
  */
@@ -175,13 +183,16 @@
 
 /obj/item/boulder/artifact/Destroy(force)
 	. = ..()
-	artifact_inside.forceMove(drop_location())
 	artifact_inside = null
 
 /obj/item/boulder/artifact/convert_to_ore()
 	. = ..()
 	artifact_inside.forceMove(drop_location())
 	artifact_inside = null
+
+/obj/item/boulder/artifact/break_apart()
+	artifact_inside = null
+	return ..()
 
 
 /obj/item/boulder/gulag
