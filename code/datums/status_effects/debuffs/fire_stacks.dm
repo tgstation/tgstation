@@ -16,6 +16,8 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
+	/// how long have we been ON FIRE?
+	var/ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(forced)
@@ -208,7 +210,16 @@
 		return
 
 	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick)
-	victim.adjustBurnLoss(5 * stacks)
+	switch(ticks_on_fire)
+		if(0 to 3)
+			victim.adjustBurnLoss(0.5 * stacks)
+		if(3 to 6)
+			victim.adjustBurnLoss(1 * stacks)
+		if(6 to 9)
+			victim.adjustBurnLoss(3 * stacks)
+		if(10 to INFINITY)
+			victim.adjustBurnLoss(5 * stacks)
+	ticks_on_fire += 1 * seconds_per_tick
 	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	victim.add_mob_memory(/datum/memory/was_burning)
 
@@ -253,6 +264,7 @@
 	update_particles()
 	for(var/obj/item/equipped in owner.get_equipped_items())
 		equipped.extinguish()
+	ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)
