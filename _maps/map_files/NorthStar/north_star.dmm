@@ -8022,8 +8022,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/aft)
 "bYX" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -9274,8 +9274,8 @@
 "coZ" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/defibrillator_mount/directional/south,
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical{
+	dir = 8
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
@@ -31258,7 +31258,9 @@
 "ilI" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/defibrillator_mount/directional/south,
-/obj/structure/bed,
+/obj/structure/bed/medical{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "ilK" = (
@@ -33162,8 +33164,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "iMF" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -54133,7 +54135,9 @@
 /area/station/medical/psychology)
 "ocO" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/green,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
@@ -61450,8 +61454,8 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "qcI" = (
-/obj/structure/bed{
-	dir = 1
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/random/directional/west,
@@ -79383,8 +79387,8 @@
 /turf/open/floor/grass,
 /area/station/science/cytology)
 "uPc" = (
-/obj/structure/bed{
-	dir = 1
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/random/directional/east,
@@ -84895,8 +84899,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "wlo" = (
-/obj/structure/bed{
-	dir = 1
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/small/directional/south,

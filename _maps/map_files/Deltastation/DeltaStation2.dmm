@@ -6286,8 +6286,8 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "bBG" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -7909,7 +7909,9 @@
 /obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 4
 	},
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/medical,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -38906,7 +38908,9 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "jFJ" = (
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/medical,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
@@ -47732,8 +47736,8 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "lQj" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical{
+	dir = 8
 	},
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
@@ -68173,9 +68177,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "rff" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -93160,7 +93163,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xqc" = (
-/obj/structure/bed,
+/obj/structure/bed/medical{
+	dir = 4
+	},
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,

@@ -63,6 +63,9 @@
 	/// The item it spawns when it's folded up.
 	var/foldable_type
 
+/obj/structure/bed/medical/anchored
+	anchored = TRUE
+
 /obj/structure/bed/medical/emergency
 	name = "emergency medical bed"
 	desc = "A compact medical bed. This emergency version can be folded and carried for quick transport."

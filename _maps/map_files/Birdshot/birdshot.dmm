@@ -23412,7 +23412,9 @@
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "iAZ" = (
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet,
 /obj/effect/turf_decal/siding/red{
 	dir = 5
@@ -60857,8 +60859,8 @@
 /area/station/service/chapel/office)
 "vnq" = (
 /obj/structure/cable,
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet{
 	dir = 1

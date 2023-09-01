@@ -2594,8 +2594,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -30110,8 +30110,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -32294,7 +32294,9 @@
 /turf/open/floor/iron/dark/side,
 /area/station/service/chapel)
 "kmA" = (
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/medical,
 /obj/machinery/camera/directional/east{
 	c_tag = "Labor Camp Infirmary";
@@ -32500,7 +32502,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "kpX" = (
-/obj/structure/bed,
+/obj/structure/bed/medical{
+	dir = 4
+	},
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
