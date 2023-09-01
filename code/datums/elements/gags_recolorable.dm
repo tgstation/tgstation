@@ -1,3 +1,4 @@
+///An element that lets players recolor the item through the greyscale menu with the help of a spraycan.
 /datum/element/gags_recolorable
 
 /datum/element/gags_recolorable/Attach(datum/target)
@@ -5,6 +6,11 @@
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine))
+
+/datum/element/gags_recolorable/proc/on_examine(atom/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	examine_text += span_notice("You could recolor [source.p_them()] with a spraycan...")
 
 /datum/element/gags_recolorable/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
 	SIGNAL_HANDLER
