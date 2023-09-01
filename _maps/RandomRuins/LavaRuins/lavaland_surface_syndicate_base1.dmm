@@ -1585,7 +1585,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "mA" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/machinery/firealarm/directional/west,

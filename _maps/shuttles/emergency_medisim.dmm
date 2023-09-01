@@ -519,7 +519,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "un" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
