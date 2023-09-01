@@ -817,6 +817,25 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Pump Random Event")
 	log_admin("[key_name(src)] pumped a random event.")
 
+/client/proc/end_weather()
+	set category = "Debug"
+	set name = "End Weather"
+	set desc = "Shows a list of currently active weather that you can end at any time."
+	if(!holder)
+		return
+
+	var/weather = tgui_input_list(usr, "Choose an active weather event", "End Weather", SSweather.processing)
+
+	if(!weather)
+		return
+
+	var/datum/weather/to_end = weather
+	to_end.end()
+
+	message_admins(span_adminnotice("[key_name_admin(src)] ended a weather event."))
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "End Weather Event")
+	log_admin("[key_name(src)] ended a weather event.")
+
 /client/proc/start_line_profiling()
 	set category = "Profile"
 	set name = "Start Line Profiling"

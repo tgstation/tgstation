@@ -185,6 +185,34 @@
 		else
 			shared_ability.StartCooldownSelf(cooldown_time)
 
+/// Resets the cooldown of this ability
+/datum/action/cooldown/proc/ResetCooldown()
+	next_use_time = world.time
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+	START_PROCESSING(SSfastprocess, src)
+
+/// Re-enables this cooldown actions
+/datum/action/cooldown/proc/enable()
+	check_flags &= ~AB_TEMPORARY_DISABLE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+	START_PROCESSING(SSfastprocess, src)
+
+/// Disables this cooldown actions
+/datum/action/cooldown/proc/disable()
+	check_flags |= AB_TEMPORARY_DISABLE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+	START_PROCESSING(SSfastprocess, src)
+
+/// Re-enables cooldown actions
+/datum/action/cooldown/proc/enable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.enable()
+
+/// Disables cooldown actions
+/datum/action/cooldown/proc/disable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.disable()
+
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
 	if(!.)

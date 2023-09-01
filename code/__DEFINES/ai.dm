@@ -249,6 +249,10 @@
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
 
+// Legion AI keys
+#define BB_LEGION_BONE "BB_legion_bone"
+#define BB_LEGION_LASERS "BB_legion_lasers"
+
 // Spider AI keys
 /// Key where we store a turf to put webs on
 #define BB_SPIDER_WEB_TARGET "BB_spider_web_target"

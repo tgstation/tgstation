@@ -195,6 +195,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/debug_spell_requirements,
 	/client/proc/display_sendmaps,
 	/client/proc/enable_mapping_verbs,
+	/client/proc/end_weather,
 	/client/proc/generate_wikichem_list,
 	/client/proc/get_dynex_power, /*debug verbs for dynex explosions.*/
 	/client/proc/get_dynex_range, /*debug verbs for dynex explosions.*/

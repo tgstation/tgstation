@@ -1,6 +1,5 @@
 ///prototype for mining mobs
 /mob/living/basic/mining
-
 	combat_mode = TRUE
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0

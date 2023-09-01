@@ -12,9 +12,10 @@
 	var/ice_breath = FALSE
 
 /datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	attack_sequence(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/attack_sequence(atom/target)

@@ -314,6 +314,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	icon_state = "boss_wall-0"
 	base_icon_state = "boss_wall"
+	flags_ricochet = RICOCHET_HARD
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_BOSS_WALLS
 	canSmoothWith = SMOOTH_GROUP_BOSS_WALLS
