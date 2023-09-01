@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - bugfix: "Hilbert's Hotel Research ruin now has a functioning tram. As a side effect, the malfunctioning tram event should now only fire on maps with a tram!"
