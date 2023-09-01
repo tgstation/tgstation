@@ -208,6 +208,7 @@
 		return
 
 	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick)
+	victim.adjustBurnLoss(5 * stacks)
 	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	victim.add_mob_memory(/datum/memory/was_burning)
 
