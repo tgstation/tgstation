@@ -61,7 +61,6 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
-	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore
 	var/atom/target = controller.blackboard[target_key]
@@ -75,7 +74,6 @@
 	var/atom/final_target = hiding_target ? hiding_target : target
 
 	if(!can_see(basic_mob, final_target, required_distance))
-		finish_action(controller, FALSE, target_key)
 		return
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
@@ -88,6 +86,8 @@
 		callback.Invoke()
 	else
 		basic_mob.RangedAttack(final_target)
+
+	return ..() //only start the cooldown when the shot is shot
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
