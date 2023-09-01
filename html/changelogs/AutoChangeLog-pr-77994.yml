@@ -1,5 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "Fixed the crafting menu being able to get stuck if your crafting recipe somehow goes missing."
-  - code_imp: "Improves the quality of the item crafting code slightly."
