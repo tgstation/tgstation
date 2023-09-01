@@ -63,9 +63,16 @@
 
 /proc/mineral_scan_pulse(turf/T, range = world.view)
 	var/list/minerals = list()
-	for(var/turf/closed/mineral/M in range(range, T))
-		if(M.scan_state)
-			minerals += M
+	var/vents_nearby = FALSE
+	for(var/turf/closed/mineral/mineral in range(range, T))
+		if(mineral.scan_state)
+			minerals += mineral
+	for(var/obj/structure/ore_vent/vent in range(range, T))
+		if(vent && !vents_nearby)
+			vents_nearby = TRUE
+		if(vent.discovered)
+			vent.add_mineral_overlays()
+
 	if(LAZYLEN(minerals))
 		for(var/turf/closed/mineral/M in minerals)
 			var/obj/effect/temp_visual/mining_overlay/oldC = locate(/obj/effect/temp_visual/mining_overlay) in M
@@ -73,6 +80,9 @@
 				qdel(oldC)
 			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
 			C.icon_state = M.scan_state
+	if(vents.len)
+		playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+		visible_message(loc, "The scanner has detected an ore vent nearby!")
 
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE

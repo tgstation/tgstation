@@ -1,6 +1,7 @@
 #define MAX_ARTIFACT_ROLL_CHANCE 10
-
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
+#define OVERLAY_OFFSET_START 0
+#define OVERLAY_OFFSET_EACH 5
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -248,6 +249,14 @@
 		else
 			ore_string += resource.name + ", "
 
+/**
+ * Adds floating temp_visual overlays to the vent, showcasing what minerals are contained within it.
+ */
+/obj/structure/ore_vent/proc/add_mineral_overlays()
+	for(var/datum/material/selected_mat as anything in mineral_breakdown)
+		
+
+
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
@@ -371,3 +380,5 @@
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM
+#undef OVERLAY_OFFSET_START
+#undef OVERLAY_OFFSET_EACH
