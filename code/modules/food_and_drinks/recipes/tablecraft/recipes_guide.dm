@@ -181,7 +181,7 @@
 	reaction = /datum/chemical_reaction/food/yoghurt
 
 /datum/crafting_recipe/food/reaction/quality_oil
-	result = /datum/reagent/consumable/quality_oil
+	result = /datum/reagent/consumable/nutriment/fat/oil/olive
 	reaction = /datum/chemical_reaction/food/quality_oil
 
 /datum/crafting_recipe/food/reaction/quality_oil/upconvert
@@ -228,6 +228,7 @@
 /datum/crafting_recipe/food/rollingpin/pizza_sheet
 	reqs = list(/obj/item/food/pizzaslice/margherita = 1)
 	result = /obj/item/stack/sheet/pizza
+	category = CAT_PIZZA
 
 // Tools: Knife
 
@@ -249,7 +250,7 @@
 /datum/crafting_recipe/food/knife/cakeslice
 	reqs = list(/obj/item/food/cake/plain = 1)
 	result = /obj/item/food/cakeslice/plain
-	category = CAT_PASTRY
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/knife/pizzaslice
 	reqs = list(/obj/item/food/pizza/margherita = 1)
@@ -266,9 +267,9 @@
 	result = /obj/item/food/rootdoughslice
 	category = CAT_BREAD
 
-/datum/crafting_recipe/food/knife/pastrybase
+/datum/crafting_recipe/food/knife/rawpastrybase
 	reqs = list(/obj/item/food/piedough = 1)
-	result = /obj/item/food/pastrybase
+	result = /obj/item/food/rawpastrybase
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/knife/butterslice
@@ -357,7 +358,7 @@
 /datum/crafting_recipe/food/knife/lil_baked_rice
 	reqs = list(/obj/item/food/big_baked_rice = 1)
 	result = /obj/item/food/lil_baked_rice
-	category = CAT_SALAD
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/knife/watermelonslice
 	reqs = list(/obj/item/food/grown/watermelon = 1)
@@ -447,7 +448,7 @@
 /datum/crafting_recipe/food/grill/grilled_cheese_sandwich
 	reqs = list(/obj/item/food/sandwich/cheese = 1)
 	result = /obj/item/food/sandwich/cheese/grilled
-	category = CAT_BREAD
+	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/grill/grilled_cheese
 	reqs = list(/obj/item/food/cheese/firm_cheese_slice = 1)
@@ -510,6 +511,11 @@
 		"Add chocolate",
 		"Bake until ready"
 	)
+
+/datum/crafting_recipe/food/grill/hard_taco_shell
+	reqs = list(/obj/item/food/tortilla = 1)
+	result = /obj/item/food/hard_taco_shell
+	category = CAT_MEXICAN
 
 // Machinery: Grinder
 /datum/crafting_recipe/food/grinder
@@ -644,7 +650,7 @@
 /datum/crafting_recipe/food/processor/tortilla
 	reqs = list(/obj/item/food/grown/corn = 1)
 	result = /obj/item/food/tortilla
-	category = CAT_BREAD
+	category = CAT_MEXICAN
 
 /datum/crafting_recipe/food/processor/tempeh
 	reqs = list(/obj/item/food/tempehstarter = 1)
@@ -748,12 +754,12 @@
 /datum/crafting_recipe/food/oven/pie
 	reqs = list(/obj/item/food/piedough = 1)
 	result = /obj/item/food/pie/plain
-	category = CAT_PASTRY
+	category = CAT_PIE
 
 /datum/crafting_recipe/food/oven/cake
 	reqs = list(/obj/item/food/cakebatter = 1)
 	result = /obj/item/food/cake/plain
-	category = CAT_PASTRY
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/oven/breadstick
 	reqs = list(/obj/item/food/raw_breadstick = 1)
@@ -777,7 +783,7 @@
 /datum/crafting_recipe/food/oven/big_baked_rice
 	reqs = list(/obj/item/food/raw_baked_rice = 1)
 	result = /obj/item/food/big_baked_rice
-	category = CAT_SALAD
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/oven/ratatouille
 	reqs = list(/obj/item/food/raw_ratatouille = 1)
@@ -787,7 +793,7 @@
 /datum/crafting_recipe/food/oven/stuffed_peppers
 	reqs = list(/obj/item/food/raw_stuffed_peppers = 1)
 	result = /obj/item/food/stuffed_peppers
-	category = CAT_SALAD
+	category = CAT_MOTH
 
 /datum/crafting_recipe/food/oven/roasted_bell_pepper
 	reqs = list(/obj/item/food/grown/bell_pepper = 1)

@@ -90,28 +90,10 @@
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
-	new /obj/item/tool_parcel(src)
+	new /obj/item/crowbar/red(src)
+	new /obj/item/screwdriver/red(src)
+	new /obj/item/weldingtool/mini(src)
 	new /obj/item/paper/fluff/operative(src)
-
-/obj/item/tool_parcel
-	name = "operative toolkit care package"
-	desc = "A small parcel. It contains a few items every operative needs."
-	w_class =  WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/storage/wrapping.dmi'
-	icon_state = "deliverypackage2"
-
-/obj/item/tool_parcel/attack_self(mob/user)
-	. = ..()
-	new /obj/item/crowbar/red(get_turf(user))
-	new /obj/item/screwdriver/red(get_turf(user))
-	new /obj/item/weldingtool/mini(get_turf(user))
-	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
-	if(prob(5))
-		new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(get_turf(user))
-		new /obj/item/lighter(get_turf(user))
-		to_chat(user, span_notice("...oh, someone left some cigarettes in here."))
-	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
-	qdel(src)
 
 /obj/item/storage/box/survival/centcom
 	name = "emergency response survival box"

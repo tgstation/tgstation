@@ -60,12 +60,3 @@
 		playsound(target.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	target.set_greyscale(menu.split_colors)
-
-	// If the item is a piece of clothing and is being worn, make sure it updates on the player
-	if(!isclothing(target))
-		return
-	if(!ishuman(target.loc))
-		return
-	var/obj/item/clothing/clothing_target = target
-	var/mob/living/carbon/human/wearer = target.loc
-	wearer.update_clothing(clothing_target.slot_flags)

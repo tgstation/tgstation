@@ -1,5 +1,0 @@
-author: "Kubisopplay"
-delete-after: True
-changes:
-  - bugfix: "Borgs no longer get permastunned by emotes"
-  - bugfix: "Borg hud should not fuck up in few situations"
