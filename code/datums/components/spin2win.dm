@@ -85,7 +85,7 @@
 		var/message = replacetext(start_spin_message, "%USER", spinning_user)
 		spinning_user.visible_message(message)
 	playsound(spinning_user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	stop_spinning_timer_id = addtimer(CALLBACK(src, PROC_REF(stop_spinning), spinning_user), spin_duration	, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	stop_spinning_timer_id = addtimer(CALLBACK(src, PROC_REF(stop_spinning), spinning_user), spin_duration, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_spin_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_spin_dropped))
 	START_PROCESSING(SSprocessing, src)
@@ -100,7 +100,7 @@
 		var/message = replacetext(end_spin_message, "%USER", user)
 		user.visible_message(message)
 	if(on_unspin_callback)
-		on_unspin_callback.Invoke(user, spin_duration	)
+		on_unspin_callback.Invoke(user, spin_duration)
 	COOLDOWN_START(src, spin_cooldown, spin_cooldown_time)
 	spinning = FALSE
 
