@@ -965,7 +965,7 @@
 		"borg_upgrade_condiment_synthesizer",
 		"borg_upgrade_silicon_knife",
 		"borg_upgrade_service_apparatus",
-		"borg_upgrade_drink_aparatus",
+		"borg_upgrade_drink_apparatus",
 		"borg_upgrade_service_cookbook",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
