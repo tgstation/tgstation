@@ -571,7 +571,7 @@
 	cooldown_time = 15 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
 
 /datum/action/cooldown/mob_cooldown/chicken/lay_egg/PreActivate(atom/target)
 	var/mob/living/basic/chicken/chicken_owner = owner
@@ -606,7 +606,7 @@
 	cooldown_time = 20 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
 
 /datum/action/cooldown/mob_cooldown/chicken/feed/PreActivate(atom/target)
 	if(!istype(target, /obj/effect/chicken_feed))

@@ -18,6 +18,9 @@
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/clown
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/clown/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/mob_cooldown/chicken/stored_action = controller.blackboard[ability_key]
+	if(!stored_action.IsAvailable())
+		return
 	var/mob/living/living_pawn = controller.pawn
 
 	if(istype(living_pawn, /mob/living/basic/chicken/clown_sad))
@@ -43,6 +46,9 @@
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/rev
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/rev/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/mob_cooldown/chicken/stored_action = controller.blackboard[ability_key]
+	if(!stored_action.IsAvailable())
+		return
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/viable_conversions = list()
@@ -56,11 +62,14 @@
 	return ..()
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/lay_egg
-	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
 	target_key = BB_CHICKEN_NESTING_BOX
 	ability_key = BB_CHICKEN_LAY_EGG
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/lay_egg/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/mob_cooldown/chicken/stored_action = controller.blackboard[ability_key]
+	if(!stored_action.IsAvailable())
+		return
 	var/mob/living/basic/chicken/living_pawn = controller.pawn
 	if(living_pawn.eggs_left <= 0)
 		return
@@ -74,11 +83,14 @@
 	return ..()
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed
-	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/on_top
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/on_top
 	target_key = BB_BASIC_MOB_CURRENT_TARGET
 	ability_key = BB_CHICKEN_FEED
 
 /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/feed/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/mob_cooldown/chicken/stored_action = controller.blackboard[ability_key]
+	if(!stored_action.IsAvailable())
+		return
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/found_spots = list()

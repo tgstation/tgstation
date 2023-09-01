@@ -77,7 +77,7 @@
 	cooldown_time = 40 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/melee
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
 
 /datum/action/cooldown/mob_cooldown/chicken/sugar_rush/Activate(mob/living/target)
 	var/mob/living/living_owner = owner

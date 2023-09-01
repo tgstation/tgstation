@@ -54,7 +54,7 @@
 	cooldown_time = 30 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	shared_cooldown = NONE
-	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/melee
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
 
 /datum/action/cooldown/mob_cooldown/chicken/honk/Activate(mob/living/target)
 	target.slip(5 SECONDS, FALSE)
