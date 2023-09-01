@@ -176,7 +176,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_QM,
-		)
+	)
 	job = /datum/job/bitrunner
 
 /datum/id_trim/job/botanist
