@@ -258,6 +258,9 @@
 	var/datum/reagent/chemical = needle.reagents.get_master_reagent()
 	if(isnull(chemical))
 		return
+	if(!(chemical.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
+		to_chat(user, span_warning("[queen] backs away from the syringe, fearful of the non-synthesizable contents!"))
+		return
 	if(chemical.type == queen.beegent?.type)
 		to_chat(user, span_warning("[queen] already has this chemical!"))
 		return
