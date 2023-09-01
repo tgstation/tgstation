@@ -169,11 +169,29 @@
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
 	desc = "An improvement on the previous model of electric thrusters. This one achieves higher speeds through \
-		mounting of more jets and a red paint applied on it."
+		mounting of more jets and application of red paint."
 	icon_state = "jetpack_advanced"
 	overlay_state_inactive = "module_jetpackadv"
 	overlay_state_active = "module_jetpackadv_on"
 	full_speed = TRUE
+
+///Jump Jet - Briefly removes the effect of gravity and pushes you up one z-level if possible.
+/obj/item/mod/module/jump_jet
+	name = "MOD ionic jump jet module"
+	desc = "A specialised ionic thruster which provides a short but powerful thrust capable of pushing against gravity."
+	icon_state = "jetpack_advanced"
+	module_type = MODULE_USABLE
+	complexity = 3
+	cooldown_time = 15 SECONDS
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	incompatible_modules = list(/obj/item/mod/module/jump_jet)
+
+/obj/item/mod/module/jump_jet/on_activation()
+	. = ..()
+	if (!.)
+		return FALSE
+	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
+	return TRUE
 
 ///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
 /obj/item/mod/module/status_readout
