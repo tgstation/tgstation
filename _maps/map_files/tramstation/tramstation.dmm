@@ -6500,6 +6500,8 @@
 	name = "Dangerous Modules";
 	req_access = list("captain")
 	},
+/obj/item/ai_module/supplied/crimereligion,
+/obj/item/ai_module/zeroth/coderedmartiallaw,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "aMG" = (
@@ -64228,6 +64230,7 @@
 	frequency = 1447;
 	name = "ai intercom"
 	},
+/obj/item/ai_module/core/full/asimovpp,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tyx" = (
