@@ -515,7 +515,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		radio.talk_into(
 			src,
 			"WARNING: Projected time until full crystal delamination significantly lower than expected. \
-			Please inspect crystal for structural abnormalities or sabatoge!",
+			Please inspect crystal for structural abnormalities or sabotage!",
 			emergency_channel,
 			list(SPAN_COMMAND)
 			)
