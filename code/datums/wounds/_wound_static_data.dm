@@ -2,28 +2,6 @@
 // For example: You can make a pregen_data subtype for your wound that overrides can_be_applied_to to only apply to specifically slimeperson limbs.
 // Without this, youre stuck with very static initial variables.
 
-GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
-
-/proc/generate_wound_static_data()
-	RETURN_TYPE(/list/datum/wound_pregen_data)
-
-	var/list/datum/wound_pregen_data/data = list()
-
-	for (var/datum/wound_pregen_data/path as anything in typecacheof(path = /datum/wound_pregen_data, ignore_root_path = TRUE))
-		if (initial(path.abstract))
-			continue
-
-		if (!isnull(data[initial(path.wound_path_to_generate)]))
-			stack_trace("pre-existing pregen data for [initial(path.wound_path_to_generate)] when [path] was being considered: [data[initial(path.wound_path_to_generate)]]. \
-						this is definitely a bug, and is probably because one of the two pregen data have the wrong wound typepath defined. [path] will not be instantiated")
-
-			continue
-
-		var/datum/wound_pregen_data/pregen_data = new path
-		data[pregen_data.wound_path_to_generate] = pregen_data
-
-	return data
-
 /// A singleton datum that holds pre-gen and static data about a wound. Each wound datum should have a corresponding wound_pregen_data.
 /datum/wound_pregen_data
 	/// The typepath of the wound we will be handling and storing data of. NECESSARY IF THIS IS A NON-ABSTRACT TYPE!
@@ -48,6 +26,8 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 	/// A list of bodyzones we are applicable to.
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+
+	var/weight = WOUND_DEFAULT_WEIGHT
 
 /datum/wound_pregen_data/New()
 	. = ..()

@@ -5,6 +5,8 @@
 	required_limb_biostate = NONE
 	check_for_any = TRUE
 
+	can_be_randomly_generated = FALSE
+
 /datum/wound/loss
 	name = "Dismemberment Wound"
 	desc = "oof ouch!!"
@@ -19,6 +21,10 @@
 
 	/// The wound_type of the attack that caused us. Used to generate the description of our scar. Currently unused, but primarily exists in case non-biological wounds are added.
 	var/loss_wound_type
+
+	wound_series = WOUND_SERIES_LOSS_BASIC
+
+	abstract = FALSE
 
 /// Our special proc for our special dismembering, the wounding type only matters for what text we have
 /datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type = WOUND_SLASH, outright = FALSE, attack_direction)

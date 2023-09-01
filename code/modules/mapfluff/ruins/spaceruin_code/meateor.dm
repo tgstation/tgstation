@@ -13,8 +13,15 @@
 
 /obj/effect/mob_spawn/corpse/human/tigercultist/perforated/special(mob/living/carbon/human/spawned_human)
 	. = ..()
-	var/datum/wound/pierce/bleed/critical/exit_hole = new()
-	exit_hole.apply_wound(spawned_human.get_bodypart(BODY_ZONE_CHEST))
+
+	var/obj/item/bodypart/chest/their_chest = spawned_human.get_bodypart(BODY_ZONE_CHEST)
+	if (!their_chest)
+		return
+
+	var/datum/wound/wound_typepath = get_corresponding_wound_type(WOUND_PIERCE, their_chest, WOUND_SEVERITY_CRITICAL)
+	if (wound_typepath)
+		var/datum/wound/new_wound = new wound_typepath
+		new_wound.apply_wound(their_chest)
 
 /// A fun drink enjoyed by the tiger cooperative, might corrode your brain if you drink the whole bottle
 /obj/item/reagent_containers/cup/glass/bottle/ritual_wine

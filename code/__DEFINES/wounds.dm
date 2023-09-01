@@ -1,4 +1,3 @@
-
 // ~wound damage/rolling defines
 /// the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage. See [/obj/item/bodypart/proc/check_wounding]
 #define WOUND_DAMAGE_EXPONENT 1.4
@@ -13,6 +12,8 @@
 /// set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100
 
+#define WOUND_DEFAULT_WEIGHT 50
+
 // ~wound severities
 /// for jokey/meme wounds like stubbed toe, no standard messages/sounds or second winds
 #define WOUND_SEVERITY_TRIVIAL 0
@@ -22,16 +23,22 @@
 /// outright dismemberment of limb
 #define WOUND_SEVERITY_LOSS 4
 
+GLOBAL_LIST_INIT(wound_severities_chronological, list(
+	"[WOUND_SEVERITY_TRIVIAL]",
+	"[WOUND_SEVERITY_MODERATE]",
+	"[WOUND_SEVERITY_SEVERE]",
+	"[WOUND_SEVERITY_CRITICAL]"
+))
 
 // ~wound categories
 /// any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds
-#define WOUND_BLUNT 1
+#define WOUND_BLUNT "wound_blunt"
 /// any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds
-#define WOUND_SLASH 2
+#define WOUND_SLASH "wound_slash"
 /// any brute weapon/attack with sharpness = SHARP_POINTY. rolls for piercing wounds
-#define WOUND_PIERCE 3
+#define WOUND_PIERCE "wound_pierce"
 /// any concentrated burn attack (lasers really). rolls for burning wounds
-#define WOUND_BURN 4
+#define WOUND_BURN "wound_burn"
 
 
 // ~determination second wind defines
@@ -91,13 +98,152 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 // Multiple wounds in a single series cannot be on a limb - the highest severity will always be prioritized, and lower ones will be skipped
 
 /// T1-T3 Bleeding slash wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: slash.dm
-#define WOUND_SERIES_FLESH_SLASH_BLEED 1
+#define WOUND_SERIES_FLESH_SLASH_BLEED "wound_series_flesh_slash_bled"
 /// T1-T3 Basic blunt wounds. T1 requires jointed, but 2-3 require bone. From: bone.dm
-#define WOUND_SERIES_BONE_BLUNT_BASIC 2
+#define WOUND_SERIES_BONE_BLUNT_BASIC "wound_series_bone_blunt_basic"
 /// T1-T3 Basic burn wounds. Requires flesh. From: burns.dm
-#define WOUND_SERIES_FLESH_BURN_BASIC 3
+#define WOUND_SERIES_FLESH_BURN_BASIC "wound_series_flesh_burn_basic"
 /// T1-3 Bleeding puncture wounds. Requires flesh. Can cause bleeding, but doesn't require it. From: pierce.dm
-#define WOUND_SERIES_FLESH_PUNCTURE_BLEED 4
+#define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
+#define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+
+/// The "mainline" wound series. Bleed wounds for slash, broken bones for blunt, etc.
+#define WOUND_SERIES_TYPE_BASIC "wound_series_type_basic"
+#define WOUND_SERIES_TYPE_ALTERNATE_GENERIC "wound_series_type_alternate_generic"
+
+/// A "mainline" wound of a series. Ex. a bleeding slesh for a flesh slash wound.
+#define WOUND_SPECIFIC_TYPE_BASIC "wound_specific_type_basic"
+
+#define WOUND_SPECIFC_TYPE_HERETIC_CLEAVE "wound_specific_type_heretic_cleave"
+
+GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
+
+/proc/generate_wound_static_data()
+	RETURN_TYPE(/list/datum/wound_pregen_data)
+
+	var/list/datum/wound_pregen_data/data = list()
+
+	for (var/datum/wound_pregen_data/path as anything in typecacheof(path = /datum/wound_pregen_data, ignore_root_path = TRUE))
+		if (initial(path.abstract))
+			continue
+
+		if (!isnull(data[initial(path.wound_path_to_generate)]))
+			stack_trace("pre-existing pregen data for [initial(path.wound_path_to_generate)] when [path] was being considered: [data[initial(path.wound_path_to_generate)]]. \
+						this is definitely a bug, and is probably because one of the two pregen data have the wrong wound typepath defined. [path] will not be instantiated")
+
+			continue
+
+		var/datum/wound_pregen_data/pregen_data = new path
+		data[pregen_data.wound_path_to_generate] = pregen_data
+
+	return data
+
+GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
+
+// Series -> severity -> specific type -> type -> weight
+/proc/generate_wound_series_collection()
+	RETURN_TYPE(/list/datum/wound)
+
+	var/list/datum/wound/wound_collection = list()
+
+	for (var/datum/wound/wound_type as anything in typecacheof(/datum/wound, FALSE, TRUE))
+		if (initial(wound_type.abstract))
+			continue
+
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+
+		var/series = initial(wound_type.wound_series)
+		var/list/datum/wound/series_list = wound_collection[series]
+		if (isnull(series_list))
+			wound_collection[series] = list()
+			series_list = wound_collection[series]
+
+		var/severity = "[(initial(wound_type.severity))]"
+		var/list/datum/wound/severity_list = series_list[severity]
+		if (isnull(severity_list))
+			series_list[severity] = list()
+			severity_list = series_list[severity]
+
+		var/specific_type = initial(wound_type.specific_type)
+		var/list/datum/specific_type_list = severity_list[specific_type]
+		if (isnull(specific_type_list))
+			severity_list[specific_type] = list()
+			specific_type_list = severity_list[specific_type]
+
+		var/weight = pregen_data.weight
+		specific_type_list[wound_type] = weight
+
+	return wound_collection
+
+GLOBAL_LIST_INIT(wound_types_to_series, list(
+	WOUND_BLUNT = list(
+		WOUND_SERIES_TYPE_BASIC = list(
+			WOUND_SERIES_BONE_BLUNT_BASIC
+		),
+	),
+	WOUND_SLASH = list(
+		WOUND_SERIES_TYPE_BASIC = list(
+			WOUND_SERIES_FLESH_SLASH_BLEED,
+		),
+	),
+	WOUND_BURN = list(
+		WOUND_SERIES_TYPE_BASIC = list(
+			WOUND_SERIES_FLESH_BURN_BASIC,
+		),
+	),
+	WOUND_PUNCTURE = list(
+		WOUND_SERIES_TYPE_BASIC = list(
+			WOUND_SERIES_FLESH_PUNCTURE_BLEED
+		),
+	),
+))
+
+#define WOUND_PICK_ROUND_UP 1
+#define WOUND_PICK_ROUND_DOWN 2
+#define WOUND_PICK_DONT_ROUND 3
+
+#define WOUND_PICK_ANY 5
+
+#define WOUND_PICK_HIGHEST_SEVERITY 1
+#define WOUND_PICK_LOWEST_SEVERITY 2
+
+/proc/get_corresponding_wound_type(wound_type, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE)
+
+	var/list/wound_type_list = GLOB.wound_types_to_series[wound_type]
+	if (!length(wound_type_list))
+		return null
+
+	var/list/series_list = wound_type_list[series_type]
+	if (!length(series_list))
+		return null
+
+	for (var/series as anything in shuffle(series_list))
+		var/list/severity_list = GLOB.wound_series_collections[series]
+		if (!length(severity_list))
+			continue
+
+		var/list/specific_type_list
+		var/picked_severity
+		for (var/severity as anything in shuffle(GLOB.wound_severities_chronological))
+			if (severity > severity_min || severity < severity_max)
+				continue
+
+			if (isnull(picked_severity) || ((severity_pick_mode == WOUND_PICK_HIGHEST_SEVERITY && severity > picked_severity) || (severity_pick_mode == WOUND_PICK_LOWEST_SEVERITY && severity < picked_severity)))
+				picked_severity = severity
+
+		specific_type_list = severity_list[picked_severity]
+
+		var/list/datum/wound/wound_types = specific_type_list[specific_type_list]
+		if (!length(specific_type_list))
+			continue
+
+		var/list/datum/wound/wound_types_copy = wound_types.Copy()
+		for (var/datum/wound/iterated_path as anything in wound_types_copy)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
+			if (!pregen_data.can_be_applied_to(part, wound_types, random_roll))
+				wound_types_copy -= iterated_path
+
+		return pick_weight(wound_types_copy)
 
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse

@@ -225,7 +225,7 @@
 
 /datum/wound/slash/flesh/on_xadone(power)
 	. = ..()
-	
+
 	if (limb) // parent can cause us to be removed, so its reasonable to check if we're still applied
 		adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
@@ -325,6 +325,8 @@
 	status_effect_type = /datum/status_effect/wound/slash/flesh/moderate
 	scar_keyword = "slashmoderate"
 
+	abstract = FALSE
+
 /datum/wound/slash/flesh/moderate/update_descriptions()
 	if(no_bleeding)
 		occur_text = "is cut open"
@@ -350,6 +352,8 @@
 	demotes_to = /datum/wound/slash/flesh/moderate
 	status_effect_type = /datum/status_effect/wound/slash/flesh/severe
 	scar_keyword = "slashsevere"
+
+	abstract = FALSE
 
 /datum/wound_pregen_data/flesh_slash/laceration
 	abstract = FALSE
@@ -377,6 +381,8 @@
 	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
 	scar_keyword = "slashcritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
+
+	abstract = FALSE
 
 /datum/wound_pregen_data/flesh_slash/avulsion
 	abstract = FALSE

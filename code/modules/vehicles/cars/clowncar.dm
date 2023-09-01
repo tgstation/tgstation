@@ -121,11 +121,13 @@
 				if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
 					continue
 				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
-					var/type_wound = pick(list(
-					/datum/wound/blunt/bone/moderate,
-					/datum/wound/blunt/bone/severe,
-					))
-					head_to_wound.force_wound_upwards(type_wound, wound_source = src)
+					var/pick_mode = text2num(pick(list(
+						"[WOUND_PICK_LOWEST_SEVERITY]",
+						"[WOUND_PICK_HIGHEST_SEVERITY]"
+					)))
+					var/datum/wound_typepath = get_corresponding_wound_type(WOUND_SLASH, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, severity_pick_mode = pick_mode)
+					if (wound_typepath)
+						head_to_wound.force_wound_upwards(wound_typepath, wound_source = src)
 					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 

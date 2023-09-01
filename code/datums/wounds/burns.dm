@@ -292,6 +292,8 @@
 	flesh_damage = 5
 	scar_keyword = "burnmoderate"
 
+	abstract = FALSE
+
 /datum/wound_pregen_data/flesh_burn/second_degree
 	abstract = FALSE
 
@@ -312,6 +314,8 @@
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
+
+	abstract = FALSE
 
 /datum/wound_pregen_data/flesh_burn/third_degree
 	abstract = FALSE
@@ -334,6 +338,8 @@
 	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
 	scar_keyword = "burncritical"
+
+	abstract = FALSE
 
 /datum/wound_pregen_data/flesh_burn/fourth_degree
 	abstract = FALSE

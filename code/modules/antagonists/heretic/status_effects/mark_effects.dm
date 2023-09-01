@@ -61,8 +61,10 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
-		var/datum/wound/slash/flesh/severe/crit_wound = new()
-		crit_wound.apply_wound(bodypart)
+		var/datum/wound/wound_typepath = get_corresponding_wound_type(WOUND_SLASH, bodypart, WOUND_SEVERITY_SEVERE)
+		if (wound_typepath)
+			var/datum/wound/new_wound = new wound_typepath
+			new_wound.apply_wound(bodypart)
 
 	return ..()
 

@@ -102,6 +102,11 @@
 	/// What flags apply to this wound
 	var/wound_flags = (ACCEPTS_GAUZE)
 
+	/// If this wound typepath is abstract and only serves to be extended apon. Cannot be initialized, will not appear in global lists.
+	var/abstract = TRUE
+
+	var/specific_type = WOUND_SPECIFIC_TYPE_BASIC
+
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)

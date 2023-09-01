@@ -179,8 +179,9 @@
 	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
-	var/datum/wound/blunt/bone/severe/severe_wound_type = /datum/wound/blunt/bone/severe
-	var/datum/wound/blunt/bone/critical/critical_wound_type = /datum/wound/blunt/bone/critical
+	var/datum/wound/severe_wound_type = get_corresponding_wound_type(WOUND_BLUNT, head, WOUND_SEVERITY_SEVERE)
+	var/datum/wound/critical_wound_type = get_corresponding_wound_type(WOUND_BLUNT, head, WOUND_SEVERITY_CRITICAL)
+
 	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10), attacking_item = src)
 	target.visible_message(
 		span_danger("[src] pierces through [target]'s skull, horribly mutilating their eyes!"),

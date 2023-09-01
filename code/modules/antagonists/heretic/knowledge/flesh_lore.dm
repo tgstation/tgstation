@@ -269,8 +269,10 @@
 
 	var/mob/living/carbon/carbon_target = target
 	var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-	var/datum/wound/slash/flesh/severe/crit_wound = new()
-	crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
+	var/datum/wound/wound_typepath = get_corresponding_wound_type(WOUND_SLASH, bodypart, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
+	if (wound_typepath)
+		var/datum/wound/crit_wound = new wound_typepath
+		crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
 
 /datum/heretic_knowledge/summon/stalker
 	name = "Lonely Ritual"

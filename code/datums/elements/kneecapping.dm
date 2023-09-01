@@ -80,8 +80,8 @@
 
 	if(do_after(attacker, 3 SECONDS, target, interaction_key = weapon))
 		attacker.visible_message(span_warning("[attacker] swings [attacker.p_their()] [weapon] at [target]'s kneecaps!"), span_danger("You swing \the [weapon] at [target]'s kneecaps!"))
-		var/datum/wound/blunt/bone/severe/severe_wound_type = /datum/wound/blunt/bone/severe
-		var/datum/wound/blunt/bone/critical/critical_wound_type = /datum/wound/blunt/bone/critical
+		var/datum/wound/severe_wound_type = get_corresponding_wound_type(WOUND_BLUNT, leg, WOUND_SEVERITY_SEVERE)
+		var/datum/wound/critical_wound_type = get_corresponding_wound_type(WOUND_BLUNT, leg, WOUND_SEVERITY_CRITICAL)
 		leg.receive_damage(brute = weapon.force, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10), damage_source = "kneecapping")
 		target.emote("scream")
 		log_combat(attacker, target, "broke the kneecaps of", weapon)

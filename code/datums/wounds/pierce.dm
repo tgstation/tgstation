@@ -18,7 +18,6 @@
 
 	scar_file = FLESH_SCAR_FILE
 
-
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
 	/// If gauzed, what percent of the internal bleeding actually clots of the total absorption rate
@@ -195,6 +194,8 @@
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
+	abstract = FALSE
+
 /datum/wound_pregen_data/flesh_pierce/breakage
 	abstract = FALSE
 
@@ -222,6 +223,8 @@
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
 
+	abstract = FALSE
+
 /datum/wound_pregen_data/flesh_pierce/open_puncture
 	abstract = FALSE
 
@@ -248,6 +251,8 @@
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
+
+	abstract = FALSE
 
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE

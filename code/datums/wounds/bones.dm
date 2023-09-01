@@ -227,6 +227,8 @@
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "bluntmoderate"
 
+	abstract = FALSE
+
 /datum/wound_pregen_data/bone/dislocate
 	abstract = FALSE
 
@@ -361,6 +363,8 @@
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
+	abstract = FALSE
+
 /datum/wound_pregen_data/bone/hairline
 	abstract = FALSE
 
@@ -390,6 +394,8 @@
 	internal_bleeding_chance = 60
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
+
+	abstract = FALSE
 
 /datum/wound_pregen_data/bone/compound
 	abstract = FALSE
