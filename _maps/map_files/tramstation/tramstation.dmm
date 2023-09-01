@@ -75300,11 +75300,10 @@
 /area/station/engineering/atmospherics_engine)
 "wZt" = (
 /mob/living/simple_animal/hostile/retaliate/clown{
-	health = 1000;
 	name = "The Forbidden One";
 	limb_destroyer = 1;
-	desc = "This clown has been imprisoned for years for his many sins...";
-	loot = list(obj/item/food/cake/clown_cake);
+	health = 1000;
+	desc = "Imprisoned for his many sins."
 	},
 /turf/open/floor/eighties/red{
 	icon = 'goon/icons/turf/floors.dmi';
