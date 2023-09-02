@@ -322,7 +322,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/mob/living/savior = savior_ref.resolve()
 			if(!istype(savior)) // didn't live to tell the tale, sadly.
 				continue
-			savior.client?.give_award(/datum/award/achievement/misc/theoretical_limits, savior)
+			savior.client?.give_award(/datum/award/achievement/jobs/theoretical_limits, savior)
 		LAZYNULL(saviors)
 
 	if(prob(15))
