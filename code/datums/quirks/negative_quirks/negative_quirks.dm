@@ -1540,7 +1540,6 @@
 	name = "Numb"
 	desc = "You can't feel pain at all."
 	icon = FA_ICON_STAR_OF_LIFE
-	quirk_flags = QUIRK_HUMAN_ONLY
 	value = -4
 	gain_text = "You feel your body becoming numb."
 	lose_text = "The numbness subsides."
