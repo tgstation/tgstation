@@ -52,6 +52,8 @@
 	var/shots = 1
 	/// The interval between individual shots in a burst
 	var/burst_interval = 0.2 SECONDS
+	/// range we will try chasing the target before giving up
+	var/chase_range = 9
 
 /datum/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -66,7 +68,7 @@
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
-	if(!targetting_datum.can_attack(basic_mob, target))
+	if(!targetting_datum.can_attack(basic_mob, target, chase_range))
 		finish_action(controller, FALSE, target_key)
 		return
 
