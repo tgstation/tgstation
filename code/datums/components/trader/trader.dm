@@ -49,7 +49,8 @@
 	*/
 	var/list/wanted_items = list()
 
-	var/list/radial_icons_cache = list()
+	///Contains images of all radial icons
+	var/static/list/radial_icons_cache = list()
 
 	///Contains information of a specific trader
 	var/datum/trader_data/trader_data
@@ -71,8 +72,8 @@
 		TRADER_RADIAL_SELL = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell"),
 		TRADER_RADIAL_TALK = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk"),
 		TRADER_RADIAL_LORE = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore"),
-		TRADER_RADIAL_DISCUSS_BUY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
-		TRADER_RADIAL_DISCUSS_SELL = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
+		TRADER_RADIAL_DISCUSS_BUY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
+		TRADER_RADIAL_DISCUSS_SELL = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
 		TRADER_RADIAL_YES = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		TRADER_RADIAL_NO = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
 		TRADER_RADIAL_OUT_OF_STOCK = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_center"),
