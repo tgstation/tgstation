@@ -19,7 +19,7 @@
 		return
 	if(current_cooldown <= world.time)
 		current_cooldown = world.time + cooldown
-		mineral_scan_pulse(get_turf(user))
+		mineral_scan_pulse(get_turf(user), scanner = src)
 
 //Debug item to identify all ore spread quickly
 /obj/item/mining_scanner/admin
@@ -59,19 +59,24 @@
 	if(current_cooldown <= world.time)
 		current_cooldown = world.time + cooldown
 		var/turf/t = get_turf(src)
-		mineral_scan_pulse(t, range)
+		mineral_scan_pulse(t, range, src)
 
-/proc/mineral_scan_pulse(turf/T, range = world.view)
+/proc/mineral_scan_pulse(turf/T, range = world.view, obj/item/scanner)
 	var/list/minerals = list()
 	var/vents_nearby = FALSE
+	var/undiscovered = FALSE
+	var/radar_volume = 30
 	for(var/turf/closed/mineral/mineral in range(range, T))
 		if(mineral.scan_state)
 			minerals += mineral
 	for(var/obj/structure/ore_vent/vent in range(range, T))
-		if(vent && !vents_nearby)
+		if(!vents_nearby)
 			vents_nearby = TRUE
-		if(vent.discovered)
-			vent.add_mineral_overlays()
+			if(vent.discovered)
+				undiscovered = TRUE
+		var/potential_volume = 80 - (get_dist(scanner, vent) * 10)
+		radar_volume = max(potential_volume, radar_volume)
+		vent.add_mineral_overlays()
 
 	if(LAZYLEN(minerals))
 		for(var/turf/closed/mineral/M in minerals)
@@ -80,9 +85,14 @@
 				qdel(oldC)
 			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
 			C.icon_state = M.scan_state
-	if(vents.len)
-		playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
-		visible_message(loc, "The scanner has detected an ore vent nearby!")
+
+	if(vents_nearby && scanner)
+		if(undiscovered)
+			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
+		else
+			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, TRUE)
+		scanner.balloon_alert_to_viewers("ore vent nearby!")
+		scanner.spasm_animation(1.5 SECONDS)
 
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE
@@ -92,7 +102,15 @@
 	duration = 35
 	pixel_x = -224
 	pixel_y = -224
+	var/easing_style = EASE_IN
 
 /obj/effect/temp_visual/mining_overlay/Initialize(mapload)
 	. = ..()
-	animate(src, alpha = 0, time = duration, easing = EASE_IN)
+	animate(src, alpha = 0, time = duration, easing = easing_style)
+
+/obj/effect/temp_visual/mining_overlay/vent
+	icon = 'icons/effects/vent_overlays.dmi'
+	duration = 45
+	pixel_x = 0
+	pixel_y = 0
+	easing_style = CIRCULAR_EASING|EASE_IN

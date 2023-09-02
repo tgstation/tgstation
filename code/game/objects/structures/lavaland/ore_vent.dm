@@ -177,6 +177,14 @@
 
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 
+/**
+ * Called when the wave defense event ends, after a variable amount of time in start_wave_defense.
+ *
+ * If the node drone is still alive, the ore vent is tapped and the ore vent will begin generating boulders.
+ * If the node drone is dead, the ore vent is not tapped and the wave defense can be reattempted.
+ *
+ * Also gives xp and mining points to all nearby miners in equal measure.
+ */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
 	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
 	if(node) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
@@ -195,7 +203,7 @@
 			if(!user_id_card)
 				continue
 			if(user_id_card)
-				var/point_reward_val = MINER_POINT_MULTIPLIER * boulder_size
+				var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
 				user_id_card.registered_account.mining_points += (point_reward_val)
 				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.escape() //Visually show the drone is done and flies away.
@@ -209,10 +217,11 @@
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/user)
 	if(!discovered)
 		balloon_alert(user, "scanning...")
+		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
 		if(do_after(user, 4 SECONDS))
 			discovered = TRUE
 			balloon_alert(user, "vent scanned!")
-			playsound(src, 'sound/items/timer.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 			generate_description()
 			return
 		else
@@ -226,13 +235,14 @@
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))
-			if(istype(rock, /turf/open/misc/asteroid) && prob(45)) // so it's too common
+			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
 				new /obj/effect/decal/cleanable/rubble(rock)
 			if(!istype(rock, /turf/closed/mineral))
 				continue
-			rock.gets_drilled(user, FALSE)
-			if(prob(75))
-				new /obj/effect/decal/cleanable/rubble(rock)
+			if(prob(100 - (i * 15)))
+				rock.gets_drilled(user, FALSE)
+				if(prob(50))
+					new /obj/effect/decal/cleanable/rubble(rock)
 		sleep(0.6 SECONDS)
 
 	start_wave_defense()
@@ -245,16 +255,22 @@
 	for(var/mineral_count in 1 to mineral_breakdown.len)
 		var/datum/material/resource = mineral_breakdown[mineral_count]
 		if(mineral_count == mineral_breakdown.len)
-			ore_string += "and " + resource.name + "."
+			ore_string += "and " + span_bold(resource.name) + "."
 		else
-			ore_string += resource.name + ", "
+			ore_string += span_bold(resource.name) + ", "
 
 /**
  * Adds floating temp_visual overlays to the vent, showcasing what minerals are contained within it.
+ * If undiscovered, adds a single overlay with the icon_state "unknown".
  */
 /obj/structure/ore_vent/proc/add_mineral_overlays()
+	if(mineral_breakdown.len && !discovered)
+		var/obj/effect/temp_visual/mining_overlay/vent/new_mat = new /obj/effect/temp_visual/mining_overlay/vent(drop_location())
+		new_mat.icon_state = "unknown"
+		return
 	for(var/datum/material/selected_mat as anything in mineral_breakdown)
-		
+		var/obj/effect/temp_visual/mining_overlay/vent/new_mat = new /obj/effect/temp_visual/mining_overlay/vent(drop_location())
+		new_mat.icon_state = selected_mat.name
 
 
 //comes with the station, and is already tapped.

@@ -282,7 +282,7 @@
 
 /datum/action/cooldown/golem_ore_sight/Activate(atom/target)
 	. = ..()
-	mineral_scan_pulse(get_turf(target))
+	mineral_scan_pulse(get_turf(target), scanner = src)
 
 ///Robotic
 
@@ -629,7 +629,7 @@
 
 	if(QDELETED(eye_owner) || !ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return
-	
+
 	if(!eye.on)
 		eye_icon_state = initial(eye_icon_state)
 		overlay_ignore_lighting = FALSE
