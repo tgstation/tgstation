@@ -119,8 +119,8 @@
 	var/list/datum/wound/possible_wounds = list()
 	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
-		if (pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
-			possible_wounds += type
+		if (pregen_data.can_be_applied_to(src, list(woundtype), random_roll = TRUE))
+			possible_wounds[type] = pregen_data.get_weight()
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -131,25 +131,37 @@
 				bare_wound_bonus = 0
 				break
 
+	for (var/datum/wound/iterated_path as anything in possible_wounds)
+		if (initial(iterated_path.threshold_minimum) > injury_roll)
+			possible_wounds -= iterated_path
+			continue
+
+		if (initial(iterated_path.compete_for_wounding))
+			for (var/datum/wound/other_path as anything in possible_wounds)
+				if (initial(iterated_path.severity) > initial(other_path.severity))
+					possible_wounds -= other_path
+
 	//cycle through the wounds of the relevant category from the most severe down
-	for(var/datum/wound/possible_wound as anything in possible_wounds)
+	while (length(possible_wounds))
+		var/datum/wound/possible_wound = pick_weight(possible_wounds)
+		possible_wounds -= possible_wound
+
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)
 			if(existing_wound.wound_series == initial(possible_wound.wound_series))
 				if(existing_wound.severity >= initial(possible_wound.severity))
-					return
+					continue
 				else
-					replaced_wound = existing_wound // if we find something we keep iterating untilw e're done or we find we're outclassed by something in our series
+					replaced_wound = existing_wound
+			// if we get through this whole loop without continuing, we found our winner
 
-		if(initial(possible_wound.threshold_minimum) < injury_roll)
-			var/datum/wound/new_wound
-			if(replaced_wound)
-				new_wound = replaced_wound.replace_wound(new possible_wound, attack_direction = attack_direction)
-			else
-				new_wound = new possible_wound
-				new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
-			log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
-			return new_wound
+		var/datum/wound/new_wound = new possible_wound
+		if(replaced_wound)
+			new_wound = replaced_wound.replace_wound(new_wound, attack_direction = attack_direction)
+		else
+			new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
+		log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
+		return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
 /obj/item/bodypart/proc/force_wound_upwards(specific_woundtype, smited = FALSE, wound_source)

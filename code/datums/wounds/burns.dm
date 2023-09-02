@@ -7,13 +7,11 @@
 /datum/wound/burn
 	name = "Burn Wound"
 	a_or_from = "from"
-	wound_type = WOUND_BURN
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 
 /datum/wound/burn/flesh
 	name = "Burn (Flesh) Wound"
 	a_or_from = "from"
-	wound_type = WOUND_BURN
 	processes = TRUE
 
 	scar_file = FLESH_SCAR_FILE
@@ -272,6 +270,7 @@
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
 
+	required_wound_types = list(WOUND_BURN)
 	required_limb_biostate = BIO_FLESH
 
 /datum/wound/burn/get_limb_examine_description()

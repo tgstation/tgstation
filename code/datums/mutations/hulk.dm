@@ -74,7 +74,7 @@
 
 	if (isnull(severity))
 		return
-	var/datum/wound/wound_typepath = get_corresponding_wound_type(WOUND_BLUNT, arm, severity)
+	var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_BLUNT), arm, severity)
 	if (!wound_typepath)
 		return
 

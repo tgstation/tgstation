@@ -8,6 +8,8 @@
 	abstract = TRUE
 	required_limb_biostate = BIO_BONE
 
+	required_wound_types = list(WOUND_BLUNT)
+
 /datum/wound/blunt/bone
 	name = "Blunt (Bone) Wound"
 	wound_flags = (ACCEPTS_GAUZE)

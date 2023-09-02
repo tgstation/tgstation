@@ -18,7 +18,7 @@
 	if (!their_chest)
 		return
 
-	var/datum/wound/wound_typepath = get_corresponding_wound_type(WOUND_PIERCE, their_chest, WOUND_SEVERITY_CRITICAL)
+	var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_PIERCE), their_chest, WOUND_SEVERITY_CRITICAL)
 	if (wound_typepath)
 		var/datum/wound/new_wound = new wound_typepath
 		new_wound.apply_wound(their_chest)

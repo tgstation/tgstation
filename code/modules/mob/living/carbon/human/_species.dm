@@ -1685,7 +1685,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else // If we have no burn apply the lowest level burn
 		severity = WOUND_SEVERITY_MODERATE
 
-	var/datum/wound/wound_typepath = get_corresponding_wound_type(WOUND_BURN, bodypart, severity)
+	var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_BURN), bodypart, severity)
 	if (wound_typepath)
 		bodypart.force_wound_upwards(wound_typepath, wound_source = "hot temperatures")
 

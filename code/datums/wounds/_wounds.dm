@@ -43,8 +43,6 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// The type of attack that can generate this wound. E.g. WOUND_SLASH = A sword can cause us, or WOUND_BLUNT = a hammer can cause us/a sword attacking mangled flesh.
-	var/wound_type
 	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
 	var/wound_series
 
@@ -106,6 +104,9 @@
 	var/abstract = TRUE
 
 	var/specific_type = WOUND_SPECIFIC_TYPE_BASIC
+
+	var/compete_for_wounding = TRUE
+	var/competition_mode = WOUND_COMPETITION_SUBMIT
 
 /datum/wound/Destroy()
 	if(attached_surgery)
@@ -188,7 +189,7 @@
 	// We assume we aren't being randomly applied - we have no reason to believe we are
 	// And, besides, if we were, you could just as easily check our pregen data rather than run this proc
 	// Generally speaking this proc is called in apply_wound, which is called when the caller is already confidant in its ability to be applied
-	return pregen_data.can_be_applied_to(L, wound_type, old_wound)
+	return pregen_data.can_be_applied_to(L, old_wound = old_wound)
 
 /// Returns the zones we can be applied to.
 /datum/wound/proc/get_viable_zones()
@@ -527,7 +528,14 @@
 /datum/wound/proc/get_dismember_chance_bonus(existing_chance)
 	SHOULD_BE_PURE(TRUE)
 
-	if (wound_type == WOUND_BLUNT && severity >= WOUND_SEVERITY_CRITICAL)
+	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
+
+	if (WOUND_BLUNT in pregen_data.required_wound_types && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
 #undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS
+
+/datum/wound/proc/get_pregen_data()
+	RETURN_TYPE(/datum/wound_pregen_data)
+
+	return GLOB.all_wound_pregen_data[type]

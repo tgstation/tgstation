@@ -6,17 +6,16 @@
 /datum/wound/slash
 	name = "Slashing (Cut) Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
-	wound_type = WOUND_SLASH
 
 /datum/wound_pregen_data/flesh_slash
 	abstract = TRUE
 
+	required_wound_types = list(WOUND_SLASH)
 	required_limb_biostate = BIO_FLESH
 
 /datum/wound/slash/flesh
 	name = "Slashing (Cut) Flesh Wound"
 	processes = TRUE
-	wound_type = WOUND_SLASH
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY

@@ -5,7 +5,7 @@
 	required_limb_biostate = NONE
 	check_for_any = TRUE
 
-	can_be_randomly_generated = FALSE
+	required_wound_types = list(WOUND_ALL)
 
 /datum/wound/loss
 	name = "Dismemberment Wound"

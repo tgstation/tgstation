@@ -40,6 +40,8 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 /// any concentrated burn attack (lasers really). rolls for burning wounds
 #define WOUND_BURN "wound_burn"
 
+#define WOUND_ALL "wound_all"
+
 
 // ~determination second wind defines
 // How much determination reagent to add each time someone gains a new wound in [/datum/wound/proc/second_wind]
@@ -52,6 +54,9 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 
 /// While someone has determination in their system, their bleed rate is slightly reduced
 #define WOUND_DETERMINATION_BLEED_MOD 0.85
+
+#define WOUND_COMPETITION_SUBMIT "wound_submit"
+#define WOUND_COMPETITION_DOMINATE "wound_dominate"
 
 // ~biology defines
 // What kind of biology a limb has, and what wounds it can suffer
@@ -77,12 +82,12 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
 
 // "Where" a specific "bio" feature is within a given limb
-// Exterior is hard shit, the last line, shit lines bones
+// Exterior is hard shit, the last line, shit like bones
 // Interior is soft shit, targetted by slashes and pierces (usually), protects exterior
 // Yes, it makes no sense
 /// The given biostate is on the "exterior" of the limb - hard shit, protected by interior
 #define BIO_EXTERIOR (1<<0)
-/// The given biostate is on the "exterior" of the limb - soft shit, protects exterior
+/// The given biostate is on the "interior" of the limb - soft shit, protects exterior
 #define BIO_INTERIOR (1<<1)
 #define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
 
@@ -207,9 +212,11 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 #define WOUND_PICK_HIGHEST_SEVERITY 1
 #define WOUND_PICK_LOWEST_SEVERITY 2
 
-/proc/get_corresponding_wound_type(wound_type, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE)
+/proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE)
 
-	var/list/wound_type_list = GLOB.wound_types_to_series[wound_type]
+	var/list/wound_type_list = list()
+	for (var/wound_type as anything in wound_types)
+		wound_type_list += GLOB.wound_types_to_series[wound_type]
 	if (!length(wound_type_list))
 		return null
 
@@ -222,28 +229,30 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 		if (!length(severity_list))
 			continue
 
-		var/list/specific_type_list
 		var/picked_severity
-		for (var/severity as anything in shuffle(GLOB.wound_severities_chronological))
+		for (var/severity_text as anything in shuffle(GLOB.wound_severities_chronological))
+			var/severity = text2num(severity_text)
 			if (severity > severity_min || severity < severity_max)
 				continue
 
 			if (isnull(picked_severity) || ((severity_pick_mode == WOUND_PICK_HIGHEST_SEVERITY && severity > picked_severity) || (severity_pick_mode == WOUND_PICK_LOWEST_SEVERITY && severity < picked_severity)))
 				picked_severity = severity
 
-		specific_type_list = severity_list[picked_severity]
-
-		var/list/datum/wound/wound_types = specific_type_list[specific_type_list]
-		if (!length(specific_type_list))
+		var/list/specific_types = severity_list["[picked_severity]"]
+		if (!length(specific_types))
 			continue
 
-		var/list/datum/wound/wound_types_copy = wound_types.Copy()
-		for (var/datum/wound/iterated_path as anything in wound_types_copy)
+		var/list/datum/wound/wound_typepaths = specific_types[specific_type]
+		if (!length(wound_typepaths))
+			continue
+
+		var/list/datum/wound/wound_typepaths_copy = wound_typepaths.Copy()
+		for (var/datum/wound/iterated_path as anything in wound_typepaths_copy)
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
 			if (!pregen_data.can_be_applied_to(part, wound_types, random_roll))
-				wound_types_copy -= iterated_path
+				wound_typepaths_copy -= iterated_path
 
-		return pick_weight(wound_types_copy)
+		return pick_weight(wound_typepaths_copy)
 
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse

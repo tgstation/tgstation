@@ -26,6 +26,9 @@
 
 	/// A list of bodyzones we are applicable to.
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	/// The type of attack that can generate this wound. E.g. WOUND_SLASH = A sword can cause us, or WOUND_BLUNT = a hammer can cause us/a sword attacking mangled flesh.
+	var/list/required_wound_types
+	var/match_all_wound_types = FALSE
 
 	var/weight = WOUND_DEFAULT_WEIGHT
 
@@ -52,7 +55,7 @@
  * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, wound_type = initial(wound_path_to_generate.wound_type), datum/wound/old_wound, random_roll = FALSE)
+/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, list/wound_types = required_wound_types, datum/wound/old_wound, random_roll = FALSE)
 	SHOULD_BE_PURE(TRUE)
 
 	if (!istype(limb) || !limb.owner)
@@ -64,13 +67,13 @@
 	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (limb.owner.status_flags & GODMODE))
 		return FALSE
 
-	if (wound_type != initial(wound_path_to_generate.wound_type))
-		return
-	else
-		for (var/datum/wound/preexisting_wound as anything in limb.wounds)
-			if (preexisting_wound.wound_series == initial(wound_path_to_generate.wound_series))
-				if (preexisting_wound.severity >= initial(wound_path_to_generate.severity))
-					return FALSE
+	if (!wound_types_valid(wound_types))
+		return FALSE
+
+	for (var/datum/wound/preexisting_wound as anything in limb.wounds)
+		if (preexisting_wound.wound_series == initial(wound_path_to_generate.wound_series))
+			if (preexisting_wound.severity >= initial(wound_path_to_generate.severity))
+				return FALSE
 
 	if (!ignore_cannot_bleed && ((required_limb_biostate & BIO_BLOODED) && !limb.can_bleed()))
 		return FALSE
@@ -99,6 +102,25 @@
 
 	return TRUE
 
+/datum/wound_pregen_data/proc/get_weight()
+	return weight
+
+/datum/wound_pregen_data/proc/wound_types_valid(list/wound_types)
+	if (!length(wound_types))
+		if (WOUND_ALL in required_wound_types)
+			return TRUE
+		return FALSE
+
+	for (var/type as anything in wound_types)
+		if (!(type in required_wound_types))
+			if (match_all_wound_types)
+				return FALSE
+		else
+			if (!match_all_wound_types)
+				return TRUE
+
+	return match_all_wound_types // if we get here, we've matched everything
+
 /// Returns a new instance of our wound datum.
 /datum/wound_pregen_data/proc/generate_instance(obj/item/bodypart/limb, ...)
 	RETURN_TYPE(/datum/wound)
@@ -109,7 +131,7 @@
 	stack_trace("[src], a singleton wound pregen data instance, was destroyed! This should not happen!")
 
 	if (!force)
-		return
+		return QDEL_HINT_LETMELIVE
 
 	. = ..()
 

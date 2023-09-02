@@ -171,7 +171,7 @@
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)
 		var/obj/item/bodypart/finger = user.get_active_hand()
-		var/datum/wound/wound_typepath = get_corresponding_wound_type(WOUND_SLASH, finger, WOUND_SEVERITY_MODERATE)
+		var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_SLASH), finger, WOUND_SEVERITY_MODERATE)
 		if (wound_typepath)
 			var/datum/wound/papercut = new wound_typepath
 			papercut.apply_wound(finger, wound_source = "paper cut")
