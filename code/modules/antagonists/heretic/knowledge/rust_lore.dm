@@ -63,7 +63,10 @@
 		return
 
 	target.rust_heretic_act()
-
+	for(var/dir in GLOB.cardinals)
+		var/turf/nearby_turf = get_step(target, dir)
+		if(istype(nearby_turf))
+			nearby_turf.rust_heretic_act()
 /datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
@@ -72,12 +75,7 @@
 	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/airlock = target
 		airlock.loseMainPower()
-
-	for(var/dir in GLOB.cardinals)
-		var/turf/nearby_turf = get_step(target, dir)
-		if(istype(nearby_turf))
-			nearby_turf.rust_heretic_act()
-		target.rust_heretic.act()
+	target.rust_heretic_act()
 	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/rust_regen
@@ -117,6 +115,11 @@
 
 	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 	heretic_eyes.flash_protect = FLASH_PROTECTION_NONE
+
+/datum/heretic_knowledge/proc/protect_ears(datum/source, list/reflist)
+    SIGNAL_HANDLER
+    reflist[1]--
+
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
  *
@@ -128,7 +131,10 @@
 	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
-
+	//damages non heretics' clothes and gives them a negative moodlet
+	for(var/mob/living/target in our_turf)
+		if (!IS_HERETIC(target))
+			target.add_mood_event("rust_corruption", /datum/mood_event/rust_corruption)
 	// Heals all damage + Stamina
 	source.adjustBruteLoss(-2, FALSE)
 	source.adjustFireLoss(-2, FALSE)
@@ -300,10 +306,10 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	source.adjustBruteLoss(-4, FALSE)
-	source.adjustFireLoss(-4, FALSE)
-	source.adjustToxLoss(-4, FALSE, forced = TRUE)
-	source.adjustOxyLoss(-4, FALSE)
+	source.adjustBruteLoss(-5, FALSE)
+	source.adjustFireLoss(-5, FALSE)
+	source.adjustToxLoss(-5, FALSE, forced = TRUE)
+	source.adjustOxyLoss(-5, FALSE)
 	source.adjustStaminaLoss(-20)
 
 /**
@@ -315,7 +321,7 @@
  */
 /datum/rust_spread
 	/// The rate of spread every tick.
-	var/spread_per_sec = 6
+	var/spread_per_sec = 12
 	/// The very center of the spread.
 	var/turf/centre
 	/// List of turfs at the edge of our rust (but not yet rusted).
