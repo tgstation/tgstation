@@ -12035,7 +12035,8 @@
 	dir = 8
 	},
 /turf/open/floor/fake_snow{
-	icon_state = "snow6"
+	icon_state = "snow6";
+	temperature = 293.14
 	},
 /area/station/hallway/floor2/fore)
 "daD" = (
@@ -18445,7 +18446,8 @@
 "eNM" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/fake_snow{
-	icon_state = "snow4"
+	icon_state = "snow4";
+	temperature = 293.14
 	},
 /area/station/hallway/floor2/fore)
 "eNN" = (
@@ -32227,7 +32229,8 @@
 "iyZ" = (
 /obj/structure/flora/bush/snow/style_random,
 /turf/open/floor/fake_snow{
-	icon_state = "snow8"
+	icon_state = "snow8";
+	temperature = 293.14
 	},
 /area/station/hallway/floor2/fore)
 "izj" = (
@@ -35537,7 +35540,8 @@
 "jtJ" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/fake_snow{
-	icon_state = "snow9"
+	icon_state = "snow9";
+	temperature = 293.14
 	},
 /area/station/hallway/floor2/fore)
 "jtL" = (
@@ -46219,7 +46223,8 @@
 /area/station/commons/fitness/recreation)
 "mdC" = (
 /turf/open/floor/fake_snow{
-	icon_state = "snow7"
+	icon_state = "snow7";
+	temperature = 293.14
 	},
 /area/station/hallway/floor2/fore)
 "mdE" = (
@@ -59536,7 +59541,8 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/snow/style_random,
 /turf/open/floor/fake_snow{
-	icon_state = "snow7"
+	icon_state = "snow7";
+	temperature = 293.14
 	},
 /area/station/hallway/floor2/fore)
 "pAH" = (
@@ -68926,7 +68932,8 @@
 "sbI" = (
 /obj/structure/flora/bush/snow/style_random,
 /turf/open/floor/fake_snow{
-	icon_state = "snow5"
+	icon_state = "snow5";
+	temperature = 293.14
 	},
 /area/station/hallway/floor2/fore)
 "sbK" = (
@@ -75891,7 +75898,9 @@
 "tTB" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/fake_snow,
+/turf/open/floor/fake_snow{
+	temperature = 293.14
+	},
 /area/station/hallway/floor2/fore)
 "tTC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
