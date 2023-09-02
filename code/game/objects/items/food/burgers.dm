@@ -12,6 +12,7 @@
 	foodtypes = GRAIN | MEAT //lettuce doesn't make burger a vegetable.
 	eat_time = 15 //Quick snack
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/plain
 	name = "plain burger"
@@ -24,6 +25,7 @@
 	foodtypes = GRAIN | MEAT
 	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/plain/Initialize(mapload)
 	. = ..()
@@ -48,6 +50,7 @@
 	tastes = list("bun" = 2, "long pig" = 4)
 	foodtypes = MEAT | GRAIN | GORE
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
@@ -69,6 +72,7 @@
 	tastes = list("bun" = 4, "corgi meat" = 2)
 	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/appendix
 	name = "appendix burger"
@@ -82,6 +86,7 @@
 	tastes = list("bun" = 4, "grass" = 2)
 	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/fish
 	name = "fillet -o- carp sandwich"
@@ -95,6 +100,7 @@
 	tastes = list("bun" = 4, "fish" = 4)
 	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/tofu
 	name = "tofu burger"
@@ -108,6 +114,7 @@
 	tastes = list("bun" = 4, "tofu" = 4)
 	foodtypes = GRAIN | VEGETABLES
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/roburger
 	name = "roburger"
@@ -143,6 +150,7 @@
 	tastes = list("bun" = 4, "acid" = 4)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/bearger
 	name = "bearger"
@@ -156,6 +164,7 @@
 	tastes = list("bun" = 2, "meat" = 2, "salmon" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/clown
 	name = "clown burger"
@@ -169,6 +178,7 @@
 	tastes = list("bun" = 2, "a bad joke" = 4)
 	foodtypes = GRAIN | FRUIT
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/mime
 	name = "mime burger"
@@ -182,6 +192,7 @@
 	)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/brain
 	name = "brainburger"
@@ -196,6 +207,7 @@
 	tastes = list("bun" = 4, "brains" = 2)
 	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/ghost
 	name = "ghost burger"
@@ -213,6 +225,7 @@
 	verb_say = "moans"
 	verb_yell = "wails"
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/ghost/Initialize(mapload)
 	. = ..()
@@ -262,6 +275,7 @@
 	)
 	tastes = list("bun" = 2, "red" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/orange
 	name = "orange burger"
@@ -276,6 +290,7 @@
 	)
 	tastes = list("bun" = 2, "orange" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/yellow
 	name = "yellow burger"
@@ -290,6 +305,7 @@
 	)
 	tastes = list("bun" = 2, "yellow" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/green
 	name = "green burger"
@@ -304,6 +320,7 @@
 	)
 	tastes = list("bun" = 2, "green" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/blue
 	name = "blue burger"
@@ -318,6 +335,7 @@
 	)
 	tastes = list("bun" = 2, "blue" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/purple
 	name = "purple burger"
@@ -332,6 +350,7 @@
 	)
 	tastes = list("bun" = 2, "purple" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/black
 	name = "black burger"
@@ -346,6 +365,7 @@
 	)
 	tastes = list("bun" = 2, "black" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/white
 	name = "white burger"
@@ -360,6 +380,7 @@
 	)
 	tastes = list("bun" = 2, "white" = 2)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/spell
 	name = "spell burger"
@@ -373,6 +394,7 @@
 	tastes = list("bun" = 4, "magic" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/bigbite
 	name = "big bite burger"
@@ -387,6 +409,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/jelly
 	name = "jelly burger"
@@ -395,6 +418,7 @@
 	tastes = list("bun" = 4, "jelly" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/jelly/slime
 	food_reagents = list(
@@ -427,6 +451,7 @@
 	tastes = list("bun" = 4, "type two diabetes" = 10)
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/burger/superbite/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to eat [src] in one bite, it looks like [user.p_theyre()] trying to commit suicide!"))
@@ -448,6 +473,7 @@
 	tastes = list("extreme heat" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/rat
 	name = "rat burger"
@@ -461,6 +487,7 @@
 	tastes = list("dead rat" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT | GORE
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/baseball
 	name = "home run baseball burger"
@@ -475,6 +502,7 @@
 	foodtypes = GRAIN | GROSS
 	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/baconburger
 	name = "bacon burger"
@@ -489,6 +517,7 @@
 	foodtypes = GRAIN | MEAT
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/empoweredburger
 	name = "empowered burger"
@@ -503,6 +532,7 @@
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/burger/catburger
 	name = "catburger"
@@ -515,6 +545,7 @@
 	)
 	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
 	foodtypes = GRAIN | MEAT | GORE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/crab
 	name = "crab burger"
@@ -528,6 +559,7 @@
 	tastes = list("bun" = 2, "crab meat" = 4)
 	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/soylent
 	name = "soylent burger"
@@ -541,6 +573,7 @@
 	tastes = list("bun" = 2, "assistant" = 4)
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/burger/rib
 	name = "mcrib"
@@ -555,6 +588,7 @@
 	tastes = list("bun" = 2, "pork patty" = 4)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/mcguffin
 	name = "mcguffin"
@@ -569,6 +603,7 @@
 	tastes = list("muffin" = 2, "bacon" = 3)
 	foodtypes = GRAIN | MEAT | BREAKFAST
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/chicken
 	name = "chicken sandwich" //Apparently the proud people of Americlapstan object to this thing being called a burger. Apparently McDonald's just calls it a burger in Europe as to not scare and confuse us.
@@ -579,11 +614,12 @@
 		/datum/reagent/consumable/mayonnaise = 3,
 		/datum/reagent/consumable/nutriment/protein = 7,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
 	foodtypes = GRAIN | MEAT | FRIED
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/cheese
 	name = "cheese burger"
@@ -597,6 +633,7 @@
 	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 3)
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/burger/cheese/Initialize(mapload)
 	. = ..()
@@ -616,6 +653,7 @@
 	)
 	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 2, "beef soaked in chili" = 3, "a smoking flare" = 2)
 	foodtypes = GRAIN | MEAT | DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/burger/crazy/Initialize(mapload)
 	. = ..()

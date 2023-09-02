@@ -504,10 +504,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			to_chat(user, "No vacated rooms.")
 		return .
 
-/obj/effect/landmark/lift_id/hilbert/research
+/obj/effect/landmark/lift_id/hilbert
 	specific_lift_id = HILBERT_TRAM
 
-/obj/effect/landmark/tram/nav/hilbert/research
+/obj/effect/landmark/tram/nav/hilbert
 	name = HILBERT_TRAM
 	specific_lift_id = TRAM_NAV_BEACONS
 
