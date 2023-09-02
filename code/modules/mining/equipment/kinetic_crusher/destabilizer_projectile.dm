@@ -20,7 +20,7 @@
 	//we don't really care if the projectile doesn't do damage
 	//(if it hits a living mob, we are proably going to attack it more with the crusher),
 	//so just make every fired projectile have this property
-	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_PROJECTILE)
+	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_PROJECTILE)
 
 /obj/projectile/destabilizer/Destroy()
 	hammer_synced = null

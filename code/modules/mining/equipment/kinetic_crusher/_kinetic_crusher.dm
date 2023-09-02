@@ -46,7 +46,7 @@
 		force_unwielded = 0, \
 		force_wielded = 20, \
 	)
-	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_MELEE)
+	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_MELEE)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)

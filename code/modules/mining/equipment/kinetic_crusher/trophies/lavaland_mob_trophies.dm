@@ -201,4 +201,4 @@
 
 /obj/projectile/bileworm_acid/spewlet_trophy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/crusher_damage_applicant, APPLY_WITH_PROJECTILE)
+	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_PROJECTILE)
