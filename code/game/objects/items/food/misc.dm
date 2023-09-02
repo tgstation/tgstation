@@ -371,7 +371,6 @@
 	)
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pierogi

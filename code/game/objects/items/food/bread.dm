@@ -519,7 +519,6 @@
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_breadstick
@@ -551,7 +550,6 @@
 	tastes = list("fluffy bread" = 1, "butter" = 2)
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_croissant
@@ -577,7 +575,6 @@
 	tastes = list("fluffy bread" = 1, "butter" = 2)
 	foodtypes = GRAIN | DAIRY | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 // Enhanced weaponised bread

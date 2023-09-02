@@ -12,7 +12,6 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	venue_value = FOOD_PRICE_CHEAP
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
 	var/obj/item/food/pizzaslice/slice_type
@@ -493,7 +492,6 @@
 	tastes = list("baked dough" = 1, "juicy meat" = 1, "melted cheese" = 1, "tomato sauce" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/raw_vegetarian_calzone
@@ -523,5 +521,4 @@
 	tastes = list("baked dough" = 1, "baked vegetables" = 1, "tomato sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3

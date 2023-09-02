@@ -41,7 +41,6 @@
 		/datum/reagent/carbon = 4,
 	)
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/sandwich/jelly
