@@ -68,12 +68,11 @@
 	background_icon_state = "bg_tech"
 	overlay_icon_state = "bg_tech_border"
 
-	///The PDA we're inserted into.
-	var/obj/item/modular_computer/pda/owner_pda
-
 /datum/action/innate/pai/messenger/Trigger(trigger_flags)
 	. = ..()
-	if(!owner_pda)
+	var/obj/item/pai_card/pai_holder = owner.loc
+	if(!istype(pai_holder.loc, /obj/item/modular_computer))
 		owner.balloon_alert(owner, "not in a pda!")
 		return
-	owner_pda.interact(owner)
+	var/obj/item/modular_computer/computer_host = pai_holder.loc
+	computer_host.interact(owner)

@@ -50,6 +50,9 @@
 		if("Crew Monitor")
 			GLOB.crewmonitor.show(usr, src)
 			return TRUE
+		if("Digital Messenger")
+			modularInterface?.interact(usr)
+			return TRUE
 		if("Door Jack")
 			// Look to door_jack.dm for implementation
 			door_jack(params["mode"])
@@ -111,6 +114,8 @@
 	switch(selection)
 		if("Atmospheric Sensor")
 			atmos_analyzer = new(src)
+		if("Digital Messenger")
+			create_modularInterface()
 		if("Host Scan")
 			host_scan = new(src)
 		if("Internal GPS")

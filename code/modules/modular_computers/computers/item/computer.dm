@@ -822,16 +822,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 	inserted_pai = card
 	balloon_alert(user, "inserted pai")
-	inserted_pai.pai.messenger_ability.owner_pda = src
-	inserted_pai.pai.messenger_ability.Grant(inserted_pai.pai)
+	var/datum/action/innate/pai/messenger/messenger_ability = new(inserted_pai.pai)
+	messenger_ability.Grant(inserted_pai.pai)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/item/modular_computer/proc/remove_pai(mob/user)
 	if(!inserted_pai)
 		return FALSE
-	inserted_pai.pai.messenger_ability.owner_pda = null
-	inserted_pai.pai.messenger_ability.Remove(inserted_pai.pai)
+	var/datum/action/innate/pai/messenger/messenger_ability = locate() in inserted_pai.actions
+	messenger_ability.Remove(inserted_pai.pai)
+	qdel(messenger_ability)
 	if(user)
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")

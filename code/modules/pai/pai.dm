@@ -29,9 +29,6 @@
 	radio = /obj/item/radio/headset/silicon/pai
 	worn_slot_flags = ITEM_SLOT_HEAD
 
-	///The innate ability to use people's ModPCs
-	var/datum/action/innate/pai/messenger/messenger_ability
-
 	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE
 	/// Whether this pAI can recieve radio messages
@@ -80,8 +77,6 @@
 	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
 	var/obj/machinery/newscaster/pai/newscaster
-	/// PDA
-	var/atom/movable/screen/ai/modpc/pda_button
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 
@@ -90,6 +85,7 @@
 	var/static/list/available_software = list(
 		"Atmospheric Sensor" = 5,
 		"Crew Manifest" = 5,
+		"Digital Messenger" = 5,
 		"Photography Module" = 5,
 		"Encryption Slot" = 10,
 		"Music Synthesizer" = 10,
@@ -215,7 +211,6 @@
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
-	messenger_ability = new
 	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
