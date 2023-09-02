@@ -12034,9 +12034,8 @@
 /mob/living/basic/pet/penguin/baby/permanent{
 	dir = 8
 	},
-/turf/open/floor/fake_snow{
-	icon_state = "snow6";
-	temperature = 293.14
+/turf/open/misc/snow/actually_safe{
+	icon_state = "snow6"
 	},
 /area/station/hallway/floor2/fore)
 "daD" = (
@@ -18445,9 +18444,8 @@
 /area/station/service/chapel)
 "eNM" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/fake_snow{
-	icon_state = "snow4";
-	temperature = 293.14
+/turf/open/misc/snow/actually_safe{
+	icon_state = "snow4"
 	},
 /area/station/hallway/floor2/fore)
 "eNN" = (
@@ -32228,9 +32226,8 @@
 /area/station/cargo/miningdock)
 "iyZ" = (
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/floor/fake_snow{
-	icon_state = "snow8";
-	temperature = 293.14
+/turf/open/misc/snow/actually_safe{
+	icon_state = "snow8"
 	},
 /area/station/hallway/floor2/fore)
 "izj" = (
@@ -35539,9 +35536,8 @@
 /area/station/hallway/floor4/aft)
 "jtJ" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/fake_snow{
-	icon_state = "snow9";
-	temperature = 293.14
+/turf/open/misc/snow/actually_safe{
+	icon_state = "snow9"
 	},
 /area/station/hallway/floor2/fore)
 "jtL" = (
@@ -46222,9 +46218,8 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "mdC" = (
-/turf/open/floor/fake_snow{
-	icon_state = "snow7";
-	temperature = 293.14
+/turf/open/misc/snow/actually_safe{
+	icon_state = "snow7"
 	},
 /area/station/hallway/floor2/fore)
 "mdE" = (
@@ -59540,9 +59535,8 @@
 "pAy" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/floor/fake_snow{
-	icon_state = "snow7";
-	temperature = 293.14
+/turf/open/misc/snow/actually_safe{
+	icon_state = "snow7"
 	},
 /area/station/hallway/floor2/fore)
 "pAH" = (
@@ -68931,9 +68925,8 @@
 /area/station/cargo/drone_bay)
 "sbI" = (
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/floor/fake_snow{
-	icon_state = "snow5";
-	temperature = 293.14
+/turf/open/misc/snow/actually_safe{
+	icon_state = "snow5"
 	},
 /area/station/hallway/floor2/fore)
 "sbK" = (
@@ -75898,9 +75891,7 @@
 "tTB" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/fake_snow{
-	temperature = 293.14
-	},
+/turf/open/misc/snow/actually_safe,
 /area/station/hallway/floor2/fore)
 "tTC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
