@@ -87,8 +87,10 @@
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
+		balloon_alert(user, "frequency set")
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
+		balloon_alert(user, "frequency copied")
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
 	else if(tool_frequency && mod_link.frequency)
@@ -98,8 +100,10 @@
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
+				balloon_alert(user, "frequency copied")
 			if("Imprint")
 				mod_link.frequency = tool_frequency
+				balloon_alert(user, "frequency set")
 
 /obj/item/mod/control/proc/can_call()
 	return get_charge() && wearer && wearer.stat < DEAD
@@ -231,17 +235,23 @@
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
+		balloon_alert(user, "frequency set")
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
+		balloon_alert(user, "frequency copied")
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
+		if(!user.is_holding(tool))
+			return
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
+				balloon_alert(user, "frequency copied")
 			if("Imprint")
 				mod_link.frequency = tool_frequency
+				balloon_alert(user, "frequency set")
 
 /obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -310,6 +320,8 @@
 
 /// A MODlink datum, used to handle unique functions that will be used in the MODlink call.
 /datum/mod_link
+	/// Generic name for multitool buffers.
+	var/name = "MODlink"
 	/// The frequency of the MODlink. You can only call other MODlinks on the same frequency.
 	var/frequency
 	/// The unique ID of the MODlink.

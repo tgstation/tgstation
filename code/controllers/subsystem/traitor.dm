@@ -44,6 +44,9 @@ SUBSYSTEM_DEF(traitor)
 	category_handler = new()
 	traitor_debug_panel = new(category_handler)
 
+	for(var/theft_item in subtypesof(/datum/objective_item/steal))
+		new theft_item
+
 	if(fexists(configuration_path))
 		var/list/data = json_decode(file2text(file(configuration_path)))
 		for(var/typepath in data)

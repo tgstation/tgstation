@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Ascended Blade Heretics no longer have blanket stun immunity, they now have 45 seconds of stun absorption that recharges after 2 minutes - think His Grace. This doesn't affect stamcrit (still immune to that) (assuming you haven't consumed all of your immunity charge) but does affect hard CC such as slips, flashbangs, or beepsky."
+  - balance: "Ascended Blade Heretics now have a 0.75 modifier to incoming knockdowns."

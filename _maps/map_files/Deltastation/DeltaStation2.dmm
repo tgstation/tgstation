@@ -24096,11 +24096,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "fXk" = (
@@ -25398,12 +25398,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "gmE" = (
@@ -58434,9 +58434,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "oIL" = (
-/obj/item/computer_disk/atmos,
-/obj/item/computer_disk/atmos,
-/obj/item/computer_disk/atmos,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/item/computer_disk/engineering,
@@ -61093,13 +61090,10 @@
 "ptA" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/item/tank/jetpack/carbondioxide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/tank/jetpack/carbondioxide,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/item/mod/module/tether,
+/obj/item/mod/module/tether,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "ptC" = (
@@ -68749,9 +68743,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "rly" = (
@@ -80986,11 +80980,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "umM" = (

@@ -1,4 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - bugfix: "Light eaters can no longer be eaten by their higher-grade brothers, the trash eaters. (recyclers)"

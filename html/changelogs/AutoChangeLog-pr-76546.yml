@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Adds a syndicate AI card for nuke ops. Costs 12 TC, can be refunded. Activating it in-hand opens up a ghost poll like normal reinforcements. Base interaction range for syndicate AIs is one, which means they can handle electronics only in proximity."
-  - rscadd: "Adds a syndicate AI interaction range upgrade for nuke ops, costs 4 TC and can be applied onto a syndicate AI (inside any container) to increase its interaction range by two per. (Three purchases are recommended for seven tiles of range!)"
