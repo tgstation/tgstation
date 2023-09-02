@@ -91,10 +91,8 @@
 ///If our trader is alive, and the customer left clicks them with an empty hand without combat mode
 /datum/component/trader/proc/on_attack_hand(atom/source, mob/living/carbon/customer)
 	SIGNAL_HANDLER
-
-	//TODO: also check if we are angry with them!
 	var/mob/living/living_trader = parent
-	if(living_trader.stat != CONSCIOUS || customer.combat_mode)
+	if(!can_trade(customer) || customer.combat_mode)
 		return
 	var/list/npc_options = list()
 	if(products.len)
@@ -119,6 +117,8 @@
  * * customer - (Mob REF) The mob trying to buy something
  */
 /datum/component/trader/proc/open_npc_options(mob/living/carbon/customer, list/npc_options)
+	if(!can_trade(customer))
+		return
 	var/npc_result = show_radial_menu(customer, parent, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	switch(npc_result)
 		if("Buy")
@@ -148,6 +148,8 @@
  * * customer - (Mob REF) The mob trying to buy something
  */
 /datum/component/trader/proc/buy_item(mob/customer)
+	if(!can_trade(customer))
+		return
 	if(!LAZYLEN(products))
 		return
 	var/mob/living/trader = parent
@@ -166,7 +168,7 @@
 			item_image.overlays += radial_icons_cache[TRADER_RADIAL_OUT_OF_STOCK]
 		items += list("[initial(thing.name)]" = item_image)
 	var/pick = show_radial_menu(customer, trader, items, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
-	if(!pick)
+	if(!pick || !can_trade(customer))
 		return
 	var/obj/item/item_to_buy = display_names[pick]
 	trader.face_atom(customer)
@@ -180,7 +182,7 @@
 		"No" = radial_icons_cache[TRADER_RADIAL_NO],
 	)
 	var/buyer_will_buy = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
-	if(buyer_will_buy != "Yes")
+	if(buyer_will_buy != "Yes" || !can_trade(customer))
 		return
 	trader.face_atom(customer)
 	if(!spend_buyer_offhand_money(customer, product_info[TRADER_PRODUCT_INFO_PRICE]))
@@ -211,13 +213,15 @@
  * * customer - (Mob REF) The mob trying to sell something
  */
 /datum/component/trader/proc/try_sell(mob/customer)
+	if(!can_trade(customer))
+		return
 	var/mob/living/trader = parent
 	var/sold_item = FALSE
 	for(var/obj/item/an_item in customer.held_items)
 		if(sell_item(customer, an_item))
 			sold_item = TRUE
 			break
-	if(!sold_item)
+	if(!sold_item && !can_trade(customer)) //don't talk if you are dead or fighting
 		trader.say(trader_data.return_trader_phrase(ITEM_REJECTED_PHRASE))
 
 
@@ -263,6 +267,8 @@
 	)
 	trader.face_atom(customer)
 	var/npc_result = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
+	if(!can_trade(customer))
+		return
 	if(npc_result != "Yes")
 		trader.say(trader_data.return_trader_phrase(ITEM_SELLING_CANCELED_PHRASE))
 		return TRUE
@@ -324,6 +330,8 @@
 		"Buying?" = radial_icons_cache[TRADER_RADIAL_DISCUSS_BUY],
 	)
 	var/pick = show_radial_menu(customer, parent, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
+	if(!can_trade(customer))
+		return
 	switch(pick)
 		if("Lore")
 			trader.say(trader_data.return_trader_phrase(TRADER_LORE_PHRASE))
@@ -334,6 +342,8 @@
 
 ///Displays to the customer what the trader is willing to buy and how much until a restock happens
 /datum/component/trader/proc/trader_buys_what(mob/customer)
+	if(!can_trade(customer))
+		return
 	var/mob/living/trader = parent
 	if(!wanted_items.len)
 		trader.say(trader_data.return_trader_phrase(TRADER_NOT_BUYING_ANYTHING))
@@ -350,6 +360,8 @@
 
 ///Displays to the customer what the trader is selling and how much is in stock
 /datum/component/trader/proc/trader_sells_what(mob/customer)
+	if(!can_trade(customer))
+		return
 	var/mob/living/trader = parent
 	if(!products.len)
 		trader.say(trader_data.return_trader_phrase(TRADER_NOT_SELLING_ANYTHING))
@@ -371,6 +383,14 @@
 ///Sets quantity of all wanted_items to initial(quanity);  this proc is currently called during initialize
 /datum/component/trader/proc/renew_item_demands()
 	wanted_items = trader_data.initial_wanteds.Copy()
+
+///Is the trader conscious?
+/datum/component/trader/proc/can_trade(mob/customer)
+	var/mob/living/trader = parent
+	if(trader.stat != CONSCIOUS)
+		customer.balloon_alert(trader, "indisposed!")
+		return
+	return TRUE
 
 #undef TRADER_RADIAL_BUY
 #undef TRADER_RADIAL_SELL
