@@ -109,6 +109,8 @@
 	return TRUE
 
 /obj/item/mcobject/interactor/proc/use_on(datum/mcmessage/input)
+	set waitfor = FALSE
+
 	if(!input)
 		return
 	var/turf/selected_turf = get_turf(src)

@@ -224,9 +224,32 @@
 //MonkeStation Edit Start
 //Butt-Based Farts
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
+	if(issilicon(user))
+		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!")
+		playsound(user, pick(
+			'monkestation/sound/effects/robot_farts/rbf1.ogg',
+			'monkestation/sound/effects/robot_farts/rbf2.ogg',
+			'monkestation/sound/effects/robot_farts/rbf3.ogg',
+			'monkestation/sound/effects/robot_farts/rbf4.ogg',
+			'monkestation/sound/effects/robot_farts/rbf5.ogg',
+			'monkestation/sound/effects/robot_farts/rbf6.ogg',
+			'monkestation/sound/effects/robot_farts/rbf7.ogg',
+			'monkestation/sound/effects/robot_farts/rbf8.ogg',
+			'monkestation/sound/effects/robot_farts/rbf9.ogg',
+			'monkestation/sound/effects/robot_farts/rbf10.ogg',
+			'monkestation/sound/effects/robot_farts/rbf11.ogg',
+			'monkestation/sound/effects/robot_farts/rbf12.ogg',
+			'monkestation/sound/effects/robot_farts/rbf13.ogg',
+			'monkestation/sound/effects/robot_farts/rbf14.ogg',
+			'monkestation/sound/effects/robot_farts/rbf15.ogg',
+			'monkestation/sound/effects/robot_farts/rbf16.ogg',
+			'monkestation/sound/effects/robot_farts/rbf17.ogg',
+			'monkestation/sound/effects/robot_farts/rbf18.ogg',
+		), 50, TRUE)
+		return
 	. = ..()
 	if(user.stat == CONSCIOUS)
-		if(!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user))
+		if((!user.get_organ_by_type(/obj/item/organ/internal/butt) || !ishuman(user)))
 			to_chat(user, "<span class='warning'>You don't have a butt!</span>")
 			return
 		var/obj/item/organ/internal/butt/booty = user.get_organ_by_type(/obj/item/organ/internal/butt)

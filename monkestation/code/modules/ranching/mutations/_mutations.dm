@@ -131,9 +131,11 @@
 			var/mob/living/basic/checked_animal = checkee
 			consumed_reagents = checked_animal.consumed_reagents
 
-		for(var/reagent in consumed_reagents)
-			if(reagent in reagent_requirements)
-				needed_reagents -= reagent
+		for(var/datum/reagent/reagent as anything in consumed_reagents)
+			if(!istype(reagent))
+				continue
+			if(reagent.type in reagent_requirements)
+				needed_reagents -= reagent.type
 		if(needed_reagents.len)
 			return FALSE
 	return TRUE

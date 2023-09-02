@@ -173,7 +173,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	. = ..()
 
 	AddComponent(/datum/component/fertile_egg,\
-		embryo_type = /mob/living/simple_animal/chick,\
+		embryo_type = /mob/living/basic/chick,\
 		minimum_growth_rate = 1,\
 		maximum_growth_rate = 2,\
 		total_growth_required = 200,\

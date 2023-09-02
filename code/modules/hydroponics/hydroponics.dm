@@ -64,6 +64,8 @@
 	var/sustaining_precent = 0
 	///do we let self sustaining increase plant stats overtime?
 	var/self_growing = FALSE
+	///the multi these get for exisitng
+	var/multi = 1
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(40)
@@ -251,11 +253,11 @@
 			needs_update = TRUE
 			growth += 3
 			if(self_sustaining && self_growing)
-				if(myseed.potency < 50)
+				if(myseed.potency < 50 * multi)
 					myseed.adjust_potency(2)
-				if(myseed.yield < 5)
+				if(myseed.yield < 5 * multi)
 					myseed.adjust_yield(1)
-				if(myseed.lifespan < 70)
+				if(myseed.lifespan < 70 * multi)
 					myseed.adjust_lifespan(2)
 /**
  * Nutrients
@@ -1152,6 +1154,13 @@
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15
+
+/obj/machinery/hydroponics/soil/Initialize(mapload)
+	. = ..()
+	if(SSmapping.level_trait(src.z, ZTRAIT_MINING))
+		multi = 5
+		self_growing = TRUE
+		self_sustaining = TRUE
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()
