@@ -14899,7 +14899,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/stack/cable_coil/cut,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "dvv" = (
@@ -15569,11 +15569,11 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering)
 "dHO" = (
@@ -36438,11 +36438,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"kGe" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
 "kGf" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -39749,24 +39744,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"lGF" = (
-/obj/machinery/door/airlock/vault{
-	name = "ULTRAMAX CONTAINMENT - DANGER";
-	desc = "There's a warning of some kind scrawled in blood on the floor here, you can't quite make it out..."
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/security/hos,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/execution/education)
 "lGH" = (
 /obj/structure/table,
 /obj/effect/spawner/random/entertainment/dice,
@@ -40444,12 +40421,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "lRP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering)
@@ -43384,12 +43360,23 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "mQc" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
+/obj/machinery/door/airlock/vault{
+	name = "ULTRAMAX CONTAINMENT - DANGER";
+	desc = "There's a warning of some kind scrawled in blood on the floor here, you can't quite make it out..."
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/security/hos,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/execution/education)
 "mQi" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -58536,7 +58523,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/engineering/glass/critical{
-	name = "PTL Accessl"
+	name = "PTL Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -74478,9 +74465,12 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "wEZ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
-/area/station/engineering)
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "wFq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -91617,7 +91607,7 @@ hIB
 tJe
 wKo
 eeR
-lGF
+mQc
 vAI
 tbp
 cnQ
@@ -104281,7 +104271,7 @@ upQ
 upQ
 upQ
 klm
-mQc
+dvu
 aac
 aac
 aac
@@ -104538,8 +104528,8 @@ aac
 aac
 aac
 aac
-mQc
 dvu
+wEZ
 aac
 aac
 aac
@@ -105316,9 +105306,9 @@ rBT
 bzI
 ooB
 ooB
-wEZ
-wEZ
-wEZ
+ooB
+ooB
+ooB
 nqG
 wPk
 nUx
@@ -105567,7 +105557,7 @@ rcI
 cXL
 vNH
 bwF
-kGe
+xAW
 oqD
 aeL
 aeL
