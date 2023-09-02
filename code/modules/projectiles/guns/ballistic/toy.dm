@@ -15,6 +15,18 @@
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
 	casing_ejector = FALSE
 
+/obj/item/gun/ballistic/automatic/toy/wirecutter_act(mob/living/user, obj/item/I)
+	to_chat(user, span_notice("You start cutting off the plastic tip..."))
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	name = "\improper Nanotrasen Saber SMG"
+	desc = "A prototype full-auto 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors. Looks a bit cheap."
+	gun_flags = NOT_A_REAL_GUN
+	update_appearance()
+	return TRUE
+
 /obj/item/gun/ballistic/automatic/toy/unrestricted
 	pin = /obj/item/firing_pin
 
@@ -24,6 +36,18 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/toy/pistol
 	fire_sound = 'sound/items/syringeproj.ogg'
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+
+/obj/item/gun/ballistic/automatic/pistol/toy/wirecutter_act(mob/living/user, obj/item/I)
+	to_chat(user, span_notice("You start cutting off the plastic tip..."))
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	name = "\improper Makarov pistol"
+	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors. Looks a bit cheap."
+	gun_flags = NOT_A_REAL_GUN
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	spawn_magazine_type = /obj/item/ammo_box/magazine/toy/pistol/riot
@@ -46,6 +70,18 @@
 	weapon_weight = WEAPON_LIGHT
 	pb_knockback = 0
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+
+/obj/item/gun/ballistic/shotgun/toy/wirecutter_act(mob/living/user, obj/item/I)
+	to_chat(user, span_notice("You start cutting off the plastic tip..."))
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	name = "shotgun"
+	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath. Looks a bit cheap."
+	gun_flags = NOT_A_REAL_GUN
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/shotgun/toy/handle_chamber()
 	. = ..()
@@ -73,6 +109,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gun_flags = NONE
 
+/obj/item/gun/ballistic/shotgun/toy/crossbow/wirecutter_act(mob/living/user, obj/item/I)
+	return
+
 /obj/item/gun/ballistic/automatic/c20r/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft SMG"
 	desc = "A bullpup three-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
@@ -83,6 +122,18 @@
 	casing_ejector = FALSE
 	clumsy_check = FALSE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+
+/obj/item/gun/ballistic/automatic/c20r/toy/wirecutter_act(mob/living/user, obj/item/I)
+	to_chat(user, span_notice("You start cutting off the plastic tip..."))
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	name = "\improper C-20r SMG"
+	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp. Looks a bit cheap."
+	gun_flags = NOT_A_REAL_GUN
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin
@@ -102,6 +153,18 @@
 	casing_ejector = FALSE
 	clumsy_check = FALSE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+
+/obj/item/gun/ballistic/automatic/l6_saw/toy/wirecutter_act(mob/living/user, obj/item/I)
+	to_chat(user, span_notice("You start cutting off the plastic tip..."))
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	name = "\improper L6 SAW"
+	desc = "A heavily modified 7mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation. Looks a bit cheap."
+	gun_flags = NOT_A_REAL_GUN
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin
