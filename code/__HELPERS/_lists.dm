@@ -1141,7 +1141,5 @@
 	if(!length(L))
 		return null
 	var/index = 1 + (value * (length(L) - 1)) / (max - min)
-	if(length(L) < index)
-		index = length(L)
 	return L[index]
 //monkestation edit end

@@ -43333,7 +43333,6 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/effect/turf_decal/sand/plating,
 /turf/open/space/basic,
 /area/station/engineering)
 "mPN" = (
