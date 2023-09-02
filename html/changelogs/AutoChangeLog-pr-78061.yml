@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "The pirate candidate gathering poll will now mention which pirate gang it is gathering candidates for."
