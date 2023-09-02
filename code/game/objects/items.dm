@@ -171,7 +171,9 @@
 	var/sharpness = NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
-	var/tool_behaviour = NONE
+	var/tool_behaviour = null
+	///Lazy list of all behaviours this tool can potentially adopt (but isn't necessarily active at the moment), must be manually maintained for now
+	var/list/all_tool_behaviours = null
 	///How fast does the tool work
 	var/toolspeed = 1
 
@@ -241,6 +243,9 @@
 	// Handle adding item associated actions
 	for(var/path in actions_types)
 		add_item_action(path)
+
+	if (!isnull(tool_behaviour) && isnull(all_tool_behaviours))
+		all_tool_behaviours = list(tool_behaviour)
 
 	actions_types = null
 

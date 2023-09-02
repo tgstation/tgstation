@@ -12,6 +12,7 @@
 	attack_verb_simple = list("prod", "poke")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
+	all_tool_behaviours = list(TOOL_KNIFE)
 	force = 0
 	/// Used on Initialize, how much time to cut cable restraints and zipties.
 	var/snap_time_weak_handcuffs = 0 SECONDS

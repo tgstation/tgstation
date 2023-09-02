@@ -95,6 +95,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_color = COLOR_SOFT_RED
+	all_tool_behaviours = list(TOOL_CAUTERY, TOOL_DRILL)
 
 /obj/item/cautery/advanced/Initialize(mapload)
 	. = ..()
@@ -372,6 +373,7 @@
 	light_range = 1
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
+	all_tool_behaviours = list(TOOL_SAW, TOOL_SCALPEL)
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
@@ -422,6 +424,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
+	all_tool_behaviours = list(TOOL_HEMOSTAT, TOOL_RETRACTOR)
 
 /obj/item/retractor/advanced/Initialize(mapload)
 	. = ..()

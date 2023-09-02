@@ -14,6 +14,7 @@
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
+	all_tool_behaviours = list(TOOL_SAW)
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon

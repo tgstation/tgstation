@@ -114,6 +114,7 @@
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	tool_behaviour = TOOL_KNIFE
+	all_tool_behaviours = list(TOOL_ROLLINGPIN, TOOL_KNIFE)
 
 /obj/item/knife/kitchen/silicon/examine()
 	. = ..()

@@ -362,6 +362,7 @@
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
+	all_tool_behaviours = list(TOOL_SCREWDRIVER)
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()

@@ -72,30 +72,33 @@
 	. = ..()
 	// assoc list of all overlays, key = the item generating the overlay, value = the overlay string
 	var/list/surgery_overlays = list()
-	// assoc list of tool behaviors to list of all items in our contents that match that behavior
+	// assoc list of tool behaviors to fastest toolspeed of that type we already have
 	// easy way for us to check if there are any lower quality tools within
-	var/list/tools_recorded = list()
+	var/list/recorded_tool_speeds = list()
 	// handle drapes separately so they're always on the bottom
 	if (locate(/obj/item/surgical_drapes) in contents)
 		. += "drapes"
 	// compile all the overlays from items inside us
 	for(var/obj/item/surgery_tool in src)
-		// if we are a tool, check for better tools to use instead
-		// initial is used for transforming tool memes. use their default behavior
-		var/surgery_tool_type = initial(surgery_tool.tool_behaviour)
-		if(surgery_tool_type)
-			for(var/obj/item/existing_overlay as anything in tools_recorded[surgery_tool_type])
-				if(surgery_tool.toolspeed <= existing_overlay.toolspeed)
-					continue
-				// the existing tool was worse than us, ditch it
-				surgery_overlays -= existing_overlay
-
-			LAZYADDASSOCLIST(tools_recorded, surgery_tool_type, surgery_tool)
-
-		// slots the overlay we get in.
+		// the overlay we will use if we want to display this one
 		var/actual_overlay = surgery_tool.get_surgery_tool_overlay(tray_extended = !is_portable)
-		if(!isnull(actual_overlay))
+		if (isnull(actual_overlay))
+			continue // nothing to see here
+
+		// if we don't have tool behaviour then just record the overlay
+		if(!length(surgery_tool.all_tool_behaviours))
 			surgery_overlays[surgery_tool] = actual_overlay
+			continue
+
+		// if we have at least one tool behaviour, check if we already recorded a faster one
+		for (var/surgery_tool_type in surgery_tool.all_tool_behaviours)
+			var/highest_speed = LAZYACCESS(recorded_tool_speeds, surgery_tool_type) || INFINITY // bigger number = slower
+			if(surgery_tool.toolspeed > highest_speed)
+				continue
+			// the existing tool was worse than us, ditch it
+			surgery_overlays -= surgery_tool_type
+			LAZYSET(recorded_tool_speeds, surgery_tool_type, surgery_tool.toolspeed)
+			surgery_overlays[surgery_tool_type] = actual_overlay
 
 	for(var/surgery_tool in surgery_overlays)
 		. |= surgery_overlays[surgery_tool]

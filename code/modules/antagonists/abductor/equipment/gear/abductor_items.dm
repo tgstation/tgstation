@@ -626,6 +626,22 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	toolspeed = 0.25
 	tool_behaviour = null
 	usesound = 'sound/items/pshoom.ogg'
+	all_tool_behaviours = list(
+		TOOL_BLOODFILTER,
+		TOOL_BONESET,
+		TOOL_CAUTERY,
+		TOOL_CROWBAR,
+		TOOL_DRILL,
+		TOOL_HEMOSTAT,
+		TOOL_MULTITOOL,
+		TOOL_RETRACTOR,
+		TOOL_SAW,
+		TOOL_SCALPEL,
+		TOOL_SCREWDRIVER,
+		TOOL_WELDER,
+		TOOL_WIRECUTTER,
+		TOOL_WRENCH,
+	)
 	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
 	var/list/tool_list = list()
 	///Which toolset do we have active currently?

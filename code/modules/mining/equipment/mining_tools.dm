@@ -211,6 +211,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
 	tool_behaviour = TOOL_WRENCH
+	all_tool_behaviours = list(TOOL_MINING, TOOL_SHOVEL, TOOL_WRENCH)
 	toolspeed = 0.75
 	usesound = 'sound/items/ratchet.ogg'
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
@@ -315,6 +316,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
+	all_tool_behaviours = list(TOOL_SHOVEL, TOOL_WRENCH)
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
