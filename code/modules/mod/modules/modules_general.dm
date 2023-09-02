@@ -190,7 +190,15 @@
 	. = ..()
 	if (!.)
 		return FALSE
+	if (DOING_INTERACTION(mod.wearer, mod.wearer))
+		balloon_alert(mod.wearer, "busy!")
+		return
+	balloon_alert(mod.wearer, "launching...")
+	mod.wearer.Shake(duration = 1 SECONDS)
+	if (!do_after(mod.wearer, 1 SECONDS, target = mod.wearer))
+		return FALSE
 	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
+	mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS)
 	return TRUE
 
 ///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
