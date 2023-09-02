@@ -46637,6 +46637,7 @@
 	id = "supportourtroops"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "nRW" = (
@@ -55923,6 +55924,7 @@
 	name = "Maintenance Hatch"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "qRO" = (
@@ -72479,6 +72481,7 @@
 "wav" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "waE" = (
@@ -120407,7 +120410,7 @@ pWy
 iRL
 quF
 quF
-quF
+kOI
 wav
 aaS
 aaa
@@ -120664,7 +120667,7 @@ pWy
 iRL
 vqz
 met
-quF
+kOI
 quF
 aaS
 aaa
@@ -121176,9 +121179,9 @@ mNW
 cOx
 pWy
 qRu
-quF
-quF
-quF
+kOI
+kOI
+kOI
 quF
 aaS
 aaa
