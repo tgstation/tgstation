@@ -66,6 +66,7 @@
 	else
 		desired_mob.key = key
 
+	SEND_SIGNAL(src, COMSIG_LIVING_ON_WABBAJACKED)
 	if(delete_old_mob)
 		QDEL_IN(src, 1)
 	return desired_mob
