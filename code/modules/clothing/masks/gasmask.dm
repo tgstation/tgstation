@@ -188,20 +188,22 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/atmos/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
-/obj/item/clothing/mask/gas/atmos/captain
+/obj/item/clothing/mask/gas/captain
 	name = "captain's rebreather"
-	desc = "A state of the art mask, with retractable bits for easier storage and a dual purpose slot for either a gas filter or narcotics."
+	desc = "A state of the art mask, with a dual purpose slot for either a gas filter or narcotics."
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	icon_state = "gas_cap"
 	inhand_icon_state = "gasmask_captain"
+	armor_type = /datum/armor/gas_atmos
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	has_fov = FALSE
+	max_filters = 1
 	cig_slot = TRUE
 
 /obj/item/clothing/mask/gas/atmos/captain/ui_action_click(mob/user, action)
 	adjustmask(user)
-	playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 20, TRUE)
 
 /obj/item/clothing/mask/gas/atmos/centcom
 	name = "\improper CentCom gas mask"
