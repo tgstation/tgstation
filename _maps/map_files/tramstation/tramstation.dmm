@@ -48771,7 +48771,8 @@
 	limb_destroyer = 1;
 	health = 1000;
 	desc = "Imprisoned for his many sins.";
-	maxHealth = 1000
+	maxHealth = 1000;
+	wound_bonus = 10
 	},
 /turf/open/floor/eighties/red{
 	icon = 'goon/icons/turf/floors.dmi';
