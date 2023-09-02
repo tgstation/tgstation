@@ -254,6 +254,7 @@
 #include "swing_combat.dm"
 #include "swing_crusher.dm"
 #include "swing_dropper.dm"
+#include "swing_emp_flash.dm"
 #include "swing_eyestab.dm"
 #include "swing_help.dm"
 #include "swing_holofans.dm"
