@@ -62,3 +62,17 @@
   - rscadd: Added flower crowns, craftable via the clothing menu.
   - image: Resprited geraniums, poppies, and lilys, along with changing their worn
       icon.
+2023-09-02:
+  Jacquerel:
+  - bugfix: Prevents admins from accidentally gibbing people by closing a confirmation
+      window.
+  - bugfix: Traitors should generate with "free objective" less often, and will once
+      more be assigned to steal things.
+  Profakos:
+  - bugfix: Ex-Interdyne pirates can now successfully spawn on case sensitive host
+      systems, such as Linux
+  Shadow-Quill:
+  - bugfix: Hilbert's Hotel Research ruin now has a functioning tram. As a side effect,
+      the malfunctioning tram event should now only fire on maps with a tram!
+  Thebleh:
+  - bugfix: fixed access on a couple of Engineering and Atmos airlocks on DeltaStation
