@@ -1542,14 +1542,14 @@
 	icon = FA_ICON_STAR_OF_LIFE
 	quirk_flags = QUIRK_HUMAN_ONLY
 	value = -4
-	gain_text = null // handled by trauma
-	lose_text = null
-	medical_record_text = "Patient's body has badly desenvolved grown nervous system leading to complete inability to feel pain. "
+	gain_text = "You feel your body becoming numb."
+	lose_text = "The numbness subsides."
+	medical_record_text = "Patient's body has poorly desenvolved grown nervous system leading to complete inability to feel pain. "
 	hardcore_value = 4
 
 /datum/quirk/numb/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.gain_trauma(/datum/brain_trauma/mild/healthy, TRAUMA_RESILIENCE_ABSOLUTE)
+	quirk_holder.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
-/datum/quirk/numb/remove()
-	human_holder.cure_trauma_type(/datum/brain_trauma/midl/healthy)
+/datum/quirk/numb/remove(client/client_source)
+	quirk_holder.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
