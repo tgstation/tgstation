@@ -68,22 +68,23 @@
 	controller.set_blackboard_key(BB_SHOP_SPOT, shop_spot)
 
 	var/turf/sign_turf
-	switch(shop_spot.dir)
-		if(NORTH)
-			sign_turf = get_step(living_pawn.loc, WEST)
-		if(SOUTH)
-			sign_turf = get_step(living_pawn.loc, EAST)
-		if(EAST)
-			sign_turf = get_step(living_pawn.loc, NORTH)
-		if(WEST)
-			sign_turf = get_step(living_pawn.loc, SOUTH)
 
-	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf))
+	sign_turf = try_find_valid_spot(living_pawn.loc, turn(shop_spot.dir, -90))
+	if(!sign_turf) //No space to my left, lets try right
+		sign_turf = try_find_valid_spot(living_pawn.loc, turn(shop_spot.dir, 90))
+
+	if(sign_turf)
 		var/sign_type_path =  controller.blackboard[BB_SHOP_SIGN_TYPE]
 		var/obj/sign = new sign_type_path(sign_turf)
 		controller.set_blackboard_key(BB_SHOP_SIGN, sign)
 
 	finish_action(controller, TRUE, target_key)
+
+/datum/ai_behavior/setup_shop/proc/try_find_valid_spot(origin_turf, direction_to_check)
+	var/turf/sign_turf = get_step(origin_turf, direction_to_check)
+	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf))
+		return sign_turf
+
 
 /datum/ai_behavior/setup_shop/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
