@@ -302,15 +302,15 @@
  */
 /datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-
+	var/heretic_heal = 5
 	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	source.adjustBruteLoss(-5, FALSE)
-	source.adjustFireLoss(-5, FALSE)
-	source.adjustToxLoss(-5, FALSE, forced = TRUE)
-	source.adjustOxyLoss(-5, FALSE)
+	source.adjustBruteLoss(heretic_heal, FALSE)
+	source.adjustFireLoss(heretic_heal, FALSE)
+	source.adjustToxLoss(heretic_heal, FALSE, forced = TRUE)
+	source.adjustOxyLoss(heretic_heal, FALSE)
 	source.adjustStaminaLoss(-20)
 
 /**
