@@ -14810,7 +14810,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "gZD" = (
-/obj/structure/bookcase,
+/obj/structure/bookcase/random,
 /turf/open/floor/wood,
 /area/space)
 "gZR" = (
