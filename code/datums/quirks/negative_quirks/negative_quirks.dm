@@ -1544,7 +1544,7 @@
 	value = -4
 	gain_text = "You feel your body becoming numb."
 	lose_text = "The numbness subsides."
-	medical_record_text = "Patient's body has poorly desenvolved grown nervous system leading to complete inability to feel pain. "
+	medical_record_text = "Patient's body has poorly developed nervous system leading to complete inability to feel pain. "
 	hardcore_value = 4
 
 /datum/quirk/numb/add(client/client_source)
