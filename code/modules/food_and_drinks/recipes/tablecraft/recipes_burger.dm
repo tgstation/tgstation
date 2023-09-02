@@ -382,7 +382,7 @@
 			/obj/item/food/grown/cabbage = 1,
 			/obj/item/toy/crayon/green = 1,
 			/obj/item/flashlight/flare = 1,
-			/datum/reagent/consumable/cooking_oil = 15
+			/datum/reagent/consumable/nutriment/fat/oil = 15
 	)
 	result = /obj/item/food/burger/crazy
 	category = CAT_BURGER

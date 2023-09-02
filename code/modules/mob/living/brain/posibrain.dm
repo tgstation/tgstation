@@ -124,20 +124,20 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		brainmob.set_suicide(FALSE)
 	transfer_personality(user)
 
-/obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/transfered_user)
-	name = "[initial(name)] ([transfered_user])"
-	brainmob.name = transfered_user.real_name
-	brainmob.real_name = transfered_user.real_name
-	if(transfered_user.has_dna())
+/obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/transferred_user)
+	name = "[initial(name)] ([transferred_user])"
+	brainmob.name = transferred_user.real_name
+	brainmob.real_name = transferred_user.real_name
+	if(transferred_user.has_dna())
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
-		transfered_user.dna.copy_dna(brainmob.stored_dna)
-	brainmob.timeofdeath = transfered_user.timeofdeath
+		transferred_user.dna.copy_dna(brainmob.stored_dna)
+	brainmob.timeofdeath = transferred_user.timeofdeath
 	brainmob.set_stat(CONSCIOUS)
 	if(brainmob.mind)
 		brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
-	if(transfered_user.mind)
-		transfered_user.mind.transfer_to(brainmob)
+	if(transferred_user.mind)
+		transferred_user.mind.transfer_to(brainmob)
 
 	brainmob.mind.remove_all_antag_datums()
 	brainmob.mind.wipe_memory()

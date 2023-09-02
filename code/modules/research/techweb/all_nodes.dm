@@ -310,6 +310,8 @@
 		"comp_access_checker",
 		"comp_arithmetic",
 		"comp_assoc_list_pick",
+		"comp_assoc_list_remove",
+		"comp_assoc_list_set",
 		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
@@ -2092,6 +2094,7 @@
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
 	boost_item_paths = list(
+		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,

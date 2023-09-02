@@ -94,7 +94,7 @@
  * also useful for changing initial amounts in reagent holder (cows start with milk, gutlunches start empty)
  */
 /obj/item/udder/proc/initial_conditions()
-	reagents.add_reagent(reagent_produced_typepath, 20)
+	reagents.add_reagent(reagent_produced_typepath, 20, added_purity = 1)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -102,7 +102,7 @@
  */
 /obj/item/udder/proc/generate()
 	if(prob(5))
-		reagents.add_reagent(reagent_produced_typepath, rand(5, 10))
+		reagents.add_reagent(reagent_produced_typepath, rand(5, 10), added_purity = 1)
 		if(on_generate_callback)
 			on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
 
@@ -117,8 +117,8 @@
 	if(milk_holder.reagents.total_volume >= milk_holder.volume)
 		to_chat(user, span_warning("[milk_holder] is full."))
 		return
-	var/transfered = reagents.trans_to(milk_holder, rand(5,10))
-	if(transfered)
+	var/transferred = reagents.trans_to(milk_holder, rand(5,10))
+	if(transferred)
 		user.visible_message(span_notice("[user] milks [src] using \the [milk_holder]."), span_notice("You milk [src] using \the [milk_holder]."))
 	else
 		to_chat(user, span_warning("The udder is dry. Wait a bit longer..."))
@@ -163,7 +163,7 @@
 /obj/item/udder/gutlunch/generate()
 	var/made_something = FALSE
 	if(prob(60))
-		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5))
+		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5), added_purity = 1)
 		made_something = TRUE
 	if(prob(45))
 		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
