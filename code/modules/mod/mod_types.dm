@@ -256,6 +256,12 @@
 		/obj/item/mod/module/jetpack/advanced,
 	)
 
+/obj/item/mod/control/pre_equipped/nuclear/plasmaman
+
+/obj/item/mod/control/pre_equipped/nuclear/plasmaman/Initialize(mapload, new_theme, new_skin, new_core)
+	applied_modules += /obj/item/mod/module/plasma_stabilizer
+	return ..()
+
 /obj/item/mod/control/pre_equipped/nuclear/unrestricted
 	req_access = null
 

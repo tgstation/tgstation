@@ -47,6 +47,7 @@
 					/obj/item/food/spiderleg,
 					/obj/item/food/fishmeat/carp,
 					/obj/item/food/meat/slab/human,
+					/obj/item/food/meat/slab/grassfed,
 				)
 	crate_name = "food crate"
 
