@@ -55,12 +55,6 @@
 	database_id = BOSS_MEDAL_LEGION
 	icon = "legion"
 
-/datum/award/achievement/boss/swarmer_beacon_kill
-	name = "Swarm Beacon Killer"
-	desc = "GET THEM OFF OF ME!"
-	database_id = BOSS_MEDAL_SWARMERS
-	icon = "swarmer"
-
 /datum/award/achievement/boss/wendigo_kill
 	name = "Wendigo Killer"
 	desc = "You've now ruined years of mythical storytelling."

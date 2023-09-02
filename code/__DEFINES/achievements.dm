@@ -101,7 +101,6 @@
 #define BOSS_MEDAL_HIEROPHANT "Hierophant Killer"
 #define BOSS_MEDAL_LEGION "Legion Killer"
 #define BOSS_MEDAL_TENDRIL "Tendril Exterminator"
-#define BOSS_MEDAL_SWARMERS "Swarmer Beacon Killer"
 #define BOSS_MEDAL_WENDIGO "Wendigo Killer"
 #define BOSS_MEDAL_KINGGOAT "King Goat Killer"
 
