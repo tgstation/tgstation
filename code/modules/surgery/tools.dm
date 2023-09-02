@@ -250,6 +250,10 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
+/obj/item/surgical_drapes/examine(mob/user)
+	. = ..()
+	. += span_notice("Operate with a health analyzer or operating computer for extra diagnostics.")
+
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
