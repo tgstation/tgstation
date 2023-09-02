@@ -85,6 +85,6 @@
 
 	finish_action(controller, TRUE, target_key)
 
-/datum/ai_behavior/sculpt_statue/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/ai_behavior/setup_shop/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
