@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - bugfix: "Fixes an issue where role banned players would be able to accept certain ghost roles they're meant to be banned from."

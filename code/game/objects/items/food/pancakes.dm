@@ -12,6 +12,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	///Used as a base name while generating the icon states when stacked
 	var/stack_name = "pancakes"
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pancakes/raw
 	name = "goopy pancake"
@@ -20,6 +21,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("milky batter" = 1)
 	stack_name = "rawpancakes"
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pancakes/raw/make_grillable()
 	AddComponent(/datum/component/grillable,\
@@ -62,6 +64,7 @@
 	)
 	tastes = list("pancakes" = 1, "blueberries" = 1)
 	stack_name = "bbpancakes"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pancakes/chocolatechip
 	name = "chocolate chip pancake"
@@ -73,6 +76,7 @@
 	)
 	tastes = list("pancakes" = 1, "chocolate" = 1)
 	stack_name = "ccpancakes"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pancakes/Initialize(mapload)
 	. = ..()

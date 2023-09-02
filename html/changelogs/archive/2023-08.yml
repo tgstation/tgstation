@@ -1348,3 +1348,72 @@
       get a status effect with a number of curses associated with it. There's some
       interesting florid language associated with the status effect as a nicety until
       your eventual gibbing from chasing that prize.
+2023-08-30:
+  Ghommie:
+  - sound: Unlocking an achievement now plays a sound by default. You can change it
+      in the Sound category of the game preferences.
+  Melbert:
+  - balance: If your server has non-human morgue cadavers enabled, you will be guaranteed
+      one human cadaver no matter what.
+  - balance: All maps (with the exception of Birdboat) now have an additional morgue
+      cadaver roundstart.
+  RikuTheKiller:
+  - bugfix: Probital overdose no longer causes plasmamen and other inorganics to receive
+      the longest nap in their lives.
+  Sealed101:
+  - qol: Metastation has had more navigate landmarks added, namely for areas like
+      Medbay, Cargo, Engineering, department heads offices and a few more.
+  SyncIt21:
+  - refactor: sheets are merged in a better way when ejected from machines & material
+      related stuff
+  - bugfix: rcd can build wallmounts on reinforced walls
+  - qol: rcd can build directional windows without requiring/building a grill
+  Timberpoes:
+  - bugfix: Fixes an issue where role banned players would be able to accept certain
+      ghost roles they're meant to be banned from.
+  VladinXXV:
+  - qol: The coroner can now store scythes in their labcoat and winter coat suit storage.
+      Ask not for whom the bell tolls...
+  xPokee:
+  - bugfix: fixed skeleton wings not being visible from behind while closed
+2023-08-31:
+  Comxy:
+  - bugfix: Fixes Star Gazer getting buckled
+  - image: Removes Star Gazer alpha pixels
+  Fikou:
+  - qol: removes the nukie tool parcel and places the tools directly in their box
+  GoldenAlpharex:
+  - bugfix: Fixes a rare issue that could lead to players entering an infinite disconnection
+      loop from having a null view.
+  Guillaume Prata:
+  - qol: The "You can't move while buckled to X" is now a balloon alert instead of
+      a to_chat message. Hopefully we all get buckle stuck processing why our inputs
+      are not working less often for now on.
+  LukasBeedellCodestuff:
+  - bugfix: Changed icebox permabrig door type to be correct
+  Momo8289:
+  - qol: Cryotubes will now notify medbay if the patient within is dead, and will
+      eject them if auto is on.
+  - qol: Cryotubes will now automatically turn on when a patient enters it if auto
+      is on, but you can no longer close the cryotube on yourself.
+  SyncIt21:
+  - bugfix: autolathe prints the correct amount of stacks and merges it with existing
+      stacks on the turf
+  - bugfix: autolathe takes constant time when printing stacks
+  - code_imp: autolathe will attempt to award you the "getting an upgrade" award only
+      once when printing multiple items & updates UI immediately
+  iwishforducks:
+  - bugfix: Space heaters no longer give extra cells when deconstructed
+  necromanceranne:
+  - bugfix: Compact fishing toolboxes no longer break space and time to contain any
+      normal-sized object. Instead, they only break space and time to contain fishing
+      rods. Settlers migrating to Nanotrasen space have no reasonable explanation
+      for this phenomenon.
+  nikothedude:
+  - balance: Prosthetics and slimepeople can now have limbs dismembered
+  - balance: Slimepeople can now receive slash wounds, but cannot bleed
+  - balance: Most limbs can now be dislocated
+  - refactor: Scar backend reworked, scars will be wiped as they update to the new
+      format
+  san7890:
+  - bugfix: The Cursed Slot Machine should now actually give you more than one pull.

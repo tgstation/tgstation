@@ -479,7 +479,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("octopus" = 1, "batter" = 1, "onion" = 1, "worcestershire sauce" = 1)
 	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES
@@ -507,7 +507,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("taco meat" = 1, "batter" = 1, "corn" = 1, "cheese" = 1)
 	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES | DAIRY
@@ -1140,7 +1140,7 @@
 	icon_state = "frickles"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("frickles" = 1)
