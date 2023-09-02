@@ -494,7 +494,7 @@
 	else
 		completion -= completion_loss * seconds_per_tick
 		if(completion <= 0 && !(special_effects & FISHING_MINIGAME_RULE_NO_ESCAPE))
-			user.balloon_alert("it got away!")
+			user.balloon_alert(user, "it got away!")
 			complete(FALSE)
 
 	completion = clamp(completion, 0, 100)
