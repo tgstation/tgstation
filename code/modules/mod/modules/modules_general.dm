@@ -181,7 +181,7 @@
 ///Jump Jet - Briefly removes the effect of gravity and pushes you up one z-level if possible.
 /obj/item/mod/module/jump_jet
 	name = "MOD ionic jump jet module"
-	desc = "A specialised ionic thruster which provides a short but powerful thrust capable of pushing against gravity, \
+	desc = "A specialised ionic thruster which provides a short but powerful boost capable of pushing against gravity, \
 		after which time it needs to recharge."
 	icon_state = "jump_jet"
 	module_type = MODULE_USABLE
