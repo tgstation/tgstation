@@ -30,9 +30,9 @@
 	var/examine_message
 	/// If TRUE, after passing the max seconds of stuns blocked, we will delete ourself.
 	/// If FALSE, we will instead recharge after some time.
-	var/delete_after_passing_max = TRUE
+	var/delete_after_passing_max
 	/// If [delete_after_passing_max] is FALSE, this is how long we will wait before recharging.
-	var/recharge_time = 1 MINUTES
+	var/recharge_time
 
 	/// Static list of all generic "stun received " signals that we will react to and block.
 	/// These all have the same arguments sent, so we can handle them all via the same signal handler.
