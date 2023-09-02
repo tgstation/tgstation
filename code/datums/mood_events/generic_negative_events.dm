@@ -431,8 +431,6 @@
 	description = "I've been here too long! I want to go out and explore space!"
 	mood_change = -3
 
-///Wizard cheesy grand finale - what everyone but the wizard gets
-/datum/mood_event/madness_despair
-	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
-	mood_change = -200
-	special_screen_obj = "mood_despair"
+/datum/mood_event/rust_corruption
+	description = "Oh god everything is falling apart, the station isnt safe..."
+	mood_change = -5
