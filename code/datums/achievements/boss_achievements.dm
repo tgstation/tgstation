@@ -103,12 +103,6 @@
 	database_id = BOSS_MEDAL_LEGION_CRUSHER
 	icon = "legion"
 
-/datum/award/achievement/boss/swarmer_beacon_crusher
-	name = "Swarm Beacon Crusher"
-	desc = "GET THEM OFF OF ME!"
-	database_id = BOSS_MEDAL_SWARMERS_CRUSHER
-	icon = "swarmer"
-
 /datum/award/achievement/boss/wendigo_crusher
 	name = "Wendigo Crusher"
 	desc = "You've now ruined years of mythical storytelling."

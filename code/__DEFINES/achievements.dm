@@ -111,7 +111,6 @@
 #define BOSS_MEDAL_DRAKE_CRUSHER "Drake Crusher"
 #define BOSS_MEDAL_HIEROPHANT_CRUSHER "Hierophant Crusher"
 #define BOSS_MEDAL_LEGION_CRUSHER "Legion Crusher"
-#define BOSS_MEDAL_SWARMERS_CRUSHER "Swarmer Beacon Crusher"
 #define BOSS_MEDAL_WENDIGO_CRUSHER "Wendigo Crusher"
 #define BOSS_MEDAL_KINGGOAT_CRUSHER "King Goat Crusher"
 
