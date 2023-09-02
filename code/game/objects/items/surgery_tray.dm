@@ -113,16 +113,17 @@
 /obj/item/surgery_tray/proc/set_tray_mode(new_mode, mob/user)
 	is_portable = new_mode
 	density = !is_portable
-
 	if(user)
 		user.visible_message(span_notice("[user] [is_portable ? "retracts" : "extends"] [src]'s wheels."), span_notice("You [is_portable ? "retract" : "extend"] [src]'s wheels."))
 
 	if(is_portable)
 		interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 		pass_flags |= PASSTABLE
+		RemoveElement(/datum/element/noisy_movement)
 	else
 		interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 		pass_flags &= ~PASSTABLE
+		AddElement(/datum/element/noisy_movement)
 
 	update_appearance()
 
@@ -153,6 +154,15 @@
 		atom_storage.remove_single(user, grabbies, drop_location())
 		user.put_in_hands(grabbies)
 	return TRUE
+
+/obj/item/surgery_tray/dump_contents()
+    var/atom/drop_point = drop_location()
+    for(var/atom/movable/tool in contents)
+        tool.forceMove(drop_point)
+
+/obj/item/surgery_tray/deconstruct(disassembled = TRUE)
+    dump_contents()
+    return ..()
 
 /obj/item/surgery_tray/morgue
 	name = "autopsy tray"

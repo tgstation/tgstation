@@ -555,7 +555,7 @@
 	toolspeed = 1
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
-   return "bonesetter" + (tray_extended ? "_out" : "")
+   return "bonesetter" + (tray_extended ? "" : "_out")
 
 /obj/item/blood_filter
 	name = "blood filter"
