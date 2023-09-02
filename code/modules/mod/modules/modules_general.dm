@@ -200,8 +200,7 @@
 	balloon_alert(mod.wearer, "launching...")
 	mod.wearer.Shake(duration = 1 SECONDS)
 	if (!do_after(mod.wearer, 1 SECONDS, target = mod.wearer))
-		COOLDOWN_START(src, cooldown_timer, FAILED_ACTIVATION_COOLDOWN) // Don't go on full cooldown if we failed to launch
-		addtimer(CALLBACK(mod, TYPE_PROC_REF(/obj/item, update_item_action_buttons), UPDATE_BUTTON_OVERLAY), FAILED_ACTIVATION_COOLDOWN)
+		start_cooldown(FAILED_ACTIVATION_COOLDOWN) // Don't go on full cooldown if we failed to launch
 		return FALSE
 	playsound(mod.wearer, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
 	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
