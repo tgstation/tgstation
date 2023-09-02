@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// Logic holder for supermatter delaminations, goes off the strategy design pattern.
 /// Selected by [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam
+	COOLDOWN_DECLARE(common_radio_cooldown)
 
 /// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
@@ -45,6 +46,15 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		return FALSE
 	sm.lastwarning = REALTIMEOFDAY
 
+	if(sm.damage_archived - sm.damage > SUPERMATTER_FAST_HEALING_RATE && sm.damage_archived >= sm.emergency_point) // Fast healing, engineers probably have it all sorted
+		if(COOLDOWN_FINISHED(src, common_radio_cooldown))
+			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
+			COOLDOWN_START(src, common_radio_cooldown, SUPERMATTER_COMMON_RADIO_DELAY)
+		else
+			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
+		playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
+		return FALSE
+
 	switch(sm.get_status())
 		if(SUPERMATTER_DELAMINATING)
 			playsound(sm, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
@@ -55,13 +65,12 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		if(SUPERMATTER_WARNING)
 			playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
 
-	if(sm.damage < sm.damage_archived) // Healing
-		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.damage_archived >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel)
-		return FALSE
-
-	if(sm.damage >= sm.emergency_point) // Taking damage, in emergency
-		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
+	if(sm.damage >= sm.emergency_point) // not out of the woods yet
+		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
 		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
+	else if(sm.damage_archived > sm.damage) // Healing, in warning
+		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
+		return FALSE
 	else // Taking damage, in warning
 		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
 
