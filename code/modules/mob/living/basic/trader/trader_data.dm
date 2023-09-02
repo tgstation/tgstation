@@ -1,6 +1,10 @@
 ///Used to contain the traders initial wares, and speech
 /datum/trader_data
 
+	///The item that marks the shopkeeper will sit on
+	var/shop_spot_type =  /obj/structure/chair/plastic
+	///The sign that will greet the customers
+	var/sign_type = /obj/structure/trader_sign
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
 	///The currency name
@@ -70,6 +74,7 @@
 	return pick(say_phrases[say_text])
 
 /datum/trader_data/mr_bones
+	sign_type = /obj/structure/trader_sign/mrbones
 	sell_sound = 'sound/voice/hiss2.ogg'
 
 	initial_products = list(

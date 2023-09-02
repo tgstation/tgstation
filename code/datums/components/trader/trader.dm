@@ -67,6 +67,9 @@
 
 	trader_data = new trader_data_path()
 
+	trader.ai_controller.set_blackboard_key(BB_SHOP_SPOT_TYPE, trader_data.shop_spot_type)
+	trader.ai_controller.set_blackboard_key(BB_SHOP_SIGN_TYPE, trader_data.sign_type)
+
 	radial_icons_cache = list(
 		TRADER_RADIAL_BUY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy"),
 		TRADER_RADIAL_SELL = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell"),
