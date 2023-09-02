@@ -1,5 +1,0 @@
-author: "NanoCats"
-delete-after: True
-changes:
-  - rscadd: "Added bespoke hand made maints to Tramstation"
-  - rscdel: "Removed randomized maints from Tramstation"
