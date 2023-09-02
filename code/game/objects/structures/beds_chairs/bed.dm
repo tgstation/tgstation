@@ -23,6 +23,8 @@
 	var/build_stack_type = /obj/item/stack/sheet/iron
 	/// How many mats to drop when deconstructed
 	var/build_stack_amount = 2
+	/// If someone's buckled to it
+	var/occupied = FALSE
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
@@ -42,8 +44,9 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
-	return CONTEXTUAL_SCREENTIP_SET
+	else if(occupied)
+		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -63,10 +66,13 @@
 	deconstruct(disassembled = TRUE)
 	return TRUE
 
-/// Medical beds
+/obj/structure/bed/post_buckle_mob(mob/living/buckled_mob)
+	occupied = TRUE
 
-#define BED_DOWN "down"
-#define BED_UP "up"
+/obj/structure/bed/post_unbuckle_mob(mob/living/unbuckled_mob)
+	occupied = FALSE
+
+/// Medical beds
 
 /obj/structure/bed/medical
 	name = "medical bed"
@@ -78,8 +84,6 @@
 	resistance_flags = NONE
 	build_stack_type = /obj/item/stack/sheet/mineral/titanium
 	build_stack_amount = 1
-	/// Position the bed is in
-	var/deploy_status = BED_DOWN
 	/// The item it spawns when it's folded up.
 	var/foldable_type
 
@@ -105,10 +109,11 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "[anchored ? "Release brakes" : "Apply brakes"]"
+	if(occupied)
+		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 
-	if(!isnull(foldable_type))
+	else if(!isnull(foldable_type))
 		context[SCREENTIP_CONTEXT_RMB] = "Fold up"
 
 	return CONTEXTUAL_SCREENTIP_SET
@@ -131,25 +136,32 @@
 
 /obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
 	set_density(TRUE)
-	deploy_status = BED_UP
-	icon_state = "[base_icon_state]_[deploy_status]"
+	occupied = TRUE
+	icon_state = "[base_icon_state]_up"
 	// Push them up from the normal lying position
 	patient.pixel_y = patient.base_pixel_y
 	update_appearance()
 
 /obj/structure/bed/medical/post_unbuckle_mob(mob/living/patient)
 	set_density(FALSE)
-	deploy_status = BED_DOWN
-	icon_state = "[base_icon_state]_[deploy_status]"
+	occupied = FALSE
+	icon_state = "[base_icon_state]_down"
 	// Set them back down to the normal lying position
 	patient.pixel_y = patient.base_pixel_y + patient.body_position_pixel_y_offset
 	update_appearance()
 
 /obj/structure/bed/medical/update_overlays()
 	. = ..()
-	if(anchored)
-		. += mutable_appearance(icon, "brakes_[deploy_status]")
-		. += emissive_appearance(icon, "brakes_[deploy_status]", src, alpha = src.alpha)
+	if(!anchored)
+		return
+
+	switch(occupied)
+		if(TRUE)
+			. += mutable_appearance(icon, "brakes_up")
+			. += emissive_appearance(icon, "brakes_up", src, alpha = src.alpha)
+		if(FALSE)
+			. += mutable_appearance(icon, "brakes_down")
+			. += emissive_appearance(icon, "brakes_down", src, alpha = src.alpha)
 
 /obj/structure/bed/medical/emergency/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/emergency_bed/silicon))
@@ -248,9 +260,6 @@
 		loaded = null
 	else
 		to_chat(user, span_warning("The dock is empty!"))
-
-#undef BED_DOWN
-#undef BED_UP
 
 /// Dog bed
 
