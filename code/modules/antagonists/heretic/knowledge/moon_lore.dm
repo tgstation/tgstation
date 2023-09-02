@@ -1,5 +1,5 @@
 /**
- * # The path of Ash.
+ * # The path of Moon.
  *
  * Goes as follows:
  *
@@ -28,26 +28,26 @@
  */
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
-	desc = "Opens up the Path of Ash to you. \
-		Allows you to transmute a match and a knife into an Ashen Blade. \
+	desc = "Opens up the Path of Moon to you. \
+		Allows you to transmute 2 sheets of glass and a knife into an Lunar Blade. \
 		You can only create two at a time."
-	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
-	next_knowledge = list(/datum/heretic_knowledge/ashen_grasp)
+	gain_text = "Under the light of the moon, and the "
+	next_knowledge = list(/datum/heretic_knowledge/moon_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/match = 1,
+		/obj/item/stack/sheet/glass = 1,
 	)
-	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	route = PATH_ASH
+	result_atoms = list(/obj/item/melee/sickly_blade/moon)
+	route = PATH_MOON
 
-/datum/heretic_knowledge/ashen_grasp
-	name = "Grasp of Ash"
+/datum/heretic_knowledge/moon_grasp
+	name = "Grasp of Lunacy"
 	desc = "Your Mansus Grasp will burn the eyes of the victim, causing damage and blindness."
 	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
 		Their lantern, expired to ash - their watch, absent."
 	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
 	cost = 1
-	route = PATH_ASH
+	route = PATH_MOON
 
 /datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -80,7 +80,7 @@
 	)
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
-	route = PATH_ASH
+	route = PATH_MOON
 
 /datum/heretic_knowledge/mark/ash_mark
 	name = "Mark of Ash"
@@ -91,7 +91,7 @@
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
-	route = PATH_ASH
+	route = PATH_MOON
 	mark_type = /datum/status_effect/eldritch/ash
 
 /datum/heretic_knowledge/mark/ash_mark/trigger_mark(mob/living/source, mob/living/target)
@@ -107,7 +107,7 @@
 
 /datum/heretic_knowledge/knowledge_ritual/ash
 	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)
-	route = PATH_ASH
+	route = PATH_MOON
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
@@ -118,7 +118,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
-	route = PATH_ASH
+	route = PATH_MOON
 
 
 /datum/heretic_knowledge/mad_mask
@@ -141,7 +141,7 @@
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
-	route = PATH_ASH
+	route = PATH_MOON
 
 /datum/heretic_knowledge/blade_upgrade/ash
 	name = "Fiery Blade"
@@ -149,7 +149,7 @@
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
 	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
-	route = PATH_ASH
+	route = PATH_MOON
 
 /datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
@@ -172,7 +172,7 @@
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
-	route = PATH_ASH
+	route = PATH_MOON
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
@@ -185,7 +185,7 @@
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
-	route = PATH_ASH
+	route = PATH_MOON
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
 		TRAIT_BOMBIMMUNE,

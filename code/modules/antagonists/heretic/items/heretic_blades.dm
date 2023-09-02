@@ -115,3 +115,12 @@
 	icon_state = "cosmic_blade"
 	inhand_icon_state = "cosmic_blade"
 	after_use_message = "The Stargazer hears your call..."
+
+// Path of Moon's blade
+/obj/item/melee/sickly_blade/moon
+	name = "\improper moon blade"
+	desc = "A blade of glass, reflecting the utter insanity of the soul. \
+		A troupe bringing joy, carving smiles on their faces if they want one or not."
+	icon_state = "cosmic_blade"
+	inhand_icon_state = "cosmic_blade"
+	after_use_message = "The Ringleader hears your call..."
