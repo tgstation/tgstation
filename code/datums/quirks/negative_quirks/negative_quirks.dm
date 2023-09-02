@@ -1538,7 +1538,7 @@
 
 /datum/quirk/numb
 	name = "Numb"
-	desc = "You cannot feel pain at all."
+	desc = "You can't feel pain at all."
 	icon = FA_ICON_STAR_OF_LIFE
 	quirk_flags = QUIRK_HUMAN_ONLY
 	value = -4
@@ -1550,3 +1550,6 @@
 /datum/quirk/numb/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.gain_trauma(/datum/brain_trauma/mild/healthy, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/numb/remove()
+	human_holder.cure_trauma_type(/datum/brain_trauma/midl/healthy)
