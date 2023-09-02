@@ -114,7 +114,8 @@
 		return
 
 	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-	heretic_eyes.flash_protect = FLASH_PROTECTION_NONE
+	if (!heretic_eyes.flash_protect == FLASH_PROTECTION_WELDER || !heretic_eyes.flash_protect == FLASH_PROTECTION_FLASH)
+		heretic_eyes.flash_protect = FLASH_PROTECTION_NONE
 
 /datum/heretic_knowledge/proc/protect_ears(datum/source, list/reflist)
 	SIGNAL_HANDLER
