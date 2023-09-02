@@ -1,7 +1,7 @@
 ///Sale signs
 /obj/structure/trader_sign
-	name = "holographic pay stand"
-	desc = "an unregistered pay stand"
+	name = "holographic store sign"
+	desc = "A holographic sign that promises great deals."
 	icon = 'icons/obj/trader_signs.dmi'
 	icon_state = "faceless"
 	anchored = TRUE
