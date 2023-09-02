@@ -571,7 +571,7 @@
 		var/list/atom/movable/foreign_contents_in_loc = list()
 
 		for(var/atom/movable/foreign_movable as anything in (turf_loc.contents - original_contents))
-			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable))
+			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable) && !istype(foreign_movable, /obj/effect/landmark/tram))
 				foreign_contents_in_loc += foreign_movable
 				continue
 

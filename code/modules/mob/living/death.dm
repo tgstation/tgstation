@@ -82,7 +82,7 @@
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
-	tod = station_time_timestamp()
+	station_timestamp_timeofdeath = station_time_timestamp()
 	var/turf/death_turf = get_turf(src)
 	var/area/death_area = get_area(src)
 	// Display a death message if the mob is a player mob (has an active mind)

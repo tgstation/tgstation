@@ -13,7 +13,7 @@
 
 /obj/effect/mob_spawn/corpse/human/tigercultist/perforated/special(mob/living/carbon/human/spawned_human)
 	. = ..()
-	var/datum/wound/pierce/critical/exit_hole = new()
+	var/datum/wound/pierce/bleed/critical/exit_hole = new()
 	exit_hole.apply_wound(spawned_human.get_bodypart(BODY_ZONE_CHEST))
 
 /// A fun drink enjoyed by the tiger cooperative, might corrode your brain if you drink the whole bottle

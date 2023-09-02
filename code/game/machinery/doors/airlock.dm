@@ -1375,7 +1375,12 @@
 
 	// applies the user-chosen airlock's icon, overlays and assemblytype to the src airlock
 	painter.use_paint(user)
-	icon = initial(airlock.icon)
+	if(initial(airlock.greyscale_config))
+		greyscale_config = initial(airlock.greyscale_config)
+		greyscale_colors = initial(airlock.greyscale_colors)
+		update_greyscale()
+	else
+		icon = initial(airlock.icon)
 	overlays_file = initial(airlock.overlays_file)
 	assemblytype = initial(airlock.assemblytype)
 	update_appearance()

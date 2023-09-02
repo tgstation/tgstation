@@ -3814,7 +3814,6 @@
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
-/obj/item/computer_disk/atmos,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "axp" = (

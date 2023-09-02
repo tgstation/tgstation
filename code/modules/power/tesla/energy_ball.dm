@@ -146,11 +146,10 @@
 	)
 
 	miniball.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
-	var/icon/I = icon(icon, icon_state,dir)
+	var/list/icon_dimensions = get_icon_dimensions(icon)
 
-	var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
+	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
-
 	miniball.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 /obj/energy_ball/Bump(atom/A)
