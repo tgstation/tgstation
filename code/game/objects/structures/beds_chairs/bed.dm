@@ -19,38 +19,54 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
-	var/buildstacktype = /obj/item/stack/sheet/iron
-	var/buildstackamount = 2
-	var/bolts = TRUE
+	/// What material this bed is made of
+	var/build_stack_type = /obj/item/stack/sheet/iron
+	/// How many mats to drop when deconstructed
+	var/build_stack_amount = 2
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/soft_landing)
+	register_context()
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	if(bolts)
+	if(!(flags_1 & NODECONSTRUCT_1))
 		. += span_notice("It's held together by a couple of <b>bolts</b>.")
+
+/obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item)
+		if(held_item.tool_behaviour != TOOL_WRENCH || flags_1 & NODECONSTRUCT_1)
+			return
+
+		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
+		if(build_stack_type)
+			new build_stack_type(loc, build_stack_amount)
 	..()
 
 /obj/structure/bed/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1&NODECONSTRUCT_1)
+	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
+
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
 	return TRUE
 
-
 /// Medical beds
+
+#define BED_DOWN "down"
+#define BED_UP "up"
 
 /obj/structure/bed/medical
 	name = "medical bed"
@@ -60,6 +76,10 @@
 	base_icon_state = "med"
 	anchored = FALSE
 	resistance_flags = NONE
+	build_stack_type = /obj/item/stack/sheet/mineral/titanium
+	build_stack_amount = 1
+	/// Position the bed is in
+	var/deploy_status = BED_DOWN
 	/// The item it spawns when it's folded up.
 	var/foldable_type
 
@@ -76,11 +96,14 @@
 /obj/structure/bed/medical/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
-	register_context()
 
 /obj/structure/bed/medical/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(!isnull(held_item))
-		return
+	if(held_item)
+		if(held_item.tool_behaviour != TOOL_WRENCH || flags_1 & NODECONSTRUCT_1)
+			return
+
+		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "[anchored ? "Release brakes" : "Apply brakes"]"
@@ -104,18 +127,29 @@
 	. = ..()
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
+	update_appearance()
 
 /obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
 	set_density(TRUE)
-	icon_state = "[base_icon_state]_up"
+	deploy_status = BED_UP
+	icon_state = "[base_icon_state]_[deploy_status]"
 	// Push them up from the normal lying position
 	patient.pixel_y = patient.base_pixel_y
+	update_appearance()
 
 /obj/structure/bed/medical/post_unbuckle_mob(mob/living/patient)
 	set_density(FALSE)
-	icon_state = "[base_icon_state]_down"
+	deploy_status = BED_DOWN
+	icon_state = "[base_icon_state]_[deploy_status]"
 	// Set them back down to the normal lying position
 	patient.pixel_y = patient.base_pixel_y + patient.body_position_pixel_y_offset
+	update_appearance()
+
+/obj/structure/bed/medical/update_overlays()
+	. = ..()
+	if(anchored)
+		. += mutable_appearance(icon, "brakes_[deploy_status]")
+		. += emissive_appearance(icon, "brakes_[deploy_status]", src, alpha = src.alpha)
 
 /obj/structure/bed/medical/emergency/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/emergency_bed/silicon))
@@ -215,6 +249,9 @@
 	else
 		to_chat(user, span_warning("The dock is empty!"))
 
+#undef BED_DOWN
+#undef BED_UP
+
 /// Dog bed
 
 /obj/structure/bed/dogbed
@@ -222,8 +259,8 @@
 	icon_state = "dogbed"
 	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
 	anchored = FALSE
-	buildstacktype = /obj/item/stack/sheet/mineral/wood
-	buildstackamount = 10
+	build_stack_type = /obj/item/stack/sheet/mineral/wood
+	build_stack_amount = 10
 	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
@@ -283,7 +320,7 @@
 	name = "double bed"
 	desc = "A luxurious double bed, for those too important for small dreams."
 	icon_state = "bed_double"
-	buildstackamount = 4
+	build_stack_amount = 4
 	max_buckled_mobs = 2
 	/// The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
 	var/mob/living/goldilocks
