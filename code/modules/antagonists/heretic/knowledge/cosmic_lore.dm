@@ -182,7 +182,7 @@
 				if(target.mind && target.stat != DEAD)
 					increase_combo_duration()
 					if(combo_counter == 4)
-						source.AddElement(/datum/element/effect_trail/cosmic_trail)
+						source.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 		third_target = second_target
 	second_target = WEAKREF(target)
 
@@ -191,7 +191,7 @@
 	second_target = null
 	third_target = null
 	if(combo_counter > 3)
-		source.RemoveElement(/datum/element/effect_trail/cosmic_trail)
+		source.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	combo_duration = combo_duration_amount
 	combo_counter = 0
 	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
@@ -249,7 +249,7 @@
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
-	var/mob/living/basic/star_gazer/star_gazer_mob = new /mob/living/basic/star_gazer(loc)
+	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY
 	user.AddElement(/datum/element/death_linked, star_gazer_mob)

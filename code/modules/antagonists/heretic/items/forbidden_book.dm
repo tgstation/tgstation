@@ -2,7 +2,7 @@
 /obj/item/codex_cicatrix
 	name = "Codex Cicatrix"
 	desc = "This book describes the secrets of the veil between worlds."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/antags/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
 	worn_icon_state = "book"

@@ -17,6 +17,7 @@
 /datum/armor/special_node
 	fire = 65
 	acid = 90
+	laser = 25
 
 /obj/structure/blob/special/node/Initialize(mapload)
 	GLOB.blob_nodes += src

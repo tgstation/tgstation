@@ -1,7 +1,7 @@
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "It charges power cells."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "ccharger"
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
@@ -20,10 +20,10 @@
 		. += "ccharger-o[newlevel]"
 	. += image(charging.icon, charging.icon_state)
 	if(charging.grown_battery)
-		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
+		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
 	. += "ccharger-[charging.connector_type]-on"
 	if((charging.charge > 0.01) && charging.charge_light_type)
-		. += mutable_appearance('icons/obj/power.dmi', "cell-[charging.charge_light_type]-o[(charging.percent() >= 99.5) ? 2 : 1]")
+		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "cell-[charging.charge_light_type]-o[(charging.percent() >= 99.5) ? 2 : 1]")
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()

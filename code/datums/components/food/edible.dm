@@ -459,8 +459,7 @@ Behavior that's still missing from this component that original food items had t
 	else if(C.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
-		var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"
-		to_chat(feeder, span_warning("You have to remove [who] [covered] first!"))
+		eater.balloon_alert(feeder, "mouth is covered!")
 		return FALSE
 	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
 		return
@@ -516,9 +515,7 @@ Behavior that's still missing from this component that original food items had t
 
 ///Ability to feed food to puppers
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/user)
-
 	SIGNAL_HANDLER
-
 
 	var/atom/owner = parent
 

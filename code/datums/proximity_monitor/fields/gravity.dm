@@ -15,7 +15,7 @@
 		return
 	if(HAS_TRAIT(target, TRAIT_FORCED_GRAVITY))
 		return
-	target.AddElement(/datum/element/forced_gravity, gravity_value)
+	target.AddElement(/datum/element/forced_gravity, gravity_value, can_override = TRUE)
 	modified_turfs[target] = gravity_value
 
 /datum/proximity_monitor/advanced/gravity/cleanup_field_turf(turf/target)
@@ -23,7 +23,7 @@
 	if(isnull(modified_turfs[target]))
 		return
 	var/grav_value = modified_turfs[target] || 0
-	target.RemoveElement(/datum/element/forced_gravity, grav_value)
+	target.RemoveElement(/datum/element/forced_gravity, grav_value, can_override = TRUE)
 	modified_turfs -= target
 
 // Subtype which pops up a balloon alert when a mob enters the field

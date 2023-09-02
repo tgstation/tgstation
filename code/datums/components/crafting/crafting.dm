@@ -20,6 +20,7 @@
 	var/mode = CRAFTING
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
+	var/forced_mode = FALSE
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -399,6 +400,7 @@
 	var/list/data = list()
 	var/list/material_occurences = list()
 
+	data["forced_mode"] = forced_mode
 	data["recipes"] = list()
 	data["categories"] = list()
 	data["foodtypes"] = FOOD_FLAGS
@@ -460,7 +462,7 @@
 				else
 					if(!istype(result, /obj/effect/spawner))
 						result.forceMove(user.drop_location())
-				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
+				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)
 			else
@@ -473,6 +475,8 @@
 			display_compact = !display_compact
 			. = TRUE
 		if("toggle_mode")
+			if(forced_mode)
+				return
 			mode = !mode
 			var/mob/user = usr
 			update_static_data(user)
@@ -510,7 +514,7 @@
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = recipe.name || initial(atom.name)
+	data["name"] = recipe.name
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result

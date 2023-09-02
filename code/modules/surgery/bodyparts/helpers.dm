@@ -168,7 +168,15 @@
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
 
+/// Makes sure that the owner's bodytype flags match the flags of all of it's parts and organs
+/mob/living/carbon/proc/synchronize_bodytypes()
+	var/all_limb_flags = NONE
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+			all_limb_flags |= ext_organ.external_bodytypes
+		all_limb_flags |= limb.bodytype
 
+	bodytype = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0
@@ -191,6 +199,14 @@
 			. = "#c4915e"
 		if("indian")
 			. = "#b87840"
+		if("mixed1")
+			. = "#a57a66"
+		if("mixed2")
+			. = "#87563d"
+		if("mixed3")
+			. = "#725547"
+		if("mixed4")
+			. = "#866e63"
 		if("african1")
 			. = "#754523"
 		if("african2")

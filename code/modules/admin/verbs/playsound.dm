@@ -71,7 +71,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Direct Mob Sound") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ///Takes an input from either proc/play_web_sound or the request manager and runs it through youtube-dl and prompts the user before playing it to the server.
-/proc/web_sound(mob/user, input)
+/proc/web_sound(mob/user, input, credit)
 	if(!check_rights(R_SOUND))
 		return
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
@@ -138,6 +138,8 @@
 					to_chat(world, span_boldannounce("An admin played: [webpage_url]"), confidential = TRUE)
 			if("Cancel", null)
 				return
+		if(credit)
+			to_chat(world, span_boldannounce(credit), confidential = TRUE)
 		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[user.ckey]", "[input]"))
 		log_admin("[key_name(user)] played web sound: [input]")
 		message_admins("[key_name(user)] played web sound: [input]")

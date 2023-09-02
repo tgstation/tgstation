@@ -77,7 +77,7 @@
 
 	tray.attack_hand(user)
 	var/list/obj/item/all_harvested_items = list()
-	for(var/obj/item/harvested_food in tray.drop_location())
+	for(var/obj/item/harvested_food in user.drop_location())
 		all_harvested_items += harvested_food
 
 	if(!all_harvested_items.len)

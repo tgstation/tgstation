@@ -153,7 +153,7 @@
 	return
 
 #define EQUIP_OUTFIT_ITEM(item_path, slot_name) if(##item_path) { \
-	user.equip_to_slot_or_del(SSwardrobe.provide_type(##item_path, user), ##slot_name, TRUE); \
+	user.equip_to_slot_or_del(SSwardrobe.provide_type(##item_path, user), ##slot_name, TRUE, indirect_action = TRUE); \
 	var/obj/item/outfit_item = user.get_item_by_slot(##slot_name); \
 	if (outfit_item && outfit_item.type == ##item_path) { \
 		outfit_item.on_outfit_equip(user, visualsOnly, ##slot_name); \

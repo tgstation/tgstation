@@ -1,7 +1,7 @@
 /obj/item/wallframe/bluespace_vendor_mount
 	name = "bluespace vendor wall mount"
 	desc = "Used for placing bluespace vendors."
-	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
 	pixel_shift = 30
@@ -13,7 +13,7 @@
 #define BS_MODE_OPEN 4
 
 /obj/machinery/bluespace_vendor
-	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_off"
 	base_icon_state = "bluespace_vendor"
 	name = "Bluespace Gas Vendor"

@@ -6,16 +6,19 @@
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"cm" = (
+/obj/structure/table/wood,
+/obj/item/bikehorn/golden{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "cs" = (
 /turf/closed/indestructible/fakeglass{
 	color = "#008000"
 	},
-/area/centcom/wizard_station)
-"cu" = (
-/obj/structure/table/wood/fancy,
-/obj/item/storage/photo_album,
-/obj/machinery/light/directional/south,
-/turf/open/floor/carpet,
 /area/centcom/wizard_station)
 "cy" = (
 /obj/machinery/door/airlock{
@@ -53,10 +56,6 @@
 /obj/item/storage/bag/tray,
 /obj/item/food/burger/spell,
 /turf/open/floor/carpet,
-/area/centcom/wizard_station)
-"gR" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
 /area/centcom/wizard_station)
 "hT" = (
 /turf/open/floor/engine/cult,
@@ -112,12 +111,12 @@
 "lL" = (
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
-"nu" = (
-/obj/structure/table/wood,
-/obj/item/bikehorn/golden{
-	pixel_x = -8;
-	pixel_y = 8
-	},
+"mc" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/clothing/suit/wizrobe/red,
+/obj/item/clothing/head/wizard/red,
+/obj/item/staff,
+/obj/item/clothing/shoes/sandal/magic,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "nN" = (
@@ -166,9 +165,21 @@
 /obj/machinery/vending/magivend,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"pw" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood,
+/area/centcom/wizard_station)
 "pA" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/centcom/wizard_station)
+"pI" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/photo_album,
+/turf/open/floor/carpet,
 /area/centcom/wizard_station)
 "qe" = (
 /turf/open/floor/grass,
@@ -190,8 +201,9 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/wizard_station)
-"rc" = (
-/obj/machinery/light/directional/east,
+"sx" = (
+/obj/structure/table/wood,
+/obj/item/retractor,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "tv" = (
@@ -265,17 +277,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
-"Dc" = (
-/obj/structure/table/wood,
-/obj/item/clothing/suit/wizrobe/magusblue,
-/obj/item/clothing/head/wizard/magus,
-/obj/item/staff,
-/obj/structure/mirror/magic{
-	pixel_y = 28
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
 "Do" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
@@ -318,6 +319,11 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
+"HX" = (
+/obj/structure/chair/wood/wings,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "IZ" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -329,6 +335,13 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
+"JQ" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet,
+/area/centcom/wizard_station)
 "JW" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -339,21 +352,11 @@
 "Lt" = (
 /turf/open/floor/wood,
 /area/centcom/wizard_station)
-"LC" = (
-/obj/machinery/computer/camera_advanced{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom/wizard_station)
 "LU" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	name = "Observation Deck"
 	},
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"Mz" = (
-/obj/machinery/light/directional/west,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "MW" = (
@@ -454,14 +457,6 @@
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/wizard_station)
-"Uu" = (
-/obj/structure/closet/crate/preopen,
-/obj/item/clothing/suit/wizrobe/red,
-/obj/item/clothing/head/wizard/red,
-/obj/item/staff,
-/obj/item/clothing/shoes/sandal/magic,
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
 "UC" = (
 /obj/machinery/computer/shuttle,
 /turf/open/floor/engine/cult,
@@ -494,6 +489,16 @@
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
+"Xt" = (
+/obj/structure/table/wood,
+/obj/item/clothing/suit/wizrobe/magusblue,
+/obj/item/clothing/head/wizard/magus,
+/obj/item/staff,
+/obj/structure/mirror/magic{
+	pixel_y = 28
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "XJ" = (
 /mob/living/simple_animal/bot/medbot/mysterious{
 	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
@@ -504,6 +509,13 @@
 /area/centcom/wizard_station)
 "XV" = (
 /obj/structure/chair/wood/wings,
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
+"Yp" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Yv" = (
@@ -517,12 +529,6 @@
 /obj/item/banhammer,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-/area/centcom/wizard_station)
-"Zu" = (
-/obj/structure/table/wood,
-/obj/item/retractor,
-/obj/machinery/light/directional/north,
-/turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "ZA" = (
 /obj/structure/toilet{
@@ -922,11 +928,11 @@ dp
 dp
 dp
 dp
-XV
+HX
 ft
 SD
 ft
-IZ
+Yp
 dp
 cs
 cs
@@ -965,7 +971,7 @@ op
 op
 dp
 dp
-LC
+pw
 Lt
 dk
 hT
@@ -1068,7 +1074,7 @@ IZ
 dp
 hT
 hT
-hT
+Cm
 dp
 xn
 GV
@@ -1104,7 +1110,7 @@ zB
 uy
 Lt
 Lt
-gR
+Lt
 dp
 dp
 cs
@@ -1112,7 +1118,7 @@ cs
 cs
 dp
 dp
-AW
+hT
 lL
 hT
 qg
@@ -1189,7 +1195,7 @@ op
 op
 dp
 dp
-Mz
+Sg
 ko
 dp
 dp
@@ -1198,11 +1204,11 @@ ae
 dp
 dp
 dp
-Zu
+sx
 hT
 hT
 hT
-Cm
+hT
 dp
 hT
 lL
@@ -1212,7 +1218,7 @@ dp
 dp
 dp
 dp
-hT
+Sg
 hT
 VO
 OV
@@ -1239,12 +1245,12 @@ hT
 hT
 cs
 hT
-hT
-hT
 Sg
+hT
+hT
 pt
 dp
-hT
+AW
 hT
 hT
 hT
@@ -1331,12 +1337,12 @@ hT
 hT
 cs
 hT
-hT
-hT
 jV
+hT
+hT
 jD
 dp
-hT
+AW
 hT
 hT
 hT
@@ -1373,7 +1379,7 @@ op
 op
 dp
 dp
-rc
+jV
 om
 dp
 dp
@@ -1382,11 +1388,11 @@ WQ
 dp
 dp
 dp
-Dc
+Xt
 hT
 hT
 hT
-Cm
+hT
 dp
 hT
 lL
@@ -1396,7 +1402,7 @@ dp
 dp
 dp
 dp
-nu
+cm
 hT
 VO
 OV
@@ -1429,7 +1435,7 @@ tz
 MW
 dp
 PF
-Uu
+mc
 DX
 hT
 hT
@@ -1472,7 +1478,7 @@ PK
 xc
 VB
 lL
-cu
+pI
 dp
 dp
 cs
@@ -1480,7 +1486,7 @@ cs
 cs
 dp
 dp
-AW
+hT
 lL
 hT
 oE
@@ -1528,7 +1534,7 @@ kZ
 cs
 hT
 hT
-hT
+Cm
 dp
 Ug
 Do
@@ -1609,7 +1615,7 @@ op
 op
 dp
 dp
-kh
+JQ
 lL
 cs
 Dq

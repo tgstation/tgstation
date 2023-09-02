@@ -1,6 +1,6 @@
 {
 	"file": "tgstation.dme",
-	"scannable_directory": "code/**/*.dm",
+	"scannable_directory": "code/",
 	"subdirectories": true,
 	"excluded_files": [],
 	"forbidden_includes": [

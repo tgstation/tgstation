@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	attack_verb_simple = "punch"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
-	healable = FALSE //don't brusepack the guardian
+	mob_biotypes = MOB_BEAST
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //how much damage from each damage type we transfer to the owner
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	light_range = 3
 	light_on = FALSE
 	hud_type = /datum/hud/guardian
-	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	faction = list()
 
 	/// The guardian's color, used for their sprite, chat, and some effects made by it.
@@ -123,7 +122,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			summoner.faction += "[REF(src)]"
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
-	update_atom_languages()
 	RegisterSignal(to_who, COMSIG_MOVABLE_MOVED, PROC_REF(check_distance))
 	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
 	RegisterSignal(to_who, COMSIG_LIVING_DEATH, PROC_REF(on_summoner_death))
@@ -367,10 +365,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return ..()
 
 /mob/living/simple_animal/hostile/guardian/death(gibbed)
-	. = ..()
 	if(!QDELETED(summoner))
 		to_chat(summoner, span_bolddanger("Your [name] died somehow!"))
 		summoner.dust()
+	return ..()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	var/severity = 0
@@ -434,25 +432,25 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 //HAND HANDLING
 
-/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/equipped_item, slot)
+/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!slot)
 		return FALSE
-	if(!istype(equipped_item))
+	if(!istype(equipping))
 		return FALSE
 
 	. = TRUE
-	var/index = get_held_index_of_item(equipped_item)
+	var/index = get_held_index_of_item(equipping)
 	if(index)
 		held_items[index] = null
 		update_held_items()
 
-	if(equipped_item.pulledby)
-		equipped_item.pulledby.stop_pulling()
+	if(equipping.pulledby)
+		equipping.pulledby.stop_pulling()
 
-	equipped_item.screen_loc = null // will get moved if inventory is visible
-	equipped_item.forceMove(src)
-	equipped_item.equipped(src, slot)
-	SET_PLANE_EXPLICIT(equipped_item, ABOVE_HUD_PLANE, src)
+	equipping.screen_loc = null // will get moved if inventory is visible
+	equipping.forceMove(src)
+	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
+	equipping.on_equipped(src, slot)
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
 	if((. = guardian_overlays[cache_index]))

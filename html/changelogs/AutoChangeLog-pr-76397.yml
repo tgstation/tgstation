@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Context tooltip size increased"
-  - bugfix: "Fixed remnants of old maptext code on various things"

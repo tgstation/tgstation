@@ -53,7 +53,7 @@
 
 	if(!should_show_text(examined))
 		return
-	var/examine_text = replacetext(replacetext("[body_zone ? examined.p_their(TRUE) : examined.p_they(TRUE)] [infused_desc]", "%PRONOUN_ES", examined.p_es()), "%PRONOUN_S", examined.p_s())
+	var/examine_text = replacetext(replacetext("[body_zone ? examined.p_Their() : examined.p_They()] [infused_desc]", "%PRONOUN_ES", examined.p_es()), "%PRONOUN_S", examined.p_s())
 	if(add_span)
 		examine_text = span_notice(examine_text)
 	examine_list += examine_text

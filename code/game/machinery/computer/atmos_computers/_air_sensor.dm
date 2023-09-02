@@ -2,7 +2,7 @@
 /// These always hook to monitors, be mindful of them
 /obj/machinery/air_sensor
 	name = "gas sensor"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "gsensor1"
 	resistance_flags = FIRE_PROOF
 	power_channel = AREA_USAGE_ENVIRON
@@ -91,7 +91,7 @@
 	if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/outlet_injector))
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = multi_tool.buffer
 		inlet_id = input.id_tag
-		multi_tool.buffer = null
+		multi_tool.set_buffer(null)
 		balloon_alert(user, "connected to input")
 
 	else if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/vent_pump))
@@ -105,11 +105,11 @@
 		output.external_pressure_bound = 0
 		//finally assign it to this sensor
 		outlet_id = output.id_tag
-		multi_tool.buffer = null
+		multi_tool.set_buffer(null)
 		balloon_alert(user, "connected to output")
 
 	else
-		multi_tool.buffer = src
+		multi_tool.set_buffer(src)
 		balloon_alert(user, "added to multitool buffer")
 
 	return TRUE
@@ -123,7 +123,7 @@
 /obj/item/air_sensor
 	name = "Air Sensor"
 	desc = "A device designed to detect gases and their concentration in an area."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "gsensor0"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	/// The injector linked with this sensor

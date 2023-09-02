@@ -256,7 +256,7 @@
 /obj/item/clothing/neck/cloak/herald_cloak
 	name = "cloak of the prophet"
 	desc = "A cloak which protects you from the heresy of the world."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "herald_cloak"
 	body_parts_covered = CHEST|GROIN|ARMS
 	hit_reaction_chance = 20

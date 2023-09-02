@@ -1,0 +1,46 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"e" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"C" = (
+/obj/machinery/door/airlock/survival_pod/glass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "podtoilet";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/pod,
+/area/misc/survivalpod)
+"H" = (
+/obj/structure/toilet,
+/obj/item/paper{
+	pixel_x = 7;
+	pixel_y = -7
+	},
+/obj/effect/turf_decal/trimline/red,
+/obj/machinery/button/door/directional/east{
+	id = "podtoilet";
+	name = "Privacy Shutters";
+	pixel_y = 6
+	},
+/turf/open/floor/pod,
+/area/misc/survivalpod)
+
+(1,1,1) = {"
+a
+e
+a
+"}
+(2,1,1) = {"
+a
+H
+C
+"}
+(3,1,1) = {"
+a
+a
+a
+"}

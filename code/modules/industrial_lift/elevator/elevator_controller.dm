@@ -46,12 +46,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 // Emagging elevator buttons will disable safeties
 /obj/item/assembly/control/elevator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
 	obj_flags |= EMAGGED
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(!lift)
-		return
+		return FALSE
 
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
 		lift_platform.violent_landing = TRUE
@@ -71,6 +71,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	// or by someone emagging the assembly directly after removing it (to be cheeky)
 	var/atom/balloon_alert_loc = get(src, /obj/machinery/button) || src
 	balloon_alert_loc.balloon_alert(user, "safeties overridden")
+	return TRUE
 
 // Multitooling emagged elevator buttons will fix the safeties
 /obj/item/assembly/control/elevator/multitool_act(mob/living/user)

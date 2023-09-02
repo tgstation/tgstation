@@ -26,7 +26,7 @@
 	if(!multitool_check_buffer(user, I))
 		return
 	var/obj/item/multitool/M = I
-	M.buffer = src
+	M.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
@@ -101,7 +101,12 @@
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, (mapload && force_connect))
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		FALSE, \
+		(mapload && force_connect) \
+	)
 
 /obj/machinery/mineral/stacking_machine/Destroy()
 	if(console)

@@ -130,10 +130,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(!SSmapping.plane_offset_blacklist["[plane]"])
 			plane = plane - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 
-		var/turf/T = SSmapping.get_turf_above(src)
+		var/turf/T = GET_TURF_ABOVE(src)
 		if(T)
 			T.multiz_turf_new(src, DOWN)
-		T = SSmapping.get_turf_below(src)
+		T = GET_TURF_BELOW(src)
 		if(T)
 			T.multiz_turf_new(src, UP)
 
@@ -187,10 +187,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
 	if(GET_LOWEST_STACK_OFFSET(z))
-		var/turf/T = SSmapping.get_turf_above(src)
+		var/turf/T = GET_TURF_ABOVE(src)
 		if(T)
 			T.multiz_turf_del(src, DOWN)
-		T = SSmapping.get_turf_below(src)
+		T = GET_TURF_BELOW(src)
 		if(T)
 			T.multiz_turf_del(src, UP)
 	if(force)
@@ -343,8 +343,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 ///Called each time the target falls down a z level possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
-/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf)
-	var/flags = NONE
+/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf, flags = NONE)
 	var/list/falling_movables = falling.get_z_move_affected()
 	var/list/falling_mov_names
 	for(var/atom/movable/falling_mov as anything in falling_movables)

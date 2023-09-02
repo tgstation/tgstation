@@ -8,7 +8,7 @@
  **/
 /obj/item/robot_model
 	name = "Default"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	inhand_icon_state = "electronic"
@@ -265,7 +265,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if(cyborg.hat)
 		cyborg.hat.forceMove(drop_location())
-		cyborg.hat = null
+
 	cyborg.cut_overlays()
 	cyborg.setDir(SOUTH)
 	do_transform_delay()
@@ -276,6 +276,7 @@
 	flick("[cyborg_base_icon]_transform", cyborg)
 	cyborg.notransform = TRUE
 	if(locked_transform)
+		cyborg.ai_lockdown = TRUE
 		cyborg.SetLockdown(TRUE)
 		cyborg.set_anchored(TRUE)
 	cyborg.logevent("Chassis model has been set to [name].")
@@ -284,6 +285,7 @@
 		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
+	cyborg.ai_lockdown = FALSE
 	cyborg.setDir(SOUTH)
 	cyborg.set_anchored(FALSE)
 	cyborg.notransform = FALSE
@@ -868,11 +870,14 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/melee/energy/sword/cyborg/saw,
+		/obj/item/bonesetter,
+		/obj/item/blood_filter,
 		/obj/item/roller/robo,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/bone_gel,
 		/obj/item/gun/medbeam,
 		/obj/item/borg/apparatus/organ_storage,
 	)

@@ -163,6 +163,8 @@
 #define FLOOR_CLEAN_LAYER 2.55
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
+///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
+#define WATER_LEVEL_LAYER 2.61
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
 #define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
@@ -217,6 +219,13 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
+/**
+ * The layer of the visual overlay used in the submerge element.
+ * The vis overlay inherits the planes of the movables it's attached to (that also have KEEP_TOGETHER added)
+ * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
+ */
+#define WATER_VISUAL_OVERLAY_LAYER 1000
+
 //---------- LIGHTING -------------
 
 // LIGHTING_PLANE layers
@@ -269,9 +278,20 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
+/// Layer for light overlays
+#define LIGHT_DEBUG_LAYER 6
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4
+
+///Layer for lobby menu collapse button
+#define LOBBY_BELOW_MENU_LAYER 2
+///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)
+#define LOBBY_MENU_LAYER 3
+///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
+#define LOBBY_SHUTTER_LAYER 4
+///Layer for lobby menu buttons that are hanging away from and lower than the main panel
+#define LOBBY_BOTTOM_BUTTON_LAYER 5
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1

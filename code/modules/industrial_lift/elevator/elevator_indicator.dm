@@ -150,7 +150,7 @@
 		return
 
 	set_light(l_on = TRUE)
-	maptext = MAPTEXT_TINY_UNICODE("<div style='font-size:12pt; color:[LIGHT_COLOR_DARK_BLUE]'>[current_lift_floor]</div>")
+	maptext = "<div style='font-family: TinyUnicode; font-size: 12pt; color: [LIGHT_COLOR_DARK_BLUE]'>[current_lift_floor]</div>"
 
 /obj/machinery/lift_indicator/update_overlays()
 	. = ..()

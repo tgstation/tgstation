@@ -203,7 +203,7 @@
 				return
 
 			if(href_list["quirk"])
-				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
+				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL, from_scan = TRUE)
 				if(quirkstring)
 					to_chat(human_user,  "<span class='notice ml-1'>Detected physiological traits:</span>\n<span class='notice ml-2'>[quirkstring]</span>")
 				else
@@ -483,7 +483,7 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		if(HAS_TRAIT(src, TRAIT_MORBID))
+		if(HAS_MIND_TRAIT(src, TRAIT_MORBID))
 			add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
 		else
 			add_mood_event("saved_life", /datum/mood_event/saved_life)

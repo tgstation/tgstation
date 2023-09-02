@@ -838,7 +838,7 @@
 	if(!.)
 		return
 
-	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
+	googly = mutable_appearance('icons/obj/service/hydroponics/harvest.dmi', "eyes")
 	googly.appearance_flags = RESET_COLOR
 	our_plant.add_overlay(googly)
 

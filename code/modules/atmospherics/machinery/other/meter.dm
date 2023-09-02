@@ -1,7 +1,7 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
-	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
+	icon = 'icons/obj/pipes_n_cables/meter.dmi'
 	icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON

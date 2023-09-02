@@ -6,7 +6,7 @@
 #define JOB_UNAVAILABLE_SLOTFULL 5
 /// Job unavailable due to incompatibility with an antag role.
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
-/// Checks for character age. 
+/// Checks for character age.
 #define JOB_UNAVAILABLE_AGE 7
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
@@ -19,6 +19,12 @@
 
 #define JOB_DISPLAY_ORDER_DEFAULT 0
 
+// Keys for jobconfig.toml
+#define JOB_CONFIG_PLAYTIME_REQUIREMENTS "Playtime Requirements"
+#define JOB_CONFIG_REQUIRED_ACCOUNT_AGE "Required Account Age"
+#define JOB_CONFIG_REQUIRED_CHARACTER_AGE "Required Character Age"
+#define JOB_CONFIG_SPAWN_POSITIONS "Spawn Positions"
+#define JOB_CONFIG_TOTAL_POSITIONS "Total Positions"
 
 /**
  * =======================
@@ -186,6 +192,11 @@
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
+/// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
+#define JOB_CANNOT_OPEN_SLOTS (1<<9)
+
+/// Combination flag for jobs which are considered regular crew members of the station.
+#define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

@@ -150,6 +150,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(!iscarbon(organ_owner))
+		stack_trace("Organ removal should not be happening on non carbon mobs: [organ_owner]")
+
 	for(var/trait in organ_traits)
 		REMOVE_TRAIT(organ_owner, trait, REF(src))
 
@@ -162,6 +165,24 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EXAMINE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
+
+	var/list/diseases = organ_owner.get_static_viruses()
+	if(!LAZYLEN(diseases))
+		return
+
+	var/list/datum/disease/diseases_to_add = list()
+	for(var/datum/disease/disease as anything in diseases)
+		// robotic organs are immune to disease unless 'inorganic biology' symptom is present
+		if(IS_ROBOTIC_ORGAN(src) && !(disease.infectable_biotypes & MOB_ROBOTIC))
+			continue
+
+		// admin or special viruses that should not be reproduced
+		if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+			continue
+
+		diseases_to_add += disease
+	if(LAZYLEN(diseases_to_add))
+		AddComponent(/datum/component/infective, diseases_to_add)
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
@@ -198,6 +219,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
+/**
+ * Proc that gets called when the organ is surgically removed by someone, can be used for special effects
+ * Currently only used so surplus organs can explode when surgically removed.
+ */
+/obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
+
 /obj/item/organ/process(seconds_per_tick, times_fired)
 	return
 
@@ -220,6 +249,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 
 	if(damage > high_threshold)
+		if(IS_ROBOTIC_ORGAN(src))
+			. += span_warning("[src] seems to be malfunctioning.")
+			return
 		. += span_warning("[src] is starting to look discolored.")
 
 ///Used as callbacks by object pooling
@@ -240,6 +272,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
 		return
+	maximum = clamp(maximum, 0, maxHealth) // the logical max is, our max
 	if(maximum < damage)
 		return
 	if(required_organ_flag && !(organ_flags & required_organ_flag))
@@ -379,7 +412,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/get_status_text()
 	var/status = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
-		status = "<font color='#E42426'> organ is [round((damage/maxHealth)*100, 1)]% damaged.</font>"
+		status = "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged.</font>"
 	else if(organ_flags & ORGAN_FAILING)
 		status = "<font color='#cc3333'>Non-Functional</font>"
 	else if(damage > high_threshold)

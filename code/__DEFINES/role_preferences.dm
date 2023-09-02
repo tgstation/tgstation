@@ -47,7 +47,6 @@
 // Other roles
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_REV "Revolutionary"
-#define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
 #define ROLE_PAI "pAI"
 #define ROLE_MONKEY_HELMET "Monkey Mind Magnification Helmet"
 #define ROLE_REVENANT "Revenant"
@@ -59,8 +58,11 @@
 #define ROLE_PYROCLASTIC_SLIME "Pyroclastic Anomaly Slime"
 #define ROLE_ANOMALY_GHOST "Ectoplasmic Anomaly Ghost"
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
+#define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
+#define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_POSIBRAIN "Posibrain"
 #define ROLE_DRONE "Drone"
+#define ROLE_EMAGGED_BOT "Malfunctioning Bot"
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_LAVALAND "Lavaland"
 
@@ -96,9 +98,12 @@
 #define ROLE_SKELETON "Skeleton"
 #define ROLE_ZOMBIE "Zombie"
 #define ROLE_MAINTENANCE_DRONE "Maintenance Drone"
+#define ROLE_DERELICT_DRONE "Derelict Drone"
+#define ROLE_SYNDICATE_DRONE "Syndicate Drone"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
+#define ROLE_BOT "Bot"
 
 
 /// This defines the antagonists you can operate with in the settings.

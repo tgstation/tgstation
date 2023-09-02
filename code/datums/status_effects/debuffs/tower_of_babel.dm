@@ -25,7 +25,6 @@
 	// if user is affected by tower of babel, we remove the blocked languages
 	owner.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_BABEL)
 	owner.remove_all_languages(source = LANGUAGE_BABEL)
-	owner.update_atom_languages()
 	if(owner.mind)
 		REMOVE_TRAIT(owner.mind, TRAIT_TOWER_OF_BABEL, trait_source)
 	return ..()

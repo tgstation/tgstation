@@ -44,7 +44,8 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	src.tame = tame
-	body_color = new_body_color
+	if(!isnull(new_body_color))
+		body_color = new_body_color
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
 	held_state = "mouse_[body_color]" // not handled by variety element
@@ -191,7 +192,7 @@
 
 /// Evolves this rat into a regal rat
 /mob/living/basic/mouse/proc/evolve_into_regal_rat()
-	var/mob/living/simple_animal/hostile/regalrat/controlled/regalrat = new(loc)
+	var/mob/living/basic/regal_rat/controlled/regalrat = new(loc)
 	mind?.transfer_to(regalrat)
 	INVOKE_ASYNC(regalrat, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)
@@ -313,7 +314,7 @@
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
-		. += span_warning("[p_theyre(TRUE)] dripping with fuel and smells terrible.")
+		. += span_warning("[p_Theyre()] dripping with fuel and smells terrible.")
 
 ///Spawn a new mouse from this dead mouse item when hit by a lazarus injector and conditions are met.
 /obj/item/food/deadmouse/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)

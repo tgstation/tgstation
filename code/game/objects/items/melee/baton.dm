@@ -95,6 +95,15 @@
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
 
+/obj/item/melee/baton/apply_fantasy_bonuses(bonus)
+	. = ..()
+	stamina_damage = modify_fantasy_variable("stamina_damage", stamina_damage, bonus * 4)
+
+
+/obj/item/melee/baton/remove_fantasy_bonuses(bonus)
+	stamina_damage = reset_fantasy_variable("stamina_damage", stamina_damage)
+	return ..()
+
 /obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))
 		return NONE
@@ -127,7 +136,7 @@
 
 	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON) && (user.mind && !HAS_TRAIT(user.mind, TRAIT_CHUNKYFINGERS_IGNORE_BATON)))
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 

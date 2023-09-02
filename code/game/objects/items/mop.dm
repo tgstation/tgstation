@@ -1,7 +1,7 @@
 /obj/item/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mop"
 	inhand_icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -24,6 +24,14 @@
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/structure/mop_bucket,
 	))
+
+/obj/item/mop/apply_fantasy_bonuses(bonus)
+	. = ..()
+	mopspeed = modify_fantasy_variable("mopspeed", mopspeed, -bonus)
+
+/obj/item/mop/remove_fantasy_bonuses(bonus)
+	mopspeed = reset_fantasy_variable("mopspeed", mopspeed)
+	return ..()
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()

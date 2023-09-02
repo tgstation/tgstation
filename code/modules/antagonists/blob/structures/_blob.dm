@@ -35,6 +35,7 @@
 /datum/armor/structure_blob
 	fire = 80
 	acid = 70
+	laser = 50
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()

@@ -108,10 +108,10 @@
 
 	return ..()
 
-/obj/item/toy/plush/handle_atom_del(atom/A)
-	if(A == grenade)
+/obj/item/toy/plush/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == grenade)
 		grenade = null
-	..()
 
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
@@ -148,7 +148,6 @@
 		else
 			to_chat(user, span_notice("You remove the grenade from [src]."))
 			user.put_in_hands(grenade)
-			grenade = null
 		return
 	if(isgrenade(I))
 		if(stuffed)
@@ -779,7 +778,7 @@
 
 /obj/item/toy/plush/shark
 	name = "shark plushie"
-	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia. Popular with cute girls who wear striped knee-high socks."
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia."
 	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
 	icon_state = "blahaj"

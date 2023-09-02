@@ -99,7 +99,7 @@
 
 	sm.add_filter(name = "icon", priority = 2, params = list(
 		type = "layer",
-		icon = new/icon('icons/obj/engine/energy_ball.dmi', "energy_ball", frame = rand(1,12)),
+		icon = new/icon('icons/obj/machines/engine/energy_ball.dmi', "energy_ball", frame = rand(1,12)),
 		flags = FILTER_UNDERLAY
 	))
 

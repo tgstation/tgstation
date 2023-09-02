@@ -1,7 +1,7 @@
 //Canister Frames
 /obj/structure/canister_frame
 	name = "canister frame"
-	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "frame_0"
 	density = TRUE
 
