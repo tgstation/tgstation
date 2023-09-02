@@ -351,6 +351,12 @@
 	matrix_transformation.Scale(1.4, 1.4)
 	transform = matrix_transformation
 
+/mob/living/simple_animal/hostile/heretic_summon/armsy/small
+
+/mob/living/simple_animal/hostile/heretic_summon/armsy/small/Initialize(mapload, spawn_bodyparts = TRUE, worm_length = 3) //length of 3
+	. = ..()
+	transform *= 0.9
+
 /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
 	name = "Rust Walker"
 	real_name = "Rusty"

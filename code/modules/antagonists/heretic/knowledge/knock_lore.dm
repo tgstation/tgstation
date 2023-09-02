@@ -1,30 +1,28 @@
 /**
- * # The path of Flesh.
+ * # The path of Knock.
  *
  * Goes as follows:
  *
- * Principle of Hunger
- * Grasp of Flesh
- * Imperfect Ritual
+ * A Locksmith’s Secret
+ * Grasp of Knock
  * > Sidepaths:
- *   Void Cloak
  *   Ashen Eyes
+ *	 Codex Cicatrix
+ * Key Keeper’s Burden
  *
- * Mark of Flesh
+ * Rite Of Passage
+ * Mark Of Knock
  * Ritual of Knowledge
- * Flesh Surgery
- * Raw Ritual
+ * Burglar's Finesse
+ * Apetra Vulnera
  * > Sidepaths:
  *   Blood Siphon
- *   Curse of Paralysis
+ *   Void Cloak
  *
- * Bleeding Steel
- * Lonely Ritual
- * > Sidepaths:
- *   Ashen Ritual
- *   Cleave
+ * Opening Blade
+ * Caretaker’s Last Refuge
  *
- * Priest's Final Hymn
+ * Many secrets behind the Spider Door
  */
 /datum/heretic_knowledge/limited_amount/starting/base_knock
 	name = "A Locksmith’s Secret"
@@ -47,7 +45,11 @@
 		DNA locked mechs will remove the lock and force the pilot out. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "My new found desires drove me to greater and greater heights."
-	next_knowledge = list(/datum/heretic_knowledge/key_ring)
+	next_knowledge = list(
+	/datum/heretic_knowledge/key_ring,
+	/datum/heretic_knowledge/medallion,
+	/datum/heretic_knowledge/codex_cicatrix,
+	)
 	cost = 1
 	route = PATH_KNOCK
 
@@ -118,7 +120,7 @@
 	desc = "Your Mansus Grasp now applies the Mark of Knock. Attack a marked person to corrupt access on \
 		all of their keycards for the duration of the mark. \
 		This will make it so that they have no access whatsoever, and even public access doors will deny their passage."
-	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
+	gain_text = "When the moon's face was wounded, these words appeared."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/knock)
 	route = PATH_KNOCK
 	mark_type = /datum/status_effect/eldritch/knock
@@ -131,8 +133,7 @@
 	name = "Burglar's Finesse"
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims storage into your hand."
-	gain_text = "At first I didn't understand these instruments of war, but the Priest \
-		told me to use them regardless. Soon, he said, I would know them well."
+	gain_text = "She in her many echoing voices told me, that burglars, locksmiths, and so on all share one thing;"
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/blade_upgrade/flesh/knock,
@@ -146,7 +147,10 @@
 	desc = "Grants you Apetra Vulnera, a spell \
 		that causes heavy bleeding on all bodyparts of the victim that have more than 15 brute."
 	gain_text = "To open certain Ways, one must first open oneself."
-	next_knowledge = list()
+	next_knowledge = list(
+	/datum/heretic_knowledge/spell/blood_siphon,
+	/datum/heretic_knowledge/void_cloak,
+	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
 	cost = 1
 	route = PATH_KNOCK
@@ -154,21 +158,75 @@
 /datum/heretic_knowledge/blade_upgrade/flesh/knock //basically a chance-based weeping avulsion version of the former
 	name = "Opening Blade"
 	desc = "Your blade has a chance to cause a weeping avulsion on attack."
-	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
-		I finally began to understand. And then, blood rained from the heavens."
+	gain_text = "They open, remove seals."
 	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_KNOCK
 	wound_type = /datum/wound/slash/critical
+	var/chance = 35
 
 /datum/heretic_knowledge/blade_upgrade/flesh/knock/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(prob(35))
+	if(prob(chance))
 		. = ..()
 
 /datum/heretic_knowledge/spell/caretaker_refuge
-	name = "Opening Blade"
-	desc = "Your blade has a chance to cause a weeping avulsion on attack."
-	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
-		I finally began to understand. And then, blood rained from the heavens."
-	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
+	name = "Caretaker’s Last Refuge"
+	desc = "Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings. \
+		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
+		You are also invincible, but pretty much cannot hurt anyone. Cancelled by being hit with an anti-magic item."
+	gain_text = "Then I saw me my own reflection cascaded mind-numbingly enough times that I was but a haze."
+	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
 	route = PATH_KNOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
+
+/datum/heretic_knowledge/ultimate/knock_final
+	name = "Many secrets behind the Spider Door"
+	desc = "The ascension ritual of the Path of Knock. \
+		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
+		When completed, you gain the ability to transform into empowered eldritch creatures \
+		and in addition, create a tear to the Spider Door. \
+		That means where this rune is completed, a big tear is placed. \
+		All spirits will be asked to be summoned as an eldritch being. \
+		Additionally, this tear can spew infinite amounts of eldritch monsters, \
+		and can create smaller Flesh Worms. \
+		Also, these monsters should be bound to you, but dont expect much."
+	gain_text = "With her knowledge, and what I had seen, I knew what to do. \
+		I had to open the gates, with the holes in my foes as Ways! \
+		Reality will soon be torn, the Spider Gate opened! WITNESS ME!"
+	required_atoms = list(/mob/living/carbon/human = 3)
+	route = PATH_KNOCK
+
+/datum/heretic_knowledge/ultimate/knock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	for(var/mob/living/carbon/human/body in atoms)
+		if(body.stat != DEAD)
+			continue
+		var/obj/item/bodypart/chest = body.get_bodypart(BODY_ZONE_CHEST)
+		if(LAZYLEN(chest.get_organs()))
+			to_chat(user, span_hierophant_warning("[body] has organs in their chest."))
+			continue
+
+		selected_atoms += body
+
+	if(!LAZYLEN(selected_atoms))
+		loc.balloon_alert(user, "ritual failed, not enough valid bodies!")
+		return FALSE
+	else
+		return TRUE
+
+/datum/heretic_knowledge/ultimate/knock_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	priority_announce("Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]", "Centra[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
+
+	// buffs
+	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
+	transform_spell.Grant(user)
+
+	user.client?.give_award(/datum/award/achievement/misc/knock_ascension, user)
+	var/datum/heretic_knowledge/blade_upgrade/flesh/knock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/knock)
+	blade_upgrade.chance += 30
+	new /obj/structure/knock_tear(loc, user.mind)
