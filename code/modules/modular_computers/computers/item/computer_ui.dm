@@ -212,6 +212,8 @@
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")
+					if(!ishuman(usr))
+						return
 					remove_pai(usr)
 				if("interact")
 					inserted_pai.attack_self(usr)

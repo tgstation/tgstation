@@ -191,7 +191,7 @@
 	if(gone == atmos_analyzer)
 		atmos_analyzer = null
 	else if(gone == aicamera)
-		camera = null
+		aicamera = null
 	else if(gone == host_scan)
 		host_scan = null
 	else if(gone == internal_gps)
