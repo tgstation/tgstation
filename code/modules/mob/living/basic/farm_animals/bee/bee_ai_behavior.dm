@@ -102,3 +102,5 @@
 		return FALSE
 
 	return !(mob_target.bee_friendly())
+
+#undef AGGRO_DISTANCE_FROM_HIVE
