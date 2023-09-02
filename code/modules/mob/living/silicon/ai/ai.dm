@@ -52,7 +52,6 @@
 	var/can_dominate_mechs = FALSE
 	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
-	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
@@ -79,7 +78,7 @@
 	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
-	var/acceleration = 1
+	var/acceleration = TRUE
 
 	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
@@ -199,6 +198,16 @@
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+
+/mob/living/silicon/ai/weak_syndie
+	radio = /obj/item/radio/headset/silicon/ai/evil
+	radio_enabled = TRUE
+	interaction_range = 1
+	sprint = 5
+
+/mob/living/silicon/ai/weak_syndie/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
+	. = ..()
+	laws = new /datum/ai_laws/syndicate_override
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -870,7 +879,6 @@
 		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
-		interaction_range = 0
 		radio_enabled = FALSE //No talking on the built-in radio for you either!
 		forceMove(card)
 		card.AI = src
@@ -990,7 +998,7 @@
 	update_sight()
 	if(client.eye != src)
 		var/atom/AT = client.eye
-		AT.get_remote_view_fullscreens(src)
+		AT?.get_remote_view_fullscreens(src)
 	else
 		clear_fullscreen("remote_view", 0)
 

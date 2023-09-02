@@ -276,6 +276,17 @@
 	id = "comp_list_remove"
 	build_path = /obj/item/circuit_component/variable/list/listremove
 
+/datum/design/component/assoc_list_set
+	name = "Associative List Set"
+	id = "comp_assoc_list_set"
+	build_path = /obj/item/circuit_component/variable/assoc_list/list_set
+
+/datum/design/component/assoc_list_remove
+	name = "Associative List Remove"
+	id = "comp_assoc_list_remove"
+	build_path = /obj/item/circuit_component/variable/assoc_list/list_remove
+
+
 /datum/design/component/list_clear
 	name = "List Clear"
 	id = "comp_list_clear"
