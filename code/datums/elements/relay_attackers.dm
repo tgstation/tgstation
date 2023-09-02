@@ -13,6 +13,7 @@
 	RegisterSignal(target, COMSIG_LIVING_ATTACKED_BY, PROC_REF(on_attacked_by))
 	RegisterSignal(target, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_shoved))
 	RegisterSignal(target, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_bullet_act))
+	ADD_TRAIT(target, TRAIT_RELAYING_ATTACKER, REF(src))
 
 /datum/element/relay_attackers/Detach(datum/source, ...)
 	. = ..()
@@ -25,6 +26,7 @@
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_PROJECTILE_PREHIT,
 	))
+	REMOVE_TRAIT(source, TRAIT_RELAYING_ATTACKER, REF(src))
 
 /datum/element/relay_attackers/proc/on_attacked_by(atom/target, mob/living/attacker, obj/item/weapon, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	SIGNAL_HANDLER

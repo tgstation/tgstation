@@ -677,7 +677,7 @@
 	return get_bodypart(user == src ? check_zone(user.zone_selected) : get_random_valid_zone(user.zone_selected, hit_chance)) || bodyparts[1]
 
 /mob/living/carbon/add_blood_from_being_attacked(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, apply_to_clothes = TRUE)
-	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb))
+	if(isnull(hit_limb) || !IS_ORGANIC_LIMB(hit_limb) || !hit_limb.can_bleed())
 		return FALSE
 
 	. = ..()

@@ -1143,7 +1143,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
-
+/// Trait given by [/datum/status_effect/blessing_of_insanity]
+#define MAD_WIZARD_TRAIT "mad_wizard_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -1299,3 +1300,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This trait is applied by some attack swings
 /// It causes the user's next swing to be reversed if applicable
 #define TRAIT_ALTERNATE_SWING_DIRECTION "go_the_other_way"
+///Trait given by /datum/element/relay_attacker
+#define TRAIT_RELAYING_ATTACKER "relaying_attacker"

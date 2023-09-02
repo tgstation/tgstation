@@ -193,6 +193,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	 **/
 	var/properly_gained = FALSE
 
+	///A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].
+	var/list/outfit_override_registry = list()
+
 ///////////
 // PROCS //
 ///////////
@@ -1403,19 +1406,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Lets pick a random body part and check for an existing burn
 	var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
-	var/datum/wound/burn/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
+	var/datum/wound/burn/flesh/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
 
 	// If we have an existing burn try to upgrade it
 	if(existing_burn)
 		switch(existing_burn.severity)
 			if(WOUND_SEVERITY_MODERATE)
 				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 400) // 800k
-					bodypart.force_wound_upwards(/datum/wound/burn/severe, wound_source = "hot temperatures")
+					bodypart.force_wound_upwards(/datum/wound/burn/flesh/severe, wound_source = "hot temperatures")
 			if(WOUND_SEVERITY_SEVERE)
 				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800) // 3200k
-					bodypart.force_wound_upwards(/datum/wound/burn/critical, wound_source = "hot temperatures")
+					bodypart.force_wound_upwards(/datum/wound/burn/flesh/critical, wound_source = "hot temperatures")
 	else // If we have no burn apply the lowest level burn
-		bodypart.force_wound_upwards(/datum/wound/burn/moderate, wound_source = "hot temperatures")
+		bodypart.force_wound_upwards(/datum/wound/burn/flesh/moderate, wound_source = "hot temperatures")
 
 	// always take some burn damage
 	var/burn_damage = HEAT_DAMAGE_LEVEL_1

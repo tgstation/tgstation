@@ -91,7 +91,10 @@
 
 /obj/item/clothing/suit/toggle/labcoat/coroner/Initialize(mapload)
 	. = ..()
-	allowed += /obj/item/autopsy_scanner
+	allowed += list(
+		/obj/item/autopsy_scanner,
+		/obj/item/scythe,
+	)
 
 /obj/item/clothing/suit/toggle/labcoat/science
 	name = "scientist labcoat"

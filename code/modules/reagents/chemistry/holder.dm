@@ -421,6 +421,28 @@
 			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
 	return TRUE
 
+/// Turn one reagent into another, preserving volume, temp, purity, ph
+/datum/reagents/proc/convert_reagent(source_reagent_typepath, target_reagent_typepath, multiplier = 1, include_source_subtypes = FALSE)
+	var/reagent_amount
+	var/reagent_purity
+	var/reagent_ph
+	if(include_source_subtypes)
+		reagent_ph = ph
+		var/weighted_purity
+		for(var/datum/reagent/reagent as anything in reagent_list)
+			if(reagent.type in typecacheof(source_reagent_typepath))
+				weighted_purity += reagent.volume * reagent.purity
+				reagent_amount += reagent.volume
+				remove_reagent(reagent.type, reagent.volume)
+		reagent_purity = weighted_purity / reagent_amount
+	else
+		var/datum/reagent/source_reagent = get_reagent(source_reagent_typepath)
+		reagent_amount = source_reagent.volume
+		reagent_purity = source_reagent.purity
+		reagent_ph = source_reagent.ph
+		remove_reagent(source_reagent_typepath, reagent_amount)
+	add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
+
 //Converts the creation_purity to purity
 /datum/reagents/proc/uncache_creation_purity(id)
 	var/datum/reagent/R = has_reagent(id)
@@ -1337,12 +1359,13 @@
 	return FALSE
 
 /// Get the amount of this reagent
-/datum/reagents/proc/get_reagent_amount(reagent)
+/datum/reagents/proc/get_reagent_amount(reagent, include_subtypes = FALSE)
 	var/list/cached_reagents = reagent_list
+	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
-		if(cached_reagent.type == reagent)
-			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
-	return 0
+		if((!include_subtypes && cached_reagent.type == reagent) || (include_subtypes && ispath(cached_reagent.type, reagent)))
+			total_amount += round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+	return total_amount
 
 /datum/reagents/proc/get_multiple_reagent_amounts(list/reagents)
 	var/list/cached_reagents = reagent_list
@@ -1359,6 +1382,30 @@
 		if(cached_reagent.type == reagent)
 			return round(cached_reagent.purity, 0.01)
 	return 0
+
+/// Get the average purity of all reagents (or all subtypes of provided typepath)
+/datum/reagents/proc/get_average_purity(parent_type = null)
+	var/total_amount
+	var/weighted_purity
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(!isnull(parent_type) && !istype(reagent, parent_type))
+			continue
+		total_amount += reagent.volume
+		weighted_purity += reagent.volume * reagent.purity
+	return weighted_purity / total_amount
+
+/// Get the average nutriment_factor of all consumable reagents
+/datum/reagents/proc/get_average_nutriment_factor()
+	var/consumable_volume
+	var/weighted_nutriment_factor
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(istype(reagent, /datum/reagent/consumable))
+			var/datum/reagent/consumable/consumable_reagent = reagent
+			consumable_volume += consumable_reagent.volume
+			weighted_nutriment_factor += consumable_reagent.volume * consumable_reagent.nutriment_factor
+	return weighted_nutriment_factor / consumable_volume
 
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()

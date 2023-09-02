@@ -48,8 +48,14 @@
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)
 	var/atom/edible_object = source
+	var/obj/item/trash_item
 
-	var/obj/item/trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())
+	if(istype(source, /obj/item/food/grown) && ispath(trash, /obj/item/food))
+		var/obj/item/food/grown/plant = source
+		var/reagent_purity = plant.seed.get_reagent_purity()
+		trash_item = new trash(edible_object.drop_location(), starting_reagent_purity = reagent_purity)
+	else
+		trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())
 
 	if(isliving(edible_object.loc))
 		var/mob/living/food_holding_mob = edible_object.loc
