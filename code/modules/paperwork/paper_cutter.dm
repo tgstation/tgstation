@@ -171,7 +171,7 @@
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)
 		var/obj/item/bodypart/finger = user.get_active_hand()
-		var/datum/wound/slash/moderate/papercut = new
+		var/datum/wound/slash/flesh/moderate/papercut = new
 		papercut.apply_wound(finger, wound_source = "paper cut")
 	stored_paper = null
 	qdel(stored_paper)

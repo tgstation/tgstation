@@ -101,6 +101,69 @@ DEFINE_BITFIELD(foodtypes, list(
 #define DRINK_FANTASTIC 5
 #define FOOD_AMAZING 6
 
+#define FOOD_QUALITY_NORMAL 1
+#define FOOD_QUALITY_NICE 2
+#define FOOD_QUALITY_GOOD 3
+#define FOOD_QUALITY_VERYGOOD 4
+#define FOOD_QUALITY_FANTASTIC 5
+#define FOOD_QUALITY_AMAZING 6
+#define FOOD_QUALITY_TOP 7
+
+#define FOOD_COMPLEXITY_0 0
+#define FOOD_COMPLEXITY_1 1
+#define FOOD_COMPLEXITY_2 2
+#define FOOD_COMPLEXITY_3 3
+#define FOOD_COMPLEXITY_4 4
+#define FOOD_COMPLEXITY_5 5
+
+/// Labels for food quality
+GLOBAL_LIST_INIT(food_quality_description, list(
+	FOOD_QUALITY_NORMAL = "okay",
+	FOOD_QUALITY_NICE = "nice",
+	FOOD_QUALITY_GOOD = "good",
+	FOOD_QUALITY_VERYGOOD = "very good",
+	FOOD_QUALITY_FANTASTIC = "fantastic",
+	FOOD_QUALITY_AMAZING = "amazing",
+	FOOD_QUALITY_TOP = "godlike",
+))
+
+/// Mood events for food quality
+GLOBAL_LIST_INIT(food_quality_events, list(
+	FOOD_QUALITY_NORMAL = /datum/mood_event/food,
+	FOOD_QUALITY_NICE = /datum/mood_event/food/nice,
+	FOOD_QUALITY_GOOD = /datum/mood_event/food/good,
+	FOOD_QUALITY_VERYGOOD = /datum/mood_event/food/verygood,
+	FOOD_QUALITY_FANTASTIC = /datum/mood_event/food/fantastic,
+	FOOD_QUALITY_AMAZING = /datum/mood_event/food/amazing,
+	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
+))
+
+/// Crafted food buffs grouped by crafting_complexity
+GLOBAL_LIST_INIT(food_buffs, list(
+	FOOD_COMPLEXITY_1 = list(
+		/datum/status_effect/food/haste = 1,
+	),
+	FOOD_COMPLEXITY_2 = list(
+		/datum/status_effect/food/haste = 1,
+	),
+	FOOD_COMPLEXITY_3 = list(
+		/datum/status_effect/food/haste = 1,
+	),
+	FOOD_COMPLEXITY_4 = list(
+		/datum/status_effect/food/haste = 1,
+		/datum/status_effect/food/trait/shockimmune = 1,
+	),
+	FOOD_COMPLEXITY_5 = list(
+		/datum/status_effect/food/haste = 1,
+		/datum/status_effect/food/trait/shockimmune = 2,
+	),
+))
+
+/// Food quality change according to species diet
+#define TOXIC_FOOD_QUALITY_CHANGE -4
+#define DISLIKED_FOOD_QUALITY_CHANGE -2
+#define LIKED_FOOD_QUALITY_CHANGE 2
+
 /// Food is "in a container", not in a code sense, but in a literal sense (canned foods)
 #define FOOD_IN_CONTAINER (1<<0)
 /// Finger food can be eaten while walking / running around
@@ -117,11 +180,6 @@ DEFINE_BITFIELD(food_flags, list(
 #define FOOD_MEAT_HUMAN 50
 #define FOOD_MEAT_MUTANT 100
 #define FOOD_MEAT_MUTANT_RARE 200
-
-///Amount of reagents you start with on crafted food excluding the used parts
-#define CRAFTED_FOOD_BASE_REAGENT_MODIFIER 0.7
-///Modifier of reagents you get when crafting food from the parts used
-#define CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER 0.5
 
 #define IS_EDIBLE(O) (O.GetComponent(/datum/component/edible))
 
