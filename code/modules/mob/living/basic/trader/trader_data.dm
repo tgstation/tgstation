@@ -74,6 +74,7 @@
 	return pick(say_phrases[say_text])
 
 /datum/trader_data/mr_bones
+	shop_spot_type = /obj/structure/chair/wood/wings
 	sign_type = /obj/structure/trader_sign/mrbones
 	sell_sound = 'sound/voice/hiss2.ogg'
 
