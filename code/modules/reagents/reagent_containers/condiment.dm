@@ -62,7 +62,7 @@
 		M.visible_message(span_warning("[user] fed [M] from [src]."), \
 			span_warning("[user] fed you from [src]."))
 		log_combat(user, M, "fed", reagents.get_reagent_log_string())
-	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
+	reagents.trans_to(M, 10, transferred_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
 
@@ -81,7 +81,7 @@
 			to_chat(user, span_warning("[src] is full!"))
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
@@ -92,7 +92,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, span_warning("you can't add anymore to [target]!"))
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] units of the condiment to [target]."))
 
 /obj/item/reagent_containers/condiment/enzyme
@@ -456,7 +456,7 @@
 			return
 		else
 			to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
-			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+			src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 			qdel(src)
 			return
 	return . | ..()

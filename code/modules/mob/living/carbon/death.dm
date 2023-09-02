@@ -40,14 +40,14 @@
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
 	var/atom/Tsec = drop_location()
 	if(!no_bodyparts)
-		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
+		if(no_organs)//so the organs don't get transferred inside the bodyparts we'll drop.
 			for(var/organ in organs)
 				if(no_brain || !istype(organ, /obj/item/organ/internal/brain))
 					qdel(organ)
 		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
 			for(var/obj/item/organ/organ as anything in organs)
 				if(no_brain && istype(organ, /obj/item/organ/internal/brain))
-					qdel(organ) //so the brain isn't transfered to the head when the head drops.
+					qdel(organ) //so the brain isn't transferred to the head when the head drops.
 					continue
 				var/org_zone = check_zone(organ.zone) //both groin and chest organs.
 				if(org_zone == BODY_ZONE_CHEST)
