@@ -3897,11 +3897,13 @@
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "atP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "atX" = (
@@ -3930,6 +3932,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "auh" = (
@@ -3950,12 +3953,14 @@
 "aum" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "auo" = (
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "aup" = (
@@ -3963,6 +3968,7 @@
 	dir = 4;
 	mapping_id = "main_turbine"
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "aur" = (
@@ -6406,6 +6412,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "aNO" = (
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering)
 "aNP" = (
@@ -10559,6 +10566,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering)
 "bZN" = (
@@ -14890,6 +14899,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "dvv" = (
@@ -15559,6 +15569,11 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering)
 "dHO" = (
@@ -21826,6 +21841,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering)
 "fKU" = (
@@ -24193,7 +24210,6 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -27021,6 +27037,7 @@
 	pixel_x = 29
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "hCd" = (
@@ -28658,6 +28675,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering)
 "ieH" = (
@@ -35278,6 +35296,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "klr" = (
@@ -36420,10 +36439,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "kGe" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
-/area/station/engineering)
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "kGf" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -39731,8 +39750,22 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "lGF" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/lava,
+/obj/machinery/door/airlock/vault{
+	name = "ULTRAMAX CONTAINMENT - DANGER";
+	desc = "There's a warning of some kind scrawled in blood on the floor here, you can't quite make it out..."
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/security/hos,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "lGH" = (
 /obj/structure/table,
@@ -40417,6 +40450,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering)
 "lRQ" = (
@@ -43350,9 +43384,12 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "mQc" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/lava,
-/area/station/security/execution/education)
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "mQi" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -48746,7 +48783,8 @@
 	name = "The Forbidden One";
 	limb_destroyer = 1;
 	health = 1000;
-	desc = "Imprisoned for his many sins."
+	desc = "Imprisoned for his many sins.";
+	maxHealth = 1000
 	},
 /turf/open/floor/eighties/red{
 	icon = 'goon/icons/turf/floors.dmi';
@@ -57343,6 +57381,7 @@
 "rnA" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "rnK" = (
@@ -67034,6 +67073,7 @@
 /obj/machinery/power/turbine/turbine_outlet{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "uul" = (
@@ -74095,7 +74135,6 @@
 /turf/open/floor/plating,
 /area/station/security/checkpoint/escape)
 "wAl" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -74440,8 +74479,6 @@
 /area/station/maintenance/central/greater)
 "wEZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
 /area/station/engineering)
 "wFq" = (
@@ -74732,6 +74769,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/security/hos,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "wKF" = (
@@ -78697,6 +78735,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering)
 "yfE" = (
@@ -91320,7 +91360,7 @@ gfK
 gfK
 gfK
 gfK
-mQc
+ylV
 tBt
 sqq
 rWk
@@ -91577,7 +91617,7 @@ hIB
 tJe
 wKo
 eeR
-wKo
+lGF
 vAI
 tbp
 cnQ
@@ -91834,7 +91874,7 @@ gfK
 gfK
 gfK
 gfK
-lGF
+ylV
 tBt
 bxT
 bxT
@@ -104241,7 +104281,7 @@ upQ
 upQ
 upQ
 klm
-dvu
+mQc
 aac
 aac
 aac
@@ -104498,7 +104538,7 @@ aac
 aac
 aac
 aac
-dvu
+mQc
 dvu
 aac
 aac
@@ -105275,10 +105315,10 @@ dTH
 rBT
 bzI
 ooB
-kGe
+ooB
 wEZ
 wEZ
-nqG
+wEZ
 nqG
 wPk
 nUx
@@ -105527,7 +105567,7 @@ rcI
 cXL
 vNH
 bwF
-xAW
+kGe
 oqD
 aeL
 aeL
@@ -119671,9 +119711,9 @@ aac
 aac
 aac
 wQP
-wQP
-wQP
-wQP
+inP
+inP
+inP
 wQP
 vXM
 vXM
@@ -119924,9 +119964,9 @@ nbw
 tFF
 ukP
 wQP
-wQP
 inP
-wQP
+inP
+inP
 wQP
 ouq
 tFF
@@ -120695,9 +120735,9 @@ lSJ
 afH
 cEf
 wQP
-wQP
 inP
-wQP
+inP
+inP
 wQP
 oFX
 afH
@@ -120952,13 +120992,13 @@ wQP
 eLb
 wQP
 wQP
-wQP
+pML
 wQP
 aac
 wQP
-wQP
-wQP
-wQP
+inP
+inP
+inP
 wQP
 dWO
 vXM
