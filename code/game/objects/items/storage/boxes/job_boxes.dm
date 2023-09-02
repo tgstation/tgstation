@@ -228,17 +228,14 @@
 	var/random_funny_internals = TRUE
 
 /obj/item/storage/box/survival/hug/PopulateContents()
-	..()
 	if(!random_funny_internals)
-		return
-	var/obj/item/internals = locate(internal_type) in src
-	qdel(internals)
-	var/which_funny_tank = pick(list(
+		return ..()
+	internal_type = pick(
 			/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o,
 			/obj/item/tank/internals/emergency_oxygen/engi/clown/bz,
 			/obj/item/tank/internals/emergency_oxygen/engi/clown/helium,
-			))
-	new which_funny_tank(src)
+			)
+	return ..()
 
 //Mime survival box
 /obj/item/storage/box/survival/hug/black
