@@ -133,8 +133,6 @@
 		return
 	var/mob/M = AM
 	shock(M, 70)
-	if(prob(50))
-		take_damage(1, BURN, FIRE, sound_effect = FALSE)
 
 /obj/structure/grille/attack_animal(mob/user, list/modifiers)
 	. = ..()
@@ -321,6 +319,9 @@
 	var/turf/T = get_turf(src)
 	if(T.overfloor_placed)//cant be a floor in the way!
 		return FALSE
+	// Shocking hurts the grille (to weaken monkey powersinks)
+	if(prob(50))
+		take_damage(1, BURN, FIRE, sound_effect = FALSE)
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
 		if(electrocute_mob(user, C, src, 1, TRUE))
