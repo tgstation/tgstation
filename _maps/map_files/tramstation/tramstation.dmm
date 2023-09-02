@@ -16522,7 +16522,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random_engines/tram,
 /turf/open/misc/asteroid/airless,
-/area/space/nearstation)
+/area/station/asteroid)
 "dXM" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -43343,7 +43343,8 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/turf/open/space/basic,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/station/engineering)
 "mPN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -48000,9 +48001,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
-"oqD" = (
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
 "oqM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -103515,8 +103513,8 @@ ooB
 ooB
 ooB
 ooB
-sLJ
-sLJ
+vBT
+vBT
 mzx
 vXM
 vXM
@@ -105559,7 +105557,7 @@ cXL
 vNH
 bwF
 xAW
-oqD
+aak
 aeL
 aeL
 ooB
@@ -105572,7 +105570,7 @@ ooB
 ooB
 ooB
 dXL
-sLJ
+vBT
 mzx
 vXM
 vXM
