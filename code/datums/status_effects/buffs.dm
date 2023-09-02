@@ -507,6 +507,7 @@
 /// Gives you a brief period of anti-gravity
 /datum/status_effect/jump_jet
 	id = "jump_jet"
+	alert_type = null
 	duration = 5 SECONDS
 
 /datum/status_effect/jump_jet/on_apply()

@@ -652,3 +652,10 @@
 /obj/effect/temp_visual/crit/Initialize(mapload)
 	. = ..()
 	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
+
+/obj/effect/temp_visual/jet_plume
+	name = "jet plume"
+	icon_state = "jet_plume"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 0.4 SECONDS

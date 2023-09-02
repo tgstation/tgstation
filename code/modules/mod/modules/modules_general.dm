@@ -175,18 +175,22 @@
 	overlay_state_active = "module_jetpackadv_on"
 	full_speed = TRUE
 
+/// Cooldown to use if we didn't actually launch a jump jet
+#define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
+
 ///Jump Jet - Briefly removes the effect of gravity and pushes you up one z-level if possible.
 /obj/item/mod/module/jump_jet
 	name = "MOD ionic jump jet module"
-	desc = "A specialised ionic thruster which provides a short but powerful thrust capable of pushing against gravity."
-	icon_state = "jetpack_advanced"
+	desc = "A specialised ionic thruster which provides a short but powerful thrust capable of pushing against gravity, \
+		after which time it needs to recharge."
+	icon_state = "jump_jet"
 	module_type = MODULE_USABLE
 	complexity = 3
-	cooldown_time = 15 SECONDS
+	cooldown_time = 30 SECONDS
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/jump_jet)
 
-/obj/item/mod/module/jump_jet/on_activation()
+/obj/item/mod/module/jump_jet/on_use()
 	. = ..()
 	if (!.)
 		return FALSE
@@ -196,10 +200,18 @@
 	balloon_alert(mod.wearer, "launching...")
 	mod.wearer.Shake(duration = 1 SECONDS)
 	if (!do_after(mod.wearer, 1 SECONDS, target = mod.wearer))
+		COOLDOWN_START(src, cooldown_timer, FAILED_ACTIVATION_COOLDOWN) // Don't go on full cooldown if we failed to launch
+		addtimer(CALLBACK(mod, TYPE_PROC_REF(/obj/item, update_item_action_buttons), UPDATE_BUTTON_OVERLAY), FAILED_ACTIVATION_COOLDOWN)
 		return FALSE
+	playsound(mod.wearer, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
 	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
-	mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS)
+	var/turf/launch_from = get_turf(mod.wearer)
+	if (mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS))
+		launch_from.visible_message(span_warning("[mod.wearer] rockets into the air!"))
+	new /obj/effect/temp_visual/jet_plume(launch_from)
 	return TRUE
+
+#undef FAILED_ACTIVATION_COOLDOWN
 
 ///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
 /obj/item/mod/module/status_readout
