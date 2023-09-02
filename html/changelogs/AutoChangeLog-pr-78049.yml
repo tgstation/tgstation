@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "The HUDs of mobs with dynamic human appearance will appear properly."
