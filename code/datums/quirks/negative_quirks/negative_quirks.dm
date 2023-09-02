@@ -1535,3 +1535,18 @@
 	SIGNAL_HANDLER
 	quirk_holder.client.give_award(/datum/award/achievement/misc/debt_extinguished, quirk_holder)
 	UnregisterSignal(source, COMSIG_MOB_LOGIN)
+
+/datum/quirk/numb
+	name = "Numb"
+	desc = "You cannot feel pain at all."
+	icon = FA_ICON_STAR_OF_LIFE
+	quirk_flags = QUIRK_HUMAN_ONLY
+	value = -4
+	gain_text = null // handled by trauma
+	lose_text = null
+	medical_record_text = "Patient's body has badly desenvolved grown nervous system leading to complete inability to feel pain. "
+	hardcore_value = 4
+
+/datum/quirk/numb/add(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.gain_trauma(/datum/brain_trauma/mild/healthy, TRAUMA_RESILIENCE_ABSOLUTE)
