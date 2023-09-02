@@ -20,7 +20,7 @@
 /// The minimum velocity required for the bait to bounce
 #define BAIT_MIN_VELOCITY_BOUNCE 200
 /// The extra deceleration of velocity that happens when the bait switches direction
-#define BAIT_DECELERATION_MULT 2.5
+#define BAIT_DECELERATION_MULT 2
 
 ///Defines to know how the bait is moving on the minigame slider.
 #define REELING_STATE_IDLE 0
@@ -459,6 +459,8 @@
 				velocity_change = -gravity_velocity
 	velocity_change *= (fish_on_bait ? FISH_ON_BAIT_ACCELERATION_MULT : 1) * seconds_per_tick
 
+	velocity_change = round(velocity_change)
+
 	/**
 	 * Put the brake on the velocity if the reeling state has changed.
 	 * The otherwise slipperiness of the bait is kinda lame,
@@ -467,12 +469,11 @@
 	 */
 	if((bait_velocity > 0 && (reeling_state == REELING_STATE_IDLE || reeling_state == REELING_STATE_DOWN)) || (bait_velocity < 0 && (reeling_state == REELING_STATE_UP || (bidirectional && reeling_state == REELING_STATE_IDLE))))
 		if(bait_velocity > 0)
-			bait_velocity += max(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
-		else
 			bait_velocity += min(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
+		else
+			bait_velocity += max(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
 		bait_velocity = round(bait_velocity)
 
-	velocity_change = round(velocity_change)
 
 	///bidirectional baits stay bouyant while idle
 	if(bidirectional && reeling_state == REELING_STATE_IDLE)
@@ -493,6 +494,7 @@
 	else
 		completion -= completion_loss * seconds_per_tick
 		if(completion <= 0 && !(special_effects & FISHING_MINIGAME_RULE_NO_ESCAPE))
+			user.balloon_alert("it got away!")
 			complete(FALSE)
 
 	completion = clamp(completion, 0, 100)
@@ -521,15 +523,19 @@
 
 ///Initialize bait, fish and completion bar and add them to the visual appearance of this screen object.
 /atom/movable/screen/fishing_hud/proc/prepare_minigame(datum/fishing_challenge/challenge)
+	var/static/icon_height
+	if(!icon_height)
+		var/list/icon_dimensions = get_icon_dimensions(icon)
+		icon_height = icon_dimensions["height"]
 	icon_state = challenge.background
 	add_overlay("frame")
 	hud_bait = new
 	hud_bait.icon = icon
 	hud_bait.icon_state = "bait"
-	var/static/icon/cut_bait_mask = icon(icon, "cut_bait")
-	if(challenge.bait_pixel_height < MINIGAME_BAIT_HEIGHT)
-		var/size_diff = MINIGAME_BAIT_HEIGHT - challenge.bait_pixel_height
-		hud_bait.add_filter("Cut_Bait", 1, displacement_map_filter(cut_bait_mask, x = 0, y = 0, size = size_diff))
+	if(challenge.bait_pixel_height != MINIGAME_BAIT_HEIGHT)
+		var/height_percent_diff = challenge.bait_pixel_height/MINIGAME_BAIT_HEIGHT
+		hud_bait.transform = hud_bait.transform.Scale(1, height_percent_diff)
+		hud_bait.pixel_z = -icon_height * (1 - height_percent_diff) * 0.5
 	hud_bait.vis_flags = VIS_INHERIT_ID
 	vis_contents += hud_bait
 	hud_fish = new
