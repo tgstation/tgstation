@@ -362,5 +362,15 @@
 	max_occurrences_modifier = 5 //All but one loan event will occur over the course of a round.
 	trait_to_give = STATION_TRAIT_LOANER_SHUTTLE
 
+/datum/station_trait/random_event_weight_modifier/wise_cows
+	name = "Wise Cow Invasion"
+	report_message = "Bluespace harmonics readings show unusual interpolative readings between your sector and sector MMF-D-02. Expect an increase in cow encounters. Encownters, if you will."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 1
+	event_control_path = /datum/round_event_control/wisdomcow
+	weight_multiplier = 3
+	max_occurrences_modifier = 10 //lotta cows
+	trait_to_give = STATION_TRAIT_WISE_COWS
+
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX

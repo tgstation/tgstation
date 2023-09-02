@@ -227,7 +227,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 		damagetype_healer = "all"
 		if(prob(20))
-			name += ", PHD."
+			name += ", PhD."
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
