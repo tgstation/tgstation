@@ -3531,7 +3531,7 @@
 /area/station/maintenance/port/central)
 "bVJ" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "medivator"
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -5999,7 +5999,7 @@
 /area/station/hallway/secondary/entry)
 "dmQ" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "MunchLift"
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -7959,7 +7959,7 @@
 /area/station/maintenance/disposal/incinerator)
 "euo" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "Bridgelift"
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -22902,7 +22902,7 @@
 /area/station/medical/medbay/lobby)
 "mXu" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "HoloLift"
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -25425,7 +25425,7 @@
 /area/station/hallway/secondary/exit/escape_pod)
 "oBC" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "cargo_vator"
 	},
 /turf/open/floor/plating/elevatorshaft,
@@ -34029,7 +34029,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tgk" = (
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "PermaElevator"
 	},
 /obj/structure/transport/linear/public,
@@ -36559,7 +36559,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/service/hydroponics)
 "uAM" = (
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "SciLift"
 	},
 /obj/structure/transport/linear/public,
@@ -37458,7 +37458,7 @@
 /area/station/commons/vacant_room/office)
 "uXn" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "PortLift"
 	},
 /obj/effect/abstract/elevator_music_zone{

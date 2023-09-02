@@ -21,15 +21,15 @@
 
 	///multiplier on how much damage/force the tram imparts on things it hits
 	var/collision_lethality = 1
-	var/obj/effect/landmark/icts/nav_beacon/tram/nav/nav_beacon
+	var/obj/effect/landmark/transport/nav_beacon/tram/nav/nav_beacon
 	/// reference to the destination landmarks we consider ourselves "at" or travelling towards. since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
-	var/obj/effect/landmark/icts/nav_beacon/tram/platform/idle_platform
+	var/obj/effect/landmark/transport/nav_beacon/tram/platform/idle_platform
 	/// reference to the destination landmarks we consider ourselves travelling towards. since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
-	var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
+	var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform
 
 	var/current_speed = 0
 	var/current_load = 0
@@ -147,8 +147,8 @@
 /datum/transport_controller/linear/tram/check_for_landmarks(obj/structure/transport/linear/tram/new_transport_module)
 	. = ..()
 	for(var/turf/platform_loc as anything in new_transport_module.locs)
-		var/obj/effect/landmark/icts/nav_beacon/tram/platform/initial_destination = locate() in platform_loc
-		var/obj/effect/landmark/icts/nav_beacon/tram/nav/beacon = locate() in platform_loc
+		var/obj/effect/landmark/transport/nav_beacon/tram/platform/initial_destination = locate() in platform_loc
+		var/obj/effect/landmark/transport/nav_beacon/tram/nav/beacon = locate() in platform_loc
 
 		if(initial_destination)
 			idle_platform = initial_destination
@@ -214,7 +214,7 @@
  * tram is and where the tram actually is. (For example, moving the landmarks after round start.)
 
  */
-/datum/transport_controller/linear/tram/proc/calculate_route(obj/effect/landmark/icts/nav_beacon/tram/destination)
+/datum/transport_controller/linear/tram/proc/calculate_route(obj/effect/landmark/transport/nav_beacon/tram/destination)
 	if(destination == idle_platform)
 		return FALSE
 
@@ -238,7 +238,7 @@
  * * destination_platform - where the subsystem wants it to go
  */
 
-/datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
+/datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/transport/nav_beacon/tram/destination_platform)
 	set_status_code(PRE_DEPARTURE, FALSE)
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
@@ -564,10 +564,10 @@
 	if(!istype(origin) || !origin.z)
 		return FALSE
 
-	var/list/obj/effect/landmark/icts/nav_beacon/tram/inbound_candidates = list()
-	var/list/obj/effect/landmark/icts/nav_beacon/tram/outbound_candidates = list()
+	var/list/obj/effect/landmark/transport/nav_beacon/tram/inbound_candidates = list()
+	var/list/obj/effect/landmark/transport/nav_beacon/tram/outbound_candidates = list()
 
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/candidate_beacon in SStransport.nav_beacons[beacon_type])
+	for(var/obj/effect/landmark/transport/nav_beacon/tram/candidate_beacon in SStransport.nav_beacons[beacon_type])
 		if(candidate_beacon.z != origin.z || candidate_beacon.z != nav_beacon.z)
 			continue
 
@@ -589,14 +589,14 @@
 
 	switch(travel_dir)
 		if(INBOUND)
-			var/obj/effect/landmark/icts/nav_beacon/tram/nav/selected = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram, inbound_candidates, origin)
+			var/obj/effect/landmark/transport/nav_beacon/tram/nav/selected = get_closest_atom(/obj/effect/landmark/transport/nav_beacon/tram, inbound_candidates, origin)
 			if(selected)
 				return selected
 			stack_trace("No inbound beacon candidate found for [origin]. Cancelling dispatch.")
 			return FALSE
 
 		if(OUTBOUND)
-			var/obj/effect/landmark/icts/nav_beacon/tram/nav/selected = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram, outbound_candidates, origin)
+			var/obj/effect/landmark/transport/nav_beacon/tram/nav/selected = get_closest_atom(/obj/effect/landmark/transport/nav_beacon/tram, outbound_candidates, origin)
 			if(selected)
 				return selected
 			stack_trace("No outbound beacon candidate found for [origin]. Cancelling dispatch.")
@@ -627,7 +627,7 @@
 	else
 		rod_velocity_sign = collided_rod.dir & EAST ? OUTBOUND : INBOUND
 
-	var/obj/effect/landmark/icts/nav_beacon/tram/nav/push_destination = closest_nav_in_travel_dir(origin = nav_beacon, travel_dir = rod_velocity_sign, beacon_type = IMMOVABLE_ROD_DESTINATIONS)
+	var/obj/effect/landmark/transport/nav_beacon/tram/nav/push_destination = closest_nav_in_travel_dir(origin = nav_beacon, travel_dir = rod_velocity_sign, beacon_type = IMMOVABLE_ROD_DESTINATIONS)
 	if(!push_destination)
 		return
 	travel_direction = get_dir(nav_beacon, push_destination)
@@ -940,8 +940,8 @@
 			controller_datum.set_status_code(MANUAL_MODE, FALSE)
 
 		if("dispatch")
-			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
-			for (var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[controller_datum.specific_transport_id])
+			var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform
+			for (var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[controller_datum.specific_transport_id])
 				if(destination.name == params["tripDestination"])
 					destination_platform = destination
 					break

@@ -78,7 +78,7 @@
 	var/list/data = list()
 	data["moving"] = tram_controller?.controller_active
 	data["broken"] = (tram_controller ? FALSE : TRUE) || (tram_controller?.paired_cabinet ? FALSE : TRUE)
-	var/obj/effect/landmark/icts/nav_beacon/tram/platform/current_loc = tram_controller?.idle_platform
+	var/obj/effect/landmark/transport/nav_beacon/tram/platform/current_loc = tram_controller?.idle_platform
 	if(current_loc)
 		data["tram_location"] = current_loc.name
 	return data
@@ -97,7 +97,7 @@
  */
 /obj/machinery/computer/tram_controls/proc/get_destinations()
 	. = list()
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
+	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
@@ -111,8 +111,8 @@
 
 	switch(action)
 		if("send")
-			var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination_platform
-			for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
+			var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform
+			for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 				if(destination.platform_code == params["destination"])
 					destination_platform = destination
 					break
@@ -123,7 +123,7 @@
 			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination_platform.platform_code)
 			update_appearance()
 
-/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/icts/nav_beacon/tram/idle_platform, controller_active)
+/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/transport/nav_beacon/tram/idle_platform, controller_active)
 	SIGNAL_HANDLER
 	var/datum/transport_controller/linear/tram/icts_controller = transport_ref?.resolve()
 	if(icts_controller.controller_active)

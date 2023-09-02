@@ -110,16 +110,16 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/turf/platform_loc as anything in new_transport_module.locs)
-		var/obj/effect/landmark/icts/transport_id/id_giver = locate() in platform_loc
+		var/obj/effect/landmark/transport/transport_id/id_giver = locate() in platform_loc
 
 		if(id_giver)
 			set_info_from_id_landmark(id_giver)
 
 ///set vars and such given an overriding transport_id landmark
-/datum/transport_controller/linear/proc/set_info_from_id_landmark(obj/effect/landmark/icts/transport_id/landmark)
+/datum/transport_controller/linear/proc/set_info_from_id_landmark(obj/effect/landmark/transport/transport_id/landmark)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!istype(landmark, /obj/effect/landmark/icts/transport_id))//transport_controller subtypes can want differnet id's than the base type wants
+	if(!istype(landmark, /obj/effect/landmark/transport/transport_id))//transport_controller subtypes can want differnet id's than the base type wants
 		return
 
 	if(landmark.specific_transport_id)

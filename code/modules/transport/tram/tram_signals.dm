@@ -663,13 +663,13 @@
 	if(!istype(src) || !src.z)
 		return FALSE
 
-	var/list/obj/effect/landmark/icts/nav_beacon/tram/platform/inbound_candidates = list()
-	var/list/obj/effect/landmark/icts/nav_beacon/tram/platform/outbound_candidates = list()
+	var/list/obj/effect/landmark/transport/nav_beacon/tram/platform/inbound_candidates = list()
+	var/list/obj/effect/landmark/transport/nav_beacon/tram/platform/outbound_candidates = list()
 
 	inbound = null
 	outbound = null
 
-	for(var/obj/effect/landmark/icts/nav_beacon/tram/platform/beacon in SStransport.nav_beacons[configured_transport_id])
+	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/beacon in SStransport.nav_beacons[configured_transport_id])
 		if(beacon.z != src.z)
 			continue
 
@@ -687,10 +687,10 @@
 					else
 						outbound_candidates += beacon
 
-	var/obj/effect/landmark/icts/nav_beacon/tram/platform/selected_inbound = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram/platform, inbound_candidates, src)
+	var/obj/effect/landmark/transport/nav_beacon/tram/platform/selected_inbound = get_closest_atom(/obj/effect/landmark/transport/nav_beacon/tram/platform, inbound_candidates, src)
 	inbound = selected_inbound.platform_code
 
-	var/obj/effect/landmark/icts/nav_beacon/tram/platform/selected_outbound = get_closest_atom(/obj/effect/landmark/icts/nav_beacon/tram/platform, outbound_candidates, src)
+	var/obj/effect/landmark/transport/nav_beacon/tram/platform/selected_outbound = get_closest_atom(/obj/effect/landmark/transport/nav_beacon/tram/platform, outbound_candidates, src)
 	outbound = selected_outbound.platform_code
 
 	update_appearance()

@@ -1246,7 +1246,7 @@
 /turf/open/openspace,
 /area/station/engineering/storage)
 "re" = (
-/obj/effect/landmark/icts/nav_beacon/tram/tramstation/west,
+/obj/effect/landmark/transport/nav_beacon/tram/tramstation/west,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/secondary/service)
 "rN" = (
@@ -1428,7 +1428,7 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
 "yX" = (
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "test_vator"
 	},
 /obj/machinery/light/floor,
@@ -1480,7 +1480,7 @@
 /area/station/engineering/storage)
 "AY" = (
 /obj/structure/transport/linear/tram,
-/obj/effect/landmark/icts/transport_id/tramstation/line_1,
+/obj/effect/landmark/transport/transport_id/tramstation/line_1,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/secondary/service)
 "Bm" = (
@@ -1881,7 +1881,7 @@
 /area/station/hallway/secondary/service)
 "Qt" = (
 /obj/structure/transport/linear/tram,
-/obj/effect/landmark/icts/nav_beacon/tram/tramstation/east,
+/obj/effect/landmark/transport/nav_beacon/tram/tramstation/east,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/secondary/service)
 "Qw" = (

@@ -15994,7 +15994,7 @@
 /area/station/engineering/atmos)
 "eAW" = (
 /obj/effect/turf_decal/tile/neutral/tram,
-/obj/effect/landmark/icts/nav_beacon/tram/platform/tramstation/east,
+/obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/east,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "eAX" = (
@@ -21611,7 +21611,7 @@
 /area/station/science/ordnance/storage)
 "gIm" = (
 /obj/effect/turf_decal/tile/neutral/tram,
-/obj/effect/landmark/icts/transport_id/tramstation/line_1,
+/obj/effect/landmark/transport/transport_id/tramstation/line_1,
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
 /turf/open/floor/noslip/tram_plate,
@@ -44516,8 +44516,8 @@
 /area/station/security/brig)
 "oZC" = (
 /obj/effect/turf_decal/tile/neutral/tram,
-/obj/effect/landmark/icts/nav_beacon/tram/nav/tramstation/main,
-/obj/effect/landmark/icts/nav_beacon/tram/platform/tramstation/central,
+/obj/effect/landmark/transport/nav_beacon/tram/nav/tramstation/main,
+/obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/central,
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
 /turf/open/floor/noslip/tram_plate,
@@ -68347,7 +68347,7 @@
 /area/station/science/ordnance)
 "xwl" = (
 /obj/effect/turf_decal/tile/neutral/tram,
-/obj/effect/landmark/icts/nav_beacon/tram/platform/tramstation/west,
+/obj/effect/landmark/transport/nav_beacon/tram/platform/tramstation/west,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "xwz" = (

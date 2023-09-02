@@ -3812,7 +3812,7 @@
 /area/station/hallway/floor3/aft)
 "aYk" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "aft_vator"
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -9187,7 +9187,7 @@
 /area/station/commons/fitness)
 "cni" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "fore_vator"
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -82341,7 +82341,7 @@
 /area/station/hallway/secondary/exit)
 "vCf" = (
 /obj/structure/transport/linear/public,
-/obj/effect/landmark/icts/transport_id{
+/obj/effect/landmark/transport/transport_id{
 	specific_lift_id = "com_vator"
 	},
 /obj/effect/abstract/elevator_music_zone{
