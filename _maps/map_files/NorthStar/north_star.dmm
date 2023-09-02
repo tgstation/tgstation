@@ -12711,8 +12711,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage/tcomms)
 "dlt" = (
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/pdapainter/security,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "dly" = (
@@ -16228,7 +16226,7 @@
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
-	preset_destination_names = list("2"="Supply-Engi  Floor","3"="Med-Sci  Floor","4"="Service  Floor")
+	preset_destination_names = list("2"="Supply-Engi    Floor","3"="Med-Sci    Floor","4"="Service    Floor")
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "fore_vator";
@@ -18571,6 +18569,11 @@
 /obj/machinery/light/floor,
 /turf/open/floor/pod,
 /area/station/hallway/secondary/entry)
+"eQd" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/pdapainter/security,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hos)
 "eQe" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -19977,6 +19980,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/port/fore)
+"fmG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hos)
 "fmK" = (
 /obj/structure/mirror/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -29395,6 +29406,13 @@
 	},
 /turf/open/floor/carpet/red,
 /area/station/service/theater)
+"hLq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hos)
 "hLs" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half,
@@ -50624,6 +50642,12 @@
 	dir = 5
 	},
 /area/station/hallway/floor4/aft)
+"nhZ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hos)
 "nih" = (
 /obj/machinery/computer/communications,
 /obj/item/radio/intercom/directional/north{
@@ -53519,7 +53543,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "aft_vator";
 	pixel_x = 24;
-	preset_destination_names = list("2"="Supply-Engi  Floor","3"="Med-Sci  Floor","4"="Service  Floor")
+	preset_destination_names = list("2"="Supply-Engi    Floor","3"="Med-Sci    Floor","4"="Service    Floor")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
@@ -55021,7 +55045,6 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/starboard/fore)
 "ooN" = (
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -78382,9 +78405,9 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/escape_pod)
 "uDL" = (
-/obj/machinery/suit_storage_unit/hos,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/suit_storage_unit/hos,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "uDN" = (
@@ -87429,6 +87452,11 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/entry)
+"wQh" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/flag/nanotrasen/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/hos)
 "wQo" = (
 /turf/closed/wall,
 /area/station/security/prison/garden)
@@ -315209,7 +315237,7 @@ vEa
 vEa
 vEa
 vEa
-owb
+vEa
 vEa
 bAG
 bAG
@@ -315465,8 +315493,8 @@ mau
 hSD
 raE
 pke
-vEa
-owb
+fmG
+nhZ
 vEa
 vEa
 wtL
@@ -315722,9 +315750,9 @@ lXx
 ltD
 nah
 jLm
+hLq
+eQd
 vEa
-owb
-owb
 vEa
 eEN
 bAG
@@ -315979,8 +316007,8 @@ lXx
 dAe
 hhX
 dlt
-vEa
-vEa
+hLq
+wQh
 vEa
 vEa
 eGl
