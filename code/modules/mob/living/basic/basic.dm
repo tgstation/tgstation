@@ -141,6 +141,19 @@
 		health = 0
 		look_dead()
 
+/mob/living/basic/gib()
+	if(butcher_results || guaranteed_butcher_results)
+		var/list/butcher_loot = list()
+		if(butcher_results)
+			butcher_loot += butcher_results
+		if(guaranteed_butcher_results)
+			butcher_loot += guaranteed_butcher_results
+		var/atom/loot_destination = drop_location()
+		for(var/path in butcher_loot)
+			for(var/i in 1 to butcher_loot[path])
+				new path(loot_destination)
+	return ..()
+
 /**
  * Apply the appearance and properties this mob has when it dies
  * This is called by the mob pretending to be dead too so don't put loot drops in here or something

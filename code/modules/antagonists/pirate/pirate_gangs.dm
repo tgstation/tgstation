@@ -118,10 +118,10 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 ///Expirienced formed employes of Interdyne Pharmaceutics now in a path of thievery and reckoning
 /datum/pirate_gang/interdyne
-	name = "Expharmacist Unrest"
+	name = "Restless Ex-Pharmacists"
 
 	is_heavy_threat = TRUE
-	ship_template_id = "interdyne"
+	ship_template_id = "ex_interdyne"
 	ship_name_pool = "interdyne_names"
 
 	threat_title = "Funding for Research"
@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 ///Agents from the space I.R.S. heavily armed to stea- I mean, collect the station's tax dues
 /datum/pirate_gang/irs
-	name = "Space IRS"
+	name = "Space IRS Agents"
 
 	is_heavy_threat = TRUE
 	ship_template_id = "irs"

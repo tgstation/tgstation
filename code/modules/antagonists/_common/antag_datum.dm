@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
-///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
+///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transferred.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)
@@ -260,8 +260,13 @@ GLOBAL_LIST_EMPTY(antagonists)
  */
 /datum/antagonist/proc/is_banned(mob/player)
 	if(!player)
+		stack_trace("Called is_banned without a mob. This shouldn't happen.")
 		return FALSE
-	. = (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
+
+	if(!player.ckey)
+		return FALSE
+
+	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
 
 /**
  * Proc that replaces a player who cannot play a specific antagonist due to being banned via a poll, and alerts the player of their being on the banlist.

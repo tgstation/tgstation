@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram will no longer fly off into space when admins try to reset the contents"
