@@ -81,7 +81,7 @@
 	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 		if (pregen_data.can_be_applied_to(src, list(woundtype), random_roll = TRUE))
-			possible_wounds[type] = pregen_data.get_weight()
+			possible_wounds[type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -93,6 +93,11 @@
 				break
 
 	for (var/datum/wound/iterated_path as anything in possible_wounds)
+		for (var/datum/wound/existing_wound as anything in wounds)
+			if (iterated_path == existing_wound.type)
+				possible_wounds -= iterated_path
+				break // breaks out of the nested loop
+
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
 		var/specific_injury_roll = (injury_roll + series_wounding_mods[pregen_data.wound_series])
 		if (pregen_data.get_threshold_for(src, attack_direction, damage_source) > specific_injury_roll)
@@ -101,10 +106,20 @@
 
 		if (pregen_data.compete_for_wounding)
 			for (var/datum/wound/other_path as anything in possible_wounds)
-				if (initial(iterated_path.severity) > initial(other_path.severity))
+				if (other_path == iterated_path)
+					continue
+				if (initial(iterated_path.severity) == initial(other_path.severity) && pregen_data.overpower_wounds_of_even_severity)
 					possible_wounds -= other_path
+					continue
+				else if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
+					if (initial(iterated_path.severity) > initial(other_path.severity))
+						possible_wounds -= other_path
+						continue
+				else if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
+					if (initial(iterated_path.severity) < initial(other_path.severity))
+						possible_wounds -= other_path
+						continue
 
-	//cycle through the wounds of the relevant category from the most severe down
 	while (length(possible_wounds))
 		var/datum/wound/possible_wound = pick_weight(possible_wounds)
 		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
@@ -188,6 +203,7 @@
 
 	return injury_mod
 
+/// Should return an assoc list of (wound_series -> penalty). Will be used in determining series-specific penalties for wounding.
 /obj/item/bodypart/proc/check_series_wounding_mods()
 	RETURN_TYPE(/list)
 

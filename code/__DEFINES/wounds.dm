@@ -55,8 +55,10 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 /// While someone has determination in their system, their bleed rate is slightly reduced
 #define WOUND_DETERMINATION_BLEED_MOD 0.85
 
-#define WOUND_COMPETITION_SUBMIT "wound_submit"
-#define WOUND_COMPETITION_DOMINATE "wound_dominate"
+/// Wounds using this competition mode will remove any wounds of a greater severity than itself in a random wound roll. In most cases, you dont want to use this.
+#define WOUND_COMPETITION_OVERPOWER_GREATERS "wound_submit"
+/// Wounds using this competition mode will remove any wounds of a lower severity than itself in a random wound roll. Used for ensuring the worse case scenario of a given injury_roll.
+#define WOUND_COMPETITION_OVERPOWER_LESSERS "wound_dominate"
 
 // ~biology defines
 // What kind of biology a limb has, and what wounds it can suffer

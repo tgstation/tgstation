@@ -104,7 +104,9 @@
 	/// What flags apply to this wound
 	var/wound_flags = (ACCEPTS_GAUZE)
 
+	/// The unique ID of our wound for use with [actionspeed_mod]. Defaults to REF(src).
 	var/unique_id
+	/// The actionspeed modifier we will use in case we are on the arms and have a interaction penalty. Qdelled on destroy.
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/actionspeed_mod
 
 /datum/wound/New()
@@ -121,6 +123,18 @@
 	QDEL_NULL(actionspeed_mod)
 
 	return ..()
+
+/// Should generate a actionspeed modifier and return it, giving it our unique ID so it can stack with other wounds.
+/datum/wound/proc/generate_actionspeed_modifier()
+	RETURN_TYPE(/datum/actionspeed_modifier)
+
+	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
+	new_modifier.multiplicative_slowdown = get_effective_actionspeed_modifier()
+	return new_modifier
+
+/// Generates the ID we use for [unique_id], which is also set as our actionspeed mod's ID
+/datum/wound/proc/generate_unique_id()
+	return REF(src) // unique, cannot change, a perfect id
 
 /**
  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
@@ -212,6 +226,7 @@
 	SIGNAL_HANDLER
 	set_victim(null)
 
+/// Setter for [victim]. Should completely transfer signals, attributes, etc. To the new victim - if there is any, as it can be null.
 /datum/wound/proc/set_victim(new_victim)
 	if(victim)
 		UnregisterSignal(victim, list(COMSIG_QDELETING, COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB))
@@ -230,12 +245,34 @@
 			start_limping_if_we_should() // the status effect already handles removing itself
 			add_or_remove_actionspeed_mod()
 
-/datum/wound/proc/generate_actionspeed_modifier()
-	RETURN_TYPE(/datum/actionspeed_modifier)
+/// Proc called to change the variable `limb` and react to the event.
+/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
+	if(limb == new_value)
+		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
+	. = limb
+	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
+		UnregisterSignal(limb, COMSIG_QDELETING)
+		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
+		LAZYREMOVE(limb.wounds, src)
+		limb.update_wounds(replaced)
+		if (disabling)
+			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
 
-	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
-	new_modifier.multiplicative_slowdown = get_effective_actionspeed_modifier()
-	return new_modifier
+	limb = new_value
+
+	// POST-CHANGE
+
+	if (limb)
+		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
+		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(gauze_state_changed))
+		if (disabling)
+			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
+		if (victim)
+			start_limping_if_we_should() // the status effect already handles removing itself
+			add_or_remove_actionspeed_mod()
+
+		update_inefficiencies()
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()
 	if(victim.get_active_hand() == limb)
@@ -246,9 +283,6 @@
 /datum/wound/proc/start_limping_if_we_should()
 	if ((limb.body_zone == BODY_ZONE_L_LEG || limb.body_zone == BODY_ZONE_R_LEG) && limp_slowdown > 0 && limp_chance > 0)
 		victim.apply_status_effect(/datum/status_effect/limp)
-
-/datum/wound/proc/generate_unique_id()
-	return REF(src) // unique, cannot change, a perfect id
 
 /datum/wound/proc/source_died()
 	SIGNAL_HANDLER
@@ -296,35 +330,6 @@
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	return
 
-/// Proc called to change the variable `limb` and react to the event.
-/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
-	if(limb == new_value)
-		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
-	. = limb
-	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
-		UnregisterSignal(limb, COMSIG_QDELETING)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
-		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds(replaced)
-		if (disabling)
-			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
-
-	limb = new_value
-
-	// POST-CHANGE
-
-	if (limb)
-		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
-		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(gauze_state_changed))
-		if (disabling)
-			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
-
-		if (victim)
-			start_limping_if_we_should() // the status effect already handles removing itself
-			add_or_remove_actionspeed_mod()
-
-		update_inefficiencies()
-
 /// Proc called to change the variable `disabling` and react to the event.
 /datum/wound/proc/set_disabling(new_value)
 	if(disabling == new_value)
@@ -339,6 +344,7 @@
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 
+/// Setter for [interaction_efficiency_penalty]. Updates the actionspeed of our actionspeed mod.
 /datum/wound/proc/set_interaction_efficiency_penalty(new_value)
 
 	var/should_update = (new_value != interaction_efficiency_penalty)
@@ -348,31 +354,36 @@
 	if (should_update)
 		update_actionspeed()
 
+/// Updates both our action mod's multiplicative_slowdown and our victim's actionspeed.
 /datum/wound/proc/update_actionspeed()
 	actionspeed_mod.multiplicative_slowdown = get_effective_actionspeed_modifier()
 
 	victim.update_actionspeed()
 
+/// Returns a "adjusted" interaction_efficiency_penalty that will be used for the actionspeed mod.
 /datum/wound/proc/get_effective_actionspeed_modifier()
 	return interaction_efficiency_penalty - 1
 
+/// Returns the decisecond multiplier of any click interactions, assuming our limb is being used.
 /datum/wound/proc/get_action_delay_mult()
 	SHOULD_BE_PURE(TRUE)
 
 	return interaction_efficiency_penalty
 
-
+/// Returns the decisecond increment of any click interactions, assuming our limb is being used.
 /datum/wound/proc/get_action_delay_increment()
 	SHOULD_BE_PURE(TRUE)
 
 	return 0
 
+/// Signal proc for if gauze has been applied or removed from our limb.
 /datum/wound/proc/gauze_state_changed()
 	SIGNAL_HANDLER
 
 	if (wound_flags & ACCEPTS_GAUZE)
 		update_inefficiencies()
 
+/// Updates our limping and interaction penalties in accordance with our gauze.
 /datum/wound/proc/update_inefficiencies()
 	if (wound_flags & ACCEPTS_GAUZE)
 		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
@@ -490,10 +501,12 @@
 
 	return handle_xadone_progress()
 
+/// Does various actions based on [cryo_progress]. By default, qdeletes the wound past a certain threshold.
 /datum/wound/proc/handle_xadone_progress()
 	if(cryo_progress > get_xadone_progress_to_qdel())
 		qdel(src)
 
+/// Returns the amount of [cryo_progress] we need to be qdeleted.
 /datum/wound/proc/get_xadone_progress_to_qdel()
 	SHOULD_BE_PURE(TRUE)
 
@@ -644,6 +657,7 @@
 	if (WOUND_BLUNT in pregen_data.required_wound_types && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
+/// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.
 /datum/wound/proc/get_pregen_data()
 	return GLOB.all_wound_pregen_data[type]
 

@@ -553,6 +553,7 @@
 			owner.updatehealth()
 	return update_bodypart_damage_state() || .
 
+/// Returns a bitflag using BIO_EXTERIOR or BIO_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
 /obj/item/bodypart/proc/get_bio_state_status()
 	SHOULD_BE_PURE(TRUE)
 
@@ -574,6 +575,7 @@
 
 	return bio_status
 
+/// Returns if our current mangling status allows us to be dismembered. Requires both no exterior/mangled exterior and no interior/mangled interior.
 /obj/item/bodypart/proc/dismemberable_by_wound()
 	SHOULD_BE_PURE(TRUE)
 
@@ -589,6 +591,7 @@
 
 	return (exterior_ready_to_dismember && interior_ready_to_dismember)
 
+/// Returns TRUE if our total percent damage is more or equal to our dismemberable percentage, but FALSE if a wound can cause us to be dismembered.
 /obj/item/bodypart/proc/dismemberable_alternate()
 
 	update_wound_theory()
@@ -608,6 +611,7 @@
 
 	return FALSE
 
+/// Updates our "can be theoretically dismembered by wounds" variables by iterating through all wound static data.
 /obj/item/bodypart/proc/update_wound_theory()
 	// We put this here so we dont increase init time by doing this all at once on initialization
 	// Effectively, we "lazy load"
