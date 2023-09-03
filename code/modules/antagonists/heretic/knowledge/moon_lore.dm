@@ -44,7 +44,7 @@
 	name = "Grasp of Lunacy"
 	desc = "Your Mansus Grasp will cause them to hallucinate everyone as lunar mass."
 	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
-	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
+	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
 	cost = 1
 	route = PATH_MOON
 
@@ -63,16 +63,16 @@
 	to_chat(target, span_danger("THE TRUTH FLARES BEFORE YOU"))
 	target.cause_hallucination (/datum/hallucination/delusion/preset/moon)
 
-/datum/heretic_knowledge/spell/ash_passage
+/datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
 	desc = "Grants you Smile of the moon, a short range spell causing high confusion, muting, blinding and deafening the target for a short duartion."
-	gain_text = "The moon smiles upon us all and those who see its true side can bring that joy."
+	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/medallion,
 	)
-	spell_to_add = /datum/action/cooldown/spell/moon_smile
+	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 	route = PATH_MOON

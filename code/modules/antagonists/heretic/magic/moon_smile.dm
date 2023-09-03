@@ -32,6 +32,6 @@
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU"))
 	cast_on.adjust_temp_blindness(eye_blind_duration)
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
-	var/mob/living/carbon/carbon_target = target
-	carbon_target.adjust_silence(5 SECONDS)
+	cast_on.adjustEarDamage(0,5)
+	cast_on.adjust_silence(5 SECONDS)
 	return TRUE
