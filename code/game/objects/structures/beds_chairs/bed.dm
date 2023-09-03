@@ -73,7 +73,6 @@
 	occupied = FALSE
 
 /// Medical beds
-
 /obj/structure/bed/medical
 	name = "medical bed"
 	icon = 'icons/obj/medical/medical_bed.dmi'
