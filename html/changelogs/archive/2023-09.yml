@@ -5,3 +5,6 @@
   NanoCats:
   - rscadd: Added bespoke hand made maints to Tramstation
   - rscdel: Removed randomized maints from Tramstation
+2023-09-03:
+  MilkForever:
+  - qol: Captains can now open the antique gun display case with their ID card.
