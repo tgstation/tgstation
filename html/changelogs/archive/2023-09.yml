@@ -1,0 +1,125 @@
+2023-09-01:
+  1393F:
+  - balance: megafauna will now gut instead of dusting or gibbing
+  FernandoJ8:
+  - bugfix: containers can no longer add more water to hydroponic trays than they
+      actually contain.
+  - bugfix: watering a hydroponic tray with amounts of water lesser than 1 will no
+      longer be added to nutrients rather than water
+  GoldenAlpharex:
+  - bugfix: Fixed the crafting menu being able to get stuck if your crafting recipe
+      somehow goes missing.
+  - code_imp: Improves the quality of the item crafting code slightly.
+  Guillaume Prata:
+  - balance: Fanny packs are now silent, no one will get a chat message about what
+      you put in or take out.
+  MTandi:
+  - rscadd: Mood buff power and duration depends on the ingredient quality and recipe
+      complexity of the food.
+  - rscadd: Hand-crafted food also gives a non-mood buff. The buff type depends on
+      recipe complexity and duration - on ingredient quality.
+  - code_imp: Added infrastructure to assign custom buff to certain dishes for unique
+      effects
+  - rscadd: Consumable reagents now care about purity, being more nutritious with
+      higher purity. Dispensers give synthetic food, natural sources are organic and
+      better and give longer buffs.
+  - rscadd: Grown food reagent purity now depends on lifespan, endurance and instability
+      stats of the seed.
+  - rscadd: Natural booze now uses the same purity formula and 100% purity can increase
+      booze power by up to 200%.
+  - rscadd: Added Fat reagent that is now a base type for lard, vegetable oil, olive
+      oil. Corn oil and cooking oil merged into vegetable oil.
+  - balance: Reagents and their purities are preserved during food chemical reactions,
+      processing, cooking and crafting.
+  - balance: Sugar nutrition rebalanced due to it being 100% pure in chem dispenser,
+      overdose happens at 100u now.
+  - bugfix: '`grind_results` of grown food give full amount equal to all removed nutrients
+      instead of just `/datum/reagent/consumable/nutriment`'
+  - qol: 'Seed Extractor now shows additional seed data: possible mutations, juicing
+      result, grinding result, fermentation result'
+  - bugfix: Reverts the unintended change of monkey cube biomass cost back to 50
+  Momo8289:
+  - bugfix: Meth will no longer explode when reacting in a body
+  Rhials:
+  - rscadd: Nuclear operatives have expanded the scope of their hiring practices.
+      Members of all species can now roll nukie!
+  - qol: The preferences menu now has an option to always be human when being selected
+      for a nuclear operative role. Check it out!
+  - image: Plasmaman operative envirosuits.
+  Sealed101, EBAT_BASUHA for spritework:
+  - rscadd: Wizard's Den now has a book of Summon Cheese in the Studies Room
+  Seven:
+  - bugfix: Fixes not being able to break out of graves
+  - qol: Graves are no longer dense (you can walk over them now)
+  VladinXXV:
+  - qol: The organ harvester's output is more predictable, and the direction can be
+      changed by alt-clicking with the panel screwed open.
+  carshalash:
+  - qol: Adds accessibility to breasts for service members
+  nikothedude:
+  - rscdel: Deleted a unused file
+  xPokee, Pirill:
+  - rscadd: Added flower crowns, craftable via the clothing menu.
+  - image: Resprited geraniums, poppies, and lilys, along with changing their worn
+      icon.
+2023-09-02:
+  Jacquerel:
+  - bugfix: Prevents admins from accidentally gibbing people by closing a confirmation
+      window.
+  - bugfix: Traitors should generate with "free objective" less often, and will once
+      more be assigned to steal things.
+  Profakos:
+  - bugfix: Ex-Interdyne pirates can now successfully spawn on case sensitive host
+      systems, such as Linux
+  Shadow-Quill:
+  - bugfix: Hilbert's Hotel Research ruin now has a functioning tram. As a side effect,
+      the malfunctioning tram event should now only fire on maps with a tram!
+  Thebleh:
+  - bugfix: fixed access on a couple of Engineering and Atmos airlocks on DeltaStation
+2023-09-03:
+  Ben10Omintrix:
+  - bugfix: basic ranged mobs will now chase victims
+  Capsandi:
+  - sound: 2 new ambient tracks for maintenance tunnels
+  Fikou:
+  - bugfix: you can now examine screen objects properly
+  Ghommie:
+  - bugfix: You can now actually fish soggy wallets from toilets, rare ores on ice
+      moon, some boney stuff in oil puddles (good luck finding them) and lube-fishes
+      by the seawater.
+  Guillaume Prata:
+  - rscadd: 'New funny internals for the clowns to spawn with. They come with O2 and
+      a secondary gas between 3 options: BZ, Helium and N2O. Talk with a "different
+      tone" with Helium, giggle and laugh "uncontrollably" while under the minor effects
+      of N2O or have "fun" hallucinations while under the minor effects of BZ.'
+  - balance: To not cut on how long the clown's O2 internals last due to the mixed
+      gases, the funny internals have 50% more gas volume, same as engineers' internals.
+  Iamgoofball:
+  - bugfix: You can no longer create non-synthesizable chemicals with bees.
+  Melbert:
+  - bugfix: Fix bastard sword granting infinite stun immunity
+  - balance: Ascended Blade Heretics no longer have blanket stun immunity, they now
+      have 45 seconds of stun absorption that recharges after 2 minutes - think His
+      Grace. This doesn't affect stamcrit (still immune to that) (assuming you haven't
+      consumed all of your immunity charge) but does affect hard CC such as slips,
+      flashbangs, or beepsky.
+  - balance: Ascended Blade Heretics now have a 0.75 modifier to incoming knockdowns.
+  Profakos:
+  - bugfix: The HUDs of mobs with dynamic human appearance will appear properly.
+  Rhials:
+  - qol: The pirate candidate gathering poll will now mention which pirate gang it
+      is gathering candidates for.
+  Sealed101:
+  - bugfix: fixed implanted legion cores being available for use when unconscious/dead.
+  blueDev2:
+  - bugfix: Soups are accepted by Kitchen Smartfridges
+  - bugfix: Soups are not accepted by drink showcases
+  carlarctg:
+  - rscdel: Removed the threshold for confusion symptom that adds illiteracy to the
+      disease.
+  - balance: Clamps confusion symptom's confusion to a maximum of 30 seconds.
+  - qol: Confusion as a debuff no longer guarantees random movement if you're resting.
+  nikothedude:
+  - bugfix: Slash wounds are now compatable with pierce wounds
+  xPokee:
+  - bugfix: Fixed the air inside of a penguin pen being way too cold

@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "'meat product' and imitation carp meat are now considered synthetic meats for the purposes of reagent purity"

@@ -31,7 +31,7 @@
 	var/direction = move_args[MOVE_ARG_DIRECTION]
 	var/new_dir
 
-	if(time_left > CONFUSION_FULL_THRESHOLD)
+	if(time_left > CONFUSION_FULL_THRESHOLD && !owner.resting)
 		new_dir = pick(GLOB.alldirs)
 
 	else if(prob(time_left * CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND))

@@ -41,3 +41,6 @@
 
 /// Checks to ensure that variables expected to exist in a job datum (for config reasons) actually exist
 /datum/unit_test/focus_only/missing_job_datum_variables
+
+/// Checks that the contents of the fish_counts list are also present in fish_table
+/datum/unit_test/focus_only/fish_sources_tables

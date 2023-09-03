@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	name = "DESTINATION/NOT/FOUND"
 	specific_lift_id = IMMOVABLE_ROD_DESTINATIONS
 
-/obj/effect/landmark/tram/nav/hilbert/research
+/obj/effect/landmark/tram/nav/hilbert
 	name = HILBERT_TRAM
 	specific_lift_id = TRAM_NAV_BEACONS
 	dir = WEST
