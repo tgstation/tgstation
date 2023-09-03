@@ -101,7 +101,6 @@
 #define BOSS_MEDAL_HIEROPHANT "Hierophant Killer"
 #define BOSS_MEDAL_LEGION "Legion Killer"
 #define BOSS_MEDAL_TENDRIL "Tendril Exterminator"
-#define BOSS_MEDAL_SWARMERS "Swarmer Beacon Killer"
 #define BOSS_MEDAL_WENDIGO "Wendigo Killer"
 #define BOSS_MEDAL_KINGGOAT "King Goat Killer"
 
@@ -112,7 +111,6 @@
 #define BOSS_MEDAL_DRAKE_CRUSHER "Drake Crusher"
 #define BOSS_MEDAL_HIEROPHANT_CRUSHER "Hierophant Crusher"
 #define BOSS_MEDAL_LEGION_CRUSHER "Legion Crusher"
-#define BOSS_MEDAL_SWARMERS_CRUSHER "Swarmer Beacon Crusher"
 #define BOSS_MEDAL_WENDIGO_CRUSHER "Wendigo Crusher"
 #define BOSS_MEDAL_KINGGOAT_CRUSHER "King Goat Crusher"
 
