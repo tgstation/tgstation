@@ -149,7 +149,7 @@
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
 
 	if(reagents && target_holder)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	return TRUE
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER

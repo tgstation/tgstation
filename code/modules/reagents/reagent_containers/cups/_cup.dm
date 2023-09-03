@@ -85,7 +85,7 @@
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
+	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
 	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	if(!iscarbon(target_mob))
@@ -123,7 +123,7 @@
 			to_chat(user, span_warning("[target] is full."))
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
@@ -135,7 +135,7 @@
 			to_chat(user, span_warning("[src] is full."))
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
 	target.update_appearance()
@@ -156,7 +156,7 @@
 			to_chat(user, span_warning("[src] is full."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
 	target.update_appearance()
@@ -192,7 +192,7 @@
 			to_chat(user, span_notice("[src] is full."))
 		else
 			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
 			qdel(attacking_egg)
 		return
 
@@ -407,7 +407,7 @@
 		if(reagents.total_volume < 1)
 			user.balloon_alert(user, "empty!")
 		else
-			reagents.trans_to(O, 5, transfered_by = user)
+			reagents.trans_to(O, 5, transferred_by = user)
 			user.balloon_alert(user, "doused [O]")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
