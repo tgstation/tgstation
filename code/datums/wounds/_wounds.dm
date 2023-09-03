@@ -524,20 +524,6 @@
 /datum/wound/proc/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
 	return scar_file
 
-
-/// Returns TRUE if our limb is the head or chest, FALSE otherwise.
-/// Essential in the sense of "we cannot live without it".
-/datum/wound/proc/limb_essential()
-	return (limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
-
-/// Getter proc for our scar_keyword, in case we might have some custom scar gen logic.
-/datum/wound/proc/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)
-	return scar_keyword
-
-/// Getter proc for our scar_file, in case we might have some custom scar gen logic.
-/datum/wound/proc/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
-	return scar_file
-
 /// Returns what string is displayed when a limb that has sustained this wound is examined
 /// (This is examining the LIMB ITSELF, when it's not attached to someone.)
 /datum/wound/proc/get_limb_examine_description()

@@ -313,17 +313,17 @@
 	return FALSE
 
 // Slowly increase (gauzed) clot rate
-/datum/wound/pierce/tea_life_process()
+/datum/wound/pierce/bleed/tea_life_process()
 	gauzed_clot_rate += 0.1
 	return TRUE
 
 // Slowly increase clot rate
-/datum/wound/slash/tea_life_process()
+/datum/wound/slash/flesh/tea_life_process()
 	clot_rate += 0.2
 	return TRUE
 
 // There's a designated burn process, but I felt this would be better for consistency with the rest of the reagent's procs
-/datum/wound/burn/tea_life_process()
+/datum/wound/burn/flesh/tea_life_process()
 	// Sanitizes and heals, but with a limit
 	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.02
 	infestation_rate = max(infestation_rate - 0.005, 0)
