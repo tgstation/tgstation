@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "kinesis plus properly lets you move again when grabbed once"
