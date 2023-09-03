@@ -82,7 +82,6 @@
 	return TRUE
 
 /datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	log_world("Soup reaction started, c_vol: " + num2text(created_volume))
 	if(!length(required_ingredients))
 		return
 
@@ -142,8 +141,6 @@
 /datum/chemical_reaction/food/soup/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	if(!length(required_ingredients))
 		return
-	log_world("step_reaction_vol: " + num2text(step_reaction_vol))
-	log_world("delta_t: " + num2text(delta_t))
 	testing("Soup reaction step progressing with an increment volume of [step_reaction_vol] and delta_t of [delta_t].")
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/list/cached_ingredients = reaction.data["ingredients"]
@@ -191,7 +188,6 @@
 
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
-	log_world("Soup reaction finished, react_vol: " + num2text(react_vol))
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
 		CRASH("[pot ? "Non-pot atom" : "Null pot"]) made it to the end of the [type] reaction chain.")
@@ -207,7 +203,6 @@
  * * react_vol: How much soup was produced
  */
 /datum/chemical_reaction/food/soup/proc/clean_up(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
-	log_world("Soup cleanup, react_vol: " + num2text(react_vol))
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 
 	reaction?.data["ingredients"] = null
