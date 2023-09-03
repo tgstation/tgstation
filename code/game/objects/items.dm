@@ -850,7 +850,7 @@
  * * tray_extended - If true, the surgical tray the item is placed on is in "table mode"
  */
 /obj/item/proc/get_surgery_tool_overlay(tray_extended)
-   return null
+	return null
 
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
