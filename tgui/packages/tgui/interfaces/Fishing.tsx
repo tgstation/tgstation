@@ -335,9 +335,10 @@ class FishingMinigame extends Component<
         acceleration = -acceleration_up;
         break;
       case ReelingState.Idle:
-        acceleration = this.bidirectional && newVelocity > 0
-          ? -acceleration_down
-          : acceleration_down;
+        acceleration =
+          this.bidirectional && newVelocity > 0
+            ? -acceleration_down
+            : acceleration_down;
         break;
     }
 
