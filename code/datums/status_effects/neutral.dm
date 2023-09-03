@@ -8,6 +8,18 @@
 	alert_type = null
 	var/total_damage = 0
 
+//debug
+/datum/status_effect/crusher_damage/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
+	return ..()
+
+/datum/status_effect/crusher_damage/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+
+/datum/status_effect/crusher_damage/proc/on_owner_death(datum/source)
+	SIGNAL_HANDLER
+	message_admins("[owner] has accumulated [total_damage] crusher damage upon death, max health: [owner.maxHealth].")
+//end debug
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
 	duration = 50

@@ -707,9 +707,9 @@ Difficulty: Hard
 		to_chat(L, span_userdanger("You're struck by a [name]!"))
 		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
-		if(trophy_spawned)
-			SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, L, caster)
 		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
+		if(trophy_spawned)
+			SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, L, caster, damage)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
 			if(H.stat == CONSCIOUS && !H.target && H.AIStatus != AI_OFF && !H.client)

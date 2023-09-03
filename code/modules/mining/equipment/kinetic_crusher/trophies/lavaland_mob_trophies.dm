@@ -20,6 +20,7 @@
 /obj/item/crusher_trophy/goliath_tentacle/Initialize(mapload)
 	. = ..()
 	missing_health_desc = 100 * missing_health_ratio
+	AddElement(/datum/element/crusher_damage_ticker,  APPLY_WITH_SPELL, bonus_value)
 
 /obj/item/crusher_trophy/goliath_tentacle/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
@@ -30,6 +31,7 @@
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
 	if(missing_health > 0)
 		target.adjustBruteLoss(missing_health) //and do that much damage
+		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, target, user, bonus_value)
 
 /**
  * Watcher
@@ -201,4 +203,4 @@
 
 /obj/projectile/bileworm_acid/spewlet_trophy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_PROJECTILE)
+	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_PROJECTILE, damage)

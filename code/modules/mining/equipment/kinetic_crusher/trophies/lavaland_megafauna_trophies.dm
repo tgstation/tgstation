@@ -32,7 +32,7 @@
 
 /obj/item/crusher_trophy/tail_spike/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_SPELL)
+	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_SPELL, bonus_value)
 
 /obj/item/crusher_trophy/tail_spike/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
@@ -44,8 +44,8 @@
 		playsound(victim, 'sound/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(get_turf(victim))
 		addtimer(CALLBACK(src, PROC_REF(pushback), victim, user), 1) //no free backstabs, we push AFTER module stuff is done
-		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, victim, user)
 		victim.adjustFireLoss(bonus_value, forced = TRUE)
+		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, victim, user, bonus_value)
 
 ///Pushes the victim away from the user a single tile
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
@@ -143,13 +143,14 @@
 	log_combat(user, target, "fired a hierophant chaser at", src)
 
 /obj/effect/temp_visual/hierophant/chaser/crusher
-	damage = 20
+	damage = 20 //the chaser sets damage after the blast's new() and thus the crusher ticker element may get confused
 	monster_damage_boost = FALSE
 	created_blast = /obj/effect/temp_visual/hierophant/blast/damaging/crusher
 
 /obj/effect/temp_visual/hierophant/blast/damaging/crusher
+	damage = 20
 	trophy_spawned = TRUE
 
 /obj/effect/temp_visual/hierophant/blast/damaging/crusher/Initialize(mapload, new_caster, friendly_fire)
 	. = ..()
-	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_SPELL)
+	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_SPELL, damage)

@@ -204,6 +204,7 @@
 		parent_item.force += sharpened_increase
 	parent_item.name = "[parent_item.name] (Wielded)"
 	parent_item.update_appearance()
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_FORCE_UPDATED, parent_item.force)
 
 	if(iscyborg(user))
 		to_chat(user, span_notice("You dedicate your module to [parent]."))
@@ -248,8 +249,9 @@
 		parent_item.force -= sharpened_increase
 	if(force_multiplier)
 		parent_item.force /= force_multiplier
-	else if(force_unwielded)
+	else if(!isnull(force_unwielded))
 		parent_item.force = force_unwielded
+	SEND_SIGNAL(parent, COMSIG_TWOHANDED_FORCE_UPDATED, parent_item.force)
 
 	// update the items name to remove the wielded status
 	var/sf = findtext(parent_item.name, " (Wielded)", -10) // 10 == length(" (Wielded)")

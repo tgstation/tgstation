@@ -34,6 +34,8 @@
 	var/detonation_damage = 50
 	///List of trophies attached to the crusher
 	var/list/trophies = list()
+	var/force_unwielded = 0
+	var/force_wielded = 20
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
@@ -43,10 +45,10 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, \
-		force_unwielded = 0, \
-		force_wielded = 20, \
+		force_unwielded = src.force_unwielded, \
+		force_wielded = src.force_wielded, \
 	)
-	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_MELEE)
+	AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_MELEE, force_wielded)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -83,23 +85,22 @@
 		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
 		user.drop_all_held_items()
 		return
-	var/target_health = target.health
-	. = ..()
-	var/datum/status_effect/crusher_damage/crusher_damage_tracker = target.has_status_effect(/datum/status_effect/crusher_damage)
-	for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
-		if(!QDELETED(target))
-			found_trophy.on_melee_hit(target, user)
-	if(!QDELETED(crusher_damage_tracker) && !QDELETED(target))
-		crusher_damage_tracker.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
+	return ..()
 
 /obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return //it's already dropped by this point, so no feedback/dropping is required
+
+	//handle trophy attack effects
+	for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
+		if(!QDELETED(target))
+			found_trophy.on_melee_hit(target, user)
+
 	if(proximity_flag && isliving(target))
 		var/mob/living/victim = target
 		var/datum/status_effect/crusher_mark/mark_field = victim.has_status_effect(/datum/status_effect/crusher_mark)
 		if(!mark_field || mark_field.hammer_synced != src || !victim.remove_status_effect(/datum/status_effect/crusher_mark))
-			return
+			return ..()
 		var/datum/status_effect/crusher_damage/crusher_damage_tracker = victim.has_status_effect(/datum/status_effect/crusher_damage)
 		var/target_health = victim.health
 		for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
@@ -123,8 +124,9 @@
 
 			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, victim, src, backstabbed)
 			victim.apply_damage(combined_damage, BRUTE, blocked = def_check)
+	return ..()
 
-/obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/attack_secondary(mob/living/victim, mob/living/user, params)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
@@ -170,6 +172,7 @@
 	destabilizer.hammer_synced = src
 	playsound(user, 'sound/weapons/plasma_cutter.ogg', 80, TRUE)
 	destabilizer.fire()
+	destabilizer.AddElement(/datum/element/crusher_damage_ticker, APPLY_WITH_PROJECTILE, destabilizer.damage) //apply element after on_projectile_fire() in case a trophy modifies it
 	charged = FALSE
 	update_appearance()
 	if(charge_time <= 0) //you never know
