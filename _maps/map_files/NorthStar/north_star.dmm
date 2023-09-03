@@ -26313,7 +26313,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/duffelbag/coroner/surgery,
+/obj/item/surgery_tray/morgue,
 /obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -54921,7 +54921,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "onz" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 13
 	},
 /obj/item/reagent_containers/medigel/sterilizine{
@@ -58259,7 +58259,7 @@
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "pjR" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 13
 	},
 /obj/item/reagent_containers/medigel/sterilizine{

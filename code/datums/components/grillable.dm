@@ -130,7 +130,7 @@
 		else if(current_cook_time <= required_cook_time)
 			examine_list += span_notice("[parent] seems to be almost finished cooking!")
 	else
-		examine_list += span_danger("[parent] should probably not be cooked for much longer!")
+		examine_list += span_danger("[parent] should probably not be put on the grill.")
 
 ///Ran when an object moves from the grill
 /datum/component/grillable/proc/on_moved(atom/source, atom/OldLoc, Dir, Forced)

@@ -43,7 +43,6 @@
 	)
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
-	burns_in_oven = TRUE
 	slice_type = /obj/item/food/cakeslice/plain
 
 /obj/item/food/cakeslice/plain

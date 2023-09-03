@@ -13449,7 +13449,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "dCG" = (
@@ -48618,7 +48618,7 @@
 	pixel_y = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/storage/backpack/duffelbag/coroner/surgery,
+/obj/item/surgery_tray/morgue,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -61822,7 +61822,7 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/item/radio/intercom/directional/south,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "uWn" = (

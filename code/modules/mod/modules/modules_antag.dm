@@ -503,3 +503,19 @@
 	if(deleting)
 		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+
+///Medbeam - Medbeam but built into a modsuit
+/obj/item/mod/module/medbeam
+	name = "MOD Medbeam Module"
+	desc = "A wrist mounted variant of the medbeam gun, allowing the user to heal their allies without the risk of dropping it."
+	icon_state = "chronogun"
+	module_type = MODULE_ACTIVE
+	complexity = 1
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	device = /obj/item/gun/medbeam/mod
+	incompatible_modules = list(/obj/item/mod/module/medbeam)
+	removable = TRUE
+	cooldown_time = 0.5
+
+/obj/item/gun/medbeam/mod
+	name = "MOD medbeam"
