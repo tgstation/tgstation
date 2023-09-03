@@ -14,6 +14,7 @@
 	ui_name = "AntagInfoTraitor"
 	suicide_cry = "FOR THE SYNDICATE!!"
 	preview_outfit = /datum/outfit/traitor
+	can_assign_self_objectives = TRUE
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?
@@ -66,6 +67,9 @@
 
 		uplink_handler.has_objectives = TRUE
 		uplink_handler.generate_objectives()
+
+		uplink_handler.can_replace_objectives = CALLBACK(src, PROC_REF(can_change_objectives))
+		uplink_handler.replace_objectives = CALLBACK(src, PROC_REF(submit_player_objective))
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
@@ -145,6 +149,10 @@
 		result += "EMPTY<br>"
 	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
 	return result
+
+/// Returns true if we're allowed to assign ourselves a new objective
+/datum/antagonist/traitor/proc/can_change_objectives()
+	return can_assign_self_objectives
 
 /// proc that generates the traitors replacement uplink code and radio frequency
 /datum/antagonist/traitor/proc/generate_replacement_codes()

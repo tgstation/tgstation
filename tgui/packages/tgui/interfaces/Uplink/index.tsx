@@ -59,6 +59,7 @@ type UplinkData = {
   maximum_potential_objectives: number;
   purchased_items: number;
   shop_locked: BooleanLike;
+  can_renegotiate: BooleanLike;
 };
 
 type UplinkState = {
@@ -160,6 +161,7 @@ export class Uplink extends Component<{}, UplinkState> {
       telecrystals,
       progression_points,
       primary_objectives,
+      can_renegotiate,
       completed_final_objective,
       active_objectives,
       potential_objectives,
@@ -379,6 +381,7 @@ export class Uplink extends Component<{}, UplinkState> {
                 <PrimaryObjectiveMenu
                   primary_objectives={primary_objectives}
                   final_objective={completed_final_objective}
+                  can_renegotiate={can_renegotiate}
                 />
               )) ||
                 (currentTab === 1 && has_objectives && (
