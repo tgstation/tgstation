@@ -82,9 +82,38 @@
 	return TRUE
 
 /datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	log_world("Soup reaction started, c_vol: " + num2text(created_volume))
 	if(!length(required_ingredients))
 		return
 
+	// If a food item is supposed to be made, remove relevant ingredients from the pot, then make the item 
+	if(resulting_food_path)
+		var/list/tracked_ingredients
+		LAZYINITLIST(tracked_ingredients)
+		var/ingredient_max_multiplier = INFINITY
+		var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+
+		// Tracked ingredients are indexed by type and point to a list containing the actual items
+		for(var/obj/item/ingredient as anything in pot.added_ingredients)
+			if(is_type_in_list(ingredient, required_ingredients))
+				LAZYADD(tracked_ingredients[ingredient.type],ingredient)
+		// Find the max number of ingredients that may be used for making the food item
+		for(var/list/ingredient_type as anything in tracked_ingredients)
+			ingredient_max_multiplier = min(ingredient_max_multiplier,LAZYLEN(tracked_ingredients[ingredient_type]))
+		// Create the food items, removing the relavent ingredients at the same time
+		for(var/i in 1 to (min(created_volume,ingredient_max_multiplier)))
+			for(var/list/ingredient_type as anything in tracked_ingredients)
+				var/ingredient = tracked_ingredients[ingredient_type][i]
+				LAZYREMOVE(pot.added_ingredients,ingredient)
+				qdel(ingredient)
+			var/obj/item/created = new resulting_food_path(get_turf(pot))
+			created.pixel_y += 8
+		// Re-add required reagents that were not used in this step
+		if(created_volume > ingredient_max_multiplier)
+			for(var/reagent_path as anything in required_reagents)
+				holder.add_reagent(reagent_path,(required_reagents[reagent_path])*(created_volume-ingredient_max_multiplier))
+
+	
 	// This only happens if we're being instant reacted so let's just skip to what we really want
 	if(isnull(reaction))
 		testing("Soup reaction of type [type] instant reacted, cleaning up.")
@@ -113,7 +142,8 @@
 /datum/chemical_reaction/food/soup/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	if(!length(required_ingredients))
 		return
-
+	log_world("step_reaction_vol: " + num2text(step_reaction_vol))
+	log_world("delta_t: " + num2text(delta_t))
 	testing("Soup reaction step progressing with an increment volume of [step_reaction_vol] and delta_t of [delta_t].")
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/list/cached_ingredients = reaction.data["ingredients"]
@@ -161,6 +191,7 @@
 
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
+	log_world("Soup reaction finished, react_vol: " + num2text(react_vol))
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
 		CRASH("[pot ? "Non-pot atom" : "Null pot"]) made it to the end of the [type] reaction chain.")
@@ -171,37 +202,35 @@
 /**
  * Cleans up the ingredients and adds whatever leftover reagents to the mixture
  *
- * * holder: The sou ppot
+ * * holder: The soup pot
  * * reaction: The reaction being cleaned up, note this CAN be null if being instant reacted
  * * react_vol: How much soup was produced
  */
 /datum/chemical_reaction/food/soup/proc/clean_up(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
+	log_world("Soup cleanup, react_vol: " + num2text(react_vol))
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 
 	reaction?.data["ingredients"] = null
 
-	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// Let's not mess with  indestructible items.
-		// Chef doesn't need more ways to delete things with cooking.
-		if(ingredient.resistance_flags & INDESTRUCTIBLE)
-			continue
+	// If soup is made, remove ingredients as their reagents were added to the soup
+	if(react_vol)
+		for(var/obj/item/ingredient as anything in pot.added_ingredients)
+			// Let's not mess with  indestructible items.
+			// Chef doesn't need more ways to delete things with cooking.
+			if(ingredient.resistance_flags & INDESTRUCTIBLE)
+				continue
 
-		// Things that had reagents or ingredients in the soup will get deleted
-		else if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
-			LAZYREMOVE(pot.added_ingredients, ingredient)
-			// Send everything left behind
-			transfer_ingredient_reagents(ingredient, holder)
-			// Delete, it's done
-			qdel(ingredient)
+			// Things that had reagents or ingredients in the soup will get deleted
+			else if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
+				LAZYREMOVE(pot.added_ingredients, ingredient)
+				// Send everything left behind
+				transfer_ingredient_reagents(ingredient, holder)
+				// Delete, it's done
+				qdel(ingredient)
 
-		// Everything else will just get fried
-		else
-			ingredient.AddElement(/datum/element/fried_item, 30)
-
-	// Spawning physical food results
-	if(resulting_food_path)
-		var/obj/item/created = new resulting_food_path(get_turf(pot))
-		created.pixel_y += 8
+			// Everything else will just get fried
+			else
+				ingredient.AddElement(/datum/element/fried_item, 30)
 
 	// Anything left in the ingredient list will get dumped out
 	pot.dump_ingredients(get_turf(pot), y_offset = 8)
