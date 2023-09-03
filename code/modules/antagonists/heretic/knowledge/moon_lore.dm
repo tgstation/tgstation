@@ -56,10 +56,6 @@
 
 /datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
-
-	if(HAS_MIND_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE))
-		return
-
 	to_chat(target, span_danger("THE TRUTH FLARES BEFORE YOU"))
 	target.cause_hallucination (/datum/hallucination/delusion/preset/moon)
 
@@ -77,7 +73,7 @@
 	cost = 1
 	route = PATH_MOON
 
-/datum/heretic_knowledge/mark/ash_mark
+/datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Ash"
 	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
 		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
@@ -85,7 +81,7 @@
 	gain_text = "He was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
+	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/moon)
 	route = PATH_MOON
 	mark_type = /datum/status_effect/eldritch/ash
 
@@ -100,30 +96,30 @@
 		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
 		grasp.build_all_button_icons()
 
-/datum/heretic_knowledge/knowledge_ritual/ash
-	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)
+/datum/heretic_knowledge/knowledge_ritual/moon
+	next_knowledge = list(/datum/heretic_knowledge/spell/moon_lunarparade)
 	route = PATH_MOON
 
-/datum/heretic_knowledge/spell/fire_blast
-	name = "Volcano Blast"
+/datum/heretic_knowledge/spell/moon_lunarparade
+	name = "Lunar Parade"
 	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
 		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+	next_knowledge = list(/datum/heretic_knowledge/jester_hat)
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	route = PATH_MOON
 
 
-/datum/heretic_knowledge/mad_mask
+/datum/heretic_knowledge/jester_hat
 	name = "Mask of Madness"
 	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/ash,
+		/datum/heretic_knowledge/blade_upgrade/moon,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/spell/space_phase,
 		/datum/heretic_knowledge/curse/paralysis,
@@ -138,12 +134,12 @@
 	cost = 1
 	route = PATH_MOON
 
-/datum/heretic_knowledge/blade_upgrade/ash
-	name = "Fiery Blade"
+/datum/heretic_knowledge/blade_upgrade/moon
+	name = "Moonlight Blade"
 	desc = "Your blade now lights enemies ablaze on attack."
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
-	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
+	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
 	route = PATH_MOON
 
 /datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
@@ -153,15 +149,15 @@
 	target.adjust_fire_stacks(1)
 	target.ignite_mob()
 
-/datum/heretic_knowledge/spell/flame_birth
-	name = "Nightwatcher's Rebirth"
+/datum/heretic_knowledge/spell/moon_ringleader
+	name = "Ringleaders Rise"
 	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
 		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
 	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/ash_final,
+		/datum/heretic_knowledge/ultimate/moon_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/eldritch_coin,
 	)
@@ -169,7 +165,7 @@
 	cost = 1
 	route = PATH_MOON
 
-/datum/heretic_knowledge/ultimate/ash_final
+/datum/heretic_knowledge/ultimate/moon_final
 	name = "Ashlord's Rite"
 	desc = "The ascension ritual of the Path of Ash. \
 		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \

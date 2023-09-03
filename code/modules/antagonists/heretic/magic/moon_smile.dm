@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/pointed/moon_smile
 	name = "Smile of the moon"
-	desc = "This spell temporarily blinds, mutes, deafens and cunfuses a single target."
+	desc = "Lets you turn the gaze of the moon on someone \
+			temporarily blinding, muting, deafening and confusing a single target."
 	button_icon_state = "blind"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 
@@ -8,8 +9,9 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "S'M'L'E M'O"
+	invocation = "S`M`L`E M`O"
 	invocation_type = INVOCATION_SHOUT
+	garbled_invocation_prob = 0
 	spell_requirements = NONE
 
 	active_msg = "You prepare to let them see the true face..."
@@ -27,6 +29,8 @@
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU"))
 	cast_on.adjust_temp_blindness(5 SECONDS)
 	cast_on.set_eye_blur_if_lower(10 SECONDS)
-	cast_on.adjustEarDamage(0,5)
+	var/obj/item/organ/internal/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
+	ears?.adjustEarDamage(0,5)
 	cast_on.adjust_silence(5 SECONDS)
+	cast_on.adjust_confusion(10 SECONDS)
 	return TRUE
