@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	suicide_cry = "FOR THE FEDERATION!!"
 	preview_outfit = /datum/outfit/wizard
 	can_assign_self_objectives = TRUE
+	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -205,7 +206,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		"remaining" = GRAND_RITUAL_FINALE_COUNT - completed,
 		"next_area" = ritual ? initial(ritual.target_area.name) : "",
 	)
-	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 /datum/antagonist/wizard/ui_act(action, params)

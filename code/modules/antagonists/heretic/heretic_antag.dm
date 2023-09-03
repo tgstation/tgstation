@@ -24,6 +24,7 @@
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
 	can_assign_self_objectives = TRUE
+	default_custom_objective = "Turn a department into a testament for your dark knowledge."
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -83,7 +84,6 @@
 	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
-	data["can_change_objective"] = can_assign_self_objectives
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
@@ -112,6 +112,7 @@
 	var/list/data = list()
 
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 
 	for(var/path in researched_knowledge)
 		var/list/knowledge_data = list()

@@ -12,6 +12,7 @@
 	ui_name = "AntagInfoChangeling"
 	suicide_cry = "FOR THE HIVE!!"
 	can_assign_self_objectives = TRUE
+	default_custom_objective = "Consume the station's most valuable genomes."
 	/// Whether to give this changeling objectives or not
 	var/give_objectives = TRUE
 	/// Weather we assign objectives which compete with other lings
@@ -1003,7 +1004,6 @@
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()
-	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.

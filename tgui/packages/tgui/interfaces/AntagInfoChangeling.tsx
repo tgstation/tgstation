@@ -134,7 +134,7 @@ const IntroductionSection = (props, context) => {
             objectiveFollowup={
               <ReplaceObjectivesButton
                 can_change_objective={can_change_objective}
-                button_title={'Adapt Directives'}
+                button_title={'Evolve New Directives'}
                 button_colour={'green'}
               />
             }

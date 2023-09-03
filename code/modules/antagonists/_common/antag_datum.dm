@@ -140,6 +140,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/data = list()
 	data["antag_name"] = name
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 //button for antags to review their descriptions/info
