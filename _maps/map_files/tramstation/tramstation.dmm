@@ -16203,6 +16203,10 @@
 "dRN" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Captain Security shutters";
+	id = "CapSec"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/captain)
 "dSe" = (
@@ -28278,6 +28282,13 @@
 /obj/structure/bed/dogbed/renault,
 /obj/structure/cable,
 /mob/living/basic/pet/fox/renault,
+/obj/machinery/button/door/directional/south{
+	id = "aux_base_shutters";
+	name = "Public Shutters Control";
+	req_access = list("aux_base");
+	pixel_y = 20;
+	pixel_x = 22
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "hYn" = (
@@ -34591,7 +34602,9 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "jXU" = (
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/extinguisher_cabinet/directional/east{
+	pixel_x = 33
+	},
 /obj/structure/table/wood,
 /obj/item/storage/box/coffeepack{
 	pixel_x = 8;
@@ -59514,6 +59527,9 @@
 	pixel_x = -4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/secure/safe/directional/north{
+	name = "armory safe B"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "saj" = (
@@ -72014,6 +72030,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
+"vRA" = (
+/obj/machinery/flasher/portable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/secure/safe/directional/north{
+	name = "armory safe A"
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "vRE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -162783,7 +162807,7 @@ aac
 aaa
 aaa
 dEv
-gxf
+vRA
 gxf
 gxf
 dst
