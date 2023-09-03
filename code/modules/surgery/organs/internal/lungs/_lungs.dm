@@ -793,6 +793,9 @@
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+#define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
+#define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
+
 /obj/item/organ/internal/lungs/plasmaman
 	name = "plasma filter"
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
@@ -808,8 +811,8 @@
 	desc = "A plasma filter that look discolored, a result from smoking a lot."
 	icon_state = "lungs-plasma-smoker"
 
-	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75
-	healing_factor = STANDARD_ORGAN_HEALING * 0.75
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/slime
 	name = "vacuole"
@@ -828,8 +831,8 @@
 	desc = "A pair of lungs that look sickly, a result from smoking a lot."
 	icon_state = "lungs-smoker"
 
-	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75
-	healing_factor = STANDARD_ORGAN_HEALING * 0.75
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
@@ -957,8 +960,8 @@
 	desc = "A pair of exotic lungs that look pale and sickly, a result from smoking a lot."
 	icon_state = "lungs_ethereal-smoker"
 
-	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75
-	healing_factor = STANDARD_ORGAN_HEALING * 0.75
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/internal/lungs/ethereal/Initialize(mapload)
 	. = ..()
