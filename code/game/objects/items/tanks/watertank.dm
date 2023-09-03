@@ -253,6 +253,8 @@
 	var/obj/item/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
+	var/launcher_cost = 100
+	var/launcher_size = 4
 	COOLDOWN_DECLARE(resin_cooldown)
 
 /obj/item/extinguisher/mini/nozzle/Initialize(mapload)
@@ -302,15 +304,15 @@
 		if(Adj)
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
-		if(R.total_volume < 100)
+		if(R.total_volume < launcher_cost)
 			balloon_alert(user, "not enough water!")
 			return
 		if(!COOLDOWN_FINISHED(src, resin_cooldown))
 			balloon_alert(user, "still recharging!")
 			return
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
-		R.remove_any(100)
-		var/obj/effect/resin_container/resin = new (get_turf(src))
+		R.remove_any(launcher_cost)
+		var/obj/effect/resin_container/resin = new (get_turf(src), launcher_size)
 		user.log_message("used Resin Launcher", LOG_GAME)
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
@@ -361,10 +363,15 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pass_flags = PASSTABLE
 	anchored = TRUE
+	var/size = 0
+
+/obj/effect/resin_container/Initialize(mapload, size)
+	..()
+	src.size = size
 
 /obj/effect/resin_container/proc/Smoke()
 	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, holder = src, location = loc)
+	foaming.set_up(size, holder = src, location = loc)
 	foaming.start()
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
@@ -372,6 +379,66 @@
 // Please don't spacedrift thanks
 /obj/effect/resin_container/newtonian_move(direction, instant = FALSE, start_delay = 0)
 	return TRUE
+
+/obj/item/watertank/atmos/portable
+	name = "handheld firefighter tank"
+	desc = "A refrigerated and pressurized handheld tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
+	inhand_icon_state = "waterbackpackatmos"
+	icon_state = "waterbackpackatmos"
+	worn_icon_state = "waterbackpackatmos"
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = NONE
+	volume = 100
+	slowdown = 0
+
+/obj/item/watertank/atmos/portable/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/water, 100)
+
+/obj/item/watertank/atmos/portable/toggle_mister(mob/living/user)
+	if(!istype(user))
+		return
+
+	if(user.incapacitated())
+		return
+
+	if(QDELETED(noz))
+		noz = make_noz()
+		RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
+	if(noz in src)
+		//Detach the nozzle into the user's hands
+		if(!user.put_in_hands(noz))
+			to_chat(user, span_warning("You need a free hand to hold the mister!"))
+			return
+	else
+		//Remove from their hands and put back "into" the tank
+		remove_noz()
+
+/obj/item/watertank/atmos/portable/make_noz()
+	return new /obj/item/extinguisher/mini/nozzle/portable(src)
+
+/obj/item/watertank/atmos/portable/attack_hand(mob/user, list/modifiers)
+	if (user.is_holding(src))
+		toggle_mister(user)
+	else
+		return ..()
+
+/obj/item/watertank/atmos/portable/attack_self(mob/user)
+	if (user.is_holding(src))
+		toggle_mister(user)
+	else
+		return ..()
+
+/obj/item/extinguisher/mini/nozzle/portable
+	desc = "A heavy duty nozzle attached to a firefighter's backpack tank."
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "atmos_nozzle"
+	inhand_icon_state = "nozzleatmos"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
+	max_water = 100
+	launcher_cost = 40
+	launcher_size = 3
 
 #undef EXTINGUISHER
 #undef RESIN_LAUNCHER
