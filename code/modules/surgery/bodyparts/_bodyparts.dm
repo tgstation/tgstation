@@ -195,10 +195,10 @@
 	var/hp_percent_to_dismemberable = 0.8
 	/// If true, we will use [hp_percent_to_dismemberable] even if we are dismemberable via wounds. Useful for things with extreme wound resistance.
 	var/use_alternate_dismemberment_calc_even_if_mangleable = FALSE
-	/// If false, no wound that can be applied to us can mangle our flesh. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
-	var/any_existing_wound_can_mangle_our_flesh
-	/// If false, no wound that can be applied to us can mangle our bone. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
-	var/any_existing_wound_can_mangle_our_bone
+	/// If false, no wound that can be applied to us can mangle our exterior. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	var/any_existing_wound_can_mangle_our_exterior
+	/// If false, no wound that can be applied to us can mangle our interior. Used for determining if we should use [hp_percent_to_dismemberable] instead of normal dismemberment.
+	var/any_existing_wound_can_mangle_our_interior
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -500,7 +500,7 @@
 		var/has_exterior = ((bio_status & BIO_EXTERIOR))
 		var/has_interior = ((bio_status & BIO_INTERIOR))
 
-		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_FLESH)))
+		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 
 		// if we're bone only, all cutting attacks go straight to the bone
 		if(!has_exterior && has_interior)
@@ -513,7 +513,7 @@
 		else
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
-			if(has_interior && exterior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
+			if(has_interior && exterior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_INTERIOR) && sharpness)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
 					wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
@@ -586,8 +586,8 @@
 	var/has_exterior = ((bio_status & BIO_EXTERIOR))
 	var/has_interior = ((bio_status & BIO_INTERIOR))
 
-	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_FLESH)))
-	var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_BONE)))
+	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
+	var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))
 
 	return (exterior_ready_to_dismember && interior_ready_to_dismember)
 
@@ -599,7 +599,7 @@
 	var/bio_status = get_bio_state_status()
 
 	var/has_interior = ((bio_status & BIO_INTERIOR))
-	var/can_theoretically_be_dismembered_by_wound = (any_existing_wound_can_mangle_our_bone || (any_existing_wound_can_mangle_our_flesh && has_interior))
+	var/can_theoretically_be_dismembered_by_wound = (any_existing_wound_can_mangle_our_interior || (any_existing_wound_can_mangle_our_exterior && has_interior))
 
 	var/wound_dismemberable = dismemberable_by_wound()
 	var/ready_to_use_alternate_formula = (use_alternate_dismemberment_calc_even_if_mangleable || (!wound_dismemberable && !can_theoretically_be_dismembered_by_wound))
@@ -615,19 +615,19 @@
 /obj/item/bodypart/proc/update_wound_theory()
 	// We put this here so we dont increase init time by doing this all at once on initialization
 	// Effectively, we "lazy load"
-	if (isnull(any_existing_wound_can_mangle_our_bone) || isnull(any_existing_wound_can_mangle_our_flesh))
-		any_existing_wound_can_mangle_our_bone = FALSE
-		any_existing_wound_can_mangle_our_flesh = FALSE
+	if (isnull(any_existing_wound_can_mangle_our_interior) || isnull(any_existing_wound_can_mangle_our_exterior))
+		any_existing_wound_can_mangle_our_interior = FALSE
+		any_existing_wound_can_mangle_our_exterior = FALSE
 		for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
 			if (!pregen_data.can_be_applied_to(src, random_roll = TRUE)) // we only consider randoms because non-randoms are usually really specific
 				continue
-			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_FLESH)
-				any_existing_wound_can_mangle_our_flesh = TRUE
-			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_BONE)
-				any_existing_wound_can_mangle_our_bone = TRUE
+			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_EXTERIOR)
+				any_existing_wound_can_mangle_our_exterior = TRUE
+			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_INTERIOR)
+				any_existing_wound_can_mangle_our_interior = TRUE
 
-			if (any_existing_wound_can_mangle_our_bone && any_existing_wound_can_mangle_our_flesh)
+			if (any_existing_wound_can_mangle_our_interior && any_existing_wound_can_mangle_our_exterior)
 				break
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.

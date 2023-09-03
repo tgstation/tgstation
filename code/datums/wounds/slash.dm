@@ -376,7 +376,7 @@
 	demotes_to = /datum/wound/slash/flesh/severe
 	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
 	scar_keyword = "slashcritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
 
 /datum/wound_pregen_data/flesh_slash/avulsion
 	abstract = FALSE

@@ -13,7 +13,7 @@
 	var/has_exterior = ((bio_status & BIO_EXTERIOR))
 	var/has_interior = ((bio_status & BIO_INTERIOR))
 
-	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_FLESH)))
+	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
 
 	// if we're bone only, all cutting attacks go straight to the bone
 	if(!has_exterior && has_interior)
@@ -26,7 +26,7 @@
 	else
 		// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 		// So a big sharp weapon is still all you need to destroy a limb
-		if(has_interior && exterior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
+		if(has_interior && exterior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_INTERIOR) && sharpness)
 			if(wounding_type == WOUND_SLASH && !easy_dismember)
 				wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
 			if(wounding_type == WOUND_PIERCE && !easy_dismember)

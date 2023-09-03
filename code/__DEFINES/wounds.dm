@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 /// Has flesh - allows the victim to suffer fleshy slash pierce and burn wounds
 #define BIO_FLESH (1<<1)
 /// Self explanatory
-#define BIO_FLESH_BONE (BIO_BONE | BIO_FLESH)
+#define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
 /// Has metal - allows the victim to suffer robotic blunt and burn wounds
 #define BIO_METAL (1<<2)
 /// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
@@ -84,20 +84,24 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_JOINTED (1<<5)
 /// Standard humanoid - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed
 #define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
+/// Standard humanoid limbs - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated
+#define BIO_STANDARD_JOINTED (BIO_STANDARD|BIO_JOINTED)
 
-// "Where" a specific "bio" feature is within a given limb
+// "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones
 // Exterior is soft shit, targetted by slashes and pierces (usually), protects exterior
-// Yes, it makes no sense
-/// The given biostate is on the "interior" of the limb - hard shit, protected by interior
+// A limb needs both mangled interior and exterior to be dismembered, but slash/pierce must mangle exterior to attack the interior
+// Not having exterior/interior counts as mangled exterior/interior for the purposes of dismemberment
+/// The given biostate is on the "interior" of the limb - hard shit, protected by exterior
 #define BIO_INTERIOR (1<<0)
-/// The given biostate is on the "exterior" of the limb - soft shit, protects exterior
+/// The given biostate is on the "exterior" of the limb - soft shit, protects interior
 #define BIO_EXTERIOR (1<<1)
 #define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
 
 /// A assoc list of BIO_ define to EXTERIOR/INTERIOR defines.
 /// This is where the interior/exterior state of a given biostate is set.
 /// Note that not all biostates are guaranteed to be one of these - and in fact, many are not
+/// IMPORTANT NOTE: All keys are stored as text and must be converted via text2num
 GLOBAL_LIST_INIT(bio_state_states, list(
 	"[BIO_WIRED]" = BIO_EXTERIOR,
 	"[BIO_METAL]" = BIO_INTERIOR,
@@ -175,6 +179,7 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 
 // Series -> severity -> specific type -> type -> weight
+/// Generates [wound_series_collections] by iterating through all pregen_data. Refer to the mentioned list for documentation
 /proc/generate_wound_series_collection()
 	RETURN_TYPE(/list/datum/wound)
 
@@ -244,6 +249,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 /**
  * Searches through all wounds for any of proper type, series, specific type, and biostate, and then returns a single one via pickweight.
  * Is able to discern between, say, a flesh slash wound, and a metallic slash wound, and will return the respective one for the provided limb.
+ *
  * Args:
  * * list/wound_types: A list of wound_types. Only wounds that accept these wound types will be considered.
  * * obj/item/bodypart/part: The limb we are considering. Extremely important for biostates.
@@ -257,7 +263,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
  * * care_about_existing_wounds = TRUE: If we iterate over wounds to see if any are above or at a given wounds severity, and disregard it if any are. Useful for simply getting a path and not instantiating.
  *
  * Returns:
- * A randomly picked wound typepath meeting all the above criteria, or null if there none met them.
+ * A randomly picked wound typepath meeting all the above criteria and being applicable to the part's biotype - or null if there were none.
  */
 /proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
 
@@ -299,7 +305,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 			if (!pregen_data.can_be_applied_to(part, wound_types, random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
 				wound_typepaths_copy -= iterated_path
 
-		return pick_weight(wound_typepaths_copy)
+		return pick_weight(wound_typepaths_copy) // we found our winners!
 
 /// Assoc list of biotype -> ideal scar file to be used and grab stuff from.
 GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
@@ -333,20 +339,21 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 
 
 // ~mangling defines
-// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (bone only creatures just need the second):
-// 1. Flesh is mangled: A critical slash or pierce wound on that limb
-// 2. Bone is mangled: At least a severe bone wound on that limb
-// see [/obj/item/bodypart/proc/get_mangled_state] for more information
+// With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (exterior/bone only creatures just need the second):
+// 1. Exterior is mangled: A critical slash or pierce wound on that limb
+// 2. Interior is mangled: At least a severe bone wound on that limb
+// Lack of exterior or interior count as mangled exterior/interior respectively
+// see [/obj/item/bodypart/proc/get_mangled_state] for more information, as well as GLOB.bio_state_states
 #define BODYPART_MANGLED_NONE NONE
-#define BODYPART_MANGLED_BONE (1<<0)
-#define BODYPART_MANGLED_FLESH (1<<1)
-#define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_BONE | BODYPART_MANGLED_FLESH)
+#define BODYPART_MANGLED_INTERIOR (1<<0)
+#define BODYPART_MANGLED_EXTERIOR (1<<1)
+#define BODYPART_MANGLED_BOTH (BODYPART_MANGLED_INTERIOR | BODYPART_MANGLED_EXTERIOR)
 
 // ~wound flag defines
-/// If having this wound counts as mangled flesh for dismemberment
-#define MANGLES_FLESH (1<<0)
-/// If having this wound counts as mangled bone for dismemberment
-#define MANGLES_BONE (1<<1)
+/// If having this wound counts as mangled exterior for dismemberment
+#define MANGLES_EXTERIOR (1<<0)
+/// If having this wound counts as mangled interior for dismemberment
+#define MANGLES_INTERIOR (1<<1)
 /// If this wound marks the limb as being allowed to have gauze applied
 #define ACCEPTS_GAUZE (1<<2)
 

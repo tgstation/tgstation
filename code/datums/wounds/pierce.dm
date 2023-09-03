@@ -247,7 +247,7 @@
 	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
 
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE
