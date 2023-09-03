@@ -85,12 +85,12 @@
 			continue // nothing to see here
 
 		// if we don't have tool behaviour then just record the overlay
-		if(!length(surgery_tool.all_tool_behaviours))
+		if(!length(surgery_tool.get_all_tool_behaviors()))
 			surgery_overlays[surgery_tool] = actual_overlay
 			continue
 
 		// if we have at least one tool behaviour, check if we already recorded a faster one
-		for (var/surgery_tool_type in surgery_tool.all_tool_behaviours)
+		for (var/surgery_tool_type in surgery_tool.get_all_tool_behaviors())
 			var/highest_speed = LAZYACCESS(recorded_tool_speeds, surgery_tool_type) || INFINITY // bigger number = slower
 			if(surgery_tool.toolspeed > highest_speed)
 				continue
