@@ -14,11 +14,6 @@
 
 	active_msg = "You prepare to let them see the true face..."
 
-	/// The amount of blind to apply
-	var/eye_blind_duration = 5 SECONDS
-	/// The amount of blurriness to apply
-	var/eye_blur_duration = 10 SECONDS
-
 /datum/action/cooldown/spell/pointed/moon_smile/is_valid_target(atom/cast_on)
 	return ..() && ishuman(cast_on)
 
@@ -30,8 +25,8 @@
 		return FALSE
 
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU"))
-	cast_on.adjust_temp_blindness(eye_blind_duration)
-	cast_on.set_eye_blur_if_lower(eye_blur_duration)
+	cast_on.adjust_temp_blindness(5 SECONDS)
+	cast_on.set_eye_blur_if_lower(10 SECONDS)
 	cast_on.adjustEarDamage(0,5)
 	cast_on.adjust_silence(5 SECONDS)
 	return TRUE
