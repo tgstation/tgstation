@@ -2775,6 +2775,7 @@
 #include "code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_moodlets.dm"
 #include "code\modules\antagonists\heretic\magic\aggressive_spread.dm"
 #include "code\modules\antagonists\heretic\magic\apetravulnera.dm"
+#include "code\modules\antagonists\heretic\magic\ascended_shapeshift.dm"
 #include "code\modules\antagonists\heretic\magic\ash_ascension.dm"
 #include "code\modules\antagonists\heretic\magic\ash_jaunt.dm"
 #include "code\modules\antagonists\heretic\magic\blood_cleave.dm"
