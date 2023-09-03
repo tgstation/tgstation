@@ -135,3 +135,24 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+
+/obj/item/gun/energy/recharge/fisher
+	name = "\improper SC/FISHER lightbreaker"
+	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that feels like a sneeze on everything that isn't light fixtures. \
+	The fired bolts have a maximum range of seven paces from the shooter's position, but can pass through machinery that would normally be in the way. It is also capable of firing twice \
+	before needing to recharge. Unfortunately, the sights on it are pretty bad, and demands precision from the user."
+	icon_state = "fisher"
+	base_icon_state = "fisher"
+	dry_fire_sound_volume = 10
+	w_class = WEIGHT_CLASS_SMALL
+	holds_charge = TRUE
+	suppressed = TRUE
+	recharge_time = 1.2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/fisher)
+
+/obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
+	. = ..()
+	. += "The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
+	attenuated to launch kinetic bolts that resonate with glass in light fixtures - and <i>only</i> light fixtures. While some would argue that this is \
+	a really terrible design choice, others argue that it is very funny to be able to shoot lightbulbs out. Caveat emptor."
+	return .
