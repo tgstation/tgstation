@@ -34,8 +34,8 @@
 	/// If this wound can generate a scar.
 	var/can_scar = TRUE
 
-	/// The file we take our scar descriptions from.
-	var/scar_file
+	/// The default file we take our scar descriptions from, if we fail to get the ideal file.
+	var/default_scar_file
 
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
@@ -48,8 +48,6 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
-	var/wound_series
 
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
@@ -76,10 +74,10 @@
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
 
-	/// The minimum we need to roll on [/obj/item/bodypart/proc/check_wounding] to begin suffering this wound, see check_wounding_mods() for more
-	var/threshold_minimum
 	/// How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage
 	var/threshold_penalty
+	/// How much having this wound will add to all future check_wounding() rolls on this limb, but only for wounds of its own series
+	var/series_threshold_penalty = 0
 	/// If we need to process each life tick
 	var/processes = FALSE
 
@@ -90,8 +88,11 @@
 	var/status_effect_type
 	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
 	var/datum/surgery/attached_surgery
-	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
+	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * [base_xadone_progress_to_qdel] power
 	var/cryo_progress
+
+	/// The base amount of [cryo_progress] required to have ourselves fully healed by cryo. Multiplied against severity.
+	var/base_xadone_progress_to_qdel = 33
 
 	/// What kind of scars this wound will create description wise once healed
 	var/scar_keyword = "generic"
@@ -102,14 +103,6 @@
 
 	/// What flags apply to this wound
 	var/wound_flags = (ACCEPTS_GAUZE)
-
-	/// If this wound typepath is abstract and only serves to be extended apon. Cannot be initialized, will not appear in global lists.
-	var/abstract = TRUE
-
-	var/specific_type = WOUND_SPECIFIC_TYPE_BASIC
-
-	var/compete_for_wounding = TRUE
-	var/competition_mode = WOUND_COMPETITION_SUBMIT
 
 	var/unique_id
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/actionspeed_mod
@@ -176,7 +169,7 @@
 		var/msg = span_danger("[victim]'s [limb.plaintext_zone] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
-		if(severity != WOUND_SEVERITY_MODERATE)
+		if(severity > WOUND_SEVERITY_MODERATE)
 			msg = "<b>[msg]</b>"
 			vis_dist = DEFAULT_MESSAGE_RANGE
 
@@ -232,15 +225,16 @@
 	if(victim)
 		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
 		RegisterSignals(victim, list(COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB), PROC_REF(add_or_remove_actionspeed_mod))
-		RegisterSignals(victim, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB), PROC_REF(update_limp))
 
-		start_limping_if_we_should() // the status effect already handles removing itself
-		add_or_remove_actionspeed_mod()
+		if (limb)
+			start_limping_if_we_should() // the status effect already handles removing itself
+			add_or_remove_actionspeed_mod()
 
 /datum/wound/proc/generate_actionspeed_modifier()
 	RETURN_TYPE(/datum/actionspeed_modifier)
 
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
+	new_modifier.multiplicative_slowdown = get_effective_actionspeed_modifier()
 	return new_modifier
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()
@@ -250,8 +244,8 @@
 		victim.remove_actionspeed_modifier(actionspeed_mod)
 
 /datum/wound/proc/start_limping_if_we_should()
-	if (limp_slowdown > 0 && limp_chance > 0)
-		victim.add_status_effect(/datum/status_effect/limp)
+	if ((limb.body_zone == BODY_ZONE_L_LEG || limb.body_zone == BODY_ZONE_R_LEG) && limp_slowdown > 0 && limp_chance > 0)
+		victim.apply_status_effect(/datum/status_effect/limp)
 
 /datum/wound/proc/generate_unique_id()
 	return REF(src) // unique, cannot change, a perfect id
@@ -321,9 +315,14 @@
 
 	if (limb)
 		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
-		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
+		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(gauze_state_changed))
 		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
+		if (victim)
+			start_limping_if_we_should() // the status effect already handles removing itself
+			add_or_remove_actionspeed_mod()
+
 		update_inefficiencies()
 
 /// Proc called to change the variable `disabling` and react to the event.
@@ -350,13 +349,31 @@
 		update_actionspeed()
 
 /datum/wound/proc/update_actionspeed()
-	actionspeed_mod.multiplicative_slowdown = interaction_efficiency_penalty
+	actionspeed_mod.multiplicative_slowdown = get_effective_actionspeed_modifier()
 
 	victim.update_actionspeed()
 
-/datum/wound/proc/update_inefficiencies()
+/datum/wound/proc/get_effective_actionspeed_modifier()
+	return interaction_efficiency_penalty - 1
+
+/datum/wound/proc/get_action_delay_mult()
+	SHOULD_BE_PURE(TRUE)
+
+	return interaction_efficiency_penalty
+
+
+/datum/wound/proc/get_action_delay_increment()
+	SHOULD_BE_PURE(TRUE)
+
+	return 0
+
+/datum/wound/proc/gauze_state_changed()
 	SIGNAL_HANDLER
 
+	if (wound_flags & ACCEPTS_GAUZE)
+		update_inefficiencies()
+
+/datum/wound/proc/update_inefficiencies()
 	if (wound_flags & ACCEPTS_GAUZE)
 		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 			if(limb.current_gauze?.splint_factor)
@@ -365,10 +382,9 @@
 			else
 				limp_slowdown = initial(limp_slowdown)
 				limp_chance = initial(limp_chance)
-			//victim.apply_status_effect(/datum/status_effect/limp)
 		else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			if(limb.current_gauze?.splint_factor)
-				set_interaction_efficiency_penalty(1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor))
+				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * limb.current_gauze.splint_factor))
 			else
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 
@@ -432,7 +448,7 @@
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
 	// check if we have a valid treatable tool
-	if(potential_treater.tool_behaviour in treatable_tool)
+	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE
 	if(TOOL_CAUTERY in treatable_tools && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		return TRUE
@@ -475,8 +491,13 @@
 	return handle_xadone_progress()
 
 /datum/wound/proc/handle_xadone_progress()
-	if(cryo_progress > 33 * severity)
+	if(cryo_progress > get_xadone_progress_to_qdel())
 		qdel(src)
+
+/datum/wound/proc/get_xadone_progress_to_qdel()
+	SHOULD_BE_PURE(TRUE)
+
+	return base_xadone_progress_to_qdel * severity
 
 /// When synthflesh is applied to the victim, we call this. No sense in setting up an entire chem reaction system for wounds when we only care for a few chems. Probably will change in the future
 /datum/wound/proc/on_synthflesh(power)
@@ -597,7 +618,17 @@
 
 /// Getter proc for our scar_file, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
-	return scar_file
+	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
+	// basically we iterate over biotypes until we find the one we want
+	// fleshy burns will look for flesh then bone
+	// dislocations will look for flesh, then bone, then metal
+	var/file = default_scar_file
+	for (var/biotype as anything in pregen_data.scar_priorities)
+		if (scarred_limb.biological_state & text2num(biotype))
+			file = GLOB.biotypes_to_scar_file[biotype]
+			break
+
+	return file
 
 /// Returns what string is displayed when a limb that has sustained this wound is examined
 /// (This is examining the LIMB ITSELF, when it's not attached to someone.)
@@ -613,9 +644,7 @@
 	if (WOUND_BLUNT in pregen_data.required_wound_types && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
-#undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS
-
 /datum/wound/proc/get_pregen_data()
-	RETURN_TYPE(/datum/wound_pregen_data)
-
 	return GLOB.all_wound_pregen_data[type]
+
+#undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS

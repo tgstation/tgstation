@@ -179,10 +179,19 @@
 	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
-	var/datum/wound/severe_wound_type = get_corresponding_wound_type(list(WOUND_BLUNT), head, WOUND_SEVERITY_SEVERE)
-	var/datum/wound/critical_wound_type = get_corresponding_wound_type(list(WOUND_BLUNT), head, WOUND_SEVERITY_CRITICAL)
+	var/datum/wound/severe_wound_type = get_corresponding_wound_type(list(WOUND_BLUNT), head, WOUND_SEVERITY_SEVERE, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
+	var/datum/wound/critical_wound_type = get_corresponding_wound_type(list(WOUND_BLUNT), head, WOUND_SEVERITY_CRITICAL, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
 
-	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10), attacking_item = src)
+	var/datum/wound_pregen_data/severe_pregen_data = GLOB.all_wound_pregen_data[severe_wound_type]
+	var/datum/wound_pregen_data/critical_pregen_data = GLOB.all_wound_pregen_data[critical_wound_type]
+
+	var/min_wound_unsanitized = severe_pregen_data?.threshold_minimum
+	var/max_wound_unsanitized = critical_pregen_data?.threshold_minimum
+
+	var/wound_min = (min_wound_unsanitized ? min_wound_unsanitized : 30)
+	var/wound_max = (max_wound_unsanitized ? max_wound_unsanitized + 10 : 50)
+
+	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(wound_min, wound_max), attacking_item = src)
 	target.visible_message(
 		span_danger("[src] pierces through [target]'s skull, horribly mutilating their eyes!"),
 		span_userdanger("Something penetrates your skull, horribly mutilating your eyes! Holy fuck!"),

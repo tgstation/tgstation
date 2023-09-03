@@ -497,16 +497,13 @@
 
 		var/bio_status = get_bio_state_status()
 
-		var/has_exterior = (bio_status & BIO_EXTERIOR)
-		var/has_interior = (bio_status & BIO_INTERIOR)
+		var/has_exterior = ((bio_status & BIO_EXTERIOR))
+		var/has_interior = ((bio_status & BIO_INTERIOR))
 
-		var/can_theoretically_be_dismembered = (any_existing_wound_can_mangle_our_bone || (any_existing_wound_can_mangle_our_flesh && !has_exterior))
-
-		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_BONE) == BODYPART_MANGLED_BONE))
-		var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_FLESH) == BODYPART_MANGLED_FLESH))
+		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_FLESH)))
 
 		// if we're bone only, all cutting attacks go straight to the bone
-		if(!has_interior && has_exterior)
+		if(!has_exterior && has_interior)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.6)
@@ -516,15 +513,13 @@
 		else
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
 			// So a big sharp weapon is still all you need to destroy a limb
-			if(has_exterior && interior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
+			if(has_interior && exterior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
 					wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
-		if (dismemberable_by_wound() && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
-			return
-		else if (dismemberable_alternate() && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+		if ((dismemberable_by_wound() || dismemberable_alternate()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
@@ -561,7 +556,7 @@
 /obj/item/bodypart/proc/get_bio_state_status()
 	SHOULD_BE_PURE(TRUE)
 
-	var/flag = NONE
+	var/bio_status = NONE
 
 	for (var/state as anything in GLOB.bio_state_states)
 		var/flag = text2num(state)
@@ -570,27 +565,27 @@
 
 		var/value = GLOB.bio_state_states[state]
 		if (value & BIO_EXTERIOR)
-			flag |= BIO_EXTERIOR
+			bio_status |= BIO_EXTERIOR
 		if (value & BIO_INTERIOR)
-			flag |= BIO_INTERIOR
+			bio_status |= BIO_INTERIOR
 
-		if (flag & BIO_EXTERIOR_AND_INTERIOR)
+		if ((bio_status & BIO_EXTERIOR_AND_INTERIOR) == BIO_EXTERIOR_AND_INTERIOR)
 			break
 
-	return flag
+	return bio_status
 
 /obj/item/bodypart/proc/dismemberable_by_wound()
 	SHOULD_BE_PURE(TRUE)
 
-	var/mangled_state = hit_bodypart.get_mangled_state()
+	var/mangled_state = get_mangled_state()
 
-	var/bio_status = hit_bodypart.get_bio_state_status()
+	var/bio_status = get_bio_state_status()
 
-	var/has_exterior = (bio_status & BIO_EXTERIOR)
-	var/has_interior = (bio_status & BIO_INTERIOR)
+	var/has_exterior = ((bio_status & BIO_EXTERIOR))
+	var/has_interior = ((bio_status & BIO_INTERIOR))
 
-	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_BONE) == BODYPART_MANGLED_BONE))
-	var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_FLESH) == BODYPART_MANGLED_FLESH))
+	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_FLESH)))
+	var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_BONE)))
 
 	return (exterior_ready_to_dismember && interior_ready_to_dismember)
 
@@ -598,13 +593,15 @@
 
 	update_wound_theory()
 
+	var/bio_status = get_bio_state_status()
+
+	var/has_interior = ((bio_status & BIO_INTERIOR))
 	var/can_theoretically_be_dismembered_by_wound = (any_existing_wound_can_mangle_our_bone || (any_existing_wound_can_mangle_our_flesh && has_interior))
 
 	var/wound_dismemberable = dismemberable_by_wound()
 	var/ready_to_use_alternate_formula = (use_alternate_dismemberment_calc_even_if_mangleable || (!wound_dismemberable && !can_theoretically_be_dismembered_by_wound))
 
 	if (ready_to_use_alternate_formula)
-		var/total_damage = (get_damage() / max_damage)
 		var/percent_to_total_max = (get_damage() / max_damage)
 		if (percent_to_total_max >= hp_percent_to_dismemberable)
 			return TRUE
@@ -612,7 +609,7 @@
 	return FALSE
 
 /obj/item/bodypart/proc/update_wound_theory()
-		// We put this here so we dont increase init time by doing this all at once on initialization
+	// We put this here so we dont increase init time by doing this all at once on initialization
 	// Effectively, we "lazy load"
 	if (isnull(any_existing_wound_can_mangle_our_bone) || isnull(any_existing_wound_can_mangle_our_flesh))
 		any_existing_wound_can_mangle_our_bone = FALSE

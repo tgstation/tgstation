@@ -169,13 +169,23 @@
 	var/mob/living/carbon/C = owner
 
 	if(C.get_active_hand() == linked_limb)
-		return linked_wound.interaction_efficiency_penalty
+		return linked_wound.get_action_delay_mult()
 
-	return 1
+	return ..()
+
+/datum/status_effect/wound/nextmove_adjust()
+	var/mob/living/carbon/C = owner
+
+	if(C.get_active_hand() == linked_limb)
+		return linked_wound.get_action_delay_increment()
+
+	return ..()
+
 
 // bones
 /datum/status_effect/wound/blunt/bone
 
+/*
 /datum/status_effect/wound/blunt/bone/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
@@ -194,7 +204,7 @@
 	if(wound_owner.get_active_hand() == linked_limb)
 		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
 	else
-		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
+		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)*/
 
 // blunt
 /datum/status_effect/wound/blunt/bone/moderate

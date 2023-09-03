@@ -13,6 +13,8 @@
 	required_wound_types = list(WOUND_SLASH)
 	required_limb_biostate = BIO_FLESH
 
+	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
+
 /datum/wound/slash/flesh
 	name = "Slashing (Cut) Flesh Wound"
 	processes = TRUE
@@ -22,9 +24,7 @@
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE)
 
-	scar_file = FLESH_SCAR_FILE
-
-	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED
+	default_scar_file = FLESH_SCAR_FILE
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -319,12 +319,9 @@
 	initial_flow = 2
 	minimum_flow = 0.5
 	clot_rate = 0.05
-	threshold_minimum = 20
 	threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/slash/flesh/moderate
 	scar_keyword = "slashmoderate"
-
-	abstract = FALSE
 
 /datum/wound/slash/flesh/moderate/update_descriptions()
 	if(!limb.can_bleed())
@@ -334,6 +331,8 @@
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/moderate
+
+	threshold_minimum = 20
 
 /datum/wound/slash/flesh/severe
 	name = "Open Laceration"
@@ -346,18 +345,17 @@
 	initial_flow = 3.25
 	minimum_flow = 2.75
 	clot_rate = 0.03
-	threshold_minimum = 50
 	threshold_penalty = 25
 	demotes_to = /datum/wound/slash/flesh/moderate
 	status_effect_type = /datum/status_effect/wound/slash/flesh/severe
 	scar_keyword = "slashsevere"
 
-	abstract = FALSE
-
 /datum/wound_pregen_data/flesh_slash/laceration
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/severe
+
+	threshold_minimum = 50
 
 /datum/wound/slash/flesh/severe/update_descriptions()
 	if(!limb.can_bleed())
@@ -374,19 +372,18 @@
 	initial_flow = 4
 	minimum_flow = 3.85
 	clot_rate = -0.015 // critical cuts actively get worse instead of better
-	threshold_minimum = 80
 	threshold_penalty = 40
 	demotes_to = /datum/wound/slash/flesh/severe
 	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
 	scar_keyword = "slashcritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
 
-	abstract = FALSE
-
 /datum/wound_pregen_data/flesh_slash/avulsion
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/critical
+
+	threshold_minimum = 80
 
 /datum/wound/slash/flesh/moderate/many_cuts
 	name = "Numerous Small Slashes"
@@ -394,7 +391,7 @@
 	examine_desc = "has a ton of small cuts"
 	occur_text = "is cut numerous times, leaving many small slashes."
 
-/datum/wound_pregen_data/flesh_slash/cuts
+/datum/wound_pregen_data/flesh_slash/abrasion/cuts
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 
@@ -410,7 +407,7 @@
 	if(!limb.can_bleed())
 		occur_text = "is ruptured"
 
-/datum/wound_pregen_data/flesh_slash/cleave
+/datum/wound_pregen_data/flesh_slash/avulsion/clear
 	abstract = FALSE
 	can_be_randomly_generated = FALSE
 

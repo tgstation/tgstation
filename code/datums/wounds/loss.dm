@@ -3,9 +3,13 @@
 
 	wound_path_to_generate = /datum/wound/loss
 	required_limb_biostate = NONE
-	check_for_any = TRUE
+	require_any_biostate = TRUE
 
 	required_wound_types = list(WOUND_ALL)
+
+	wound_series = WOUND_SERIES_LOSS_BASIC
+
+	threshold_minimum = WOUND_DISMEMBER_OUTRIGHT_THRESH // not actually used since dismembering is handled differently, but may as well assign it since we got it
 
 /datum/wound/loss
 	name = "Dismemberment Wound"
@@ -13,7 +17,6 @@
 
 	sound_effect = 'sound/effects/dismember.ogg'
 	severity = WOUND_SEVERITY_LOSS
-	threshold_minimum = WOUND_DISMEMBER_OUTRIGHT_THRESH // not actually used since dismembering is handled differently, but may as well assign it since we got it
 	status_effect_type = null
 	scar_keyword = "dismember"
 	wound_flags = null
@@ -21,10 +24,6 @@
 
 	/// The wound_type of the attack that caused us. Used to generate the description of our scar. Currently unused, but primarily exists in case non-biological wounds are added.
 	var/loss_wound_type
-
-	wound_series = WOUND_SERIES_LOSS_BASIC
-
-	abstract = FALSE
 
 /// Our special proc for our special dismembering, the wounding type only matters for what text we have
 /datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type = WOUND_SLASH, outright = FALSE, attack_direction)
@@ -70,17 +69,9 @@
 			if(WOUND_BURN)
 				occur_text = "is outright incinerated, falling to dust!"
 	else
-		var/bone_text
-		if (biological_state & BIO_BONE)
-			bone_text = "bone"
-		else if (biological_state & BIO_METAL)
-			bone_text = "metal"
+		var/bone_text = get_internal_description()
 
-		var/tissue_text
-		if (biological_state & BIO_FLESH)
-			tissue_text = "flesh"
-		else if (biological_state & BIO_WIRED)
-			tissue_text = "wire"
+		var/tissue_text = get_external_description()
 
 		switch(wounding_type)
 			if(WOUND_BLUNT)
@@ -94,10 +85,18 @@
 
 	return occur_text
 
-/datum/wound/loss/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
-	if (scarred_limb.biological_state & BIO_FLESH)
-		return FLESH_SCAR_FILE
-	if (scarred_limb.biological_state & BIO_BONE)
-		return BONE_SCAR_FILE
+/obj/item/bodypart/proc/get_external_description()
+	if (biological_state & BIO_FLESH)
+		return "flesh"
+	if (biological_state & BIO_WIRED)
+		return "wiring"
 
-	return ..()
+	return "error"
+
+/obj/item/bodypart/proc/get_internal_description()
+	if (biological_state & BIO_BONE)
+		return "bone"
+	if (biological_state & BIO_METAL)
+		return "metal"
+
+	return "error"

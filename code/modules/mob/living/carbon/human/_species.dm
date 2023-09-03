@@ -1669,7 +1669,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
 	var/datum/wound/existing_burn
 	for (var/datum/wound/iterated_wound as anything in bodypart.wounds)
-		if (iterated_wound.wound_series in GLOB.wound_types_to_series[WOUND_BURN][WOUND_SERIES_TYPE_BASIC])
+		var/datum/wound_pregen_data/pregen_data = iterated_wound.get_pregen_data()
+		if (pregen_data.wound_series in GLOB.wound_types_to_series[WOUND_BURN][WOUND_SERIES_TYPE_BASIC])
 			existing_burn = iterated_wound
 			break
 	// If we have an existing burn try to upgrade it

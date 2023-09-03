@@ -82,20 +82,20 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
 
 // "Where" a specific "bio" feature is within a given limb
-// Exterior is hard shit, the last line, shit like bones
-// Interior is soft shit, targetted by slashes and pierces (usually), protects exterior
+// Interior is hard shit, the last line, shit like bones
+// Exterior is soft shit, targetted by slashes and pierces (usually), protects exterior
 // Yes, it makes no sense
-/// The given biostate is on the "exterior" of the limb - hard shit, protected by interior
-#define BIO_EXTERIOR (1<<0)
-/// The given biostate is on the "interior" of the limb - soft shit, protects exterior
-#define BIO_INTERIOR (1<<1)
+/// The given biostate is on the "interior" of the limb - hard shit, protected by interior
+#define BIO_INTERIOR (1<<0)
+/// The given biostate is on the "exterior" of the limb - soft shit, protects exterior
+#define BIO_EXTERIOR (1<<1)
 #define BIO_EXTERIOR_AND_INTERIOR (BIO_EXTERIOR|BIO_INTERIOR)
 
 GLOBAL_LIST_INIT(bio_state_states, list(
-	"[BIO_WIRED]" = BIO_INTERIOR,
-	"[BIO_METAL]" = BIO_EXTERIOR,
-	"[BIO_FLESH]" = BIO_INTERIOR,
-	"[BIO_BONE]" = BIO_EXTERIOR,
+	"[BIO_WIRED]" = BIO_EXTERIOR,
+	"[BIO_METAL]" = BIO_INTERIOR,
+	"[BIO_FLESH]" = BIO_EXTERIOR,
+	"[BIO_BONE]" = BIO_INTERIOR,
 ))
 
 // Wound series
@@ -152,12 +152,14 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 	var/list/datum/wound/wound_collection = list()
 
 	for (var/datum/wound/wound_type as anything in typecacheof(/datum/wound, FALSE, TRUE))
-		if (initial(wound_type.abstract))
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+		if (!pregen_data)
 			continue
 
-		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+		if (pregen_data.abstract)
+			continue
 
-		var/series = initial(wound_type.wound_series)
+		var/series = pregen_data.wound_series
 		var/list/datum/wound/series_list = wound_collection[series]
 		if (isnull(series_list))
 			wound_collection[series] = list()
@@ -169,7 +171,7 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 			series_list[severity] = list()
 			severity_list = series_list[severity]
 
-		var/specific_type = initial(wound_type.specific_type)
+		var/specific_type = pregen_data.specific_type
 		var/list/datum/specific_type_list = severity_list[specific_type]
 		if (isnull(specific_type_list))
 			severity_list[specific_type] = list()
@@ -212,7 +214,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 #define WOUND_PICK_HIGHEST_SEVERITY 1
 #define WOUND_PICK_LOWEST_SEVERITY 2
 
-/proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE)
+/proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
 
 	var/list/wound_type_list = list()
 	for (var/wound_type as anything in wound_types)
@@ -249,10 +251,16 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 		var/list/datum/wound/wound_typepaths_copy = wound_typepaths.Copy()
 		for (var/datum/wound/iterated_path as anything in wound_typepaths_copy)
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
-			if (!pregen_data.can_be_applied_to(part, wound_types, random_roll))
+			if (!pregen_data.can_be_applied_to(part, wound_types, random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
 				wound_typepaths_copy -= iterated_path
 
 		return pick_weight(wound_typepaths_copy)
+
+/// Assoc list of biotype -> ideal scar file to be used and grab stuff from.
+GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
+	"[BIO_FLESH]" = FLESH_SCAR_FILE,
+	"[BIO_BONE]" = BONE_SCAR_FILE
+))
 
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse

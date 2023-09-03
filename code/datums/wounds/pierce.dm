@@ -13,9 +13,7 @@
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE)
 
-	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
-
-	scar_file = FLESH_SCAR_FILE
+	default_scar_file = FLESH_SCAR_FILE
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -174,6 +172,8 @@
 	required_limb_biostate = (BIO_FLESH)
 	required_wound_types = list(WOUND_PIERCE)
 
+	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
+
 /datum/wound/pierce/get_limb_examine_description()
 	return span_warning("The flesh on this limb appears badly perforated.")
 
@@ -189,17 +189,16 @@
 	gauzed_clot_rate = 0.8
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
-	threshold_minimum = 30
 	threshold_penalty = 20
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
-
-	abstract = FALSE
 
 /datum/wound_pregen_data/flesh_pierce/breakage
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/moderate
+
+	threshold_minimum = 30
 
 /datum/wound/pierce/bleed/moderate/update_descriptions()
 	if(!limb.can_bleed())
@@ -218,17 +217,16 @@
 	gauzed_clot_rate = 0.6
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
-	threshold_minimum = 50
 	threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
-
-	abstract = FALSE
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/severe
+
+	threshold_minimum = 50
 
 /datum/wound/pierce/bleed/severe/update_descriptions()
 	if(!limb.can_bleed())
@@ -246,15 +244,14 @@
 	gauzed_clot_rate = 0.4
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
-	threshold_minimum = 100
 	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
 
-	abstract = FALSE
-
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/critical
+
+	threshold_minimum = 100

@@ -16,7 +16,7 @@
 	/// A list of biostates a limb must have to receive our wound, in wounds.dm.
 	var/required_limb_biostate
 	/// If false, we will check if the limb has all of our required biostates instead of just any.
-	var/check_for_any = FALSE
+	var/require_any_biostate = FALSE
 
 	/// If false, we will iterate through wounds on a given limb, and if any match our type, we wont add our wound.
 	var/duplicates_allowed = FALSE
@@ -32,6 +32,20 @@
 
 	var/weight = WOUND_DEFAULT_WEIGHT
 
+	var/threshold_minimum
+
+	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
+	var/wound_series
+
+	var/specific_type = WOUND_SPECIFIC_TYPE_BASIC
+
+	var/compete_for_wounding = TRUE
+	var/competition_mode = WOUND_COMPETITION_SUBMIT
+
+	/// A list of BIO_ defines that will be iterated over in order to determine the scar file our wound will generate.
+	/// Use generate_scar_priorities to create a custom list.
+	var/list/scar_priorities
+
 /datum/wound_pregen_data/New()
 	. = ..()
 
@@ -40,6 +54,18 @@
 			stack_trace("required_limb_biostate null - please set it! occured on: [src.type]")
 		if (wound_path_to_generate == null)
 			stack_trace("wound_path_to_generate null - please set it! occured on: [src.type]")
+
+	scar_priorities = generate_scar_priorities()
+
+/datum/wound_pregen_data/proc/generate_scar_priorities()
+	RETURN_TYPE(/list)
+
+	var/list/priorities = list(
+		"[BIO_FLESH]",
+		"[BIO_BONE]",
+	)
+
+	return priorities
 
 // this proc is the primary reason this datum exists - a singleton instance so we can always run this proc even without the wound existing
 /**
@@ -55,7 +81,7 @@
  * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, list/wound_types = required_wound_types, datum/wound/old_wound, random_roll = FALSE)
+/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, list/wound_types = required_wound_types, datum/wound/old_wound, random_roll = FALSE, duplicates_allowed = src.duplicates_allowed, care_about_existing_wounds = TRUE)
 	SHOULD_BE_PURE(TRUE)
 
 	if (!istype(limb) || !limb.owner)
@@ -70,10 +96,12 @@
 	if (!wound_types_valid(wound_types))
 		return FALSE
 
-	for (var/datum/wound/preexisting_wound as anything in limb.wounds)
-		if (preexisting_wound.wound_series == initial(wound_path_to_generate.wound_series))
-			if (preexisting_wound.severity >= initial(wound_path_to_generate.severity))
-				return FALSE
+	if (care_about_existing_wounds)
+		for (var/datum/wound/preexisting_wound as anything in limb.wounds)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[preexisting_wound.type]
+			if (pregen_data.wound_series == wound_series)
+				if (preexisting_wound.severity >= initial(wound_path_to_generate.severity))
+					return FALSE
 
 	if (!ignore_cannot_bleed && ((required_limb_biostate & BIO_BLOODED) && !limb.can_bleed()))
 		return FALSE
@@ -94,7 +122,7 @@
 
 /// Returns true if we have the given biostates, or any biostate in it if check_for_any is true. False otherwise.
 /datum/wound_pregen_data/proc/biostate_valid(biostate)
-	if (check_for_any)
+	if (require_any_biostate)
 		if (!(biostate & required_limb_biostate))
 			return FALSE
 	else if (!((biostate & required_limb_biostate) == required_limb_biostate)) // check for all
@@ -106,9 +134,9 @@
 	return weight
 
 /datum/wound_pregen_data/proc/wound_types_valid(list/wound_types)
+	if (WOUND_ALL in required_wound_types)
+		return TRUE
 	if (!length(wound_types))
-		if (WOUND_ALL in required_wound_types)
-			return TRUE
 		return FALSE
 
 	for (var/type as anything in wound_types)
@@ -120,6 +148,9 @@
 				return TRUE
 
 	return match_all_wound_types // if we get here, we've matched everything
+
+/datum/wound_pregen_data/proc/get_threshold_for(obj/item/bodypart/part, attack_direction, damage_source)
+	return threshold_minimum
 
 /// Returns a new instance of our wound datum.
 /datum/wound_pregen_data/proc/generate_instance(obj/item/bodypart/limb, ...)
