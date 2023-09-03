@@ -58,7 +58,7 @@
 	var/list/treatable_by
 	/// Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher
 	var/list/treatable_by_grabbed
-	/// Tools with the specified tool flag will also be able to try directly treating this wound
+	/// Any tools with any of the flags in this list will be usable to try directly treating this wound
 	var/list/treatable_tools
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
 	var/base_treat_time = 5 SECONDS
