@@ -1,0 +1,27 @@
+/**
+ * todo: make this a supply_pack/custom. Drop pog? ohoho yes. Would be VERY fun.
+ */
+/datum/supply_pack/market_materials
+	group = "Canisters & Materials"
+	/// What material we are trying to buy sheets of?
+	var/datum/material/material
+	/// How many sheets of the material we are trying to buy at once?
+	var/amount
+
+/datum/supply_pack/market_materials/get_cost()
+	for(var/datum/material/mat in SSstock_market.materials_prices)
+		if(material == mat)
+			return SSstock_market.materials_prices[mat] * amount
+
+/datum/supply_pack/market_materials/fill(obj/structure/closet/crate/C)
+	. = ..()
+	new material.sheet_type(C, amount)
+
+/datum/supply_pack/market_materials/iron
+	material = /datum/material/iron
+MARKET_QUANTITY_HELPERS(/datum/supply_pack/market_materials/iron)
+
+
+/datum/supply_pack/market_materials/gold
+	material = /datum/material/gold
+MARKET_QUANTITY_HELPERS(/datum/supply_pack/market_materials/gold)

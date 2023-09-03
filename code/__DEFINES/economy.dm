@@ -73,3 +73,21 @@
 #define PAYMENT_CLINICAL "clinical"
 #define PAYMENT_FRIENDLY "friendly"
 #define PAYMENT_ANGRY "angry"
+
+/// Create quantity subtypes for stock market datums.
+#define MARKET_QUANTITY_HELPERS(path) ##path/one {\
+	amount = 1; \
+} \
+##path/five {\
+	amount = 5; \
+} \
+##path/ten {\
+	amount = 10; \
+} \
+##path/twenty_five {\
+	amount = 25; \
+} \
+##path/fifty {\
+	amount = 50; \
+}
+

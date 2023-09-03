@@ -35,6 +35,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/integrity_modifier = 1
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
+	///Is this material traded on the stock market?
+	var/tradable = FALSE
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit.
