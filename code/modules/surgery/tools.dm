@@ -376,7 +376,7 @@
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
 
-/obj/item/scalpel/advanced/get_all_tool_behaviors()
+/obj/item/scalpel/advanced/get_all_tool_behaviours()
 	return list(TOOL_SAW, TOOL_SCALPEL)
 
 /obj/item/scalpel/advanced/Initialize(mapload)
@@ -429,7 +429,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 
-/obj/item/retractor/advanced/get_all_tool_behaviors()
+/obj/item/retractor/advanced/get_all_tool_behaviours()
 	return list(TOOL_HEMOSTAT, TOOL_RETRACTOR)
 
 /obj/item/retractor/advanced/Initialize(mapload)

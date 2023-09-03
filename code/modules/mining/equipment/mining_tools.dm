@@ -323,7 +323,7 @@
 	/// Wether we knock down and launch away out enemies when we attack.
 	var/do_launch = TRUE
 
-/obj/item/shovel/giant_wrench/get_all_tool_behaviors()
+/obj/item/shovel/giant_wrench/get_all_tool_behaviours()
 	return list(TOOL_SHOVEL, TOOL_WRENCH)
 
 /datum/armor/giant_wrench
