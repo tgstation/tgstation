@@ -190,7 +190,7 @@
 	handle_reflling(arrived)
 	return ..()
 
-/obj/item/borg/apparatus/beaker/service2
+/obj/item/borg/apparatus/beaker/drink
 	name = "secondary beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks and condiment packets without spilling their contents. Will NOT resynthesize drinks unlike your standard apparatus."
 	icon_state = "borg_beaker_apparatus"
