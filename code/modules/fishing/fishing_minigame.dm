@@ -462,25 +462,20 @@
 	velocity_change = round(velocity_change)
 
 	/**
-	 * Put the brake on the velocity if the reeling state has changed.
-	 * The otherwise slipperiness of the bait is kinda lame,
-	 * and I suppose that's the second reason the old minigame TGUI felt annoying,
-	 * the other being input lag.
+	 * Pull the brake on the velocity if the current velocity and the acceleration
+	 * have different directions, making the bait less slippery, thus easier to control
 	 */
-	if((bait_velocity > 0 && (reeling_state == REELING_STATE_IDLE || reeling_state == REELING_STATE_DOWN)) || (bait_velocity < 0 && (reeling_state == REELING_STATE_UP || (bidirectional && reeling_state == REELING_STATE_IDLE))))
-		if(bait_velocity > 0)
-			bait_velocity += min(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
-		else
-			bait_velocity += max(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
-		bait_velocity = round(bait_velocity)
-
+	if(bait_velocity > 0 && velocity_change < 0)
+		bait_velocity += min(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
+	else if(bait_velocity < 0 && velocity_change > 0)
+		bait_velocity += max(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
 
 	///bidirectional baits stay bouyant while idle
 	if(bidirectional && reeling_state == REELING_STATE_IDLE)
 		if(velocity_change < 0)
 			bait_velocity = max(bait_velocity + velocity_change, 0)
 		else if(velocity_change > 0)
-			bait_velocity += min(bait_velocity + velocity_change, 0)
+			bait_velocity = min(bait_velocity + velocity_change, 0)
 	else
 		bait_velocity += velocity_change
 
