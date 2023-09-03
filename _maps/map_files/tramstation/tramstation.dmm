@@ -14606,6 +14606,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "dqm" = (
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Office";
+	req_access = list("hop")
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "dqp" = (
@@ -15568,7 +15572,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/directional/east,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -21843,6 +21846,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering)
 "fKU" = (
@@ -30368,9 +30372,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/computer/security/mining{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "iHO" = (
@@ -44972,6 +44973,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering)
 "nqH" = (
@@ -56901,7 +56903,7 @@
 /area/station/cargo/warehouse)
 "rgP" = (
 /obj/machinery/power/transmission_laser{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -60806,6 +60808,7 @@
 	pixel_x = -8
 	},
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "swg" = (
@@ -67350,6 +67353,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "uyJ" = (
