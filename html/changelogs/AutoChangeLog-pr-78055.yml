@@ -1,0 +1,5 @@
+author: "blueDev2"
+delete-after: True
+changes:
+  - bugfix: "Soups are accepted by Kitchen Smartfridges"
+  - bugfix: "Soups are not accepted by drink showcases"

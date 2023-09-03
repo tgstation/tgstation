@@ -172,7 +172,7 @@
 		visible_message(span_danger("\The [src] explodes!"))
 		// old code for reference:
 		// standard fuel tank = 1000 units = heavy_impact_range = 1, light_impact_range = 5, flame_range = 5
-		// big fuel tank =SHEET_MATERIAL_AMOUNT * 2.5 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
+		// big fuel tank = 5000 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
 		// It did not account for how much fuel was actually in the tank at all, just the size of the tank.
 		// I encourage others to better scale these numbers in the future.
 		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
@@ -286,7 +286,7 @@
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, span_warning("Your [W.name] is already full!"))
 				return
-			reagents.trans_to(W, W.max_fuel, transfered_by = user)
+			reagents.trans_to(W, W.max_fuel, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_appearance()
@@ -302,7 +302,7 @@
 	name = "high capacity fuel tank"
 	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
 	icon_state = "fuel_high"
-	tank_volume =SHEET_MATERIAL_AMOUNT * 2.5
+	tank_volume = 5000
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
@@ -378,7 +378,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
 	anchored = TRUE
-	reagent_id = /datum/reagent/consumable/cooking_oil
+	reagent_id = /datum/reagent/consumable/nutriment/fat/oil
 	openable = TRUE
 
 /obj/structure/reagent_dispensers/servingdish

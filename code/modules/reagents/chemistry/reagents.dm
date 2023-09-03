@@ -167,13 +167,13 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /*
-Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
+Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.
 Primarily used in reagents/reaction_agents
 */
 /datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target)
 	return FALSE
 
-///Called after a reagent is transfered
+///Called after a reagent is transferred
 /datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
 	return
 

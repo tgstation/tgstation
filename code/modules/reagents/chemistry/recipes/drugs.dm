@@ -63,6 +63,7 @@
 	if(ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
 		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		return
 	var/lastkey = holder.my_atom.fingerprintslast
 	var/touch_msg = "N/A"
 	if(lastkey)
