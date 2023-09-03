@@ -40,24 +40,24 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		),
 	)
 
-/datum/chasm_detritus/proc/dispense_reward(turf/fishing_spot)
+/datum/chasm_detritus/proc/dispense_reward(turf/fishing_spot, turf/fisher_turf)
 	if (prob(default_contents_chance))
 		var/default_spawn = pick(default_contents[default_contents_key])
-		return new default_spawn(fishing_spot)
-	return find_chasm_contents(fishing_spot)
+		return new default_spawn(fisher_turf)
+	return find_chasm_contents(fishing_spot, fisher_turf)
 
 /// Returns the chosen detritus from the given list of things to choose from
 /datum/chasm_detritus/proc/determine_detritus(list/chasm_stuff)
 	return pick(chasm_stuff)
 
 /// Returns an objected which is currently inside of a nearby chasm.
-/datum/chasm_detritus/proc/find_chasm_contents(datum/source, turf/fishing_spot)
+/datum/chasm_detritus/proc/find_chasm_contents(datum/source, turf/fishing_spot, turf/fisher_turf)
 	SIGNAL_HANDLER
 	var/list/chasm_contents = get_chasm_contents(fishing_spot)
 
 	if (!length(chasm_contents))
 		var/default_spawn = pick(default_contents[default_contents_key])
-		return new default_spawn(fishing_spot)
+		return new default_spawn(fisher_turf)
 
 	return determine_detritus(chasm_contents)
 
