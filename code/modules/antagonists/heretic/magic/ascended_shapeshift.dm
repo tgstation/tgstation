@@ -27,6 +27,6 @@
 	monster.transform *= 1.5
 	monster.AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_RWALLS)
 
-/datum/action/cooldown/spell/shapeshift/ascension/do_unshapeshift(mob/living/caster)
+/datum/action/cooldown/spell/shapeshift/eldritch/ascension/do_unshapeshift(mob/living/caster)
 	. = ..()
 	shapeshift_type = null //pick another loser
