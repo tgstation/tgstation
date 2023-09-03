@@ -172,8 +172,7 @@
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
 	var/tool_behaviour = null
-	///Lazy list of all behaviours this tool can potentially adopt (but isn't necessarily active at the moment), must be manually maintained for now
-	var/list/all_tool_behaviours = null
+
 	///How fast does the tool work
 	var/toolspeed = 1
 
@@ -243,10 +242,6 @@
 	// Handle adding item associated actions
 	for(var/path in actions_types)
 		add_item_action(path)
-
-	if (!isnull(tool_behaviour) && isnull(all_tool_behaviours))
-		all_tool_behaviours = list(tool_behaviour)
-
 	actions_types = null
 
 	if(force_string)
@@ -1619,3 +1614,9 @@
 	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
+
+//automatically finds tool behavior if there is only one. requires an extension of the proc if a tool has multiple behaviors
+/obj/item/proc/get_all_tool_behaviours()
+	if (!isnull(tool_behaviour))
+		return list(tool_behaviour)
+	return null

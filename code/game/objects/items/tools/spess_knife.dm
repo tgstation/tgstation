@@ -15,7 +15,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FIRE_PROOF
 	tool_behaviour = null
-	all_tool_behaviours = list(TOOL_KNIFE, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	toolspeed = 1.25 // 25% worse than default tools
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	hitsound = SFX_SWING_HIT
@@ -23,6 +22,9 @@
 	var/list/options = list()
 	///Chance to select wrong tool
 	var/wrong_tool_prob = 10
+
+/obj/item/spess_knife/get_all_tool_behaviours()
+   return list(TOOL_KNIFE, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 
 /obj/item/spess_knife/Initialize(mapload)
 	. = ..()

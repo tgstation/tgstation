@@ -102,11 +102,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
-	all_tool_behaviours = list(TOOL_CROWBAR, TOOL_WIRECUTTER)
 	/// Used on Initialize, how much time to cut cable restraints and zipties.
 	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = 0 SECONDS
+
+/obj/item/crowbar/power/get_all_tool_behaviours()
+   return list(TOOL_CROWBAR, TOOL_WIRECUTTER)
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()

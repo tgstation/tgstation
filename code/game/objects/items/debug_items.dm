@@ -34,28 +34,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	toolspeed = 0.1
 	tool_behaviour = null
-	all_tool_behaviours = list(
-		TOOL_ANALYZER,
-		TOOL_BLOODFILTER,
-		TOOL_BONESET,
-		TOOL_CAUTERY,
-		TOOL_CROWBAR,
-		TOOL_DRILL,
-		TOOL_HEMOSTAT,
-		TOOL_KNIFE,
-		TOOL_MINING,
-		TOOL_MULTITOOL,
-		TOOL_RETRACTOR,
-		TOOL_ROLLINGPIN,
-		TOOL_RUSTSCRAPER,
-		TOOL_SAW,
-		TOOL_SCALPEL,
-		TOOL_SCREWDRIVER,
-		TOOL_SHOVEL,
-		TOOL_WELDER,
-		TOOL_WIRECUTTER,
-		TOOL_WRENCH,
-	)
 
 /obj/item/debug/omnitool/examine()
 	. = ..()
@@ -68,6 +46,28 @@
 		return FALSE
 	return TRUE
 
+/obj/item/debug/omnitool/get_all_tool_behaviours()
+	return list(TOOL_ANALYZER,
+	TOOL_BLOODFILTER,
+	TOOL_BONESET,
+	TOOL_CAUTERY,
+	TOOL_CROWBAR,
+	TOOL_DRILL,
+	TOOL_HEMOSTAT,
+	TOOL_KNIFE,
+	TOOL_MINING,
+	TOOL_MULTITOOL,
+	TOOL_RETRACTOR,
+	TOOL_ROLLINGPIN,
+	TOOL_RUSTSCRAPER,
+	TOOL_SAW,
+	TOOL_SCALPEL,
+	TOOL_SCREWDRIVER,
+	TOOL_SHOVEL,
+	TOOL_WELDER,
+	TOOL_WIRECUTTER,
+	TOOL_WRENCH,
+	)
 
 /obj/item/debug/omnitool/attack_self(mob/user)
 	if(!user)

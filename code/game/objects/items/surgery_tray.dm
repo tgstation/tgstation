@@ -37,7 +37,6 @@
 
 /obj/item/surgery_tray/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noisy_movement)
 	AddElement(/datum/element/drag_pickup)
 	create_storage(storage_type = /datum/storage/medicart)
 	populate_contents()

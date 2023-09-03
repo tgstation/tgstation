@@ -417,9 +417,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	all_tool_behaviours = list(TOOL_KNIFE)
 	/// Whether the switchblade starts extended or not.
 	var/start_extended = FALSE
+
+/obj/item/switchblade/get_all_tool_behaviours()
+	return list(TOOL_KNIFE)
 
 /obj/item/switchblade/Initialize(mapload)
 	. = ..()

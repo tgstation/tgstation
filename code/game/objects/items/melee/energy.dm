@@ -14,7 +14,6 @@
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
-	all_tool_behaviours = list(TOOL_SAW)
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
@@ -34,6 +33,9 @@
 /datum/armor/melee_energy
 	fire = 100
 	acid = 30
+
+/obj/item/melee/energy/get_all_tool_behaviours()
+   return list(TOOL_SAW)
 
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
