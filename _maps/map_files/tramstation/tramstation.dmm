@@ -28284,7 +28284,7 @@
 /mob/living/basic/pet/fox/renault,
 /obj/machinery/button/door/directional/south{
 	id = "aux_base_shutters";
-	name = "Public Shutters Control";
+	name = "Captain Security Shutters";
 	req_access = list("aux_base");
 	pixel_y = 20;
 	pixel_x = 22
