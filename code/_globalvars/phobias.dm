@@ -387,6 +387,11 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/reality_pierce,
 		/obj/projectile/curse_hand,
 		/obj/structure/destructible/eldritch_crucible,
+		/obj/structure/knock_tear,
+		/obj/effect/knock_portal,
+		/obj/item/card/id/advanced/heretic,
+		/obj/item/heretic_lintel,
+		/obj/effect/forcefield/wizard/heretic,
 	)),
 	"insects" = typecacheof(list(
 		/obj/item/clothing/mask/animal/small/bee,
