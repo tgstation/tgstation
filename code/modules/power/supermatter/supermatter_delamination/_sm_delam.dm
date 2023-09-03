@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	sm.lastwarning = REALTIMEOFDAY
 
 	if(sm.damage_archived - sm.damage > SUPERMATTER_FAST_HEALING_RATE && sm.damage_archived >= sm.emergency_point) // Fast healing, engineers probably have it all sorted
-		if(COOLDOWN_FINISHED(src, common_radio_cooldown))
+		if(COOLDOWN_FINISHED(src, common_radio_cooldown)) // We alert common once per cooldown period, otherwise alert engineering
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
 			COOLDOWN_START(src, common_radio_cooldown, SUPERMATTER_COMMON_RADIO_DELAY)
 		else
