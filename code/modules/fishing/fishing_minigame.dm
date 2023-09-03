@@ -453,9 +453,9 @@
 		if(REELING_STATE_DOWN)
 			velocity_change = -reeling_velocity
 		if(REELING_STATE_IDLE)
-			if(!bidirectional || velocity_change > 0)
+			if(!bidirectional || bait_velocity > 0)
 				velocity_change = gravity_velocity
-			else if(bidirectional && velocity_change < 0)
+			else
 				velocity_change = -gravity_velocity
 	velocity_change *= (fish_on_bait ? FISH_ON_BAIT_ACCELERATION_MULT : 1) * seconds_per_tick
 
@@ -466,9 +466,9 @@
 	 * have different directions, making the bait less slippery, thus easier to control
 	 */
 	if(bait_velocity > 0 && velocity_change < 0)
-		bait_velocity += min(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
-	else if(bait_velocity < 0 && velocity_change > 0)
 		bait_velocity += max(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
+	else if(bait_velocity < 0 && velocity_change > 0)
+		bait_velocity += min(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
 
 	///bidirectional baits stay bouyant while idle
 	if(bidirectional && reeling_state == REELING_STATE_IDLE)
