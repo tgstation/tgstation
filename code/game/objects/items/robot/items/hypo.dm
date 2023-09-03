@@ -190,7 +190,7 @@
 		to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
 
 		if(injectee.reagents)
-			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
+			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
 			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
 			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
 	else
@@ -382,7 +382,7 @@
 		stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
 		shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
 
-		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+		shaker.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 	return .
 
@@ -446,7 +446,7 @@
 	var/datum/reagents/shaker = new()
 	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
 	shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
-	shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+	shaker.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 	balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 
 

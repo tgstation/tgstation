@@ -160,6 +160,7 @@
 	desc = "A slab of station reclaimed and chemically processed meat product."
 	tastes = list("meat flavoring" = 2, "modified starches" = 2, "natural & artificial dyes" = 1, "butyric acid" = 1)
 	foodtypes = RAW | MEAT
+	starting_reagent_purity = 0.3
 
 /obj/item/food/meat/slab/meatproduct/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/meatproduct, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
