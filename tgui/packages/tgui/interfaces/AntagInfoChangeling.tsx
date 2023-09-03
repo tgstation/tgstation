@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../components';
@@ -50,17 +51,18 @@ type Info = {
   stolen_antag_info: string;
   memories: Memory[];
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
 export const AntagInfoChangeling = (props, context) => {
   return (
-    <Window width={720} height={720}>
+    <Window width={720} height={750}>
       <Window.Content
         style={{
           'backgroundImage': 'none',
         }}>
         <Stack vertical fill>
-          <Stack.Item maxHeight={13.2}>
+          <Stack.Item maxHeight={16}>
             <IntroductionSection />
           </Stack.Item>
           <Stack.Item grow={4}>
@@ -115,7 +117,7 @@ const HivemindSection = (props, context) => {
 
 const IntroductionSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
-  const { true_name, hive_name, objectives } = data;
+  const { true_name, hive_name, objectives, can_change_objective } = data;
   return (
     <Section
       fill
@@ -127,7 +129,21 @@ const IntroductionSection = (props, context) => {
           <span style={hivestyle}> {hive_name}</span>.
         </Stack.Item>
         <Stack.Item>
-          <ObjectivePrintout objectives={objectives} />
+          <ObjectivePrintout
+            objectives={objectives}
+            objectiveFollowup={
+              can_change_objective && (
+                <Button
+                  color={'green'}
+                  content={'Adapt Directives'}
+                  tooltip={multiline`
+                    Replace your existing objectives with a custom one.
+                    This action can only be taken once.`}
+                  onClick={() => act('change_objectives')}
+                />
+              )
+            }
+          />
         </Stack.Item>
       </Stack>
     </Section>
