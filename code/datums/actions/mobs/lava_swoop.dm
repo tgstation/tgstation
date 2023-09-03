@@ -96,19 +96,14 @@
 	owner.mouse_opacity = initial(owner.mouse_opacity)
 	playsound(owner.loc, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, owner) - owner)
-		if(L.stat)
-			owner.visible_message(span_warning("[owner] slams down on [L], crushing [L.p_them()]!"))
-			L.investigate_log("has been gibbed by lava swoop.", INVESTIGATE_DEATHS)
-			L.gib()
-		else
-			L.adjustBruteLoss(75)
-			if(L && !QDELETED(L)) // Some mobs are deleted on death
-				var/throw_dir = get_dir(owner, L)
-				if(L.loc == owner.loc)
-					throw_dir = pick(GLOB.alldirs)
-				var/throwtarget = get_edge_target_turf(owner, throw_dir)
-				L.throw_at(throwtarget, 3)
-				owner.visible_message(span_warning("[L] is thrown clear of [owner]!"))
+		L.adjustBruteLoss(75)
+		if(!QDELETED(L)) // Some mobs are deleted on death
+			var/throw_dir = get_dir(owner, L)
+			if(L.loc == owner.loc)
+				throw_dir = pick(GLOB.alldirs)
+			var/throwtarget = get_edge_target_turf(owner, throw_dir)
+			L.throw_at(throwtarget, 3)
+			owner.visible_message(span_warning("[L] is thrown clear of [owner]!"))
 	for(var/obj/vehicle/sealed/mecha/M in orange(1, owner))
 		M.take_damage(75, BRUTE, MELEE, 1)
 

@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - qol: "inserting new high luminosity eyes will now properly remember the previous eyes' color and default to that initially"

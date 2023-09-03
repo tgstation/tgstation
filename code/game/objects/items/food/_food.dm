@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
-	///List of reagents this food gets on creation
+	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
 	var/food_flags
@@ -48,6 +48,18 @@
 	var/decomposition_time = 0
 	///Used to set decomposition stink particles for food, will have no particles if null
 	var/decomposition_particles = /particles/stink
+	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
+	var/starting_reagent_purity = null
+	///How exquisite the meal is. Applicable to crafted food, increasing its quality. Spans from 0 to 5.
+	var/crafting_complexity = 0
+	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
+	var/datum/status_effect/food/crafted_food_buff = null
+
+/obj/item/food/New(loc, starting_reagent_purity, no_base_reagents = FALSE, ...)
+	src.starting_reagent_purity = starting_reagent_purity
+	if(no_base_reagents)
+		food_reagents = null
+	return ..()
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -80,8 +92,8 @@
 		eatverbs = eatverbs,\
 		bite_consumption = bite_consumption,\
 		junkiness = junkiness,\
+		reagent_purity = starting_reagent_purity,\
 	)
-
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/make_processable()
