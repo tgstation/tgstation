@@ -247,3 +247,5 @@
 	new teleport_effect(get_turf(owner))
 	owner.Paralyze(2 SECONDS)
 	return ..()
+
+/datum/status_effect/eldritch/moon

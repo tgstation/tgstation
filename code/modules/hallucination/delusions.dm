@@ -229,3 +229,13 @@
 	affects_us = FALSE
 	affects_others = TRUE
 	random_hallucination_weight = 0
+
+/// Hallucination used by the path of moon heretic to turn everyone into a lunar mass
+/datum/hallucination/delusion/preset/moon
+	delusion_icon_file = 'icons/mob/simple/mob.dmi'
+	delusion_icon_state = "ghost"
+	delusion_name = "lunar mass"
+	duration = 15 SECONDS
+	affects_us = FALSE
+	affects_others = TRUE
+	random_hallucination_weight = 0
