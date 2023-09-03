@@ -186,6 +186,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
 	route = PATH_KNOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
+	cost = 1
 
 /datum/heretic_knowledge/ultimate/knock_final
 	name = "Many secrets behind the Spider Door"
