@@ -21,11 +21,11 @@
 	icon_state = "panelsAF"
 
 /area/station/solars/aux/port
-	name = "\improper Port Bow Auxiliary Solar Array"
+	name = "\improper Port Fore Auxiliary Solar Array"
 	icon_state = "panelsA"
 
 /area/station/solars/aux/starboard
-	name = "\improper Starboard Bow Auxiliary Solar Array"
+	name = "\improper Starboard Fore Auxiliary Solar Array"
 	icon_state = "panelsA"
 
 /area/station/solars/starboard
@@ -33,11 +33,11 @@
 	icon_state = "panelsS"
 
 /area/station/solars/starboard/aft
-	name = "\improper Starboard Quarter Solar Array"
+	name = "\improper Starboard Aft Solar Array"
 	icon_state = "panelsAS"
 
 /area/station/solars/starboard/fore
-	name = "\improper Starboard Bow Solar Array"
+	name = "\improper Starboard Fore Solar Array"
 	icon_state = "panelsFS"
 
 /area/station/solars/port
@@ -45,11 +45,11 @@
 	icon_state = "panelsP"
 
 /area/station/solars/port/aft
-	name = "\improper Port Quarter Solar Array"
+	name = "\improper Port Aft Solar Array"
 	icon_state = "panelsAP"
 
 /area/station/solars/port/fore
-	name = "\improper Port Bow Solar Array"
+	name = "\improper Port Fore Solar Array"
 	icon_state = "panelsFP"
 
 /area/station/solars/aisat
@@ -72,11 +72,11 @@
 	icon_state = "SolarcontrolP"
 
 /area/station/maintenance/solars/port/aft
-	name = "Port Quarter Solar Maintenance"
+	name = "Port Aft Solar Maintenance"
 	icon_state = "SolarcontrolAP"
 
 /area/station/maintenance/solars/port/fore
-	name = "Port Bow Solar Maintenance"
+	name = "Port Fore Solar Maintenance"
 	icon_state = "SolarcontrolFP"
 
 /area/station/maintenance/solars/starboard
@@ -84,9 +84,9 @@
 	icon_state = "SolarcontrolS"
 
 /area/station/maintenance/solars/starboard/aft
-	name = "Starboard Quarter Solar Maintenance"
+	name = "Starboard Aft Solar Maintenance"
 	icon_state = "SolarcontrolAS"
 
 /area/station/maintenance/solars/starboard/fore
-	name = "Starboard Bow Solar Maintenance"
+	name = "Starboard Fore Solar Maintenance"
 	icon_state = "SolarcontrolFS"
