@@ -366,7 +366,7 @@
 	var/size = 0
 
 /obj/effect/resin_container/Initialize(mapload, size)
-	..()
+	. = ..()
 	src.size = size
 
 /obj/effect/resin_container/proc/Smoke()
@@ -393,7 +393,7 @@
 
 /obj/item/watertank/atmos/portable/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/water, 100)
+	reagents.add_reagent(/datum/reagent/water, volume)
 
 /obj/item/watertank/atmos/portable/toggle_mister(mob/living/user)
 	if(!istype(user))
