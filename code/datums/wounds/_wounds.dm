@@ -16,6 +16,11 @@
 
 #define WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS 15
 
+// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
+#define TRAIT_WOUND_SCANNED "wound_scanned"
+// I dunno lol
+#define ANALYZER_TRAIT "analyzer_trait"
+
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
@@ -56,7 +61,7 @@
 	/// Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher
 	var/list/treatable_by_grabbed
 	/// Tools with the specified tool flag will also be able to try directly treating this wound
-	var/treatable_tool
+	var/list/treatable_tools
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
 	var/base_treat_time = 5 SECONDS
 
@@ -70,8 +75,6 @@
 	var/limp_chance
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
-	/// Essentially, keeps track of whether or not this wound is capable of bleeding (in case the owner has the NOBLOOD species trait)
-	var/no_bleeding = FALSE
 
 	/// The minimum we need to roll on [/obj/item/bodypart/proc/check_wounding] to begin suffering this wound, see check_wounding_mods() for more
 	var/threshold_minimum
@@ -108,17 +111,23 @@
 	var/compete_for_wounding = TRUE
 	var/competition_mode = WOUND_COMPETITION_SUBMIT
 
+	var/unique_id
+	var/datum/actionspeed_modifier/wound_interaction_inefficiency/actionspeed_mod
+
+/datum/wound/New()
+	. = ..()
+
+	unique_id = generate_unique_id()
+	actionspeed_mod = generate_actionspeed_modifier()
+
 /datum/wound/Destroy()
-	if(attached_surgery)
-		QDEL_NULL(attached_surgery)
+	QDEL_NULL(attached_surgery)
 	if (limb)
 		remove_wound()
-	return ..()
 
-// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
-#define TRAIT_WOUND_SCANNED "wound_scanned"
-// I dunno lol
-#define ANALYZER_TRAIT "analyzer_trait"
+	QDEL_NULL(actionspeed_mod)
+
+	return ..()
 
 /**
  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
@@ -148,7 +157,6 @@
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
-	no_bleeding = HAS_TRAIT(victim, TRAIT_NOBLOOD)
 	update_descriptions()
 	limb.update_wounds()
 	if(status_effect_type)
@@ -213,11 +221,40 @@
 
 /datum/wound/proc/set_victim(new_victim)
 	if(victim)
+		UnregisterSignal(victim, list(COMSIG_QDELETING, COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB))
 		UnregisterSignal(victim, COMSIG_QDELETING)
+		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
+		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
+		victim.remove_actionspeed_modifier(actionspeed_mod)
+
 	remove_wound_from_victim()
 	victim = new_victim
 	if(victim)
 		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
+		RegisterSignals(victim, list(COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB), PROC_REF(add_or_remove_actionspeed_mod))
+		RegisterSignals(victim, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB), PROC_REF(update_limp))
+
+		start_limping_if_we_should() // the status effect already handles removing itself
+		add_or_remove_actionspeed_mod()
+
+/datum/wound/proc/generate_actionspeed_modifier()
+	RETURN_TYPE(/datum/actionspeed_modifier)
+
+	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
+	return new_modifier
+
+/datum/wound/proc/add_or_remove_actionspeed_mod()
+	if(victim.get_active_hand() == limb)
+		victim.add_actionspeed_modifier(actionspeed_mod, TRUE)
+	else
+		victim.remove_actionspeed_modifier(actionspeed_mod)
+
+/datum/wound/proc/start_limping_if_we_should()
+	if (limp_slowdown > 0 && limp_chance > 0)
+		victim.add_status_effect(/datum/status_effect/limp)
+
+/datum/wound/proc/generate_unique_id()
+	return REF(src) // unique, cannot change, a perfect id
 
 /datum/wound/proc/source_died()
 	SIGNAL_HANDLER
@@ -272,6 +309,7 @@
 	. = limb
 	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
 		UnregisterSignal(limb, COMSIG_QDELETING)
+		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds(replaced)
 		if (disabling)
@@ -283,9 +321,10 @@
 
 	if (limb)
 		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
-	if(limb)
-		if(disabling)
+		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(update_inefficiencies))
+		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+		update_inefficiencies()
 
 /// Proc called to change the variable `disabling` and react to the event.
 /datum/wound/proc/set_disabling(new_value)
@@ -301,6 +340,44 @@
 	if(limb?.can_be_disabled)
 		limb.update_disabled()
 
+/datum/wound/proc/set_interaction_efficiency_penalty(new_value)
+
+	var/should_update = (new_value != interaction_efficiency_penalty)
+
+	interaction_efficiency_penalty = new_value
+
+	if (should_update)
+		update_actionspeed()
+
+/datum/wound/proc/update_actionspeed()
+	actionspeed_mod.multiplicative_slowdown = interaction_efficiency_penalty
+
+	victim.update_actionspeed()
+
+/datum/wound/proc/update_inefficiencies()
+	SIGNAL_HANDLER
+
+	if (wound_flags & ACCEPTS_GAUZE)
+		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			if(limb.current_gauze?.splint_factor)
+				limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
+				limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
+			else
+				limp_slowdown = initial(limp_slowdown)
+				limp_chance = initial(limp_chance)
+			//victim.apply_status_effect(/datum/status_effect/limp)
+		else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			if(limb.current_gauze?.splint_factor)
+				set_interaction_efficiency_penalty(1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor))
+			else
+				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
+
+		if(initial(disabling))
+			set_disabling(!limb.current_gauze)
+
+		limb.update_wounds()
+
+	start_limping_if_we_should()
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()
@@ -355,9 +432,9 @@
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
 	// check if we have a valid treatable tool
-	if(potential_treater.tool_behaviour == treatable_tool)
+	if(potential_treater.tool_behaviour in treatable_tool)
 		return TRUE
-	if(treatable_tool == TOOL_CAUTERY && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
+	if(TOOL_CAUTERY in treatable_tools && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(potential_treater, user))
@@ -394,6 +471,10 @@
 /// Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh
 /datum/wound/proc/on_xadone(power)
 	cryo_progress += power
+
+	return handle_xadone_progress()
+
+/datum/wound/proc/handle_xadone_progress()
 	if(cryo_progress > 33 * severity)
 		qdel(src)
 
@@ -504,7 +585,6 @@
 			return "Severe"
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
-
 
 /// Returns TRUE if our limb is the head or chest, FALSE otherwise.
 /// Essential in the sense of "we cannot live without it".

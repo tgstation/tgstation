@@ -18,7 +18,7 @@
 	processes = TRUE
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
-	treatable_tool = TOOL_CAUTERY
+	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE)
 
@@ -50,7 +50,7 @@
 			old_wound.clear_highest_scar()
 	else
 		set_blood_flow(initial_flow)
-		if(!no_bleeding && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+		if(limb.can_bleed() && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
 			victim.spray_blood(attack_direction, severity)
 
 	if(!highest_scar)
@@ -118,7 +118,7 @@
 
 /datum/wound/slash/flesh/get_bleed_rate_of_change()
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
@@ -133,7 +133,7 @@
 		return
 
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
-	if(!no_bleeding)
+	if(limb.can_bleed())
 		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
@@ -146,7 +146,7 @@
 		adjust_blood_flow(-limb.current_gauze.absorption_rate * seconds_per_tick)
 		limb.seep_gauze(limb.current_gauze.absorption_rate * seconds_per_tick)
 	//otherwise, only clot if it's a bleeder
-	else if(!no_bleeding)
+	else if(limb.can_bleed())
 		adjust_blood_flow(-clot_rate * seconds_per_tick)
 
 	if(blood_flow > highest_flow)
@@ -156,7 +156,7 @@
 		if(demotes_to)
 			replace_wound(new demotes_to)
 		else
-			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [no_bleeding ? "healed up" : "stopped bleeding"]!"))
+			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
 			qdel(src)
 
 /datum/wound/slash/flesh/on_stasis(seconds_per_tick, times_fired)
@@ -263,7 +263,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
-	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
+	var/bleeding_wording = (!limb.can_bleed() ? "cuts" : "bleeding")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
 	if(prob(30))
@@ -291,7 +291,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
+	var/bleeding_wording = (!limb.can_bleed() ? "cuts" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -327,7 +327,7 @@
 	abstract = FALSE
 
 /datum/wound/slash/flesh/moderate/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "is cut open"
 
 /datum/wound_pregen_data/flesh_slash/abrasion
@@ -360,7 +360,7 @@
 	wound_path_to_generate = /datum/wound/slash/flesh/severe
 
 /datum/wound/slash/flesh/severe/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "is ripped open"
 
 /datum/wound/slash/flesh/critical
@@ -407,7 +407,7 @@
 	clot_rate = 0.01
 
 /datum/wound/slash/flesh/critical/cleave/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "is ruptured"
 
 /datum/wound_pregen_data/flesh_slash/cleave

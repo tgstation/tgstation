@@ -165,6 +165,13 @@
 	if(W == linked_wound)
 		qdel(src)
 
+/datum/status_effect/wound/nextmove_modifier()
+	var/mob/living/carbon/C = owner
+
+	if(C.get_active_hand() == linked_limb)
+		return linked_wound.interaction_efficiency_penalty
+
+	return 1
 
 // bones
 /datum/status_effect/wound/blunt/bone
@@ -188,14 +195,6 @@
 		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
 	else
 		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
-
-/datum/status_effect/wound/blunt/bone/nextmove_modifier()
-	var/mob/living/carbon/C = owner
-
-	if(C.get_active_hand() == linked_limb)
-		return linked_wound.interaction_efficiency_penalty
-
-	return 1
 
 // blunt
 /datum/status_effect/wound/blunt/bone/moderate

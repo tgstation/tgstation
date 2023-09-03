@@ -37,8 +37,11 @@ can next move
 	/// Other modification datums this conflicts with.
 	var/conflicts_with
 
-/datum/actionspeed_modifier/New()
+/datum/actionspeed_modifier/New(init_id)
 	. = ..()
+
+	id = init_id
+
 	if(!id)
 		id = "[type]" //We turn the path into a string.
 

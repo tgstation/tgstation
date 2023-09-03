@@ -182,28 +182,6 @@
 	New common procs for /datum/wound/blunt/bone/
 */
 
-/datum/wound/blunt/bone/proc/update_inefficiencies()
-	SIGNAL_HANDLER
-
-	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		if(limb.current_gauze?.splint_factor)
-			limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
-			limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
-		else
-			limp_slowdown = initial(limp_slowdown)
-			limp_chance = initial(limp_chance)
-		victim.apply_status_effect(/datum/status_effect/limp)
-	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		if(limb.current_gauze?.splint_factor)
-			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor)
-		else
-			interaction_efficiency_penalty = initial(interaction_efficiency_penalty)
-
-	if(initial(disabling))
-		set_disabling(!limb.current_gauze)
-
-	limb.update_wounds()
-
 /datum/wound/blunt/bone/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
 	if (scarred_limb.biological_state & BIO_BONE && (!(scarred_limb.biological_state & BIO_FLESH))) // only bone
 		return BONE_SCAR_FILE
@@ -225,7 +203,7 @@
 	limp_chance = 50
 	threshold_minimum = 35
 	threshold_penalty = 15
-	treatable_tool = TOOL_BONESET
+	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "bluntmoderate"
 
