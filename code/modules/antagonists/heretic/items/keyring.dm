@@ -58,10 +58,13 @@
 		if(!IS_HERETIC_OR_MONSTER(teleportee))
 			teleportee.adjustBruteLoss(20) //so they dont roll it like a jackpot machine to see if they can land in the armory
 			to_chat(teleportee, span_userdanger("You stumble through [src], battered by forces beyond your comprehension, landing in anywhere but where you thought you were going."))
-		if(istype(doorstination, /obj/machinery/door/airlock)) //they can create portals on ANY door, but we should unlock airlocks so they can actually open
-			var/obj/machinery/door/airlock/as_airlock = doorstination
-			as_airlock.unbolt()
-		doorstination.open()
+		INVOKE_ASYNC(src, PROC_REF(async_opendoor), doorstination)
+
+/obj/effect/knock_portal/proc/async_opendoor(obj/machinery/door/door)
+	if(istype(door, /obj/machinery/door/airlock)) //they can create portals on ANY door, but we should unlock airlocks so they can actually open
+		var/obj/machinery/door/airlock/as_airlock = door
+		as_airlock.unbolt()
+	door.open()
 
 /obj/item/card/id/advanced/heretic
 	var/list/obj/item/card/id/fused_ids = list()
