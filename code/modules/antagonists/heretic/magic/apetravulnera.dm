@@ -15,7 +15,7 @@
 
 	cast_range = 4
 	/// What type of wound we apply
-	var/wound_type = /datum/wound/slash/critical/cleave
+	var/wound_type = /datum/wound/slash/flesh/critical/cleave
 
 /datum/action/cooldown/spell/pointed/apetra_vulnera/is_valid_target(atom/cast_on)
 	return ..() && ishuman(cast_on)

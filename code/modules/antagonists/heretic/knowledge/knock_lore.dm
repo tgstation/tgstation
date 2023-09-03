@@ -161,7 +161,7 @@
 	gain_text = "They open, remove seals."
 	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_KNOCK
-	wound_type = /datum/wound/slash/critical
+	wound_type = /datum/wound/slash/flesh/critical
 	var/chance = 35
 
 /datum/heretic_knowledge/blade_upgrade/flesh/knock/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
