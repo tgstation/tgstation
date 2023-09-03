@@ -194,9 +194,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	H.equipOutfit(outfit_type)
 
 /datum/antagonist/wizard/ui_static_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 /datum/antagonist/wizard/ui_data(mob/user)
@@ -207,15 +207,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		"next_area" = ritual ? initial(ritual.target_area.name) : "",
 	)
 	return data
-
-/datum/antagonist/wizard/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("change_objectives")
-			submit_player_objective()
-			return TRUE
 
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
