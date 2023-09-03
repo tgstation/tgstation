@@ -35,11 +35,6 @@
 	/// Once we reach infestation beyond WOUND_INFESTATION_SEPSIS, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn for a really long time for this to happen)
 	var/strikes_to_lose_limb = 3
 
-	/// The cryo progress we must obtain for necrosis to be kicked back one stepped if we are necrotic.
-	var/base_xadone_progress_to_stop_necrosis = 90
-	/// The amount cryo progress will be multiplied if necrosis is stopped by cryo.
-	var/necrosis_stopped_progress_mult = 0.2
-
 /datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
 
 	if (!victim || IS_IN_STASIS(victim))
@@ -269,24 +264,6 @@
 
 /datum/wound/burn/flesh/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
-
-/datum/wound/burn/flesh/handle_xadone_progress()
-	. = ..()
-
-	var/progress_to_stop_necrosis = get_xadone_progress_to_stop_necrosis()
-	if (strikes_to_lose_limb <= 0 && cryo_progress >= progress_to_stop_necrosis)
-		victim?.visible_message(span_green("[victim]'s [limb.plaintext_zone] slightly recovers from it's necrosis..."), span_green("Your [limb.plaintext_zone] slightly recovers from it's necrosis..."))
-		strikes_to_lose_limb++ // wowie
-		cryo_progress -= (progress_to_stop_necrosis * necrosis_stopped_progress_mult)
-
-/datum/wound/burn/flesh/proc/get_xadone_progress_to_stop_necrosis()
-	return base_xadone_progress_to_stop_necrosis * severity
-
-/datum/wound/burn/flesh/get_xadone_progress_to_qdel()
-	if (strikes_to_lose_limb <= 0)
-		return INFINITY // prevents necrosis from being trivialized by cryo
-
-	return ..()
 
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
