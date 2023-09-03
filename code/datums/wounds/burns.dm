@@ -35,17 +35,23 @@
 	/// Once we reach infestation beyond WOUND_INFESTATION_SEPSIS, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn for a really long time for this to happen)
 	var/strikes_to_lose_limb = 3
 
-	/// The cryo progress we must obtain for necrosis to be kicked back one stepped if we are necrotic.
-	var/base_xadone_progress_to_stop_necrosis = 90
-	/// The amount cryo progress will be multiplied if necrosis is stopped by cryo.
-	var/necrosis_stopped_progress_mult = 0.2
+	/// The cryo progress we must obtain for necrosis to be kicked back one step if we are necrotic.
+	var/base_xadone_progress_to_stop_necrosis = 45
+	/// The amount cryo progress will be multiplied if necrosis is stopped by cryo. cryo_progress is subtracted by the result.
+	var/necrosis_stopped_progress_mult = 1
+
+	var/current_necrosis_buffer = 0
+	var/initial_necrosis_buffer = 20 SECONDS // 20 seconds of immunity to rising necrosis
 
 /datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
+
+	current_necrosis_buffer -= seconds_per_tick SECONDS
 
 	if (!victim || IS_IN_STASIS(victim))
 		return
 
 	. = ..()
+
 	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
 		victim.adjustToxLoss(0.25 * seconds_per_tick)
 		if(SPT_PROB(0.5, seconds_per_tick))
@@ -127,18 +133,19 @@
 					victim.adjustToxLoss(1)
 
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
-			if(SPT_PROB(0.5 * infestation, seconds_per_tick))
-				strikes_to_lose_limb--
-				switch(strikes_to_lose_limb)
-					if(2 to INFINITY)
-						to_chat(victim, span_deadsay("<b>The infection in your [limb.plaintext_zone] is literally dripping off, you feel horrible!</b>"))
-					if(1)
-						to_chat(victim, span_deadsay("<b>Infection has just about completely claimed your [limb.plaintext_zone]!</b>"))
-					if(0)
-						to_chat(victim, span_deadsay("<b>The last of the nerve endings in your [limb.plaintext_zone] wither away, as the infection completely paralyzes your joint connector.</b>"))
-						threshold_penalty = 120 // piss easy to destroy
-						var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
-						victim.gain_trauma(sepsis)
+			if (current_necrosis_buffer <= 0)
+				if(SPT_PROB(0.5 * infestation, seconds_per_tick))
+					strikes_to_lose_limb--
+					switch(strikes_to_lose_limb)
+						if(2 to INFINITY)
+							to_chat(victim, span_deadsay("<b>The infection in your [limb.plaintext_zone] is literally dripping off, you feel horrible!</b>"))
+						if(1)
+							to_chat(victim, span_deadsay("<b>Infection has just about completely claimed your [limb.plaintext_zone]!</b>"))
+						if(0)
+							to_chat(victim, span_deadsay("<b>The last of the nerve endings in your [limb.plaintext_zone] wither away, as the infection completely paralyzes your joint connector.</b>"))
+							threshold_penalty = 120 // piss easy to destroy
+							var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
+							victim.gain_trauma(sepsis)
 
 /datum/wound/burn/flesh/get_wound_description(mob/user)
 	if(strikes_to_lose_limb <= 0)
@@ -274,19 +281,32 @@
 	. = ..()
 
 	var/progress_to_stop_necrosis = get_xadone_progress_to_stop_necrosis()
-	if (strikes_to_lose_limb <= 0 && cryo_progress >= progress_to_stop_necrosis)
+	if (!cryo_can_qdel() && cryo_progress >= progress_to_stop_necrosis)
 		victim?.visible_message(span_green("[victim]'s [limb.plaintext_zone] slightly recovers from it's necrosis..."), span_green("Your [limb.plaintext_zone] slightly recovers from it's necrosis..."))
 		strikes_to_lose_limb++ // wowie
 		cryo_progress -= (progress_to_stop_necrosis * necrosis_stopped_progress_mult)
+		current_necrosis_buffer = initial_necrosis_buffer
+
+		var/obj/machinery/atmospherics/components/unary/cryo_cell/our_cell = victim.loc
+		if (!istype(our_cell))
+			return
+		playsound(our_cell, 'sound/machines/cryo_warning.ogg', our_cell.volume * 0.8, TRUE, frequency = 1.3) // Bug the doctors.
+		var/necrosis_timer = current_necrosis_buffer / 10
+		var/msg = "Patient's [limb.plaintext_zone] has recovered from necrosis. Recommend extraction and treatment - sepsis will resume in [necrosis_timer] seconds."
+		our_cell.radio.talk_into(our_cell, msg, our_cell.radio_channel)
 
 /datum/wound/burn/flesh/proc/get_xadone_progress_to_stop_necrosis()
 	return base_xadone_progress_to_stop_necrosis * severity
 
 /datum/wound/burn/flesh/get_xadone_progress_to_qdel()
-	if (strikes_to_lose_limb <= 0)
+	if (!cryo_can_qdel())
 		return INFINITY // prevents necrosis from being trivialized by cryo
 
 	return ..()
+
+/// If strikes to lose limb are below 3, cryo cannot qdelete this limb.
+/datum/wound/burn/flesh/proc/cryo_can_qdel()
+	return (strikes_to_lose_limb >= 3)
 
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
