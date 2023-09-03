@@ -7,7 +7,6 @@
  */
 
 /// Beds
-
 /obj/structure/bed
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
@@ -23,8 +22,6 @@
 	var/build_stack_type = /obj/item/stack/sheet/iron
 	/// How many mats to drop when deconstructed
 	var/build_stack_amount = 2
-	/// If someone's buckled to it
-	var/occupied = FALSE
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
@@ -44,7 +41,7 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	else if(occupied)
+	else if(has_buckled_mobs())
 		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -65,12 +62,6 @@
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
 	return TRUE
-
-/obj/structure/bed/post_buckle_mob(mob/living/buckled_mob)
-	occupied = TRUE
-
-/obj/structure/bed/post_unbuckle_mob(mob/living/unbuckled_mob)
-	occupied = FALSE
 
 /// Medical beds
 /obj/structure/bed/medical
@@ -102,9 +93,8 @@
 
 /obj/structure/bed/medical/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
-
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "[anchored ? "Release brakes" : "Apply brakes"]"
-	if(!isnull(foldable_type) && !buckled)
+	if(!isnull(foldable_type) && !has_buckled_mobs())
 		context[SCREENTIP_CONTEXT_RMB] = "Fold up"
 
 	return CONTEXTUAL_SCREENTIP_SET
@@ -127,32 +117,37 @@
 
 /obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
 	set_density(TRUE)
-	occupied = TRUE
-	icon_state = "[base_icon_state]_up"
-	// Push them up from the normal lying position
-	patient.pixel_y = patient.base_pixel_y
 	update_appearance()
 
 /obj/structure/bed/medical/post_unbuckle_mob(mob/living/patient)
 	set_density(FALSE)
-	occupied = FALSE
-	icon_state = "[base_icon_state]_down"
-	// Set them back down to the normal lying position
-	patient.pixel_y = patient.base_pixel_y + patient.body_position_pixel_y_offset
 	update_appearance()
+
+/obj/structure/bed/medical/update_icon_state()
+	. = ..()
+	if(has_buckled_mobs())
+		icon_state = "[base_icon_state]_up"
+		// Push them up from the normal lying position
+		if(buckled_mobs.len > 1)
+			for(var/mob/living/patient as anything in buckled_mobs)
+				patient.pixel_y = patient.base_pixel_y
+		else
+			buckled_mobs[1].pixel_y = buckled_mobs[1].base_pixel_y
+
+	else
+		icon_state = "[base_icon_state]_down"
 
 /obj/structure/bed/medical/update_overlays()
 	. = ..()
 	if(!anchored)
 		return
 
-	switch(occupied)
-		if(TRUE)
-			. += mutable_appearance(icon, "brakes_up")
-			. += emissive_appearance(icon, "brakes_up", src, alpha = src.alpha)
-		if(FALSE)
-			. += mutable_appearance(icon, "brakes_down")
-			. += emissive_appearance(icon, "brakes_down", src, alpha = src.alpha)
+	if(has_buckled_mobs())
+		. += mutable_appearance(icon, "brakes_up")
+		. += emissive_appearance(icon, "brakes_up", src, alpha = src.alpha)
+	else
+		. += mutable_appearance(icon, "brakes_down")
+		. += emissive_appearance(icon, "brakes_down", src, alpha = src.alpha)
 
 /obj/structure/bed/medical/emergency/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/emergency_bed/silicon))
