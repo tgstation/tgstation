@@ -222,7 +222,14 @@
 			discovered = TRUE
 			balloon_alert(user, "vent scanned!")
 			playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-			generate_description()
+
+			if(ishuman(user))
+				var/mob/living/carbon/human/scanning_miner = user
+				var/obj/item/card/id/user_id_card = scanning_miner.get_idcard(TRUE)
+				if(user_id_card)
+					user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
+					user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points vent discovery.")
+			generate_description(user)
 			return
 		else
 			return
@@ -251,14 +258,15 @@
  * Generates a description of the ore vent to ore_string, based on the minerals contained within it.
  * Ore_string is passed to examine().
  */
-/obj/structure/ore_vent/proc/generate_description()
+/obj/structure/ore_vent/proc/generate_description(mob/user)
 	for(var/mineral_count in 1 to mineral_breakdown.len)
 		var/datum/material/resource = mineral_breakdown[mineral_count]
 		if(mineral_count == mineral_breakdown.len)
 			ore_string += "and " + span_bold(resource.name) + "."
 		else
 			ore_string += span_bold(resource.name) + ", "
-
+	if(user)
+		ore_string += "\nThis vent was first discovered by [user]."
 /**
  * Adds floating temp_visual overlays to the vent, showcasing what minerals are contained within it.
  * If undiscovered, adds a single overlay with the icon_state "unknown".

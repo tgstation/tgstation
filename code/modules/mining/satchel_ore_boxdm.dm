@@ -10,7 +10,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
 /obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/stack/ore))
+	if (istype(W, /obj/item/stack/ore) || istype(W, /obj/item/boulder))
 		user.transferItemToLoc(W, src)
 	else if(W.atom_storage)
 		W.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
@@ -45,7 +45,7 @@
 /obj/structure/ore_box/proc/dump_box_contents()
 	var/drop = drop_location()
 	var/turf/our_turf = get_turf(src)
-	for(var/obj/item/stack/ore/O in src)
+	for(var/obj/item/O in src)
 		if(QDELETED(O))
 			continue
 		if(QDELETED(src))

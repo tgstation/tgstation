@@ -61,7 +61,7 @@
 		manual_process(weapon, user, 3)
 		return
 
-/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/user, golem_speed)
+/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/user, golem_speed, mech_override = FALSE)
 	var/process_speed = 0
 	if(weapon)
 		process_speed = weapon.toolspeed
@@ -74,10 +74,11 @@
 	else
 		return
 
-	if(!do_after(user, (2 * process_speed SECONDS), target = src))
-		return FALSE
-	if(!user.Adjacent(src))
-		return
+	if(!mech_override)
+		if(!do_after(user, (2 * process_speed SECONDS), target = src))
+			return FALSE
+		if(!user.Adjacent(src))
+			return
 	durability--
 	if(ishuman(user))
 		var/mob/living/carbon/human/miner = user
@@ -97,31 +98,30 @@
 		manual_process(weapon, user, golem_speed)
 		return
 
-/obj/item/boulder/proc/convert_to_ore()
+/obj/item/boulder/proc/convert_to_ore(weak)
 	for(var/datum/material/picked in custom_materials)
-		/// Take the associated value and convert it into ore stacks, but less resources than if they processed it.
-		say("[picked?.name] is inside!")
-		var/obj/item/stack/ore/cracked_ore
+		var/obj/item/stack/ore/cracked_ore // Take the associated value and convert it into ore stacks...
+		var/quantity = clamp(round((custom_materials[picked] - SHEET_MATERIAL_AMOUNT)/SHEET_MATERIAL_AMOUNT), 1, 10) //but less resources than if they processed it by hand.
 		switch(picked.type)
 			if(/datum/material/iron)
-				cracked_ore = new /obj/item/stack/ore/iron(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/iron(drop_location(), quantity)
 			if(/datum/material/gold)
-				cracked_ore = new /obj/item/stack/ore/gold(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/gold(drop_location(), quantity)
 			if(/datum/material/silver)
-				cracked_ore = new /obj/item/stack/ore/silver(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/silver(drop_location(), quantity)
 			if(/datum/material/plasma)
-				cracked_ore = new /obj/item/stack/ore/plasma(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/plasma(drop_location(), quantity)
 			if(/datum/material/diamond)
-				cracked_ore = new /obj/item/stack/ore/diamond(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/diamond(drop_location(), quantity)
 			if(/datum/material/glass)
-				cracked_ore = new /obj/item/stack/ore/glass/basalt(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/glass/basalt(drop_location(), quantity)
 			if(/datum/material/bluespace)
-				cracked_ore = new /obj/item/stack/ore/bluespace_crystal(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/bluespace_crystal(drop_location(), quantity)
 			if(/datum/material/titanium)
-				cracked_ore = new /obj/item/stack/ore/titanium(drop_location(), 1)
+				cracked_ore = new /obj/item/stack/ore/titanium(drop_location(), quantity)
 			if(/datum/material/uranium)
-				cracked_ore = new /obj/item/stack/ore/uranium(drop_location(), 1)
-		SSblackbox.record_feedback("tally", "ore_mined", 1, cracked_ore)
+				cracked_ore = new /obj/item/stack/ore/uranium(drop_location(), quantity)
+		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore)
 
 /obj/item/boulder/proc/can_get_processed()
 	if(COOLDOWN_FINISHED(src, processing_cooldown))

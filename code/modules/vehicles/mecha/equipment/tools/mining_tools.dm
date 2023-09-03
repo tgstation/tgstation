@@ -66,8 +66,13 @@
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
-				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+				if(istype(O, /obj/item/boulder))
+					var/obj/item/boulder/nu_boulder = O
+					nu_boulder.manual_process(src, source, mech_override = TRUE)
+					playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
+				else
+					O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
+					playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
 
 			// If we caused a qdel drilling the target, we can stop drilling them.
 			// Prevents starting a do_after on a qdeleted target.
@@ -155,7 +160,7 @@
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
 	equip_cooldown = 15
-	equipment_slot = MECHA_UTILITY
+	equipment_slot = MECHA_R_ARM
 	mech_flags = EXOSUIT_MODULE_WORKING
 	var/scanning_time = 0
 
@@ -175,6 +180,15 @@
 		return
 	scanning_time = world.time + equip_cooldown
 	mineral_scan_pulse(get_turf(src), scanner = src)
+
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/action(mob/source, atom/target, list/modifiers)
+	. = ..()
+	if(!action_checks(target))
+		return
+	if(istype(target, /obj/structure/ore_vent))
+		var/obj/structure/ore_vent/vent = target
+		vent.scan_and_confirm(source)
+		return
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED

@@ -90,7 +90,7 @@
 		if(undiscovered)
 			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
 		else
-			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, TRUE)
+			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
 		scanner.balloon_alert_to_viewers("ore vent nearby!")
 		scanner.spasm_animation(1.5 SECONDS)
 
