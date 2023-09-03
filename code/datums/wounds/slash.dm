@@ -42,7 +42,7 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/slash/Destroy()
+/datum/wound/slash/flesh/Destroy()
 	highest_scar = null
 
 	return ..()
