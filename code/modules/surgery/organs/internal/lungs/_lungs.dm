@@ -21,7 +21,6 @@
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
-
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
@@ -804,6 +803,14 @@
 	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
 
+/obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
+	name = "smoker plasma filter"
+	desc = "A plasma filter that look discolored, a result from smoking a lot."
+	icon_state = "lungs-plasma-s"
+
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75
+	healing_factor = STANDARD_ORGAN_HEALING * 0.75
+
 /obj/item/organ/internal/lungs/slime
 	name = "vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
@@ -815,6 +822,14 @@
 	if (breath?.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+
+/obj/item/organ/internal/lungs/smoker_lungs
+	name = "smoker lungs"
+	desc = "A pair of lungs that look sickly, a result from smoking a lot."
+	icon_state = "lungs-s"
+
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75
+	healing_factor = STANDARD_ORGAN_HEALING * 0.75
 
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
@@ -936,6 +951,14 @@
 	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
 	heat_level_2_threshold = 473
 	heat_level_3_threshold = 1073
+
+/obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+	name = "smoker aeration reticulum"
+	desc = "A pair of exotic lungs that look pale and sickly, a result from smoking a lot."
+	icon_state = "lungs_ethereal-s"
+
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75
+	healing_factor = STANDARD_ORGAN_HEALING * 0.75
 
 /obj/item/organ/internal/lungs/ethereal/Initialize(mapload)
 	. = ..()
