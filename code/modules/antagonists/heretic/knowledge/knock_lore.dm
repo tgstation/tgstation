@@ -153,7 +153,7 @@
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
 	cost = 1
-	route = PATH_KNOCK
+	route = PATH_SIDE
 
 /datum/heretic_knowledge/blade_upgrade/flesh/knock //basically a chance-based weeping avulsion version of the former
 	name = "Opening Blade"

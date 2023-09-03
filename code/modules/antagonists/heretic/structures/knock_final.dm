@@ -20,8 +20,9 @@
 	transform *= 3
 	if(!monster_types)
 		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) - list(/mob/living/simple_animal/hostile/heretic_summon/armsy/prime, /mob/living/simple_animal/hostile/heretic_summon/armsy)
-	ascendee = ascendant
-	RegisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE, PROC_REF(master_examine))
+	if(ascendant)
+		ascendee = ascendant
+		RegisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE, PROC_REF(master_examine))
 	INVOKE_ASYNC(src, PROC_REF(poll_ghosts))
 
 /obj/structure/knock_tear/proc/poll_ghosts()
@@ -67,5 +68,6 @@
 
 /obj/structure/knock_tear/Destroy(force) //this shouldnt happen but hey
 	. = ..()
-	UnregisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE)
-	ascendee = null
+	if(ascendee)
+		UnregisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE)
+		ascendee = null
