@@ -280,7 +280,6 @@
 		"hemostat",
 		"large_beaker",
 		"medicalbed",
-		"medicalbed_emergency",
 		"mmi_m",
 		"operating",
 		"petri_dish",
@@ -733,6 +732,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
+		"medicalbed_emergency",
 		"femto_servo",
 		"quantum_keycard",
 		"swapper",
