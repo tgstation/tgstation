@@ -3,6 +3,7 @@ import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
 import { ObjectivePrintout, Objective } from './common/Objectives';
+import { multiline } from 'common/string';
 
 const hereticRed = {
   color: '#e03c3c',
@@ -49,11 +50,12 @@ type Info = {
   total_sacrifices: number;
   ascended: BooleanLike;
   objectives: Objective[];
+  can_change_objectives: BooleanLike;
 };
 
 const IntroductionSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
+  const { data, act } = useBackend<Info>(context);
+  const { objectives, ascended, can_change_objectives } = data;
 
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
@@ -62,20 +64,37 @@ const IntroductionSection = (props, context) => {
           <Stack vertical>
             <FlavorSection />
             <Stack.Divider />
-
             <GuideSection />
             <Stack.Divider />
-
             <InformationSection />
             <Stack.Divider />
-
-            <Stack.Item>
-              <ObjectivePrintout
-                fill
-                titleMessage="In order to ascend, you have these tasks to fulfill:"
-                objectives={objectives}
-              />
-            </Stack.Item>
+            {!ascended &&
+              (can_change_objectives ? (
+                <Stack.Item>
+                  <ObjectivePrintout
+                    fill
+                    titleMessage="In order to ascend, you have these tasks to fulfill"
+                    objectives={objectives}
+                  />
+                  <Button
+                    color={'red'}
+                    content={'Reject Ascension'}
+                    tooltip={multiline`
+                      Turn your back on the Mansus to accomplish
+                      a task of your choosing.
+                      Selecting this option will prevent you from ascending!`}
+                    onClick={() => act('reject_ascension')}
+                  />
+                </Stack.Item>
+              ) : (
+                <Stack.Item>
+                  <ObjectivePrintout
+                    fill
+                    titleMessage="Use your dark knowledge to fulfil your personal goal:"
+                    objectives={objectives}
+                  />
+                </Stack.Item>
+              ))}
           </Stack>
         </Section>
       </Stack.Item>
@@ -292,7 +311,7 @@ export const AntagInfoHeretic = (props, context) => {
   const [currentTab, setTab] = useLocalState(context, 'currentTab', 0);
 
   return (
-    <Window width={675} height={625}>
+    <Window width={675} height={635}>
       <Window.Content
         style={{
           'background-image': 'none',

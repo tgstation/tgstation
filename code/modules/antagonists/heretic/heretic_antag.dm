@@ -23,6 +23,7 @@
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
+	can_assign_self_objectives = TRUE
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -82,6 +83,7 @@
 	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
+	data["can_change_objectives"] = can_assign_self_objectives
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
@@ -143,6 +145,9 @@
 
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			knowledge_points -= initial(researched_path.cost)
+			return TRUE
+		if("reject_ascension")
+			submit_player_objective(retain_escape = FALSE)
 			return TRUE
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
@@ -654,6 +659,8 @@
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */
 /datum/antagonist/heretic/proc/can_ascend()
+	if(!can_assign_self_objectives)
+		return FALSE // We spurned the offer of the Mansus :(
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
 			return FALSE
