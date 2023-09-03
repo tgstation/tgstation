@@ -27,6 +27,7 @@
 	return isliving(cast_on)
 
 /datum/action/cooldown/spell/caretaker/cast(atom/cast_on)
+	. = ..()
 	for(var/mob/living/alive in orange(5, owner))
 		if(alive.stat != DEAD && alive.client)
 			owner.balloon_alert(owner, "there are heathens!")

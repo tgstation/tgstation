@@ -22,6 +22,9 @@
 		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) - list(/mob/living/simple_animal/hostile/heretic_summon/armsy/prime, /mob/living/simple_animal/hostile/heretic_summon/armsy)
 	ascendee = ascendant
 	RegisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE, PROC_REF(master_examine))
+	INVOKE_ASYNC(src, PROC_REF(poll_ghosts))
+
+/obj/structure/knock_tear/proc/poll_ghosts()
 	var/list/candidates = poll_ghost_candidates("Would you like to be a random eldritch monster attacking the crew?", ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, POLL_IGNORE_HERETIC_MONSTER)
 	while(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick_n_take(candidates)
