@@ -154,4 +154,3 @@
 	. += "The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
 	attenuated to launch kinetic bolts that resonate with glass in light fixtures and power connections in human-held flashlights - and <i>only</i> those. \
 	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor."
-	return .
