@@ -16,7 +16,7 @@
 	var/surgical_tray_overlay = "retractor_normal"
 
 /obj/item/retractor/get_surgery_tool_overlay(tray_extended)
-   return surgical_tray_overlay
+	return surgical_tray_overlay
 
 /obj/item/retractor/augment
 	desc = "Micro-mechanical manipulator for retracting stuff."
@@ -43,7 +43,7 @@
 	var/surgical_tray_overlay = "hemostat_normal"
 
 /obj/item/hemostat/get_surgery_tool_overlay(tray_extended)
-   return surgical_tray_overlay
+	return surgical_tray_overlay
 
 /obj/item/hemostat/augment
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
@@ -70,7 +70,7 @@
 	var/surgical_tray_overlay = "cautery_normal"
 
 /obj/item/cautery/get_surgery_tool_overlay(tray_extended)
-   return surgical_tray_overlay
+	return surgical_tray_overlay
 
 /obj/item/cautery/ignition_effect(atom/ignitable_atom, mob/user)
 	. = span_notice("[user] touches the end of [src] to \the [ignitable_atom], igniting it with a puff of smoke.")
@@ -158,7 +158,7 @@
 	AddElement(/datum/element/eyestab)
 
 /obj/item/surgicaldrill/get_surgery_tool_overlay(tray_extended)
-   return surgical_tray_overlay
+	return surgical_tray_overlay
 
 /obj/item/surgicaldrill/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -211,7 +211,7 @@
 	AddElement(/datum/element/eyestab)
 
 /obj/item/scalpel/get_surgery_tool_overlay(tray_extended)
-   return surgical_tray_overlay
+	return surgical_tray_overlay
 
 /obj/item/scalpel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -260,7 +260,7 @@
 	//saws are very accurate and fast at butchering
 
 /obj/item/circular_saw/get_surgery_tool_overlay(tray_extended)
-   return surgical_tray_overlay
+	return surgical_tray_overlay
 
 /obj/item/circular_saw/augment
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."
@@ -561,7 +561,7 @@
 	toolspeed = 1
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
-   return "bonesetter" + (tray_extended ? "" : "_out")
+	return "bonesetter" + (tray_extended ? "" : "_out")
 
 /obj/item/blood_filter
 	name = "blood filter"
@@ -581,7 +581,7 @@
 	var/list/whitelist = list()
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
-   return "filter"
+	return "filter"
 
 /obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
