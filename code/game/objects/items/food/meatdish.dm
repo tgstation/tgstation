@@ -55,6 +55,7 @@
 	name = "imitation carp fillet"
 	desc = "Almost just like the real thing, kinda."
 	cell_line = null
+	starting_reagent_purity = 0.3
 
 /obj/item/food/fishmeat/moonfish
 	name = "moonfish fillet"
