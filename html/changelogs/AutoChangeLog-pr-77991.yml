@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscdel: "Removed the threshold for confusion symptom that adds illiteracy to the disease."
-  - balance: "Clamps confusion symptom's confusion to a maximum of 30 seconds."
-  - qol: "Confusion as a debuff no longer guarantees random movement if you're resting."
