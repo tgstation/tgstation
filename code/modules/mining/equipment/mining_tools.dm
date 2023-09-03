@@ -218,7 +218,7 @@
 	wound_bonus = 10
 
 /obj/item/trench_tool/get_all_tool_behaviours()
-   return list(TOOL_MINING, TOOL_SHOVEL, TOOL_WRENCH)
+	return list(TOOL_MINING, TOOL_SHOVEL, TOOL_WRENCH)
 
 /obj/item/trench_tool/Initialize(mapload)
 	. = ..()
@@ -323,8 +323,8 @@
 	/// Wether we knock down and launch away out enemies when we attack.
 	var/do_launch = TRUE
 
-/obj/item/shovel/giant_wrench/get_all_tool_behaviours()
-   return list(TOOL_SHOVEL, TOOL_WRENCH)
+/obj/item/shovel/giant_wrench/get_all_tool_behaviors()
+	return list(TOOL_SHOVEL, TOOL_WRENCH)
 
 /datum/armor/giant_wrench
 	acid = 30

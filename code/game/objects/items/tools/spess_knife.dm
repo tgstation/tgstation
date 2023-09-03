@@ -24,7 +24,7 @@
 	var/wrong_tool_prob = 10
 
 /obj/item/spess_knife/get_all_tool_behaviours()
-   return list(TOOL_KNIFE, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	return list(TOOL_KNIFE, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 
 /obj/item/spess_knife/Initialize(mapload)
 	. = ..()

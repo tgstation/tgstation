@@ -364,7 +364,7 @@
 	toolspeed = 1.2  // gotta have some downside
 
 /obj/item/pen/screwdriver/get_all_tool_behaviours()
-   return list(TOOL_SCREWDRIVER)
+	return list(TOOL_SCREWDRIVER)
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()

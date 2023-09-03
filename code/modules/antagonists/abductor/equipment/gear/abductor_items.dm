@@ -632,7 +632,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/active_toolset = TOOLSET_MEDICAL
 
 /obj/item/abductor/alien_omnitool/get_all_tool_behaviours()
-   return list(
+	return list(
 	TOOL_BLOODFILTER,
 	TOOL_BONESET,
 	TOOL_CAUTERY,
