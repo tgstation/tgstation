@@ -83,7 +83,7 @@
 	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
-	data["can_change_objectives"] = can_assign_self_objectives
+	data["can_change_objective"] = can_assign_self_objectives
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
@@ -146,9 +146,19 @@
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			knowledge_points -= initial(researched_path.cost)
 			return TRUE
-		if("reject_ascension")
-			submit_player_objective(retain_escape = FALSE)
-			return TRUE
+
+/datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
+	if (isnull(owner) || isnull(owner.current))
+		return
+	var/confirmed = tgui_alert(
+		owner.current,
+		message = "Are you sure? You will no longer be able to Ascend.",
+		title = "Reject the call?",
+		buttons = list("Yes", "No"),
+	) == "Yes"
+	if (!confirmed)
+		return
+	return ..()
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
 	if(user.stat == DEAD)

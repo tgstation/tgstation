@@ -1006,16 +1006,6 @@
 	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
-/datum/antagonist/changeling/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
-	switch(action)
-		if("change_objectives")
-			submit_player_objective()
-			return TRUE
-
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
 	name = "\improper Headslug Changeling"

@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
-import { Stack } from '../../components';
+import { useBackend } from '../../backend';
+import { Button, Stack } from '../../components';
 
 export type Objective = {
   // The title of the objective, not actually displayed so optional
@@ -52,5 +53,40 @@ export const ObjectivePrintout = (props: ObjectivePrintoutProps, context) => {
       </Stack.Item>
       {!!objectiveFollowup && <Stack.Item>{objectiveFollowup}</Stack.Item>}
     </Stack>
+  );
+};
+
+type ReplaceObjectivesProps = {
+  // Whether we can actually use this button
+  can_change_objective: BooleanLike;
+  // What do we call our button
+  button_title: string;
+  // What colour is our button
+  button_colour: string;
+  // Tooltip to display on our button
+  button_tooltip?: string;
+};
+
+export const ReplaceObjectivesButton = (
+  props: ReplaceObjectivesProps,
+  context
+) => {
+  const {
+    can_change_objective,
+    button_title,
+    button_colour,
+    button_tooltip = 'Replace your existing objectives with a custom one. This action can only be taken once',
+  } = props;
+  const { act } = useBackend(context);
+  if (!can_change_objective) {
+    return null;
+  }
+  return (
+    <Button
+      color={button_colour}
+      content={button_title}
+      tooltip={button_tooltip}
+      onClick={() => act('change_objectives')}
+    />
   );
 };

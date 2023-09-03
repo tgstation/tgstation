@@ -124,6 +124,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 		ui = new(user, src, ui_name, name)
 		ui.open()
 
+/datum/antagonist/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("change_objectives")
+			submit_player_objective()
+			return TRUE
+
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
 

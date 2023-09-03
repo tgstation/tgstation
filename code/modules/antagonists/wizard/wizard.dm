@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	ui_name = "AntagInfoWizard"
 	suicide_cry = "FOR THE FEDERATION!!"
 	preview_outfit = /datum/outfit/wizard
+	can_assign_self_objectives = TRUE
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -204,7 +205,17 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		"remaining" = GRAND_RITUAL_FINALE_COUNT - completed,
 		"next_area" = ritual ? initial(ritual.target_area.name) : "",
 	)
+	data["can_change_objective"] = can_assign_self_objectives
 	return data
+
+/datum/antagonist/wizard/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("change_objectives")
+			submit_player_objective()
+			return TRUE
 
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
@@ -253,6 +264,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
 	antag_hud_name = "apprentice"
+	can_assign_self_objectives = FALSE
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
 	outfit_type = /datum/outfit/wizard/apprentice
@@ -370,6 +382,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	show_in_antagpanel = FALSE
 	outfit_type = /datum/outfit/wizard/academy
 	move_to_lair = FALSE
+	can_assign_self_objectives = FALSE
 
 /datum/antagonist/wizard/academy/assign_ritual()
 	return // Has other duties to be getting on with

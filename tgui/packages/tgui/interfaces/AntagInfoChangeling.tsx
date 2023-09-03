@@ -3,7 +3,7 @@ import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
 const hivestyle = {
   fontWeight: 'bold',
@@ -132,16 +132,11 @@ const IntroductionSection = (props, context) => {
           <ObjectivePrintout
             objectives={objectives}
             objectiveFollowup={
-              can_change_objective && (
-                <Button
-                  color={'green'}
-                  content={'Adapt Directives'}
-                  tooltip={multiline`
-                    Replace your existing objectives with a custom one.
-                    This action can only be taken once.`}
-                  onClick={() => act('change_objectives')}
-                />
-              )
+              <ReplaceObjectivesButton
+                can_change_objective={can_change_objective}
+                button_title={'Adapt Directives'}
+                button_colour={'green'}
+              />
             }
           />
         </Stack.Item>
