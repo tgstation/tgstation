@@ -9,6 +9,7 @@
 	if(istype(bumpee) && !IS_HERETIC_OR_MONSTER(bumpee))
 		var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
 		bumpee.safe_throw_at(throwtarget, 10, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
+		visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
 
 /obj/item/heretic_lintel
 	name = "consecrated lintel"
