@@ -215,3 +215,37 @@
 
 /obj/item/tank/internals/generic/populate_gas()
 	return
+
+/*
+ * Funny internals
+ */
+/obj/item/tank/internals/emergency_oxygen/engi/clown
+	name = "funny emergency oxygen tank"
+	desc = "Used for emergencies. Contains very little oxygen with an extra of a funny gas, so try to conserve it until you actually need it."
+	icon_state = "emergency_clown"
+	inhand_icon_state = "emergency_clown"
+	worn_icon_state = "emergency_clown"
+	tank_holder_icon_state = "holder_emergency_clown"
+	distribute_pressure = TANK_CLOWN_RELEASE_PRESSURE
+
+/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o
+
+/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o/populate_gas()
+	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.95
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.05
+
+/obj/item/tank/internals/emergency_oxygen/engi/clown/bz
+
+/obj/item/tank/internals/emergency_oxygen/engi/clown/bz/populate_gas()
+	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/bz)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.9
+	air_contents.gases[/datum/gas/bz][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.1
+
+/obj/item/tank/internals/emergency_oxygen/engi/clown/helium
+	distribute_pressure = TANK_CLOWN_RELEASE_PRESSURE + 2
+
+/obj/item/tank/internals/emergency_oxygen/engi/clown/helium/populate_gas()
+	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/helium)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.75
+	air_contents.gases[/datum/gas/helium][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.25
