@@ -102,18 +102,10 @@
 	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/bed/medical/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(held_item)
-		if(held_item.tool_behaviour != TOOL_WRENCH || flags_1 & NODECONSTRUCT_1)
-			return
-
-		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
-		return CONTEXTUAL_SCREENTIP_SET
+	. = ..()
 
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "[anchored ? "Release brakes" : "Apply brakes"]"
-	if(occupied)
-		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
-
-	else if(!isnull(foldable_type))
+	if(!isnull(foldable_type) && !buckled)
 		context[SCREENTIP_CONTEXT_RMB] = "Fold up"
 
 	return CONTEXTUAL_SCREENTIP_SET
