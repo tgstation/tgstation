@@ -43,7 +43,7 @@
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
 		return
-	if(user.get_item_by_slot(user.getBackSlot()) != src)
+	if(slot_flags & ITEM_SLOT_BACK && user.get_item_by_slot(user.getBackSlot()) != src)
 		to_chat(user, span_warning("The watertank must be worn properly to use!"))
 		return
 	if(user.incapacitated())
@@ -221,7 +221,7 @@
 
 /obj/item/watertank/atmos/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/water, 200)
+	reagents.add_reagent(/datum/reagent/water, volume)
 
 /obj/item/watertank/atmos/make_noz()
 	return new /obj/item/extinguisher/mini/nozzle(src)
@@ -390,29 +390,6 @@
 	slot_flags = NONE
 	volume = 50
 	slowdown = 0
-
-/obj/item/watertank/atmos/portable/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/water, volume)
-
-/obj/item/watertank/atmos/portable/toggle_mister(mob/living/user)
-	if(!istype(user))
-		return
-
-	if(user.incapacitated())
-		return
-
-	if(QDELETED(noz))
-		noz = make_noz()
-		RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
-	if(noz in src)
-		//Detach the nozzle into the user's hands
-		if(!user.put_in_hands(noz))
-			to_chat(user, span_warning("You need a free hand to hold the mister!"))
-			return
-	else
-		//Remove from their hands and put back "into" the tank
-		remove_noz()
 
 /obj/item/watertank/atmos/portable/make_noz()
 	return new /obj/item/extinguisher/mini/nozzle/portable(src)
