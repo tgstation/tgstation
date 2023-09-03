@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - rscadd: "Atmos Tech now have new drip and will spawn with Atmos Overalls to protect their clothing from gas leaks! (It will actually not protect you against fire or leaks, but hey! It's the thought that counts!!)"
