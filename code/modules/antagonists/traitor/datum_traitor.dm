@@ -99,8 +99,10 @@
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
-	if(uplink_handler)
+	if(!isnull(uplink_handler))
 		uplink_handler.has_objectives = FALSE
+		uplink_handler.can_replace_objectives = null
+		uplink_handler.replace_objectives = null
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
