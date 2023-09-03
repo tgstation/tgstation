@@ -21,6 +21,7 @@
 	if(!monster_types)
 		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) - list(/mob/living/simple_animal/hostile/heretic_summon/armsy/prime, /mob/living/simple_animal/hostile/heretic_summon/armsy)
 	ascendee = ascendant
+	RegisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE, PROC_REF(master_examine))
 	var/list/candidates = poll_ghost_candidates("Would you like to be a random eldritch monster attacking the crew?", ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, POLL_IGNORE_HERETIC_MONSTER)
 	while(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick_n_take(candidates)
@@ -52,9 +53,16 @@
 	kill_all_your_friends.completed = TRUE
 	woohoo_free_antag.objectives += kill_all_your_friends
 
+/obj/structure/knock_tear/proc/master_examine(datum/source, mob/examinee, list/text) //if we ascended it should be obvious that the ascendee is the heretic but some people are brainlets
+	SIGNAL_HANDLER
+	var/datum/antagonist/heretic_monster/monster = IS_HERETIC_MONSTER(examinee)
+	if(monster && monster.master == ascendee)
+		text += span_hypnophrase("This is your master!")
+
 /obj/structure/knock_tear/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
 /obj/structure/knock_tear/Destroy(force) //this shouldnt happen but hey
 	. = ..()
+	UnregisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE)
 	ascendee = null
