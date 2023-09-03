@@ -67,7 +67,7 @@
  */
 /datum/security_level/red
 	name = "red"
-	sound = 'sound/misc/notice1.ogg' // The same angry alarm
+	sound = 'sound/misc/notice3.ogg' // More angry alarm
 	number_level = SEC_LEVEL_RED
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
@@ -80,7 +80,7 @@
  */
 /datum/security_level/delta
 	name = "delta"
-	sound = 'sound/misc/notice1.ogg' // The same angry alarm, again
+	sound = 'sound/misc/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
 	shuttle_call_time_mod = 0.25

@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 //				message = L.treat_message(message)["message"] MONKESTATION EDIT CHANGE OLD -- we dont have TTS
 				message = L.treat_message(message) // MONKESTATION EDIT CHANGE NEW
 
-			minor_announce(message, "[department] Announcement:", html_encode = FALSE)
+			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/misc/announce_dig.ogg')
 			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
