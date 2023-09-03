@@ -19,7 +19,7 @@
 	. = ..()
 	transform *= 3
 	if(!monster_types)
-		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) - list(/mob/living/simple_animal/hostile/heretic_summon/armsy/prime, /mob/living/simple_animal/hostile/heretic_summon/armsy)
+		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) - /mob/living/simple_animal/hostile/heretic_summon/armsy/prime
 	if(ascendant)
 		ascendee = ascendant
 		RegisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE, PROC_REF(master_examine))
