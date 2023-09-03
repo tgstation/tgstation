@@ -1,0 +1,5 @@
+author: "CoiledLamb"
+delete-after: True
+changes:
+  - rscadd: "adds medical carts and surgery trays"
+  - image: "gives the surgery razor a unique sprite"
