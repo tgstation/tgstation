@@ -191,17 +191,15 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		return FALSE
 
 	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
-		var/didthegamerwin = TRUE
 		for(var/datum/antagonist/antag_datums as anything in human_mob.mind.antag_datums)
+			if(initial(antag_datums.can_assign_self_objectives) && !antag_datums.can_assign_self_objectives)
+				return FALSE // You don't get a prize if you picked your own objective, you can't fail those
 			for(var/datum/objective/objective_datum as anything in antag_datums.objectives)
 				if(!objective_datum.check_completion())
-					didthegamerwin = FALSE
-		if(!didthegamerwin)
-			return FALSE
+					return FALSE
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
 	else if(considered_escaped(human_mob.mind))
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
-
 
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
