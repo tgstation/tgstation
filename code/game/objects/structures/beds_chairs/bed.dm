@@ -254,7 +254,6 @@
 		to_chat(user, span_warning("The dock is empty!"))
 
 /// Dog bed
-
 /obj/structure/bed/dogbed
 	name = "dog bed"
 	icon_state = "dogbed"
