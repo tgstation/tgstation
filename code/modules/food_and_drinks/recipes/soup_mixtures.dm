@@ -47,7 +47,7 @@
 	/// Tracks the total number of ingredient items needed, for calculating multipliers. Only done once in first on_reaction
 	VAR_FINAL/total_ingredient_max
 
-	/// Multiplier applied to all reagents transfered from reagents to pot when the soup is cooked
+	/// Multiplier applied to all reagents transferred from reagents to pot when the soup is cooked
 	var/ingredient_reagent_multiplier = 0.8
 	/// What percent of nutriment is converted to "soup" (what percent does not stay final product)?
 	/// Raise this if your ingredients have a lot of nutriment and is overpowering your other reagents

@@ -11,9 +11,9 @@
 
 	///Output pressure target
 	var/target_pressure = ONE_ATMOSPHERE
-	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	///Ratio between the node 1 and 2, determines the amount of gas transferred, sums up to 1
 	var/node1_concentration = 0.5
-	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	///Ratio between the node 1 and 2, determines the amount of gas transferred, sums up to 1
 	var/node2_concentration = 0.5
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 

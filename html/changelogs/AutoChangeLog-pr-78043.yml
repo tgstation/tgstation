@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Prevents admins from accidentally gibbing people by closing a confirmation window."
