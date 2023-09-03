@@ -38,7 +38,7 @@
 /obj/item/surgery_tray/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
-	create_storage(storage_type = /datum/storage/medicart)
+	create_storage(storage_type = /datum/storage/surgery_tray)
 	populate_contents()
 	register_context()
 	set_tray_mode(is_portable)
@@ -156,7 +156,7 @@
 
 /obj/item/surgery_tray/dump_contents()
 	var/atom/drop_point = drop_location()
-	for(var/atom/movable/tool in contents)
+	for(var/atom/movable/tool as anything in contents)
 		tool.forceMove(drop_point)
 
 /obj/item/surgery_tray/deconstruct(disassembled = TRUE)
@@ -183,12 +183,12 @@
 		/obj/item/surgicaldrill,
 	)
 
-/datum/storage/medicart
+/datum/storage/surgery_tray
 	max_total_storage = 30
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_slots = 14
 
-/datum/storage/medicart/New()
+/datum/storage/surgery_tray/New()
 	. = ..()
 	set_holdable(list(
 		/obj/item/blood_filter,
