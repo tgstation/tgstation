@@ -155,13 +155,13 @@
 	return TRUE
 
 /obj/item/surgery_tray/dump_contents()
-    var/atom/drop_point = drop_location()
-    for(var/atom/movable/tool in contents)
-        tool.forceMove(drop_point)
+	var/atom/drop_point = drop_location()
+	for(var/atom/movable/tool in contents)
+		tool.forceMove(drop_point)
 
 /obj/item/surgery_tray/deconstruct(disassembled = TRUE)
-    dump_contents()
-    return ..()
+	dump_contents()
+	return ..()
 
 /obj/item/surgery_tray/morgue
 	name = "autopsy tray"

@@ -107,8 +107,8 @@
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = 0 SECONDS
 
-/obj/item/crowbar/power/get_all_tool_behaviours()
-   return list(TOOL_CROWBAR, TOOL_WIRECUTTER)
+/obj/item/crowbar/power/get_all_tool_behaviors()
+	return list(TOOL_CROWBAR, TOOL_WIRECUTTER)
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
