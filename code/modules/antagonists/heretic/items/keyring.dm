@@ -132,9 +132,9 @@
 	if(istype(target, /obj/machinery/door))
 		if(link)
 			make_portal(user, link, target)
+			to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
 			link = null
 			balloon_alert(user, "link 2/2")
-			to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
 		else
 			link = target
 			balloon_alert(user, "link 1/2")
