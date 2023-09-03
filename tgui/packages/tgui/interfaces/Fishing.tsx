@@ -335,7 +335,7 @@ class FishingMinigame extends Component<
         acceleration = -acceleration_up;
         break;
       case ReelingState.Idle:
-        acceleration = this.bidirectional
+        acceleration = this.bidirectional && newVelocity > 0
           ? -acceleration_down
           : acceleration_down;
         break;
@@ -354,9 +354,9 @@ class FishingMinigame extends Component<
      * towards 0 velocity, making it less slippery, thus easier to control.
      */
     if (newVelocity > 0 && velocity_change < 0) {
-      newVelocity += Math.min(-newVelocity, velocity_change * brake_coeff);
-    } else if (newVelocity < 0 && velocity_change > 0) {
       newVelocity += Math.max(-newVelocity, velocity_change * brake_coeff);
+    } else if (newVelocity < 0 && velocity_change > 0) {
+      newVelocity += Math.min(-newVelocity, velocity_change * brake_coeff);
     }
 
     newVelocity += velocity_change;
