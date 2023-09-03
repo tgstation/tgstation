@@ -70,7 +70,6 @@
 				occur_text = "is outright incinerated, falling to dust!"
 	else
 		var/bone_text = get_internal_description()
-
 		var/tissue_text = get_external_description()
 
 		switch(wounding_type)
@@ -84,19 +83,3 @@
 				occur_text = "is completely incinerated, falling to dust!"
 
 	return occur_text
-
-/obj/item/bodypart/proc/get_external_description()
-	if (biological_state & BIO_FLESH)
-		return "flesh"
-	if (biological_state & BIO_WIRED)
-		return "wiring"
-
-	return "error"
-
-/obj/item/bodypart/proc/get_internal_description()
-	if (biological_state & BIO_BONE)
-		return "bone"
-	if (biological_state & BIO_METAL)
-		return "metal"
-
-	return "error"
