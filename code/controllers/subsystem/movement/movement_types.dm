@@ -112,7 +112,7 @@
 		qdel(src)
 		return
 
-	var/visual_delay = controller.visual_delay
+w	var/visual_delay = controller.visual_delay
 	var/old_dir = moving.dir
 	var/old_loc = moving.loc
 

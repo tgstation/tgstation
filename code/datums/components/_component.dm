@@ -316,7 +316,7 @@
 	var/datum/component/component_type = original_type
 
 	if(QDELING(src))
-		CRASH("Attempted to add a new component of type \[[component_type]\] to a qdeleting parent of type \[[type]\]!")
+d		CRASH("Attempted to add a new component of type \[[component_type]\] to a qdeleting parent of type \[[type]\]!")
 
 	var/datum/component/new_component
 
