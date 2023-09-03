@@ -388,7 +388,7 @@
 	worn_icon_state = "waterbackpackatmos"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = NONE
-	volume = 100
+	volume = 50
 	slowdown = 0
 
 /obj/item/watertank/atmos/portable/Initialize(mapload)
@@ -430,15 +430,15 @@
 		return ..()
 
 /obj/item/extinguisher/mini/nozzle/portable
-	desc = "A heavy duty nozzle attached to a firefighter's backpack tank."
+	desc = "A heavy duty nozzle attached to a firefighter's portable tank."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "atmos_nozzle"
 	inhand_icon_state = "nozzleatmos"
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
-	max_water = 100
-	launcher_cost = 40
-	launcher_size = 3
+	max_water = 50
+	launcher_cost = 25
+	launcher_size = 2
 
 #undef EXTINGUISHER
 #undef RESIN_LAUNCHER
