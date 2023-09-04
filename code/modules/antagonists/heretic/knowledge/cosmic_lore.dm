@@ -228,9 +228,9 @@
 		The Star Gazer has an aura that will heal you and damage opponents. \
 		Star Touch can now teleport you to the Star Gazer when activated in your hand."
 	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
-	I clung on to them, they would protect me, and I would protect it. \
-	I closed my eyes with my head laid against their form. I was safe. \
-	WITNESS MY ASCENSION!"
+		I clung on to them, they would protect me, and I would protect it. \
+		I closed my eyes with my head laid against their form. I was safe. \
+		WITNESS MY ASCENSION!"
 	route = PATH_COSMIC
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(
