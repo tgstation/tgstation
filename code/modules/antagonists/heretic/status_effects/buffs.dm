@@ -251,7 +251,7 @@
 	owner.density = FALSE
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
-	RegisterSignal(owner, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(nullrod_handler))
+	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
 	return TRUE
 
 /datum/status_effect/caretaker_refuge/on_remove()
@@ -262,7 +262,7 @@
 	owner.density = initial(owner.density)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
 	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
-	UnregisterSignal(owner, COMSIG_ATOM_AFTER_ATTACKEDBY)
+	UnregisterSignal(owner, COMSIG_ATOM_HOLYATTACK)
 	owner.visible_message(
 			span_warning("The haze around [owner] disappears, leaving them materialized!"),
 			span_notice("You exit the refuge."),
@@ -273,10 +273,9 @@
 
 /datum/status_effect/caretaker_refuge/proc/nullrod_handler(datum/source, obj/item/weapon)
 	SIGNAL_HANDLER
-	if(weapon.GetComponent(/datum/component/anti_magic))
-		playsound(get_turf(owner), 'sound/effects/curse1.ogg', 80, TRUE)
-		owner.visible_message(span_warning("[weapon] repels the haze around [owner]!"))
-		owner.remove_status_effect(type)
+	playsound(get_turf(owner), 'sound/effects/curse1.ogg', 80, TRUE)
+	owner.visible_message(span_warning("[weapon] repels the haze around [owner]!"))
+	owner.remove_status_effect(type)
 
 /datum/status_effect/caretaker_refuge/proc/on_focus_lost()
 	SIGNAL_HANDLER
