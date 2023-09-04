@@ -11,7 +11,7 @@
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
-	wound_flags = (ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE | CAN_BE_GRASPED)
 
 	default_scar_file = FLESH_SCAR_FILE
 
@@ -247,7 +247,7 @@
 	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE

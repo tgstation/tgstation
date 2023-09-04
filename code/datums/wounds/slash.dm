@@ -22,7 +22,7 @@
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
-	wound_flags = (ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
 	default_scar_file = FLESH_SCAR_FILE
 
@@ -381,7 +381,7 @@
 	demotes_to = /datum/wound/slash/flesh/severe
 	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
 	scar_keyword = "slashcritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 
 /datum/wound/slash/flesh/critical/update_descriptions()
 	if (!limb.can_bleed())

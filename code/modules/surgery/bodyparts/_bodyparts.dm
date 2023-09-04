@@ -1141,9 +1141,6 @@
 	for(var/datum/wound/iter_wound as anything in wounds)
 		cached_bleed_rate += iter_wound.blood_flow
 
-	if(!cached_bleed_rate)
-		QDEL_NULL(grasped_by)
-
 	// Our bleed overlay is based directly off bleed_rate, so go aheead and update that would you?
 	if(cached_bleed_rate != old_bleed_rate)
 		update_part_wound_overlay()

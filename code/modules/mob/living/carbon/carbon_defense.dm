@@ -711,14 +711,16 @@
 		return ..()
 
 	var/obj/item/bodypart/grasped_part = get_bodypart(zone_selected)
-	if(!grasped_part?.get_modified_bleed_rate())
+	if(!grasped_part?.can_be_grasped())
 		return
 	var/starting_hand_index = active_hand_index
 	if(starting_hand_index == grasped_part.held_index)
 		to_chat(src, span_danger("You can't grasp your [grasped_part.name] with itself!"))
 		return
 
-	to_chat(src, span_warning("You try grasping at your [grasped_part.name], trying to stop the bleeding..."))
+	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
+	to_chat(src, span_warning("You try grasping at your [grasped_part.name][bleeding_text]..."))
 	if(!do_after(src, 0.75 SECONDS))
 		to_chat(src, span_danger("You fail to grasp your [grasped_part.name]."))
 		return
@@ -729,6 +731,17 @@
 		QDEL_NULL(grasp)
 		return
 	grasp.grasp_limb(grasped_part)
+
+/// If TRUE, the owner of this bodypart can try grabbing it to slow bleeding, as well as various other effects.
+/obj/item/bodypart/proc/can_be_grasped()
+	if (get_modified_bleed_rate())
+		return TRUE
+
+	for (var/datum/wound/iterated_wound as anything in wounds)
+		if (iterated_wound.wound_flags & CAN_BE_GRASPED)
+			return TRUE
+
+	return FALSE
 
 /// an abstract item representing you holding your own limb to staunch the bleeding, see [/mob/living/carbon/proc/grabbedby] will probably need to find somewhere else to put this.
 /obj/item/hand_item/self_grasp
@@ -774,7 +787,9 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
 	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
-	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
+	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
+	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
 
