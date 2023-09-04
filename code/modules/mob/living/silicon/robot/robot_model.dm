@@ -232,7 +232,7 @@
 
 /obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	if(HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
-		robot.balloon_alert("can't transform right now!")
+		robot.balloon_alert(robot, "can't transform right now!")
 		return FALSE
 	if(islist(borg_skins) && !forced)
 		var/mob/living/silicon/robot/cyborg = loc
