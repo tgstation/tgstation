@@ -88,4 +88,4 @@
 
 /datum/action/cooldown/spell/caretaker/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_warning("Theyre enveloped in an unholy haze!")
+	examine_list += span_warning("[user.p_Theyre()] enveloped in an unholy haze!")
