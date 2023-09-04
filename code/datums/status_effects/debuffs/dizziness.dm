@@ -3,7 +3,9 @@
 	tick_interval = 2 SECONDS
 	alert_type = null
 	remove_on_fullheal = TRUE
+	/// Is this status effect currently manipulating the screen of the victim?
 	var/applying_dizziness = FALSE
+	var/base_duration = DIZZINESS_BASE_CAMERA_SHAKE_DURATION
 
 /datum/status_effect/dizziness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -52,9 +54,11 @@
 	// Want to be able to offset things by the time the animation should be "playing" at
 	var/time = world.time
 	var/delay = 0
+	var/delay_increment = DIZZINESS_BASE_CAMERA_SHAKE_DURATION/DIZZINESS_AMOUNT_OF_CAMERA_SHAKES
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 
+	addtimer(CALLBACK(src, PROC_REF(dizziness_done)), DIZZINESS_BASE_CAMERA_SHAKE_DURATION)
 	// This shit is annoying at high strengthvar/pixel_x_diff = 0
 	var/list/view_range_list = getviewsize(owner.client.view)
 	var/view_range = view_range_list[1]
@@ -69,8 +73,7 @@
 	// Relative animations are weird, so we do actually need this
 	applying_dizziness = TRUE
 	animate(owner.client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-	delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
-	addtimer(CALLBACK(src, PROC_REF(dizziness_done)), delay + 3)
+	delay += delay_increment // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
 
 	x_diff = amplitude * sin(next_amount * (time + delay))
 	y_diff = amplitude * cos(next_amount * (time + delay))
@@ -81,5 +84,6 @@
 	// Now we reset back to our old pixel_x/y, since these animates are relative
 	animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
 
+/// Timer proc used to unset our applying_dizziness var when we are done messing with our victim's screen.
 /datum/status_effect/dizziness/proc/dizziness_done()
 	applying_dizziness = FALSE

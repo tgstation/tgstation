@@ -114,28 +114,30 @@
 
 	var/picked_damage = LERP(processing_shock_power_per_second_min, processing_shock_power_per_second_max, rand())
 	processing_shock_power_this_tick += (picked_damage * damage_mult)
-	if (processing_shock_power_this_tick > 1)
-		var/stun_chance = (processing_shock_stun_chance * intensity_mult) * base_mult
-		var/spark_chance = (processing_shock_spark_chance * intensity_mult) * base_mult
+	if (processing_shock_power_this_tick <= 1)
+		return
 
-		var/should_stun = SPT_PROB(stun_chance, seconds_per_tick)
-		var/should_message = SPT_PROB(process_shock_message_chance, seconds_per_tick)
+	var/stun_chance = (processing_shock_stun_chance * intensity_mult) * base_mult
+	var/spark_chance = (processing_shock_spark_chance * intensity_mult) * base_mult
 
-		zap(victim,
-			processing_shock_power_this_tick,
-			stun = should_stun,
-			spark = SPT_PROB(spark_chance, seconds_per_tick),
-			animation = should_stun, message = FALSE,
-			message = should_stun,
-			tell_victim_if_no_message = should_message,
-			ignore_immunity = TRUE,
-			jitter_time = seconds_per_tick,
-			stutter_time = 0,
-			delay_stun = TRUE,
-			knockdown = TRUE,
-			ignore_gloves = TRUE
-		)
-		processing_shock_power_this_tick = 0
+	var/should_stun = SPT_PROB(stun_chance, seconds_per_tick)
+	var/should_message = SPT_PROB(process_shock_message_chance, seconds_per_tick)
+
+	zap(victim,
+		processing_shock_power_this_tick,
+		stun = should_stun,
+		spark = SPT_PROB(spark_chance, seconds_per_tick),
+		animation = should_stun, message = FALSE,
+		message = should_stun,
+		tell_victim_if_no_message = should_message,
+		ignore_immunity = TRUE,
+		jitter_time = seconds_per_tick,
+		stutter_time = 0,
+		delay_stun = TRUE,
+		knockdown = TRUE,
+		ignore_gloves = TRUE
+	)
+	processing_shock_power_this_tick = 0
 
 /datum/wound/electrical_damage/proc/get_progress_mult()
 	var/progress_mult = get_base_mult() * seconds_per_intensity_mult
@@ -310,8 +312,6 @@
 				user?.electrocute_act(max(process_shock_spark_count_max * get_intensity_mult(), 1), limb)
 				set_wiring_status(TRUE, user)
 
-			//suturing_item.use(1)
-
 		if (fixed())
 			return TRUE
 	return TRUE
@@ -359,10 +359,9 @@
 	return TRUE
 
 /datum/wound/electrical_damage/proc/set_wiring_status(reset, mob/user)
-	if (!wiring_reset && reset)
-		if (user)
-			var/your_or_other = (user == victim ? "your" : "[user]'s")
-			to_chat(user, span_green("The wires in [your_or_other]'s [limb.plaintext_zone] are set! You can now safely use wires/sutures."))
+	if (!wiring_reset && reset & !isnull(user))
+		var/your_or_other = (user == victim ? "your" : "[user]'s")
+		to_chat(user, span_green("The wires in [your_or_other]'s [limb.plaintext_zone] are set! You can now safely use wires/sutures."))
 	wiring_reset = reset
 
 /datum/wound/electrical_damage/proc/remove_if_fixed()
@@ -379,20 +378,21 @@
 	return (min((intensity / processing_full_shock_threshold), 1))
 
 /datum/wound/electrical_damage/proc/zap(
-		mob/living/target,
-		damage,
-		coeff = 1,
-		stun,
-		spark = TRUE,
-		animation = TRUE,
-		message = TRUE,
-		ignore_immunity = FALSE,
-		delay_stun = FALSE,
-		knockdown = FALSE,
-		ignore_gloves = FALSE,
-		tell_victim_if_no_message = TRUE,
-		jitter_time = 20 SECONDS,
-		stutter_time = 4 SECONDS)
+	mob/living/target,
+	damage,
+	coeff = 1,
+	stun,
+	spark = TRUE,
+	animation = TRUE,
+	message = TRUE,
+	ignore_immunity = FALSE,
+	delay_stun = FALSE,
+	knockdown = FALSE,
+	ignore_gloves = FALSE,
+	tell_victim_if_no_message = TRUE,
+	jitter_time = 20 SECONDS,
+	stutter_time = 4 SECONDS,
+)
 
 	var/flags = NONE
 	if (!stun)
@@ -419,17 +419,19 @@
 /datum/wound/electrical_damage/proc/can_zap(atom/target = victim, atom/connecting_item, uses_victim_hands, uses_target_hands)
 	if (!isliving(target))
 		return FALSE
-	if (target != victim)
-		if (!isnull(connecting_item))
+	if (target == victim)
+		return TRUE
+
+	if (!isnull(connecting_item))
+		return FALSE
+	if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE))
+		return FALSE
+	if (uses_victim_hands && victim.wearing_shock_proof_gloves())
+		return FALSE
+	if (uses_target_hands && iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		if (carbon_target.wearing_shock_proof_gloves())
 			return FALSE
-		if (HAS_TRAIT(target, TRAIT_SHOCKIMMUNE))
-			return FALSE
-		if (uses_victim_hands && victim.wearing_shock_proof_gloves())
-			return FALSE
-		if (uses_target_hands && iscarbon(target))
-			var/mob/living/carbon/carbon_target = target
-			if (carbon_target.wearing_shock_proof_gloves())
-				return FALSE
 
 	return TRUE
 
@@ -534,7 +536,7 @@
 	occur_text = "lets out a violent \"zhwarp\" sound as angry electric arcs attack the surrounding air"
 	examine_desc = "has lots of wires mauled wires sticking out"
 	treat_text = "Immediate securing via gauze, followed by emergency cable replacement and securing via wirecutters or retractor. \
-				If the fault has become uncontrollable, extreme heat therapy is reccomended."
+		If the fault has become uncontrollable, extreme heat therapy is reccomended."
 
 	severity = WOUND_SEVERITY_CRITICAL
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR)

@@ -49,11 +49,6 @@
 	/// The minimum heat difference we must have on reagent contact to cause heat shock damage.
 	var/heat_shock_minimum_delta = 5
 
-	/*/// The max thermal shock we can sustain during this tick interval, used for preventing things like splashing a beaker to instantly kill someone.
-	var/heat_shock_damage_allowed_this_interval = 0
-	/// The max thermal shock we can sustain during a given tick interval, used for preventing things like splashing a beaker to instantly kill someone.
-	var/heat_shock_damage_allowed_per_interval = 85*/
-
 	/// The max damage a given thermal shock can do. Used for preventing things like spalshing a beaker to instantly kill someone.
 	var/heat_shock_max_damage_per_shock = 80
 
@@ -79,30 +74,20 @@
 	processes = TRUE
 
 /datum/wound/burn/robotic/overheat/New(temperature)
-	chassis_temperature = temperature
-	if (isnull(temperature))
-		chassis_temperature = get_random_starting_temperature()
-	else
-		chassis_temperature = temperature
+	chassis_temperature = (isnull(temperature) ? get_random_starting_temperature() : temperature)
 
 	return ..()
 
 /datum/wound/burn/robotic/overheat/Destroy()
-	. = ..()
-
-	if (mob_glow)
-		QDEL_NULL(mob_glow)
+	QDEL_NULL(mob_glow)
+	return ..()
 
 /datum/wound/burn/robotic/overheat/set_victim(mob/living/new_victim)
 	if (victim)
-		//glow.loc = limb
-		//glow.update_light()
-		qdel(mob_glow)
+		QDEL_NULL(mob_glow)
 		UnregisterSignal(victim, COMSIG_MOB_AFTER_APPLY_DAMAGE)
 		UnregisterSignal(victim, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS)
 	if (new_victim)
-		//glow.loc = new_victim
-		//glow.update_light()
 		mob_glow = new_victim.mob_light(light_range, light_power, light_color)
 		mob_glow.set_light_on(TRUE)
 		RegisterSignal(new_victim, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(victim_attacked))
@@ -122,26 +107,22 @@
 	return span_warning("The metal on this limb is glowing radiantly.")
 
 /datum/wound/burn/robotic/overheat/handle_process(seconds_per_tick, times_fired)
-
-	//heat_shock_damage_allowed_this_interval = (heat_shock_damage_allowed_per_interval * seconds_per_tick)
-
-	if (victim)
-
-		var/statis_mult = 1
-		if (IS_IN_STASIS(victim))
-			statis_mult *= OVERHEAT_ON_STASIS_HEAT_MULT
-
-		if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick * statis_mult)))
-			return
-		if (outgoing_bodytemp_coeff)
-			var/mult = outgoing_bodytemp_coeff
-			if (limb_essential())
-				mult *= important_outgoing_mult
-			victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * mult) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick * statis_mult)
-	else
+	if (isnull(victim))
 		var/turf/our_turf = get_turf(limb)
-		if (our_turf)
+		if (!isnull(our_turf))
 			expose_temperature(our_turf.GetTemperature(), (turf_coeff * seconds_per_tick))
+		return
+	if (outgoing_bodytemp_coeff <= 0)
+		return
+	var/statis_mult = 1
+	if (IS_IN_STASIS(victim))
+		statis_mult *= OVERHEAT_ON_STASIS_HEAT_MULT
+	if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick * statis_mult)))
+		return
+	var/mult = outgoing_bodytemp_coeff
+	if (limb_essential())
+		mult *= important_outgoing_mult
+	victim.adjust_bodytemperature(((chassis_temperature - victim.bodytemperature) * mult) * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick * statis_mult)
 
 /datum/wound/burn/robotic/overheat/proc/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
@@ -224,17 +205,14 @@
 		return TRUE
 
 /datum/wound/burn/robotic/overheat/get_scanner_description(mob/user)
-	var/desc = ..()
-
-	desc += " Its current temperature is [span_blue("[chassis_temperature]")]K, and needs to cool to [span_nicegreen("[cooling_threshold]")]K, but \
-			will worsen if heated to [span_purple("[heating_threshold]")]K."
-
-	return desc
+    . = ..()
+    . += "Its current temperature is [span_blue("[chassis_temperature]")]K, and needs to cool to [span_nicegreen("[cooling_threshold]")]K, but \
+        will worsen if heated to [span_purple("[heating_threshold]")]K."
 
 /datum/wound/burn/robotic/overheat/moderate
 	name = "Transient Overheating"
-	desc = "External metals have exceeded lower-bound thermal limits, and as such, have lost some structural integrity, increasing damage taken, as well as the chance to \
-			sustain unrelated wounds."
+    desc = "External metals have exceeded lower-bound thermal limits and have lost some structural integrity, increasing damage taken as well as the chance to \
+        sustain additional wounds."
 	occur_text = "lets out a slight groan as it turns a dull shade of thermal red"
 	examine_desc = "is glowing a dull thermal red and giving off heat"
 	treat_text = "Reduction of body temperature to expedite the passive heat dissipation - or, if thermal shock is to be risked, application of a fire extinguisher/shower."
@@ -286,8 +264,8 @@
 	desc = "Exterior plating has surpassed critical thermal levels, causing significant failure in structural integrity and overheating of internal systems."
 	occur_text = "sizzles, the externals turning a dull shade of orange"
 	examine_desc = "appears discolored and polychromatic, parts of it glowing a dull orange"
-	treat_text = "Isolation from physical hazards, and accomodation of passive heat dissipation - active cooling may be used, but temperature differentials significantly \
-				raise the risk of thermal shock."
+    treat_text = "Isolation from physical hazards, and accommodation of passive heat dissipation - active cooling may be used, but temperature differentials significantly \
+        raise the risk of thermal shock."
 	severity = WOUND_SEVERITY_SEVERE
 
 	a_or_from = "from"
@@ -333,8 +311,8 @@
 	desc = "Carapace is beyond melting point, causing catastrophic structural integrity failure as well as massively heating up the subject."
 	occur_text = "turns a bright shade of radiant white as it sizzles and melts"
 	examine_desc = "is a blinding shade of white, almost melting from the heat"
-	treat_text = "Immediate confinement to cryogenics, as rapid overheating and physical vulnerability may occur. Active cooling is inadvised, \
-				since the thermal shock may be lethal with such a temperature differential."
+    treat_text = "Immediate confinement to cryogenics, as rapid overheating and physical vulnerability may occur. Active cooling is not advised, \
+        since the thermal shock may be lethal with such a temperature differential."
 	severity = WOUND_SEVERITY_CRITICAL
 
 	a_or_from = "from"
