@@ -438,4 +438,4 @@
 
 /datum/mood_event/rust_corruption
 	description = "Oh god everything is falling apart, the station isnt safe..."
-	mood_change = -5
+	mood_change = -12
