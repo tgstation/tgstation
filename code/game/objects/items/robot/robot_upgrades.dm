@@ -545,7 +545,7 @@
 
 /obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/robot, user = usr)
 	. = ..()
-	if(!.)
+	if(!. || HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
 		return FALSE
 
 	if(robot.hasExpanded)
