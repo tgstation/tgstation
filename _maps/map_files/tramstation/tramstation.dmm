@@ -7790,9 +7790,15 @@
 /turf/closed/wall/rock/porous,
 /area/station/security/prison/workout)
 "bhs" = (
-/obj/effect/turf_decal/sand/plating,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 4
+	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "bhx" = (
 /obj/machinery/door/airlock/hatch{
@@ -13764,11 +13770,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"daW" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable,
-/turf/open/misc/asteroid,
-/area/station/maintenance/department/cargo)
 "dbc" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
@@ -17182,6 +17183,20 @@
 /obj/item/pen/red,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
+"ejh" = (
+/obj/structure/plasticflaps/opaque{
+	name = "airtight delivery flaps"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "ejr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/canister,
@@ -18840,14 +18855,6 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
-"eMg" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/door/airlock/grunge{
-	name = "Expansion Wing"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
 "eMu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -24716,6 +24723,11 @@
 "gLV" = (
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
+"gLX" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "gLZ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/duct,
@@ -25909,13 +25921,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
-"hhr" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
-/area/station/hallway/primary/tram/center)
 "hhC" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -28108,11 +28113,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
-"hUU" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable,
-/turf/open/misc/asteroid/dug,
-/area/station/maintenance/department/cargo)
 "hUY" = (
 /obj/machinery/door/airlock/external{
 	autoclose = 0;
@@ -30722,10 +30722,6 @@
 	},
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
-"iMW" = (
-/obj/structure/falsewall,
-/turf/open/floor/plating,
-/area/station/hallway/primary/tram/center)
 "iNc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32321,6 +32317,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"jlY" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/cargo)
 "jmb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -33125,20 +33126,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
-"jzm" = (
-/obj/structure/plasticflaps/opaque{
-	name = "airtight delivery flaps"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "jzo" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33351,6 +33338,14 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
+"jCO" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/door/airlock/grunge{
+	name = "Expansion Wing"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "jCT" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -34081,12 +34076,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "jPF" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Dynamic Bar Docking Port";
-	desc = "This airlock is a contingency to keep any funny business from the replacable bar system..."
-	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/structure/cable,
+/obj/machinery/door/airlock/grunge{
+	name = "Dynamic Bar Docking Port";
+	desc = "This airlock is a contingency to keep any funny business from the replacable bar system. If it opens to a wall, this is intentional!"
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "jPG" = (
@@ -36307,6 +36302,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"kCU" = (
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "kDd" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/structure/cable,
@@ -38228,11 +38226,11 @@
 /turf/open/floor/wood/parquet,
 /area/station/command/meeting_room)
 "ldC" = (
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/machinery/door/airlock/grunge{
 	name = "Dynamic Bar Docking Port";
-	desc = "This airlock is a contingency to keep any funny business from the replacable bar system..."
+	desc = "This airlock is a contingency to keep any funny business from the replacable bar system. If it opens to a wall, this is intentional!"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "ldD" = (
@@ -38991,17 +38989,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/robotics,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/science)
-"lpU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "lqe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/cardboard,
@@ -47665,6 +47652,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"oiU" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/department/cargo)
 "oiV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -53198,6 +53190,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
+"pZe" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/hallway/primary/tram/center)
 "pZr" = (
 /mob/living/basic/mouse/brown/tom,
 /turf/open/misc/asteroid,
@@ -55595,6 +55591,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"qKr" = (
+/obj/machinery/button/door/directional/north{
+	id = "funnywindow";
+	name = "Lockdown"
+	},
+/turf/open/space/basic,
+/area/space)
 "qKx" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/light/directional/south,
@@ -56586,7 +56589,7 @@
 "ral" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Dynamic Bar Docking Port";
-	desc = "This airlock is a contingency to keep any funny business from the replacable bar system..."
+	desc = "This airlock is a contingency to keep any funny business from the replacable bar system. If it opens to a wall, this is intentional!"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/iron/smooth,
@@ -70653,6 +70656,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"vtC" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/center)
 "vtP" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/industrial_lift/tram,
@@ -173967,7 +173977,7 @@ vXM
 vXM
 vXM
 vXM
-iMW
+pZe
 eSz
 eSz
 eSz
@@ -175256,7 +175266,7 @@ vXM
 nMM
 aHA
 aHA
-hhr
+vtC
 gvV
 hWK
 lPP
@@ -175739,7 +175749,7 @@ nIh
 apj
 apj
 yeD
-hUU
+oiU
 xaW
 xaW
 itB
@@ -176022,7 +176032,7 @@ vXM
 vXM
 vXM
 vXM
-vXM
+qKr
 vXM
 vXM
 vXM
@@ -177276,7 +177286,7 @@ apj
 nIh
 jXo
 yeD
-bhs
+gLX
 yeD
 yeD
 yeD
@@ -177541,7 +177551,7 @@ yeD
 apj
 abE
 abE
-eMg
+jCO
 hDd
 itB
 vXM
@@ -177792,7 +177802,7 @@ nfg
 yeD
 abE
 abE
-daW
+jlY
 abE
 abE
 abE
@@ -181144,19 +181154,19 @@ fmk
 vTP
 qDt
 xRB
-lpU
+bhs
 xRB
-lpU
+bhs
 vRE
-lpU
+bhs
 xRB
-lpU
+bhs
 xRB
-lpU
-lpU
-lpU
-jzm
-lpU
+bhs
+bhs
+bhs
+ejh
+bhs
 klr
 jcM
 iRf
@@ -181925,7 +181935,7 @@ lZW
 itc
 mBh
 sVx
-sAO
+kCU
 bSp
 gMh
 jWO
