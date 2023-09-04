@@ -73,6 +73,7 @@
 	var/list/priorities = list(
 		"[BIO_FLESH]",
 		"[BIO_BONE]",
+		"[BIO_METAL]"
 	)
 
 	return priorities

@@ -4,6 +4,9 @@
 	abstract = TRUE
 
 	required_limb_biostate = BIO_METAL
+	required_wound_types = list(WOUND_BURN)
+
+	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT
 
 /datum/wound/burn/robotic/overheat
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
@@ -69,8 +72,7 @@
 	/// The glow we have attached to our victim, to simulate our limb glowing.
 	var/obj/effect/dummy/lighting_obj/moblight/mob_glow
 
-	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT
-	scar_file = ROBOTIC_METAL_BURN_SCAR_FILE
+	default_scar_file = METAL_SCAR_FILE
 
 	wound_flags = (ACCEPTS_GAUZE) // gauze binds the metal and makes it resistant to thermal shock
 
@@ -252,7 +254,6 @@
 	a_or_from = "from"
 
 	// easy to get
-	threshold_minimum = 30
 	threshold_penalty = 30
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/moderate
@@ -278,6 +279,8 @@
 
 	wound_path_to_generate = /datum/wound/burn/robotic/overheat/moderate
 
+	threshold_minimum = 30
+
 /datum/wound/burn/robotic/overheat/severe
 	name = "Thermal Overload"
 	desc = "Exterior plating has surpassed critical thermal levels, causing significant failure in structural integrity and overheating of internal systems."
@@ -289,7 +292,6 @@
 
 	a_or_from = "from"
 
-	threshold_minimum = 80
 	threshold_penalty = 65
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
@@ -317,12 +319,14 @@
 	light_power = 0.8
 	light_range = 0.5
 
-	scar_keyword = "robotic_burnsevere"
+	scar_keyword = "burnsevere"
 
-/datum/wound_pregen_data/burnt_metal/transient_overheat
+/datum/wound_pregen_data/burnt_metal/severe
 	abstract = FALSE
 
-	wound_path_to_generate = /datum/wound/burn/robotic/overheat/moderate
+	wound_path_to_generate = /datum/wound/burn/robotic/overheat/severe
+
+	threshold_minimum = 80
 
 /datum/wound/burn/robotic/overheat/critical
 	name = "Runaway Exothermy"
@@ -337,7 +341,6 @@
 
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 
-	threshold_minimum = 140
 	threshold_penalty = 100
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/critical
@@ -360,22 +363,18 @@
 
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 
-	wound_flags = (MANGLES_FLESH|ACCEPTS_GAUZE)
+	wound_flags = (MANGLES_EXTERIOR|ACCEPTS_GAUZE)
 
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3
 	light_range = 1.5
 
-	scar_keyword = "robotic_burncritical"
-
-/datum/wound_pregen_data/burnt_metal/severe
-	abstract = FALSE
-
-	wound_path_to_generate = /datum/wound/burn/robotic/overheat/severe
+	scar_keyword = "burncritical"
 
 /datum/wound_pregen_data/burnt_metal/critical
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/burn/robotic/overheat/critical
+	threshold_minimum = 140
 
 #undef OVERHEAT_ON_STASIS_HEAT_MULT

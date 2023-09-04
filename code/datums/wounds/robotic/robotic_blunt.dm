@@ -45,11 +45,6 @@
 #define ROBOTIC_WOUND_DETERMINATION_HIT_DAZE_MULT ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD
 #define ROBOTIC_WOUND_DETERMINATION_HIT_NAUSEA_MULT 0.5
 
-/datum/wound_pregen_data/blunt_metal
-	abstract = TRUE
-
-	required_limb_biostate = BIO_METAL
-
 /datum/wound/blunt/robotic
 	name = "Robotic Blunt (Screws and bolts) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
@@ -140,18 +135,15 @@
 	/// Multiplies the camera shake by this for the purposes of deciding if we should override dizziness.
 	var/head_movement_shake_dizziness_overtake_mult = 1
 
-	scar_file = ROBOTIC_BLUNT_SCAR_FILE
+	default_scar_file = METAL_SCAR_FILE
+
+/datum/wound_pregen_data/blunt_metal
+	abstract = TRUE
+
+	required_limb_biostate = BIO_METAL
 
 	wound_series = WOUND_SERIES_METAL_BLUNT_BASIC
-
-/datum/wound/blunt/robotic/set_victim(new_victim)
-	if (victim)
-		victim.remove_status_effect(/datum/status_effect/limp)
-
-	. = ..()
-
-	if (limb && victim)
-		update_inefficiencies()
+	required_wound_types = list(WOUND_BLUNT)
 
 /datum/wound/blunt/robotic/moderate
 	name = "Loosened Screws"
@@ -163,14 +155,13 @@
 	severity = WOUND_SEVERITY_MODERATE
 
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/moderate
-	treatable_tool = TOOL_SCREWDRIVER
+	treatable_tools = list(TOOL_SCREWDRIVER)
 
 	max_nausea_duration = DISGUST_LEVEL_GROSS + 10
 
 	interaction_efficiency_penalty = 1.2
 	limp_slowdown = 2.5
 	limp_chance = 30
-	threshold_minimum = 30
 	threshold_penalty = 20
 
 	daze_attacked_minimum_score = 8
@@ -202,6 +193,8 @@
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/blunt/robotic/moderate
+
+	threshold_minimum = 30
 
 /datum/wound/blunt/robotic/proc/uses_percussive_maintenance()
 	return FALSE
@@ -249,15 +242,15 @@
 	occur_text = "visibly cracks open, solder flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
 
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
 	treatable_by = list(/obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/severe
-	treatable_tool = TOOL_WELDER
+	treatable_tools = list(TOOL_WELDER)
 
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
 	limp_chance = 60
-	threshold_minimum = 65
+
 	threshold_penalty = 40
 
 	daze_attacked_minimum_score = 6
@@ -296,7 +289,7 @@
 	ready_to_secure_internals = TRUE
 	ready_to_ghetto_weld = FALSE
 
-	scar_keyword = "robotic_bluntsevere"
+	scar_keyword = "bluntsevere"
 
 	gellable = TRUE
 
@@ -304,6 +297,8 @@
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/blunt/robotic/severe
+
+	threshold_minimum = 65
 
 /datum/wound/blunt/robotic/severe/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
 	var/turf/limb_turf = get_turf(L)
@@ -503,19 +498,18 @@
 	interaction_efficiency_penalty = 2.8
 	limp_slowdown = 8
 	limp_chance = 80
-	threshold_minimum = 125
 	threshold_penalty = 60
 
-	scar_keyword = "robotic_bluntcritical"
+	scar_keyword = "bluntcritical"
 
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
 
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
 
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
 	treatable_by = list(/obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
-	treatable_tool = TOOL_WELDER
+	treatable_tools = list(TOOL_WELDER)
 
 	daze_attacked_minimum_score = 1
 
@@ -557,6 +551,8 @@
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/blunt/robotic/critical
+
+	threshold_minimum = 125
 
 /datum/wound/blunt/robotic/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited, attack_direction, wound_source)
 	var/turf/limb_turf = get_turf(L)
@@ -759,7 +755,8 @@
 
 /datum/wound/blunt/robotic/proc/get_overheat_wound()
 	for (var/datum/wound/found_wound as anything in limb.wounds)
-		if (found_wound.wound_series == WOUND_SERIES_METAL_BURN_OVERHEAT && found_wound.severity >= WOUND_SEVERITY_SEVERE) // meh solution but whateva
+		var/datum/wound_pregen_data/pregen_data = found_wound.get_pregen_data()
+		if (pregen_data.wound_series == WOUND_SERIES_METAL_BURN_OVERHEAT && found_wound.severity >= WOUND_SEVERITY_SEVERE) // meh solution but whateva
 			return found_wound
 	return null
 
@@ -983,31 +980,6 @@
 				break
 
 	return picked_organs
-
-/datum/wound/blunt/robotic/proc/update_inefficiencies(datum/source)
-	SIGNAL_HANDLER
-
-	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		if(limb.current_gauze?.splint_factor)
-			limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
-			limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
-		else
-			limp_slowdown = initial(limp_slowdown)
-			limp_chance = initial(limp_chance)
-		victim.apply_status_effect(/datum/status_effect/limp)
-	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		if(limb.current_gauze?.splint_factor)
-			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor)
-		else
-			interaction_efficiency_penalty = initial(interaction_efficiency_penalty)
-
-	if(initial(disabling))
-		if (victim)
-			set_disabling(!limb.current_gauze)
-		else
-			set_disabling(FALSE)
-
-	limb.update_wounds()
 
 #undef BLUNT_ATTACK_DAZE_MULT
 

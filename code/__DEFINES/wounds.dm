@@ -124,6 +124,11 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
 
+#define WOUND_SERIES_METAL_BLUNT_BASIC "wound_series_metal_blunt_basic"
+#define WOUND_SERIES_METAL_BURN_OVERHEAT "wound_series_metal_burn_basic"
+#define WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE "wound_series_metal_slash_electrical_damage_basic"
+#define WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE "wound_series_metal_pierce_electrical_damage_basic"
+
 // SERIES TYPES
 // A series type is basically our way of declaring how "mainstream" a series is.
 // WOUND_SERIES_TYPE_BASIC is totally mainline, and will be picked for random generations
@@ -221,22 +226,26 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 GLOBAL_LIST_INIT(wound_types_to_series, list(
 	WOUND_BLUNT = list(
 		WOUND_SERIES_TYPE_BASIC = list(
-			WOUND_SERIES_BONE_BLUNT_BASIC
+			WOUND_SERIES_BONE_BLUNT_BASIC,
+			WOUND_SERIES_METAL_BLUNT_BASIC,
 		),
 	),
 	WOUND_SLASH = list(
 		WOUND_SERIES_TYPE_BASIC = list(
 			WOUND_SERIES_FLESH_SLASH_BLEED,
+			WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE,
 		),
 	),
 	WOUND_BURN = list(
 		WOUND_SERIES_TYPE_BASIC = list(
 			WOUND_SERIES_FLESH_BURN_BASIC,
+			WOUND_SERIES_METAL_BURN_OVERHEAT
 		),
 	),
 	WOUND_PUNCTURE = list(
 		WOUND_SERIES_TYPE_BASIC = list(
-			WOUND_SERIES_FLESH_PUNCTURE_BLEED
+			WOUND_SERIES_FLESH_PUNCTURE_BLEED,
+			WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE
 		),
 	),
 ))
@@ -310,16 +319,9 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 /// Assoc list of biotype -> ideal scar file to be used and grab stuff from.
 GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 	"[BIO_FLESH]" = FLESH_SCAR_FILE,
-	"[BIO_BONE]" = BONE_SCAR_FILE
+	"[BIO_BONE]" = BONE_SCAR_FILE,
+	"[BIO_METAL]" = METAL_SCAR_FILE
 ))
-
-#define WOUND_SERIES_METAL_SLASH_BLEED 5
-#define WOUND_SERIES_METAL_BLUNT_BASIC 6
-#define WOUND_SERIES_METAL_BURN_OVERHEAT 7
-#define WOUND_SERIES_METAL_PUNCTURE_BLEED 8
-
-#define WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE 9
-#define WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE 10
 
 // ~burn wound infection defines
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse

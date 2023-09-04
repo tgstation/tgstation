@@ -2,11 +2,12 @@
 #define ELECTRICAL_DAMAGE_REPLACE_METALS_BASE_DELAY 4 SECONDS
 
 /datum/wound/electrical_damage/pierce
-	wound_type = WOUND_PIERCE
-	wound_series = WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE
 
 /datum/wound_pregen_data/electrical_damage/pierce
 	abstract = TRUE
+
+	wound_series = WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE
+	required_wound_types = list(WOUND_PIERCE)
 
 /datum/wound/burn/electrical_damage/pierce/get_limb_examine_description()
 	return span_warning("The metal on this limb is pierced open.")
@@ -25,7 +26,6 @@
 
 	sound_volume = 30
 
-	threshold_minimum = 40
 	threshold_penalty = 30
 
 	intensity = 10 SECONDS
@@ -55,12 +55,14 @@
 
 	a_or_from = "a"
 
-	scar_keyword = "robotic_piercemoderate"
+	scar_keyword = "piercemoderate"
 
 /datum/wound_pregen_data/electrical_damage/pierce/moderate
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/pierce/moderate
+
+	threshold_minimum = 40
 
 /datum/wound/electrical_damage/pierce/severe
 	name = "Penetrated Transformer"
@@ -75,7 +77,6 @@
 
 	sound_volume = 15
 
-	threshold_minimum = 60
 	threshold_penalty = 40
 
 	intensity = 20 SECONDS
@@ -105,12 +106,14 @@
 
 	a_or_from = "a"
 
-	scar_keyword = "robotic_piercemoderate"
+	scar_keyword = "piercemoderate"
 
 /datum/wound_pregen_data/electrical_damage/pierce/severe
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/pierce/severe
+
+	threshold_minimum = 60
 
 /datum/wound/electrical_damage/pierce/critical
 	name = "Ruptured PSU"
@@ -121,13 +124,12 @@
 				If the fault has become uncontrollable, extreme heat therapy is reccomended."
 
 	severity = WOUND_SEVERITY_CRITICAL
-	wound_flags = (ACCEPTS_GAUZE|MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_EXTERIOR)
 
 	sound_effect = 'sound/effects/wounds/robotic_slash_T3.ogg'
 
 	sound_volume = 30
 
-	threshold_minimum = 110
 	threshold_penalty = 60
 
 	intensity = 40 SECONDS
@@ -155,12 +157,14 @@
 
 	a_or_from = "a"
 
-	scar_keyword = "robotic_piercecritical"
+	scar_keyword = "piercecritical"
 
 /datum/wound_pregen_data/electrical_damage/pierce/critical
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/pierce/critical
+
+	threshold_minimum = 110
 
 #undef ELECTRICAL_DAMAGE_REPAIR_WELD_BASE_DELAY
 #undef ELECTRICAL_DAMAGE_REPLACE_METALS_BASE_DELAY

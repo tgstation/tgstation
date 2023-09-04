@@ -1,40 +1,62 @@
 {
 	"generic": ["general disfigurement"],
 
-	"dislocate_robotic": [
+	"dislocate": [
 		"some slight crookedness"
 	],
 
-	"robotic_slashmoderate": [
+	"bluntsevere": [
+		"an area of slightly crumpled metal",
+		"some faded cracks on some screws"
+	],
+
+	"bluntcritical": [
+		"a malformed superstructure",
+		"some heavily beaten plating"
+	],
+
+	"slashmoderate": [
 		"a very thin line of solder",
 		"a few welded cuts"
 	],
 
-	"robotic_slashsevere": [
+	"slashsevere": [
 		"a pair of soldered, straight cracks",
 		"an area of freshly replaced metal",
         "has some deep welded scratches on the metal"
 	],
 
-	"robotic_slashcritical": [
+	"slashcritical": [
 		"a matrix of desperately soldered wide cracks",
 		"some gruesome welding lines",
 		"a series of deep and wide welded gashes"
 	],
 
-	"robotic_piercemoderate": [
+	"piercemoderate": [
 		"a dot of hardened solder",
 		"a dot of fresh metal in a small hole"
 	],
 
-	"robotic_piercesevere": [
+	"piercesevere": [
 		"a wad of hardened solder",
 		"a small patch of fresh metal in a small hole"
 	],
 
-	"robotic_piercecritical": [
+	"piercecritical": [
 		"a large splot of hardened solder",
 		"an inward caving hole leading to fresh metal"
+	],
+
+	"burnsevere": [
+		"some vaguely discolored metal",
+		"some burnt ridges",
+		"a few heat cracks"
+	],
+
+	"burncritical": [
+		"lots of polychromatic metal on it",
+		"some heat-warped plating",
+		"melting marks"
 	],
 
 	"dismember": [

@@ -15,7 +15,7 @@
 
 	wound_flags = (ACCEPTS_GAUZE)
 
-	treatable_tool = TOOL_WIRECUTTER
+	treatable_tools = list(TOOL_WIRECUTTER)
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/stack/cable_coil)
 
@@ -78,7 +78,7 @@
 	/// If [get_intensity_mult()] is at or above this, the limb gets disabled.
 	var/disable_at_intensity_mult
 
-	scar_file = ROBOTIC_METAL_SCAR_FILE
+	default_scar_file = METAL_SCAR_FILE
 
 	processes = TRUE
 
@@ -86,6 +86,9 @@
 	abstract = TRUE
 
 	required_limb_biostate = (BIO_WIRED)
+	required_wound_types = list(WOUND_SLASH)
+
+	wound_series = WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE
 
 /datum/wound/burn/electrical_damage/slash/get_limb_examine_description()
 	return span_warning("The metal on this limb is slashed open.")
@@ -431,8 +434,6 @@
 	return TRUE
 
 /datum/wound/electrical_damage/slash
-	wound_type = WOUND_SLASH
-	wound_series = WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE
 
 /datum/wound/electrical_damage/slash/moderate
 	name = "Frayed Wiring"
@@ -448,7 +449,6 @@
 
 	sound_volume = 30
 
-	threshold_minimum = 35
 	threshold_penalty = 20
 
 	intensity = 10 SECONDS
@@ -474,12 +474,15 @@
 
 	a_or_from = "from"
 
-	scar_keyword = "robotic_slashmoderate"
+	scar_keyword = "slashmoderate"
 
 /datum/wound_pregen_data/electrical_damage/slash/moderate
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/slash/moderate
+
+	threshold_minimum = 35
+
 /datum/wound/electrical_damage/slash/severe
 	name = "Severed Conduits"
 	desc = "A number of wires have been completely cut, resulting in electrical faults that will intensify at a worrying rate."
@@ -493,7 +496,6 @@
 
 	sound_volume = 15
 
-	threshold_minimum = 60
 	threshold_penalty = 30
 
 	intensity = 10 SECONDS
@@ -517,12 +519,15 @@
 
 	a_or_from = "from"
 
-	scar_keyword = "robotic_slashsevere"
+	scar_keyword = "slashsevere"
 
 /datum/wound_pregen_data/electrical_damage/slash/severe
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/slash/severe
+
+	threshold_minimum = 60
+
 /datum/wound/electrical_damage/slash/critical
 	name = "Systemic Fault"
 	desc = "A significant portion of the power distribution network has been cut open, resulting in massive power loss and runaway electrocution."
@@ -532,13 +537,12 @@
 				If the fault has become uncontrollable, extreme heat therapy is reccomended."
 
 	severity = WOUND_SEVERITY_CRITICAL
-	wound_flags = (ACCEPTS_GAUZE|MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR)
 
 	sound_effect = 'sound/effects/wounds/robotic_slash_T3.ogg'
 
 	sound_volume = 30
 
-	threshold_minimum = 100
 	threshold_penalty = 50
 
 	intensity = 10 SECONDS
@@ -562,12 +566,14 @@
 
 	a_or_from = "a"
 
-	scar_keyword = "robotic_slashcritical"
+	scar_keyword = "slashcritical"
 
 /datum/wound_pregen_data/electrical_damage/slash/critical
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/electrical_damage/slash/critical
+
+	threshold_minimum = 100
 
 #undef ELECTRICAL_DAMAGE_ON_STASIS_MULT
 #undef ELECTRICAL_DAMAGE_GRASPED_MULT

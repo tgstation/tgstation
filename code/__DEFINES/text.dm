@@ -84,12 +84,8 @@
 #define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
 /// File location for bone wound descriptions
 #define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
-/// File location for robotic wound blunt descriptions
-#define ROBOTIC_BLUNT_SCAR_FILE "wounds/robotic_blunt_scar_desc.json"
-/// File location for robotic wound slash/pierce descriptions
-#define ROBOTIC_METAL_SCAR_FILE "wounds/robotic_metal_scar_desc.json"
-/// File location for robotic wound burn descriptions
-#define ROBOTIC_METAL_BURN_SCAR_FILE "wounds/robotic_metal_burn_scar_desc.json"
+/// File location for metalic wound descriptions
+#define METAL_SCAR_FILE "wounds/metal_scar_desc.json"
 /// File location for scar wound descriptions
 #define SCAR_LOC_FILE "wounds/scar_loc.json"
 /// File location for exodrone descriptions

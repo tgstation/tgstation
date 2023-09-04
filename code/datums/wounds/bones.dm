@@ -198,18 +198,6 @@
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "dislocate"
 
-/datum/wound/blunt/bone/moderate/get_scar_file(obj/item/bodypart/scarred_limb, add_to_scars)
-	if (scarred_limb.biological_state & BIO_METAL)
-		return ROBOTIC_BLUNT_SCAR_FILE
-
-	return ..()
-
-/datum/wound/blunt/bone/moderate/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)
-	if (scarred_limb.biological_state & BIO_METAL)
-		return "dislocate_robotic"
-
-	return ..()
-
 /datum/wound_pregen_data/bone/dislocate
 	abstract = FALSE
 
