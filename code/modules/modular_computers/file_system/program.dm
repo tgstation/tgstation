@@ -41,6 +41,8 @@
 	var/alert_pending = FALSE
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
+	///Boolean on whether or not only one copy of the app can exist. This means it deletes itself when cloned elsewhere.
+	var/unique_copy = FALSE
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
@@ -49,6 +51,11 @@
 	temp.program_icon_state = program_icon_state
 	temp.requires_ntnet = requires_ntnet
 	temp.usage_flags = usage_flags
+	if(unique_copy)
+		if(computer)
+			computer.remove_file(src)
+		if(disk_host)
+			disk_host.remove_file(src)
 	return temp
 
 /**
@@ -173,9 +180,9 @@
  * Use this proc to kill the program.
  * Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
  * Args:
- * - reload_ui - Whether we reload the UI on computer's shutdown.
+ * - user - If there's a user, this is the person killing the program.
  **/
-/datum/computer_file/program/proc/kill_program()
+/datum/computer_file/program/proc/kill_program(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(src == computer.active_program)

@@ -18,7 +18,6 @@
 	var/status = TRUE
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
-	var/obj/item/camera_bug/bug = null
 	var/datum/weakref/assembly_ref = null
 	var/area/myarea = null
 
@@ -129,12 +128,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		LAZYREMOVE(myarea.cameras, src)
 	QDEL_NULL(alarm_manager)
 	QDEL_NULL(assembly_ref)
-	if(bug)
-		bug.bugged_cameras -= c_tag
-		if(bug.current == src)
-			bug.current = null
-		bug = null
-
 	QDEL_NULL(last_shown_paper)
 	return ..()
 
@@ -420,21 +413,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				log_paper("[key_name(user)] held [last_shown_paper] up to [src], and [key_name(potential_viewer)] may read it.")
 				potential_viewer.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
 				to_chat(potential_viewer, "[span_name(user)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to your camera...")
-		return
-
-
-	if(istype(attacking_item, /obj/item/camera_bug))
-		if(!can_use())
-			to_chat(user, span_notice("Camera non-functional."))
-			return
-		if(bug)
-			to_chat(user, span_notice("Camera bug removed."))
-			bug.bugged_cameras -= src.c_tag
-			bug = null
-		else
-			to_chat(user, span_notice("Camera bugged."))
-			bug = attacking_item
-			bug.bugged_cameras[src.c_tag] = WEAKREF(src)
 		return
 
 	return ..()

@@ -128,7 +128,7 @@
 
 	switch(action)
 		if("PC_exit")
-			active_program.kill_program()
+			active_program.kill_program(usr)
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
@@ -146,7 +146,7 @@
 			if(!istype(killed_program))
 				return
 
-			killed_program.kill_program()
+			killed_program.kill_program(usr)
 			to_chat(usr, span_notice("Program [killed_program.filename].[killed_program.filetype] with PID [rand(100,999)] has been killed."))
 			return TRUE
 
@@ -221,3 +221,8 @@
 	if(physical)
 		return physical
 	return src
+
+/obj/item/modular_computer/ui_close(mob/user)
+	. = ..()
+	if(active_program)
+		active_program.ui_close(user)

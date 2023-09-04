@@ -304,8 +304,7 @@
 		borg.cell.use(SILICON_LATHE_TAX)
 
 	//consume materials
-	materials.mat_container.use_materials(design.materials, coefficient, print_quantity)
-	materials.silo_log(src, "built", -print_quantity, "[design.name]", design.materials)
+	materials.use_materials(design.materials, coefficient, print_quantity, "built", "[design.name]")
 	for(var/reagent in design.reagents_list)
 		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
 	//produce item

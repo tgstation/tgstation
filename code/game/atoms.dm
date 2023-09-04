@@ -541,6 +541,7 @@
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent])
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
 
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()
@@ -824,8 +825,8 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
 		return
 	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
-		to_chat(user, span_warning("You can't move while buckled to [src]!"))
+		buckle_message_cooldown = world.time + 25
+		balloon_alert(user, "can't move while buckled!")
 	return
 
 /**

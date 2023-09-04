@@ -2178,7 +2178,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/airalarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "aDi" = (
@@ -7427,6 +7426,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/starboard/fore)
 "bRl" = (
@@ -12034,7 +12034,7 @@
 /mob/living/basic/pet/penguin/baby/permanent{
 	dir = 8
 	},
-/turf/open/floor/fake_snow{
+/turf/open/misc/snow/actually_safe{
 	icon_state = "snow6"
 	},
 /area/station/hallway/floor2/fore)
@@ -12874,11 +12874,11 @@
 /turf/open/floor/iron/freezer,
 /area/station/service/chapel)
 "doC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/structure/window/hollow/plasma/middle{
 	dir = 4
 	},
 /obj/structure/girder/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "doJ" = (
@@ -18444,7 +18444,7 @@
 /area/station/service/chapel)
 "eNM" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/fake_snow{
+/turf/open/misc/snow/actually_safe{
 	icon_state = "snow4"
 	},
 /area/station/hallway/floor2/fore)
@@ -25000,7 +25000,7 @@
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "gEv" = (
@@ -26313,7 +26313,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/duffelbag/coroner/surgery,
+/obj/item/surgery_tray/morgue,
 /obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -32226,7 +32226,7 @@
 /area/station/cargo/miningdock)
 "iyZ" = (
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/floor/fake_snow{
+/turf/open/misc/snow/actually_safe{
 	icon_state = "snow8"
 	},
 /area/station/hallway/floor2/fore)
@@ -35536,7 +35536,7 @@
 /area/station/hallway/floor4/aft)
 "jtJ" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/fake_snow{
+/turf/open/misc/snow/actually_safe{
 	icon_state = "snow9"
 	},
 /area/station/hallway/floor2/fore)
@@ -38427,6 +38427,13 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
+"keX" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/floor4/starboard/fore)
 "kfb" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
@@ -46211,7 +46218,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "mdC" = (
-/turf/open/floor/fake_snow{
+/turf/open/misc/snow/actually_safe{
 	icon_state = "snow7"
 	},
 /area/station/hallway/floor2/fore)
@@ -49075,6 +49082,7 @@
 /area/station/commons/dorms/apartment2)
 "mOT" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "mPs" = (
@@ -54913,7 +54921,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "onz" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 13
 	},
 /obj/item/reagent_containers/medigel/sterilizine{
@@ -58251,7 +58259,7 @@
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "pjR" = (
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 13
 	},
 /obj/item/reagent_containers/medigel/sterilizine{
@@ -59527,7 +59535,7 @@
 "pAy" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/floor/fake_snow{
+/turf/open/misc/snow/actually_safe{
 	icon_state = "snow7"
 	},
 /area/station/hallway/floor2/fore)
@@ -63068,10 +63076,8 @@
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "qyH" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/binary/pump/off/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "qyJ" = (
@@ -68159,11 +68165,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor3/aft)
 "rQx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/binary/pump/on/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor4/starboard/fore)
 "rQG" = (
@@ -68916,7 +68925,7 @@
 /area/station/cargo/drone_bay)
 "sbI" = (
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/floor/fake_snow{
+/turf/open/misc/snow/actually_safe{
 	icon_state = "snow5"
 	},
 /area/station/hallway/floor2/fore)
@@ -75882,7 +75891,7 @@
 "tTB" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/hallway/floor2/fore)
 "tTC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -312585,7 +312594,7 @@ ucA
 xHe
 xHe
 bRh
-bRh
+keX
 rQx
 uEY
 uxw

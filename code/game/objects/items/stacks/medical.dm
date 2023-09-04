@@ -415,6 +415,9 @@
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
 
+/obj/item/stack/medical/bone_gel/get_surgery_tool_overlay(tray_extended)
+	return "gel" + (tray_extended ? "" : "_out")
+
 /obj/item/stack/medical/bone_gel/attack(mob/living/patient, mob/user)
 	patient.balloon_alert(user, "no fractures!")
 	return
@@ -431,9 +434,9 @@
 	patient.emote("scream")
 	for(var/i in patient.bodyparts)
 		var/obj/item/bodypart/bone = i
-		var/datum/wound/blunt/severe/oof_ouch = new
+		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
-		var/datum/wound/blunt/critical/oof_OUCH = new
+		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
 
 	for(var/i in patient.bodyparts)

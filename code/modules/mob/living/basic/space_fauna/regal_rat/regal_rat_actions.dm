@@ -54,6 +54,7 @@
 	var/static/list/mouse_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/protect_owner,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/attack/mouse
 	)
@@ -61,6 +62,7 @@
 	var/static/list/glockroach_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/protect_owner/glockroach,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/attack/glockroach
 	)
@@ -243,3 +245,6 @@
 	else if(prob(5))
 		C.vomit()
 	return ..()
+
+/datum/pet_command/protect_owner/glockroach
+	protect_behavior = /datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach

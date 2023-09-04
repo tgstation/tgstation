@@ -28,6 +28,8 @@
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
 	custom_price = PAYCHECK_COMMAND
+	/// If this analyzer will give a bonus to wound treatments apon woundscan.
+	var/give_wound_treatment_bonus = FALSE
 
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
@@ -344,8 +346,8 @@
 		render_list += "<span class='info ml-1'>[body_temperature_message]</span>\n"
 
 	// Time of death
-	if(target.tod && (target.stat == DEAD || ((HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !advanced)))
-		render_list += "<span class='info ml-1'>Time of Death: [target.tod]</span>\n"
+	if(target.station_timestamp_timeofdeath && (target.stat == DEAD || ((HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !advanced)))
+		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span>\n"
 		var/tdelta = round(world.time - target.timeofdeath)
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago.</b></span>\n"
 
@@ -494,36 +496,40 @@
 #define AID_EMOTION_SAD "sad"
 
 /// Displays wounds with extended information on their status vs medscanners
-/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/simple/scanner)
+/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/scanner)
 	if(!istype(patient) || user.incapacitated())
 		return
 
 	var/render_list = ""
-	var/advised
+	var/advised = FALSE
 	for(var/limb in patient.get_wounded_bodyparts())
 		var/obj/item/bodypart/wounded_part = limb
 		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
 		for(var/limb_wound in wounded_part.wounds)
 			var/datum/wound/current_wound = limb_wound
 			render_list += "<div class='ml-2'>[current_wound.get_scanner_description()]</div>\n"
-			ADD_TRAIT(current_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
-			if(!advised)
-				to_chat(user, span_notice("You notice how bright holo-images appear over your [(length(wounded_part.wounds) || length(patient.get_wounded_bodyparts()) ) > 1 ? "various wounds" : "wound"]. They seem to be filled with helpful information, this should make treatment easier!"))
-				advised = TRUE
+			if (scanner.give_wound_treatment_bonus)
+				ADD_TRAIT(current_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
+				if(!advised)
+					to_chat(user, span_notice("You notice how bright holo-images appear over your [(length(wounded_part.wounds) || length(patient.get_wounded_bodyparts()) ) > 1 ? "various wounds" : "wound"]. They seem to be filled with helpful information, this should make treatment easier!"))
+					advised = TRUE
 		render_list += "</span>"
 
+	var/obj/item/healthanalyzer/simple/simple_scanner
+	if(istype(scanner, /obj/item/healthanalyzer/simple))
+		simple_scanner = scanner
 	if(render_list == "")
-		if(istype(scanner))
+		if (simple_scanner)
 			// Only emit the cheerful scanner message if this scan came from a scanner
-			playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
-			to_chat(user, span_notice("\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!"))
-			scanner.show_emotion(AID_EMOTION_HAPPY)
-		else
-			to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
+			playsound(simple_scanner, 'sound/machines/ping.ogg', 50, FALSE)
+			to_chat(user, span_notice("\The [simple_scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!"))
+			simple_scanner.show_emotion(AID_EMOTION_HAPPY)
+		to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
 		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
-		scanner.show_emotion(AID_EMOTION_WARN)
-		playsound(scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
+		if (simple_scanner)
+			simple_scanner.show_emotion(AID_EMOTION_WARN)
+			playsound(simple_scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
 
 
 /obj/item/healthanalyzer/simple
@@ -540,6 +546,7 @@
 			"reminds you that everyone is doing their best", "displays a message wishing you well", "displays a sincere thank-you for your interest in first-aid", "formally absolves you of all your sins")
 	// How often one can ask for encouragement
 	var/patience = 10 SECONDS
+	give_wound_treatment_bonus = TRUE
 
 /obj/item/healthanalyzer/simple/attack_self(mob/user)
 	if(next_encouragement < world.time)

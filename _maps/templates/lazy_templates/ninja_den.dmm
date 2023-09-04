@@ -1650,7 +1650,7 @@
 /area/centcom/central_command_areas/holding)
 "Mz" = (
 /obj/structure/closet,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/medkit/regular,

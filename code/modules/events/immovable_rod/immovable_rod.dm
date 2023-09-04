@@ -182,7 +182,12 @@
 		SSexplosions.highturf += clong
 		return ..()
 
+	// If we Bump into the tram front or back, push the tram. Otherwise smash the object as usual.
 	if(isobj(clong))
+		if(istramwall(clong) && !special_target)
+			rod_vs_tram_battle(clong)
+			return ..()
+
 		var/obj/clong_obj = clong
 		clong_obj.take_damage(INFINITY, BRUTE, NONE, TRUE, dir, INFINITY)
 		return ..()
@@ -244,7 +249,7 @@
  * * strongman - the suplexer of the rod.
  */
 /obj/effect/immovablerod/proc/suplex_rod(mob/living/strongman)
-	strongman.client?.give_award(/datum/award/achievement/misc/feat_of_strength, strongman)
+	strongman.client?.give_award(/datum/award/achievement/jobs/feat_of_strength, strongman)
 	strongman.visible_message(
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
 		span_warning("You suplex [src] into the ground!")
@@ -290,3 +295,25 @@
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
 	destination_turf = get_edge_target_turf(src, direction)
 	SSmove_manager.move_towards(src, destination_turf)
+
+/**
+ * Rod will push the tram to a landmark if it hits the tram from the front/back
+ * while flying parallel.
+ */
+/obj/effect/immovablerod/proc/rod_vs_tram_battle()
+	var/obj/structure/industrial_lift/tram/industrial_lift = locate() in src.loc
+
+	if(isnull(industrial_lift))
+		return
+
+	var/datum/lift_master/tram/lift_master = industrial_lift.lift_master_datum
+
+	if(isnull(lift_master))
+		return
+
+	var/push_target = lift_master.rod_collision(src)
+
+	if(!push_target)
+		return
+
+	go_for_a_walk(push_target)

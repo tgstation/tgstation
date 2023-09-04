@@ -35,7 +35,7 @@
 
 	src.direction = direction
 
-	ADD_TRAIT(parent, TRAIT_HYPERSPACED, src)
+	ADD_TRAIT(parent, TRAIT_HYPERSPACED, REF(src))
 
 	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(update_state))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_FREE_HYPERSPACE_MOVEMENT), PROC_REF(initialize_loop))
@@ -178,7 +178,7 @@
 	qdel(src)
 
 /datum/component/shuttle_cling/Destroy(force, silent)
-	REMOVE_TRAIT(parent, TRAIT_HYPERSPACED, src)
+	REMOVE_TRAIT(parent, TRAIT_HYPERSPACED, REF(src))
 	QDEL_NULL(hyperloop)
 
 	return ..()

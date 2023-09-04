@@ -149,3 +149,11 @@
 	bio = 50
 	fire = 50
 	acid = 40
+
+/obj/item/clothing/under/plasmaman/syndicate
+	name = "tacticool envirosuit"
+	desc = "A sinister looking envirosuit, for the boniest of operatives."
+	icon_state = "syndie_envirosuit"
+	has_sensor = NO_SENSORS
+	resistance_flags = FIRE_PROOF
+	inhand_icon_state = null
