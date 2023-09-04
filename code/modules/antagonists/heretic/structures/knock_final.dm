@@ -23,7 +23,6 @@
 		monster_types = subtypesof(/mob/living/simple_animal/hostile/heretic_summon) - /mob/living/simple_animal/hostile/heretic_summon/armsy/prime
 	if(ascendant)
 		ascendee = ascendant
-		RegisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE, PROC_REF(master_examine))
 	INVOKE_ASYNC(src, PROC_REF(poll_ghosts))
 
 /obj/structure/knock_tear/proc/poll_ghosts()
@@ -58,17 +57,10 @@
 	kill_all_your_friends.completed = TRUE
 	woohoo_free_antag.objectives += kill_all_your_friends
 
-/obj/structure/knock_tear/proc/master_examine(datum/source, mob/examinee, list/text) //if we ascended it should be obvious that the ascendee is the heretic but some people are brainlets
-	SIGNAL_HANDLER
-	var/datum/antagonist/heretic_monster/monster = IS_HERETIC_MONSTER(examinee)
-	if(monster && monster.master == ascendee)
-		text += span_hypnophrase("This is your master!")
-
 /obj/structure/knock_tear/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
 /obj/structure/knock_tear/Destroy(force) //this shouldnt happen but hey
 	if(ascendee)
-		UnregisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE)
 		ascendee = null
 	return ..()
