@@ -89,7 +89,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	C << link("[addr]")
 
-#undef TRAIT_SERVER_HOPPING
+#undef SERVER_HOPPER_TRAIT
 
 /mob/dead/proc/update_z(new_z) // 1+ to register, null to unregister
 	if (registered_z != new_z)
