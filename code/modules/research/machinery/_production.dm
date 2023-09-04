@@ -46,22 +46,22 @@
 	)
 
 	create_reagents(0, OPENCONTAINER)
-	if(stored_research)
-		update_designs()
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+	return ..()
 
+/obj/machinery/rnd/production/on_connected_techweb()
 	. = ..()
-
 	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		PROC_REF(on_techweb_update)
 	)
+	update_designs()
 
 /obj/machinery/rnd/production/Destroy()
 	materials = null

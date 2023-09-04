@@ -8,12 +8,9 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
 
-	///List of all techwebs.
+	///List of all techwebs, generating points or not.
+	///Autolathes, Mechfabs, and others all have shared techwebs, for example.
 	var/list/datum/techweb/techwebs = list()
-	///The default Science Techweb.
-	var/datum/techweb/science/science_tech
-	///The default Admin Techweb.
-	var/datum/techweb/admin/admin_tech
 
 	var/datum/techweb_node/error_node/error_node //These two are what you get if a node/design is deleted and somehow still stored in a console.
 	var/datum/design/error_design/error_design
@@ -74,8 +71,9 @@ SUBSYSTEM_DEF(research)
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	populate_ordnance_experiments()
-	science_tech = new /datum/techweb/science
-	admin_tech = new /datum/techweb/admin
+	new /datum/techweb/science
+	new /datum/techweb/admin
+	new /datum/techweb/oldstation
 	autosort_categories()
 	error_design = new
 	error_node = new
@@ -308,3 +306,29 @@ SUBSYSTEM_DEF(research)
 			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
 				partner.accepted_experiments += ordnance_experiment.type
 		scientific_partners += partner
+
+/**
+ * Goes through all techwebs and goes through their servers to find ones on a valid z-level
+ * Returns the full list of all techweb servers.
+ */
+/datum/controller/subsystem/research/proc/get_available_servers(turf/location)
+	var/list/local_servers = list()
+	for (var/datum/techweb/individual_techweb as anything in techwebs)
+		var/list/servers = find_valid_servers(location, individual_techweb)
+		if(length(servers))
+			local_servers += servers
+	return local_servers
+
+/**
+ * Goes through an individual techweb's servers and finds one on a valid z-level
+ * Returns a list of existing ones, or an empty list otherwise.
+ * Args:
+ * - checking_web - The techweb we're checking the servers of.
+ */
+/datum/controller/subsystem/research/proc/find_valid_servers(turf/location, datum/techweb/checking_web)
+	var/list/valid_servers = list()
+	for(var/obj/machinery/rnd/server/server as anything in checking_web.techweb_servers)
+		if(!is_valid_z_level(get_turf(server), location))
+			continue
+		valid_servers += server
+	return valid_servers
