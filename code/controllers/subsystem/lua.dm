@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(lua)
 /datum/controller/subsystem/lua/Initialize()
 	if(!CONFIG_GET(flag/auxtools_enabled))
 		warning("SSlua requires auxtools to be enabled to run.")
-		return SS_INIT_NO_NEED
+		return SS_INIT_NO_MESSAGE
 
 	try
 		// Initialize the auxtools library

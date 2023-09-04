@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(tts)
 
 /datum/controller/subsystem/tts/Initialize()
 	if(!CONFIG_GET(string/tts_http_url))
-		return SS_INIT_NO_NEED
+		return SS_INIT_NO_MESSAGE
 
 	queued_http_messages = new /datum/heap(GLOBAL_PROC_REF(cmp_word_length_asc))
 	max_concurrent_requests = CONFIG_GET(number/tts_max_concurrent_requests)

@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(achievements)
 
 /datum/controller/subsystem/achievements/Initialize()
 	if(!SSdbcore.Connect())
-		return SS_INIT_NO_NEED
+		return SS_INIT_NO_MESSAGE
 	achievements_enabled = TRUE
 
 	var/list/achievements_by_db_id = list()

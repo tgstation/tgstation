@@ -289,7 +289,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		SS_INIT_FAILURE,
 		SS_INIT_NONE,
 		SS_INIT_SUCCESS,
-		SS_INIT_NO_NEED,
+		SS_INIT_NO_MESSAGE,
 	)
 
 	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
@@ -337,7 +337,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			chat_warning = TRUE
 		if(SS_INIT_SUCCESS)
 			message_prefix = "Initialized [subsystem.name] subsystem within"
-		if(SS_INIT_NO_NEED)
+		if(SS_INIT_NO_MESSAGE)
 			// This SS is disabled or is otherwise shy.
 			return
 		else

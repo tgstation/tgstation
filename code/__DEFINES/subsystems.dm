@@ -119,8 +119,8 @@
 /// Subsystem initialized sucessfully.
 #define SS_INIT_SUCCESS 2
 
-/// Successful, but don't print anything. Useful if subsystem was disabled.
-#define SS_INIT_NO_NEED 3
+/// Successful, but don't print anything. Useful if subsystem was disabled. Or if it spoils game mechanics
+#define SS_INIT_NO_MESSAGE 3
 
 //! ### SS initialization load orders
 // Subsystem init_order, from highest priority to lowest priority
