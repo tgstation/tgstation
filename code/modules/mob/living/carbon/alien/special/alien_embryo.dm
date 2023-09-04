@@ -121,7 +121,7 @@
 		CRASH("AttemptGrow failed due to the early qdeletion of source or owner.")
 
 	if(!isnull(new_xeno))
-		remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
+		new_xeno.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
 		new_xeno.invisibility = 0
 
 	if(gib_on_success)
