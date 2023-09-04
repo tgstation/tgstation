@@ -1,1 +1,0 @@
-/obj/item/clothing/mask/gas/atmos/captain : /obj/item/clothing/mask/gas/captain{@OLD}

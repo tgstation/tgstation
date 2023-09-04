@@ -77,7 +77,7 @@
 	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/captain
-	mask_type = /obj/item/clothing/mask/gas/atmos/captain
+	mask_type = /obj/item/clothing/mask/gas/captain
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
 	mod_type = /obj/item/mod/control/pre_equipped/magnate
 
