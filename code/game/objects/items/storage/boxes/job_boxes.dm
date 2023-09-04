@@ -131,6 +131,10 @@
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
 
+// Captain's survival box
+/obj/item/storage/box/survival/captain
+	mask_type = /obj/item/clothing/mask/gas/captain
+
 // Medical survival box
 /obj/item/storage/box/survival/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
