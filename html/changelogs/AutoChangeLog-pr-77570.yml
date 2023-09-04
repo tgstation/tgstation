@@ -1,5 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "boiled rice doesn't burn instantly after being baked"
-  - code_imp: "simplifies the way burning food is handled, grilled/baked food now turns to a burnt mess rather than being set on fire, unless they have a baking/grilling recipe"

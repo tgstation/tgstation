@@ -1,4 +1,0 @@
-author: "DaydreamIQ"
-delete-after: True
-changes:
-  - rscadd: "Adds the medbeam module for nukies, don't cross the damn beams. (Also removes the handheld one from the uplink)"
