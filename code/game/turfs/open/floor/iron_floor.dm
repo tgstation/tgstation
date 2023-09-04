@@ -15,9 +15,13 @@
 
 
 /turf/open/floor/iron/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/open/floor/plating/rust)
+    if(prob(70))
+        new /obj/effect/temp_visual/glowing_rune(src)
+
+    var/turf/plating_beneath = ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+    if(isnull(plating_beneath) || plating_beneath == src)
+        return
+    plating_beneath.rust_heretic_act()
 
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)
