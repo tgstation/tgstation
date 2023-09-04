@@ -74,6 +74,12 @@
 #define PAYMENT_FRIENDLY "friendly"
 #define PAYMENT_ANGRY "angry"
 
+#define MARKET_TREND_UPWARD 1
+#define MARKET_TREND_DOWNWARD -1
+#define MARKET_TREND_STABLE 0
+
+#define MARKET_EVENT_PROBABILITY 1 //Probability of a market event firing, in percent. Fires once per material, every 20 seconds.
+
 /// Create quantity subtypes for stock market datums.
 #define MARKET_QUANTITY_HELPERS(path) ##path/one {\
 	amount = 1; \
@@ -90,4 +96,5 @@
 ##path/fifty {\
 	amount = 50; \
 }
+
 
