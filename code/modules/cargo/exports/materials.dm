@@ -2,7 +2,7 @@
 	cost = 5 // Cost per SHEET_MATERIAL_AMOUNT, which is 100cm3 as of May 2023.
 	message = "cm3 of developer's tears. Please, report this on github"
 	amount_report_multiplier = SHEET_MATERIAL_AMOUNT
-	var/material_id = null
+	var/datum/material/material_id = null
 	export_types = list(
 		/obj/item/stack/sheet/mineral, /obj/item/stack/tile/mineral,
 		/obj/item/stack/ore, /obj/item/coin)
@@ -27,7 +27,14 @@
 
 	return round(amount / SHEET_MATERIAL_AMOUNT)
 
-// Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
+// Materials. Static materials exist as parent types, while materials subject to the stock market have a fluid cost as determined by material/market types
+// If you're adding a new material to the stock market, make sure its export type is added here.
+
+/datum/export/material/plasma
+	cost = CARGO_CRATE_VALUE * 0.4
+	k_elasticity = 0
+	material_id = /datum/material/plasma
+	message = "cm3 of plasma"
 
 /datum/export/material/bananium
 	cost = CARGO_CRATE_VALUE * 2
@@ -36,37 +43,6 @@
 
 /datum/export/material/diamond
 	cost = CARGO_CRATE_VALUE
-	material_id = /datum/material/diamond
-	message = "cm3 of diamonds"
-
-/datum/export/material/plasma
-	cost = CARGO_CRATE_VALUE * 0.4
-	k_elasticity = 0
-	material_id = /datum/material/plasma
-	message = "cm3 of plasma"
-
-/datum/export/material/uranium
-	cost = CARGO_CRATE_VALUE * 0.2
-	material_id = /datum/material/uranium
-	message = "cm3 of uranium"
-
-/datum/export/material/gold
-	cost = CARGO_CRATE_VALUE * 0.25
-	material_id = /datum/material/gold
-	message = "cm3 of gold"
-
-/datum/export/material/silver
-	cost = CARGO_CRATE_VALUE * 0.1
-	material_id = /datum/material/silver
-	message = "cm3 of silver"
-
-/datum/export/material/titanium
-	cost = CARGO_CRATE_VALUE * 0.25
-	material_id = /datum/material/titanium
-	message = "cm3 of titanium"
-
-/datum/export/material/adamantine
-	cost = CARGO_CRATE_VALUE
 	material_id = /datum/material/adamantine
 	message = "cm3 of adamantine"
 
@@ -74,11 +50,6 @@
 	cost = CARGO_CRATE_VALUE * 3
 	material_id = /datum/material/mythril
 	message = "cm3 of mythril"
-
-/datum/export/material/bscrystal
-	cost = CARGO_CRATE_VALUE * 0.6
-	message = "of bluespace crystals"
-	material_id = /datum/material/bluespace
 
 /datum/export/material/plastic
 	cost = CARGO_CRATE_VALUE * 0.05
@@ -89,21 +60,6 @@
 	cost = CARGO_CRATE_VALUE * 1.2
 	message = "cm3 of runite"
 	material_id = /datum/material/runite
-
-/datum/export/material/iron
-	cost = CARGO_CRATE_VALUE * 0.01
-	message = "cm3 of iron"
-	material_id = /datum/material/iron
-	export_types = list(
-		/obj/item/stack/sheet/iron, /obj/item/stack/tile/iron,
-		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
-
-/datum/export/material/glass
-	cost = CARGO_CRATE_VALUE * 0.01
-	message = "cm3 of glass"
-	material_id = /datum/material/glass
-	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
-		/obj/item/shard)
 
 /datum/export/material/hot_ice
 	cost = CARGO_CRATE_VALUE * 0.8
@@ -116,3 +72,62 @@
 	message = "cm3 of metallic hydrogen"
 	material_id = /datum/material/metalhydrogen
 	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen
+
+/datum/export/material/market
+
+/datum/export/material/market/diamond
+	material_id = /datum/material/diamond
+	message = "cm3 of diamonds"
+
+/datum/export/material/market/uranium
+	material_id = /datum/material/uranium
+	message = "cm3 of uranium"
+
+/datum/export/material/market/gold
+	material_id = /datum/material/gold
+	message = "cm3 of gold"
+
+/datum/export/material/market/silver
+	material_id = /datum/material/silver
+	message = "cm3 of silver"
+
+/datum/export/material/market/titanium
+	material_id = /datum/material/titanium
+	message = "cm3 of titanium"
+
+/datum/export/material/market/bscrystal
+	message = "of bluespace crystals"
+	material_id = /datum/material/bluespace
+	export_types = list(/obj/item/stack/sheet/bluespace_crystal, /obj/item/stack/ore) //For whatever reason, bluespace crystals are not a mineral
+
+/datum/export/material/market/iron
+	message = "cm3 of iron"
+	material_id = /datum/material/iron
+	export_types = list(
+		/obj/item/stack/sheet/iron, /obj/item/stack/tile/iron,
+		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
+
+/datum/export/material/market/glass
+	message = "cm3 of glass"
+	material_id = /datum/material/glass
+	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
+		/obj/item/shard)
+
+/datum/export/material/market/get_cost(obj/O, apply_elastic = FALSE)
+	var/obj/item/I = O
+	var/amount = get_amount(I)
+	if(!amount)
+		return 0
+	var/material_value = (SSstock_market.materials_prices[material_id]) * amount
+	return round(material_value)
+
+/datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
+	. = ..()
+	var/amount = get_amount(sold_item)
+	var/price = get_cost(sold_item)
+	if(!amount)
+		return
+	if(!dry_run)
+		SSstock_market.materials_quantity[material_id] += amount
+		SSstock_market.materials_prices[material_id] = round((price - (material_id.value_per_unit * SHEET_MATERIAL_AMOUNT)) * (amount / (amount + SSstock_market.materials_quantity[material_id])))
+		//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.

@@ -12,6 +12,8 @@ SUBSYSTEM_DEF(stock_market)
 	var/list/materials_trends = list()
 	/// Associated list of materials alongside the life of it's current trend. After it's life is up, it will change to a new trend.
 	var/list/materials_trend_life = list()
+	/// Associated list of materials alongside their available quantity. This is used to determine how much of a material is available to buy, and how much buying and selling affects the price.
+	var/list/materials_quantity = list()
 	/// HTML string that is used to display the market events to the player.
 	var/news_string = ""
 
@@ -27,22 +29,30 @@ SUBSYSTEM_DEF(stock_market)
 			materials_trend_life += possible_market
 			materials_trend_life[possible_market] = rand(1,10)
 
+			materials_quantity += possible_market
+			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-possible_market.tradable_base_quantity * 0.5, possible_market.tradable_base_quantity * 0.5))
+
 /datum/controller/subsystem/stock_market/fire(resumed)
 	for(var/datum/material/market as anything in materials_prices)
 		handle_trends_and_price(market)
 		to_chat(world, span_boldannounce("We are firing! Price units of [market.name] is now [materials_prices[market]]! Trend is [materials_trends[market]] for another [materials_trend_life[market]]!"))
 
+/**
+ * Handles shifts in the cost of materials, and in what direction the material is most likely to move.
+ */
 /datum/controller/subsystem/stock_market/proc/handle_trends_and_price(datum/material/mat)
 	if(prob(MARKET_EVENT_PROBABILITY))
 		handle_market_event(mat)
 		return
-
-	var/price_units = materials_prices[mat]
 	var/trend = materials_trends[mat]
 	var/trend_life = materials_trend_life[mat]
+
+	var/price_units = materials_prices[mat]
 	var/price_minimum = mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5
 	var/price_maximum = mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3
 	var/price_baseline = mat.value_per_unit * SHEET_MATERIAL_AMOUNT
+
+	var/stock_quantity = materials_quantity[mat]
 
 	if(trend_life == 0)
 		///We want to scale our trend so that if we're closer to our minimum or maximum price, we're more likely to trend the other way.
@@ -63,14 +73,19 @@ SUBSYSTEM_DEF(stock_market)
 		materials_trend_life[mat] -= 1
 
 	var/price_change = 0
+	var/quantity_change = 0
 	switch(trend)
 		if(MARKET_TREND_UPWARD)
-			price_change = round(gaussian(price_units * 0.15, 0.05 * price_units))
+			price_change = ROUND_UP(gaussian(price_units * 0.1, price_units * 0.05)) //If we don't ceil, small numbers will get trapped at low values
+			quantity_change = -round(gaussian(stock_quantity * 0.1, stock_quantity * 0.05))
 		if(MARKET_TREND_STABLE)
-			price_change = round(gaussian(0, 0.01 * price_units))
+			price_change = round(gaussian(0, price_units * 0.01))
+			quantity_change = round(gaussian(0, stock_quantity * 0.01))
 		if(MARKET_TREND_DOWNWARD)
-			price_change = -round(gaussian(price_units * 0.15, 0.05 * price_units))
+			price_change = -ROUND_UP(gaussian(price_units * 0.1, price_units * 0.05))
+			quantity_change = round(gaussian(stock_quantity * 0.1, stock_quantity * 0.05))
 	materials_prices[mat] =  round(clamp(price_units + price_change, price_minimum, price_maximum))
+	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, mat.tradable_base_quantity * 2))
 
 /**
  * Market events are a way to spice up the market and make it more interesting.
@@ -91,7 +106,6 @@ SUBSYSTEM_DEF(stock_market)
 		"Dreamland Robotics"
 	)
 	var/circumstance
-
 	var/event = rand(1,3)
 	switch(event)
 		if(1) //Reset to stable
@@ -104,7 +118,6 @@ SUBSYSTEM_DEF(stock_market)
 				"Due to a corporate restructuring, the largest supplier of <b>[mat.name]</b> has had the price changed to <b>[materials_prices[mat]] cr</b>.",
 				"<b>[mat.name]</b> is now under a monopoly by [pick(company_name)]. The price has been changed to <b>[materials_prices[mat]] cr</b> accordingly."
 			))
-			to_chat(world, span_boldannounce("A market event has occured! [mat.name] is now stable at [materials_prices[mat]]!"))
 		if(2) //Big boost
 			materials_prices[mat] += round(gaussian(price_units * 0.5, 0.1 * price_units))
 			materials_prices[mat] = clamp(materials_prices[mat], mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5, mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
@@ -115,7 +128,6 @@ SUBSYSTEM_DEF(stock_market)
 				"Due to [pick(company_name)] finding a new property of <b>[mat.name]</b>, its price has been raised to <b>[materials_prices[mat]] cr</b>.",
 				"A study has found that <b>[mat.name]</b> may run out within the next 100 years. The price has raised to <b>[materials_prices[mat]] cr</b> due to panic."
 			))
-			to_chat(world, span_boldannounce("A market event has occured! [mat.name] got a big boost!"))
 		if(3) //Big drop
 			materials_prices[mat] -= round(gaussian(price_units * 1.5, 0.1 * price_units))
 			materials_prices[mat] = clamp(materials_prices[mat], mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5, mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
@@ -126,5 +138,4 @@ SUBSYSTEM_DEF(stock_market)
 				"Due to a new competitor, the price of <b>[mat.name]</b> has dropped to <b>[materials_prices[mat]] cr</b>.",
 				"<b>[mat.name]</b> has been found to be a carcinogen. The price has dropped to <b>[materials_prices[mat]] cr</b> due to panic."
 			))
-			to_chat(world, span_boldannounce("A market event has occured! [mat.name] took a big hit!"))
 	news_string += circumstance + "<br>" // Add the event to the news_string, formatted for newscasters.
