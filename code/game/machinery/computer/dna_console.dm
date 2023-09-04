@@ -240,7 +240,7 @@
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)

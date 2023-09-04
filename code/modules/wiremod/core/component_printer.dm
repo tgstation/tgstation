@@ -31,7 +31,7 @@
 /obj/machinery/component_printer/LateInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
 	if(techweb)
 		on_connected_techweb()
 

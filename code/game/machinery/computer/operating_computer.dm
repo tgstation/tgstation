@@ -23,7 +23,7 @@
 /obj/machinery/computer/operating/LateInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
 	experiment_handler = AddComponent( \
 		/datum/component/experiment_handler, \

@@ -48,7 +48,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/LateInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 	if(stored_research)
 		stored_research.consoles_accessing += src
 
