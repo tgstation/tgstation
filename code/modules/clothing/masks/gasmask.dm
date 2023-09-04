@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	has_fov = FALSE
 	cig_slot = TRUE
 
-/obj/item/clothing/mask/gas/atmos/captain/ui_action_click(mob/user, action)
+/obj/item/clothing/mask/gas/captain/ui_action_click(mob/user, action)
 	adjustmask(user)
 
 /obj/item/clothing/mask/gas/atmos/centcom
