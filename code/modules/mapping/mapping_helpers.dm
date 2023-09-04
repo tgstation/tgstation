@@ -1359,3 +1359,36 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
 	qdel(src)
+
+/obj/effect/mapping_helpers/emergency_shuttle_event_override
+	name = "emergency shuttle events override"
+	icon_state = "shuttleeventoverride"
+	late = TRUE
+	/// List of event paths to run
+	var/list/events_override = list()
+
+/obj/effect/mapping_helpers/emergency_shuttle_event_override/LateInitialize()
+	var/obj/docking_port/mobile/port = SSshuttle.emergency
+	if(!port)
+		qdel(src)
+		return
+	port.event_list.Cut()
+	change_paths(port)
+	qdel(src)
+
+/obj/effect/mapping_helpers/emergency_shuttle_event_override/proc/change_paths(obj/docking_port/mobile/port)
+	for(var/path in events_override)
+		port.event_list.Add(new path(port))
+
+/obj/effect/mapping_helpers/emergency_shuttle_event_override/random_pick
+	name = "random emergency shuttle event override"
+	events_override = list(/datum/shuttle_event/simple_spawner/carp = 1) //example
+	var/pick_count = 1
+
+/obj/effect/mapping_helpers/emergency_shuttle_event_override/random_pick/change_paths(obj/docking_port/mobile/port)
+	var/list/chosen = list()
+	while(pick_count)
+		var/path = pick_weight(events_override)
+		pick_count--
+		events_override -= path
+		port.event_list.Add(new path(port))

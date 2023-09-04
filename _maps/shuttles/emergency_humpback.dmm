@@ -104,6 +104,12 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
+"fJ" = (
+/obj/effect/mapping_helpers/emergency_shuttle_event_override/random_pick{
+	events_override = list(/datum/shuttle_event/simple_spawner/carp/friendly = 5, /datum/shuttle_event/simple_spawner/carp/friendly_but_no_personal_space = 3, /datum/shuttle_event/simple_spawner/carp = 2, /datum/shuttle_event/simple_spawner/carp/magic = 1)
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
 "gL" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig"
@@ -984,7 +990,7 @@ EO
 EO
 EO
 EO
-vR
+fJ
 EO
 vF
 dP
