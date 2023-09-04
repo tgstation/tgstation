@@ -86,7 +86,7 @@
 		When triggered, the victim is returned to the location where the mark was originally applied to them. \
 		They will then be paralyzed for 2 seconds."
 	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. \
-	I can help them, I have to help them."
+		I can help them, I have to help them."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/cosmic)
 	route = PATH_COSMIC
 	mark_type = /datum/status_effect/eldritch/cosmic
