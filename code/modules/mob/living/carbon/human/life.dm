@@ -19,6 +19,9 @@
 #define THERMAL_PROTECTION_HAND_RIGHT 0.025
 
 /mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+
 	. = ..()
 	if(QDELETED(src))
 		return FALSE
