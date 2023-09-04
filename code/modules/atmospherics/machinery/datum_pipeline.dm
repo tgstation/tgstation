@@ -1,5 +1,7 @@
 /datum/pipeline
+	/// The gases contained within this pipeline
 	var/datum/gas_mixture/air
+	/// The gas_mixtures of objects directly connected to this pipeline
 	var/list/datum/gas_mixture/other_airs
 
 	var/list/obj/machinery/atmospherics/pipe/members
@@ -28,7 +30,7 @@
 	if(air?.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/considered_pipe in members)
-		considered_pipe.parent = null
+		considered_pipe.set_pipenet(null)
 		if(QDELETED(considered_pipe))
 			continue
 		SSair.add_to_rebuild_queue(considered_pipe)
@@ -105,7 +107,7 @@
 				possible_expansions += item
 
 				volume += item.volume
-				item.parent = src
+				item.set_pipenet(src)
 
 				if(item.air_temporary)
 					air.merge(item.air_temporary)
@@ -142,7 +144,7 @@
 		var/obj/machinery/atmospherics/pipe/reference_pipe = reference_device
 		if(reference_pipe.parent)
 			merge(reference_pipe.parent)
-		reference_pipe.parent = src
+		reference_pipe.set_pipenet(src)
 		var/list/adjacent = reference_pipe.pipeline_expansion()
 		for(var/obj/machinery/atmospherics/pipe/adjacent_pipe in adjacent)
 			if(adjacent_pipe.parent == src)
@@ -159,7 +161,7 @@
 	air.volume += parent_pipeline.air.volume
 	members.Add(parent_pipeline.members)
 	for(var/obj/machinery/atmospherics/pipe/reference_pipe in parent_pipeline.members)
-		reference_pipe.parent = src
+		reference_pipe.set_pipenet(src)
 	air.merge(parent_pipeline.air)
 	for(var/obj/machinery/atmospherics/components/reference_component in parent_pipeline.other_atmos_machines)
 		reference_component.replace_pipenet(parent_pipeline, src)
