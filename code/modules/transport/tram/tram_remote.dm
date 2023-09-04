@@ -19,7 +19,7 @@
 
 /obj/item/assembly/control/icts/remote/Initialize(mapload)
 	. = ..()
-	SStransport.hello(src)
+	SStransport.hello(src, name, cached_ref)
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 	register_context()
 

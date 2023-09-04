@@ -67,6 +67,22 @@ DEFINE_BITFIELD(controller_status, list(
 	"MANUAL_MODE" = MANUAL_MODE,
 ))
 
+#define TRANSPORT_FLAGS list( \
+	"SYSTEM_FAULT", \
+	"COMM_ERROR", \
+	"EMERGENCY_STOP", \
+	"PRE_DEPARTURE", \
+	"DOORS_OPEN", \
+	"CONTROLS_LOCKED", \
+	"BYPASS_SENSORS", \
+	"MANUAL_MODE", \
+)
+
+/// Logging
+#define SUB_TS_STATUS "TS-[english_list(bitfield_to_list(transport_controller.controller_status, TRANSPORT_FLAGS))]"
+#define TC_TS_STATUS "TS-[english_list(bitfield_to_list(controller_status, TRANSPORT_FLAGS))]"
+#define TC_TA_INFO "TA-[transport_controller.controller_active ? "PROCESSING" : "READY"]"
+
 DEFINE_BITFIELD(request_flags, list(
 	"RAPID_MODE" = RAPID_MODE,
 	"BYPASS_SENSORS" = BYPASS_SENSORS,

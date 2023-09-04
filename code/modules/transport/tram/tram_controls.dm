@@ -24,7 +24,7 @@
 
 /obj/machinery/computer/tram_controls/LateInitialize()
 	. = ..()
-	SStransport.hello(src)
+	SStransport.hello(src, name, cached_ref)
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 	find_tram()
 

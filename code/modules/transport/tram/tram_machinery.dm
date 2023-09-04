@@ -34,8 +34,12 @@
 	id = 0
 
 /obj/item/assembly/control/icts/call_button/Initialize(mapload)
-	..()
-	SStransport.hello(src)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/assembly/control/icts/call_button/LateInitialize(mapload)
+	. = ..()
+	SStransport.hello(src, name, cached_ref)
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 
 /obj/item/assembly/control/icts/proc/call_response(controller, list/relevant, response_code, response_info)

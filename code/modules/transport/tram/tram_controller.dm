@@ -222,6 +222,7 @@
 	travel_direction = get_dir(nav_beacon, destination_platform)
 	travel_remaining = get_dist(nav_beacon, destination_platform)
 	travel_trip_length = travel_remaining
+	log_transport("TC: [specific_transport_id] trip calculation: src: [nav_beacon.x], [nav_beacon.y], [nav_beacon.z] dst: [destination_platform] [destination_platform.x], [destination_platform.y], [destination_platform.z] = Dir [travel_direction] Dist [travel_remaining.]")
 	return TRUE
 
 /**
@@ -239,6 +240,7 @@
  */
 
 /datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/transport/nav_beacon/tram/destination_platform)
+	log_transport("TC: [specific_transport_id] starting departure.")
 	set_status_code(PRE_DEPARTURE, FALSE)
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
@@ -319,12 +321,14 @@
 
 /datum/transport_controller/linear/tram/proc/normal_stop()
 	cycle_doors(OPEN_DOORS)
+	log_transport("TC: [specific_transport_id] trip completed.")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
+		log_transport("TC: [specific_transport_id] position data successfully reset. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
@@ -334,12 +338,14 @@
 	speed_limiter = initial(speed_limiter)
 
 /datum/transport_controller/linear/tram/proc/degraded_stop()
+	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS]")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	set_lights(estop = TRUE)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
+		log_transport("TC: [specific_transport_id] position data successfully reset. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
@@ -355,6 +361,8 @@
 	if(controller_status & SYSTEM_FAULT)
 		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller error. Please contact your engineering department.")
+		log_transport("TC: [specific_transport_id] Transport Controller failed!")
+		log_transport("TC: [specific_transport_id] TODO: put detailed stuff here")
 
 	if(travel_remaining)
 		travel_remaining = 0
@@ -366,6 +374,7 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(cycle_doors), OPEN_DOORS), 2 SECONDS)
 	idle_platform = null
+	log_transport("TC: [specific_transport_id] Transport Controller needs new position data from the tram.")
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
@@ -377,8 +386,10 @@
 		set_status_code(EMERGENCY_STOP, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
+		log_transport("TC: [specific_transport_id] Transport Controller reset was requested, but the tram nav data seems correct. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 		return
 
+	log_transport("TC: [specific_transport_id] performing Transport Controller reset. Locating closest reset beacon to ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z])")
 	var/tram_velocity_sign
 	if(travel_direction & (NORTH|SOUTH))
 		tram_velocity_sign = travel_direction & NORTH ? OUTBOUND : INBOUND
@@ -390,6 +401,7 @@
 	if(!reset_beacon)
 		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset failed. Contact manufacturer.") // If you screwed up the tram this bad, I don't even
+		log_transport("TC: [specific_transport_id] non-recoverable error! Tram is at ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z] [tram_velocity_sign ? "OUTBOUND" : "INBOUND"]) and can't find a reset beacon.")
 		return
 
 	travel_direction = get_dir(nav_beacon, reset_beacon)
@@ -399,15 +411,18 @@
 	speed_limiter = 1.5
 	playsound(paired_cabinet, 'sound/machines/ping.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Peforming controller reset... Navigating to reset point.")
+	log_transport("TC: [specific_transport_id] trip calculation: src: [nav_beacon.x], [nav_beacon.y], [nav_beacon.z] dst: [destination_platform] [destination_platform.x], [destination_platform.y], [destination_platform.z] = Dir [travel_direction] Dist [travel_remaining.]")
 	cycle_doors(CLOSE_DOORS)
 	set_active(TRUE)
 	set_status_code(CONTROLS_LOCKED, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(dispatch_transport), reset_beacon), 3 SECONDS)
+	log_transport("TC: [specific_transport_id] trying to reset at [destination_platform].")
 
 /datum/transport_controller/linear/tram/proc/estop()
 	playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Emergency stop activated!")
 	set_status_code(EMERGENCY_STOP, TRUE)
+	log_transport("TC: [specific_transport_id] requested emergency stop.")
 
 /**
  * Handles unlocking the tram controls for use after moving
@@ -442,6 +457,7 @@
 
 	controller_active = new_status
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	log_transport("TC: [specific_transport_id] controller state [controller_active ? "READY > PROCESSING" : "PROCESSING > READY"].")
 
 /**
  * Sets the controller status bitfield
@@ -455,6 +471,7 @@
  * * value - boolean TRUE/FALSE to set the code
  */
 /datum/transport_controller/linear/tram/proc/set_status_code(code, value)
+	log_transport("TC: [specific_transport_id] status change [value ? "+" : "-"][english_list(bitfield_to_list(code, TRANSPORT_FLAGS))].")
 	switch(value)
 		if(TRUE)
 			controller_status |= code
@@ -478,6 +495,7 @@
 	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 		if(door.transport_linked_id == specific_transport_id)
 			if(door.airlock_state != 1)
+				log_transport("TC: [specific_transport_id] door [door.cached_ref] failed check with status [door.airlock_state].")
 				set_status_code(DOORS_OPEN, TRUE)
 				break
 
@@ -503,6 +521,7 @@
 	RegisterSignal(new_cabinet, COMSIG_MACHINERY_POWER_LOST, PROC_REF(power_lost))
 	RegisterSignal(new_cabinet, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(power_restored))
 	RegisterSignal(new_cabinet, COMSIG_QDELETING, PROC_REF(on_cabinet_qdel))
+	log_transport("TC: [specific_transport_id] is now paired with [new_cabinet].")
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
@@ -510,6 +529,7 @@
 
 /datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
 	paired_cabinet = null
+	log_transport("TC: [specific_transport_id] received QDEL from controller cabinet.")
 	set_status_code(SYSTEM_FAULT, TRUE)
 
 /**
@@ -520,6 +540,7 @@
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
 	paired_cabinet.generate_repair_signals()
 	collision_lethality = 1.25
+	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
 /**
  * Remove effects of tram malfunction event.
@@ -534,16 +555,19 @@
 	paired_cabinet.clear_repair_signals()
 	collision_lethality = initial(collision_lethality)
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
+	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
 /datum/transport_controller/linear/tram/proc/register_collision()
 	tram_registration["collisions"] += 1
 
 /datum/transport_controller/linear/tram/proc/power_lost()
-	controller_operational = FALSE
+	set_operational(FALSE)
+	log_transport("TC: [specific_transport_id] power lost.")
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/power_restored()
-	controller_operational = TRUE
+	set_operational(TRUE)
+	log_transport("TC: [specific_transport_id] power restored.")
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/set_operational(new_value)
@@ -618,6 +642,7 @@
  * Return: push_destination (the landmark /obj/effect/landmark/tram/nav that the tram is being pushed to due to the rod's trajectory)
  */
 /datum/transport_controller/linear/tram/proc/rod_collision(obj/effect/immovablerod/collided_rod)
+	log_transport("TC: [specific_transport_id] hit an immovable rod.")
 	if(!controller_operational)
 		return
 	var/rod_velocity_sign
@@ -634,6 +659,7 @@
 	travel_remaining = get_dist(nav_beacon, push_destination)
 	travel_trip_length = travel_remaining
 	destination_platform = push_destination
+	log_transport("TC: [specific_transport_id] collided at ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) towards [push_destination] ([push_destination.x], [push_destination.y], [push_destination.z]) Dir [travel_direction] Dist [travel_remaining.].")
 	// Don't bother processing crossing signals, where this tram's going there are no signals
 	//for(var/obj/machinery/transport/crossing_signal/xing as anything in SStransport.crossing_signals)
 	//	xing.temp_malfunction()
@@ -680,7 +706,7 @@
  */
 /obj/machinery/transport/tram_controller/LateInitialize(mapload)
 	. = ..()
-	SStransport.hello(src)
+	SStransport.hello(src, name, cached_ref)
 	find_controller()
 	update_appearance()
 

@@ -29,15 +29,17 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 	)
 
-/datum/controller/subsystem/processing/transport/proc/hello(new_unit)
+/datum/controller/subsystem/processing/transport/proc/hello(atom/new_unit, ref_name, ref_info)
 	RegisterSignal(new_unit, COMSIG_TRANSPORT_REQUEST, PROC_REF(incoming_request))
+	log_transport("Sub: Registered new transport component [ref_name] [ref_info].")
 
 /datum/controller/subsystem/processing/transport/Recover()
 	_listen_lookup = SStransport._listen_lookup
 
-/datum/controller/subsystem/processing/transport/proc/incoming_request(source, obj/effect/landmark/transport/nav_beacon/tram/transport_network, platform, options)
+/datum/controller/subsystem/processing/transport/proc/incoming_request(atom/source, obj/effect/landmark/transport/nav_beacon/tram/transport_network, platform, options)
 	SIGNAL_HANDLER
 
+	log_transport("Sub: Received request from [source.name] [source.cached_ref]. Contents: [transport_network] [platform] [options]")
 	var/relevant
 	var/request_flags = options
 	var/datum/transport_controller/linear/tram/transport_controller
@@ -51,18 +53,22 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	if(!transport_controller || !transport_controller.controller_operational || !transport_controller.paired_cabinet)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NOT_IN_SERVICE)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [NOT_IN_SERVICE]. Info: TC-[!transport_controller][!transport_controller.controller_operational][!transport_controller.paired_cabinet].")
 		return
 
 	if(transport_controller.controller_status & SYSTEM_FAULT || transport_controller.controller_status & EMERGENCY_STOP)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
 		return
 
 	if(transport_controller.controller_status & MANUAL_MODE && options != MANUAL_MODE)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, PLATFORM_DISABLED)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [PLATFORM_DISABLED]. Info: [SUB_TS_STATUS].")
 		return
 
 	if(transport_controller.controller_active) //in use
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [PLATFORM_DISABLED]. Info: [TC_TA_INFO].")
 		return
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)
@@ -73,37 +79,46 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	if(!destination)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INVALID_PLATFORM]. Info: RD0.")
 		return
 
 	if(transport_controller.idle_platform == destination) //did you even look?
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NO_CALL_REQUIRED)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [NO_CALL_REQUIRED]. Info: RD1.")
 		return
 
 	if(!transport_controller.calculate_route(destination))
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: NV0.")
 		return
 
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_SUCCESS, destination.name)
+	log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_SUCCESS] [destination.name].")
 
 	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, request_flags)
 
 /datum/controller/subsystem/processing/transport/proc/dispatch_transport(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
+	log_transport("Sub: Sending dispatch request to [transport_controller.specific_transport_id]. [request_flags ? "Contents: [request_flags]." : "No request flags."]")
 	if(transport_controller.idle_platform == transport_controller.destination_platform)
+		log_transport("Sub: [transport_controller.specific_transport_id] dispatch failed. Info: DE-1 Transport Controller idle and destination are the same.")
 		return
 
 	transport_controller.set_active(TRUE)
 	pre_departure(transport_controller, request_flags)
 
 /datum/controller/subsystem/processing/transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, request_flags)
+	log_transport("Sub: [transport_controller.specific_transport_id] start pre-departure. Info: [SUB_TS_STATUS]")
 	if(transport_controller.controller_status & COMM_ERROR)
 		request_flags |= BYPASS_SENSORS
 	transport_controller.set_status_code(PRE_DEPARTURE, TRUE)
 	transport_controller.set_status_code(CONTROLS_LOCKED, TRUE)
 	transport_controller.set_lights()
+	log_transport("Sub: [transport_controller.specific_transport_id] requested door close. Info: [SUB_TS_STATUS].")
 	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS || transport_controller.controller_status & BYPASS_SENSORS) // bypass for unsafe, rapid departure
 		for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close), BYPASS_DOOR_CHECKS)
 		if(request_flags & RAPID_MODE)
+			log_transport("Sub: [transport_controller.specific_transport_id] rapid mode enabled, bypassing validation.")
 			transport_controller.dispatch_transport()
 			return
 	else
@@ -113,6 +128,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller), 3 SECONDS)
 
 /datum/controller/subsystem/processing/transport/proc/validate_and_dispatch(datum/transport_controller/linear/tram/transport_controller, attempt)
+	log_transport("Sub: [transport_controller.specific_transport_id] start pre-departure validation. Attempts: [attempt ? attempt : 0].")
 	var/current_attempt
 	if(attempt)
 		current_attempt = attempt
@@ -120,6 +136,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		current_attempt = 0
 
 	if(current_attempt >= 4)
+		log_transport("Sub: [transport_controller.specific_transport_id] pre-departure validation failed! Info: [SUB_TS_STATUS].")
 		transport_controller.halt_and_catch_fire()
 		return
 
@@ -127,10 +144,12 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	transport_controller.update_status()
 	if(transport_controller.controller_status & DOORS_OPEN)
-		addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller, current_attempt), 3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller, current_attempt), 4 SECONDS)
 		return
 	else
+
 		transport_controller.dispatch_transport()
+		log_transport("Sub: [transport_controller.specific_transport_id] pre-departure passed.")
 
 /datum/controller/subsystem/processing/transport/proc/detailed_destination_list(specific_transport_id)
 	. = list()
