@@ -27,7 +27,7 @@
 	var/wiring_reset = FALSE
 
 	/// How many sparks do we spawn when we're gained?
-	var/initial_sparks_amount
+	var/initial_sparks_amount = 1
 
 	/// How much of our damage is reduced if the target is shock immune. Percent.
 	var/shock_immunity_self_damage_reduction = 75
@@ -40,21 +40,21 @@
 	/// The overall "intensity" of this wound. Goes up to [processing_full_shock_threshold], and is used for determining our effect scaling. Measured in deciseconds.
 	var/intensity
 	/// The time, in deciseconds, it takes to reach 100% power.
-	var/processing_full_shock_threshold
+	var/processing_full_shock_threshold = 3 MINUTES
 	/// If [intensity] is at or below this, we remove ourselves.
 	var/minimum_intensity = 0
 
 	/// How much shock power we add to [processing_shock_power_this_tick] per tick. Lower bound
-	var/processing_shock_power_per_second_min
+	var/processing_shock_power_per_second_min = 0.1
 	/// How much shock power we add to [processing_shock_power_this_tick] per tick. Upper bound
-	var/processing_shock_power_per_second_max
+	var/processing_shock_power_per_second_max = 0.2
 
 	/// In the case we get below 1 power, we add the power to this buffer and use it next tick.
-	var/processing_shock_power_this_tick
+	var/processing_shock_power_this_tick = 0
 	/// The chance for each processed shock to stun the user.
-	var/processing_shock_stun_chance
+	var/processing_shock_stun_chance = 0
 	/// The chance for each processed shock to spark.
-	var/processing_shock_spark_chance
+	var/processing_shock_spark_chance = 30
 	/// The chance for each processed shock to message the user.
 	var/process_shock_message_chance = 80
 
@@ -62,13 +62,16 @@
 	var/seconds_per_intensity_mult = 1
 
 	/// How many sparks we spawn if a shock sparks. Lower bound
-	var/process_shock_spark_count_min
+	var/process_shock_spark_count_min = 1
 	/// How many sparks we spawn if a shock sparks. Upper bound
-	var/process_shock_spark_count_max
+	var/process_shock_spark_count_max = 1
 
+	/// The percent, in decimal, a successful wirecut use will reduce intensity by.
 	var/wirecut_repair_percent
+	/// The percent, in decimal, a successful wire use will reduce intensity by.
 	var/wire_repair_percent
 
+	/// The basic multiplier to all our effects. Damage, progress, etc.
 	var/overall_effect_mult = 1
 
 	/// The bodyheat our victim must be at or above to start getting passive healing.
@@ -79,7 +82,7 @@
 	/// Percent chance for a heat repair to give the victim a message.
 	var/heat_heal_message_chance = 20
 
-	/// If [get_intensity_mult()] is at or above this, the limb gets disabled.
+	/// If [get_intensity_mult()] is at or above this, the limb gets disabled. If null, it will never occur.
 	var/disable_at_intensity_mult
 
 /datum/wound_pregen_data/electrical_damage

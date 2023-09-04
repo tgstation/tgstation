@@ -79,7 +79,7 @@
 	var/daze_dizziness_maximum_duration = 20 SECONDS
 
 	/// The maximum duration our nausea will last for. See _stomach.dm for the various levels of nausea.
-	var/max_nausea_duration
+	var/max_nausea_duration = 20 SECONDS
 	/// The base amount of nausea we apply to our victim on movement.
 	var/chest_movement_base_nausea_score = 0.2 SECONDS
 	/// Percent chance, every time we move, to attempt to increase nausea of the victim if we are on the chest.
