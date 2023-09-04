@@ -6,6 +6,12 @@
 	initial_gas_mix = AIRLESS_ATMOS
 	temperature = TCMB
 
+/turf/open/floor/engine/hull/air
+	name = "interior hull plating"
+	desc = "Sturdy interior hull plating that separates you from the floor below."
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	temperature = T20C
+
 /turf/open/floor/engine/hull/ceiling
 	name = "shuttle ceiling plating"
 	var/old_turf_type
