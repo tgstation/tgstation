@@ -36,9 +36,9 @@
 		teleport(loser)
 
 /obj/effect/knock_portal/Destroy()
-	. = ..()
 	destination = null
 	our_airlock = null
+	return ..()
 
 /obj/effect/knock_portal/proc/teleport(mob/living/teleportee)
 	if(!destination) //dumbass
