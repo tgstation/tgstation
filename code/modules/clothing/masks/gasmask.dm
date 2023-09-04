@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A state of the art mask, with a dual purpose slot for either a gas filter or narcotics."
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
-	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
+	flags_cover = MASKCOVERSMOUTH
 	icon_state = "gas_cap"
 	inhand_icon_state = "gasmask_captain"
 	armor_type = /datum/armor/gas_atmos
