@@ -223,8 +223,7 @@
 	if(!LAZYLEN(selected_atoms))
 		loc.balloon_alert(user, "ritual failed, not enough valid bodies!")
 		return FALSE
-	else
-		return TRUE
+	return TRUE
 
 /datum/heretic_knowledge/ultimate/knock_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
