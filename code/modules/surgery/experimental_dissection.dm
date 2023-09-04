@@ -16,7 +16,7 @@
 
 /datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/target)
 	. = ..()
-	if(HAS_TRAIT(target, TRAIT_DISSECTED))
+	if(HAS_TRAIT_FROM(target, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT))
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
