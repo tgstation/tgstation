@@ -61830,13 +61830,6 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
-"sLx" = (
-/obj/machinery/button/door/directional/north{
-	id = "funnywindow";
-	name = "Lockdown"
-	},
-/turf/open/space/basic,
-/area/space)
 "sLz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -176032,7 +176025,7 @@ vXM
 vXM
 vXM
 vXM
-sLx
+vXM
 vXM
 vXM
 vXM
