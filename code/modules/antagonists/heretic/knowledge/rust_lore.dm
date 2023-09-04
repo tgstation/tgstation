@@ -118,8 +118,8 @@
 		heretic_eyes.flash_protect = FLASH_PROTECTION_NONE
 
 /datum/heretic_knowledge/proc/protect_ears(datum/source, list/reflist)
-	SIGNAL_HANDLER
-	reflist[1]--
+    SIGNAL_HANDLER
+    reflist[1]--
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -132,10 +132,6 @@
 	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
-	//damages non heretics' clothes and gives them a negative moodlet
-	for(var/mob/living/target in our_turf)
-		if (!IS_HERETIC(target))
-			target.add_mood_event("rust_corruption", /datum/mood_event/rust_corruption)
 	// Heals all damage + Stamina
 	source.adjustBruteLoss(-2, FALSE)
 	source.adjustFireLoss(-2, FALSE)
@@ -302,7 +298,7 @@
  */
 /datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-	var/heretic_heal = 5
+	var/heretic_heal = -5
 	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
