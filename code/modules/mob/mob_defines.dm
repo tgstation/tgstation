@@ -90,7 +90,7 @@
 	  * Set when you're being turned into something else and also used in a bunch of places
 	  * it probably shouldn't really be
 	  */
-	var/notransform = null //Carbon
+	var/notransform = TRUE
 
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null

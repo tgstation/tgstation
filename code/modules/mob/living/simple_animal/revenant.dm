@@ -351,7 +351,7 @@
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
 	unreveal_time = 0
-	notransform = 0
+	notransform = FALSE
 	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE
