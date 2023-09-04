@@ -36,7 +36,7 @@
 #endif
 		return
 
-	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_WAS_ATTACKED, COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_ATTACK_HAND))
+	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_WAS_ATTACKED, COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_ATTACK_HAND))
 	return ..() //Run parent at end
 
 /datum/ai_controller/robot_customer/proc/on_attackby(datum/source, obj/item/I, mob/living/user)

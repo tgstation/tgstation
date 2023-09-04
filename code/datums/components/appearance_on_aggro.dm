@@ -39,7 +39,7 @@
 	if(isnull(target))
 		return
 	current_target = target
-	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_clear_target))
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_clear_target))
 	if(overlay_path)
 		source.update_appearance(UPDATE_OVERLAYS)
 	if(alpha_on_aggro)
@@ -56,7 +56,7 @@
 	revert_appearance(parent)
 
 /datum/component/appearance_on_aggro/proc/revert_appearance(mob/living/source)
-	UnregisterSignal(current_target, COMSIG_QDELETING)
+	UnregisterSignal(current_target, COMSIG_PARENT_QDELETING)
 	current_target = null
 	if(overlay_path)
 		source.update_appearance(UPDATE_OVERLAYS)
