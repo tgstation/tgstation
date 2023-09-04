@@ -469,11 +469,10 @@ SUBSYSTEM_DEF(ticker)
 				living.client.init_verbs()
 			livings += living
 	if(livings.len)
-		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 3 SECONDS, TIMER_CLIENT_TIME)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
-	for(var/iterable in livings)
-		var/mob/living/living_mob = iterable
+	for(var/mob/living/living_mob as anything in livings)
 		REMOVE_TRAIT(living_mob, TRAIT_NO_TRANSFORM, REF(src))
 
 /datum/controller/subsystem/ticker/proc/check_queue()
