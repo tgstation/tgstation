@@ -1212,7 +1212,7 @@
 /area/shuttle/abandoned/medbay)
 "cF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/small/built/directional/north,
 /obj/effect/decal/cleanable/blood/old,
@@ -1247,7 +1247,7 @@
 "cH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white/side{
 	dir = 1
@@ -1555,7 +1555,7 @@
 "dk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white/side{
 	dir = 10
@@ -1624,7 +1624,7 @@
 "dr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white/side{
 	dir = 6
