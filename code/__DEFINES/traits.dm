@@ -193,8 +193,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
-/// The macro name is rather antiquated as to its purpose, but it's remained to express the original intent of the trait while retaining the modern use in the string it ties to
-/// Ensure you track this as properly as possible! Nine times out of ten, this is sourcing it to the REF(src) that we currently have going on.
+/// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"

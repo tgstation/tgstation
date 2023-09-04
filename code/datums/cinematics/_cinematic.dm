@@ -1,3 +1,5 @@
+#define CINEMATIC_SOURCE "cinematic"
+
 /**
  * Plays a cinematic, duh. Can be to a select few people, or everyone.
  *
@@ -106,7 +108,7 @@
 /datum/cinematic/proc/show_to(mob/watching_mob, client/watching_client)
 	SIGNAL_HANDLER
 
-	if(!HAS_TRAIT_FROM(watching_mob, TRAIT_NO_TRANSFORM, REF(src)))
+	if(!HAS_TRAIT_FROM(watching_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE))
 		lock_mob(watching_mob)
 
 	// Only show the actual cinematic to cliented mobs.
@@ -148,14 +150,14 @@
 /// Locks a mob, preventing them from moving, being hurt, or acting
 /datum/cinematic/proc/lock_mob(mob/to_lock)
 	locked += WEAKREF(to_lock)
-	ADD_TRAIT(to_lock, TRAIT_NO_TRANSFORM, REF(src))
+	ADD_TRAIT(to_lock, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
 
 /// Unlocks a previously locked weakref
 /datum/cinematic/proc/unlock_mob(datum/weakref/mob_ref)
 	var/mob/locked_mob = mob_ref.resolve()
 	if(isnull(locked_mob))
 		return
-	REMOVE_TRAIT(locked_mob, TRAIT_NO_TRANSFORM, REF(src))
+	REMOVE_TRAIT(locked_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
 	UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
 
 /// Removes the passed client from our watching list.
@@ -172,3 +174,5 @@
 	no_longer_watching.screen -= screen
 
 	watching -= no_longer_watching
+
+#undef CINEMATIC_SOURCE
