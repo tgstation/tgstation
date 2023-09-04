@@ -80,4 +80,8 @@
 	if (selected_server) { \
 		server_var = selected_server.stored_research; \
 	}; \
+	else { \
+		var/datum/techweb/station_fallback_web = locate(/datum/techweb/science) in SSresearch.techwebs; \
+		server_var = station_fallback_web; \
+	}; \
 } while (FALSE)

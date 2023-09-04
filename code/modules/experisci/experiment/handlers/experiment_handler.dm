@@ -72,10 +72,7 @@
 	// Note this won't work at the moment for non-machines that have been included
 	// on the map as the servers aren't initialized when the non-machines are initializing
 	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
-		var/list/found_servers = SSresearch.get_available_servers(get_turf(parent))
-		var/obj/machinery/rnd/server/selected_server = length(found_servers) ? found_servers[1] : null
-		if (selected_server)
-			link_techweb(selected_server.stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(selected_server)
 
 	GLOB.experiment_handlers += src
 
