@@ -11,6 +11,12 @@
 /datum/wound/burn/robotic/overheat
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
 
+	default_scar_file = METAL_SCAR_FILE
+
+	wound_flags = (ACCEPTS_GAUZE) // gauze binds the metal and makes it resistant to thermal shock
+
+	processes = TRUE
+
 	/// The virtual temperature of the chassis. Crucial for many things, like our severity, the temp we transfer, our cooling damage, etc.
 	var/chassis_temperature
 
@@ -66,12 +72,6 @@
 
 	/// The glow we have attached to our victim, to simulate our limb glowing.
 	var/obj/effect/dummy/lighting_obj/moblight/mob_glow
-
-	default_scar_file = METAL_SCAR_FILE
-
-	wound_flags = (ACCEPTS_GAUZE) // gauze binds the metal and makes it resistant to thermal shock
-
-	processes = TRUE
 
 /datum/wound/burn/robotic/overheat/New(temperature)
 	chassis_temperature = (isnull(temperature) ? get_random_starting_temperature() : temperature)

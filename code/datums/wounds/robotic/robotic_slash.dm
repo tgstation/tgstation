@@ -19,6 +19,10 @@
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/stack/cable_coil)
 
+	default_scar_file = METAL_SCAR_FILE
+
+	processes = TRUE
+
 	/// If our wiring is safe to manually manipultae. If false, attempts to use sutures/coils will shock the helper.
 	var/wiring_reset = FALSE
 
@@ -77,10 +81,6 @@
 
 	/// If [get_intensity_mult()] is at or above this, the limb gets disabled.
 	var/disable_at_intensity_mult
-
-	default_scar_file = METAL_SCAR_FILE
-
-	processes = TRUE
 
 /datum/wound_pregen_data/electrical_damage
 	abstract = TRUE

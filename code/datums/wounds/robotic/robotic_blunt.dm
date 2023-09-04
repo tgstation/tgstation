@@ -49,6 +49,8 @@
 	name = "Robotic Blunt (Screws and bolts) Wound"
 	wound_flags = (ACCEPTS_GAUZE)
 
+	default_scar_file = METAL_SCAR_FILE
+
 	/// The minimum effective damage our limb must sustain before we try to daze our victim.
 	var/daze_attacked_minimum_score = 8
 
@@ -129,8 +131,6 @@
 
 	/// Multiplies the camera shake by this for the purposes of deciding if we should override dizziness.
 	var/head_movement_shake_dizziness_overtake_mult = 1
-
-	default_scar_file = METAL_SCAR_FILE
 
 /datum/wound_pregen_data/blunt_metal
 	abstract = TRUE
