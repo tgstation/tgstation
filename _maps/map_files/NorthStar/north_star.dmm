@@ -1601,11 +1601,13 @@
 /area/station/construction)
 "auv" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	volume_rate = 200;
+	dir = 8;
+	initialize_directions = 8
 	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
@@ -79078,8 +79080,9 @@
 /area/station/maintenance/floor2/port/aft)
 "uLB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	volume_rate = 200;
 	dir = 8;
-	volume_rate = 200
+	initialize_directions = 8
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2{
 	dir = 8
