@@ -354,7 +354,7 @@
 
 /datum/station_trait/random_event_weight_modifier/shuttle_loans
 	name = "Loaner Shuttle"
-	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space to assist with special requests. Expect to recieve more shuttle loan opportunities, and slightly higher payouts."
+	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to recieve more shuttle loan opportunities, with slightly higher payouts."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 3
 	event_control_path = /datum/round_event_control/shuttle_loan
@@ -379,6 +379,47 @@
 	weight = 2
 	trait_to_give = STATION_TRAIT_SHUTTLE_SALE
 	show_in_report = TRUE
+
+/datum/station_trait/missing_wallet
+	name = "Misplaced Wallet"
+	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 4
+	trait_to_give = STATION_TRAIT_MISSING_WALLET
+	show_in_report = TRUE
+
+/datum/station_trait/missing_wallet/on_round_start()
+	. = ..()
+
+	var/obj/structure/closet/locker_to_fill
+	var/list/locker_list = GLOB.all_closets.Copy()
+	while(!is_station_level(locker_to_fill) && length(locker_list))
+		locker_to_fill = pick_n_take(locker_list)
+
+	var/obj/item/storage/wallet/new_wallet = new(locker_to_fill)
+
+	new /obj/item/stack/spacecash/c1000(new_wallet)
+	if(prob(25)) //Jackpot!
+		new /obj/item/stack/spacecash/c1000(new_wallet)
+
+	new /obj/item/card/id/advanced/technician_id(new_wallet)
+
+	if(prob(35)) //DEBUG CHANGE TO 30
+		report_message += " The technician reports they last remember having their wallet around [get_area_name(new_wallet)]."
+
+/obj/item/card/id/advanced/technician_id
+	name = "Repair Technician ID"
+	desc = "Repair Technician? We don't have those in this sector, just a bunch of lazy engineers! This must have been from the between-shift crew..."
+	registered_name = "Pluoxium LXVII"
+	registered_age = 67
+	trim = /datum/id_trim/technician_id
+
+/datum/id_trim/technician_id
+	access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MAINT_TUNNELS)
+	assignment = "Repair Technician"
+	trim_state = "trim_stationengineer"
+	department_color = COLOR_ENGINEERING_ORANGE
+	subdepartment_color = COLOR_ENGINEERING_ORANGE
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX

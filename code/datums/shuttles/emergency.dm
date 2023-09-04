@@ -8,9 +8,9 @@
 	. = ..()
 	if(!occupancy_limit && who_can_purchase)
 		CRASH("The [name] needs an occupancy limit!")
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_SHUTTLE_SALE) && prob(15))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_SHUTTLE_SALE) && credit_cost > 0 && prob(15))
 		var/discount_amount = rand(40, 75)
-		description += "This shuttle on sale, for a [discount_amount]% discount!"
+		name += " ([discount_amount]% discount!)"
 		credit_cost *= (discount_amount * 0.01)
 		credit_cost = round(credit_cost, 10) //For better readability
 

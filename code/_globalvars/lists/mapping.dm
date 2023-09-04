@@ -147,3 +147,6 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(
 	/mob/living/simple_animal/hostile/megafauna/colossus = 2,
 	/mob/living/simple_animal/hostile/megafauna/dragon = 4,
 ))
+
+///A comprehensive list of all closets in the game world
+GLOBAL_LIST_EMPTY(all_closets)

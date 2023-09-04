@@ -120,6 +120,8 @@
 	if(access_choices)
 		access_choices = card_reader_choices
 
+	GLOB.all_closets += src
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload && !opened)
 		. = INITIALIZE_HINT_LATELOAD
@@ -155,6 +157,7 @@
 /obj/structure/closet/Destroy()
 	id_card = null
 	QDEL_NULL(door_obj)
+	GLOB.all_closets -= src
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)
