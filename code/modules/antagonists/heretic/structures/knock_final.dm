@@ -53,7 +53,7 @@
 		woohoo_free_antag.set_owner(ascendee)
 	var/datum/objective/kill_all_your_friends = new()
 	kill_all_your_friends.owner = monster.mind
-	kill_all_your_friends.explanation_text = "The stations crew must be sacrificed."
+	kill_all_your_friends.explanation_text = "The station's crew must be culled."
 	kill_all_your_friends.completed = TRUE
 	woohoo_free_antag.objectives += kill_all_your_friends
 
