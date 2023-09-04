@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "fixed fishing skeleton mob spawners that immediately crumble back into the void of whatever chasm you fished them from."

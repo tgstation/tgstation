@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - image: "New medical bed and emergency roller bed"
+  - code_imp: "Added context hints for beds"

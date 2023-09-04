@@ -242,13 +242,13 @@
 	mix_message = "The mixture thickens into yoghurt."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/quality_oil_upconvert
+/datum/chemical_reaction/food/olive_oil_upconvert
 	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1, /datum/reagent/consumable/nutriment/fat/oil = 2)
 	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/quality_oil
+/datum/chemical_reaction/food/olive_oil
 	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT

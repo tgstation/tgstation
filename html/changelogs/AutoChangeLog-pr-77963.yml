@@ -1,5 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - rscadd: "New funny internals for the clowns to spawn with. They come with O2 and a secondary gas between 3 options: BZ, Helium and N2O. Talk with a \"different tone\" with Helium, giggle and laugh \"uncontrollably\" while under the minor effects of N2O or have \"fun\" hallucinations while under the minor effects of BZ."
-  - balance: "To not cut on how long the clown's O2 internals last due to the mixed gases, the funny internals have 50% more gas volume, same as engineers' internals."

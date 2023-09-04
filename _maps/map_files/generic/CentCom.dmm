@@ -487,7 +487,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "cl" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/decal/cleanable/cobweb,
@@ -5600,7 +5600,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/control)
 "zI" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -7123,7 +7123,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "HR" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/directional/west,
@@ -9668,7 +9668,7 @@
 /area/centcom/central_command_areas/armory)
 "Vh" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 10;
 	pixel_x = 2
 	},

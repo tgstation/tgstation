@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
-///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
+///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transferred.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)

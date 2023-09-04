@@ -105,4 +105,4 @@
 		else if(current_bake_time <= required_bake_time)
 			examine_list += span_notice("[parent] seems to be almost finished baking!")
 	else
-		examine_list += span_danger("[parent] should probably not be baked for much longer!")
+		examine_list += span_danger("[parent] should probably not be put in the oven.")
