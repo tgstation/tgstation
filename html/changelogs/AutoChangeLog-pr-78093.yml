@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed bileworm evolution deleting anything they devoured; they will now eject their contents upon evolution to vileworms"
