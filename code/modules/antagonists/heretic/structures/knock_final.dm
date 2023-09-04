@@ -67,7 +67,7 @@
 	return FALSE
 
 /obj/structure/knock_tear/Destroy(force) //this shouldnt happen but hey
-	. = ..()
 	if(ascendee)
 		UnregisterSignal(ascendee.current, COMSIG_ATOM_EXAMINE)
 		ascendee = null
+	return ..()
