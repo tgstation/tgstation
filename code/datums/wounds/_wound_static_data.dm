@@ -47,7 +47,7 @@
 	/// If true, we will attempt to, during a random wound roll, overpower and remove other wound typepaths from the possible wounds list using [competition_mode] and [overpower_wounds_of_even_severity].
 	var/compete_for_wounding = TRUE
 	/// The competition mode with which we will remove other wounds from a possible wound roll assuming [compete_for_wounding] is TRUE. See wounds.dm, the defines file, for more information on what these do.
-	var/competition_mode = WOUND_COMPETITION_OVERPOWER_GREATERS
+	var/competition_mode = WOUND_COMPETITION_OVERPOWER_LESSERS
 	/// If this and [compete_for_wounding] is true, we will remove wounds of an even severity to us during a random wound roll.
 	var/overpower_wounds_of_even_severity = FALSE
 
