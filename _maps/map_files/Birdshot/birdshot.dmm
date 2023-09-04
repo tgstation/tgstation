@@ -35994,12 +35994,9 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/obj/machinery/door/airlock{
-	name = "Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "mUt" = (
@@ -36252,7 +36249,12 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine)
 "mZA" = (
-/turf/open/space/basic,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/machinery/door/airlock/public/glass{
+	name = "Old Dorms"
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/wood,
 /area/station/maintenance/starboard/greater)
 "mZX" = (
 /obj/item/kirbyplants/random,
