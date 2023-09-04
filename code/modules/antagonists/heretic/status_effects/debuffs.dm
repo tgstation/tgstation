@@ -197,7 +197,7 @@
 /datum/status_effect/heretic_lastresort
 	id = "heretic_lastresort"
 	alert_type = /atom/movable/screen/alert/status_effect/heretic_lastresort
-	duration = 10 SECONDS
+	duration = 12 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = -1
 
@@ -213,4 +213,4 @@
 
 /datum/status_effect/heretic_lastresort/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, MAGIC_TRAIT)
-	owner.AdjustUnconscious(10 SECONDS, ignore_canstun = TRUE)
+	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)

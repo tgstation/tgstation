@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/aoe/knock_blast
 	name = "Wave Of Desperation"
-	desc = "Removes your restraints, and repels and knocks down adjacent people, casts secondary mansus grasp on everything nearby. Cannot be casted unrestrained!"
+	desc = "Removes your restraints, and repels and knocks down adjacent people, casts secondary mansus grasp on everything nearby. Cannot be casted unrestrained, and you go unconscious 12 seconds later!"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
