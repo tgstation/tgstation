@@ -26,6 +26,7 @@
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research)
+	if(stored_research)
 		on_connected_techweb()
 
 /obj/machinery/rnd/Destroy()

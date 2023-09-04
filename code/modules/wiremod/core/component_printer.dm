@@ -32,6 +32,7 @@
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb)
+	if(techweb)
 		on_connected_techweb()
 
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
