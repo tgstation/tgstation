@@ -61,7 +61,7 @@
 		return
 
 	required_limb_biostate = pregen_data.required_limb_biostate
-	check_any_biostates = pregen_data.check_for_any
+	check_any_biostates = pregen_data.require_any_biostate
 
 	limb = BP
 	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))

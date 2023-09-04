@@ -494,9 +494,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 	var/static/list/picture_options = list(
 		"Default" = "default",
+		"Delta Alert" = "deltaalert",
 		"Red Alert" = "redalert",
+		"Blue Alert" = "bluealert",
+		"Green Alert" = "greenalert",
 		"Biohazard" = "biohazard",
 		"Lockdown" = "lockdown",
+		"Radiation" = "radiation",
 		"Happy" = "ai_happy",
 		"Neutral" = "ai_neutral",
 		"Very Happy" = "ai_veryhappy",

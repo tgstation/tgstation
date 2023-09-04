@@ -1,0 +1,4 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - code_imp: "Moved some job-related achievements from the misc category to the jobs category."

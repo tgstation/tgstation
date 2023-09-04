@@ -53,7 +53,7 @@
 	if(cavity_item)
 		cavity_item.forceMove(drop_location())
 		cavity_item = null
-	..()
+	return ..()
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'

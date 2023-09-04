@@ -158,16 +158,16 @@
  * Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
  * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
  *
- * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_FLESH if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
+ * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_EXTERIOR if our skin is broken, BODYPART_MANGLED_INTERIOR if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
  */
 /obj/item/bodypart/proc/get_mangled_state()
 	. = BODYPART_MANGLED_NONE
 
 	for(var/datum/wound/iter_wound as anything in wounds)
-		if((iter_wound.wound_flags & MANGLES_BONE))
-			. |= BODYPART_MANGLED_BONE
-		if((iter_wound.wound_flags & MANGLES_FLESH))
-			. |= BODYPART_MANGLED_FLESH
+		if((iter_wound.wound_flags & MANGLES_INTERIOR))
+			. |= BODYPART_MANGLED_INTERIOR
+		if((iter_wound.wound_flags & MANGLES_EXTERIOR))
+			. |= BODYPART_MANGLED_EXTERIOR
 
 /**
  * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it

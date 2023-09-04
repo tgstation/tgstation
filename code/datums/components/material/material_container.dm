@@ -462,7 +462,7 @@
  *
  * Arguments:
  * - [I][obj/item]: the item whos materials must be retrieved
- * - breakdown_flags: how this item must be broken down to retrive its materials
+ * - breakdown_flags: how this item must be broken down to retrieve its materials
  */
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I, breakdown_flags = mat_container_flags)
 	if(!istype(I) || !I.custom_materials)

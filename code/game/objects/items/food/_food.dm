@@ -30,10 +30,6 @@
 	var/trash_type
 	///How much junkiness this food has? God I should remove junkiness soon
 	var/junkiness
-	///Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time
-	var/burns_on_grill = FALSE
-	///Will this food turn into badrecipe in an oven? Don't use this for everything; preferably mostly for food that is made in an oven to begin with so it burns after some time
-	var/burns_in_oven = FALSE
 	///Price of this food if sold in a venue
 	var/venue_value
 	///Food that's immune to decomposition.
@@ -101,14 +97,12 @@
 
 ///This proc handles grillable components, overwrite if you want different grill results etc.
 /obj/item/food/proc/make_grillable()
-	if(burns_on_grill)
-		AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
+	AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 	return
 
 ///This proc handles bakeable components, overwrite if you want different bake results etc.
 /obj/item/food/proc/make_bakeable()
-	if(burns_in_oven)
-		AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
 	return
 
 /// This proc handles the microwave component. Overwrite if you want special microwave results.

@@ -91,6 +91,8 @@
 
 	for(var/messenger_ref in messengers_sorted)
 		var/datum/computer_file/program/messenger/messenger = messengers_sorted[messenger_ref]
+		if(!istype(messenger) || !istype(messenger.computer))
+			continue
 		if(messenger == src || messenger.invisible)
 			continue
 
