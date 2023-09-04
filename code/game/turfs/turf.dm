@@ -612,7 +612,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
-
+	AddElement(/datum/element/rust_damage)
 	AddElement(/datum/element/rust)
 	ADD_TRAIT(src, TRAIT_RUSTY, HERETIC)
 /turf/handle_fall(mob/faller)
