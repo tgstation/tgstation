@@ -10,7 +10,7 @@
 		CRASH("The [name] needs an occupancy limit!")
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_SHUTTLE_SALE) && credit_cost > 0 && prob(15))
 		var/discount_amount = rand(40, 75)
-		name += " ([discount_amount]% discount!)"
+		name += " ([discount_amount]% Price!)"
 		credit_cost *= (discount_amount * 0.01)
 		credit_cost = round(credit_cost, 10) //For better readability
 
