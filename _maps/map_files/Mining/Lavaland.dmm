@@ -69,7 +69,7 @@
 /area/mine/maintenance/living/south)
 "aq" = (
 /obj/machinery/camera/autoname/directional/east{
-	network = list("labor")
+	network = list("mine")
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
