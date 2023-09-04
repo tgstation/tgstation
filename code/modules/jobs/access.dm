@@ -61,8 +61,6 @@
 
 // Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
-	//if(I && HAS_TRAIT(I, TRAIT_ALWAYS_NO_ACCESS))
-	//	return FALSE
 	return check_access_list(I ? I.GetAccess() : null)
 
 /obj/proc/check_access_list(list/access_list)
