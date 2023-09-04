@@ -368,7 +368,8 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 #define MANGLES_INTERIOR (1<<1)
 /// If this wound marks the limb as being allowed to have gauze applied
 #define ACCEPTS_GAUZE (1<<2)
-
+/// If this wound allows the victim to grasp it
+#define CAN_BE_GRASPED (1<<3)
 
 // ~scar persistence defines
 // The following are the order placements for persistent scar save formats
