@@ -133,7 +133,9 @@
 #define DISPOSAL_PIPE_LAYER 2.042
 #define WIRE_LAYER 2.044
 #define GLASS_FLOOR_LAYER 2.046
-#define TRAM_RAIL_LAYER 2.04
+#define TRAM_RAIL_LAYER 2.047
+#define TRAM_FLOOR_LAYER 2.048
+#define TRAM_STRUCTURE_LAYER 2.0485
 #define ABOVE_OPEN_TURF_LAYER 2.049
 
 //WALL_PLANE layers
@@ -161,8 +163,6 @@
 // I hate this life of ours
 #define FLOOR_CLEAN_LAYER 2.55
 #define TRAM_STRUCTURE_LAYER 2.57
-#define TRAM_FLOOR_LAYER 2.58
-#define TRAM_WALL_LAYER 2.58
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
 ///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
@@ -202,8 +202,8 @@
 
 // GAME_PLANE_UPPER layers
 #define ABOVE_MOB_LAYER 4.1
-#define TRAM_SIGNAL_LAYER 4.2
 #define WALL_OBJ_LAYER 4.25
+#define TRAM_SIGNAL_LAYER 4.26
 // WALL_PLANE_UPPER layers
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
