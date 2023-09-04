@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, hailer_cooldown, PHRASE_COOLDOWN)
 	user.audible_message("[user]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
-	playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
+	playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 50, FALSE, 4)
 	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown()
