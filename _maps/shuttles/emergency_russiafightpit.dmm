@@ -438,7 +438,7 @@
 "iJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/item/clothing/gloves/fingerless,
 /turf/open/floor/iron,
 /area/shuttle/escape)

@@ -44328,7 +44328,7 @@
 /area/station/maintenance/port/lesser)
 "pTr" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = -5
 	},
 /obj/item/wirecutters{
@@ -70729,7 +70729,7 @@
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/coroner/surgery,
+/obj/item/surgery_tray/morgue,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "yaL" = (

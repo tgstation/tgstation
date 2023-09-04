@@ -204,7 +204,6 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/rawegg
