@@ -60,7 +60,7 @@
 			return
 		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
-		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM)
+		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
 		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)
