@@ -1,6 +1,6 @@
 /mob/living/basic/mining_drone
 	name = "\improper Nanotrasen minebot"
-	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
+	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. Insert any type of ore into it to make it start listening to your commands!"
 	gender = NEUTER
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
@@ -34,7 +34,7 @@
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 	///the commands our owner can give us
 	var/list/pet_commands = list(
-		/datum/pet_command/idle,
+		/datum/pet_command/idle/minebot,
 		/datum/pet_command/minebot_ability/light,
 		/datum/pet_command/minebot_ability/dump,
 		/datum/pet_command/automate_mining,
@@ -89,7 +89,7 @@
 		else
 			. += span_boldwarning("[p_They()] look severely dented!")
 
-	if(!stored_gun?.max_mod_capacity)
+	if(isnull(stored_gun) || !stored_gun.max_mod_capacity)
 		return
 
 	. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."

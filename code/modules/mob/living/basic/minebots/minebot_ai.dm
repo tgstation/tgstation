@@ -172,8 +172,8 @@
 /datum/pet_command/automate_mining
 	command_name = "Automate mining"
 	command_desc = "Make your minebot automatically mine!"
-	radial_icon = 'icons/mob/actions/actions_mecha.dmi'
-	radial_icon_state = "mech_lights_off"
+	radial_icon = 'icons/obj/mining.dmi'
+	radial_icon_state = "pickaxe"
 	speech_commands = list("mine")
 
 /datum/pet_command/automate_mining/execute_action(datum/ai_controller/controller)
@@ -212,8 +212,15 @@
 /datum/pet_command/point_targetting/attack/minebot
 	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot
 
-/datum/pet_command/point_targetting/attack/execute_action(datum/ai_controller/controller)
+/datum/pet_command/point_targetting/attack/minebot/execute_action(datum/ai_controller/controller)
+	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	var/mob/living/living_pawn = controller.pawn
 	if(!living_pawn.combat_mode)
 		living_pawn.set_combat_mode(TRUE)
+	return ..()
+
+/datum/pet_command/idle/minebot
+
+/datum/pet_command/idle/minebot/execute_action(datum/ai_controller/controller)
+	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	return ..()
