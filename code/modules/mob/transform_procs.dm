@@ -1,7 +1,7 @@
 #define TRANSFORMATION_DURATION 22
 
 /mob/living/carbon/proc/monkeyize(instant = FALSE)
-	if (notransform || transformation_timer)
+	if (transformation_timer || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(ismonkey(src))
@@ -12,7 +12,7 @@
 		return
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -23,8 +23,8 @@
 
 /mob/living/carbon/proc/finish_monkeyize()
 	transformation_timer = null
-	to_chat(src, "<B>You are now a monkey.</B>")
-	notransform = FALSE
+	to_chat(src, span_boldnotice("You are now a monkey."))
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
@@ -39,7 +39,7 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(species = /datum/species/human, instant = FALSE)
-	if (notransform || transformation_timer)
+	if (transformation_timer || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(!ismonkey(src))
@@ -50,7 +50,7 @@
 		return
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -61,8 +61,8 @@
 
 /mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
 	transformation_timer = null
-	to_chat(src, "<B>You are now a human.</B>")
-	notransform = FALSE
+	to_chat(src, span_boldnotice("You are now a human."))
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	icon = initial(icon)
 	invisibility = 0
 	set_species(species)
@@ -107,9 +107,9 @@
 	qdel(src)
 
 /mob/living/carbon/AIize(client/preference_source, transfer_after = TRUE)
-	if (notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	Paralyze(1, ignore_canstun = TRUE)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
@@ -119,7 +119,7 @@
 	return ..()
 
 /mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE)
-	if (notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	for(var/t in bodyparts)
 		qdel(t)
@@ -127,9 +127,9 @@
 	return ..()
 
 /mob/proc/Robotize(delete_items = 0, transfer_after = TRUE)
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
 
 	new_borg.gender = gender
@@ -162,9 +162,9 @@
 	qdel(src)
 
 /mob/living/Robotize(delete_items = 0, transfer_after = TRUE)
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	Paralyze(1, ignore_canstun = TRUE)
 
 	for(var/obj/item/W in src)
@@ -176,7 +176,7 @@
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 
-	notransform = FALSE
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	return ..()
 
 /mob/living/silicon/robot/proc/replace_banned_cyborg()
@@ -191,9 +191,9 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
-	if (notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
@@ -216,14 +216,14 @@
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.key = key
 
-	to_chat(new_xeno, "<B>You are now an alien.</B>")
-	. = new_xeno
+	to_chat(new_xeno, span_boldnotice("You are now an alien."))
 	qdel(src)
+	return new_xeno
 
 /mob/living/carbon/human/proc/slimeize(reproduce as num)
-	if (notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
@@ -248,9 +248,9 @@
 	new_slime.set_combat_mode(TRUE)
 	new_slime.key = key
 
-	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
-	. = new_slime
+	to_chat(new_slime, span_boldnotice("You are now a slime. Skreee!"))
 	qdel(src)
+	return new_slime
 
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
@@ -260,9 +260,9 @@
 
 
 /mob/living/carbon/human/proc/corgize()
-	if (notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	Paralyze(1, ignore_canstun = TRUE)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
@@ -276,14 +276,14 @@
 	new_corgi.set_combat_mode(TRUE)
 	new_corgi.key = key
 
-	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
-	. = new_corgi
+	to_chat(new_corgi, span_boldnotice("You are now a Corgi. Yap Yap!"))
 	qdel(src)
+	return new_corgi
 
 /mob/living/carbon/proc/gorillize()
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	Paralyze(1, ignore_canstun = TRUE)
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
@@ -302,9 +302,9 @@
 		mind.transfer_to(new_gorilla)
 	else
 		new_gorilla.key = key
-	to_chat(new_gorilla, "<B>You are now a gorilla. Ooga ooga!</B>")
-	. = new_gorilla
+	to_chat(new_gorilla, span_boldnotice("You are now a gorilla. Ooga ooga!"))
 	qdel(src)
+	return new_gorilla
 
 /mob/living/carbon/human/Animalize()
 
@@ -316,9 +316,9 @@
 		to_chat(usr, span_danger("Sorry but this mob type is currently unavailable."))
 		return
 
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 	Paralyze(1, ignore_canstun = TRUE)
 
 	for(var/obj/item/W in src)
@@ -337,8 +337,8 @@
 	new_mob.set_combat_mode(TRUE)
 
 	to_chat(new_mob, span_boldnotice("You suddenly feel more... animalistic."))
-	. = new_mob
 	qdel(src)
+	return new_mob
 
 /mob/proc/Animalize()
 
