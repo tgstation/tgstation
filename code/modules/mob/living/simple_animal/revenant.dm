@@ -139,7 +139,7 @@
 		to_chat(src, span_revenboldnotice("You are once more concealed."))
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
-		remove_trait(src, TRAIT_NO_TRANSFORM, REF(src))
+		REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 		to_chat(src, span_revenboldnotice("You can move again!"))
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence + (essence_regen_amount * seconds_per_tick), essence_regen_cap)

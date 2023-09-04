@@ -155,7 +155,7 @@
 	var/mob/locked_mob = mob_ref.resolve()
 	if(isnull(locked_mob))
 		return
-	REMOVE_TRAIT(to_lock, TRAIT_NO_TRANSFORM, REF(src))
+	REMOVE_TRAIT(locked_mob, TRAIT_NO_TRANSFORM, REF(src))
 	UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
 
 /// Removes the passed client from our watching list.
