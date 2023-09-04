@@ -103,7 +103,7 @@
 		deals a bit of fire damage and damages the cells. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
-	My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
+		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
 	next_knowledge = list(/datum/heretic_knowledge/spell/star_blast)
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
