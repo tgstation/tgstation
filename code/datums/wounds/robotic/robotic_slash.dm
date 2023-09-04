@@ -13,7 +13,7 @@
 /datum/wound/electrical_damage
 	name = "Electrical (Wires) Wound"
 
-	wound_flags = (ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
 	treatable_tools = list(TOOL_WIRECUTTER)
 	treatable_by = list(/obj/item/stack/medical/suture)
@@ -550,7 +550,7 @@
 		If the fault has become uncontrollable, extreme heat therapy is reccomended."
 
 	severity = WOUND_SEVERITY_CRITICAL
-	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR)
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
 
 	sound_effect = 'sound/effects/wounds/robotic_slash_T3.ogg'
 

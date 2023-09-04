@@ -124,7 +124,7 @@
 		If the fault has become uncontrollable, extreme heat therapy is reccomended."
 
 	severity = WOUND_SEVERITY_CRITICAL
-	wound_flags = (ACCEPTS_GAUZE|MANGLES_EXTERIOR)
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_EXTERIOR|CAN_BE_GRASPED)
 
 	sound_effect = 'sound/effects/wounds/robotic_slash_T3.ogg'
 
