@@ -1,0 +1,4 @@
+author: "Eronymun"
+delete-after: True
+changes:
+  - bugfix: "You can no longer walk into Birdshot's secure tech storage like you own the place - unless you do own the place."
