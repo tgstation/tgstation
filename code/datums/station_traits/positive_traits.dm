@@ -398,13 +398,13 @@
 
 	var/obj/item/storage/wallet/new_wallet = new(locker_to_fill)
 
-	new /obj/item/stack/spacecash/c1000(new_wallet)
+	new /obj/item/stack/spacecash/c500(new_wallet)
 	if(prob(25)) //Jackpot!
 		new /obj/item/stack/spacecash/c1000(new_wallet)
 
 	new /obj/item/card/id/advanced/technician_id(new_wallet)
 
-	if(prob(35)) //DEBUG CHANGE TO 30
+	if(prob(35))
 		report_message += " The technician reports they last remember having their wallet around [get_area_name(new_wallet)]."
 
 /obj/item/card/id/advanced/technician_id
