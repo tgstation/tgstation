@@ -383,6 +383,10 @@
 	scar_keyword = "slashcritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR)
 
+/datum/wound/slash/flesh/critical/update_descriptions()
+	if (!limb.can_bleed())
+		occur_text = "is torn open"
+
 /datum/wound_pregen_data/flesh_slash/avulsion
 	abstract = FALSE
 
