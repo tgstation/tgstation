@@ -30,7 +30,7 @@
 		for(var/i in 1 to event_amount)
 			var/path = pick_weight(events)
 			events -= path
-			mobile.event_list.Add(new path(port))
+			mobile.event_list.Add(new path(mobile))
 	
 
 /datum/map_template/shuttle/emergency/backup
