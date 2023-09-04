@@ -54,17 +54,25 @@
 	/// The minimum effective damage our limb must sustain before we try to daze our victim.
 	var/daze_attacked_minimum_score = 8
 
+	/// How much effective damage is multiplied against for purposes of determining our camerashake's duration when we are hit on the head.
 	var/head_attacked_shake_duration_ratio = 0.3
+	/// How much effective damage is multiplied against for purposes of determining our camerashake's intensity when we are hit on the head.
 	var/head_attacked_shake_intensity_ratio = 0.2
 
+	/// How much effective damage is multiplied against for purposes of determining how much dizziness a strike to the head will add.
 	var/head_attacked_dizzy_duration_ratio = 0.2
 
+	/// The base chance, in percent, for moving to shake our camera. Multiplied against many local modifiers, such as resting, being gauzed, etc.
 	var/head_movement_shake_chance = 100
+	/// The base chance, in percent, for moving to increase dizziness. Multiplied against many local modifiers, such as resting, being gauzed, etc.
 	var/head_movement_dizzy_chance = 100
 
+	/// The base duration, in deciseconds, for our camera shake on movement.
 	var/head_movement_base_shake_duration = 1
+	/// The base intensity, in tiles, for our camera shake on movement.
 	var/head_movement_base_shake_intensity = 1
 
+	/// The base duration increment, in deciseconds, for our dizziness to be increased by when we move.
 	var/head_movement_dizzy_base_duration = 1
 
 	/// The maximum time in deciseconds daze() may cause dizziness for
