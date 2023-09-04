@@ -198,7 +198,7 @@ const PageBuyingShuttle = (props, context) => {
           </Box>
           <Box color="violet" fontSize="10px" bold>
             {shuttle.prerequisites ? (
-              <b>Prerequisitces: {shuttle.prerequisites}</b>
+              <b>Prerequisites: {shuttle.prerequisites}</b>
             ) : null}
           </Box>
         </Section>

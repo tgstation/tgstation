@@ -364,13 +364,21 @@
 
 /datum/station_trait/random_event_weight_modifier/wise_cows
 	name = "Wise Cow Invasion"
-	report_message = "Bluespace harmonics readings show unusual interpolative readings between your sector and sector MMF-D-02. Expect an increase in cow encounters. Encownters, if you will."
+	report_message = "Bluespace harmonic readings show unusual interpolative readings between your sector and agricultural sector MMF-D-02. Expect an increase in cow encounters. Encownters, if you will."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 1
 	event_control_path = /datum/round_event_control/wisdomcow
 	weight_multiplier = 3
 	max_occurrences_modifier = 10 //lotta cows
 	trait_to_give = STATION_TRAIT_WISE_COWS
+
+/datum/station_trait/shuttle_sale
+	name = "Shuttle Firesale"
+	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Check your shuttle purchase list for discounted options."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 2
+	trait_to_give = STATION_TRAIT_SHUTTLE_SALE
+	show_in_report = TRUE
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
