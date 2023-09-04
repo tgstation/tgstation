@@ -16224,7 +16224,6 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = "security shutters";
 	id = "CapSec"
 	},
 /turf/open/floor/plating,
