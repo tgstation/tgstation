@@ -21,9 +21,7 @@
 		span_userdanger("The spell bounces from [victim]'s skin back into your arm!"),
 	)
 	var/obj/item/bodypart/to_wound = caster.get_holding_bodypart_of_item(hand)
-	var/datum/wound_typepath = get_corresponding_wound_type(list(WOUND_SLASH), caster, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL, WOUND_PICK_HIGHEST_SEVERITY)
-	if (wound_typepath)
-		to_wound.force_wound_upwards(wound_typepath)
+	caster.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
 
 /datum/action/cooldown/spell/touch/scream_for_me/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	if(!ishuman(victim))
@@ -31,9 +29,7 @@
 	var/mob/living/carbon/human/human_victim = victim
 	human_victim.emote("scream")
 	for(var/obj/item/bodypart/to_wound as anything in human_victim.bodyparts)
-		var/datum/wound_typepath = get_corresponding_wound_type(list(WOUND_SLASH), caster, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL, WOUND_PICK_HIGHEST_SEVERITY)
-		if (wound_typepath)
-			to_wound.force_wound_upwards(/datum/wound/slash/flesh/critical)
+		human_victim.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
 	return TRUE
 
 /obj/item/melee/touch_attack/scream_for_me

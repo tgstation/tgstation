@@ -18,10 +18,7 @@
 	if (!their_chest)
 		return
 
-	var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_PIERCE), their_chest, WOUND_SEVERITY_CRITICAL)
-	if (wound_typepath)
-		var/datum/wound/new_wound = new wound_typepath
-		new_wound.apply_wound(their_chest)
+	spawned_human.cause_wound_of_type_and_severity(WOUND_PIERCE, their_chest, WOUND_SEVERITY_CRITICAL)
 
 /// A fun drink enjoyed by the tiger cooperative, might corrode your brain if you drink the whole bottle
 /obj/item/reagent_containers/cup/glass/bottle/ritual_wine

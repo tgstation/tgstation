@@ -80,18 +80,11 @@
 
 	if(do_after(attacker, 3 SECONDS, target, interaction_key = weapon))
 		attacker.visible_message(span_warning("[attacker] swings [attacker.p_their()] [weapon] at [target]'s kneecaps!"), span_danger("You swing \the [weapon] at [target]'s kneecaps!"))
-		var/datum/wound/severe_wound_type = get_corresponding_wound_type(list(WOUND_BLUNT), leg, WOUND_SEVERITY_SEVERE, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
-		var/datum/wound/critical_wound_type = get_corresponding_wound_type(list(WOUND_BLUNT), leg, WOUND_SEVERITY_CRITICAL, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
-		var/datum/wound_pregen_data/severe_pregen = GLOB.all_wound_pregen_data[severe_wound_type]
-		var/datum/wound_pregen_data/critical_pregen = GLOB.all_wound_pregen_data[critical_wound_type]
 
-		var/min_wound_unsanitized = severe_pregen?.threshold_minimum
-		var/max_wound_unsanitized = critical_pregen?.threshold_minimum
+		var/min_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, 30, wound_source = weapon)
+		var/max_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, 50, wound_source = weapon)
 
-		var/min_wound = (min_wound_unsanitized ? min_wound_unsanitized : 30)
-		var/max_wound = (max_wound_unsanitized ? max_wound_unsanitized + 10 : 50)
-
-		leg.receive_damage(brute = weapon.force, wound_bonus = rand(min_wound, max_wound), damage_source = "kneecapping")
+		leg.receive_damage(brute = weapon.force, wound_bonus = rand(min_wound, max_wound + 10), damage_source = "kneecapping")
 		target.emote("scream")
 		log_combat(attacker, target, "broke the kneecaps of", weapon)
 		target.update_damage_overlays()

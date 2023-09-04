@@ -125,9 +125,7 @@
 						"[WOUND_PICK_LOWEST_SEVERITY]",
 						"[WOUND_PICK_HIGHEST_SEVERITY]"
 					)))
-					var/datum/wound_typepath = get_corresponding_wound_type(list(WOUND_SLASH), head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, severity_pick_mode = pick_mode)
-					if (wound_typepath)
-						head_to_wound.force_wound_upwards(wound_typepath, wound_source = src)
+					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
 					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 

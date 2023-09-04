@@ -144,10 +144,12 @@
 		return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
-/obj/item/bodypart/proc/force_wound_upwards(specific_woundtype, smited = FALSE, wound_source)
+/obj/item/bodypart/proc/force_wound_upwards(datum/wound/potential_wound, smited = FALSE, wound_source)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/datum/wound/potential_wound = specific_woundtype
+	if (isnull(potential_wound))
+		return
+
 	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[potential_wound]
 	for(var/datum/wound/existing_wound as anything in wounds)
 		var/datum/wound_pregen_data/existing_pregen_data = existing_wound.get_pregen_data()
@@ -158,6 +160,52 @@
 
 	var/datum/wound/new_wound = new potential_wound
 	new_wound.apply_wound(src, smited = smited, wound_source = wound_source)
+	return new_wound
+
+/**
+ *  A simple proc to force a type of wound onto this mob. If you just want to force a specific mainline (fractures, bleeding, etc.) wound, you only need to care about the first 3 args.
+ *
+ * Args:
+ * * wound_type: The wound_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list.
+ * * obj/item/bodypart/limb: The limb we wil be applying the wound to. If null, a random bodypart will be picked.
+ * * min_severity: The minimum severity that will be considered.
+ * * max_severity: The maximum severity that will be considered.
+ * * wound_source: The source of the wound to be applied. Nullable.
+ *
+ * For the rest of the args, refer to get_corresponding_wound_type().
+ *
+ * Returns:
+ * A new wound instance if the application was successful, null otherwise.
+*/
+/mob/living/carbon/proc/cause_wound_of_type_and_severity(wound_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
+	if (isnull(limb))
+		limb = pick(bodyparts)
+
+	var/list/type_list = wound_type
+	if (!islist(type_list))
+		type_list = list(type_list)
+
+	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(type_list, limb, min_severity, max_severity, severity_pick_mode, series_type = series_type, specific_type = specific_type)
+	if (corresponding_typepath)
+		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
+
+/mob/living/carbon/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, obj/item/bodypart/limb, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
+	if (isnull(limb))
+		limb = pick(bodyparts)
+
+	return limb.get_wound_threshold_of_wound_type(wound_type, severity, default, series_type, specific_type, wound_source)
+
+/obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
+	var/list/type_list = wound_type
+	if (!islist(type_list))
+		type_list = list(type_list)
+
+	var/datum/wound/wound_path = get_corresponding_wound_type(type_list, src, severity, series_type = series_type, specific_type = specific_type, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
+	if (wound_path)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_path]
+		return pregen_data.get_threshold_for(src, damage_source = wound_source)
+
+	return default
 
 /**
  * check_wounding_mods() is where we handle the various modifiers of a wound roll

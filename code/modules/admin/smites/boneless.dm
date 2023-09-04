@@ -18,6 +18,4 @@
 			"[WOUND_SEVERITY_CRITICAL]",
 			"[WOUND_SEVERITY_CRITICAL]",
 		))
-		var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_BLUNT), limb, text2num(severity))
-		if (wound_typepath)
-			limb.force_wound_upwards(wound_typepath, smited = TRUE)
+		carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, severity)

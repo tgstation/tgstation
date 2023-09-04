@@ -303,9 +303,7 @@
 		return
 	var/damage = weapon.w_class * remove_pain_mult
 	limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
-	var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_PIERCE), limb, WOUND_SEVERITY_MODERATE)
-	if (wound_typepath)
-		limb.force_wound_upwards(wound_typepath)
+	victim.cause_wound_of_type_and_severity(WOUND_PIERCE, limb, WOUND_SEVERITY_MODERATE)
 	victim.adjustStaminaLoss(pain_stam_pct * damage)
 	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
 

@@ -74,11 +74,8 @@
 
 	if (isnull(severity))
 		return
-	var/datum/wound/wound_typepath = get_corresponding_wound_type(list(WOUND_BLUNT), arm, severity)
-	if (!wound_typepath)
-		return
 
-	arm.force_wound_upwards(wound_typepath, wound_source = "hulk smashing")
+	owner.cause_wound_of_type_and_severity(WOUND_BLUNT, arm, severity, wound_source = "hulk smashing")
 
 /datum/mutation/human/hulk/on_life(seconds_per_tick, times_fired)
 	if(owner.health < owner.crit_threshold)
