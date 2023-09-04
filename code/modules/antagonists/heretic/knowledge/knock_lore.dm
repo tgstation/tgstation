@@ -14,10 +14,9 @@
  * Mark Of Knock
  * Ritual of Knowledge
  * Burglar's Finesse
- * Apetra Vulnera
  * > Sidepaths:
- *   Blood Siphon
- *   Void Cloak
+ *   Apetra Vulnera
+ *   Opening Blast
  *
  * Opening Blade
  * Caretaker’s Last Refuge
@@ -44,7 +43,7 @@
 	desc = "Your mansus grasp allows you to access anything! Right click on an airlock or a locker to force it open. \
 		DNA locked mechs will remove the lock and force the pilot out. Works on consoles. \
 		Makes a distinctive knocking sound on use."
-	gain_text = "My new found desires drove me to greater and greater heights."
+	gain_text = "Nothing may remain closed from my touch."
 	next_knowledge = list(
 	/datum/heretic_knowledge/key_ring,
 	/datum/heretic_knowledge/medallion,
@@ -98,7 +97,7 @@
 		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
 		You can use it in-hand to change its form to a card you fused. \
 		Does not preserve the card used in the ritual."
-	gain_text = "Every door in the Mansus requires its sacrifice before it will open."
+	gain_text = "Gateways shall open before me, my very will ensnaring reality."
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
@@ -113,7 +112,7 @@
 	name = "Rite Of Passage"
 	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create Consecrated Lintel. \
 		It can materialize a barricade at range, that only you and people resistant to magic can pass. 3 uses."
-	gain_text = "This is the skull of a door through which power has passed."
+	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
 		/obj/item/toy/crayon/white = 1,
 		/obj/item/stack/sheet/mineral/wood = 1,
@@ -129,7 +128,7 @@
 	desc = "Your Mansus Grasp now applies the Mark of Knock. Attack a marked person to corrupt access on \
 		all of their keycards for the duration of the mark. \
 		This will make it so that they have no access whatsoever, and even public access doors will deny their passage."
-	gain_text = "When the moon's face was wounded, these words appeared."
+	gain_text = "Their requests for passage will remain unheeded."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/knock)
 	route = PATH_KNOCK
 	mark_type = /datum/status_effect/eldritch/knock
@@ -142,32 +141,20 @@
 	name = "Burglar's Finesse"
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims storage into your hand."
-	gain_text = "She in her many echoing voices told me, that burglars, locksmiths, and so on all share one thing;"
+	gain_text = "Their trinkets will be mine, as will their lives in due time."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/apetra_vulnera,
+		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/blade_upgrade/flesh/knock,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 2
 	route = PATH_KNOCK
 
-/datum/heretic_knowledge/spell/apetra_vulnera
-	name = "Apetra Vulnera"
-	desc = "Grants you Apetra Vulnera, a spell \
-		that causes heavy bleeding on all bodyparts of the victim that have more than 15 brute."
-	gain_text = "To open certain Ways, one must first open oneself."
-	next_knowledge = list(
-	/datum/heretic_knowledge/spell/blood_siphon,
-	/datum/heretic_knowledge/void_cloak,
-	)
-	spell_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
-	cost = 1
-	route = PATH_SIDE
-
 /datum/heretic_knowledge/blade_upgrade/flesh/knock //basically a chance-based weeping avulsion version of the former
 	name = "Opening Blade"
 	desc = "Your blade has a chance to cause a weeping avulsion on attack."
-	gain_text = "They open, remove seals."
+	gain_text = "The power of my patron courses through my blade, willing their very flesh to part."
 	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_KNOCK
 	wound_type = /datum/wound/slash/flesh/critical
@@ -182,7 +169,7 @@
 	desc = "Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings. \
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are also invincible, but pretty much cannot hurt anyone. Cancelled by being hit with an anti-magic item."
-	gain_text = "Then I saw me my own reflection cascaded mind-numbingly enough times that I was but a haze."
+	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
 	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
 	route = PATH_KNOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
