@@ -397,7 +397,7 @@
 	if (!buckled_to)
 		return 1
 
-	if (istype(buckled_to, /obj/structure/bed/roller))
+	if (istype(buckled_to, /obj/structure/bed/medical))
 		return 0.05
 	else
 		return 0.5
