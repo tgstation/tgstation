@@ -20,6 +20,11 @@
 
 /datum/action/cooldown/spell/pointed/burglar_finesse/cast(mob/living/carbon/human/cast_on)
 	. = ..()
+	if(cast_on.can_block_magic(antimagic_flags))
+		to_chat(cast_on, span_danger("You feel a light tug, but are otherwise fine, you were protected by holiness!"))
+		to_chat(owner, span_danger("[cast_on] is protected by holy forces!"))
+		return FALSE
+
 	var/obj/storage_item = cast_on.get_item_by_slot(ITEM_SLOT_BACK)
 	if(!storage_item)
 		storage_item = locate(/obj/item/storage) in cast_on.contents

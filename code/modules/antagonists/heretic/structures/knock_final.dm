@@ -11,6 +11,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = HIGH_PIPE_LAYER //0.01 above sigil layer used by heretic runes
+	move_resist = INFINITY
 	var/datum/mind/ascendee
 	///a static list of heretic summons, this shouldnt even matter enough to be static but whatever
 	var/static/list/monster_types
@@ -28,8 +29,8 @@
 /obj/structure/knock_tear/proc/poll_ghosts()
 	var/list/candidates = poll_ghost_candidates("Would you like to be a random eldritch monster attacking the crew?", ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, POLL_IGNORE_HERETIC_MONSTER)
 	while(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick_n_take(candidates)
-		ghost_to_monster(C, FALSE)
+		var/mob/dead/observer/candidate = pick_n_take(candidates)
+		ghost_to_monster(candidate, should_ask = FALSE)
 
 /obj/structure/knock_tear/attack_ghost(mob/user)
 	. = ..()

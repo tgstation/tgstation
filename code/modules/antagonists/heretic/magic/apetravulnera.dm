@@ -31,8 +31,8 @@
 
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(
-			span_danger("[cast_on]'s bruises , but repels the effect!"),
-			span_danger("Your bruises sting a little, but you are protected!!")
+			span_danger("[cast_on]'s bruises briefly glow, but repels the effect!"),
+			span_danger("Your bruises sting a little, but you are protected!")
 		)
 		return FALSE
 
