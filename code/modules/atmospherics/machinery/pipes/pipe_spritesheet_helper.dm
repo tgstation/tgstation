@@ -49,7 +49,7 @@
 			GeneratePipeCross(layer, combined_dirs)
 
 	Finalize(generated_icons, generated_icons_queue, layer, combined_dirs)
-	//Finalize(generated_gas_overlays, generated_gas_queue, layer, combined_dirs)
+	Finalize(generated_gas_overlays, generated_gas_queue, layer, combined_dirs)
 
 /datum/pipe_icon_generator/proc/Finalize(icon/spritesheet, list/queue, layer, combined_dirs)
 	var/shift_amount = (layer - 1) * 5
@@ -99,10 +99,10 @@
 	switch(combined_dirs)
 		if(NORTH | SOUTH)
 			generated_icons_queue += GenerateDamaged(working, combined_dirs, y_offset=offset)
-			//generated_gas_queue += GenerateDamaged(gas, combined_dirs, y_offset=offset)
+			generated_gas_queue += GenerateDamaged(gas, combined_dirs, y_offset=offset)
 		if(EAST | WEST)
 			generated_icons_queue += GenerateDamaged(working, combined_dirs, x_offset=offset)
-			//generated_gas_queue += GenerateDamaged(gas, combined_dirs, x_offset=offset)
+			generated_gas_queue += GenerateDamaged(gas, combined_dirs, x_offset=offset)
 
 /datum/pipe_icon_generator/proc/GeneratePipeElbow(layer, combined_dirs)
 	var/icon/working
@@ -125,7 +125,7 @@
 	generated_icons_queue += GenerateDamaged(working, combined_dirs)
 
 	generated_gas_queue[gas] = NONE
-	//generated_gas_queue += GenerateDamaged(gas, combined_dirs)
+	generated_gas_queue += GenerateDamaged(gas, combined_dirs)
 
 /datum/pipe_icon_generator/proc/GeneratePipeTJunction(layer, combined_dirs)
 	var/icon/working
@@ -148,7 +148,7 @@
 	generated_icons_queue += GenerateDamaged(working, combined_dirs)
 
 	generated_gas_queue[gas] = NONE
-	//generated_gas_queue += GenerateDamaged(gas, combined_dirs)
+	generated_gas_queue += GenerateDamaged(gas, combined_dirs)
 
 /datum/pipe_icon_generator/proc/GeneratePipeCross(layer, combined_dirs)
 	var/icon/working = icon(template_pieces, "cross")
