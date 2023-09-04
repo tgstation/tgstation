@@ -1128,10 +1128,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	dir = 4;
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 8
 	},
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/corner{
@@ -5367,7 +5365,7 @@
 /area/station/maintenance/central/greater)
 "ceK" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "ceZ" = (
@@ -6076,7 +6074,7 @@
 /turf/open/floor/plating/rust,
 /area/station/maintenance/department/engine/atmos)
 "cvy" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "cvH" = (
@@ -8583,9 +8581,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "dry" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 4
 	},
 /obj/item/bedsheet/medical,
 /obj/machinery/light/small/directional/east,
@@ -17204,7 +17201,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
@@ -19697,7 +19694,7 @@
 	},
 /area/station/engineering/atmos)
 "hjx" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -23490,7 +23487,9 @@
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "iAZ" = (
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet,
 /obj/effect/turf_decal/siding/red{
 	dir = 5
@@ -31257,10 +31256,8 @@
 /area/station/cargo/sorting)
 "llP" = (
 /obj/structure/cable,
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	dir = 4;
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/corner,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -49089,9 +49086,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "rsz" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 4
 	},
 /obj/item/bedsheet/medical,
 /obj/machinery/light/small/directional/east,
@@ -53446,13 +53442,13 @@
 /area/station/maintenance/port/greater)
 "sMT" = (
 /obj/structure/table,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 14
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 18
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 25
 	},
 /obj/item/wheelchair{
@@ -58694,9 +58690,8 @@
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "uAH" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed"
+/obj/structure/bed/medical{
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/bedsheet/medical,
@@ -59569,7 +59564,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "uQf" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
@@ -61059,8 +61054,8 @@
 /area/station/service/chapel/office)
 "vnq" = (
 /obj/structure/cable,
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet{
 	dir = 1
@@ -69991,7 +69986,7 @@
 "xRl" = (
 /obj/structure/cable,
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/siding/red,
 /turf/open/floor/iron/white,
