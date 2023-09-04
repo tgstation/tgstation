@@ -291,6 +291,9 @@
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
+	var/old_victim = victim
+	var/old_limb = limb
+
 	set_disabling(FALSE)
 	if(limb && can_scar && !already_scarred && !replaced)
 		already_scarred = TRUE
@@ -302,6 +305,10 @@
 	if(limb && !ignore_limb)
 		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
 		// if you want to keep the ref, do it externally, theres no reason for us to remember it
+
+	if (ismob(old_victim))
+		var/mob/mob_victim = old_victim
+		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced)
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)

@@ -277,6 +277,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 	if (!length(series_list))
 		return null
 
+	var/list/datum/wound/paths_to_pick_from = list()
 	for (var/series as anything in shuffle(series_list))
 		var/list/severity_list = GLOB.wound_series_collections[series]
 		if (!length(severity_list))
@@ -299,13 +300,12 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 		if (!length(wound_typepaths))
 			continue
 
-		var/list/datum/wound/wound_typepaths_copy = wound_typepaths.Copy()
-		for (var/datum/wound/iterated_path as anything in wound_typepaths_copy)
+		for (var/datum/wound/iterated_path as anything in wound_typepaths)
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
-			if (!pregen_data.can_be_applied_to(part, wound_types, random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
-				wound_typepaths_copy -= iterated_path
+			if (pregen_data.can_be_applied_to(part, wound_types, random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
+				paths_to_pick_from[iterated_path] = wound_typepaths[iterated_path]
 
-		return pick_weight(wound_typepaths_copy) // we found our winners!
+	return pick_weight(paths_to_pick_from) // we found our winners!
 
 /// Assoc list of biotype -> ideal scar file to be used and grab stuff from.
 GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
