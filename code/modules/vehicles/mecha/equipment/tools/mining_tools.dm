@@ -160,7 +160,7 @@
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
 	equip_cooldown = 15
-	equipment_slot = MECHA_R_ARM
+	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
 	var/scanning_time = 0
 
@@ -181,14 +181,18 @@
 	scanning_time = world.time + equip_cooldown
 	mineral_scan_pulse(get_turf(src), scanner = src)
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/action(mob/source, atom/target, list/modifiers)
-	. = ..()
-	if(!action_checks(target))
-		return
-	if(istype(target, /obj/structure/ore_vent))
-		var/obj/structure/ore_vent/vent = target
-		vent.scan_and_confirm(source)
-		return
+// /obj/item/mecha_parts/mecha_equipment/mining_scanner/set_active(active)
+// 	if(!do_after(src, 4 SECONDS))
+// 		return
+// 	var/vent_found = FALSE
+// 	for(var/obj/structure/ore_vent/vent as anything in range(3, drop_location(src)))
+// 		vent.scan_and_confirm()
+// 		vent_found = TRUE
+// 		break
+// 	if(!vent_found)
+
+// Alright this will take UI work won't it
+
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED
