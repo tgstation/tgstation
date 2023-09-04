@@ -6,7 +6,7 @@
 #define PLAYER_NOT_READY 0
 #define PLAYER_READY_TO_PLAY 1
 
-//movement intent defines for the m_intent var
+//movement intent defines for the move_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
 

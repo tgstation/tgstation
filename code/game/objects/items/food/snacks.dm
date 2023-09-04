@@ -16,6 +16,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/candy/bronx
 	name = "\improper South Bronx Paradise bar"
@@ -69,6 +70,7 @@
 	tastes = list("dried meat" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = JUNKFOOD | MEAT | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/sosjerky/healthy
 	name = "homemade beef jerky"
@@ -107,7 +109,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 1,
 		/datum/reagent/consumable/nutriment = 1,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat/oil = 3,
 		/datum/reagent/consumable/salt = 1,
 	)
 	tastes = list("salt" = 1, "shrimp" = 1)
@@ -129,6 +131,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_CREW * 0.7
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/no_raisin/healthy
 	name = "homemade raisins"
@@ -226,7 +229,7 @@
 	custom_price = PAYCHECK_CREW * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
+	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/nutriment/fat/oil = 2)
 	var/safe_for_consumption = TRUE
 
 /obj/item/food/peanuts/salted
@@ -393,7 +396,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	custom_price = PAYCHECK_CREW//pistachios are even more expensive.
 	junkiness = 10 //on par with peanuts
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
+	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/nutriment/fat/oil = 2)
 
 /obj/item/food/semki
 	name = "\improper Semki Sunflower Seeds"
@@ -401,7 +404,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	icon_state = "semki"
 	trash_type = /obj/item/trash/semki
 	food_reagents = list(
-		/datum/reagent/consumable/cornoil = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 1,
 		/datum/reagent/consumable/salt = 6,
 	) //1 cornoil is equal to 1.33 nutriment
 	tastes = list("sunflowers" = 5)
@@ -423,6 +426,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	junkiness = 5 //Homemade or not, sunflower seets are always kinda junky
 	foodtypes = JUNKFOOD | NUTS
 	trash_type = /obj/item/trash/semki/healthy
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/cornchips
 	name = "\improper Boritos corn chips"
@@ -432,7 +436,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	bite_consumption = 2
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/salt = 3,
 	)
 	junkiness = 20
@@ -451,7 +455,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	trash_type = /obj/item/trash/boritos
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/salt = 3,
 		/datum/reagent/consumable/yoghurt = 1,
 		/datum/reagent/consumable/garlic = 1,
@@ -465,7 +469,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	trash_type = /obj/item/trash/boritos/green
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/salt = 3,
 		/datum/reagent/consumable/astrotame = 1,
 		/datum/reagent/consumable/blackpepper = 1,
@@ -479,7 +483,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	trash_type = /obj/item/trash/boritos/red
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/salt = 3,
 		/datum/reagent/consumable/astrotame = 1,
 		/datum/reagent/consumable/cornmeal = 1,
@@ -493,7 +497,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	trash_type = /obj/item/trash/boritos/purple
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/salt = 3,
 		/datum/reagent/consumable/capsaicin = 1,
 		/datum/reagent/consumable/sugar = 1,
@@ -533,7 +537,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	foodtypes = JUNKFOOD | SUGAR | NUTS
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/consumable/cornoil = 3, /datum/reagent/consumable/caramel = 2)
+	grind_results = list(/datum/reagent/consumable/nutriment/fat/oil = 3, /datum/reagent/consumable/caramel = 2)
 
 /obj/item/food/sticko
 	name = "\improper Sticko Classic"

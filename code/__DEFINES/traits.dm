@@ -1136,7 +1136,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
-
+/// Trait given by [/datum/status_effect/blessing_of_insanity]
+#define MAD_WIZARD_TRAIT "mad_wizard_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

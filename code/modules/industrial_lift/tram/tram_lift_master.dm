@@ -67,7 +67,7 @@
 		if(initial_destination)
 			idle_platform = initial_destination
 
-		if(initial_destination)
+		if(beacon)
 			nav_beacon = beacon
 
 /datum/lift_master/tram/proc/check_starting_landmark()

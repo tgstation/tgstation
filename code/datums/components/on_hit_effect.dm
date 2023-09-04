@@ -18,6 +18,11 @@
 	if(!(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent) || isitem(parent) || isanimal_or_basicmob(parent) || isprojectile(parent)))
 		return ELEMENT_INCOMPATIBLE
 
+/datum/component/on_hit_effect/Destroy(force, silent)
+	on_hit_callback = null
+	extra_check_callback = null
+	return ..()
+
 /datum/component/on_hit_effect/RegisterWithParent()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent))
 		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))

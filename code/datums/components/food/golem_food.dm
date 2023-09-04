@@ -31,6 +31,7 @@
 
 /datum/component/golem_food/Destroy(force, silent)
 	QDEL_NULL(golem_snack)
+	snack_type = null
 	extra_validation = null
 	return ..()
 
