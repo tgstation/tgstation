@@ -10907,8 +10907,8 @@
 "ejn" = (
 /obj/structure/frame,
 /obj/item/stack/cable_coil/five,
-/obj/item/circuitboard/computer/arcade,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/techstorage/arcade_boards,
 /turf/open/floor/eighties/red,
 /area/station/service/abandoned_gambling_den/gaming)
 "ejt" = (
@@ -69616,8 +69616,8 @@
 "xMo" = (
 /obj/structure/frame,
 /obj/item/stack/cable_coil/five,
-/obj/item/circuitboard/computer/arcade,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/random/techstorage/arcade_boards,
 /turf/open/floor/eighties/red,
 /area/station/service/abandoned_gambling_den/gaming)
 "xMr" = (
