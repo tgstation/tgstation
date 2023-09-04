@@ -47852,10 +47852,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
-"oma" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/hallway/primary/tram/center)
 "omh" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -180415,7 +180411,7 @@ afP
 omp
 afX
 afy
-oma
+gTr
 rrv
 aHl
 whz
