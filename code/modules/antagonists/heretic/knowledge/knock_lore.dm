@@ -175,7 +175,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/flesh/knock/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(prob(chance))
-		. = ..()
+		return ..()
 
 /datum/heretic_knowledge/spell/caretaker_refuge
 	name = "Caretaker’s Last Refuge"
