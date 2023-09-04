@@ -78,13 +78,13 @@
 	timeout = 60 SECONDS
 
 /datum/mood_event/dismembered
-	description = "AHH! I WAS USING THAT LIMB!"
+	description = "AHH! MY LIMB! I WAS USING THAT!"
 	mood_change = -10
 	timeout = 8 MINUTES
 
 /datum/mood_event/dismembered/add_effects(obj/item/bodypart/limb)
 	if(limb)
-		description = "AHH! I WAS USING THAT [full_capitalize(limb.plaintext_zone)]"
+		description = "AHH! MY [uppertext(limb.plaintext_zone)]! I WAS USING THAT!"
 
 /datum/mood_event/reattachment
 	description = "Ouch! My limb feels like I fell asleep on it."
