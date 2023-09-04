@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(radioactive_nebula)
 
 /// Remove the fake radiation. The compontent we add to mobs handles its own removal
 /datum/controller/subsystem/radioactive_nebula/proc/fake_unirradiate(atom/movable/leaver)
-	leaver.remove_filter(GLOW_NEBULA)
 	REMOVE_TRAIT(leaver, TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED, REF(src))
+	leaver.remove_filter(GLOW_NEBULA)
 
 #undef TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED
