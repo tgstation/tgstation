@@ -211,7 +211,7 @@
 	if (ready_to_secure_internals)
 		if (istype(item, /obj/item/stack/medical/bone_gel))
 			if (gellable)
-				return gel(item, user)
+				return apply_gel(item, user)
 			else
 				var/victim_or_not = (victim ? "[victim]'s " : "")
 				var/limb_text = (victim ? "[limb.plaintext_zone]" : "[limb]")
@@ -220,7 +220,7 @@
 		else if (item_can_secure_internals(item))
 			return secure_internals_normally(item, user)
 	else if (ready_to_ghetto_weld && (item.tool_behaviour == TOOL_WELDER) || (item.tool_behaviour == TOOL_CAUTERY))
-		return weld(item, user)
+		return resolder(item, user)
 
 /datum/wound/blunt/robotic/proc/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
@@ -268,18 +268,18 @@
 		attack_random_organs((effective_damage * attacked_organ_damage_mult), attacked_organ_damage_individual_max)
 
 	if (!uses_percussive_maintenance() || damage <= 0 || damage > percussive_maintenance_damage_threshold || damagetype != BRUTE || sharpness)
-			return
-		var/chance_mult = 1
-		if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-			chance_mult *= 1.5
-		if (isatom(attacking_item))
-			var/atom/attacking_atom = attacking_item
-			if (attacking_atom.loc != victim)
-				chance_mult *= 3 // encourages people to get other people to beat the shit out of their limbs
-		if (prob(percussive_maintenance_repair_chance * chance_mult))
-			handle_percussive_maintenance_success(attacking_item)
-		else
-			handle_percussive_maintenance_failure(attacking_item)
+		return
+	var/chance_mult = 1
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		chance_mult *= 1.5
+	if (isatom(attacking_item))
+		var/atom/attacking_atom = attacking_item
+		if (attacking_atom.loc != victim)
+			chance_mult *= 3 // encourages people to get other people to beat the shit out of their limbs
+	if (prob(percussive_maintenance_repair_chance * chance_mult))
+		handle_percussive_maintenance_success(attacking_item)
+	else
+		handle_percussive_maintenance_failure(attacking_item)
 
 /datum/wound/blunt/robotic/proc/handle_percussive_maintenance_success(attacking_item)
 	victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] rattles from the impact, but looks a lot more secure!"), \
@@ -456,7 +456,7 @@
 
 /datum/wound/blunt/robotic/moderate/treat(obj/item/I, mob/user)
 	if (I.tool_behaviour == TOOL_SCREWDRIVER)
-		screw(I, user)
+		fasten_screws(I, user)
 		return TRUE
 
 	return ..()
