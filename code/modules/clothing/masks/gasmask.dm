@@ -199,7 +199,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	armor_type = /datum/armor/gas_atmos
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	has_fov = FALSE
-	max_filters = 1
 	cig_slot = TRUE
 
 /obj/item/clothing/mask/gas/atmos/captain/ui_action_click(mob/user, action)
