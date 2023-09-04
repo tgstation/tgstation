@@ -33,7 +33,7 @@
 		QDEL_NULL(cast_on.legcuffed)
 
 	cast_on.apply_status_effect(/datum/status_effect/heretic_lastresort)
-	new /obj/effect/temp_visual/voidin(get_turf(cast_on))
+	new /obj/effect/temp_visual/knockblast(get_turf(cast_on))
 
 	for(var/mob/living/victim in get_things_to_cast_on(cast_on, radius_override = 1))
 		victim.AdjustKnockdown(3 SECONDS)
@@ -66,3 +66,9 @@
 		var/our_turf = get_turf(caster)
 		var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(mover, our_turf)))
 		mover.safe_throw_at(throwtarget, 3, 1, force = MOVE_FORCE_STRONG)
+
+/obj/effect/temp_visual/knockblast
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield-flash"
+	alpha = 180
+	duration = 1 SECONDS
