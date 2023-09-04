@@ -227,7 +227,7 @@
 "W" = (
 /obj/structure/table,
 /obj/item/clothing/suit/apron/surgical,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "X" = (

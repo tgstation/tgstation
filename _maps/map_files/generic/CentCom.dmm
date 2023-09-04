@@ -9668,7 +9668,7 @@
 /area/centcom/central_command_areas/armory)
 "Vh" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray{
 	pixel_y = 10;
 	pixel_x = 2
 	},

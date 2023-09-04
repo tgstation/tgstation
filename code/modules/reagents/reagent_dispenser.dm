@@ -286,7 +286,7 @@
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, span_warning("Your [W.name] is already full!"))
 				return
-			reagents.trans_to(W, W.max_fuel, transfered_by = user)
+			reagents.trans_to(W, W.max_fuel, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_appearance()
