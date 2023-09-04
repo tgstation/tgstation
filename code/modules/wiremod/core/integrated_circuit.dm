@@ -59,6 +59,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// List variables stored on this integrated circuit, with a `variable_name = value` structure
 	var/list/datum/circuit_variable/list_variables = list()
 
+	/// Assoc list variables stored on this integrated circuit, with a `variable_name = value` structure
+	var/list/datum/circuit_variable/assoc_list_variables = list()
+
 	/// The maximum amount of setters and getters a circuit can have
 	var/max_setters_and_getters = 30
 
@@ -598,8 +601,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			if(params["is_list"])
 				variable_datatype = PORT_TYPE_LIST(variable_datatype)
+			else if(params["is_assoc_list"])
+				variable_datatype = PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, variable_datatype)
 			var/datum/circuit_variable/variable = new /datum/circuit_variable(variable_identifier, variable_datatype)
-			if(params["is_list"])
+			if(params["is_assoc_list"])
+				variable.set_value(list())
+				assoc_list_variables[variable_identifier] = variable
+			else if(params["is_list"])
 				variable.set_value(list())
 				list_variables[variable_identifier] = variable
 			else

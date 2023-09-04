@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - sound: "Adds a sound effect for hypospray/medipen injections. Doesn't affect sleepy pens or HMS injectors"

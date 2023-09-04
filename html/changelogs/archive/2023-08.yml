@@ -1179,3 +1179,241 @@
       a floor now
   mc-oofert:
   - rscadd: becoming a felinid makes your brain smaller (visually)
+2023-08-26:
+  GoldenAlpharex:
+  - bugfix: Fixes the recycler being able to grind the server to a halt by trying
+      to recycle the same sheet worth of material over and over and over again.
+  Guillaume Prata:
+  - qol: Medical Kiosk now have their wand removed with a right click, got new screentips
+      and have a few of its chat messages turned into balloon alerts.
+  YehnBeep:
+  - qol: Messenger bags can be crafted with 4 cloth.
+  distributivgesetz:
+  - rscadd: Replaces decloning clone damage with a strike system that you can replenish
+      with Mutadone.
+  - bugfix: The decloning virus is curable with rezadone again.
+  iwishforducks:
+  - bugfix: You should no longer attack RCD effects when they're done constructing.
+  san7890:
+  - admin: The "HREF Dock Exploit" message should now contain a bit more usable information
+      (such as a jump link) so you can investigate if something is really going wacky
+      with shuttles.
+  vinylspiders:
+  - refactor: fixed a bunch of instances of callbacks being qdeleted and cleaned up
+      related code
+2023-08-27:
+  CoiledLamb:
+  - bugfix: the coroner medkit can now hold every item it spawns with
+  Deadgebert:
+  - bugfix: multitool can be used on APC/Teslacoil/SMES/emitter if it has exposed
+      wires.
+  - qol: Icebox monsters no longer spawn close enough to aggro Lia at round start
+  Fikou:
+  - bugfix: quartermasters get their voice of god power boost correctly
+  Ghommie:
+  - bugfix: Fixed the double-barreled shotgun not working properly
+  - qol: The Achievements UI now shows how many people have unlocked a given achievement.
+  - bugfix: The "Skills" Category for achievements should no longer be hidden.
+  Jacquerel:
+  - bugfix: Watchers won't retain an ethereal outline of their wings hovering over
+      their dead body.
+  Kubisopplay:
+  - bugfix: Borgs no longer get permastunned by emotes
+  - bugfix: Borg hud should not fuck up in few situations
+  MTandi:
+  - bugfix: Fixed Phazon construction message typo
+  RikuTheKiller:
+  - bugfix: Light eaters can no longer be eaten by their higher-grade brothers, the
+      trash eaters. (recyclers)
+  SyncIt21:
+  - bugfix: zipping a duffle bag closes the UI of all storage items opened inside
+      it
+  YehnBeep:
+  - qol: Stabilized yellow slime extracts no longer spam a message every charge pulse
+      (but examining characters will still show that it's active).
+  YesterdaysPromise:
+  - rscadd: 'Gave snow legions a separate corpse-drop pool: ash walkers excluded,
+      but eskimos included.'
+  carlarctg:
+  - rscadd: Adds a syndicate AI card for nuke ops. Costs 12 TC, can be refunded. Activating
+      it in-hand opens up a ghost poll like normal reinforcements. Base interaction
+      range for syndicate AIs is one, which means they can handle electronics only
+      in proximity.
+  - rscadd: Adds a syndicate AI interaction range upgrade for nuke ops, costs 4 TC
+      and can be applied onto a syndicate AI (inside any container) to increase its
+      interaction range by two per. (Three purchases are recommended for seven tiles
+      of range!)
+  iwishforducks:
+  - balance: Railings now only cost 2 rods and are much easier to construct. But they
+      can now be destroyed much easier and cut with wirecutters without unwrenching.
+  mc-oofert:
+  - qol: rats no longer spawn on multiz cable hubs
+  necromanceranne:
+  - bugfix: Ops wanting to get the CQC kit will actually get given the kit, and not
+      just the CQC book.
+  tf-4:
+  - spellcheck: Fixed a spelling error with the daps emote.
+  vinylspiders:
+  - bugfix: greyscale colors will now update on the mob when modifying them via the
+      VV menu
+  - qol: inserting new high luminosity eyes will now properly remember the previous
+      eyes' color and default to that initially
+2023-08-28:
+  Comxy:
+  - rscadd: New rotator disposal pipe.
+  - bugfix: Flipped transit tube stations are now accessible in the RPD again.
+  - image: New rotator disposal pipe sprite.
+  Das15:
+  - bugfix: Big fuel tanks' capacity is back to 5000.
+  Ghommie:
+  - bugfix: Fixed an issue with the "recolor from string" option in the greyscale
+      modify menu that resulted in invisible icons.
+  Guillaume Prata:
+  - bugfix: Unary vents have a pressure cap on both their pressuring and siphoning
+      mode now, preventing the bypass trick of putting "infinite" pressure on tiles/pipelines.
+  - balance: Overclocked Volume Pumps do not have a pressure cap anymore.
+  Jacquerel:
+  - bugfix: You can't use the bioscrambler belt to turn yourself into a changeling.
+  JohnFulpWillard:
+  - qol: Display case chassis now uses balloon alerts, screentips, examine hints,
+      etc. Basically, the construction steps are more visible to players.
+  LT3:
+  - bugfix: Using an airlock painter on a GAGS airlock works properly
+  - bugfix: Tram will no longer fly off into space when admins try to reset the contents
+  MTandi:
+  - qol: Crafting menu "Can Make" category shows complex recipes first.
+  Sealed101:
+  - bugfix: after a long 6 years, alien alloy once again unlocks the Alien Technology
+      node (the one that lets you print alien alloy)
+  Watermelon914:
+  - rscadd: Added associative list variables and associative list variable manipulation
+      for finer data manipulation and storage.
+  - rscadd: List Find components will now return the index of the element it has found.
+  distributivgesetz:
+  - rscadd: Add an achievement for saving a cascading engine from the final countdown.
+  - balance: Damaging synchronous mesh blobs now incorporates damage resistance of
+      other blob structures when dealing shared damage to those nearby.
+  mc-oofert:
+  - rscadd: clickdragging an autolathe changes its output direction
+  nikothedude:
+  - bugfix: Woundscans no longer runtime
+  - bugfix: Normal health analyzers can no longer give the first aid bonus when woundscanning
+  vinylspiders:
+  - code_imp: fixed some typos
+  - bugfix: fixes a runtime with arrow projectiles
+  xXPawnStarrXx:
+  - bugfix: fixed corn cobs not making seeds and lying to you in the text box.
+2023-08-29:
+  Ben10Omintrix:
+  - bugfix: mobs do not get stuck when running away from danger
+  DATA-xPUNGED:
+  - bugfix: Quartermaster's Overcoat and Cargo's gorka can now hold stamps in their
+      suit slots, just like their winter coat counterpart
+  Fikou:
+  - bugfix: roundstart modlink scryers now come with the nt frequency
+  FlufflesTheDog:
+  - bugfix: Made it easier to place tiles on multi z level holes
+  - bugfix: Non-surgically debraining someone no longer makes their brain unusuable
+  Hatterhat:
+  - bugfix: Ash drakes, colossi, and Bubblegum spawn on Lavaland more often; a sharp
+      increase from the previous bugged amount of "basically never".
+  Jacquerel:
+  - image: progress bars and cleaning particles are now centered on the tile occupied
+      by the target, if it is a big sprite
+  LT3:
+  - balance: Pre-equipped engineering modsuit now includes emergency tether
+  - balance: Pre-equipped atmospherics modsuit now includes magboots
+  OrionTheFox:
+  - rscadd: Cargo now once again has access to a "Cargo Shortskirt", a skirt variant
+      of their shorts!
+  - image: tweaks and adjustments to the Cargo resprite have been made, as well as
+      respriting some missed icons such as the Winter Coats and QM Cloak
+  Seven:
+  - bugfix: Syndicate ranged mobs (and probably other basic mobs) properly update
+      their shell's description to show they are spent.
+  Vincent983:
+  - qol: Various jobs have gotten additional programs uploaded at roundstart, engineers
+      now have the canary and atmospheric scanner programs, atmospheric technicians
+      now have the supermatter monitor, and Robotisists/RDs now have the silliconnect
+      program.
+  carlarctg:
+  - bugfix: Items worn on a void cloak's suit storage are no longer visible on the
+      stripping menu.
+  - qol: Misclicking the turf below a heretic influence no longer leaves a fingerprint.
+  iwishforducks:
+  - bugfix: Railings no longer give more metal than they take
+  san7890:
+  - rscadd: The Lavaland Cursed Slot Machine of Greed suddenly seems a lot more sinister...
+  - refactor: Instead of taking clone damage from the cursed slot machine, you now
+      get a status effect with a number of curses associated with it. There's some
+      interesting florid language associated with the status effect as a nicety until
+      your eventual gibbing from chasing that prize.
+2023-08-30:
+  Ghommie:
+  - sound: Unlocking an achievement now plays a sound by default. You can change it
+      in the Sound category of the game preferences.
+  Melbert:
+  - balance: If your server has non-human morgue cadavers enabled, you will be guaranteed
+      one human cadaver no matter what.
+  - balance: All maps (with the exception of Birdboat) now have an additional morgue
+      cadaver roundstart.
+  RikuTheKiller:
+  - bugfix: Probital overdose no longer causes plasmamen and other inorganics to receive
+      the longest nap in their lives.
+  Sealed101:
+  - qol: Metastation has had more navigate landmarks added, namely for areas like
+      Medbay, Cargo, Engineering, department heads offices and a few more.
+  SyncIt21:
+  - refactor: sheets are merged in a better way when ejected from machines & material
+      related stuff
+  - bugfix: rcd can build wallmounts on reinforced walls
+  - qol: rcd can build directional windows without requiring/building a grill
+  Timberpoes:
+  - bugfix: Fixes an issue where role banned players would be able to accept certain
+      ghost roles they're meant to be banned from.
+  VladinXXV:
+  - qol: The coroner can now store scythes in their labcoat and winter coat suit storage.
+      Ask not for whom the bell tolls...
+  xPokee:
+  - bugfix: fixed skeleton wings not being visible from behind while closed
+2023-08-31:
+  Comxy:
+  - bugfix: Fixes Star Gazer getting buckled
+  - image: Removes Star Gazer alpha pixels
+  Fikou:
+  - qol: removes the nukie tool parcel and places the tools directly in their box
+  GoldenAlpharex:
+  - bugfix: Fixes a rare issue that could lead to players entering an infinite disconnection
+      loop from having a null view.
+  Guillaume Prata:
+  - qol: The "You can't move while buckled to X" is now a balloon alert instead of
+      a to_chat message. Hopefully we all get buckle stuck processing why our inputs
+      are not working less often for now on.
+  LukasBeedellCodestuff:
+  - bugfix: Changed icebox permabrig door type to be correct
+  Momo8289:
+  - qol: Cryotubes will now notify medbay if the patient within is dead, and will
+      eject them if auto is on.
+  - qol: Cryotubes will now automatically turn on when a patient enters it if auto
+      is on, but you can no longer close the cryotube on yourself.
+  SyncIt21:
+  - bugfix: autolathe prints the correct amount of stacks and merges it with existing
+      stacks on the turf
+  - bugfix: autolathe takes constant time when printing stacks
+  - code_imp: autolathe will attempt to award you the "getting an upgrade" award only
+      once when printing multiple items & updates UI immediately
+  iwishforducks:
+  - bugfix: Space heaters no longer give extra cells when deconstructed
+  necromanceranne:
+  - bugfix: Compact fishing toolboxes no longer break space and time to contain any
+      normal-sized object. Instead, they only break space and time to contain fishing
+      rods. Settlers migrating to Nanotrasen space have no reasonable explanation
+      for this phenomenon.
+  nikothedude:
+  - balance: Prosthetics and slimepeople can now have limbs dismembered
+  - balance: Slimepeople can now receive slash wounds, but cannot bleed
+  - balance: Most limbs can now be dislocated
+  - refactor: Scar backend reworked, scars will be wiped as they update to the new
+      format
+  san7890:
+  - bugfix: The Cursed Slot Machine should now actually give you more than one pull.

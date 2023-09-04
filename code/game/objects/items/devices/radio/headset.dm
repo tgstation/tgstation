@@ -356,6 +356,15 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
 
+/obj/item/radio/headset/silicon/ai/evil
+	name = "\proper Evil Integrated Subspace Transceiver "
+	keyslot2 = new /obj/item/encryptionkey/ai/evil
+	command = FALSE
+
+/obj/item/radio/headset/silicon/ai/evil/Initialize(mapload)
+	. = ..()
+	make_syndie()
+
 /obj/item/radio/headset/screwdriver_act(mob/living/user, obj/item/tool)
 	user.set_machine(src)
 	if(keyslot || keyslot2)

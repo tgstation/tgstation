@@ -87,7 +87,6 @@
 		/mob/living/simple_animal/hostile/blob/blobspore,
 		/mob/living/simple_animal/hostile/blob/blobspore/independent,
 		/mob/living/simple_animal/hostile/blob/blobspore/weak,
-		/mob/living/simple_animal/hostile/boss,
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/construct/artificer,
 		/mob/living/simple_animal/hostile/construct/artificer/angelic,

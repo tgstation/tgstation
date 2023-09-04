@@ -428,7 +428,7 @@
 	if(!chassis.Adjacent(S))
 		to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
 		return FALSE
-	S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = user)
+	S.reagents.trans_to(src, S.reagents.total_volume, transferred_by = user)
 	S.forceMove(src)
 	LAZYADD(syringes,S)
 	to_chat(user, "[icon2html(src, user)][span_notice("Syringe loaded.")]")

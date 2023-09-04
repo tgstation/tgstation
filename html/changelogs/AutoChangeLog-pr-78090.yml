@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscdel: "Removes the swarmer beacon achievements from the game (no one ever got them, and they haven't been obtainable for years)"
