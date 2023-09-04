@@ -416,8 +416,8 @@
 			C.electrocute_act(shock_damage*0.75, src, 1, flags, jitter_time, stutter_time, stun_duration)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	var/paralyze = (!(flags & SHOCK_KNOCKDOWN))
-	var/immediately_stun = (should_stun && !(flags & SHOCK_DELAY_STUN))
+	var/paralyze = !(flags & SHOCK_KNOCKDOWN)
+	var/immediately_stun = should_stun && !(flags & SHOCK_DELAY_STUN)
 	if (immediately_stun)
 		if (paralyze)
 			Paralyze(stun_duration)
