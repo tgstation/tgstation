@@ -1,7 +1,7 @@
 /// How much damage and progress is reduced when on stasis.
 #define ELECTRICAL_DAMAGE_ON_STASIS_MULT 0.25
 /// How much damage and progress is reduced when limb is grasped.
-#define ELECTRICAL_DAMAGE_GRASPED_MULT 0.5
+#define ELECTRICAL_DAMAGE_GRASPED_MULT 0.7
 /// How much damage and progress is reduced when our victim lies down.
 #define ELECTRICAL_DAMAGE_LYING_DOWN_MULT 0.5
 
@@ -94,7 +94,7 @@
 	wound_series = WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE
 
 /datum/wound/burn/electrical_damage/slash/get_limb_examine_description()
-	return span_warning("The metal on this limb is slashed open.")
+	return span_warning("The wiring on this limb is slashed open.")
 
 /datum/wound/electrical_damage/handle_process(seconds_per_tick, times_fired)
 	. = ..()
@@ -248,9 +248,9 @@
 	. += "\nFault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue("[0]")]% to remove the wound."
 
 /datum/wound/electrical_damage/get_extra_treatment_text()
-	return "Being aggressively grabbed on the afflicted limb halves fault progress. \n\
+	return "Being aggressively grabbed on the afflicted limb halves fault progress. You can also grab it yourself to reduce it a bit less. \n\
 	Lying down halves fault progress. \n\
-	Knowing robo/engi wires, as well as diagnostic huds, increases treatment quality, while self-tending reduces it."
+	Having a diagnostic hud or knowing robo/engi wires increases treatment quality, but self-tending reduces it."
 
 /datum/wound/electrical_damage/get_xadone_progress_to_qdel()
 	return INFINITY

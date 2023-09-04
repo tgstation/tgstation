@@ -688,7 +688,7 @@
 
 /datum/wound/blunt/robotic/get_extra_treatment_text()
 	return "Walking instead of running, buckling yourself to something, resting, or having no gravity all reduce consequences of movement. \n\
-	Knowing robo/engi wires, as well as diagnostic huds, increases treatment quality, while self-tending reduces it."
+	Having a diagnostic hud or knowing robo/engi wires increases treatment quality, but self-tending reduces it."
 
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
