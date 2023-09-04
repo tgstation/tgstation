@@ -170,6 +170,9 @@
  * * obj/item/bodypart/limb: The limb we wil be applying the wound to. If null, a random bodypart will be picked.
  * * min_severity: The minimum severity that will be considered.
  * * max_severity: The maximum severity that will be considered.
+ * * severity_pick_mode: The "pick mode" to be used. See get_corresponding_wound_type's documentation
+ * * series_type: See get_corresponding_wound_type's documentation
+ * * specific_type: See get_corresponding_wound_type's documentation
  * * wound_source: The source of the wound to be applied. Nullable.
  *
  * For the rest of the args, refer to get_corresponding_wound_type().
@@ -189,12 +192,30 @@
 	if (corresponding_typepath)
 		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
 
+/// Limb is nullable, but picks a random one. Defers to limb.get_wound_threshold_of_wound_type, see it for documentation.
 /mob/living/carbon/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, obj/item/bodypart/limb, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
+	if (!limb)
+		return default
+
 	return limb.get_wound_threshold_of_wound_type(wound_type, severity, default, series_type, specific_type, wound_source)
 
+/**
+ * A simple proc that gets the best wound to fit the criteria laid out, then returns its wound threshold.
+ *
+ * Args:
+ * * wound_type: The wound_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list.
+ * * severity: The severity that will be considered.
+ * * default: If no wound is found, we will return this instead.
+ * * series_type: See get_corresponding_wound_type's documentation
+ * * specific_type: See get_corresponding_wound_type's documentation
+ * * wound_source: The theoretical source of the wound. Nullable.
+ *
+ * Returns:
+ * Default if no wound is found - if one IS found, the wound threshold for that wound.
+ */
 /obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
 	var/list/type_list = wound_type
 	if (!islist(type_list))
