@@ -3,11 +3,35 @@
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
+	///assoc list of shuttle events to add to this shuttle on spawn (typepath = weight)
+	var/list/events
+	///pick all events instead of random
+	var/use_all_events = TRUE
+	///how many do we pick
+	var/event_amount = 1
+	///do we empty the event list before adding our events
+	var/events_override = FALSE
 
 /datum/map_template/shuttle/emergency/New()
 	. = ..()
 	if(!occupancy_limit && who_can_purchase)
 		CRASH("The [name] needs an occupancy limit!")
+
+///on post_load use our variables to change shuttle events
+/datum/map_template/shuttle/emergency/post_load(obj/docking_port/mobile/mobile)
+	. = ..()
+	if(!events)
+		return
+	if(events_override)
+		mobile.event_list.Cut()
+	if(use_all_events)
+		mobile.event_list += events
+	else
+		for(var/i in 1 to event_amount)
+			var/path = pick_weight(events)
+			events -= path
+			mobile.event_list.Add(new path(port))
+	
 
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
@@ -49,6 +73,7 @@
 	description = "A repurposed cargo hauling and salvaging ship, for sightseeing and tourism. Has a bar."
 	credit_cost = CARGO_CRATE_VALUE * 12
 	occupancy_limit = "30"
+	events = list(/datum/shuttle_event/simple_spawner/carp/friendly = 10, /datum/shuttle_event/simple_spawner/carp/friendly_but_no_personal_space = 2, /datum/shuttle_event/simple_spawner/carp = 2, /datum/shuttle_event/simple_spawner/carp/magic = 1)
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
