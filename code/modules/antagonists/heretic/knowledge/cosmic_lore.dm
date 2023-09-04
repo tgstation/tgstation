@@ -132,7 +132,7 @@
 		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
 		a cosmic trail and increase your combo timer up to ten seconds."
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
-	The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
+		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
 	route = PATH_COSMIC
 	/// Storage for the second target.
