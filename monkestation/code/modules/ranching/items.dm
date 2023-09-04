@@ -201,8 +201,9 @@
 		beaker.reagents.remove_all(1000)
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
 			user.put_in_hands(beaker)
+		beaker = null
 
-	first_food = list()
+	first_food = null
 	held_foods = list()
 	food_inserted = 0
 
