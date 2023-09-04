@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_METAL (1<<2)
 /// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
 #define BIO_WIRED (1<<3)
-/// Robotic: shit like cyborg limbs, mostly
+/// Robotic: shit like cyborg limbs, mostly. BIO_METAL and BIO_WIRED
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has bloodflow - can suffer bleeding wounds and can bleed
 #define BIO_BLOODED (1<<4)

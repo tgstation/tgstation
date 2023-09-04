@@ -205,6 +205,9 @@
 /datum/wound/blunt/robotic/get_limb_examine_description()
 	return span_warning("This limb looks loosely held together.")
 
+/datum/wound/blunt/robotic/get_xadone_progress_to_qdel()
+	return INFINITY
+
 /datum/wound/blunt/robotic/proc/limb_malleable()
 	return (!isnull(get_overheat_wound()))
 
@@ -516,7 +519,7 @@
 
 	max_nausea_duration = DISGUST_LEVEL_VERYGROSS + 2 // just BARELY above the vomit threshold
 
-	chest_movement_nausea_chance = 0
+	chest_movement_nausea_chance = 2
 	chest_attacked_nausea_chance = 75
 	chest_attacked_nausea_mult = 0.25 // saw = 15, 1.5 seconds of disgust at x1
 
@@ -683,6 +686,10 @@
 	time_til_next_movement_shake_allowed = null
 	can_do_movement_shake = TRUE
 
+/datum/wound/blunt/robotic/get_extra_treatment_text()
+	return "Walking instead of running, buckling yourself to something, resting, or having no gravity all reduce consequences of movement. \n\
+	Knowing robo/engi wires, as well as diagnostic huds, increases treatment quality, while self-tending reduces it."
+
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
 	desc = "The superstructure has totally collapsed in one or more locations, causing extreme internal oscillation with every move and massive limb dysfunction"
@@ -733,7 +740,7 @@
 	chest_movement_organ_damage_max = 6
 	chest_movement_organ_damage_individual_max = 4
 
-	head_movement_shake_dizziness_overtake_mult = 4
+	head_movement_shake_dizziness_overtake_mult = 200
 
 	a_or_from = "a"
 

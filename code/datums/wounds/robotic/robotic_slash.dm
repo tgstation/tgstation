@@ -74,7 +74,7 @@
 	/// The bodyheat our victim must be at or above to start getting passive healing.
 	var/heat_thresh_to_heal = (BODYTEMP_NORMAL + 20)
 	/// The mult that heat differences between normal and bodytemp thresh is multiplied against. Controls passive heat healing.
-	var/heat_differential_healing_mult = 2
+	var/heat_differential_healing_mult = 0.02
 
 	/// Percent chance for a heat repair to give the victim a message.
 	var/heat_heal_message_chance = 20
@@ -242,7 +242,15 @@
 /datum/wound/electrical_damage/get_scanner_description(mob/user)
 	. = ..()
 
-	. += " Fault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue("[0]")]% to remove the wound."
+	. += "\nFault intensity is currently at [span_bold("[get_intensity_mult() * 100]")]%. It must be reduced to [span_blue("[0]")]% to remove the wound."
+
+/datum/wound/electrical_damage/get_extra_treatment_text()
+	return "Being aggressively grabbed on the afflicted limb halves fault progress. \n\
+	Lying down halves fault progress. \n\
+	Knowing robo/engi wires, as well as diagnostic huds, increases treatment quality, while self-tending reduces it."
+
+/datum/wound/electrical_damage/get_xadone_progress_to_qdel()
+	return INFINITY
 
 /datum/wound/electrical_damage/item_can_treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_RETRACTOR)

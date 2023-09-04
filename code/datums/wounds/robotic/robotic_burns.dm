@@ -37,6 +37,8 @@
 
 	/// The coefficient of heat transfer we will use when shifting our temp to the victim's.
 	var/bodytemp_coeff = 0.04
+	/// For every degree below normal bodytemp, we will multiply our incoming temperature by 1 + degrees * this. Allows incentivization of freezing yourself instead of just waiting.
+	var/bodytemp_difference_expose_bonus_ratio = 0.035
 	/// The coefficient of heat transfer we will use when shifting our victim's temp to ours.
 	var/outgoing_bodytemp_coeff = 0
 	/// The mult applied to heat output when we are on a important limb, e.g. head/torso.
@@ -54,6 +56,9 @@
 	var/heat_shock_delta_to_damage_ratio = 0.2
 	/// The minimum heat difference we must have on reagent contact to cause heat shock damage.
 	var/heat_shock_minimum_delta = 5
+
+	/// If we are sprayed with a extinguisher/shower with obscuring clothing on (think clothing that prevents surgery), the effect is multiplied against this.
+	var/sprayed_with_reagent_clothed_mult = 0.25
 
 	/// The max damage a given thermal shock can do. Used for preventing things like spalshing a beaker to instantly kill someone.
 	var/heat_shock_max_damage_per_shock = 80
@@ -117,7 +122,10 @@
 	var/statis_mult = 1
 	if (IS_IN_STASIS(victim))
 		statis_mult *= OVERHEAT_ON_STASIS_HEAT_MULT
-	if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick * statis_mult)))
+
+	var/difference_from_average = max((BODYTEMP_NORMAL - victim.bodytemperature), 0)
+	var/difference_mult = 1 + (difference_from_average * bodytemp_difference_expose_bonus_ratio)
+	if (expose_temperature(victim.bodytemperature, (bodytemp_coeff * seconds_per_tick * statis_mult * difference_mult)))
 		return
 	var/mult = outgoing_bodytemp_coeff
 	if (limb_essential())
@@ -148,12 +156,16 @@
 /datum/wound/burn/robotic/overheat/proc/victim_exposed_to_reagents(datum/signal_source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 
+	var/reagent_coeff = base_reagent_temp_coefficient
+	if (!get_location_accessible(victim, limb.body_zone))
+		reagent_coeff *= sprayed_with_reagent_clothed_mult
+
 	if (istype(source.my_atom, /obj/effect/particle_effect/water/extinguisher)) // this used to be a lot, lot more modular, but sadly reagent temps/volumes and shit are horribly inconsistant
-		expose_temperature(source.chem_temp, 1.7 * base_reagent_temp_coefficient, TRUE)
+		expose_temperature(source.chem_temp, 1.7 * reagent_coeff, TRUE)
 		return
 
 	if (istype(source.my_atom, /obj/machinery/shower))
-		expose_temperature(source.chem_temp, (10 * volume_modifier * base_reagent_temp_coefficient), TRUE)
+		expose_temperature(source.chem_temp, (10 * volume_modifier * reagent_coeff), TRUE)
 		return
 
 /datum/wound/burn/robotic/overheat/proc/expose_temperature(temperature, coeff = 0.02, heat_shock = FALSE)
@@ -168,7 +180,8 @@
 
 		if (victim)
 			var/gauze_or_not = (!isnull(gauze) ? ", but [gauze] helps to keep it together" : "")
-			victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock[gauze_or_not]!"))
+			var/clothing_text = (!get_location_accessible(victim, limb.body_zone) ? ", its clothing absorbing some of the heat" : "")
+			victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock[clothing_text][gauze_or_not]!"))
 			playsound(victim, 'sound/items/welder.ogg', 25)
 
 		var/unclamped_damage = (temp_delta * heat_shock_delta_to_damage_ratio) * gauze_mult
@@ -205,8 +218,27 @@
 
 /datum/wound/burn/robotic/overheat/get_scanner_description(mob/user)
 	. = ..()
-	. += "Its current temperature is [span_blue("[chassis_temperature]")]K, and needs to cool to [span_nicegreen("[cooling_threshold]")]K, but \
-		will worsen if heated to [span_purple("[heating_threshold]")]K."
+
+	var/current_temp_celcius = round(chassis_temperature - T0C, 0.1)
+	var/current_temp_fahrenheit = round(chassis_temperature * 1.8-459.67, 0.1)
+
+	var/cool_celcius = round(cooling_threshold - T0C, 0.1)
+	var/cool_fahrenheit = round(cooling_threshold * 1.8-459.67, 0.1)
+
+	var/heat_celcius = round(heating_threshold - T0C, 0.1)
+	var/heat_fahrenheit = round(cooling_threshold * 1.8-459.67, 0.1)
+
+	. += "\nIts current temperature is [span_blue("[current_temp_celcius ] &deg;C ([current_temp_fahrenheit] &deg;F)")], \
+	and needs to cool to [span_nicegreen("[cool_celcius] &deg;C ([cool_fahrenheit] &deg;F)")], but \
+	will worsen if heated to [span_purple("[heat_celcius] &deg;C ([heat_fahrenheit] &deg;F)")]."
+
+/datum/wound/burn/robotic/overheat/get_extra_treatment_text()
+	return "Wearing clothing reduces the effects of being sprayed with reagents. \n\
+	Gauze reduces the damage taken from thermal shock. \n\
+	Bodytemp/Cryogenics do not cause thermal shock, only extinguishers/showers."
+
+/datum/wound/burn/robotic/overheat/get_xadone_progress_to_qdel()
+	return INFINITY
 
 /datum/wound/burn/robotic/overheat/moderate
 	name = "Transient Overheating"
@@ -237,8 +269,8 @@
 
 	sound_volume = 20
 
-	outgoing_bodytemp_coeff = 0.009
-	bodytemp_coeff = 0.02
+	outgoing_bodytemp_coeff = 0.007
+	bodytemp_coeff = 0.006
 
 	base_reagent_temp_coefficient = 0.05
 	heat_shock_delta_to_damage_ratio = 0.2
@@ -283,8 +315,8 @@
 	cooling_threshold = (BODYTEMP_NORMAL + 375)
 	heating_threshold = (BODYTEMP_NORMAL + 800)
 
-	outgoing_bodytemp_coeff = 0.009
-	bodytemp_coeff = 0.017
+	outgoing_bodytemp_coeff = 0.008
+	bodytemp_coeff = 0.004
 
 	base_reagent_temp_coefficient = 0.03
 	heat_shock_delta_to_damage_ratio = 0.2
@@ -322,7 +354,7 @@
 
 	status_effect_type = /datum/status_effect/wound/burn/robotic/critical
 
-	damage_mulitplier_penalty = 1.6 //1.6x damage taken
+	damage_mulitplier_penalty = 1.5 //1.5x damage taken
 
 	starting_temperature_min = (BODYTEMP_NORMAL + 1050)
 	starting_temperature_max = (BODYTEMP_NORMAL + 1100)
@@ -332,8 +364,8 @@
 	cooling_threshold = (BODYTEMP_NORMAL + 775)
 	heating_threshold = INFINITY
 
-	outgoing_bodytemp_coeff = 0.009 // burn... BURN...
-	bodytemp_coeff = 0.013
+	outgoing_bodytemp_coeff = 0.0076 // burn... BURN...
+	bodytemp_coeff = 0.002
 
 	base_reagent_temp_coefficient = 0.02
 	heat_shock_delta_to_damage_ratio = 0.25

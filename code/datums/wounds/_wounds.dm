@@ -614,7 +614,13 @@
 	return "[desc]."
 
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
+	var/treatment_text = get_extra_treatment_text()
+	var/treatment_notes = (treatment_text ? "\n\nTreatment notes: [treatment_text]" : "")
+	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text][treatment_notes]"
+
+/// An extra bit of treatment text that is only shown on a analyzer's woundscan mode. Lets you put little bits of misc knowledge in without clogging chat on most scans.
+/datum/wound/proc/get_extra_treatment_text()
+	return
 
 /datum/wound/proc/severity_text()
 	switch(severity)
