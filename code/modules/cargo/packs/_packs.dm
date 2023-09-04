@@ -86,7 +86,7 @@
 		return FALSE
 	var/list/open_turfs = list()
 	for(var/turf/open/floor/found_turf in get_area_turfs(pick(areas), subtypes = TRUE))
-		open_turfs += found_turf 
+		open_turfs += found_turf
 
 	if(!length(open_turfs))
 		return FALSE

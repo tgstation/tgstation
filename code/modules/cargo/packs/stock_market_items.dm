@@ -18,10 +18,14 @@
 	new material.sheet_type(C, amount)
 
 /datum/supply_pack/market_materials/iron
+	name = "Iron Sheets"
+	crate_name = "iron stock crate"
 	material = /datum/material/iron
 MARKET_QUANTITY_HELPERS(/datum/supply_pack/market_materials/iron)
 
 
 /datum/supply_pack/market_materials/gold
+	name = "Gold Sheets"
+	crate_name = "gold stock crate"
 	material = /datum/material/gold
 MARKET_QUANTITY_HELPERS(/datum/supply_pack/market_materials/gold)
