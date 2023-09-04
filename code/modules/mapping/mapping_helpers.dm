@@ -1386,7 +1386,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/pick_count = 1
 
 /obj/effect/mapping_helpers/emergency_shuttle_event_override/random_pick/change_paths(obj/docking_port/mobile/port)
-	var/list/chosen = list()
 	while(pick_count)
 		var/path = pick_weight(events_override)
 		pick_count--
