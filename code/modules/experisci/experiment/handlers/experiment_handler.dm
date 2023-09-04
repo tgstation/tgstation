@@ -72,7 +72,7 @@
 	// Note this won't work at the moment for non-machines that have been included
 	// on the map as the servers aren't initialized when the non-machines are initializing
 	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
-		CONNECT_TO_RND_SERVER_ROUNDSTART(selected_server)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_web)
 
 	GLOB.experiment_handlers += src
 
