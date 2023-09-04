@@ -408,13 +408,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		parts += "<br><B>Grand Rituals completed:</B> [ritual.times_completed]<br>"
 
 	var/count = 1
-	var/wizardwin = 1
+	var/wizardwin = TRUE
 	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
-			wizardwin = 0
+		if(!objective.check_completion())
+			wizardwin = FALSE
+		parts += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 		count++
 
 	if(wizardwin)
