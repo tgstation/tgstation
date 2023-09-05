@@ -301,7 +301,7 @@
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
 
-/obj/item/food/deadmouse/Initialize(mapload, loc, starting_reagent_purity, no_base_reagents, mob/living/basic/mouse/dead_critter)
+/obj/item/food/deadmouse/Initialize(mapload, starting_reagent_purity, no_base_reagents, mob/living/basic/mouse/dead_critter)
 	. = ..()
 	if(dead_critter)
 		body_color = dead_critter.body_color
