@@ -356,7 +356,7 @@
 	name = "Loaner Shuttle"
 	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to recieve more shuttle loan opportunities, with slightly higher payouts."
 	trait_type = STATION_TRAIT_POSITIVE
-	weight = 3
+	weight = 4
 	event_control_path = /datum/round_event_control/shuttle_loan
 	weight_multiplier = 2.5
 	max_occurrences_modifier = 5 //All but one loan event will occur over the course of a round.
@@ -376,7 +376,7 @@
 	name = "Shuttle Firesale"
 	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Check your shuttle purchase list for discounted options."
 	trait_type = STATION_TRAIT_POSITIVE
-	weight = 2
+	weight = 4
 	trait_to_give = STATION_TRAIT_SHUTTLE_SALE
 	show_in_report = TRUE
 
@@ -384,7 +384,7 @@
 	name = "Misplaced Wallet"
 	report_message = "A repair technician left their wallet in a locker somewhere. They would greatly appreciate if you could locate and return it to them when the shift has ended."
 	trait_type = STATION_TRAIT_POSITIVE
-	weight = 4
+	weight = 5
 	trait_to_give = STATION_TRAIT_MISSING_WALLET
 	show_in_report = TRUE
 
