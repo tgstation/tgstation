@@ -136,6 +136,7 @@
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 
+/// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
 /obj/item/gun/energy/recharge/fisher
 	name = "\improper SC/FISHER lightbreaker"
 	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that does literally nothing to anything but light fixtures and held flashlights. \
@@ -151,6 +152,6 @@
 
 /obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
 	. = ..()
-	. += "The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
+	. += span_notice("The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
 	attenuated to launch kinetic bolts that resonate with glass in light fixtures and power connections in human-held flashlights - and <i>only</i> those. \
-	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor."
+	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor.")

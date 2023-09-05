@@ -301,6 +301,7 @@
 #include "code\__DEFINES\dcs\signals\signals_ladder.dm"
 #include "code\__DEFINES\dcs\signals\signals_leash.dm"
 #include "code\__DEFINES\dcs\signals\signals_lift.dm"
+#include "code\__DEFINES\dcs\signals\signals_light_disruptor.dm"
 #include "code\__DEFINES\dcs\signals\signals_light_eater.dm"
 #include "code\__DEFINES\dcs\signals\signals_material_container.dm"
 #include "code\__DEFINES\dcs\signals\signals_medical.dm"

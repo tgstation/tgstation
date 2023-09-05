@@ -98,6 +98,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
+	RegisterSignal(parent, COMSIG_DISRUPTED_LIGHTS, PROC_REF(on_disrupted_lights))
 
 /datum/component/seclite_attachable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -156,12 +157,10 @@
 	if(!light)
 		return FALSE
 
-	light.on = !light.on
-	light.update_brightness()
-	if(user)
+	var/successful_toggle = light.toggle_light(user)
+	if(successful_toggle)
 		user.balloon_alert(user, "[light.name] toggled [light.on ? "on":"off"]")
 
-	playsound(light, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_light()
 	return TRUE
 
@@ -296,3 +295,9 @@
 		// Yes, this might mess with other icon state alterations,
 		// but that's the downside of using icon states over overlays.
 		source.icon_state = base_state
+
+/// Signal proc for [COMSIG_DISRUPTED_LIGHTS] that turns the light off for a few seconds.
+/datum/component/seclite_attachable/proc/on_disrupted_lights(disrupt_duration)
+	SIGNAL_HANDLER
+	light.on_disrupted_lights(disrupt_duration)
+	update_light()
