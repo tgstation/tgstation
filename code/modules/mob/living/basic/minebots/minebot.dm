@@ -77,9 +77,8 @@
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
-	var/functioning_mode = combat_mode ? "attack" : "collect"
 	icon_state = combat_mode ? "mining_drone_offense" : "mining_drone"
-	to_chat(src, span_info("You are set to [functioning_mode] mode."))
+	balloon_alert(src, "now [combat_mode ? "attacking" : "collecting"]")
 
 /mob/living/basic/mining_drone/examine(mob/user)
 	. = ..()
@@ -102,7 +101,7 @@
 	if(user.combat_mode)
 		return FALSE
 	if(combat_mode)
-		user.balloon_alert(user, "can't in attack mode!")
+		user.balloon_alert(user, "can't repair in attack mode!")
 		return TRUE
 	if(maxHealth == health)
 		user.balloon_alert(user, "at full integrity!")
@@ -125,10 +124,7 @@
 	if(. || user.combat_mode)
 		return
 	set_combat_mode(!combat_mode)
-	if(combat_mode)
-		to_chat(user, span_info("[src] has been set to search and store loose ore."))
-		return
-	to_chat(user, span_info("[src] has been set to attack hostile wildlife."))
+	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
 
 /mob/living/basic/mining_drone/RangedAttack(atom/target)
 	if(!combat_mode)
@@ -139,10 +135,10 @@
 /mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
 
-	if(!. || !proximity_flag)
+	if(!. || !proximity_flag || combat_mode)
 		return
 
-	if(istype(attack_target, /obj/item/stack/ore) && !combat_mode)
+	if(istype(attack_target, /obj/item/stack/ore))
 		var/obj/item/target_ore = attack_target
 		target_ore.forceMove(src)
 

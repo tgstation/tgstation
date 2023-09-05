@@ -35,7 +35,7 @@
 
 /datum/ai_behavior/send_sos_message
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 5 MINUTES
+	action_cooldown = 2 MINUTES
 
 /datum/ai_behavior/send_sos_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/carbon/target = controller.blackboard[target_key]

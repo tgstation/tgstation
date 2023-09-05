@@ -30,7 +30,7 @@
 		return
 	minebot.maxHealth += 45
 	minebot.updatehealth()
-	to_chat(user, "<span class='notice'>You reinforce the armor of [minebot].")
+	to_chat(user, span_notice("You reinforce the armor of [minebot]."))
 	qdel(src)
 
 //AI
