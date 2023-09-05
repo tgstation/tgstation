@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "PDAs being on silent no longer prevents PDAs from being sent to your chat, again."
-  - rscadd: "pAIs inserted into a PDA can now control the PDA, and will receive PDA messages sent to it (and can respond under the PDA's name)."
