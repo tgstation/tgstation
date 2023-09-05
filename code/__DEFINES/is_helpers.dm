@@ -65,11 +65,11 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define iscliffturf(A) (istype(A, /turf/open/cliff))
 
 GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
-	/turf/open/space,
-	/turf/open/openspace,
 	/turf/closed/mineral,
 	/turf/open/misc/asteroid,
-)))
+	/turf/open/openspace,
+	/turf/open/space
+	)))
 
 #define ispassmeteorturf(A) (is_type_in_typecache(A, GLOB.turfs_pass_meteor))
 
