@@ -119,3 +119,19 @@
 #define BB_ORE_TARGET "BB_ore_target"
 /// which ore types we will not eat
 #define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"
+
+// minebot keys
+/// key that stores our toggle light ability
+#define BB_MINEBOT_LIGHT_ABILITY "minebot_light_ability"
+/// key that stores our dump ore ability
+#define BB_MINEBOT_DUMP_ABILITY "minebot_dump_ability"
+/// key that stores our target turf
+#define BB_TARGET_MINERAL_TURF "target_mineral_turf"
+/// key that stores list of the turfs we ignore
+#define BB_BLACKLIST_MINERAL_TURFS "blacklist_mineral_turfs"
+/// key that stores the previous blocked wall
+#define BB_PREVIOUS_UNREACHABLE_WALL "previous_unreachable_wall"
+/// key that stores our mining mode
+#define BB_AUTOMATED_MINING "automated_mining"
+/// key that stores the nearest dead human
+#define BB_NEARBY_DEAD_MINER "nearby_dead_miner"

@@ -242,3 +242,6 @@
 	else if(prob(5))
 		C.vomit()
 	return ..()
+
+/datum/pet_command/protect_owner/glockroach
+	protect_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
