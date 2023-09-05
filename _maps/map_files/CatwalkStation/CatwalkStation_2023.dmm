@@ -2738,7 +2738,9 @@
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/item/toy/plush/moth{
-	name = "Moff #1"
+	name = "Moff #1";
+	pixel_y = -7;
+	pixel_x = -15
 	},
 /turf/open/floor/iron,
 /area/space)
@@ -16932,9 +16934,22 @@
 "hTT" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/toy/plush/moth{
-	name = "They locked me in a room making me name these all send h"
+	name = "Headslicer Mofiny";
+	pixel_y = 11;
+	pixel_x = 2
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/toy/plush/moth{
+	name = "Flutty The Ravager Moffy";
+	pixel_x = 5
+	},
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north,
+/obj/item/toy/plush/moth{
+	name = "Sporg Asbord";
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/structure/sign/poster/ripped/directional/east,
 /turf/open/floor/plating,
 /area/space)
 "hUl" = (
@@ -38886,18 +38901,19 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sde" = (
-/obj/structure/sign/poster/ripped/directional/north,
-/obj/item/toy/plush/lizard_plushie/green{
-	name = "Ssorg Asbord";
-	pixel_x = -5;
-	pixel_y = 1
-	},
 /obj/item/toy/plush/moth{
 	name = "Goofy Greg";
 	pixel_x = 3;
 	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/moth{
+	name = "Crimes Reynald";
+	pixel_x = -2;
+	pixel_y = 14
+	},
+/obj/structure/sign/poster/contraband/mothic_rations/directional/west,
+/obj/structure/sign/poster/official/moth_piping/directional/north,
 /turf/open/floor/plating,
 /area/space)
 "sdf" = (
@@ -43192,7 +43208,7 @@
 	pixel_y = 11
 	},
 /obj/item/toy/plush/moth{
-	name = "plush moth";
+	name = "General Kill Light";
 	pixel_y = -3
 	},
 /turf/open/floor/iron,
@@ -48719,7 +48735,6 @@
 /turf/open/floor/plating,
 /area/space)
 "wIe" = (
-/obj/structure/sign/poster/contraband/mothic_rations/directional/west,
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
 	},
@@ -49333,6 +49348,7 @@
 	pixel_y = -10
 	},
 /obj/structure/broken_flooring/pile/directional/west,
+/obj/structure/sign/poster/official/moth_hardhat/directional/west,
 /turf/open/floor/plating,
 /area/space)
 "wWx" = (
@@ -51583,7 +51599,7 @@
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/item/toy/plush/moth{
-	name = "/Spanner";
+	name = "Spanner 2, her sibling";
 	pixel_y = 10
 	},
 /obj/item/toy/plush/moth{
@@ -51592,6 +51608,11 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/moth{
+	name = "Lizzy Hates-The-Lizards";
+	pixel_y = 1;
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/space)
 "xXY" = (
