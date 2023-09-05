@@ -16085,7 +16085,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/mob/living/simple_animal/parrot/poly,
+/mob/living/basic/parrot/poly,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4

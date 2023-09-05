@@ -47552,7 +47552,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/mob/living/simple_animal/parrot/poly,
+/mob/living/basic/parrot/poly,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "pWt" = (

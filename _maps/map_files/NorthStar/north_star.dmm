@@ -6814,7 +6814,7 @@
 /obj/machinery/computer/security/telescreen/engine{
 	name = "Engineering and atmospherics monitor"
 	},
-/mob/living/simple_animal/parrot/poly,
+/mob/living/basic/parrot/poly,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/command/heads_quarters/ce)
 "bIQ" = (
