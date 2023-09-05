@@ -296,11 +296,10 @@
 	SIGNAL_HANDLER
 	if(aiming)
 		process_aim()
-		aiming_beam()
+		INVOKE_ASYNC(src, PROC_REF(aiming_beam))
 		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
 			zooming_angle = lastangle
 			set_autozoom_pixel_offsets_immediate(zooming_angle)
-	return ..()
 
 ///Start aiming and charging the beam
 /obj/item/gun/energy/beam_rifle/proc/on_mouse_down(client/source, atom/movable/object, location, control, params)
@@ -309,9 +308,8 @@
 		return
 	if(!object.IsAutoclickable() || (object in source.mob.contents) || (object == source.mob))
 		return
-	start_aiming()
+	INVOKE_ASYNC(src, PROC_REF(start_aiming))
 	RegisterSignal(source, COMSIG_CLIENT_MOUSEDRAG, PROC_REF(on_mouse_drag))
-	return ..()
 
 ///Stop aiming and fire the beam if charged enough
 /obj/item/gun/energy/beam_rifle/proc/on_mouse_up(client/source, atom/movable/object, location, control, params)
@@ -324,10 +322,9 @@
 		sync_ammo()
 		var/atom/target = source.mouse_object_ref?.resolve()
 		if(target)
-			afterattack(target, source.mob, FALSE, source.mouseParams, passthrough = TRUE)
+			INVOKE_ASYNC(src, PROC_REF(afterattack), target, source.mob, FALSE, source.mouseParams, passthrough = TRUE)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
-	return ..()
 
 /obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	. |= AFTERATTACK_PROCESSED_ITEM
