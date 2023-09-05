@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(stock_market)
 			materials_prices[possible_market] = (possible_market.value_per_unit * SHEET_MATERIAL_AMOUNT)
 
 			materials_trends += possible_market
-			materials_trends[possible_market] = rand(-1,1)
+			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) //aka -1 to 1
 
 			materials_trend_life += possible_market
 			materials_trend_life[possible_market] = rand(1,10)
@@ -35,7 +35,6 @@ SUBSYSTEM_DEF(stock_market)
 /datum/controller/subsystem/stock_market/fire(resumed)
 	for(var/datum/material/market as anything in materials_prices)
 		handle_trends_and_price(market)
-		to_chat(world, span_boldannounce("We are firing! Price units of [market.name] is now [materials_prices[market]]! Trend is [materials_trends[market]] for another [materials_trend_life[market]]!"))
 
 /**
  * Handles shifts in the cost of materials, and in what direction the material is most likely to move.

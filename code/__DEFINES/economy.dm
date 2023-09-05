@@ -80,6 +80,8 @@
 
 #define MARKET_EVENT_PROBABILITY 1 //Probability of a market event firing, in percent. Fires once per material, every 20 seconds.
 
+#define MARKET_PROFIT_MODIFIER 0.8 //We don't make every sale a 1-1 of the actual buy price value, like with real life taxes and to encourage more smart trades
+
 /// Create quantity subtypes for stock market datums.
 #define MARKET_QUANTITY_HELPERS(path) ##path/one {\
 	amount = 1; \

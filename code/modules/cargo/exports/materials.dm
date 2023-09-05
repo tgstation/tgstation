@@ -118,7 +118,7 @@
 	var/amount = get_amount(I)
 	if(!amount)
 		return 0
-	var/material_value = (SSstock_market.materials_prices[material_id]) * amount
+	var/material_value = (SSstock_market.materials_prices[material_id]) * amount * MARKET_PROFIT_MODIFIER
 	return round(material_value)
 
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
@@ -129,5 +129,5 @@
 		return
 	if(!dry_run)
 		SSstock_market.materials_quantity[material_id] += amount
-		SSstock_market.materials_prices[material_id] = round((price - (material_id.value_per_unit * SHEET_MATERIAL_AMOUNT)) * (amount / (amount + SSstock_market.materials_quantity[material_id])))
+		SSstock_market.materials_prices[material_id] = (price) - round((price) * (amount / (amount + SSstock_market.materials_quantity[material_id])))
 		//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
