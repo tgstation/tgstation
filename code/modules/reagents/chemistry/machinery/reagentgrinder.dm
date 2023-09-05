@@ -317,7 +317,7 @@
 			juice_item(I, user)
 
 /obj/machinery/reagentgrinder/proc/juice_item(obj/item/I, mob/user) //Juicing results can be found in respective object definitions
-	if(!I.juice(beaker, user))
+	if(!I.juice(beaker.reagents, user))
 		to_chat(usr, span_danger("[src] shorts out as it tries to juice up [I], and transfers it back to storage."))
 		return
 	remove_object(I)
@@ -336,7 +336,7 @@
 			grind_item(i, user)
 
 /obj/machinery/reagentgrinder/proc/grind_item(obj/item/I, mob/user) //Grind results can be found in respective object definitions
-	if(!I.grind(beaker, user))
+	if(!I.grind(beaker.reagents, user))
 		to_chat(usr, span_danger("[src] shorts out as it tries to grind up [I], and transfers it back to storage."))
 		return
 	remove_object(I)

@@ -247,4 +247,4 @@
 	return ..()
 
 /datum/pet_command/protect_owner/glockroach
-	protect_behavior = /datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
+	protect_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
