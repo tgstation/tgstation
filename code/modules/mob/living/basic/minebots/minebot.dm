@@ -68,8 +68,8 @@
 	ai_controller.set_blackboard_key(BB_MINEBOT_DUMP_ABILITY, dump_ore_action)
 
 	stored_gun = new(src)
-	var/obj/item/implant/radio/mining/imp = new(src)
-	imp.implant(src)
+	var/obj/item/implant/radio/mining/comms = new(src)
+	comms.implant(src)
 	access_card = new /obj/item/card/id/advanced/gold(src)
 	SSid_access.apply_trim_to_card(access_card, /datum/id_trim/job/shaft_miner)
 
