@@ -56,7 +56,7 @@
 	var/timed_out = FALSE
 
 /datum/leash_wait/New()
-	addtimer(VARSET_CALLBACK(src, timed_out, TRUE), 50 SECONDS)
+	addtimer(VARSET_CALLBACK(src, timed_out, TRUE), 80 SECONDS)
 
 /datum/leash_wait/proc/completed()
 	completed = TRUE
