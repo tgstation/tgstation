@@ -18,6 +18,7 @@
 
 
 #define PI 3.1416
+#define PI2 PI / 2 //MONKESTATION MODULE OUTDOOR_EFFECTS
 #define INFINITY 1e31 //closer then enough
 
 #define SHORT_REAL_LIMIT 16777216

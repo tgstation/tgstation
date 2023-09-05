@@ -79,6 +79,7 @@
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
+		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct)
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
@@ -132,6 +133,7 @@
 	//Basically an optional override for our glide size
 	//Sometimes you want to look like you're moving with a delay you don't actually have yet
 	visual_delay = 0
+	var/old_dir = dir
 
 	. = ..()
 
@@ -153,7 +155,8 @@
 
 		// At this point we've moved the client's attached mob. This is one of the only ways to guess that a move was done
 		// as a result of player input and not because they were pulled or any other magic.
-		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVED)
+		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVED, direct, old_dir)
+		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED_CLIENT_SEND, direct)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)

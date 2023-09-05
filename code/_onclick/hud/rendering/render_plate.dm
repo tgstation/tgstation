@@ -161,6 +161,12 @@
 	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 
+	//monkestation edit start
+	var/atom/movable/screen/sunlight = mymob.overlay_fullscreen("sunlight_backdrop_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/sunlight)
+	sunlight.filters += filter(type="layer", render_source="[SUNLIGHTING_RENDER_TARGET] #[offset]")
+	SET_PLANE_EXPLICIT(sunlight, PLANE_TO_TRUE(sunlight.plane), src)
+	//monkestation edit end
+
 	// Sorry, this is a bit annoying
 	// Basically, we only want the lighting plane we can actually see to attempt to render
 	// If we don't our lower plane gets totally overriden by the black void of the upper plane
@@ -176,6 +182,7 @@
 	. = ..()
 	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
 	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
+	oldmob.clear_fullscreen("sunlight_backdrop_[home.key]#[offset]") //monkestation addition
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))

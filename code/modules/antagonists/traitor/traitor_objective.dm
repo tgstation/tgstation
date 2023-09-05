@@ -205,10 +205,10 @@
 	if(objective_state != OBJECTIVE_STATE_INACTIVE && objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_COMPLETED)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, src)
 	handle_cleanup()
 	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "completed"] [to_debug_string()]")
 	objective_state = OBJECTIVE_STATE_COMPLETED
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, src)
 	save_objective()
 	handler.on_update() // Trigger an update to the UI
 

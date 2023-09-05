@@ -49,6 +49,7 @@
 	canSmoothWith = null
 	smoothing_groups = null
 	rcd_memory = null
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/vault/rock
 	name = "rocky wall"
@@ -76,11 +77,13 @@
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
 	color = COLOR_ORANGE_BROWN
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
@@ -91,6 +94,7 @@
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
 	color = COLOR_ORANGE_BROWN
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
@@ -120,6 +124,7 @@
 	hardness = 50
 	girder_type = null
 	decon_type = /turf/closed/mineral/asteroid
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/rock/porous
 	name = "reinforced porous rock"
@@ -135,6 +140,7 @@
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/material/meat
 	name = "living wall"

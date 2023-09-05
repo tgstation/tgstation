@@ -810,7 +810,7 @@
 /area/shuttle/escape)
 "Fo" = (
 /obj/item/cultivator,
-/mob/living/simple_animal/hostile/lizard,
+/mob/living/basic/lizard,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Fp" = (

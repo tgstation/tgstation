@@ -3829,7 +3829,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Zj" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Zl" = (

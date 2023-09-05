@@ -96,6 +96,7 @@
 	hardness = 3 //very hard for hulks to break
 	//for deconstruction
 	var/d_state = INTACT
+	wall_trim = null //monkestation edit
 
 /turf/closed/wall/clockwork/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	if(IS_CLOCK(hulkman)) //dont recoil for clock cultists

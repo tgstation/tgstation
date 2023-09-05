@@ -11,6 +11,13 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 	. = ..()
 	owner = user
 	ui_interact(user)
+
+/datum/pre_round_store/Destroy(force, ...)
+	. = ..()
+	owner.client?.readied_store = null
+	owner = null
+	bought_item = null
+
 /datum/pre_round_store/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)

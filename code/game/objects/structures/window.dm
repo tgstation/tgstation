@@ -76,6 +76,18 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
+	//monkestation edit start
+	if(uses_color)
+		var/new_color = SSstation_coloring.get_default_color()
+		if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+			glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+		else
+			glass_color = new_color
+		if(fulltile)
+			color = glass_color
+		if(mapload && fulltile)
+			new /obj/structure/window_sill(get_turf(src))
+	//monkestation edit end
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -181,6 +193,7 @@
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
 		playsound(src, bash_sound, 100, TRUE)
+	return TRUE //monkestation edit
 
 /obj/structure/window/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -413,6 +426,7 @@
 
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
+
 
 	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
@@ -915,6 +929,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/plasma/spawner, 0)
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
 	glass_type = /obj/item/stack/sheet/bronze
+	uses_color // monkestation edit
 
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE

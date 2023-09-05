@@ -41,6 +41,13 @@
 		pixel_x = base_pixel_x
 		pixel_y = base_pixel_y
 
+/obj/item/mcobject/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	var/datum/component/mclinker/link = src.GetComponent(/datum/component/mclinker)
+	if(link)
+		to_chat(user, span_warning("Link buffer cleared."))
+		qdel(link)
+
 /obj/item/mcobject/multitool_act(mob/living/user, obj/item/tool)
 	var/datum/component/mclinker/link = tool.GetComponent(/datum/component/mclinker)
 	if(link)

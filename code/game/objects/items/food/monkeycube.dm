@@ -85,4 +85,4 @@
 		/datum/reagent/medicine/strange_reagent = 1,
 	)
 	tastes = list("buzzing" = 1, "honey" = 1, "regret" = 1)
-	spawned_mob = /mob/living/simple_animal/hostile/bee
+	spawned_mob = /mob/living/basic/bee

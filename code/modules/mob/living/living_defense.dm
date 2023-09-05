@@ -267,6 +267,13 @@
 							span_notice("\The [user] [user.friendly_verb_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [user.friendly_verb_simple] [src]!"))
 		return FALSE
+	if(user.advanced_simple)
+		if((user.istate & ISTATE_SECONDARY))
+			if (user != src && iscarbon(src))
+				user.disarm(src)
+				return TRUE
+		if (!(user.istate & ISTATE_HARM))
+			return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to hurt anyone!"))
 		return FALSE

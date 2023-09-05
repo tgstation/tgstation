@@ -420,7 +420,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	effectiveness = 100, \
 	)
 
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		start_transformed = start_extended, \
 		force_on = 20, \
 		throwforce_on = 23, \
@@ -495,13 +496,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/cane/white/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = 7, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_BULKY, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
-		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 
@@ -513,8 +516,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/cane/white/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	if(user)
+		balloon_alert(user, active ? "extended" : "collapsed")
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
@@ -751,25 +755,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/relative_direction = get_cardinal_dir(direction_traveled, target_mob)
 	var/atom/throw_target = get_edge_target_turf(target_mob, relative_direction)
 	. = ..()
-	var/passed = TRUE
 	if(iscarbon(target_mob))
 		var/mob/living/carbon/target = target_mob
 		target.stamina.adjust(-force * 2)
-		if(target.stamina.current > 80 && !target.incapacitated())
-			passed = FALSE
 
-	if(passed)
-		if(homerun_ready)
-			user.visible_message(span_userdanger("It's a home run!"))
-			if(!QDELETED(target_mob))
-				target_mob.throw_at(throw_target, rand(8,10), 14, user)
-			SSexplosions.medturf += throw_target
-			playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-			homerun_ready = FALSE
-			return
-		else if(!QDELETED(target_mob) && !target_mob.anchored)
-			var/whack_speed = (prob(60) ? 1 : 4)
-			target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+	if(homerun_ready)
+		user.visible_message(span_userdanger("It's a home run!"))
+		if(!QDELETED(target_mob))
+			target_mob.throw_at(throw_target, rand(8,10), 14, user)
+		SSexplosions.medturf += throw_target
+		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+		homerun_ready = FALSE
+		return
+	else if(!QDELETED(target_mob) && !target_mob.anchored)
+		var/whack_speed = (prob(60) ? 1 : 4)
+		target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/Destroy(force)
 	for(var/target in thrown_datums)
@@ -877,16 +877,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	splattable = typecacheof(list(
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/butterfly,
+		/mob/living/basic/ant,
+		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
-		/obj/item/queen_bee,
-		/mob/living/basic/spiderling,
-		/mob/living/simple_animal/hostile/ant,
+		/mob/living/basic/spider/growing/spiderling,
+		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
+		/obj/item/queen_bee,
 	))
 	strong_against = typecacheof(list(
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/spider/giant,
 	))
 
 
@@ -1119,7 +1119,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 25
 
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
-	if(!IS_WIZARD(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()

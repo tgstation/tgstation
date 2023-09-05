@@ -113,6 +113,13 @@
 #define HAS_TRAIT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]))
 #define HAS_TRAIT_FROM_ONLY(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (length(target.status_traits[trait] - source) > 0))
+/// Returns a list of trait sources for this trait. Only useful for wacko cases and internal futzing
+/// You should not be using this
+#define GET_TRAIT_SOURCES(target, trait) (target.status_traits?[trait] || list())
+/// Returns the amount of sources for a trait. useful if you don't want to have a "thing counter" stuck around all the time
+#define COUNT_TRAIT_SOURCES(target, trait) length(GET_TRAIT_SOURCES(target, trait))
+/// A simple helper for checking traits in a mob's mind
+#define HAS_MIND_TRAIT(target, trait) (HAS_TRAIT(target, trait) || (target.mind ? HAS_TRAIT(target.mind, trait) : FALSE))
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
@@ -228,9 +235,26 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBLOOD "noblood"
 #define TRAIT_NOMETABOLISM "no_metabolism"
 // Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
-#define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
+/// This just means that the carbon will always have functional liverless metabolism
+#define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
+/// Humans with this trait cannot be turned into zombies
+#define TRAIT_NO_ZOMBIFY "no_zombify"
+/// Humans with this trait cannot be affected by changeling transformation stings
+#define TRAIT_NO_TRANSFORMATION_STING "no_transformation_sting"
+/// Carbons with this trait can't have their DNA copied by diseases nor changelings
+#define TRAIT_NO_DNA_COPY "no_dna_copy"
+/// Carbons with this trait can eat blood to regenerate their own blood volume, instead of injecting it
+#define TRAIT_DRINKS_BLOOD "drinks_blood"
+/// Mob is immune to clone (cellular) damage
 #define TRAIT_NOCLONELOSS "no_cloneloss"
+/// Mob is immune to toxin damage
 #define TRAIT_TOXIMMUNE "toxin_immune"
+/// Mob is immune to oxygen damage, does not need to breathe
+#define TRAIT_NOBREATH "no_breath"
+/// Mob is currently disguised as something else (like a morph being another mob or an object). Holds a reference to the thing that applied the trait.
+#define TRAIT_DISGUISED "disguised"
+/// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
+#define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -244,11 +268,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
-#define TRAIT_NOBREATH "no_breath"
 #define TRAIT_ANTIMAGIC "anti_magic"
 #define TRAIT_HOLY "holy"
 /// This allows a person who has antimagic to cast spells without getting blocked
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
+/// The user can do things like use magic staffs without penalty
+#define TRAIT_MAGICALLY_GIFTED "magically_gifted"
 #define TRAIT_DEPRESSION "depression"
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
@@ -263,6 +288,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_SLIP_SLIDE "noslip_slide"
 /// Stops all slipping and sliding from ocurring
 #define TRAIT_NO_SLIP_ALL "noslip_all"
+
+/// Unlinks gliding from movement speed, meaning that there will be a delay between movements rather than a single move movement between tiles
+#define TRAIT_NO_GLIDE "no_glide"
 
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
@@ -547,6 +575,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VOIDSTORM_IMMUNE "voidstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
+/// Cannot be grabbed by goliath tentacles
+#define TRAIT_TENTACLE_IMMUNE "tentacle_immune"
+/// Currently under the effect of overwatch
+#define TRAIT_OVERWATCHED "watcher_overwatched"
+/// Cannot be targetted by watcher overwatch
+#define TRAIT_OVERWATCH_IMMUNE "overwatch_immune"
+
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
 #define TRAIT_PARALYSIS "paralysis"
@@ -618,6 +653,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_APC_SHOCKING "apc_shocking"
 /// Properly wielded two handed item
 #define TRAIT_WIELDED "wielded"
+/// A transforming item that is actively extended / transformed
+#define TRAIT_TRANSFORM_ACTIVE "active_transform"
 /// Buckling yourself to objects with this trait won't immobilize you
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
 /// Prevents stripping this equipment
@@ -757,6 +794,23 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
 #define TRAIT_SUICIDED "committed_suicide"
 
+///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
+#define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
+
+/// Trait given to mechs that can have orebox functionality on movement
+#define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
+
+///fish traits
+#define TRAIT_RESIST_EMULSIFY "resist_emulsify"
+#define TRAIT_FISH_SELF_REPRODUCE "fish_self_reproduce"
+#define TRAIT_FISH_NO_MATING "fish_no_mating"
+#define TRAIT_YUCKY_FISH "yucky_fish"
+#define TRAIT_FISH_TOXIN_IMMUNE "fish_toxin_immune"
+#define TRAIT_FISH_CROSSBREEDER "fish_crossbreeder"
+#define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
+///Trait needed for the lubefish evolution
+#define TRAIT_FISH_FED_LUBE "fish_fed_lube"
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define UNCONSCIOUS_TRAIT "unconscious"
@@ -848,6 +902,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 
+
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"
@@ -925,6 +980,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
 #define BRAIN_UNAIDED "brain-unaided"
+/// Trait applied to a mob when it gets a required "operational datum" (components/elements). Sends out the source as the type of the element.
+#define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
 /// Trait applied by MODsuits.
 #define MOD_TRAIT "mod"
 /// Trait applied by element
@@ -954,6 +1011,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
+/// Trait given by simple/basic mob death
+#define BASIC_MOB_DEATH_TRAIT "basic_mob_death"
+/// Trait given by your current speed
+#define SPEED_TRAIT "speed_trait"
+/// Trait given to mobs that have been autopsied
+#define AUTOPSY_TRAIT "autopsy_trait"
+
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -1064,6 +1128,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Is runechat for this atom/movable currently disabled, regardless of prefs or anything?
 #define TRAIT_RUNECHAT_HIDDEN "runechat_hudden"
 
+///coming from a fish trait datum.
+#define FISH_TRAIT_DATUM "fish_trait_datum"
+///coming from a fish evolution datum
+#define FISH_EVOLUTION "fish_evolution"
+
 /// some trait sorces dirived from bodyparts BODYPART_TRAIT is generic.
 #define BODYPART_TRAIT "bodypart"
 #define HEAD_TRAIT "head"
@@ -1098,8 +1167,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GLUED_ITEM_TRAIT "glued-item"
 #define TRAIT_BELT_SATCHEL "belt_satchel"
 
+//monkestation edit start
 /// One can breath under water, you get me?
 #define TRAIT_WATER_BREATHING "water_breathing"
 
 /// Do IPC's dream of doomsday? The answer is yes
 #define TRAIT_ROBOT_CAN_BLEED "robots_can_bleed"
+//monkestation edit end

@@ -281,10 +281,10 @@
 	return TRUE
 
 /// Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null, _no_react = FALSE)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
-		add_reagent(r_id, amt, data)
+		add_reagent(r_id, amt, data, no_react = _no_react)
 
 
 /// Remove a specific reagent
@@ -423,20 +423,27 @@
  * Reagent takes a PATH to a reagent.
  * Amount checks for having a specific amount of that chemical.
  * Needs matabolizing takes into consideration if the chemical is matabolizing when it's checked.
+ * Check subtypes controls whether it should it should also include subtypes: ispath(type, reagent) versus type == reagent.
  */
-/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
+/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE, check_subtypes = FALSE)
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
-		if (holder_reagent.type == reagent)
+		if (check_subtypes ? ispath(holder_reagent.type, reagent) : holder_reagent.type == reagent)
 			if(!amount)
 				if(needs_metabolizing && !holder_reagent.metabolizing)
+					if(check_subtypes)
+						continue
 					return FALSE
 				return holder_reagent
 			else
 				if(round(holder_reagent.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					if(needs_metabolizing && !holder_reagent.metabolizing)
+						if(check_subtypes)
+							continue
 						return FALSE
 					return holder_reagent
+				else if(!check_subtypes)
+					return FALSE
 	return FALSE
 
 /**

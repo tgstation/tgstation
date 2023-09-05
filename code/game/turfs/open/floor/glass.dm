@@ -36,6 +36,7 @@
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 	setup_glow()
+	starlight_color = GLOB.starlight_color
 
 /turf/open/floor/glass/Destroy()
 	. = ..()

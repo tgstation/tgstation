@@ -92,6 +92,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
 	/client/proc/spawn_pollution,
+	/client/proc/view_player_camera,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -106,7 +107,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/adjust_players_antag_tokens,
 	/client/proc/adjust_players_metacoins,
 	/client/proc/admin_change_sec_level,
-	/client/proc/change_ocean,
+	/client/proc/change_ocean, //monkestation addition
 	/client/proc/cinematic,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_gib_self,
@@ -116,26 +117,27 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
 	/client/proc/forceEvent,
-	/client/proc/generate_bulk_code,
-	/client/proc/generate_code,
-	/client/proc/mass_add_metacoins,
+	/client/proc/generate_bulk_code, //monkestation addition
+	/client/proc/generate_code, //monkestation addition
+	/client/proc/mass_add_metacoins, //monkestation addition
 	/client/proc/mass_zombie_cure,
 	/client/proc/mass_zombie_infection,
-	/client/proc/move_hotspots,
+	/client/proc/move_hotspots, //monkestation addition
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
-	/client/proc/remove_liquid,
+	/client/proc/remove_liquid, //monkestation addition
 	/client/proc/remove_mob_ability,
 	/client/proc/reset_ooc,
 	/client/proc/run_weather,
+	/client/proc/run_particle_weather, //monkestation addition
 	/client/proc/set_dynex_scale,
 	/client/proc/set_ooc,
 	/client/proc/show_tip,
 	/client/proc/smite,
-	/client/proc/spawn_liquid,
-	/client/proc/spawn_pollution,
+	/client/proc/spawn_liquid, //monkestation addition
+	/client/proc/spawn_pollution, //monkestation addition
 	/client/proc/summon_ert,
-	/client/proc/summon_twitch_event,
+	/client/proc/summon_twitch_event, //monkestation addition
 	/client/proc/toggle_nuke,
 	/client/proc/toggle_random_events,
 	))

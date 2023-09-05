@@ -212,3 +212,10 @@
 /obj/item/clothing/head/helmet/hat/cowboy/science
 	name = "bulletproof science cowboy hat"
 	icon_state = "cowboy_hat_science"
+
+/obj/item/clothing/head/maidheadband/syndicate
+	name = "tactical maid headband"
+	desc = "Tacticute."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "syndieheadband"

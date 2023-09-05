@@ -62,6 +62,12 @@
 	/// Effect for when someone teleports
 	var/obj/effect/rune_effect = /obj/effect/temp_visual/rune_light
 
+/obj/effect/cosmic_rune/Initialize(mapload)
+	. = ..()
+	var/image/silicon_image = image(icon = 'icons/obj/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
+
 /obj/effect/cosmic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
@@ -130,6 +136,12 @@
 	anchored = TRUE
 	duration = 5
 
+/obj/effect/temp_visual/cosmic_rune_fade/Initialize(mapload)
+	. = ..()
+	var/image/silicon_image = image(icon = 'icons/obj/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
+
 /obj/effect/temp_visual/rune_light
 	name = "cosmic rune"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
@@ -137,3 +149,9 @@
 	layer = SIGIL_LAYER
 	anchored = TRUE
 	duration = 5
+
+/obj/effect/temp_visual/rune_light/Initialize(mapload)
+	. = ..()
+	var/image/silicon_image = image(icon = 'icons/obj/hand_of_god_structures.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)

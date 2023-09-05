@@ -92,10 +92,10 @@ GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)
 #define PARSE_LIGHT_COLOR(source) \
 do { \
 	if (source.light_color != COLOR_WHITE) { \
-		var/__light_color = source.light_color; \
-		source.lum_r = GETREDPART(__light_color) / 255; \
-		source.lum_g = GETGREENPART(__light_color) / 255; \
-		source.lum_b = GETBLUEPART(__light_color) / 255; \
+		var/list/color_map = rgb2num(source.light_color); \
+		source.lum_r = color_map[1] / 255; \
+		source.lum_g = color_map[2] / 255; \
+		source.lum_b = color_map[3] / 255; \
 	} else { \
 		source.lum_r = 1; \
 		source.lum_g = 1; \
@@ -109,3 +109,31 @@ do { \
 
 /// Include this to have lights randomly break on initialize.
 #define LIGHTS_RANDOMLY_BROKEN
+
+//Monkestation start
+//Sunlight states
+#define SKY_BLOCKED   0
+#define SKY_VISIBLE  1
+#define SKY_VISIBLE_BORDER   2
+
+#define SUNLIGHT_DARK_MATRIX \
+	list                     \
+	(                        \
+		0, 0, 0, 0, \
+		0, 0, 0, 0, \
+		0, 0, 0, 0, \
+		0, 0, 0, 0, \
+		0, 0, 0, 1           \
+	)
+
+/// If I were you I'd leave this alone.
+#define LIGHTING_BASE_MATRIX \
+	list                     \
+	(                        \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		1, 1, 1, 0, \
+		0, 0, 0, 1           \
+	)                        \
+//monkestation end

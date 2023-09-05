@@ -60,6 +60,17 @@
 		playsound(invoker, 'sound/magic/mm_hit.ogg', 50, TRUE)
 		return TRUE
 
+	if(IS_HERETIC(hit_mob))
+		to_chat(invoker, span_warning("Some force greater than you intervenes! [hit_mob] is protected by the Forgotten Gods!"))
+		to_chat(hit_mob, span_warning("You are protected by your faith to the Forgotten Gods."))
+		var/old_color = hit_mob.color
+		hit_mob.color = rgb(0, 128, 0)
+		animate(hit_mob, color = old_color, time = 1 SECONDS, easing = EASE_IN)
+		hit_mob.adjust_stutter(15 SECONDS)
+		hit_mob.adjust_jitter(15 SECONDS)
+		playsound(invoker, 'sound/magic/mm_hit.ogg', 50, TRUE)
+		return TRUE
+
 	//Successful Invokation
 	invoker.mob_light(_color = LIGHT_COLOR_CLOCKWORK, _range = 2, _duration = 1 SECONDS)
 

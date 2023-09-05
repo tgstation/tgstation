@@ -59,6 +59,20 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 	name = "Zippo Lighter"
 	item_path = /obj/item/lighter
 
+/datum/store_item/pocket/zippolighter/bright
+	name = "Illuminative Lighter"
+	item_path = /obj/item/lighter/bright
+	item_cost = 2500
+
+/datum/store_item/pocket/zippolighter/mime
+	name = "Mime's Lighter"
+	item_path = /obj/item/lighter/mime
+	item_cost = 2500
+
+/datum/store_item/pocket/zippolighter/skull
+	name = "Skull Zippo Lighter"
+	item_path = /obj/item/lighter/skull
+	item_cost = 2500
 
 /datum/store_item/pocket/paicard
 	name = "Personal AI Device"
