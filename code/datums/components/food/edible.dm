@@ -461,7 +461,7 @@ Behavior that's still missing from this component that original food items had t
 		apply_buff(eater)
 
 	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
+	owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = INGEST)
 	bitecount++
 
 	checkLiked(fraction, eater)
@@ -654,7 +654,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		var/atom/eaten_food = parent
-		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transfered_by = eater)
+		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transferred_by = eater)
 		eater.visible_message(span_warning("[src] eats [eaten_food]!"), span_notice("You eat [eaten_food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(eaten_food)
