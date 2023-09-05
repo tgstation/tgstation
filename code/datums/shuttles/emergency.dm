@@ -6,7 +6,7 @@
 	///assoc list of shuttle events to add to this shuttle on spawn (typepath = weight)
 	var/list/events
 	///pick all events instead of random
-	var/use_all_events = TRUE
+	var/use_all_events = FALSE
 	///how many do we pick
 	var/event_amount = 1
 	///do we empty the event list before adding our events
@@ -25,7 +25,9 @@
 	if(events_override)
 		mobile.event_list.Cut()
 	if(use_all_events)
-		mobile.event_list += events
+		for(var/path in events)
+			mobile.event_list.Add(new path(mobile))
+			events -= path
 	else
 		for(var/i in 1 to event_amount)
 			var/path = pick_weight(events)
@@ -70,10 +72,15 @@
 /datum/map_template/shuttle/emergency/humpback
 	suffix = "humpback"
 	name = "Humpback Emergency Shuttle"
-	description = "A repurposed cargo hauling and salvaging ship, for sightseeing and tourism. Has a bar."
+	description = "A repurposed cargo hauling and salvaging ship, for sightseeing and tourism. Has a bar. Complete with a 2 minute vacation plan to carp territory."
 	credit_cost = CARGO_CRATE_VALUE * 12
 	occupancy_limit = "30"
-	events = list(/datum/shuttle_event/simple_spawner/carp/friendly = 10, /datum/shuttle_event/simple_spawner/carp/friendly_but_no_personal_space = 2, /datum/shuttle_event/simple_spawner/carp = 2, /datum/shuttle_event/simple_spawner/carp/magic = 1)
+	events = list(
+		/datum/shuttle_event/simple_spawner/carp/friendly = 10,
+		/datum/shuttle_event/simple_spawner/carp/friendly_but_no_personal_space = 2,
+		/datum/shuttle_event/simple_spawner/carp = 2,
+		/datum/shuttle_event/simple_spawner/carp/magic = 1,
+	)
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
