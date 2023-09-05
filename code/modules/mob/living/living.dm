@@ -1106,7 +1106,12 @@
 		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
-		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+
+		var/grab_resilience = pulledby.get_grab_resilience_mult()
+		var/grab_resilience_mult = (grab_resilience ? (1 / grab_resilience) : 0)
+		var/resist_chance_mult = get_resist_chance_mult() * grab_resilience_mult
+
+		resist_chance = ((resist_chance / altered_grab_state) * resist_chance_mult) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -1124,6 +1129,49 @@
 	else
 		pulledby.stop_pulling()
 		return FALSE
+
+/// Returns how resilient our grab is, in the form of a multiplier that is inverted and multipied against someone who is resisting our grab's resist chance.
+/mob/proc/get_grab_resilience_mult()
+	return 1
+
+/mob/living/carbon/get_grab_resilience_mult()
+	. = ..()
+
+	if (gloves)
+		. *= gloves.grab_resilience_mult
+		. += gloves.grab_resilience_increment
+
+	var/occupied_hands = num_hands - usable_hands // disabled hands are "occupied"
+	for(var/obj/item/held_item as anything in held_items)
+		// items like slappers/zombie claws/etc. should be ignored
+		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
+			continue
+
+		occupied_hands++
+
+	var/percent_hands_occupied = (occupied_hands / max(2, num_hands)) // support for the very rare case of having a lot of hands
+
+	if (percent_hands_occupied == 0)
+		. *= ALL_HANDS_FREE_GRAB_RESILIENCE_MULT
+	else if (percent_hands_occupied == 1)
+		. *= BOTH_HANDS_OCCUPIED_GRAB_RESILIENCE_MULT
+	else
+		. *= ONE_HAND_FREE_GRAB_RESILIENCE_MULT // it literally has to be between 0 and 1
+
+	if (HAS_TRAIT(src, TRAIT_HULK))
+		. *= HULK_GRAB_RESILIENCE_MULT
+
+/// Returns a multiplier that will be put against our resist chance when we try to resist a grab.
+/mob/living/proc/get_resist_chance_mult()
+	var/mult = 1
+
+	if (HAS_TRAIT(src, TRAIT_HULK))
+		mult *= HULK_GRAB_RESIST_MULT
+
+	if (pulledby.grab_state < GRAB_NECK && body_position == LYING_DOWN)
+		mult *= KNOCKED_DOWN_GRAB_RESIST_MULT
+
+	return mult
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)

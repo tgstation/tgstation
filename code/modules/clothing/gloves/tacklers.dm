@@ -23,6 +23,8 @@
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 0
 
+	grab_resilience_mult = 1.35
+
 /obj/item/clothing/gloves/tackler/Destroy()
 	tackler = null
 	return ..()
@@ -56,6 +58,8 @@
 	min_distance = 2
 	skill_mod = -2
 
+	grab_resilience_mult = 1.15
+
 /obj/item/clothing/gloves/tackler/combat
 	name = "gorilla gloves"
 	desc = "Premium quality combative gloves, heavily reinforced to give the user an edge in close combat tackles, though they are more taxing to use than normal gripper gloves. Fireproof to boot!"
@@ -74,11 +78,15 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 
+	grab_resilience_mult = 1.8
+
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerrilla gloves"
 	desc = "Superior quality combative gloves, good for performing tackle takedowns as well as absorbing electrical shocks."
 	siemens_coefficient = 0
 	armor_type = /datum/armor/combat_insulated
+
+	grab_resilience_mult = 2
 
 /datum/armor/combat_insulated
 	bio = 50
@@ -96,6 +104,8 @@
 	tackle_speed = 6
 	skill_mod = 7
 
+	grab_resilience_mult = 1.25
+
 /obj/item/clothing/gloves/tackler/offbrand
 	name = "improvised gripper gloves"
 	desc = "Ratty looking fingerless gloves wrapped with sticky tape. Beware anyone wearing these, for they clearly have no shame and nothing to lose."
@@ -106,6 +116,8 @@
 	base_knockdown = 1.75 SECONDS
 	min_distance = 2
 	skill_mod = -1
+
+	grab_resilience_mult = 1.25
 
 /obj/item/clothing/gloves/tackler/football
 	name = "football gloves"

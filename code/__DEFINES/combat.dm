@@ -123,6 +123,21 @@ DEFINE_BITFIELD(status_flags, list(
 //Grab breakout odds
 #define BASE_GRAB_RESIST_CHANCE 60 //base chance for whether or not you can escape from a grab
 
+/// If none of our hands are occupied, we will multiply our grab resilience by this
+#define ALL_HANDS_FREE_GRAB_RESILIENCE_MULT 1.4
+/// If only one of our hands are occupied, we will multiply our grab resilience by this
+#define ONE_HAND_FREE_GRAB_RESILIENCE_MULT 1
+/// If all of our hands are occupied, we will multiply our grab resilience by this
+#define BOTH_HANDS_OCCUPIED_GRAB_RESILIENCE_MULT 0.3 // you should really have at least one hand free!
+
+/// If we are a hulk, we will multiply our grab resilience by this
+#define HULK_GRAB_RESILIENCE_MULT 3
+/// If we are a hulk, we will multipliy our grab resist chance by this
+#define HULK_GRAB_RESIST_MULT 3
+
+/// If our grabbed level is below neckgrab and we are on the ground, we will multiply this against our resist chance
+#define KNOCKED_DOWN_GRAB_RESIST_MULT 0.75 // doesnt apply to neckgrabs and above
+
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
 #define SOFTCRIT_ADD_SLOWDOWN 2
 //slowdown when crawling
