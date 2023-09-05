@@ -48,10 +48,6 @@
 	action_cooldown = 0.6 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
-	/// How many shots to fire
-	var/shots = 1
-	/// The interval between individual shots in a burst
-	var/burst_interval = 0.2 SECONDS
 	/// range we will try chasing the target before giving up
 	var/chase_range = 9
 
@@ -79,16 +75,7 @@
 		return
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
-
-	if(shots>1)
-		var/atom/burst_target = final_target
-		var/datum/callback/callback = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,RangedAttack), burst_target)
-		for(var/i in 2 to shots)
-			addtimer(callback, (i - 1) * burst_interval)
-		callback.Invoke()
-	else
-		basic_mob.RangedAttack(final_target)
-
+	basic_mob.RangedAttack(final_target)
 	return ..() //only start the cooldown when the shot is shot
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
