@@ -1129,7 +1129,7 @@
 		else
 			smoker_lungs = /obj/item/organ/internal/lungs/smoker_lungs
 	if(!isnull(smoker_lungs))
-		smoker_lungs = new smoker_lungs()
+		smoker_lungs = new smoker_lungs
 		smoker_lungs.Insert(carbon_holder, special = TRUE, drop_if_replaced = FALSE)
 
 /datum/quirk/item_quirk/junkie/smoker/process(seconds_per_tick)
