@@ -6410,7 +6410,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/secondary/entry)
 "bBg" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/cold/directional/south,
@@ -8022,8 +8022,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/aft)
 "bYX" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -9274,8 +9274,8 @@
 "coZ" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/defibrillator_mount/directional/south,
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical{
+	dir = 8
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
@@ -21198,7 +21198,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/office)
@@ -26979,7 +26979,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/starboard)
 "hfd" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
@@ -30267,7 +30267,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "hXt" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -31277,7 +31277,9 @@
 "ilI" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/defibrillator_mount/directional/south,
-/obj/structure/bed,
+/obj/structure/bed/medical{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "ilK" = (
@@ -33181,8 +33183,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "iMF" = (
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -36451,7 +36453,7 @@
 /area/station/security/prison)
 "jEZ" = (
 /obj/structure/window/spawner/directional/south,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
 "jFh" = (
@@ -54158,7 +54160,9 @@
 /area/station/medical/psychology)
 "ocO" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/green,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
@@ -57349,7 +57353,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
 "oVy" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/gym/mirrored/right{
 	pixel_y = 32
@@ -61472,8 +61476,8 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "qcI" = (
-/obj/structure/bed{
-	dir = 1
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/random/directional/west,
@@ -71328,7 +71332,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark/textured,
@@ -79405,8 +79409,8 @@
 /turf/open/floor/grass,
 /area/station/science/cytology)
 "uPc" = (
-/obj/structure/bed{
-	dir = 1
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/random/directional/east,
@@ -84917,8 +84921,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "wlo" = (
-/obj/structure/bed{
-	dir = 1
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/small/directional/south,

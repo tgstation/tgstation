@@ -2594,8 +2594,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -9100,7 +9100,7 @@
 "cLf" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -18390,7 +18390,7 @@
 /area/station/engineering/storage_shared)
 "fKi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -18964,7 +18964,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "fUj" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "fUn" = (
@@ -30112,8 +30112,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -32296,7 +32296,9 @@
 /turf/open/floor/iron/dark/side,
 /area/station/service/chapel)
 "kmA" = (
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/medical,
 /obj/machinery/camera/directional/east{
 	c_tag = "Labor Camp Infirmary";
@@ -32502,7 +32504,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "kpX" = (
-/obj/structure/bed,
+/obj/structure/bed/medical{
+	dir = 4
+	},
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -35103,7 +35107,7 @@
 /area/station/science/xenobiology)
 "lei" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "lek" = (
@@ -38020,7 +38024,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -45793,7 +45797,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "ozV" = (
@@ -55544,7 +55548,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -57551,7 +57555,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -67859,7 +67863,7 @@
 	dir = 10
 	},
 /obj/structure/sign/warning/chem_diamond/directional/west,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
@@ -68264,10 +68268,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_x = -1
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_x = 4
 	},
 /obj/item/storage/medkit/regular{

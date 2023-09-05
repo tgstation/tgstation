@@ -1804,7 +1804,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate/medical,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 4
 	},
 /obj/item/healthanalyzer,

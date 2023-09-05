@@ -1652,7 +1652,7 @@
 /obj/structure/closet,
 /obj/item/surgery_tray,
 /obj/machinery/iv_drip,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
