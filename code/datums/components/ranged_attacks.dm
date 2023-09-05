@@ -8,10 +8,12 @@
 	var/projectile_type
 	/// Sound to play when we fire our projectile
 	var/projectile_sound
+	/// how many shots we will fire
+	var/burst_shots
+	/// intervals between shots
+	var/burst_intervals
 	/// Time to wait between shots
 	var/cooldown_time
-	var/burst_shots
-	var/burst_intervals
 	/// Tracks time between shots
 	COOLDOWN_DECLARE(fire_cooldown)
 
