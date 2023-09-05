@@ -31,7 +31,7 @@
 /datum/supply_pack/imports/wt550ammo/nonlethal
 	name = "WT-550 Non-Lethal Ammo Crate"
 	desc = "A supply of non-lethal ammunition for the WT-550 autorifle."
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9/wtrub = 3,
 		/obj/item/ammo_box/magazine/wt550m9/wtsalt = 3,
@@ -44,7 +44,7 @@
 /datum/supply_pack/imports/wt550ammo
 	name = "WT-550 Ammo Crate"
 	desc = "A supply of spare and exotic lethal ammunition for the WT-550 autorifle."
-	cost = CARGO_CRATE_VALUE * 7
+	cost = CARGO_CRATE_VALUE * 6
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
