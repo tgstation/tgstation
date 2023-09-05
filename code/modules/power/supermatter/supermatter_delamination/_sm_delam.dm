@@ -9,7 +9,6 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// Logic holder for supermatter delaminations, goes off the strategy design pattern.
 /// Selected by [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam
-	COOLDOWN_DECLARE(common_radio_cooldown)
 
 /// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
@@ -47,9 +46,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	sm.lastwarning = REALTIMEOFDAY
 
 	if(sm.damage_archived - sm.damage > SUPERMATTER_FAST_HEALING_RATE && sm.damage_archived >= sm.emergency_point) // Fast healing, engineers probably have it all sorted
-		if(COOLDOWN_FINISHED(src, common_radio_cooldown)) // We alert common once per cooldown period, otherwise alert engineering
+		if(sm.should_alert_common()) // We alert common once per cooldown period, otherwise alert engineering
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
-			COOLDOWN_START(src, common_radio_cooldown, SUPERMATTER_COMMON_RADIO_DELAY)
 		else
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
 		playsound(sm, 'sound/machines/terminal_alert.ogg', 75)

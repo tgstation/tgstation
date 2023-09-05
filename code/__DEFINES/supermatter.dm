@@ -39,7 +39,7 @@
 /// If the crystal is healing faster than this per damage check, we suppress the Common radio notification for the cooldown
 #define SUPERMATTER_FAST_HEALING_RATE 0.025
 
-#define SUPERMATTER_COMMON_RADIO_DELAY (7 MINUTES)
+#define SUPERMATTER_COMMON_RADIO_DELAY (6 MINUTES)
 
 #define SM_HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
