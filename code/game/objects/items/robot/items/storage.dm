@@ -190,6 +190,7 @@
 	handle_reflling(arrived)
 	return ..()
 
+///Used by the service borg drink apparatus upgrade, holds drink-related items
 /obj/item/borg/apparatus/beaker/drink
 	name = "secondary beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks and condiment packets without spilling their contents. Will NOT resynthesize drinks unlike your standard apparatus."
