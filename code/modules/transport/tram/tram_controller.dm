@@ -199,12 +199,7 @@
 			explosion(transport_module, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(transport_module)
 
-		for(var/obj/machinery/transport/destination_sign/desto as anything in SStransport.displays)
-			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
-
-		for(var/obj/machinery/transport/crossing_signal/xing as anything in SStransport.crossing_signals)
-			xing.set_signal_state(XING_STATE_MALF)
-			xing.update_appearance()
+		send_transport_active_signal()
 
 /**
  * Calculate the journey details to the requested platform
@@ -320,7 +315,7 @@
 		scheduled_move = world.time + speed_limiter
 
 /datum/transport_controller/linear/tram/proc/normal_stop()
-	cycle_doors(OPEN_DOORS)
+	cycle_doors(CYCLE_OPEN)
 	log_transport("TC: [specific_transport_id] trip completed.")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(set_lights)), 2.2 SECONDS)
@@ -372,7 +367,7 @@
 
 	set_lights(estop = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(cycle_doors), OPEN_DOORS), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 	idle_platform = null
 	log_transport("TC: [specific_transport_id] Transport Controller needs new position data from the tram.")
 	tram_registration["distance_travelled"] += (travel_trip_length - travel_remaining)
@@ -412,7 +407,7 @@
 	playsound(paired_cabinet, 'sound/machines/ping.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Peforming controller reset... Navigating to reset point.")
 	log_transport("TC: [specific_transport_id] trip calculation: src: [nav_beacon.x], [nav_beacon.y], [nav_beacon.z] dst: [destination_platform] [destination_platform.x], [destination_platform.y], [destination_platform.z] = Dir [travel_direction] Dist [travel_remaining.]")
-	cycle_doors(CLOSE_DOORS)
+	cycle_doors(CYCLE_CLOSED)
 	set_active(TRUE)
 	set_status_code(CONTROLS_LOCKED, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(dispatch_transport), reset_beacon), 3 SECONDS)
@@ -456,7 +451,7 @@
 		return
 
 	controller_active = new_status
-	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	send_transport_active_signal()
 	log_transport("TC: [specific_transport_id] controller state [controller_active ? "READY > PROCESSING" : "PROCESSING > READY"].")
 
 /**
@@ -481,7 +476,10 @@
 			stack_trace("Transport controller received invalid status code request [code]/[value]")
 			return
 
-	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	send_transport_active_signal()
+
+/datum/transport_controller/linear/tram/proc/send_transport_active_signal()
+	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * Part of the pre-departure list, checks the status of the doors on the tram
@@ -504,12 +502,12 @@
  */
 /datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
 	switch(door_status)
-		if(OPEN_DOORS)
+		if(CYCLE_OPEN)
 			for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 				if(door.transport_linked_id == specific_transport_id)
 					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
 
-		if(CLOSE_DOORS)
+		if(CYCLE_CLOSED)
 			for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 				if(door.transport_linked_id == specific_transport_id)
 					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close))
@@ -563,12 +561,12 @@
 /datum/transport_controller/linear/tram/proc/power_lost()
 	set_operational(FALSE)
 	log_transport("TC: [specific_transport_id] power lost.")
-	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/power_restored()
 	set_operational(TRUE)
 	log_transport("TC: [specific_transport_id] power restored.")
-	SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/set_operational(new_value)
 	if(controller_operational != new_value)
@@ -986,10 +984,10 @@
 			controller_datum.reset_position()
 
 		if("dclose")
-			controller_datum.cycle_doors(CLOSE_DOORS)
+			controller_datum.cycle_doors(CYCLE_CLOSED)
 
 		if("dopen")
-			controller_datum.cycle_doors(OPEN_DOORS)
+			controller_datum.cycle_doors(CYCLE_OPEN)
 
 		if("togglesensors")
 			if(controller_datum.controller_status & BYPASS_SENSORS)

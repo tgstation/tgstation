@@ -97,6 +97,10 @@ DEFINE_BITFIELD(request_flags, list(
 #define XING_STATE_RED 2
 #define XING_STATE_MALF 3
 
+// Defines for door cycles
+#define CYCLE_OPEN "open"
+#define CYCLE_CLOSED "close"
+
 #define AMBER_THRESHOLD_NORMAL 70
 #define RED_THRESHOLD_NORMAL 40
 #define AMBER_THRESHOLD_DEGRADED 40

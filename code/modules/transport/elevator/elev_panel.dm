@@ -341,7 +341,7 @@
 				return TRUE // The security level might have been lowered since last update, so update UI
 
 			// Open all elevator doors, it's an emergency dang it!
-			lift.update_lift_doors(action = OPEN_DOORS)
+			lift.update_lift_doors(action = CYCLE_OPEN)
 			door_reset_timerid = addtimer(CALLBACK(src, PROC_REF(reset_doors)), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 			return TRUE // We opened up all the doors, update the UI so the emergency button is replaced correctly
 
@@ -381,8 +381,8 @@
 
 	// Open all the doors on the zs we should be open on,
 	// and close all doors we aren't on. Simple enough.
-	lift.update_lift_doors(zs_we_are_present_on, action = OPEN_DOORS)
-	lift.update_lift_doors(zs_we_are_absent, action = CLOSE_DOORS)
+	lift.update_lift_doors(zs_we_are_present_on, action = CYCLE_OPEN)
+	lift.update_lift_doors(zs_we_are_absent, action = CYCLE_CLOSED)
 
 	door_reset_timerid = null
 

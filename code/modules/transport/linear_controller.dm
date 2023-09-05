@@ -392,13 +392,13 @@
 	// Send out a signal that we're going
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	// Close all lift doors
-	update_lift_doors(action = CLOSE_DOORS)
+	update_lift_doors(action = CYCLE_CLOSED)
 
 	if(isnull(lift_move_duration) || lift_move_duration <= 0 SECONDS)
 		// Do an instant move
 		move_lift_vertically(direction, user)
 		// Open doors on the zs we arrive at
-		update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
+		update_lift_doors(get_zs_we_are_on(), action = CYCLE_OPEN)
 		// And unlock the controls after
 		controls_lock(FALSE)
 		return TRUE
@@ -461,7 +461,7 @@
 	var/travel_speed = prime_lift.elevator_vertical_speed
 
 	// Close all lift doors
-	update_lift_doors(action = CLOSE_DOORS)
+	update_lift_doors(action = CYCLE_CLOSED)
 	// Approach the desired z-level one step at a time
 	for(var/i in 1 to z_difference)
 		if(!Check_lift_move(direction))
@@ -489,7 +489,7 @@
  *
  * Arguments:
  * on_z_level - optional, only open doors on this z-level or list of z-levels
- * action - how do we update the doors? OPEN_DOORS to make them open, CLOSE_DOORS to make them shut
+ * action - how do we update the doors? CYCLE_OPEN to make them open, CYCLE_CLOSED to make them shut
  */
 /datum/transport_controller/linear/proc/update_lift_doors(on_z_level, action)
 
@@ -503,13 +503,13 @@
 		if(on_z_level && !(elevator_door.z in on_z_level))
 			continue
 		switch(action)
-			if(OPEN_DOORS)
+			if(CYCLE_OPEN)
 				elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 				if(!played_ding)
 					playsound(elevator_door, 'sound/machines/ping.ogg', 50, TRUE)
 					played_ding = TRUE
 				addtimer(CALLBACK(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open)), 0.7 SECONDS)
-			if(CLOSE_DOORS)
+			if(CYCLE_CLOSED)
 				elevator_door.elevator_status = LIFT_PLATFORM_LOCKED
 				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
 			else
@@ -517,7 +517,7 @@
 
 /// Helper used in callbacks to open all the doors our platform is on
 /datum/transport_controller/linear/proc/open_lift_doors_callback()
-	update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
+	update_lift_doors(get_zs_we_are_on(), action = CYCLE_OPEN)
 
 /**
  * Moves the platform, this is what users invoke with their hand.

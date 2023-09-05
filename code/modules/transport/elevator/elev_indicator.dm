@@ -16,7 +16,7 @@
 
 	light_range = 1
 	light_power = 1
-	light_color = LIGHT_COLOR_DARK_BLUE
+	light_color = LIGHT_COLOR_FAINT_CYAN
 	luminosity = 1
 
 	maptext_x = 18
@@ -150,7 +150,7 @@
 		return
 
 	set_light(l_on = TRUE)
-	maptext = "<div style='font-family: TinyUnicode; font-size: 12pt; color: [LIGHT_COLOR_DARK_BLUE]'>[current_lift_floor]</div>"
+	maptext = "<div style='font-family: TinyUnicode; font-size: 12pt; color: [COLOR_DISPLAY_BLUE]'>[current_lift_floor]</div>"
 
 /obj/machinery/lift_indicator/update_overlays()
 	. = ..()
