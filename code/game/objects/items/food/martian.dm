@@ -166,7 +166,6 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 15
 	)
-	burns_in_oven = TRUE
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN | VEGETABLES
 	venue_value = FOOD_PRICE_TRASH
@@ -943,7 +942,6 @@
 	)
 	tastes = list("winter spices" = 2, "ambrosia vulgaris" = 2, "cake" = 5)
 	foodtypes = GRAIN | SUGAR | DAIRY
-	burns_in_oven = TRUE
 
 /obj/item/food/cake/spekkoek/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/spekkoek, 5, 3 SECONDS, table_required = TRUE)
@@ -1177,8 +1175,6 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/salt = 1,
 	)
-	burns_on_grill = TRUE
-	burns_in_oven = TRUE
 	tastes = list("bread" = 1, "salt" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -1208,7 +1204,6 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment = 4,
 	)
-	burns_on_grill = TRUE
 	tastes = list("chicken" = 1, "umami sauce" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL

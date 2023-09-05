@@ -120,7 +120,7 @@
  *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
 */
 /datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access)
-	if(issilicon(user))
+	if(issilicon(user) && !ispAI(user))
 		return TRUE
 
 	if(isAdminGhostAI(user))
