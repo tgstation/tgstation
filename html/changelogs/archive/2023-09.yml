@@ -62,3 +62,64 @@
   - rscadd: Added flower crowns, craftable via the clothing menu.
   - image: Resprited geraniums, poppies, and lilys, along with changing their worn
       icon.
+2023-09-02:
+  Jacquerel:
+  - bugfix: Prevents admins from accidentally gibbing people by closing a confirmation
+      window.
+  - bugfix: Traitors should generate with "free objective" less often, and will once
+      more be assigned to steal things.
+  Profakos:
+  - bugfix: Ex-Interdyne pirates can now successfully spawn on case sensitive host
+      systems, such as Linux
+  Shadow-Quill:
+  - bugfix: Hilbert's Hotel Research ruin now has a functioning tram. As a side effect,
+      the malfunctioning tram event should now only fire on maps with a tram!
+  Thebleh:
+  - bugfix: fixed access on a couple of Engineering and Atmos airlocks on DeltaStation
+2023-09-03:
+  Ben10Omintrix:
+  - bugfix: basic ranged mobs will now chase victims
+  Capsandi:
+  - sound: 2 new ambient tracks for maintenance tunnels
+  Fikou:
+  - bugfix: you can now examine screen objects properly
+  Ghommie:
+  - bugfix: You can now actually fish soggy wallets from toilets, rare ores on ice
+      moon, some boney stuff in oil puddles (good luck finding them) and lube-fishes
+      by the seawater.
+  Guillaume Prata:
+  - rscadd: 'New funny internals for the clowns to spawn with. They come with O2 and
+      a secondary gas between 3 options: BZ, Helium and N2O. Talk with a "different
+      tone" with Helium, giggle and laugh "uncontrollably" while under the minor effects
+      of N2O or have "fun" hallucinations while under the minor effects of BZ.'
+  - balance: To not cut on how long the clown's O2 internals last due to the mixed
+      gases, the funny internals have 50% more gas volume, same as engineers' internals.
+  Iamgoofball:
+  - bugfix: You can no longer create non-synthesizable chemicals with bees.
+  Melbert:
+  - bugfix: Fix bastard sword granting infinite stun immunity
+  - balance: Ascended Blade Heretics no longer have blanket stun immunity, they now
+      have 45 seconds of stun absorption that recharges after 2 minutes - think His
+      Grace. This doesn't affect stamcrit (still immune to that) (assuming you haven't
+      consumed all of your immunity charge) but does affect hard CC such as slips,
+      flashbangs, or beepsky.
+  - balance: Ascended Blade Heretics now have a 0.75 modifier to incoming knockdowns.
+  Profakos:
+  - bugfix: The HUDs of mobs with dynamic human appearance will appear properly.
+  Rhials:
+  - qol: The pirate candidate gathering poll will now mention which pirate gang it
+      is gathering candidates for.
+  Sealed101:
+  - bugfix: fixed implanted legion cores being available for use when unconscious/dead.
+  blueDev2:
+  - bugfix: Soups are accepted by Kitchen Smartfridges
+  - bugfix: Soups are not accepted by drink showcases
+  carlarctg:
+  - rscdel: Removed the threshold for confusion symptom that adds illiteracy to the
+      disease.
+  - balance: Clamps confusion symptom's confusion to a maximum of 30 seconds.
+  - qol: Confusion as a debuff no longer guarantees random movement if you're resting.
+  nikothedude:
+  - bugfix: Slash wounds are now compatable with pierce wounds
+  xPokee:
+  - bugfix: Fixed the air inside of a penguin pen being way too cold

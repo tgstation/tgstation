@@ -46,7 +46,7 @@
 		if(affected_mob.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
+				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
 			else
 				reagents.expose(affected_mob, INJECT, fraction)
 				trans = reagents.copy_to(affected_mob, amount_per_transfer_from_this)
