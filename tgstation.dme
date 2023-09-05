@@ -3146,7 +3146,7 @@
 #include "code\modules\cargo\expressconsole.dm"
 #include "code\modules\cargo\gondolapod.dm"
 #include "code\modules\cargo\goodies.dm"
-#include "code\modules\cargo\matmarket.dm"
+#include "code\modules\cargo\materials_market.dm"
 #include "code\modules\cargo\order.dm"
 #include "code\modules\cargo\orderconsole.dm"
 #include "code\modules\cargo\supplypod.dm"

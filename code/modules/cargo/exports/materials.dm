@@ -4,8 +4,11 @@
 	amount_report_multiplier = SHEET_MATERIAL_AMOUNT
 	var/datum/material/material_id = null
 	export_types = list(
-		/obj/item/stack/sheet/mineral, /obj/item/stack/tile/mineral,
-		/obj/item/stack/ore, /obj/item/coin)
+		/obj/item/stack/sheet/mineral,
+		/obj/item/stack/tile/mineral,
+		/obj/item/stack/ore,
+		/obj/item/coin
+	)
 // Yes, it's a base type containing export_types.
 // But it has no material_id, so any applies_to check will return false, and these types reduce amount of copypasta a lot
 
@@ -104,14 +107,21 @@
 	message = "cm3 of iron"
 	material_id = /datum/material/iron
 	export_types = list(
-		/obj/item/stack/sheet/iron, /obj/item/stack/tile/iron,
-		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/tile/iron,
+		/obj/item/stack/rods,
+		/obj/item/stack/ore,
+		/obj/item/coin
+	)
 
 /datum/export/material/market/glass
 	message = "cm3 of glass"
 	material_id = /datum/material/glass
-	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
-		/obj/item/shard)
+	export_types = list(
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/ore,
+		/obj/item/shard
+	)
 
 /datum/export/material/market/get_cost(obj/O, apply_elastic = FALSE)
 	var/obj/item/I = O
@@ -131,3 +141,16 @@
 		SSstock_market.materials_quantity[material_id] += amount
 		SSstock_market.materials_prices[material_id] = (price) - round((price) * (amount / (amount + SSstock_market.materials_quantity[material_id])))
 		//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
+
+
+// Stock blocks are a special type of export that can be used to sell a quantity of materials at a specific price on the market.
+/datum/export/stock_block
+	cost = 0
+	message = "stock block"
+	export_types = list(/obj/item/stock_block)
+
+/datum/export/stock_block/get_cost(obj/O, apply_elastic = FALSE)
+	var/obj/item/stock_block/block = O
+	return block.export_value
+
+
