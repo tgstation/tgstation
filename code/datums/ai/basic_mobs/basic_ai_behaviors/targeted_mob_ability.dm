@@ -56,10 +56,11 @@
 /datum/ai_behavior/targeted_mob_ability/min_range
 	required_distance = 6
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	var/datum/ai_movement/new_movement
 
 /datum/ai_behavior/targeted_mob_ability/min_range/setup(datum/ai_controller/controller, ability_key, target_key)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
-	set_movement_target(controller, target)
+	set_movement_target(controller, target, new_movement)

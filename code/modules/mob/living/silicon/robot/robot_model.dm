@@ -170,7 +170,11 @@
 			var/obj/item/gun/energy/gun = module
 			if(!gun.chambered)
 				gun.recharge_newshot() //try to reload a new shot.
-
+		//monkestation ed start
+		else if(istype(module, /obj/item/hand_labeler/cyborg))
+			var/obj/item/hand_labeler/cyborg/labeler = module
+			labeler.labels_left = 30
+		//monkestation edit end
 	cyborg.toner = cyborg.tonermax
 
 /**
@@ -255,7 +259,6 @@
 			cyborg_base_icon = details[SKIN_ICON_STATE]
 		if(!isnull(details[SKIN_ICON]))
 			cyborg.icon = details[SKIN_ICON]
-		if(!isnull(details[SKIN_PIXEL_X]))
 			cyborg.base_pixel_x = details[SKIN_PIXEL_X]
 		if(!isnull(details[SKIN_PIXEL_Y]))
 			cyborg.base_pixel_y = details[SKIN_PIXEL_Y]

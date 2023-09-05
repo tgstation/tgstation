@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(station_coloring)
 	init_order = INIT_ORDER_ICON_COLORING // before SSicon_smooth
 	flags = SS_NO_FIRE
 	///do we bother with wall trims?
-	var/wall_trims = TRUE
+	var/wall_trims = FALSE
 	//RED (Only sec stuff honestly)
 	var/list/red = list("#d0294c", "#d6292f", "#d62f29", "#d63a29")
 	//BAR

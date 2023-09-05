@@ -25,7 +25,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	light_inner_range = 0.1
 	light_outer_range = 4
 	light_falloff_curve = 5
-	space_lit = TRUE
+	//space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
@@ -61,6 +61,9 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
 		plane = PLANE_SPACE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
+
+	if(!SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT))
+		space_lit = TRUE
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
@@ -120,7 +123,8 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 
 /// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
-	set_light(l_color = GLOB.starlight_color, l_on = TRUE)
+	if(space_lit)
+		set_light(l_color = GLOB.starlight_color, l_on = TRUE)
 
 /turf/open/space/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

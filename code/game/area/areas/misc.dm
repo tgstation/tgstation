@@ -6,8 +6,8 @@
 	always_unpowered = TRUE
 	static_lighting = FALSE
 
-	base_lighting_alpha = 255
-	base_lighting_color = "#FFFFFF"
+	//base_lighting_alpha = 255
+	//base_lighting_color = "#FFFFFF"
 
 	power_light = FALSE
 	power_equip = FALSE
@@ -19,9 +19,12 @@
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
 
+
 /area/space/Initialize(mapload)
 	. = ..()
-	set_base_lighting(GLOB.starlight_color, alpha)
+	if(!SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT))
+		set_base_lighting(GLOB.starlight_color, alpha)
+
 
 /area/space/nearstation
 	icon_state = "space_near"

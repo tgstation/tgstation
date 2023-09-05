@@ -109,6 +109,8 @@
 	return TRUE
 
 /obj/item/mcobject/interactor/proc/use_on(datum/mcmessage/input)
+	set waitfor = FALSE
+
 	if(!input)
 		return
 	var/turf/selected_turf = get_turf(src)
@@ -124,6 +126,8 @@
 		if(!held_item)
 			if(!right_clicks)
 				listed_atom.attack_hand(dummy_human)
+				if(istype(listed_atom, /obj/item) && !held_item) // yoink it if its an item
+					held_item = listed_atom
 			else
 				dummy_human.istate |= ISTATE_SECONDARY
 				listed_atom.attack_hand_secondary(dummy_human)
@@ -156,7 +160,6 @@
 		else
 			held_item.forceMove(get_turf(src))
 		held_item = null
-
 	held_item = weapon
 	dummy_human.put_in_l_hand(weapon)
 	update_appearance()

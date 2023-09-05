@@ -945,6 +945,7 @@
 		"borg_upgrade_selfrepair",
 		"borg_upgrade_thrusters",
 		"borg_upgrade_trashofholding",
+		"borg_upgrade_clamp", //monkestation edit
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 

@@ -224,7 +224,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	turf_reagents.expose(member, TOUCH, liquid = TRUE)
 
 /datum/liquid_group/proc/build_turf_reagent()
-	if(!members)
+	if(!length(members))
 		return
 	if(!turf_reagents)
 		turf_reagents = new(100000)

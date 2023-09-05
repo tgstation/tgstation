@@ -5,11 +5,10 @@
 	egg_type = /obj/item/food/egg/cotton_candy
 	mutation_list = list(/datum/mutation/ranching/chicken/dreamsicle)
 
-	unique_ability = CHICKEN_SUGAR_RUSH
-	cooldown_time = 40 SECONDS
-	ability_prob = 5
+	self_ability = /datum/action/cooldown/mob_cooldown/chicken/sugar_rush
 
 	book_desc = "Incredibly fluffy, aswell as hyper. Watch out they will sometimes enter a Sugar Rush which will cause them to bounce around and make other chickens unhappy."
+
 /obj/item/food/egg/cotton_candy
 	name = "Sugary Egg"
 	icon_state = "cotton_candy"
@@ -64,3 +63,24 @@
 	var/datum/component/after_image = owner.GetComponent(/datum/component/after_image)
 	qdel(after_image)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/sugar_rush)
+
+
+/datum/action/cooldown/mob_cooldown/chicken/sugar_rush
+	name = "Sugar Rush"
+	desc = "Bounce around."
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "eye"
+	background_icon_state = "bg_demon"
+	overlay_icon_state = "bg_demon_border"
+
+	click_to_activate = FALSE
+	cooldown_time = 40 SECONDS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	shared_cooldown = NONE
+	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
+
+/datum/action/cooldown/mob_cooldown/chicken/sugar_rush/Activate(mob/living/target)
+	var/mob/living/living_owner = owner
+	living_owner.apply_status_effect(HEN_RUSH)
+	StartCooldown()
+	return TRUE

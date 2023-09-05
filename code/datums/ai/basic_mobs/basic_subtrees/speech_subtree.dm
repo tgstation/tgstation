@@ -85,6 +85,12 @@
 		"Hmm mmm mmm!",
 	)
 
+/datum/ai_planning_subtree/random_speech/chick
+	speech_chance = 4
+	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
+	emote_hear = list("cheeps.")
+	emote_see = list("pecks at the ground.","flaps her tiny wings.")
+
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
