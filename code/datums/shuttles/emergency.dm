@@ -34,7 +34,6 @@
 			events -= path
 			mobile.event_list.Add(new path(mobile))
 	
-
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
 	name = "Backup Shuttle"
