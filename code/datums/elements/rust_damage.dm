@@ -12,4 +12,4 @@
 	var/mob/living/carbon/human/H = entered
 	if(IS_HERETIC(H))
 		return
-	H.apply_status_effect(/datum/status_effect/rust_corruption)
+	H.apply_status_effect(/datum/status_effects/rust_corruption)
