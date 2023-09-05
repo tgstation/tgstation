@@ -41,7 +41,7 @@
 	. = ..()
 	var/mob/living/carbon/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
-	if(QDELETED(target))
+	if(QDELETED(target) || is_station_level(target.z))
 		finish_action(controller, FALSE, target_key)
 		return
 	var/turf/target_turf = get_turf(target)
