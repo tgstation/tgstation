@@ -284,7 +284,6 @@
 	)
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
-	burns_on_grill = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -447,7 +446,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8)
 	tastes = list("bread" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/rootroll
@@ -459,7 +457,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("roll" = 1) // the roll tastes of roll.
 	foodtypes = VEGETABLES | NUTS
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 //Bread Dishes
@@ -474,7 +471,6 @@
 	foodtypes = VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	burns_in_oven = TRUE
 	slice_type = /obj/item/food/breadslice/root
 
 /obj/item/food/bread/root/Initialize(mapload)

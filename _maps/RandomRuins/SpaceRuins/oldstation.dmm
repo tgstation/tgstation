@@ -838,7 +838,7 @@
 /area/ruin/space/ancientstation/delta/ai)
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4

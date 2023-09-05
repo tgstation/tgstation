@@ -511,7 +511,7 @@
 /area/shuttle/escape)
 "by" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
