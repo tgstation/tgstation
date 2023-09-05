@@ -38,6 +38,7 @@
 	action_cooldown = 2 MINUTES
 
 /datum/ai_behavior/send_sos_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	. = ..()
 	var/mob/living/carbon/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 	if(QDELETED(target))
