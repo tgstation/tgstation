@@ -1,0 +1,5 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - refactor: "the minebots have been refactored please report any bugs"
+  - rscadd: "minebots can now mine walls and collect ores automatically and they will alert everyone if they find u dead"
