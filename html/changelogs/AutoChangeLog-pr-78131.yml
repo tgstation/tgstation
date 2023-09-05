@@ -1,0 +1,4 @@
+author: "CoiledLamb"
+delete-after: True
+changes:
+  - image: "cleans up the engineering emergency internals sprite slightly"
