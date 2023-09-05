@@ -2638,6 +2638,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/floor2/aft)
+"aIU" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor4/port)
 "aIV" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -16226,7 +16230,7 @@
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
-	preset_destination_names = list("2"="Supply-Engi    Floor","3"="Med-Sci    Floor","4"="Service    Floor")
+	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "fore_vator";
@@ -17950,8 +17954,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/starboard)
 "eGl" = (
-/obj/machinery/space_heater,
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port)
 "eGp" = (
@@ -33594,6 +33596,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
+"iQB" = (
+/obj/machinery/space_heater,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor4/port)
 "iQF" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/plant_analyzer,
@@ -53545,7 +53552,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "aft_vator";
 	pixel_x = 24;
-	preset_destination_names = list("2"="Supply-Engi    Floor","3"="Med-Sci    Floor","4"="Service    Floor")
+	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
@@ -315500,7 +315507,7 @@ pke
 fmG
 nhZ
 vEa
-vEa
+aIU
 wtL
 bAG
 wtL
@@ -315757,8 +315764,8 @@ jLm
 hLq
 eQd
 vEa
-vEa
 eEN
+wtL
 bAG
 tqr
 fXs
@@ -316014,7 +316021,7 @@ dlt
 hLq
 wQh
 vEa
-vEa
+iQB
 eGl
 fPD
 jbV
