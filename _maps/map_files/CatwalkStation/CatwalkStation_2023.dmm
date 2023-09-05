@@ -3645,6 +3645,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "bNH" = (
@@ -17880,6 +17881,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "ipm" = (
@@ -27489,6 +27491,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Mining Maintenance Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "mIO" = (
@@ -30324,6 +30327,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "miningshuttleexit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/space/basic,
 /area/station/cargo/miningoffice)
 "ocj" = (
@@ -42599,6 +42603,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "miningshuttleexit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "tSY" = (
@@ -94773,7 +94778,7 @@ hIA
 leT
 vQd
 fPX
-aCL
+hIA
 rxM
 afr
 afr
@@ -97600,7 +97605,7 @@ bCh
 bZs
 uUL
 dpv
-trR
+bCh
 hRj
 hRj
 aCL
@@ -97857,7 +97862,7 @@ bCh
 bCh
 obJ
 bCh
-trR
+bCh
 hRj
 hRj
 aCL
