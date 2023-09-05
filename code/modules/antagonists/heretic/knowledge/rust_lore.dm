@@ -118,8 +118,8 @@
 		heretic_eyes.flash_protect = FLASH_PROTECTION_NONE
 
 /datum/heretic_knowledge/proc/protect_ears(datum/source, list/reflist)
-    SIGNAL_HANDLER
-    reflist[1]--
+	SIGNAL_HANDLER
+	reflist[1]--
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
