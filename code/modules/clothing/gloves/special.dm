@@ -10,6 +10,8 @@
 	undyeable = TRUE
 	var/datum/weakref/pull_component_weakref
 
+	grab_resilience_mult = 1.4
+
 /obj/item/clothing/gloves/cargo_gauntlet/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_glove_equip))
