@@ -57,7 +57,7 @@
 /datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 	to_chat(target, span_danger("THE TRUTH FLARES BEFORE YOU"))
-	target.cause_hallucination (/datum/hallucination/delusion/preset/moon)
+	target.cause_hallucination (/datum/hallucination/delusion/preset/moon, "forced by manus grasp")
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
