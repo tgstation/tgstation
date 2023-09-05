@@ -56,8 +56,13 @@
 
 /datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
-	to_chat(target, span_danger("THE TRUTH FLARES BEFORE YOU"))
-	target.cause_hallucination (/datum/hallucination/delusion/preset/moon, "forced by manus grasp")
+
+	if(!iscarbon(target))
+		return
+
+	var/mob/living/carbon/carbon_target = target
+	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
+	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by manus grasp")
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
@@ -74,8 +79,8 @@
 	route = PATH_MOON
 
 /datum/heretic_knowledge/mark/moon_mark
-	name = "Mark of Ash"
-	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
+	name = "Mark of Moon"
+	desc = "Your Mansus Grasp now applies the Mark of Moon. The mark is triggered from an attack with your Ashen Blade. \
 		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
 		Damage dealt is decreased with each transfer."
 	gain_text = "He was a very particular man, always watching in the dead of night. \
