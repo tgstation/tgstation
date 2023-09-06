@@ -328,6 +328,8 @@
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
 
+	remove_actionspeed_modifier()
+
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
 	if(limb && !ignore_limb)
