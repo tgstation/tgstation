@@ -73,6 +73,7 @@
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
+	messenger = /obj/item/storage/backpack/messenger/eng
 
 	box = /obj/item/storage/box/survival/engineer
 	chameleon_extras = /obj/item/stamp/head/ce

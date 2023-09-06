@@ -62,7 +62,7 @@
 		UnregisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS)
 		wearer.update_appearance(UPDATE_ICON)
 		wearer = null
-	QDEL_NULL(on_hit_effects)
+	on_hit_effects = null
 	return ..()
 
 /datum/component/shielded/RegisterWithParent()

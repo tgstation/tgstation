@@ -82,12 +82,12 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/M = user.mob
+	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
 
 /datum/keybinding/mob/toggle_move_intent/up(client/user)
-	var/mob/M = user.mob
+	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
 
@@ -102,7 +102,7 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/M = user.mob
+	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
 

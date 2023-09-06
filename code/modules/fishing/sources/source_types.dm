@@ -7,6 +7,7 @@
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
 		/obj/item/fish/lanternfish = 5,
+		/obj/item/fish/clownfish/lube = 3,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,
@@ -30,6 +31,7 @@
 	var/radial_state = "fish_tank"
 	///The icon state of the overlay shown on the machine when active.
 	var/overlay_state = "portal_aquarium"
+
 /datum/fish_source/portal/beach
 	fish_table = list(
 		FISHING_DUD = 10,
@@ -43,6 +45,7 @@
 	radial_state = "palm_beach"
 
 /datum/fish_source/portal/chasm
+	background = "fishing_background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 10,
@@ -232,7 +235,8 @@
 		/obj/item/stack/ore/plasma = 3,
 		/mob/living/basic/mining/lobstrosity = 1,
 		/obj/effect/decal/remains/plasma = 1,
-
+		/obj/item/stack/sheet/mineral/mythril = 1,
+		/obj/item/stack/sheet/mineral/adamantine = 1,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
@@ -255,6 +259,7 @@
 		FISHING_DUD = 18,
 		/obj/item/fish/sludgefish = 18,
 		/obj/item/fish/slimefish = 4,
+		/obj/item/storage/wallet/money = 2,
 	)
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
@@ -297,6 +302,9 @@
 		FISHING_DUD = 5,
 		/obj/item/fish/boned = 10,
 		/obj/item/stack/sheet/bone = 2,
+		/obj/item/clothing/gloves/bracer = 2,
+		/obj/effect/decal/remains/human = 2,
+		/obj/item/fish/mastodon = 1,
 	)
 	fish_counts = list(
 		/obj/item/clothing/gloves/bracer = 1,

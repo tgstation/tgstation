@@ -12,16 +12,21 @@
 	desc = "It's a net made of green energy."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "energynet"
-	density = TRUE//Can't pass through.
-	opacity = FALSE //Can see through.
-	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
-	anchored = TRUE//Can't drag/grab the net.
+	density = TRUE //Can't pass through.
+	anchored = TRUE //Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	max_integrity = 60 //How much health it has.
-	can_buckle = 1
+	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
+
+/obj/structure/energy_net/Initialize(mapload)
+	. = ..()
+	var/image/underlay = image(icon, "energynet_underlay")
+	underlay.layer = BELOW_MOB_LAYER
+	SET_PLANE_EXPLICIT(underlay, GAME_PLANE, src)
+	add_overlay(underlay)
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BRUTE || damage_type == BURN)

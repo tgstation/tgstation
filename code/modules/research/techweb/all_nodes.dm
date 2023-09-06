@@ -280,6 +280,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"medicalbed",
 		"mmi_m",
 		"operating",
 		"petri_dish",
@@ -309,6 +310,8 @@
 		"comp_access_checker",
 		"comp_arithmetic",
 		"comp_assoc_list_pick",
+		"comp_assoc_list_remove",
+		"comp_assoc_list_set",
 		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
@@ -730,6 +733,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
+		"medicalbed_emergency",
 		"femto_servo",
 		"quantum_keycard",
 		"swapper",
@@ -2091,6 +2095,7 @@
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
 	boost_item_paths = list(
+		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,

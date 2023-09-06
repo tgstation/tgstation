@@ -196,9 +196,10 @@
 /obj/machinery/Destroy()
 	SSmachines.unregister_machine(src)
 	end_processing()
-	dump_inventory_contents()
 
 	clear_components()
+	dump_contents()
+
 	unset_static_power()
 	return ..()
 
@@ -361,6 +362,10 @@
 /obj/machinery/proc/dump_inventory_contents(list/subset = null)
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
+		//so machines like microwaves dont dump out signalers after cooking
+		if(wires && (movable_atom in flatten_list(wires.assemblies)))
+			continue
+
 		if(subset && !(movable_atom in subset))
 			continue
 

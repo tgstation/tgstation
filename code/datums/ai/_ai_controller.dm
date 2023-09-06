@@ -545,6 +545,8 @@ multiple modular subtrees with behaviors
  * * key - A blackboard key
  */
 /datum/ai_controller/proc/clear_blackboard_key(key)
+	if(isnull(blackboard[key]))
+		return
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
 	if(isnull(pawn))

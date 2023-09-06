@@ -376,9 +376,9 @@ class FishingMinigame extends Component<
     const { fish, bait } = this.state;
 
     // Speedup when reeling
-    const acceleration_up = -1500 * this.accel_up_coeff;
+    const acceleration_up = -1200 * this.accel_up_coeff;
     // Gravity
-    const acceleration_down = 1000;
+    const acceleration_down = 800;
     // Velocity is multiplied by this when bouncing off the bottom/top
     const bounce_coeff = this.baitBounceCoeff;
     // Acceleration mod when bait is over fish
@@ -406,12 +406,22 @@ class FishingMinigame extends Component<
       }
     }
 
-    const acceleration =
-      this.reeling === ReelingState.Reeling
-        ? acceleration_up
-        : this.reeling === ReelingState.ReelingDown
-          ? -acceleration_up
-          : acceleration_down;
+    let acceleration = 0;
+    switch (this.reeling) {
+      case ReelingState.Reeling:
+        acceleration = acceleration_up;
+        break;
+      case ReelingState.ReelingDown:
+        acceleration = -acceleration_up;
+        break;
+      case ReelingState.Idle:
+        acceleration =
+          this.bidirectional && newVelocity > 0
+            ? -acceleration_down
+            : acceleration_down;
+        break;
+    }
+
     // Slowdown both ways when on fish, invert if antigrav is on
     const velocity_change =
       acceleration *
@@ -419,14 +429,25 @@ class FishingMinigame extends Component<
       (this.fishOnBait(fish, bait) ? on_point_coeff : 1) *
       (this.effect === ActiveEffect.AntiGrav ? -1 : 1);
 
+    const brake_coeff = 2;
+    /*
+     * Basically, if current velocity and the change of velocity
+     * are going in different directions, we ensure the bait decelerates
+     * towards 0 velocity, making it less slippery, thus easier to control.
+     */
+    if (newVelocity > 0 && velocity_change < 0) {
+      newVelocity += Math.max(-newVelocity, velocity_change * brake_coeff);
+    } else if (newVelocity < 0 && velocity_change > 0) {
+      newVelocity += Math.min(-newVelocity, velocity_change * brake_coeff);
+    }
+
+    newVelocity += velocity_change;
+    // Ensure that bidirectional baits stay in place
     if (this.bidirectional && this.reeling === ReelingState.Idle) {
-      if (newVelocity < 0) {
-        newVelocity = Math.min(newVelocity + velocity_change, 0);
-      } else {
-        newVelocity = Math.max(newVelocity - velocity_change, 0);
-      }
-    } else {
-      newVelocity += velocity_change;
+      newVelocity =
+        velocity_change < 0
+          ? Math.max(newVelocity, 0)
+          : Math.min(newVelocity, 0);
     }
 
     // Round it off and cap
@@ -526,10 +547,10 @@ class FishingMinigame extends Component<
     const posToStyle = (value: number) => (value / this.area_height) * 100;
     const background_image = resolveAsset(this.used_background);
 	const bait_position = this.effect === ActiveEffect.Flip ?
-	  Math.abs(bait.position - (area_height - bait.height) :
+	  Math.abs(bait.position - (area_height - bait.height)) :
 	  bait.position;
 	const fish_position = this.effect === ActiveEffect.Flip ?
-	  Math.abs(fish.position - (area_height - fish.height) :
+	  Math.abs(fish.position - (area_height - fish.height)) :
 	  fish.position;
     return (
       <div class="fishing">

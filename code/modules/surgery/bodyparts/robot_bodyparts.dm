@@ -37,6 +37,8 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
+	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
+
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 
@@ -58,6 +60,7 @@
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
+
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -67,6 +70,8 @@
 	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
+	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -88,6 +93,7 @@
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
+
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -97,6 +103,8 @@
 	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
+	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -127,6 +135,7 @@
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
+
 	disabling_threshold_percentage = 1
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -136,6 +145,8 @@
 	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
+	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -173,6 +184,8 @@
 	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
+	biological_state = (BIO_ROBOTIC)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -294,6 +307,8 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
+	biological_state = (BIO_ROBOTIC)
+
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 	head_flags = HEAD_EYESPRITES
@@ -380,6 +395,11 @@
 	flash2?.forceMove(drop_loc)
 	return ..()
 
+// Prosthetics - Cheap, mediocre, and worse than organic limbs
+// The fact they dont have a internal biotype means theyre a lot weaker defensively,
+// since they skip slash and go right to blunt
+// They are VERY easy to delimb as a result
+// HP is also reduced just in case this isnt enough
 
 /obj/item/bodypart/arm/left/robot/surplus
 	name = "surplus prosthetic left arm"
@@ -390,6 +410,8 @@
 	brute_modifier = 1
 	max_damage = 20
 
+	biological_state = (BIO_METAL|BIO_JOINTED)
+
 /obj/item/bodypart/arm/right/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -398,6 +420,8 @@
 	burn_modifier = 1
 	brute_modifier = 1
 	max_damage = 20
+
+	biological_state = (BIO_METAL|BIO_JOINTED)
 
 /obj/item/bodypart/leg/left/robot/surplus
 	name = "surplus prosthetic left leg"
@@ -408,6 +432,8 @@
 	burn_modifier = 1
 	max_damage = 20
 
+	biological_state = (BIO_METAL|BIO_JOINTED)
+
 /obj/item/bodypart/leg/right/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
@@ -416,6 +442,8 @@
 	brute_modifier = 1
 	burn_modifier = 1
 	max_damage = 20
+
+	biological_state = (BIO_METAL|BIO_JOINTED)
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

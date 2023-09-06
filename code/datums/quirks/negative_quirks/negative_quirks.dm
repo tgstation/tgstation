@@ -440,7 +440,7 @@
 		quirk_holder.clear_mood_event("nyctophobia")
 		return
 
-	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
+	if(quirk_holder.move_intent == MOVE_INTENT_RUN)
 		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 		quirk_holder.toggle_move_intent()
 	quirk_holder.add_mood_event("nyctophobia", /datum/mood_event/nyctophobia)
@@ -1535,3 +1535,20 @@
 	SIGNAL_HANDLER
 	quirk_holder.client.give_award(/datum/award/achievement/misc/debt_extinguished, quirk_holder)
 	UnregisterSignal(source, COMSIG_MOB_LOGIN)
+
+/datum/quirk/numb
+	name = "Numb"
+	desc = "You can't feel pain at all."
+	icon = FA_ICON_STAR_OF_LIFE
+	value = -4
+	gain_text = "You feel your body becoming numb."
+	lose_text = "The numbness subsides."
+	medical_record_text = "The patient exhibits congenital hypoesthesia, making them insensitive to pain stimuli."
+	hardcore_value = 4
+
+/datum/quirk/numb/add(client/client_source)
+	quirk_holder.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/quirk/numb/remove(client/client_source)
+	quirk_holder.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+

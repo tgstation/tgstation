@@ -417,9 +417,8 @@
 	else
 		healium_euphoria = EUPHORIA_INACTIVE
 	// Stun/Sleep side-effects.
-	if(healium_pp > healium_para_min)
-		// Random chance to stun mob. Timing not in seconds to have a much higher variation
-		breather.Unconscious(rand(3 SECONDS, 5 SECONDS))
+	if(healium_pp > healium_para_min && !breather.IsSleeping() && prob(30))
+		breather.Sleeping(rand(3 SECONDS, 5 SECONDS))
 	// Metabolize to reagent when concentration is high enough.
 	if(healium_pp > healium_sleep_min)
 		breather.reagents.add_reagent(/datum/reagent/healium, max(0, 1 - breather.reagents.get_reagent_amount(/datum/reagent/healium)))

@@ -42,8 +42,8 @@
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
 /obj/item/multitool/proc/set_buffer(datum/buffer)
-	if(buffer)
-		UnregisterSignal(buffer, COMSIG_QDELETING)
+	if(src.buffer)
+		UnregisterSignal(src.buffer, COMSIG_QDELETING)
 	if(QDELETED(buffer))
 		return
 	src.buffer = buffer
@@ -95,10 +95,6 @@
 /obj/item/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
 	detect_state = PROXIMITY_NONE
-	for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
-		if(AI.cameraFollow == src)
-			detect_state = PROXIMITY_ON_SCREEN
-			return
 
 	for(var/mob/camera/ai_eye/AI_eye as anything in GLOB.aiEyes)
 		if(!AI_eye.ai_detector_visible)

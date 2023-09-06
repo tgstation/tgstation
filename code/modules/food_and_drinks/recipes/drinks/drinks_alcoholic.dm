@@ -241,7 +241,7 @@
 
 /datum/chemical_reaction/drink/pina_olivada
 	results = list(/datum/reagent/consumable/ethanol/pina_olivada = 5)
-	required_reagents = list(/datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/quality_oil = 1)
+	required_reagents = list(/datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/nutriment/fat/oil/olive = 1)
 
 /datum/chemical_reaction/drink/sbiten
 	results = list(/datum/reagent/consumable/ethanol/sbiten = 10)
