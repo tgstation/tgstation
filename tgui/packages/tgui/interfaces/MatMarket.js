@@ -7,11 +7,28 @@ export const MatMarket = (props, context) => {
 
   const { materials = [] } = data;
   return (
-    <Window width={700} height={400}>
+    <Window width={675} height={400}>
       <Window.Content scrollable>
-        <Section title="Materials for sale">
+        <Section
+          title="Materials for sale"
+          buttons={
+            <Button
+              icon="dollar"
+              tooltip="Place order from cargo budget."
+              color={data.orderingPrive && data.canOrderCargo ? 'green' : null}
+              content="Order via Cargo Budget"
+              onClick={() => act('toggle_budget')}
+            />
+          }>
           Buy orders for material sheets placed here will be ordered on the next
           cargo shipment.
+          <br />
+          To sell materials, please insert sheets or similar stacks of
+          materials.
+          <Section>
+            Current credit balance:{' '}
+            <b>{data.creditBalance ? data.creditBalance : 'zero'}</b> cr.
+          </Section>
         </Section>
         {materials.map((material) => (
           <Section title={material.name} key={material.id}>
@@ -27,7 +44,7 @@ export const MatMarket = (props, context) => {
                     trading.
                   </Stack.Item>
                   <Stack.Item
-                    width="33%"
+                    width="40%"
                     color={
                       material.trend === 'up'
                         ? 'green'

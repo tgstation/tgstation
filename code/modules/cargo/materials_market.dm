@@ -10,6 +10,7 @@
 	icon_state = "mat_market"
 	base_icon_state = "mat_market"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
+	/// What items can be converted into a stock block? Must be a stack subtype based on current implementation.
 	var/list/exportable_material_items = list(
 		/obj/item/stack/sheet/iron, //God why are we like this
 		/obj/item/stack/sheet/glass, //No really, God why are we like this
@@ -19,6 +20,10 @@
 		/obj/item/stack/sheet/bluespace_crystal,
 		/obj/item/stack/rods
 	)
+	/// Are we ordering sheets from our own card balance or the cargo budget?
+	var/ordering_private = TRUE
+	/// Currently, can we order sheets from our own card balance or the cargo budget?
+	var/can_buy_via_budget = FALSE
 
 /obj/machinery/materials_market/update_icon_state()
 	if(panel_open)
@@ -41,7 +46,6 @@
 	else if(default_deconstruction_crowbar(O))
 		return
 	if(is_type_in_list(O, exportable_material_items))
-		say("I'm in")
 		var/amount = 0
 		var/value = 0
 		var/mat_name = ""
@@ -59,9 +63,9 @@
 			return TRUE
 		qdel(exportable)
 		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
-		new_block.export_value = amount * value
+		new_block.export_value = amount * value * MARKET_PROFIT_MODIFIER
 		new_block.export_name = mat_name
-		balloon_alert_to_viewers("stock block created!")
+		playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
 		return TRUE
 	return ..()
 
@@ -91,7 +95,26 @@
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			))
-	data["materials"] = material_data
+
+	can_buy_via_budget = FALSE
+	var/obj/item/card/id/used_id_card
+	if(isliving(user))
+		var/mob/living/living_user = user
+		used_id_card = living_user.get_idcard(TRUE)
+		can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
+
+	var/balance = 0
+	if(!ordering_private)
+		var/datum/bank_account/dept = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		if(dept)
+			balance = dept.account_balance
+	else
+		balance = used_id_card?.registered_account?.account_balance
+
+	data["materials"] = material_data //+
+	data["creditBalance"] = balance //+
+	data["orderingPrive"] = ordering_private
+	data["canOrderCargo"] = can_buy_via_budget
 	return data
 
 /obj/machinery/materials_market/ui_act(action, params)
@@ -114,20 +137,25 @@
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
 			var/mob/living/living_user = usr
-			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
-			var/cost = SSstock_market.materials_prices[mat] * quantity
+			var/datum/bank_account/account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(ordering_private)
+				var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
+				account_payable = used_id_card.registered_account
+			else if(can_buy_via_budget)
+				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
+
+			var/cost = SSstock_market.materials_prices[material_bought] * quantity
 
 			sheet_to_buy = material_bought.sheet_type
 			if(!sheet_to_buy)
 				CRASH("Material with no sheet type being sold on materials market!")
-				return
-			if(!used_id_card || !used_id_card.registered_account)
+			if(!account_payable)
 				say("No bank account detected!")
 				return
-			if(cost > used_id_card.registered_account.balance)
+			if(cost > account_payable.account_balance)
 				to_chat(living_user, span_warning("You don't have enough money to buy that!"))
 				return
-			used_id_card.registered_account.adjust_money(-cost, "Materials Market Purchase")
+			account_payable.adjust_money(-cost, "Materials Market Purchase")
 			var/list/things_to_order = list()
 			things_to_order += (sheet_to_buy)
 			things_to_order[sheet_to_buy] = quantity
@@ -143,7 +171,7 @@
 				orderer_rank = "Galactic Materials Market",
 				orderer_ckey = living_user.ckey,
 				reason = "",
-				paying_account = used_id_card.registered_account,
+				paying_account = account_payable,
 				department_destination = null,
 				coupon = null,
 				charge_on_purchase = FALSE,
@@ -153,6 +181,13 @@
 			)
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 			SSshuttle.shopping_list += new_order
+			return
+		if("toggle_budget")
+			if(!can_buy_via_budget)
+				return
+			ordering_private = !ordering_private
+			to_chat(usr, "Ordering via budget: [ordering_private? "Engaged":"Disengaged"].")
+
 
 /obj/item/stock_block
 	name = "stock block"
