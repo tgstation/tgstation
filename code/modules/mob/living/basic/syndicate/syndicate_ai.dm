@@ -47,7 +47,6 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/syndicate_burst
 
 /datum/ai_behavior/basic_ranged_attack/syndicate_burst
-	shots = 3
 	action_cooldown = 3 SECONDS
 
 /datum/ai_controller/basic_controller/syndicate/ranged/shotgunner
@@ -60,8 +59,6 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/syndicate_shotgun
 
 /datum/ai_behavior/basic_ranged_attack/syndicate_shotgun
-	shots = 2
-	burst_interval = 0.6 SECONDS
 	action_cooldown = 3 SECONDS
 	required_distance = 1
 

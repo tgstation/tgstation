@@ -85,10 +85,19 @@
 	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
 	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
+	///number of burst shots
+	var/burst_shots
+	///cooldown between attacks
+	var/ranged_cooldown = 1 SECONDS
 
 /mob/living/basic/cockroach/glockroach/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/glockroach, cooldown_time = 1 SECONDS)
+	AddComponent(\
+		/datum/component/ranged_attacks,\
+		casing_type = /obj/item/ammo_casing/glockroach,\
+		burst_shots = burst_shots,\
+		cooldown_time = ranged_cooldown,\
+	)
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(
@@ -171,6 +180,8 @@
 	desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
 	icon_state = "mobroach"
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/mobroach
+	burst_shots = 4
+	ranged_cooldown = 2 SECONDS
 
 /datum/ai_controller/basic_controller/cockroach/mobroach
 	planning_subtrees = list(
@@ -185,5 +196,4 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/mobroach
 
 /datum/ai_behavior/basic_ranged_attack/mobroach
-	shots = 4
 	action_cooldown = 2 SECONDS
