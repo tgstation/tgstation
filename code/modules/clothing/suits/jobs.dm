@@ -388,3 +388,35 @@
 /obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/storage/bag/xeno
+
+// Atmos
+/obj/item/clothing/suit/atmos_overalls
+	name = "atmospherics overalls"
+	desc = "A set of fireproof overalls, good for protecting thinner clothes from gas leaks."
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	icon_state = "atmos_overalls"
+	inhand_icon_state = ""
+	body_parts_covered = CHEST|GROIN|LEGS
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/atmos_overalls
+	species_exception = list(/datum/species/golem)
+	allowed = list(
+		/obj/item/analyzer,
+		/obj/item/construction/rcd,
+		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/pipe_dispenser,
+		/obj/item/storage/bag/construction,
+		/obj/item/t_scanner,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+	)
+
+/datum/armor/atmos_overalls
+	fire = 100
+	acid = 50
+
+/obj/item/clothing/suit/atmos_overalls/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)

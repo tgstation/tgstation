@@ -37,7 +37,6 @@
 	)
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pie/cream
@@ -427,5 +426,4 @@
 	)
 	tastes = list("pie" = 1, "the far off year of 2010" = 1)
 	foodtypes = GRAIN
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
