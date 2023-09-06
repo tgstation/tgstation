@@ -32,7 +32,7 @@
 			if(wounding_type == WOUND_PIERCE && !easy_dismember)
 				wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 			wounding_type = WOUND_BLUNT
-		if ((dismemberable_by_wound() || dismemberable_alternate()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 			return
 	return check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
@@ -208,15 +208,15 @@
  * Args:
  * * wound_type: The wound_type, e.g. WOUND_BLUNT, WOUND_SLASH to force onto the mob. Can be a list.
  * * severity: The severity that will be considered.
- * * default: If no wound is found, we will return this instead.
+ * * return_value_if_no_wound: If no wound is found, we will return this instead. (It is reccomended to use named args for this one, as its unclear what it is without)
  * * series_type: See get_corresponding_wound_type's documentation
  * * specific_type: See get_corresponding_wound_type's documentation
  * * wound_source: The theoretical source of the wound. Nullable.
  *
  * Returns:
- * Default if no wound is found - if one IS found, the wound threshold for that wound.
+ * return_value_if_no_wound if no wound is found - if one IS found, the wound threshold for that wound.
  */
-/obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wound_type, severity, default, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
+/obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wound_type, severity, return_value_if_no_wound, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, wound_source)
 	var/list/type_list = wound_type
 	if (!islist(type_list))
 		type_list = list(type_list)
@@ -226,7 +226,7 @@
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_path]
 		return pregen_data.get_threshold_for(src, damage_source = wound_source)
 
-	return default
+	return return_value_if_no_wound
 
 /**
  * check_wounding_mods() is where we handle the various modifiers of a wound roll

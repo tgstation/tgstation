@@ -12,6 +12,7 @@
 /// set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100
 
+/// The default pick_weight of all wounds. See _wound_pregen_data.dm for more details
 #define WOUND_DEFAULT_WEIGHT 50
 
 // ~wound severities
@@ -70,22 +71,22 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_BONE (1<<0)
 /// Has flesh - allows the victim to suffer fleshy slash pierce and burn wounds
 #define BIO_FLESH (1<<1)
-/// Self explanatory
-#define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
 /// Has metal - allows the victim to suffer robotic blunt and burn wounds
 #define BIO_METAL (1<<2)
 /// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
 #define BIO_WIRED (1<<3)
-/// Robotic: shit like cyborg limbs, mostly
-#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has bloodflow - can suffer bleeding wounds and can bleed
 #define BIO_BLOODED (1<<4)
 /// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
 #define BIO_JOINTED (1<<5)
+/// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
+#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
+/// Self explanatory
+#define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
 /// Standard humanoid - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed
 #define BIO_STANDARD (BIO_FLESH_BONE|BIO_BLOODED)
 /// Standard humanoid limbs - can suffer all flesh wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated
-#define BIO_STANDARD_JOINTED (BIO_STANDARD|BIO_JOINTED)
+#define BIO_STANDARD_LIMB (BIO_STANDARD|BIO_JOINTED)
 
 // "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones
@@ -143,7 +144,7 @@ GLOBAL_LIST_INIT(bio_state_states, list(
 
 // Both series and specific types are unused but exist for future extension
 
-/// A "mainline" wound of a series. Ex. a bleeding slesh for a flesh slash wound.
+/// A "mainline" wound of a series. Ex. a bleeding slash for a flesh slash wound.
 #define WOUND_SPECIFIC_TYPE_BASIC "wound_specific_type_basic"
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
@@ -153,24 +154,24 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 /proc/generate_wound_static_data()
 	RETURN_TYPE(/list/datum/wound_pregen_data)
 
-	var/list/datum/wound_pregen_data/data = list()
+	var/list/datum/wound_pregen_data/all_pregen_data = list()
 
-	for (var/datum/wound_pregen_data/path as anything in typecacheof(path = /datum/wound_pregen_data, ignore_root_path = TRUE))
-		if (initial(path.abstract))
+	for (var/datum/wound_pregen_data/iterated_path as anything in typecacheof(path = /datum/wound_pregen_data, ignore_root_path = TRUE))
+		if (initial(iterated_path.abstract))
 			continue
 
-		if (!isnull(data[initial(path.wound_path_to_generate)]))
-			stack_trace("pre-existing pregen data for [initial(path.wound_path_to_generate)] when [path] was being considered: [data[initial(path.wound_path_to_generate)]]. \
-						this is definitely a bug, and is probably because one of the two pregen data have the wrong wound typepath defined. [path] will not be instantiated")
+		if (!isnull(all_pregen_data[initial(iterated_path.wound_path_to_generate)]))
+			stack_trace("pre-existing pregen data for [initial(iterated_path.wound_path_to_generate)] when [iterated_path] was being considered: [all_pregen_data[initial(iterated_path.wound_path_to_generate)]]. \
+						this is definitely a bug, and is probably because one of the two pregen data have the wrong wound typepath defined. [iterated_path] will not be instantiated")
 
 			continue
 
-		var/datum/wound_pregen_data/pregen_data = new path
-		data[pregen_data.wound_path_to_generate] = pregen_data
+		var/datum/wound_pregen_data/pregen_data = new iterated_path
+		all_pregen_data[pregen_data.wound_path_to_generate] = pregen_data
 
-	return data
+	return all_pregen_data
 
-/// A branching assoc list of (series -> (severity -> (specific type) -> (typepath) -> (weight))). Allows you to say "I want a generic slash wound",
+/// A branching assoc list of (series -> list(severity -> list(specific type -> list(typepath -> weight))). Allows you to say "I want a generic slash wound",
 /// then "Of severity 2", then "normal type", and get a wound of that description - via get_corresponding_wound_type()
 /// Series: A generic wound_series, such as WOUND_SERIES_BONE_BLUNT_BASIC
 /// Severity: Any wounds held within this will be of this severity.
@@ -191,6 +192,8 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 			continue
 
 		if (pregen_data.abstract)
+			stack_trace("somehow, a abstract wound_pregen_data instance ([pregen_data.type]) was instantiated and made it to generate_wound_series_collection()! \
+						i literally have no idea how! please fix this!")
 			continue
 
 		var/series = pregen_data.wound_series
@@ -249,6 +252,13 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
 /**
  * Searches through all wounds for any of proper type, series, specific type, and biostate, and then returns a single one via pickweight.
  * Is able to discern between, say, a flesh slash wound, and a metallic slash wound, and will return the respective one for the provided limb.
+ *
+ * The severity_max and severity_pick_mode args mostly exist in case you want a wound in a series that may not have your ideal severity wound, as it lets you
+ * essentially set a "fallback", where if your ideal wound doesnt exist, it'll still return something, trying to get closest to your ideal severity.
+ *
+ * Generally speaking, if you want a critical/severe/moderate wound, you should set severity_min to WOUND_SEVERITY_MODERATE, severity_max to your ideal wound,
+ * and severity_pick_mode to WOUND_PICK_HIGHEST_SEVERITY - UNLESS you for some reason want the LOWEST severity, in which case you should set
+ * severity_max to the highest wound you're willing to tolerate, and severity_pick_mode to WOUND_PICK_LOWEST_SEVERITY.
  *
  * Args:
  * * list/wound_types: A list of wound_types. Only wounds that accept these wound types will be considered.

@@ -519,7 +519,7 @@
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
-		if ((dismemberable_by_wound() || dismemberable_alternate()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
@@ -592,7 +592,7 @@
 	return (exterior_ready_to_dismember && interior_ready_to_dismember)
 
 /// Returns TRUE if our total percent damage is more or equal to our dismemberable percentage, but FALSE if a wound can cause us to be dismembered.
-/obj/item/bodypart/proc/dismemberable_alternate()
+/obj/item/bodypart/proc/dismemberable_by_total_damage()
 
 	update_wound_theory()
 
