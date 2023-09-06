@@ -266,6 +266,7 @@ GLOBAL_LIST_INIT(wound_types_to_series, list(
  * A randomly picked wound typepath meeting all the above criteria and being applicable to the part's biotype - or null if there were none.
  */
 /proc/get_corresponding_wound_type(list/wound_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, series_type = WOUND_SERIES_TYPE_BASIC, specific_type = WOUND_SPECIFIC_TYPE_BASIC, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
+	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
 	var/list/wound_type_list = list()
 	for (var/wound_type as anything in wound_types)
