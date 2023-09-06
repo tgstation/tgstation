@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -21,8 +22,46 @@ const damageTypes = [
   },
 ];
 
+type PatientStateViewData = {
+  hasTable: BooleanLike;
+  advancedSurgeriesForbidden: BooleanLike;
+
+  patient:
+    | {
+        stat: string;
+        statstate: string;
+
+        health: number;
+        minHealth: number;
+        maxHealth: number;
+
+        bruteLoss: number;
+        fireLoss: number;
+        toxLoss: number;
+        oxyLoss: number;
+
+        blood_type: string;
+      }
+    | undefined;
+
+  procedures:
+    | {
+        name: string;
+        next_step: string;
+        alternative_step: string;
+        chems_needed: string;
+        alt_chems_needed: string;
+      }[]
+    | undefined;
+
+  surgeries: {
+    name: string;
+    desc: string;
+  }[];
+};
+
 export const OperatingComputer = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<PatientStateViewData>(context);
   const [tab, setTab] = useSharedState(context, 'tab', 1);
 
   return (
@@ -47,15 +86,15 @@ export const OperatingComputer = (props, context) => {
 };
 
 const PatientStateView = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { table, procedures = [], patient = {} } = data;
-  if (!table) {
+  const { act, data } = useBackend<PatientStateViewData>(context);
+  const { hasTable, procedures = [], patient } = data;
+  if (!hasTable) {
     return <NoticeBox>No Table Detected</NoticeBox>;
   }
   return (
     <>
       <Section title="Patient State">
-        {Object.keys(patient).length ? (
+        {patient ? (
           <LabeledList>
             <LabeledList.Item label="State" color={patient.statstate}>
               {patient.stat}
@@ -124,8 +163,8 @@ const PatientStateView = (props, context) => {
 };
 
 const SurgeryProceduresView = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { surgeries = [] } = data;
+  const { act, data } = useBackend<PatientStateViewData>(context);
+  const { surgeries = [], advancedSurgeriesForbidden } = data;
   return (
     <Section title="Advanced Surgery Procedures">
       <Button
@@ -133,8 +172,16 @@ const SurgeryProceduresView = (props, context) => {
         content="Sync Research Database"
         onClick={() => act('sync')}
       />
+
+      {!!advancedSurgeriesForbidden && (
+        <NoticeBox danger mt={2}>
+          Advanced surgeries are not available at this table. Move patient to an
+          appropriate operating table.
+        </NoticeBox>
+      )}
+
       {surgeries.map((surgery) => (
-        <Section title={surgery.name} key={surgery.name} level={2}>
+        <Section title={surgery.name} key={surgery.name}>
           {surgery.desc}
         </Section>
       ))}

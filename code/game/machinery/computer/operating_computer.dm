@@ -8,22 +8,34 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
 
-	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 
 	var/datum/component/experiment_handler/experiment_handler
 
+	VAR_PRIVATE
+		/// Tracks all possible patients, in order of most recent to least recent.
+		// We don't need to worry about cleaning up the references when the components destroy, because the components
+		// already mark all their patients as leaving on destruction, which will clear their reference.
+		list/datum/operating_computer_patient/patients = list()
+
+		/// What datums are linked to this computer?
+		list/datum/links = list()
+
 /obj/machinery/computer/operating/Initialize(mapload)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		linked_techweb = SSresearch.science_tech
-	find_table()
+
+	RegisterSignal(src, COMSIG_LINKS_TO_OPERATING_COMPUTERS_INITIALIZED, PROC_REF(on_links_to_operating_computers_initialized))
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/operating/LateInitialize()
 	. = ..()
+
+	SEND_SIGNAL(loc, COMSIG_OPERATING_COMPUTER_INITIALIZED, src)
 
 	experiment_handler = AddComponent( \
 		/datum/component/experiment_handler, \
@@ -33,11 +45,9 @@
 	)
 
 /obj/machinery/computer/operating/Destroy()
-	for(var/direction in GLOB.alldirs)
-		table = locate(/obj/structure/table/optable) in get_step(src, direction)
-		if(table && table.computer == src)
-			table.computer = null
 	QDEL_NULL(experiment_handler)
+	links.Cut()
+	patients.Cut()
 	return ..()
 
 /obj/machinery/computer/operating/multitool_act(mob/living/user, obj/item/multitool/tool)
@@ -65,13 +75,6 @@
 			continue
 		advanced_surgeries |= D.surgery
 
-/obj/machinery/computer/operating/proc/find_table()
-	for(var/direction in GLOB.alldirs)
-		table = locate(/obj/structure/table/optable) in get_step(src, direction)
-		if(table)
-			table.computer = src
-			break
-
 /obj/machinery/computer/operating/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
@@ -92,17 +95,18 @@
 		all_surgeries += list(surgery)
 	data["surgeries"] = all_surgeries
 
-	//If there's no patient just hop to it yeah?
-	if(!table)
-		data["patient"] = null
+	var/has_table = links.len > 0
+	data["hasTable"] = has_table
+	if (!has_table)
 		return data
 
-	data["table"] = table
+	var/mob/living/carbon/patient = get_patient()
+	if (isnull(patient))
+		return data
+
+	data["advancedSurgeriesForbidden"] = !provide_upgraded_surgeries_to(patient)
+
 	data["patient"] = list()
-	if(!table.patient)
-		return data
-	var/mob/living/carbon/patient = table.patient
-
 	switch(patient.stat)
 		if(CONSCIOUS)
 			data["patient"]["stat"] = "Conscious"
@@ -155,8 +159,6 @@
 			))
 	return data
 
-
-
 /obj/machinery/computer/operating/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -167,6 +169,73 @@
 		if("open_experiments")
 			experiment_handler.ui_interact(usr)
 	return TRUE
+
+/obj/machinery/computer/operating/proc/on_links_to_operating_computers_initialized(datum/source, datum/link, list/patients)
+	SIGNAL_HANDLER
+
+	if (link in links)
+		return
+
+	links += link
+
+	RegisterSignal(link, COMSIG_QDELETING, PROC_REF(on_link_qdeleting))
+	RegisterSignal(link, COMSIG_LINKS_TO_OPERATING_COMPUTERS_PATIENT_ADDED, PROC_REF(on_links_to_operating_computers_patient_added))
+	RegisterSignal(link, COMSIG_LINKS_TO_OPERATING_COMPUTERS_PATIENT_REMOVED, PROC_REF(on_links_to_operating_computers_patient_removed))
+
+	for (var/patient in patients)
+		add_patient(patient, link)
+
+/obj/machinery/computer/operating/proc/on_links_to_operating_computers_patient_added(datum/source, mob/living/carbon/patient)
+	SIGNAL_HANDLER
+
+	add_patient(patient, source)
+
+/obj/machinery/computer/operating/proc/add_patient(mob/living/carbon/patient, datum/link)
+	var/datum/operating_computer_patient/patient_data = new
+	patient_data.patient = patient
+	patient_data.link = link
+
+	patients += patient_data
+
+/obj/machinery/computer/operating/proc/on_links_to_operating_computers_patient_removed(datum/source, mob/living/carbon/patient)
+	SIGNAL_HANDLER
+
+	for (var/datum/operating_computer_patient/patient_data as anything in patients)
+		if (patient_data.patient == patient && patient_data.link == source)
+			patients -= patient_data
+			return
+
+/obj/machinery/computer/operating/proc/on_link_qdeleting(datum/source)
+	SIGNAL_HANDLER
+	links -= source
+
+/// Gets the patient we should be operating on.
+/// Prioritizes the oldest patient that has upgraded surgeries,
+/// followed by the oldest patient otherwise.
+/obj/machinery/computer/operating/proc/get_patient()
+	RETURN_TYPE(/mob/living/carbon)
+
+	if (patients.len == 0)
+		return null
+
+	for (var/datum/operating_computer_patient/patient_data as anything in patients)
+		if (patient_data.link.provide_upgraded_surgeries)
+			return patient_data.patient
+
+	return patients[1].patient
+
+/// Should this operating computer provide upgraded surgeries to the patient?
+/// Will return TRUE if and only if this is a patient on a nearby table that allows it.
+/obj/machinery/computer/operating/proc/provide_upgraded_surgeries_to(mob/living/patient)
+	for (var/datum/operating_computer_patient/patient_data as anything in patients)
+		if (patient_data.link.provide_upgraded_surgeries && patient_data.patient == patient)
+			return TRUE
+
+	return FALSE
+
+/datum/operating_computer_patient
+	var/mob/living/carbon/patient
+	var/datum/component/links_to_operating_computers/link
 
 #undef MENU_OPERATION
 #undef MENU_SURGERIES

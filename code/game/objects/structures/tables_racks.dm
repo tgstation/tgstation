@@ -720,24 +720,16 @@
 	buckle_lying = 90
 	climbable = FALSE
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
-	var/mob/living/carbon/patient = null
-	var/obj/machinery/computer/operating/computer = null
 
 /obj/structure/table/optable/Initialize(mapload)
 	. = ..()
-	for(var/direction in GLOB.alldirs)
-		computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
-		if(computer)
-			computer.table = src
-			break
 
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
+	AddComponent(/datum/component/links_to_operating_computers, provide_upgraded_surgeries = TRUE)
+
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_atom_entered))
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
 
 /obj/structure/table/optable/Destroy()
-	if(computer && computer.table == src)
-		computer.table = null
-	patient = null
 	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
 	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
 	return ..()
@@ -747,43 +739,17 @@
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
 
-/// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
-/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/on_atom_entered(datum/source, mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
-	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
-	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 	potential_patient.pixel_y = potential_patient.base_pixel_y
 
-/// Unmark the potential patient.
-/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/on_atom_exited(datum/source, mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
-	if(potential_patient == patient)
-		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
-	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
 	potential_patient.pixel_y = potential_patient.base_pixel_y + potential_patient.body_position_pixel_y_offset
-
-/// Someone on our tile just lied down, got up, moved in, or moved out.
-/// potential_patient is the mob that had one of those four things change.
-/// The check is a bit broad so we can find a replacement patient.
-/obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/potential_patient)
-	SIGNAL_HANDLER
-	if(patient && patient != potential_patient)
-		return
-
-	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
-		patient = potential_patient
-		return
-
-	// Find another lying mob as a replacement.
-	for (var/mob/living/carbon/replacement_patient in loc.contents)
-		if(replacement_patient.body_position == LYING_DOWN)
-			patient = replacement_patient
-			return
-	patient = null
 
 /*
  * Racks

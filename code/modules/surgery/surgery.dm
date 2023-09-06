@@ -95,7 +95,7 @@
 	var/turf/patient_turf = get_turf(patient)
 
 	//Get the relevant operating computer
-	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient_turf)
+	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient)
 	if (isnull(opcomputer))
 		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
@@ -143,20 +143,28 @@
 	qdel(src)
 
 /// Returns a nearby operating computer linked to an operating table
-/datum/surgery/proc/locate_operating_computer(turf/patient_turf)
+/datum/surgery/proc/locate_operating_computer(mob/patient)
+	var/turf/patient_turf = get_turf(patient)
+
 	if (isnull(patient_turf))
 		return null
 
-	var/obj/structure/table/optable/operating_table = locate(/obj/structure/table/optable, patient_turf)
-	var/obj/machinery/computer/operating/operating_computer = operating_table?.computer
+	for (var/direction in GLOB.alldirs)
+		var/turf/nearby_turf = get_step(patient_turf, direction)
+		var/obj/machinery/computer/operating/operating_computer = locate() in nearby_turf
 
-	if (isnull(operating_computer))
-		return null
+		if (isnull(operating_computer))
+			continue
 
-	if(operating_computer.machine_stat & (NOPOWER|BROKEN))
-		return null
+		if (operating_computer.machine_stat & (NOPOWER|BROKEN))
+			continue
 
-	return operating_computer
+		if (!operating_computer.provide_upgraded_surgeries_to(patient))
+			continue
+
+		return operating_computer
+
+	return null
 
 /datum/surgery/advanced
 	name = "advanced surgery"

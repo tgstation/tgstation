@@ -187,7 +187,7 @@
 #include "novaflower_burn.dm"
 #include "nuke_cinematic.dm"
 #include "objectives.dm"
-#include "operating_table.dm"
+#include "operating_computers.dm"
 #include "orderable_items.dm"
 #include "organ_set_bonus.dm"
 #include "organs.dm"
