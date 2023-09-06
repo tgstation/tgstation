@@ -36,7 +36,7 @@
 		sleep(1 SECONDS)
 	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
-	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
+	reagents.trans_to(H, src.reagents.total_volume, transferred_by = H) //a big sip
 	sleep(0.5 SECONDS)
 	H.say(pick(
 		"Now, Outbomb Cuban Pete, THAT was a game.",
@@ -306,7 +306,7 @@
 /obj/item/reagent_containers/cup/soda_cans/beer
 	name = "space beer"
 	desc = "Canned beer. In space."
-	icon_state = "beer"
+	icon_state = "space_beer"
 	volume = 40
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 40)
 	drink_type = GRAIN

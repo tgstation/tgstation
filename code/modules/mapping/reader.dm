@@ -140,7 +140,6 @@
  * - x_offset: The x offset to load the map at
  * - y_offset: The y offset to load the map at
  * - z_offset: The z offset to load the map at
- * - only_load_this_z: If set, only this z level from the given map will be loaded
  * - crop_map: If true, the map will be cropped to the world bounds
  * - measure_only: If true, the map will not be loaded, but the bounds will be calculated
  * - no_changeturf: If true, the map will not call /turf/AfterChange
@@ -148,6 +147,8 @@
  * - x_upper: The maximum x coordinate to load
  * - y_lower: The minimum y coordinate to load
  * - y_upper: The maximum y coordinate to load
+ * - z_lower: The minimum z coordinate to load
+ * - z_upper: The maximum z coordinate to load
  * - place_on_top: Whether to use /turf/proc/PlaceOnTop rather than /turf/proc/ChangeTurf
  * - new_z: If true, a new z level will be created for the map
  */
@@ -156,7 +157,6 @@
 	x_offset = 0,
 	y_offset = 0,
 	z_offset = 0,
-	only_load_this_z = 0,
 	crop_map = FALSE,
 	measure_only = FALSE,
 	no_changeturf = FALSE,
@@ -164,20 +164,25 @@
 	x_upper = INFINITY,
 	y_lower = -INFINITY,
 	y_upper = INFINITY,
+	z_lower = 1,
+	z_upper = INFINITY,
 	place_on_top = FALSE,
 	new_z = FALSE,
 )
+	if(z_lower < 1)
+		CRASH("Attempted to call load_map with a z_lower less than 1, this will not work")
+
 	if(!(dmm_file in GLOB.cached_maps))
 		GLOB.cached_maps[dmm_file] = new /datum/parsed_map(dmm_file)
 
 	var/datum/parsed_map/parsed_map = GLOB.cached_maps[dmm_file]
 	parsed_map = parsed_map.copy()
 	if(!measure_only && !isnull(parsed_map.bounds))
-		parsed_map.load(x_offset, y_offset, z_offset, only_load_this_z, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+		parsed_map.load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
 	return parsed_map
 
 /// Parse a map, possibly cropping it.
-/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
+/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, z_lower = 1, z_upper=INFINITY, measureOnly=FALSE)
 	// This proc sleeps for like 6 seconds. why?
 	// Is it file accesses? if so, can those be done ahead of time, async to save on time here? I wonder.
 	// Love ya :)
@@ -228,20 +233,26 @@
 				CRASH("Coords before model definition in DMM")
 
 			var/curr_x = text2num(regexOutput[3])
-
 			if(curr_x < x_lower || curr_x > x_upper)
+				continue
+
+			var/curr_y = text2num(regexOutput[4])
+			if(curr_y < y_lower || curr_y > y_upper)
+				continue
+
+			var/curr_z = text2num(regexOutput[5])
+			if(curr_z < z_lower || curr_z > z_upper)
 				continue
 
 			var/datum/grid_set/gridSet = new
 
 			gridSet.xcrd = curr_x
-			//position of the currently processed square
-			gridSet.ycrd = text2num(regexOutput[4])
-			gridSet.zcrd = text2num(regexOutput[5])
+			gridSet.ycrd = curr_y
+			gridSet.zcrd = curr_z
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], curr_x)
-			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
-			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], gridSet.zcrd)
+			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], curr_y)
+			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], curr_z)
 
 			var/list/gridLines = splittext(regexOutput[6], "\n")
 			gridSet.gridLines = gridLines
@@ -282,16 +293,18 @@
 		bounds[MAP_MAXX] = clamp(bounds[MAP_MAXX], x_lower, x_upper)
 		bounds[MAP_MINY] = clamp(bounds[MAP_MINY], y_lower, y_upper)
 		bounds[MAP_MAXY] = clamp(bounds[MAP_MAXY], y_lower, y_upper)
+		bounds[MAP_MINZ] = clamp(bounds[MAP_MINZ], z_lower, z_upper)
+		bounds[MAP_MAXZ] = clamp(bounds[MAP_MAXZ], z_lower, z_upper)
 
 	parsed_bounds = src.bounds
 	src.key_len = key_len
 	src.line_len = line_len
 
 /// Load the parsed map into the world. You probably want [/proc/load_map]. Keep the signature the same.
-/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, only_load_this_z = 0, crow_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
+/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, crop_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = 1, z_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+	. = _load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
 	Master.StopLoadingMap()
 
 #define MAPLOADING_CHECK_TICK \
@@ -306,7 +319,7 @@
 	}
 
 // Do not call except via load() above.
-/datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+/datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
 	PRIVATE_PROC(TRUE)
 	// Tell ss atoms that we're doing maploading
 	// We'll have to account for this in the following tick_checks so it doesn't overflow
@@ -319,9 +332,9 @@
 	var/sucessful = FALSE
 	switch(map_format)
 		if(MAP_TGM)
-			sucessful = _tgm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+			sucessful = _tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
 		else
-			sucessful = _dmm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+			sucessful = _dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
 
 	// And we are done lads, call it off
 	SSatoms.map_loader_stop(REF(src))
@@ -353,7 +366,7 @@
 // In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
 // In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
 // You can think of dmm as storing maps in rows, whereas tgm stores them in columns
-/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -374,10 +387,10 @@
 	var/relative_y = first_column.ycrd
 	var/highest_y = relative_y + y_relative_to_absolute
 
-	if(!crow_map && highest_y > world.maxy)
+	if(!crop_map && highest_y > world.maxy)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
-			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - 1)
+			world.increaseMaxY(highest_y, max_zs_to_load = z_offset - z_lower)
 		else
 			world.increaseMaxY(highest_y)
 		expanded_y = TRUE
@@ -389,7 +402,6 @@
 	var/y_starting_skip = relative_y - y_skip_above
 	highest_y -= y_starting_skip
 
-
 	// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
 	var/line_count = length(first_column.gridLines)
 	var/lowest_y = relative_y - (line_count - 1) // -1 because we decrement at the end of the loop, not the start
@@ -397,7 +409,7 @@
 
 	// X setup
 	var/x_delta_with = x_upper
-	if(crow_map)
+	if(crop_map)
 		// Take our smaller crop threshold yes?
 		x_delta_with = min(x_delta_with, world.maxx)
 
@@ -411,10 +423,10 @@
 		// If our relative x is greater then X upper, well then we've gotta limit our expansion
 		var/delta = max(final_x - x_delta_with, 0)
 		final_x -= delta
-	if(final_x > world.maxx && !crow_map)
+	if(final_x > world.maxx && !crop_map)
 		if(new_z)
 			// Need to avoid improperly loaded area/turf_contents
-			world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
+			world.increaseMaxX(final_x, max_zs_to_load = z_offset - z_lower)
 		else
 			world.increaseMaxX(final_x)
 		expanded_x = TRUE
@@ -422,17 +434,17 @@
 	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
 
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
-	var/highest_z = only_load_this_z ? 1 : last_column.zcrd + z_offset - 1 // Lets not just make a new z level each time we increment maxz
+	var/highest_z = last_column.zcrd + z_offset - z_lower // Lets not just make a new z level each time we increment maxz
 	var/z_threshold = world.maxz
-	if(highest_z > z_threshold && crow_map)
+	if(highest_z > z_threshold && crop_map)
 		for(var/i in z_threshold + 1 to highest_z) //create a new z_level if needed
 			world.incrementMaxZ()
 		if(!no_changeturf)
 			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
 	for(var/datum/grid_set/gset as anything in gridSets)
-		if(only_load_this_z && gset.zcrd != only_load_this_z)
-			continue
+		if(gset.zcrd > z_upper || gset.zcrd < z_lower)
+			continue // skip z levels we dont want
 
 		var/true_xcrd = gset.xcrd + x_relative_to_absolute
 
@@ -440,7 +452,7 @@
 		if(final_x < true_xcrd || lowest_x > gset.xcrd)
 			continue
 
-		var/zcrd = only_load_this_z ? z_offset : gset.zcrd + z_offset - 1
+		var/zcrd = gset.zcrd + z_offset - z_lower
 		// If we're using changeturf, we disable it if we load into a z level we JUST created
 		var/no_afterchange = no_changeturf || zcrd > z_threshold
 
@@ -491,7 +503,7 @@
 /// Stanrdard loading, not used in production
 /// Doesn't take advantage of any tgm optimizations, which makes it slower but also more general
 /// Use this if for some reason your map format is messy
-/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, only_load_this_z, crow_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, place_on_top, new_z)
+/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -503,25 +515,25 @@
 	var/x_relative_to_absolute = x_offset - 1
 	var/line_len = src.line_len
 	for(var/datum/grid_set/gset as anything in gridSets)
-		if(only_load_this_z && gset.zcrd != only_load_this_z)
-			continue
+		if(gset.zcrd > z_upper || gset.zcrd < z_lower)
+			continue // skip z levels we dont want
 
 		var/relative_x = gset.xcrd
 		var/relative_y = gset.ycrd
 		var/true_xcrd = relative_x + x_relative_to_absolute
 		var/ycrd = relative_y + y_relative_to_absolute
-		var/zcrd = only_load_this_z ? z_offset : gset.zcrd + z_offset - 1
-		if(!crow_map && ycrd > world.maxy)
+		var/zcrd = gset.zcrd + z_offset - z_lower
+		if(!crop_map && ycrd > world.maxy)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
-				world.increaseMaxY(ycrd, max_zs_to_load = z_offset - 1)
+				world.increaseMaxY(ycrd, max_zs_to_load = z_offset - z_lower)
 			else
 				world.increaseMaxY(ycrd)
 			expanded_y = TRUE
 		var/zexpansion = zcrd > world.maxz
 		var/no_afterchange = no_changeturf
 		if(zexpansion)
-			if(crow_map)
+			if(crop_map)
 				continue
 			else
 				while (zcrd > world.maxz) //create a new z_level if needed
@@ -558,7 +570,7 @@
 		var/x_step_count = ROUND_UP(x_target / key_len)
 		var/final_x = relative_x + (x_step_count - 1)
 		var/x_delta_with = x_upper
-		if(crow_map)
+		if(crop_map)
 			// Take our smaller crop threshold yes?
 			x_delta_with = min(x_delta_with, world.maxx)
 		if(final_x > x_delta_with)
@@ -567,10 +579,10 @@
 			x_step_count -= delta
 			final_x -= delta
 			x_target = x_step_count * key_len
-		if(final_x > world.maxx && !crow_map)
+		if(final_x > world.maxx && !crop_map)
 			if(new_z)
 				// Need to avoid improperly loaded area/turf_contents
-				world.increaseMaxX(final_x, max_zs_to_load = z_offset - 1)
+				world.increaseMaxX(final_x, max_zs_to_load = z_offset - z_lower)
 			else
 				world.increaseMaxX(final_x)
 			expanded_x = TRUE

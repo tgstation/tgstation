@@ -190,5 +190,13 @@
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
 	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_ENGINEERING = 1, RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_MEDICAL = 1, RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_AI_PRIVATE = 1)
 
+/obj/item/encryptionkey/ai/evil //ported from NT, this goes 'inside' the AI.
+	name = "syndicate binary encryption key"
+	icon_state = "cypherkey_syndicate"
+	channels = list(RADIO_CHANNEL_SYNDICATE = 1)
+	syndie = TRUE
+	greyscale_config = /datum/greyscale_config/encryptionkey_syndicate
+	greyscale_colors = "#171717#990000"
+
 /obj/item/encryptionkey/secbot
 	channels = list(RADIO_CHANNEL_AI_PRIVATE = 1, RADIO_CHANNEL_SECURITY = 1)

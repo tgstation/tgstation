@@ -43,15 +43,12 @@
 	taste_description = "rubbery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/healium/on_mob_metabolize(mob/living/breather)
-	. = ..()
-	breather.PermaSleeping()
-
 /datum/reagent/healium/on_mob_end_metabolize(mob/living/breather)
-	breather.SetSleeping(10)
+	breather.SetSleeping(1 SECONDS)
 	return ..()
 
 /datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
+	breather.SetSleeping(30 SECONDS)
 	breather.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	breather.adjustToxLoss(-5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	breather.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)

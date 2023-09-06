@@ -541,3 +541,20 @@
 
 /datum/status_effect/tinlux_light/on_remove()
 	QDEL_NULL(mob_light_obj)
+
+/datum/status_effect/gutted
+	id = "gutted"
+	alert_type = null
+	duration = -1
+	tick_interval = -1
+
+/datum/status_effect/gutted/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(stop_gutting))
+	return TRUE
+
+/datum/status_effect/gutted/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/status_effect/gutted/proc/stop_gutting()
+	SIGNAL_HANDLER
+	qdel(src)

@@ -40,7 +40,7 @@
 			connected_botpad = buffered_remote
 			connected_botpad.connected_remote = src
 			connected_botpad.id = id
-			multitool.buffer = null
+			multitool.set_buffer(null)
 			to_chat(user, span_notice("You connect the controller to the pad with data from the [multitool.name]'s buffer."))
 		else
 			to_chat(user, span_warning("Unable to upload!"))

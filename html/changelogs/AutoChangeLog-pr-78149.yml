@@ -1,0 +1,5 @@
+author: "Dmeto"
+delete-after: True
+changes:
+  - bugfix: "Machine frames in NorthStar Cyto are now functional."
+  - qol: "Minor cable/pipe changes to NorthStar the xeno containment."

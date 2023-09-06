@@ -22,13 +22,6 @@ handles linking back and forth.
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
 
-	//Internal vars
-
-	///Prepare storage when component is registered to parent. This allows local material container(if created) to be first in the component list so it gets GC'd properly
-	var/_prepare_on_register = FALSE
-	///Are we trying to to connect to remote ore silo or not
-	var/_connect_to_silo = FALSE
-
 /datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -36,23 +29,26 @@ handles linking back and forth.
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(OnAttackBy))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
 	var/turf/T = get_turf(parent)
-	_connect_to_silo = FALSE
+	var/connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
-		_connect_to_silo = TRUE
+		connect_to_silo = TRUE
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 
 	if(mapload) // wait for silo to initialize during mapload
-		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), _connect_to_silo))
+		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
 	else //directly register in round
-		_prepare_on_register = TRUE
+		_PrepareStorage(connect_to_silo)
 
-/datum/component/remote_materials/RegisterWithParent()
-	if(_prepare_on_register)
-		_PrepareStorage(_connect_to_silo)
-
+/**
+ * Internal proc. prepares local storage if onnect_to_silo = FALSE
+ *
+ * Arguments
+ * connect_to_silo- if true connect to global silo. If not successfull then go to local storage
+ * only if allow_standalone = TRUE, else you a null mat_container
+ */
 /datum/component/remote_materials/proc/_PrepareStorage(connect_to_silo)
 	if (connect_to_silo)
 		silo = GLOB.ore_silo_default
@@ -112,7 +108,12 @@ handles linking back and forth.
 	if (!silo && mat_container)
 		mat_container.max_amount = size
 
-// called if disconnected by ore silo UI or destruction
+/**
+ * Disconnect this component from the remote silo
+ *
+ * Arguments
+ * old_silo- The silo we are trying to disconnect from
+ */
 /datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
 	if (!old_silo || silo != old_silo)
 		return
@@ -122,12 +123,14 @@ handles linking back and forth.
 	if (allow_standalone)
 		_MakeLocal()
 
-/datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
+///Insert mats into silo
+/datum/component/remote_materials/proc/SiloAttackBy(datum/source, obj/item/target, mob/user)
 	SIGNAL_HANDLER
 
-	if (silo && isstack(I))
-		if (silo.remote_attackby(parent, user, I, mat_container_flags))
-			return COMPONENT_NO_AFTERATTACK
+	if(silo)
+		mat_container.user_insert(target, user, mat_container_flags, parent)
+
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
 	SIGNAL_HANDLER
@@ -152,52 +155,87 @@ handles linking back and forth.
 		silo.ore_connected_machines += src
 		silo.updateUsrDialog()
 		mat_container = silo.GetComponent(/datum/component/material_container)
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
-/datum/component/remote_materials/proc/check_z_level(obj/silo_to_check)
-	SIGNAL_HANDLER
-	if(!silo_to_check)
-		if(isnull(silo))
-			return FALSE
-		silo_to_check = silo
+/**
+ * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc
+ *
+ * Arguments
+ * silo_to_check- Is this components parent in the same Z level as this param silo. If null
+ * then check this components connected silo
+ *
+ * Returns true if both are on the station or same z level
+ */
+/datum/component/remote_materials/proc/check_z_level(obj/silo_to_check = silo)
+	if(isnull(silo_to_check))
+		return FALSE
 
-	var/turf/current_turf = get_turf(parent)
-	var/turf/silo_turf = get_turf(silo_to_check)
-	if(!is_valid_z_level(silo_turf, current_turf))
+	return is_valid_z_level(get_turf(silo_to_check), get_turf(parent))
+
+/// returns TRUE if this connection put on hold by the silo
+/datum/component/remote_materials/proc/on_hold()
+	return check_z_level() ? silo.holds[src] : FALSE
+
+/**
+ * Internal proc to check if this connection can use any materials from the silo
+ * Returns true only if
+ * - The parent is of type movable atom
+ * - A mat container is actually present
+ * - The silo in not on hold
+ */
+/datum/component/remote_materials/proc/_can_use_resource()
+	var/atom/movable/movable_parent = parent
+	if (!istype(movable_parent))
+		return FALSE
+	if (!mat_container) //no silolink & local storage not supported
+		movable_parent.say("No access to material storage, please contact the quartermaster.")
+		return FALSE
+	if(on_hold()) //silo on hold
+		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	return TRUE
 
-/datum/component/remote_materials/proc/on_hold()
-	if(!check_z_level())
-		return FALSE
-	return silo.holds[src]
+/**
+ * Use materials from either the silo(if connected) or from the local storage. If silo then this action
+ * is logged else not e.g. action="build" & name="matter bin" means you are trying to build an matter bin
+ *
+ * Arguments
+ * [mats][list]- list of materials to use
+ * coefficient- each mat unit is scaled by this value then rounded. This value if usually your machine efficiency e.g. upgraded protolathe has reduced costs
+ * multiplier- each mat unit is scaled by this value then rounded after it is scaled by coefficient. This value is your print quatity e.g. printing multiple items
+ * action- For logging only. e.g. build, create, i.e. the action you are trying to perform
+ * name- For logging only. the design you are trying to build e.g. matter bin, etc.
+ */
+/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design")
+	if(!_can_use_resource())
+		return 0
 
-/datum/component/remote_materials/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
-	if (silo)
-		silo.silo_log(M || parent, action, amount, noun, mats)
+	var/amount_consumed = mat_container.use_materials(mats, coefficient, multiplier)
 
-/// Ejects the given material ref and logs it, or says out loud the problem.
-/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount)
+	if (silo)//log only if silo is linked
+		var/list/scaled_mats = list()
+		for(var/i in mats)
+			scaled_mats[i] = OPTIMAL_COST(OPTIMAL_COST(mats[i] * coefficient) * multiplier)
+		silo.silo_log(parent, action, -multiplier, name, scaled_mats)
+
+	return amount_consumed
+
+/**
+ * Ejects the given material ref and logs it
+ *
+ * Arguments
+ * [material_ref][datum/material]- The material type you are trying to eject
+ * eject_amount- how many sheets to eject
+ * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
+ */
+/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null)
+	if(!_can_use_resource())
+		return 0
+
 	var/atom/movable/movable_parent = parent
-	if (!istype(movable_parent))
-		return 0
+	if(isnull(drop_target))
+		drop_target = movable_parent.drop_location()
 
-	if (!mat_container) //no silolink & local storage not supported
-		movable_parent.say("No access to material storage, please contact the quartermaster.")
-		return 0
-	if(!mat_container.can_hold_material(material_ref)) //material not supported by container
-		movable_parent.say("Invalid material requested.")
-		return 0
-	if(eject_amount <= 0) //invalid amount
-		movable_parent.say("Invalid amount requested.")
-		return 0
-	if(on_hold()) //silo on hold
-		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
-
-	var/count = mat_container.retrieve_sheets(eject_amount, material_ref, movable_parent.drop_location())
-	var/list/matlist = list()
-	matlist[material_ref] = eject_amount
-	silo_log(parent, "ejected", -count, "sheets", matlist)
-	return count
+	return mat_container.retrieve_sheets(eject_amount, material_ref, target = drop_target, context = parent)

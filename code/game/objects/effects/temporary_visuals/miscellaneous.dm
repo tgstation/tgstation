@@ -545,6 +545,8 @@
 	if (status == RCD_DECONSTRUCT)
 		qdel(src)
 	else
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
 		addtimer(CALLBACK(src, PROC_REF(end)), 15)
 

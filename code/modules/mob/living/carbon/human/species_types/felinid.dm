@@ -21,6 +21,8 @@
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
+	/// Brain size for scaling
+	var/brain_size = 0.8
 
 // Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -43,6 +45,16 @@
 			ears.Insert(target_human, drop_if_replaced = FALSE)
 		else
 			mutantears = /obj/item/organ/internal/ears
+		var/obj/item/organ/internal/brain/current_brain = target_human.get_organ_by_type(/obj/item/organ/internal/brain)
+		if(current_brain)
+			current_brain.transform = current_brain.transform.Scale(brain_size) //smaller brain
+	return ..()
+
+/datum/species/human/felinid/on_species_loss(mob/living/carbon/former_feline, datum/species/old_species, pref_load)
+	if(iscarbon(former_feline))
+		var/obj/item/organ/internal/brain/current_brain = former_feline.get_organ_by_type(/obj/item/organ/internal/brain)
+		if(current_brain)
+			current_brain.transform = current_brain.transform.Scale(1 / brain_size) //bigger brain
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)

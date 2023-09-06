@@ -69,7 +69,8 @@
 			bottom_left.x,
 			bottom_left.y,
 			bottom_left.z,
-			only_load_this_z = z_idx,
+			z_upper = z_idx,
+			z_lower = z_idx,
 		)
 		var/list/to_init = list()
 		for(var/turf/turf as anything in block(bottom_left, top_right))

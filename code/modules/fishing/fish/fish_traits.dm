@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	. = ..()
 	// Wary fish require transparent line or they're harder
 	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_CLOAKED))
-		.[ADDITIVE_FISHING_MOD] = -FISH_TRAIT_MINOR_DIFFICULTY_BOOST
+		.[ADDITIVE_FISHING_MOD] += FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/shiny_lover
 	name = "Shiny Lover"
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	. = ..()
 	// These fish are easier to catch with shiny lure
 	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
-		.[ADDITIVE_FISHING_MOD] = FISH_TRAIT_MINOR_DIFFICULTY_BOOST
+		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/picky_eater
 	name = "Picky Eater"

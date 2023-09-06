@@ -509,9 +509,6 @@
 
 	nebula.add_shielder(shielder, shielding_proc)
 
-/// Name of the glow we use for the radioation effect outside
-#define GLOW_NEBULA "glow_nebula"
-
 ///The station will be inside a radioactive nebula! Space is radioactive and the station needs to start setting up nebula shielding
 /datum/station_trait/nebula/hostile/radiation
 	name = "Radioactive Nebula"
@@ -549,7 +546,7 @@
 	. = ..()
 
 	for(var/area/target as anything in get_areas(radioactive_areas))
-		RegisterSignals(target, list(COMSIG_AREA_ENTERED, COMSIG_AREA_INITIALIZED_IN), PROC_REF(on_entered))
+		RegisterSignal(target, COMSIG_AREA_ENTERED, PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
 
 /datum/station_trait/nebula/hostile/radiation/on_round_start()
@@ -581,27 +578,18 @@
 /datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer, area/old_area)
 	SIGNAL_HANDLER
 
-	if(iscarbon(enterer))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
-		if(!istype(old_area, radioactive_areas)) //old area wasnt radioactive
-			enterer.AddComponent( \
-				/datum/component/radioactive_exposure, \
-				minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME, \
-				irradiation_chance_base = RADIATION_EXPOSURE_NEBULA_BASE_CHANCE, \
-				irradiation_chance_increment = RADIATION_EXPOSURE_NEBULA_CHANCE_INCREMENT, \
-				irradiation_interval = RADIATION_EXPOSURE_NEBULA_CHECK_INTERVAL, \
-				source = src, \
-				radioactive_areas = radioactive_areas, \
-			)
+	// Old area was radioactive, so what's the point. nothing changes. nothing ever does. also make sure the subsystem is alive before we give it food
+	if (istype(old_area, radioactive_areas) || !SSradioactive_nebula.initialized)
+		return
 
-	else if(isobj(enterer)) //and fake the rest
-		//outline clashes too much with other outlines and creates pretty ugly lines
-		enterer.add_filter(GLOW_NEBULA, 2, list("type" = "drop_shadow", "color" = nebula_radglow, "size" = 2))
+	SSradioactive_nebula.fake_irradiate(enterer)
 
 ///Called when an atom leaves space, so we can remove the radiation effect
 /datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter, direction)
 	SIGNAL_HANDLER
 
-	exiter.remove_filter(GLOW_NEBULA)
+	SSradioactive_nebula.fake_unirradiate(exiter)
+
 	// The component handles its own removal
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
@@ -694,3 +682,4 @@
 
 	storm_type = /datum/weather/snow_storm/forever_storm
 
+#undef GLOW_NEBULA

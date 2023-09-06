@@ -12,7 +12,8 @@
 /datum/action/cooldown/mob_cooldown/ice_breath/Activate(atom/target_atom)
 	var/turf/target_fire_turf = get_ranged_target_turf_direct(owner, target_atom, fire_range)
 	var/list/burn_turfs = get_line(owner, target_fire_turf) - get_turf(owner)
-	dragon_fire_line(owner, burn_turfs, frozen = TRUE)
+	// This proc sleeps
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(dragon_fire_line), owner, /* burn_turfs = */ burn_turfs, /* frozen = */ TRUE)
 	StartCooldown()
 	return TRUE
 

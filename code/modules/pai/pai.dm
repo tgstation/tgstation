@@ -79,10 +79,6 @@
 	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
 	var/obj/machinery/newscaster/pai/newscaster
-	/// PDA
-	var/atom/movable/screen/ai/modpc/pda_button
-	/// Photography module
-	var/obj/item/camera/siliconcam/pai_camera/camera
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 
@@ -155,7 +151,6 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(host_scan)
 	QDEL_NULL(instrument)
@@ -195,8 +190,8 @@
 /mob/living/silicon/pai/Exited(atom/movable/gone, direction)
 	if(gone == atmos_analyzer)
 		atmos_analyzer = null
-	else if(gone == camera)
-		camera = null
+	else if(gone == aicamera)
+		aicamera = null
 	else if(gone == host_scan)
 		host_scan = null
 	else if(gone == internal_gps)

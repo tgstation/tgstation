@@ -77,7 +77,7 @@
 				if(!multitool_check_buffer(user, I))
 					return
 				var/obj/item/multitool/M = I
-				M.buffer = src
+				M.set_buffer(src)
 				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
 				return 1
 

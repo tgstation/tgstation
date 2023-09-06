@@ -334,7 +334,7 @@
 /datum/uplink_item/weapon_kits/high_cost/cqc
 	name = "CQC Equipment Case (Very Hard)"
 	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant and a snazzy bandana (and a hat stabilizer to go with it)."
-	item = /obj/item/book/granter/martial/cqc
+	item = /obj/item/storage/toolbox/guncase/cqc
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	surplus = 0
 
@@ -597,6 +597,32 @@
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/device_tools/medgun_mod
+	name = "Medbeam Gun Module"
+	desc = "A wonder of Syndicate engineering, the Medbeam gun module, or Medi-Gun enables a medic to keep his fellow \
+		operatives in the fight, even while under fire. Don't cross the streams!"
+	item = /obj/item/mod/module/medbeam
+	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/syndi_intellicard
+	name = "Pre-Loaded Syndicate Intellicard"
+	desc = "A syndicate intellicard that can be activated to download a captured Nanotrasen AI, modified with the standard syndicate lawset. You can slot it into your modsuit for a conversational partner! It can additionally control the MODsuit's modules at will, and move your body around even if you're in critical condition or dead. \
+			However, due to failsafes activated during the extraction process, the AI is unable to interact with electronics from anywhere but direct proximity..."
+	item = /obj/item/aicard/syndie/loaded
+	cost = 12
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	refundable = TRUE
+
+/datum/uplink_item/suits/synd_ai_upgrade
+	name = "Syndicate AI Upgrade"
+	desc = "...unless you buy the Syndicate Upgrade! This data chip allows the captured AI to increase its interaction range by two tiles per application. The Syndicate recommends three or four purchases at most, for a total of seven or infinite meters of range."
+	item = /obj/item/computer_disk/syndie_ai_upgrade
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	cant_discount = TRUE
+	refundable = TRUE
+
 // Devices
 
 /datum/uplink_item/device_tools/assault_pod
@@ -614,14 +640,6 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
-/datum/uplink_item/device_tools/medgun
-	name = "Medbeam Gun"
-	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
-		operatives in the fight, even while under fire. Don't cross the streams!"
-	item = /obj/item/gun/medbeam
-	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/medkit

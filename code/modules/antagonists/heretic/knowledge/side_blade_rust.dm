@@ -61,7 +61,7 @@
 	route = PATH_SIDE
 
 /datum/heretic_knowledge/rifle_ammo
-	name = "Lionhunter Rifle Ammunition"
+	name = "Lionhunter Rifle Ammunition (free)"
 	desc = "Allows you to transmute 3 ballistic ammo casings (used or unused) of any caliber, \
 		including shotgun shot, with any animal hide to create an extra clip of ammunition for the Lionhunter Rifle."
 	gain_text = "The weapon came with three rough iron balls, intended to be used as ammunition. \
@@ -72,7 +72,7 @@
 		/obj/item/ammo_casing = 3,
 	)
 	result_atoms = list(/obj/item/ammo_box/strilka310/lionhunter)
-	cost = 1
+	cost = 0
 	route = PATH_SIDE
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
 	var/static/list/caliber_blacklist = list(
@@ -95,3 +95,11 @@
 	// We removed any invalid casings from the atoms list,
 	// return to allow the ritual to fill out selected atoms with the new list
 	return TRUE
+
+/datum/heretic_knowledge/spell/rust_charge
+	name = "Rust Charge"
+	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
+	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
+	spell_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
+	cost = 1
+	route = PATH_SIDE

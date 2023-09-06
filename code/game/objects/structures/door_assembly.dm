@@ -383,7 +383,7 @@
 
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -393,18 +393,3 @@
 			qdel(src)
 			return TRUE
 	return FALSE
-
-/**
- * Updates the bounds of the airlock assembly
- * Sets the bounds of the airlock assembly according to the direction.
- * This ensures that the bounds are always correct, even if the airlock is rotated.
- */
-/obj/structure/door_assembly/multi_tile/proc/set_bounds()
-	var/size = get_size_in_tiles(src)
-
-	if(dir in list(NORTH, SOUTH))
-		bound_width = size * world.icon_size
-		bound_height = world.icon_size
-	else
-		bound_width = world.icon_size
-		bound_height = size * world.icon_size

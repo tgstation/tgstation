@@ -165,7 +165,7 @@
 
 	var/mob/living/carbon/victim = parent
 	var/chance = jostle_chance
-	if(victim.m_intent == MOVE_INTENT_WALK || victim.body_position == LYING_DOWN)
+	if(victim.move_intent == MOVE_INTENT_WALK || victim.body_position == LYING_DOWN)
 		chance *= 0.5
 
 	if(harmful && prob(chance))
@@ -303,7 +303,7 @@
 		return
 	var/damage = weapon.w_class * remove_pain_mult
 	limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
-	limb.force_wound_upwards(/datum/wound/pierce/moderate)
+	limb.force_wound_upwards(/datum/wound/pierce/bleed/moderate)
 	victim.adjustStaminaLoss(pain_stam_pct * damage)
 	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
 

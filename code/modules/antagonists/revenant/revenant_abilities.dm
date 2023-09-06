@@ -24,9 +24,10 @@
 /mob/living/simple_animal/revenant/ranged_secondary_attack(atom/target, modifiers)
 	if(revealed || notransform || inhibited || !Adjacent(target) || !incorporeal_move_check(target))
 		return
-	var/icon/I = icon(target.icon,target.icon_state,target.dir)
-	var/orbitsize = (I.Width()+I.Height())*0.5
-	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+
+	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
+	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 	orbit(target, orbitsize)
 
 //Harvest; activated by clicking the target, will try to drain their essence.

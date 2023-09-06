@@ -75,12 +75,14 @@
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
+	SEND_SIGNAL(src, COMSIG_CARBON_APPLY_OVERLAY, cache_index, .)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
 	var/I = overlays_standing[cache_index]
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
+	SEND_SIGNAL(src, COMSIG_CARBON_REMOVE_OVERLAY, cache_index, I)
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()

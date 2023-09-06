@@ -158,6 +158,7 @@
 		if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
 			continue
 		module.on_deactivation(display_message = FALSE)
+	mod_link.end_call()
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	if (ai_assistant)
@@ -227,17 +228,15 @@
 		if (!seal && wearer?.invalid_internals())
 			wearer.cutoff_internals()
 
-/// Finishes the suit's activation, starts processing
+/// Finishes the suit's activation
 /obj/item/mod/control/proc/finish_activation(on)
 	active = on
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_activation()
-		START_PROCESSING(SSobj, src)
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_deactivation()
-		STOP_PROCESSING(SSobj, src)
 	update_speed()
 	update_icon_state()
 	wearer.update_clothing(slot_flags)

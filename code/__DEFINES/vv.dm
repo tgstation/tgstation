@@ -98,6 +98,7 @@
 #define VV_HK_EDIT_FILTERS "edit_filters"
 #define VV_HK_EDIT_PARTICLES "edit_particles"
 #define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
+#define VV_HK_TEST_MATRIXES "test_matrixes"
 #define VV_HK_ADD_AI "add_ai"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
