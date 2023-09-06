@@ -24,7 +24,8 @@ export const MatMarket = (props, context) => {
           cargo shipment.
           <br />
           To sell materials, please insert sheets or similar stacks of
-          materials.
+          materials. All minerals sold on the market directly are subject to an
+          20% market fee.
           <Section>
             Current credit balance:{' '}
             <b>{data.creditBalance ? data.creditBalance : 'zero'}</b> cr.
