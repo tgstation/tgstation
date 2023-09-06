@@ -28,5 +28,3 @@
 						ANNOUNCER_SHUTTLEDOCK = 'monkestation/sound/ai/duke/shuttle_arrive.ogg',
 						ANNOUNCER_SHUTTLERECALLED = 'monkestation/sound/ai/duke/shuttle_recall.ogg',
 						ANNOUNCER_SPANOMALIES = 'monkestation/sound/ai/duke/spanomalies.ogg')
-
-	custom_alert_message = "<br><span class='alert'>Please stand by for an important message from the Duke.</span><br>"

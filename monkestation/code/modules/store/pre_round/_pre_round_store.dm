@@ -5,17 +5,13 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 
 /datum/pre_round_store
 	var/datum/store_item/bought_item
-	var/mob/owner
 
 /datum/pre_round_store/New(mob/user)
 	. = ..()
-	owner = user
 	ui_interact(user)
 
 /datum/pre_round_store/Destroy(force, ...)
 	. = ..()
-	owner.client?.readied_store = null
-	owner = null
 	bought_item = null
 
 /datum/pre_round_store/ui_interact(mob/user, datum/tgui/ui)

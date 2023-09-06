@@ -25,6 +25,11 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	initiator_ref = particle_weather
 	start_process()
 
+/datum/weather_event/Destroy(force, ...)
+	. = ..()
+	initiator_ref.weather_additional_ongoing_events -= src
+	initiator_ref = null
+
 /datum/weather_event/proc/start_process()
 	return
 
