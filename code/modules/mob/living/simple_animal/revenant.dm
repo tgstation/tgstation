@@ -129,6 +129,7 @@
 /mob/living/simple_animal/revenant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(stasis)
 		return
+	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	if(revealed && essence <= 0)
 		death()
 	if(unreveal_time && world.time >= unreveal_time)
@@ -142,7 +143,7 @@
 		notransform = FALSE
 		to_chat(src, span_revenboldnotice("You can move again!"))
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
-		essence = min(essence + (essence_regen_amount * seconds_per_tick), essence_regen_cap)
+		essence = min(essence + (essence_regen_amount * delta_time), essence_regen_cap)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
