@@ -1601,11 +1601,13 @@
 /area/station/construction)
 "auv" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/outlet_injector{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	volume_rate = 200;
+	dir = 8;
+	initialize_directions = 8
 	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
@@ -2102,6 +2104,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "aCl" = (
@@ -3851,6 +3854,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
 "aYv" = (
@@ -8345,6 +8349,7 @@
 /obj/machinery/light/cold/no_nightlight/directional/east,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
 "cdf" = (
@@ -10546,6 +10551,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "cHf" = (
@@ -19350,6 +19356,7 @@
 /obj/effect/turf_decal/stripes,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
 "fdr" = (
@@ -24253,7 +24260,7 @@
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/storage)
 "gup" = (
-/obj/structure/frame{
+/obj/structure/frame/machine{
 	anchored = 1
 	},
 /obj/structure/disposalpipe/segment,
@@ -42709,6 +42716,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "lhT" = (
@@ -56185,7 +56193,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/station/tcommsat/server)
 "oFH" = (
-/obj/structure/frame{
+/obj/structure/frame/machine{
 	anchored = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -57562,6 +57570,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
 "oYL" = (
@@ -59408,6 +59417,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
 "pyQ" = (
@@ -63613,6 +63623,7 @@
 /obj/effect/turf_decal/trimline/purple/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "qEe" = (
@@ -68214,6 +68225,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/science/cytology)
 "rQV" = (
@@ -76193,6 +76205,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "tXF" = (
@@ -79096,8 +79109,9 @@
 /area/station/maintenance/floor2/port/aft)
 "uLB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	volume_rate = 200;
 	dir = 8;
-	volume_rate = 200
+	initialize_directions = 8
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2{
 	dir = 8
@@ -87970,6 +87984,7 @@
 	dir = 5
 	},
 /obj/item/radio/intercom/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "wXi" = (
