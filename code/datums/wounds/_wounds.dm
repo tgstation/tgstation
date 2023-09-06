@@ -113,7 +113,7 @@
 	. = ..()
 
 	unique_id = generate_unique_id()
-	actionspeed_mod = generate_actionspeed_modifier()
+	update_actionspeed_modifier()
 
 /datum/wound/Destroy()
 	QDEL_NULL(attached_surgery)
@@ -124,13 +124,41 @@
 
 	return ..()
 
-/// Should generate a actionspeed modifier and return it, giving it our unique ID so it can stack with other wounds.
+/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we dont have one
+/// by qdeleting any existing modifier. 
+/datum/wound/proc/update_actionspeed_modifier()
+	if (should_have_actionspeed_modifier())
+		if (!actionspeed_mod)
+			generate_actionspeed_modifier()
+		actionspeed_mod.multiplicative_slowdown = get_effective_actionspeed_modifier()
+		victim.update_actionspeed()
+	else
+		remove_actionspeed_modifier()
+
+/// Returns TRUE if we have an interaction_efficiency_penalty, FALSE otherwise.
+/datum/wound/proc/should_have_actionspeed_modifier()
+	return (interaction_efficiency_penalty != 0)
+
+/// If we have no actionspeed_mod, generates a new one with our unique ID, sets actionspeed_mod to it, then returns it.
 /datum/wound/proc/generate_actionspeed_modifier()
 	RETURN_TYPE(/datum/actionspeed_modifier)
 
+	if (actionspeed_mod)
+		return actionspeed_mod
+
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/new_modifier = new /datum/actionspeed_modifier/wound_interaction_inefficiency(unique_id, src)
 	new_modifier.multiplicative_slowdown = get_effective_actionspeed_modifier()
-	return new_modifier
+
+	actionspeed_mod = new_modifier
+	return actionspeed_mod
+
+/// If we have an actionspeed_mod, qdels it and sets our ref of it to null.
+/datum/wound/proc/remove_actionspeed_modifier()
+	if (!actionspeed_mod)
+		return
+
+	QDEL_NULL(actionspeed_mod)
+	victim.update_actionspeed()
 
 /// Generates the ID we use for [unique_id], which is also set as our actionspeed mod's ID
 /datum/wound/proc/generate_unique_id()
@@ -353,19 +381,12 @@
 
 /// Setter for [interaction_efficiency_penalty]. Updates the actionspeed of our actionspeed mod.
 /datum/wound/proc/set_interaction_efficiency_penalty(new_value)
-
 	var/should_update = (new_value != interaction_efficiency_penalty)
 
 	interaction_efficiency_penalty = new_value
 
 	if (should_update)
-		update_actionspeed()
-
-/// Updates both our action mod's multiplicative_slowdown and our victim's actionspeed.
-/datum/wound/proc/update_actionspeed()
-	actionspeed_mod.multiplicative_slowdown = get_effective_actionspeed_modifier()
-
-	victim.update_actionspeed()
+		update_actionspeed_modifier()
 
 /// Returns a "adjusted" interaction_efficiency_penalty that will be used for the actionspeed mod.
 /datum/wound/proc/get_effective_actionspeed_modifier()
