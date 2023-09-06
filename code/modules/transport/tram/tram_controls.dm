@@ -192,8 +192,6 @@
 					say("The tram is not in service. Please contact the nearest engineer.")
 				if(INVALID_PLATFORM)
 					say("Configuration error. Please contact the nearest engineer.")
-				if(PLATFORM_DISABLED)
-					say("The tram is currently under manual operation.")
 				if(INTERNAL_ERROR)
 					say("Tram controller error. Please contact the nearest engineer.")
 				else

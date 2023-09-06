@@ -508,7 +508,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	specific_transport_id = HILBERT_LINE_1
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav/hilbert
-	name = HILBERT_TRAM
+	name = HILBERT_LINE_1
 	specific_transport_id = TRAM_NAV_BEACONS
 
 /obj/effect/landmark/transport/nav_beacon/tram/platform/hilbert/left

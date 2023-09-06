@@ -63,7 +63,7 @@
 	. = ..()
 	link_tram()
 
-/obj/machinery/transport/destination_sign/indicator/deconstruct(disassembled = TRUE)
+/obj/machinery/transport/destination_sign/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(disassembled)

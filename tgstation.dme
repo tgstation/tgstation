@@ -109,7 +109,6 @@
 #include "code\__DEFINES\icon_smoothing.dm"
 #include "code\__DEFINES\id_cards.dm"
 #include "code\__DEFINES\important_recursive_contents.dm"
-#include "code\__DEFINES\industrial_lift.dm"
 #include "code\__DEFINES\injection.dm"
 #include "code\__DEFINES\input.dm"
 #include "code\__DEFINES\instruments.dm"

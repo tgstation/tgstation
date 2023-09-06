@@ -23,7 +23,7 @@
 	var/z_sorted = FALSE
 
 	///transport_id taken from our base lift platform, used to put us into SStransport.transports_by_type
-	var/transport_id = BASIC_LIFT_ID
+	var/transport_id = TRANSPORT_TYPE_ELEVATOR
 
 	///overridable ID string to link control units to this specific transport_controller datum. created by placing a lift id landmark object
 	///somewhere on the tram, if its anywhere on the tram we'll find it in init and set this to whatever it specifies

@@ -12,53 +12,6 @@
 	floor_tile = /obj/item/stack/tile/noslip/tram_plate
 	slowdown = 0
 	flags_1 = NONE
-	footstep = FOOTSTEP_CATWALK
-	layer = CATWALK_LAYER
-	overfloor_placed = TRUE
-	underfloor_accessibility = UNDERFLOOR_HIDDEN
-	var/covered = TRUE
-	var/plate_type = "tram_plate"
-	var/static/list/tram_underlays = list()
-
-/turf/open/floor/noslip/tram_plate/Initialize(mapload)
-	. = ..()
-	if(!tram_underlays[plate_type])
-		var/mutable_appearance/plating_underlay = mutable_appearance(icon, "[plate_type]_open", TURF_LAYER)
-		tram_underlays[plate_type] = plating_underlay
-	underlays += tram_underlays[plate_type]
-	update_appearance()
-
-/turf/open/floor/noslip/tram_plate/examine(mob/user)
-	. = ..()
-
-	if(covered)
-		. += span_notice("You can <b>unscrew</b> it to reveal the electronics inside.")
-	else
-		. += span_notice("You can <b>screw</b> it to secure the contents inside.")
-		. += span_notice("There's a <b>triangular notch</b> on the edge of the circuit board.")
-
-/turf/open/floor/noslip/tram_plate/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	covered = !covered
-	if(!covered)
-		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
-		layer = TURF_LAYER
-		icon_state = "[plate_type]_open"
-	else
-		underfloor_accessibility = UNDERFLOOR_HIDDEN
-		layer = CATWALK_LAYER
-		icon_state = "[plate_type]"
-
-	levelupdate()
-	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
-	tool.play_tool_sound(src)
-	update_appearance()
-
-/turf/open/floor/noslip/tram_plate/crowbar_act(mob/user, obj/item/crowbar)
-	if(covered)
-		user.balloon_alert(user, "remove cover first!")
-		return FALSE
-	. = ..()
 
 /turf/open/floor/noslip/tram_plate/energized
 	desc = "The linear induction plate that powers the tram. It is currently energized."
@@ -94,7 +47,7 @@
 		build_with_titanium(object, user)
 
 /turf/open/floor/noslip/tram_plate/energized/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRAM_LIFT_ID])
+	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id != TRAMSTATION_LINE_1)
 			continue
 		return tram

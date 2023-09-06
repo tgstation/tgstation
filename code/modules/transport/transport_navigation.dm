@@ -11,7 +11,6 @@
 	var/platform_code = null
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
-	var/platform_status = PLATFORM_ACTIVE
 
 /obj/effect/landmark/transport/nav_beacon/tram/Initialize(mapload)
 	. = ..()
@@ -41,7 +40,7 @@
 	specific_transport_id = TRAMSTATION_LINE_1
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav/tramstation/main
-	name = MAIN_STATION_TRAM
+	name = TRAMSTATION_LINE_1
 	specific_transport_id = TRAM_NAV_BEACONS
 	dir = WEST
 
@@ -69,12 +68,12 @@
 	specific_transport_id = BIRDSHOT_LINE_2
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav/birdshot/prison
-	name = PRISON_TRAM
+	name = BIRDSHOT_LINE_1
 	specific_transport_id = TRAM_NAV_BEACONS
 	dir = NORTH
 
 /obj/effect/landmark/transport/nav_beacon/tram/nav/birdshot/maint
-	name = MAINTENANCE_TRAM
+	name = BIRDSHOT_LINE_2
 	specific_transport_id = TRAM_NAV_BEACONS
 	dir = WEST
 

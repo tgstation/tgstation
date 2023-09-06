@@ -18,7 +18,6 @@
 #define NOT_IN_SERVICE "!NIS"
 #define TRANSPORT_IN_USE "!BUSY"
 #define INVALID_PLATFORM "!NDEST"
-#define PLATFORM_DISABLED "!DIS"
 #define NO_CALL_REQUIRED "!NCR"
 #define INTERNAL_ERROR "!ERR"
 #define BROKEN_BEYOND_REPAIR "!DEAD"
@@ -43,7 +42,11 @@
 #define ELEVATOR_7 "elev_7"
 #define ELEVATOR_8 "elev_8"
 
-#define PLATFORM_ACTIVE 1
+//Booleans in arguments are confusing, so I made them defines.
+///the lift's controls are currently locked from user input
+#define LIFT_PLATFORM_LOCKED 1
+///the lift's controls are currently unlocked so user's can direct it
+#define LIFT_PLATFORM_UNLOCKED 0
 
 // Flags for the Tram VOBC (vehicle on-board computer)
 
@@ -88,6 +91,7 @@ DEFINE_BITFIELD(request_flags, list(
 
 #define TRANSPORT_TYPE_ELEVATOR "icts_elev"
 #define TRANSPORT_TYPE_TRAM "icts_tram"
+#define TRANSPORT_TYPE_DEBUG "icts_debug"
 
 /// Tram crossing light logic
 #define XING_STATE_GREEN 0

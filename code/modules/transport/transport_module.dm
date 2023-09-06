@@ -10,6 +10,7 @@
 	base_icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	armor_type = /datum/armor/transport_module
 	max_integrity = 50
 	layer = TRAM_FLOOR_LAYER
@@ -17,13 +18,13 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	obj_flags = BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
 	///ID used to determine what transport types we can merge with
-	var/transport_id = BASIC_LIFT_ID
+	var/transport_id = TRANSPORT_TYPE_ELEVATOR
 
 	///if true, the elevator works through floors
 	var/pass_through_floors = FALSE
@@ -757,7 +758,6 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	warns_on_down_movement = TRUE
 	violent_landing = FALSE
 	elevator_vertical_speed = 3 SECONDS
@@ -767,7 +767,7 @@
 	name = "transport platform"
 	desc = "A lightweight platform. It moves in any direction, except up and down."
 	color = "#5286b9ff"
-	transport_id = DEBUG_LIFT_ID
+	transport_id = TRANSPORT_TYPE_DEBUG
 	radial_travel = TRUE
 
 /obj/structure/transport/linear/debug/open_lift_radial(mob/living/user)
@@ -830,16 +830,16 @@
 	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "subfloor"
 	base_icon_state = null
+	density = FALSE
 	layer = TRAM_STRUCTURE_LAYER
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
 	//the modular structure is pain to work with, damage is done to the floor on top
-	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	transport_id = TRANSPORT_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE
-
+	obj_flags = NONE
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 

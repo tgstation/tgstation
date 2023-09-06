@@ -428,6 +428,7 @@
 	var/datum/weakref/tram_ref
 	///The tram we're attached to
 	var/tram_id = TRAMSTATION_LINE_1
+	obj_flags = CAN_BE_HIT
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	girder_type = /obj/structure/girder/tram/corner
 	smoothing_flags = NONE

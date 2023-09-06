@@ -69,7 +69,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	if(transport_controller.controller_active) //in use
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [PLATFORM_DISABLED]. Info: [TC_TA_INFO].")
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [TRANSPORT_IN_USE]. Info: [TC_TA_INFO].")
 		return
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)
