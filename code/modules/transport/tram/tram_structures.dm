@@ -26,7 +26,7 @@
 	icon_state = "tram-part-0"
 	base_icon_state = "tram-part"
 	max_integrity = 150
-	layer = TRAM_STRUCTURE_LAYER
+	layer = TRAM_WALL_LAYER
 	density = TRUE
 	opacity = FALSE
 	anchored = TRUE

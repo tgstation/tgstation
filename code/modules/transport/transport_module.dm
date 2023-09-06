@@ -12,7 +12,7 @@
 	anchored = TRUE
 	armor_type = /datum/armor/transport_module
 	max_integrity = 50
-	layer = LATTICE_LAYER //under pipes
+	layer = TRAM_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
