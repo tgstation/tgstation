@@ -268,16 +268,15 @@
 	var/line_color = line?.line_color || default_line_color
 	/// Line part by the rod, always visible
 	var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
-	reel_appearance.color = line_color;
+	reel_appearance.color = line_color
 	. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)
 		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay")
-		line_overlay.color = line_color;
+		line_overlay.color = line_color
 		. += line_overlay
-		var/mutable_appearance/hook_overlay = mutable_appearance(icon, hook?.rod_overlay_icon_state || "hook_overlay")
-		. += hook_overlay
+		. += hook?.rod_overlay_icon_state || "hook_overlay"
 
 	if(bait)
 		var/bait_state = "worm_overlay" //default to worm overlay for anything without specific one
@@ -512,7 +511,7 @@
 	name = "master fishing rod"
 	desc = "The mythical rod of a lost fisher king. Said to be imbued with un-paralleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
 	difficulty_modifier = -10
-	ui_description = "This rods makes fishing easy even for an absolute beginner."
+	ui_description = "This rod makes fishing easy even for an absolute beginner."
 	icon_state = "fishing_rod_master"
 	reel_overlay = "reel_master"
 	active_force = 13 //It's that sturdy

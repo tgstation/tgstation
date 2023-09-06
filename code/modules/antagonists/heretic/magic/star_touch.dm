@@ -54,12 +54,12 @@
 	return target_turfs
 
 /// To set the star gazer
-/datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/star_gazer/star_gazer_mob)
+/datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/heretic_summon/star_gazer/star_gazer_mob)
 	star_gazer = WEAKREF(star_gazer_mob)
 
 /// To obtain the star gazer if there is one
 /datum/action/cooldown/spell/touch/star_touch/proc/get_star_gazer()
-	var/mob/living/basic/star_gazer/star_gazer_resolved = star_gazer?.resolve()
+	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_resolved = star_gazer?.resolve()
 	if(star_gazer_resolved)
 		return star_gazer_resolved
 	return FALSE
@@ -94,7 +94,7 @@
 
 /obj/item/melee/touch_attack/star_touch/attack_self(mob/living/user)
 	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
-	var/mob/living/basic/star_gazer/star_gazer_mob = star_touch_spell?.get_star_gazer()
+	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = star_touch_spell?.get_star_gazer()
 	if(!star_gazer_mob)
 		balloon_alert(user, "no linked star gazer!")
 		return ..()
@@ -229,7 +229,7 @@
 
 /// What to add when the beam connects to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
-	if(!istype(target, /mob/living/basic/star_gazer))
+	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return
 
@@ -241,6 +241,6 @@
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
-	if(!istype(target, /mob/living/basic/star_gazer))
+	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
 		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return

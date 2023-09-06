@@ -6,6 +6,8 @@
 #define COMSIG_ATOM_EXPOSE_REAGENTS "atom_expose_reagents"
 	/// Prevents the atom from being exposed to reagents if returned on [COMSIG_ATOM_EXPOSE_REAGENTS]
 	#define COMPONENT_NO_EXPOSE_REAGENTS (1<<0)
+///from base of atom/expose_reagents(): (/list, /datum/reagents, methods, volume_modifier, show_message)
+#define COMSIG_ATOM_AFTER_EXPOSE_REAGENTS "atom_after_expose_reagents"
 ///from base of [/datum/reagent/proc/expose_atom]: (/datum/reagent, reac_volume)
 #define COMSIG_ATOM_EXPOSE_REAGENT "atom_expose_reagent"
 ///from base of [/datum/reagent/proc/expose_atom]: (/atom, reac_volume)

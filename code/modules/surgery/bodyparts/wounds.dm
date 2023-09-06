@@ -8,40 +8,74 @@
 	var/mangled_state = get_mangled_state()
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-	if(wounding_type == WOUND_BLUNT && sharpness)
-		if(sharpness & SHARP_EDGED)
-			wounding_type = WOUND_SLASH
-		else if (sharpness & SHARP_POINTY)
-			wounding_type = WOUND_PIERCE
+	var/has_exterior = FALSE
+	var/has_interior = FALSE
 
-	//Handling for bone only/flesh only(none right now)/flesh and bone targets
-	switch(biological_state)
-		// if we're bone only, all cutting attacks go straight to the bone
-		if(BIO_BONE)
-			if(wounding_type == WOUND_SLASH)
-				wounding_type = WOUND_BLUNT
-				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.6)
-			else if(wounding_type == WOUND_PIERCE)
-				wounding_type = WOUND_BLUNT
-				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.75)
-			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
-				return
-		// note that there's no handling for BIO_FLESH since we don't have any that are that right now (slimepeople maybe someday)
-		// standard humanoids
-		if(BIO_FLESH_BONE)
-			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
-			// So a big sharp weapon is still all you need to destroy a limb
-			if((mangled_state & BODYPART_MANGLED_FLESH) && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
-				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
-				if(wounding_type == WOUND_SLASH && !easy_dismember)
-					phantom_wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
-				if(wounding_type == WOUND_PIERCE && !easy_dismember)
-					phantom_wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
-				wounding_type = WOUND_BLUNT
-			else if((mangled_state & BODYPART_MANGLED_FLESH) && (mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
+	for (var/state as anything in GLOB.bio_state_states)
+		var/flag = text2num(state)
+		if (!(biological_state & flag))
+			continue
+
+		var/value = GLOB.bio_state_states[state]
+		if (value & BIO_EXTERIOR)
+			has_exterior = TRUE
+		if (value & BIO_INTERIOR)
+			has_interior = TRUE
+
+		if (has_exterior && has_interior)
+			break
+
+	// We put this here so we dont increase init time by doing this all at once on initialization
+	// Effectively, we "lazy load"
+	if (isnull(any_existing_wound_can_mangle_our_bone) || isnull(any_existing_wound_can_mangle_our_flesh))
+		any_existing_wound_can_mangle_our_bone = FALSE
+		any_existing_wound_can_mangle_our_flesh = FALSE
+		for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+			if (!pregen_data.can_be_applied_to(src, random_roll = TRUE)) // we only consider randoms because non-randoms are usually really specific
+				continue
+			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_FLESH)
+				any_existing_wound_can_mangle_our_flesh = TRUE
+			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_BONE)
+				any_existing_wound_can_mangle_our_bone = TRUE
+
+			if (any_existing_wound_can_mangle_our_bone && any_existing_wound_can_mangle_our_flesh)
+				break
+
+	var/can_theoretically_be_dismembered = (any_existing_wound_can_mangle_our_bone || (any_existing_wound_can_mangle_our_flesh && !has_exterior))
+
+	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_BONE) == BODYPART_MANGLED_BONE))
+	var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_FLESH) == BODYPART_MANGLED_FLESH))
+
+	// if we're bone only, all cutting attacks go straight to the bone
+	if(has_exterior && interior_ready_to_dismember)
+		if(wounding_type == WOUND_SLASH)
+			wounding_type = WOUND_BLUNT
+			phantom_wounding_dmg *= (easy_dismember ? 1 : 0.6)
+		else if(wounding_type == WOUND_PIERCE)
+			wounding_type = WOUND_BLUNT
+			phantom_wounding_dmg *= (easy_dismember ? 1 : 0.75)
+		if(exterior_ready_to_dismember && try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
+			return
+	else
+		// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
+		// So a big sharp weapon is still all you need to destroy a limb
+		if(has_exterior && interior_ready_to_dismember && !(mangled_state & BODYPART_MANGLED_BONE) && sharpness)
+			playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
+			if(wounding_type == WOUND_SLASH && !easy_dismember)
+				phantom_wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
+			if(wounding_type == WOUND_PIERCE && !easy_dismember)
+				phantom_wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
+			wounding_type = WOUND_BLUNT
+		else if(interior_ready_to_dismember && exterior_ready_to_dismember && try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
+			return
+	if (use_alternate_dismemberment_calc_even_if_mangleable || !can_theoretically_be_dismembered)
+		var/percent_to_total_max = (get_damage() / max_damage)
+		if (percent_to_total_max >= hp_percent_to_dismemberable)
+			if (try_dismember(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 
-	check_wounding(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
+	return check_wounding(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
 
 /**
  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
@@ -82,7 +116,11 @@
 		dismembering.apply_dismember(src, woundtype, outright = TRUE, attack_direction = attack_direction)
 		return
 
-	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
+	var/list/datum/wound/possible_wounds = list()
+	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
+		if (pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
+			possible_wounds += type
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -94,19 +132,19 @@
 				break
 
 	//cycle through the wounds of the relevant category from the most severe down
-	for(var/datum/wound/possible_wound as anything in wounds_checking)
+	for(var/datum/wound/possible_wound as anything in possible_wounds)
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)
-			if(existing_wound.type in wounds_checking)
+			if(existing_wound.wound_series == initial(possible_wound.wound_series))
 				if(existing_wound.severity >= initial(possible_wound.severity))
 					return
 				else
-					replaced_wound = existing_wound
+					replaced_wound = existing_wound // if we find something we keep iterating untilw e're done or we find we're outclassed by something in our series
 
 		if(initial(possible_wound.threshold_minimum) < injury_roll)
 			var/datum/wound/new_wound
 			if(replaced_wound)
-				new_wound = replaced_wound.replace_wound(possible_wound, attack_direction = attack_direction)
+				new_wound = replaced_wound.replace_wound(new possible_wound, attack_direction = attack_direction)
 			else
 				new_wound = new possible_wound
 				new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
@@ -119,9 +157,9 @@
 
 	var/datum/wound/potential_wound = specific_woundtype
 	for(var/datum/wound/existing_wound as anything in wounds)
-		if(existing_wound.wound_type == initial(potential_wound.wound_type))
+		if (existing_wound.wound_series == initial(potential_wound.wound_series))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
-				existing_wound.replace_wound(potential_wound, smited)
+				existing_wound.replace_wound(new potential_wound, smited)
 			return
 
 	var/datum/wound/new_wound = new potential_wound

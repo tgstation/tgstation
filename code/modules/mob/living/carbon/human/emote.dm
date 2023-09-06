@@ -20,7 +20,7 @@
 	key = "dap"
 	key_third_person = "daps"
 	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
-	message_param = "give daps to %t."
+	message_param = "gives daps to %t."
 	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/eyebrow

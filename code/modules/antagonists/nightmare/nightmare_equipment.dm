@@ -10,7 +10,8 @@
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	item_flags = ABSTRACT | DROPDEL | ACID_PROOF
+	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_MINING

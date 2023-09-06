@@ -17,9 +17,8 @@
 
 /datum/element/caseless/proc/on_fired_casing(obj/item/ammo_casing/shell, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro, obj/projectile/proj)
 	SIGNAL_HANDLER
-	if(!proj)
+	if(isnull(proj))
 		return
-
 	if(reusable)
 		proj.AddElement(/datum/element/projectile_drop, shell.type)
 
@@ -27,4 +26,4 @@
 		var/obj/item/gun/shot_from = fired_from
 		if(shot_from.chambered == shell)
 			shot_from.chambered = null //Nuke it. Nuke it now.
-	qdel(shell)
+	QDEL_NULL(shell)

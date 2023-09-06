@@ -167,9 +167,9 @@ GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
 		if(RCD_CATWALK)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 			if(lattice)
-				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 1)
-			else
 				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 2)
+			else
+				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 4)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

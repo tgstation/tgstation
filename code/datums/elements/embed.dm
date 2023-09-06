@@ -40,23 +40,23 @@
 		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, PROC_REF(tryForceEmbed))
 		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, PROC_REF(detachFromWeapon))
-		if(!initialized)
-			src.embed_chance = embed_chance
-			src.fall_chance = fall_chance
-			src.pain_chance = pain_chance
-			src.pain_mult = pain_mult
-			src.remove_pain_mult = remove_pain_mult
-			src.rip_time = rip_time
-			src.impact_pain_mult = impact_pain_mult
-			src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
-			src.jostle_chance = jostle_chance
-			src.jostle_pain_mult = jostle_pain_mult
-			src.pain_stam_pct = pain_stam_pct
-			initialized = TRUE
 	else
 		payload_type = projectile_payload
 		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(checkEmbedProjectile))
 
+	if(!initialized)
+		src.embed_chance = embed_chance
+		src.fall_chance = fall_chance
+		src.pain_chance = pain_chance
+		src.pain_mult = pain_mult
+		src.remove_pain_mult = remove_pain_mult
+		src.rip_time = rip_time
+		src.impact_pain_mult = impact_pain_mult
+		src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
+		src.jostle_chance = jostle_chance
+		src.jostle_pain_mult = jostle_pain_mult
+		src.pain_stam_pct = pain_stam_pct
+		initialized = TRUE
 
 /datum/element/embed/Detach(obj/target)
 	. = ..()
@@ -136,24 +136,25 @@
  * That's awful, and it'll limit us to drop-deletable shrapnels in the worry of stuff like
  * arrows and harpoons being embeddable even when not let loose by their weapons.
  */
-/datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
+/datum/element/embed/proc/checkEmbedProjectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(hit) || HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE))
-		Detach(P)
+	if(!source.can_embed_into(hit))
+		Detach(source)
 		return // we don't care
 
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	if(istype(payload, /obj/item/shrapnel/bullet))
-		payload.name = P.name
-	SEND_SIGNAL(P, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload)
+		payload.name = source.name
+	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload)
 	var/mob/living/carbon/C = hit
 	var/obj/item/bodypart/limb = C.get_bodypart(hit_zone)
 	if(!limb)
 		limb = C.get_bodypart()
 
-	tryForceEmbed(payload, limb)
-	Detach(P)
+	if(!tryForceEmbed(payload, limb))
+		payload.failedEmbed()
+	Detach(source)
 
 /**
  * tryForceEmbed() is called here when we fire COMSIG_EMBED_TRY_FORCE from [/obj/item/proc/tryEmbed]. Mostly, this means we're a piece of shrapnel from a projectile that just impacted something, and we're trying to embed in it.

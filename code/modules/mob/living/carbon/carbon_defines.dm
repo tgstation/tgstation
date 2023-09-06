@@ -11,8 +11,8 @@
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = EMISSIVE_BLOCK_NONE
-	///List of [/obj/item/organ/internal] in the mob. They don't go in the contents for some reason I don't want to know.
-	var/list/obj/item/organ/internal/organs = list()
+	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
+	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/organs_slot = list()
 	///How many dream images we have left to send
@@ -103,6 +103,9 @@
 	var/list/all_wounds
 	/// All of the scars a carbon has afflicted throughout their limbs
 	var/list/all_scars
+
+	/// Assoc list of BODY_ZONE -> WOUND_TYPE. Set when a limb is dismembered, unset when one is attached. Used for determining what scar to add when it comes time to generate them.
+	var/list/body_zone_dismembered_by
 
 	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
 	var/skillchip_complexity_modifier = 0

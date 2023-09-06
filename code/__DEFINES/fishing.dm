@@ -51,12 +51,6 @@
 /// Much like FISHING_HOOK_ENSNARE but for the reel.
 #define FISHING_LINE_BOUNCY (1 << 2)
 
-#define FISHING_SPOT_PRESET_BEACH "beach"
-#define FISHING_SPOT_PRESET_LAVALAND_LAVA "lavaland lava"
-#define FISHING_SPOT_PRESET_ICEMOON_PLASMA "icemoon plasma"
-#define FISHING_SPOT_PRESET_CHASM "chasm"
-#define FISHING_SPOT_PRESET_TOILET "toilet"
-
 #define FISHING_MINIGAME_RULE_HEAVY_FISH "heavy"
 #define FISHING_MINIGAME_RULE_LUBED_FISH "lubed"
 #define FISHING_MINIGAME_RULE_WEIGHTED_BAIT "weighted"

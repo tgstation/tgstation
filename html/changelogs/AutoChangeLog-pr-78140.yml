@@ -1,0 +1,4 @@
+author: "Eronymun"
+delete-after: True
+changes:
+  - bugfix: "The Birdshot Gaming Den now has arcade circuit boards and computer frames that actually work."

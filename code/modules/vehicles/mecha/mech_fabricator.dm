@@ -28,9 +28,6 @@
 	/// The job ID of the part currently being processed. This is used for ordering list items for the client UI.
 	var/top_job_id = 0
 
-	/// Reference to all materials used in the creation of the item being_built.
-	var/list/build_materials
-
 	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
@@ -221,12 +218,11 @@
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	materials.use_materials(D.materials, component_coeff)
+	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]")
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
 	desc = "It's building \a [D.name]."
-	rmat.silo_log(src, "built", -1, "[D.name]", build_materials)
 
 	return TRUE
 

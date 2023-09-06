@@ -35,7 +35,7 @@ type FishingMinigameProps = {
   fish_ai: FishAI;
   special_rules: SpecialRule[];
   background: string;
-  win: (perfect: boolean) => void;
+  win: () => void;
   lose: () => void;
 };
 
@@ -60,7 +60,6 @@ class FishingMinigame extends Component<
   animation_id: number;
   last_frame: number;
   reeling: ReelingState = ReelingState.Idle;
-  perfect: boolean = true;
   area_height: number = 1000;
   state: FishingMinigameState;
   currentVelocityLimit: number = 200;
@@ -297,9 +296,9 @@ class FishingMinigame extends Component<
     const { fish, bait } = this.state;
 
     // Speedup when reeling
-    const acceleration_up = -1500 * this.accel_up_coeff;
+    const acceleration_up = -1200 * this.accel_up_coeff;
     // Gravity
-    const acceleration_down = 1000;
+    const acceleration_down = 800;
     // Velocity is multiplied by this when bouncing off the bottom/top
     const bounce_coeff = this.baitBounceCoeff;
     // Acceleration mod when bait is over fish
@@ -327,26 +326,47 @@ class FishingMinigame extends Component<
       }
     }
 
-    const acceleration =
-      this.reeling === ReelingState.Reeling
-        ? acceleration_up
-        : this.reeling === ReelingState.ReelingDown
-          ? -acceleration_up
-          : acceleration_down;
+    let acceleration = 0;
+    switch (this.reeling) {
+      case ReelingState.Reeling:
+        acceleration = acceleration_up;
+        break;
+      case ReelingState.ReelingDown:
+        acceleration = -acceleration_up;
+        break;
+      case ReelingState.Idle:
+        acceleration =
+          this.bidirectional && newVelocity > 0
+            ? -acceleration_down
+            : acceleration_down;
+        break;
+    }
+
     // Slowdown both ways when on fish
     const velocity_change =
       acceleration *
       seconds *
       (this.fishOnBait(fish, bait) ? on_point_coeff : 1);
 
+    const brake_coeff = 2;
+    /*
+     * Basically, if current velocity and the change of velocity
+     * are going in different directions, we ensure the bait decelerates
+     * towards 0 velocity, making it less slippery, thus easier to control.
+     */
+    if (newVelocity > 0 && velocity_change < 0) {
+      newVelocity += Math.max(-newVelocity, velocity_change * brake_coeff);
+    } else if (newVelocity < 0 && velocity_change > 0) {
+      newVelocity += Math.min(-newVelocity, velocity_change * brake_coeff);
+    }
+
+    newVelocity += velocity_change;
+    // Ensure that bidirectional baits stay in place
     if (this.bidirectional && this.reeling === ReelingState.Idle) {
-      if (newVelocity < 0) {
-        newVelocity = Math.min(newVelocity + velocity_change, 0);
-      } else {
-        newVelocity = Math.max(newVelocity - velocity_change, 0);
-      }
-    } else {
-      newVelocity += velocity_change;
+      newVelocity =
+        velocity_change < 0
+          ? Math.max(newVelocity, 0)
+          : Math.min(newVelocity, 0);
     }
 
     // Round it off and cap
@@ -376,7 +396,6 @@ class FishingMinigame extends Component<
       completion_delta = seconds * completion_gain_per_second;
     } else {
       completion_delta = seconds * completion_lost_per_second;
-      this.perfect = false;
     }
     const rawCompletion = currentState.completion + completion_delta;
     const newCompletion = clamp(rawCompletion, 0, 100);
@@ -391,7 +410,7 @@ class FishingMinigame extends Component<
       this.props.lose();
       dispatch(backendSuspendStart());
     } else if (newCompletion >= 100) {
-      this.props.win(this.perfect);
+      this.props.win();
       dispatch(backendSuspendStart());
     }
 
@@ -500,7 +519,7 @@ export const Fishing = (props, context) => {
           fish_ai={data.fish_ai}
           special_rules={data.special_effects}
           background={data.background_image}
-          win={(perfect) => act('win', { perfect: perfect })}
+          win={() => act('win')}
           lose={() => act('lose')}
         />
       </Window.Content>
