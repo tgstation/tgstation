@@ -570,7 +570,6 @@
 
 
 /datum/beam/fishing_line
-	emissive = FALSE
 	// Is the fishing rod held in left side hand
 	var/lefthand = FALSE
 
