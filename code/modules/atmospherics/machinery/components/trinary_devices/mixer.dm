@@ -88,8 +88,8 @@
 	var/combined_heat_capacity = air1.heat_capacity() + air2.heat_capacity()
 	var/equalized_temperature = combined_heat_capacity ? (air1.thermal_energy() + air2.thermal_energy()) / combined_heat_capacity : 0
 
-	var/transfer_moles1 = equalized_temperature ? node1_concentration * general_transfer / equalized_temperature : 0
-	var/transfer_moles2 = equalized_temperature ? node2_concentration * general_transfer / equalized_temperature : 0
+	var/transfer_moles1 = equalized_temperature ? (node1_concentration * general_transfer) / equalized_temperature : 0
+	var/transfer_moles2 = equalized_temperature ? (node2_concentration * general_transfer) / equalized_temperature : 0
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
