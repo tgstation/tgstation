@@ -53,6 +53,8 @@
 
 		if(REQUEST_FAIL)
 			switch(response_info)
+				if(BROKEN_BEYOND_REPAIR)
+					say("The tram has suffered a catastrophic failure. Please seek alternate modes of travel.")
 				if(NOT_IN_SERVICE) //tram is QDEL or has no power
 					say("The tram is not in service. Please contact the nearest engineer.")
 				if(INVALID_PLATFORM) //engineer needs to fix button

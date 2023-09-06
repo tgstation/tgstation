@@ -21,6 +21,7 @@
 #define PLATFORM_DISABLED "!DIS"
 #define NO_CALL_REQUIRED "!NCR"
 #define INTERNAL_ERROR "!ERR"
+#define BROKEN_BEYOND_REPAIR "!DEAD"
 
 /// Tram Lines
 #define TRAMSTATION_LINE_1 "tram_1"

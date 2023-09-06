@@ -354,8 +354,9 @@
 
 /datum/transport_controller/linear/tram/proc/halt_and_catch_fire()
 	if(controller_status & SYSTEM_FAULT)
-		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		paired_cabinet.say("Controller error. Please contact your engineering department.")
+		if(!isnull(paired_cabinet))
+			playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			paired_cabinet.say("Controller error. Please contact your engineering department.")
 		log_transport("TC: [specific_transport_id] Transport Controller failed!")
 		log_transport("TC: [specific_transport_id] TODO: put detailed stuff here")
 
@@ -377,12 +378,13 @@
 
 /datum/transport_controller/linear/tram/proc/reset_position()
 	if(idle_platform)
-		set_status_code(SYSTEM_FAULT, FALSE)
-		set_status_code(EMERGENCY_STOP, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		paired_cabinet.say("Controller reset.")
-		log_transport("TC: [specific_transport_id] Transport Controller reset was requested, but the tram nav data seems correct. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
-		return
+		if(get_turf(idle_platform) == get_turf(nav_beacon))
+			set_status_code(SYSTEM_FAULT, FALSE)
+			set_status_code(EMERGENCY_STOP, FALSE)
+			playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			paired_cabinet.say("Controller reset.")
+			log_transport("TC: [specific_transport_id] Transport Controller reset was requested, but the tram nav data seems correct. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+			return
 
 	log_transport("TC: [specific_transport_id] performing Transport Controller reset. Locating closest reset beacon to ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z])")
 	var/tram_velocity_sign
@@ -521,9 +523,7 @@
 	RegisterSignal(new_cabinet, COMSIG_QDELETING, PROC_REF(on_cabinet_qdel))
 	log_transport("TC: [specific_transport_id] is now paired with [new_cabinet].")
 	if(controller_status & SYSTEM_FAULT)
-		set_status_code(SYSTEM_FAULT, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		paired_cabinet.say("Controller reset.")
+		reset_position()
 
 /datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
 	paired_cabinet = null

@@ -2,33 +2,38 @@
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
 	icon = 'icons/obj/tram/tram_display.dmi'
-	icon_state = "desto_off"
-	base_icon_state = "desto_"
+	icon_state = "desto_blank"
+	base_icon_state = "desto"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
 	anchored = TRUE
 	density = FALSE
-	subsystem_type = /datum/controller/subsystem/processing/transport
 	layer = SIGN_LAYER
-
-	/// The ID of the tram we're indicating
-	configured_transport_id = TRAMSTATION_LINE_1
+	light_range = 0
 	/// What sign face prefixes we have icons for
 	var/static/list/available_faces = list()
-	/// The light mask overlay we use
-	var/light_mask
+	/// The sign face we're displaying
+	var/sign_face
+	var/sign_color = COLOR_DISPLAY_BLUE
+
+/obj/machinery/transport/destination_sign/split/north
+	pixel_x = -8
+
+/obj/machinery/transport/destination_sign/split/south
+	pixel_x = 8
 
 /obj/machinery/transport/destination_sign/indicator
 	icon = 'icons/obj/tram/tram_indicator.dmi'
-	icon_state = "indi_off"
-	base_icon_state = "indi_"
-	light_range = 1.5
-	light_color = LIGHT_COLOR_DARK_BLUE
+	icon_state = "indi_blank"
+	base_icon_state = "indi"
+	light_range = 2
+	light_power = 0.7
+	light_angle = 115
 
 /obj/item/wallframe/icts/indicator_display
 	name = "indicator display frame"
 	desc = "Used to build tram indicator displays, just secure to the wall."
-	icon_state = "indi_off"
+	icon_state = "indi_blank"
 	icon = 'icons/obj/tram/tram_indicator.dmi'
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/destination_sign/indicator
@@ -41,23 +46,20 @@
 	available_faces = list(
 		TRAMSTATION_LINE_1,
 	)
+	set_light(l_dir = REVERSE_DIR(dir))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/transport/destination_sign/Destroy()
 	SStransport.displays -= src
 	. = ..()
 
+/obj/machinery/transport/destination_sign/indicator/setDir(newdir)
+	. = ..()
+	set_light(l_dir = REVERSE_DIR(dir))
+
 /obj/machinery/transport/destination_sign/indicator/LateInitialize(mapload)
 	. = ..()
 	link_tram()
-
-/obj/machinery/transport/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
-	SIGNAL_HANDLER
-
-	if(controller.specific_transport_id != configured_transport_id)
-		return
-	update_sign()
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
 
 /obj/machinery/transport/destination_sign/indicator/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
@@ -81,65 +83,57 @@
 		deconstruct()
 		return TRUE
 
-/obj/machinery/transport/destination_sign/proc/update_operating()
-	// Immediately process for snappy feedback
-	var/should_process = process() != PROCESS_KILL
-	if(should_process)
-		begin_processing()
-		return
-	end_processing()
-
 /obj/machinery/transport/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform)
-	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "[base_icon_state]off"
-		light_mask = null
-		set_light(l_on = FALSE)
+	SIGNAL_HANDLER
+
+	if(machine_stat & (NOPOWER|BROKEN) || isnull(destination_platform))
+		sign_face = null
 		update_appearance()
-		return PROCESS_KILL
+		return
 
 	if(!controller || !controller.controller_operational)
-		icon_state = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]"
-		light_mask = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]_e"
+		sign_face = "[base_icon_state]_NIS"
+		sign_color = COLOR_DISPLAY_RED
 		update_appearance()
-		return PROCESS_KILL
+		return
 
-	use_power(active_power_usage)
+	if(controller.controller_status & EMERGENCY_STOP || controller.controller_status & SYSTEM_FAULT)
+		sign_face = "[base_icon_state]_NIS"
+		sign_color = COLOR_DISPLAY_RED
+		update_appearance()
+		return
 
-	set_light(l_on = TRUE)
-	var/sign_face = ""
-	sign_face += "[base_icon_state]"
+	sign_face = ""
+	sign_face += "[base_icon_state]_"
 	if(!LAZYFIND(available_faces, controller.specific_transport_id))
 		sign_face += "[TRAMSTATION_LINE_1]"
 	else
 		sign_face += "[controller.specific_transport_id]"
+
 	sign_face += "[controller_active]"
 	sign_face += "[destination_platform.platform_code]"
 	sign_face += "[travel_direction]"
-	icon_state = "[sign_face]"
-	light_mask = "[sign_face]_e"
+	sign_color = COLOR_DISPLAY_BLUE
 
 	update_appearance()
-	return PROCESS_KILL
-
-/obj/machinery/transport/destination_sign/update_overlays()
-	. = ..()
-	if(!light_mask)
-		return
-
-	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += emissive_appearance(icon, light_mask, src, alpha = alpha)
 
 /obj/machinery/transport/destination_sign/update_icon_state()
 	. = ..()
-	switch(dir)
-		if(SOUTH, EAST)
-			pixel_x = 8
-		if(NORTH, WEST)
-			pixel_x = -8
+	if(isnull(sign_face))
+		icon_state = "[base_icon_state]_blank"
+		return
+	else
+		icon_state = sign_face
 
-/obj/machinery/transport/destination_sign/indicator/update_icon_state()
+/obj/machinery/transport/destination_sign/update_overlays()
 	. = ..()
-	pixel_x = 0
+
+	if(isnull(sign_face))
+		set_light(l_on = FALSE)
+		return
+
+	set_light(l_on = TRUE, l_color = sign_color)
+	. += emissive_appearance(icon, "[sign_face]_e", src, alpha = src.alpha)
 
 /obj/machinery/transport/destination_sign/indicator/power_change()
 	..()
@@ -149,5 +143,4 @@
 
 	update_sign(src, tram, tram.controller_active, tram.controller_status, tram.travel_direction, tram.destination_platform)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/transport/destination_sign, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/transport/destination_sign/indicator, 32)

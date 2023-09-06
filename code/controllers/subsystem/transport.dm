@@ -51,6 +51,12 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	LAZYADD(relevant, source)
 
+	if(isnull(transport_controller))
+		log_transport("Sub: Transport [transport_network] has no controller datum! Someone deleted it or something catastrophic happened.")
+		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, BROKEN_BEYOND_REPAIR)
+		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
+		return
+
 	if(!transport_controller || !transport_controller.controller_operational || !transport_controller.paired_cabinet)
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, NOT_IN_SERVICE)
 		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [NOT_IN_SERVICE]. Info: TC-[!transport_controller][!transport_controller.controller_operational][!transport_controller.paired_cabinet].")

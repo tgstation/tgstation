@@ -2,8 +2,8 @@
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
 	icon_state = "tram_controls"
-	base_icon_state = "tram_"
-	icon_screen = "tram_Central Wing_idle"
+	base_icon_state = "tram"
+	icon_screen = "tram_1014"
 	icon_keyboard = null
 	layer = SIGN_LAYER
 	density = FALSE
@@ -12,6 +12,10 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
+	/// What sign face prefixes we have icons for
+	var/static/list/available_faces = list()
+	/// The sign face we're displaying
+	var/sign_face
 
 	///Weakref to the tram piece we control
 	var/datum/weakref/transport_ref
@@ -28,21 +32,9 @@
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_RESPONSE, PROC_REF(call_response))
 	find_tram()
 
-	var/datum/transport_controller/linear/tram/icts_controller = transport_ref?.resolve()
-	if(icts_controller)
-		RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_tram_display))
-
-/obj/machinery/computer/tram_controls/update_icon_state()
-	. = ..()
-	switch(dir)
-		if(NORTH)
-			pixel_x = -8
-		if(SOUTH)
-			pixel_x = 8
-		if(EAST)
-			pixel_y = -8
-		if(WEST)
-			pixel_y = 8
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(tram)
+		RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_display))
 
 /**
  * Finds the tram from the console
@@ -123,15 +115,67 @@
 			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination_platform.platform_code)
 			update_appearance()
 
-/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/transport/nav_beacon/tram/idle_platform, controller_active)
+/obj/machinery/computer/tram_controls/proc/update_display(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform)
 	SIGNAL_HANDLER
-	var/datum/transport_controller/linear/tram/icts_controller = transport_ref?.resolve()
-	if(icts_controller.controller_active)
-		icon_screen = "[base_icon_state][icts_controller.destination_platform.name]_active"
-	else
-		icon_screen = "[base_icon_state][icts_controller.destination_platform.name]_idle"
-	update_appearance(UPDATE_ICON)
-	return PROCESS_KILL
+
+	if(machine_stat & (NOPOWER|BROKEN))
+		icon_screen = null
+		update_appearance()
+		return
+
+	if(!controller || !controller.controller_operational)
+		icon_screen = "[base_icon_state]_broken"
+		update_appearance()
+		return
+
+	if(isnull(destination_platform))
+		icon_screen = "[base_icon_state]_NIS"
+		update_appearance()
+		return
+
+	if(controller.controller_status & EMERGENCY_STOP || controller.controller_status & SYSTEM_FAULT)
+		icon_screen = "[base_icon_state]_NIS"
+		update_appearance()
+		return
+
+	if(controller_active)
+		icon_screen = "[base_icon_state]_0[travel_direction]"
+		update_appearance()
+		return
+
+	icon_screen = ""
+	icon_screen += "[controller.specific_transport_id]"
+	icon_screen += "[destination_platform.platform_code]"
+
+	update_appearance()
+
+/obj/machinery/computer/tram_controls/update_icon_state()
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			pixel_x = -8
+		if(SOUTH)
+			pixel_x = 8
+		if(EAST)
+			pixel_y = -8
+		if(WEST)
+			pixel_y = 8
+
+/obj/machinery/computer/tram_controls/update_overlays()
+	. = ..()
+
+	if(isnull(icon_screen))
+		return
+
+	. += emissive_appearance(icon, icon_screen, src, alpha = src.alpha)
+
+/obj/machinery/computer/tram_controls/power_change()
+	..()
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(!tram)
+		return
+
+	update_display(src, tram, tram.controller_active, tram.controller_status, tram.travel_direction, tram.destination_platform)
 
 /obj/machinery/computer/tram_controls/proc/call_response(controller, list/relevant, response_code, response_info)
 	SIGNAL_HANDLER
