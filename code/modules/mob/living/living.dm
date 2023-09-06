@@ -1141,22 +1141,24 @@
 		. *= gloves.grab_resilience_mult
 		. += gloves.grab_resilience_increment
 
+	// if you get more hands you are better at grabbing. duh
+	var/base_hand_mult = ((max(num_hands, 2) - 2) * GRAB_RESILIENCE_PER_HAND) + 1 // the -2 ensures at 2 hands you have x1 resilience
+
 	var/occupied_hands = num_hands - usable_hands // disabled hands are "occupied"
-	for(var/obj/item/held_item as anything in held_items)
+	for (var/obj/item/held_item as anything in held_items)
 		// items like slappers/zombie claws/etc. should be ignored
-		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
+		if (held_item.item_flags & HAND_ITEM)
 			continue
 
 		occupied_hands++
 
-	var/percent_hands_occupied = (occupied_hands / max(2, num_hands)) // support for the very rare case of having a lot of hands
+	if (occupied_hands >= num_hands) // its a little different if you literally have NOTHING to hold them with
+		base_hand_mult = BOTH_HANDS_OCCUPIED_GRAB_RESILIENCE_MULT
+	else // 0.7x at one hand occupied, 0.3x at both hands occupied because of ^
+		var/occupied_hand_mult_decrement = -(occupied_hands * GRAB_RESILIENCE_PER_HAND)
+		base_hand_mult += occupied_hand_mult_decrement
 
-	if (percent_hands_occupied == 0)
-		. *= ALL_HANDS_FREE_GRAB_RESILIENCE_MULT
-	else if (percent_hands_occupied == 1)
-		. *= BOTH_HANDS_OCCUPIED_GRAB_RESILIENCE_MULT
-	else
-		. *= ONE_HAND_FREE_GRAB_RESILIENCE_MULT // it literally has to be between 0 and 1
+	. *= base_hand_mult
 
 	if (HAS_TRAIT(src, TRAIT_HULK))
 		. *= HULK_GRAB_RESILIENCE_MULT
@@ -1167,9 +1169,6 @@
 
 	if (HAS_TRAIT(src, TRAIT_HULK))
 		mult *= HULK_GRAB_RESIST_MULT
-
-	if (pulledby.grab_state < GRAB_NECK && body_position == LYING_DOWN)
-		mult *= KNOCKED_DOWN_GRAB_RESIST_MULT
 
 	return mult
 

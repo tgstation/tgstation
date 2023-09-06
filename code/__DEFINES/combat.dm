@@ -123,10 +123,8 @@ DEFINE_BITFIELD(status_flags, list(
 //Grab breakout odds
 #define BASE_GRAB_RESIST_CHANCE 60 //base chance for whether or not you can escape from a grab
 
-/// If none of our hands are occupied, we will multiply our grab resilience by this
-#define ALL_HANDS_FREE_GRAB_RESILIENCE_MULT 1.4
-/// If only one of our hands are occupied, we will multiply our grab resilience by this
-#define ONE_HAND_FREE_GRAB_RESILIENCE_MULT 1
+/// If we have less/more usable hands than 2, our grab strength will be multiplied against this for each extra/occupied hand. 
+#define GRAB_RESILIENCE_PER_HAND 1.3
 /// If all of our hands are occupied, we will multiply our grab resilience by this
 #define BOTH_HANDS_OCCUPIED_GRAB_RESILIENCE_MULT 0.3 // you should really have at least one hand free!
 
