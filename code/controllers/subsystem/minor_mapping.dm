@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(minor_mapping)
 
 /datum/controller/subsystem/minor_mapping/Initialize()
 	#ifdef UNIT_TESTS // This whole subsystem just introduces a lot of odd confounding variables into unit test situations, so let's just not bother with doing an initialize here.
-	return SS_INIT_NO_MESSAGE
+	return SS_INIT_NO_NEED
 	#else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels(satchel_amount = 2)

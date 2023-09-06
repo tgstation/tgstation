@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(radioactive_nebula)
 	radioactive_nebula = locate() in SSstation.station_traits
 	if (!radioactive_nebula)
 		can_fire = FALSE
-		return SS_INIT_NO_MESSAGE
+		return SS_INIT_NO_NEED
 
 	// We don't *really* care that this happens by the time the server is ready to play.
 	ASYNC

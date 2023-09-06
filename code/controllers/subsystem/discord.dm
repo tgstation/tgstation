@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(discord)
 		enabled = TRUE // Allows other procs to use this (Account linking, etc)
 	else
 		can_fire = FALSE // We dont want excess firing
-		return SS_INIT_NO_MESSAGE
+		return SS_INIT_NO_NEED
 
 	try
 		people_to_notify = json_decode(file2text(notify_file))
