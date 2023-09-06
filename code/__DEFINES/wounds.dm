@@ -171,6 +171,9 @@ GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate
 
 	return all_pregen_data
 
+// A wound series "collection" is merely a way for us to track what is in what series, and what their types are.
+// Without this, we have no centralized way to determine what type is in what series outside of iterating over every pregen data.
+
 /// A branching assoc list of (series -> list(severity -> list(specific type -> list(typepath -> weight))). Allows you to say "I want a generic slash wound",
 /// then "Of severity 2", then "normal type", and get a wound of that description - via get_corresponding_wound_type()
 /// Series: A generic wound_series, such as WOUND_SERIES_BONE_BLUNT_BASIC
