@@ -1,0 +1,4 @@
+author: "dieamond13"
+delete-after: True
+changes:
+  - image: "adds special sprites for lungs when you use the smoker quirk"
