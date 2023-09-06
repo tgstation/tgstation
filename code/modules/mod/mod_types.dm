@@ -53,10 +53,13 @@
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/tether,
 		/obj/item/mod/module/magboot,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/tether,
 	)
 
 /obj/item/mod/control/pre_equipped/atmospheric
@@ -66,8 +69,13 @@
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/magboot,
 		/obj/item/mod/module/t_ray,
 		/obj/item/mod/module/quick_carry,
+	)
+	default_pins = list(
+		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/flashlight,
 	)
 
 /obj/item/mod/control/pre_equipped/advanced
@@ -81,8 +89,9 @@
 		/obj/item/mod/module/jetpack,
 	)
 	default_pins = list(
-		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/magboot/advanced,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/jetpack,
 	)
 
 /obj/item/mod/control/pre_equipped/loader
@@ -246,6 +255,12 @@
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
 	)
+
+/obj/item/mod/control/pre_equipped/nuclear/plasmaman
+
+/obj/item/mod/control/pre_equipped/nuclear/plasmaman/Initialize(mapload, new_theme, new_skin, new_core)
+	applied_modules += /obj/item/mod/module/plasma_stabilizer
+	return ..()
 
 /obj/item/mod/control/pre_equipped/nuclear/unrestricted
 	req_access = null

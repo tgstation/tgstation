@@ -6,7 +6,6 @@
 	name = "Bird Crate"
 	desc = "Contains five expert telecommunication birds."
 	cost = CARGO_CRATE_VALUE * 8
-	access_view = ACCESS_CE
 	contains = list(/mob/living/simple_animal/parrot)
 	crate_name = "parrot crate"
 
@@ -20,7 +19,6 @@
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 5
-	access_view = ACCESS_THEATRE
 	contains = list(/mob/living/basic/butterfly)
 	crate_name = "entomology samples crate"
 
@@ -33,7 +31,6 @@
 	name = "Cat Crate"
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 10 //Cats are worth as much as corgis.
-	access_view = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/pet/cat,
 					/obj/item/clothing/neck/petcollar,
 					/obj/item/toy/cattoy,
@@ -51,7 +48,6 @@
 	name = "Chicken Crate"
 	desc = "The chicken goes bwaak!"
 	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/basic/chick)
 	crate_name = "chicken crate"
 
@@ -60,7 +56,6 @@
 	desc = "Considered the optimal dog breed by thousands of research scientists, this Corgi is but \
 		one dog from the millions of Ian's noble bloodline. Comes with a cute collar!"
 	cost = CARGO_CRATE_VALUE * 10
-	access_view = ACCESS_HOP
 	contains = list(/mob/living/basic/pet/dog/corgi,
 					/obj/item/clothing/neck/petcollar,
 				)
@@ -78,7 +73,6 @@
 	name = "Cow Crate"
 	desc = "The cow goes moo! Contains one cow."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_HYDROPONICS
 	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
@@ -86,7 +80,6 @@
 	name = "Sheep Crate"
 	desc = "The sheep goes BAAAA! Contains one sheep."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_HYDROPONICS
 	contains = list(/mob/living/basic/sheep)
 	crate_name = "sheep crate"
 
@@ -94,7 +87,6 @@
 	name = "Pig Crate"
 	desc = "The pig goes oink! Contains one pig."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/basic/pig)
 	crate_name = "pig crate"
 
@@ -102,7 +94,6 @@
 	name = "Pony Crate"
 	desc = "Ponies, yay! (Just the one.)"
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_SERVICE
 	contains = list(/mob/living/basic/pony)
 	crate_name = "pony crate"
 
@@ -116,7 +107,6 @@
 		EEEEEEEEEEEEEEEEEEEEEEEEE EEEETTTTTTTTTTTTAAAAAAAAA AAAHHHHHHHHHHHHH. CRAB ROCKET. CRAAAB \
 		ROCKEEEEEEEEEGGGGHHHHTT CRAB CRAB CRAABROCKET CRAB ROCKEEEET."//fun fact: i actually spent like 10 minutes and transcribed the entire video.
 	cost = CARGO_CRATE_VALUE * 8
-	access_view = ACCESS_HOS
 	contains = list(/mob/living/basic/crab)
 	crate_name = "look sir free crabs"
 	drop_pod_only = TRUE
@@ -140,7 +130,6 @@
 	name = "Fox Crate"
 	desc = "The fox goes...? Contains one fox. Comes with a collar!"//what does the fox say
 	cost = CARGO_CRATE_VALUE * 10
-	access_view = ACCESS_CAPTAIN
 	contains = list(
 		/mob/living/basic/pet/fox,
 		/obj/item/clothing/neck/petcollar,
@@ -151,7 +140,6 @@
 	name = "Goat Crate"
 	desc = "The goat goes baa! Contains one goat. Warranty void if used as a replacement for Pete."
 	cost = CARGO_CRATE_VALUE * 5
-	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
@@ -202,7 +190,6 @@
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
 		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_SECURITY
 	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
 	crate_name = "snake crate"
 
@@ -221,7 +208,6 @@
 	name = "Lizard Crate"
 	desc = "Hisss! Containssss a friendly lizard. Not to be confusssed with a lizardperssson."
 	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_JANITOR
 	contains = list(/mob/living/basic/lizard)
 	crate_name = "lizard crate"
 

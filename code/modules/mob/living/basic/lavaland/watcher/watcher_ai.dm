@@ -20,7 +20,7 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/overwatch/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if (LAZYLEN(living_pawn.do_afters))
+	if (living_pawn.do_after_count())
 		return // Don't interrupt our other ability
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target) || HAS_TRAIT(target, TRAIT_OVERWATCH_IMMUNE))

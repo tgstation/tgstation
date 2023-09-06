@@ -1,6 +1,0 @@
-author: "LukasBeedellCodestuff"
-delete-after: True
-changes:
-  - rscadd: "Added compact shotgun to the hos locker"
-  - rscadd: "Added compact shotgun as a traitor objective"
-  - balance: "gives the compact shotgun 1 extra shot"

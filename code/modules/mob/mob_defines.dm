@@ -117,9 +117,6 @@
 	/// How many ticks this mob has been over reating
 	var/overeatduration = 0 // How long this guy is overeating //Carbon
 
-	/// The movement intent of the mob (run/wal)
-	var/m_intent = MOVE_INTENT_RUN//Living
-
 	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null
 

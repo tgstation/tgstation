@@ -385,9 +385,10 @@
  *
  * Argument(s):
  * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ * * Optional - include_accessories (TRUE/FALSE), whether or not to include the accessories in the returned list
  */
 
-/mob/living/proc/get_equipped_items(include_pockets = FALSE)
+/mob/living/proc/get_equipped_items(include_pockets = FALSE, include_accessories = FALSE)
 	var/list/items = list()
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
@@ -400,17 +401,21 @@
  *
  * Argument(s):
  * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ * * Optional - include_accessories (TRUE/FALSE), whether or not to include the accessories in the returned list
  */
 
-/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
+/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE, include_accessories = FALSE)
 	var/list/items = ..()
 	if(!include_pockets)
 		items -= list(l_store, r_store, s_store)
+	if(include_accessories && w_uniform)
+		var/obj/item/clothing/under/worn_under = w_uniform
+		items += worn_under.attached_accessories
 	return items
 
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
-	items |= get_equipped_items(TRUE)
+	items |= get_equipped_items(include_pockets = TRUE)
 	for(var/I in items)
 		dropItemToGround(I)
 	drop_all_held_items()
@@ -536,7 +541,7 @@
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/carbon/proc/get_all_gear()
-	var/list/processing_list = get_equipped_items(include_pockets = TRUE) + held_items
+	var/list/processing_list = get_equipped_items(include_pockets = TRUE, include_accessories = TRUE) + held_items
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
 	while(i < length(processing_list) )

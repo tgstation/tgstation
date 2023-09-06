@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "removed unused procs in ore silo"
-  - code_imp: "merged repeated code segments when using materials from the ore silo into a single proc"
-  - code_imp: "added auto docs & cleaned up some procs"
-  - refactor: "logging when an item is inserted or sheets are ejected from the silo is now handled directly by the silo itself"

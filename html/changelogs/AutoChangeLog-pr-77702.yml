@@ -1,5 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - qol: "Satchels can now be crafted using the same recipe (4 cloth) as backpacks."
-  - bugfix: "Fixed a light inside a wall on Delta Station."

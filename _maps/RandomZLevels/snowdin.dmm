@@ -8965,7 +8965,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "EK" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},

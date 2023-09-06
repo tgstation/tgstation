@@ -379,6 +379,24 @@
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/traditional
+	name = "Traditional Suit"
+	desc = "A full, vibrantly coloured suit. Likely with traditional purposes. Maybe the colours represent a familly, clan, or rank, who knows."
+	icon_state = "tradition"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/loincloth
+	name = "Leather Loincloth"
+	desc = "Just a piece of leather to cover private areas. Itchy to the touch. Whoever made this must have been desperate, or savage."
+	icon_state = "loincloth"
+	inhand_icon_state = null
+	body_parts_covered = GROIN
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+
 /obj/item/clothing/under/costume/henchmen
 	name = "henchmen jumpsuit"
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
@@ -388,3 +406,4 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+

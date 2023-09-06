@@ -49,7 +49,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
 	AddComponent(\
 		/datum/component/egg_layer,\
-		/obj/item/food/egg,\
+		/obj/item/food/egg/organic,\
 		list(/obj/item/food/grown/wheat),\
 		feed_messages = list("She clucks contently."),\
 		lay_messages = EGG_LAYING_MESSAGES,\

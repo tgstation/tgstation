@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "you can detach signaller from wires without the machine deconstructing itself"

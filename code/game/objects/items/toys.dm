@@ -62,7 +62,7 @@
 		else if(reagents.total_volume >= 10)
 			to_chat(user, span_warning("[src] is full."))
 		else
-			A.reagents.trans_to(src, 10, transfered_by = user)
+			A.reagents.trans_to(src, 10, transferred_by = user)
 			to_chat(user, span_notice("You fill the balloon with the contents of [A]."))
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_appearance()
@@ -77,7 +77,7 @@
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, span_notice("You fill the balloon with the contents of [I]."))
-				I.reagents.trans_to(src, 10, transfered_by = user)
+				I.reagents.trans_to(src, 10, transferred_by = user)
 				update_appearance()
 	else if(I.get_sharpness())
 		balloon_burst()
@@ -663,7 +663,7 @@
 	SIGNAL_HANDLER
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
+		if(issilicon(H) || M.move_intent == MOVE_INTENT_RUN)
 			to_chat(M, span_danger("You step on the snap pop!"))
 			pop_burst(2, 0)
 

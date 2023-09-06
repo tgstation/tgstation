@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed some tooltips in the sec records UI showing \"false\"s where they shouldn't."

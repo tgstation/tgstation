@@ -30,7 +30,6 @@
 	mail_goodies = list(
 		/obj/item/raw_anomaly_core/random = 10,
 		/obj/item/disk/design_disk/bepis = 2,
-		/obj/item/camera_bug = 1
 	)
 	rpg_title = "Thaumaturgist"
 	job_flags = STATION_JOB_FLAGS
@@ -52,6 +51,7 @@
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
+	messenger = /obj/item/storage/backpack/messenger/science
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()

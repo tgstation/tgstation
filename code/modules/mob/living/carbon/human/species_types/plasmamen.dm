@@ -51,6 +51,13 @@
 
 	ass_image = 'icons/ass/assplasma.png'
 
+	outfit_override_registry = list(
+		/datum/outfit/syndicate = /datum/outfit/syndicate/plasmaman,
+		/datum/outfit/syndicate/full = /datum/outfit/syndicate/full/plasmaman,
+		/datum/outfit/syndicate/leader = /datum/outfit/syndicate/leader/plasmaman,
+		/datum/outfit/syndicate/reinforcement = /datum/outfit/syndicate/reinforcement/plasmaman,
+	)
+
 	/// If the bones themselves are burning clothes won't help you much
 	var/internal_fire = FALSE
 

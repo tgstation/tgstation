@@ -454,3 +454,52 @@
 	name = "Nest Vitalization"
 	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
 	icon_state = "nest_life"
+
+/**
+ * Granted to wizards upon satisfying the cheese sacrifice during grand rituals.
+ * Halves incoming damage and makes the owner stun immune, damage slow immune, levitating(even in space and hyperspace!) and glowing.
+ */
+/datum/status_effect/blessing_of_insanity
+	id = "blessing_of_insanity"
+	duration = -1
+	tick_interval = -1
+	alert_type = /atom/movable/screen/alert/status_effect/blessing_of_insanity
+
+/atom/movable/screen/alert/status_effect/blessing_of_insanity
+	name = "Blessing of Insanity"
+	desc = "Your devotion to madness has improved your resilience to all damage and you gain the power to levitate!"
+	//no screen alert - the gravity already throws one
+
+/datum/status_effect/blessing_of_insanity/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		var/datum/physiology/owner_physiology = human_owner.physiology
+		owner_physiology.brute_mod *= 0.5
+		owner_physiology.burn_mod *= 0.5
+		owner_physiology.tox_mod *= 0.5
+		owner_physiology.oxy_mod *= 0.5
+		owner_physiology.clone_mod *= 0.5
+		owner_physiology.stamina_mod *= 0.5
+	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
+	owner.AddElement(/datum/element/forced_gravity, 0)
+	owner.AddElement(/datum/element/simple_flying)
+	owner.add_stun_absorption(source = id, priority = 4)
+	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
+	return TRUE
+
+/datum/status_effect/blessing_of_insanity/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		var/datum/physiology/owner_physiology = human_owner.physiology
+		owner_physiology.brute_mod *= 2
+		owner_physiology.burn_mod *= 2
+		owner_physiology.tox_mod *= 2
+		owner_physiology.oxy_mod *= 2
+		owner_physiology.clone_mod *= 2
+		owner_physiology.stamina_mod *= 2
+	owner.remove_filter("mad_glow")
+	owner.RemoveElement(/datum/element/forced_gravity, 0)
+	owner.RemoveElement(/datum/element/simple_flying)
+	owner.remove_stun_absorption(id)
+	remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
