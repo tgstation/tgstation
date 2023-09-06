@@ -496,22 +496,24 @@
 	set name = "toggle-walk-run"
 	set hidden = TRUE
 	set instant = TRUE
-	if(mob)
-		mob.toggle_move_intent(usr)
+	if(isliving(mob))
+		var/mob/living/user_mob = mob
+		user_mob.toggle_move_intent(usr)
 
 /**
  * Toggle the move intent of the mob
  *
  * triggers an update the move intent hud as well
  */
-/mob/proc/toggle_move_intent(mob/user)
-	if(m_intent == MOVE_INTENT_RUN)
-		m_intent = MOVE_INTENT_WALK
+/mob/living/proc/toggle_move_intent(mob/user)
+	if(move_intent == MOVE_INTENT_RUN)
+		move_intent = MOVE_INTENT_WALK
 	else
-		m_intent = MOVE_INTENT_RUN
+		move_intent = MOVE_INTENT_RUN
 	if(hud_used?.static_inventory)
 		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_appearance()
+	update_move_intent_slowdown()
 
 ///Moves a mob upwards in z level
 /mob/verb/up()

@@ -121,7 +121,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aA" = (
-/obj/item/roller,
+/obj/item/emergency_bed,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aB" = (

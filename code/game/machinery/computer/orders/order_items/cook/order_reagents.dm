@@ -51,9 +51,9 @@
 	item_path = /obj/item/reagent_containers/condiment/vinegar
 	cost_per_order = 30
 
-/datum/orderable_item/reagents/quality_oil
-	name = "Quality Oil"
-	item_path = /obj/item/reagent_containers/condiment/quality_oil
+/datum/orderable_item/reagents/olive_oil
+	name = "Olive Oil"
+	item_path = /obj/item/reagent_containers/condiment/olive_oil
 	cost_per_order = 50 //Extra Virgin, just like you, the reader
 
 /datum/orderable_item/reagents/peanut_butter

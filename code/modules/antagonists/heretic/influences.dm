@@ -115,7 +115,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	alpha = 0
 
@@ -194,7 +194,7 @@
 	name = "reality smash"
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
 	/// Whether we're currently being drained or not.
@@ -205,12 +205,28 @@
 	var/list/datum/mind/minds = list()
 	/// The image shown to heretics
 	var/image/heretic_image
+	/// We hold the turf we're on so we can remove and add the 'no prints' flag.
+	var/turf/on_turf
 
 /obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
 	heretic_image = image(icon, src, real_icon_state, OBJ_LAYER)
 	generate_name()
+	on_turf = get_turf(src)
+	if(!istype(on_turf))
+		return
+	on_turf.interaction_flags_atom |= INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	RegisterSignal(on_turf, COMSIG_TURF_CHANGE, PROC_REF(replace_our_turf))
+
+/obj/effect/heretic_influence/proc/replace_our_turf(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+	SIGNAL_HANDLER
+	post_change_callbacks += CALLBACK(src, PROC_REF(replace_our_turf_two))
+	on_turf = null //hard del ref?
+
+/obj/effect/heretic_influence/proc/replace_our_turf_two(turf/new_turf)
+	new_turf.interaction_flags_atom |= INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	on_turf = new_turf
 
 /obj/effect/heretic_influence/Destroy()
 	GLOB.reality_smash_track.smashes -= src
@@ -218,6 +234,8 @@
 		remove_mind(heretic)
 
 	heretic_image = null
+	on_turf?.interaction_flags_atom &= ~INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
+	on_turf = null
 	return ..()
 
 /obj/effect/heretic_influence/attack_hand_secondary(mob/user, list/modifiers)

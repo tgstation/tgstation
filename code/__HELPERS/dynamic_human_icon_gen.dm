@@ -54,5 +54,6 @@ GLOBAL_LIST_EMPTY(dynamic_human_appearances)
 /proc/set_dynamic_human_appearance(list/arguments)
 	var/atom/target = arguments[1] //1st argument is the target
 	var/dynamic_appearance = get_dynamic_human_appearance(arglist(arguments.Copy(2))) //the rest of the arguments starting from 2 matter to the proc
-	target.icon = null
+	target.icon = 'icons/blanks/32x32.dmi'
+	target.icon_state = "nothing"
 	target.copy_overlays(dynamic_appearance, cut_old = TRUE)

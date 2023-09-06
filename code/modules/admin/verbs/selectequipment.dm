@@ -213,7 +213,7 @@
 				delete_pocket = TRUE
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
-	for(var/obj/item/item in human_target.get_equipped_items(delete_pocket))
+	for(var/obj/item/item in human_target.get_equipped_items(include_pockets = delete_pocket))
 		qdel(item)
 
 	var/obj/item/organ/internal/brain/human_brain = human_target.get_organ_slot(BRAIN)

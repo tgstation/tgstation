@@ -2594,8 +2594,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -4947,6 +4947,7 @@
 	cycle_id = "perma-entrance"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "bBr" = (
@@ -9099,7 +9100,7 @@
 "cLf" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -10640,7 +10641,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -13062,7 +13063,7 @@
 	network = list("ss13","medbay");
 	pixel_x = 22
 	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -18389,7 +18390,7 @@
 /area/station/engineering/storage_shared)
 "fKi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -18907,6 +18908,7 @@
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "fTB" = (
@@ -18962,7 +18964,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "fUj" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "fUn" = (
@@ -29404,6 +29406,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"jse" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "jsp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
@@ -30100,8 +30112,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/structure/bed{
-	dir = 4
+/obj/structure/bed/medical/anchored{
+	dir = 8
 	},
 /obj/item/bedsheet/medical{
 	dir = 4
@@ -32284,7 +32296,9 @@
 /turf/open/floor/iron/dark/side,
 /area/station/service/chapel)
 "kmA" = (
-/obj/structure/bed,
+/obj/structure/bed/medical/anchored{
+	dir = 4
+	},
 /obj/item/bedsheet/medical,
 /obj/machinery/camera/directional/east{
 	c_tag = "Labor Camp Infirmary";
@@ -32490,7 +32504,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "kpX" = (
-/obj/structure/bed,
+/obj/structure/bed/medical{
+	dir = 4
+	},
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -35091,7 +35107,7 @@
 /area/station/science/xenobiology)
 "lei" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "lek" = (
@@ -38008,7 +38024,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -44611,7 +44627,7 @@
 "oiv" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/coroner/surgery,
+/obj/item/surgery_tray/morgue,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "oiy" = (
@@ -45573,6 +45589,18 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"oxu" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "oxB" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -45769,7 +45797,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "ozV" = (
@@ -55520,7 +55548,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -57527,7 +57555,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
@@ -67835,7 +67863,7 @@
 	dir = 10
 	},
 /obj/structure/sign/warning/chem_diamond/directional/west,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
@@ -68240,10 +68268,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_x = -1
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_x = 4
 	},
 /obj/item/storage/medkit/regular{
@@ -68667,7 +68695,6 @@
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
 /obj/item/computer_disk/engineering,
-/obj/item/computer_disk/atmos,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -233317,7 +233344,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+aBR
 aBR
 aBR
 aBR
@@ -233574,7 +233601,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+aBR
 aBR
 aBR
 aBR
@@ -233830,8 +233857,8 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
+aBR
+aBR
 aBR
 aBR
 aBR
@@ -234087,8 +234114,8 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
+aBR
+aBR
 aBR
 aBR
 aBR
@@ -234343,10 +234370,10 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+bln
 aBR
 aBR
 nbp
@@ -234599,12 +234626,12 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
 aBR
+aBR
+aBR
+aBR
+bln
+bln
 aBR
 nbp
 mhx
@@ -234856,12 +234883,12 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+bln
+lBD
+bln
 aBR
 nbp
 xKY
@@ -235113,13 +235140,13 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
 aBR
+aBR
+aBR
+bln
+uer
+bln
+lBD
 nbp
 mhx
 jeF
@@ -235369,14 +235396,14 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
 aBR
+aBR
+aBR
+lBD
+bln
+bln
+bln
+lBD
 nbp
 nbp
 mUM
@@ -235626,14 +235653,14 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+bln
+bln
+bln
+tGr
+bln
 lbc
 nbp
 mMX
@@ -235883,14 +235910,14 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+bln
+lBD
+tGr
+tGr
+tGr
 lbc
 nbp
 nbp
@@ -236140,17 +236167,17 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+uer
+bln
+tGr
+tGr
+tGr
 lbc
 bln
-bln
+lBD
 bln
 npb
 bln
@@ -236397,14 +236424,14 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+aBR
+bln
+tGr
+tGr
+tGr
 lbc
 bln
 bln
@@ -236655,13 +236682,13 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+bln
+bln
+tGr
+tGr
 lbc
 bln
 bln
@@ -236912,13 +236939,13 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+bln
+bln
+lBD
+tGr
 lbc
 bln
 bln
@@ -237169,13 +237196,13 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+bln
+bln
+lBD
+tGr
 lbc
 bln
 bln
@@ -237183,7 +237210,7 @@ bln
 lbc
 bln
 bln
-bln
+lBD
 bln
 lSu
 bUx
@@ -237426,23 +237453,23 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
+aBR
+bln
+bln
+bln
 mZf
 oot
 oot
 ajx
-rwt
-aBR
-aBR
-aBR
-aBR
-aBR
+qVo
+bln
+bln
+bln
+bln
+bln
 bUx
 xmO
 ubE
@@ -237684,22 +237711,22 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
 aBR
 aBR
 aBR
-aBR
-aBR
-aBR
-aBR
-aBR
-aBR
-aBR
+bln
+uer
+bln
+lBD
+bln
+bln
+bln
+npb
+bln
+bln
+bln
+tGr
+tGr
 bUx
 xmO
 deY
@@ -237941,22 +237968,22 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
-wNO
 aBR
 aBR
 aBR
-aBR
-aBR
-aBR
-aBR
-aBR
-aBR
-aBR
+bln
+bln
+bln
+tGr
+tGr
+bln
+bln
+npb
+bln
+tGr
+tGr
+tGr
+tGr
 bUx
 hJe
 xmO
@@ -238199,16 +238226,16 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
 aBR
 aBR
 aBR
 bln
 bln
+tGr
+tGr
+lBD
+bln
+jse
 bln
 xAs
 nXb
@@ -238456,14 +238483,14 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
-wNO
 aBR
 aBR
 aBR
+aBR
+lBD
+tGr
+tGr
+tGr
 bln
 bln
 bln
@@ -238714,19 +238741,19 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
 aBR
 aBR
 aBR
 bln
 bln
+tGr
+tGr
+bln
+lSu
 xiI
-bln
-bln
-bln
+oxu
+oot
+oot
 kei
 pDC
 clq
@@ -238971,14 +238998,14 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
-wNO
+aBR
 aBR
 aBR
 aBR
 bln
+bln
+bln
+lBD
 bln
 bln
 bln
@@ -239229,13 +239256,13 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
+aBR
 aBR
 aBR
 aBR
 bln
+bln
+lBD
 bln
 bln
 bln
@@ -239486,17 +239513,17 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
 aBR
 aBR
 aBR
+aBR
+aBR
 bln
 bln
 bln
 bln
 bln
+lBD
 tCR
 lGK
 jRP
@@ -239743,15 +239770,15 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
-wNO
+aBR
+aBR
+aBR
 aBR
 aBR
 aBR
 bln
 bln
-bln
+uer
 bln
 bln
 tCR
@@ -240001,15 +240028,15 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
 aBR
 aBR
 aBR
+aBR
+aBR
 bln
 bln
 bln
-bln
+lBD
 bln
 tCR
 nKR
@@ -240259,7 +240286,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+aBR
 aBR
 aBR
 aBR
@@ -240516,13 +240543,13 @@ wNO
 wNO
 wNO
 wNO
-wNO
+aBR
 aBR
 aBR
 aBR
 bln
 bln
-bln
+lBD
 bln
 ykw
 mvl

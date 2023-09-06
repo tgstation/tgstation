@@ -144,10 +144,12 @@
 		//MOB SPAWNING HERE
 		if(mobs_allowed && !spawned_something && prob(mob_spawn_chance))
 			var/atom/picked_mob = pick(mob_spawn_list)
+			var/is_megafauna = FALSE
 
 			if(picked_mob == SPAWN_MEGAFAUNA)
 				if(megas_allowed) //this is danger. it's boss time.
 					picked_mob = pick(megafauna_spawn_list)
+					is_megafauna = TRUE
 				else //this is not danger, don't spawn a boss, spawn something else
 					picked_mob = pick(mob_spawn_no_mega_list) //What if we used 100% of the brain...and did something (slightly) less shit than a while loop?
 
@@ -165,8 +167,9 @@
 					if(ismining(mob_blocker))
 						can_spawn = FALSE
 						break
-				// Also block spawns if there's a random lavaland mob spawner nearby
-				can_spawn = can_spawn && !(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
+				// Also block spawns if there's a random lavaland mob spawner nearby and it's not a mega
+				if(!is_megafauna)
+					can_spawn = can_spawn && !(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
 			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
 			if(can_spawn)
 				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, turf))

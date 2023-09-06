@@ -308,7 +308,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/mod/core/standard(src)
 	for(var/i in 1 to 2)
-		new /obj/item/clothing/neck/link_scryer(src)
+		new /obj/item/clothing/neck/link_scryer/loaded(src)
 
 /obj/structure/closet/crate/solarpanel_small
 	name = "budget solar panel crate"

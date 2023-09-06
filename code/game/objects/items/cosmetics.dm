@@ -274,3 +274,12 @@
 					shave(human_target, location)
 				return
 	return ..()
+
+/obj/item/razor/surgery
+	name = "surgical razor"
+	desc = "A medical grade razor. Its precision blades provide a clean shave for surgical preparation."
+	icon = 'icons/obj/cosmetic.dmi'
+	icon_state = "medrazor"
+
+/obj/item/razor/surgery/get_surgery_tool_overlay(tray_extended)
+	return "razor"
