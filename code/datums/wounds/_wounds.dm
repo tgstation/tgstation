@@ -665,7 +665,11 @@
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
 /// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.
+/// In fact, since it's RETURN_TYPEd to wound_pregen_data, you can even directly access the variables without having to store the value of this proc in a typed variable.
+/// Ex. get_pregen_data().wound_series
 /datum/wound/proc/get_pregen_data()
+	RETURN_TYPE(/datum/wound_pregen_data)
+
 	return GLOB.all_wound_pregen_data[type]
 
 #undef WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS
