@@ -1,4 +1,3 @@
-#define MAX_BOULDERS_PER_VENT 10
 
 SUBSYSTEM_DEF(stock_market)
 	name = "Stock Market"
