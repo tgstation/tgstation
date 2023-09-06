@@ -47,7 +47,7 @@
 /// Grab everyone we share space with. If it's nobody, go home.
 /obj/effect/goliath_tentacle/proc/grab()
 	for (var/mob/living/victim in loc)
-		if (victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE) || caster.faction_check_mob(victim))
+		if (victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE) || caster?.faction_check_mob(victim))
 			continue
 		balloon_alert(victim, "grabbed")
 		visible_message(span_danger("[src] grabs hold of [victim]!"))

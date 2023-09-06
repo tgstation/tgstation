@@ -5,7 +5,6 @@
 /datum/element/crusher_damage_ticker
 	/// How much damage do we deal to the enemy and want to increment the tracker's damage for
 	var/damage_to_increment
-	var/ref_source
 
 /datum/element/crusher_damage_ticker/Attach(datum/target, listen_to, damage_to_increment)
 	. = ..()
@@ -15,7 +14,6 @@
 	if(isnull(listen_to))
 		stack_trace("crusher_damage_ticker element was not passed a listen_to for [target] to determine what to listen to.")
 		return ELEMENT_INCOMPATIBLE
-	ref_source = target
 	switch(listen_to)
 		if(APPLY_WITH_MELEE)
 			RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_melee_attack))
