@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 /datum/pre_round_store/proc/finalize_purchase_spawn(mob/new_player_mob, mob/new_player_mob_living)
 	var/datum/preferences/owners_prefs = new_player_mob.client.prefs
 	if(!owners_prefs.has_coins(initial(bought_item.item_cost)))
-		to_chat(owner, span_warning("It seems your lacking coins to complete this transaction."))
+		to_chat(new_player_mob, span_warning("It seems your lacking coins to complete this transaction."))
 		return
 	var/obj/item/created_item = new bought_item.item_path
 
