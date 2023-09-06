@@ -8180,13 +8180,13 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "bWw" = (
-/obj/machinery/button/flasher{
-	id = "Cell 6";
-	name = "Prisoner Flash";
-	pixel_x = -25
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/machinery/status_display/door_timer{
+	id = "Isolation_Cell";
+	name = "Isolation Cell";
+	pixel_x = -32
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -23598,6 +23598,7 @@
 	dir = 5
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "fQF" = (
@@ -28123,7 +28124,7 @@
 /area/station/medical/cryo)
 "gTH" = (
 /obj/machinery/flasher/directional/south{
-	id = "Cell 6"
+	id = "Isolation_Cell"
 	},
 /obj/machinery/light/small/broken/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -78427,6 +78428,7 @@
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
 /obj/item/mod/module/magboot,
+/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "tGq" = (
@@ -93506,6 +93508,7 @@
 	dir = 1
 	},
 /obj/machinery/digital_clock/directional/south,
+/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "xtZ" = (

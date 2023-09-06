@@ -20832,14 +20832,9 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},
-/obj/item/stock_parts/matter_bin{
-	pixel_x = 2;
-	pixel_y = -5
-	},
-/obj/item/stock_parts/micro_laser{
-	pixel_y = 7
-	},
-/obj/item/trash/boritos/green,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/signlang_radio,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -31982,6 +31977,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/signlang_radio,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron/dark,
 /area/station/security/eva)
 "iuE" = (
@@ -46117,7 +46115,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/window/right/directional/south{
 	name = "First Aid Supplies";
@@ -54241,11 +54238,8 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/storage/medkit/regular,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/left/directional/south{
-	name = "First Aid Supplies";
-	req_access = list("medical")
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "odz" = (
@@ -68092,6 +68086,12 @@
 "rOY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/signlang_radio,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "rPi" = (

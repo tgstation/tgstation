@@ -13800,6 +13800,7 @@
 /obj/item/mod/module/thermal_regulator,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/status_display/ai/directional/south,
+/obj/item/mod/module/signlang_radio,
 /turf/open/floor/iron/small,
 /area/station/medical/storage)
 "fkt" = (
@@ -19691,6 +19692,10 @@
 /obj/item/storage/fancy/cigarettes{
 	pixel_x = 20;
 	pixel_y = 11
+	},
+/obj/item/mod/module/signlang_radio{
+	pixel_y = 2;
+	pixel_x = -2
 	},
 /turf/open/floor/iron/small,
 /area/station/security/office)
@@ -25884,6 +25889,9 @@
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/package_wrap{
+	pixel_y = 5
+	},
 /obj/item/storage/box/matches,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
