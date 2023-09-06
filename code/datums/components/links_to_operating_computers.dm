@@ -36,6 +36,9 @@
 /datum/component/links_to_operating_computers/proc/on_atom_entered(source, mob/living/carbon/enterer)
 	SIGNAL_HANDLER
 
+	if (enterer in patients)
+		return
+
 	check_atom_on_object(enterer)
 
 /datum/component/links_to_operating_computers/proc/check_atom_on_object(atom)
