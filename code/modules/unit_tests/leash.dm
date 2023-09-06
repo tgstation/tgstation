@@ -47,6 +47,8 @@
 	for (var/_ in 1 to distance)
 		mover.Move(get_step(mover, EAST))
 
+	leash_wait.completed()
+
 	return leash_wait
 
 /datum/leash_wait
