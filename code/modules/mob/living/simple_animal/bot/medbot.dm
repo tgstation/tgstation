@@ -222,11 +222,11 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
-	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA))
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && is_station_level(z))
 		skin = "advanced"
 		update_appearance(UPDATE_OVERLAYS)
 		damagetype_healer = "all"
-		if(prob(20))
+		if(prob(50))
 			name += ", PhD."
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
