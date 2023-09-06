@@ -457,7 +457,6 @@
 						SSpersistence.tram_hits_this_round++
 						var/datum/transport_controller/linear/tram/tram_controller = transport_controller_datum
 						tram_controller.register_collision()
-						SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, travel_direction)

@@ -84,8 +84,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	. = ..()
 	GLOB.map_delamination_counters += src
 	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)
-	for(var/obj/structure/transport/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
-		RegisterSignal(tram, COMSIG_TRAM_COLLISION, PROC_REF(update_tram_count))
+	RegisterSignal(SStransport, COMSIG_TRAM_COLLISION, PROC_REF(update_tram_count))
 
 	update_appearance()
 

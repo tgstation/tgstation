@@ -412,6 +412,7 @@
 	icon_state = "tram"
 	state = GIRDER_TRAM
 	density = FALSE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
 /obj/structure/girder/tram/corner
 	name = "tram frame corner"
