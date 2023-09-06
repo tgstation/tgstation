@@ -47,8 +47,6 @@
 	for (var/_ in 1 to distance)
 		mover.Move(get_step(mover, EAST))
 
-	leash_wait.completed() // in case we hit early returns in check_distance() for every single move, don't wait for the timer
-
 	return leash_wait
 
 /datum/leash_wait
