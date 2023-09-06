@@ -248,4 +248,16 @@
 	owner.Paralyze(2 SECONDS)
 	return ..()
 
+// MARK OF MOON
+
 /datum/status_effect/eldritch/moon
+	effect_icon_state = "emark1"
+
+/datum/status_effect/eldritch/moon/on_effect()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
+		var/datum/wound/slash/flesh/severe/crit_wound = new()
+		crit_wound.apply_wound(bodypart)
+
+	return ..()

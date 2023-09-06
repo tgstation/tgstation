@@ -83,14 +83,14 @@
 	desc = "Your Mansus Grasp now applies the Mark of Moon. The mark is triggered from an attack with your Ashen Blade. \
 		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
 		Damage dealt is decreased with each transfer."
-	gain_text = "He was a very particular man, always watching in the dead of night. \
-		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
-		He shone brightly in the darkness, until the blaze begin to die."
+	gain_text = "The troupe on the moon would dance all day long \
+		and in that dance the moon would smile upon us \
+		but when the night came the tents were packed."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/moon)
 	route = PATH_MOON
-	mark_type = /datum/status_effect/eldritch/ash
+	mark_type = /datum/status_effect/eldritch/moon
 
-/datum/heretic_knowledge/mark/ash_mark/trigger_mark(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/mark/moon_mark/trigger_mark(mob/living/source, mob/living/target)
 	. = ..()
 	if(!.)
 		return

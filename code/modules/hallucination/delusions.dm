@@ -234,7 +234,7 @@
 /datum/hallucination/delusion/preset/moon
 	delusion_icon_file = 'icons/mob/simple/mob.dmi'
 	delusion_icon_state = "ghost"
-	delusion_name = "ghost"
+	delusion_name = "moon"
 	duration = 15 SECONDS
 	affects_others = TRUE
 	random_hallucination_weight = 0
