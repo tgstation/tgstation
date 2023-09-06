@@ -518,7 +518,6 @@
 	show_in_report = TRUE
 	report_message = "This station is located inside a radioactive nebula. Setting up nebula shielding is top-priority."
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
-	force = TRUE
 
 	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
 	threat_reduction = 30
