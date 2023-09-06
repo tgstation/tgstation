@@ -809,7 +809,7 @@
 /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
 	name = "smoker plasma filter"
 	desc = "A plasma filter that look discolored, a result from smoking a lot."
-	icon_state = "lungs-plasma-smoker"
+	icon_state = "lungs_plasma_smoker"
 
 	maxHealth = SMOKER_ORGAN_HEALTH
 	healing_factor = SMOKER_LUNG_HEALING
@@ -829,7 +829,7 @@
 /obj/item/organ/internal/lungs/smoker_lungs
 	name = "smoker lungs"
 	desc = "A pair of lungs that look sickly, a result from smoking a lot."
-	icon_state = "lungs-smoker"
+	icon_state = "lungs_smoker"
 
 	maxHealth = SMOKER_ORGAN_HEALTH
 	healing_factor = SMOKER_LUNG_HEALING
@@ -958,7 +958,7 @@
 /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
 	name = "smoker aeration reticulum"
 	desc = "A pair of exotic lungs that look pale and sickly, a result from smoking a lot."
-	icon_state = "lungs_ethereal-smoker"
+	icon_state = "lungs_ethereal_smoker"
 
 	maxHealth = SMOKER_ORGAN_HEALTH
 	healing_factor = SMOKER_LUNG_HEALING
