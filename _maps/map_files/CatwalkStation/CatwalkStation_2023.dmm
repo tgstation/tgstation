@@ -28715,9 +28715,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/command/storage/eva)
-"npg" = (
-/turf/closed/wall/bathhouse,
-/area/space)
 "npE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -40590,10 +40587,6 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
-"sUv" = (
-/obj/machinery/porta_turret/ai,
-/turf/open/openspace/airless,
-/area/space)
 "sUx" = (
 /turf/open/openspace,
 /area/station/service/chapel)
@@ -169520,7 +169513,7 @@ nlm
 nlm
 nlm
 nlm
-sUv
+nlm
 nlm
 nlm
 nlm
@@ -170024,12 +170017,12 @@ nlm
 nlm
 nlm
 nlm
-npg
-npg
-npg
-npg
-npg
-npg
+nlm
+nlm
+nlm
+nlm
+nlm
+nlm
 nlm
 nlm
 nlm
@@ -170281,12 +170274,12 @@ nlm
 nlm
 nlm
 nlm
-vQq
-vQq
-vQq
-vQq
-vQq
-vQq
+nlm
+nlm
+nlm
+nlm
+nlm
+nlm
 nlm
 nlm
 nlm
@@ -170538,12 +170531,12 @@ nlm
 nlm
 nlm
 nlm
-vQq
-vQq
-vQq
-vQq
-vQq
-vQq
+nlm
+nlm
+nlm
+nlm
+nlm
+nlm
 nlm
 nlm
 nlm
