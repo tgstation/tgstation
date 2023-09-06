@@ -45,7 +45,7 @@
 		starting_icon_state = initial(target.icon_state),
 		starting_config = initial(target.greyscale_config),
 		starting_colors = target.greyscale_colors,
-		used_spraycan = can
+		used_spraycan = can,
 	)
 	menu.ui_interact(user)
 
