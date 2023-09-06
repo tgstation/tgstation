@@ -195,12 +195,12 @@
 		. = message_alien
 	else if(islarva(user) && message_larva)
 		. = message_larva
-	else if(iscyborg(user) && message_robot)
-		. = message_robot
 	else if(isAI(user) && message_AI)
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
+	else if(iscyborg(user) && message_robot || (user.mob_biotypes & MOB_ROBOTIC))
+		. = message_robot
 	else if(isanimal_or_basicmob(user) && message_animal_or_basic)
 		. = message_animal_or_basic
 
