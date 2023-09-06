@@ -814,10 +814,6 @@
 		. += mutable_appearance(icon, "comms")
 		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
 
-	else if(controller_datum.controller_status & MANUAL_MODE)
-		. += mutable_appearance(icon, "manual")
-		. += emissive_appearance(icon, "manual", src, alpha = src.alpha)
-
 	else
 		. += mutable_appearance(icon, "normal")
 		. += emissive_appearance(icon, "normal", src, alpha = src.alpha)
@@ -945,7 +941,6 @@
 		"statusDO" = controller_datum.controller_status & DOORS_READY,
 		"statusCL" = controller_datum.controller_status & CONTROLS_LOCKED,
 		"statusBS" = controller_datum.controller_status & BYPASS_SENSORS,
-		"statusMM" = controller_datum.controller_status & MANUAL_MODE,
 	)
 
 	return data
@@ -962,8 +957,6 @@
 		return
 
 	switch(action)
-		if("automatic")
-			controller_datum.set_status_code(MANUAL_MODE, FALSE)
 
 		if("dispatch")
 			var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination_platform
@@ -975,8 +968,7 @@
 			if(!destination_platform)
 				return FALSE
 
-			controller_datum.set_status_code(MANUAL_MODE, TRUE)
-			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code, MANUAL_MODE)
+			SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, controller_datum.specific_transport_id, destination_platform.platform_code)
 			update_appearance()
 
 		if("estop")

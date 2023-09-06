@@ -55,7 +55,6 @@
 #define CONTROLS_LOCKED (1<<5)
 #define BYPASS_SENSORS (1<<6)
 #define RAPID_MODE (1<<7)
-#define MANUAL_MODE (1<<8)
 
 DEFINE_BITFIELD(controller_status, list(
 	"SYSTEM_FAULT" = SYSTEM_FAULT,
@@ -65,7 +64,6 @@ DEFINE_BITFIELD(controller_status, list(
 	"DOORS_READY" = DOORS_READY,
 	"CONTROLS_LOCKED" = CONTROLS_LOCKED,
 	"BYPASS_SENSORS" = BYPASS_SENSORS,
-	"MANUAL_MODE" = MANUAL_MODE,
 ))
 
 #define TRANSPORT_FLAGS list( \
@@ -76,7 +74,6 @@ DEFINE_BITFIELD(controller_status, list(
 	"DOORS_READY", \
 	"CONTROLS_LOCKED", \
 	"BYPASS_SENSORS", \
-	"MANUAL_MODE", \
 )
 
 /// Logging

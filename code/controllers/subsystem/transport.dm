@@ -67,11 +67,6 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [INTERNAL_ERROR]. Info: [SUB_TS_STATUS].")
 		return
 
-	if(transport_controller.controller_status & MANUAL_MODE && options != MANUAL_MODE)
-		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, PLATFORM_DISABLED)
-		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [PLATFORM_DISABLED]. Info: [SUB_TS_STATUS].")
-		return
-
 	if(transport_controller.controller_active) //in use
 		SEND_TRANSPORT_SIGNAL(COMSIG_TRANSPORT_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
 		log_transport("Sub: Sending response to [source.cached_ref]. Contents: [REQUEST_FAIL] [PLATFORM_DISABLED]. Info: [TC_TA_INFO].")
