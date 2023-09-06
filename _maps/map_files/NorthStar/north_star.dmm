@@ -16236,7 +16236,7 @@
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
-	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
+	preset_destination_names = list("2"="Supply-Engi                Floor","3"="Med-Sci                Floor","4"="Service                Floor")
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "fore_vator";
@@ -48444,7 +48444,10 @@
 	},
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver,
 /obj/structure/table,
-/obj/item/binoculars,
+/obj/item/binoculars{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
@@ -53560,7 +53563,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "aft_vator";
 	pixel_x = 24;
-	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
+	preset_destination_names = list("2"="Supply-Engi                Floor","3"="Med-Sci                Floor","4"="Service                Floor")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
@@ -66367,7 +66370,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
@@ -78306,7 +78308,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/aft)
@@ -84764,7 +84765,6 @@
 /area/station/security/courtroom)
 "wiF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "wiJ" = (
@@ -85581,7 +85581,6 @@
 "wth" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/west,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "wtl" = (
