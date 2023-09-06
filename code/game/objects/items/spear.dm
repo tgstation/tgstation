@@ -54,7 +54,15 @@
 		force_wielded = force_wielded, \
 		icon_wielded = "[icon_prefix]1", \
 	)
+	add_headpike_component()
 	update_appearance()
+
+// I dunno man
+/obj/item/spear/proc/add_headpike_component()
+	AddComponent(/datum/component/slapcrafting,\
+			item_to_slap_with = /obj/item/bodypart/head,\
+			slapcraft_recipe = /datum/crafting_recipe/headpike,\
+	)
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
@@ -223,6 +231,12 @@
 	force_unwielded = 12
 	force_wielded = 20
 
+/obj/item/spear/bonespear/add_headpike_component()
+	AddComponent(/datum/component/slapcrafting,\
+			item_to_slap_with = /obj/item/bodypart/head,\
+			slapcraft_recipe = /datum/crafting_recipe/headpikebone,\
+	)
+
 /*
  * Bamboo Spear
  */
@@ -237,3 +251,10 @@
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 20)
 	force_unwielded = 10
 	force_wielded = 18
+
+
+/obj/item/spear/bamboospear/add_headpike_component()
+	AddComponent(/datum/component/slapcrafting,\
+			item_to_slap_with = /obj/item/bodypart/head,\
+			slapcraft_recipe = /datum/crafting_recipe/headpikebamboo,\
+	)

@@ -350,6 +350,26 @@
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
 
+/obj/item/clothing/glasses/sunglasses/Initialize(mapload)
+	. = ..()
+	// Yeah okay we need to refacor tihs
+	AddComponent(/datum/component/slapcrafting,\
+			item_to_slap_with = /obj/item/clothing/glasses/hud/security,\
+			slapcraft_recipe = /datum/crafting_recipe/hudsunsec,\
+	)
+	AddComponent(/datum/component/slapcrafting,\
+			item_to_slap_with = /obj/item/clothing/glasses/hud/health,\
+			slapcraft_recipe = /datum/crafting_recipe/hudsunhealth,\
+	)
+	AddComponent(/datum/component/slapcrafting,\
+			item_to_slap_with = /obj/item/clothing/glasses/hud/security,\
+			slapcraft_recipe = /datum/crafting_recipe/hudsunsec,\
+	)
+	AddComponent(/datum/component/slapcrafting,\
+			item_to_slap_with = /obj/item/clothing/glasses/hud/security,\
+			slapcraft_recipe = /datum/crafting_recipe/hudsunsec,\
+	)
+
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	icon_state = "sunhudbeer"

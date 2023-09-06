@@ -328,7 +328,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			SCREENTIP_CONTEXT_LMB = "Craft stunprod",
 		),
 	)
-
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 /obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
