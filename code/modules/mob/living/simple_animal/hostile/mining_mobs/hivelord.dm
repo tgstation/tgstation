@@ -160,9 +160,7 @@
 		else if(dwarf_mob)
 			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(our_turf)
 		else if(snow_legion)
-			new /obj/effect/mob_spawn/corpse/human/legioninfested/snow(our_turf)
-
-			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(our_turf)
+			new /obj/effect/mob_spawn/corpse/human/snowlegioninfested(our_turf)
 		else
 			new /obj/effect/mob_spawn/corpse/human/legioninfested(our_turf)
 	return ..()
