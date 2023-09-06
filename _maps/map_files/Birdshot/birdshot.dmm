@@ -14377,6 +14377,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable/multilayer,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "fuC" = (
@@ -67668,6 +67669,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/multilayer,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "xlP" = (
