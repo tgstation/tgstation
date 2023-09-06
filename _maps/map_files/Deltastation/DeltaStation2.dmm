@@ -9199,7 +9199,7 @@
 /area/station/medical/psychology)
 "ckB" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/item/clothing/suit/costume/ianshirt,
+/obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian,
 /obj/item/bedsheet/ian,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)

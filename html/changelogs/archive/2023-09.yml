@@ -205,3 +205,23 @@
       eject their contents upon evolution to vileworms
   mc-oofert:
   - bugfix: emissive appearances on glowy eyes and such now properly rotate
+2023-09-06:
+  Acantharctia:
+  - rscadd: Added the Numb quirk, that makes you (almost) unable to perceive how much
+      your injuries hurt.
+  Ben10Omintrix:
+  - refactor: the minebots have been refactored please report any bugs
+  - rscadd: minebots can now mine walls and collect ores automatically and they will
+      alert everyone if they find u dead
+  CoiledLamb:
+  - image: cleans up the engineering emergency internals sprite slightly
+  Jackal-boop:
+  - spellcheck: re-writes cosmic heretic lore
+  Krysonism:
+  - image: resprites the noticeboard
+  carlarctg:
+  - bugfix: Fixed walking into grilles to destroy them
+  lizardqueenlexi:
+  - bugfix: Fixed all-in-one grinders not giving all the correct reagents when grinding.
+  - spellcheck: Improved phrasing and syntax on dismemberment mood messages.
+  - bugfix: Snow legions now drop only one corpse, and no longer drop Lavaland corpses.
