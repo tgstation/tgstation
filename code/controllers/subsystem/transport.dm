@@ -121,15 +121,14 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	transport_controller.set_lights()
 	log_transport("Sub: [transport_controller.specific_transport_id] requested door close. Info: [SUB_TS_STATUS].")
 	if(request_flags & RAPID_MODE || request_flags & BYPASS_SENSORS || transport_controller.controller_status & BYPASS_SENSORS) // bypass for unsafe, rapid departure
-		for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
-			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close), BYPASS_DOOR_CHECKS)
+		transport_controller.cycle_doors(CYCLE_CLOSED, BYPASS_DOOR_CHECKS)
 		if(request_flags & RAPID_MODE)
 			log_transport("Sub: [transport_controller.specific_transport_id] rapid mode enabled, bypassing validation.")
 			transport_controller.dispatch_transport()
 			return
 	else
-		for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
-			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close))
+		transport_controller.set_status_code(DOORS_READY, FALSE)
+		transport_controller.cycle_doors(CYCLE_CLOSED)
 
 	addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller), 3 SECONDS)
 
@@ -142,15 +141,15 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		current_attempt = 0
 
 	if(current_attempt >= 4)
-		log_transport("Sub: [transport_controller.specific_transport_id] pre-departure validation failed! Info: [SUB_TS_STATUS].")
-		transport_controller.halt_and_catch_fire()
+		log_transport("Sub: [transport_controller.specific_transport_id] pre-departure validation failed, but dispatching tram anyways. Info: [SUB_TS_STATUS].")
+		transport_controller.dispatch_transport()
 		return
 
 	current_attempt++
 
 	transport_controller.update_status()
-	if(transport_controller.controller_status & DOORS_OPEN)
-		addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller, current_attempt), 4 SECONDS)
+	if(!(transport_controller.controller_status & DOORS_READY))
+		addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller, current_attempt), 3 SECONDS)
 		return
 	else
 

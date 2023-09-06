@@ -20,6 +20,7 @@
 	/// Weakref to the tram we're attached
 	var/datum/weakref/tram_ref
 	var/retry_counter
+	var/crushing_in_progress = FALSE
 	bound_width = 64
 
 /**
@@ -106,6 +107,7 @@
 		return FALSE
 	if(density)
 		return TRUE
+	crushing_in_progress = TRUE
 	var/hungry_door = (forced == BYPASS_DOOR_CHECKS || !safe)
 	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
@@ -136,6 +138,7 @@
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)
 	crush()
+	crushing_in_progress = FALSE
 	sleep(TRAM_DOOR_CYCLE_TIME)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
@@ -236,7 +239,7 @@
 		return
 	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
 	add_fingerprint(user)
-	if(tram_part.travel_remaining < DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH)
+	if((tram_part.travel_remaining < DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH) && tram_part.controller_active)
 		return // we're already animating, don't reset that
 	open(forced = BYPASS_DOOR_CHECKS)
 	return

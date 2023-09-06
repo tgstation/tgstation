@@ -468,7 +468,8 @@
  * * value - boolean TRUE/FALSE to set the code
  */
 /datum/transport_controller/linear/tram/proc/set_status_code(code, value)
-	log_transport("TC: [specific_transport_id] status change [value ? "+" : "-"][english_list(bitfield_to_list(code, TRANSPORT_FLAGS))].")
+	if(code != DOORS_READY)
+		log_transport("TC: [specific_transport_id] status change [value ? "+" : "-"][english_list(bitfield_to_list(code, TRANSPORT_FLAGS))].")
 	switch(value)
 		if(TRUE)
 			controller_status |= code
@@ -491,30 +492,30 @@
  * TODO: this is probably better renamed check_door_status()
  */
 /datum/transport_controller/linear/tram/proc/update_status()
-	set_status_code(DOORS_OPEN, FALSE)
 	for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
-		if(door.transport_linked_id == specific_transport_id)
-			if(door.airlock_state != 1)
-				log_transport("TC: [specific_transport_id] door [door.cached_ref] failed check with status [door.airlock_state].")
-				set_status_code(DOORS_OPEN, TRUE)
-				break
+		if(door.transport_linked_id != specific_transport_id)
+			continue
+		if(door.crushing_in_progress)
+			log_transport("TC: [specific_transport_id] door [door.cached_ref] failed crush status check.")
+			set_status_code(DOORS_READY, FALSE)
+			return
+
+	set_status_code(DOORS_READY, TRUE)
 
 /**
  * Cycle all the doors on the tram.
  */
-/datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
+/datum/transport_controller/linear/tram/proc/cycle_doors(door_status, rapid)
 	switch(door_status)
 		if(CYCLE_OPEN)
 			for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 				if(door.transport_linked_id == specific_transport_id)
-					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open))
+					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, open), rapid)
 
 		if(CYCLE_CLOSED)
 			for(var/obj/machinery/door/airlock/tram/door as anything in SStransport.doors)
 				if(door.transport_linked_id == specific_transport_id)
-					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close))
-
-	update_status()
+					INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, close), rapid)
 
 /datum/transport_controller/linear/tram/proc/notify_controller(obj/machinery/transport/tram_controller/new_cabinet)
 	paired_cabinet = new_cabinet
@@ -523,6 +524,7 @@
 	RegisterSignal(new_cabinet, COMSIG_QDELETING, PROC_REF(on_cabinet_qdel))
 	log_transport("TC: [specific_transport_id] is now paired with [new_cabinet].")
 	if(controller_status & SYSTEM_FAULT)
+		set_status_code(SYSTEM_FAULT, FALSE)
 		reset_position()
 
 /datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
@@ -796,7 +798,7 @@
 		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
 		return
 
-	if(controller_datum.controller_status & DOORS_OPEN)
+	if(!(controller_datum.controller_status & DOORS_READY))
 		. += mutable_appearance(icon, "doors")
 		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
 
@@ -940,7 +942,7 @@
 		"statusCE" = controller_datum.controller_status & COMM_ERROR,
 		"statusES" = controller_datum.controller_status & EMERGENCY_STOP,
 		"statusPD" = controller_datum.controller_status & PRE_DEPARTURE,
-		"statusDO" = controller_datum.controller_status & DOORS_OPEN,
+		"statusDO" = controller_datum.controller_status & DOORS_READY,
 		"statusCL" = controller_datum.controller_status & CONTROLS_LOCKED,
 		"statusBS" = controller_datum.controller_status & BYPASS_SENSORS,
 		"statusMM" = controller_datum.controller_status & MANUAL_MODE,
