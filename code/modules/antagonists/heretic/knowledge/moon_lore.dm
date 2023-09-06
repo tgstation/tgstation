@@ -66,7 +66,7 @@
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
-	desc = "Grants you Smile of the moon, a ranged spell causing high confusion, muting, blinding and deafening the target for a short duartion."
+	desc = "Grants you Smile of the moon, a ranged spell muting, blinding and deafening the target for a short duartion."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
@@ -85,7 +85,7 @@
 		Damage dealt is decreased with each transfer."
 	gain_text = "The troupe on the moon would dance all day long \
 		and in that dance the moon would smile upon us \
-		but when the night came the tents were packed."
+		but when the night came its smile would dull forced to gaze on the earth."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/moon)
 	route = PATH_MOON
 	mark_type = /datum/status_effect/eldritch/moon

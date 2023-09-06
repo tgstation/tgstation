@@ -255,9 +255,6 @@
 
 /datum/status_effect/eldritch/moon/on_effect()
 	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
-		var/datum/wound/slash/flesh/severe/crit_wound = new()
-		crit_wound.apply_wound(bodypart)
-
+		var/mob/living/carbon/carbon_owner = owner
+		carbon_owner.adjust_confusion(30 SECONDS)
 	return ..()

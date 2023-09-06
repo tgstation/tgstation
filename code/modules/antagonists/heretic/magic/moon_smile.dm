@@ -31,11 +31,11 @@
 		to_chat(owner, span_warning("The moon does not smile upon them."))
 		return FALSE
 
-	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU"))
+	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU!"))
 	cast_on.adjust_temp_blindness(7 SECONDS)
 	cast_on.set_eye_blur_if_lower(10 SECONDS)
 	var/obj/item/organ/internal/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
 	ears?.adjustEarDamage(0,7)
 	cast_on.adjust_silence(7 SECONDS)
-	cast_on.adjust_confusion(10 SECONDS)
+	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)
 	return TRUE
