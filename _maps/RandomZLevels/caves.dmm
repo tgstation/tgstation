@@ -1206,7 +1206,7 @@
 "he" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
-/mob/living/simple_animal/hostile/mining_drone,
+/mob/living/basic/mining_drone,
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "hq" = (
@@ -1728,7 +1728,7 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "IH" = (
 /obj/structure/window/spawner/directional/west,
-/mob/living/simple_animal/hostile/mining_drone,
+/mob/living/basic/mining_drone,
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "IN" = (

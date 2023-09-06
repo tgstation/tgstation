@@ -90,8 +90,12 @@
 
 /obj/structure/railing/deconstruct(disassembled)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 6)
-		transfer_fingerprints_to(rod)
+		if (istype(src,/obj/structure/railing/corner)) // Corner railings only cost 1 rod
+			var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 1)
+			transfer_fingerprints_to(rod)
+		else
+			var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 2)
+			transfer_fingerprints_to(rod)
 	return ..()
 
 ///Implements behaviour that makes it possible to unanchor the railing.
