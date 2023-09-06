@@ -92,8 +92,6 @@
 	if(surgery_signal & COMPONENT_CANCEL_SURGERY)
 		return FALSE
 
-	var/turf/patient_turf = get_turf(patient)
-
 	//Get the relevant operating computer
 	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient)
 	if (isnull(opcomputer))
