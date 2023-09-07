@@ -39,7 +39,7 @@
 
 /obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user)
 	for(var/mob/living/victim in oview(2, user))
-		if(victim.stat == DEAD)
+		if(victim.stat == DEAD || victim.faction_check_mob(user))
 			continue
 		playsound(victim, 'sound/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(get_turf(victim))
@@ -114,6 +114,7 @@
 		marker.icon_state = "chronobolt"
 		marker.damage = bonus_value
 		marker.speed = 2
+		marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, bonus_value)
 		deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)

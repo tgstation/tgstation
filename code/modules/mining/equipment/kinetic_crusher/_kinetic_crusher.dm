@@ -172,15 +172,14 @@
 	destabilizer.hammer_synced = src
 	playsound(user, 'sound/weapons/plasma_cutter.ogg', 80, TRUE)
 	destabilizer.fire()
-	destabilizer.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, destabilizer.damage) //apply element after on_projectile_fire() in case a trophy modifies it
 	charged = FALSE
 	update_appearance()
 	if(charge_time <= 0) //you never know
 		charge_time = 0.1 SECONDS
-	addtimer(CALLBACK(src, PROC_REF(Recharge)), charge_time)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time)
 
 ///Ready up the crusher to fire another projectile
-/obj/item/kinetic_crusher/proc/Recharge()
+/obj/item/kinetic_crusher/proc/recharge()
 	if(!charged)
 		charged = TRUE
 		update_appearance()

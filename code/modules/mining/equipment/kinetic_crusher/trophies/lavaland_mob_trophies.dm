@@ -31,7 +31,7 @@
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
 	if(missing_health > 0)
 		target.adjustBruteLoss(missing_health) //and do that much damage
-		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, target, user, bonus_value)
+		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, target, user, missing_health)
 
 /**
  * Watcher
@@ -86,6 +86,7 @@
 		marker.name = "heated [marker.name]"
 		marker.icon_state = "lava"
 		marker.damage = bonus_value
+		marker.AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_PROJECTILE, bonus_value)
 		deadly_shot = FALSE
 
 /**
