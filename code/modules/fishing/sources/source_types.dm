@@ -74,11 +74,15 @@
 	overlay_state = "portal_ocean"
 	radial_state = "seaboat"
 
-/datum/fish_source/portal/hyperspace //WIP
+/datum/fish_source/portal/hyperspace
 	fish_table = list(
 		FISHING_DUD = 5,
+		/obj/item/fish/starfish = 6,
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/mob/living/basic/carp = 2,
+	)
+	fish_counts = list(
+		/obj/item/stack/ore/bluespace_crystal = 10,
 	)
 	catalog_description = "Hyperspace dimension (Fishing portal generator)"
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
@@ -112,14 +116,14 @@
 	var/static/list/all_portal_fish_sources_at_once
 	radial_state = "misaligned_question_mark"
 
-///Generate our fancy fish table if we don't have one already.
+///Generate the fish table if we don't have one already.
 /datum/fish_source/portal/random/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	if(fish_table)
 		return
 
 	///rewards not found in other fishing portals
 	fish_table = list(
-		/obj/item/fish/holo/checkered = 5,
+		/obj/item/fish/holo/checkered = 1,
 	)
 
 	for(var/portal_type in GLOB.preset_fish_sources)

@@ -265,7 +265,7 @@
 				if("antigrav")
 					sound = sound('sound/effects/arcade_jump.ogg', volume = 50)
 				if("antigrav_end")
-					sound = sound('sound/effects/empulse.ogg', volume = 50)
+					sound = sound('sound/effects/arcade_jump.ogg', volume = 50)
 					sound.frequency = -1
 				if("flip")
 					sound = sound('sound/effects/boing.ogg')

@@ -444,7 +444,7 @@
 	. = ..()
 	var/area/station/holodeck/holo_area = get_area(src)
 	if(!istype(holo_area))
-		addtimer(CALLBACK(src, PROC_REF(set_status), FISH_DEAD))
+		addtimer(CALLBACK(src, PROC_REF(set_status), FISH_DEAD), 1 MINUTES)
 		return
 	holo_area.linked.add_to_spawned(src)
 
@@ -502,3 +502,37 @@
 	sprite_height = 4
 	sprite_width = 10
 	average_size = 50
+
+/obj/item/fish/starfish
+	name = "cosmostarfish"
+	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
+	icon_state = "starfish"
+	dedicated_in_aquarium_icon_state = "starfish_small"
+	icon_state_dead = "starfish_dead"
+	sprite_width = 4
+	average_size = 30
+	average_weight = 300
+	stable_population = 3
+	required_fluid_type = AQUARIUM_FLUID_AIR
+	random_case_rarity = FISH_RARITY_NOPE
+	required_temperature_min = 0
+	required_temperature_max = INFINITY
+	safe_air_limits = null
+	min_pressure = 0
+	max_pressure = INFINITY
+	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/consumable/liquidgibs = 5)
+	fillet_type = null
+	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+
+/obj/item/fish/starfish/Initialize()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/fish/starfish/update_overlays()
+	. = ..()
+	if(status == FISH_ALIVE)
+		. += emissive_appearance(icon, "starfish_emissive", src)
+
+///It spins, and dimly glows in the dark.
+/obj/item/fish/starfish/flop_animation()
+	DO_FLOATING_ANIM(src)

@@ -495,7 +495,7 @@
 	skill_name = "Reveal Fish Type"
 	skill_description = "Grants the user the fishing knowledge to take more than a wild guess of whatever they're trying to catch."
 	skill_icon = "fish"
-	activate_message = span_notice("Memories of sunbaked, middle-aged men flood your mind. Steel-nerved, they wait for fish to catch their baits.")
+	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
 	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
 
 #undef SKILLCHIP_CATEGORY_GENERAL

@@ -547,10 +547,11 @@
 #define FLOP_SINGLE_MOVE_TIME 1.5
 #define JUMP_X_DISTANCE 5
 #define JUMP_Y_DISTANCE 6
-/// This animation should be applied to actual parent atom instead of vc_object.
-/proc/flop_animation(atom/movable/animation_target)
+
+/// This flopping animation played while the fish is alive.
+/obj/item/fish/proc/flop_animation()
 	var/pause_between = PAUSE_BETWEEN_PHASES + rand(1, 5) //randomized a bit so fish are not in sync
-	animate(animation_target, time = pause_between, loop = -1)
+	animate(src, time = pause_between, loop = -1)
 	//move nose down and up
 	for(var/_ in 1 to FLOP_COUNT)
 		var/matrix/up_matrix = matrix()
@@ -571,6 +572,7 @@
 		animate(time = up_time, pixel_y = JUMP_Y_DISTANCE , pixel_x=x_step, loop = -1, flags= ANIMATION_RELATIVE, easing = BOUNCE_EASING | EASE_IN)
 		animate(time = up_time, pixel_y = -JUMP_Y_DISTANCE, pixel_x=x_step, loop = -1, flags= ANIMATION_RELATIVE, easing = BOUNCE_EASING | EASE_OUT)
 		animate(time = PAUSE_BETWEEN_FLOPS, loop = -1)
+
 #undef PAUSE_BETWEEN_PHASES
 #undef PAUSE_BETWEEN_FLOPS
 #undef FLOP_COUNT
@@ -584,7 +586,7 @@
 	if(flopping)  //Requires update_transform/animate_wrappers to be less restrictive.
 		return
 	flopping = TRUE
-	flop_animation(src)
+	flop_animation()
 
 /// Stops flopping animation
 /obj/item/fish/proc/stop_flopping()
@@ -599,7 +601,7 @@
 
 /obj/item/fish/proc/refresh_flopping()
 	if(flopping)
-		flop_animation(src)
+		flop_animation()
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

@@ -1,16 +1,14 @@
 /obj/machinery/fishing_portal_generator
 	name = "fish-porter 3000"
 	desc = "Fishing anywhere, anytime... anyway what was I talking about?"
-
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "portal"
-
 	idle_power_usage = 0
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-
 	anchored = FALSE
 	density = TRUE
 
+	///The current fishing spot loaded in
 	var/datum/component/fishing_spot/active
 
 /obj/machinery/fishing_portal_generator/wrench_act(mob/living/user, obj/item/tool)
@@ -35,7 +33,7 @@
 	if(active)
 		deactivate()
 	else
-		select_fish_source()
+		select_fish_source(user)
 
 /obj/machinery/fishing_portal_generator/update_overlays()
 	. = ..()
@@ -83,9 +81,9 @@
 		activate(default)
 		return
 	var/list/choices = list()
-	for(var/radial_name as anything in available_fish_sources)
+	for(var/radial_name in available_fish_sources)
 		var/datum/fish_source/portal/source = available_fish_sources[radial_name]
-		choices[radial_name] = image(icon = 'icons/hud/radial.dmi', icon_state = source.radial_state)
+		choices[radial_name] = image(icon = 'icons/hud/radial_fishing.dmi', icon_state = source.radial_state)
 
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
 	if(!choice || !can_interact(user))
