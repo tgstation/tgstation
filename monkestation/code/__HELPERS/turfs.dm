@@ -12,4 +12,7 @@
 	visible_message(span_userdanger("\The [src] looks like its about to collapse!"))
 	Shake(0.2, 0.2, shake_duration)
 	sleep(shake_duration)
+	if(QDELETED(src))
+		return
+
 	explosion(src, explosion_stats[1], explosion_stats[2], explosion_stats[3])
