@@ -40,6 +40,7 @@
 		. += span_brass("Use on other materials to convert them into power, but less efficiently.")
 		. += span_brass("<b>Use</b> in-hand to select what to fabricate.")
 		. += span_brass("<b>Right Click</b> in-hand to fabricate bronze sheets.")
+		. += span_brass("Walls and windows will be built slower while on reebe.")
 
 
 /obj/item/clockwork/replica_fabricator/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
