@@ -506,6 +506,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in gaining_holder.blocked_languages)
 		C.add_blocked_language(language, LANGUAGE_SPECIES)
+	C.regenerate_icons()
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
