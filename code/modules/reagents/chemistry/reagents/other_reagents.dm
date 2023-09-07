@@ -2525,7 +2525,10 @@
 		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
 			if(yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
 				holder.remove_reagent(type, 5)
-			affected_mob.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = rand(14, 26), stun = yuck_cycles >= (YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN))
+			var/passable_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_COLOR_TOXIC)
+			if(yuck_cycles >= (YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN))
+				passable_flags |= MOB_VOMIT_STUN
+			affected_mob.vomit(vomit_flags = passable_flags, lost_nutrition = rand(14, 26))
 	if(holder)
 		return ..()
 #undef YUCK_PUKE_CYCLES
