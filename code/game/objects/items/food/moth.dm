@@ -28,7 +28,6 @@
 	tastes = list("cheese" = 1, "char" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/mothic_salad
@@ -143,7 +142,6 @@
 	tastes = list("cheese" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/baked_cheese_platter
@@ -192,7 +190,6 @@
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
 	foodtypes = VEGETABLES | GRAIN | NUTS
 	w_class = WEIGHT_CLASS_NORMAL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/green_lasagne/make_processable()
@@ -242,7 +239,6 @@
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/big_baked_rice/make_processable()
@@ -275,7 +271,6 @@
 	tastes = list("corn" = 1, "char" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/buttered_baked_corn
@@ -339,7 +334,6 @@
 	tastes = list("veggies" = 1, "roasted peppers" = 1, "char" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/mozzarella_sticks
@@ -385,7 +379,6 @@
 	tastes = list("creamy cheese" = 1, "herbs" = 1, "onion" = 1, "bell pepper" = 1)
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/fueljacks_lunch
