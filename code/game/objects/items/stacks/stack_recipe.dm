@@ -24,11 +24,9 @@
 	var/check_direction = FALSE
 	/// If the atom requires a floor below
 	var/on_solid_ground = FALSE
-	/// If the atom requires a tram floor below
-	var/on_tram = FALSE
 	/// If the atom checks that there are objects with density in the same turf when being built. TRUE by default
 	var/check_density = TRUE
-	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT)
+	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT|STACK_CHECK_TRAM_FORBIDDEN|STACK_CHECK_TRAM_EXCLUSIVE)
 	var/placement_checks = NONE
 	/// If TRUE, the created atom will gain custom mat datums
 	var/applies_mats = FALSE
@@ -48,7 +46,6 @@
 	time = 0,
 	one_per_turf = FALSE,
 	on_solid_ground = FALSE,
-	on_tram = FALSE,
 	is_fulltile = FALSE,
 	check_direction = FALSE,
 	check_density = TRUE,
@@ -67,7 +64,6 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_solid_ground = on_solid_ground
-	src.on_tram = on_tram
 	src.is_fulltile = is_fulltile
 	src.check_direction = check_direction || is_fulltile
 	src.check_density = check_density
@@ -90,7 +86,6 @@
 	time = 0,
 	one_per_turf = FALSE,
 	on_solid_ground = FALSE,
-	on_tram = FALSE,
 	window_checks = FALSE,
 	placement_checks = NONE,
 	applies_mats = FALSE,

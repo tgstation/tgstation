@@ -17,6 +17,21 @@
 	)
 	var/malfunctioning = FALSE
 
+/obj/machinery/transport/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
+
+	if(panel_open)
+		if(malfunctioning || methods_to_fix.len)
+			context[SCREENTIP_CONTEXT_LMB] = "repair electronics"
+		if(held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_RMB] = "deconstruct"
+
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "repair frame"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /**
  * Finds the tram
  *
@@ -64,9 +79,12 @@
 
 /obj/machinery/transport/examine(mob/user)
 	. = ..()
+	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
 	if(methods_to_fix)
 		for(var/tool_method as anything in methods_to_fix)
 			. += span_info("It needs someone to [tool_method].")
+	if(panel_open)
+		. += span_notice("It can be deconstructed with a <b>crowbar</b>.")
 
 /**
  * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machinery.

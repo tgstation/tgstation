@@ -739,6 +739,13 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/transport/tram_controller/examine(mob/user)
+	. = ..()
+	. += span_notice("The door appears to be [cover_locked ? "locked" : "unlocked"].")
+	if(panel_open)
+		. += span_notice("It is secured to the tram wall with <b>bolts</b>.")
+
+
 /obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
 	if(!user.combat_mode)
 		if(weapon && istype(weapon, /obj/item/card/id) && !cover_open)
@@ -843,19 +850,29 @@
 		return
 	update_appearance()
 
+/obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
+	. = ..()
+	if(!cover_open && cover_locked)
+		balloon_alert(user, "it's locked!")
+		return
+
 /obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
 
-	if(cover_locked)
-		return
+	if(!cover_open && cover_locked)
+		balloon_alert(user, "it's locked!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	toggle_door()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/transport/tram_controller/proc/toggle_door()
 	if(!cover_open)
 		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
 	else
 		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
 	cover_open = !cover_open
 	update_appearance()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/proc/try_toggle_lock(mob/living/user, item, params)
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
@@ -905,7 +922,7 @@
 /obj/machinery/transport/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
-	if(!cover_open && !issilicon(user))
+	if(!cover_open && !issiliconoradminghost(user) && !isobserver(user))
 		return
 
 	if(!is_operational)
@@ -997,4 +1014,4 @@
 	icon_state = "controller-panel"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/tram_controller
-	pixel_shift = 16
+	pixel_shift = 32

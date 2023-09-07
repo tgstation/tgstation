@@ -63,6 +63,13 @@
 	. = ..()
 	link_tram()
 
+
+/obj/machinery/transport/destination_sign/indicator/examine(mob/user)
+	. = ..()
+
+	if(panel_open)
+		. += span_notice("It is secured to the tram wall with <b>bolts</b>.")
+
 /obj/machinery/transport/destination_sign/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		return

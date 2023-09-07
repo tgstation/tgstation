@@ -123,29 +123,8 @@
 	SStransport.crossing_signals -= src
 	. = ..()
 
-/obj/machinery/transport/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
-
-	if(panel_open)
-		if(held_item.tool_behaviour == TOOL_WRENCH)
-			//context[SCREENTIP_CONTEXT_LMB] = "rotate signal" // gotta move this
-			context[SCREENTIP_CONTEXT_RMB] = "flip signal"
-		if(malfunctioning || methods_to_fix.len)
-			context[SCREENTIP_CONTEXT_LMB] = "repair electronics"
-		if(held_item.tool_behaviour == TOOL_CROWBAR)
-			context[SCREENTIP_CONTEXT_RMB] = "deconstruct"
-
-	if(held_item.tool_behaviour == TOOL_WELDER)
-		context[SCREENTIP_CONTEXT_LMB] = "repair frame"
-
-	if(istype(held_item, /obj/item/card/emag) && !(obj_flags & EMAGGED))
-		context[SCREENTIP_CONTEXT_LMB] = "disable sensors"
-
-	return CONTEXTUAL_SCREENTIP_SET
-
 /obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
-	if (!user.combat_mode)
+	if(!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
 
@@ -153,6 +132,23 @@
 			return
 
 	return ..()
+
+/obj/machinery/transport/crossing_signal/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(panel_open)
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "rotate signal"
+			context[SCREENTIP_CONTEXT_RMB] = "flip signal"
+
+	if(istype(held_item, /obj/item/card/emag) && !(obj_flags & EMAGGED))
+		context[SCREENTIP_CONTEXT_LMB] = "disable sensors"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/transport/crossing_signal/examine(mob/user)
+	. = ..()
+	if(panel_open)
+		. += span_notice("It can be flipped or rotated with a <b>wrench</b>.")
 
 /obj/machinery/transport/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -162,12 +158,18 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
-/obj/machinery/transport/crossing_signal/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/transport/crossing_signal/AltClick(mob/living/user)
 	. = ..()
 
-	if(default_change_direction_wrench(user, tool))
-		find_uplink()
-		return TRUE
+	var/obj/item/tool = user.get_active_held_item()
+	if(!panel_open || tool.tool_behaviour != TOOL_WRENCH)
+		return FALSE
+
+	tool.play_tool_sound(src, 50)
+	setDir(turn(dir,-90))
+	to_chat(user, span_notice("You rotate [src]."))
+	find_uplink()
+	return TRUE
 
 /obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
@@ -516,6 +518,17 @@
 	. = ..()
 	pair_sensor()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+
+/obj/machinery/transport/guideway_sensor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(panel_open)
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_RMB] = "rotate sensor"
+
+	if(istype(held_item, /obj/item/card/emag) && !(obj_flags & EMAGGED))
+		context[SCREENTIP_CONTEXT_LMB] = "disable sensor"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)
