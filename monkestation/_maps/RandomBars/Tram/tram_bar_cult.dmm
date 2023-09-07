@@ -1024,7 +1024,7 @@
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
-/turf/open/space/basic,
+/turf/open/floor/cult,
 /area/station/service/kitchen)
 "Dd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
