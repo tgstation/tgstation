@@ -1,0 +1,2 @@
+Every sound line (except for emag.ogg) are heavily modified lines using free voice TTS by elevenlabs.io
+https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform-
