@@ -2,10 +2,24 @@ import { useBackend } from '../backend';
 import { Section, Stack, Flex, Button } from '../components';
 import { Window } from '../layouts';
 
-export const MatMarket = (props, context) => {
-  const { act, data } = useBackend(context);
+`type Data = {
+    orderingPrive: BooleanLike; // you will need to import this
+    canOrderCargo: BooleanLike;
+    creditBalance: number;
+    materials: Material[];
+};
 
-  const { materials = [] } = data;
+type Material = {
+    name: string;
+    quantity: number;
+    id: string; // correct this if its a number
+    trend: string;
+};
+    
+export const MatMarket = (props, context) => {
+  const { act, data } = useBackend<Data>(context);   // this will tell your editor that data is the type listed above
+  
+  const { orderingPrive, canOrderCargo, creditBalance, materials = [] } = data; // better to destructure here (style nit)
   return (
     <Window width={675} height={400}>
       <Window.Content scrollable>
@@ -15,7 +29,7 @@ export const MatMarket = (props, context) => {
             <Button
               icon="dollar"
               tooltip="Place order from cargo budget."
-              color={data.orderingPrive && data.canOrderCargo ? 'green' : null}
+              color={!!orderingPrive && !!canOrderCargo ? 'green' : ''}
               content="Order via Cargo Budget"
               onClick={() => act('toggle_budget')}
             />
@@ -28,7 +42,7 @@ export const MatMarket = (props, context) => {
           20% market fee.
           <Section>
             Current credit balance:{' '}
-            <b>{data.creditBalance ? data.creditBalance : 'zero'}</b> cr.
+            <b>{creditBalance || 'zero'}</b> cr.
           </Section>
         </Section>
         {materials.map((material) => (
