@@ -55,7 +55,7 @@
 			switch(response_info)
 				if(BROKEN_BEYOND_REPAIR)
 					say("The tram has suffered a catastrophic failure. Please seek alternate modes of travel.")
-				if(NOT_IN_SERVICE) //tram is QDEL or has no power
+				if(NOT_IN_SERVICE) //tram has no power or other fault, but it's not broken forever
 					say("The tram is not in service. Please contact the nearest engineer.")
 				if(INVALID_PLATFORM) //engineer needs to fix button
 					say("Button configuration error. Please contact the nearest engineer.")
@@ -100,29 +100,4 @@
 	. += span_notice("There's a small inscription on the button...")
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
 
-/obj/item/assembly/control/icts/call_button/proc/debug_autotram(platform)
-	var/next_platform
-	if(platform)
-		next_platform = platform + 1
-	else
-		next_platform = 1
-
-	if(next_platform > 3)
-		next_platform = 1
-
-	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, next_platform)
-	addtimer(CALLBACK(src, PROC_REF(debug_autotram), next_platform), 10 SECONDS)
-
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/icts/tram, 32)
-
-/obj/machinery/button/icts/tram/estop
-	name = "tram request"
-	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	base_icon_state = "tram"
-	icon_state = "tram"
-	light_color = LIGHT_COLOR_DARK_BLUE
-	can_alter_skin = FALSE
-	device_type = /obj/item/assembly/control/icts/call_button
-	req_access = list()
-	specific_transport_id = TRAMSTATION_LINE_1
-	id = 0
