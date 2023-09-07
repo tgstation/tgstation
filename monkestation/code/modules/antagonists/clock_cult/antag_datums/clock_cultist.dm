@@ -6,7 +6,7 @@
 	antag_moodlet = /datum/mood_event/cult
 	suicide_cry = ",r For Ratvar!!!"
 	ui_name = "AntagInfoClock"
-	show_to_ghosts = TRUE //to make testing easier
+	show_to_ghosts = TRUE
 	antag_hud_name = "clockwork"
 	/// Ref to the cultist's communication ability
 	var/datum/action/innate/clockcult/comm/communicate = new

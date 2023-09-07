@@ -27,6 +27,7 @@
 #define POLL_IGNORE_MONKEY_HELMET "mind_magnified_monkey"
 #define POLL_IGNORE_LAVALAND_ELITE "lavaland_elite"
 #define POLL_IGNORE_SHUTTLE_DENIZENS "shuttle_denizens"
+#define POLL_IGNORE_BOTS "bots"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
@@ -57,6 +58,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_MONKEY_HELMET = "Mind magnified monkey",
 	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
 	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",
+	POLL_IGNORE_BOTS = "Bots",
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

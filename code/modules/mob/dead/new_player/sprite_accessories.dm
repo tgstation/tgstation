@@ -1715,11 +1715,12 @@
 	icon_state = "ltiger"
 	gender_specific = 1
 
+/*
 /datum/sprite_accessory/body_markings/lbelly
 	name = "Light Belly"
 	icon_state = "lbelly"
 	gender_specific = 1
-
+*/
 /datum/sprite_accessory/tails
 	em_block = TRUE
 

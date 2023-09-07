@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(station_coloring)
 		                        /area/station/service/hydroponics),
 		pick(blue)         = typesof(/area/station/medical),
 		pick(bar)          = list(/area/station/service/bar),
-		pick(brown)		   = typesof(/area/station/cargo),
+		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
 		COLOR_WHITE        = typesof(/area/shuttle),
 		COLOR_WHITE        = typesof(/area/centcom),
 	)
@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(station_coloring)
 		                        /area/station/service/hydroponics),
 		pick(blue)         = typesof(/area/station/medical),
 		pick(bar)          = list(/area/station/service/bar),
-		pick(brown)		   = typesof(/area/station/cargo),
+		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
 		COLOR_WHITE        = typesof(/area/shuttle),
 		COLOR_WHITE        = typesof(/area/centcom),
 	)

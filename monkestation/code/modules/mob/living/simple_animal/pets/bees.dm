@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/bee/friendly
+/mob/living/basic/bee/friendly
 	name = "friendly maintenance bee"
 	desc = "He wants to bee friends!"
 	faction = list(FACTION_NEUTRAL)
@@ -12,14 +12,10 @@
 	icon_base = "bee"
 
 
-/mob/living/simple_animal/hostile/bee/friendly/Initialize()
+/mob/living/basic/bee/friendly/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/drug)) //if it's from maint, it's probably drugs
 	assign_reagent(GLOB.chemical_reagents_list[R])
-
-/mob/living/simple_animal/hostile/bee/friendly/AttackingTarget() //these guys are too high to do anything, no pollinating
-		visible_message("[src] nuzzles \the [target].")
-		return TRUE
 
 /obj/item/stack/sheet/animalhide/bee
 	name = "bee fuzz"

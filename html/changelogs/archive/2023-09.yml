@@ -1,0 +1,10 @@
+2023-09-02:
+  Denesta:
+  - rscadd: Added new message when trying to wring out a dry mop into a bucket.
+  - bugfix: Fixed right clicking a mop on a bucket also acting as a left click.
+  NanoCats:
+  - rscadd: Added bespoke hand made maints to Tramstation
+  - rscdel: Removed randomized maints from Tramstation
+2023-09-03:
+  MilkForever:
+  - qol: Captains can now open the antique gun display case with their ID card.
