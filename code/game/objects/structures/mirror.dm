@@ -40,7 +40,7 @@
 /obj/structure/mirror/Destroy()
 	mirror_options = null
 	selectable_races = null
-	. = ..()
+	return ..()
 
 /obj/structure/mirror/proc/update_choices()
 	for(var/i in mirror_options)
