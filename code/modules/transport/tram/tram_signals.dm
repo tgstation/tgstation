@@ -150,6 +150,21 @@
 	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
 	if(panel_open)
 		. += span_notice("It can be flipped or rotated with a [EXAMINE_HINT("wrench.")]")
+	switch(operating_status)
+		if(TRANSPORT_REMOTE_WARNING)
+			. += span_notice("The yellow [EXAMINE_HINT("remote warning")] light is on.")
+			. += span_notice("The status display reads: Check track sensor.")
+		if(TRANSPORT_REMOTE_FAULT)
+			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
+			. += span_notice("The status display reads: Check tram controller.")
+		if(TRANSPORT_LOCAL_FAULT)
+			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
+			. += span_notice("The status display reads: Repair required.")
+	switch(dir)
+		if(NORTH, SOUTH)
+			. += span_notice("The tram configuration display shows EAST/WEST.")
+		if(EAST, WEST)
+			. += span_notice("The tram configuration display shows NORTH/SOUTH.")
 
 /obj/machinery/transport/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -230,29 +245,6 @@
 	inbound = null
 	outbound = null
 	update_appearance()
-
-/obj/machinery/transport/crossing_signal/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
-
-	if(!is_operational)
-		return
-
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "TRANSPORTCrossingSignal")
-		ui.open()
-
-/obj/machinery/transport/crossing_signal/ui_data(mob/user)
-	var/list/data = list()
-
-	data = list(
-		"sensorStatus" = linked_sensor ? TRUE : FALSE,
-		"operatingStatus" = operating_status,
-		"inboundPlatform" = inbound,
-		"outboundPlatform" = outbound,
-	)
-
-	return data
 
 /**
  * Only process if the tram is actually moving
@@ -509,6 +501,8 @@
 	var/obj/item/stock_parts/scanning_module/attached_scanner = new /obj/item/stock_parts/scanning_module/adv()
 	/// Sensors work in a married pair
 	var/datum/weakref/paired_sensor
+	/// If us or anything else in the operation chain is broken
+	var/operating_status = TRANSPORT_SYSTEM_NORMAL
 
 /obj/machinery/transport/guideway_sensor/Initialize(mapload)
 	. = ..()
@@ -536,6 +530,16 @@
 	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
 	if(panel_open)
 		. += span_notice("It can be rotated with a [EXAMINE_HINT("wrench.")]")
+	switch(operating_status)
+		if(TRANSPORT_REMOTE_WARNING)
+			. += span_notice("The yellow [EXAMINE_HINT("remote warning")] light is on.")
+			. += span_notice("The status display reads: Check paired sensor.")
+		if(TRANSPORT_REMOTE_FAULT)
+			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
+			. += span_notice("The status display reads: Paired sensor not found.")
+		if(TRANSPORT_LOCAL_FAULT)
+			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
+			. += span_notice("The status display reads: Repair required.")
 
 /obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)
@@ -603,11 +607,13 @@
 		return
 
 	if(machine_stat & BROKEN)
+		operating_status = TRANSPORT_LOCAL_FAULT
 		. += mutable_appearance(icon, "sensor-[TRANSPORT_LOCAL_FAULT]")
 		. += emissive_appearance(icon, "sensor-[TRANSPORT_LOCAL_FAULT]", src, alpha = src.alpha)
 		return
 
 	if(machine_stat & MAINT)
+		operating_status = TRANSPORT_REMOTE_FAULT
 		. += mutable_appearance(icon, "sensor-[TRANSPORT_REMOTE_FAULT]")
 		. += emissive_appearance(icon, "sensor-[TRANSPORT_REMOTE_FAULT]", src, alpha = src.alpha)
 		return
@@ -615,14 +621,17 @@
 	var/obj/machinery/transport/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(buddy)
 		if(!buddy.is_operational)
+			operating_status = TRANSPORT_REMOTE_WARNING
 			. += mutable_appearance(icon, "sensor-[TRANSPORT_REMOTE_WARNING]")
 			. += emissive_appearance(icon, "sensor-[TRANSPORT_REMOTE_WARNING]", src, alpha = src.alpha)
 		else
+			operating_status = TRANSPORT_SYSTEM_NORMAL
 			. += mutable_appearance(icon, "sensor-[TRANSPORT_SYSTEM_NORMAL]")
 			. += emissive_appearance(icon, "sensor-[TRANSPORT_SYSTEM_NORMAL]", src, alpha = src.alpha)
 			return
 
 	else
+		operating_status = TRANSPORT_REMOTE_FAULT
 		. += mutable_appearance(icon, "sensor-[TRANSPORT_REMOTE_FAULT]")
 		. += emissive_appearance(icon, "sensor-[TRANSPORT_REMOTE_FAULT]", src, alpha = src.alpha)
 

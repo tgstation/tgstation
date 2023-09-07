@@ -948,7 +948,7 @@
 		"statusCE" = controller_datum.controller_status & COMM_ERROR,
 		"statusES" = controller_datum.controller_status & EMERGENCY_STOP,
 		"statusPD" = controller_datum.controller_status & PRE_DEPARTURE,
-		"statusDO" = controller_datum.controller_status & DOORS_READY,
+		"statusDR" = controller_datum.controller_status & DOORS_READY,
 		"statusCL" = controller_datum.controller_status & CONTROLS_LOCKED,
 		"statusBS" = controller_datum.controller_status & BYPASS_SENSORS,
 	)

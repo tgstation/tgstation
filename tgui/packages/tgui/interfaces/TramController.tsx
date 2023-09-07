@@ -18,10 +18,9 @@ type TransportData = {
   statusCE: boolean;
   statusES: boolean;
   statusPD: boolean;
-  statusDO: boolean;
+  statusDR: boolean;
   statusCL: boolean;
   statusBS: boolean;
-  statusMM: boolean;
   destinations: TramDestination[];
 };
 
@@ -52,10 +51,9 @@ export const TramController = (props, context) => {
     statusCE,
     statusES,
     statusPD,
-    statusDO,
+    statusDR,
     statusCL,
     statusBS,
-    statusMM,
     destinations = [],
   } = data;
 
@@ -66,7 +64,7 @@ export const TramController = (props, context) => {
   );
 
   return (
-    <Window title="Tram Controller" width={800} height={350} theme="dark">
+    <Window title="Tram Controller" width={800} height={325} theme="dark">
       <Window.Content>
         <Flex direction="row">
           <Flex.Item width={350} px={0.5}>
@@ -147,7 +145,7 @@ export const TramController = (props, context) => {
                 color="bad"
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={7}
                 minHeight={2}
                 textAlign="center"
                 content="E-Stop"
@@ -158,7 +156,7 @@ export const TramController = (props, context) => {
                 color="yellow"
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={7}
                 minHeight={2}
                 textAlign="center"
                 content="Reset"
@@ -167,23 +165,13 @@ export const TramController = (props, context) => {
               <Button
                 icon="play"
                 color="green"
+                disabled={statusES || statusSF}
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={21}
                 minHeight={2}
                 textAlign="center"
-                content="Automatic"
-                onClick={() => act('automatic', {})}
-              />
-              <Button
-                icon="location-dot"
-                color="blue"
-                my={1}
-                lineHeight={2}
-                minWidth={5}
-                minHeight={2}
-                textAlign="center"
-                content="Manual: Destination"
+                content="Start: Destination"
                 onClick={() =>
                   act('dispatch', {
                     'tripDestination': tripDestination,
@@ -191,7 +179,7 @@ export const TramController = (props, context) => {
                 }
               />
               <Dropdown
-                width="99%"
+                width="97%"
                 options={destinations.map((id) => id.name)}
                 selected={tripDestination}
                 displayText={tripDestination || 'Pick a Destination'}
@@ -224,10 +212,10 @@ export const TramController = (props, context) => {
                 color={statusBS ? 'good' : 'bad'}
                 my={1}
                 lineHeight={2}
-                minWidth={11}
+                minWidth={15}
                 minHeight={2}
                 textAlign="center"
-                content="Door Sensors"
+                content="Bypass Door Sensors"
                 onClick={() => act('togglesensors', {})}
               />
             </Section>
@@ -236,7 +224,7 @@ export const TramController = (props, context) => {
                 color={statusES ? 'red' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={6}
                 minHeight={2}
                 textAlign="center"
                 content="ESTOP"
@@ -245,7 +233,7 @@ export const TramController = (props, context) => {
                 color={statusSF ? 'yellow' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={6}
                 minHeight={2}
                 textAlign="center"
                 content="FAULT"
@@ -254,7 +242,7 @@ export const TramController = (props, context) => {
                 color={statusCE ? 'teal' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={6}
                 minHeight={2}
                 textAlign="center"
                 content="COMMS"
@@ -266,13 +254,13 @@ export const TramController = (props, context) => {
                 minWidth={5}
                 minHeight={2}
                 textAlign="center"
-                content="DEPT"
+                content="RQST"
               />
               <Button
-                color={statusDO ? 'blue' : 'transparent'}
+                color={statusDR ? 'blue' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={6}
                 minHeight={2}
                 textAlign="center"
                 content="DOORS"
@@ -281,19 +269,10 @@ export const TramController = (props, context) => {
                 color={statusCL ? 'blue' : 'transparent'}
                 my={1}
                 lineHeight={2}
-                minWidth={5}
+                minWidth={6}
                 minHeight={2}
                 textAlign="center"
-                content="LOCKED"
-              />
-              <Button
-                color={statusMM ? 'blue' : 'transparent'}
-                my={1}
-                lineHeight={2}
-                minWidth={5}
-                minHeight={2}
-                textAlign="center"
-                content="MANUAL"
+                content="BUSY"
               />
             </Section>
           </Flex.Item>

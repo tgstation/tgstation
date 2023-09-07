@@ -45,10 +45,10 @@
 	var/mineral_amount = 2
 	var/tram_wall_type = /obj/structure/tram
 	var/girder_type = /obj/structure/girder/tram
+	var/mutable_appearance/damage_overlay
 	var/break_sound = SFX_SHATTER
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
-	var/hit_sound = 'sound/effects/glasshit.ogg'
 
 /obj/structure/tram/solid
 	desc = "A lightweight titanium composite structure with tinted titanium silicate panels."
@@ -96,6 +96,17 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/structure/tram/update_overlays(updates = ALL)
+	. = ..()
+	var/ratio = atom_integrity / max_integrity
+	ratio = CEILING(ratio * 4, 1) * 25
+	cut_overlay(damage_overlay)
+	if(ratio > 75)
+		return
+
+	damage_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer + 0.1))
+	. += damage_overlay
+
 /obj/structure/tram/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 
@@ -120,6 +131,11 @@
 			qdel(src)
 			return TRUE
 	return FALSE
+
+/obj/structure/tram/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	. = ..()
+	if(.) //received damage
+		update_appearance()
 
 /obj/structure/tram/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)

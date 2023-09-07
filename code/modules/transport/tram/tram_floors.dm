@@ -1,5 +1,6 @@
 /turf/open/floor/noslip/tram
 	name = "high-traction platform"
+	icon = 'icons/turf/tram.dmi'
 	icon_state = "noslip_tram"
 	base_icon_state = "noslip_tram"
 	floor_tile = /obj/item/stack/tile/noslip/tram
@@ -7,6 +8,7 @@
 /turf/open/floor/noslip/tram_plate
 	name = "linear induction plate"
 	desc = "The linear induction plate that powers the tram."
+	icon = 'icons/turf/tram.dmi'
 	icon_state = "tram_plate"
 	base_icon_state = "tram_plate"
 	floor_tile = /obj/item/stack/tile/noslip/tram_plate
@@ -24,6 +26,7 @@
 
 /turf/open/floor/noslip/tram_platform
 	name = "tram platform"
+	icon = 'icons/turf/tram.dmi'
 	icon_state = "tram_platform"
 	base_icon_state = "tram_platform"
 	floor_tile = /obj/item/stack/tile/noslip/tram_platform
@@ -47,16 +50,21 @@
 /turf/open/floor/noslip/tram_platform/burnt_states()
 	return list("tram_platform-scorched1","tram_platform-scorched2")
 
-/turf/open/floor/noslip/tram_plate/energized/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/energized, inbound, outbound, specific_transport_id)
-
 /turf/open/floor/noslip/attackby(obj/item/object, mob/living/user, params)
 	. = ..()
 	if(istype(object, /obj/item/stack/thermoplastic))
 		build_with_transport_tiles(object, user)
 	else if(istype(object, /obj/item/stack/sheet/mineral/titanium))
 		build_with_titanium(object, user)
+
+/turf/open/floor/noslip/tram_plate/energized/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/energized, inbound, outbound, specific_transport_id)
+
+/turf/open/floor/noslip/tram_plate/energized/examine(mob/user)
+	. = ..()
+	if(broken || burnt)
+		. += span_danger("It looks damaged and the electrical components exposed!")
 
 /turf/open/floor/noslip/tram_plate/energized/proc/bad_omen(mob/living/unlucky)
 	return
@@ -72,7 +80,7 @@
 /obj/structure/thermoplastic
 	name = "tram"
 	desc = "A lightweight thermoplastic flooring."
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/tram.dmi'
 	icon_state = "tram_dark"
 	density = FALSE
 	anchored = TRUE
@@ -85,7 +93,7 @@
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
 	var/secured = TRUE
 	var/floor_tile = /obj/item/stack/thermoplastic
-	var/damaged_icon_state = "honk"
+	var/mutable_appearance/damage_overlay
 
 /datum/armor/tram_floor
 	melee = 40
@@ -108,15 +116,21 @@
 		. += span_notice("You can [EXAMINE_HINT("crowbar")] to remove the tile.")
 		. += span_notice("It can be re-secured using a [EXAMINE_HINT("screwdriver.")]")
 
-/obj/structure/thermoplastic/atom_break()
+/obj/structure/thermoplastic/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
-	icon_state = damaged_icon_state
-	update_appearance()
+	if(.) //received damage
+		update_appearance()
 
-/obj/structure/thermoplastic/atom_fix()
+/obj/structure/thermoplastic/update_overlays(updates = ALL)
 	. = ..()
-	icon_state = initial(icon_state)
-	update_appearance()
+	var/ratio = atom_integrity / max_integrity
+	ratio = CEILING(ratio * 4, 1) * 25
+	cut_overlay(damage_overlay)
+	if(ratio > 75)
+		return
+
+	damage_overlay = mutable_appearance('icons/turf/tram.dmi', "damage[ratio]", (layer + 0.1))
+	. += damage_overlay
 
 /obj/structure/thermoplastic/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -164,6 +178,7 @@
 	if(tool.use_tool(src, user, integrity_to_repair * 0.5, volume = 50))
 		atom_integrity = max_integrity
 		to_chat(user, span_notice("You repair [src]."))
+		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/thermoplastic
@@ -185,10 +200,6 @@
 	novariants = TRUE
 	merge_type = /obj/item/stack/thermoplastic
 	var/tile_type = /obj/structure/thermoplastic
-	/// Cached associative lazy list to hold the radial options for tile reskinning. See tile_reskinning.dm for more information. Pattern: list[type] -> image
-	var/list/tile_reskin_types = list(
-		/obj/item/stack/thermoplastic/light,
-	)
 
 /obj/item/stack/thermoplastic/light
 	color = COLOR_TRAM_LIGHT_BLUE
@@ -198,8 +209,6 @@
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
-	//if(tile_reskin_types)
-	//	tile_reskin_types = tile_reskin_list(tile_reskin_types)
 
 /obj/item/stack/thermoplastic/examine(mob/user)
 	. = ..()
