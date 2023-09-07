@@ -1,7 +1,7 @@
 #define TRAM_DOOR_WARNING_TIME (1.4 SECONDS)
 #define TRAM_DOOR_CYCLE_TIME (0.4 SECONDS)
 #define TRAM_DOOR_CRUSH_TIME (0.7 SECONDS)
-#define TRAM_DOOR_RECYCLE_TIME	(3 SECONDS)
+#define TRAM_DOOR_RECYCLE_TIME (3 SECONDS)
 
 /obj/machinery/door/airlock/tram
 	name = "tram door"
