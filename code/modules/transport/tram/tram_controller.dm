@@ -695,7 +695,7 @@
 	/// If the cover is open
 	var/cover_open = FALSE
 	/// If the cover is locked
-	var/cover_locked = FALSE
+	var/cover_locked = TRUE
 
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()

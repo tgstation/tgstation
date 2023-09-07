@@ -402,7 +402,7 @@
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2,
 	)
-	build_path = /obj/item/wallframe/icts/indicator_display
+	build_path = /obj/item/wallframe/indicator_display
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,

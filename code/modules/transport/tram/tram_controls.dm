@@ -7,9 +7,9 @@
 	icon_keyboard = null
 	layer = SIGN_LAYER
 	density = FALSE
+	max_integrity = 100
+	armor_type = /datum/armor/tram_structure
 	circuit = /obj/item/circuitboard/computer/tram_controls
-	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 	/// What sign face prefixes we have icons for

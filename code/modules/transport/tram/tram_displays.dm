@@ -32,7 +32,7 @@
 	light_angle = 115
 	flags_1 = NONE
 
-/obj/item/wallframe/icts/indicator_display
+/obj/item/wallframe/indicator_display
 	name = "indicator display frame"
 	desc = "Used to build tram indicator displays, just secure to the wall."
 	icon_state = "indi_blank"
@@ -63,6 +63,15 @@
 	. = ..()
 	link_tram()
 
+/obj/machinery/transport/destination_sign/indicator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "unanchor"
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "repair"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/machinery/transport/destination_sign/indicator/examine(mob/user)
 	. = ..()
@@ -74,7 +83,7 @@
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(disassembled)
-		new /obj/item/wallframe/icts/indicator_display(drop_location())
+		new /obj/item/wallframe/indicator_display(drop_location())
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
 		new /obj/item/stack/sheet/iron(drop_location(), 1)

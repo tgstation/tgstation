@@ -147,6 +147,7 @@
 
 /obj/machinery/transport/crossing_signal/examine(mob/user)
 	. = ..()
+	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
 	if(panel_open)
 		. += span_notice("It can be flipped or rotated with a <b>wrench</b>.")
 
@@ -529,6 +530,12 @@
 		context[SCREENTIP_CONTEXT_LMB] = "disable sensor"
 
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/transport/guideway_sensor/examine(mob/user)
+	. = ..()
+	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
+	if(panel_open)
+		. += span_notice("It can be rotated with a <b>wrench</b>.")
 
 /obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
 	if (!user.combat_mode)

@@ -79,7 +79,6 @@
 
 /obj/machinery/transport/examine(mob/user)
 	. = ..()
-	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
 	if(methods_to_fix)
 		for(var/tool_method as anything in methods_to_fix)
 			. += span_info("It needs someone to [tool_method].")
