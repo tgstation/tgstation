@@ -326,37 +326,61 @@
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
-	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
+	duration = 30 SECONDS //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	///The crusher mark's underlay effect
 	var/mutable_appearance/marked_underlay
+	/// The crusher that this mark can be detonated by
 	var/obj/item/kinetic_crusher/hammer_synced
-
 
 /datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
 	. = ..()
-	if(.)
-		hammer_synced = new_hammer_synced
+	if(!.)
+		return FALSE
+	hammer_synced = new_hammer_synced
+	AddComponent(/datum/component/crusher_damage_ticker, APPLY_WITH_SPELL, null) //we calculate the damage in the signal proc and send it there
 
 /datum/status_effect/crusher_mark/on_apply()
-	if(owner.mob_size >= MOB_SIZE_LARGE)
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
-		marked_underlay.pixel_x = -owner.pixel_x
-		marked_underlay.pixel_y = -owner.pixel_y
-		owner.underlays += marked_underlay
-		return TRUE
-	return FALSE
+	if(owner.mob_size < MOB_SIZE_LARGE)
+		return FALSE
+	marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+	marked_underlay.pixel_x = -owner.pixel_x
+	marked_underlay.pixel_y = -owner.pixel_y
+	owner.underlays += marked_underlay
+	RegisterSignal(src, COMSIG_CRUSHER_MARK_DETONATE, PROC_REF(on_mark_detonation))
+	return TRUE
 
 /datum/status_effect/crusher_mark/Destroy()
 	hammer_synced = null
 	if(owner)
 		owner.underlays -= marked_underlay
 	QDEL_NULL(marked_underlay)
+	UnregisterSignal(src, COMSIG_CRUSHER_MARK_DETONATE)
 	return ..()
 
 /datum/status_effect/crusher_mark/be_replaced()
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
-	..()
+	return ..()
+
+/datum/status_effect/crusher_mark/proc/on_mark_detonation(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(!QDELETED(owner))
+		new /obj/effect/temp_visual/kinetic_blast(get_turf(owner))
+		var/backstabbed = FALSE
+		var/combined_damage = hammer_synced.detonation_damage
+		var/backstab_dir = get_dir(user, owner)
+		var/def_check = owner.getarmor(type = BOMB)
+		if((user.dir & backstab_dir) && (owner.dir & backstab_dir))
+			backstabbed = TRUE
+			combined_damage += hammer_synced.backstab_bonus
+			playsound(user, 'sound/weapons/kinetic_accel.ogg', 80, TRUE)
+
+		SEND_SIGNAL(src, COMSIG_CRUSHER_SPELL_HIT, owner, user, combined_damage)
+		SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, owner, src, backstabbed)
+		owner.apply_damage(combined_damage, BRUTE, blocked = def_check)
+		qdel(src)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"

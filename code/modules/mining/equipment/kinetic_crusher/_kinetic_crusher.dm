@@ -88,8 +88,8 @@
 	return ..()
 
 /obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return //it's already dropped by this point, so no feedback/dropping is required
+	//if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	//	return //it's already dropped by this point, so no feedback/dropping is required
 
 	//handle trophy attack effects
 	for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
@@ -99,31 +99,11 @@
 	if(proximity_flag && isliving(target))
 		var/mob/living/victim = target
 		var/datum/status_effect/crusher_mark/mark_field = victim.has_status_effect(/datum/status_effect/crusher_mark)
-		if(!mark_field || mark_field.hammer_synced != src || !victim.remove_status_effect(/datum/status_effect/crusher_mark))
+		if(!mark_field || mark_field.hammer_synced != src)
 			return ..()
-		var/datum/status_effect/crusher_damage/crusher_damage_tracker = victim.has_status_effect(/datum/status_effect/crusher_damage)
-		var/target_health = victim.health
+		SEND_SIGNAL(mark_field, COMSIG_CRUSHER_MARK_DETONATE, user)
 		for(var/obj/item/crusher_trophy/found_trophy as anything in trophies)
 			found_trophy.on_mark_detonation(target, user)
-		if(!QDELETED(victim))
-			if(!QDELETED(crusher_damage_tracker))
-				crusher_damage_tracker.total_damage += target_health - victim.health //we did some damage, but let's not assume how much we did
-			new /obj/effect/temp_visual/kinetic_blast(get_turf(victim))
-			var/backstabbed = FALSE
-			var/combined_damage = detonation_damage
-			var/backstab_dir = get_dir(user, victim)
-			var/def_check = victim.getarmor(type = BOMB)
-			if((user.dir & backstab_dir) && (victim.dir & backstab_dir))
-				backstabbed = TRUE
-				combined_damage += backstab_bonus
-				playsound(user, 'sound/weapons/kinetic_accel.ogg', 80, TRUE)
-
-			if(!QDELETED(crusher_damage_tracker))
-				crusher_damage_tracker.total_damage += combined_damage
-
-
-			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, victim, src, backstabbed)
-			victim.apply_damage(combined_damage, BRUTE, blocked = def_check)
 	return ..()
 
 /obj/item/kinetic_crusher/attack_secondary(mob/living/victim, mob/living/user, params)

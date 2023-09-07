@@ -9,8 +9,6 @@
 	var/apply_with
 
 /datum/component/crusher_damage_ticker/Initialize(apply_with, damage_to_increment)
-	if(!ismovable(parent))
-		return COMPONENT_INCOMPATIBLE
 	if(isnull(apply_with))
 		stack_trace("crusher_damage_ticker component was not passed an apply_with for [parent] to determine the signal to listen to.")
 		return COMPONENT_INCOMPATIBLE
@@ -39,9 +37,9 @@
 /datum/component/crusher_damage_ticker/proc/try_apply_damage_tracker(mob/living/living_target)
 	var/has_tracker = living_target.has_status_effect(/datum/status_effect/crusher_damage)
 	if(has_tracker)
-		message_admins("[living_target] already has a crusher damage tracker") //debug
+		to_chat(world, span_notice("[living_target] already has a crusher damage tracker")) //debug
 		return has_tracker
-	message_admins("[living_target] has received a crusher damage tracker") //debug
+	to_chat(world, span_green("[living_target] has received a crusher damage tracker")) //debug
 	return living_target.apply_status_effect(/datum/status_effect/crusher_damage)
 
 /datum/component/crusher_damage_ticker/proc/on_melee_attack(datum/source, mob/living/target, mob/user, params)
@@ -51,13 +49,13 @@
 		return
 	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(target)
 	target_tracker.total_damage += damage_to_increment
-	message_admins("[target] has received [damage_to_increment] crusher damage, total damage: [target_tracker.total_damage]") //debug
+	to_chat(world, span_cult("[target] has received [damage_to_increment] crusher damage via [parent], total damage: [target_tracker.total_damage]")) //debug
 
 /datum/component/crusher_damage_ticker/proc/on_melee_wield(datum/source, force)
 	SIGNAL_HANDLER
 
 	src.damage_to_increment = force
-	message_admins("damage_to_increment changed to [damage_to_increment] with [force]") //debug
+	to_chat(world, span_notice(("damage_to_increment changed to [damage_to_increment] with [force]"))) //debug
 
 /datum/component/crusher_damage_ticker/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb)
 	SIGNAL_HANDLER
@@ -69,19 +67,16 @@
 		return
 	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(living_target)
 	target_tracker.total_damage += damage_to_increment
-	message_admins("[living_target] has received [damage_to_increment] crusher damage, total damage: [target_tracker.total_damage]") //debug
+	to_chat(world, span_blue("[living_target] has received [damage_to_increment] crusher damage, via [parent] total damage: [target_tracker.total_damage]")) //debug
 
-/datum/component/crusher_damage_ticker/proc/on_applied_spell(datum/source, atom/target, mob/living/caster, damage_dealt)
+/datum/component/crusher_damage_ticker/proc/on_applied_spell(datum/source, mob/living/target, mob/living/caster, damage_dealt)
 	SIGNAL_HANDLER
 
-	if(!isliving(target))
+	if(target.mob_size < MOB_SIZE_LARGE)
 		return
-	var/mob/living/living_target = target
-	if(living_target.mob_size < MOB_SIZE_LARGE)
-		return
-	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(living_target)
+	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(target)
 	target_tracker.total_damage += damage_dealt ? damage_dealt : damage_to_increment
-	message_admins("[living_target] has received [damage_dealt ? damage_dealt : damage_to_increment] crusher damage, total damage: [target_tracker.total_damage]") //debug
+	to_chat(world, span_revendanger("[target] has received [damage_dealt ? damage_dealt : damage_to_increment] crusher damage via [parent], total damage: [target_tracker.total_damage]")) //debug
 
 /datum/component/crusher_damage_ticker/proc/on_mob_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -93,4 +88,4 @@
 		return
 	var/datum/status_effect/crusher_damage/target_tracker = try_apply_damage_tracker(living_target)
 	target_tracker.total_damage += damage_to_increment
-	message_admins("[living_target] has received [damage_to_increment] crusher damage, total damage: [target_tracker.total_damage]") //debug
+	to_chat(world, span_clown(("[living_target] has received [damage_to_increment] crusher damage via [parent], total damage: [target_tracker.total_damage]"))) //debug
