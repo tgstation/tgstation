@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(stock_market)
 	for(var/datum/material/possible_market as anything in subtypesof(/datum/material)) // I need to make this work like this, but lets hardcode it for now
 		if(initial(possible_market.tradable))
 			materials_prices += possible_market
-			materials_prices[possible_market] = (possible_market.value_per_unit * SHEET_MATERIAL_AMOUNT)
+			materials_prices[possible_market] = initial(possible_market.value_per_unit) * SHEET_MATERIAL_AMOUNT
 
 			materials_trends += possible_market
 			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) //aka -1 to 1
