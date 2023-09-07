@@ -856,16 +856,20 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define MOB_VOMIT_HARM (1<<3)
 /// Flag which will make the proc skip certain checks when it comes to forcing a vomit.
 #define MOB_VOMIT_FORCE (1<<4)
-/// Flag which makes the mob vomit a green color. Default if no color is supplied. Mutually exclusive to the other two colors!
+/// Flag which makes the mob vomit a green color. This will yield the "default" sprite. Mutually exclusive to the other three colors!
 #define MOB_VOMIT_COLOR_TOXIC (1<<5)
-/// Flag which makes the mob vomit a purple color. Mutually exclusive to the other two colors!
+/// Flag which makes the mob vomit a purple color. Mutually exclusive to the other three colors!
 #define MOB_VOMIT_COLOR_PURPLE (1<<6)
-/// Flag which makes the mob vomit a nebula color. Mutually exclusive to the other two colors!
+/// Flag which makes the mob vomit a nebula color. Mutually exclusive to the other three colors!
 #define MOB_VOMIT_COLOR_NEBULA (1<<7)
+// Flag which makes the mob vomit up some nanites. Mutually exclusive to the other three colors!
+#define MOB_VOMIT_COLOR_NANITES (1<<8) // yes yes it's not a color but come on man
 
-/// The default "vomit", or what you might typically expect to happen when you vomit.
-#define VOMIT_CATEGORY_DEFAULT (MOB_VOMIT_STUN | MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_COLOR_TOXIC)
-/// The vomit you've all come to know and love, but with a little extra "spice" (blood)
+/// Colorless vomit, just the bare basics of what you might get when you vomit but allows you to pass in a unique color.
+#define VOMIT_CATEGORY_COLORLESS (MOB_VOMIT_STUN | MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
+/// The default "vomit" color green, which will ultinately give you might typically expect to happen when you vomit.
+#define VOMIT_CATEGORY_DEFAULT (VOMIT_CATEGORY_COLORLESS | MOB_VOMIT_COLOR_TOXIC)
+/// The green vomit you've all come to know and love, but with a little extra "spice" (blood)
 #define VOMIT_CATEGORY_BLOOD (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_BLOOD)
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
