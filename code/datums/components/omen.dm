@@ -90,7 +90,7 @@
 
 	if(istype(our_guy_pos, /turf/open/floor/noslip/tram_plate/energized))
 		var/turf/open/floor/noslip/tram_plate/energized/future_tram_victim = our_guy_pos
-		if(future_tram_victim.toast(living_guy))
+		if(future_tram_victim.bad_omen(living_guy))
 			if(!permanent)
 				qdel(src)
 			return

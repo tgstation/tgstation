@@ -19,6 +19,8 @@
 	var/inbound
 	/// Outbound station
 	var/outbound
+	/// Transport ID of the tram
+	var/specific_transport_id = TRAMSTATION_LINE_1
 
 /turf/open/floor/noslip/tram_platform
 	name = "tram platform"
@@ -33,11 +35,21 @@
 /turf/open/floor/noslip/tram_plate/burnt_states()
 	return list("tram_plate-scorched1","tram_plate-scorched2")
 
+/turf/open/floor/noslip/tram_plate/energized/broken_states()
+	return list("energized_plate_damaged")
+
+/turf/open/floor/noslip/tram_plate/energized/burnt_states()
+	return list("energized_plate_damaged")
+
 /turf/open/floor/noslip/tram_platform/broken_states()
 	return list("tram_platform-damaged1","tram_platform-damaged2")
 
 /turf/open/floor/noslip/tram_platform/burnt_states()
 	return list("tram_platform-scorched1","tram_platform-scorched2")
+
+/turf/open/floor/noslip/tram_plate/energized/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/energized, inbound, outbound, specific_transport_id)
 
 /turf/open/floor/noslip/attackby(obj/item/object, mob/living/user, params)
 	. = ..()
@@ -46,61 +58,8 @@
 	else if(istype(object, /obj/item/stack/sheet/mineral/titanium))
 		build_with_titanium(object, user)
 
-/turf/open/floor/noslip/tram_plate/energized/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
-		if(tram.specific_transport_id != TRAMSTATION_LINE_1)
-			continue
-		return tram
-
-/turf/open/floor/noslip/tram_plate/energized/proc/toast(mob/living/future_tram_victim)
-	var/datum/transport_controller/linear/tram/tram = find_tram()
-
-	// Check for stopped states.
-	if(!tram || !tram.controller_operational || !inbound || !outbound)
-		return FALSE
-
-	var/obj/structure/transport/linear/tram/tram_part = tram.return_closest_platform_to(src)
-
-	if(QDELETED(tram_part))
-		return FALSE
-
-	// Everything will be based on position and travel direction
-	var/plate_pos
-	var/tram_pos
-	var/tram_velocity_sign // 1 for positive axis movement, -1 for negative
-	// Try to be agnostic about N-S vs E-W movement
-	if(tram.travel_direction & (NORTH|SOUTH))
-		plate_pos = y
-		tram_pos = tram_part.y
-		tram_velocity_sign = tram.travel_direction & NORTH ? 1 : -1
-	else
-		plate_pos = x
-		tram_pos = tram_part.x
-		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
-
-	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
-
-	// Check if our victim is in the active path of the tram.
-	if(!tram.controller_active)
-		return FALSE
-	if(approach_distance < 0)
-		return FALSE
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	audible_message(
-		span_hear("You hear an electric crackle when you step on the plate...")
-	)
-	if((tram.travel_direction & WEST) && inbound < tram.idle_platform.platform_code)
-		return FALSE
-	if((tram.travel_direction & EAST) && outbound > tram.idle_platform.platform_code)
-		return FALSE
-	if(approach_distance >= AMBER_THRESHOLD_NORMAL)
-		return FALSE
-
-	// Finally the interesting part where they ACTUALLY get hit!
-	notify_ghosts("[future_tram_victim] has fallen in the path of an oncoming tram!", source = future_tram_victim, action = NOTIFY_ORBIT, header = "Electrifying!")
-	future_tram_victim.electrocute_act(15, src, 1)
-	return TRUE
+/turf/open/floor/noslip/tram_plate/energized/proc/bad_omen(mob/living/unlucky)
+	return
 
 /turf/open/floor/glass/reinforced/tram/Initialize(mapload)
 	. = ..()
@@ -117,6 +76,8 @@
 	icon_state = "tram_dark"
 	density = FALSE
 	anchored = TRUE
+	max_integrity = 150
+	integrity_failure = 0.75
 	armor_type = /datum/armor/tram_floor
 	layer = TRAM_FLOOR_LAYER
 	plane = FLOOR_PLANE
@@ -124,11 +85,13 @@
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
 	var/secured = TRUE
 	var/floor_tile = /obj/item/stack/thermoplastic
+	var/damaged_icon_state = "honk"
 
 /datum/armor/tram_floor
 	melee = 40
 	bullet = 10
 	laser = 10
+	bomb = 45
 	fire = 90
 	acid = 100
 
@@ -145,18 +108,28 @@
 		. += span_notice("You can [EXAMINE_HINT("crowbar")] to remove the tile.")
 		. += span_notice("It can be re-secured using a [EXAMINE_HINT("screwdriver.")]")
 
+/obj/structure/thermoplastic/atom_break()
+	. = ..()
+	icon_state = damaged_icon_state
+	update_appearance()
+
+/obj/structure/thermoplastic/atom_fix()
+	. = ..()
+	icon_state = initial(icon_state)
+	update_appearance()
+
 /obj/structure/thermoplastic/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(secured)
 		user.visible_message(span_notice("[user] begins to unscrew the tile..."),
 		span_notice("You begin to unscrew the tile..."))
-		if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			secured = FALSE
 			to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the tile."))
 	else
 		user.visible_message(span_notice("[user] begins to fasten the tile..."),
 		span_notice("You begin to fasten the tile..."))
-		if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			secured = TRUE
 			to_chat(user, span_notice("The tile is securely screwed in place."))
 
@@ -171,7 +144,7 @@
 	else
 		user.visible_message(span_notice("[user] wedges \the [tool] into the tile's gap in the edge and starts prying..."),
 		span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
-		if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			to_chat(user, span_notice("The panel pops out of the frame."))
 			var/obj/item/stack/thermoplastic/pulled_tile = new()
 			pulled_tile.update_integrity(atom_integrity)
@@ -188,7 +161,7 @@
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	var/integrity_to_repair = max_integrity - atom_integrity
-	if(tool.use_tool(src, user, integrity_to_repair, volume = 50))
+	if(tool.use_tool(src, user, integrity_to_repair * 0.5, volume = 50))
 		atom_integrity = max_integrity
 		to_chat(user, span_notice("You repair [src]."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS

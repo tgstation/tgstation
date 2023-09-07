@@ -964,6 +964,7 @@
 #include "code\datums\components\egg_layer.dm"
 #include "code\datums\components\electrified_buckle.dm"
 #include "code\datums\components\embedded.dm"
+#include "code\datums\components\energized.dm"
 #include "code\datums\components\engraved.dm"
 #include "code\datums\components\evolutionary_leap.dm"
 #include "code\datums\components\explodable.dm"
